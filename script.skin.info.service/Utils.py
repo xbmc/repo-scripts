@@ -182,7 +182,7 @@ def set_movie_properties(json_response):
         HOME.setProperty('SkinInfo.Set.Movie.%d.PlotOutline' % count, item['plotoutline'])
         HOME.setProperty('SkinInfo.Set.Movie.%d.Path' % count, media_path(item['file']))
         HOME.setProperty('SkinInfo.Set.Movie.%d.Year' % count, str(item['year']))
-        HOME.setProperty('SkinInfo.Set.Movie.%d.Duration' % count, str(item['runtime'] / 60))
+        HOME.setProperty('SkinInfo.Set.Movie.%d.Duration' % count, str(item['runtime'] // 60))
         HOME.setProperty('SkinInfo.Set.Movie.%d.VideoResolution' % count, streaminfo["videoresolution"])
         HOME.setProperty('SkinInfo.Set.Movie.%d.Art(clearlogo)' % count, art.get('clearlogo', ''))
         HOME.setProperty('SkinInfo.Set.Movie.%d.Art(discart)' % count, art.get('discart', ''))
@@ -218,7 +218,7 @@ def set_movie_properties(json_response):
     else:
         HOME.setProperty('SkinInfo.Set.Movies.ExtendedPlot', plot)
     HOME.setProperty('SkinInfo.Set.Movies.Title', title_list)
-    HOME.setProperty('SkinInfo.Set.Movies.Runtime', str(runtime / 60))
+    HOME.setProperty('SkinInfo.Set.Movies.Runtime', str(runtime // 60))
     HOME.setProperty('SkinInfo.Set.Movies.Writer', " / ".join(writer))
     HOME.setProperty('SkinInfo.Set.Movies.Director', " / ".join(director))
     HOME.setProperty('SkinInfo.Set.Movies.Genre', " / ".join(genre))
