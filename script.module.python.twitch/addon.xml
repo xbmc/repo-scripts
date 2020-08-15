@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.14" provider-name="A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.15" provider-name="anxdpanic, A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
         <import addon="script.module.six" version="1.11.0"/>
@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] logging in Kodi 19
+[upd] Update material to reflect repository changes
         </news>
         <assets>
             <icon>icon.png</icon>
@@ -18,7 +18,8 @@
         <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
         <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
         <license>GPL-3.0-only</license>
-        <source>https://github.com/MrSprigster/script.module.python.twitch</source>
+        <source>https://github.com/anxdpanic/script.module.python.twitch</source>
+        <forum>https://twitchaddon.page.link/forum</forum>
         <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>
 </addon>
