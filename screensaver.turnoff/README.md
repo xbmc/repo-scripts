@@ -1,8 +1,8 @@
-[![GitHub release](https://img.shields.io/github/release/dagwieers/screensaver.turnoff.svg)](https://github.com/dagwieers/screensaver.turnoff/releases)
-[![Build Status](https://travis-ci.org/dagwieers/screensaver.turnoff.svg?branch=master)](https://travis-ci.org/dagwieers/screensaver.turnoff)
-[![Codecov status](https://img.shields.io/codecov/c/github/dagwieers/screensaver.turnoff/master)](https://codecov.io/gh/dagwieers/screensaver.turnoff/branch/master)
+[![GitHub release](https://img.shields.io/github/release/add-ons/screensaver.turnoff.svg)](https://github.com/add-ons/screensaver.turnoff/releases)
+[![Build Status](https://travis-ci.org/add-ons/screensaver.turnoff.svg?branch=master)](https://travis-ci.org/add-ons/screensaver.turnoff)
+[![Codecov status](https://img.shields.io/codecov/c/github/add-ons/screensaver.turnoff/master)](https://codecov.io/gh/add-ons/screensaver.turnoff/branch/master)
 [![License: GPLv2](https://img.shields.io/badge/License-GPLv2-yellow.svg)](https://opensource.org/licenses/GPL-2.0)
-[![Contributors](https://img.shields.io/github/contributors/dagwieers/screensaver.turnoff.svg)](https://github.com/dagwieers/screensaver.turnoff/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/add-ons/screensaver.turnoff.svg)](https://github.com/add-ons/screensaver.turnoff/graphs/contributors)
 
 # Kodi screensaver that turns your screen off to save power
 
@@ -62,10 +62,13 @@ A collection of related links:
 
 
 ## Reporting issues
-You can report issues at [our GitHub project](https://github.com/dagwieers/screensaver.turnoff).
+You can report issues at [our GitHub project](https://github.com/add-ons/screensaver.turnoff).
 
 
 ## Releases
+### v0.10.3 (2020-08-01)
+- Workflow changes for Matrix
+
 ### v0.10.2 (2019-11-21)
 - Create separate entrypoint
 - Improve stability
