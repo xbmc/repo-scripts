@@ -622,3 +622,26 @@ msgstr ""
 msgctxt "#32131"
 msgid "You have selected a .sub file, which uses frame rates to indicate when subtitles should be shown. To edit these subtitles, you have to select a frame rate. You can start a video to see what frame rate it has or just pick a random one if you want to use a sync option."
 msgstr ""
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr ""
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr ""
+
+
+

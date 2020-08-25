@@ -422,7 +422,6 @@ def sync_with_video(subtitlefile, filename):
     xbmcPlayer.play(location)
     xbmc.Monitor().waitForAbort()
 
-
 def check_integrity_menu(subtitlefile, filename):
     subtitlefile, problems = check_integrity(subtitlefile)
     if not problems:
@@ -435,12 +434,26 @@ def check_integrity_menu(subtitlefile, filename):
         xbmcgui.Dialog().ok(_(32033), report)
     show_dialog(subtitlefile, filename)
 
+def check_validity(subtitlefile):
+    check = 0
+    for line in subtitlefile:
+        if len(line) == 30 or len(line) == 31:
+            if line[0] == "0" and line[17] == "0":
+                check += 1
+    if check == 0:
+        resp = xbmcgui.Dialog().yesno(_(32132), _(32132), yeslabel=_(32133), nolabel=_(32134))
+        if resp:
+            return True
+        else:
+            return False
+    return True
+
 def load_subtitle(with_warning):
     global backupfile
     #Sublissimo, select sub, select sub
     if with_warning:
         xbmcgui.Dialog().ok(_(31001), _(32034))
-    filename = xbmcgui.Dialog().browse(1, _(32035), 'video')
+    filename = xbmcgui.Dialog().browse(1, _(32035), 'video', ".srt|.sub")
     if filename == "":
         sys.exit()
     if filename[-3:] == 'sub':
@@ -455,7 +468,10 @@ def load_subtitle(with_warning):
         subtitlefile = [sentence+"\n" for sentence in b]
         backupfile = copy.deepcopy(subtitlefile)
         f.close()
-        return subtitlefile, filename
+        if check_validity(subtitlefile):
+            return subtitlefile, filename
+        else:
+            return load_subtitle(False)
     except:
         # Error, file not found
         xbmcgui.Dialog().ok(_(32014), _(32027) + filename)
@@ -560,6 +576,13 @@ def load_sub_subtitlefile(filename="", subtitlefile=[]):
         b = f.read().split("\n")
         subtitlefile = [sentence+"\n" for sentence in b]
         f.close()
+    check = 0
+    for line in subtitlefile:
+        if line[0] == "{" and "}{" in line:
+            check += 1
+    if check == 0:
+        xbmcgui.Dialog().ok(_(32135), _(32136))
+        show_dialog()
     options = ["23.976", "24", "25", "29.976", "30", _(32127), _(32104), _(32129)]
     menuchoice = xbmcgui.Dialog().select(_(32105), options)
     if menuchoice == 5:
