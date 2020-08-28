@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.keymap" name="Keymap Editor" version="1.1.2" provider-name="takoi,pkscout">
+	<requires>
+		<import addon="xbmc.python" version="2.26.0" />
+		<import addon="script.module.kodi-six" version="0.0.3" />
+		<import addon="script.module.defusedxml" version="0.6.0" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<news>
+v1.1.2
+- Better support for v18 Leia
+- Fix so script only backups user defined keymaps if trying to save new keymap file
+- Moved all text into language file for easier internationalization
+		</news>
+		<assets>
+        	<icon>icon.png</icon>
+        </assets>
+		<summary lang="en_GB">An editor for keymap files</summary>
+		<description lang="en_GB">Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by xbmc. Note: existing user defined key mappings will be renamed to .bak.</description>
+		<platform>all</platform>
+		<license>GPL-3.0-only</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=168767</forum>
+		<source>https://github.com/tamland/xbmc-keymap-editor</source>
+	</extension>
+</addon>
