@@ -20,7 +20,7 @@ v1.1.2
 		<description lang="en_GB">Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by xbmc. Note: existing user defined key mappings will be renamed to .bak.</description>
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
-		<forum>http://forum.xbmc.org/showthread.php?tid=168767</forum>
+		<forum>http://forum.kodi.tv/showthread.php?tid=168767</forum>
 		<source>https://github.com/tamland/xbmc-keymap-editor</source>
 	</extension>
 </addon>
