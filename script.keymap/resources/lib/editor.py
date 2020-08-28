@@ -15,13 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from kodi_six import xbmcaddon
+from kodi_six import xbmc, xbmcaddon
 from threading import Timer
 from collections import OrderedDict
 from kodi_six.xbmcgui import Dialog, WindowXMLDialog
 from resources.lib.actions import ACTIONS, WINDOWS
 from resources.lib.utils import tr
 
+KODIMONITOR = xbmc.Monitor()
 
 class Editor(object):
     def __init__(self, defaultkeymap, userkeymap):
@@ -31,14 +32,14 @@ class Editor(object):
         self.dirty = False
 
     def start(self):
-        while True:
+        while not KODIMONITOR.abortRequested():
             # Select context menu
             idx = Dialog().select(tr(30007), list(WINDOWS.values()))
             if idx == -1:
                 break
             window = list(WINDOWS.keys())[idx]
 
-            while True:
+            while not KODIMONITOR.abortRequested():
                 # Select category menu
                 idx = Dialog().select(tr(30008), list(ACTIONS.keys()))
                 if idx == -1:
