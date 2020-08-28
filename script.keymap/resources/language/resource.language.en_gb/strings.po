@@ -20,7 +20,9 @@ msgctxt "#30000"
 msgid "Keymap Editor"
 msgstr ""
 
-# emptry string 30001
+msgctxt "#30001"
+msgid "Failed to remove old keymap file"
+msgstr ""
 
 msgctxt "#30002"
 msgid "Press the key you want to assign now"

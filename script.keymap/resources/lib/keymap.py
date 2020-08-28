@@ -42,8 +42,8 @@ def main():
         setup_keymap_folder()
     except Exception:
         traceback.print_exc()
-        utils.rpc('GUI.ShowNotification', title="Keymap Editor",
-            message="Failed to remove old keymap file", image='error')
+        utils.rpc('GUI.ShowNotification', title=tr(30000),
+            message=tr(30001), image='error')
         return
 
     defaultkeymap = utils.read_keymap(default)
