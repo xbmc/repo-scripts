@@ -1,0 +1,52 @@
+# Kodi Media Center language file
+# Addon Name: Keymap Editor
+# Addon id: script.keymap
+# Addon Provider: takoi|pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: pkscout@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#30118"
+msgid "Visualisation"
+msgstr "Visualization"
+
+msgctxt "#30901"
+msgid "Minimise"
+msgstr "Minimize"
+
+msgctxt "#31113"
+msgid "Show current visualisation preset"
+msgstr "Show current visualization preset"
+
+msgctxt "#31114"
+msgid "Show visualisation preset list"
+msgstr "Show visualization preset list"
+
+msgctxt "#31115"
+msgid "Next visualisation preset"
+msgstr "Next visualization preset"
+
+msgctxt "#31116"
+msgid "Previous visualisation preset"
+msgstr "Previous visualization preset"
+
+msgctxt "#31117"
+msgid "Lock current visualisation preset"
+msgstr "Lock current visualization preset"
+
+msgctxt "#31238"
+msgid "Visualisation Preset List"
+msgstr "Visualization Preset List"
+
+msgctxt "#31257"
+msgid "Colour Management Settings"
+msgstr "Color Management Settings"
