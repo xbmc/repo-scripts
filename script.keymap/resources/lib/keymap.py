@@ -93,5 +93,3 @@ def main():
                 break
         else:
             break
-
-    sys.modules.clear()
