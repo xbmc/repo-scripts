@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.keymap" name="Keymap Editor" version="1.1.2" provider-name="takoi,pkscout">
+<addon id="script.keymap" name="Keymap Editor" version="1.1.3" provider-name="takoi,pkscout">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0" />
 		<import addon="script.module.kodi-six" version="0.0.3" />
@@ -8,7 +8,7 @@
 	<extension point="xbmc.python.script" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v1.1.2
+v1.1.3
 - Better support for v18 Leia
 - Fix so script only backups user defined keymaps if trying to save new keymap file
 - Moved all text into language file for easier internationalization

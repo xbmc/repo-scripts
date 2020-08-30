@@ -30,6 +30,7 @@ default = xbmc.translatePath('special://xbmc/system/keymaps/keyboard.xml')
 userdata = xbmc.translatePath('special://userdata/keymaps')
 gen_file = os.path.join(userdata, 'gen.xml')
 
+KODIMONITOR = xbmc.Monitor()
 
 def setup_keymap_folder():
     if not os.path.exists(userdata):
@@ -59,7 +60,7 @@ def main():
 
     ## main loop ##
     confirm_discard = False
-    while True:
+    while not KODIMONITOR.abortRequested():
         idx = Dialog().select(tr(30000), [tr(30003), tr(30004), tr(30005)])
         if idx == 0:
             # edit
