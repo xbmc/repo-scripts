@@ -46,7 +46,7 @@ class Editor(object):
                     break
                 category = list(ACTIONS.keys())[idx]
 
-                while True:
+                while not KODIMONITOR.abortRequested():
                     # Select action menu
                     current_keymap = self._current_keymap(window, category)
                     labels = ["%s - %s" % (name, key) for _, key, name in current_keymap]
