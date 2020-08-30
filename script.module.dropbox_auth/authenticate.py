@@ -34,7 +34,7 @@ if len(sys.argv) == 5:#
     DROPBOX_APP_SECRET = sys.argv[4]
 else:
     utils.log('expecting 5 input arguments for Target Addon Id, Setting Name, Dropbox App key and secret. Received %d:' % len(sys.argv), xbmc.LOGERROR)
-    utils.log(str(sys.argv), xbmc.LOGNOTICE)
+    utils.log(str(sys.argv), xbmc.LOGINFO)
     utils.showNotification(utils.getString(32102), utils.getString(32202))
     sys.exit(1)
         
