@@ -29,7 +29,7 @@ def log(message,loglevel=xbmc.LOGDEBUG):
     
     Args:
         message: has to be unicode, http://wiki.xbmc.org/index.php?title=Add-on_unicode_paths#Logging
-        loglevel: xbmc.LOGDEBUG, xbmc.LOGINFO, xbmc.LOGNOTICE, xbmc.LOGWARNING, xbmc.LOGERROR, xbmc.LOGFATAL
+        loglevel: xbmc.LOGDEBUG, xbmc.LOGINFO, xbmc.LOGWARNING, xbmc.LOGERROR, xbmc.LOGFATAL
     """
     xbmc.log(__addon_id__ + u": " + message, level=loglevel)
     
