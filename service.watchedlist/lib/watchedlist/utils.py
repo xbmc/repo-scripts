@@ -34,12 +34,12 @@ def addon_dir():
     return _Addon.getAddonInfo('path')
 
 
-def log(message, loglevel=xbmc.LOGNOTICE):
+def log(message, loglevel=xbmc.LOGINFO):
     """"save message to xbmc.log.
 
     Args:
         message: has to be unicode, http://wiki.xbmc.org/index.php?title=Add-on_unicode_paths#Logging
-        loglevel: xbmc.LOGDEBUG, xbmc.LOGINFO, xbmc.LOGNOTICE, xbmc.LOGWARNING, xbmc.LOGERROR, xbmc.LOGFATAL
+        loglevel: xbmc.LOGDEBUG, xbmc.LOGINFO, xbmc.LOGWARNING, xbmc.LOGERROR, xbmc.LOGFATAL
     """
     xbmc.log(_addon_id + u": " + message, level=loglevel)
 
