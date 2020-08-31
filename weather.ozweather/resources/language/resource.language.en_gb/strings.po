@@ -21,35 +21,27 @@ msgid "OzWeather Settings"
 msgstr ""
 
 msgctxt "#32111"
-msgid "Change Suburb 1"
+msgid "Suburb 1"
 msgstr ""
 
 msgctxt "#32112"
-msgid "Change Suburb 2"
+msgid "Suburb 2"
 msgstr ""
 
 msgctxt "#32113"
-msgid "Change Suburb 3"
-msgstr ""
-
-msgctxt "#32113"
-msgid "Change Suburb 3"
-msgstr ""
-
-msgctxt "#32113"
-msgid "Change Suburb 3"
+msgid "Suburb 3"
 msgstr ""
 
 msgctxt "#32155"
-msgid "Change Radar ID for Suburb 1 (e.g. IDR023)"
+msgid "Radar ID for Suburb 1 (e.g. IDR023)"
 msgstr ""
 
 msgctxt "#32156"
-msgid "Change Radar ID for Suburb 2"
+msgid "Radar ID for Suburb 2"
 msgstr ""
 
 msgctxt "#32157"
-msgid "Change Radar ID for Suburb 3"
+msgid "Radar ID for Suburb 3"
 msgstr ""
 
 msgctxt "#32194"

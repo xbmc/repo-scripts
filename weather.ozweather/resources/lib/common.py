@@ -3,10 +3,11 @@
 # Handy utility functions for Kodi Addons
 # By bossanova808
 # Free in all senses....
-# VERSION 0.1.1
-# (Matrix on)
+# VERSION 0.1.3 2020-08-31
+# (For Kodi Matrix & later)
 
 import xbmc
+import xbmcgui
 import xbmcaddon
 import sys
 import traceback
@@ -23,6 +24,7 @@ LANGUAGE = ADDON.getLocalizedString
 PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
 KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
 USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
+WEATHER_WINDOW = xbmcgui.Window(12600)
 
 
 def log(message, exception_instance=None, level=xbmc.LOGDEBUG):
@@ -43,15 +45,15 @@ def log(message, exception_instance=None, level=xbmc.LOGDEBUG):
         xbmc.log(message_with_exception, level)
 
 
-def log_notice(message, exception_instance=None):
+def log_info(message, exception_instance=None):
     """
-    Log a message at the LOGNOTICE level, i.e. even if Kodi debugging is not turned on. Use sparingly.
+    Log a message at the LOGINFO level, i.e. even if Kodi debugging is not turned on. Use sparingly.
 
     :param message: required, the message to log
     :param exception_instance: optional, an instance of some Exception
     """
 
-    log(message, exception_instance, level=xbmc.LOGNOTICE)
+    log(message, exception_instance, level=xbmc.LOGINFO)
 
 
 def footprints(startup=True):
@@ -61,11 +63,11 @@ def footprints(startup=True):
     :param startup: optional, default True.  If true, log the startup of an addon, otherwise log the exit.
     """
     if startup:
-        log_notice(f'Starting...')
-        log_notice(f'Kodi Version: {KODI_VERSION}')
-        log_notice(f'Addon arguments: {ADDON_ARGUMENTS}')
+        log_info(f'Starting...')
+        log_info(f'Kodi Version: {KODI_VERSION}')
+        log_info(f'Addon arguments: {ADDON_ARGUMENTS}')
     else:
-        log_notice(f'Exiting...')
+        log_info(f'Exiting...')
 
 
 def set_property(window, name, value=""):
