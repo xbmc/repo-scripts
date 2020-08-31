@@ -10,5 +10,7 @@ You can mark shows where episode order doesn't matter as show to be ignored (and
 
 If it detects you've started playback of an episode you probably shouldn't have, the video will be paused, and you'll get a pop up window with options to stop playback, carry on on this occasion, or carry on and also mark the show as one to ignore from now on.
 
+Forum thread: <https://forum.kodi.tv/showthread.php?tid=355464>
+
 Available in the main Kodi repository (legacy Python 2 version for Kodi Leia and below, Python 3 version for Kodi Matrix and the on).
 

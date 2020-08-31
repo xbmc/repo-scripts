@@ -1,34 +1,37 @@
-v0.4
-* Updated (by Razzeee) to Python 3 / Kodi Matrix - thanks Razzeee!!
+v0.4.2
+- Update for changes to Kodi Matrix logging functions
+
+v0.4.1
+- Updated (by Razzeee) to Python 3 / Kodi Matrix - thanks Razzeee!!
 
 v0.3.5 
-* (N.B. this is the last version for Kodi Leia and below)
-* Fixed error with non ascii chars in show title
-* Better addon profile path handling, create profile directory if doesn't exists
+- (N.B. this is the last version for Kodi Leia and below)
+- Fixed error with non ascii chars in show title
+- Better addon profile path handling, create profile directory if doesn't exists
 
 v0.3.4
-* Add new option to ignore particular shows
-* Move 'browse show episodes' to a setting rather than on every interaction, which felt janky to me
-* Improve language across the board
+- Add new option to ignore particular shows
+- Move 'browse show episodes' to a setting rather than on every interaction, which felt janky to me
+- Improve language across the board
 
 v0.3.3
-* Krypton fixes for previous
+- Krypton fixes for previous
 
 v0.3.2
-* Maintenance by bossanova08 - Updated for Kodi Leia
-* Add new setting to ignore if the previous episode is not in library at all
+- Maintenance by bossanova08 - Updated for Kodi Leia
+- Add new setting to ignore if the previous episode is not in library at all
 
 v0.3.1
-* Use builtin json module instead of simplejson (Thanks tamland)
+- Use builtin json module instead of simplejson (Thanks tamland)
 
 v0.3.0
-* Added option to show a "browse this show" dialog
+- Added option to show a "browse this show" dialog
 
 v0.2.1
-* Stupid bug fixed
+- Stupid bug fixed
 
 v0.2.0
-* Added transifex language support
+- Added transifex language support
 
 v0.1.0
-* Initial release
+- Initial release
