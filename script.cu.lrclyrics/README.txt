@@ -43,6 +43,11 @@ Window(Home).Property(culrc.manual) - set to 'true' if manual retrieval is requi
 Window(Home).Property(culrc.artist) - set by the client to the required artist name
 Window(Home).Property(culrc.track) - set by the client to the required track name
 
+to pass lyrics from an addon:
+https://codedocs.xyz/xbmc/xbmc/group__python__xbmcgui__listitem.html
+listitem.setInfo('music', {'lyrics': 'lyrics here'})
+listitem.setProperty('culrc.source', 'addon name here')
+
 other addons may want to set the MusicPlayer.Property(do_not_analyze) to 'true'.
 this will tell cu lrc lyrics to skip searching for embedded lyrics.
 
