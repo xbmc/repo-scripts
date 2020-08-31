@@ -1,3 +1,8 @@
+Kodi Oz Weather
+===================================
+
+`weather.ozweather`
+
 Script for Kodi for Australian weather.  
 
 Available from the Kodi official repository (i.e. don't install from here - just go to Addons -> Get Addons -> Weather -> OzWeather)
