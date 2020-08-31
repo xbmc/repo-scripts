@@ -230,7 +230,7 @@ if len(sys.argv) > 1:
 # DEFAULT - RUN AS A SERVICE & WATCH PLAYBACK EVENTS
 else:
     log('Kodi ' + str(__kodiversion__) +
-        ', listen to onAVStarted', xbmc.LOGNOTICE)
+        ', listen to onAVStarted', xbmc.LOGINFO)
 
     monitor = xbmc.Monitor()
     player_monitor = MyPlayer()
