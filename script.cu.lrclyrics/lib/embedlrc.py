@@ -1,37 +1,56 @@
 from mutagen.flac import FLAC
 from mutagen.mp3 import MP3
 from mutagen.mp4 import MP4
+from mutagen.oggvorbis import OggVorbis
+from mutagen.apev2 import APEv2
 from lib.utils import *
 
 LANGUAGE = ADDON.getLocalizedString
 
+
 class BinaryFile(xbmcvfs.File):
-    def read(self, numBytes: int = 0) -> bytes:
-        return bytes(self.readBytes(numBytes))
+    def read(self, numBytes):
+        if numBytes == 0:
+            return b""
+        else:
+            return bytes(super().readBytes(numBytes))
+
 
 def getEmbedLyrics(song, getlrc):
     lyrics = Lyrics()
     lyrics.song = song
     lyrics.source = LANGUAGE(32002)
     lyrics.lrc = getlrc
+    lry = lyrics.song.embed
+    if lry:
+        match = isLRC(lry)
+        if (getlrc and match) or ((not getlrc) and (not match)):
+            if lyrics.song.source:
+                lyrics.source = lyrics.song.source
+            lyrics.lyrics = lry
+            return lyrics
     filename = song.filepath
     ext = os.path.splitext(filename)[1].lower()
+    sup_ext = ['.mp3', '.flac', '.ogg', '.ape', '.m4a']
     lry = None
-    bfile = BinaryFile(filename)
-    if ext == '.mp3':
-        lry = getID3Lyrics(bfile, getlrc)
-        if not lry:
-            try:
-                text = getLyrics3(filename, getlrc)
-                if text:
-                    enc = chardet.detect(text)
-                    lry = text.decode(enc['encoding'])
-            except:
-                pass
-    elif  ext == '.flac':
-        lry = getFlacLyrics(bfile, getlrc)
-    elif  ext == '.m4a':
-        lry = getMP4Lyrics(bfile, getlrc)
+    if ext in sup_ext:
+        bfile = BinaryFile(filename)
+        if ext == '.mp3':
+            lry = getID3Lyrics(bfile, getlrc)
+            if not lry:
+                try:
+                    lry = getLyrics3(bfile, getlrc)
+                except:
+                    pass
+        elif ext == '.flac':
+            lry = getFlacLyrics(bfile, getlrc)
+        elif ext == '.m4a':
+            lry = getMP4Lyrics(bfile, getlrc)
+        elif ext == '.ogg':
+            lry = getOGGLyrics(bfile, getlrc)
+        elif ext == '.ape':
+            lry = getAPELyrics(bfile, getlrc)
+        bfile.close()
     if not lry:
         return None
     lyrics.lyrics = lry
@@ -42,37 +61,38 @@ Get lyrics embed with Lyrics3/Lyrics3V2 format
 See: http://id3.org/Lyrics3
      http://id3.org/Lyrics3v2
 '''
-def getLyrics3(filename, getlrc):
-    f = xbmcvfs.File(filename)
-    f.seek(-128-9, os.SEEK_END)
-    buf = f.readBytes(9)
+def getLyrics3(bfile, getlrc):
+    bfile.seek(-128-9, os.SEEK_END)
+    buf = bfile.read(9)
     if (buf != b'LYRICS200' and buf != b'LYRICSEND'):
-        f.seek(-9, os.SEEK_END)
-        buf = f.readBytes(9)
+        bfile.seek(-9, os.SEEK_END)
+        buf = bfile.read(9)
     if (buf == b'LYRICSEND'):
         ''' Find Lyrics3v1 '''
-        f.seek(-5100-9-11, os.SEEK_CUR)
-        buf = f.readBytes(5100+11)
-        f.close();
+        bfile.seek(-5100-9-11, os.SEEK_CUR)
+        buf = bfile.read(5100+11)
         start = buf.find(b'LYRICSBEGIN')
-        content = buf[start+11:]
+        data = buf[start+11:]
+        enc = chardet.detect(data)
+        content = data.decode(enc['encoding'])
         if (getlrc and isLRC(content)) or (not getlrc and not isLRC(content)):
             return content
     elif (buf == b'LYRICS200'):
         ''' Find Lyrics3v2 '''
-        f.seek(-9-6, os.SEEK_CUR)
-        size = int(f.readBytes(6))
-        f.seek(-size-6, os.SEEK_CUR)
-        buf = f.readBytes(11)
+        bfile.seek(-9-6, os.SEEK_CUR)
+        size = int(bfile.read(6))
+        bfile.seek(-size-6, os.SEEK_CUR)
+        buf = bfile.read(11)
         if(buf == b'LYRICSBEGIN'):
-            buf = f.readBytes(size-11)
-            f.close();
+            buf = bfile.read(size-11)
             tags=[]
             while buf!= '':
                 tag = buf[:3]
                 length = int(buf[3:8])
-                content = buf[8:8+length]
-                if (tag == 'LYR'):
+                data = buf[8:8+length]
+                enc = chardet.detect(data)
+                content = data.decode(enc['encoding'])
+                if (tag == b'LYR'):
                     if (getlrc and isLRC(content)) or (not getlrc and not isLRC(content)):
                         return content
                 buf = buf[8+length:]
@@ -133,7 +153,31 @@ def getMP4Lyrics(bfile, getlrc):
     except:
         return
 
+def getOGGLyrics(bfile, getlrc):
+    try:
+        tags = OggVorbis(bfile)
+        if 'lyrics' in tags:
+            lyr = tags['lyrics'][0]
+            match = isLRC(lyr)
+            if (getlrc and match) or ((not getlrc) and (not match)):
+                return lyr
+    except:
+        return
+
+def getAPELyrics(bfile, getlrc):
+    try:
+        tags = APEv2(bfile)
+        if 'lyrics' in tags:
+            lyr = tags['lyrics'][0]
+            match = isLRC(lyr)
+            if (getlrc and match) or ((not getlrc) and (not match)):
+                return lyr
+    except:
+        return
+
 def isLRC(lyr):
     match = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
     if match:
         return True
+    else:
+        return False

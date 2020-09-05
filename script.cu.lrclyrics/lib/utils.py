@@ -11,6 +11,7 @@ import xbmcvfs
 
 ADDON = xbmcaddon.Addon()
 ADDONNAME = ADDON.getAddonInfo('name')
+ADDONICON = ADDON.getAddonInfo('icon')
 ADDONVERSION = ADDON.getAddonInfo('version')
 ADDONID = ADDON.getAddonInfo('id')
 CWD = xbmc.translatePath(ADDON.getAddonInfo('path'))
@@ -90,16 +91,15 @@ class Song:
         self.artist = in_artist
         self.title = in_title
         self.filepath = ''
+        self.embed = ''
+        self.source = ''
         self.analyze_safe = True
 
     def __str__(self):
         return 'Artist: %s, Title: %s' % (self.artist, self.title)
 
-    def __cmp__(self, song):
-        if (self.artist != song.artist):
-            return cmp(deAccent(self.artist), deAccent(song.artist))
-        else:
-            return cmp(deAccent(self.title), deAccent(song.title))
+    def __eq__(self, song):
+        return (deAccent(self.artist) == deAccent(song.artist)) and (deAccent(self.title) == deAccent(song.title))
 
     def path1(self, lrc):
         if lrc:
@@ -152,29 +152,26 @@ class Song:
             song.filepath = xbmc.getInfoLabel('Player.Filenameandpath')
         song.title = xbmc.getInfoLabel('MusicPlayer%s.Title' % offset_str).replace('\\', ' & ').replace('/', ' & ').replace('  ',' ').replace(':','-').strip('.')
         song.artist = xbmc.getInfoLabel('MusicPlayer%s.Artist' % offset_str).replace('\\', ' & ').replace('/', ' & ').replace('  ',' ').replace(':','-').strip('.')
+        song.embed = xbmc.getInfoLabel('MusicPlayer%s.Lyrics' % offset_str)
+        song.source = xbmc.getInfoLabel('MusicPlayer%s.Property(culrc.source)' % offset_str)
         # some third party addons may insert the tracknumber in the song title
         regex = re.compile('\d\d\.\s')
         match = regex.match(song.title)
         if match:
             song.title = song.title[4:]
-        if not song.artist and (xbmc.getCondVisibility('Player.IsInternetStream') or xbmc.getCondVisibility('Pvr.IsPlayingRadio')):
-            # We probably listen to a radio which usually set the song title as 'Artist - Title' (via ICY StreamTitle)
+        if xbmc.getCondVisibility('Player.IsInternetStream') or xbmc.getCondVisibility('Pvr.IsPlayingRadio') or (xbmc.getInfoLabel('MusicPlayer.Property(do_not_analyze)') == 'true'):
+            # disable search for embedded lyrics for internet streams, or if explicitly told by the music addon we're listening to
             song.analyze_safe = False
+        if not song.artist:
+            # We probably listen to online radio which usually sets the song title as 'Artist - Title' (via ICY StreamTitle)
             sep = song.title.find('-')
             if sep > 1:
                 song.artist = song.title[:sep - 1].strip()
                 song.title = song.title[sep + 1:].strip()
-                # The title in the radio often contains some additional
-                # bracketed information at the end:
-                # Radio version, short version, year of the song...
-                # It often disturbs the lyrics search so we remove it
+                # The title can contains some additional info in brackets at the end, so we remove it
                 song.title = re.sub(r'\([^\)]*\)$', '', song.title)
         if (song.filepath and ((not song.title) or (not song.artist) or (ADDON.getSettingBool('read_filename')))):
             song.artist, song.title = get_artist_from_filename(song.filepath)
         if ADDON.getSettingBool('clean_title'):
             song.title = re.sub(r'\([^\)]*\)$', '', song.title)
-        #Check if analyzing the stream is discouraged
-        do_not_analyze = xbmc.getInfoLabel('MusicPlayer.Property(do_not_analyze)')
-        if do_not_analyze == 'true':
-            song.analyze_safe = False
         return song

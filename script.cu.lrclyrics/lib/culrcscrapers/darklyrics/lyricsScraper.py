@@ -6,7 +6,9 @@ scraper by smory
 '''
 
 import hashlib
-import urllib.request
+import math
+import requests
+import time
 import urllib.parse
 import re
 from lib.utils import *
@@ -19,49 +21,53 @@ class LyricsFetcher:
     
     def __init__(self):
         self.base_url = 'http://www.darklyrics.com/'
-        self.searchUrl = 'http://www.darklyrics.com/search?q=%term%'
-        
+        self.searchUrl = 'http://www.darklyrics.com/search?q=%s'
+        self.cookie = self.getCookie()
+
+    def getCookie(self):
+         # http://www.darklyrics.com/tban.js
+         lastvisitts = str(math.ceil(time.time() * 1000 / (60 * 60 * 6 * 1000)))
+         lastvisittscookie = 0
+         for i in range(len(lastvisitts)):
+             lastvisittscookie = ((lastvisittscookie << 5) - lastvisittscookie) + ord(lastvisitts[i])
+             lastvisittscookie = lastvisittscookie & lastvisittscookie
+         return str(lastvisittscookie)
+
     def search(self, artist, title):
-        term = urllib.parse.quote((artist if artist else '') + ' ' + (title if title else ''))
-        
+        term = urllib.parse.quote((artist if artist else '') + '+' + (title if title else ''))
         try:
-            request = urllib.request.urlopen(self.searchUrl.replace('%term%', term))
-            searchResponse = request.read().decode('utf-8')
+            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            req = requests.get(self.searchUrl % term, headers=headers, cookies={'lastvisitts': self.cookie})
+            searchResponse = req.text
         except:
             return None
-
         searchResult = re.findall('<h2><a\shref="(.*?#([0-9]+))".*?>(.*?)</a></h2>', searchResponse)
-        
         if len(searchResult) == 0:
             return None
-        
         links = []
-        
         i = 0
         for result in searchResult:
             a = []
-            a.append(result[2] + (' ' + self.getAlbumName(self.base_url + result[0]) if i < 6 else '')); # title from server + album nane
-            a.append(self.base_url + result[0]);  # url with lyrics
+            a.append(result[2] + (' ' + self.getAlbumName(self.base_url + result[0]) if i < 6 else '')) # title from server + album nane
+            a.append(self.base_url + result[0]) # url with lyrics
             a.append(artist)
             a.append(title)
-            a.append(result[1]); # id of the side part containing this song lyrics
+            a.append(result[1]) # id of the side part containing this song lyrics
             links.append(a)
             i += 1
-            
         return links
     
     def findLyrics(self, url, index):
         try:
-            request = urllib.request.urlopen(url)
-            res = request.read().decode('utf-8')
+            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie})
+            res = req.text
         except:
             return None
-        
-        pattern = '<a\sname="%index%">(.*?)(?:<h3>|<div)';  # require multi line and dot all mode
+        pattern = '<a\sname="%index%">(.*?)(?:<h3>|<div)' # require multi line and dot all mode
         pattern = pattern.replace('%index%', index)
-        
         match = re.search(pattern, res, re.MULTILINE | re.DOTALL)
-        if match:  
+        if match:
             s = match.group(1)
             s = s.replace('<br />', '')
             s = s.replace('<i>', '')
@@ -74,17 +80,16 @@ class LyricsFetcher:
         
     def getAlbumName(self, url):
         try:
-            request = urllib.request.urlopen(url)
-            res = request.read().decode('utf-8')
+            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie})
+            res = req.text
         except:
             return ''
-             
         match = re.search('<h2>(?:album|single|ep|live):?\s?(.*?)</h2>', res, re.IGNORECASE)
-        
         if match:
             return ('(' + match.group(1) + ')').replace('\'', '')
         else:
-            return '';        
+            return ''
 
     def get_lyrics(self, song):
         log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
@@ -92,14 +97,11 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-        
         links = self.search(song.artist , song.title)
-        
         if(links == None or len(links) == 0):
             return None
         elif len(links) > 1:
             lyrics.list = links
-        
         lyr = self.get_lyrics_from_list(links[0])
         if not lyr:
             return None
@@ -108,5 +110,4 @@ class LyricsFetcher:
 
     def get_lyrics_from_list(self, link):
         title, url, artist, song, index = link
-        return self.findLyrics(url, index);        
-        
+        return self.findLyrics(url, index)

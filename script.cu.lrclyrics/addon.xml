@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.2.2" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.2.4" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.8.2+matrix.1"/>
@@ -78,10 +78,8 @@
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
-		<news>- remove broken ttplayer scraper
-- fix genius scraper
-- fix manual sync
-- fix potential crash in minilyrics
-- fix reading embedded lyrics from remote files</news>
+		<news>- add support for MusicPlayer.Lyrics infolabel
+- support lyrics from .ogg files
+- support lyrics from .ape files</news>
 	</extension>
 </addon>

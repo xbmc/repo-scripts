@@ -34,7 +34,7 @@ class LyricsFetcher:
         search = '%s+%s' % (artist, title)
         try:
             url = self.SEARCH_URL % search
-            search = requests.get(url, headers=UserAgent)
+            search = requests.get(url, headers=UserAgent, timeout=10)
             response = search.text
         except:
             return None
@@ -65,7 +65,7 @@ class LyricsFetcher:
         title,url,artist,song = link
         try:
             log('%s: search url: %s' % (__title__, url))
-            search = requests.get(url, headers=UserAgent)
+            search = requests.get(url, headers=UserAgent, timeout=10)
             response = search.text
         except:
             return None
