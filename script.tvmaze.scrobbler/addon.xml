@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.tvmaze.scrobbler"
+   name="TVmaze Scrobbler/Tracker"
+   version="1.0.0+matrix.1"
+   provider-name="Roman V.M.">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.pyxbmct" />
+    <import addon="script.module.six" />
+    <import addon="script.module.kodi-six" />
+    <import addon="script.module.pyqrcode" />
+    <import addon="script.module.dateutil" />
+<!--    <import addon="script.module.web-pdb" />-->
+  </requires>
+  <extension point="xbmc.python.script" library="script.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">TVmaze Tracker/Scrobbler for Kodi Mediacenter</summary>
+    <description lang="en_GB">Automatically track all TV episodes you are watching to TVmaze. A must have if you want to sync your watch history between various applications.
+Sign up for a free account at https://tvmaze.com for more features.
+
+This Kodi TV episode Tracker uses the TVmaze.com user API's scrobbler endpoints(https://static.tvmaze.com/apidoc/)
+
+What this addon does:
+- Performs an initial sync between Kodi and TVmaze for the episodes you've watched.
+- If you add an episode to the Kodi library it marks it as "acquired" on TVmaze.
+- If you watch an episode in Kodi it marks it as "watched" in TVmaze.
+- If you mark an episode as watched in TVmaze it marks it as watched in Kodi.</description>
+    <license>GPL-3.0-or-later</license>
+    <website>https://www.tvmaze.com</website>
+    <email>roman1972@gmail.com</email>
+    <source>https://github.com/romanvm/kodi.tvmaze.scrobbler</source>
+    <assets>
+      <icon>resources/images/icon.png</icon>
+      <fanart>resources/images/background.jpg</fanart>
+    </assets>
+    <news>1.0.0:
+- The first public release.</news>
+  </extension>
+</addon>
