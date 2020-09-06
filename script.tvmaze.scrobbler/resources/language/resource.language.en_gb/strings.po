@@ -1,0 +1,136 @@
+# Kodi Media Center language file
+# Translators: put your translations in msgstr lines. Preserve items in curly {} and square [] brackets.
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Confirm Addon Authorization"
+msgstr ""
+
+msgctxt "#32002"
+msgid "To authorize the addon open the link below[CR][B]{confirm_url}[/B],[CR]scan the QR-code or check your mailbox[CR][B]{email}[/B]"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32004"
+msgid "TVmaze Scrobbler Menu"
+msgstr ""
+
+msgctxt "#32005"
+msgid "The addon is already authorized.[CR]Authorize again?"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Your TVmaze account email"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Authorization error: {}"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Confirmation error: {}"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Authorize the addon"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Invalid email"
+msgstr ""
+
+msgctxt "#32011"
+msgid "TVmaze Scrobbler"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Syncing episodes"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Syncing episodes for show \"{show_name}\": {count}/{total}"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Sync all shows"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Sync completed"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Sync completed with errors. Check the log for more info."
+msgstr ""
+
+msgctxt "#32017"
+msgid "Failed to sync episode status"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Synced episode status"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Addon has been authorized successfully"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Sync recently added episodes"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Sync watched episodes from TVmaze"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Synced watched episodes from TVmaze"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Show update notifications"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Automatically pull watched episodes from TVmaze"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Reset Authorization"
+msgstr ""
+
+msgctxt "#32026"
+msgid "This will clear stored authentication credentials.[CR]Are you sure?"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Authentication failed. You need to authorize the addon."
+msgstr ""
+
+msgctxt "#32028"
+msgid "This window will close automatically after authorization."
+msgstr ""
+
+msgctxt "#32029"
+msgid "Do you want to sync your TV shows with TVmaze now?"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Medialibrary has no TV episodes"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Updating TV shows in Kodi: {} of {}"
+msgstr ""
