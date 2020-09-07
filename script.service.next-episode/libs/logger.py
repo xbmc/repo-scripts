@@ -9,7 +9,7 @@ from inspect import currentframe
 from kodi_six import xbmc
 from .addon import ADDON_ID, ADDON_VERSION
 
-__all__ = ['log_debug', 'log_error', 'log_notice', 'log_warning']
+__all__ = ['log_debug', 'log_error', 'log_info', 'log_warning']
 
 FORMAT = '{id} [v.{version}] - {filename}:{lineno} - {message}'
 
@@ -28,8 +28,8 @@ def log_message(msg, level=xbmc.LOGDEBUG):
     )
 
 
-def log_notice(msg):
-    log_message(msg, xbmc.LOGNOTICE)
+def log_info(msg):
+    log_message(msg, xbmc.LOGINFO)
 
 
 def log_warning(msg):
