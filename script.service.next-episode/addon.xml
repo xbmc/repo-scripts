@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.next-episode"
    name="Next Episode (next-episode.net)"
-   version="1.2.1"
+   version="1.2.2"
    provider-name="next-episode.net">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
@@ -22,17 +22,18 @@
     <description lang="ru_RU">Служба next-episode.net для Kodi позволяет добавлять фильмы и сериалы из меедиатеки в ваш список на next-episode.net. Служба также отслеживает проигрывание видео и обновляет состояние "просмотрено" на next-episode.net.[CR][B]Внимание![/B] Дополнение работает только с медиатекой Kodi.</description>
     <summary lang="uk_UA">Служба для сайта Next Episode (next-episode.net).</summary>
     <description lang="uk_UA">Служба next-episode.net для Kodi дозволяє додавати фільми та серіали з медіатеки у ваш список на next-episode.net. Служба також відстежує перегляд відео та оновлює статус "переглянуто" на next-episode.net.[CR][B]Увага![/B] Надбудова працює лише з медіатекою Kodi.</description>
-    <license>GNU GPL v.3</license>
+    <license>GPL-3.0-or-later</license>
     <website>http://next-episode.net</website>
     <email>roman1972@gmail.com</email>
     <source>https://github.com/santah/next-episode-kodi</source>
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <news>1.2.1:
+    <news>1.2.2:
+- Replaced deprecated logging level.
+
+1.2.1:
 - Fixed library sync when TMDB is used as a TV shows scraper.
-- Fixed UI dialogs in Kodi 19 &quot;Matrix&quot;.
-1.2.0:
-- Added compatibility with Python 3 for the future Kodi 19 &quot;Matrix&quot; version.</news>
+- Fixed UI dialogs in Kodi 19 &quot;Matrix&quot;.</news>
   </extension>
 </addon>
