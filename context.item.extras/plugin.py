@@ -39,7 +39,7 @@ def browse():
         xbmcplugin.endOfDirectory(plugin.handle, succeeded=False)
         return
 
-    current_path = args['path'][0]
+    current_path = py2_decode(args['path'][0].decode('base64'))
     if not current_path.endswith('/'):
         current_path += '/'
 
@@ -50,14 +50,14 @@ def browse():
 
     for name in dirs:
         li = ListItem(name)
-        if 'fanart' in args:
-            li.setArt({'fanart': args['fanart'][0]})
-        path = os.path.join(current_path, name)
         params = {
             b'path': path,
             b'title': args['title'][0],
-            b'fanart': args['fanart'][0],
         }
+        if 'fanart' in args:
+            li.setArt({'fanart': args['fanart'][0]})
+            params.update({b'fanart':args['fanart'][0]})
+        path = os.path.join(current_path, name)
         url = 'plugin://context.item.extras/?' + urlencode(params)
         xbmcplugin.addDirectoryItem(plugin.handle, url, li, isFolder=True)
 
@@ -71,7 +71,7 @@ def browse():
     if 'isroot' in args:
         li = ListItem("Search on Youtube")
         li.setProperty("specialsort", "bottom")
-        url = plugin.url_for(youtube, q=py2_encode(args['title'][0]) + ' Extras')
+        url = plugin.url_for(youtube, q=args['title'][0].decode('base64') + ' Extras') 
         # xbmcplugin.addDirectoryItem(plugin.handle, url, li, isFolder=True)
 
     xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_LABEL)
