@@ -674,7 +674,7 @@ class XMLFunctions():
             hasher = hashlib.md5()
             hasher.update(xbmcvfs.File(path).read().encode("utf-8"))
 
-            with open(path, "r+") as f:
+            with open(path, "r+", encoding="utf-8") as f:
                 DATA._save_hash( path, f.read() )
                 f.close()
 
