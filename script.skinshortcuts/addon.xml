@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="1.1.2" provider-name="BigNoid, marcelveldt, SiLVO">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="1.1.3" provider-name="BigNoid, marcelveldt, SiLVO">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.unidecode" version="0.4.14"/>
