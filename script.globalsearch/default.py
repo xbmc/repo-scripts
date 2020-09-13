@@ -8,7 +8,7 @@ CWD = xbmcaddon.Addon().getAddonInfo('path')
 
 if (__name__ == '__main__'):
     try:
-        params = dict(arg.split('=') for arg in sys.argv[ 1 ].split('&'))
+        params = dict(arg.split('=') for arg in sys.argv[1].split('&'))
     except:
         params = {}
     searchstring = unquote_plus(params.get('searchstring',''))

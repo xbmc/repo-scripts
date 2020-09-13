@@ -1,3 +1,7 @@
+v9.0.5
+- fix setting focus to the list
+- fix incorrect list layout was shown in icons view
+
 v9.0.4
 - fix issue with unneeded seeking
 - add functionality to navigate back
