@@ -7,7 +7,6 @@
 		<setting type="sep" />
 		<setting label="32154" type="lsep"/>
 		<setting id="minilyrics" type="bool" label="MiniLyrics" default="true"/>
-		<setting id="ttplayer" type="bool" label="TTPlayer" default="true"/>
 		<setting id="gomaudio" type="bool" label="GomAudio" default="true"/>
 		<setting id="music163" type="bool" label="Music 163" default="true"/>
 		<setting type="sep" />
@@ -17,7 +16,6 @@
 		<setting id="lyricsmode" type="bool" label="Lyrics Mode" default="true"/>
 		<setting id="azlyrics" type="bool" label="AZLyrics" default="true"/>
 		<setting id="lyricscom" type="bool" label="Lyrics.com" default="true"/>
-		<setting id="darklyrics" type="bool" label="Dark Lyrics" default="true"/>
 	</category>
 	<category label="32151">
 		<setting label="32115" type="lsep"/>

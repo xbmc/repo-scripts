@@ -40,7 +40,6 @@ class LyricsFetcher:
             request.add_header('Referer', 'https://www.xiami.com/play')
             response = urllib2.urlopen(request)
             result = response.read()
-            print result
         except:
             log( "%s: %s::%s (%d) [%s]" % (
                    __title__, self.__class__.__name__,

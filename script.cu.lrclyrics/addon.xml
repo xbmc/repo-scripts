@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.7.4" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.8.1" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.chardet" version="2.2.1"/>
@@ -7,7 +7,7 @@
 		<import addon="script.module.requests" version="2.18.4"/>
 	</requires>
 	<extension point="xbmc.python.lyrics" library="default.py"/>
-	<extension point="xbmc.service" library="default.py" start="login"/>
+	<extension point="xbmc.service" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="be_BY">CU LRC Lyrics</summary>
 		<summary lang="bg_BG">CU LRC Лирики</summary>
@@ -72,11 +72,13 @@
 		<description lang="zh_TW">CU LRC Lyrics 是為 Kodi 而設的歌詞腳本。它支援一般格式的歌詞以及 LRC 格式的歌詞。此腳本能夠搜尋歌曲檔案內嵌歌詞的同步及非同步歌詞，同時也能使用刮削器在線搜尋、本地文件或通过刮削器获取同步/非同步歌词。它可以讀取放在同一個資料夾內，而又與歌曲相同命名的 .lrc/.txt 歌詞檔。</description>
 		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=147340</forum>
 		<source>https://gitlab.com/ronie/script.cu.lrclyrics/</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
+		<news>- fix genius scraper
+- remove broken scrapers</news>
 	</extension>
 </addon>
