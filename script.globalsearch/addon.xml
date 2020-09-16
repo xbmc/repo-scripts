@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.globalsearch" name="Global Search" version="9.0.4" provider-name="ronie">
+<addon id="script.globalsearch" name="Global Search" version="9.0.5" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -13,7 +13,7 @@
 		<summary lang="en_GB">Search your library.</summary>
 		<summary lang="en_NZ">Search your library.</summary>
 		<summary lang="en_US">Search your library.</summary>
-		<summary lang="es_ES">Busca tu biblioteca.</summary>
+		<summary lang="es_ES">Busca en tu biblioteca.</summary>
 		<summary lang="fr_FR">Chercher dans la médiathèque.</summary>
 		<summary lang="fr_CA">Chercher dans votre bibliothèque</summary>
 		<summary lang="gl_ES">Buscar a súa biblioteca.</summary>
