@@ -107,5 +107,4 @@ class LyricsFetcher:
 
     def get_lyrics_from_list(self, link):
         title, url, artist, song, index = link;
-        return self.findLyrics(url, index);        
-        
+        return self.findLyrics(url, index);

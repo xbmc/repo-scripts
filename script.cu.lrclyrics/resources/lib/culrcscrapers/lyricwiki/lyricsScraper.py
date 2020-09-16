@@ -10,7 +10,7 @@ import json
 from utilities import *
 
 __title__ = 'lyricwiki'
-__priority__ = '100'
+__priority__ = '200'
 __lrc__ = False
 
 LIC_TXT = 'we are not licensed to display the full lyrics for this song at the moment'
@@ -43,7 +43,7 @@ class LyricsFetcher:
             try:
                 req = urllib2.urlopen(self.page)
                 response = req.read()
-            except urllib2.HTTPError, error: # strange... sometimes lyrics are returned with a 404 error
+            except urllib2.HTTPError as error: # strange... sometimes lyrics are returned with a 404 error
                 if error.code == 404:
                     response = error.read()
                 else:

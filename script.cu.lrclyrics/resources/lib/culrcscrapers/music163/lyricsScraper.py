@@ -15,7 +15,7 @@ import difflib
 from utilities import *
 
 __title__ = "Music163"
-__priority__ = '130'
+__priority__ = '120'
 __lrc__ = True
 
 UserAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'

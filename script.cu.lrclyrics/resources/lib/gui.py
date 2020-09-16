@@ -301,7 +301,7 @@ class MAIN():
                     # double-check if we're still on the visualisation screen and check if gui is already running
                     if xbmc.getCondVisibility('Window.IsVisible(12006)') and not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
-                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, remove=self.remove_lyrics_from_memory, delete=self.delete_lyrics, function=self.return_time)
+                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, remove=self.remove_lyrics_from_memory, delete=self.delete_lyrics, function=self.return_time, monitor=self.Monitor)
                         gui.start()
                 else:
                     # signal gui thread to exit
@@ -366,9 +366,10 @@ class guiThread(threading.Thread):
         self.remove = kwargs['remove']
         self.delete = kwargs['delete']
         self.function = kwargs['function']
+        self.Monitor = kwargs['monitor']
 
     def run(self):
-        ui = GUI('script-cu-lrclyrics-main.xml', CWD, 'Default', mode=self.mode, save=self.save, remove=self.remove, delete=self.delete, function=self.function)
+        ui = GUI('script-cu-lrclyrics-main.xml', CWD, 'Default', mode=self.mode, save=self.save, remove=self.remove, delete=self.delete, function=self.function, monitor=self.Monitor)
         ui.doModal()
         del ui
         WIN.clearProperty('culrc.guirunning')
@@ -400,7 +401,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.remove = kwargs['remove']
         self.delete = kwargs['delete']
         self.function = kwargs['function']
-        self.Monitor = MyMonitor(function = None)
+        self.Monitor = kwargs['monitor']
        
     def onInit(self):
         self.matchlist = ['@', 'www\.(.*?)\.(.*?)', 'QQ(.*?)[1-9]', 'artist ?: ?.', 'album ?: ?.', 'title ?: ?.', 'song ?: ?.', 'by ?: ?.']
@@ -458,7 +459,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         WIN.clearProperty('culrc.newlyrics')
         WIN.clearProperty('culrc.nolyrics')
         WIN.clearProperty('culrc.haslist')
-        self.lock = threading.Lock()
+#        self.lock = threading.Lock()
         self.timer = None
         self.allowtimer = True
         self.refreshing = False
@@ -485,7 +486,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         return lines
 
     def refresh(self):
-        self.lock.acquire()
+#        self.lock.acquire()
         #Maybe Kodi is not playing any media file
         try:
             customtimer, starttime = self.function()
@@ -514,18 +515,19 @@ class GUI(xbmcgui.WindowXMLDialog):
                 self.timer.start()
             else:
                 self.refreshing = False
-            self.lock.release()
+#            self.lock.release()
         except:
-            self.lock.release()
+            pass
+#            self.lock.release()
 
     def stop_refresh(self):
-        self.lock.acquire()
+#        self.lock.acquire()
         try:
             self.timer.cancel()
         except:
             pass
         self.refreshing = False
-        self.lock.release()
+#        self.lock.release()
 
     def show_control(self, controlId):
         self.text.setVisible(controlId == 110)
