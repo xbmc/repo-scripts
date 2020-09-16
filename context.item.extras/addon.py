@@ -18,6 +18,7 @@
 import os
 import sys
 from kodi_six import xbmc, xbmcgui, xbmcaddon
+from kodi_six.utils import py2_encode, py2_decode
 try:
     from urllib import urlencode
 except ImportError:
@@ -26,17 +27,16 @@ except ImportError:
 
 def main():
     addon = xbmcaddon.Addon()
-    item_path = sys.listitem.getVideoInfoTag().getPath()
+    item_path = py2_decode(sys.listitem.getVideoInfoTag().getPath())
     if not item_path:
         return
-
     extras_dir = os.path.join(item_path, addon.getSetting('extras-folder'))
     xbmc.log("[%s] opening '%s'" % (addon.getAddonInfo('id'), extras_dir), xbmc.LOGDEBUG)
 
     params = {
-        'path': extras_dir,
+        'path': py2_encode(extras_dir).encode('base64'),
         'isroot': 'true',
-        'title': sys.listitem.getLabel(),
+        'title': sys.listitem.getLabel().encode('base64'),
         'fanart': sys.listitem.getProperty('fanart_image'),
     }
     plugin_url = "plugin://context.item.extras/?" + urlencode(params)
