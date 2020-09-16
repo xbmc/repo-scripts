@@ -1,3 +1,6 @@
+3.90.1
+- replace LOGNOTICE with LOGINFO, remove LOGSEVERE
+- use translatePath from xbmcvfs instead of xbmc
 3.90.0
 - XBMC LCDproc for Kodi Matrix (Python 3)
 - Allow LCDproc protocol version 0.4

@@ -41,8 +41,6 @@ LOGERROR   = xbmc.LOGERROR
 LOGFATAL   = xbmc.LOGFATAL
 LOGINFO    = xbmc.LOGINFO
 LOGNONE    = xbmc.LOGNONE
-LOGNOTICE  = xbmc.LOGNOTICE
-LOGSEVERE  = xbmc.LOGSEVERE
 LOGWARNING = xbmc.LOGWARNING
 
 # interesting Kodi GUI Window IDs (no defines seem to exist for this)
