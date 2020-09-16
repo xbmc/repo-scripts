@@ -235,13 +235,13 @@ class LCDProc(LcdBase):
 
       # When the LCDd driver doesn't supply a valid string, inform and return
       if reply == "":
-        log(LOGNOTICE, "Empty driver information reply")
+        log(LOGINFO, "Empty driver information reply")
         return
 
-      log(LOGNOTICE, "Driver information reply: " + reply)
+      log(LOGINFO, "Driver information reply: " + reply)
 
       if re.match(rematch_imon, reply):
-        log(LOGNOTICE, "SoundGraph iMON LCD detected")
+        log(LOGINFO, "SoundGraph iMON LCD detected")
         if bUseExtraIcons:
           self.m_cExtraIcons = LCDproc_extra_imon()
 
@@ -250,12 +250,12 @@ class LCDProc(LcdBase):
         self.m_iBigDigits = 7
 
       elif re.match(rematch_mdm166a, reply):
-        log(LOGNOTICE, "Futaba/Targa USB mdm166a VFD detected")
+        log(LOGINFO, "Futaba/Targa USB mdm166a VFD detected")
         if bUseExtraIcons:
           self.m_cExtraIcons = LCDproc_extra_mdm166a()
 
       elif re.match(rematch_imonvfd, reply):
-        log(LOGNOTICE, "SoundGraph iMON IR/VFD detected")
+        log(LOGINFO, "SoundGraph iMON IR/VFD detected")
 
       if self.m_cExtraIcons is not None:
         self.m_cExtraIcons.Initialize()
@@ -298,7 +298,7 @@ class LCDProc(LcdBase):
       self.m_iCellHeight = int(lcdinfo.group(5))
 
       # tell users what's going on
-      log(LOGNOTICE, "Connected to LCDd at %s:%s, Protocol version %s - Geometry %sx%s characters (%sx%s pixels, %sx%s pixels per character)" % (str(ip), str(port), float(lcdinfo.group(1)), str(self.m_iColumns), str(self.m_iRows), str(self.m_iColumns * self.m_iCellWidth), str(self.m_iRows * self.m_iCellHeight), str(self.m_iCellWidth), str(self.m_iCellHeight)))
+      log(LOGINFO, "Connected to LCDd at %s:%s, Protocol version %s - Geometry %sx%s characters (%sx%s pixels, %sx%s pixels per character)" % (str(ip), str(port), float(lcdinfo.group(1)), str(self.m_iColumns), str(self.m_iRows), str(self.m_iColumns * self.m_iCellWidth), str(self.m_iRows * self.m_iCellHeight), str(self.m_iCellWidth), str(self.m_iCellHeight)))
 
       # Set up BigNum values based on display geometry
       if self.m_iColumns < 13:

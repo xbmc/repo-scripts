@@ -29,7 +29,7 @@ import time
 from xml.etree import ElementTree as xmltree
 from array import array
 
-import xbmc
+import xbmcvfs
 import xbmcgui
 
 from .common import *
@@ -38,8 +38,8 @@ from .extraicons import *
 from .infolabels import *
 from .charset_hd44780 import *
 
-__lcdxml__        = xbmc.translatePath(os.path.join("special://masterprofile", "LCD.xml"))
-__lcddefaultxml__ = xbmc.translatePath(os.path.join(KODI_ADDON_ROOTPATH, "resources", "LCD.xml.defaults"))
+__lcdxml__        = xbmcvfs.translatePath(os.path.join("special://masterprofile", "LCD.xml"))
+__lcddefaultxml__ = xbmcvfs.translatePath(os.path.join(KODI_ADDON_ROOTPATH, "resources", "LCD.xml.defaults"))
 
 class LCD_MODE:
   LCD_MODE_GENERAL     = 0
@@ -179,7 +179,7 @@ class LcdBase():
       else:
         try:
           shutil.copy2(__lcddefaultxml__, __lcdxml__)
-          log(LOGNOTICE, "Initialised LCD.xml from defaults")
+          log(LOGINFO, "Initialised LCD.xml from defaults")
           ret = True
         except:
           log(LOGERROR, "Failed to copy LCD defaults!")
@@ -234,7 +234,7 @@ class LcdBase():
 
     bHaveSkin = False
 
-    log(LOGNOTICE, "Loading settings from %s" % (xmlFile))
+    log(LOGINFO, "Loading settings from %s" % (xmlFile))
 
     try:
       doc = xmltree.parse(xmlFile)
@@ -453,7 +453,7 @@ class LcdBase():
       self.m_lcdMode[i] = []			#clear list
 
   def Shutdown(self):
-    log(LOGNOTICE, "Shutting down")
+    log(LOGINFO, "Shutting down")
 
     if self.m_Settings.getDimOnShutdown():
       self.SetBackLight(0)
