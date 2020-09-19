@@ -4,11 +4,11 @@
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
 from __future__ import unicode_literals
-from libs.logger import log_notice
+from libs.logger import log_info
 from libs.monitoring import UpdateMonitor, initial_prompt
 
 initial_prompt()
 update_monitor = UpdateMonitor()
-log_notice('Service started')
+log_info('Service started')
 update_monitor.waitForAbort()
-log_notice('Service stopped')
+log_info('Service stopped')
