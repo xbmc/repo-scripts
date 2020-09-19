@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.next-episode"
    name="Next Episode (next-episode.net)"
-   version="1.2.2"
+   version="1.2.3"
    provider-name="next-episode.net">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
@@ -29,11 +29,7 @@
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <news>1.2.2:
-- Replaced deprecated logging level.
-
-1.2.1:
-- Fixed library sync when TMDB is used as a TV shows scraper.
-- Fixed UI dialogs in Kodi 19 &quot;Matrix&quot;.</news>
+    <news>1.2.3:
+- Fix broken service.</news>
   </extension>
 </addon>
