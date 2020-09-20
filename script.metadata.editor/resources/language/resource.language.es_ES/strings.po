@@ -4,13 +4,14 @@
 # Addon Provider: sualfred
 # Translators:
 # Bartolome Soriano <bsoriano@gmail.com>, 2019
-#
+# Rafa Oliveros <roliverosc@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Metadata Editor\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-11-07 08:05+0000\n"
-"Last-Translator: Bartolome Soriano <bsoriano@gmail.com>, 2019\n"
+"Last-Translator: Rafa Oliveros <roliverosc@gmail.com>, 2020\n"
 "Language-Team: Spanish (Spain) (https://www.transifex.com/sualfred/teams/80018/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,12 +22,12 @@ msgstr ""
 #: /addon.xml
 msgctxt "#32000"
 msgid "Metadata Editor"
-msgstr "Editor de Meta datos"
+msgstr "Editor de Metadatos"
 
 #: /resources/lib/dialog.py
 msgctxt "#32001"
 msgid "User rating"
-msgstr "Valorización de usuario"
+msgstr "Valoración de usuario"
 
 #: /resources/lib/dialog_videogenres.py
 msgctxt "#32002"
@@ -36,47 +37,47 @@ msgstr "Entradas disponibles"
 #: /addon.xml
 msgctxt "#32003"
 msgid "Add/remove available tags"
-msgstr "Adicionar/Eliminar Tags disponibles"
+msgstr "Añadir/Eliminar etiquetas disponibles"
 
 #: /addon.xml
 msgctxt "#32004"
 msgid "Add/remove available genres"
-msgstr "Adicionar/Eliminar Géneros disponibles"
+msgstr "Añadir/Eliminar géneros disponibles"
 
 #: /resources/lib/utils.py
 msgctxt "#32005"
 msgid "Add new item"
-msgstr "Adicionar ítem nuevo"
+msgstr "Añadir nuevo elemento"
 
 #: /resources/lib/utils.py
 msgctxt "#32006"
-msgid "Modify current list"
-msgstr "Modificar lista actual"
+msgid "Edit current list as string"
+msgstr "Editar lista actual como cadena"
 
 #: /resources/lib/utils.py
 msgctxt "#32007"
 msgid "Select from available items"
-msgstr "Seleccionar de ítems disponibles"
+msgstr "Seleccionar de elementos disponibles"
 
 #: /context.py
 msgctxt "#32008"
-msgid "Remove favourite tag"
-msgstr "Eliminar tag de favorito"
+msgid "Remove watchlist tag"
+msgstr "Eliminar de lista de seguimiento"
 
 #: /context.py
 msgctxt "#32009"
-msgid "Add favourite tag"
-msgstr "Adicionar tag de favorito"
+msgid "Add watchlist tag"
+msgstr "Añadir a lista de seguimiento"
 
 #: /context.py
 msgctxt "#32010"
 msgid "Open editor"
-msgstr "Abrir Editor"
+msgstr "Abrir editor"
 
 #: /resources/lib/utils.py
 msgctxt "#32011"
 msgid "Enter floating number"
-msgstr "Digite número de punto flotante"
+msgstr "Introduzca número de coma flotante"
 
 #: /resources/lib/utils.py
 msgctxt "#32012"
@@ -101,17 +102,17 @@ msgstr "Seleccionar fuente predeterminada"
 #: /resources/lib/utils.py
 msgctxt "#32016"
 msgid "Edit ratings and votes"
-msgstr "Editar valorización y votos"
+msgstr "Editar valoración y votos"
 
 #: /resources/lib/utils.py
 msgctxt "#32017"
 msgid "Add source"
-msgstr "Adicionar fuente"
+msgstr "Añadir fuente"
 
 #: /resources/lib/utils.py
 msgctxt "#32018"
 msgid "Only values between 1.0 and 10.0 are allowed."
-msgstr "Sólo se permiten valores entre 1.0 y 10.0."
+msgstr "Solo se permiten valores entre 1.0 y 10.0."
 
 #: /resources/lib/utils.py
 msgctxt "#32019"
@@ -126,74 +127,62 @@ msgstr "¿Establecer como predeterminado?"
 #: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable .nfo updating for movies, TV shows and music videos"
-msgstr "Activar actualización de .nfo para películas, series TV y vídeoclips"
+msgstr "Activar actualización de .nfo para películas, series TV y videoclips"
 
 #: /resources/lib/editor.py
 msgctxt "#32022"
 msgid "value unkown (missing Kodi feature)"
-msgstr "valor desconocido (funcionalidad faltante en Kodi)"
+msgstr "valor desconocido (falta la función de Kodi)"
 
 #: /resources/lib/editor.py
 msgctxt "#32023"
 msgid "Record label"
 msgstr "Estudio de grabación"
 
-#: /default.py
-msgctxt "#32024"
-msgid "Please use the context menu on a library item to run this script."
-msgstr ""
-"Por favor utilice el menú de contexto sobre un ítem de su colección para "
-"ejecutar este script."
-
 #: /resources/settings.xml
 msgctxt "#32025"
-msgid "Preferred TMDb language"
-msgstr "Idioma preferido en TMDb"
+msgid "Preferred language"
+msgstr "Idioma preferido"
 
 #: /resources/settings.xml
 msgctxt "#32026"
-msgid "TV show scraper related settings"
-msgstr "Ajustes relacionados con el scraper de Series TV"
+msgid "Scraper settings"
+msgstr "Ajustes scraper"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32024"
+msgid "Heavy server load. Please wait."
+msgstr "Carga de servidor intensa. Por favor espere."
 
 #: /resources/settings.xml
 msgctxt "#32027"
-msgid "Library is based on informations of"
-msgstr "Colección está basada en informaciones de"
-
-#: /resources/settings.xml
-msgctxt "#32028"
-msgid "ListItem.IMDBNumber fallback value source"
-msgstr "Fuente para valor alternativo de ListItem.IMDBNumber"
+msgid "TV show library is based on informations of"
+msgstr "La biblioteca de serie TV se basa en información de"
 
 #: /resources/settings.xml
 msgctxt "#32029"
 msgid "Enable JSON logging"
-msgstr "Activar bitácora de JSON"
+msgstr "Activar registro JSON"
 
 #: /resources/settings.xml
 msgctxt "#32030"
 msgid "Rating updater"
-msgstr "Actualizador de Valoraciones"
+msgstr "Actualizador de valoraciones"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid "Run updating process in the background"
+msgstr "Ejecutar el proceso de actualización en segundo plano"
 
 #: /resources/settings.xml
 msgctxt "#32031"
 msgid "Your personal OMDb API key (www.omdbapi.com)"
-msgstr "Su llave API personal en OMDb (www.omdbapi.com)"
+msgstr "Su clave API personal en OMDb (www.omdbapi.com)"
 
 #: /resources/settings.xml
 msgctxt "#32032"
-msgid "Search OMDb with title/year if IMDb is missing"
-msgstr "Buscar en OMDb con título/año si IMDb no está presente"
-
-#: /resources/lib/rating_updater.py
-msgctxt "#32033"
-msgid "Updating movie ratings"
-msgstr "Actualizado valoraciones de películas"
-
-#: /resources/lib/rating_updater.py
-msgctxt "#32034"
-msgid "Updating TV show ratings"
-msgstr "Actualizando valoraciones de Series TV"
+msgid "Search by title/year if IMDb ID is missing (not recommended)"
+msgstr "Buscar por título/año si falta la ID IMDb (no recomendado)"
 
 #: /default.py
 msgctxt "#32035"
@@ -205,18 +194,33 @@ msgid ""
 "100.000.[CR][CR]Do you want to proceed updating The Movie DB ratings? This "
 "only works if you have a TMDb ID stored."
 msgstr ""
-"No ha configurado llave API de OMDb. Esta es requerida para actualizar "
-"valoraciones de IMDb, Rotten Tomatoes y Metacritic. Por favor visite "
-"www.omdbapi.com y cree su propia llave API.[CR][CR]Nota: La llave gratis "
-"está limitada a 1000 llamadas diarias. Le sugiero que se convierta en "
-"donante en OMDb para incrementar el límite a 100,000.[CR][CR]¿Quiere "
-"proceder a actualizar las valoraciones de The Movie DB? Esto solo funciona "
-"si tiene un id de TMDb guardado."
+"No ha configurado la clave API de OMDb, esta es requerida para actualizar "
+"valoraciones desde IMDb, Rotten Tomatoes y Metacritic. Por favor visite "
+"www.omdbapi.com y cree su propia clave API.[CR][CR]Nota: La clave API "
+"gratuita está limitada a 1000 solicitudes diarias. Considere convertirse en "
+"donante de OMDb para aumentar este límite a 100.000.[CR][CR]¿Quiere proceder"
+" a actualizar las valoraciones desde The Movie DB? Esto solo funcionara si "
+"tiene una ID de TMDb almacenada."
 
 #: /default.py
 msgctxt "#32036"
 msgid "Update TV show ratings"
 msgstr "Actualizar valoraciones de Series TV"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32033"
+msgid ""
+"OMDB API limit reached. Please consider to become a Patreon to increase your"
+" daily call limitation. Proceed by only using The Movie DB?"
+msgstr ""
+"Limite de API OMDB alcanzado. Por favor, considere convertirse en donante "
+"para aumentar su limite de solicitudes diarias. ¿Proceder usando solo The "
+"Movie DB?"
+
+#: /resources/settings.xml
+msgctxt "#32034"
+msgid "Create .nfo file if missing"
+msgstr "Crear archivo .nfo si está pendiente"
 
 #: /default.py
 msgctxt "#32037"
@@ -237,3 +241,91 @@ msgstr "Actualizar valoraciones"
 msgctxt "#32040"
 msgid "Edit data for"
 msgstr "Editar datos para"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32042"
+msgid "Canceled"
+msgstr "Cancelado"
+
+#: /resources/settings.xml
+msgctxt "#32043"
+msgid "MPAA region"
+msgstr "Región MPAA"
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Update premiered/year if database value is different"
+msgstr ""
+"Actualizar premiered/año si los valores de la base de datos son diferentes."
+
+#: /resources/settings.xml
+msgctxt "#32044"
+msgid "Skip updating of MPAA"
+msgstr "Omitir actualización de MPAA"
+
+#: /default.py
+msgctxt "#32045"
+msgid "Update episode ratings"
+msgstr "Actualizar valoraciones de episodios"
+
+#: /resources/lib/editor.py
+msgctxt "#32047"
+msgid "No default source defined"
+msgstr "No hay una fuente predeterminada definida"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32048"
+msgid "No items found"
+msgstr "No se encontraron elementos"
+
+#: /context.py
+msgctxt "#32046"
+msgid "Update .nfo"
+msgstr "Actualizar .nfo"
+
+#: /default.py
+msgctxt "#32049"
+msgid "Incomplete arguments or content type not supported"
+msgstr "Argumentos incompletos o tipo de contenido no soportado"
+
+#: /default.py
+msgctxt "#32050"
+msgid "Do you want to cancel the update?"
+msgstr "¿Desea cancelar la actualización?"
+
+#: /default.py
+msgctxt "#32051"
+msgid "Content"
+msgstr "Contenido"
+
+#: /resources/settings.xml
+msgctxt "#32052"
+msgid "Fallback to US MPAA if configured country has no certification stored"
+msgstr ""
+"Recurrir a MPAA de EE. UU. Si el país configurado no tiene ninguna "
+"certificación almacenada"
+
+#: /resources/settings.xml
+msgctxt "#32053"
+msgid "Don't store \"NR\" (Not rated) MPAA rating"
+msgstr "No almacenar \"NR\" (Not rated) valoración MPAA"
+
+#: /service.py
+msgctxt "#32054"
+msgid "Do you want to rate the following item?"
+msgstr "¿Quiere valorar el siguiente elemento?"
+
+#: /resources/settings.xml
+msgctxt "#32055"
+msgid "Automatically update changed watched states to .nfo"
+msgstr "Actualizar automáticamente los estados de vistos modificados a .nfo"
+
+#: /resources/settings.xml
+msgctxt "#32056"
+msgid "Rate your media if playback has ended"
+msgstr "Calificar sus medios si la reproducción ha finalizado"
+
+#: /resources/settings.xml
+msgctxt "#32057"
+msgid "Write watched flag and playcount to .nfo"
+msgstr "Escribir etiqueta de visto y recuento de reproducciones en .nfo"

@@ -26,7 +26,7 @@ ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
 
-NOTICE = xbmc.LOGNOTICE
+NOTICE = xbmc.LOGINFO
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
 ERROR = xbmc.LOGERROR
