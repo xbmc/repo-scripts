@@ -108,11 +108,10 @@ class UpdateNFO():
 
         xml_prettyprint(self.root)
 
-        content = ET.tostring(self.root).decode()
+        content = ET.tostring(self.root, encoding='UTF-8', method='xml', xml_declaration=True).decode()
 
-        file = xbmcvfs.File(self.targetfile, 'w')
-        file.write(content)
-        file.close()
+        with xbmcvfs.File(self.targetfile, 'w') as f:
+            result = f.write(content)
 
     def handle_details(self):
         li = [{'key': 'title', 'value': self.details.get('title')},

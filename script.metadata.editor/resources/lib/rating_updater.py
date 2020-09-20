@@ -126,7 +126,7 @@ class ProgressDialog(object):
         if RUN_IN_BACKGROUND:
             self.progressdialog.update(progress, processed, cat + ':' + label)
         else:
-            self.progressdialog.update(progress, cat + ':[CR]' + label, processed)
+            self.progressdialog.update(progress, cat + ':[CR]' + label + '[CR]' + processed)
 
     def close(self):
         self.progressdialog.close()
