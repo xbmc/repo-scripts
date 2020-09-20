@@ -5,6 +5,7 @@
 from resources.lib.helper import *
 from resources.lib.editor import *
 from resources.lib.rating_updater import *
+from context import *
 
 ########################
 
@@ -63,6 +64,9 @@ class Main:
                 winprop('updatenfo.bool', True)
                 update_nfo(dbid=self.dbid, dbtype=self.dbtype, forced=True)
                 winprop('updatenfo', clear=True)
+
+            elif self.action == 'contextmenu':
+                ContextMenu(dbid=self.dbid, dbtype=self.dbtype)
 
             else:
                 self._editor()
