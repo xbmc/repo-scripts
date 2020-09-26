@@ -1,0 +1,61 @@
+name: CI
+on:
+- pull_request
+- push
+jobs:
+  tests:
+    name: Add-on testing
+    runs-on: ubuntu-latest
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONPATH: ${{ github.workspace }}/resources/lib:${{ github.workspace }}/tests
+    strategy:
+      fail-fast: false
+      matrix:
+#        max-parallel: 2
+        python-version: [ 2.7, 3.5, 3.6, 3.7, 3.8 ]
+    steps:
+    - name: Check out ${{ github.sha }} from repository ${{ github.repository }}
+      uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+#    - name: Install dependencies
+#      run: |
+#        sudo apt-get install gettext
+#        sudo pip install coverage --install-option="--install-scripts=/usr/bin"
+#        python -m pip install --upgrade pip
+#        pip install -r requirements.txt
+#    - name: Run tox
+#      run: python -m tox -q -e flake8,py
+#      if: always()
+#    - name: Run pylint
+#      run: python -m pylint resources/lib/ tests/
+#      if: always()
+#    - name: Compare translations
+#      run: make check-translations
+#      if: always()
+    # Python 2.7 and Python 3.5 are no longer supported by proxy.py
+#    - name: Run unit tests
+#      run: coverage run -m unittest discover
+#      env:
+#        ADDON_PASSWORD: ${{ secrets.ADDON_PASSWORD }}
+#        ADDON_USERNAME: ${{ secrets.ADDON_USERNAME }}
+#      if: always()
+#    - name: Run addon using cli
+#      run: coverage run -a tests/run.py /
+#      if: always()
+    - name: Upload code coverage to CodeCov
+      uses: codecov/codecov-action@v1
+      continue-on-error: true
+    # FIXME: Requires changes from SonarSource/sonarcloud-github-action#9
+    - name: Analyze with SonarCloud
+      uses: dagwieers/sonarcloud-github-action@more-options
+      with:
+        organization: add-ons
+        projectKey: add-ons_speedtester
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      continue-on-error: true

@@ -51,7 +51,9 @@
 # under the License.													   #
 ############################################################################
 
-import xbmc ,xbmcgui, xbmcaddon
+import xbmc
+import xbmcgui
+import xbmcaddon
 import os
 import re
 import sys
@@ -61,6 +63,19 @@ import socket
 import timeit
 import platform
 import threading
+import time
+import uuid
+
+
+try:
+	import xml.etree.cElementTree as ET
+	from xml.dom import minidom as DOM
+except ImportError:
+	try:
+		import xml.etree.ElementTree as ET
+	except ImportError:
+		from xml.dom import minidom as DOM
+		ET = None
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
@@ -78,32 +93,105 @@ ua_tuple = ('Mozilla/5.0', '(%s; U; %s; en-us)'
 		
 user_agent = ' '.join(ua_tuple)
 
-#py2 imports except py3 ver
-if sys.version_info.major==3:
+try:
+	import xml.etree.cElementTree as ET
+	from xml.dom import minidom as DOM
+except ImportError:
 	try:
 		import xml.etree.ElementTree as ET
 	except ImportError:
 		from xml.dom import minidom as DOM
 		ET = None
+
+try:
+	from urllib2 import urlopen, Request, HTTPError, URLError
+except ImportError:
 	from urllib.request import urlopen, Request, HTTPError, URLError
+
+try:
+	from httplib import HTTPConnection, HTTPSConnection
+except ImportError:
 	from http.client import HTTPConnection, HTTPSConnection
+
+try:
+	from Queue import Queue
+except ImportError:
 	from queue import Queue
+
+try:
+	from urlparse import urlparse
+except ImportError:
 	from urllib.parse import urlparse
+
+try:
+	from urlparse import parse_qs
+except ImportError:
 	try:
 		from urllib.parse import parse_qs
 	except ImportError:
 		from cgi import parse_qs
+
+try:
 	from hashlib import md5
-if sys.version_info.major==2:
-	import xml.etree.cElementTree as ET
-	from xml.dom import minidom as DOM
-	from urllib2 import urlopen, Request, HTTPError, URLError
-	from httplib import HTTPConnection, HTTPSConnection
-	from Queue import Queue
-	from urlparse import urlparse
-	from urlparse import parse_qs
+except ImportError:
 	from md5 import md5
 
+try:
+	from argparse import ArgumentParser as ArgParser
+except ImportError:
+	from optparse import OptionParser as ArgParser
+
+try:
+	import builtins
+except ImportError:
+	def print_(*args, **kwargs):
+		fp = kwargs.pop('file', sys.stdout)
+		if fp is None:
+			return
+
+		def write(data):
+			if not isinstance(data, basestring):
+				data = str(data)
+			fp.write(data)
+
+		want_unicode = False
+		sep = kwargs.pop('sep', None)
+		if sep is not None:
+			if isinstance(sep, unicode):
+				want_unicode = True
+			elif not isinstance(sep, str):
+				raise TypeError('sep must be None or a string')
+		end = kwargs.pop('end', None)
+		if end is not None:
+			if isinstance(end, unicode):
+				want_unicode = True
+			elif not isinstance(end, str):
+				raise TypeError('end must be None or a string')
+		if kwargs:
+			raise TypeError('invalid keyword arguments to print()')
+		if not want_unicode:
+			for arg in args:
+				if isinstance(arg, unicode):
+					want_unicode = True
+					break
+		if want_unicode:
+			newline = unicode('\n')
+			space = unicode(' ')
+		else:
+			newline = '\n'
+			space = ' '
+		if sep is None:
+			sep = space
+		if end is None:
+			end = newline
+		for (i, arg) in enumerate(args):
+			if i:
+				write(sep)
+			write(arg)
+		write(end)
+else:
+	print_ = getattr(builtins, 'print')
+	del builtins
 
 class SpeedtestCliServerListError(Exception):
 	"""
@@ -209,7 +297,7 @@ def getConfig():
 		build_request('http://www.speedtest.net/speedtest-config.php')
 	uh = catch_request(request)
 	if uh is False:
-		xbmc.log('Could not retrieve speedtest.net configuration: %s' % e,xbmc.LOGDEBUG)
+		print_('Could not retrieve speedtest.net configuration: %s' % e)
 		sys.exit(1)
 	configxml = []
 	while 1:
@@ -240,7 +328,7 @@ def getConfig():
 				'upload': getAttributesByTagName(root, 'upload'),
 				}
 	except SyntaxError:
-		xbmc.log('Failed to parse speedtest.net configuration',xbmc.LOGDEBUG)
+		print_('Failed to parse speedtest.net configuration')
 		sys.exit(1)
 	del root
 	del configxml
@@ -263,7 +351,7 @@ def closestServers(client, all=False):
 				errors.append('%s' % e)
 				raise SpeedtestCliServerListError
 			serversxml = []
-			while not xbmc.Monitor().abortRequested():
+			while 1:
 				serversxml.append(uh.read(10240))
 				if len(serversxml[-1]) == 0:
 					break
@@ -304,7 +392,9 @@ def closestServers(client, all=False):
 		if servers:
 			break
 	if not servers:
-		xbmc.log('Failed to retrieve list of speedtest.net servers:%s'% '\n'.join(errors),xbmc.LOGDEBUG)
+		print_('''Failed to retrieve list of speedtest.net servers:
+%s'''
+			% '\n'.join(errors))
 		sys.exit(1)
 	closest = []
 	for d in sorted(servers.keys()):
@@ -352,19 +442,10 @@ def getBestServer(servers):
 	best['latency'] = fastest
 	return best
 
-
-class animation(xbmcgui.WindowXMLDialog):
-	def __init__(self,*args, **kwargs):
-		super(xbmcgui.WindowXMLDialog, self).__init__()
+class DG_Speed_Test(xbmcgui.WindowXMLDialog):
+	def __init__(self, *args, **kwargs):
+		xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
 		self.doModal()
-
-class DG_Speed_Test(animation):
-	def __init__(self,*args, **kwargs):
-		if sys.version_info.major==2:
-			xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
-			self.doModal()
-		if sys.version_info.major==3:
-			super().__init__(*args, **kwargs)
 
 	def onInit(self):
 		self.testRun = False
@@ -397,8 +478,8 @@ class DG_Speed_Test(animation):
 
 	def displayButtonRun(self, function="true"):
 		if (function == "true"):
-			button_run_glowx = int((self.screenx / 3) - (300 / 2))
-			button_run_glowy = int((self.screeny / 3) - (122 / 2) + 50)
+			button_run_glowx = (self.screenx / 3) - (300 / 2)
+			button_run_glowy = (self.screeny / 3) - (122 / 2) + 50
 
 			self.button_run_glow = xbmcgui.ControlImage(button_run_glowx, button_run_glowy, 300, 122, '', aspectRatio=0)
 			self.addControl(self.button_run_glow)
@@ -408,8 +489,11 @@ class DG_Speed_Test(animation):
 				('conditional', 'effect=fade start=0 time=1000 condition=true pulse=true')
 			])
 
-			self.button_run = xbmcgui.ControlButton(button_run_glowx, button_run_glowy, 300, 122, "[B]Run Speedtest[/B]",focusTexture=self.image_button_run,noFocusTexture=self.image_button_run, alignment=2 | 4,textColor='0xFF000000', focusedColor='0xFF000000',shadowColor='0xFFCCCCCC', disabledColor='0xFF000000')
-
+			self.button_run = xbmcgui.ControlButton(button_run_glowx, button_run_glowy, 300, 122, "[B]Run Speedtest[/B]",
+													focusTexture=self.image_button_run,
+													noFocusTexture=self.image_button_run, alignment=2 | 4,
+													textColor='0xFF000000', focusedColor='0xFF000000',
+													shadowColor='0xFFCCCCCC', disabledColor='0xFF000000')
 			self.addControl(self.button_run)
 			self.setFocus(self.button_run)
 			self.button_run.setVisible(False)
@@ -440,8 +524,11 @@ class DG_Speed_Test(animation):
 				'effect=fade start=0 time=1000 delay=2000 pulse=true condition=Control.IsVisible(%d)' % self.button_close_glow.getId())
 			])
 
-			self.button_close = xbmcgui.ControlButton(99999, 99999, 300, 122, "[B]Close[/B]",focusTexture=self.image_button_run,noFocusTexture=self.image_button_run, alignment=2 | 4,textColor='0xFF000000', focusedColor='0xFF000000',shadowColor='0xFFCCCCCC', disabledColor='0xFF000000')
-
+			self.button_close = xbmcgui.ControlButton(99999, 99999, 300, 122, "[B]Close[/B]",
+													focusTexture=self.image_button_run,
+													noFocusTexture=self.image_button_run, alignment=2 | 4,
+													textColor='0xFF000000', focusedColor='0xFF000000',
+													shadowColor='0xFFCCCCCC')
 			self.addControl(self.button_close)
 			self.button_close.setVisible(False)
 			self.button_close.setPosition(880, 418)
@@ -461,13 +548,13 @@ class DG_Speed_Test(animation):
 
 	def displayPingTest(self, function="true"):
 		if (function == "true"):
-			imgCentertextx = int((self.screenx / 3) - (320 / 2))
-			imgCentertexty = int((self.screeny / 3) - (130 / 2) + 50)
+			imgCentertextx = (self.screenx / 3) - (320 / 2)
+			imgCentertexty = (self.screeny / 3) - (130 / 2) + 50
 			self.imgCentertext = xbmcgui.ControlImage(imgCentertextx, imgCentertexty, 320, 130, ' ', aspectRatio=0)
 			self.addControl(self.imgCentertext)
 
-			imgPingx = int((self.screenx / 3) - (600 / 2))
-			imgPingy = int((self.screeny / 3) - (400 / 2))
+			imgPingx = (self.screenx / 3) - (600 / 2)
+			imgPingy = (self.screeny / 3) - (400 / 2)
 			self.imgPing = xbmcgui.ControlImage(imgPingx, imgPingy, 600, 400, '', aspectRatio=1)
 			self.imgPing_glow = xbmcgui.ControlImage(imgPingx, imgPingy, 600, 400, '', aspectRatio=1)
 			self.addControl(self.imgPing)
@@ -505,11 +592,11 @@ class DG_Speed_Test(animation):
 	def displayGaugeTest(self, function="true"):
 		if (function == "true"):
 
-			imgGaugex = int((self.screenx / 3) - (548 / 2))
-			imgGaugey = int((self.screeny / 3) - (400 / 2))
+			imgGaugex = (self.screenx / 3) - (548 / 2)
+			imgGaugey = (self.screeny / 3) - (400 / 2)
 
-			imgGauge_arrowx = int((self.screenx / 3) - (66 / 2) - 5)
-			imgGauge_arrowy = int((self.screeny / 3) - (260 / 2) - 60)
+			imgGauge_arrowx = (self.screenx / 3) - (66 / 2) - 5
+			imgGauge_arrowy = (self.screeny / 3) - (260 / 2) - 60
 			self.imgGauge = xbmcgui.ControlImage(imgGaugex, imgGaugey, 548, 400, '', aspectRatio=0)
 			self.imgGauge_arrow = xbmcgui.ControlImage(imgGauge_arrowx, imgGauge_arrowy, 66, 260, '', aspectRatio=0)
 			self.addControl(self.imgGauge)
@@ -531,8 +618,8 @@ class DG_Speed_Test(animation):
 				'effect=fade start=100 end=0 time=300 condition=!Control.IsEnabled(%d)' % self.imgGauge_arrow.getId())
 			])
 
-			dlul_prog_textboxx = int((self.screenx / 3) - (200 / 2))
-			dlul_prog_textboxy = int((self.screeny / 3) - (50 / 2) + 170)
+			dlul_prog_textboxx = (self.screenx / 3) - (200 / 2)
+			dlul_prog_textboxy = (self.screeny / 3) - (50 / 2) + 170
 			self.dlul_prog_textbox = xbmcgui.ControlLabel(dlul_prog_textboxx, dlul_prog_textboxy, 200, 50, label='',
 														textColor='0xFFFFFFFF', font='font30', alignment=2 | 4)
 			self.addControl(self.dlul_prog_textbox)
@@ -561,8 +648,8 @@ class DG_Speed_Test(animation):
 				'effect=fade start=100 end=0 time=300 condition=!Control.IsEnabled(%d)' % self.imgProgress.getId())
 			])
 			self.imgProgress.setVisible(True)
-			imgProgressx = int((self.screenx / 3) - (200 / 2))
-			imgProgressy = int((self.screeny / 3) - (50 / 2) + 270)
+			imgProgressx = (self.screenx / 3) - (200 / 2)
+			imgProgressy = (self.screeny / 3) - (50 / 2) + 270
 			self.please_wait_textbox = xbmcgui.ControlLabel(imgProgressx, imgProgressy, 200, 50,
 															label='Please wait...', textColor='0xFFFFFFFF',
 															alignment=2 | 4)
@@ -630,7 +717,7 @@ class DG_Speed_Test(animation):
 		self.addControl(self.rec_speed)
 		self.rec_speed.setVisible(False)
 		self.rec_speed.setEnabled(False)
-		self.rec_speed.setText("".join("[B]Recomenended Speeds for Streaming! \n3 to 5 Mb/s for viewing standard definition 480p video \n5 to 10 Mb/s for viewing high-def 720p video \n10+ Mb/s or more for the best  1080p experience \n10+ Mb/s for the best Live TV Streaming experience \n25 to 50+ Mb/s 4K streaming \nAll Speeds are based on the device not what speed you pay for![/B]"))
+		self.rec_speed.setText("[B]Recommended download speed for video streaming:[/B]\n- 3 to 5 Mbit/s for viewing SD-quality 480p video\n- 5 to 10 Mbit/s for viewing HD-quality 720p video\n- 10+ Mbit/s for the best 1080p or Live TV experience\n- 25 to 50+ Mbit/s for 4K streaming\n[I]Reported speeds may be due to the limitations of the device.[/I]")
 		self.rec_speed.setAnimations([
 			('conditional',
 			'effect=fade start=0 end=100 time=1000 delay=100 condition=Control.IsVisible(%d)' % self.rec_speed.getId()),
@@ -735,7 +822,7 @@ class DG_Speed_Test(animation):
 				finished.append(sum(thread.result))
 				speedF = ((sum(finished) / (timeit.default_timer() - start)) / 1000 / 1000) * 8
 				speed_dl = self.configGauge(speedF, speed_dl)
-				self.dlul_prog_textbox.setLabel('%.02f Mbps ' % speedF)
+				self.dlul_prog_textbox.setLabel('%.02f Mbit/s ' % speedF)
 				del thread
 
 		q = Queue(6)
@@ -772,7 +859,7 @@ class DG_Speed_Test(animation):
 				finished.append(thread.result)
 				speedF = ((sum(finished) / (timeit.default_timer() - start)) / 1000 / 1000) * 8
 				speed_dl = self.configGauge(speedF, speed_dl)
-				self.dlul_prog_textbox.setLabel('%.02f Mbps ' % speedF)
+				self.dlul_prog_textbox.setLabel('%.02f Mbit/s ' % speedF)
 				del thread
 
 		q = Queue(6)
@@ -805,41 +892,51 @@ class DG_Speed_Test(animation):
 
 		startST.append('Retrieving speedtest.net configuration')
 		self.update_textbox(startST)
+		if not simple:
+			print_('Retrieving speedtest.net configuration')
 		try:
 			config = getConfig()
 		except URLError:
+			print_('Cannot retrieve speedtest configuration')
 			return False
 
 		startST.append('Retrieving speedtest.net server list')
 		self.update_textbox(startST)
 		self.imgCentertext.setImage(self.image_centertext_testingping)
+		print_('Retrieving speedtest.net server list...')
 
 		servers = closestServers(config['client'])
 
 		startST.append('Testing from %(isp)s (%(ip)s)' % config['client'])
 		self.update_textbox(startST)
+		print_('Testing from %(isp)s (%(ip)s)...' % config['client'])
 
 		best = getBestServer(servers)
 
 		try:
 			startST.append('Selecting best server based on latency')
 			self.update_textbox(startST)
+			print_('Selecting best server based on latency')
 		except:pass
 		try:
 			startST.append('Hosted by: %(sponsor)s' % best)
 			self.update_textbox(startST)
+			print_('Hosted by %(sponsor)s' % best)
 		except:pass
 		try:
 			startST.append('Host Server: %(host)s' % best)
 			self.update_textbox(startST)
+			print_('Host Server: %(host)s' % best)
 		except:pass
 		try:
 			startST.append('Country: %(country)s' % best)
 			self.update_textbox(startST)
+			print_('Location: %(country)s' % best)
 		except:pass
 		try:
 			startST.append('City , State: %(name)s' % best)
 			self.update_textbox(startST)
+			print_('City , State: %(name)s' % best)
 		except:pass
 		try:
 			km2mi = 0.62
@@ -848,11 +945,13 @@ class DG_Speed_Test(animation):
 			miles = Distance * km2mi
 			startST.append('Distance: %s mi' % miles)
 			self.update_textbox(startST)
+			print_('Distance: %s' % miles)
 		except:pass
 		try:
 			startST.append('Ping: %(latency)s ms' % best)
 			self.update_textbox(startST)
 			self.ping_textbox.setLabel("%.0f" % float(best['latency']))
+			print_('Ping: %(latency)s ms' % best)
 		except:pass
 		self.imgCentertext.setImage(' ')
 		self.imgPing.setEnabled(False)
@@ -865,16 +964,24 @@ class DG_Speed_Test(animation):
 				urls.append('%s/random%sx%s.jpg' %
 									(os.path.dirname(best['url']), size, size))
 		self.imgGauge.setVisible(True)
-		xbmc.Monitor().waitForAbort(1)
+		time.sleep(1)
 		self.configGauge(0)
 		self.imgGauge_arrow.setVisible(True)
 
 		startST.append('Testing download speed')
 		self.update_textbox(startST)
+		if not simple:
+			print_('Testing download speed', end='')
 		dlspeed = self.downloadSpeed(urls, simple)
+		if not simple:
+			print_()
 		startST.append('Download: %0.2f M%s/s' % ((dlspeed / 1000 / 1000) * units[1], units[0]))
 		self.update_textbox(startST)
 		self.dl_textbox.setLabel("%.2f" % float((dlspeed / 1000 / 1000) * units[1]))
+		print_('Download: %0.2f M%s/s' %
+				((dlspeed / 1000 / 1000) * units[1], units[0]))
+		self.configGauge(0, (dlspeed / 1000 / 1000) * 8, time=3000)
+		time.sleep(2)
 
 		sizesizes = [int(.25 * 1000 * 1000), int(.5 * 1000 * 1000)]
 		sizes = []
@@ -884,12 +991,18 @@ class DG_Speed_Test(animation):
 
 		startST.append('Testing upload speed')
 		self.update_textbox(startST)
+		if not simple:
+			print_('Testing upload speed', end='')
 		ulspeed = self.uploadSpeed(best['url'], sizes, simple)
+		if not simple:
+			print_()
 		startST.append('Upload: %0.2f M%s/s' % ((ulspeed / 1000 / 1000) * units[1], units[0]))
 		self.update_textbox(startST)
 		self.ul_textbox.setLabel("%.2f" % float((ulspeed / 1000 / 1000) * units[1]))
+		print_('Upload: %0.2f M%s/s' %
+				((ulspeed / 1000 / 1000) * units[1], units[0]))
 		self.configGauge(0, (ulspeed / 1000 / 1000) * 8, time=3000)
-		xbmc.Monitor().waitForAbort(2)
+		time.sleep(2)
 
 		if share:
 			dlspeedk = int(round((dlspeed / 1000) * 8, 0))
@@ -915,25 +1028,29 @@ class DG_Speed_Test(animation):
 										headers=headers)
 			f = catch_request(request)
 			if f is False:
-				xbmc.log('Could not submit results to speedtest.net',xbmc.LOGDEBUG)
+				print_('Could not submit results to speedtest.net')
 				return False
 			response = f.read()
 			code = f.code
 			f.close()
 
 			if int(code) != 200:
-				xbmc.log('Could not submit results to speedtest.net',xbmc.LOGDEBUG)
+				print_('Could not submit results to speedtest.net')
 				return False
 
 			qsargs = parse_qs(response.decode())
 			resultid = qsargs.get('resultid')
 			if not resultid or len(resultid) != 1:
-				xbmc.log('Could not submit results to speedtest.net',xbmc.LOGDEBUG)
+				print_('Could not submit results to speedtest.net')
 				return False
+
+			print_('Share results: https://www.speedtest.net/result/%s.png' %
+					resultid[0])
 				
 			global image_result
 			image_result = 'https://www.speedtest.net/result/%s.png' % resultid[0]
 
 if __name__ == '__main__':
-	Dr0idGuy = DG_Speed_Test("script-speedtester_main.xml", ADDON.getAddonInfo('path'), "Default")
+	Dr0idGuy = DG_Speed_Test("main.xml", ADDON.getAddonInfo('path'), "Default")
 	del Dr0idGuy
+
