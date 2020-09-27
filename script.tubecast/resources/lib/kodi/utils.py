@@ -51,7 +51,10 @@ def set_setting(setting, value):
 
 
 def get_device_id():
-    return get_infolabel("System.FriendlyName")
+    friendly_name = get_infolabel("System.FriendlyName")
+    if not friendly_name:
+        friendly_name = get_setting("kodi-advertise")
+    return friendly_name
 
 
 def get_setting_as_bool(setting):

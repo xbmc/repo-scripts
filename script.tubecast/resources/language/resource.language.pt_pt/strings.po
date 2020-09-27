@@ -72,3 +72,11 @@ msgstr "Depuração"
 msgctxt "#32013"
 msgid "Verify SSL connections"
 msgstr "Verificar ligações SSL"
+
+msgctxt "#32014"
+msgid "Debug HTTP requests"
+msgstr "Depuração de pedidos HTTP"
+
+msgctxt "#32015"
+msgid "Kodi advertisement name (fallback)"
+msgstr "Nome para o Kodi (fallback)"
