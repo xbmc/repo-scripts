@@ -48,7 +48,8 @@ class CastState(object):
         return bool(self.playlist)
 
     def handle_set_playlist(self, data):
-        self.ctt = data["ctt"]
+        if 'ctt' in data:
+            self.ctt = data["ctt"]
 
         self.playlist_id = data["listId"]
         self.playlist = data["videoIds"].split(",")
