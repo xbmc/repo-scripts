@@ -18,7 +18,7 @@ from optparse import OptionParser
 from urllib.parse import urlencode, parse_qs
 
 
-from xbmcswift2 import xbmc, xbmcgui, xbmcplugin, xbmcaddon, Request
+from xbmcswift2 import xbmcvfs, xbmcgui, xbmcplugin, xbmcaddon, Request
 from xbmcswift2.listitem import ListItem
 from xbmcswift2.logger import log, setup_log
 from xbmcswift2.common import enum, clean_dict, Modes, DEBUG_MODES
@@ -107,7 +107,7 @@ class Plugin(XBMCMixin):
         self._log = setup_log(self._addon_id)
 
         # The path to the storage directory for the addon
-        self._storage_path = xbmc.translatePath(
+        self._storage_path = xbmcvfs.translatePath(
             'special://profile/addon_data/%s/.storage/' % self._addon_id)
         if not os.path.isdir(self._storage_path):
             os.makedirs(self._storage_path)
