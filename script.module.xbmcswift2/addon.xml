@@ -1,4 +1,4 @@
-<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel), enen92" version="19.0.1">
+<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel), enen92" version="19.0.2">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -9,7 +9,7 @@
     <license>GPL-3.0</license>
     <summary lang="en_GB">xbmcswift2 is a small framework to ease development of KODI addons.</summary>
     <description lang="en_GB">xbmcswift2 is a small framework to ease development of KODI addons.</description>
-    <news>Remove LOGSEVERE and LOGNOTICE log levels to comply to https://github.com/xbmc/xbmc/pull/18346</news>
+    <news>Move xbmc.translatepath to xbmcvfs.translatepath</news>
     <assets>
       <icon>icon.png</icon>
     </assets>

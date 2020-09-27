@@ -46,6 +46,7 @@ try:
     import xbmcgui
     import xbmcplugin
     import xbmcaddon
+    import xbmcvfs
     CLI_MODE = False
 except ImportError:
     CLI_MODE = True

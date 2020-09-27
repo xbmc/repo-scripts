@@ -6,7 +6,7 @@ import urllib
 from datetime import timedelta
 from functools import wraps
 
-from xbmcswift2 import xbmc, xbmcaddon, xbmcplugin, xbmcgui, ListItem
+from xbmcswift2 import xbmc, xbmcvfs, xbmcaddon, xbmcplugin, xbmcgui, ListItem
 from xbmcswift2.storage import TimedStorage
 from xbmcswift2.logger import log
 from xbmcswift2.constants import SortMethod
@@ -152,7 +152,7 @@ class XBMCMixin(object):
         return storage
 
     def temp_fn(self, path):
-        return os.path.join(xbmc.translatePath('special://temp/'), path)
+        return os.path.join(xbmcvfs.translatePath('special://temp/'), path)
 
     def get_string(self, stringid):
         '''Returns the localized string from strings.po for the given
