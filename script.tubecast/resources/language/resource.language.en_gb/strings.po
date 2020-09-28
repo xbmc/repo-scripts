@@ -76,3 +76,7 @@ msgstr ""
 msgctxt "#32014"
 msgid "Debug HTTP requests"
 msgstr ""
+
+msgctxt "#32015"
+msgid "Kodi advertisement name (fallback)"
+msgstr ""
