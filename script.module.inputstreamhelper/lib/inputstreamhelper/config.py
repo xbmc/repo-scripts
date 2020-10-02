@@ -99,8 +99,6 @@ CHROMEOS_RECOVERY_ARM_HWIDS = [
     'MICKEY',
     'MIGHTY',
     'MINNIE',
-    'PHASER',
-    'PHASER360',
     'PI',
     'PIT',
     'RELM',

@@ -4,347 +4,344 @@ msgstr ""
 "Project-Id-Version: script.module.inputstreamhelper\n"
 "Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
 "POT-Creation-Date: 2013-11-18 16:15+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Dion Nicolaas <dion@nicolaas.net>\n"
-"Language-Team: Dutch\n"
+"PO-Revision-Date: 2020-10-01 19:22+0300\n"
+"Language-Team: Hebrew\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? 2 : 3);\n"
 
 msgctxt "#30001"
 msgid "Information"
-msgstr "Informatie"
+msgstr "מידע"
 
 msgctxt "#30002"
 msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
-msgstr "Deze add-on heeft de [B]Widevine CDM[/B] decodeer-module van een derde partij nodig om af te spelen."
+msgstr "הרחבה זו תלויה במודול הפענוח הקנייני [B]Widevine CDM[/B] על מנת לנגן."
 
 msgctxt "#30004"
 msgid "Error"
-msgstr "Fout"
+msgstr "שגיאה"
 
 msgctxt "#30005"
 msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
-msgstr "Er is een fout opgetreden bij het installeren van [B]Widevine CDM[/B]. Schakel debug logging in en dien een bug-rapport in op:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr "קרתה שגיאה במהלך התקנת [B]Widevine CDM[/B]. נא לאפשר רישום ניפוי באגים ולדווח ב-[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
 msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "Wegens distributierechten moet [B]Widevine CDM[/B] worden uitgepakt uit een recovery-image van Chrome OS. Voor dit process is minimaal [B]{diskspace}[/B] vrije schijfruimte nodig. Wil je doorgaan?"
+msgstr "בגלל זכויות הפצה יש לחלץ את [B]Widevine CDM[/B] מתוך קובץ ההצלה של מערכת ההפעלה כרום. תהליך זה לוקח לפחות [B]{diskspace}[/B] של שטח אחסון. האם ברצונך להמשיך?"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
-msgstr "[B]Widevine CDM[/B] is helaas niet beschikbaar voor deze syteemarchitectuur ([B]{arch}[/B])."
+msgstr "לרוע המזל מודול [B]Widevine CDM[/B] אינו זמין עבור ארכיטקטורת המערכת הזו ([B]{arch}[/B])."
 
 msgctxt "#30008"
 msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
-msgstr "[B]{addon}[/B] ontbreekt op deze Kodi-installatie. Deze add-on is nodig om deze video af te spelen."
+msgstr "ההרחבה [B]{addon}[/B] חסרה בהתקנת קודי שלך. הרחבה זו נדרשת כדי לנגן תוכן זה."
 
 msgctxt "#30009"
 msgid "[B]{addon}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{addon}[/B]?"
-msgstr "[B]{addon}[/B] is niet ingeschakeld. Deze add-on is nodig om de video af te spelen.[CR][CR][B]{addon}[/B] inschakelen?"
+msgstr "ההרחבה [B]{addon}[/B] איננה מאופשרת. הרחבה זו נדרשת על מנת לנגן תוכן זה. האם ברצונך לאפשר את ההרחבה [B]{addon}[/B]?"
 
 msgctxt "#30010"
 msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] content playback."
-msgstr "[B]Kodi {version}[/B] of hoger is nodig om met [B]Widevine CDM[/B] beschermde video's af te spelen."
+msgstr "גרסת קודי [B]{version}[/B] ומעלה נדרשת לניגון תוכן באמצעות [B]Widevine CDM[/B]."
 
 msgctxt "#30011"
 msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
-msgstr "Dit besturingssysteem ([B]{os}[/B] wordt niet ondersteund door [B]Widevine CDM[/B]."
+msgstr "מערכת ההפעלה [B]{os}[/B] איננה נתמכת על ידי [B]Widevine CDM[/B]."
 
 msgctxt "#30012"
 msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
-msgstr "De Windows Store versie van Kodi ondersteunt [B]Widevine CDM[/B] niet.[CR][CR]Gebruik de Windows-installer van kodi.tv."
+msgstr "גרסת חנות היישומים של חלונות (Windows Store) של קודי אינה תומכת ב-[B]Widevine CDM[/B].[CR][CR]נא להשתמש בכלי ההתקנה מאתר kodi.tv במקום זאת."
 
 msgctxt "#30013"
 msgid "Failed to retrieve [B]{filename}[/B]."
-msgstr "Het is niet gelukt om [B]{filename}[/B] op te halen."
+msgstr "שגיאה בשליפת הקובץ [B]{filename}[/B]."
 
 msgctxt "#30014"
 msgid "Download in progress..."
-msgstr "Bezig met downloaden..."
+msgstr "ההורדה מתבצעת..."
 
 msgctxt "#30015"
 msgid "Downloading [B]{filename}[/B]..."
-msgstr "[B]{filename}[/B] wordt gedownload..."
+msgstr "מוריד את הקובץ [B]{filename}[/B]..."
 
 msgctxt "#30016"
 msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
-msgstr "Het uitpakken van [B]Widevine CDM[/B] uit het zip-bestand is mislukt."
+msgstr "שגיאה בחילוץ [B]Widevine CDM[/B] מקובץ zip."
 
 msgctxt "#30017"
 msgid "[B]{addon}[/B] {version} or later is required to play this content."
-msgstr "[B]{addon}[/B] {version} of later is nodig om deze video af te spelen."
+msgstr "ההרחבה [B]{addon}[/B] מגרסה {version} ומעלה נדרשת על מנת לנגן תוכן זה."
 
 msgctxt "#30018"
 msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{diskspace}[/B] and try again."
-msgstr "Er is onvoldoende schijfruimte vrij om [B]Widevine CDM[/B] te installeren. Maak minstens [B]{diskspace}[/B] vrij en probeer het opnieuw."
+msgstr "אין מספיק שטח אחסון על מנת להתקין את  [B]Widevine CDM[/B]. יש לפנות לפחות [B]{diskspace}[/B] ולנסות שוב."
 
 msgctxt "#30019"
 msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B] for ARM devices."
-msgstr "Dit besturingssysteem ([B]{os}[/B]) wordt niet ondersteund door [B]Widevine CDM[/B] voor ARM-apparaten."
+msgstr "מערכת ההפעלה הזו ([B]{os}[/B]) אינה נתמכת על ידי [B]Widevine CDM[/B] עבור התקני ARM."
 
 msgctxt "#30020"
 msgid "[B]'{command1}'[/B] or [B]'{command2}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
-msgstr "Het commando [B]'{command1}'[/B] of [B]'{command2}'[/B] moet op het systeem aanwezig zijn om [B]Widevine CDM[/B] uit te pakken."
+msgstr "הפקודה [B]'{command1}'[/B] או [B]'{command2}'[/B] נדרשת כדי לחלץ את  [B]Widevine CDM[/B]."
 
 msgctxt "#30021"
 msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
-msgstr "Het commando [B]'{command}'[/B] moet op het systeem aanwezig zijn om [B]Widevine CDM[/B] uit te pakken."
+msgstr "הפקודה [B]'{command}'[/B] נדרשת כדי לחלץ את [B]Widevine CDM[/B]."
 
 msgctxt "#30022"
 msgid "Downloading the Chrome OS recovery image..."
-msgstr "De recovery-image van Chrome OS wordt gedownload..."
+msgstr "מוריד את קובץ ההצלה של מערכת ההפעלה כרום..."
 
 msgctxt "#30023"
 msgid "Download completed!"
-msgstr "Klaar met downloaden!"
+msgstr "ההורדה הושלמה!"
 
 msgctxt "#30024"
 msgid "The installation now needs to unzip, mount and extract [B]Widevine CDM[/B] from the recovery image.[CR][CR]This process may take up to ten minutes to complete."
-msgstr "Voor de installatie moet de recovery-image worden gemount, worden gedecomprimeerd en moet [B]Widevine CDM[/B] worden uitgepakt.[CR][CR]Dit proces kan wel tien minuten duren."
+msgstr "על ההתקנה כעת לפרוש ולחלץ את [B]Widevine CDM[/B] מתוך קובץ ההצלה.[CR][CR]תהליך זה עשוי לקחת עד עשר דקות."
 
 msgctxt "#30025"
 msgid "Acquiring EULA."
-msgstr "Licentieovereenkomst wordt opgehaald"
+msgstr "מוריד הסכם רישיון למשתמש הקצה."
 
 msgctxt "#30026"
 msgid "Widevine CDM EULA"
-msgstr "Widevine CDM licentieovereenkomst"
+msgstr "הסכם רישיון למשתמש הקצה של Widevine CDM"
 
 msgctxt "#30027"
 msgid "I accept"
-msgstr "Akkoord"
+msgstr "אני מקבל/ת"
 
 msgctxt "#30028"
 msgid "Cancel"
-msgstr "Afbreken"
+msgstr "ביטול"
 
 msgctxt "#30029"
 msgid "OK"
-msgstr "OK"
+msgstr "אישור"
 
 msgctxt "#30030"
 msgid "The installation may need to run the following commands with root permissions: [B]{cmds}[/B]."
-msgstr "Voor de installatie zouden de volgende commando's met root-permissie kunnen worden uitgevoerd: [B]{cmds}[/B]."
+msgstr "ההתקנה עשויה להריץ את הפקודות הבאות בהרשאות root: [B]{cmds}[/B]."
 
 msgctxt "#30031"
 msgid "An update of [B]Widevine CDM[/B] is required to play this content."
-msgstr "Een update van [B]Widevine CDM[/B] is nodig voor het afspelen van deze video."
+msgstr "עדכון של [B]Widevine CDM[/B] נדרש על מנת לנגן תוכן זה."
 
 msgctxt "#30032"
 msgid "Your system is missing the following libraries required by Widevine CDM: [B]{libs}[/B]. Install the libraries to play this content."
-msgstr "De volgende libraries, die nodig zijn voor Widevine CDM, ontbreken op het systeem: [B]{libs}[/B]. Installeer deze libraries om deze video af te spelen."
+msgstr "במערכת שלך חסרים הספריות הבאות הנדרשות על ידי Widevine CDM: [B]{libs}[/B]. יש להתקין את הספריות על מנת לנגן תוכן זה."
 
 msgctxt "#30033"
 msgid "There is an update available for [B]Widevine CDM[/B]."
-msgstr "Er is een update voor [B]Widevine CDM[/B] beschikbaar."
+msgstr "יש עדכון זמין עבור המודול [B]Widevine CDM[/B]."
 
 msgctxt "#30034"
 msgid "Update"
-msgstr "Update"
+msgstr "לעדכן"
 
 msgctxt "#30035"
 msgid "[B]loop[/B] is still loaded"
-msgstr "[B]loop[/B] is nog steeds geladen."
+msgstr "המודול [B]loop[/B] עדיין טעון"
 
 msgctxt "#30036"
 msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr "Stop [B]loop[/B] door het volgende commando in een terminal te starten: [B]modprobe -r loop[/B]"
+msgstr "ניתן להסיר אותו באמצעות הפקודה [B]modprobe -r loop[/B] במסוף."
 
 msgctxt "#30037"
 msgid "Success!"
-msgstr "Gelukt!"
+msgstr "הצלחה!"
 
 msgctxt "#30038"
 msgid "Install Widevine"
-msgstr "Installeer Widevine"
+msgstr "התקנת Widevine"
 
 msgctxt "#30039"
 msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
-msgstr "[B]Widevine CDM[/B] is momenteel niet in een ARM64-versie beschikbaar. Gebruik een 32-bits omgeving om [B]Widevine CDM[/B] te kunnen gebruiken."
+msgstr "המודול [B]Widevine CDM[/B] איננו זמין עבור ARM64. יש להחליף ל-userspace של 32 סיביות עבור תמיכה ב-[B]Widevine CDM[/B]."
 
 msgctxt "#30040"
 msgid "Update available"
-msgstr "Update beschikbaar"
+msgstr "עדכון זמין"
 
 msgctxt "#30041"
 msgid "Widevine CDM is required"
-msgstr "Widevine CDM is vereist"
+msgstr "נדרש Widevine CDM"
 
 msgctxt "#30042"
 msgid "Using a SOCKS proxy requires the PySocks library (script.module.pysocks) installed."
-msgstr "Als u een SOCKS-proxy gebruikt, moet de PySocks-library (script.module.pysocks) geïnstalleerd zijn."
+msgstr "שימוש בפרוקסי מסוג SOCKS דורש התקנת ספריית PySocks (script.module.pysocks)."
 
 msgctxt "#30043"
 msgid "Extracting Widevine CDM"
-msgstr "Widevine CDM wordt uitgepakt"
+msgstr "מחלץ את Widevine CDM"
 
 msgctxt "#30044"
 msgid "Preparing downloaded image..."
-msgstr "De recovery-image wordt voorbereid..."
+msgstr "מכין את הקובץ שהורד..."
 
 msgctxt "#30045"
 msgid "Uncompressing image..."
-msgstr "De recovery-image wordt uitgepakt..."
+msgstr "פורש קובץ..."
 
 msgctxt "#30046"
 msgid "This may take several minutes."
-msgstr "Dit kan enkele minuten duren."
+msgstr "תהליך זה עשוי לקחת מספר דקות."
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
-msgstr "[I]Onderbreek dit proces niet.[/I]"
+msgstr "[I]נא לא לעצור תהליך זה[/I]"
 
 msgctxt "#30048"
 msgid "Extracting Widevine CDM from image..."
-msgstr "Widevine CDM wordt van de recovery-image gehaald..."
+msgstr "מחלץ את Widevine CDM מתוך הקובץ..."
 
 msgctxt "#30049"
 msgid "Installing Widevine CDM..."
-msgstr "Widevine CDM wordt geïnstalleerd..."
+msgstr "מתקין את Widevine CDM..."
 
 msgctxt "#30050"
 msgid "Finishing..."
-msgstr "Beëindigen..."
+msgstr "מסיים..."
 
 msgctxt "#30051"
 msgid "[B]Widevine CDM[/B] successfully installed."
-msgstr "[B]Widevine CDM[/B] met succes geïnstalleerd."
+msgstr "מודול [B]Widevine CDM[/B] הותקן בהצלחה."
 
 msgctxt "#30052"
 msgid "[B]Widevine CDM[/B] successfully removed."
-msgstr "[B]Widevine CDM[/B] met succes verwijderd."
+msgstr "מודול [B]Widevine CDM[/B] הוסר בהצלחה."
 
 msgctxt "#30053"
 msgid "[B]Widevine CDM[/B] not found."
-msgstr "[B]Widevine CDM[/B] is niet gevonden."
+msgstr "[B]Widevine CDM[/B] לא נמצא."
 
 msgctxt "#30054"
 msgid "disabled"
-msgstr "uitgeschakeld"
+msgstr "מבוטל"
 
 msgctxt "#30055"
 msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
-msgstr "Er is onvoldoende vrije schijfruimte in de huidige tijdelijke map. Wilt u een andere map opgeven om tijdelijk te gebruiken voor de recovery-image van Chrome OS (bijvoorbeeld op een USB-stick)?"
+msgstr "אין מספיק שטח אחסון בתיקיה הזמנית הנוכחית. האם תרצה/י לבחור תיקיה אחרת לשימוש זמני עבור קובץ ההצלה של מערכת ההפעלה כרום (למשל על גבי USB)?"
 
 msgctxt "#30056"
 msgid "No backups found!"
-msgstr "Geen backups gevonden!"
+msgstr "לא נמצאו גיבויים!"
 
 msgctxt "#30057"
 msgid "Choose a backup to restore"
-msgstr "Kies een back-up om te herstellen"
+msgstr "בחר/י גיבוי לשחזור"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr "Resterende tijd: {mins:d}:{secs:02d}"
+msgstr "הזמן שנותר: {mins:d}:{secs:02d}"
 
 msgctxt "#30059"
 msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
-msgstr "Moeten we ondertussen Widevine CDM proberen uit te pakken met de legacy-methode?"
+msgstr "בינתיים, האם לנסות לחלץ את Widevine CDM בשיטה הישנה?"
 
 msgctxt "#30060"
 msgid "Identifying wanted partition..."
-msgstr "Bezig met de gewenste partitie te identificeren..."
+msgstr "מזהה את המחיצה המבוקשת..."
 
 msgctxt "#30061"
 msgid "Scanning the filesystem for the Widevine CDM..."
-msgstr "Bezig met het bestandssysteem te scannen op Widevine CDM..."
+msgstr "סורק את מערכת הקבצים עבור Widevine CDM"
 
 msgctxt "#30062"
 msgid "Widevine CDM found, analyzing..."
-msgstr "Widevine CDM gevonden, bezig met analyseren..."
+msgstr "המודול Widevine CDM נמצא, מנתח..."
 
 msgctxt "#30063"
 msgid "Could not make the request. Your internet may be down."
-msgstr "Het verzoek kan niet verstuurd worden. Uw internetverbinding is mogelijk niet beschikbaar."
+msgstr "לא ניתן לבצע את הבקשה. האינטרנט שלך עשוי להיות מנותק."
 
 msgctxt "#30064"
 msgid "Could not finish the download."
-msgstr "Het downloaden kan niet voltooid worden."
+msgstr "לא ניתן להשלים את ההורדה."
 
 msgctxt "#30065"
 msgid "Shall we try again?"
-msgstr "Zullen we het opnieuw proberen?"
+msgstr "לנסות שוב?"
 
-
-### INFORMATION DIALOG
+# ## INFORMATION DIALOG
 msgctxt "#30800"
 msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
-msgstr "[B]Kodi[/B] versie [B]{version}[/B] draait op een [B]{system}[/B] systeem met [B]{arch}[/B] architectuur."
+msgstr "[B]קודי[/B] מגרסה [B]{version}[/B] רץ על מערכת [B]{system}[/B] עם ארכיטקטורה [B]{arch}[/B]."
 
 msgctxt "#30810"
 msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
-msgstr "[B]InputStream Helper[/B] is versie [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] בגרסה [B]{version}[/B] {state}"
 
 msgctxt "#30811"
 msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
-msgstr "[B]InputStream Adaptive[/B] is versie [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] בגרסה [B]{version}[/B] {state}"
 
 msgctxt "#30820"
 msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
-msgstr "[B]Widevine CDM[/B] is [B]ingebouwd in Android[/B]"
+msgstr "המודול [B]Widevine CDM[/B] הוא חלק [B]מובנה באנדרואיד[/B]"
 
 msgctxt "#30821"
 msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
-msgstr "[B]Widevine CDM[/B] is versie [B]{version}[/B] en werd geïnstalleerd op [B]{date}[/B]"
+msgstr "המודול [B]Widevine CDM[/B] מגרסה [B]{version}[/B] הותקן בתאריך [B]{date}[/B]"
 
 msgctxt "#30822"
 msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
-msgstr "Het werd uitgepakt uit Chrome OS image [B]{name}[/B] met versie [B]{version}[/B]"
+msgstr "חולץ מתוך קובץ מערכת ההפעלה כרום [B]{name}[/B] מגרסה [B]{version}[/B]"
 
 msgctxt "#30823"
 msgid "It was last checked for updates on [B]{date}[/B]"
-msgstr "Het werd laatste gecontroleerd op [B]{date}[/B]"
+msgstr "נבדק לזמינות עדכונים בפעם האחרונה בתאריך [B]{date}[/B]"
 
 msgctxt "#30824"
 msgid "It is installed at [B]{path}[/B]"
-msgstr "Het is geïnstalleerd in [B]{path}[/B]"
+msgstr "הותקן ב-[B]{path}[/B]"
 
 msgctxt "#30830"
 msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
-msgstr "Gelieve problemen te melden op: [COLOR yellow]{url}[/COLOR]"
+msgstr "נא לדווח על שגיאות אל: [COLOR yellow]{url}[/COLOR]"
 
-
-### SETTINGS
+# ## SETTINGS
 msgctxt "#30900"
 msgid "Expert"
-msgstr "Expert"
+msgstr "מומחה"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
-msgstr "InputStream Helper informatie"
+msgstr "מידע InputStream Helper"
 
 msgctxt "#30903"
 msgid "Disable InputStream Helper"
-msgstr "InputStream Helper uitschakelen"
+msgstr "ביטול InputStream Helper"
 
 msgctxt "#30904"
 msgid "[I]When disabled, DRM playback may fail![/I]"
-msgstr "[I]Indien uitgeschakeld kan de weergave van DRM-content mislukken![/I]"
+msgstr "[I]כאשר מבוטל, ניגון של תוכן מוגן בזכויות יוצרים (DRM) עשוי להיכשל![/I]"
 
 msgctxt "#30905"
 msgid "Update frequency in days"
-msgstr "Updatefrequentie in dagen"
+msgstr "תדירות עדכון בימים"
 
 msgctxt "#30907"
 msgid "Temporary download directory"
-msgstr "Tijdelijke download-folder"
+msgstr "תיקיית הורדה זמנית"
 
 msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
-msgstr "Widevine CDM (her-)installeren..."
+msgstr "התקנה (מחדש) של ספריית Widevine CDM..."
 
 msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
-msgstr "Widevine CDM verwijderen..."
+msgstr "הסרת ספריית Widevine CDM..."
 
 msgctxt "#30913"
 msgid "Number of backups"
-msgstr "Aantal backups"
+msgstr "מספר הגיבויים"
 
 msgctxt "#30915"
 msgid "Restore Widevine CDM library..."
-msgstr "Herstel Widevine CDM..."
+msgstr "שחזור ספריית Widevine CDM..."
