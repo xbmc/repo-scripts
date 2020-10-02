@@ -124,7 +124,7 @@ class ChromeOSImage:
 
         self.seek_stream(self.part_offset + 1024)  # superblock starts after 1024 byte
         pack = self.read_stream(fmt_len)
-        sb_dict = dict(zip(names, unpack(fmt, pack)))
+        sb_dict = dict(list(zip(names, unpack(fmt, pack))))
 
         sb_dict['s_magic'] = hex(sb_dict['s_magic'])
         assert sb_dict['s_magic'] == '0xef53'  # assuming/checking this is an ext2 fs
@@ -149,7 +149,7 @@ class ChromeOSImage:
         pack = self.read_stream(fmt_len)
         blk = unpack(fmt, pack)
 
-        blk_dict = dict(zip(names, blk))
+        blk_dict = dict(list(zip(names, blk)))
 
         return blk_dict
 
@@ -180,7 +180,7 @@ class ChromeOSImage:
         pack = self.read_stream(fmt_len)
         inode = unpack(fmt, pack)
 
-        inode_dict = dict(zip(names, inode))
+        inode_dict = dict(list(zip(names, inode)))
         inode_dict['i_mode'] = hex(inode_dict['i_mode'])
 
         blocks = inode_dict['i_size'] / self.blocksize
@@ -195,7 +195,7 @@ class ChromeOSImage:
         dir_names = ('inode', 'rec_len', 'name_len', 'file_type', 'name')
         dir_fmt = '<IHBB' + str(len(chunk) - 8) + 's'
 
-        dir_dict = dict(zip(dir_names, unpack(dir_fmt, chunk)))
+        dir_dict = dict(list(zip(dir_names, unpack(dir_fmt, chunk))))
 
         return dir_dict
 
