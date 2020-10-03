@@ -16,108 +16,116 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Sleep Timer"
-""
+msgstr ""
 
 msgctxt "#30001"
 msgid "Cancel to continue playing"
-""
+msgstr ""
 
 msgctxt "#30002"
 msgid "Service check time (minutes)"
-""
+msgstr ""
 
 msgctxt "#30003"
 msgid "Waiting time for the dialog (before stop) (seconds)"
-""
+msgstr ""
 
 msgctxt "#30004"
 msgid "Slow mute audio before stop playing"
-""
+msgstr ""
 
 msgctxt "#30005"
 msgid "General"
-""
+msgstr ""
 
 msgctxt "#30006"
 msgid "Time between 1% volume change  (millisec)"
-""
+msgstr ""
 
 msgctxt "#30007"
 msgid "Next check time if dialog is cancelled (minutes)"
-""
+msgstr ""
 
 msgctxt "#30008"
 msgid "Enable Screensaver after stopping"
-""
+msgstr ""
 
 msgctxt "#30009"
 msgid "Audio/Video Supervision settings"
-""
+msgstr ""
 
 msgctxt "#30010"
 msgid "Enable Video Supervision"
-""
+msgstr ""
 
 msgctxt "#30011"
 msgid "Enable Audio Supervision"
-""
+msgstr ""
 
 msgctxt "#30012"
 msgid "Maximum Playing time (minutes) before asking to stop"
-""
+msgstr ""
 
 msgctxt "#30013"
 msgid "Video Playbacktime"
-""
+msgstr ""
 
 msgctxt "#30014"
 msgid "Audio Playbacktime"
-""
+msgstr ""
 
 msgctxt "#30015"
 msgid "Debug"
-""
+msgstr ""
 
 msgctxt "#30016"
 msgid "Debug mode"
-""
+msgstr ""
 
 msgctxt "#30017"
 msgid "'Enable' debugging sets:"
-""
+msgstr ""
 
 msgctxt "#30018"
 msgid "Audio and Video-Check enabled"
-""
+msgstr ""
 
 msgctxt "#30019"
 msgid "Service check time (minutes): '1'"
-""
+msgstr ""
 
 msgctxt "#30020"
 msgid "Waiting time for the dialog (before stop) (seconds): '30'"
-""
+msgstr ""
 
 msgctxt "#30021"
 msgid "It doesn't matter, what you set in the other Tabs!"
-""
+msgstr ""
 
 msgctxt "#30022"
 msgid "Execute custom cmd after playback stop"
-""
+msgstr ""
 
 msgctxt "#30023"
 msgid "Custom CMD"
-""
+msgstr ""
 
 msgctxt "#30024"
 msgid "Supervision Mode"
-""
+msgstr ""
 
 msgctxt "#30025"
 msgid "Hour start (eg. 23:00)"
-""
+msgstr ""
 
 msgctxt "#30026"
 msgid "Hour supervision end (eg. 03:20)"
-""
+msgstr ""
+
+msgctxt "#30027"
+msgid "Always"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Specific Time"
+msgstr ""
