@@ -1,3 +1,6 @@
+2.0.6 - 27/6/2016
+-Updated settings
+
 2.0.5 - 19/12/2015
 -Bug fixing - thanks joshjowen
 

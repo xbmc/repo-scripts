@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="30005">
-		<setting id="check_time" label="30002" default="5" type="labelenum" values="1|3|5|10|15|20|25|30"/>
-		<setting id="waiting_time_dialog" label="30003" type="labelenum" default="60" values="30|45|60|90|120|150|180"/>
+		<setting id="check_time" label="30002" default="5" type="slider" range="1,5,120" option="int"/>
+		<setting id="waiting_time_dialog" label="30003" type="slider" default="60" range="30,5,180" option="int"/>
 		<setting id="audio_change" label="30004" type="bool" default="true" visible="true"/>
 		<setting id="audio_change_rate" label="30006" enable="eq(-1,true)" type="slider" default="500" range="50,50,3000" option="int"/>
-		<setting id="check_time_next" label="30007" default="30" type="labelenum" values="15|30|45|60|90|120"/>
+		<setting id="check_time_next" label="30007" type="slider" default="30" range="15,10,120" option="int"/>
 		<setting id="enable_screensaver" label="30008" type="bool" default="false" visible="true"/>
 	     <setting id="custom_cmd" label="30022" type="bool" default="false" visible="true"/>
 	     <setting id="cmd" type="text" label="30023" default="" visible="eq(-1,true)"/>
@@ -14,10 +14,10 @@
 		<setting id="video_enable" label="30010" type="bool" default="true" visible="true"/>
 		<setting id="audio_enable" label="30011" type="bool" default="true" visible="true"/>
 		<setting label="30012" type="lsep"/>
-		<setting id="max_time_video" label="30013" type="labelenum" default="150" enable="eq(-3,true)" values="30|60|90|120|150|180|210|240|270|300|330|360|390|420"/>
-		<setting id="max_time_audio" label="30014" type="labelenum" default="150" enable="eq(-3,true)" values="30|60|90|120|150|180|210|240|270|300|330|360|390|420"/>
+		<setting id="max_time_video" label="30013" default="150" enable="eq(-3,true)" type="slider" range="30,5,420" option="int"/>
+		<setting id="max_time_audio" label="30014" default="150" enable="eq(-3,true)" type="slider" range="30,5,420" option="int"/>
 		<setting label="30024" type="lsep"/>
-		<setting id="supervision_mode" label="30024" type="enum" default="0" values="Always|Specific Time"/>
+		<setting id="supervision_mode" label="30024" type="enum" default="0" values="30027|30028"/>
 		<setting label="30025" type="text" id="hour_start_sup" visible="eq(-1,1)" default="00:00"/>
 		<setting label="30026" type="text" id="hour_end_sup" visible="eq(-2,1)" default="00:00"/>
 	</category>
