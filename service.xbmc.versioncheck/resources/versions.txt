@@ -831,6 +831,15 @@
                 "major": "19",
                 "minor": "0",
                 "tag": "alpha",
+                "tagversion":"2",
+                "revision": "20201005-54be31bc5c",
+                "extrainfo": "alpha2",
+                "addon_support": "yes"
+            },
+            {
+                "major": "19",
+                "minor": "0",
+                "tag": "alpha",
                 "tagversion":"1",
                 "revision": "20200726-db40b2ade4",
                 "extrainfo": "alpha1",
