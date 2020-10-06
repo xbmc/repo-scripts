@@ -17,13 +17,14 @@ import sys
 import xbmc  # pylint: disable=import-error
 import xbmcaddon  # pylint: disable=import-error
 import xbmcgui  # pylint: disable=import-error
+import xbmcvfs  # pylint: disable=import-error
 
 ADDON = xbmcaddon.Addon('service.xbmc.versioncheck')
 ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_NAME = ADDON.getAddonInfo('name')
 if sys.version_info[0] >= 3:
     ADDON_PATH = ADDON.getAddonInfo('path')
-    ADDON_PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+    ADDON_PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 else:
     ADDON_PATH = ADDON.getAddonInfo('path').decode('utf-8')
     ADDON_PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
@@ -154,7 +155,7 @@ def dialog_yes_no(line1=0, line2=0):
     :return: users selection (yes / no)
     :rtype: bool
     """
-    return xbmcgui.Dialog().yesno(ADDON_NAME, localise(line1), localise(line2))
+    return xbmcgui.Dialog().yesno(ADDON_NAME, '[CR]'.join([localise(line1), localise(line2)]))
 
 
 def upgrade_message(msg):
@@ -166,7 +167,10 @@ def upgrade_message(msg):
     wait_for_end_of_video()
 
     if ADDON.getSetting('lastnotified_version') < ADDON_VERSION:
-        xbmcgui.Dialog().ok(ADDON_NAME, localise(msg), localise(32001), localise(32002))
+        xbmcgui.Dialog().ok(
+            ADDON_NAME,
+            '[CR]'.join([localise(msg), localise(32001), localise(32002)])
+        )
     else:
         log('Already notified one time for upgrading.')
 
@@ -213,18 +217,18 @@ def upgrade_message2(version_installed, version_available, version_stable, old_v
     # Ignore any add-on updates as those only count for != stable
     if old_version == 'stable' and ADDON.getSetting('lastnotified_stable') != msg_stable:
         if xbmcaddon.Addon('xbmc.addon').getAddonInfo('version') < '13.9.0':
-            xbmcgui.Dialog().ok(ADDON_NAME, msg, localise(32030), localise(32031))
+            xbmcgui.Dialog().ok(ADDON_NAME, '[CR]'.join([msg, localise(32030), localise(32031)]))
         else:
-            xbmcgui.Dialog().ok(ADDON_NAME, msg, localise(32032), localise(32033))
+            xbmcgui.Dialog().ok(ADDON_NAME, '[CR]'.join([msg, localise(32032), localise(32033)]))
         ADDON.setSetting('lastnotified_stable', msg_stable)
 
     elif old_version != 'stable' and ADDON.getSetting('lastnotified_version') != msg_available:
         if xbmcaddon.Addon('xbmc.addon').getAddonInfo('version') < '13.9.0':
             # point them to xbmc.org
-            xbmcgui.Dialog().ok(ADDON_NAME, msg, localise(32035), localise(32031))
+            xbmcgui.Dialog().ok(ADDON_NAME, '[CR]'.join([msg, localise(32035), localise(32031)]))
         else:
             # use kodi.tv
-            xbmcgui.Dialog().ok(ADDON_NAME, msg, localise(32035), localise(32033))
+            xbmcgui.Dialog().ok(ADDON_NAME, '[CR]'.join([msg, localise(32035), localise(32033)]))
 
         ADDON.setSetting('lastnotified_version', msg_available)
 
