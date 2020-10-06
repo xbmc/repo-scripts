@@ -13,6 +13,7 @@
 
 """
 
+import platform
 import sys
 
 import xbmc  # pylint: disable=import-error
@@ -33,14 +34,20 @@ from .json_interface import get_version_file_list
 from .json_interface import get_installed_version
 from .versions import compare_version
 
-
 if sys.version_info[0] == 3 and sys.version_info[1] >= 8:
-    from .distro import distro
-    DISTRIBUTION = distro.linux_distribution(full_distribution_name=False)[0].lower()
+    try:
+        from .distro import distro
+
+        DISTRIBUTION = distro.linux_distribution(full_distribution_name=False)[0].lower()
+
+    except (AttributeError, ImportError):
+        DISTRIBUTION = ''
+
 else:
-    import platform
-    # pylint: disable=deprecated-method
-    DISTRIBUTION = platform.linux_distribution(full_distribution_name=0)[0].lower()
+    DISTRIBUTION = platform.linux_distribution(full_distribution_name=0)[0].lower()  # pylint: disable=deprecated-method
+
+if not DISTRIBUTION:
+    DISTRIBUTION = platform.uname().system.lower()
 
 
 def _version_check():
@@ -127,7 +134,10 @@ def _check_cryptography():
     ver_parts = list(map(int, ver.split('.')))
     if len(ver_parts) < 2 or ver_parts[0] < 1 or (ver_parts[0] == 1 and ver_parts[1] < 7):
         log('Python cryptography module version %s is too old, at least version 1.7 needed' % ver)
-        xbmcgui.Dialog().ok(ADDON_NAME, localise(32040) % ver, localise(32041), localise(32042))
+        xbmcgui.Dialog().ok(
+            ADDON_NAME,
+            '[CR]'.join([localise(32040) % ver, localise(32041), localise(32042)])
+        )
 
 
 def run():

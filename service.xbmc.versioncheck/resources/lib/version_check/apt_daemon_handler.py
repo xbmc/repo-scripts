@@ -16,9 +16,9 @@ from .common import log
 from .handler import Handler
 
 try:
-    import apt  # pylint: disable=import-error
-    from aptdaemon import client  # pylint: disable=import-error
-    from aptdaemon import errors  # pylint: disable=import-error
+    import apt
+    from aptdaemon import client
+    from aptdaemon import errors
 except ImportError:
     apt = None
     client = None
