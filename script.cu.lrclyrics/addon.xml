@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.8.1" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.8.3" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.chardet" version="2.2.1"/>
@@ -78,7 +78,8 @@
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
-		<news>- fix genius scraper
-- remove broken scrapers</news>
+		<news>- add syair scraper
+- fix dark lyrics scraper
+- remove broken lyricwiki scraper</news>
 	</extension>
 </addon>

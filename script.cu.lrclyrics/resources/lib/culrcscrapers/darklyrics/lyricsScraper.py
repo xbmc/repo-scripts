@@ -6,8 +6,11 @@ smory
 '''
 
 import hashlib
+import math
 import urllib2
 import re
+import requests
+import time
 from utilities import *
 
 __title__ = 'darklyrics'
@@ -18,14 +21,25 @@ class LyricsFetcher:
     
     def __init__(self):
         self.base_url = 'http://www.darklyrics.com/'
-        self.searchUrl = 'http://www.darklyrics.com/search?q=%term%'
+        self.searchUrl = 'http://www.darklyrics.com/search?q=%s'
+        self.cookie = self.getCookie()
+
+    def getCookie(self):
+         # http://www.darklyrics.com/tban.js
+         lastvisitts = str(int(math.ceil(time.time() * 1000 / (60 * 60 * 6 * 1000))))
+         lastvisittscookie = 0
+         for i in range(len(lastvisitts)):
+             lastvisittscookie = ((lastvisittscookie << 5) - lastvisittscookie) + ord(lastvisitts[i])
+             lastvisittscookie = lastvisittscookie & lastvisittscookie
+         return str(lastvisittscookie)
         
     def search(self, artist, title):
-        term = urllib2.quote((artist if artist else '') + ' ' + (title if title else ''));
+        term = urllib2.quote((artist if artist else '') + '+' + (title if title else ''));
         
         try:
-            request = urllib2.urlopen(self.searchUrl.replace('%term%', term))
-            searchResponse = request.read();
+            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            req = requests.get(self.searchUrl % term, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
+            searchResponse = req.text
         except:
             return None
 
@@ -51,8 +65,9 @@ class LyricsFetcher:
     
     def findLyrics(self, url, index):
         try:
-            request = urllib2.urlopen(url);
-            res = request.read();
+            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
+            res = req.text
         except:
             return None
         
@@ -73,10 +88,11 @@ class LyricsFetcher:
         
     def getAlbumName(self, url):
         try:
-            request = urllib2.urlopen(url);
-            res = request.read();
+            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
+            res = req.text
         except:
-            return '';
+            return ''
              
         match = re.search('<h2>(?:album|single|ep|live):?\s?(.*?)</h2>', res, re.IGNORECASE);
         
