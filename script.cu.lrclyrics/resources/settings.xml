@@ -39,11 +39,6 @@
 				</setting>
 			</group>
 			<group id="4" label="32155">
-				<setting help="" id="lyricwiki" label="32911" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting help="" id="genius" label="32912" type="boolean">
 					<level>0</level>
 					<default>true</default>

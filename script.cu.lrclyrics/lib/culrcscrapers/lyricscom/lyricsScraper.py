@@ -1,35 +1,33 @@
 #-*- coding: UTF-8 -*-
 import re
-import urllib.request
+import requests
 import urllib.parse
-import socket
 import difflib
 from bs4 import BeautifulSoup
 from lib.utils import *
 
 __title__ = 'lyricscom'
-__priority__ = '230'
+__priority__ = '240'
 __lrc__ = False
 
 
-socket.setdefaulttimeout(10)
-
 class LyricsFetcher:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        self.DEBUG = kwargs['debug']
+        self.settings = kwargs['settings']
         self.url = 'http://www.lyrics.com/serp.php?st=%s&qtype=2'
 
     def get_lyrics(self, song):
-        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
-        lyrics = Lyrics()
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title), debug=self.DEBUG)
+        lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
         try:
-            request = urllib.request.urlopen(self.url % urllib.parse.quote_plus(song.artist))
-            response = request.read()
+            request = requests.get(self.url % urllib.parse.quote_plus(song.artist), timeout=10)
+            response = request.text
         except:
             return
-        request.close()
         soup = BeautifulSoup(response, 'html.parser')
         url = ''
         for link in soup.find_all('a'):
@@ -38,11 +36,10 @@ class LyricsFetcher:
                 break
         if url:
             try:
-                req = urllib.request.urlopen(url)
-                resp = req.read()
+                req = requests.get(url, timeout=10)
+                resp = req.text
             except:
                 return
-            req.close()
             soup = BeautifulSoup(resp, 'html.parser')
             url = ''
             for link in soup.find_all('a'):
@@ -51,11 +48,10 @@ class LyricsFetcher:
                     break
             if url:
                 try:
-                    req2 = urllib.request.urlopen(url)
-                    resp2 = req2.read().decode('utf-8')
+                    req2 = requests.get(url, timeout=10)
+                    resp2 = req2.text
                 except:
                     return
-                req2.close()
                 matchcode = re.search('<pre.*?>(.*?)</pre>', resp2, flags=re.DOTALL)
                 if matchcode:
                     lyricscode = (matchcode.group(1))

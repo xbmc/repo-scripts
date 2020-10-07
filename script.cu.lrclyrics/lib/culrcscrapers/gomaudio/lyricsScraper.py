@@ -6,9 +6,8 @@ edge
 '''
 
 import sys
-import socket
 import hashlib
-import urllib.request
+import requests
 import urllib.parse
 import re
 import unicodedata
@@ -19,7 +18,6 @@ __title__ = 'GomAudio'
 __priority__ = '110'
 __lrc__ = True
 
-socket.setdefaulttimeout(10)
 
 GOM_URL = 'http://newlyrics.gomtv.com/cgi-bin/lyrics.cgi?cmd=find_get_lyrics&file_key=%s&title=%s&artist=%s&from=gomaudio_local'
 
@@ -53,12 +51,14 @@ class gomClient(object):
         return m,s,ms
 
 class LyricsFetcher:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        self.DEBUG = kwargs['debug']
+        self.settings = kwargs['settings']
         self.base_url = 'http://newlyrics.gomtv.com/'
 
     def get_lyrics(self, song, key=None, ext=None):
-        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
-        lyrics = Lyrics()
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title), debug=self.DEBUG)
+        lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
@@ -71,15 +71,16 @@ class LyricsFetcher:
             if not key:
                 return None
             url = GOM_URL %(key, urllib.parse.quote(remove_accents(song.title).encode('euc-kr')), urllib.parse.quote(remove_accents(song.artist).encode('euc-kr')))
-            response = urllib.request.urlopen(url)
-            Page = response.read().decode('euc-kr')
+            response = requests.get(url, timeout=10)
+            response.encoding = 'euc-kr'
+            Page = response.text
         except:
             log('%s: %s::%s (%d) [%s]' % (
                     __title__, self.__class__.__name__,
                     sys.exc_info()[2].tb_frame.f_code.co_name,
                     sys.exc_info()[2].tb_lineno,
                     sys.exc_info()[1]
-               ))
+               ), debug=self.DEBUG)
             return None
         if Page[:Page.find('>')+1] != '<lyrics_reply result="0">':
             return None

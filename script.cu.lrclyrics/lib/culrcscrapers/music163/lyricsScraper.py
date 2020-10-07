@@ -6,9 +6,8 @@ osdlyrics
 '''
 
 import os
-import socket
 import urllib
-import urllib.request
+import requests
 import re
 import random
 import difflib
@@ -18,18 +17,20 @@ __title__ = "Music163"
 __priority__ = '120'
 __lrc__ = True
 
-UserAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
+headers = {}
+headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
 
-socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        self.DEBUG = kwargs['debug']
+        self.settings = kwargs['settings']
         self.SEARCH_URL = 'http://music.163.com/api/search/get'
         self.LYRIC_URL = 'http://music.163.com/api/song/lyric'
 
     def get_lyrics(self, song):
-        log("%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
-        lyrics = Lyrics()
+        log("%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title), debug=self.DEBUG)
+        lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
@@ -38,11 +39,8 @@ class LyricsFetcher:
         search = '?s=%s+%s&type=1' % (artist, title)
         try:
             url = self.SEARCH_URL + search
-            request = urllib.request.Request(url)
-            request.add_header('User-Agent', UserAgent)
-            response = urllib.request.urlopen(request)
-            Page = response.read()
-            result = json.loads(Page)
+            response = requests.get(url, headers=headers, timeout=10)
+            result = response.json()
         except:
             return None
         links = []
@@ -64,12 +62,9 @@ class LyricsFetcher:
     def get_lyrics_from_list(self, link):
         title,url,artist,song = link
         try:
-            log('%s: search url: %s' % (__title__, url))
-            request = urllib.request.Request(url)
-            request.add_header('User-Agent', UserAgent)
-            response = urllib.request.urlopen(request)
-            Page = response.read()
-            result = json.loads(Page)
+            log('%s: search url: %s' % (__title__, url), debug=self.DEBUG)
+            response = requests.get(url, headers=headers, timeout=10)
+            result = response.json()
         except:
             return None
         if 'lrc' in result:

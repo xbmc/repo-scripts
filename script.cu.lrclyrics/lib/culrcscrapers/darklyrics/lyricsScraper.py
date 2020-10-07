@@ -17,9 +17,11 @@ __title__ = 'darklyrics'
 __priority__ = '250'
 __lrc__ = False
 
+
 class LyricsFetcher:
-    
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        self.DEBUG = kwargs['debug']
+        self.settings = kwargs['settings']
         self.base_url = 'http://www.darklyrics.com/'
         self.searchUrl = 'http://www.darklyrics.com/search?q=%s'
         self.cookie = self.getCookie()
@@ -37,7 +39,7 @@ class LyricsFetcher:
         term = urllib.parse.quote((artist if artist else '') + '+' + (title if title else ''))
         try:
             headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
-            req = requests.get(self.searchUrl % term, headers=headers, cookies={'lastvisitts': self.cookie})
+            req = requests.get(self.searchUrl % term, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
             searchResponse = req.text
         except:
             return None
@@ -60,7 +62,7 @@ class LyricsFetcher:
     def findLyrics(self, url, index):
         try:
             headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
-            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie})
+            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
             res = req.text
         except:
             return None
@@ -81,7 +83,7 @@ class LyricsFetcher:
     def getAlbumName(self, url):
         try:
             headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
-            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie})
+            req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
             res = req.text
         except:
             return ''
@@ -92,8 +94,8 @@ class LyricsFetcher:
             return ''
 
     def get_lyrics(self, song):
-        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
-        lyrics = Lyrics()
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title), debug=self.DEBUG)
+        lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__

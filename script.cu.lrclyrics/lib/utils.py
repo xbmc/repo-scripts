@@ -1,5 +1,4 @@
 import chardet
-import json
 import os
 import re
 import sys
@@ -14,8 +13,8 @@ ADDONNAME = ADDON.getAddonInfo('name')
 ADDONICON = ADDON.getAddonInfo('icon')
 ADDONVERSION = ADDON.getAddonInfo('version')
 ADDONID = ADDON.getAddonInfo('id')
-CWD = xbmc.translatePath(ADDON.getAddonInfo('path'))
-PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+CWD = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 LANGUAGE = ADDON.getLocalizedString
 
 CANCEL_DIALOG = (9, 10, 92, 216, 247, 257, 275, 61467, 61448,)
@@ -24,9 +23,9 @@ ACTION_CODEC = (0, 27,)
 LYRIC_SCRAPER_DIR = os.path.join(CWD, 'lib', 'culrcscrapers')
 WIN = xbmcgui.Window(10000)
 
-def log(txt):
-    if ADDON.getSettingBool('log_enabled'):
-        message = '%s: %s' % (ADDONID, txt)
+def log(*args, **kwargs):
+    if kwargs['debug']:
+        message = '%s: %s' % (ADDONID, args[0])
         xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 def deAccent(str):
@@ -46,54 +45,62 @@ def get_textfile(filepath):
     except:
         return None
 
-def get_artist_from_filename(filename):
+def get_artist_from_filename(*args, **kwargs):
+    filename = kwargs['filename']
+    SETTING_READ_FILENAME_FORMAT = kwargs['opt']['read_filename_format']
+    DEBUG = kwargs['opt']['debug']
     try:
         artist = ''
         title = ''
         basename = os.path.basename(filename)
         # Artist - title.ext
-        if ADDON.getSettingInt('read_filename_format') == 0:
+        if SETTING_READ_FILENAME_FORMAT == 0:
             artist = basename.split('-', 1)[0].strip()
             title = os.path.splitext(basename.split('-', 1)[1].strip())[0]
         # Artist/Album/title.ext or Artist/Album/Track (-) title.ext
-        elif ADDON.getSettingInt('read_filename_format') in (1,2):
+        elif SETTING_READ_FILENAME_FORMAT in (1,2):
             artist = os.path.basename(os.path.split(os.path.split(filename)[0])[0])
             # Artist/Album/title.ext
-            if ADDON.getSettingInt('read_filename_format') == 1:
+            if SETTING_READ_FILENAME_FORMAT == 1:
                 title = os.path.splitext(basename)[0]
             # Artist/Album/Track (-) title.ext
-            elif ADDON.getSettingInt('read_filename_format') == 2:
+            elif SETTING_READ_FILENAME_FORMAT == 2:
                 title = os.path.splitext(basename)[0].split(' ', 1)[1].lstrip('-').strip()
         # Track Artist - title.ext
-        elif ADDON.getSettingInt('read_filename_format') == 3:
+        elif SETTING_READ_FILENAME_FORMAT == 3:
             at = basename.split(' ', 1)[1].strip()
             artist = at.split('-', 1)[0].strip()
             title = os.path.splitext(at.split('-', 1)[1].strip())[0]
         # Track - Artist - title.ext
-        elif ADDON.getSettingInt('read_filename_format') == 4:
+        elif SETTING_READ_FILENAME_FORMAT == 4:
             artist = basename.split('-', 2)[1].strip()
             title = os.path.splitext(basename.split('-', 2)[2].strip())[0]
     except:
         # invalid format selected
-        log('failed to get artist and title from filename')
+        log('failed to get artist and title from filename', debug=DEBUG)
     return artist, title
 
 class Lyrics:
-    def __init__(self):
-        self.song = Song()
+    def __init__(self, *args, **kwargs):
+        settings = kwargs['settings']
+        self.song = Song(opt=settings)
         self.lyrics = ''
         self.source = ''
         self.list = None
         self.lrc = False
 
 class Song:
-    def __init__(self, in_artist='', in_title=''):
-        self.artist = in_artist
-        self.title = in_title
+    def __init__(self, *args, **kwargs):
+        self.artist = ''
+        self.title = ''
         self.filepath = ''
         self.embed = ''
         self.source = ''
         self.analyze_safe = True
+        self.SETTING_SAVE_FILENAME_FORMAT = kwargs['opt']['save_filename_format']
+        self.SETTING_SAVE_LYRICS_PATH = kwargs['opt']['save_lyrics_path']
+        self.SETTING_SAVE_SUBFOLDER = kwargs['opt']['save_subfolder']
+        self.SETTING_SAVE_SUBFOLDER_PATH = kwargs['opt']['save_subfolder_path']
 
     def __str__(self):
         return 'Artist: %s, Title: %s' % (self.artist, self.title)
@@ -106,10 +113,10 @@ class Song:
             ext = '.lrc'
         else:
             ext = '.txt'
-        if ADDON.getSettingInt('save_filename_format') == 0:
-            return os.path.join(ADDON.getSettingString('save_lyrics_path'), self.artist, self.title + ext)
+        if self.SETTING_SAVE_FILENAME_FORMAT == 0:
+            return os.path.join(self.SETTING_SAVE_LYRICS_PATH, self.artist, self.title + ext)
         else:
-            return os.path.join(ADDON.getSettingString('save_lyrics_path'), self.artist + ' - ' + self.title + ext)
+            return os.path.join(self.SETTING_SAVE_LYRICS_PATH, self.artist + ' - ' + self.title + ext)
 
     def path2(self, lrc):
         if lrc:
@@ -119,37 +126,35 @@ class Song:
         dirname = os.path.dirname(self.filepath)
         basename = os.path.basename(self.filepath)
         filename = basename.rsplit('.', 1)[0]
-        if ADDON.getSettingBool('save_subfolder'):
-            return os.path.join(dirname, ADDON.getSettingString('save_subfolder_path'), filename + ext)
+        if self.SETTING_SAVE_SUBFOLDER:
+            return os.path.join(dirname, self.SETTING_SAVE_SUBFOLDER_PATH, filename + ext)
         else:
             return os.path.join(dirname, filename + ext)
 
     @staticmethod
-    def current():
-        song = Song.by_offset(0)
+    def current(*args, **kwargs):
+        kwargs = kwargs['opt']
+        song = Song.by_offset(offset=0, opt=kwargs)
         return song
 
     @staticmethod
-    def next():
-        song = Song.by_offset(1)
+    def next(*args, **kwargs):
+        kwargs = kwargs['opt']
+        song = Song.by_offset(offset=1, opt=kwargs)
         if song.artist != '' and song.title != '':
             return song
 
     @staticmethod
-    def by_offset(offset = 0):
-        song = Song()
+    def by_offset(*args, **kwargs):
+        offset = kwargs['offset']
+        SETTING_READ_FILENAME = kwargs['opt']['read_filename']
+        SETTING_CLEAN_TITLE = kwargs['opt']['clean_title']
+        song = Song(opt=kwargs['opt'])
         if offset > 0:
             offset_str = '.offset(%i)' % offset
-            try:
-                pos = int(xbmc.getInfoLabel('MusicPlayer.PlaylistPosition')) + offset
-                json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Playlist.GetItems", "params":{"properties":["file"], "playlistid":0, "limits":{"start":%i, "end":%i}}, "id": 1}' % (pos-1, pos))
-                json_response = json.loads(json_query)
-                song.filepath = json_response['result']['items'][0]['file']
-            except:
-                song.filepath = ''
         else:
             offset_str = ''
-            song.filepath = xbmc.getInfoLabel('Player.Filenameandpath')
+        song.filepath = xbmc.getInfoLabel('Player%s.Filenameandpath' % offset_str)
         song.title = xbmc.getInfoLabel('MusicPlayer%s.Title' % offset_str).replace('\\', ' & ').replace('/', ' & ').replace('  ',' ').replace(':','-').strip('.')
         song.artist = xbmc.getInfoLabel('MusicPlayer%s.Artist' % offset_str).replace('\\', ' & ').replace('/', ' & ').replace('  ',' ').replace(':','-').strip('.')
         song.embed = xbmc.getInfoLabel('MusicPlayer%s.Lyrics' % offset_str)
@@ -159,8 +164,8 @@ class Song:
         match = regex.match(song.title)
         if match:
             song.title = song.title[4:]
-        if xbmc.getCondVisibility('Player.IsInternetStream') or xbmc.getCondVisibility('Pvr.IsPlayingRadio') or (xbmc.getInfoLabel('MusicPlayer.Property(do_not_analyze)') == 'true'):
-            # disable search for embedded lyrics for internet streams, or if explicitly told by the music addon we're listening to
+        if xbmc.getCondVisibility('Player.IsInternetStream') or xbmc.getCondVisibility('Pvr.IsPlayingRadio'):
+            # disable search for embedded lyrics for internet streams
             song.analyze_safe = False
         if not song.artist:
             # We probably listen to online radio which usually sets the song title as 'Artist - Title' (via ICY StreamTitle)
@@ -170,8 +175,8 @@ class Song:
                 song.title = song.title[sep + 1:].strip()
                 # The title can contains some additional info in brackets at the end, so we remove it
                 song.title = re.sub(r'\([^\)]*\)$', '', song.title)
-        if (song.filepath and ((not song.title) or (not song.artist) or (ADDON.getSettingBool('read_filename')))):
-            song.artist, song.title = get_artist_from_filename(song.filepath)
-        if ADDON.getSettingBool('clean_title'):
+        if (song.filepath and ((not song.title) or (not song.artist) or (SETTING_READ_FILENAME))):
+            song.artist, song.title = get_artist_from_filename(filename=song.filepath, opt=kwargs['opt'])
+        if SETTING_CLEAN_TITLE:
             song.title = re.sub(r'\([^\)]*\)$', '', song.title)
         return song
