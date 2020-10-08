@@ -7,12 +7,13 @@ class GUI(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         self.function = kwargs['function']
         self.offset = kwargs['offset']
+        self.Monitor = kwargs['monitor']
 
     def onInit(self):
         self._get_controls()
         self._init_values()
         self.exit = False
-        while (not xbmc.Monitor().abortRequested()) and xbmc.getCondVisibility('Player.HasAudio') and (not self.exit):
+        while (not self.Monitor.abortRequested()) and xbmc.getCondVisibility('Player.HasAudio') and (not self.exit):
             xbmc.sleep(100)
         self.close()
 

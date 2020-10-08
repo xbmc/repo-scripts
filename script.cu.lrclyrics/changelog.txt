@@ -1,3 +1,14 @@
+v6.3.1
+- skin cosmetics
+- move all scrapers to python requests
+- fix bug with monitor class
+
+v6.3.0
+- remove the need for list control 200
+- remove support for manually searching for lyrics
+- don't use window properties for inter-thread communication
+- remove thread locking
+
 v6.2.4
 - fix darklyrics scraper
 - really really fix reading embedded lyrics from remote files

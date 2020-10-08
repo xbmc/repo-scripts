@@ -10,10 +10,13 @@ __priority__ = '220'
 __lrc__ = False
 
 class LyricsFetcher:
+    def __init__(self, *args, **kwargs):
+        self.DEBUG = kwargs['debug']
+        self.settings = kwargs['settings']
 
     def get_lyrics(self, song):
-        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
-        lyrics = Lyrics()
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title), debug=self.DEBUG)
+        lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
@@ -30,19 +33,19 @@ class LyricsFetcher:
 
     def direct_url(self, url):
         try:
-            log('%s: direct url: %s' % (__title__, url))
-            song_search = requests.get(url)
+            log('%s: direct url: %s' % (__title__, url), debug=self.DEBUG)
+            song_search = requests.get(url, timeout=10)
             response = song_search.text
             if response.find('lyrics_text') >= 0:
                 return response
         except:
-            log('error in direct url')
+            log('error in direct url', debug=self.DEBUG)
 
     def search_url(self, artist, title):
         try:
             url = 'http://www.lyricsmode.com/search.php?search=' + urllib.parse.quote_plus(artist.lower() + ' ' + title.lower())
-            log('%s: search url: %s' % (__title__, url))
-            song_search = requests.get(url)
+            log('%s: search url: %s' % (__title__, url), debug=self.DEBUG)
+            song_search = requests.get(url, timeout=10)
             response = song_search.text
             matchcode = re.search('lm-list__cell-title">.*?<a href="(.*?)" class="lm-link lm-link--primary', response, flags=re.DOTALL)
             try:
@@ -53,4 +56,4 @@ class LyricsFetcher:
             except:
                 return
         except:
-            log('error in search url')
+            log('error in search url', debug=self.DEBUG)

@@ -9,7 +9,6 @@ rikels
 https://github.com/rikels/LyricsSearch
 '''
 
-import socket
 import re
 import hashlib
 import difflib
@@ -20,8 +19,6 @@ from lib.utils import *
 __title__ = 'MiniLyrics'
 __priority__ = '100'
 __lrc__ = True
-
-socket.setdefaulttimeout(10)
 
 
 class MiniLyrics(object):
@@ -66,7 +63,10 @@ class MiniLyrics(object):
             result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode('utf-8')
         except UnicodeDecodeError:
             ecd = chardet.detect(bytearray(encddata))
-            result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode(ecd['encoding'])
+            if ecd['encoding']:
+                result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode(ecd['encoding'])
+            else:
+                result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + "".join(map(chr, bytearray(encddata)))
         return result
 
     @staticmethod
@@ -87,7 +87,9 @@ class MiniLyrics(object):
         return result
 
 class LyricsFetcher:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        self.DEBUG = kwargs['debug']
+        self.settings = kwargs['settings']
         self.proxy = None
 
     def htmlDecode(self,string):
@@ -97,8 +99,8 @@ class LyricsFetcher:
         return string
 
     def get_lyrics(self, song):
-        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
-        lyrics = Lyrics()
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title), debug=self.DEBUG)
+        lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
@@ -114,7 +116,7 @@ class LyricsFetcher:
                    "Content-Type": "application/x-www-form-urlencoded"
                    }
         try:
-            request = requests.post(search_url, data=search_encquery, headers=headers)
+            request = requests.post(search_url, data=search_encquery, headers=headers, timeout=10)
             search_result = request.text
         except:
             return
@@ -147,7 +149,7 @@ class LyricsFetcher:
     def get_lyrics_from_list(self, link):
         title,url,artist,song = link
         try:
-            f = requests.get('http://search.crintsoft.com/l/' + url)
+            f = requests.get('http://search.crintsoft.com/l/' + url, timeout=10)
             lyrics = f.content
         except:
             return

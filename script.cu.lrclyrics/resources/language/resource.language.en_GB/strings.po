@@ -229,10 +229,6 @@ msgctxt "#32905"
 msgid "Syair"
 msgstr ""
 
-msgctxt "#32911"
-msgid "LyricWiki"
-msgstr ""
-
 msgctxt "#32912"
 msgid "Genius"
 msgstr ""
