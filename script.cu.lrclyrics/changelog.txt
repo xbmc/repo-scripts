@@ -1,3 +1,10 @@
+v5.8.3
+- add syair scraper
+- fix darklyrics scraper
+
+v5.8.2
+- remove broken lyricwiki scraper
+
 v5.8.1
 - use single monitor class
 

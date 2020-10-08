@@ -480,7 +480,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         while xbmc.getInfoLabel('Container(110).NumPages') and (int(xbmc.getInfoLabel('Container(110).NumPages')) < 2) and (not self.Monitor.abortRequested()):
             listitem = xbmcgui.ListItem(offscreen=True)
             self.text.addItem(listitem)
-            xbmc.sleep(50)
+            xbmc.sleep(5)
         lines = self.text.size() - 1
         self.blockOSD = False
         return lines
