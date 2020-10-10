@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.speedtester" name="Speed Tester" version="1.1.2+matrix.1" provider-name="Dr0idGuy, dagwieers">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="resources/lib/addon_entry.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">Test your Internet bandwidth</summary>
+    <description lang="en_GB">This add-on tests your Internet bandwith and reports both download and upload speeds and latency from within Kodi.
+
+Use this if you are experiencing streaming issues and you suspect your network to be the cause.</description>
+    <disclaimer lang="en_GB">Speed Tester is powered by speedtest.net</disclaimer>
+    <language>en</language>
+    <license>Apache-2.0</license>
+    <email>dag@wieers.com</email>
+    <website>https://kodi.wiki/view/Add-on:Speed_Tester</website>
+    <source>https://github.com/add-ons/script.speedtester</source>
+    <news>
+v1.1.1 (2020-10-10)
+- Fix issues for Kodi repo review
+
+v1.1.1 (2020-10-10)
+- Add localization
+
+v1.1.0 (2020-09-26)
+- Move add-on to Add-ons project
+- Fix typos and structure of standard output
+
+v1.0.1 (2019-08-06)
+- Initial release
+    </news>
+    <assets>
+      <icon>resources/media/icon.png</icon>
+      <screenshot>resources/media/screenshot01.jpg</screenshot>
+      <screenshot>resources/media/screenshot02.jpg</screenshot>
+      <screenshot>resources/media/screenshot03.jpg</screenshot>
+    </assets>
+  </extension>
+</addon>
