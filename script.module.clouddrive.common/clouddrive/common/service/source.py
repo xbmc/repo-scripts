@@ -18,13 +18,14 @@
 #-------------------------------------------------------------------------------
 
 import datetime
+import json
 import time
 from types import NoneType
 import urllib
 from urllib2 import HTTPError
+from urlparse import urlparse
 
 from clouddrive.common.account import AccountManager
-from clouddrive.common.cache.cache import Cache
 from clouddrive.common.exception import ExceptionUtils, RequestException
 from clouddrive.common.html import XHTML
 from clouddrive.common.remote.errorreport import ErrorReport
@@ -32,8 +33,7 @@ from clouddrive.common.service.base import BaseServerService, BaseHandler
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
-import json
-from urlparse import urlparse
+from clouddrive.common.cache.cache import Cache
 
 
 class Source(BaseHandler):
@@ -138,7 +138,7 @@ class Source(BaseHandler):
         
     def get_drive_list(self):
         drives = []
-        accounts = self._account_manager.load()
+        accounts = self._account_manager.get_accounts()
         provider = self._get_provider()
         for account_id in accounts:
             account = accounts[account_id]
@@ -191,6 +191,7 @@ class Source(BaseHandler):
                             self.get_folder_items(driveid, path[0:path.rfind('/')+1])
                         url = self.get_download_url(driveid, path)
                         headers['location'] = url
+                        Logger.debug('redirect to: ' + url)
                 else:
                     url = self.path + '/'
                     headers['location'] = url

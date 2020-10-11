@@ -21,8 +21,6 @@ import xbmcgui, xbmcvfs
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
 import os
-from clouddrive.common.ui.logger import Logger
-from clouddrive.common.account import AccountManager
 from clouddrive.common.export import ExportManager
 import urllib
 
@@ -243,7 +241,7 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
         self.account_manager = kwargs["account_manager"]
         self.provider = kwargs["provider"]
         self.provider.configure(self.account_manager, self.driveid)
-        self.export_manager = ExportManager(self.account_manager._addon_data_path)
+        self.export_manager = ExportManager(self.account_manager.db._base_path)
         self._addon_name = KodiUtils.get_addon_info('name')
         self._common_addon = KodiUtils.get_common_addon()
         self._dialog = xbmcgui.Dialog()
@@ -275,7 +273,7 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
         self.dest_folder_button = self.getControl(1006)
         
         self.update_library_sw = self.getControl(1007)
-        self.nfo_export_sw = self.getControl(1008)
+        self.download_artwork_sw = self.getControl(1008)
         self.watch_drive_sw = self.getControl(1009)
         self.schedule_sw = self.getControl(1010)
         
@@ -287,19 +285,18 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
         self.schedule_label.setLabel(self._common_addon.getLocalizedString(32083))
         
         self.title_label.setLabel(self._addon_name + ' - ' + self._common_addon.getLocalizedString(32004))
-        self.account_manager.load()
-        account = self.account_manager.get_account_by_driveid(self.driveid)
-        drive = self.account_manager.get_drive_by_driveid(self.driveid)
+        account = self.account_manager.get_by_driveid('account', self.driveid)
+        drive = self.account_manager.get_by_driveid('drive', self.driveid, account)
         drive_name = self.account_manager.get_account_display_name(account, drive, self.provider, True)
         self.drive_name_label.setLabel(drive_name)
         self.drive_folder_label.setLabel(self.name)
         
-        exports = self.export_manager.load()
+        exports = self.export_manager.get_exports()
         export = Utils.get_safe_value(exports, self.item_id, {})
         if export:
             self.editing = True
             self.watch_drive_sw.setSelected(Utils.get_safe_value(export, 'watch', False))
-            self.nfo_export_sw.setSelected(Utils.get_safe_value(export, 'nfo_export', False))
+            self.download_artwork_sw.setSelected(Utils.get_safe_value(export, 'download_artwork', False))
             self.schedule_sw.setSelected(Utils.get_safe_value(export, 'schedule', False))
             self.update_library_sw.setSelected(Utils.get_safe_value(export, 'update_library', False))
             self.schedules = Utils.get_safe_value(export, 'schedules', [])
@@ -319,7 +316,7 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
         return True
     
     def save_export(self):
-        self.export_manager.add_export({
+        self.export_manager.save_export({
             'id': self.item_id,
             'item_driveid': self.item_driveid,
             'driveid': self.driveid,
@@ -327,10 +324,11 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
             'content_type': self.content_type,
             'destination_folder': self.dest_folder_label.getLabel(),
             'watch': self.watch_drive_sw.isSelected(),
-            'nfo_export':self.nfo_export_sw.isSelected(),
+            'download_artwork':self.download_artwork_sw.isSelected(),
             'schedule': self.schedule_sw.isSelected(),
             'update_library': self.update_library_sw.isSelected(),
-            'schedules': self.schedules
+            'schedules': self.schedules,
+            'run_immediately': self.run
         })
     
     def schedule_enabled(self, enabled):
@@ -387,8 +385,8 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
             self.close()
         elif control_id == self.save_button.getId() or control_id == self.save_export_button.getId():
             if self.is_valid_export():
-                self.save_export()
                 self.run = control_id == self.save_export_button.getId()
+                self.save_export()
                 self.close()
                 
         elif control_id == self.dest_folder_button.getId():

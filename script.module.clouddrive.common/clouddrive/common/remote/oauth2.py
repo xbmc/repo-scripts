@@ -48,7 +48,7 @@ class OAuth2(object):
     
     def _on_exception(self, request, e, original_on_exception):
         ex = ExceptionUtils.extract_exception(e, urllib2.HTTPError)
-        if ex and ex.code >= 400 and ex.code <= 599 and ex.code != 503:
+        if ex and ex.code != 503:
             request.tries = request.current_tries
         if original_on_exception and not(original_on_exception is self._on_exception):
             original_on_exception(request, e)
@@ -91,7 +91,7 @@ class OAuth2(object):
         if not access_tokens:
             access_tokens = self.get_access_tokens()
         self._validate_access_tokens(access_tokens, url, data, headers)
-        if time.time() > (access_tokens['date'] + access_tokens['expires_in']):
+        if time.time() > (access_tokens['date'] + access_tokens['expires_in'] - 600):
             access_tokens.update(self.refresh_access_tokens(request_params))
             self._validate_access_tokens(access_tokens, 'refresh_access_tokens', 'Unknown', 'Unknown')
             self.persist_access_tokens(access_tokens)

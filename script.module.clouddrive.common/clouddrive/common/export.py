@@ -27,68 +27,77 @@ from clouddrive.common.remote.request import Request
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
+from clouddrive.common.db import SimpleKeyValueDb
+from _collections import deque
+from clouddrive.common.remote.errorreport import ErrorReport
 
 
 class ExportManager(object):
-    exports = {}
     _export_items_file_format = 'export-%s.items'
-    _addon_data_path = None
-    _config_file_name = 'exports.cfg'
-    _config_path = None
     _strm_extension = '.strm'
 
-    def __init__(self, addon_data_path):
-        self._addon_data_path = addon_data_path
-        self._config_path = os.path.join(addon_data_path, self._config_file_name)
-        if not os.path.exists(addon_data_path):
-            try:
-                os.makedirs(addon_data_path)
-            except:
-                KodiUtils.get_system_monitor().waitForAbort(3)
-                os.makedirs(addon_data_path)
-
-    def load(self):
-        self.exports = {}
-        if os.path.exists(self._config_path):
+    def __init__(self, _base_path):
+        self.exports_db = SimpleKeyValueDb(_base_path, 'exports')
+        self.export_items_db = SimpleKeyValueDb(_base_path, 'export-items')
+        
+        # only if not migrated. ignore if fails to read.
+        config_path = os.path.join(_base_path, 'exports.cfg')
+        if os.path.exists(config_path):
             with KodiUtils.lock:
-                with open(self._config_path, 'rb') as fo:
-                    self.exports = json.loads(fo.read())
-        return self.exports
+                try:
+                    with open(config_path, 'rb') as fo:
+                        exports = json.loads(fo.read())
+                        for exportid in exports:
+                            self.exports_db.set(exportid, exports[exportid])
+                    os.rename(config_path, config_path + '.migrated')
+                except Exception as ex:
+                    Logger.debug("Error migrating exports.")
+                    Logger.debug(ex)
+                    os.rename(config_path, config_path + '.failed')
+        for filename in os.listdir(_base_path):
+            config_path = os.path.join(_base_path, filename)
+            with KodiUtils.lock:
+                try:
+                    if filename[:7] == "export-" and filename[-6:] == ".items": 
+                        exportid = filename.split(".")[0].split("-")[1]
+                        Logger.debug(exportid)
+                        with open(config_path, 'rb') as fo:
+                            items_info = json.loads(fo.read())
+                            self.export_items_db.set(exportid, items_info)
+                        os.rename(config_path, config_path + '.migrated')
+                except Exception as ex:
+                    Logger.debug("Error migrating export items from %s" % filename)
+                    Logger.debug(ex)
+                    os.rename(config_path, config_path + '.failed')
+                
+        
+    def get_exports(self):
+        return self.exports_db.getall()
 
-    def add_export(self, export):
-        self.load()
-        self.exports[export['id']] = export
-        self.save()
-
-    def save(self):
-        with KodiUtils.lock:
-            with open(self._config_path, 'wb') as fo:
-                fo.write(json.dumps(self.exports, sort_keys=True, indent=4))
+    def save_export(self, export):
+        self.exports_db.set(export['id'], export)
 
     def remove_export(self, exportid, keep_local=True):
-        self.load()
-        export = self.exports[exportid]
+        export = self.exports_db.get(exportid)
+        self.exports_db.remove(exportid)
+        self.export_items_db.remove(exportid)
         path = os.path.join(export['destination_folder'], export['name'],'')
         if not keep_local:
             if KodiUtils.file_exists(path):
                 Utils.remove_folder(path)
-            if self.get_items_info_path(exportid):
-                KodiUtils.file_delete(self.get_items_info_path(exportid))
-        del self.exports[exportid]
-        self.save()
-
-    def get_items_info_path(self, exportid):
-        return os.path.join(self._addon_data_path, self._export_items_file_format % exportid)
 
     def get_items_info(self, exportid):
-        items_info = None
-        items_info_path = self.get_items_info_path(exportid)
-        if KodiUtils.file_exists(items_info_path):
-            with KodiUtils.lock:
-                with open(items_info_path, 'rb') as fo:
-                    items_info = eval(fo.read())
-        return items_info
+        return self.export_items_db.get(exportid)
 
+    def save_items_info(self, exportid, items_info):
+        self.export_items_db.set(exportid, items_info)
+    
+    def get_pending_changes(self, exportid):
+        return deque(Utils.default(self.export_items_db.get('pending-' + exportid), []))
+
+    def save_pending_changes(self, exportid, changes):
+        self.export_items_db.set('pending-' + exportid, list(changes))
+                
     @staticmethod
     def add_item_info(items_info, item_id, name, full_local_path, parent, item_type):
         items_info[item_id] = {'name': name, 'full_local_path': full_local_path, 'parent': parent,'type':item_type}
@@ -99,19 +108,22 @@ class ExportManager(object):
             del items_info[item_id]
 
     @staticmethod
-    def create_strm(driveid, item, file_path, content_type, addon_url):
+    def get_strm_link(driveid, item, content_type, addon_url):
         item_id = Utils.str(item['id'])
         item_drive_id = Utils.default(Utils.get_safe_value(item, 'drive_id'), driveid)
+        content = addon_url + '?' + urllib.urlencode(
+                {'action': 'play', 'content_type': content_type, 'item_driveid': item_drive_id, 'item_id': item_id,
+                 'driveid': driveid})
+        return Utils.str(content)
+    
+    @staticmethod
+    def create_text_file(file_path, content):
         f = None
         try:
             f = KodiUtils.file(file_path, 'w')
-            content = addon_url + '?' + urllib.urlencode(
-                {'action': 'play', 'content_type': content_type, 'item_driveid': item_drive_id, 'item_id': item_id,
-                 'driveid': driveid})
-            if item['name_extension'] == 'strm':
-                content = Request(item['download_info']['url'], None).request()
-            f.write(str(content))
-        except:
+            f.write(Utils.str(content))
+        except Exception as e:
+            ErrorReport.handle_exception(e)
             return False
         finally:
             if f:
@@ -119,32 +131,18 @@ class ExportManager(object):
         return True
 
     @staticmethod
-    def create_nfo(item_id, item_driveid, nfo_path, provider):
-        url = provider.get_item(item_driveid=item_driveid, item_id=item_id, include_download_info = True)["download_info"]["url"]
-        headers = {"Authorization":"Bearer %s"%provider.get_access_tokens()['access_token']}
+    def download(item, download_path, provider, on_update_download=None):
+        url = item['download_info']['url']
+        headers = None
+        if provider.download_requires_auth:
+            headers = {"Authorization":"Bearer %s"%provider.get_access_tokens()['access_token']}
         try:
-            response = Request(url, None, headers).request()
-        except:
-            Logger.error('Error on request to: %s' % url)
+            req = Request(url, None, headers, download_path = download_path, on_update_download = on_update_download)
+            req.request()
+        except Exception as e:
+            ErrorReport.handle_exception(e)
             return False
-        f = None
-        try:
-            f=KodiUtils.file(nfo_path,'w')
-            f.write(response)
-        except Exception as err:
-            Logger.error(err)
-            return False
-        finally:
-            if f:
-                f.close()
-        return True
+        return req.success
 
-    def save_items_info(self, exportid, items_info):
-        f = None
-        try:
-            f = KodiUtils.file(self.get_items_info_path(exportid), 'w')
-            f.write(repr(items_info))
-        finally:
-            if f:
-                f.close()
+    
                 

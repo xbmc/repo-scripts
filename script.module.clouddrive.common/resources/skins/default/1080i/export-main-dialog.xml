@@ -249,7 +249,7 @@
 			<width>1300</width>
 			<height>80</height>
 			<texturenofocus>dialog-bg.png</texturenofocus>
-			<label>Create NFO Files</label>
+			<label>Download artwork (.nfo, .banner, .fanart, etc)</label>
 			<textoffsetx>22</textoffsetx>
 			<onup>1007</onup>
 			<ondown>1009</ondown>
@@ -277,7 +277,7 @@
 			<width>1300</width>
 			<height>80</height>
 			<texturenofocus>dialog-bg.png</texturenofocus>
-			<label>Schedule automatic exports</label>
+			<label>Schedule full exports</label>
 			<textoffsetx>22</textoffsetx>
 			<onup>1009</onup>
 			<ondown>1011</ondown>
@@ -335,7 +335,7 @@
 						<right>0</right>
 						<bottom>0</bottom>
 						<texture colordiffuse="FF147A96" border="2">white.png</texture>
-						<visible>Control.HasFocus(1010)</visible>
+						<visible>Control.HasFocus(10100)</visible>
 					</control>
 					<control type="label">
 						<left>10</left>
