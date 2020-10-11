@@ -41,6 +41,14 @@ msgctxt "#32003"
 msgid "Open settings dialog?"
 msgstr "Obro el diàleg de paràmetres?"
 
+msgctxt "#32004"
+msgid "Remove '%s'?"
+msgstr "Voleu treure '%s'?"
+
+msgctxt "#32005"
+msgid "Remove data as well?"
+msgstr "Voleu eliminar les dades també?"
+
 msgctxt "#32101"
 msgid "Add"
 msgstr "Afegeix"
@@ -79,6 +87,14 @@ msgstr ""
 
 msgctxt "#32111"
 msgid "Status"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Torrent Details"
+msgstr "Detalls del torrent"
+
+msgctxt "#32113"
+msgid "[%(status)s] %(down)s down (%(pct).2f%%), %(up)s up (Ratio: %(ratio).2f)"
 msgstr ""
 
 msgctxt "#32200"

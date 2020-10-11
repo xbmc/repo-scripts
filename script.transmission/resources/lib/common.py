@@ -7,8 +7,10 @@ from resources.lib import transmissionrpc
 __addon__ = xbmcaddon.Addon(id='script.transmission')
 get_localized_string = __addon__.getLocalizedString
 
+
 def get_addon_info(name):
     return __addon__.getAddonInfo(name)
+
 
 def get_settings():
     params = {
@@ -20,6 +22,7 @@ def get_settings():
     }
     return params
 
+
 def get_params():
     params = {
         'address': __addon__.getSetting('rpc_host'),
@@ -29,12 +32,15 @@ def get_params():
     }
     return params
 
+
 def get_rpc_client():
     params = get_params()
     return transmissionrpc.Client(**params)
 
+
 def open_settings():
     __addon__.openSettings()
+
 
 def set_setting(name, value):
     __addon__.setSetting(name, value)

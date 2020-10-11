@@ -41,6 +41,14 @@ msgctxt "#32003"
 msgid "Open settings dialog?"
 msgstr "Открыть окно настроек?"
 
+msgctxt "#32004"
+msgid "Remove '%s'?"
+msgstr "Удалить '%s'?"
+
+msgctxt "#32005"
+msgid "Remove data as well?"
+msgstr "Удалить также и данные?"
+
 msgctxt "#32101"
 msgid "Add"
 msgstr "Добавить"
@@ -80,6 +88,14 @@ msgstr "Название"
 msgctxt "#32111"
 msgid "Status"
 msgstr "Статус"
+
+msgctxt "#32112"
+msgid "Torrent Details"
+msgstr "Детали торрента"
+
+msgctxt "#32113"
+msgid "[%(status)s] %(down)s down (%(pct).2f%%), %(up)s up (Ratio: %(ratio).2f)"
+msgstr "[%(status)s] Закачка: %(down)s (%(pct).2f%%), Отдача: %(up)s (Рейтинг: %(ratio).2f)"
 
 msgctxt "#32200"
 msgid "Browse for torrent file"

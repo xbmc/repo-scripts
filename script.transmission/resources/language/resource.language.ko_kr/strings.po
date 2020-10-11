@@ -41,6 +41,14 @@ msgctxt "#32003"
 msgid "Open settings dialog?"
 msgstr ""
 
+msgctxt "#32004"
+msgid "Remove '%s'?"
+msgstr "'%s' 를 제거 하시겠습니까?"
+
+msgctxt "#32005"
+msgid "Remove data as well?"
+msgstr "데이터도 제거 하시겠습니까?"
+
 msgctxt "#32101"
 msgid "Add"
 msgstr "추가"
@@ -79,6 +87,14 @@ msgstr ""
 
 msgctxt "#32111"
 msgid "Status"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Torrent Details"
+msgstr "토렌트 세부 정보"
+
+msgctxt "#32113"
+msgid "[%(status)s] %(down)s down (%(pct).2f%%), %(up)s up (Ratio: %(ratio).2f)"
 msgstr ""
 
 msgctxt "#32200"

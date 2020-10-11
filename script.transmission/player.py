@@ -7,6 +7,7 @@ from resources.lib import transmissionrpc
 from six import iteritems
 import sys
 
+
 class SubstitutePlayer(xbmc.Player):
     def __init__(self):
         xbmc.Player.__init__(self)
@@ -44,6 +45,7 @@ class SubstitutePlayer(xbmc.Player):
             except:
                 self.transmission = None
             self.prev_settings = settings
+
 
 player = SubstitutePlayer()
 

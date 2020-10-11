@@ -41,6 +41,14 @@ msgctxt "#32003"
 msgid "Open settings dialog?"
 msgstr ""
 
+msgctxt "#32004"
+msgid "Remove '%s'?"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Remove data as well?"
+msgstr ""
+
 # Buttons
 # empty strings from id 32004 to 32100
 
@@ -88,6 +96,10 @@ msgstr ""
 
 msgctxt "#32112"
 msgid "Torrent Details"
+msgstr ""
+
+msgctxt "#32113"
+msgid "[%(status)s] %(down)s down (%(pct).2f%%), %(up)s up (Ratio: %(ratio).2f)"
 msgstr ""
 
 # Adding

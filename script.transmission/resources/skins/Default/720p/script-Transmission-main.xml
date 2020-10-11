@@ -214,12 +214,12 @@
 					<height>20</height>
 					<label>$INFO[ListItem.label]</label>
 				</control>
-				<control type="progress">
+				<control type="progress" id="122">
 					<posx>90</posx>
 					<posy>40</posy>
 					<width>640</width>
 					<height>20</height>
-					<info>ListItem.Property(TorrentProgress)</info>
+					<info>ListItem.Property(Progress)</info>
 				</control>
 				<control type="label">
 					<posx>735</posx>
@@ -261,12 +261,12 @@
 					<label>$INFO[ListItem.label]</label>
 					<scroll>true</scroll>
 				</control>
-				<control type="progress">
+				<control type="progress" id="122">
 					<posx>90</posx>
 					<posy>40</posy>
 					<width>640</width>
 					<height>20</height>
-					<info>ListItem.Property(TorrentProgress)</info>
+					<info>ListItem.Property(Progress)</info>
 				</control>
 				<control type="label">
 					<posx>735</posx>
