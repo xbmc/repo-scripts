@@ -67,6 +67,10 @@ def set_item_info(props, item, item_type, icon='%s.png', day_temp=None):
     if 'FanartCode' in keys:
         props['FanartCode'] = weather_code
 
+    if 'ProviderIcon' in keys\
+        and weather.use_provider_icon:
+        props['ProviderIcon'] = 'resource://resource.images.weatherprovidericons.gismeteo/{0}.png'.format(item['icon'])
+
     # Wind
 
     wind = item['wind']

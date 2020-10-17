@@ -180,6 +180,7 @@ class WeatherProperties(object):
                 # extenden properties
                 'Pressure': '',
                 'Precipitation': '',
+                'ProviderIcon': '',
                 }
 
     @staticmethod
@@ -198,6 +199,9 @@ class WeatherProperties(object):
                 'Outlook': '',
                 'OutlookIcon': '',
                 'FanartCode': '',
+
+                # extended properties
+                'ProviderIcon': '',
                 }
 
     @staticmethod
@@ -225,6 +229,7 @@ class WeatherProperties(object):
                 'TempNight': '',
                 'Pressure': '',
                 'Precipitation': '',
+                'ProviderIcon': '',
                 }
 
     @staticmethod
@@ -244,6 +249,7 @@ class WeatherProperties(object):
                 'FeelsLike': '',
                 'Pressure': '',
                 'Precipitation': '',
+                'ProviderIcon': '',
                 }
 
     @staticmethod
@@ -266,6 +272,7 @@ class WeatherProperties(object):
                 'FeelsLike': '',
                 'Pressure': '',
                 'Precipitation': '',
+                'ProviderIcon': '',
                 }
 
     @staticmethod
