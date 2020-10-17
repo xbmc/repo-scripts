@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="weather.gismeteo" version="0.4.2" name="Gismeteo" provider-name="vl.maksime">
+<addon id="weather.gismeteo" version="0.5.2" name="Gismeteo" provider-name="vl.maksime">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.future" version="0.16.0.4"/>
@@ -22,7 +22,7 @@
 		<website>https://www.gismeteo.com/</website>
 		<email>vl.maksime@gmail.com</email>
 		<source>https://github.com/vlmaksime/weather.gismeteo</source>
-		<news>v0.4.2 (2020-05-21)[CR]- Fixed identified bugs[CR][CR]v0.4.1 (2020-05-03)[CR]- Changed data caching mechanism[CR]- Fixed identified bugs[CR]- Added Spanish translation (CHIKIRY WIZARD GROUP)</news>
+		<news>v0.5.2 (2020-10-15)[CR]- Fixed bug with parsing XML data[CR][CR]v0.5.1 (2020-06-01)[CR]- Added the ability to display Gismeteo icons</news>
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
