@@ -49,6 +49,17 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="" id="lastfmkey" label="" type="string">
+					<visible>false</visible>
+					<level>4</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading></heading>
+					</control>
+				</setting>
 			</group>
 		</category>
 	</section>

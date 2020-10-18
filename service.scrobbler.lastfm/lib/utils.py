@@ -24,7 +24,7 @@ LANGUAGE = ADDON.getLocalizedString
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD = ADDON.getAddonInfo('path')
 DEBUG = ADDON.getSettingBool('Debug')
-DATAPATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+DATAPATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 WINDOW = xbmcgui.Window(10000)
 
 socket.setdefaulttimeout(10)
