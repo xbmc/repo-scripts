@@ -205,22 +205,6 @@ msgctxt "#32053"
 msgid "Recent"
 msgstr "אחרונים"
 
-msgctxt "#32054"
-msgid "-unused- Documents"
-msgstr "-לא בשימוש- מסמכים"
-
-msgctxt "#32055"
-msgid "-unused- Special: Photos"
-msgstr "-לא בשימוש- מיוחד: תמונות"
-
-msgctxt "#32056"
-msgid "-unused- Special: Music"
-msgstr "-לא בשימוש- מיוחד: מוסיקה"
-
-msgctxt "#32057"
-msgid "-unused- Shared By Me"
-msgstr "-לא בשימוש- שותף על-ידי"
-
 msgctxt "#32058"
 msgid "Shared With Me"
 msgstr "משותף איתי"

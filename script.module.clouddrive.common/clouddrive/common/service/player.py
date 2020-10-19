@@ -71,19 +71,20 @@ class KodiPlayer(KodiUtils.kodi_player_class()):
         self.addonid = addonid
 
     def onPlayBackStarted(self):
-        Logger.debug('playback started: %s' % self.getPlayingFile())
-        if self.isPlaying() and KodiUtils.get_addon_setting('set_subtitle') == 'true' and self.source_url_matcher.match(self.getPlayingFile()):
-                t = threading.Thread(target=self.get_subtitles, name='%s-getsubtitles' % threading.current_thread().name)
-                t.setDaemon(True)
-                t.start()
-
-        if self.isPlaying() and self.iskrypton and KodiUtils.get_addon_setting('save_resume_watched') == 'true':
-            dbid = KodiUtils.get_home_property('dbid')
-            addonid = KodiUtils.get_home_property('addonid')
-            if addonid and addonid == self.addonid and dbid:
-                t = threading.Thread(target=self.track_progress, name='%s-trackprogress' % threading.current_thread().name)
-                t.setDaemon(True)
-                t.start()
+        if self.isPlaying():
+            Logger.debug('playback started: %s' % self.getPlayingFile())
+            if self.isPlaying() and KodiUtils.get_addon_setting('set_subtitle') == 'true' and self.source_url_matcher.match(self.getPlayingFile()):
+                    t = threading.Thread(target=self.get_subtitles, name='%s-getsubtitles' % threading.current_thread().name)
+                    t.setDaemon(True)
+                    t.start()
+    
+            if self.isPlaying() and self.iskrypton and KodiUtils.get_addon_setting('save_resume_watched') == 'true':
+                dbid = KodiUtils.get_home_property('dbid')
+                addonid = KodiUtils.get_home_property('addonid')
+                if addonid and addonid == self.addonid and dbid:
+                    t = threading.Thread(target=self.track_progress, name='%s-trackprogress' % threading.current_thread().name)
+                    t.setDaemon(True)
+                    t.start()
 
     def onPlayBackEnded(self):
         self.player_stopped()
@@ -108,7 +109,10 @@ class KodiPlayer(KodiUtils.kodi_player_class()):
                 if dbtype and position and total:
                     position = float(position)
                     total = float(total)
-                    percent = position / total * 100
+                    if total > 0:
+                        percent = position / total * 100
+                    else:
+                        percent = 0
                     details = {}
                     Logger.debug('position is %d of %d = %d percent' % (position, total, percent))
                     if percent >= 90:

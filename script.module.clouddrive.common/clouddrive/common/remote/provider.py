@@ -22,11 +22,13 @@ import time
 from clouddrive.common.remote.oauth2 import OAuth2
 from clouddrive.common.remote.signin import Signin
 from clouddrive.common.utils import Utils
+from __builtin__ import False
 
 
 class Provider(OAuth2):
     name = ''
     source_mode = False
+    download_requires_auth = False
     _signin = Signin()
     _account_manager = None
     _driveid = None
@@ -57,13 +59,11 @@ class Provider(OAuth2):
     
     def _account_from_manager(self):
         self.validate_configuration()
-        self._account_manager.load()
-        return self._account_manager.get_account_by_driveid(self._driveid)
+        return self._account_manager.get_by_driveid('account', self._driveid)
 
     def _drive_from_manager(self):
         self.validate_configuration()
-        self._account_manager.load()
-        return self._account_manager.get_drive_by_driveid(self._driveid)
+        return self._account_manager.get_by_driveid('drive', self._driveid)
         
     def get_access_tokens(self):
         return self._account_from_manager()['access_tokens']
@@ -81,12 +81,12 @@ class Provider(OAuth2):
     def persist_access_tokens(self, access_tokens):
         account = self._account_from_manager()
         account['access_tokens'] = access_tokens
-        self._account_manager.add_account(account)
+        self._account_manager.save_account(account)
     
     def persist_change_token(self, change_token):
         drive = self._drive_from_manager()
         drive['change_token'] = change_token
-        self._account_manager.save()
+        self._account_manager.save_drive(drive)
     
     def get_account(self, request_params=None, access_tokens=None):
         raise NotImplementedError()

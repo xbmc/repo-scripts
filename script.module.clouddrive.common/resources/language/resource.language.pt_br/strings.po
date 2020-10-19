@@ -209,22 +209,6 @@ msgctxt "#32053"
 msgid "Recent"
 msgstr "Recente"
 
-msgctxt "#32054"
-msgid "-unused- Documents"
-msgstr "-unused- Documentos"
-
-msgctxt "#32055"
-msgid "-unused- Special: Photos"
-msgstr "-unused- Especial: Fotos"
-
-msgctxt "#32056"
-msgid "-unused- Special: Music"
-msgstr "-unused- Especial: Musica"
-
-msgctxt "#32057"
-msgid "-unused- Shared By Me"
-msgstr "-unused- Compartilhado por mim"
-
 msgctxt "#32058"
 msgid "Shared With Me"
 msgstr "Compartilhado comigo"
