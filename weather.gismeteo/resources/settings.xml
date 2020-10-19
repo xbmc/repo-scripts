@@ -20,6 +20,10 @@
 		<setting label="32133" type="lsep"/>
 		<setting id="PresUnit" label="32134" type="enum" lvalues="32440|32441|32442|32443" default="0"/>
 		<setting id="PrecipUnit" label="32135" type="enum" lvalues="32430|32431" default="0"/>
+		<setting label="32220" type="lsep"/>
+		<setting id="UseProviderIcons" label="32221" type="bool" enable="System.HasAddon(resource.images.weatherprovidericons.gismeteo)" default="false"/>
+		<setting label="32222" type="action" action="InstallAddon(resource.images.weatherprovidericons.gismeteo)" visible="!System.HasAddon(resource.images.weatherprovidericons.gismeteo)"/>
+		<setting label="32223" type="text" enable="false"/>
 	</category>
 	<category label="32103">
 		<setting id="Location1" label="32111" type="text" default=""/>
