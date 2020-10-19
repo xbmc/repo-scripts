@@ -1,5 +1,6 @@
 v4.0.3
-- v19 update
+- v19a2 update
+- fix crash on first run
 
 v4.0.2
 - py3 fix
