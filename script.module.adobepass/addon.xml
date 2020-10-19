@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.adobepass" name="adobepass" version="2020.10.12+matrix.1" provider-name="eracknaphobia">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.requests"/>
+    <import addon="script.module.kodi-six" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">Simplify authentication to services that use adobe primetime (formely adobe pass)</summary>
+    <description lang="en_GB">Simplify Logins authentication services that use adobe primetime (formely adobe pass)</description>
+    <license>GPL-2.0-or-later</license>
+    <source>https://github.com/eracknaphobia/script.module.adobepass</source>
+    <assets>
+        <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>
