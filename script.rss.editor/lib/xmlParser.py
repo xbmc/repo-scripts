@@ -3,6 +3,7 @@ import sys
 import unicodedata
 from xml.dom.minidom import parse, Document, _write_data, Node, Element
 import xbmc
+import xbmcvfs
 import xbmcaddon
 import xbmcgui
 
@@ -41,7 +42,7 @@ getLS = xbmcaddon.Addon().getLocalizedString
 
 class XMLParser:
     def __init__(self):
-        self.RssFeedsPath = xbmc.translatePath('special://userdata/RssFeeds.xml')
+        self.RssFeedsPath = xbmcvfs.translatePath('special://userdata/RssFeeds.xml')
         sane = self.checkRssFeedPathSanity()
         if sane:
             try:
