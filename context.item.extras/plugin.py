@@ -50,14 +50,14 @@ def browse():
 
     for name in dirs:
         li = ListItem(name)
-        if 'fanart' in args:
-            li.setArt({'fanart': args['fanart'][0]})
         path = os.path.join(current_path, name)
         params = {
             b'path': path,
             b'title': args['title'][0],
-            b'fanart': args['fanart'][0],
         }
+        if 'fanart' in args:
+            li.setArt({'fanart': args['fanart'][0]})
+            params.update({b'fanart':args['fanart'][0]})
         url = 'plugin://context.item.extras/?' + urlencode(params)
         xbmcplugin.addDirectoryItem(plugin.handle, url, li, isFolder=True)
 
