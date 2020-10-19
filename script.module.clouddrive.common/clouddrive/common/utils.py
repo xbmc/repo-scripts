@@ -64,7 +64,7 @@ class Utils:
     
     @staticmethod
     def get_safe_value(dictionary, key, default_value=None):
-        if dictionary and key in dictionary:
+        if dictionary and key in dictionary and dictionary[key]:
             return dictionary[key]
         return default_value
     

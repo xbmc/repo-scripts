@@ -220,6 +220,10 @@ msgctxt "#32050"
 msgid "Do you want to help reporting errors to resolve them quickly?"
 msgstr ""
 
+msgctxt "#32051"
+msgid "Download"
+msgstr ""
+
 msgctxt "#32052"
 msgid "Files"
 msgstr ""
@@ -233,15 +237,15 @@ msgid "Resume from %s"
 msgstr ""
 
 msgctxt "#32055"
-msgid "-unused- Special: Photos"
+msgid "Export will start in less than %s seconds"
 msgstr ""
 
 msgctxt "#32056"
-msgid "-unused- Special: Music"
+msgid "Downloading %s"
 msgstr ""
 
 msgctxt "#32057"
-msgid "-unused- Shared By Me"
+msgid "File %s downloaded"
 msgstr ""
 
 msgctxt "#32058"
@@ -358,4 +362,8 @@ msgstr ""
 
 msgctxt "#32086"
 msgid "Do you want to keep the local files of '%s'?"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Download of file %s failed"
 msgstr ""

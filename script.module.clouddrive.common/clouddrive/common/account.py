@@ -19,69 +19,72 @@
 
 import json
 import os
+
+from clouddrive.common.db import SimpleKeyValueDb
+from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
 
 
 class AccountManager(object):
-    accounts = {}
-    _addon_data_path = None
-    _config_file_name = 'accounts.cfg'
-    _config_path = None
+    db = None
     
-    def __init__(self, addon_data_path):
-        self._addon_data_path = addon_data_path
-        self._config_path = os.path.join(addon_data_path, self._config_file_name)
-        if not os.path.exists(addon_data_path):
-            try:
-                os.makedirs(addon_data_path)
-            except:
-                KodiUtils.get_system_monitor().waitForAbort(3)
-                os.makedirs(addon_data_path)
-
-    def load(self):
-        self.accounts = {}
-        if os.path.exists(self._config_path):
+    def __init__(self, _base_path):
+        self.db = SimpleKeyValueDb(_base_path, 'accounts')
+        
+        # only if not migrated. ignore if fails to read.
+        config_path = os.path.join(_base_path, 'accounts.cfg')
+        if os.path.exists(config_path):
             with KodiUtils.lock:
-                with open(self._config_path, 'rb') as fo:
-                    self.accounts = json.loads(fo.read())
-        return self.accounts
+                try:
+                    with open(config_path, 'rb') as fo:
+                        accounts = json.loads(fo.read())
+                        for accountid in accounts:
+                            self.db.set(accountid, accounts[accountid])
+                    os.rename(config_path, os.path.join(_base_path, 'accounts.cfg.migrated'))
+                except Exception as ex:
+                    Logger.debug("Error migrating accounts.")
+                    Logger.debug(ex)
+                    os.rename(config_path, os.path.join(_base_path, 'accounts.cfg.failed'))
     
-    def add_account(self, account):
-        self.load()
-        self.accounts[account['id']] = account
-        self.save()
+    def get_accounts(self):
+        return self.db.getall()
     
-    def get_account_by_driveid(self, driveid):
-        for accountid in self.accounts:
-            for drive in self.accounts[accountid]['drives']:
+    def save_account(self, account):
+        self.db.set(account['id'], account)
+    
+    def get_by_driveid(self, return_type, driveid, account=None, accounts=None):
+        if account:
+            accounts = {account['id'] : account}
+        if not accounts:
+            accounts = self.get_accounts()
+        for accountid in accounts:
+            for drive in accounts[accountid]['drives']:
                 if drive['id'] == driveid:
-                    return self.accounts[accountid]
-        raise AccountNotFoundException(driveid)
+                    if return_type == 'account':
+                        return accounts[accountid]
+                    else:
+                        return drive
+        if return_type == 'account':
+            raise AccountNotFoundException(driveid)
+        else:
+            raise DriveNotFoundException(driveid)
     
-    def get_drive_by_driveid(self, driveid):
-        for account_id in self.accounts:
-            for drive in self.accounts[account_id]['drives']:
-                if drive['id'] == driveid:
-                    return drive
-        raise DriveNotFoundException(driveid)
-    
-    def save(self):
-        with KodiUtils.lock:
-            with open(self._config_path, 'wb') as fo:
-                fo.write(json.dumps(self.accounts, sort_keys=True, indent=4))
+    def save_drive(self, drive, account=None, accounts=None):
+        account = self.get_by_driveid('account', drive['id'], account, accounts)
+        stored_drive = self.get_by_driveid('drive', drive['id'], account, accounts)
+        index = account['drives'].index(stored_drive)
+        account['drives'][index] = drive
+        self.save_account(account)
         
     def remove_account(self, accountid):
-        self.load()
-        del self.accounts[accountid]
-        self.save()
+        self.db.remove(accountid)
     
-    def remove_drive(self, driveid):
-        self.load()
-        account = self.get_account_by_driveid(driveid)
-        drive = self.get_drive_by_driveid(driveid)
+    def remove_drive(self, driveid, account=None, accounts=None):
+        account = self.get_by_driveid('account', driveid, account, accounts)
+        drive = self.get_by_driveid('drive', driveid, account)
         account['drives'].remove(drive)
-        self.save()
+        self.save_account(account)
     
     def get_account_display_name(self, account, drive=None, provider=None, with_format=False):
         s = '[B]%s[/B]' if with_format else '%s'

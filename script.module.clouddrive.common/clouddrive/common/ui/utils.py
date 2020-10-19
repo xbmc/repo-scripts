@@ -179,6 +179,13 @@ class KodiUtils:
         del addon
         return info
     
+    
+    @staticmethod
+    def show_notification(msg, time=5000):
+        import xbmcgui
+        from clouddrive.common.utils import Utils
+        xbmcgui.Dialog().notification(KodiUtils.get_addon_info('name'), msg, Utils.unicode(KodiUtils.get_addon_info('path') + '/icon.png'), time)
+    
     @staticmethod
     def get_service_port(service, addonid=None):
         with KodiUtils.lock:

@@ -25,10 +25,13 @@ from clouddrive.common.exception import RequestException
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.utils import Utils
 from cookielib import CookieJar
+from clouddrive.common.ui.utils import KodiUtils
 
 
 class Request(object):
     _DEFAULT_RESPONSE = '{}'
+    DOWNLOAD_CHUNK_SIZE = 16 * 1024
+    download_progress = 0
     url = None
     data = None
     headers = None
@@ -54,7 +57,9 @@ class Request(object):
     response_text = None
     response_cookies = None
     
-    def __init__(self, url, data, headers=None, tries=3, delay=5, backoff=2, exceptions=None, before_request=None, on_exception=None, on_failure=None, on_success=None, on_complete=None, cancel_operation=None, waiting_retry=None, wait=None, read_content=True):
+    def __init__(self, url, data, headers=None, tries=4, delay=5, backoff=2, exceptions=None, \
+                 before_request=None, on_exception=None, on_failure=None, on_success=None, on_complete=None, on_update_download=None, \
+                 cancel_operation=None, waiting_retry=None, wait=None, read_content=True, download_path=None):
         self.url = url
         self.data = data
         self.headers = headers
@@ -73,6 +78,8 @@ class Request(object):
         self.waiting_retry = waiting_retry
         self.wait = wait
         self.read_content = read_content
+        self.download_path = download_path
+        self.on_update_download = on_update_download
     
     def get_url_for_report(self, url):
         index = url.find('access_token=')
@@ -113,6 +120,8 @@ class Request(object):
             request_report += '\nRequest headers: ' + Utils.str(self.get_headers_for_report(self.headers))
             response_report = '<response_not_set>'
             response = None
+            rex = None
+            download_file = None
             try:
                 Logger.debug(request_report)
                 req = urllib2.Request(self.url, self.data, self.headers)
@@ -124,26 +133,59 @@ class Request(object):
                 cookiejar._policy._now = cookiejar._now = int(time.time())
                 self.response_cookies = cookiejar.make_cookies(response, req)
                 if self.read_content:
-                    self.response_text = response.read()
+                    if self.download_path:
+                        self.response_text = 'Downloading to: ' + self.download_path + '... '
+                        download_file = KodiUtils.file(self.download_path, 'wb')
+                        self.download_progress = 0
+                        while True:
+                            chunk = response.read(self.DOWNLOAD_CHUNK_SIZE)
+                            if not chunk:
+                                break
+                            download_file.write(chunk)
+                            self.download_progress += self.DOWNLOAD_CHUNK_SIZE
+                            if self.on_update_download:
+                                self.on_update_download(self)
+                        self.response_text += ' OK.'
+                    else:
+                        self.response_text = response.read()
                 content_length = self.response_info.getheader('content-length', -1)
                 response_report = '\nResponse Headers:\n%s' % Utils.str(self.response_info)
-                response_report += '\nResponse (%d) content-length=%s, len=<%s>:\n%s' % (self.response_code, content_length, len(self.response_text), self.response_text)
+                response_report += '\nResponse (%d) content-length=%s, len=<%s>:\n' % (self.response_code, content_length, len(self.response_text),)
+                try:
+                    response_report += Utils.str(self.response_text)
+                except:
+                    response_report += '<possible binary content>'
                 self.success = True
                 break
             except self.exceptions as e:
+                Logger.debug('Exception...')
                 root_exception = e
                 response_report = '\nResponse <Exception>: ' 
                 if isinstance(e, urllib2.HTTPError):
+                    self.response_code = e.code
                     self.response_text = Utils.str(e.read())
                     response_report += self.response_text
                 else:
                     response_report += Utils.str(e)
                 rex = RequestException(Utils.str(e), root_exception, request_report, response_report)
+            finally:
+                try:
+                    if download_file:
+                        download_file.close()
+                    Logger.debug(response_report)
+                except:
+                    Logger.debug('unable to print response_report')
+                if response:
+                    response.close()
+            if rex:
                 if self.on_exception:
+                    Logger.debug('calling self.on_exception...')
                     self.on_exception(self, rex)
                 if self.cancel_operation and self.cancel_operation():
                     break
+                Logger.debug('current_tries: ' + str(self.current_tries) + ' maximum tries: ' + str(self.tries) + ' i: ' + str(i))
                 if self.current_tries == self.tries:
+                    Logger.debug('max retries reached')
                     if self.on_failure:
                         self.on_failure(self)
                     if self.on_complete:
@@ -152,17 +194,17 @@ class Request(object):
                     raise rex
                 current_time = time.time()
                 max_waiting_time = current_time + self.current_delay
+                Logger.debug('current_delay: ' + str(self.current_delay) + ' seconds. Waiting...')
                 while (not self.cancel_operation or not self.cancel_operation()) and max_waiting_time > current_time:
                     remaining = round(max_waiting_time-current_time)
                     if self.waiting_retry:
+                        Logger.debug('calling self.waiting_retry...')
                         self.waiting_retry(self, remaining)
                     self.wait(1)
                     current_time = time.time()
+                Logger.debug('Done waiting.')
                 self.current_delay *= self.backoff
-            finally:
-                Logger.debug(response_report);
-                if response:
-                    response.close()
+            
         if self.success and self.on_success:
             self.on_success(self)
         if self.on_complete:

@@ -17,25 +17,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import datetime
+from __builtin__ import True
 import sqlite3
-import time
 
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 
 
-class Cache(object):
-    _addonid = None
+class SimpleKeyValueDb(object):
+    _base_path = None
     _name = None
-    _expiration = None
     _monitor = None
     _abort = False
 
-    def __init__(self, addonid, name, expiration):
-        self._addonid = addonid
+    def __init__(self, _base_path, name):
+        self._base_path = _base_path
         self._name = name
-        self._expiration = expiration
         self._monitor = KodiUtils.get_system_monitor()
     
     def __del__(self):
@@ -43,59 +40,58 @@ class Cache(object):
         del self._monitor
     
     def _get_connection(self):
-        profile_path = KodiUtils.get_addon_info("profile", self._addonid)
-        if not KodiUtils.file_exists(profile_path):
-            KodiUtils.mkdirs(profile_path)
-        db = KodiUtils.translate_path("%s/cache_%s.db" % (profile_path, self._name,))
+        if not KodiUtils.file_exists(self._base_path):
+            KodiUtils.mkdirs(self._base_path)
+        db = KodiUtils.translate_path("%s/%s.db" % (self._base_path, self._name,))
         con = sqlite3.connect(db, timeout=30, isolation_level=None)
-        con.execute('pragma journal_mode=wal;')
-        rs = con.execute("select name from sqlite_master where type='table' AND name='cache'")
+        con.execute("pragma journal_mode=wal")
+        Logger.debug("db [%s] - opened in wal mode" % (self._name, ))
+        rs = con.execute("select name from sqlite_master where type='table' AND name='store'")
         if not rs.fetchone():
             try:
-                con.execute("create table cache(key text unique, value text, expiration integer)")
+                con.execute("create table store(key text unique, value text)")
             except Exception as ex:
                 Logger.debug(ex)
         return con
 
-    def _get_datetime(self, ts):
-        return int(time.mktime(ts.timetuple()))
-
     def get(self, key):
         row = self._read(key)
-        if row and row[1] > self._get_datetime(datetime.datetime.now()):
+        if row:
             return eval(row[0])
         return
+    
+    def getall(self):
+        d = {}
+        rows = self._readall()
+        for row in rows:
+            d[row[0]] = eval(row[1])
+        return d
 
     def set(self, key, value):
-        expiration = self._get_datetime(datetime.datetime.now() + self._expiration)
-        self._insert(key, value, expiration)
+        self._insert(key, value)
     
     def setmany(self, key_value_list):
-        expiration = self._get_datetime(datetime.datetime.now() + self._expiration)
         for kv in key_value_list:
             kv[1] = repr(kv[1])
-            kv.append(expiration)
-        self._execute_sql("insert or replace into cache(key, value, expiration) values(?,?,?)", key_value_list)
+        self._execute_sql("insert or replace into store(key, value) values(?,?)", key_value_list)
         
     def remove(self, key):
-        self._execute_sql("delete from cache where key = ?", (key,))
+        self._execute_sql("delete from store where key = ?", (key,))
     
-    def clear(self):
-        self._execute_sql("delete from cache")
-        Logger.debug("Cache '%s' cleared" % self._name)
-        self.checkpoint()
-
     def checkpoint(self):
         row = self._execute_sql("PRAGMA wal_checkpoint(TRUNCATE)")
-        Logger.debug("Db '%s' checkpoint: %s, %s, %s" % (self._name, row[0], row[1], row[2],))
+        Logger.debug("Db '%s' checkpoint: #d, #d, #d" % (self._name, row[0], row[1], row[2],))
         
+    def _readall(self):
+        return self._execute_sql("select key, value from store", fetchall=True)
+    
     def _read(self, key):
-        return self._execute_sql("select value, expiration from cache where key = ?", (key,))
+        return self._execute_sql("select value from store where key = ?", (key,))
+    
+    def _insert(self, key, value):
+        self._execute_sql("insert or replace into store(key, value) values(?,?)", (key, repr(value)))
         
-    def _insert(self, key, value, expiration):
-        self._execute_sql("insert or replace into cache(key, value, expiration) values(?,?,?)", (key, repr(value), expiration,))
-        
-    def _execute_sql(self, query, data=None):
+    def _execute_sql(self, query, data=None, fetchall=False):
         result = None
         con = self._get_connection()
         with con:
@@ -103,25 +99,29 @@ class Cache(object):
             error = None
             while retries < 15 and not self._abort:
                 try:
-                    con.execute("delete from cache where expiration < ?", (self._get_datetime(datetime.datetime.now()),))
                     if isinstance(data, list):
-                        result = con.executemany(query, data).fetchone()
+                        cur = con.executemany(query, data)
                     elif data:
-                        result = con.execute(query, data).fetchone()
+                        cur = con.execute(query, data)
                     else:
-                        result = con.execute(query).fetchone()
+                        cur = con.execute(query)
+                    
+                    if fetchall:
+                        result = cur.fetchall()
+                    else:
+                        result = cur.fetchone()
                     break
                 except sqlite3.OperationalError as error:
                     if "_database is locked" in error:
                         retries += 1
-                        Logger.debug("Cache query retrying #d [%s]: %s" % (retries, query, str(data),))
+                        Logger.debug("db [%s] - query retry #d: [%s]: %s" % (self._name, retries, query, str(data),))
                         self._monitor.waitForAbort(0.3)
                     else:
                         break
                 except Exception as error:
                     break
             if error:
-                Logger.debug("Error executing cache query [%s]: %s" % (query, str(error),))
+                Logger.debug("db [%s] - Error executing query [%s]: %s" % (self._name, query, str(error),))
         con.close()
         return result
 
