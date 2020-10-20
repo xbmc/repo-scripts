@@ -52,6 +52,9 @@ class Weather(SW_Weather, WeatherProperties):
         self.WEEK_DAY_SHORT = self.week_day_short()
         self.KODILANGUAGE = xbmc.getLanguage().lower()
 
+        iconpack_installed = xbmc.getCondVisibility('System.HasAddon(resource.images.weatherprovidericons.gismeteo)')
+        self.use_provider_icon = self.get_setting('UseProviderIcons') and iconpack_installed
+
     def gismeteo_lang(self):
 
         lang_id = self.get_setting('Language')

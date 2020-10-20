@@ -9,7 +9,8 @@ SimplePlugin micro-framework for Kodi content plugins
 """
 
 from __future__ import unicode_literals
-from future.builtins import *
+from future.builtins import (zip, super,
+                             bytes, dict, int, list, object, str)
 from future.utils import (PY2, PY3, iteritems, itervalues,
                           python_2_unicode_compatible)
 # from future.standard_library import install_aliases
@@ -26,7 +27,6 @@ import inspect
 import time
 import hashlib
 import pickle
-from io import open
 from collections import MutableMapping, namedtuple
 from copy import deepcopy
 from functools import wraps
@@ -102,6 +102,9 @@ def py2_decode(s, encoding='utf-8'):
         s = s.decode(encoding)
     return s
 
+def _kodi_major_version():
+    kodi_version = xbmc.getInfoLabel('System.BuildVersion').split(' ')[0]
+    return kodi_version.split('.')[0]
 
 @contextmanager
 def log_exception(logger=None):
@@ -677,7 +680,10 @@ class Addon(object):
         :param message: message to write to the Kodi log
         :type message: str
         """
-        self.log(message, xbmc.LOGNOTICE)
+        if _kodi_major_version() < '19':
+            self.log(message, xbmc.LOGNOTICE)
+        else:
+            self.log(message, xbmc.LOGINFO)
 
     def log_warning(self, message):
         """
