@@ -19,12 +19,17 @@ import xbmcaddon  # pylint: disable=import-error
 import xbmcgui  # pylint: disable=import-error
 import xbmcvfs  # pylint: disable=import-error
 
+try:
+    xbmc.translatePath = xbmcvfs.translatePath
+except AttributeError:
+    pass
+
 ADDON = xbmcaddon.Addon('service.xbmc.versioncheck')
 ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_NAME = ADDON.getAddonInfo('name')
 if sys.version_info[0] >= 3:
     ADDON_PATH = ADDON.getAddonInfo('path')
-    ADDON_PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+    ADDON_PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
 else:
     ADDON_PATH = ADDON.getAddonInfo('path').decode('utf-8')
     ADDON_PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
