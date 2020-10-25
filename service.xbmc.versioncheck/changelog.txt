@@ -1,4 +1,8 @@
-v0.5.7
+v0.5.9
+- add Kodi 18.9 release
+- fixup Kodi 19 pre alpha2 translatePath
+
+v0.5.7 - 0.5.8
 - add Kodi 19.0 alpha2 release
 - use xbmcvfs for translatePath for matrix
 - fix platforms where subprocess is not available
