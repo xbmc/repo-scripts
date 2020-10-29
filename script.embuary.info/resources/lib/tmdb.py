@@ -306,7 +306,7 @@ def tmdb_handle_person(item):
     list_item.setProperty('deathday', date_format(item.get('deathday', '')))
     list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday', ''), item.get('deathday'))))
     list_item.setProperty('biography', tmdb_fallback_info(item, 'biography'))
-    list_item.setProperty('place_of_birth', item.get('place_of_birth', ''))
+    list_item.setProperty('place_of_birth', item.get('place_of_birth').strip() if item.get('place_of_birth') else '')
     list_item.setProperty('known_for_department', item.get('known_for_department', ''))
     list_item.setProperty('gender', gender)
     list_item.setProperty('id', str(item.get('id', '')))
@@ -495,18 +495,29 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
 
 
 def tmdb_fallback_info(item,key):
-    key_value = item.get(key)
+    if FALLBACK_LANGUAGE == DEFAULT_LANGUAGE:
+        key_value = item.get(key, '').replace('&amp;', '&').strip()
+    else:
+        key_value = tmdb_get_translation(item, key, DEFAULT_LANGUAGE)
 
-    if key_value:
-        return key_value.replace('&amp;', '&')
+    # Default language is empty in the translations dict? Fall back to EN
+    if not key_value:
+        key_value = tmdb_get_translation(item, key, FALLBACK_LANGUAGE)
 
+    return key_value
+
+
+def tmdb_get_translation(item,key,language):
     try:
         for translation in item['translations']['translations']:
-            if translation.get('iso_639_1') == FALLBACK_LANGUAGE:
+
+            if translation.get('iso_639_1') == language:
+
                 if translation['data'][key]:
                     key_value = translation['data'][key]
-                    return key_value.replace('&amp;', '&')
 
+                    if key_value:
+                            return key_value.replace('&amp;', '&').strip()
     except Exception:
         pass
 

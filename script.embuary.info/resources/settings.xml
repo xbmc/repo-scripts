@@ -7,6 +7,8 @@
                 <setting label="$ADDON[script.embuary.info 32023]" type="text" id="tmdb_api_key" default="fc168650632c6597038cf7072a7c20da"/>
                 <setting label="OMDB $ADDON[script.embuary.info 32002]" type="lsep"/>
                 <setting label="$ADDON[script.embuary.info 32023]" type="text" id="omdb_api_key"/>
+                <setting label="Trakt.tv" type="lsep"/>
+                <setting label="$ADDON[script.embuary.info 32023]" type="text" id="trakt_api_key" default="db17981042166c60e1642c483f5be54b12ec86e3401cd67c2514fdf6843a110f"/>
                 <setting label="$ADDON[script.embuary.info 32026]" type="lsep"/>
                 <setting label="$ADDON[script.embuary.info 32027]" type="bool" id="filter_shows" default="true"/>
                 <setting label="$ADDON[script.embuary.info 32028]" type="bool" id="filter_movies" default="false"/>
