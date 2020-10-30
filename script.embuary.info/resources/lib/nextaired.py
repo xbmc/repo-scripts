@@ -6,7 +6,7 @@
 import requests
 
 from resources.lib.helper import *
-from resources.lib.tvdb import *
+from resources.lib.tmdb import *
 from resources.lib.trakt import *
 from resources.lib.localdb import *
 
@@ -65,7 +65,6 @@ class NextAired():
         for item in self.local_media:
             local_media_data.append([item.get('tmdbid'), item.get('tvdbid'), item.get('imdbnumber'), item.get('art'), item.get('title'), item.get('originaltitle'), item.get('year')])
 
-        tvdb_api = TVDB_API()
         trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/8?extended=full&countries=' + COUNTRY_CODE.lower() + '%2Cus')
 
         if trakt_results:
@@ -93,42 +92,44 @@ class NextAired():
                 tvdb_id = show.get('ids', {}).get('tvdb')
                 imdb_id = show.get('ids', {}).get('imdb')
                 tvdb_id_episode = episode.get('ids', {}).get('tvdb')
+                tmdb_id_episode = episode.get('ids', {}).get('tmdb')
+                season_nr = episode.get('season')
+                episode_nr = episode.get('number')
 
                 for i in local_media_data:
                     if str(tmdb_id) == i[0] or str(tvdb_id) == i[1] or str(imdb_id) == i[2] or (tvshowtitle in [i[4], i[5]] and year == i[6]):
-                        tvdb_cache_key = 'nextaired_tvdb_episode_' + COUNTRY_CODE + '_' + str(tvdb_id_episode)
-                        tvdb_query = get_cache(tvdb_cache_key)
+                        episode_cache_key = 'nextaired_tmdb_episode_' + COUNTRY_CODE + '_' + str(tmdb_id_episode)
+                        episode_query = get_cache(episode_cache_key)
 
-                        if not tvdb_query:
-                            tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode))
+                        if not episode_query:
+                            episode_query = tmdb_query(action='tv',
+                                                       call=tmdb_id,
+                                                       get='season',
+                                                       get2=season_nr,
+                                                       get3='episode',
+                                                       get4=episode_nr,
+                                                       params={'append_to_response': 'translations'}
+                                                       )
 
-                            if tvdb_query:
-                                write_cache(tvdb_cache_key, tvdb_query, 48)
+                            if episode_query:
+                                write_cache(episode_cache_key, episode_query, 48)
 
-                        if tvdb_query and not tvdb_query['overview'] and COUNTRY_CODE != 'US':
-                            tvdb_fallback_cache_key = 'nextaired_tvdb_episode_US_' + str(tvdb_id_episode)
-                            tvdb_query = get_cache(tvdb_fallback_cache_key)
+                        if episode_query:
+                            episode_query['localart'] = i[3]
+                            episode_query['showtitle'] = i[4] or i[5]
+                            episode_query['airing'] = airing_date
+                            episode_query['airing_time'] = airing_time
+                            episode_query['weekday'] = weekday
+                            episode_query['weekday_code'] = weekday_code
+                            episode_query['network'] = network
+                            episode_query['country'] = country
+                            episode_query['status'] = status
+                            episode_query['runtime'] = runtime
+                            episode_query['show_id'] = tmdb_id
+                            episode_query['overview'] = tmdb_fallback_info(episode_query, 'overview')
+                            episode_query['name'] = tmdb_fallback_info(episode_query, 'name')
 
-                            if not tvdb_query:
-                                tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode), lang='us')
-
-                                if tvdb_query:
-                                    write_cache(tvdb_fallback_cache_key, tvdb_query, 48)
-
-
-                        if tvdb_query:
-                            tvdb_query['localart'] = i[3]
-                            tvdb_query['showtitle'] = i[4] or i[5]
-                            tvdb_query['airing'] = airing_date
-                            tvdb_query['airing_time'] = airing_time
-                            tvdb_query['weekday'] = weekday
-                            tvdb_query['weekday_code'] = weekday_code
-                            tvdb_query['network'] = network
-                            tvdb_query['country'] = country
-                            tvdb_query['status'] = status
-                            tvdb_query['runtime'] = runtime
-
-                            self.airing_items['week'].append(tvdb_query)
-                            self.airing_items[str(weekday_code)].append(tvdb_query)
+                            self.airing_items['week'].append(episode_query)
+                            self.airing_items[str(weekday_code)].append(episode_query)
 
                         break

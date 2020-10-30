@@ -5,12 +5,11 @@
 
 import routing
 from xbmcgui import ListItem
-from xbmcplugin import addDirectoryItem, endOfDirectory
+from xbmcplugin import *
 from datetime import date
 
 from resources.lib.helper import *
 from resources.lib.tmdb import *
-from resources.lib.tvdb import *
 from resources.lib.trakt import *
 from resources.lib.localdb import *
 from resources.lib.nextaired import *
@@ -106,11 +105,12 @@ def index():
         item =  INDEX_MENU[i]
         li_item = ListItem(item['name'])
         li_item.setArt(DEFAULT_ART)
-        addDirectoryItem(plugin.handle,
+        xbmcplugin.addDirectoryItem(plugin.handle,
                          plugin.url_for(eval(item['route'])),
                          li_item, item['folder'])
 
-    endOfDirectory(plugin.handle)
+    _sortmethods()
+    xbmcplugin.endOfDirectory(plugin.handle)
 
 
 # actions
@@ -135,7 +135,7 @@ def nextaired(day=None):
         for i in INDEX_MENU['nextaired'].get('menu'):
             li_item = ListItem(i.get('name'))
             li_item.setArt(DEFAULT_ART)
-            addDirectoryItem(plugin.handle,
+            xbmcplugin.addDirectoryItem(plugin.handle,
                              plugin.url_for(nextaired, i.get('day')),
                              li_item, True)
 
@@ -152,7 +152,7 @@ def nextaired(day=None):
 
             li_item = ListItem(translated_date)
             li_item.setArt(DEFAULT_ART)
-            addDirectoryItem(plugin.handle,
+            xbmcplugin.addDirectoryItem(plugin.handle,
                              plugin.url_for(nextaired, tmp_day),
                              li_item, True)
 
@@ -161,7 +161,8 @@ def nextaired(day=None):
     else:
         _nextaired(day)
 
-    endOfDirectory(plugin.handle)
+    _sortmethods()
+    xbmcplugin.endOfDirectory(plugin.handle)
 
 def _nextaired(day):
     if day == 'today':
@@ -173,22 +174,19 @@ def _nextaired(day):
     if day == 'week':
         next_aired_results = sort_dict(next_aired_results, 'airing')
 
+    #log(next_aired_results,force=True,json=True)
+
     for i in next_aired_results:
         try:
-            art = i.get('filename', '')
-            if art:
-                thumb = 'https://artworks.thetvdb.com/banners/' + art
-            else:
-                thumb = i['localart'].get('landscape') or i['localart'].get('fanart') or ''
 
             if day != 'week' and day is not None:
-                label = '%s %sx%s. %s' % (i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+                label = '%s %sx%s. %s' % (i['showtitle'], i['season_number'], i['episode_number'], i['name'])
             else:
                 kodi_date = date_format(i['airing'])
-                label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+                label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['season_number'], i['episode_number'], i['name'])
 
-            season = str(i.get('airedSeason', ''))
-            episode = str(i.get('airedEpisodeNumber', ''))
+            season = str(i.get('season_number', ''))
+            episode = str(i.get('episode_number', ''))
             airing_date = i.get('airing', '')
             airing_time = i.get('airing_time', '')
             plot = i.get('overview') or xbmc.getLocalizedString(19055)
@@ -196,10 +194,14 @@ def _nextaired(day):
             overview = [date_format(airing_date) + ' ' + airing_time, plot]
             overview ='[CR]'.join(filter(None, overview))
 
+            thumb = IMAGEPATH + i.get('still_path') if i.get('still_path') else ''
+            if not thumb:
+                thumb = i['localart'].get('landscape') or i['localart'].get('fanart') or ''
+
             li_item = ListItem(label)
             li_item.setArt(i.get('localart'))
             li_item.setArt({'icon': 'DefaultVideo.png', 'thumb': thumb})
-            li_item.setInfo('video', {'title': i.get('episodeName') or xbmc.getLocalizedString(13205),
+            li_item.setInfo('video', {'title': i.get('name') or xbmc.getLocalizedString(13205),
                                       'tvshowtitle': i.get('showtitle') or xbmc.getLocalizedString(13205),
                                       'plot': overview,
                                       'premiered': airing_date,
@@ -215,7 +217,7 @@ def _nextaired(day):
             li_item.setProperty('AirTime', airing_time)
             li_item.setProperty('IsPlayable', 'false')
 
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
+            xbmcplugin.addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', i['show_id']), li_item)
 
         except Exception as error:
             pass
@@ -239,7 +241,7 @@ def discover(directory=None,option=None,filterby=None,page=1,pages=1):
         for i in INDEX_MENU['discover'].get('menu'):
             li_item = ListItem(i.get('name'))
             li_item.setArt(DEFAULT_ART)
-            addDirectoryItem(plugin.handle,
+            xbmcplugin.addDirectoryItem(plugin.handle,
                              plugin.url_for(discover, i.get('call')),
                              li_item, True)
 
@@ -251,7 +253,8 @@ def discover(directory=None,option=None,filterby=None,page=1,pages=1):
         if _previouspage(page):
             li_item = ListItem(ADDON.getLocalizedString(32056))
             li_item.setArt(DEFAULT_ART)
-            addDirectoryItem(plugin.handle,
+            li_item.setProperty('SpecialSort', 'top')
+            xbmcplugin.addDirectoryItem(plugin.handle,
                              plugin.url_for(discover, directory, option, filterby, int(page)-1),
                              li_item, True)
 
@@ -267,7 +270,7 @@ def discover(directory=None,option=None,filterby=None,page=1,pages=1):
             for i in DISCOVER_INDEX[directory]:
                 li_item = ListItem(i.get('name'))
                 li_item.setArt(DEFAULT_ART)
-                addDirectoryItem(plugin.handle,
+                xbmcplugin.addDirectoryItem(plugin.handle,
                                  plugin.url_for(discover, directory, i.get('option')),
                                  li_item, True)
 
@@ -288,7 +291,7 @@ def discover(directory=None,option=None,filterby=None,page=1,pages=1):
                 li_item = ListItem(i.get('name'))
                 li_item.setArt({'icon': icon})
 
-                addDirectoryItem(plugin.handle,
+                xbmcplugin.addDirectoryItem(plugin.handle,
                                  plugin.url_for(discover, directory, option, i.get(filter_value)),
                                  li_item, True)
 
@@ -306,11 +309,13 @@ def discover(directory=None,option=None,filterby=None,page=1,pages=1):
         if _nextpage(page, pages):
             li_item = ListItem(xbmc.getLocalizedString(33078))
             li_item.setArt(DEFAULT_ART)
-            addDirectoryItem(plugin.handle,
+            li_item.setProperty('SpecialSort', 'bottom')
+            xbmcplugin.addDirectoryItem(plugin.handle,
                              plugin.url_for(discover, directory, option, filterby, int(page)+1),
                              li_item, True)
 
-    endOfDirectory(plugin.handle)
+    _sortmethods()
+    xbmcplugin.endOfDirectory(plugin.handle)
 
 
 def _discover_option(call,option):
@@ -361,7 +366,8 @@ def _listing(directory, call, page, pages):
     if _previouspage(page):
         li_item = ListItem(ADDON.getLocalizedString(32056))
         li_item.setArt(DEFAULT_ART)
-        addDirectoryItem(plugin.handle,
+        li_item.setProperty('SpecialSort', 'top')
+        xbmcplugin.addDirectoryItem(plugin.handle,
                          plugin.url_for(eval(route), call, int(page)-1),
                          li_item, True)
 
@@ -370,7 +376,7 @@ def _listing(directory, call, page, pages):
         for i in INDEX_MENU[directory].get('menu'):
             li_item = ListItem(i.get('name'))
             li_item.setArt(DEFAULT_ART)
-            addDirectoryItem(plugin.handle,
+            xbmcplugin.addDirectoryItem(plugin.handle,
                              plugin.url_for(eval(route), i.get('call')),
                              li_item, True)
 
@@ -389,11 +395,13 @@ def _listing(directory, call, page, pages):
     if _nextpage(page, pages):
         li_item = ListItem(xbmc.getLocalizedString(33078))
         li_item.setArt(DEFAULT_ART)
-        addDirectoryItem(plugin.handle,
+        li_item.setProperty('SpecialSort', 'bottom')
+        xbmcplugin.addDirectoryItem(plugin.handle,
                          plugin.url_for(eval(route), call, int(page)+1),
                          li_item, True)
 
-    endOfDirectory(plugin.handle)
+    _sortmethods()
+    xbmcplugin.endOfDirectory(plugin.handle)
 
 #helpers
 def _dict_match(get,source,key,value):
@@ -408,18 +416,17 @@ def _add(items,call):
     if call == 'tv':
         for item in items:
             list_item, is_local = tmdb_handle_tvshow(item, local_items=local_items.get('shows', []))
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', item['id']), list_item)
+            xbmcplugin.addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', item['id']), list_item)
 
     elif call == 'movie':
         for item in items:
             list_item, is_local = tmdb_handle_movie(item, local_items=local_items.get('movies', []))
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', 'tmdb', item['id']), list_item)
+            xbmcplugin.addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', 'tmdb', item['id']), list_item)
 
     elif call == 'person':
         for item in items:
             list_item = tmdb_handle_person(item)
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'person', 'tmdb', item['id']), list_item)
-
+            xbmcplugin.addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'person', 'tmdb', item['id']), list_item)
 
 def _category(content='',category='',call=None,info=None):
     if content == 'tv':
@@ -474,3 +481,7 @@ def _previouspage(page):
     if int(page) > 1 and condition('Window.IsVisible(MyVideoNav.xml) + !Container.HasParent'):
         return True
     return False
+
+
+def _sortmethods():
+    xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE)
