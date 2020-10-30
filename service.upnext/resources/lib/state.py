@@ -20,3 +20,4 @@ class State:
         self.last_file = None
         self.track = False
         self.pause = False
+        self.queued = False

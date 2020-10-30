@@ -15,7 +15,7 @@ The add-on has various settings to fine-tune the experience, however the default
 
   * Simple or fancy mode (defaults to fancy mode, but a more simple interface is possible)
   * The notification time can be adjusted (defaults to 30 seconds before the end)
-  * The default action can be confnigured, i.e. should it advance to the next episode (default) when the user does not respond, or stop
+  * The default action can be configured, i.e. should it advance to the next episode (default) when the user does not respond, or stop
   * The number of episodes to play automatically before asking the user if he is still there (defaults to 3 episodes)
 
 > NOTE: The add-on settings are found in the Kodi add-ons section, in the *Services* category.
@@ -23,6 +23,16 @@ The add-on has various settings to fine-tune the experience, however the default
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Addon-Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+### v1.1.3 (2020-10-14)
+- Enable customPlayTime by default (@dagwieers)
+- Do not seek to the end before playing next episode (@dagwieers)
+- Add Kodi v17 compatibility (@dagwieers)
+- Fix logging on Kodi v19 (Matrix) after recent breakage (@MoojMidge)
+- Enqueue the next episode in the playlist (@MoojMidge)
+
+### v1.1.2 (2020-06-22)
+- Small bugfix release (@im85288)
+
 ### v1.1.1 (2020-06-21)
 - Avoid conflict with external players (@BrutuZ)
 - Restore "Ignore Playlist" option (@BrutuZ)
@@ -40,3 +50,40 @@ For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Addon-Int
 - New translations for Brazilian, Czech, Greek, Japanese, Korean (@mediabrasiltv, @svetlemodry, @Twilight0, @Thunderbird2086)
 - New translations for Russian, Slovak, Spanish, Swedish (@vlmaksime, @matejmosko, @sagatxxx, @Sopor)
 - Translation updates to Croatian, French, German, Hungarian, Italian, Polish (@arvvoid, @zecakeh, @tweimer, @frodo19, @EffeF, @notoco)
+
+### v1.0.7 (2019-12-03)
+- Add Up Next in the program add-on section (@dagwieers)
+- Update add-on icon to use black background (@dagwieers)
+- Fix 24-hour format based on Kodi setting (@dagwieers)
+- New translations for Croatian (@arvvoid)
+- Translation updates to French, Hungarian, Italian and Polish (@mediaminister, @frodo19, @EffeF, @notoco)
+
+### v1.0.6 (2019-11-26)
+- Implement base64 encoding to support newer AddonSignals (@dagwieers)
+- Fixes to Python 3.5 support (@anxdpanic)
+- Add SPDX identifier for license (@dagwieers)
+- Translation updates to German (@tweimer)
+
+### v1.0.5 (2019-11-19)
+- Translation fixes (@dagwieers)
+
+### v1.0.4 (2019-11-19)
+- Automatic stop playing as option (@notoco)
+- Fix exception when add-on is exited (@dagwieers)
+- Fix playlist logic (@mediaminister)
+- Add support for Python 3 and Kodi v19 (@mediaminister)
+- Introduce "Close" button when configured in settings (@dagwieers)
+- Add support for a Back-button action to dismiss Up Next pop-up (@dagwieers)
+- Always reset state when playback finishes (@mediaminister)
+- Various code improvements and fixes (@dagwieers, @mediaminister)
+- New translations for Dutch (@dagwieers)
+- Translation updates to German (@semool, @beatmasterRS)
+
+### v1.0.3 (2019-07-30)
+- Disable tracking for non episode (@angelblue05)
+
+### v1.0.2 (2019-07-24)
+- Add JSONRPC method (@angelblue05)
+- Add priority to existing playlist (@angelblue05)
+- Add endtime prop (@angelblue05)
+- Remove enablePlaylist setting (@angelblue05)

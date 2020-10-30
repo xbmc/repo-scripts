@@ -93,6 +93,14 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "Volgende aflevering"
 
+msgctxt "#30060"
+msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
+msgstr "[B]UP NEXT DEMO MODUS IS GEACTIVEERD[/B]"
+
+msgctxt "#30061"
+msgid "[I]Episodes automatically skip to end.[/I]"
+msgstr "[I]Afleveringen springen automatisch naar het einde.[/I]"
+
 
 ### SETTINGS
 msgctxt "#30500"
@@ -183,9 +191,13 @@ msgctxt "#30801"
 msgid "Test how the user interface looks"
 msgstr "Test hoe de gebruikersinterface er uit ziet"
 
+msgctxt "#30803"
+msgid "Enable DEMO mode"
+msgstr "Activeer DEMO modus"
+
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
-msgstr "Toon een upNext pop-up…"
+msgstr "Toon een UpNext pop-up…"
 
 msgctxt "#30807"
 msgid "Show an UpNextSimple pop-up…"

@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 "X-Generator: Poedit 2.2.4\n"
 
-# ## APPLICATION
+### APPLICATION
 msgctxt "#30006"
 msgid "Watch Now"
 msgstr "Pozerať teraz"
@@ -94,7 +94,16 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "Ďalšia epizóda"
 
-# ## SETTINGS
+msgctxt "#30060"
+msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
+msgstr ""
+
+msgctxt "#30061"
+msgid "[I]Episodes automatically skip to end.[/I]"
+msgstr ""
+
+
+### SETTINGS
 msgctxt "#30500"
 msgid "Interface"
 msgstr "Rozhranie"
@@ -182,6 +191,10 @@ msgstr "Vývojár"
 msgctxt "#30801"
 msgid "Test how the user interface looks"
 msgstr "Otestuj ako vyzerá rozhranie"
+
+msgctxt "#30803"
+msgid "Enable DEMO mode"
+msgstr ""
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
