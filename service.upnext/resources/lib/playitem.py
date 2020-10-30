@@ -36,6 +36,7 @@ class PlayItem:
             current_episode = self.api.handle_addon_lookup_of_current_episode()
             self.state.current_episode_id = current_episode.get('episodeid')
             if self.state.current_tv_show_id != current_episode.get('tvshowid'):
+                self.log('Change in TV show ID: last: %s / current: %s' % (self.state.current_tv_show_id, current_episode.get('tvshowid')), 2)
                 self.state.current_tv_show_id = current_episode.get('tvshowid')
                 self.state.played_in_a_row = 1
         return episode
@@ -53,10 +54,10 @@ class PlayItem:
             return
 
         item = result.get('result').get('item')
-        self.state.tv_show_id = item.get('tvshowid')
         if item.get('type') != 'episode':
             return
 
+        self.state.tv_show_id = item.get('tvshowid')
         if int(self.state.tv_show_id) == -1:
             current_show_title = item.get('showtitle').encode('utf-8')
             self.state.tv_show_id = self.api.showtitle_to_id(title=current_show_title)
@@ -72,5 +73,6 @@ class PlayItem:
         )
         self.state.current_episode_id = current_episode_id
         if self.state.current_tv_show_id != self.state.tv_show_id:
+            self.log('Change in TV show ID: last: %s / current: %s' % (self.state.current_tv_show_id, self.state.tv_show_id), 2)
             self.state.current_tv_show_id = self.state.tv_show_id
             self.state.played_in_a_row = 1

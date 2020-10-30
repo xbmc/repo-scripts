@@ -40,7 +40,7 @@ msgstr "まだ観るの。"
 
 msgctxt "#30032"
 msgid "Enable on playlists"
-msgstr ""
+msgstr "プレイリストに有効"
 
 msgctxt "#30033"
 msgid "Stop"
@@ -93,6 +93,14 @@ msgstr "Debug"
 msgctxt "#30049"
 msgid "Next Episode"
 msgstr "次のエピソード"
+
+msgctxt "#30060"
+msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
+msgstr ""
+
+msgctxt "#30061"
+msgid "[I]Episodes automatically skip to end.[/I]"
+msgstr ""
 
 
 ### SETTINGS
@@ -183,6 +191,10 @@ msgstr "デベロッパーモード"
 msgctxt "#30801"
 msgid "Test how the user interface looks"
 msgstr "テストしたい通知ウィンドウ"
+
+msgctxt "#30803"
+msgid "Enable DEMO mode"
+msgstr ""
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"

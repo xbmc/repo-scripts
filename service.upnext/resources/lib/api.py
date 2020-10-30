@@ -35,6 +35,22 @@ class Api:
     def play_kodi_item(episode):
         jsonrpc(method='Player.Open', id=0, params=dict(item=dict(episodeid=episode.get('episodeid'))))
 
+    def queue_next_item(self, episode):
+        next_item = {}
+        if not self.data:
+            next_item.update(episodeid=episode.get('episodeid'))
+        elif self.data.get('play_url'):
+            next_item.update(file=self.data.get('play_url'))
+
+        if next_item:
+            jsonrpc(method='Playlist.Add', id=0, params=dict(playlistid=1, item=next_item))
+
+        return bool(next_item)
+
+    @staticmethod
+    def reset_queue():
+        jsonrpc(method='Playlist.Remove', id=0, params=dict(playlistid=1, position=0))
+
     def get_next_in_playlist(self, position):
         result = jsonrpc(method='Playlist.GetItems', params=dict(
             playlistid=1,

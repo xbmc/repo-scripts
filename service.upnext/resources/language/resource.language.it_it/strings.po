@@ -94,6 +94,15 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "Prossimo Episodio"
 
+msgctxt "#30060"
+msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
+msgstr ""
+
+msgctxt "#30061"
+msgid "[I]Episodes automatically skip to end.[/I]"
+msgstr ""
+
+
 # SETTINGS
 msgctxt "#30500"
 msgid "Interface"
@@ -182,6 +191,10 @@ msgstr "Sviluppatore"
 msgctxt "#30801"
 msgid "Test how the user interface looks"
 msgstr "Testa come l'interfaccia utente appare"
+
+msgctxt "#30803"
+msgid "Enable DEMO mode"
+msgstr ""
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
