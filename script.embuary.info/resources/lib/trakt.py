@@ -10,11 +10,15 @@ from resources.lib.helper import *
 
 ########################
 
+TRAKT_API_KEY = ADDON.getSettingString('trakt_api_key')
+
+########################
+
 def trakt_api(call=None):
     headers = {
               'Content-Type': 'application/json',
               'trakt-api-version': '2',
-              'trakt-api-key': 'db17981042166c60e1642c483f5be54b12ec86e3401cd67c2514fdf6843a110f'
+              'trakt-api-key': TRAKT_API_KEY
               }
 
     request_url = 'https://api.trakt.tv' + call
