@@ -1,3 +1,6 @@
+v0.5.10
+- add Kodi 19.0 alpha3 release
+
 v0.5.9
 - add Kodi 18.9 release
 - fixup Kodi 19 pre alpha2 translatePath
