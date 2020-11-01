@@ -10,7 +10,7 @@
         <setting label="30605" type="bool" id="includeWatched" default="false"/>
         <setting label="30607" type="slider" id="playedInARow" default="3" range="0,1,15" option="int"/>
         <setting label="30609" type="lsep"/> <!-- Autoplay duration -->
-        <setting label="30611" type="bool" id="customAutoPlayTime" default="false"/>
+        <setting label="30611" type="bool" id="customAutoPlayTime" default="true"/>
         <setting label="30613" type="slider" id="autoPlaySeasonTime" default="30" range="0,5,120" option="int" subsetting="true" visible="eq(-1,false)"/>
         <setting label="30615" type="slider" id="autoPlayTimeXS" default="15" range="0,5,120" option="int" subsetting="true" visible="eq(-2,true)"/>
         <setting label="30617" type="slider" id="autoPlayTimeS" default="30" range="0,5,120" option="int" subsetting="true" visible="eq(-3,true)"/>
@@ -24,6 +24,7 @@
     </category>
     <category label="30800"> <!-- Developer -->
         <setting label="30801" type="lsep"/> <!-- Test the GUI -->
+        <setting label="30803" type="bool" id="enableDemoMode" default="false"/>
         <setting label="30805" type="action" action="RunScript(service.upnext,test_window,script-upnext-upnext.xml)"/>
         <setting label="30807" type="action" action="RunScript(service.upnext,test_window,script-upnext-upnext-simple.xml)"/>
         <setting label="30809" type="action" action="RunScript(service.upnext,test_window,script-upnext-stillwatching.xml)"/>
