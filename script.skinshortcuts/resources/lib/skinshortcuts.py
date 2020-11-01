@@ -19,9 +19,9 @@ ADDONVERSION = ADDON.getAddonInfo('version')
 LANGUAGE     = ADDON.getLocalizedString
 CWD          = ADDON.getAddonInfo('path')
 ADDONNAME    = ADDON.getAddonInfo('name')
-RESOURCE     = xbmc.translatePath(os.path.join(CWD, 'resources', 'lib'))
-DATAPATH     = os.path.join(xbmc.translatePath("special://profile/"), "addon_data", ADDONID)
-MASTERPATH   = os.path.join(xbmc.translatePath("special://masterprofile/"), "addon_data", ADDONID)
+RESOURCE     = xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'lib'))
+DATAPATH     = os.path.join(xbmcvfs.translatePath("special://profile/"), "addon_data", ADDONID)
+MASTERPATH   = os.path.join(xbmcvfs.translatePath("special://masterprofile/"), "addon_data", ADDONID)
 
 from resources.lib import xmlfunctions, datafunctions, library, nodefunctions
 XML = xmlfunctions.XMLFunctions()
@@ -77,13 +77,13 @@ class Main:
             # Load library shortcuts in thread
             thread.start_new_thread(LIBRARY.loadAllLibrary, ())
 
-            if self.GROUPING is not None:
+            if self.GROUPING != None:
                 selectedShortcut = LIBRARY.selectShortcut( "", grouping = self.GROUPING, custom = self.CUSTOM, showNone = self.NONE )
             else:
                 selectedShortcut = LIBRARY.selectShortcut( "", custom = self.CUSTOM, showNone = self.NONE )
 
             # Now set the skin strings
-            if selectedShortcut is not None and selectedShortcut.getProperty( "Path" ):
+            if selectedShortcut != None and selectedShortcut.getProperty( "Path" ):
                 path = selectedShortcut.getProperty( "Path" )
 
                 if selectedShortcut.getProperty( "chosenPath" ):
@@ -91,31 +91,31 @@ class Main:
 
                 if path.startswith( "pvr-channel://" ):
                     path = "RunScript(script.skinshortcuts,type=launchpvr&channel=" + path.replace( "pvr-channel://", "" ) + ")"
-                if self.LABEL is not None and selectedShortcut.getLabel() != "":
+                if self.LABEL != None and selectedShortcut.getLabel() != "":
                     xbmc.executebuiltin( "Skin.SetString(" + self.LABEL + "," + selectedShortcut.getLabel() + ")" )
-                if self.ACTION is not None:
+                if self.ACTION != None:
                     xbmc.executebuiltin( "Skin.SetString(" + self.ACTION + "," + path + " )" )
-                if self.SHORTCUTTYPE is not None:
+                if self.SHORTCUTTYPE != None:
                     xbmc.executebuiltin( "Skin.SetString(" + self.SHORTCUTTYPE + "," + selectedShortcut.getLabel2() + ")" )
-                if self.THUMBNAIL is not None and selectedShortcut.getProperty( "icon" ):
+                if self.THUMBNAIL != None and selectedShortcut.getProperty( "icon" ):
                     xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "icon" ) + ")" )
-                if self.THUMBNAIL is not None and selectedShortcut.getProperty( "thumbnail" ):
+                if self.THUMBNAIL != None and selectedShortcut.getProperty( "thumbnail" ):
                     xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "thumbnail" ) + ")" )
-                if self.LIST is not None:
+                if self.LIST != None:
                     xbmc.executebuiltin( "Skin.SetString(" + self.LIST + "," + DATA.getListProperty( path ) + ")" )
-            elif selectedShortcut is not None and selectedShortcut.getLabel() == "::NONE::":
+            elif selectedShortcut != None and selectedShortcut.getLabel() == "::NONE::":
                 # Clear the skin strings
-                if self.LABEL is not None:
+                if self.LABEL != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.LABEL + ")" )
-                if self.ACTION is not None:
+                if self.ACTION != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.ACTION + " )" )
-                if self.SHORTCUTTYPE is not None:
+                if self.SHORTCUTTYPE != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.SHORTCUTTYPE + ")" )
-                if self.THUMBNAIL is not None:
+                if self.THUMBNAIL != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.THUMBNAIL + ")" )
-                if self.THUMBNAIL is not None:
+                if self.THUMBNAIL != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.THUMBNAIL + ")" )
-                if self.LIST is not None:
+                if self.LIST != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.LIST + ")" )
 
         if self.TYPE=="widgets":
@@ -177,15 +177,15 @@ class Main:
 
             elif selectedShortcut.getLabel() == "::NONE::":
                 # Clear the skin strings
-                if self.WIDGET is not None:
+                if self.WIDGET != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGET + ")" )
-                if self.WIDGETTYPE is not None:
+                if self.WIDGETTYPE != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETTYPE + " )" )
-                if self.WIDGETNAME is not None:
+                if self.WIDGETNAME != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETNAME + ")" )
-                if self.WIDGETTARGET is not None:
+                if self.WIDGETTARGET != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETTARGET + ")" )
-                if self.WIDGETPATH is not None:
+                if self.WIDGETPATH != None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETPATH + ")" )
 
         if self.TYPE=="context":
@@ -317,7 +317,7 @@ class Main:
         dialog = xbmcgui.Dialog()
 
         shouldRun = None
-        if self.WARNING is not None and self.WARNING.lower() == "false":
+        if self.WARNING != None and self.WARNING.lower() == "false":
             shouldRun = True
 
         # Ask the user if they're sure they want to do this
