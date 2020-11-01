@@ -18,9 +18,9 @@ ADDONID      = ADDON.getAddonInfo('id')
 KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 LANGUAGE     = ADDON.getLocalizedString
 CWD          = ADDON.getAddonInfo('path')
-DATAPATH     = os.path.join(xbmc.translatePath("special://profile/"), "addon_data", ADDONID)
-SKINPATH     = xbmc.translatePath("special://skin/shortcuts/")
-DEFAULTPATH  = xbmc.translatePath(os.path.join(CWD, 'resources', 'shortcuts'))
+DATAPATH     = os.path.join(xbmcvfs.translatePath("special://profile/"), "addon_data", ADDONID)
+SKINPATH     = xbmcvfs.translatePath("special://skin/shortcuts/")
+DEFAULTPATH  = xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'shortcuts'))
 
 hashlist = []
 
@@ -68,7 +68,7 @@ class DataFunctions():
 
         if includeAddOnID:
             addon_labelID = self._get_addon_labelID( action )
-            if addon_labelID is not None:
+            if addon_labelID != None:
                 labelID = addon_labelID
 
         # If we're getting the defaultID, just return this
@@ -129,12 +129,12 @@ class DataFunctions():
         log( "Loading shortcuts for group " + group )
 
         if profileDir is None:
-            profileDir = xbmc.translatePath("special://profile/")
+            profileDir = xbmcvfs.translatePath("special://profile/")
 
         userShortcuts = os.path.join( profileDir, "addon_data", ADDONID, self.slugify( group, True, isSubLevel = isSubLevel ) + ".DATA.xml" )
         skinShortcuts = os.path.join( SKINPATH , self.slugify( group ) + ".DATA.xml")
         defaultShortcuts = os.path.join( DEFAULTPATH , self.slugify( group ) + ".DATA.xml" )
-        if defaultGroup is not None:
+        if defaultGroup != None:
             skinShortcuts = os.path.join( SKINPATH , self.slugify( defaultGroup ) + ".DATA.xml")
             defaultShortcuts = os.path.join( DEFAULTPATH , self.slugify( defaultGroup ) + ".DATA.xml" )
 
@@ -151,7 +151,7 @@ class DataFunctions():
                 self._save_hash( path, file )
                 tree = xmltree.parse( path )
 
-            if tree is not None and processShortcuts:
+            if tree != None and processShortcuts:
                 # If this is a user-selected list of shortcuts...
                 if path == userShortcuts:
                     if group == "mainmenu":
@@ -166,7 +166,7 @@ class DataFunctions():
 
                 log( " - Loaded file" )
                 return tree
-            elif tree is not None:
+            elif tree != None:
                 log( " - Loaded file " + path )
                 log( " - Returning unprocessed shortcuts" )
                 return tree
@@ -190,12 +190,12 @@ class DataFunctions():
             # If not user shortcuts, remove locked nodes (in case of naughty skinners!)
             if isUserShortcuts == False:
                 searchNode = node.find( "locked" )
-                if searchNode is not None:
+                if searchNode != None:
                     node.remove( searchNode )
 
             # Remove any labelID node (because it confuses us!)
             searchNode = node.find( "labelID" )
-            if searchNode is not None:
+            if searchNode != None:
                 node.remove( searchNode )
 
             # Get the action
@@ -219,20 +219,20 @@ class DataFunctions():
 
             # If there's no defaultID, set it to the labelID
             defaultID = labelID
-            if node.find( "defaultID" ) is not None:
+            if node.find( "defaultID" ) != None:
                 defaultID = node.find( "defaultID" ).text
             xmltree.SubElement( node, "defaultID" ).text = defaultID
 
             # Check that any version node matches current XBMC version
             version = node.find( "version" )
-            if version is not None:
+            if version != None:
                 if KODIVERSION != version.text and self.checkVersionEquivalency( version.text, node.find( "action" ) ) == False:
                     tree.getroot().remove( node )
                     self._pop_labelID()
                     continue
 
             # Get any disabled element
-            if node.find( "disabled" ) is not None:
+            if node.find( "disabled" ) != None:
                 xmltree.SubElement( node, "disabled" ).text = "True"
 
             # Load additional properties
@@ -262,13 +262,13 @@ class DataFunctions():
 
             # Get a skin-overriden icon
             overridenIcon = self._get_icon_overrides( skinoverrides, node.find( "icon" ).text, group, labelID )
-            if overridenIcon is not None:
+            if overridenIcon != None:
                 # Add a new node with the overriden icon
                 xmltree.SubElement( node, "override-icon" ).text = overridenIcon
 
             # If the action uses the special://skin protocol, translate it
             if "special://skin/" in action.text:
-                action.text = xbmc.translatePath( action.text )
+                action.text = xbmcvfs.translatePath( action.text )
 
             # Get visibility condition
             visibilityCondition = self.checkVisibility( action.text )
@@ -311,7 +311,7 @@ class DataFunctions():
             for overrideTree in overrideTrees:
                 if hasOverriden == True:
                     continue
-                if overrideTree is not None:
+                if overrideTree != None:
                     for elem in overrideTree.findall( "override" ):
                         # Pull out the current action, and any already-overriden actions
                         itemsToOverride = []
@@ -342,7 +342,7 @@ class DataFunctions():
                                 # Get the visibility condition
                                 condition = elem.find( "condition" )
                                 overrideVisibility = None
-                                if condition is not None:
+                                if condition != None:
                                     overrideVisibility = condition.text
 
                                 # Get the new action
@@ -352,18 +352,18 @@ class DataFunctions():
                                         newaction.text = actions.text.replace("::ACTION::",itemToOverride.text)
                                     else:
                                         newaction.text = actions.text
-                                    if overrideVisibility is not None:
+                                    if overrideVisibility != None:
                                         newaction.set( "condition", overrideVisibility )
 
                                 # Add visibility if no action specified
                                 if len( elem.findall( "action" ) ) == 0:
                                     newaction = xmltree.SubElement( node, "override-action" )
                                     newaction.text = itemToOverride.text
-                                    if overrideVisibility is not None:
+                                    if overrideVisibility != None:
                                         newaction.set( "condition", overrideVisibility )
 
                                 # If there's already a condition, add it
-                                if newaction is not None and itemToOverride.get( "condition" ):
+                                if newaction != None and itemToOverride.get( "condition" ):
                                     newaction.set( "condition", "[%s] + [%s]" %( itemToOverride.get( "condition" ), newaction.get( "condition" ) ) )
 
                                 newaction = None
@@ -387,7 +387,7 @@ class DataFunctions():
 
             # Get any visibility conditions in the .DATA.xml file
             additionalVisibility = node.find( "visible" )
-            if additionalVisibility is not None:
+            if additionalVisibility != None:
                 if visibilityNode == None:
                     xmltree.SubElement( node, "visibility" ).text = additionalVisibility.text
                 else:
@@ -447,7 +447,7 @@ class DataFunctions():
         newicon = icon
 
         # Check for overrides
-        if tree is not None:
+        if tree != None:
             for elem in tree.findall( "icon" ):
                 if oldicon is None:
                     if ("labelID" in elem.attrib and elem.attrib.get( "labelID" ) == labelID) or ("image" in elem.attrib and elem.attrib.get( "image" ) == icon):
@@ -518,7 +518,7 @@ class DataFunctions():
 
         overridePath = os.path.join( profileDir, "overrides.xml" )
         try:
-            tree = xmltree.parse( xbmc.translatePath( overridePath ) )
+            tree = xmltree.parse( xbmcvfs.translatePath( overridePath ) )
             self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
             self.overrides[ "user" ] = tree
             return tree
@@ -536,7 +536,7 @@ class DataFunctions():
     def _get_additionalproperties( self, profileDir ):
         # Load all saved properties (widgets, backgrounds, custom properties)
 
-        if self.currentProperties is not None:
+        if self.currentProperties != None:
             return[ self.currentProperties, self.defaultProperties ]
 
         self.currentProperties = []
@@ -592,13 +592,13 @@ class DataFunctions():
                         if elemSearch[ 0 ] == "background":
                             # Get and set the background name
                             backgroundName = self._getBackgroundName( elem.text )
-                            if backgroundName is not None:
+                            if backgroundName != None:
                                 self.defaultProperties.append( [ "mainmenu", labelID, "backgroundName", backgroundName, defaultID ] )
 
                         if elemSearch[0] == "widget":
                             # Get and set widget type and name
                             widgetDetails = self._getWidgetNameAndType( elem.text )
-                            if widgetDetails is not None:
+                            if widgetDetails != None:
                                 self.defaultProperties.append( [ "mainmenu", labelID, "widgetName", widgetDetails[ "name" ], defaultID ] )
                                 if "type" in widgetDetails:
                                     self.defaultProperties.append( [ "mainmenu", labelID, "widgetType", widgetDetails[ "type" ], defaultID ] )
@@ -625,13 +625,13 @@ class DataFunctions():
                         if elemSearch[ 0 ] == "background":
                             # Get and set the background name
                             backgroundName = self._getBackgroundName( elem.text )
-                            if backgroundName is not None:
+                            if backgroundName != None:
                                 self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "backgroundName", backgroundName, defaultID ] )
 
                         if elemSearch[0] == "widget":
                             # Get and set widget type and name
                             widgetDetails = self._getWidgetNameAndType( elem.text )
-                            if widgetDetails is not None:
+                            if widgetDetails != None:
                                 self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetName", widgetDetails[ "name" ], defaultID ] )
                                 if "type" in widgetDetails:
                                     self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetType", widgetDetails[ "type" ], defaultID ] )
@@ -707,7 +707,7 @@ class DataFunctions():
         return( self.propertyInformation[ "fallbackProperties" ][ group ], self.propertyInformation[ "fallbacks" ][ group ] )
 
     def _getPropertyRequires( self ):
-        if self.propertyInformation[ "requires" ] is not None:
+        if self.propertyInformation[ "requires" ] != None:
             # We've already loaded requires and templateOnly properties, return eveything
             return( self.propertyInformation[ "otherProperties" ], self.propertyInformation[ "requires" ], self.propertyInformation[ "templateOnly" ] )
 
@@ -917,7 +917,7 @@ class DataFunctions():
             if tree.find( "versionEquivalency" ) is None:
                 continue
             for elem in tree.find( "versionEquivalency" ).findall( findElem ):
-                if elem.attrib.get( findAttrib ) is not None and elem.attrib.get( findAttrib ).lower() != action.lower():
+                if elem.attrib.get( findAttrib ) != None and elem.attrib.get( findAttrib ).lower() != action.lower():
                     # Action's don't match
                     continue
                 if int( elem.attrib.get( "version" ) ) > int( KODIVERSION ):
@@ -948,7 +948,7 @@ class DataFunctions():
         #  allProperties[0] = Saved properties
         #  allProperties[1] = Default properties
 
-        if isUserShortcuts and ( len( allProperties[ 0 ] ) == 0 or allProperties[ 0 ][ 0 ] is not None ):
+        if isUserShortcuts and ( len( allProperties[ 0 ] ) == 0 or allProperties[ 0 ][ 0 ] != None ):
             currentProperties = allProperties[0]
 
         # Loop through the current properties, looking for the current item
@@ -958,17 +958,17 @@ class DataFunctions():
             # currentProperty[2] = Property name
             # currentProperty[3] = Property value
             # currentProperty[4] = defaultID
-            if labelID is not None and currentProperty[0] == group and currentProperty[1] == labelID:
+            if labelID != None and currentProperty[0] == group and currentProperty[1] == labelID:
                 returnProperties.append( self.upgradeAdditionalProperties( currentProperty[2], currentProperty[3] ) )
-            elif len( currentProperty ) is not 4:
-                if defaultID is not None and currentProperty[0] == group and currentProperty[4] == defaultID:
+            elif len( currentProperty ) != 4:
+                if defaultID != None and currentProperty[0] == group and currentProperty[4] == defaultID:
                     returnProperties.append( self.upgradeAdditionalProperties( currentProperty[2], currentProperty[3] ) )
 
         return returnProperties
 
     def checkShortcutLabelOverride( self, action ):
         tree = self._get_overrides_skin()
-        if tree is not None:
+        if tree != None:
             elemSearch = tree.findall( "availableshortcutlabel" )
             for elem in elemSearch:
                 if elem.attrib.get( "action" ).lower() == action.lower():
@@ -984,12 +984,12 @@ class DataFunctions():
     def checkIfMenusShared( self, isSubLevel = False ):
         # Check if the skin required the menu not to be shared
         tree = self._get_overrides_skin()
-        if tree is not None:
+        if tree != None:
             # If this is a sublevel, and the skin has asked for sub levels to not be shared...
-            if isSubLevel and tree.find( "doNotShareLevels" ) is not None:
+            if isSubLevel and tree.find( "doNotShareLevels" ) != None:
                 return False
             # If the skin has asked for all menu's not to be shared...
-            if tree.find( "doNotShareMenu" ) is not None:
+            if tree.find( "doNotShareMenu" ) != None:
                 return False
 
         # Check if the user has asked for their menus not to be shared
@@ -1089,7 +1089,7 @@ class DataFunctions():
 
 
     def _save_hash( self, filename, file ):
-        if file is not None:
+        if file != None:
             hasher = hashlib.md5()
             hasher.update(xbmcvfs.File(filename).read().encode("utf-8"))
             hashlist.append([filename, hasher.hexdigest()])

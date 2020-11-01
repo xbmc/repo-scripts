@@ -10,7 +10,7 @@ from simpleeval import simple_eval
 
 ADDON    = xbmcaddon.Addon()
 ADDONID  = ADDON.getAddonInfo('id')
-SKINPATH = xbmc.translatePath("special://skin/shortcuts/")
+SKINPATH = xbmcvfs.translatePath("special://skin/shortcuts/")
 
 hashlist = []
 
@@ -75,13 +75,13 @@ class Template():
         # Get the template for this menu
         if menuType == "mainmenu":
             template = self.tree.find( "mainmenu" )
-            if template is not None:
+            if template != None:
                 template = self.copy_tree( template )
         else:
             if len( items.findall( "item" ) ) == 0: return
             template = self.findSubmenu( menuName, level )
 
-        if template is not None:
+        if template != None:
             # Found a template - let's build it
             if menuType == "mainmenu":
                 log( "Main menu template found" )
@@ -99,7 +99,7 @@ class Template():
 
             # If we've been passed any mainmenu items, retrieve their properties
             properties = {}
-            if mainmenuitems is not None:
+            if mainmenuitems != None:
                 properties = self.getProperties( template, mainmenuitems )
 
             # Now replace all <skinshortcuts> elements with correct data
@@ -115,7 +115,7 @@ class Template():
 
         # If we've been passed any mainmenu items, retrieve the id of the main menu item
         rootID = None
-        if mainmenuitems is not None:
+        if mainmenuitems != None:
             rootID = mainmenuitems.attrib.get( "id" )
 
         progressCount = 0
@@ -203,13 +203,13 @@ class Template():
 
                 # Add the template to the includes
                 controls = final.find( "controls" )
-                if controls is not None:
+                if controls != None:
                     for child in controls:
                         include.append( child )
 
                 # Process the variables
                 variables = final.find( "variables" )
-                if variables is not None:
+                if variables != None:
                     for variable in variables.findall( "variable" ):
                         # If the profile doesn't have a dict in finalVariables, create one
                         profileVisibility = profile.attrib.get( "visible" )
@@ -330,7 +330,7 @@ class Template():
 
         # If we've been passed a condition, create an include with that as condition
         # and name as text
-        if condition is not None:
+        if condition != None:
             visInclude = xmltree.SubElement( newInclude, "include" )
             visInclude.set( "condition", condition )
             visInclude.text = name + "-" + profile
@@ -408,7 +408,7 @@ class Template():
             # Check whether the skinner has set the match type (whether all conditions need to match, or any)
             matchType = "all"
             matchElem = template.find( "match" )
-            if matchElem is not None:
+            if matchElem != None:
                 matchType = matchElem.text.lower()
                 if matchType not in [ "any", "all" ]:
                     log( "Invalid <match /> element in template" )
@@ -440,7 +440,7 @@ class Template():
 
             # All the rules matched, so next we'll get any properties
             properties = self.getProperties( template, item )
-            if rootID is not None:
+            if rootID != None:
                 properties[ "auto-rootID" ] = rootID
 
             # Next up, we do any replacements - EXCEPT for visibility, which
@@ -531,7 +531,7 @@ class Template():
         # Find all elements with matching tag
         matchedRule = False
         for item in items.findall( tag ):
-            if attrib is not None:
+            if attrib != None:
                 if attrib[ 0 ] not in item.attrib:
                     # Doesn't have the attribute we're looking for
                     continue
@@ -539,7 +539,7 @@ class Template():
                     # This property doesn't match
                     continue
 
-            if condition.text is not None and item.text != condition.text:
+            if condition.text != None and item.text != condition.text:
                 # This property doesn't match
                 continue
 
@@ -593,7 +593,7 @@ class Template():
                 rules.append( ( tag, attribute, value, propertyValue ) )
 
             matchAll = property.find( "match" )
-            if matchAll is not None and matchAll.text.lower() == "all":
+            if matchAll != None and matchAll.text.lower() == "all":
                 matchAny = False
 
             # If we haven't grabbed anything to match against yet
@@ -638,7 +638,7 @@ class Template():
                     value = rule[ 2 ]
 
                     for item in items.findall( tag ):
-                        if attrib is not None:
+                        if attrib != None:
                             if attrib[ 0 ] not in item.attrib:
                                 # Doesn't have the attribute we're looking for
                                 continue
@@ -650,12 +650,12 @@ class Template():
                             # The item doesn't have a value to match
                             continue
 
-                        if value is not None and item.text not in value:
+                        if value != None and item.text not in value:
                             # The value doesn't match
                             continue
 
                         # We've matched a property :)
-                        if rule[ 3 ] is not None:
+                        if rule[ 3 ] != None:
                             properties[ name ] = rule[ 3 ]
                         else:
                             properties[ name ] = item.text
@@ -675,7 +675,7 @@ class Template():
 
                     for item in items.findall( tag ):
                         log( repr( attrib ) )
-                        if attrib is not None:
+                        if attrib != None:
                             if attrib[ 0 ] not in item.attrib:
                                 # Doesn't have the attribute we're looking for
                                 matchedRule = False
@@ -689,14 +689,14 @@ class Template():
                             matchedRule = False
                             continue
 
-                        if value is not None and item.text not in value:
+                        if value != None and item.text not in value:
                             # The value doesn't match
                             matchedRule = False
                             continue
 
                 if matchedRule:
                     # We've matched a property :)
-                    if rule[ 3 ] is not None:
+                    if rule[ 3 ] != None:
                         properties[ name ] = rule[ 3 ]
                     else:
                         # This method only supports setting the property value directly, so if it wasn't specified,
@@ -742,13 +742,13 @@ class Template():
 
                 # Make replacement element
                 newElement = xmltree.Element( tag )
-                if text is not None:
+                if text != None:
                     newElement.text = text
                 for singleAttrib in attribs:
                     newElement.set( singleAttrib[ 0 ], singleAttrib[ 1 ] )
 
                 # Make replacements
-                if type == "visibility" and visibilityCondition is not None:
+                if type == "visibility" and visibilityCondition != None:
                     newElement.set( "condition", visibilityCondition )
 
                 # Insert it
@@ -756,7 +756,7 @@ class Template():
 
             # <tag>$skinshortcuts[var]</tag> -> <tag>[value]</tag>
             # <tag>$skinshortcuts[var]</tag> -> <tag><include>[includeName]</include></tag> (property = $INCLUDE[includeName])
-            if elem.text is not None:
+            if elem.text != None:
                 while "$SKINSHORTCUTS[" in elem.text:
                     # Split the string into its composite parts
                     stringStart = elem.text.split( "$SKINSHORTCUTS[", 1 )
@@ -797,7 +797,7 @@ class Template():
                     elem.set( attrib, newValue )
 
             # <tag>$PYTHON[var]</tag> -> <tag>[result]</tag>
-            if elem.text is not None:
+            if elem.text != None:
                 while "$PYTHON[" in elem.text:
                     # Split the string into its composite parts
                     stringStart = elem.text.split( "$PYTHON[", 1 )
@@ -839,13 +839,13 @@ class Template():
                 tree.remove( elem )
 
                 # Make replacements
-                if type == "visibility" and visibilityCondition is not None:
+                if type == "visibility" and visibilityCondition != None:
                     # Create a new visible element
                     newelement = xmltree.Element( "visible" )
                     newelement.text = visibilityCondition
                     # Insert it
                     tree.insert( index, newelement )
-                elif type == "items" and customitems is not None and elem.attrib.get( "insert" ):
+                elif type == "items" and customitems != None and elem.attrib.get( "insert" ):
                     for elem in self.buildSubmenuCustomItems( customitems, items.findall( "item" ), elem.attrib.get( "insert" ), properties ):
                         for child in elem:
                             tree.insert( index, child )
@@ -897,7 +897,7 @@ class Template():
         return newelements
 
     def _save_hash( self, filename, file ):
-        if file is not None:
+        if file != None:
             hasher = hashlib.md5()
             hasher.update(file.encode("utf8"))
             hashlist.append([filename.encode("utf8"), hasher.hexdigest()])

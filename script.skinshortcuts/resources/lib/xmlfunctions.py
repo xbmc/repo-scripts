@@ -12,7 +12,7 @@ ADDONID      = ADDON.getAddonInfo('id')
 ADDONVERSION = ADDON.getAddonInfo('version')
 KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 LANGUAGE     = ADDON.getLocalizedString
-MASTERPATH   = os.path.join(xbmc.translatePath("special://masterprofile/addon_data/"), ADDONID)
+MASTERPATH   = os.path.join(xbmcvfs.translatePath("special://masterprofile/addon_data/"), ADDONID)
 
 from resources.lib import datafunctions, template
 DATA = datafunctions.DataFunctions()
@@ -36,7 +36,7 @@ class XMLFunctions():
         self.loadedPropertyPatterns = False
         self.propertyPatterns = None
 
-        self.skinDir = xbmc.translatePath( "special://skin" )
+        self.skinDir = xbmcvfs.translatePath( "special://skin" )
 
         self.checkForShorctcuts = []
 
@@ -48,14 +48,14 @@ class XMLFunctions():
         xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-isrunning", "True" )
 
         # Get a list of profiles
-        fav_file = xbmc.translatePath('special://userdata/profiles.xml')
+        fav_file = xbmcvfs.translatePath('special://userdata/profiles.xml')
         tree = None
         if xbmcvfs.exists( fav_file ):
             f = xbmcvfs.File( fav_file )
             tree = xmltree.fromstring( f.read() )
 
         profilelist = []
-        if tree is not None:
+        if tree != None:
             profiles = tree.findall( "profile" )
             for profile in profiles:
                 name = profile.find( "name" ).text
@@ -64,9 +64,9 @@ class XMLFunctions():
 
                 # Localise the directory
                 if "://" in dir:
-                    dir = xbmc.translatePath(dir)
+                    dir = xbmcvfs.translatePath(dir)
                 # Base if off of the master profile
-                dir = xbmc.translatePath(os.path.join("special://masterprofile", dir))
+                dir = xbmcvfs.translatePath(os.path.join("special://masterprofile", dir))
                 profilelist.append([dir, "String.IsEqual(System.ProfileName,%s)" %(name), name])
 
         else:
@@ -126,7 +126,7 @@ class XMLFunctions():
                 enabledSystemDebug = False
                 enabledScriptDebug = False
 
-                if json_response in ['result'] and json_response['settings'] in ['result'] and json_response['result']['settings'] is not None:
+                if json_response in ['result'] and json_response['settings'] in ['result'] and json_response['result']['settings'] != None:
                     for item in json_response['result']['settings']:
                         if item["id"] == "debug.showloginfo":
                             if item["value"] == False:
@@ -163,7 +163,7 @@ class XMLFunctions():
         xbmc.executebuiltin( "Skin.SetString(skinshortcuts-sharedmenu,%s)" %( ADDON.getSetting( "shared_menu" ) ) )
 
         # Get the skins addon.xml file
-        addonpath = xbmc.translatePath(os.path.join("special://skin/", 'addon.xml'))
+        addonpath = xbmcvfs.translatePath(os.path.join("special://skin/", 'addon.xml'))
         addon = xmltree.parse( addonpath )
         extensionpoints = addon.findall( "extension" )
         paths = []
@@ -177,7 +177,7 @@ class XMLFunctions():
             if extensionpoint.attrib.get( "point" ) == "xbmc.gui.skin":
                 resolutions = extensionpoint.findall( "res" )
                 for resolution in resolutions:
-                    path = xbmc.translatePath(os.path.join("special://skin/", resolution.attrib.get( "folder" ), "script-skinshortcuts-includes.xml"))
+                    path = xbmcvfs.translatePath(os.path.join("special://skin/", resolution.attrib.get( "folder" ), "script-skinshortcuts-includes.xml"))
                     paths.append( path )
                     skinpaths.append( path )
 
@@ -210,7 +210,7 @@ class XMLFunctions():
         foundFullMenu = False
 
         for hash in hashes:
-            if hash[1] is not None:
+            if hash[1] != None:
                 if hash[0] == "::XBMCVER::":
                     # Check the skin version is still the same as hash[1]
                     checkedXBMCVer = True
@@ -605,7 +605,7 @@ class XMLFunctions():
                 # Check if the overrides asks for a forced settings...
                 overridestree = DATA._get_overrides_skin()
                 forceSettings = overridestree.getroot().find( "forcesettings" )
-                if forceSettings is not None:
+                if forceSettings != None:
                     # We want a settings option to be added
                     newelement = xmltree.SubElement( mainmenuTree, "item" )
                     xmltree.SubElement( newelement, "label" ).text = "$LOCALIZE[10004]"
@@ -623,7 +623,7 @@ class XMLFunctions():
             if len( self.checkForShortcuts ) != 0:
                 # Add a value to the variable for all checkForShortcuts
                 for checkForShortcut in self.checkForShortcuts:
-                    if profile[ 1 ] is not None and xbmc.getCondVisibility( profile[ 1 ] ):
+                    if profile[ 1 ] != None and xbmc.getCondVisibility( profile[ 1 ] ):
                         # Current profile - set the skin bool
                         if checkForShortcut[ 2 ] == "True":
                             xbmc.executebuiltin( "Skin.SetBool(%s)" %( checkForShortcut[ 1 ] ) )
@@ -653,7 +653,7 @@ class XMLFunctions():
         progress.update( 100, message = LANGUAGE( 32098 ) )
 
         # Get the skins addon.xml file
-        addonpath = xbmc.translatePath(os.path.join("special://skin/", 'addon.xml'))
+        addonpath = xbmcvfs.translatePath(os.path.join("special://skin/", 'addon.xml'))
         addon = xmltree.parse( addonpath )
         extensionpoints = addon.findall( "extension" )
         paths = []
@@ -661,7 +661,7 @@ class XMLFunctions():
             if extensionpoint.attrib.get( "point" ) == "xbmc.gui.skin":
                 resolutions = extensionpoint.findall( "res" )
                 for resolution in resolutions:
-                    path = xbmc.translatePath(os.path.join(self.skinDir, resolution.attrib.get("folder"), "script-skinshortcuts-includes.xml"))
+                    path = xbmcvfs.translatePath(os.path.join(self.skinDir, resolution.attrib.get("folder"), "script-skinshortcuts-includes.xml"))
                     paths.append( path )
         skinVersion = addon.getroot().attrib.get( "version" )
 
@@ -696,7 +696,7 @@ class XMLFunctions():
         allProps = {}
 
         # Set ID
-        if itemid is not -1:
+        if itemid != -1:
             newelement.set( "id", str( itemid ) )
         idproperty = xmltree.SubElement( newelement, "property" )
         idproperty.set( "name", "id" )
@@ -723,7 +723,7 @@ class XMLFunctions():
         else:
             xmltree.SubElement(newelement, "icon").text = icon.text
         thumb = item.find( "thumb" )
-        if thumb is not None:
+        if thumb != None:
             xmltree.SubElement(newelement,"thumb").text = item.find("thumb").text
 
         # labelID and defaultID
@@ -737,7 +737,7 @@ class XMLFunctions():
         allProps[ "defaultID" ] = defaultID
 
         # Check if the item is disabled
-        if item.find( "disabled" ) is not None:
+        if item.find( "disabled" ) != None:
             # It is, so we set it to be invisible, add an empty onclick and return
             xmltree.SubElement( newelement, "visible" ).text = "False"
             xmltree.SubElement( newelement, "onclick" ).text = "noop"
@@ -835,7 +835,7 @@ class XMLFunctions():
 
         # Primary visibility
         visibility = item.find( "visibility" )
-        if visibility is not None:
+        if visibility != None:
             xmltree.SubElement( newelement, "visible" ).text = visibility.text
 
         #additional onclick (group overrides)
@@ -861,11 +861,11 @@ class XMLFunctions():
             if onclick.text.startswith( "pvr-channel://" ):
                 # PVR action
                 onclickelement.text = "RunScript(script.skinshortcuts,type=launchpvr&channel=" + onclick.text.replace( "pvr-channel://", "" ) + ")"
-            elif onclick.text.startswith( "ActivateWindow(" ) and xbmc.translatePath( "special://skin/" ) in onclick.text:
+            elif onclick.text.startswith( "ActivateWindow(" ) and xbmcvfs.translatePath( "special://skin/" ) in onclick.text:
                 # Skin-relative links
                 try:
                     actionParts = onclick.text[15:-1].split( "," )
-                    actionParts[1] = actionParts[1].replace( xbmc.translatePath( "special://skin/" ), "" )
+                    actionParts[1] = actionParts[1].replace( xbmcvfs.translatePath( "special://skin/" ), "" )
                     path = actionParts[1].split( os.sep )
                     newAction = "special://skin"
                     for actionPart in actionParts[1].split( os.sep ):
@@ -914,9 +914,9 @@ class XMLFunctions():
                 self.checkForShortcuts = newCheckForShortcuts
 
         # Visibility
-        if visibilityCondition is not None:
+        if visibilityCondition != None:
             visibilityElement = xmltree.SubElement( newelement, "visible" )
-            if profileVisibility is not None:
+            if profileVisibility != None:
                 visibilityElement.text = profileVisibility + " + [" + visibilityCondition + "]"
             else:
                 visibilityElement.text = visibilityCondition
@@ -924,12 +924,12 @@ class XMLFunctions():
             issubmenuElement.set( "name", "isSubmenu" )
             issubmenuElement.text = "True"
             allProps[ "isSubmenu" ] = issubmenuElement
-        elif profileVisibility is not None:
+        elif profileVisibility != None:
             visibilityElement = xmltree.SubElement( newelement, "visible" )
             visibilityElement.text = profileVisibility
 
         # Submenu visibility
-        if submenuVisibility is not None:
+        if submenuVisibility != None:
             submenuVisibilityElement = xmltree.SubElement( newelement, "property" )
             submenuVisibilityElement.set( "name", "submenuVisibility" )
             if submenuVisibility.isdigit():
@@ -945,19 +945,19 @@ class XMLFunctions():
 
         # If this isn't the main menu, and we're cloning widgets or backgrounds...
         if groupName != "mainmenu":
-            if "clonewidgets" in options and len( self.MAINWIDGET ) is not 0:
+            if "clonewidgets" in options and len( self.MAINWIDGET ) != 0:
                 for key in self.MAINWIDGET:
                     additionalproperty = xmltree.SubElement( newelement, "property" )
                     additionalproperty.set( "name", key )
                     additionalproperty.text = self.MAINWIDGET[key]
                     allProps[ key ] = additionalproperty
-            if "clonebackgrounds" in options and len( self.MAINBACKGROUND ) is not 0:
+            if "clonebackgrounds" in options and len( self.MAINBACKGROUND ) != 0:
                 for key in self.MAINBACKGROUND:
                     additionalproperty = xmltree.SubElement( newelement, "property" )
                     additionalproperty.set( "name", key )
                     additionalproperty.text = DATA.local( self.MAINBACKGROUND[ key ] )[1]
                     allProps[ key ] = additionalproperty
-            if "cloneproperties" in options and len( self.MAINPROPERTIES ) is not 0:
+            if "cloneproperties" in options and len( self.MAINPROPERTIES ) != 0:
                 for key in self.MAINPROPERTIES:
                     additionalproperty = xmltree.SubElement( newelement, "property" )
                     additionalproperty.set( "name", key )
