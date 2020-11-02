@@ -10,7 +10,7 @@ from simpleeval import simple_eval
 
 ADDON    = xbmcaddon.Addon()
 ADDONID  = ADDON.getAddonInfo('id')
-SKINPATH = xbmc.translatePath("special://skin/shortcuts/")
+SKINPATH = xbmcvfs.translatePath("special://skin/shortcuts/")
 
 hashlist = []
 

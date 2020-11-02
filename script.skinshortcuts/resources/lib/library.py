@@ -14,7 +14,7 @@ NODE = nodefunctions.NodeFunctions()
 ADDON        = xbmcaddon.Addon()
 ADDONID      = ADDON.getAddonInfo('id')
 CWD          = ADDON.getAddonInfo('path')
-DATAPATH     = os.path.join(xbmc.translatePath("special://profile/"), "addon_data", ADDONID)
+DATAPATH     = os.path.join(xbmcvfs.translatePath("special://profile/"), "addon_data", ADDONID)
 LANGUAGE     = ADDON.getLocalizedString
 KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 
@@ -32,12 +32,12 @@ def kodiwalk(path, stringForce = False):
             if 'file' in item and 'filetype' in item and 'label' in item:
                 if item['filetype'] == 'directory' and not item['file'].endswith(('.xsp', '.m3u', '.xml/', '.xml' )):
                     if stringForce and item['file'].startswith(stringForce):
-                        files = files + kodiwalk( xbmc.translatePath( item['file'] ), stringForce )
+                        files = files + kodiwalk( xbmcvfs.translatePath( item['file'] ), stringForce )
                     else:
                         files = files + kodiwalk( item['file'], stringForce )
                 else:
                     if stringForce and item['file'].startswith(stringForce):
-                        files.append({'path':xbmc.translatePath(item['file']), 'label':item['label']})
+                        files.append({'path':xbmcvfs.translatePath(item['file']), 'label':item['label']})
                     else:
                         files.append({'path':item['file'], 'label':item['label']})
     return files
@@ -705,11 +705,11 @@ class LibraryFunctions():
             prefix = "library://music"
             action = "||AUDIO||"
 
-        rootdir = os.path.join(xbmc.translatePath("special://profile"), "library", library)
+        rootdir = os.path.join(xbmcvfs.translatePath("special://profile"), "library", library)
         if type == "custom":
             log( "Listing custom %s nodes..." %( library ) )
         else:
-            rootdir = os.path.join(xbmc.translatePath("special://xbmc"), "system", "library", library)
+            rootdir = os.path.join(xbmcvfs.translatePath("special://xbmc"), "system", "library", library)
             log("Listing default %s nodes..." %(library))
 
         nodes = NODE.get_nodes( rootdir, prefix )
@@ -960,7 +960,7 @@ class LibraryFunctions():
                 try:
                     playlist = file['path']
                     label = file['label']
-                    playlistfile = xbmc.translatePath(playlist)
+                    playlistfile = xbmcvfs.translatePath(playlist)
                     mediaLibrary = path[2]
 
                     if playlist.endswith( '.xsp' ):
@@ -1046,7 +1046,7 @@ class LibraryFunctions():
             for file in kodiwalk( path ):
                 playlist = file['path']
                 label = file['label']
-                playlistfile = xbmc.translatePath(playlist)
+                playlistfile = xbmcvfs.translatePath(playlist)
 
                 if playlist.endswith( '-randomversion.xsp' ):
                     contents = xbmcvfs.File(playlistfile, 'r')
@@ -1074,7 +1074,7 @@ class LibraryFunctions():
         listitems = []
         listing = None
 
-        fav_file = xbmc.translatePath('special://profile/favourites.xml')
+        fav_file = xbmcvfs.translatePath('special://profile/favourites.xml')
         if xbmcvfs.exists( fav_file ):
             doc = parse( fav_file )
             listing = doc.documentElement.getElementsByTagName( 'favourite' )
@@ -1372,7 +1372,7 @@ class LibraryFunctions():
 
                     if item[ "filetype" ] == "directory":
                         thumb = None
-                        if item[ "thumbnail" ] is not "":
+                        if item[ "thumbnail" ] != "":
                             thumb = item[ "thumbnail" ]
 
                         listitem = self._create( [ "ActivateWindow(%s,%s,return)" %( windowID, item[ "file" ] ), altLabel, "", {"icon": "DefaultFolder.png", "thumb": thumb} ] )
@@ -1417,7 +1417,7 @@ class LibraryFunctions():
                     # Process this as a plugin
                     if item["filetype"] == "directory":
                         thumb = None
-                        if item[ "thumbnail" ] is not "":
+                        if item[ "thumbnail" ] != "":
                             thumb = item[ "thumbnail" ]
                         listitem = self._create( [item[ "file" ], item[ "label" ] + "  >", "", {"icon": "DefaultFolder.png", "thumb": thumb} ] )
                         listings.append( self._get_icon_overrides( tree, listitem, "" ) )
@@ -1786,7 +1786,7 @@ class LibraryFunctions():
             temp_path = target.replace( "multipath://", "" ).split( "%2f/" )
             target = []
             for item in temp_path:
-                if item is not "":
+                if item != "":
                     target.append( urllib.url2pathname( item ) )
         else:
             target = [target]
@@ -1833,8 +1833,8 @@ class LibraryFunctions():
                 elements = target.split( "," )
                 if len( elements ) > 1:
                     if elements[1].startswith( "special://profile/addon_data/" + ADDONID + "/" ) and elements[1].endswith( ".xsp" ):
-                        xbmcvfs.delete( xbmc.translatePath( elements[1] ) )
-                        xbmcvfs.delete( xbmc.translatePath( elements[1].replace( ".xsp", "-randomversion.xsp" ) ) )
+                        xbmcvfs.delete( xbmcvfs.translatePath( elements[1] ) )
+                        xbmcvfs.delete( xbmcvfs.translatePath( elements[1].replace( ".xsp", "-randomversion.xsp" ) ) )
             except:
                 return
 
@@ -1851,7 +1851,7 @@ class LibraryFunctions():
 
             try:
                 if elements[1].startswith( "special://profile/addon_data/" + ADDONID + "/" ) and elements[1].endswith( ".xsp" ):
-                    filename =  xbmc.translatePath( elements[1] )
+                    filename =  xbmcvfs.translatePath( elements[1] )
                 else:
                     return
             except:

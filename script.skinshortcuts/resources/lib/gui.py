@@ -22,9 +22,9 @@ ADDON        = xbmcaddon.Addon()
 ADDONID      = ADDON.getAddonInfo('id')
 CWD          = ADDON.getAddonInfo('path')
 LANGUAGE     = ADDON.getLocalizedString
-DATAPATH     = os.path.join(xbmc.translatePath("special://profile/addon_data/"), ADDONID)
-SKINPATH     = xbmc.translatePath("special://skin/shortcuts/")
-DEFAULTPATH  = xbmc.translatePath(os.path.join(CWD, 'resources', 'shortcuts'))
+DATAPATH     = os.path.join(xbmcvfs.translatePath("special://profile/addon_data/"), ADDONID)
+SKINPATH     = xbmcvfs.translatePath("special://skin/shortcuts/")
+DEFAULTPATH  = xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'shortcuts'))
 
 ACTION_CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
 ACTION_CONTEXT_MENU = ( 117, )
@@ -342,7 +342,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         action = item.find( "action" ).text
         self._add_additionalproperty( listitem, "translatedPath", action )
         if "special://skin/" in action:
-            translate = xbmc.translatePath("special://skin/")
+            translate = xbmcvfs.translatePath("special://skin/")
             action = action.replace( "special://skin/", translate )
 
         listitem.setProperty( "path", action )

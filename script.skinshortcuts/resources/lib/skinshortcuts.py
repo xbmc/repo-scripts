@@ -19,9 +19,9 @@ ADDONVERSION = ADDON.getAddonInfo('version')
 LANGUAGE     = ADDON.getLocalizedString
 CWD          = ADDON.getAddonInfo('path')
 ADDONNAME    = ADDON.getAddonInfo('name')
-RESOURCE     = xbmc.translatePath(os.path.join(CWD, 'resources', 'lib'))
-DATAPATH     = os.path.join(xbmc.translatePath("special://profile/"), "addon_data", ADDONID)
-MASTERPATH   = os.path.join(xbmc.translatePath("special://masterprofile/"), "addon_data", ADDONID)
+RESOURCE     = xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'lib'))
+DATAPATH     = os.path.join(xbmcvfs.translatePath("special://profile/"), "addon_data", ADDONID)
+MASTERPATH   = os.path.join(xbmcvfs.translatePath("special://masterprofile/"), "addon_data", ADDONID)
 
 from resources.lib import xmlfunctions, datafunctions, library, nodefunctions
 XML = xmlfunctions.XMLFunctions()
