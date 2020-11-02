@@ -18,9 +18,9 @@ ADDONID      = ADDON.getAddonInfo('id')
 KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 LANGUAGE     = ADDON.getLocalizedString
 CWD          = ADDON.getAddonInfo('path')
-DATAPATH     = os.path.join(xbmc.translatePath("special://profile/"), "addon_data", ADDONID)
-SKINPATH     = xbmc.translatePath("special://skin/shortcuts/")
-DEFAULTPATH  = xbmc.translatePath(os.path.join(CWD, 'resources', 'shortcuts'))
+DATAPATH     = os.path.join(xbmcvfs.translatePath("special://profile/"), "addon_data", ADDONID)
+SKINPATH     = xbmcvfs.translatePath("special://skin/shortcuts/")
+DEFAULTPATH  = xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'shortcuts'))
 
 hashlist = []
 
@@ -129,7 +129,7 @@ class DataFunctions():
         log( "Loading shortcuts for group " + group )
 
         if profileDir is None:
-            profileDir = xbmc.translatePath("special://profile/")
+            profileDir = xbmcvfs.translatePath("special://profile/")
 
         userShortcuts = os.path.join( profileDir, "addon_data", ADDONID, self.slugify( group, True, isSubLevel = isSubLevel ) + ".DATA.xml" )
         skinShortcuts = os.path.join( SKINPATH , self.slugify( group ) + ".DATA.xml")
@@ -268,7 +268,7 @@ class DataFunctions():
 
             # If the action uses the special://skin protocol, translate it
             if "special://skin/" in action.text:
-                action.text = xbmc.translatePath( action.text )
+                action.text = xbmcvfs.translatePath( action.text )
 
             # Get visibility condition
             visibilityCondition = self.checkVisibility( action.text )
@@ -518,7 +518,7 @@ class DataFunctions():
 
         overridePath = os.path.join( profileDir, "overrides.xml" )
         try:
-            tree = xmltree.parse( xbmc.translatePath( overridePath ) )
+            tree = xmltree.parse( xbmcvfs.translatePath( overridePath ) )
             self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
             self.overrides[ "user" ] = tree
             return tree
@@ -960,7 +960,7 @@ class DataFunctions():
             # currentProperty[4] = defaultID
             if labelID is not None and currentProperty[0] == group and currentProperty[1] == labelID:
                 returnProperties.append( self.upgradeAdditionalProperties( currentProperty[2], currentProperty[3] ) )
-            elif len( currentProperty ) is not 4:
+            elif len( currentProperty ) != 4:
                 if defaultID is not None and currentProperty[0] == group and currentProperty[4] == defaultID:
                     returnProperties.append( self.upgradeAdditionalProperties( currentProperty[2], currentProperty[3] ) )
 
