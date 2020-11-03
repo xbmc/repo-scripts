@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+### CONTEXT MENU
+msgctxt "#30600"
+msgid "Play with IPTV Manager"
+msgstr ""
+
+
+### MESSAGES
+msgctxt "#30700"
+msgid "Are you sure you want to setup IPTV Simple for the use with IPTV Manager? Any existing configuration of IPTV Simple will be overwritten."
+msgstr ""
+
+msgctxt "#30701"
+msgid "IPTV Simple is configured for use with IPTV Manager!"
+msgstr ""
+
+msgctxt "#30702"
+msgid "The configuration of IPTV Simple has failed. Please check the log files for more information."
+msgstr ""
+
+msgctxt "#30703"
+msgid "Detecting IPTV add-ons..."
+msgstr ""
+
+msgctxt "#30704"
+msgid "Fetching channels and guide of {addon}..."
+msgstr ""
+
+msgctxt "#30705"
+msgid "Updating channels and guide..."
+msgstr ""
+
+msgctxt "#30706"
+msgid "This program isn't available to play."
+msgstr ""
+
+
+### SETTINGS
+msgctxt "#30800"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Refreshing"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Refresh interval [I](in hours)[/I]"
+msgstr ""
+
+msgctxt "#30803"
+msgid "Refresh channels and guide now…"
+msgstr ""
+
+msgctxt "#30820"
+msgid "IPTV Simple"
+msgstr ""
+
+msgctxt "#30821"
+msgid "Configuration"
+msgstr ""
+
+msgctxt "#30822"
+msgid "Configure IPTV Simple automatically…"
+msgstr ""
+
+msgctxt "#30823"
+msgid "Open IPTV Simple settings…"
+msgstr ""
+
+msgctxt "#30824"
+msgid "Automatically restart IPTV Simple to refresh the data"
+msgstr ""
