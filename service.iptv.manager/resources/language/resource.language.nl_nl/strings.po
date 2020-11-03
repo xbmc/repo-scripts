@@ -37,21 +37,9 @@ msgctxt "#30705"
 msgid "Updating channels and guide..."
 msgstr "Updaten van de kanalenlijst en de gids..."
 
-msgctxt "#30710"
-msgid "Could not find an Add-on to play programs from {channel}."
-msgstr "Kon geen Add-on vinden om programma's van {channel} af te spelen."
-
-msgctxt "#30711"
-msgid "Select an Add-on to use for playback"
-msgstr "Selecteer een Add-on om te gebruiken voor het afspelen"
-
-msgctxt "#30712"
-msgid "Could not determine the currently selected program. Please try again without selecting another program."
-msgstr "Kon het geselecteerde programma niet bepalen. Probeer opnieuw zonder een andere programma te selecteren."
-
-msgctxt "#30713"
-msgid "The EPG data is not up to date. Do you want to refresh the EPG now?"
-msgstr "De EPG is niet up to date. Wil je deze nu vernieuwen?"
+msgctxt "#30706"
+msgid "This program isn't available to play."
+msgstr "Dit programma is niet beschikbaar om af te spelen."
 
 
 ### SETTINGS
