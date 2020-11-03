@@ -30,13 +30,18 @@ class UpNextPlayer(Player):
     def disable_tracking(self):
         self.state.track = False
 
+    def reset_queue(self):
+        if self.state.queued:
+            self.api.reset_queue()
+            self.state.queued = False
+
     def onPlayBackStarted(self):  # pylint: disable=invalid-name
         """Will be called when kodi starts playing a file"""
-        self.monitor.waitForAbort(5)
+        self.monitor.waitForAbort(2)
         if not getCondVisibility('videoplayer.content(episodes)'):
             return
         self.state.track = True
-
+        self.reset_queue()
 
     def onPlayBackPaused(self):  # pylint: disable=invalid-name
         self.state.pause = True
@@ -46,15 +51,18 @@ class UpNextPlayer(Player):
 
     def onPlayBackStopped(self):  # pylint: disable=invalid-name
         """Will be called when user stops playing a file"""
+        self.reset_queue()
         self.api.reset_addon_data()
         self.state = State()  # Reset state
 
     def onPlayBackEnded(self):  # pylint: disable=invalid-name
         """Will be called when Kodi has ended playing a file"""
+        self.reset_queue()
         self.api.reset_addon_data()
         self.state = State()  # Reset state
 
     def onPlayBackError(self):  # pylint: disable=invalid-name
         """Will be called when when playback stops due to an error"""
+        self.reset_queue()
         self.api.reset_addon_data()
         self.state = State()  # Reset state

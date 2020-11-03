@@ -39,7 +39,7 @@ class UpNext(WindowXMLDialog):
             self.getControl(3013).setLabel(localize(30034))  # Close
 
     def set_info(self):
-        episode_info = '%(season)sx%(episode)s.' % self.item
+        episode_info = '{season}x{episode}.'.format(**self.item)
         if self.item.get('rating') is None:
             rating = ''
         else:

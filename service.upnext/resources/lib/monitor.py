@@ -7,7 +7,7 @@ from api import Api
 from playbackmanager import PlaybackManager
 from player import UpNextPlayer
 from statichelper import from_unicode
-from utils import decode_json, get_property, get_setting_bool, log as ulog
+from utils import decode_json, get_property, get_setting_bool, kodi_version_major, log as ulog
 
 
 class UpNextMonitor(Monitor):
@@ -39,16 +39,20 @@ class UpNextMonitor(Monitor):
 
             if bool(get_property('PseudoTVRunning') == 'True'):
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
             if get_setting_bool('disableNextUp'):
                 # Next Up is disabled
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
-            if self.player.isExternalPlayer():
+            # Method isExternalPlayer() was added in Kodi v18 onward
+            if kodi_version_major() >= 18 and self.player.isExternalPlayer():
                 self.log('Up Next tracking stopped, external player detected', 2)
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
             last_file = self.player.get_last_file()
@@ -57,9 +61,10 @@ class UpNextMonitor(Monitor):
             except RuntimeError:
                 self.log('Up Next tracking stopped, failed player.getPlayingFile()', 2)
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
-            if last_file and last_file == current_file:
+            if last_file and last_file == from_unicode(current_file):
                 # Already processed this playback before
                 continue
 
@@ -68,11 +73,13 @@ class UpNextMonitor(Monitor):
             except RuntimeError:
                 self.log('Up Next tracking stopped, failed player.getTotalTime()', 2)
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
             if total_time == 0:
                 self.log('Up Next tracking stopped, no file is playing', 2)
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
             try:
@@ -80,6 +87,7 @@ class UpNextMonitor(Monitor):
             except RuntimeError:
                 self.log('Up Next tracking stopped, failed player.getTime()', 2)
                 self.player.disable_tracking()
+                self.playback_manager.demo.hide()
                 continue
 
             notification_time = self.api.notification_time(total_time=total_time)
@@ -105,5 +113,6 @@ class UpNextMonitor(Monitor):
             self.log('Received data from sender %s is not JSON: %s' % (sender, data), 2)
             return
 
+        self.playback_manager.handle_demo()
         decoded_data.update(id='%s_play_action' % sender.replace('.SIGNAL', ''))
         self.api.addon_data_received(decoded_data, encoding=encoding)
