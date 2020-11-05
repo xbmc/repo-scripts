@@ -1,4 +1,4 @@
-import os
+import os, sys
 import uuid, hmac, hashlib, base64, time
 from kodi_six import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 import requests
