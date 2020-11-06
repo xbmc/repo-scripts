@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+### CONTEXT MENU
+msgctxt "#30600"
+msgid "Play with IPTV Manager"
+msgstr "Afspelen met IPTV Manager"
+
+
+### MESSAGES
+msgctxt "#30700"
+msgid "Are you sure you want to setup IPTV Simple for the use with IPTV Manager? Any existing configuration of IPTV Simple will be overwritten."
+msgstr "Bent u zeker om IPTV Simple in te stellen om te gebruiken met IPTV Manager? De bestaande configuratie van IPTV Simple zal worden overschreven."
+
+msgctxt "#30701"
+msgid "IPTV Simple is configured for use with IPTV Manager!"
+msgstr "IPTV SImple is geconfigureerd om te gebruiken met IPTV Manager!"
+
+msgctxt "#30702"
+msgid "The configuration of IPTV Simple has failed. Please check the log files for more information."
+msgstr "De configuratie van IPTV Simple is mislukt. Gelieve de logbestanden te bekijken voor meer informatie."
+
+msgctxt "#30703"
+msgid "Detecting IPTV add-ons..."
+msgstr "Detecteren van IPTV add-ons..."
+
+msgctxt "#30704"
+msgid "Fetching channels and guide of {addon}..."
+msgstr "Opvragen van kanalenlijst en gids van {addon}..."
+
+msgctxt "#30705"
+msgid "Updating channels and guide..."
+msgstr "Updaten van de kanalenlijst en de gids..."
+
+msgctxt "#30706"
+msgid "This program isn't available to play."
+msgstr "Dit programma is niet beschikbaar om af te spelen."
+
+
+### SETTINGS
+msgctxt "#30800"
+msgid "Channels"
+msgstr "Kanalen"
+
+msgctxt "#30801"
+msgid "Refreshing"
+msgstr "Verniewen"
+
+msgctxt "#30802"
+msgid "Refresh interval [I](in hours)[/I]"
+msgstr "Vernieuwsingsinterval [I](in uren)[/I]"
+
+msgctxt "#30803"
+msgid "Refresh channels and guide now…"
+msgstr "Vernieuw kanalenlijst en gids nu…"
+
+msgctxt "#30820"
+msgid "IPTV Simple"
+msgstr "IPTV Simple"
+
+msgctxt "#30821"
+msgid "Configuration"
+msgstr "Configuratie"
+
+msgctxt "#30822"
+msgid "Configure IPTV Simple automatically…"
+msgstr "Configureer IPTV Simple automatisch…"
+
+msgctxt "#30823"
+msgid "Open IPTV Simple settings…"
+msgstr "Open de IPTV Simple instellingen…"
+
+msgctxt "#30824"
+msgid "Automatically restart IPTV Simple to refresh the data"
+msgstr "Herstart IPTV Simple automatisch om de data te vernieuwen"
