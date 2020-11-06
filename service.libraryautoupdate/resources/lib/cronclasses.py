@@ -29,7 +29,7 @@ class CronSchedule:
 
 
 class CustomPathFile:
-    jsonFile = xbmc.translatePath(utils.data_dir() + "custom_paths.json")
+    jsonFile = xbmcvfs.translatePath(utils.data_dir() + "custom_paths.json")
     paths = None
     contentType = 'video'  # all by default
 
