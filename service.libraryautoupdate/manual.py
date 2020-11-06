@@ -8,7 +8,7 @@ runUpdate = False
 if(not utils.getSettingBool('disable_manual_prompt')):
     nextRun = autoUpdate.showNotify(False)
     # check if we should run updates
-    runUpdate = xbmcgui.Dialog().yesno(utils.getString(30000), utils.getString(30060) + nextRun, line2=utils.getString(30061), autoclose=6000)
+    runUpdate = xbmcgui.Dialog().yesno(utils.getString(30000), "%s %s \n %s" % (utils.getString(30060), nextRun, utils.getString(30061)), autoclose=6000)
 else:
     # the user has elected to skip the prompt
     runUpdate = True

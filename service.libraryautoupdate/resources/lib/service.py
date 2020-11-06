@@ -294,9 +294,9 @@ class AutoUpdater:
     def readLastRun(self):
         if(self.last_run == 0):
             # read it in from the settings
-            if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "last_run.txt"))):
+            if(xbmcvfs.exists(xbmcvfs.translatePath(utils.data_dir() + "last_run.txt"))):
 
-                runFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "last_run.txt"))
+                runFile = xbmcvfs.File(xbmcvfs.translatePath(utils.data_dir() + "last_run.txt"))
 
                 try:
                     # there may be an issue with this file, we'll get it the next time through
@@ -309,7 +309,7 @@ class AutoUpdater:
                 self.last_run = 0
 
     def writeLastRun(self):
-        runFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "last_run.txt"), 'w')
+        runFile = xbmcvfs.File(xbmcvfs.translatePath(utils.data_dir() + "last_run.txt"), 'w')
         runFile.write(str(self.last_run))
         runFile.close()
 
