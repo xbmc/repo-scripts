@@ -36,21 +36,9 @@ msgctxt "#30705"
 msgid "Updating channels and guide..."
 msgstr "Обновление каналов и программы..."
 
-msgctxt "#30710"
-msgid "Could not find an Add-on to play programs from {channel}."
-msgstr "Не удалось найти дополнение для воспроизведения программ с {channel}."
-
-msgctxt "#30711"
-msgid "Select an Add-on to use for playback"
-msgstr "Выберите дополнение для воспроизведения"
-
-msgctxt "#30712"
-msgid "Could not determine the currently selected program. Please try again without selecting another program."
-msgstr "Не удалось определить текущую выбранную программу. Пожалуйста, попробуйте снова, не выбирая другую программу."
-
-msgctxt "#30713"
-msgid "The EPG data is not up to date. Do you want to refresh the EPG now?"
-msgstr "Данные EPG устарели. Хотите обновить EPG сейчас?"
+msgctxt "#30706"
+msgid "This program isn't available to play."
+msgstr ""
 
 
 ### SETTINGS

@@ -121,10 +121,8 @@ class IptvSimple:
                         m3u8_data += ' group-title="{group}"'.format(**channel)
                     if channel.get('radio'):
                         m3u8_data += ' radio="true"'
-                    if channel.get('vod'):
-                        m3u8_data += ' catchup="vod"'
 
-                    m3u8_data += ',{name}\n{stream}\n\n'.format(**channel)
+                    m3u8_data += ' catchup="vod",{name}\n{stream}\n\n'.format(**channel)
 
             fdesc.write(m3u8_data.encode('utf-8'))
 
