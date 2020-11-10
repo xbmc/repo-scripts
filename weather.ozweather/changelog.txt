@@ -1,4 +1,9 @@
-v1.2 
+
+v1.2.2
+ - Change xbmc.translatePath (deprecated) to xbmcvfs.translatePath
+ - Fix missing import in locations.py that broke setting new locations
+
+v1.2.1
  - Submit to Kodi Matrx repo
  - Add github workflows for addon checking & submission
 

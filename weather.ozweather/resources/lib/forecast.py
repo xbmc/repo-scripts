@@ -1,4 +1,5 @@
 import xbmc
+import xbmcvfs
 import xbmcgui
 
 from resources.lib.common import *
@@ -118,9 +119,9 @@ def forecast(urlPath, radarCode):
     if extended_features == "true":
         log("Getting radar images for " + radarCode)
 
-        backgroundsPath = xbmc.translatePath(
+        backgroundsPath = xbmcvfs.translatePath(
             "special://profile/addon_data/weather.ozweather/radarbackgrounds/" + radarCode + "/");
-        overlayLoopPath = xbmc.translatePath(
+        overlayLoopPath = xbmcvfs.translatePath(
             "special://profile/addon_data/weather.ozweather/currentloop/" + radarCode + "/");
 
         updateRadarBackgrounds = ADDON.getSetting('BGDownloadToggle')
@@ -157,7 +158,7 @@ def get_forecast():
     clear_properties()
 
     # Set basic properties/'brand'
-    set_property(WEATHER_WINDOW, 'WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
+    set_property(WEATHER_WINDOW, 'WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
     set_property(WEATHER_WINDOW, 'WeatherProvider', 'Bureau of Meteorology Australia (via WeatherZone)')
     set_property(WEATHER_WINDOW, 'WeatherVersion', ADDON_NAME + "-" + ADDON_VERSION)
 
