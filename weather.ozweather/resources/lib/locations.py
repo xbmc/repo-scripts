@@ -2,6 +2,7 @@ import xbmc
 import xbmcgui
 
 from resources.lib.common import *
+from resources.lib.weatherzone import *
 
 
 def refresh_locations():

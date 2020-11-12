@@ -7,6 +7,7 @@
 # (For Kodi Matrix & later)
 
 import xbmc
+import xbmcvfs
 import xbmcgui
 import xbmcaddon
 import sys
@@ -21,7 +22,7 @@ ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_ARGUMENTS = str(sys.argv)
 CWD = ADDON.getAddonInfo('path')
 LANGUAGE = ADDON.getLocalizedString
-PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
 USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
 WEATHER_WINDOW = xbmcgui.Window(12600)

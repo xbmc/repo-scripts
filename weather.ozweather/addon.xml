@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="1.2.1" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="Oz Weather" version="1.2.2" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
     	<import addon="script.module.requests" version="2.22.0+matrix.1"/>
@@ -21,7 +21,9 @@
        		<icon>icon.png</icon>
        		<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>V1.2.1
+		<news>V1.2.2
+			- Fix for setting of new locations
+			V1.2.1
 			- Updated for change in Kodi logging functions (LOGNOTICE -> LOGINFO)
 			v1.2.0
 			- Updated for Kodi Matrix and Python 3
