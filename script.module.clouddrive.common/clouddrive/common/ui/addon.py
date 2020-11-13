@@ -339,14 +339,18 @@ class CloudDriveAddon(RemoteProcessCallable):
     
     def _remove_export(self, driveid, item_id):
         self._export_manager = ExportManager(self._profile_path)
-        item = self._export_manager.get_exports()[item_id]
-        remove_export = self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32001) % Utils.unicode(item['name']))
-        if remove_export:
-            keep_locals = self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32086) % Utils.unicode(item['name']))
-            if not keep_locals:
-                self._export_manager.remove_export(item_id, False)
-            else:
-                self._export_manager.remove_export(item_id)
+        exports = self._export_manager.get_exports()
+        if item_id in exports:
+            item = exports[item_id]
+            remove_export = self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32001) % Utils.unicode(item['name']))
+            if remove_export:
+                keep_locals = self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32086) % Utils.unicode(item['name']))
+                if not keep_locals:
+                    self._export_manager.remove_export(item_id, False)
+                else:
+                    self._export_manager.remove_export(item_id)
+                KodiUtils.executebuiltin('Container.Refresh')
+        else:
             KodiUtils.executebuiltin('Container.Refresh')
     
     def _open_export(self, driveid, item_driveid, item_id, name):

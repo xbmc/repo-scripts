@@ -26,7 +26,7 @@ import urllib
 from clouddrive.common.remote.request import Request
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
-from clouddrive.common.utils import Utils
+from clouddrive.common.utils import Utils, timeit
 from clouddrive.common.db import SimpleKeyValueDb
 from _collections import deque
 from clouddrive.common.remote.errorreport import ErrorReport
@@ -74,6 +74,7 @@ class ExportManager(object):
     def get_exports(self):
         return self.exports_db.getall()
 
+    @timeit
     def save_export(self, export):
         self.exports_db.set(export['id'], export)
 
@@ -81,7 +82,9 @@ class ExportManager(object):
         export = self.exports_db.get(exportid)
         self.exports_db.remove(exportid)
         self.export_items_db.remove(exportid)
-        path = os.path.join(export['destination_folder'], export['name'],'')
+        self.export_items_db.remove('pending-' + exportid)
+        self.export_items_db.remove('retry-' + exportid)
+        path = os.path.join(export['destination_folder'], Utils.unicode(export['name']), '')
         if not keep_local:
             if KodiUtils.file_exists(path):
                 Utils.remove_folder(path)
@@ -89,14 +92,23 @@ class ExportManager(object):
     def get_items_info(self, exportid):
         return self.export_items_db.get(exportid)
 
+    @timeit
     def save_items_info(self, exportid, items_info):
         self.export_items_db.set(exportid, items_info)
     
     def get_pending_changes(self, exportid):
         return deque(Utils.default(self.export_items_db.get('pending-' + exportid), []))
 
+    @timeit
     def save_pending_changes(self, exportid, changes):
         self.export_items_db.set('pending-' + exportid, list(changes))
+
+    def get_retry_changes(self, exportid):
+        return deque(Utils.default(self.export_items_db.get('retry-' + exportid), []))
+
+    @timeit
+    def save_retry_changes(self, exportid, changes):
+        self.export_items_db.set('retry-' + exportid, list(changes))
                 
     @staticmethod
     def add_item_info(items_info, item_id, name, full_local_path, parent, item_type):
