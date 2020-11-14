@@ -1,4 +1,5 @@
-import os
+import os, sys
+import codecs
 import uuid, hmac, hashlib, base64, time
 from kodi_six import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 import requests
@@ -37,7 +38,7 @@ class ADOBE:
         sso_path = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
     else:
         sso_path = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-    local_string = xbmcaddon.Addon().getLocalizedString
+    local_string = xbmcaddon.Addon('script.module.adobepass').getLocalizedString
     verify = False
 
     def __init__(self, service_vars):
@@ -80,8 +81,8 @@ class ADOBE:
         epoch_time = str(int(time.time() * 1000))
         authorization = "%s requestor_id=%s, nonce=%s, signature_method=HMAC-SHA1, request_time=%s, request_uri=%s" % \
                         (request_method, self.requestor_id, nonce, epoch_time, request_uri)
-        signature = hmac.new(self.private_key, authorization, hashlib.sha1)
-        signature = base64.b64encode(signature.digest())
+        signature = hmac.new(codecs.encode(self.private_key), codecs.encode(authorization), hashlib.sha1)
+        signature = codecs.decode(base64.b64encode(signature.digest()))
         authorization += ", public_key=" + self.public_key + ", signature=" + signature
 
         return authorization
@@ -111,10 +112,10 @@ class ADOBE:
         if self.mvpd_id != '': payload += '&mvpd=' + self.mvpd_id
 
         r = requests.post(url, headers=self.headers, cookies=self.load_cookies(), data=payload, verify=self.verify)
-        self.reg_code = r.json()['code']
+        self.reg_code = str(r.json()['code'])
 
         msg = self.local_string(30010) + '[B][COLOR yellow]' + self.registration_url + '[/COLOR][/B][CR]'
-        msg += self.local_string(30011)
+        msg += self.local_string(30011) + '[CR]'
         msg += self.local_string(30012) + '[B][COLOR yellow]' + self.reg_code + '[/COLOR][/B]' + self.local_string(30013)
 
         dialog = xbmcgui.Dialog()
