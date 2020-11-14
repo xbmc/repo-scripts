@@ -276,6 +276,11 @@ class KodiUtils:
         return xbmcvfs.rename(f, newFile)
     
     @staticmethod
+    def mkdir(f):
+        import xbmcvfs
+        return xbmcvfs.mkdir(f)
+    
+    @staticmethod
     def mkdirs(f):
         import xbmcvfs
         return xbmcvfs.mkdirs(f)

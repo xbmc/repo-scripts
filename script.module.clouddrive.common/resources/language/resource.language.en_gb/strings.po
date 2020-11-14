@@ -367,3 +367,7 @@ msgstr ""
 msgctxt "#32087"
 msgid "Download of file %s failed"
 msgstr ""
+
+msgctxt "#32088"
+msgid "watching changes"
+msgstr ""

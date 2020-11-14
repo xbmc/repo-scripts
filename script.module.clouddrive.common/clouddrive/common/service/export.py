@@ -19,7 +19,7 @@
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 import datetime
-from clouddrive.common.utils import Utils
+from clouddrive.common.utils import Utils, timeit
 from clouddrive.common.ui.dialog import ExportScheduleDialog, DialogProgressBG
 from calendar import weekday
 from clouddrive.common.remote.errorreport import ErrorReport
@@ -133,20 +133,41 @@ class ExportService(object):
         for export in export_list:
             self.run_export(export)
     
-    def _show_progress_before_change(self, change, pending_changes, changes_done, retry_changes):
-        completed = len(changes_done) + len(retry_changes)
+    def _get_progress_header(self, export):
+        sid = 32024
+        if Utils.get_safe_value(export, 'origin', '') == 'watch':
+            sid = 32088
+        return self._common_addon.getLocalizedString(sid) + ': ' + Utils.unicode(export['name'])
+    
+    def _get_percent(self, completed, target):
+        if target > 0:
+            return completed * 100 / target
+        return 0
+    
+    def _show_progress_before_change(self, change, pending_changes, changes_done, retry_changes, ignored, export):
+        completed = len(changes_done) + len(retry_changes) + ignored
         target = len(pending_changes) + completed + 1
-        p = completed * 100 / target
-        self._export_progress_dialog_bg.update(p, self._addon_name + ' ' + self._common_addon.getLocalizedString(32024), Utils.get_safe_value(change,'name','n/a'))
+        self._export_progress_dialog_bg.update(self._get_percent(completed, target), self._addon_name + ' ' + self._get_progress_header(export), Utils.get_safe_value(change,'name','n/a'))
+
+    def _show_progress_after_change(self, change, change_type, pending_changes, changes_done, retry_changes, ignored, export):
+        completed = len(changes_done) + len(retry_changes) + ignored
+        target = len(pending_changes) + completed
+        msg = self._common_addon.getLocalizedString(32041)
+        if change_type:
+            msg = Utils.get_safe_value(change,'name','n/a')
+        self._export_progress_dialog_bg.update(self._get_percent(completed, target), self._addon_name + ' ' + self._get_progress_header(export), msg)
     
     def run_export(self, export):
         exporting = Utils.get_safe_value(export, 'exporting', False)
         Logger.debug('Run export requested. Exporting = %s' % (exporting,))
         if not exporting:
             export['exporting'] = True
+            export['origin'] = 'schedule'
             self.export_manager.save_export(export)
             try:
-                self._export_progress_dialog_bg.create(self._addon_name + ' ' + self._common_addon.getLocalizedString(32024), self._common_addon.getLocalizedString(32025))
+                show_export_progress = KodiUtils.get_addon_setting('hide_export_progress') != 'true'
+                if show_export_progress:
+                    self._export_progress_dialog_bg.create(self._addon_name + ' ' + self._common_addon.getLocalizedString(32024), self._common_addon.getLocalizedString(32025))
                 export_folder = export['destination_folder']
                 if not KodiUtils.file_exists(export_folder):
                     Logger.debug('creating folder: %s' % (export_folder,))
@@ -160,68 +181,86 @@ class ExportService(object):
                     ExportManager.add_item_info(items_info, 'root-folder', None, export_folder, None, 'folder')
                     self.export_manager.save_items_info(exportid, items_info)
                     item = self.provider.get_item(export['item_driveid'], exportid)
-                    item['parent'] = 'root-folder'
+                    item.update({
+                        'parent': 'root-folder',
+                        'origin': 'schedule'
+                    })
                     self.export_manager.save_pending_changes(exportid, deque([item]))
-                    self.process_pending_changes(exportid, False, on_before_change = self._show_progress_before_change)
-                    if Utils.get_safe_value(export, 'update_library', False):
-                        if Utils.get_safe_value(export, 'content_type', '') == 'audio':
-                            KodiUtils.update_library('music')
-                        else:
-                            KodiUtils.update_library('video')
+                    self.export_manager.save_retry_changes(exportid, deque([]))
+                    if show_export_progress:
+                        progress_listener = self._show_progress_before_change
+                    else:
+                        progress_listener = None
+                    changes_done = self.process_pending_changes(exportid, on_before_change = progress_listener)
+                    if changes_done:
+                        if Utils.get_safe_value(export, 'update_library', False):
+                            if Utils.get_safe_value(export, 'content_type', '') == 'audio':
+                                KodiUtils.update_library('music')
+                            else:
+                                KodiUtils.update_library('video')
                             
             except Exception as e:
                 ErrorReport.handle_exception(e)
                 KodiUtils.show_notification(self._common_addon.getLocalizedString(32027) + ' ' + Utils.unicode(e))
             finally:
                 export['exporting'] = False
+                del export['origin']
                 self.export_manager.save_export(export)
                 self._export_progress_dialog_bg.close()
         else:
             KodiUtils.show_notification(self._common_addon.getLocalizedString(32059) + ' ' + self._common_addon.getLocalizedString(32038))
-            
-    def get_folder_changes(self, driveid, folder):
-        return self.provider.get_folder_items(Utils.default(Utils.get_safe_value(folder, 'drive_id'), driveid), folder['id'], include_download_info=True)
+    
+    def get_folder_changes(self, driveid, folder, on_before_add_item=None):
+        return self.provider.get_folder_items(Utils.default(Utils.get_safe_value(folder, 'drive_id'), driveid), folder['id'], include_download_info=True, on_before_add_item=on_before_add_item)
+    
+    def on_before_add_item(self, export, item):
+        item['origin'] = Utils.get_safe_value(export, 'origin', '')
         
-    def process_pending_changes(self, exportid, abort_if_exporting = True, on_after_change = None, on_before_change = None):
+    def process_pending_changes(self, exportid, on_after_change = None, on_before_change = None):
         changes_done = []
-        export = self.export_manager.get_exports()[exportid]
-        exporting = Utils.get_safe_value(export, 'exporting', False)
-        if exporting and abort_if_exporting:
-            Logger.debug('other export already in progress...')
-            KodiUtils.show_notification(self._common_addon.getLocalizedString(32059) + ' ' + self._common_addon.getLocalizedString(32038))
-        else:
-            pending_changes = self.export_manager.get_pending_changes(exportid)
-            if pending_changes:
-                Logger.debug('*** Processing all changes for export "%s" in %s' % (export['name'], export['destination_folder']))
-                items_info = Utils.default(self.export_manager.get_items_info(exportid), {})
-                retry_changes = []
-                processed_changes = set()
-                while len(pending_changes) > 0:
-                    change = pending_changes.popleft()
-                    change_id = change['id']
-                    if change_id in processed_changes:
-                        continue
-                    processed_changes.add(change_id)
-                    if on_before_change:
-                        on_before_change(change, pending_changes, changes_done, retry_changes)
-                    
-                    change_type = self.process_change(change, items_info, export)
-                    self.export_manager.save_items_info(exportid, items_info)
-                    if change_type:
-                        if change_type[-6:] == "_retry":
-                            retry_changes.append(change)
-                            Logger.debug('change marked for retry')
-                        else:
-                            changes_done.append(change)
-                            if change_type == 'create_folder':
-                                pending_changes.extendleft(self.get_folder_changes(export['driveid'], change))
-                    if on_after_change:
-                        on_after_change(change, change_type, pending_changes, changes_done, retry_changes)
-                if retry_changes:
-                    pending_changes = deque(retry_changes)
-                    self.export_manager.save_pending_changes(exportid, pending_changes)
-                    Logger.debug('pending changes to retry for %s: %s' % (exportid, Utils.str(pending_changes),))
+        pending_changes = self.export_manager.get_pending_changes(exportid)
+        if pending_changes:
+            export = self.export_manager.get_exports()[exportid]
+            Logger.debug('*** Processing all changes for export id: %s' % exportid)
+            try:
+                Logger.debug('    Exporting "%s" in %s' % (Utils.unicode(export['name']), Utils.unicode(export['destination_folder'])))
+            except Exception:
+                Logger.debug('    Export name: %s' % Utils.str(export['name']))
+                Logger.debug('    Export destination_folder: %s' % Utils.str(export['destination_folder']))
+            items_info = Utils.default(self.export_manager.get_items_info(exportid), {})
+            retry_changes = []
+            processed_changes = set()
+            ignored = 0
+            while len(pending_changes) > 0:
+                change = pending_changes.popleft()
+                change_id = change['id']
+                if change_id in processed_changes:
+                    continue
+                processed_changes.add(change_id)
+                if on_before_change:
+                    on_before_change(change, pending_changes, changes_done, retry_changes, ignored, export)
+                
+                change_type = self.process_change(change, items_info, export)
+                self.export_manager.save_items_info(exportid, items_info)
                 self.export_manager.save_pending_changes(exportid, pending_changes)
+                is_retry = False
+                if change_type:
+                    if change_type[-6:] == "_retry":
+                        is_retry = True
+                        retry_changes.append(change)
+                        Logger.debug('change marked for retry')
+                    else:
+                        changes_done.append(change)
+                        if change_type == 'create_folder' or (change_type == 'create_folder_ignored' and Utils.get_safe_value(change, 'origin', '') == 'schedule'):
+                            before_add_item = lambda item: self.on_before_add_item(change, item)
+                            pending_changes.extendleft(self.get_folder_changes(export['driveid'], change, before_add_item))
+                            self.export_manager.save_pending_changes(exportid, pending_changes)
+                else:
+                    ignored += 1
+                if on_after_change:
+                    on_after_change(change, change_type, pending_changes, changes_done, retry_changes, ignored, export)
+                if is_retry:
+                    self.export_manager.save_retry_changes(exportid, deque(retry_changes))
         return changes_done
     
     def process_watch(self):
@@ -232,9 +271,13 @@ class ExportService(object):
             export = exports[exportid]
             watch = Utils.get_safe_value(export, 'watch', False)
             exporting = Utils.get_safe_value(export, 'exporting', False)
-            if watch and not exporting:
+            retry_changes = self.export_manager.get_retry_changes(exportid)
+            if (watch or len(retry_changes) > 0) and not exporting:
                 items_info = self.export_manager.get_items_info(exportid)
                 if items_info:
+                    export['exporting'] = True
+                    export['origin'] = 'watch'
+                    self.export_manager.save_export(export)
                     try:
                         driveid = export['driveid']
                         if driveid in changes_by_drive:
@@ -245,9 +288,20 @@ class ExportService(object):
                             changes_by_drive[driveid] = []
                             changes_by_drive[driveid].extend(changes)
                         pending_changes = self.export_manager.get_pending_changes(exportid)
+                        pending_changes.extend(retry_changes)
                         pending_changes.extend(changes)
-                        self.export_manager.save_pending_changes(exportid, pending_changes)
-                        changes_done = self.process_pending_changes(exportid, on_before_change = self._show_progress_before_change)
+                        if len(changes) > 0 or len(retry_changes) > 0:
+                            self.export_manager.save_pending_changes(exportid, pending_changes)
+                        if len(retry_changes) > 0:
+                            self.export_manager.save_retry_changes(exportid, deque([]))
+                        show_export_progress = KodiUtils.get_addon_setting('hide_export_progress') != 'true'
+                        if pending_changes and show_export_progress:
+                            self._export_progress_dialog_bg.update(0, self._addon_name + ' ' + self._common_addon.getLocalizedString(32088), self._common_addon.getLocalizedString(32025))
+                        if show_export_progress:
+                            progress_listener = self._show_progress_after_change
+                        else:
+                            progress_listener = None
+                        changes_done = self.process_pending_changes(exportid, on_after_change = progress_listener)
                         if changes_done:
                             if Utils.get_safe_value(export, 'update_library', False):
                                 update_library[Utils.get_safe_value(export, 'content_type', 'None')] = True
@@ -259,16 +313,18 @@ class ExportService(object):
                         KodiUtils.show_notification(self._common_addon.getLocalizedString(32027) + ' ' + Utils.unicode(e))
                     finally:
                         export['exporting'] = False
+                        del export['origin']
                         self.export_manager.save_export(export)
-                        self._export_progress_dialog_bg.close()
                 else:
                     self.run_export(export)
+        self._export_progress_dialog_bg.close()
         if update_library:
             if Utils.get_safe_value(update_library, 'video', False):
                 KodiUtils.update_library('video')
             if Utils.get_safe_value(update_library, 'audio', False):
                 KodiUtils.update_library('music')
     
+    @timeit
     def process_change(self, change, items_info, export):
         change_type = None
         changed_item_id = change['id']
@@ -317,6 +373,7 @@ class ExportService(object):
                     change_type += '_retry'
         else:
             Logger.debug('file already deleted: %s' % item_info_path)
+            change_type +='_ignored'
         ExportManager.remove_item_info(items_info, changed_item_id)
         return change_type
     
@@ -333,7 +390,7 @@ class ExportService(object):
         item_type = item_info['type']
         is_folder = item_type == 'folder'
         item_info_path = item_info['full_local_path']
-        new_path = os.path.join(parent_item_path, Utils.unicode(changed_item_name))
+        new_path = os.path.join(Utils.unicode(parent_item_path), Utils.unicode(changed_item_name))
         if is_folder:
             change_type += '_folder'
             new_path = os.path.join(new_path, '')
@@ -364,7 +421,7 @@ class ExportService(object):
         parent_item_info = Utils.get_safe_value(items_info,parent_id)
         if parent_item_info:
             parent_item_path = parent_item_info['full_local_path']
-            new_path = os.path.join(parent_item_path, Utils.unicode(changed_item_name))
+            new_path = os.path.join(Utils.unicode(parent_item_path), Utils.unicode(changed_item_name))
             change_type = 'create'
             if is_folder:
                 change_type += '_folder'
@@ -376,10 +433,11 @@ class ExportService(object):
                         Logger.debug(error)
                 if not KodiUtils.file_exists(new_path):
                     Logger.debug('creating folder: %s' % (new_path,))
-                    if not KodiUtils.mkdirs(new_path):
+                    if not KodiUtils.mkdir(new_path):
                         change_type += '_retry'
                         Logger.debug('unable to create folder %s' % (new_path,))
                 else:
+                    change_type +='_ignored'
                     Logger.debug('folder %s already exists' % (new_path,))
             else:
                 download_artwork = 'download_artwork' in export and export['download_artwork']
@@ -411,6 +469,7 @@ class ExportService(object):
                             change_type += "_retry"
                             Logger.debug('Unable to download file: %s' % (new_path,))
                     else:
+                        change_type +='_ignored'
                         Logger.debug('Download ignored: Local file size (%s) is equal to cloud file size (%s)' % (Utils.str(local_size), Utils.str(cloud_size),))
                 else:
                     is_stream_file = (('video' in change or (changed_item_extension and changed_item_extension in self._video_file_extensions)) and content_type == 'video') \
@@ -426,6 +485,7 @@ class ExportService(object):
                             if not ExportManager.create_text_file(new_path, strm_content):
                                 change_type += '_retry'
                         else:
+                            change_type +='_ignored'
                             Logger.debug('ignoring strm creation: %s, strm file already exists. same expected size.' % (new_path,))
                     else:
                         change_type = None
