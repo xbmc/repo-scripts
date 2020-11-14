@@ -22,6 +22,7 @@ import sqlite3
 
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
+from clouddrive.common.utils import Utils
 
 
 class SimpleKeyValueDb(object):
@@ -45,13 +46,12 @@ class SimpleKeyValueDb(object):
         db = KodiUtils.translate_path("%s/%s.db" % (self._base_path, self._name,))
         con = sqlite3.connect(db, timeout=30, isolation_level=None)
         con.execute("pragma journal_mode=wal")
-        Logger.debug("db [%s] - opened in wal mode" % (self._name, ))
         rs = con.execute("select name from sqlite_master where type='table' AND name='store'")
         if not rs.fetchone():
             try:
                 con.execute("create table store(key text unique, value text)")
             except Exception as ex:
-                Logger.debug(ex)
+                Logger.debug("error in db [%s] - %s" % (self._name, Utils.str(ex),))
         return con
 
     def get(self, key):

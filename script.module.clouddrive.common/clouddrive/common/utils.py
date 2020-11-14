@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 from clouddrive.common.ui.logger import Logger
-
+from timeit import default_timer as timer
 
 class Utils:
     
@@ -138,3 +138,12 @@ class Utils:
                 return False
             return KodiUtils.rmdir(folder_path, True)
         return True
+
+def timeit(method):
+    def timed(*args, **kw):
+        ts = timer()
+        result = method(*args, **kw)
+        te = timer()
+        Logger.debug('%r: %2.2f ms' % (method.__name__, (te - ts) * 1000))
+        return result    
+    return timed
