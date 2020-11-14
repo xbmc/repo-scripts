@@ -1,7 +1,12 @@
 import os
 import uuid, hmac, hashlib, base64, time
-import xbmc, xbmcgui, xbmcaddon
-import cookielib, requests
+from kodi_six import xbmc, xbmcgui, xbmcaddon, xbmcvfs
+import requests
+if sys.version_info[0] > 2:
+    import http
+    cookielib = http.cookiejar
+else:
+    import cookielib
 
 
 class ADOBE:
@@ -28,7 +33,11 @@ class ADOBE:
     registration_url = ''
     requestor_id = ''
     resource_id = ''
-    sso_path = xbmc.translatePath(xbmcaddon.Addon('script.module.adobepass').getAddonInfo('profile'))
+    if sys.version_info[0] > 2:
+        sso_path = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+    else:
+        sso_path = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+    local_string = xbmcaddon.Addon().getLocalizedString
     verify = False
 
     def __init__(self, service_vars):
@@ -69,8 +78,8 @@ class ADOBE:
     def create_authorization(self, request_method, request_uri):
         nonce = str(uuid.uuid4())
         epoch_time = str(int(time.time() * 1000))
-        authorization = request_method + " requestor_id=" + self.requestor_id + ", nonce=" + nonce \
-                        + ", signature_method=HMAC-SHA1, request_time=" + epoch_time + ", request_uri=" + request_uri
+        authorization = "%s requestor_id=%s, nonce=%s, signature_method=HMAC-SHA1, request_time=%s, request_uri=%s" % \
+                        (request_method, self.requestor_id, nonce, epoch_time, request_uri)
         signature = hmac.new(self.private_key, authorization, hashlib.sha1)
         signature = base64.b64encode(signature.digest())
         authorization += ", public_key=" + self.public_key + ", signature=" + signature
@@ -83,7 +92,6 @@ class ADOBE:
         Returns randomly generated registration Code and login Page URI
         """
         reggie_url = '/reggie/v1/' + self.requestor_id + '/regcode'
-        #reggie_url = '/reggie/v1/nbcsports/regcode'
         self.headers['Authorization'] = self.create_authorization('POST', reggie_url)
 
         url = self.REGGIE_FQDN + reggie_url
@@ -105,12 +113,12 @@ class ADOBE:
         r = requests.post(url, headers=self.headers, cookies=self.load_cookies(), data=payload, verify=self.verify)
         self.reg_code = r.json()['code']
 
-        msg = '1. Go to [B][COLOR yellow]' + self.registration_url + '[/COLOR][/B][CR]'
-        msg += '2. Select any platform, it does not matter[CR]'
-        msg += '3. Enter [B][COLOR yellow]' + self.reg_code + '[/COLOR][/B] as your activation code'
+        msg = self.local_string(30010) + '[B][COLOR yellow]' + self.registration_url + '[/COLOR][/B][CR]'
+        msg += self.local_string(30011)
+        msg += self.local_string(30012) + '[B][COLOR yellow]' + self.reg_code + '[/COLOR][/B]' + self.local_string(30013)
 
         dialog = xbmcgui.Dialog()
-        dialog.ok('Activate Device', msg)
+        dialog.ok(self.local_string(30009), msg)
 
     def pre_auth(self):
         """
@@ -148,8 +156,8 @@ class ADOBE:
         r = requests.get(url, headers=self.headers, cookies=self.load_cookies(), verify=self.verify)
         self.save_cookies(r.cookies)
 
-        if r.status_code != 200:
-            title = 'Authorization Failed'
+        if not r.ok:
+            title = self.local_string(30014)
             if 'message' in r.json() and 'details' in r.json():
                 title = r.json()['message']
                 msg = r.json()['details']
@@ -180,7 +188,7 @@ class ADOBE:
 
         if r.status_code == 204:
             dialog = xbmcgui.Dialog()
-            dialog.notification('Logout', 'You have successfully logged out.', '', 3000, False)
+            dialog.notification(self.local_string(30015), self.local_string(30016), '', 3000, False)
 
     def media_token(self):
         """
@@ -199,7 +207,7 @@ class ADOBE:
         r = requests.get(url, headers=self.headers, cookies=self.load_cookies(), verify=self.verify)
         self.save_cookies(r.cookies)
 
-        if r.status_code == 200:
+        if r.ok:
             return r.json()['serializedToken']
         else:
             if 'details' in r.json():
@@ -208,7 +216,7 @@ class ADOBE:
                 msg = r.text
 
             dialog = xbmcgui.Dialog()
-            dialog.ok('Obtain Media Token Failed', msg)
+            dialog.ok(self.local_string(30017), msg)
             return ''
 
     def get_authn(self):
@@ -258,7 +266,7 @@ class ADOBE:
         r = requests.get(url, headers=self.headers, cookies=self.load_cookies(), verify=self.verify)
         self.save_cookies(r.cookies)
 
-        if r.status_code == 200:
+        if r.ok:
             return True
         else:
             return False
@@ -285,8 +293,8 @@ class ADOBE:
         r = requests.get(url, headers=self.headers, cookies=self.load_cookies(), verify=self.verify)
         self.save_cookies(r.cookies)
 
-        if r.status_code != 200:
-            title = "Authz Failed" + str(r.status_code)
+        if not r.ok:
+            title = self.local_string(30019) + str(r.status_code)
             if 'message' in r.json():
                 title = r.json()['message']
             if 'details' in r.json():
