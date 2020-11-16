@@ -44,8 +44,8 @@ class logger(object):
         xbmc.log('{0}: {1}'.format(ADDON_ID, message), level)
 
     @staticmethod
-    def notice(message):
-        logger.log(message, xbmc.LOGNOTICE)
+    def info(message):
+        logger.log(message, xbmc.LOGINFO)
 
     @staticmethod
     def error(message):
