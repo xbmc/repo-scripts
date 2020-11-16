@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.web-pdb"
        name="Web-PDB"
-       version="1.5.4+matrix.1"
+       version="1.5.5+matrix.1"
        provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -22,7 +22,8 @@
       <icon>icon.png</icon>
       <screenshot>resources/screenshot.jpg</screenshot>
     </assets>
-    <news>- 1.5.4: Fix info dialog in Kodi &quot;Matrix&quot;.
-- 1.5.3: Fix a rare issue when a debugger session cannot be started.</news>
+    <news>- 1.5.5: Fixed deprecated Kodi logging levels.
+- 1.5.4: Fixed info dialog in Kodi &quot;Matrix&quot;.
+- 1.5.3: Fixed a rare issue when a debugger session cannot be started.</news>
   </extension>
 </addon>
