@@ -4,6 +4,8 @@
 
 import sys
 from addic7ed.core import router
+from addic7ed.exception_logger import log_exception
 
 if __name__ == '__main__':
-    router(sys.argv[2][1:])
+    with log_exception():
+        router(sys.argv[2][1:])
