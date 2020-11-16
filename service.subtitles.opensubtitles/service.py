@@ -17,19 +17,17 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 
-__cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') )
-__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
-__temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp', '') )
+__cwd__        = xbmcvfs.translatePath( __addon__.getAddonInfo('path') )
+__profile__    = xbmcvfs.translatePath( __addon__.getAddonInfo('profile') )
+__temp__       = xbmcvfs.translatePath( os.path.join( __profile__, 'temp', '') )
 
 if xbmcvfs.exists(__temp__):
   shutil.rmtree(__temp__)
 xbmcvfs.mkdirs(__temp__)
 
-sys.path.append (__resource__)
-
-from OSUtilities import OSDBServer, log, hashFile, normalizeString
 from urllib.parse import unquote
+from resources.lib.OSUtilities import OSDBServer, log, hashFile, normalizeString
+
 
 def Search( item ):
   search_data = []
@@ -37,8 +35,7 @@ def Search( item ):
     search_data = OSDBServer().searchsubtitles(item)
   except:
     log( __name__, "failed to connect to service for subtitle search")
-    xbmcgui.Dialog().ok(__scriptname__, __language__(32001),__language__(32005))
-    # xbmc.executebuiltin((u'Notification(%s,%s,%s,%s/icon.png)' % (__scriptname__ , __language__(32001),"5000",__cwd__)).encode('utf-8'))
+    xbmcgui.Dialog().ok(__scriptname__, '{}\n{}'.format(__language__(32001),__language__(32005)))
     return
 
   if search_data != None:
@@ -48,7 +45,7 @@ def Search( item ):
 				     not x['LanguageName'] == PreferredSub])
     for item_data in search_data:
       ## hack to work around issue where Brazilian is not found as language in XBMC
-      if item_data["LanguageName"] == "Brazilian":
+      if item_data["LanguageName"] == "Portuguese (BR)":
         item_data["LanguageName"] = "Portuguese (Brazil)"
 
       if ((item['season'] == item_data['SeriesSeason'] and
@@ -87,12 +84,12 @@ def Download(id,url,format,stack=False):
   if not result:
     log( __name__,"Download Using HTTP")
     zip = os.path.join( __temp__, "OpenSubtitles.zip")
-    f = urllib.urlopen(url)
+    f = urllib.request.urlopen(url)
     with open(zip, "wb") as subFile:
       subFile.write(f.read())
-    subFile.close()
+
     xbmc.sleep(500)
-    xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
+    xbmc.executebuiltin(('Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
     for file in xbmcvfs.listdir(zip)[1]:
       file = os.path.join(__temp__, file)
       if (os.path.splitext( file )[1] in exts):
