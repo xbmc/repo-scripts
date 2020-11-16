@@ -22,7 +22,7 @@ class Logger(object):
         self._name = name
 
     def info(self, msg):
-        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGNOTICE)
+        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGINFO)
 
     def error(self, msg):
         xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGERROR)
@@ -35,7 +35,7 @@ class Logger(object):
         xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGDEBUG)
 
     def critical(self, msg):
-        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGSEVERE)
+        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGFATAL)
 
 
 def getLogger(name):
