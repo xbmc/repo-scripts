@@ -1,3 +1,6 @@
+5.1.2
+- Fixes for python3/matrix. Remove sys.path.append.
+
 5.1.1
 - Fixed issue with language flag icons
 

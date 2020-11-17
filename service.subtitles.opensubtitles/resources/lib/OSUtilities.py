@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -22,10 +22,11 @@ class OSDBServer:
   def __init__( self, *args, **kwargs ):
     self.server = xmlrpc.client.ServerProxy( BASE_URL_XMLRPC, verbose=0 )
     login = self.server.LogIn(__addon__.getSetting( "OSuser" ), __addon__.getSetting( "OSpass" ), "en", "%s_v%s" %(__scriptname__.replace(" ","_"),__version__))
-    if (login["status"] == "200 OK"):
-      self.osdb_token  = login[ "token" ]
+    if login["status"] == "200 OK":
+      self.osdb_token  = login["token"]
+
   def searchsubtitles( self, item):
-    if ( self.osdb_token ) :
+    if self.osdb_token:
       searchlist  = []
       if item['mansearch']:
         searchlist = [{'sublanguageid':",".join(item['3let_language']),
@@ -41,13 +42,13 @@ class OSDBServer:
         OS_search_string = ("%s S%.2dE%.2d" % (item['tvshow'],
                                                 int(item['season']),
                                                 int(item['episode']),)
-                                              ).replace(" ","+")      
+                                              ).replace(" ","+")
       else:
         if str(item['year']) == "":
           item['title'], item['year'] = xbmc.getCleanMovieTitle( item['title'] )
-    
+
         OS_search_string = item['title'].replace(" ","+")
-    
+
       log( __name__ , "Search String [ %s ]" % (OS_search_string,))
 
       if not item['temp']:
@@ -60,9 +61,9 @@ class OSDBServer:
                             })
         except:
           pass
-            
+
         imdb = str(xbmc.Player().getVideoInfoTag().getIMDBNumber().replace('tt',''))
-        
+
         if ((not item['tvshow']) and imdb != ""):
           searchlist.append({'sublanguageid' :",".join(item['3let_language']),
                              'imdbid'        :imdb
@@ -70,8 +71,8 @@ class OSDBServer:
 
         searchlist.append({'sublanguageid':",".join(item['3let_language']),
                           'query'        :OS_search_string
-                         }) 
-      
+                         })
+
       else:
         searchlist = [{'sublanguageid':",".join(item['3let_language']),
                        'query'        :OS_search_string
@@ -80,7 +81,7 @@ class OSDBServer:
       search = self.server.SearchSubtitles( self.osdb_token, searchlist )
 
       if search["data"]:
-        return search["data"] 
+        return search["data"]
 
 
   def download(self, ID, dest):
@@ -101,23 +102,23 @@ class OSDBServer:
        return False
 
 def log(module, msg):
-  xbmc.log((u"### [%s] - %s" % (module,msg,)),level=xbmc.LOGDEBUG ) 
+  xbmc.log((u"### [%s] - %s" % (module,msg,)),level=xbmc.LOGDEBUG )
 
 def hashFile(file_path, rar):
     if rar:
       return OpensubtitlesHashRar(file_path)
-      
-    log( __name__,"Hash Standard file")  
+
+    log( __name__,"Hash Standard file")
     longlongformat = 'q'  # long long
     bytesize = struct.calcsize(longlongformat)
     f = xbmcvfs.File(file_path)
-    
+
     filesize = f.size()
     hash = filesize
-    
+
     if filesize < 65536 * 2:
         return "SizeError"
-    
+
     buffer = f.read(65536)
     f.seek(max(0,filesize-65536),0)
     buffer += f.read(65536)
@@ -127,7 +128,7 @@ def hashFile(file_path, rar):
         (l_value,)= struct.unpack(longlongformat, buffer[size:size+bytesize])
         hash += l_value
         hash = hash & 0xFFFFFFFFFFFFFFFF
-    
+
     returnHash = "%016x" % hash
     return filesize,returnHash
 
@@ -141,11 +142,11 @@ def OpensubtitlesHashRar(firsrarfile):
     seek=0
     for i in range(4):
         f.seek(max(0,seek),0)
-        a=f.read(100)        
-        type,flag,size=struct.unpack( '<BHH', a[2:2+5]) 
+        a=f.read(100)
+        type,flag,size=struct.unpack( '<BHH', a[2:2+5])
         if 0x74==type:
             if 0x30!=struct.unpack( '<B', a[25:25+1])[0]:
-                raise Exception('Bad compression method! Work only for "store".')            
+                raise Exception('Bad compression method! Work only for "store".')
             s_partiizebodystart=seek+size
             s_partiizebody,s_unpacksize=struct.unpack( '<II', a[7:7+2*4])
             if (flag & 0x0100):
@@ -174,7 +175,7 @@ def addfilehash(name,hash,seek):
     for i in range(8192):
         hash+=struct.unpack('<q', f.read(8))[0]
         hash =hash & 0xffffffffffffffff
-    f.close()    
+    f.close()
     return hash
 
 def normalizeString(str):
