@@ -529,6 +529,15 @@
         ],
         "beta": [
             {
+                "major": "19",
+                "minor": "0",
+                "tag": "beta",
+                "tagversion":"1",
+                "revision": "20201117-88e186e4b4",
+                "extrainfo": "beta1",
+                "addon_support": "yes"
+            },
+            {
                 "major": "18",
                 "minor": "0",
                 "tag": "beta",
