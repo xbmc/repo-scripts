@@ -50,13 +50,14 @@ If the cache is empty, you perform the usual stuff to get the data and save that
 
 ## Available methods
 
-### get(endpoint, checksum="")
+### get(endpoint, checksum="", json=False)
 ```
     Returns the data from the cache for the specified endpoint. Will return None if there is no cache.
 
     parameters:
     endpoint --> Your unique reference/key for the cache object. TIP: To prevent clashes with other addons, prefix with your addon ID.
     checksum --> Optional argument to check for a checksum in the file (Will only work if you store the checksum with the set method). Can be any python object which can be serialized with eval.
+    json --> Optional argument. Default is False. For JSON data it is recommended to switch it to True to avoid Memomy Error exceptions or other issues. If you set the global "data_is_json" bool to True, it will always handle your data as JSON.
 
 
     Example: _cache.get("MyAddon.MyChunkOfData", checksum=len(myvideos))
@@ -65,7 +66,7 @@ If the cache is empty, you perform the usual stuff to get the data and save that
 
 ```
 
-### set(endpoint, data, checksum="", expiration=timedelta(days=30))
+### set(endpoint, data, checksum="", expiration=timedelta(days=30), json=False)
 ```
     Stores the data in the cache for the specified endpoint.
 
@@ -74,6 +75,7 @@ If the cache is empty, you perform the usual stuff to get the data and save that
     data --> Your objectdata. Can be any python object which can be serialized with eval.
     checksum --> Optional argument to store as checksum in the file. Can be any python object which can be serialized with eval.
     expiration --> Optional argument to specify the amount of time the data may be cached as python timedelta object. Defaults to 30 days if ommitted.
+    json --> Optional argument. Default is False. For JSON data it is recommended to switch it to True to avoid Memomy Error exceptions or other issues. If you set the global "data_is_json" bool to True, it will always handle your data as JSON.
 
     Example: _cache.set("MyAddon.MyGreatChunkOfData", my_objects, checksum=len(myvideos), expiration=timedelta(hours=1))
 
@@ -94,3 +96,8 @@ In that case, objects will only be stored on disk (database)
 
 
 3) Cache objects on disk are stored in a self-maintaining sqllite database. Expired objects will be auto cleaned from the database.
+
+4) If your data is only JSON you can set a global bool to handle all input/ouput requests as JSON. This is recommended to avoid problems and issues on slower devices.
+```
+    _cache.data_is_json = True
+```
