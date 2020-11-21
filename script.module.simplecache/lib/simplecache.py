@@ -11,6 +11,7 @@ import xbmcaddon
 import datetime
 import time
 import sqlite3
+import json
 from functools import reduce
 
 ADDON_ID = "script.module.simplecache"
@@ -19,6 +20,7 @@ PYTHON3 = True if sys.version_info.major == 3 else False
 class SimpleCache(object):
     '''simple stateless caching system for Kodi'''
     enable_mem_cache = True
+    data_is_json = False
     global_checksum = None
     _exit = False
     _auto_clean_interval = datetime.timedelta(hours=4)
@@ -48,7 +50,7 @@ class SimpleCache(object):
         if not self._exit:
             self.close()
 
-    def get(self, endpoint, checksum=""):
+    def get(self, endpoint, checksum="", json_data=False):
         '''
             get object from cache and return the results
             endpoint: the (unique) name of the cache object as reference
@@ -59,15 +61,15 @@ class SimpleCache(object):
         result = None
         # 1: try memory cache first
         if self.enable_mem_cache:
-            result = self._get_mem_cache(endpoint, checksum, cur_time)
+            result = self._get_mem_cache(endpoint, checksum, cur_time, json_data)
 
         # 2: fallback to _database cache
         if result is None:
-            result = self._get_db_cache(endpoint, checksum, cur_time)
+            result = self._get_db_cache(endpoint, checksum, cur_time, json_data)
 
         return result
 
-    def set(self, endpoint, data, checksum="", expiration=datetime.timedelta(days=30)):
+    def set(self, endpoint, data, checksum="", expiration=datetime.timedelta(days=30), json_data=False):
         '''
             set data in cache
         '''
@@ -78,11 +80,11 @@ class SimpleCache(object):
 
         # memory cache: write to window property
         if self.enable_mem_cache and not self._exit:
-            self._set_mem_cache(endpoint, checksum, expires, data)
+            self._set_mem_cache(endpoint, checksum, expires, data, json_data)
 
         # db cache
         if not self._exit:
-            self._set_db_cache(endpoint, checksum, expires, data)
+            self._set_db_cache(endpoint, checksum, expires, data, json_data)
 
         # remove this task from list
         self._busy_tasks.remove(task_name)
@@ -97,7 +99,7 @@ class SimpleCache(object):
             # cleanup needed...
             self._do_cleanup()
 
-    def _get_mem_cache(self, endpoint, checksum, cur_time):
+    def _get_mem_cache(self, endpoint, checksum, cur_time, json_data):
         '''
             get cache data from memory cache
             we use window properties because we need to be stateless
@@ -110,18 +112,26 @@ class SimpleCache(object):
             cachedata = self._win.getProperty(endpoint)
 
         if cachedata:
-            cachedata = eval(cachedata)
+            if json_data or self.data_is_json:
+                cachedata = json.loads(cachedata)
+            else:
+                cachedata = eval(cachedata)
             if cachedata[0] > cur_time:
                 if not checksum or checksum == cachedata[2]:
                     result = cachedata[1]
         return result
 
-    def _set_mem_cache(self, endpoint, checksum, expires, data):
+    def _set_mem_cache(self, endpoint, checksum, expires, data, json_data):
         '''
             window property cache as alternative for memory cache
             usefull for (stateless) plugins
         '''
         cachedata = (expires, data, checksum)
+        if json_data or self.data_is_json:
+            cachedata_str = json.dumps(cachedata)
+        else:
+            cachedata_str = repr(cachedata)
+        self._win.setProperty(endpoint, cachedata_str)
 
         if not PYTHON3:
             cachedata_str = repr(cachedata).encode("utf-8")
@@ -130,8 +140,7 @@ class SimpleCache(object):
             cachedata_str = repr(cachedata)
             self._win.setProperty(endpoint, cachedata_str)
 
-
-    def _get_db_cache(self, endpoint, checksum, cur_time):
+    def _get_db_cache(self, endpoint, checksum, cur_time, json_data):
         '''get cache data from sqllite _database'''
         result = None
         query = "SELECT expires, data, checksum FROM simplecache WHERE id = ?"
@@ -140,16 +149,22 @@ class SimpleCache(object):
             cache_data = cache_data.fetchone()
             if cache_data and cache_data[0] > cur_time:
                 if not checksum or cache_data[2] == checksum:
-                    result = eval(cache_data[1])
+                    if json_data or self.data_is_json:
+                        result = json.loads(cache_data[1])
+                    else:
+                        result = eval(cache_data[1])
                     # also set result in memory cache for further access
                     if self.enable_mem_cache:
-                        self._set_mem_cache(endpoint, checksum, cache_data[0], result)
+                        self._set_mem_cache(endpoint, checksum, cache_data[0], result, json_data)
         return result
 
-    def _set_db_cache(self, endpoint, checksum, expires, data):
+    def _set_db_cache(self, endpoint, checksum, expires, data, json_data):
         ''' store cache data in _database '''
         query = "INSERT OR REPLACE INTO simplecache( id, expires, data, checksum) VALUES (?, ?, ?, ?)"
-        data = repr(data)
+        if json_data or self.data_is_json:
+            data = json.dumps(data)
+        else:
+            data = repr(data)
         self._execute_sql(query, (endpoint, expires, data, checksum))
 
     def _do_cleanup(self):
