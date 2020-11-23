@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.simplecache" name="Simple Cache Module" version="1.0.19" provider-name="sualfred">
+<addon id="script.module.simplecache" name="Simple Cache Module" version="1.0.20" provider-name="sualfred">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
     </requires>
