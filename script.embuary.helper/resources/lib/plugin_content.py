@@ -807,7 +807,11 @@ class PluginContent(object):
             if self.dbid and not self.li:
                 self._retry('getitemsbyactor')
 
-            plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor
+            if not PYTHON3:
+                plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor.decode('utf-8')
+            else:
+                plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor
+
             set_plugincontent(content='videos', category=plugin_category)
 
             random.shuffle(self.li)
