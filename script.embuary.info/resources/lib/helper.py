@@ -45,6 +45,7 @@ FALLBACK_LANGUAGE = 'en'
 
 CACHE = simplecache.SimpleCache()
 CACHE.enable_mem_cache = False
+CACHE.data_is_json = True
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_' + DEFAULT_LANGUAGE + COUNTRY_CODE + '_'
 
