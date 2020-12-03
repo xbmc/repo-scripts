@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: service.upnext\n"
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-03-29 16:59+0000\n"
+"PO-Revision-Date: 2020-11-29 22:22+0000\n"
 "Last-Translator: tmihai20\n"
 "Language-Team: Română\n"
 "MIME-Version: 1.0\n"
@@ -97,11 +97,11 @@ msgstr "Următorul episod"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]MOD DEMO ACTIVAT UP NEXT"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Episoadele se derulează automat către sfârșit"
 
 
 ### SETTINGS
@@ -195,7 +195,7 @@ msgstr "Testează cum arată interfața utilizator"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Activează mod DEMO"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
