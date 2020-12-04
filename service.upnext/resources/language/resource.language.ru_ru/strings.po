@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: service.upnext\n"
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-02-26 13:31+0000\n"
+"PO-Revision-Date: 202020-12-02 00:00+0000\n"
 "Last-Translator: vl_maksime\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -96,11 +96,11 @@ msgstr "Следующая серия"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]ДЕМО-РЕЖИМ UP NEXT ВКЛЮЧЕН[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Серии автоматически переходят на конец.[/I]"
 
 
 ### SETTINGS
@@ -194,7 +194,7 @@ msgstr "Проверьте, как выглядит пользовательск
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Включить ДЕМО-режим"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"

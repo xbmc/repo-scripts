@@ -96,11 +96,11 @@ msgstr "Siguiente episodio"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]UP NEXT MODO DE DEMOSTRACIÓN HABILITADO[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Los episodios saltan automáticamente al final.[/I]"
 
 
 # ## SETTINGS
@@ -194,7 +194,7 @@ msgstr "Prueba cómo se ve la interfaz de usuario"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Habilitar modo DEMO"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
