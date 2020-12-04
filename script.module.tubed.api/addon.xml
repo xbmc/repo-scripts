@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.tubed.api" name="Tubed API" version="1.0.0+matrix.1" provider-name="anxdpanic">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.module" library="resources/lib/src/"/>
+    <extension point="xbmc.service" library="resources/lib/service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <news>
+- Initial release
+        </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+        </assets>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <source>https://github.com/anxdpanic/script.module.tubed.api</source>
+        <summary lang="en_GB">A module to access YouTube's Data API</summary>
+        <description lang="en_GB">The Tubed API module provides a convenient way to access YouTube's Data API in Kodi 19+</description>
+    </extension>
+</addon>
