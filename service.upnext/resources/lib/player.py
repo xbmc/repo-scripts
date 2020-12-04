@@ -37,7 +37,7 @@ class UpNextPlayer(Player):
 
     def onPlayBackStarted(self):  # pylint: disable=invalid-name
         """Will be called when kodi starts playing a file"""
-        self.monitor.waitForAbort(2)
+        self.monitor.waitForAbort(5)
         if not getCondVisibility('videoplayer.content(episodes)'):
             return
         self.state.track = True
