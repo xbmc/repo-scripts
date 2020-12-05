@@ -12,6 +12,7 @@ ACCESS_TOKEN = ''
 API_KEY = ''
 CLIENT_ID = ''
 CLIENT_SECRET = ''
+HTTP_REFERRER = ''
 
-__all__ = ['ACCESS_TOKEN', 'API_KEY', 'CLIENT_ID', 'CLIENT_SECRET',
+__all__ = ['ACCESS_TOKEN', 'API_KEY', 'CLIENT_ID', 'CLIENT_SECRET', 'HTTP_REFERRER',
            'oauth', 'usher', 'utils', 'v3', 'exceptions']

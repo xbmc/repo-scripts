@@ -30,6 +30,9 @@ class Client:
             self.client_id = CLIENT_ID
             self.client_secret = CLIENT_SECRET
 
+        from .. import HTTP_REFERRER
+        self.http_referrer = HTTP_REFERRER
+
     def request_codes(self, scope=None):
         headers = {
             'Host': 'accounts.google.com',
@@ -37,6 +40,9 @@ class Client:
                           '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+
+        if self.http_referrer:
+            headers['Referer'] = self.http_referrer
 
         if not scope:
             scope = scopes.YOUTUBE
@@ -82,6 +88,9 @@ class Client:
                           '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+
+        if self.http_referrer:
+            headers['Referer'] = self.http_referrer
 
         data = {
             'client_id': self.client_id,
@@ -129,6 +138,9 @@ class Client:
             'Content-Type': 'application/x-www-form-urlencoded'
         }
 
+        if self.http_referrer:
+            headers['Referer'] = self.http_referrer
+
         data = {
             'client_id': self.client_id,
             'client_secret': self.client_secret,
@@ -169,6 +181,9 @@ class Client:
                           '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+
+        if self.http_referrer:
+            headers['Referer'] = self.http_referrer
 
         data = {
             'token': token

@@ -94,6 +94,8 @@ class V3Query(Query):
     _base_url = 'https://www.googleapis.com/youtube/v3/'
 
     def __init__(self, method, path, parameters=None, data=None, headers=None, unauthorized=False):
+        # pylint: disable=import-outside-toplevel
+
         if parameters is None:
             parameters = {}
         else:
@@ -104,8 +106,9 @@ class V3Query(Query):
         else:
             headers = deepcopy(headers)
 
-        from .. import ACCESS_TOKEN  # pylint: disable=import-outside-toplevel
-        from .. import API_KEY  # pylint: disable=import-outside-toplevel
+        from .. import ACCESS_TOKEN
+        from .. import API_KEY
+        from .. import HTTP_REFERRER
 
         if API_KEY:
             parameters.update({
@@ -118,6 +121,9 @@ class V3Query(Query):
                           '(KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
             'Accept-Encoding': 'gzip, deflate'
         })
+
+        if HTTP_REFERRER:
+            headers['Referer'] = HTTP_REFERRER
 
         if method.lower() == 'post':
             headers.update({
