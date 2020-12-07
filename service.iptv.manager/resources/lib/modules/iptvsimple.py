@@ -159,57 +159,7 @@ class IptvSimple:
             # Write program info
             for _, key in enumerate(epg):
                 for item in epg[key]:
-                    start = dateutil.parser.parse(item.get('start')).strftime('%Y%m%d%H%M%S %z')
-                    stop = dateutil.parser.parse(item.get('stop')).strftime('%Y%m%d%H%M%S %z')
-                    title = item.get('title', '')
-
-                    # Add an icon ourselves in Kodi 18
-                    if kodiutils.kodi_version_major() < 19 and item.get('stream'):
-                        # We use a clever way to hide the direct URI in the label so Kodi 18 can access the it
-                        title = '%s [COLOR green]•[/COLOR][COLOR vod="%s"][/COLOR]' % (
-                            title, item.get('stream')
-                        )
-
-                    program = '<programme start="{start}" stop="{stop}" channel="{channel}"{vod}>\n'.format(
-                        start=start,
-                        stop=stop,
-                        channel=cls._xml_encode(key),
-                        vod=' catchup-id="%s"' % cls._xml_encode(item.get('stream')) if item.get('stream') else '')
-
-                    program += ' <title>{title}</title>\n'.format(
-                        title=cls._xml_encode(title))
-
-                    if item.get('description'):
-                        program += ' <desc>{description}</desc>\n'.format(
-                            description=cls._xml_encode(item.get('description')))
-
-                    if item.get('subtitle'):
-                        program += ' <sub-title>{subtitle}</sub-title>\n'.format(
-                            subtitle=cls._xml_encode(item.get('subtitle')))
-
-                    if item.get('episode'):
-                        program += ' <episode-num system="onscreen">{episode}</episode-num>\n'.format(
-                            episode=cls._xml_encode(item.get('episode')))
-
-                    if item.get('image'):
-                        program += ' <icon src="{image}"/>\n'.format(
-                            image=cls._xml_encode(item.get('image')))
-
-                    if item.get('date'):
-                        program += ' <date>{date}</date>\n'.format(
-                            date=cls._xml_encode(item.get('date')))
-
-                    if item.get('genre'):
-                        if isinstance(item.get('genre'), list):
-                            for genre in item.get('genre'):
-                                program += ' <category>{genre}</category>\n'.format(
-                                    genre=cls._xml_encode(genre))
-                        else:
-                            program += ' <category>{genre}</category>\n'.format(
-                                genre=cls._xml_encode(item.get('genre')))
-
-                    program += '</programme>\n'
-
+                    program = cls._construct_epg_program_xml(item, key)
                     fdesc.write(program.encode('utf-8'))
 
             fdesc.write('</tv>\n'.encode('utf-8'))
@@ -219,6 +169,110 @@ class IptvSimple:
             os.remove(epg_path)
 
         os.rename(epg_path + '.tmp', epg_path)
+
+    @classmethod
+    def _construct_epg_program_xml(cls, item, channel):
+        """ Generate the XML for the EPG of a program. """
+        try:
+            start = dateutil.parser.parse(item.get('start')).strftime('%Y%m%d%H%M%S %z')
+            stop = dateutil.parser.parse(item.get('stop')).strftime('%Y%m%d%H%M%S %z')
+            title = item.get('title', '')
+
+            # Add an icon ourselves in Kodi 18
+            if kodiutils.kodi_version_major() < 19 and item.get('stream'):
+                # We use a clever way to hide the direct URI in the label so Kodi 18 can access the it
+                title = '%s [COLOR green]•[/COLOR][COLOR vod="%s"][/COLOR]' % (
+                    title, item.get('stream')
+                )
+
+            program = '<programme start="{start}" stop="{stop}" channel="{channel}"{vod}>\n'.format(
+                start=start,
+                stop=stop,
+                channel=cls._xml_encode(channel),
+                vod=' catchup-id="%s"' % cls._xml_encode(item.get('stream')) if item.get('stream') else '')
+
+            program += ' <title>{title}</title>\n'.format(
+                title=cls._xml_encode(title))
+
+            if item.get('description'):
+                program += ' <desc>{description}</desc>\n'.format(
+                    description=cls._xml_encode(item.get('description')))
+
+            if item.get('subtitle'):
+                program += ' <sub-title>{subtitle}</sub-title>\n'.format(
+                    subtitle=cls._xml_encode(item.get('subtitle')))
+
+            if item.get('episode'):
+                program += ' <episode-num system="onscreen">{episode}</episode-num>\n'.format(
+                    episode=cls._xml_encode(item.get('episode')))
+
+            if item.get('image'):
+                program += ' <icon src="{image}"/>\n'.format(
+                    image=cls._xml_encode(item.get('image')))
+
+            if item.get('date'):
+                program += ' <date>{date}</date>\n'.format(
+                    date=cls._xml_encode(item.get('date')))
+
+            if item.get('genre'):
+                if isinstance(item.get('genre'), list):
+                    for genre in item.get('genre'):
+                        program += ' <category>{genre}</category>\n'.format(
+                            genre=cls._xml_encode(genre))
+                else:
+                    program += ' <category>{genre}</category>\n'.format(
+                        genre=cls._xml_encode(item.get('genre')))
+
+            if item.get('credits'):
+                program += ' <credits>\n'
+                for credit in item.get('credits'):
+                    # IPTV Simple only supports `actor`, `director` and `writer`, so we need to narrow the options down.
+                    # actor -> actor (with optional role)
+                    # director -> director
+                    # writer -> writer
+                    # adapter -> writer
+                    # producer -> director
+                    # composer -> writer
+                    # editor -> writer
+                    # presenter -> actor
+                    # commentator -> actor
+                    # guest -> actor
+
+                    if credit.get('type') == 'actor':
+                        if credit.get('role'):
+                            program += '  <actor role="{role}">{name}</actor>\n'.format(role=cls._xml_encode(credit.get('role')),
+                                                                                        name=cls._xml_encode(credit.get('name')))
+                        else:
+                            program += '  <actor>{name}</actor>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'director':
+                        program += '  <director>{name}</director>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'writer':
+                        program += '  <writer>{name}</writer>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'adapter':
+                        program += '  <writer>{name}</writer>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'producer':
+                        program += '  <director>{name}</director>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'composer':
+                        program += '  <writer>{name}</writer>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'editor':
+                        program += '  <writer>{name}</writer>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'presenter':
+                        program += '  <actor>{name}</actor>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'commentator':
+                        program += '  <actor>{name}</actor>\n'.format(name=cls._xml_encode(credit.get('name')))
+                    elif credit.get('type') == 'guest':
+                        program += '  <actor>{name}</actor>\n'.format(name=cls._xml_encode(credit.get('name')))
+
+                program += ' </credits>\n'
+
+            program += '</programme>\n'
+            return program
+
+        except Exception as exc:  # pylint: disable=broad-except
+            # When we encounter an error, log an error, but don't error out for the other programs
+            _LOGGER.error('Could not parse item: %s', item)
+            _LOGGER.exception(exc)
+            return ''
 
     @staticmethod
     def _xml_encode(value):

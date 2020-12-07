@@ -1,8 +1,28 @@
 # Changelog
 
+## [v0.2.2](https://github.com/add-ons/service.iptv.manager/tree/v0.2.2) (2020-12-07)
+
+[Full Changelog](https://github.com/add-ons/service.iptv.manager/compare/v0.2.1...v0.2.2)
+
+**Implemented enhancements:**
+
+- Allow passing credits with the EPG data [\#54](https://github.com/add-ons/service.iptv.manager/pull/54) ([michaelarnauts](https://github.com/michaelarnauts))
+
+**Fixed bugs:**
+
+- Rollback pvr.iptvsimple to 3.8.8 [\#57](https://github.com/add-ons/service.iptv.manager/pull/57) ([MPParsley](https://github.com/MPParsley))
+
+**Merged pull requests:**
+
+- Run tests on Python 3.9 [\#55](https://github.com/add-ons/service.iptv.manager/pull/55) ([michaelarnauts](https://github.com/michaelarnauts))
+
 ## [v0.2.1](https://github.com/add-ons/service.iptv.manager/tree/v0.2.1) (2020-11-03)
 
 [Full Changelog](https://github.com/add-ons/service.iptv.manager/compare/v0.2.0...v0.2.1)
+
+**Implemented enhancements:**
+
+- Cleanup code by removing play by airdate [\#49](https://github.com/add-ons/service.iptv.manager/pull/49) ([michaelarnauts](https://github.com/michaelarnauts))
 
 **Fixed bugs:**
 
@@ -10,7 +30,6 @@
 
 **Merged pull requests:**
 
-- Cleanup code by removing play by airdate [\#49](https://github.com/add-ons/service.iptv.manager/pull/49) ([michaelarnauts](https://github.com/michaelarnauts))
 - Add a release workflow [\#45](https://github.com/add-ons/service.iptv.manager/pull/45) ([dagwieers](https://github.com/dagwieers))
 
 ## [v0.2.0](https://github.com/add-ons/service.iptv.manager/tree/v0.2.0) (2020-10-09)
