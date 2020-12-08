@@ -17,7 +17,7 @@ class ListItem(object):
     of any set properties that xbmcgui doesn't expose getters for.
     '''
     def __init__(self, label=None, label2=None, icon=None, thumbnail=None,
-                 path=None, fanart=None):
+                 path=None, fanart=None, offscreen=False):
         '''Defaults are an emtpy string since xbmcgui.ListItem will not
         accept None.
         '''
@@ -25,6 +25,7 @@ class ListItem(object):
             'label': label,
             'label2': label2,
             'path': path,
+            'offscreen': offscreen
         }
         #kwargs = dict((key, val) for key, val in locals().items() if val is
         #not None and key != 'self')
@@ -193,13 +194,14 @@ class ListItem(object):
     def from_dict(cls, label=None, label2=None, icon=None, thumbnail=None,
                   path=None, selected=None, info=None, properties=None,
                   context_menu=None, replace_context_menu=False,
-                  is_playable=None, info_type='video', stream_info=None, fanart=None):
+                  is_playable=None, info_type='video', stream_info=None, fanart=None,
+                  offscreen=False):
         '''A ListItem constructor for setting a lot of properties not
         available in the regular __init__ method. Useful to collect all
         the properties in a dict and then use the **dct to call this
         method.
         '''
-        listitem = cls(label, label2, icon, thumbnail, path, fanart)
+        listitem = cls(label, label2, icon, thumbnail, path, fanart, offscreen)
 
         if selected is not None:
             listitem.select(selected)
