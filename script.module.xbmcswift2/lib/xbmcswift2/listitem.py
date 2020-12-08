@@ -17,7 +17,7 @@ class ListItem(object):
     of any set properties that xbmcgui doesn't expose getters for.
     '''
     def __init__(self, label=None, label2=None, icon=None, thumbnail=None,
-                 path=None, fanart=None):
+                 path=None, fanart=None, offscreen=False):
         '''Defaults are an emtpy string since xbmcgui.ListItem will not
         accept None.
         '''
@@ -25,6 +25,7 @@ class ListItem(object):
             'label': label,
             'label2': label2,
             'path': path,
+            'offscreen': offscreen
         }
         #kwargs = dict((key, val) for key, val in locals().items() if val is
         #not None and key != 'self')

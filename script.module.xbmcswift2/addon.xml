@@ -1,4 +1,4 @@
-<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel), enen92" version="13.0.0">
+<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel), enen92" version="13.0.1">
   <requires>
     <import addon="xbmc.python" version="2.14.0" />
   </requires>
