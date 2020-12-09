@@ -1,0 +1,133 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Macedonian (http://www.transifex.com/projects/p/xbmc-addons/language/mk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mk\n"
+"Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Општо"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Категорија"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Филм"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Однапред зададено"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Брзина"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Прилагодено"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Споро"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Брзо"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Оневозможено"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Прилагодено"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Споро"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Брзо"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Оневозможено"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Црвена"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Зелена"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Сина"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Прилагодено"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Споро"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Брзо"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Оневозможено"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Прилагодено"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Споро"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Брзо"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Оневозможено"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Датоте."
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Прилагодено"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Споро"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Брзо"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Оневозможено"

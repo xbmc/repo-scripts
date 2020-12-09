@@ -1,0 +1,145 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "常规"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "影片"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "预设"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "速度"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "自定义"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "慢"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "快"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "关闭"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "音乐电视"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "自定义"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "慢"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "快"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "关闭"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "其它"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "红色"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "绿色"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "蓝色"
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "剧集"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "自定义"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "慢"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "快"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "关闭"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "自定义"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "慢"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "快"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "关闭"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "文件"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "自定义"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "慢"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "快"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "关闭"

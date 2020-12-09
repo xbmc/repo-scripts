@@ -1,0 +1,145 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Allmän"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Kategori"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Förinställning"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Hastighet"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Anpassad"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Långsam"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Snabb"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "Musikvideo"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Anpassad"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Långsam"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Snabb"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Annan"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Röd"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Grön"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Blå"
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "TV Shows"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Anpassad"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Långsam"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Snabb"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Anpassad"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Långsam"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Snabb"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Filer"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Anpassad"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Långsam"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Snabb"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Inaktiverad"

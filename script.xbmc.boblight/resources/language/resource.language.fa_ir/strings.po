@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Persian (Iran) (http://www.transifex.com/projects/p/xbmc-addons/language/fa_IR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "عمومی"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "دسته بندی"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "فیلم"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "تنظیمات موجود"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "سرعت"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "سفارشی"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "غیر فعال"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "سفارشی"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "غیر فعال"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "قرمز"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "سبز"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "آبی"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "سفارشی"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "غیر فعال"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "سفارشی"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "غیر فعال"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "فایل ها "
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "سفارشی"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "غیر فعال"

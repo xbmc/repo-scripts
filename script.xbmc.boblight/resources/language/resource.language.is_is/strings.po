@@ -1,0 +1,137 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Icelandic (http://www.transifex.com/projects/p/xbmc-addons/language/is/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Almennt"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Flokkur"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Kvikmynd"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Forstilling"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Hraði"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Sérsniðið"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Hægt"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Hratt"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Sérsniðið"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Hægt"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Hratt"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Rauður"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Grænn"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Blár"
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "SJÓNVARPSÞÆTTIR"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Sérsniðið"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Hægt"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Hratt"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Sérsniðið"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Hægt"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Hratt"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Skrár"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Sérsniðið"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Hægt"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Hratt"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Óvirkt"
