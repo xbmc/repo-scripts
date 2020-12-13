@@ -90,6 +90,9 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.5.2 (2020-12-13)
+- Update Chrome OS ARM hardware id's (@mediaminister)
+
 ### v0.5.1 (2020-10-02)
 - Fix incorrect ARM HWIDs: PHASER and PHASER360 (@dagwieers)
 - Added Hebrew translations (@haggaie)

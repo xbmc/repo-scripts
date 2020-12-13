@@ -147,6 +147,7 @@ def install_widevine_arm(backup_path):
                       localize(30018, diskspace=sizeof_fmt(required_diskspace)))
             return False
 
+        log(2, 'Downloading best ChromeOS image for Widevine: {hwid} ({version})'.format(**arm_device))
         url = arm_device['url']
         downloaded = http_download(url, message=localize(30022), checksum=arm_device['sha1'], hash_alg='sha1',
                                    dl_size=int(arm_device['zipfilesize']))  # Downloading the recovery image

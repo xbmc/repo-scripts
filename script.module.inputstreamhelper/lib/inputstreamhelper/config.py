@@ -79,36 +79,24 @@ WIDEVINE_CONFIG_NAME = 'manifest.json'
 
 CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.json'
 
-# Last updated: 2019-08-20 (version 12239.67.0)
+# To keep the Chrome OS ARM hardware ID list up to date, the following resources can be used:
+# https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
+# https://cros-updates-serving.appspot.com/
+# Last updated: 2020-10-05
 CHROMEOS_RECOVERY_ARM_HWIDS = [
-    # 'ARKHAM',
-    'BIG',
-    'BLAZE',
     'BOB',
-    # 'DAISY',
     'DRUWL',
     'DUMO',
     'ELM',
-    'EXPRESSO',
     'FIEVEL',
     'HANA',
-    'JAQ',
-    'JERRY',
+    'JUNIPER-HVPU',
     'KEVIN',
-    'KITTY',
+    'KODAMA',
+    'KRANE-ZDKS',
     'MICKEY',
-    'MIGHTY',
-    'MINNIE',
-    'PI',
-    'PIT',
-    'RELM',
     'SCARLET',
-    'SKATE',
-    'SNOW',
-    'SPEEDY',
-    'SPRING',
     'TIGER',
-    # 'WHIRLWIND',
 ]
 
 CHROMEOS_BLOCK_SIZE = 512
