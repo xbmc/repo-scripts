@@ -7,6 +7,13 @@ from contextlib import contextmanager
 import xbmc
 import xbmcaddon
 from xbmcgui import DialogProgress, DialogProgressBG
+
+try:  # Kodi v19 or newer
+    from xbmcvfs import translatePath
+except ImportError:  # Kodi v18 and older
+    # pylint: disable=ungrouped-imports
+    from xbmc import translatePath
+
 from .unicodes import from_unicode, to_unicode
 
 # NOTE: We need to explicitly add the add-on id here!
@@ -60,7 +67,7 @@ def kodi_version_major():
 
 def translate_path(path):
     """Translate special xbmc paths"""
-    return to_unicode(xbmc.translatePath(from_unicode(path)))
+    return to_unicode(translatePath(from_unicode(path)))
 
 
 def get_addon_info(key):
@@ -186,14 +193,11 @@ def get_setting_int(key, default=None):
 
 def get_setting_float(key, default=None):
     """Get an add-on setting as float"""
+    value = get_setting(key, default)
     try:
-        return ADDON.getSettingNumber(key)
-    except (AttributeError, TypeError):  # On Krypton or older, or when not a float
-        value = get_setting(key, default)
-        try:
-            return float(value)
-        except ValueError:
-            return default
+        return float(value)
+    except ValueError:
+        return default
     except RuntimeError:  # Occurs when the add-on is disabled
         return default
 

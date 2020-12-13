@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-    <setting id="last_modified" value="0.0" visible="false"/>
-    <setting id="last_check" value="0.0" visible="false"/>
-    <setting id="version" value="" visible="false"/>
     <category label="30900"> <!-- Expert -->
+        <setting id="last_modified" default="0.0" visible="false"/>
+        <setting id="last_check" default="0.0" visible="false"/>
+        <setting id="version" default="" visible="false"/>
         <setting label="30901" help="30902" type="action" action="RunScript(script.module.inputstreamhelper, info)"/>
         <setting type="sep"/>
         <setting label="30903" help="30904" type="bool" id="disabled" default="false"/>
