@@ -1,8 +1,7 @@
-
 Kodi Unpause Jumpback
 ===================================
 
-_script.xbmc.unpausejumpback_
+`script.xbmc.unpausejumpback`
 
 Simple Kodi Service to jump back a configurable number of seconds after pause, or rewind/fast-forward events.
 
