@@ -1,3 +1,9 @@
+0.3.6
+- Use direct download strategy discovred by user @tuxitos. Thanks!
+- Adapt to: subdivx.com now being served via HTTPS; changes in subtitles
+  submissions list page HTML
+- Improve readability of descriptions with non-ASCII chars
+
 0.3.5
 - Adapt to handle subdivx.com pagination changes
 - Add caching of web search results with new configurable TTL setting

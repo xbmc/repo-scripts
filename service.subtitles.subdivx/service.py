@@ -19,7 +19,8 @@ except Exception:
 import sys
 import tempfile
 from unicodedata import normalize
-from urllib import FancyURLopener, unquote, quote_plus, urlencode, quote
+from urllib import unquote, quote_plus, urlencode, quote
+import urllib2
 from urlparse import parse_qs, urlsplit, urlunsplit
 
 try:
@@ -48,28 +49,32 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = '0.3.5'
+__version__    = '0.3.6'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
 __profile__    = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
 
 
-MAIN_SUBDIVX_URL = "http://www.subdivx.com/"
+MAIN_SUBDIVX_URL = "https://www.subdivx.com/"
 SEARCH_PAGE_URL = MAIN_SUBDIVX_URL + "index.php"
 QS_DICT = {
     'accion': '5',
     'masdesc': '',
     'oxdown': '1',
 }
+QS_KEY_QUERY = 'q'
+QS_KEY_PAGE = 'pg'
 MAX_RESULTS_COUNT = 40
 
 INTERNAL_LINK_URL_BASE = "plugin://%s/?"
 SUB_EXTS = ['SRT', 'SUB', 'SSA']
-HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
+# HTTP_USER_AGENT = ""
+# HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
+HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36"
 FORCED_SUB_SENTINELS = ['FORZADO', 'FORCED']
 
-PAGE_ENCODING = 'latin1'
+PAGE_ENCODING = 'utf-8'
 
 kodi_major_version = None
 
@@ -86,11 +91,13 @@ kodi_major_version = None
 # <div id="menu_detalle_buscador">
 
 SUBTITLE_RE = re.compile(r'''<a\s+class="titulo_menu_izq2?"\s+
-                         href="http://www.subdivx.com/(?P<subdivx_id>.+?)\.html">
+                         href="https://www.subdivx.com/(?P<subdivx_id>.+?)\.html">
                          .+?<img\s+src="img/calif(?P<calif>\d)\.gif"\s+class="detalle_calif"\s+name="detalle_calif">
                          .+?<div\s+id="buscador_detalle_sub">(?P<comment>.*?)</div>
                          .+?<b>Downloads:</b>(?P<downloads>.+?)
                          <b>Cds:</b>
+                         .+?<b>Comentarios:</b>
+                         .+?<b>Cds:</b>
                          .+?<b>Subido\ por:</b>\s*<a.+?>(?P<uploader>.+?)</a>.+?</div></div>''',
                          re.IGNORECASE | re.DOTALL | re.VERBOSE | re.UNICODE |
                          re.MULTILINE)
@@ -98,6 +105,7 @@ SUBTITLE_RE = re.compile(r'''<a\s+class="titulo_menu_izq2?"\s+
 # 'subdivx_id': ID to fetch the subs files
 # 'comment': Translation author comment, may contain filename
 # 'downloads': Downloads, used for ratings
+# 'uploader': Subdivx community member uploader nick
 
 DETAIL_PAGE_LINK_RE = re.compile(r'<a rel="nofollow" class="detalle_link" href="http://www.subdivx.com/(?P<id>.*?)"><b>Bajar</b></a>',
                                  re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
@@ -145,18 +153,21 @@ def log(msg, level=LOGDEBUG):
 
 
 def get_url(url):
-    class MyOpener(FancyURLopener):
-        # version = HTTP_USER_AGENT
-        version = ''
-    my_urlopener = MyOpener()
+    req = urllib2.Request(url)
+    req.add_header("User-Agent", HTTP_USER_AGENT)
     log(u"Fetching %s" % url)
     try:
-        response = my_urlopener.open(url)
+        response = urllib2.urlopen(req)
         content = response.read()
-    except Exception:
-        log(u"Failed to fetch %s" % url, level=LOGWARNING)
-        content = None
-    return content
+    except urllib2.HTTPError as e:
+        log(u"Failed to fetch %s (HTTP status: %d)" % (url, e.code), level=LOGWARNING)
+    except urllib2.URLError as e:
+        log(u"Failed to fetch %s (URL error %s)" % (url, e.reason), level=LOGWARNING)
+    except Exception as e:
+        log(u"Failed to fetch %s (generic error %s)" % (url, e), level=LOGWARNING)
+    else:
+        return content
+    return None
 
 
 def cleanup_subdivx_comment(comment):
@@ -190,10 +201,13 @@ def process_page(page_nr, srch_param_name, srch_str, file_orig_path):
     qs_dict = QS_DICT.copy()
     qs_dict[srch_param_name] = srch_str
     if page_nr > 1:
-        qs_dict['pg'] = str(page_nr)
+        qs_dict[QS_KEY_PAGE] = str(page_nr)
     url = build_subdivx_url(qs_dict)
     content = get_url(url)
-    if content is None or not SUBTITLE_RE.search(content):
+    if content is None:
+        return [], set()
+    if not SUBTITLE_RE.search(content):
+        log(u"No subtitle link regexp match found in page contents", level=LOGSEVERE)
         return [], set()
     subs = []
     descriptions = []
@@ -242,7 +256,7 @@ def get_all_subs(searchstring, languageshort, file_orig_path):
     page_nr = 1
     last_page = set()
     while True:
-        page_results, current_page = process_page(page_nr, 'q', searchstring, file_orig_path)
+        page_results, current_page = process_page(page_nr, QS_KEY_QUERY, searchstring, file_orig_path)
         if not page_results:
             break
         if current_page == last_page:
@@ -345,7 +359,7 @@ def build_tvshow_searchstring(item):
     return ''.join(parts)
 
 
-def Search(item):
+def action_search(item):
     """Called when subtitle download is requested from XBMC."""
     log(u'item = %s' % pformat(item))
     # Do what's needed to get the list of subtitles from service site
@@ -435,7 +449,25 @@ def _save_subtitles(workdir, content):
         return [{'path': tmp_fname, 'forced': False}]
 
 
-def Download(subdivx_id, workdir):
+def method_traditional(sub_id, u):
+    actual_subtitle_file_url = MAIN_SUBDIVX_URL + "bajar.php?id=" + sub_id + "&u=" + u
+    return get_url(actual_subtitle_file_url)
+
+
+def method_direct_download(sub_id, u):
+    if u == "1":
+        u = ""
+    for ext in (".rar", ".zip"):
+        actual_subtitle_file_url = MAIN_SUBDIVX_URL + "sub" + u + "/" + sub_id + ext
+        content = get_url(actual_subtitle_file_url)
+        if content is not None:
+            break
+    else:
+        return None
+    return content
+
+
+def action_download(subdivx_id, workdir):
     """Called when subtitle download is requested from XBMC."""
     # Get the page with the subtitle link,
     # i.e. http://www.subdivx.com/X6XMjE2NDM1X-iron-man-2-2010
@@ -458,16 +490,21 @@ def Download(subdivx_id, workdir):
         return []
     match = DOWNLOAD_LINK_RE.search(html_content)
     if match is None:
-        log(u"Expected content not found in final download page")
+        log(u"Expected content not found in final download page", level=LOGFATAL)
         return []
     id_, u = match.group('id', 'u')
-    actual_subtitle_file_url = MAIN_SUBDIVX_URL + "bajar.php?id=" + id_ + "&u=" + u
-    content = get_url(actual_subtitle_file_url)
-    if content is None:
-        log(u"Got no content when downloading actual subtitle file",
-            level=LOGFATAL)
+    methods = [
+        method_direct_download,
+        method_traditional,
+    ]
+    for method in methods:
+        content = method(id_, u)
+        if content is not None:
+            saved_fnames = _save_subtitles(workdir, content)
+            break
+    else:
+        log(u"Got no content when downloading actual subtitle file", level=LOGFATAL)
         return []
-    saved_fnames = _save_subtitles(workdir, content)
     return saved_fnames
 
 
@@ -622,7 +659,7 @@ def main():
             stackPath = item['file_original_path'].split(" , ")
             item['file_original_path'] = stackPath[0][8:]
 
-        Search(item)
+        action_search(item)
         # Send end of directory to XBMC
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -636,8 +673,8 @@ def main():
         # Make sure it ends with a path separator (Kodi 14)
         workdir = workdir + os.path.sep
         debug_dump_path(workdir, 'workdir')
-        # We pickup our arguments sent from the Search() function
-        subs = Download(params["id"], workdir)
+        # We pickup our arguments sent from the action_search() function
+        subs = action_download(params["id"], workdir)
         # We can return more than one subtitle for multi CD versions, for now
         # we are still working out how to handle that in XBMC core
         for sub in subs:
