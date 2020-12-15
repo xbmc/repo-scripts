@@ -1,5 +1,8 @@
 CHANGES
 =======
+Version 13.0.3 (15/12/2020)
+- Remove offscreen support (only supported in leia++)
+
 Version 13.0.0 (12/4/2020)
 - Fix args
 - py2 only version
