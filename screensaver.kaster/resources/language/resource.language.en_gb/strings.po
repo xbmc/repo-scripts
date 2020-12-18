@@ -104,4 +104,6 @@ msgctxt "#32021"
 msgid "Show black background"
 msgstr ""
 
-
+msgctxt "#32022"
+msgid "Enable high resolution pictures (2560x1440)"
+msgstr ""

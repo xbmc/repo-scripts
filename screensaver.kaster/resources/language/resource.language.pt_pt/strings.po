@@ -103,3 +103,7 @@ msgstr "Esconder plano dim"
 msgctxt "#32021"
 msgid "Show black background"
 msgstr "Mostrar fundo preto"
+
+msgctxt "#32022"
+msgid "Enable high resolution pictures (2560x1440)"
+msgstr "Ativar imagens de maior resolução (2560x1440)"
