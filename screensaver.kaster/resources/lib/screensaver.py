@@ -18,7 +18,11 @@ from random import randint, shuffle
 from .screensaverutils import ScreenSaverUtils
 
 PATH = xbmcaddon.Addon().getAddonInfo("path")
-IMAGE_FILE = os.path.join(PATH, "resources", "images", "chromecast.json")
+
+if not kodiutils.get_setting_as_bool("enable-hq"):
+    IMAGE_FILE = os.path.join(PATH, "resources", "images", "chromecast.json")
+else:
+    IMAGE_FILE = os.path.join(PATH, "resources", "images", "chromecast-hq.json")
 
 
 class Kaster(xbmcgui.WindowXMLDialog):
