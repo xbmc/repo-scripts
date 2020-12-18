@@ -51,7 +51,7 @@ def search_episode(query, languages=None):
     """
     if languages is None:
         languages = [LanguageData('English', 'English')]
-    webpage = session.load_page('/srch.php',
+    webpage = session.load_page('/search.php',
                                 params={'search': query, 'Submit': 'Search'})
     soup = BeautifulSoup(webpage, 'html5lib')
     table = soup.find('table',
