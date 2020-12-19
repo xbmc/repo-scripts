@@ -9,6 +9,7 @@
 """
 
 import json
+import operator
 import re
 from copy import deepcopy
 from html import escape
@@ -99,76 +100,91 @@ class ManifestGenerator:
 
         self.discarded = discarded
 
-    def _filter_qualities(self, stream_data, container, quality_object):  # pylint: disable=too-many-branches
+    def _filter_qualities(self, stream_data, container, quality_object):
         data = deepcopy(stream_data)
 
-        if container == 'mp4':
-            discard_mime = 'video/webm'
-            mime_type = 'video/mp4'
-        elif container == 'webm':
-            discard_mime = 'video/mp4'
-            mime_type = 'video/webm'
-        else:
-            return data
+        height_to_width_map = {
+            4320: 7680,
+            2160: 3840,
+            1440: 2560,
+            1080: 1920,
+            720: 1280,
+            480: 854,
+            426: 240,
+        }
 
-        if quality_object.limit_30fps and mime_type in stream_data:
-            # if 30 fps limit enabled, discard streams that are greater than 30fps
-            if any(itag for itag in data[mime_type].keys() if data[mime_type][itag]['fps'] <= 30):
-                for itag in list(data[mime_type].keys()):
-                    if data[mime_type][itag]['fps'] > 30:
-                        self.discard_video(mime_type, itag, data[mime_type][itag], 'frame rate')
-                        del data[mime_type][itag]
+        rng = 1 if container == 'mp4' else 2
 
-        if discard_mime in data:
-            # discard streams with unwanted mime type
-            for itag in list(data[discard_mime].keys()):
-                self.discard_video(discard_mime, itag, data[discard_mime][itag], 'mime type')
-                del data[discard_mime][itag]
+        for idx in range(rng):
+            mime_mp4 = 'video/mp4'
+            mime_webm = 'video/webm'
+            if container == 'mp4' or (container == 'webm' and idx == 1):
+                discard_mime = mime_webm
+                discarded_mime_streams = data[mime_webm]
 
-            del data[discard_mime]
+                selected_mime = mime_mp4
+                streams = deepcopy(data[mime_mp4])
+            elif container == 'webm':
+                discard_mime = mime_mp4
+                discarded_mime_streams = data[mime_mp4]
 
-        itag_matches = []
-        itag_match = None
+                selected_mime = mime_webm
+                streams = deepcopy(data[mime_webm])
 
-        for quality in quality_object.qualities:
-            # find all streams with matching height
-            if any(itag for itag in list(data[mime_type].keys())
-                   if int(data[mime_type][itag].get('height', 0)) == quality):
-                i_matches = [itag for itag in list(data[mime_type].keys())
-                             if int(data[mime_type][itag].get('height', 0)) == quality]
-                itag_matches.extend(i_matches)
-                break
+                if not streams:
+                    discard_mime = mime_webm
+                    discarded_mime_streams = data[mime_webm]
 
-        if not itag_matches:
-            # find best match for quality if there were no exact height candidates
-            for index, quality in enumerate(quality_object.qualities):
-                if index == len(quality_object.qualities) - 1:
+                    selected_mime = mime_mp4
+                    streams = deepcopy(data[mime_mp4])
+            else:
+                return data
+
+            thirty_fps_streams = [streams[itag] for itag in list(streams.keys())
+                                  if streams[itag].get('fps') <= 30]
+
+            sixty_fps_streams = [streams[itag] for itag in list(streams.keys())
+                                 if streams[itag].get('fps') > 30]
+
+            fps_streams = sixty_fps_streams
+            if (not quality_object.limit_30fps and not sixty_fps_streams) or \
+                    quality_object.limit_30fps:
+                fps_streams = thirty_fps_streams
+
+            quality_streams = []
+
+            for quality in quality_object.qualities:
+                # find all streams with matching width
+                matches = [stream for stream in fps_streams
+                           if int(stream.get('width', 0)) == height_to_width_map.get(quality, -1)]
+
+                if matches:
+                    quality_streams.extend(matches)
                     continue
 
-                if any(itag for itag in data[mime_type].keys()
-                       if (quality > int(data[mime_type][itag].get('height', 0)) >=
-                           quality_object.qualities[index + 1])):
-                    i_match = next(itag for itag in data[mime_type].keys()
-                                   if ((int(data[mime_type][itag].get('height', 0)) < quality) and
-                                       (int(data[mime_type][itag].get('height', 0)) >=
-                                        quality_object.qualities[index + 1])))
-                    itag_matches.append(i_match)
-                    break
+            if not quality_streams:
+                continue
 
-        for itag in list(data[mime_type].keys()):
-            # find highest fps and bandwidth itag out of all candidates
-            if itag in itag_matches:
-                if (not itag_match or itag_match.get('fps') < data[mime_type][itag].get('fps') or
-                        (itag_match.get('fps') == data[mime_type][itag].get('fps') and
-                         itag_match.get('bandwidth') < data[mime_type][itag].get('bandwidth'))):
-                    itag_match = data[mime_type][itag]
+            quality_streams.sort(key=operator.itemgetter('bandwidth'), reverse=True)
+            quality_streams.sort(key=operator.itemgetter('width'), reverse=True)
 
-        if itag_match:
-            for itag in list(data[mime_type].keys()):
+            selected_stream = quality_streams[0]
+            selected_itag = selected_stream.get('id', -1)
+
+            for itag in list(streams.keys()):
                 # discard all streams except the best match
-                if itag != itag_match.get('id'):
-                    self.discard_video(mime_type, itag, data[mime_type][itag], 'quality')
-                    del data[mime_type][itag]
+                if itag != selected_itag:
+                    self.discard_video(selected_mime, itag, streams[itag], 'quality')
+                    del data[selected_mime][itag]
+
+            if discarded_mime_streams:
+                # discard streams with unwanted mime type
+                for itag in list(discarded_mime_streams.keys()):
+                    self.discard_video(discard_mime, itag,
+                                       discarded_mime_streams[itag], 'mime type')
+                    del data[discard_mime][itag]
+
+            break
 
         return data
 
@@ -270,6 +286,24 @@ class ManifestGenerator:
 
         return data
 
+    def _filter_av1(self, data):
+        data = deepcopy(data)
+        payload = {}
+
+        for itag in data.keys():
+            if data[itag]['codec'].lower().startswith(('av01', 'av1')):
+                continue
+
+            payload[itag] = data[itag]
+
+        discarded = [data[itag] for itag in (set(data) - set(payload)) if itag in data]
+
+        for discard in discarded:
+            self.discard_video('video/mp4', discard['id'],
+                               data[discard['id']], 'av1 unsupported')
+
+        return payload
+
     def _filter_hdr(self, data, hdr=False):
         data = deepcopy(data)
         webm = {}
@@ -290,8 +324,10 @@ class ManifestGenerator:
         elif not hdr:
             # when hdr disabled and remove vp9.2 (hdr) streams
             for itag in data.keys():
-                if 'vp9' in data[itag]['codec']:
-                    webm[itag] = data[itag]
+                if 'vp9.2' in data[itag]['codec']:
+                    continue
+
+                webm[itag] = data[itag]
 
             discarded = [data[itag] for itag in (set(data) - set(webm)) if itag in data]
 
@@ -359,10 +395,13 @@ class ManifestGenerator:
                  quality_object.hdr)):
             default_mime_type = 'webm'
 
-        if 'video/webm' in supported_mime_types:
-            filtered = self._filter_hdr(data['video/webm'], hdr=quality_object.hdr)
-            if filtered:
-                data['video/webm'] = filtered
+        av1_filtered = self._filter_av1(data.get('video/mp4', {}))
+        if av1_filtered:
+            data['video/mp4'] = av1_filtered
+
+        hdr_filtered = self._filter_hdr(data.get('video/webm', {}), hdr=quality_object.hdr)
+        if hdr_filtered:
+            data['video/webm'] = hdr_filtered
 
         if isinstance(quality_object.quality, int) and isinstance(quality_object.qualities, list):
             data = self._filter_qualities(data, default_mime_type, quality_object)
