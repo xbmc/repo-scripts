@@ -2,7 +2,6 @@
 import uuid
 
 from resources.lib.kodi.utils import get_device_id
-from resources.lib.tubecast.utils import PY3
 
 
 class Kodicast(object):
@@ -17,8 +16,6 @@ class Kodicast(object):
 
 def generate_uuid():
     friendly_name = 'device.tubecast.{}'.format(Kodicast.friendlyName)
-    if not PY3:
-        friendly_name = friendly_name.encode('utf8')
     Kodicast.uuid = str(uuid.uuid5(
         uuid.NAMESPACE_DNS,
         friendly_name))

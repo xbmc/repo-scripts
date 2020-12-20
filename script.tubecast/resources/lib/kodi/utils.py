@@ -3,7 +3,6 @@
 import json
 
 from resources.lib.kodi import kodilogging
-from resources.lib.tubecast.utils import PY3
 
 import xbmc
 
@@ -18,15 +17,9 @@ ADDON = xbmcaddon.Addon()
 logger = kodilogging.get_logger()
 
 
-def yes_no(line1, line2=None, line3=None, nolabel=None, yeslabel=None):
-    if PY3:
-        return xbmcgui.Dialog().yesno(heading=ADDON.getAddonInfo('name'),
-                                  message="{} {}".format(line1, line2),
-                                  nolabel=nolabel,
-                                  yeslabel=yeslabel)
-    else:
-        return xbmcgui.Dialog().yesno(heading=ADDON.getAddonInfo('name'),
-                                  line1=line1, line2=line2,
+def yes_no(message, nolabel=None, yeslabel=None):
+    return xbmcgui.Dialog().yesno(heading=ADDON.getAddonInfo('name'),
+                                  message=message,
                                   nolabel=nolabel,
                                   yeslabel=yeslabel)
 
@@ -41,9 +34,7 @@ def show_settings():
 
 
 def get_setting(setting):
-    if PY3:
-        return ADDON.getSetting(setting).strip()
-    return ADDON.getSetting(setting).strip().decode('utf-8')
+    return ADDON.getSetting(setting).strip()
 
 
 def set_setting(setting, value):
@@ -76,9 +67,7 @@ def get_setting_as_int(setting):
 
 
 def get_string(string_id):
-    if PY3:
-        return ADDON.getLocalizedString(string_id)
-    return ADDON.getLocalizedString(string_id).encode('utf-8', 'ignore')
+    return ADDON.getLocalizedString(string_id)
 
 
 def kodi_json_request(params):
