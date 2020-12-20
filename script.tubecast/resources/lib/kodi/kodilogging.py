@@ -8,7 +8,6 @@ import xbmc
 
 import xbmcaddon
 
-from resources.lib.tubecast.utils import PY3
 
 LEVEL_MAP = {
     logging.CRITICAL: xbmc.LOGFATAL,
@@ -25,8 +24,6 @@ class KodiLogHandler(logging.StreamHandler):
     def __init__(self):
         logging.StreamHandler.__init__(self)
         addon_id = xbmcaddon.Addon().getAddonInfo('id')
-        if not PY3:
-            addon_id = addon_id.decode('utf-8')
         prefix = "[%s] " % addon_id
         formatter = logging.Formatter(prefix + '%(name)s: %(message)s')
         self.setFormatter(formatter)

@@ -8,12 +8,9 @@ import threading
 from resources.lib.kodi import kodilogging
 from resources.lib.kodi.utils import get_setting_as_bool
 from resources.lib.tubecast.kodicast import Kodicast
-from resources.lib.tubecast.utils import build_template, str_to_bytes, PY3
+from resources.lib.tubecast.utils import build_template
 
-if PY3:
-    from socketserver import DatagramRequestHandler, ThreadingUDPServer
-else:
-    from SocketServer import DatagramRequestHandler, ThreadingUDPServer
+from socketserver import DatagramRequestHandler, ThreadingUDPServer
 
 
 logger = kodilogging.get_logger("ssdp")
@@ -127,7 +124,7 @@ ST: urn:dial-multiscreen-org:service:dial:1\r
 
     def reply(self, data, address):
         socket = self.request[1]
-        socket.sendto(str_to_bytes(data), address)
+        socket.sendto(bytes(data, 'utf-8'), address)
 
     @staticmethod
     def get_remote_ip(address):
@@ -135,7 +132,7 @@ ST: urn:dial-multiscreen-org:service:dial:1\r
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(address)
         iface = s.getsockname()[0]
-        return iface if PY3 else unicode(iface)
+        return iface
 
     def datagram_received(self, datagram, address):
         if get_setting_as_bool('debug-ssdp'):

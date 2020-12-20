@@ -7,17 +7,13 @@ from bottle import request, response
 
 from resources.lib.kodi import kodilogging
 from resources.lib.kodi.utils import get_device_id, get_setting_as_bool
-from resources.lib.tubecast.utils import PY3
 from resources.lib.tubecast.youtube import kodibrigde
 from resources.lib.tubecast.youtube.player import CastPlayer, STATUS_LOADING, STATUS_STOPPED
 from resources.lib.tubecast.youtube.templates import YoutubeTemplates
 from resources.lib.tubecast.youtube.utils import CommandParser
 from resources.lib.tubecast.youtube.volume import VolumeMonitor
 
-if PY3:
-    from urllib.parse import urlencode
-else:
-    from urllib import urlencode
+from urllib.parse import urlencode
 
 import xbmc
 
@@ -512,7 +508,7 @@ class YoutubeListener(threading.Thread):
             if debug_http:
                 logger.debug("received chunk %r", chunk)
 
-            parser.write(chunk.decode("utf-8") if PY3 else chunk)
+            parser.write(chunk.decode("utf-8"))
             for cmd in parser.get_commands():
                 self.app.handle_cmd(cmd)
 
