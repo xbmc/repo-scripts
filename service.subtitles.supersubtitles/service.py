@@ -136,7 +136,7 @@ def recreate_tmp_dir():
                 debuglog("Remove %s directory with out file system encoding" % __temp__)
                 shutil.rmtree(__temp__, ignore_errors=True)
         except Exception as e:
-            debuglog("Exception while delete %s: %s" % (__temp__, e.message))
+            debuglog("Exception while delete %s: %s" % (__temp__, getattr(e, 'message', repr(e))))
 
     if not xbmcvfs.exists(__temp__):
         debuglog("Create %s directory" % __temp__)
@@ -165,7 +165,7 @@ def send_request(params):
     except URLError as e:
         debuglog("URL Error %s, %s" % (e.reason, url))
     except Exception as e:
-        debuglog("Unexpected exception: %s" % e.message)
+        debuglog("Unexpected exception: %s" % getattr(e, 'message', repr(e)))
 
     return None
 
@@ -174,11 +174,11 @@ def query_data(params):
     with closing(send_request(params)) as response:
         if response:
             try:
-                return json.loads(response.read(), encoding='utf-8')
+                return json.loads(response.read())
             except ValueError as e:
-                debuglog("Json Decode Error: %s" % e.message)
+                debuglog("Json Decode Error: %s" % getattr(e, 'msg', repr(e)))
             except Exception as e:
-                debuglog("Unexpected exception: %s" % e.message)
+                debuglog("Unexpected exception: %s" % getattr(e, 'message', repr(e)))
     return None
 
 
