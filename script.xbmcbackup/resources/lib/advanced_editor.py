@@ -1,5 +1,4 @@
 import json
-import xbmc
 import xbmcgui
 import xbmcvfs
 import os.path
@@ -7,7 +6,7 @@ from . import utils as utils
 
 
 class BackupSetManager:
-    jsonFile = xbmc.translatePath(utils.data_dir() + "custom_paths.json")
+    jsonFile = xbmcvfs.translatePath(utils.data_dir() + "custom_paths.json")
     paths = None
 
     def __init__(self):
@@ -106,7 +105,7 @@ class AdvancedBackupEditor:
                     rootFolder = rootFolder + '/'
 
                 # check that this path even exists
-                if(not xbmcvfs.exists(xbmc.translatePath(rootFolder))):
+                if(not xbmcvfs.exists(xbmcvfs.translatePath(rootFolder))):
                     self.dialog.ok(utils.getString(30117), utils.getString(30118), rootFolder)
                     return None
             else:
@@ -227,7 +226,7 @@ class AdvancedBackupEditor:
         shouldContinue = self.dialog.yesno(utils.getString(30139), utils.getString(30140), utils.getString(30141))
 
         if(shouldContinue):
-            source = xbmc.translatePath(os.path.join(utils.addon_dir(), 'resources', 'data', 'default_files.json'))
-            dest = xbmc.translatePath(os.path.join(utils.data_dir(), 'custom_paths.json'))
+            source = xbmcvfs.translatePath(os.path.join(utils.addon_dir(), 'resources', 'data', 'default_files.json'))
+            dest = xbmcvfs.translatePath(os.path.join(utils.data_dir(), 'custom_paths.json'))
 
             xbmcvfs.copy(source, dest)

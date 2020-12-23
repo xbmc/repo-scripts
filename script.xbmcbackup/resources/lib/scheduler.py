@@ -20,7 +20,7 @@ class BackupScheduler:
     def __init__(self):
         self.monitor = UpdateMonitor(update_method=self.settingsChanged)
         self.enabled = utils.getSettingBool("enable_scheduler")
-        self.next_run_path = xbmc.translatePath(utils.data_dir()) + 'next_run.txt'
+        self.next_run_path = xbmcvfs.translatePath(utils.data_dir()) + 'next_run.txt'
 
         if(self.enabled):
 
@@ -173,11 +173,11 @@ class BackupScheduler:
 
     def _resumeCheck(self):
         shouldContinue = False
-        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "resume.txt"))):
-            rFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "resume.txt"), 'r')
+        if(xbmcvfs.exists(xbmcvfs.translatePath(utils.data_dir() + "resume.txt"))):
+            rFile = xbmcvfs.File(xbmcvfs.translatePath(utils.data_dir() + "resume.txt"), 'r')
             self.restore_point = rFile.read()
             rFile.close()
-            xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "resume.txt"))
+            xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "resume.txt"))
             shouldContinue = xbmcgui.Dialog().yesno(utils.getString(30042), utils.getString(30043), utils.getString(30044))
 
         return shouldContinue

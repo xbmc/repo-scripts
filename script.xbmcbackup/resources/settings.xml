@@ -3,6 +3,7 @@
 	<category id="general" label="30011" level="expert">
 		<setting id="compress_backups" type="bool" label="30087" default="false" />
 		<setting id="backup_rotation" type="number" label="30026" default="0" />
+    <setting id="always_prompt_restore_settings" type="bool" label="30148" default="false" />
 		<setting id="progress_mode" type="enum" label="30022" lvalues="30082|30083|30084" default="0" />
 		<setting type="sep" />
 		<setting id="verbose_logging" type="bool" label="Enable Verbose Logging" default="false" />
