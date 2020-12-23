@@ -1,3 +1,6 @@
+v1.3.5 (23/12/2020)
+- [fix] Unicode fixes for python3 (tks @roidy)
+
 v1.3.4 (18/12/2020)
 - [fix] New scrapped pictures (tks delboy711)
 - [new] Add new source for higher resolution pictures (tks delboy711)
