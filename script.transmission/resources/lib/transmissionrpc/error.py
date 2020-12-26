@@ -4,6 +4,7 @@
 
 from six import string_types, integer_types
 
+
 class TransmissionError(Exception):
     """
 	This exception is raised when there has occurred an error related to
@@ -17,16 +18,23 @@ class TransmissionError(Exception):
     def __str__(self):
         if self.original:
             original_name = type(self.original).__name__
-            return '%s Original exception: %s, "%s"' % (self.message, original_name, str(self.original))
+            return '%s Original exception: %s, "%s"' % (
+                self.message, original_name, str(self.original))
         else:
             return self.message
+
 
 class HTTPHandlerError(Exception):
     """
 	This exception is raised when there has occurred an error related to
 	the HTTP handler. It is a subclass of Exception.
     """
-    def __init__(self, httpurl=None, httpcode=None, httpmsg=None, httpheaders=None, httpdata=None):
+    def __init__(self,
+                 httpurl=None,
+                 httpcode=None,
+                 httpmsg=None,
+                 httpheaders=None,
+                 httpdata=None):
         Exception.__init__(self)
         self.url = ''
         self.code = 600

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.transmission"
        name="Transmission Control Panel"
-       version="1.0.0"
+       version="1.0.2"
        provider-name="Vasyl Gello">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -27,10 +27,20 @@
     <license>MIT</license>
     <email>vasek.gello@gmail.com</email>
     <source>https://github.com/basilgello/Transmission-Control-Panel</source>
-    <news>Version 1.0.0
-        * Complete rework of original script.transmission by Correl J.Roush
-        * Coded in Python 3
-        * Targets Kodi 19.0 &quot;Matrix&quot; and newer</news>
+    <news>
+Version 1.0.2
+* Fix localizations for new strings
+
+Version 1.0.1
+* Fix torrent progress bar in main screen (thanks @AnonTester)
+* Fix error with missing ETA on stalled torrents (thanks @AnonTester)
+* Fix KeyError on torrent removal
+
+Version 1.0.0
+* Complete rework of original script.transmission by Correl J.Roush
+* Coded in Python 3
+* Targets Kodi 19.0 &quot;Matrix&quot; and newer
+    </news>
     <assets>
         <icon>icon.png</icon>
     </assets>
