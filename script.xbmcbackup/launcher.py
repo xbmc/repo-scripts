@@ -1,6 +1,5 @@
 # launcher for various helpful functions found in the settings.xml area
 import sys
-import xbmc
 import xbmcgui
 import xbmcvfs
 import resources.lib.utils as utils
@@ -14,9 +13,9 @@ def authorize_cloud(cloudProvider):
         authorizer = DropboxAuthorizer()
 
         if(authorizer.authorize()):
-            xbmcgui.Dialog().ok(utils.getString(30010), utils.getString(30027) + ' ' + utils.getString(30106))
+            xbmcgui.Dialog().ok(utils.getString(30010), '%s %s' % (utils.getString(30027), utils.getString(30106)))
         else:
-            xbmcgui.Dialog().ok(utils.getString(30010), utils.getString(30107) + ' ' + utils.getString(30027))
+            xbmcgui.Dialog().ok(utils.getString(30010), '%s %s' % (utils.getString(30107), utils.getString(30027)))
 
 
 def remove_auth():
@@ -25,8 +24,8 @@ def remove_auth():
 
     if(shouldDelete):
         # delete any of the known token file types
-        xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "tokens.txt"))  # dropbox
-        xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "google_drive.dat"))  # google drive
+        xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"))  # dropbox
+        xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "google_drive.dat"))  # google drive
 
 
 def get_params():

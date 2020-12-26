@@ -1,4 +1,3 @@
-import xbmc
 import xbmcgui
 import xbmcvfs
 import resources.lib.tinyurl as tinyurl
@@ -7,6 +6,7 @@ import resources.lib.utils as utils
 # don't die on import error yet, these might not even get used
 try:
     from dropbox import dropbox
+    from dropbox import oauth
 except ImportError:
     pass
 
@@ -24,7 +24,7 @@ class DropboxAuthorizer:
 
         if(self.APP_KEY == '' and self.APP_SECRET == ''):
             # we can't go any farther, need these for sure
-            xbmcgui.Dialog().ok(utils.getString(30010), utils.getString(30027) + ' ' + utils.getString(30058), utils.getString(30059))
+            xbmcgui.Dialog().ok(utils.getString(30010), '%s %s\n%s' % (utils.getString(30027), utils.getString(30058), utils.getString(30059)))
 
             result = False
 
@@ -46,13 +46,13 @@ class DropboxAuthorizer:
             self._deleteToken()
 
         # copied flow from http://dropbox-sdk-python.readthedocs.io/en/latest/moduledoc.html#dropbox.oauth.DropboxOAuth2FlowNoRedirect
-        flow = dropbox.oauth.DropboxOAuth2FlowNoRedirect(self.APP_KEY, self.APP_SECRET)
+        flow = oauth.DropboxOAuth2FlowNoRedirect(self.APP_KEY, self.APP_SECRET)
 
         url = flow.start()
 
         # print url in log
         utils.log("Authorize URL: " + url)
-        xbmcgui.Dialog().ok(utils.getString(30010), utils.getString(30056), utils.getString(30057), tinyurl.shorten(url))
+        xbmcgui.Dialog().ok(utils.getString(30010), '%s\n%s\n%s' % (utils.getString(30056), utils.getString(30057), str(tinyurl.shorten(url), 'utf-8')))
 
         # get the auth code
         code = xbmcgui.Dialog().input(utils.getString(30027) + ' ' + utils.getString(30103))
@@ -89,14 +89,14 @@ class DropboxAuthorizer:
 
     def _setToken(self, token):
         # write the token files
-        token_file = open(xbmc.translatePath(utils.data_dir() + "tokens.txt"), 'w')
+        token_file = open(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"), 'w')
         token_file.write(token)
         token_file.close()
 
     def _getToken(self):
         # get token, if it exists
-        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "tokens.txt"))):
-            token_file = open(xbmc.translatePath(utils.data_dir() + "tokens.txt"))
+        if(xbmcvfs.exists(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"))):
+            token_file = open(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"))
             token = token_file.read()
             token_file.close()
 
@@ -105,5 +105,5 @@ class DropboxAuthorizer:
             return ""
 
     def _deleteToken(self):
-        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "tokens.txt"))):
-            xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "tokens.txt"))
+        if(xbmcvfs.exists(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"))):
+            xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"))
