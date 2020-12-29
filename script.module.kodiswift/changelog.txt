@@ -1,5 +1,17 @@
+0.0.10
+=====
+
+- fixed the error in not importing python six library in addon.xml.
+
+0.0.9
+=====
+
+- enable script.module.kodiswift to support python 2 and python 3 by incorporating the six package.
+- add supports on subtitles.
+
 0.0.8
 =====
+
 - Set `listitem.is_folder` to `False` when setting `listitem.is_playable` to `True`.
 
 0.0.7
