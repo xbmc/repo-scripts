@@ -5,6 +5,8 @@ import re
 from .import css_types as ct
 import unicodedata
 
+import bs4
+
 # Empty tag pattern (whitespace okay)
 RE_NOT_EMPTY = re.compile('[^ \t\r\n\f]')
 
@@ -87,50 +89,36 @@ class _DocumentNav(object):
     @staticmethod
     def is_doc(obj):
         """Is `BeautifulSoup` object."""
-
-        import bs4
         return isinstance(obj, bs4.BeautifulSoup)
 
     @staticmethod
     def is_tag(obj):
         """Is tag."""
-
-        import bs4
         return isinstance(obj, bs4.Tag)
 
     @staticmethod
     def is_declaration(obj):  # pragma: no cover
         """Is declaration."""
-
-        import bs4
         return isinstance(obj, bs4.Declaration)
 
     @staticmethod
     def is_cdata(obj):
         """Is CDATA."""
-
-        import bs4
         return isinstance(obj, bs4.CData)
 
     @staticmethod
     def is_processing_instruction(obj):  # pragma: no cover
         """Is processing instruction."""
-
-        import bs4
         return isinstance(obj, bs4.ProcessingInstruction)
 
     @staticmethod
     def is_navigable_string(obj):
         """Is navigable string."""
-
-        import bs4
         return isinstance(obj, bs4.NavigableString)
 
     @staticmethod
     def is_special_string(obj):
         """Is special string."""
-
-        import bs4
         return isinstance(obj, (bs4.Comment, bs4.Declaration, bs4.CData, bs4.ProcessingInstruction, bs4.Doctype))
 
     @classmethod
@@ -328,6 +316,11 @@ class _DocumentNav(object):
             [node for node in self.get_descendants(el, tags=False, no_iframe=no_iframe) if self.is_content_string(node)]
         )
 
+    def get_own_text(self, el, no_iframe=False):
+        """Get Own Text."""
+
+        return [node for node in self.get_contents(el, no_iframe=no_iframe) if self.is_content_string(node)]
+
 
 class Inputs(object):
     """Class for parsing and validating input items."""
@@ -419,8 +412,8 @@ class Inputs(object):
                 hour = int(m.group('hour'), 10)
                 minutes = int(m.group('minutes'), 10)
                 if (
-                    cls.validate_year(year) and cls.validate_month(month) and cls.validate_day(year, month, day) and
-                    cls.validate_hour(hour) and cls.validate_minutes(minutes)
+                    cls.validate_year(year) and cls.validate_month(month) and cls.validate_day(year, month, day)
+                    and cls.validate_hour(hour) and cls.validate_minutes(minutes)
                 ):
                     parsed = (year, month, day, hour, minutes)
         elif itype in ("number", "range"):
@@ -513,9 +506,9 @@ class _Match(object):
                 # Avoid analyzing certain elements specified in the specification.
                 direction = DIR_MAP.get(util.lower(self.get_attribute_by_name(node, 'dir', '')), None)
                 if (
-                    self.get_tag(node) in ('bdi', 'script', 'style', 'textarea', 'iframe') or
-                    not self.is_html_tag(node) or
-                    direction is not None
+                    self.get_tag(node) in ('bdi', 'script', 'style', 'textarea', 'iframe')
+                    or not self.is_html_tag(node)
+                    or direction is not None
                 ):
                     continue  # pragma: no cover
 
@@ -652,8 +645,8 @@ class _Match(object):
             match = False
         # Verify prefix matches
         elif (
-            tag.prefix and
-            tag.prefix != '*' and (tag_ns is None or namespace != tag_ns)
+            tag.prefix
+            and tag.prefix != '*' and (tag_ns is None or namespace != tag_ns)
         ):
             match = False
         return match
@@ -683,8 +676,8 @@ class _Match(object):
 
         name = (util.lower(tag.name) if not self.is_xml and tag.name is not None else tag.name)
         return not (
-            name is not None and
-            name not in (self.get_tag(el), '*')
+            name is not None
+            and name not in (self.get_tag(el), '*')
         )
 
     def match_tag(self, el, tag):
@@ -794,8 +787,8 @@ class _Match(object):
             sibling = self.get_previous(el, tags=False)
             while is_root and sibling is not None:
                 if (
-                    self.is_tag(sibling) or (self.is_content_string(sibling) and sibling.strip()) or
-                    self.is_cdata(sibling)
+                    self.is_tag(sibling) or (self.is_content_string(sibling) and sibling.strip())
+                    or self.is_cdata(sibling)
                 ):
                     is_root = False
                 else:
@@ -804,8 +797,8 @@ class _Match(object):
             sibling = self.get_next(el, tags=False)
             while is_root and sibling is not None:
                 if (
-                    self.is_tag(sibling) or (self.is_content_string(sibling) and sibling.strip()) or
-                    self.is_cdata(sibling)
+                    self.is_tag(sibling) or (self.is_content_string(sibling) and sibling.strip())
+                    or self.is_cdata(sibling)
                 ):
                     is_root = False
                 else:
@@ -821,8 +814,8 @@ class _Match(object):
         """Match tag type for `nth` matches."""
 
         return(
-            (self.get_tag(child) == self.get_tag(el)) and
-            (self.get_tag_ns(child) == self.get_tag_ns(el))
+            (self.get_tag(child) == self.get_tag(el))
+            and (self.get_tag_ns(child) == self.get_tag_ns(el))
         )
 
     def match_nth(self, el, nth):
@@ -955,12 +948,23 @@ class _Match(object):
         content = None
         for contain_list in contains:
             if content is None:
-                content = self.get_text(el, no_iframe=self.is_html)
+                if contain_list.own:
+                    content = self.get_own_text(el, no_iframe=self.is_html)
+                else:
+                    content = self.get_text(el, no_iframe=self.is_html)
             found = False
             for text in contain_list.text:
-                if text in content:
-                    found = True
-                    break
+                if contain_list.own:
+                    for c in content:
+                        if text in c:
+                            found = True
+                            break
+                    if found:
+                        break
+                else:
+                    if text in content:
+                        found = True
+                        break
             if not found:
                 match = False
         return match
@@ -1082,10 +1086,10 @@ class _Match(object):
             for k, v in self.iter_attributes(parent):
                 attr_ns, attr = self.split_namespace(parent, k)
                 if (
-                    ((not has_ns or has_html_ns) and (util.lower(k) if not self.is_xml else k) == 'lang') or
-                    (
-                        has_ns and not has_html_ns and attr_ns == NS_XML and
-                        (util.lower(attr) if not self.is_xml and attr is not None else attr) == 'lang'
+                    ((not has_ns or has_html_ns) and (util.lower(k) if not self.is_xml else k) == 'lang')
+                    or (
+                        has_ns and not has_html_ns and attr_ns == NS_XML
+                        and (util.lower(attr) if not self.is_xml and attr is not None else attr) == 'lang'
                     )
                 ):
                     found_lang = v
@@ -1276,9 +1280,9 @@ class _Match(object):
 
         name = self.get_tag(el)
         return (
-            name.find('-') == -1 or
-            name.find(':') != -1 or
-            self.get_prefix(el) is not None
+            name.find('-') == -1
+            or name.find(':') != -1
+            or self.get_prefix(el) is not None
         )
 
     def match_placeholder_shown(self, el):

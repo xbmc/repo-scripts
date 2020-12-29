@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.soupsieve" name="Soup Sieve" version="2.0.0+matrix.1" provider-name="Isaac Muse">
+<addon id="script.module.soupsieve" name="Soup Sieve" version="2.1.0+matrix.1" provider-name="Isaac Muse">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>

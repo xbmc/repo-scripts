@@ -1,20 +1,17 @@
 """Utility."""
-from functools import wraps
+from functools import wraps, lru_cache
 import warnings
-import os
 import re
-MODULE = os.path.dirname(__file__)
 
 DEBUG = 0x00001
 
 RE_PATTERN_LINE_SPLIT = re.compile(r'(?:\r\n|(?!\r\n)[\n\r])|$')
 
-LC_A = ord('a')
-LC_Z = ord('z')
 UC_A = ord('A')
 UC_Z = ord('Z')
 
 
+@lru_cache(maxsize=512)
 def lower(string):
     """Lower."""
 
@@ -22,16 +19,6 @@ def lower(string):
     for c in string:
         o = ord(c)
         new_string.append(chr(o + 32) if UC_A <= o <= UC_Z else c)
-    return ''.join(new_string)
-
-
-def upper(string):  # pragma: no cover
-    """Lower."""
-
-    new_string = []
-    for c in string:
-        o = ord(c)
-        new_string.append(chr(o - 32) if LC_A <= o <= LC_Z else c)
     return ''.join(new_string)
 
 
