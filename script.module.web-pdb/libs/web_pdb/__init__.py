@@ -89,8 +89,8 @@ class WebPdb(Pdb):
         i(nspect) object
         Inspect an object
         """
-        if arg in self.curframe.f_locals:
-            obj = self.curframe.f_locals[arg]
+        if arg in self.curframe_locals:
+            obj = self.curframe_locals[arg]
         elif arg in self.curframe.f_globals:
             obj = self.curframe.f_globals[arg]
         else:
@@ -213,7 +213,7 @@ class WebPdb(Pdb):
         :return: a listing of ``var = value`` pairs sorted alphabetically
         :rtype: unicode
         """
-        return self._format_variables(self.curframe.f_locals)
+        return self._format_variables(self.curframe_locals)
 
     def remove_trace(self, frame=None):
         """
