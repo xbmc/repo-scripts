@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category id="movement" label="32000">
+		<setting id="movementtype" label="32100" type="select" default="0" lvalues="32101|32102|32103|32104"/>
+		<setting id="movementspeed" label="32110" type="select" subsetting="true" visible="eq(-1,1)" default="1" lvalues="32111|32112|32113"/>
+		<setting id="stayinplace" label="32120" type="slider" subsetting="true" visible="eq(-2,0)" default="10" range="5,5,60" option="int"/>
+		<setting id="customx" label="32150" type="number" subsetting="true" visible="eq(-3,3)" default="1" option="int"/>
+		<setting id="customy" label="32160" type="number" subsetting="true" visible="eq(-4,3)" default="1" option="int"/>
+		<setting label="32121" type="text" enable="false" visible="eq(-5,2) | eq(-5,3)"/>
+	</category>
+    <category id="format" label="32001">
+		<setting id="timeformat" type="select" label="32130" default="0" lvalues="32131|32132|32133|32134|32135|32136|32137"/>
+		<setting id="colonblink" label="32139" type="bool" default="true"/>
+		<setting id="dateformat" type="select" label="32140" default="1" lvalues="32141|32142|32143|32144|32145"/>
+		<setting id="customdateformat" label="32170" type="text" subsetting="true" visible="eq(-1,4)"/>
+		<setting label="32171" type="text" enable="false" visible="eq(-2,4)"/>
+		<setting label="32172" type="text" enable="false" visible="eq(-3,4)"/>
+		<setting label="32173" type="text" enable="false" visible="eq(-4,4)"/>
+	</category>
+    <category id="additionalinformation" label="32005">
+		<setting id="additionalinformation" label="32200" type="bool" default="false"/>
+		<setting id="infoswitch" label="32210" type="slider" visible="eq(-1,true)" default="5" range="5,5,30" option="int"/>
+		<setting id="nowplayinginfoshow" label="32220" type="bool" visible="eq(-2,true)" default="false"/>
+		<setting id="combinesonginfo" label="32223" type="bool" subsetting="true" visible="eq(-1,true) + eq(-3,true)" default="false"/>
+		<setting id="showonlynowplaying" label="32221" type="bool" subsetting="true" visible="eq(-1,false) + eq(-2,true) + eq(-4,true)" default="false"/>
+		<setting label="32222" type="text" enable="false" subsetting="true" visible="eq(-1,true) + eq(-2,false) + eq(-3,true) + eq(-5,true)"/>
+		<setting id="albumartshow" label="32250" type="bool" subsetting="true" visible="eq(-6,true)" default="false"/>
+		<setting id="weatherinfoshow" label="32230" type="bool" visible="eq(-7,true)" default="false"/>
+		<setting id="weathericonformat" type="select" label="32240" subsetting="true" visible="eq(-8,true) + eq(-1,true)" default="1" lvalues="32241|32242|32243|32244|32245"/>
+		<setting id="cpuusage" label="32260" type="bool" visible="eq(-9,true)" default="false"/>
+		<setting id="batterylevel" label="32261" type="bool" visible="eq(-10,true)" default="false"/>
+		<setting id="freememory" label="32262" type="bool" visible="eq(-11,true)" default="false"/>
+		<setting id="cputemp" label="32266" type="bool" visible="eq(-12,true)" default="false"/>
+		<setting id="gputemp" label="32267" type="bool" visible="eq(-13,true)" default="false"/>
+		<setting id="hddtemp" label="32268" type="bool" visible="eq(-14,true)" default="false"/>
+		<setting id="fps" label="32269" type="bool" visible="eq(-15,true)" default="false"/>
+		<setting id="cuptime" label="32270" type="bool" visible="eq(-16,true)" default="false"/>
+		<setting id="tuptime" label="32271" type="bool" visible="eq(-17,true)" default="false"/>
+		<setting id="movies" label="32263" type="bool" visible="eq(-18,true)" default="false"/>
+		<setting id="tvshows" label="32264" type="bool" visible="eq(-19,true)" default="false"/>
+		<setting id="music" label="32265" type="bool" visible="eq(-20,true)" default="false"/>
+	</category>
+    <category id="colorandopacity" label="32010">
+		<setting label="32310" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.hourcolor)"/>
+		<setting id="hourcolor" subsetting="true" type="bool" label="32311" default="false"/>
+		<setting id="hourtr" subsetting="true" type="bool" label="32312" default="false"/>
+		<setting label="32320" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.coloncolor)"/>
+		<setting id="coloncolor" subsetting="true" type="bool" label="32321" default="false"/>
+		<setting id="colontr" subsetting="true" type="bool" label="32322" default="false"/>
+		<setting label="32330" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.minutecolor)"/>
+		<setting id="minutecolor" subsetting="true" type="bool" label="32331" default="false"/>
+		<setting id="minutetr" subsetting="true" type="bool" label="32332" default="false"/>
+		<setting label="32340" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.ampmcolor)"/>
+		<setting id="ampmcolor" subsetting="true" type="bool" label="32341" default="false"/>
+		<setting id="ampmtr" subsetting="true" type="bool" label="32342" default="false"/>
+		<setting label="32350" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.datecolor)"/>
+		<setting id="datecolor" subsetting="true" type="bool" label="32351" default="false"/>
+		<setting id="datetr" subsetting="true" type="bool" label="32352" default="false"/>
+		<setting label="32360" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.informationcolor)"/>
+		<setting id="informationcolor" subsetting="true" type="bool" label="32361" default="false"/>
+		<setting id="informationtr" subsetting="true" type="bool" label="32362" default="false"/>
+		<setting label="32370" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.iconcolor)"/>
+		<setting id="iconcolor" subsetting="true" type="bool" label="32371" default="false"/>
+		<setting id="icontr" subsetting="true" type="bool" label="32372" default="false"/>
+	</category>
+    <category id="background" label="32020">
+		<setting label="32500" type="action" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.shadowcolor)"/>
+		<setting id="aspectratio" type="select" label="32505" default="0" lvalues="32506|32507"/>
+		<setting id="backgroundchoice" type="select" label="32510" default="0" lvalues="32511|32512|32513|32514|32515"/>
+		<setting label="32520" type="action" visible="eq(-1,0)" action="RunScript(script.skin.helper.colorpicker,skinstring=screensaver.digitalclock.backgroundcolor)"/>
+		<setting id="file" label="32530" type="image" subsetting="true" visible="eq(-2,1)" default="images" source="pictures"/>
+		<setting id="folder" label="32540" type="folder" subsetting="true" visible="eq(-3,2)" default="images" source="pictures"/>
+		<setting id="randomimages" label="32550" type="bool" subsetting="true" visible="eq(-4,2)" default="false"/>
+		<setting id="skinhelper" type="select" label="32580" subsetting="true" visible="eq(-5,3)" default="3" lvalues="32581|32582|32583|32584"/>
+		<setting id="imagetimer" type="select" label="32560" subsetting="true" visible="eq(-6,2) | eq(-6,3)" default="0" lvalues="32561|32562|32563|32564|32565|32566|32567|32568|32569|32570|32571|32572"/>
+		<setting id="dimlevel" label="32516" type="slider" subsetting="true" visible="eq(-7,4)" default="50" range="0,1,100" option="percent"/>
+		<setting label="32531" type="text" enable="false" visible="eq(-8,1)"/>
+		<setting label="32579" type="text" enable="false" visible="eq(-9,3)"/>
+	</category>
+    <category id="extraoptions" label="32025">
+		<setting id="zoomlevel" type="select" label="32600" default="100" values="100|110|120|130|140|150|160|170|180|190|200"/>
+		<setting id="logout" label="32610" type="bool" default="false"/>
+		<setting id="logoutplaying" label="32611" type="bool" subsetting="true" visible="eq(-1,true)" default="false"/>
+		<setting id="logouttime" label="32612" type="number" subsetting="true" visible="eq(-2,true)" default="10" option="int"/>
+		<setting id="rss" label="32620" type="bool" default="false"/>
+		<setting label="32621" type="text" enable="false" subsetting="true" visible="eq(-1,true)"/>
+	</category>
+</settings>
