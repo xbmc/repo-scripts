@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file (skin.default) is meant to be used by screensaver.digitalclock if there is no specific xml file for the current skin.
+Confluence fonts and font sizes are used.
+Most probably it won't look pretty but now screensaver.digitalclock will work with any skin.
+-->
+<window>
+<backgroundcolor>0x00000000</backgroundcolor>
+	<controls>
+		<control type="image" id="30020">
+			<description>Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<fadetime>500</fadetime>
+			<aspectratio>scale</aspectratio>
+		</control>
+		<control type="image" id="30022">
+			<description>Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<fadetime>500</fadetime>
+			<aspectratio>keep</aspectratio>
+		</control>
+		<control type="group" id="30023">
+			<control type="image">
+				<left>0</left>
+				<bottom>0</bottom>
+				<width>110%</width>
+				<height>80</height>
+				<texture flipy="true">special://home/addons/screensaver.digitalclock/resources/media/InfoBar.png</texture>
+			</control>
+			<control type="rss">
+				<left>0</left>
+				<bottom>0</bottom>
+				<height>40</height>
+				<width>100%</width>
+				<font>font12</font>
+				<urlset>1</urlset>
+				<hitrect x="-100" y="0" w="1" h="1" />
+				<titlecolor>button_focus</titlecolor>
+				<textcolor>button_focus</textcolor>
+				<shadowcolor>text_shadow</shadowcolor>
+				<headlinecolor>FFFFFFFF</headlinecolor>
+				<visible>true</visible>
+			</control>
+		</control>
+		<control type="group" id="30002">
+			<description>Clock and Date</description>
+			<animation effect="zoom" end="110" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),110)">WindowOpen</animation>
+			<animation effect="zoom" end="120" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),120)">WindowOpen</animation>
+			<animation effect="zoom" end="130" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),130)">WindowOpen</animation>
+			<animation effect="zoom" end="140" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),140)">WindowOpen</animation>
+			<animation effect="zoom" end="150" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),150)">WindowOpen</animation>
+			<animation effect="zoom" end="160" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),160)">WindowOpen</animation>
+			<animation effect="zoom" end="170" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),170)">WindowOpen</animation>
+			<animation effect="zoom" end="180" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),180)">WindowOpen</animation>
+			<animation effect="zoom" end="190" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),190)">WindowOpen</animation>
+			<animation effect="zoom" end="200" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),200)">WindowOpen</animation>			
+			<posx>460</posx>
+			<posy>290</posy>
+			<width>360</width>
+			<height>280</height>
+			<visible>true</visible>
+			<control type="image" id="30021">
+				<description>Weathericon</description>
+				<posx>120</posx>
+				<posy>160</posy>
+				<width>120</width>
+				<height>120</height>
+				<align>center</align>
+				<aligny>center</aligny>				
+				<aspectratio>keep</aspectratio>
+				<visible>true</visible>
+			</control>						
+			<control type="label" id="30101">
+				<description>Hour</description>
+				<posx>60</posx>
+				<posy>10</posy>
+				<width>120</width>
+				<height>65</height>
+				<textcolor>$INFO[Control.GetLabel(30105)]</textcolor>
+				<shadowcolor>$INFO[Control.GetLabel(30112)]</shadowcolor>
+				<colordiffuse>00000000</colordiffuse>
+				<align>center</align>
+				<aligny>center</aligny>				
+				<label></label>
+				<font>WeatherTemp</font>
+			</control>
+			<control type="label" id="30102">
+				<description>Colon</description>
+				<posx>0</posx>
+				<posy>10</posy>
+				<width>360</width>
+				<height>65</height>
+				<textcolor>$INFO[Control.GetLabel(30106)]</textcolor>
+				<shadowcolor>$INFO[Control.GetLabel(30112)]</shadowcolor>
+				<colordiffuse>00000000</colordiffuse>
+				<align>center</align>
+				<aligny>center</aligny>				
+				<label></label>
+				<font>WeatherTemp</font>
+				</control>
+			<control type="label" id="30103">
+				<description>Minute</description>
+				<posx>180</posx>
+				<posy>10</posy>
+				<width>120</width>
+				<height>65</height>
+				<textcolor>$INFO[Control.GetLabel(30107)]</textcolor>
+				<shadowcolor>$INFO[Control.GetLabel(30112)]</shadowcolor>
+				<colordiffuse>00000000</colordiffuse>
+				<align>center</align>
+				<aligny>center</aligny>				
+				<label></label>
+				<font>WeatherTemp</font>
+			</control>
+			<control type="label" id="30104">
+				<description>AMPM</description>
+				<posx>280</posx>
+				<posy>45</posy>
+				<width>70</width>
+				<height>35</height>
+				<textcolor>$INFO[Control.GetLabel(30108)]</textcolor>
+				<shadowcolor>$INFO[Control.GetLabel(30112)]</shadowcolor>
+				<colordiffuse>00000000</colordiffuse>
+				<align>center</align>
+				<aligny>center</aligny>				
+				<label></label>
+				<font>font13_title</font>
+			</control>			
+			<control type="label" id="30100">
+				<description>Date</description>
+				<posx>0</posx>
+				<posy>85</posy>
+				<width>360</width>
+				<height>35</height>
+				<textcolor>$INFO[Control.GetLabel(30109)]</textcolor>
+				<shadowcolor>$INFO[Control.GetLabel(30112)]</shadowcolor>
+				<colordiffuse>00000000</colordiffuse>
+				<align>center</align>
+				<aligny>center</aligny>
+				<scroll>true</scroll>
+				<label></label>
+				<font>font13_title</font>
+			</control>	
+			<control type="label" id="30110">
+				<description>Information</description>
+				<posx>0</posx>
+				<posy>125</posy>
+				<width>360</width>
+				<height>35</height>
+				<textcolor>$INFO[Control.GetLabel(30111)]</textcolor>
+				<shadowcolor>$INFO[Control.GetLabel(30112)]</shadowcolor>
+				<colordiffuse>00000000</colordiffuse>
+				<align>center</align>
+				<aligny>center</aligny>
+				<scroll>true</scroll>
+				<label></label>
+				<font>font13_title</font>
+			</control>				
+			<control type="label" id="30105">
+				<description>Hour color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+			</control>
+			<control type="label" id="30106">
+				<description>Colon color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+				</control>
+			<control type="label" id="30107">
+				<description>Minute color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+			</control>
+			<control type="label" id="30108">
+				<description>AMPM color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+			</control>			
+			<control type="label" id="30109">
+				<description>Date color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+			</control>	
+			<control type="label" id="30111">
+				<description>Information color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+			</control>			
+			<control type="label" id="30112">
+				<description>Shadow color control</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<align>center</align>
+				<label></label>
+				<font>font14</font>
+				<visible>false</visible>
+			</control>				
+		</control>
+	</controls>
+</window>
