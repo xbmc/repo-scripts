@@ -54,16 +54,16 @@ class Immutable(object):
         """Equal."""
 
         return (
-            isinstance(other, self.__base__()) and
-            all([getattr(other, key) == getattr(self, key) for key in self.__slots__ if key != '_hash'])
+            isinstance(other, self.__base__())
+            and all([getattr(other, key) == getattr(self, key) for key in self.__slots__ if key != '_hash'])
         )
 
     def __ne__(self, other):
         """Equal."""
 
         return (
-            not isinstance(other, self.__base__()) or
-            any([getattr(other, key) != getattr(self, key) for key in self.__slots__ if key != '_hash'])
+            not isinstance(other, self.__base__())
+            or any([getattr(other, key) != getattr(self, key) for key in self.__slots__ if key != '_hash'])
         )
 
     def __hash__(self):
@@ -95,8 +95,8 @@ class ImmutableDict(Mapping):
         arg = args[0] if args else kwargs
         is_dict = isinstance(arg, dict)
         if (
-            is_dict and not all([isinstance(v, Hashable) for v in arg.values()]) or
-            not is_dict and not all([isinstance(k, Hashable) and isinstance(v, Hashable) for k, v in arg])
+            is_dict and not all([isinstance(v, Hashable) for v in arg.values()])
+            or not is_dict and not all([isinstance(k, Hashable) and isinstance(v, Hashable) for k, v in arg])
         ):
             raise TypeError('All values must be hashable')
 
@@ -239,13 +239,14 @@ class SelectorAttribute(Immutable):
 class SelectorContains(Immutable):
     """Selector contains rule."""
 
-    __slots__ = ("text", "_hash")
+    __slots__ = ("text", "own", "_hash")
 
-    def __init__(self, text):
+    def __init__(self, text, own):
         """Initialize."""
 
         super(SelectorContains, self).__init__(
-            text=text
+            text=text,
+            own=own
         )
 
 
