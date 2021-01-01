@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.beautifulsoup4" name="BeautifulSoup4" version="4.8.2+matrix.1" provider-name="Leonard Richardson (leonardr@segfault.org)">
+<addon id="script.module.beautifulsoup4" name="BeautifulSoup4" version="4.9.3+matrix.1" provider-name="Leonard Richardson (leonardr@segfault.org)">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.soupsieve" version="2.0.0+matrix.1"/>
