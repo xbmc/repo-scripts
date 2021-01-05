@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0
 
-import json
 import xbmc
+import xbmcaddon
 
 
 class LockMonitor(xbmc.Monitor):
@@ -22,3 +22,6 @@ class LockMonitor(xbmc.Monitor):
         if xbmc.getCondVisibility("System.IsMaster"):
             xbmc.log("[MasterLock] Master Lock was disengaged. Engaging.")
             xbmc.executebuiltin("Mastermode")
+            go_home = xbmcaddon.Addon().getSettingBool("navigate_home")
+            if go_home:
+                xbmc.executebuiltin("ActivateWindow(home)")
