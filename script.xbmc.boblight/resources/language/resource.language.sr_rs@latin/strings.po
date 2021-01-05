@@ -1,0 +1,113 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Serbian (http://www.transifex.com/projects/p/xbmc-addons/language/sr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Опште"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Kategorija"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Unapred zadato"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Brzina"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Prilagođeno"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Brzo"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Prilagođeno"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Brzo"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Crvena"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Zelena"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Plava"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Prilagođeno"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Brzo"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Prilagođeno"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Brzo"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Datoteke"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Prilagođeno"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Brzo"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Onemogućeno"

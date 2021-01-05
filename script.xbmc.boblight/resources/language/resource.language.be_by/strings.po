@@ -1,0 +1,145 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Belarusian (http://www.transifex.com/projects/p/xbmc-addons/language/be/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: be\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Category"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Фільм"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Preset"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Хуткасьць"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Дапасаваны"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Забаронена"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "Musicvideo"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Дапасаваны"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Забаронена"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Other"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Red"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Green"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Блакітны"
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "ТЫ шоў"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Дапасаваны"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Забаронена"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Дапасаваны"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Забаронена"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Files"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Дапасаваны"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Забаронена"

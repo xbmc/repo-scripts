@@ -1,0 +1,249 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#32101"
+msgid "Use remote boblightd"
+msgstr "Távoli boblightd használata."
+
+msgctxt "#32102"
+msgid "Boblightd IP"
+msgstr "Boblightd IP"
+
+msgctxt "#32103"
+msgid "Boblightd Port"
+msgstr "Boblightd Port"
+
+msgctxt "#32104"
+msgid "Disable boblight"
+msgstr "Boblight letiltása"
+
+msgctxt "#32105"
+msgid "Override used category"
+msgstr "Kategória felülírása"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Előbeállítások"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Sebesség"
+
+msgctxt "#32203"
+msgid "Autospeed"
+msgstr "Automata sebesség"
+
+msgctxt "#32204"
+msgid "Interpolation"
+msgstr "Interpoláció"
+
+msgctxt "#32205"
+msgid "Saturation"
+msgstr "Szaturáció"
+
+msgctxt "#32206"
+msgid "Value"
+msgstr "Érték"
+
+msgctxt "#32207"
+msgid "Threshold"
+msgstr "Kitartás"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Egyéni"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Lassú"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Gyors"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Letiltva"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "Videóklip"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Egyéni"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Lassú"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Gyors"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Letiltva"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Másik"
+
+msgctxt "#32401"
+msgid "Static background light"
+msgstr "Statikus háttérfény"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Vörös"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Zöld"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Kék"
+
+msgctxt "#32405"
+msgid "Disable when Screen Saver is on"
+msgstr "Letiltás aktív Képernyővédő esetén"
+
+msgctxt "#32406"
+msgid "Enable initial light flash"
+msgstr "Kezdeti felvillanás engedélyezése"
+
+msgctxt "#32407"
+msgid "Enable status notifications"
+msgstr "Állapot visszajelzés engedélyezése"
+
+msgctxt "#32500"
+msgid "Failed to connect to boblightd!"
+msgstr "Boblihgtd kapcsolódás sikertelen!"
+
+msgctxt "#32501"
+msgid "Connected to boblightd!"
+msgstr "Boblightd kapccsolódás sikeres!"
+
+msgctxt "#32502"
+msgid "Settings changed!"
+msgstr "A beállítások megváltoztatva!"
+
+msgctxt "#32503"
+msgid "Boblight is disabled!"
+msgstr "Boblight letiltva!"
+
+msgctxt "#32504"
+msgid "This addon needs a binary library."
+msgstr "A kiegészítő használatához egy bináris könyvár szükséges."
+
+msgctxt "#32505"
+msgid "Please read the README file."
+msgstr "Olvassa el a README fájlt."
+
+msgctxt "#32506"
+msgid "for getting some more instructions."
+msgstr "további információkhoz."
+
+msgctxt "#32507"
+msgid "This addon can't be run on that"
+msgstr "Ez a kiegészítő nem fut ezen az"
+
+msgctxt "#32508"
+msgid "operating system! (missing ctypes module)"
+msgstr "operációs rendszeren! (hiányzó ctypes modul )"
+
+msgctxt "#32509"
+msgid "Should the addon try to download it for you?"
+msgstr "Próbálja meg a kiegészítő letölteni?"
+
+msgctxt "#32510"
+msgid "Error downloading. Check filesystem permissions."
+msgstr "Letöltés hiba. Ellenőrizze a fájlrendszer jogosultságokat."
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Egyéni"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Lassú"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Gyors"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Letiltva"
+
+msgctxt "#32700"
+msgid "LiveTV"
+msgstr "ÉlőTV"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Egyéni"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Lassú"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Gyors"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Letiltva"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Fájlok"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Egyéni"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Lassú"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Gyors"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Letiltva"

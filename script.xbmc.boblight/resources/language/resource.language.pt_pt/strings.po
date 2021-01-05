@@ -1,0 +1,249 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (http://www.transifex.com/projects/p/xbmc-addons/language/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Geral"
+
+msgctxt "#32101"
+msgid "Use remote boblightd"
+msgstr "Usar boblightd remoto"
+
+msgctxt "#32102"
+msgid "Boblightd IP"
+msgstr "IP Boblightd"
+
+msgctxt "#32103"
+msgid "Boblightd Port"
+msgstr "Porta Boblightd"
+
+msgctxt "#32104"
+msgid "Disable boblight"
+msgstr "Desactivar boblightd"
+
+msgctxt "#32105"
+msgid "Override used category"
+msgstr "Substituir categoria utilizada"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Categoria"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Vídeo"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Pré-Selecção"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Velocidade"
+
+msgctxt "#32203"
+msgid "Autospeed"
+msgstr "Velocidade Auto"
+
+msgctxt "#32204"
+msgid "Interpolation"
+msgstr "Interpolação"
+
+msgctxt "#32205"
+msgid "Saturation"
+msgstr "Saturação"
+
+msgctxt "#32206"
+msgid "Value"
+msgstr "Valor"
+
+msgctxt "#32207"
+msgid "Threshold"
+msgstr "Limite"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Personalizado"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Lento"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Rápido"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Desligado"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "Vídeoclipe"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Personalizado"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Lento"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Rápido"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Desligado"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Outro"
+
+msgctxt "#32401"
+msgid "Static background light"
+msgstr "Luz de fundo estática"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Vermelho"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Verde"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Azul"
+
+msgctxt "#32405"
+msgid "Disable when Screen Saver is on"
+msgstr "Desactivar quando a Protecção de Ecrã estiver activa"
+
+msgctxt "#32406"
+msgid "Enable initial light flash"
+msgstr "Activar piscar de luz inicial"
+
+msgctxt "#32407"
+msgid "Enable status notifications"
+msgstr "Activar notificações de estado"
+
+msgctxt "#32500"
+msgid "Failed to connect to boblightd!"
+msgstr "A ligação a boblightd falhou!"
+
+msgctxt "#32501"
+msgid "Connected to boblightd!"
+msgstr "Ligado a boblightd!"
+
+msgctxt "#32502"
+msgid "Settings changed!"
+msgstr "Definições alteradas!"
+
+msgctxt "#32503"
+msgid "Boblight is disabled!"
+msgstr "O boblightd está desactivado!"
+
+msgctxt "#32504"
+msgid "This addon needs a binary library."
+msgstr "Este addon necessita de uma biblioteca binária."
+
+msgctxt "#32505"
+msgid "Please read the README file."
+msgstr "Por favor, leia o ficheiro README."
+
+msgctxt "#32506"
+msgid "for getting some more instructions."
+msgstr "para obter mais instrucções."
+
+msgctxt "#32507"
+msgid "This addon can't be run on that"
+msgstr "Este addon não pode ser executado nesse"
+
+msgctxt "#32508"
+msgid "operating system! (missing ctypes module)"
+msgstr "sistema operativo! (módulo ctypes em falta)"
+
+msgctxt "#32509"
+msgid "Should the addon try to download it for you?"
+msgstr "Quer que o addon tente transferi-lo?"
+
+msgctxt "#32510"
+msgid "Error downloading. Check filesystem permissions."
+msgstr "Erro na transferência. Verifique as permissões do sistema de ficheiros."
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "Séries TV"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Personalizado"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Lento"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Rápido"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Desligado"
+
+msgctxt "#32700"
+msgid "LiveTV"
+msgstr "LiveTV"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Personalizado"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Lento"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Rápido"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Desligado"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Ficheiros"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Personalizado"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Lento"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Rápido"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Desligado"

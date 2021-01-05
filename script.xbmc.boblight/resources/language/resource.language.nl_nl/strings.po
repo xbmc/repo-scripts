@@ -1,0 +1,249 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#32101"
+msgid "Use remote boblightd"
+msgstr "Gebruik afstandbediening boblightd"
+
+msgctxt "#32102"
+msgid "Boblightd IP"
+msgstr "Boblightd IP"
+
+msgctxt "#32103"
+msgid "Boblightd Port"
+msgstr "Boblightd Port"
+
+msgctxt "#32104"
+msgid "Disable boblight"
+msgstr "Deactiveer boblight"
+
+msgctxt "#32105"
+msgid "Override used category"
+msgstr "Overschrijf gebruikte category"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Categorie"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Preset"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Snelheid"
+
+msgctxt "#32203"
+msgid "Autospeed"
+msgstr "Auto-snelheid"
+
+msgctxt "#32204"
+msgid "Interpolation"
+msgstr "Interpolatie"
+
+msgctxt "#32205"
+msgid "Saturation"
+msgstr "Saturatie"
+
+msgctxt "#32206"
+msgid "Value"
+msgstr "Waarde"
+
+msgctxt "#32207"
+msgid "Threshold"
+msgstr "Drempel"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Eigen"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Traag"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Snel"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "Muziekvideo"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Eigen"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Traag"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Snel"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Andere"
+
+msgctxt "#32401"
+msgid "Static background light"
+msgstr "Statische achtergrond belichting"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Rood"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Groen"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Blauw"
+
+msgctxt "#32405"
+msgid "Disable when Screen Saver is on"
+msgstr "Deactiveer wanneer schermbeveiliging aan is"
+
+msgctxt "#32406"
+msgid "Enable initial light flash"
+msgstr "Activeer de eerste lichtflits"
+
+msgctxt "#32407"
+msgid "Enable status notifications"
+msgstr "Activeer status notificaties"
+
+msgctxt "#32500"
+msgid "Failed to connect to boblightd!"
+msgstr "Mislukt om te verbinden met boblightd!"
+
+msgctxt "#32501"
+msgid "Connected to boblightd!"
+msgstr "verbonden met boblightd!"
+
+msgctxt "#32502"
+msgid "Settings changed!"
+msgstr "Instellingen veranderd!"
+
+msgctxt "#32503"
+msgid "Boblight is disabled!"
+msgstr "Boblight is gedeactiveerd"
+
+msgctxt "#32504"
+msgid "This addon needs a binary library."
+msgstr "deze add-on vereist een binaire bibliotheek."
+
+msgctxt "#32505"
+msgid "Please read the README file."
+msgstr "Lees a.u.b. het README bestand."
+
+msgctxt "#32506"
+msgid "for getting some more instructions."
+msgstr "om meer instructies te verkrijgen."
+
+msgctxt "#32507"
+msgid "This addon can't be run on that"
+msgstr "Deze add-on kan niet woorden gespeeld op dat"
+
+msgctxt "#32508"
+msgid "operating system! (missing ctypes module)"
+msgstr "Besturingssysteem! (ctypes module mist) "
+
+msgctxt "#32509"
+msgid "Should the addon try to download it for you?"
+msgstr "Zou deze add-on het moeten proberen om het te downloaden voor jou?"
+
+msgctxt "#32510"
+msgid "Error downloading. Check filesystem permissions."
+msgstr "Fout bij downloaden. controleer de permissies van het bestandssysteem."
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "TV Series"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Eigen"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Traag"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Snel"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+msgctxt "#32700"
+msgid "LiveTV"
+msgstr "Live-TV"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Eigen"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Traag"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Snel"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Bestanden"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Eigen"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Traag"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Snel"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Uitgeschakeld"

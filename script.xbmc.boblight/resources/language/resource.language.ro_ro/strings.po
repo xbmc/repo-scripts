@@ -1,0 +1,137 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Romanian (http://www.transifex.com/projects/p/xbmc-addons/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Categorie"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Predefinit"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Viteză"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Particularizat"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Rapid"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Dezactivat"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Particularizat"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Rapid"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Dezactivat"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Altele"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Roșu"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Verde"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Albastru"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Particularizat"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Rapid"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Dezactivat"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Particularizat"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Rapid"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Dezactivat"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Fișiere"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Particularizat"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Rapid"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Dezactivat"
