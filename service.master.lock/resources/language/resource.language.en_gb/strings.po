@@ -1,0 +1,25 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Master Lock Service\n"
+"Report-Msgid-Bugs-To: https://github.com/basrieter/service.master.lock/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Bas Rieter\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30100"
+msgid "General"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Go to Home on lock"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Should Kodi navigate to the Home screen when the Master Lock is re-engaged? This will cause Kodi to navigate out of any folder, library or window that might not be available with an active Master Lock."
+msgstr ""

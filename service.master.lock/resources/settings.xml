@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+  <section id="service.master.lock">
+    <category id="general" label="30100">
+      <group id="general">
+        <setting id="navigate_home" type="boolean" label="30101" help="30102">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
