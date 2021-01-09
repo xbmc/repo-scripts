@@ -20,6 +20,29 @@
 			<fadetime>500</fadetime>
 			<aspectratio>keep</aspectratio>
 		</control>
+		<control type="group" id="30023">
+			<control type="image">
+				<left>0</left>
+				<bottom>0</bottom>
+				<width>110%</width>
+				<height>80</height>
+				<texture flipy="true">special://home/addons/screensaver.digitalclock/resources/media/InfoBar.png</texture>
+			</control>
+			<control type="rss">
+				<left>0</left>
+				<bottom>0</bottom>
+				<height>40</height>
+				<width>100%</width>
+				<font>font12</font>
+				<urlset>1</urlset>
+				<hitrect x="-100" y="0" w="1" h="1" />
+				<titlecolor>button_focus</titlecolor>
+				<textcolor>button_focus</textcolor>
+				<shadowcolor>text_shadow</shadowcolor>
+				<headlinecolor>FFFFFFFF</headlinecolor>
+				<visible>true</visible>
+			</control>
+		</control>
 		<control type="group" id="30002">
 			<description>Clock and Date</description>
 			<animation effect="zoom" end="110" center="auto" time="" condition="String.IsEqual(Window(12900).Property(zoomamount),110)">WindowOpen</animation>
@@ -115,6 +138,7 @@
 				<colordiffuse>00000000</colordiffuse>
 				<align>center</align>
 				<aligny>center</aligny>
+				<scroll>true</scroll>
 				<label></label>
 				<font>font_small_bold</font>
 			</control>	
@@ -129,6 +153,7 @@
 				<colordiffuse>00000000</colordiffuse>
 				<align>center</align>
 				<aligny>center</aligny>
+				<scroll>true</scroll>
 				<label></label>
 				<font>font_small_bold</font>
 			</control>				
