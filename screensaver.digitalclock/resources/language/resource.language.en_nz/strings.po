@@ -1,0 +1,413 @@
+# Kodi Media Center language file
+# Addon Name: Digital Clock Screensaver
+# Addon id: screensaver.digitalclock
+# Addon Provider: Vojislav Vlasic
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (New Zealand) (http://www.transifex.com/projects/p/kodi-addons/language/en_NZ/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_NZ\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32005"
+msgid "Additional Information"
+msgstr "Additional Information"
+
+msgctxt "#32010"
+msgid "Colors"
+msgstr "Colours"
+
+msgctxt "#32015"
+msgid "Transparency"
+msgstr "Transparency"
+
+msgctxt "#32020"
+msgid "Background"
+msgstr "Background"
+
+msgctxt "#32025"
+msgid "Element Size Increase"
+msgstr "Element Size Increase"
+
+msgctxt "#32100"
+msgid "Movement on the screen"
+msgstr "Movement on the screen"
+
+msgctxt "#32101"
+msgid "Random position"
+msgstr "Random position"
+
+msgctxt "#32102"
+msgid "Bounce"
+msgstr "Bounce"
+
+msgctxt "#32103"
+msgid "Fixed in the center"
+msgstr "Fixed in the center"
+
+msgctxt "#32104"
+msgid "Custom fixed position"
+msgstr "Custom fixed position"
+
+msgctxt "#32110"
+msgid "Movement speed"
+msgstr "Movement speed"
+
+msgctxt "#32111"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#32112"
+msgid "Normal"
+msgstr "Normal"
+
+msgctxt "#32113"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#32120"
+msgid "Number of seconds to stay in place"
+msgstr "Number of seconds to stay in place"
+
+msgctxt "#32121"
+msgid "Warning! Having static text on your screen can cause a burn in!"
+msgstr "Warning! Having static text on your screen can cause a burn in!"
+
+msgctxt "#32130"
+msgid "Time format"
+msgstr "Time format"
+
+msgctxt "#32131"
+msgid "17:14"
+msgstr "17:14"
+
+msgctxt "#32132"
+msgid "05:14"
+msgstr "05:14"
+
+msgctxt "#32133"
+msgid "05:14 PM"
+msgstr "05:14 PM"
+
+msgctxt "#32140"
+msgid "Date format"
+msgstr "Date format"
+
+msgctxt "#32141"
+msgid "Hide date"
+msgstr "Hide date"
+
+msgctxt "#32142"
+msgid "Saturday 30. May 2015"
+msgstr "Saturday 30. May 2015"
+
+msgctxt "#32143"
+msgid "30.05.2015"
+msgstr "30.05.2015"
+
+msgctxt "#32144"
+msgid "05.30.2015"
+msgstr "05.30.2015"
+
+msgctxt "#32150"
+msgid "Custom value for X position (1-1280)"
+msgstr "Custom value for X position (1-1280)"
+
+msgctxt "#32160"
+msgid "Custom value for Y position (1-720)"
+msgstr "Custom value for Y position (1-720)"
+
+msgctxt "#32200"
+msgid "Enable additional information"
+msgstr "Enable additional information"
+
+msgctxt "#32210"
+msgid "Number of seconds for information switch"
+msgstr "Number of seconds for information switch"
+
+msgctxt "#32220"
+msgid "Enable now playing information"
+msgstr "Enable now playing information"
+
+msgctxt "#32230"
+msgid "Enable weather information"
+msgstr "Enable weather information"
+
+msgctxt "#32240"
+msgid "Weather icons"
+msgstr "Weather icons"
+
+msgctxt "#32241"
+msgid "Hide weather icon"
+msgstr "Hide weather icon"
+
+msgctxt "#32242"
+msgid "Icon set 1"
+msgstr "Icon set 1"
+
+msgctxt "#32243"
+msgid "Icon set 2"
+msgstr "Icon set 2"
+
+msgctxt "#32244"
+msgid "Icon set 3"
+msgstr "Icon set 3"
+
+msgctxt "#32245"
+msgid "Icon set 4"
+msgstr "Icon set 4"
+
+msgctxt "#32250"
+msgid "Enable album art"
+msgstr "Enable album art"
+
+msgctxt "#32300"
+msgid "Random color"
+msgstr "Random colour"
+
+msgctxt "#32310"
+msgid "Hour color"
+msgstr "Hour colour"
+
+msgctxt "#32311"
+msgid "White"
+msgstr "White"
+
+msgctxt "#32312"
+msgid "Red"
+msgstr "Red"
+
+msgctxt "#32313"
+msgid "Green"
+msgstr "Green"
+
+msgctxt "#32314"
+msgid "Blue"
+msgstr "Blue"
+
+msgctxt "#32315"
+msgid "Yellow"
+msgstr "Yellow"
+
+msgctxt "#32316"
+msgid "Black"
+msgstr "Black"
+
+msgctxt "#32320"
+msgid "Colon color"
+msgstr "Colon colour"
+
+msgctxt "#32330"
+msgid "Minute color"
+msgstr "Minute colour"
+
+msgctxt "#32340"
+msgid "AM/PM color"
+msgstr "AM/PM colour"
+
+msgctxt "#32350"
+msgid "Date color"
+msgstr "Date colour"
+
+msgctxt "#32360"
+msgid "Additional information color"
+msgstr "Additional information colour"
+
+msgctxt "#32370"
+msgid "Icon color"
+msgstr "Icon colour"
+
+msgctxt "#32400"
+msgid "Random transparency"
+msgstr "Random transparency"
+
+msgctxt "#32410"
+msgid "Hour transparency"
+msgstr "Hour transparency"
+
+msgctxt "#32411"
+msgid "0%"
+msgstr "0%"
+
+msgctxt "#32412"
+msgid "10%"
+msgstr "10%"
+
+msgctxt "#32413"
+msgid "20%"
+msgstr "20%"
+
+msgctxt "#32414"
+msgid "30%"
+msgstr "30%"
+
+msgctxt "#32415"
+msgid "40%"
+msgstr "40%"
+
+msgctxt "#32416"
+msgid "50%"
+msgstr "50%"
+
+msgctxt "#32417"
+msgid "60%"
+msgstr "60%"
+
+msgctxt "#32418"
+msgid "70%"
+msgstr "70%"
+
+msgctxt "#32419"
+msgid "80%"
+msgstr "80%"
+
+msgctxt "#32420"
+msgid "90%"
+msgstr "90%"
+
+msgctxt "#32421"
+msgid "100%"
+msgstr "100%"
+
+msgctxt "#32430"
+msgid "Colon transparency"
+msgstr "Colon transparency"
+
+msgctxt "#32440"
+msgid "Minute transparency"
+msgstr "Minute transparency"
+
+msgctxt "#32450"
+msgid "AM/PM transparency"
+msgstr "AM/PM transparency"
+
+msgctxt "#32460"
+msgid "Date transparency"
+msgstr "Date transparency"
+
+msgctxt "#32470"
+msgid "Additional information transparency"
+msgstr "Additional information transparency"
+
+msgctxt "#32480"
+msgid "Icon transparency"
+msgstr "Icon transparency"
+
+msgctxt "#32500"
+msgid "Text shadow color"
+msgstr "Text shadow colour"
+
+msgctxt "#32501"
+msgid "None"
+msgstr "None"
+
+msgctxt "#32502"
+msgid "White"
+msgstr "White"
+
+msgctxt "#32503"
+msgid "Gray"
+msgstr "Gray"
+
+msgctxt "#32504"
+msgid "Black"
+msgstr "Black"
+
+msgctxt "#32510"
+msgid "Choose background"
+msgstr "Choose background"
+
+msgctxt "#32511"
+msgid "One color"
+msgstr "One colour"
+
+msgctxt "#32512"
+msgid "Single image"
+msgstr "Single image"
+
+msgctxt "#32513"
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgctxt "#32520"
+msgid "Choose color"
+msgstr "Choose colour"
+
+msgctxt "#32530"
+msgid "Choose image"
+msgstr "Choose image"
+
+msgctxt "#32531"
+msgid "Warning! Having only one image on your screen can cause a burn in!"
+msgstr "Warning! Having only one image on your screen can cause a burn in!"
+
+msgctxt "#32540"
+msgid "Choose slideshow directory"
+msgstr "Choose slideshow directory"
+
+msgctxt "#32550"
+msgid "Random images"
+msgstr "Random images"
+
+msgctxt "#32560"
+msgid "Change background picture every:"
+msgstr "Change background picture every:"
+
+msgctxt "#32561"
+msgid "15 sec"
+msgstr "15 sec"
+
+msgctxt "#32562"
+msgid "30 sec"
+msgstr "30 sec"
+
+msgctxt "#32563"
+msgid "1 min"
+msgstr "1 min"
+
+msgctxt "#32564"
+msgid "2 min"
+msgstr "2 min"
+
+msgctxt "#32565"
+msgid "3 min"
+msgstr "3 min"
+
+msgctxt "#32566"
+msgid "4 min"
+msgstr "4 min"
+
+msgctxt "#32567"
+msgid "5 min"
+msgstr "5 min"
+
+msgctxt "#32568"
+msgid "6 min"
+msgstr "6 min"
+
+msgctxt "#32569"
+msgid "7 min"
+msgstr "7 min"
+
+msgctxt "#32570"
+msgid "8 min"
+msgstr "8 min"
+
+msgctxt "#32571"
+msgid "9 min"
+msgstr "9 min"
+
+msgctxt "#32572"
+msgid "10 min"
+msgstr "10 min"
+
+msgctxt "#32600"
+msgid "Size (%)"
+msgstr "Size (%)"

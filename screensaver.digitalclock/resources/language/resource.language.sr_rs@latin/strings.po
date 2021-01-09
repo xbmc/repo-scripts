@@ -1,0 +1,413 @@
+# Kodi Media Center language file
+# Addon Name: Digital Clock Screensaver
+# Addon id: screensaver.digitalclock
+# Addon Provider: Vojislav Vlasic
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Serbian (Latin) (Serbia) (http://www.transifex.com/projects/p/kodi-addons/language/sr_RS@latin/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sr_RS@latin\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32005"
+msgid "Additional Information"
+msgstr "Dodatni Podaci"
+
+msgctxt "#32010"
+msgid "Colors"
+msgstr "Boje"
+
+msgctxt "#32015"
+msgid "Transparency"
+msgstr "Providnost"
+
+msgctxt "#32020"
+msgid "Background"
+msgstr "Pozadina"
+
+msgctxt "#32025"
+msgid "Element Size Increase"
+msgstr "Povećavanje Veličine Elemenata"
+
+msgctxt "#32100"
+msgid "Movement on the screen"
+msgstr "Kretanje po ekranu"
+
+msgctxt "#32101"
+msgid "Random position"
+msgstr "Nasumična pozicija"
+
+msgctxt "#32102"
+msgid "Bounce"
+msgstr "Odbijanje"
+
+msgctxt "#32103"
+msgid "Fixed in the center"
+msgstr "Fiksirano u centru"
+
+msgctxt "#32104"
+msgid "Custom fixed position"
+msgstr "Prilagođena fiksirana pozicija"
+
+msgctxt "#32110"
+msgid "Movement speed"
+msgstr "Brzina kretanja"
+
+msgctxt "#32111"
+msgid "Slow"
+msgstr "Sporo"
+
+msgctxt "#32112"
+msgid "Normal"
+msgstr "Normalno"
+
+msgctxt "#32113"
+msgid "Fast"
+msgstr "Brzo"
+
+msgctxt "#32120"
+msgid "Number of seconds to stay in place"
+msgstr "Broj sekundi stajanja u mestu"
+
+msgctxt "#32121"
+msgid "Warning! Having static text on your screen can cause a burn in!"
+msgstr "Upozorenje! Ako imate statični tekst na Vašem ekranu on se može urezati na njega! "
+
+msgctxt "#32130"
+msgid "Time format"
+msgstr "Oblik prikaza vremena"
+
+msgctxt "#32131"
+msgid "17:14"
+msgstr "17:14"
+
+msgctxt "#32132"
+msgid "05:14"
+msgstr "05:14"
+
+msgctxt "#32133"
+msgid "05:14 PM"
+msgstr "05:14 PM"
+
+msgctxt "#32140"
+msgid "Date format"
+msgstr "Oblik prikaza datuma"
+
+msgctxt "#32141"
+msgid "Hide date"
+msgstr "Sakriti datum"
+
+msgctxt "#32142"
+msgid "Saturday 30. May 2015"
+msgstr "subota 30. maj 2015"
+
+msgctxt "#32143"
+msgid "30.05.2015"
+msgstr "30.05.2015"
+
+msgctxt "#32144"
+msgid "05.30.2015"
+msgstr "05.30.2015"
+
+msgctxt "#32150"
+msgid "Custom value for X position (1-1280)"
+msgstr "Prilagođena vrednost za X poziciju (1-1280)"
+
+msgctxt "#32160"
+msgid "Custom value for Y position (1-720)"
+msgstr "Prilagođena vrednost za Y poziciju (1-720)"
+
+msgctxt "#32200"
+msgid "Enable additional information"
+msgstr "Omogući dodatne podatke"
+
+msgctxt "#32210"
+msgid "Number of seconds for information switch"
+msgstr "Broj sekundi za zamenu podataka"
+
+msgctxt "#32220"
+msgid "Enable now playing information"
+msgstr "Omogući podatke o trenutnoj reprodukciji"
+
+msgctxt "#32230"
+msgid "Enable weather information"
+msgstr "Omogući podatke o vremenskoj prognozi"
+
+msgctxt "#32240"
+msgid "Weather icons"
+msgstr "Ikone vremenske prognoze"
+
+msgctxt "#32241"
+msgid "Hide weather icon"
+msgstr "Sakriti ikone vremenske prognoze"
+
+msgctxt "#32242"
+msgid "Icon set 1"
+msgstr "Skup ikona 1"
+
+msgctxt "#32243"
+msgid "Icon set 2"
+msgstr "Skup ikona 2"
+
+msgctxt "#32244"
+msgid "Icon set 3"
+msgstr "Skup ikona 3"
+
+msgctxt "#32245"
+msgid "Icon set 4"
+msgstr "Skup ikona 4"
+
+msgctxt "#32250"
+msgid "Enable album art"
+msgstr "Omogući umetnost albuma"
+
+msgctxt "#32300"
+msgid "Random color"
+msgstr "Nasumična boja"
+
+msgctxt "#32310"
+msgid "Hour color"
+msgstr "Boja sata"
+
+msgctxt "#32311"
+msgid "White"
+msgstr "Bela"
+
+msgctxt "#32312"
+msgid "Red"
+msgstr "Crvena"
+
+msgctxt "#32313"
+msgid "Green"
+msgstr "Zelena"
+
+msgctxt "#32314"
+msgid "Blue"
+msgstr "Plava"
+
+msgctxt "#32315"
+msgid "Yellow"
+msgstr "Žuta"
+
+msgctxt "#32316"
+msgid "Black"
+msgstr "Crna"
+
+msgctxt "#32320"
+msgid "Colon color"
+msgstr "Boja dvotačke"
+
+msgctxt "#32330"
+msgid "Minute color"
+msgstr "Boja minuta"
+
+msgctxt "#32340"
+msgid "AM/PM color"
+msgstr "Boja AM/PM"
+
+msgctxt "#32350"
+msgid "Date color"
+msgstr "Boja datuma"
+
+msgctxt "#32360"
+msgid "Additional information color"
+msgstr "Boja dodatnih podataka"
+
+msgctxt "#32370"
+msgid "Icon color"
+msgstr "Boja ikone"
+
+msgctxt "#32400"
+msgid "Random transparency"
+msgstr "Nasumična providnost"
+
+msgctxt "#32410"
+msgid "Hour transparency"
+msgstr "Providnost sata"
+
+msgctxt "#32411"
+msgid "0%"
+msgstr "0%"
+
+msgctxt "#32412"
+msgid "10%"
+msgstr "10%"
+
+msgctxt "#32413"
+msgid "20%"
+msgstr "20%"
+
+msgctxt "#32414"
+msgid "30%"
+msgstr "30%"
+
+msgctxt "#32415"
+msgid "40%"
+msgstr "40%"
+
+msgctxt "#32416"
+msgid "50%"
+msgstr "50%"
+
+msgctxt "#32417"
+msgid "60%"
+msgstr "60%"
+
+msgctxt "#32418"
+msgid "70%"
+msgstr "70%"
+
+msgctxt "#32419"
+msgid "80%"
+msgstr "80%"
+
+msgctxt "#32420"
+msgid "90%"
+msgstr "90%"
+
+msgctxt "#32421"
+msgid "100%"
+msgstr "100%"
+
+msgctxt "#32430"
+msgid "Colon transparency"
+msgstr "Providnost dvotačke"
+
+msgctxt "#32440"
+msgid "Minute transparency"
+msgstr "Providnost minuta"
+
+msgctxt "#32450"
+msgid "AM/PM transparency"
+msgstr "Providnost AM/PM"
+
+msgctxt "#32460"
+msgid "Date transparency"
+msgstr "Providnost datuma"
+
+msgctxt "#32470"
+msgid "Additional information transparency"
+msgstr "Providnost dodatnih podataka"
+
+msgctxt "#32480"
+msgid "Icon transparency"
+msgstr "Providnost ikone"
+
+msgctxt "#32500"
+msgid "Text shadow color"
+msgstr "Boja senke teksta"
+
+msgctxt "#32501"
+msgid "None"
+msgstr "Ništa"
+
+msgctxt "#32502"
+msgid "White"
+msgstr "Bela"
+
+msgctxt "#32503"
+msgid "Gray"
+msgstr "Siva"
+
+msgctxt "#32504"
+msgid "Black"
+msgstr "Crna"
+
+msgctxt "#32510"
+msgid "Choose background"
+msgstr "Odaberite pozadinu"
+
+msgctxt "#32511"
+msgid "One color"
+msgstr "Jedna boja"
+
+msgctxt "#32512"
+msgid "Single image"
+msgstr "Jedna slika"
+
+msgctxt "#32513"
+msgid "Slideshow"
+msgstr "Reprodukcija slajdova"
+
+msgctxt "#32520"
+msgid "Choose color"
+msgstr "Odaberite boju"
+
+msgctxt "#32530"
+msgid "Choose image"
+msgstr "Odaberite sliku"
+
+msgctxt "#32531"
+msgid "Warning! Having only one image on your screen can cause a burn in!"
+msgstr "Upozorenje! Ako imate samo jednu sliku na Vašem ekranu ona se može urezati na njega! "
+
+msgctxt "#32540"
+msgid "Choose slideshow directory"
+msgstr "Odaberite datoteku reprodukcije slajdova"
+
+msgctxt "#32550"
+msgid "Random images"
+msgstr "Nasumične slike"
+
+msgctxt "#32560"
+msgid "Change background picture every:"
+msgstr "Promeni sliku pozadine svakih"
+
+msgctxt "#32561"
+msgid "15 sec"
+msgstr "15 sek"
+
+msgctxt "#32562"
+msgid "30 sec"
+msgstr "30 sek"
+
+msgctxt "#32563"
+msgid "1 min"
+msgstr "1 min"
+
+msgctxt "#32564"
+msgid "2 min"
+msgstr "2 min"
+
+msgctxt "#32565"
+msgid "3 min"
+msgstr "3 min"
+
+msgctxt "#32566"
+msgid "4 min"
+msgstr "4 min"
+
+msgctxt "#32567"
+msgid "5 min"
+msgstr "5 min"
+
+msgctxt "#32568"
+msgid "6 min"
+msgstr "6 min"
+
+msgctxt "#32569"
+msgid "7 min"
+msgstr "7 min"
+
+msgctxt "#32570"
+msgid "8 min"
+msgstr "8 min"
+
+msgctxt "#32571"
+msgid "9 min"
+msgstr "9 min"
+
+msgctxt "#32572"
+msgid "10 min"
+msgstr "10 min"
+
+msgctxt "#32600"
+msgid "Size (%)"
+msgstr "Veličina (%)"

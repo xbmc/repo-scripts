@@ -118,7 +118,23 @@ msgctxt "#32133"
 msgid "05:14 PM"
 msgstr ""
 
-#empty strings from id 32134 to 32138
+msgctxt "#32134"
+msgid "5:14 No hour zero padding Windows"
+msgstr ""
+
+msgctxt "#32135"
+msgid "5:14 PM No hour zero padding Windows"
+msgstr ""
+
+msgctxt "#32136"
+msgid "5:14 No hour zero padding Unix"
+msgstr ""
+
+msgctxt "#32137"
+msgid "5:14 PM No hour zero padding Unix"
+msgstr ""
+
+#empty strings from id 32138 to 32138
 
 msgctxt "#32139"
 msgid "Colon blink"
@@ -196,7 +212,19 @@ msgctxt "#32220"
 msgid "Enable now playing information"
 msgstr ""
 
-#empty strings from id 32221 to 32229
+msgctxt "#32221"
+msgid "Show only music information"
+msgstr ""
+
+msgctxt "#32222"
+msgid "This will hide all other info while the music is playing!"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Merge song artist and title"
+msgstr ""
+
+#empty strings from id 32224 to 32229
 
 msgctxt "#32230"
 msgid "Enable weather information"
@@ -471,13 +499,13 @@ msgstr ""
 #empty strings from id 32373 to 32499
 
 msgctxt "#32500"
-msgid "Chose text shadow color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.shadowcolor)]]($INFO[Skin.String(screensaver.digitalclock.shadowcolor.name)])[/COLOR]"
+msgid "Choose text shadow color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.shadowcolor)]]($INFO[Skin.String(screensaver.digitalclock.shadowcolor.name)])[/COLOR]"
 msgstr ""
 
 #empty strings from id 32501 to 32504
 
 msgctxt "#32505"
-msgid "Chose background image aspect ratio:"
+msgid "Choose background image aspect ratio:"
 msgstr ""
 
 msgctxt "#32506"
@@ -510,7 +538,15 @@ msgctxt "#32514"
 msgid "Skin Helper Backgrounds"
 msgstr ""
 
-#empty strings from id 32515 to 32519
+msgctxt "#32515"
+msgid "Dim"
+msgstr ""
+
+msgctxt "#32516"
+msgid "Brightness level"
+msgstr ""
+
+#empty strings from id 32517 to 32519
 
 msgctxt "#32520"
 msgid "Choose background color - [COLOR $INFO[Skin.String(screensaver.digitalclock.backgroundcolor)]]($INFO[Skin.String(screensaver.digitalclock.backgroundcolor.name)])[/COLOR]"
@@ -634,4 +670,12 @@ msgstr ""
 
 msgctxt "#32612"
 msgid "Log out after (minutes)"
+msgstr ""
+
+msgctxt "#32620"
+msgid "Enable RSS"
+msgstr ""
+
+msgctxt "#32621"
+msgid "RSS needs to be properly configured in Kodi and enabled!"
 msgstr ""
