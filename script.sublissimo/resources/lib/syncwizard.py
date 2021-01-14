@@ -60,9 +60,7 @@ class SyncWizard(xbmc.Player) :
         script.sync_after_wizard(self.starting_time, self.ending_time, self.subtitlefile, self.filename)
 
     def onPlayBackPaused(self):
-        if self.proper_exit:
-            pass
-        else:
+        if not self.proper_exit:
             current_time = self.getTime()
             if not self.starting_time:
                 class_time = script.make_timelines_classical(current_time*1000)
@@ -172,13 +170,9 @@ class SyncWizard(xbmc.Player) :
                 self.send_times()
                 
     def onPlayBackStopped(self):
-        if self.proper_exit:
-            pass
-        else:
+        if not self.proper_exit:
             script.show_dialog(self.subtitlefile, self.filename)
 
     def onPlayBackEnded(self):
-        if self.proper_exit:
-            pass
-        else:
+        if not self.proper_exit:
             script.show_dialog(self.subtitlefile, self.filename)                
