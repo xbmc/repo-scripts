@@ -25,6 +25,7 @@ _  = __addon__.getLocalizedString
 logger = logging.getLogger(ADDON.getAddonInfo('id'))
 backupfile = None
 videodbfilename = None
+player_instances = []
 
 def select_line_subtitle(subtitlefile, start, end):
     start_index_found = False
@@ -96,7 +97,8 @@ def search_subtitles(subtitlefile, filename):
         if searchstring in lines:
             area = [x for x in [index-3, index-2, index-1, index, index+1] if x > 0 and x < len(subtitlefile)]
             results += area
-    structured_results = [str(_(33032)) + str(x).zfill(4) + " | " + subtitlefile[x] for x in sorted(set(results))]
+    structured_results = [str(_(33032)) + str(x).zfill(4) + " | "
+                                + subtitlefile[x] for x in sorted(set(results))]
     xbmcgui.Dialog().select(_(32011), structured_results)
     show_dialog(subtitlefile, filename)
 
@@ -299,6 +301,7 @@ def save_the_file(subtitlefile, filename, playing=False):
     if choice == -1 or choice == 3:
         show_dialog(subtitlefile, filename)
     if choice == 4:
+        check_player_instances()
         sys.exit()
     if choice == 0:
         new_file_name = filename[:-4] + "_edited.srt"
@@ -314,10 +317,11 @@ def save_the_file(subtitlefile, filename, playing=False):
         xbmc.Player().setSubtitles(new_file_name)
         temp_file = filename[:-4] + "_temp.srt"
         if xbmcvfs.exists(temp_file):
-             xbmcvfs.delete(temp_file)
+            xbmcvfs.delete(temp_file)
         # succes, file saved to:
         xbmcgui.Dialog().ok(_(32017), _(32123) + str(new_file_name))
         xbmc.Player().pause()
+        check_player_instances()
         sys.exit()
     if not playing:
         if xbmcvfs.exists(new_file_name):
@@ -331,6 +335,7 @@ def save_the_file(subtitlefile, filename, playing=False):
 
 
 def exiting(subtitlefile=[], filename=""):
+    check_player_instances()
     global backupfile
     if backupfile != subtitlefile:
         # Warning, You might have unsaved progress, Exit anyway, Save
@@ -404,6 +409,7 @@ def retrieve_video(subtitlefile, filename):
     return location
 
 def sync_with_video(subtitlefile, filename):
+    global player_instances
     #Name, long desc, Ok, More Info
     resp = xbmcgui.Dialog().yesno(_(31001), _(32060),
                                    yeslabel=_(32012), nolabel=_(32013))
@@ -414,6 +420,7 @@ def sync_with_video(subtitlefile, filename):
     xbmcPlayer = SyncWizard()
     xbmcPlayer.add(subtitlefile, filename)
     xbmcPlayer.play(location)
+    player_instances.append(xbmcPlayer)
     xbmc.Monitor().waitForAbort()
 
 def check_integrity_menu(subtitlefile, filename):
@@ -458,11 +465,25 @@ def read_file(filename, backup):
         xbmcgui.Dialog().ok(_(32014), _(32027) + filename)
         sys.exit()
 
+def check_validity(subtitlefile):
+    check = 0
+    for line in subtitlefile:
+        if len(line) == 30 or len(line) == 31:
+            if line[0] == "0" and line[17] == "0":
+                check += 1
+    if check == 0:
+        resp = xbmcgui.Dialog().yesno(_(32132), _(32132), yeslabel=_(32133), nolabel=_(32134))
+        if resp:
+            return True
+        else:
+            return False
+    return True
+
 def load_subtitle(with_warning):
     #Sublissimo, select sub, select sub
     if with_warning:
         xbmcgui.Dialog().ok(_(31001), _(32034))
-    filename = xbmcgui.Dialog().browse(1, _(32035), 'video')
+    filename = xbmcgui.Dialog().browse(1, _(32035), 'video', ".srt|.sub")
     if filename == "":
         sys.exit()
     if filename[-3:] == 'sub':
@@ -472,24 +493,31 @@ def load_subtitle(with_warning):
         xbmcgui.Dialog().ok(_(32014), _(32026))
         load_subtitle(False)
     subtitlefile, filename = read_file(filename, True)
-    return subtitlefile, filename
+    if check_validity(subtitlefile):
+        return subtitlefile, filename
+    else:
+        return load_subtitle(False)    
 
 
 def synchronize_by_frame_rate(subtitlefile, filename):
+    global player_instances
     location = retrieve_video(subtitlefile, filename)
     newplayer = SyncWizardFrameRate()
     newplayer.add(subtitlefile, filename)
     newplayer.play(location)
     newplayer.give_frame_rate(False)
+    player_instances.append(newplayer)
     xbmc.Monitor().waitForAbort()
 
 def play_along_file(subtitlefile, filename):
+    global player_instances
     location = retrieve_video(subtitlefile, filename)
-    newplayer = PlayAlongFile()
-    newplayer.add(subtitlefile, filename)
-    newplayer.play(location)
+    play_along_file_player = PlayAlongFile()
+    play_along_file_player.add(subtitlefile, filename)
+    play_along_file_player.play(location)
     xbmc.sleep(500)
-    newplayer.activate_sub()
+    play_along_file_player.activate_sub()
+    player_instances.append(play_along_file_player)
     xbmc.Monitor().waitForAbort()
 
 def stretch_by_providing_factor(subtitlefile, filename):
@@ -571,6 +599,13 @@ def recreate_line(line, frame_rate, line_number):
 def load_sub_subtitlefile(filename="", subtitlefile=[]):
     if not subtitlefile:
         subtitlefile, not_important = read_file(filename, False)
+    check = 0
+    for line in subtitlefile:
+        if line[0] == "{" and "}{" in line:
+            check += 1
+    if check == 0:
+        xbmcgui.Dialog().ok(_(32135), _(32136))
+        show_dialog()        
     options = ["23.976", "24", "25", "29.976", "30", _(32127), _(32104), _(32129)]
     menuchoice = xbmcgui.Dialog().select(_(32105), options)
     if menuchoice == 5:
@@ -608,9 +643,16 @@ def create_new_sub(subtitlefile, filename, frame_rate):
 
 # -------------END OF SUB FILES ---------------
 
+def check_player_instances():
+    global player_instances
+    if player_instances:
+        for instance in player_instances:
+            instance.proper_exit = True   
+
 def show_dialog(subtitlefile="", filename=""):
     if not subtitlefile:
         subtitlefile, filename = load_subtitle(True)
+    check_player_instances()    
     #Scroll, edit, move, stretch, syncwsub, syncwvideo, playalong, advanced, save, quit
     options = [_(31000), _(30001), _(31002), _(31003), _(31004), _(31005),
                _(31010), _(31011), _(31013), _(31008), _(31009)]
