@@ -1,5 +1,8 @@
 Digital clock screensaver
 =================
+**Branches guide:**
+ - **master:** Works just on Kodi v19 Codename Matrix
+ - **krypton:** Works on Kodi v17 Codename Krypton and on Kodi V18 Codename Leia
 
 Digital clock screensaver with a lot of options.
 
@@ -93,22 +96,35 @@ If there is no appropriate xml file it will use skin.default.xml
 
 If the skin is not on the list screensaver will use default font names from confluence (It might not look pretty but it will work with any skin):
 
+- Ace2
 - Adonic
 - Aeon Nox 5
+- Aeon Nox Silvo
+- Aeon Tajo
+- Aeon MQ5
 - Aeon MQ5
 - Aeon MQ6
+- Aeon MQ8
 - Amber
 - AppTV
 - Arctic: Zephyr
+- Arctic: Zephyr 2
+- Aura
 - Bello 6
+- Bello 7
 - Black Glass Nova
 - Box
 - Chroma
 - Confluence
+- Embuary-Leia
 - Eminence.2
 - Estouchy
 - Estuary
+- Ftv
 - (Fuse)neue
+- Grid
+- Horizon
+- Madnox
 - Metropolis
 - Mimic
 - Nebula
@@ -116,17 +132,17 @@ If the skin is not on the list screensaver will use default font names from conf
 - OSMC
 - Pellucid
 - Phenomenal
+- Quartz
 - Rapier
 - Retouched
+- Reestuarized
 - Revolve
-- Titan (Default testing skin!)
+- Titan
 - Transparency
 - Unity
 - Xperience1080
 
 If your skin is not on the list, and you would like it to be - send me a message.
-
-I have tested this screensaver with a couple of languages and on two systems, windows 7 laptop and Raspberry Pi 2 running OSMC.
 
 Possible issues:
 Depending on your language and selected date format the date text might become ... that means that the text for the date is too long, I can fix that easily, just let me know if it happens. (Screenshot would be great including which language you are using and how many letters are supposed to be on the screen).
