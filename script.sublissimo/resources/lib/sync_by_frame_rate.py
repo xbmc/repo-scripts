@@ -67,9 +67,9 @@ class SyncWizardFrameRate(xbmc.Player):
                                       + "\n", yeslabel=_(32012), nolabel= _(32008))
         if not res:
             self.give_frame_rate(False)
-        new_subtitlefile = cur_sub.create_new_times(False, new_factor, 0)
-        #xbmcgui.Dialog().multiselect(_(32010), new_subtitlefile)
-        self.write_and_display_temp_file(new_subtitlefile, True)
+        else:    
+            new_subtitlefile = cur_sub.create_new_times(False, new_factor, 0)
+            self.write_and_display_temp_file(new_subtitlefile, True)
 
     def give_frame_rate(self, from_pause):
         # get frame_rate from video, calculate manually,  Exit to main menu,
@@ -107,9 +107,7 @@ class SyncWizardFrameRate(xbmc.Player):
             script.show_dialog(self.subtitlefile, self.filename)
 
     def onPlayBackPaused(self):
-        if self.proper_exit:
-            pass
-        else:
+        if not self.proper_exit:
             choice = xbmcgui.Dialog().contextmenu([_(32074), _(32100), _(31000), _(32101), _(32096), _(32098)])
             if choice == 0 or choice == -1:
                 self.flag = False
