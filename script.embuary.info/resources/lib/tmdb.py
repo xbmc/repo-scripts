@@ -54,6 +54,8 @@ def tmdb_query(action,call=None,get=None,get2=None,get3=None,get4=None,params=No
 
                 if str(request.status_code).startswith('5'):
                     raise Exception(str(request.status_code))
+                else:
+                    break
 
             except Exception:
                 xbmc.sleep(500)
