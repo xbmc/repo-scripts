@@ -516,7 +516,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.date_control.setLabel(self.date)
         if len(self.informationlist) != 0:
             self.information_control.setLabel(self.information)
-        if (self.weatherinfoshow == 'true' and self.weathericonf != '0') or (self.nowplayinginfoshow == 'true' and self.albumartshow == 'true'):
+        if (self.weatherinfoshow == 'true' and self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.nowplayinginfoshow == 'true' and self.albumartshow == 'true' and (xbmc.getInfoLabel('MusicPlayer.Artist') or xbmc.getInfoLabel('MusicPlayer.Title'))):
             self.icon_control.setImage(self.icon)
         self.hour_colorcontrol.setLabel(self.hourcolor)
         self.colon_colorcontrol.setLabel(self.coloncolor)
