@@ -808,7 +808,10 @@ class PluginContent(object):
                 self._retry('getitemsbyactor')
 
             if not PYTHON3:
-                plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor.decode('utf-8')
+                if isinstance(actor, unicode):
+                    plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor
+                else:
+                    plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor.decode('utf-8')
             else:
                 plugin_category = ADDON.getLocalizedString(32030) + ' ' + actor
 
