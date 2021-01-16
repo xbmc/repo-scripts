@@ -24,6 +24,8 @@ _  = __addon__.getLocalizedString
 logger = logging.getLogger(ADDON.getAddonInfo('id'))
 backupfile = None
 videodbfilename = None
+player_instances = []
+
 
 def select_line_subtitle(subtitlefile, start, end):
     start_index_found = False
@@ -304,6 +306,7 @@ def save_the_file(subtitlefile, filename, playing=False):
     if choice == -1 or choice == 3:
         show_dialog(subtitlefile, filename)
     if choice == 4:
+        check_player_instances()
         sys.exit()
     if choice == 0:
         new_file_name = filename[:-4] + "_edited.srt"
@@ -323,6 +326,7 @@ def save_the_file(subtitlefile, filename, playing=False):
         # succes, file saved to:
         xbmcgui.Dialog().ok(_(32017), _(32123) + str(new_file_name))
         xbmc.Player().pause()
+        check_player_instances()
         sys.exit()
     if not playing:
         if xbmcvfs.exists(new_file_name):
@@ -336,6 +340,7 @@ def save_the_file(subtitlefile, filename, playing=False):
 
 
 def exiting(subtitlefile=[], filename=""):
+    check_player_instances()
     global backupfile
     if backupfile != subtitlefile:
         # Warning, You might have unsaved progress, Exit anyway, Save
@@ -410,6 +415,7 @@ def retrieve_video(subtitlefile, filename):
     return location
 
 def sync_with_video(subtitlefile, filename):
+    global player_instances
     #Name, long desc, Ok, More Info
     resp = xbmcgui.Dialog().yesno(_(31001), _(32060),
                                    yeslabel=_(32012), nolabel=_(32013))
@@ -420,6 +426,7 @@ def sync_with_video(subtitlefile, filename):
     xbmcPlayer = SyncWizard()
     xbmcPlayer.add(subtitlefile, filename)
     xbmcPlayer.play(location)
+    player_instances.append(xbmcPlayer)
     xbmc.Monitor().waitForAbort()
 
 def check_integrity_menu(subtitlefile, filename):
@@ -478,20 +485,24 @@ def load_subtitle(with_warning):
         sys.exit()
 
 def synchronize_by_frame_rate(subtitlefile, filename):
+    global player_instances
     location = retrieve_video(subtitlefile, filename)
     newplayer = SyncWizardFrameRate()
     newplayer.add(subtitlefile, filename)
     newplayer.play(location)
     newplayer.give_frame_rate(False)
+    player_instances.append(newplayer)
     xbmc.Monitor().waitForAbort()
 
 def play_along_file(subtitlefile, filename):
+    global player_instances
     location = retrieve_video(subtitlefile, filename)
-    newplayer = PlayAlongFile()
-    newplayer.add(subtitlefile, filename)
-    newplayer.play(location)
+    play_along_file_player = PlayAlongFile()
+    play_along_file_player.add(subtitlefile, filename)
+    play_along_file_player.play(location)
     xbmc.sleep(500)
-    newplayer.activate_sub()
+    play_along_file_player.activate_sub()
+    player_instances.append(play_along_file_player)
     xbmc.Monitor().waitForAbort()
 
 def stretch_by_providing_factor(subtitlefile, filename):
@@ -512,6 +523,8 @@ def stretch_by_providing_factor(subtitlefile, filename):
                                   _(32110) + str(new_timestamp) + "\n", yeslabel=_(32012), nolabel= _(32008))
     new_subtitlefile = cur_sub.create_new_factor(new_timestamp, old_starting_time, old_ending_time)
     show_dialog(new_subtitlefile, filename)
+
+
 
 
 def stretch_subtitle_menu(subtitlefile, filename):
@@ -620,9 +633,16 @@ def create_new_sub(subtitlefile, filename, frame_rate):
 
 # -------------END OF SUB FILES ---------------
 
+def check_player_instances():
+    global player_instances
+    if player_instances:
+    	for instance in player_instances:
+    	    instance.proper_exit = True
+
 def show_dialog(subtitlefile="", filename=""):
     if not subtitlefile:
         subtitlefile, filename = load_subtitle(True)
+    check_player_instances()
     #Scroll, edit, move, stretch, syncwsub, syncwvideo, playalong, advanced, save, quit
     options = [_(31000), _(30001), _(31002), _(31003), _(31004), _(31005),
                _(31010), _(31011), _(31013), _(31008), _(31009)]
