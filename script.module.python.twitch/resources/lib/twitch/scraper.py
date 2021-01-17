@@ -95,7 +95,13 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, re
     for _ in range(MAX_RETRIES):
         try:
             headers.update({USER_AGENT: USER_AGENT_STRING})
-            response = requests.request(method=method, url=url, headers=headers, data=data, verify=SSL_VERIFICATION)
+            if isinstance(data, list):
+                json_body = data
+                data = None
+            else:
+                json_body = None
+            response = requests.request(method=method, url=url, headers=headers,
+                                        json=json_body, data=data, verify=SSL_VERIFICATION)
             content = response.content
             if not content:
                 content = '{{"status": {0}}}'.format(response.status_code)

@@ -26,6 +26,7 @@ _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
 _clips_baseurl = 'https://gql.twitch.tv/gql'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
+_gql_baseurl = 'https://gql.twitch.tv/gql'
 _oauth_baseurl = 'https://api.twitch.tv/kraken/oauth2/'
 
 
@@ -219,6 +220,16 @@ class V5Query(ApiQuery):
 class HelixQuery(HelixApiQuery):
     def __init__(self, path, use_app_token=False, method=methods.GET):
         super(HelixQuery, self).__init__(path, use_app_token=use_app_token, method=method)
+
+
+class GQLQuery(JsonQuery):
+    def __init__(self, path, headers={}, data={}, use_token=True, method=methods.POST):
+        _headers = deepcopy(headers)
+        _headers.setdefault('Client-ID', CLIENT_ID)
+        if use_token and OAUTH_TOKEN:
+            _headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        super(GQLQuery, self).__init__(_gql_baseurl, _headers, data, method)
+        self.add_path(path)
 
 
 def assert_new(d, k):
