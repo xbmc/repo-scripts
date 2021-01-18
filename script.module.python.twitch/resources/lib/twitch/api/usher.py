@@ -16,11 +16,17 @@ import json
 from .. import keys
 from ..api.parameters import Boolean
 from ..parser import m3u8, clip_embed
-from ..queries import ClipsQuery, HiddenApiQuery, UsherQuery
+from ..queries import ClipsQuery, HiddenApiQuery, UsherQuery, GQLQuery
 from ..queries import query
 from ..log import log
 
 from six.moves.urllib.parse import urlencode
+
+ACCESS_TOKEN_EXCEPTION = {
+    'error': 'Error',
+    'message': 'Failed to retrieve access token',
+    'status': 404
+}
 
 
 def valid_video_id(video_id):
@@ -33,21 +39,35 @@ def valid_video_id(video_id):
 
 @query
 def channel_token(channel, platform=keys.WEB, headers={}):
-    q = HiddenApiQuery('channels/{channel}/access_token', headers=headers)
-    q.add_urlkw(keys.CHANNEL, channel)
-    q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
-    q.add_param(keys.PLATFORM, platform)
-    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    data = [{
+        "operationName": "PlaybackAccessToken_Template",
+        "query": "query PlaybackAccessToken_Template($login: String!, $isLive: Boolean!, $vodID: ID!, $isVod: Boolean!, $playerType: String!) {  streamPlaybackAccessToken(channelName: $login, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isLive) {    value    signature    __typename  }  videoPlaybackAccessToken(id: $vodID, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isVod) {    value    signature    __typename  }}",
+        "variables": {
+            "isLive": True,
+            "login": channel,
+            "isVod": False,
+            "vodID": "",
+            "playerType": "site"
+        }
+    }]
+    q = GQLQuery('', headers=headers, data=data, use_token=True)
     return q
 
 
 @query
 def vod_token(video_id, platform=keys.WEB, headers={}):
-    q = HiddenApiQuery('vods/{vod}/access_token', headers=headers)
-    q.add_urlkw(keys.VOD, video_id)
-    q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
-    q.add_param(keys.PLATFORM, platform)
-    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    data = [{
+        "operationName": "PlaybackAccessToken_Template",
+        "query": "query PlaybackAccessToken_Template($login: String!, $isLive: Boolean!, $vodID: ID!, $isVod: Boolean!, $playerType: String!) {  streamPlaybackAccessToken(channelName: $login, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isLive) {    value    signature    __typename  }  videoPlaybackAccessToken(id: $vodID, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isVod) {    value    signature    __typename  }}",
+        "variables": {
+            "isLive": False,
+            "login": "",
+            "isVod": True,
+            "vodID": video_id,
+            "playerType": "site"
+        }
+    }]
+    q = GQLQuery('', headers=headers, data=data, use_token=True)
     return q
 
 
@@ -60,13 +80,17 @@ def _legacy_video(video_id):
 
 def live_request(channel, platform=keys.WEB, headers={}):
     token = channel_token(channel, platform=platform, headers=headers)
-    if keys.ERROR in token:
-        return token
+    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+
+    if not token:
+        return ACCESS_TOKEN_EXCEPTION
     else:
+        signature = token[keys.SIGNATURE]
+        access_token = token[keys.VALUE]
         q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
         q.add_urlkw(keys.CHANNEL, channel)
-        q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
-        q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
+        q.add_param(keys.SIG, signature.encode('utf-8'))
+        q.add_param(keys.TOKEN, access_token.encode('utf-8'))
         q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
         q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
         q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
@@ -77,17 +101,23 @@ def live_request(channel, platform=keys.WEB, headers={}):
         q.add_param(keys.RTQOS, keys.CONTROL)
         q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
         url = '?'.join([q.url, urlencode(q.params)])
-        request_dict = {'url': url, 'headers': q.headers}
+        request_dict = {
+            'url': url,
+            'headers': q.headers
+        }
         log.debug('live_request: |{0}|'.format(str(request_dict)))
         return request_dict
 
 
 @query
 def _live(channel, token, headers={}):
+    signature = token[keys.SIGNATURE]
+    access_token = token[keys.VALUE]
+
     q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
     q.add_urlkw(keys.CHANNEL, channel)
-    q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
-    q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
+    q.add_param(keys.SIG, signature.encode('utf-8'))
+    q.add_param(keys.TOKEN, access_token.encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
@@ -103,8 +133,9 @@ def _live(channel, token, headers={}):
 @m3u8
 def live(channel, platform=keys.WEB, headers={}):
     token = channel_token(channel, platform=platform, headers=headers)
-    if keys.ERROR in token:
-        return token
+    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+    if not token:
+        return ACCESS_TOKEN_EXCEPTION
     else:
         return _live(channel, token, headers=headers)
 
@@ -113,13 +144,17 @@ def video_request(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
-        if keys.ERROR in token:
-            return token
+        token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+
+        if not token:
+            return ACCESS_TOKEN_EXCEPTION
         else:
+            signature = token[keys.SIGNATURE]
+            access_token = token[keys.VALUE]
             q = UsherQuery('vod/{id}', headers=headers)
             q.add_urlkw(keys.ID, video_id)
-            q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
-            q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
+            q.add_param(keys.NAUTHSIG, signature.encode('utf-8'))
+            q.add_param(keys.NAUTH, access_token.encode('utf-8'))
             q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
             q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
             q.add_param(keys.CDM, keys.WV)
@@ -131,7 +166,10 @@ def video_request(video_id, platform=keys.WEB, headers={}):
             q.add_param(keys.BAKING_BROWNIES, Boolean.TRUE)
             q.add_param(keys.BAKING_BROWNIES_TIMEOUT, 1050)
             url = '?'.join([q.url, urlencode(q.params)])
-            request_dict = {'url': url, 'headers': q.headers}
+            request_dict = {
+                'url': url,
+                'headers': q.headers
+            }
             log.debug('video_request: |{0}|'.format(str(request_dict)))
             return request_dict
     else:
@@ -140,10 +178,13 @@ def video_request(video_id, platform=keys.WEB, headers={}):
 
 @query
 def _vod(video_id, token, headers={}):
+    signature = token[keys.SIGNATURE]
+    access_token = token[keys.VALUE]
+
     q = UsherQuery('vod/{id}', headers=headers)
     q.add_urlkw(keys.ID, video_id)
-    q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
-    q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
+    q.add_param(keys.NAUTHSIG, signature.encode('utf-8'))
+    q.add_param(keys.NAUTH, access_token.encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
     q.add_param(keys.CDM, keys.WV)
@@ -162,8 +203,10 @@ def video(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
-        if keys.ERROR in token:
-            return token
+        token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+
+        if not token:
+            return ACCESS_TOKEN_EXCEPTION
         else:
             return _vod(video_id, token, headers=headers)
     else:
