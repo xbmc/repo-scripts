@@ -64,7 +64,10 @@ class MiniLyrics(object):
         except UnicodeDecodeError:
             ecd = chardet.detect(bytearray(encddata))
             if ecd['encoding']:
-                result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode(ecd['encoding'])
+                try:
+                    result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode(ecd['encoding'])
+                except:
+                    result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + "".join(map(chr, bytearray(encddata)))
             else:
                 result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + "".join(map(chr, bytearray(encddata)))
         return result

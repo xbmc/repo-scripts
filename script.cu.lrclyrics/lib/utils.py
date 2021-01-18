@@ -20,6 +20,7 @@ LANGUAGE = ADDON.getLocalizedString
 CANCEL_DIALOG = (9, 10, 92, 216, 247, 257, 275, 61467, 61448,)
 ACTION_OSD = (107, 163,)
 ACTION_CODEC = (0, 27,)
+ACTION_UPDOWN = (3, 4, 105, 106, 111, 112, 603, 604)
 LYRIC_SCRAPER_DIR = os.path.join(CWD, 'lib', 'culrcscrapers')
 WIN = xbmcgui.Window(10000)
 

@@ -2,7 +2,7 @@
 import sys
 import re
 import requests
-from html.parser import HTMLParser
+import html
 import xbmc
 import xbmcaddon
 from lib.utils import *
@@ -34,8 +34,7 @@ class LyricsFetcher:
         req.close()
         try:
             lyricscode = response.split('. -->')[1].split('</div')[0]
-            htmlparser = HTMLParser()
-            lyricstext = htmlparser.unescape(lyricscode).replace('<br />', '\n')
+            lyricstext = html.unescape(lyricscode).replace('<br />', '\n')
             lyr = re.sub('<[^<]+?>', '', lyricstext)
             lyrics.lyrics = lyr
             return lyrics

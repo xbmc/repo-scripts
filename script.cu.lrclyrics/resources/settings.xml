@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <settings version="1">
-	<section id="addon">
+	<section id="script.cu.lrclyrics">
 		<category id="32150" label="32150">
 			<group id="1">
 				<setting help="" id="search_embedded" label="32152" type="boolean">
@@ -196,6 +196,11 @@
 			</group>
 			<group id="2" label="32118">
 				<setting help="" id="log_enabled" label="32159" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="32168" id="hide_dialog" label="32148" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
