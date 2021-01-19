@@ -69,6 +69,10 @@ class MAIN():
         self.scrapers.sort()
         if (ADDON.getSettingString('save_lyrics_path') == ''):
             ADDON.setSettingString(id='save_lyrics_path', value=os.path.join(PROFILE, 'lyrics'))
+        if ADDON.getSettingBool('hide_dialog'):
+            WIN.setProperty('culrc.hidedialog', 'True')
+        else:
+            WIN.clearProperty('culrc.hidedialog')
 
     def main_loop(self):
         # main loop
@@ -102,6 +106,7 @@ class MAIN():
         WIN.clearProperty('culrc.source')
         WIN.clearProperty('culrc.haslist')
         WIN.clearProperty('culrc.running')
+        WIN.clearProperty('culrc.hidedialog')
 
     def get_lyrics(self, song, prefetch):
         log('searching memory for lyrics', debug=self.DEBUG)
@@ -310,7 +315,8 @@ class MAIN():
                 log('Current Song: %s - %s' % (song.artist, song.title), debug=self.DEBUG)
                 lyrics = self.get_lyrics(song, False)
                 self.current_lyrics = lyrics
-                if lyrics.lyrics:
+                # if we have found lyrics and have not skipped to another track while searching for lyrics, show lyrics
+                if lyrics.lyrics and (song == Song.current(opt=self.lyricssettings)):
                     # signal the gui thread to display the next lyrics
                     self.CULRC_NOLYRICS = False
                     self.CULRC_NEWLYRICS = True
@@ -318,7 +324,8 @@ class MAIN():
                     if self.proceed() and not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
                         self.kwargs = {'service':self.SETTING_SERVICE, 'save':self.save_lyrics_to_file, 'remove':self.remove_lyrics_from_memory, 'delete':self.delete_lyrics, \
-                                       'function':self.return_time, 'callback':self.callback, 'monitor':self.Monitor, 'offset':self.SETTING_OFFSET, 'strip':self.SETTING_STRIP}
+                                       'function':self.return_time, 'callback':self.callback, 'monitor':self.Monitor, 'offset':self.SETTING_OFFSET, 'strip':self.SETTING_STRIP, \
+                                       'debug':self.DEBUG, 'settings':self.lyricssettings}
                         gui = guiThread(opt=self.kwargs)
                         gui.start()
                 else:
@@ -329,8 +336,8 @@ class MAIN():
                         self.dialog.notification(ADDONNAME + ': ' + LANGUAGE(32001), song.artist + ' - ' + song.title, icon=ADDONICON, time=2000, sound=False)
                 break
             xbmc.sleep(50)
-        # only search for next lyrics if current song has changed
-        if xbmc.getCondVisibility('MusicPlayer.HasNext') and songchanged:
+        # only search for next lyrics if current song has changed and we have not skipped to another track while searching for lyrics
+        if xbmc.getCondVisibility('MusicPlayer.HasNext') and songchanged and (song == Song.current(opt=self.lyricssettings)):
             next_song = Song.next(opt=self.lyricssettings)
             if next_song:
                 log('Next Song: %s - %s' % (next_song.artist, next_song.title), debug=self.DEBUG)
@@ -379,6 +386,7 @@ class guiThread(threading.Thread):
         del ui
         WIN.clearProperty('culrc.guirunning')
 
+
 class syncThread(threading.Thread):
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self)
@@ -395,6 +403,7 @@ class syncThread(threading.Thread):
         dialog.doModal()
         adjust = dialog.val
         del dialog
+        # safe new offset to file
         self.save(self.lyrics, adjust)
         # file has changed, remove it from memory
         self.remove(self.lyrics)
@@ -411,6 +420,8 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.SETTING_OFFSET = kwargs['opt']['offset']
         self.SETTING_SERVICE = kwargs['opt']['service']
         self.SETTING_STRIP = kwargs['opt']['strip']
+        self.DEBUG = kwargs['opt']['debug']
+        self.lyricssettings = kwargs['opt']['settings']
         self.dialog = xbmcgui.Dialog()
 
     def onInit(self):
@@ -435,11 +446,13 @@ class GUI(xbmcgui.WindowXMLDialog):
         else:
             WIN.setProperty('culrc.lyrics', LANGUAGE(32001))
             WIN.clearProperty('culrc.islrc')
+
         if self.lyrics.list:
             WIN.setProperty('culrc.haslist', 'true')
             self.prepare_list(self.lyrics.list)
         else:
             WIN.clearProperty('culrc.haslist')
+            self.choices = []
 
     def gui_loop(self):
         # gui loop
@@ -659,7 +672,7 @@ class GUI(xbmcgui.WindowXMLDialog):
                 source = item.getProperty('source').lower()
                 lyric = eval(item.getProperty('lyric'))
                 exec ('from lib.culrcscrapers.%s import lyricsScraper as lyricsScraper_%s' % (source, source))
-                scraper = eval('lyricsScraper_%s.LyricsFetcher()' % source)
+                scraper = eval('lyricsScraper_%s.LyricsFetcher(debug=self.DEBUG, settings=self.lyricssettings)' % source)
                 self.lyrics.lyrics = scraper.get_lyrics_from_list(lyric)
                 self.text.reset()
                 self.show_lyrics(self.lyrics)
@@ -667,6 +680,16 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def set_synctime(self, adjust):
         self.syncadjust = adjust
+
+    def scrolltosync(self):
+        old_time = xbmc.Player().getTime()
+        item = self.text.getSelectedItem()
+        new_time = float(item.getProperty('time'))
+        self.syncadjust = new_time - old_time
+        # safe new offset to file
+        self.save(self.lyrics, self.syncadjust)
+        # file has changed, remove it from memory
+        self.remove(self.lyrics)
 
     def context_menu(self):
         labels = ()
@@ -713,7 +736,7 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def onClick(self, controlId):
         if (controlId == 110):
-            # will only works for lrc based lyrics
+            # will only work for lrc based lyrics
             try:
                 item = self.text.getSelectedItem()
                 stamp = float(item.getProperty('time'))
@@ -738,6 +761,8 @@ class GUI(xbmcgui.WindowXMLDialog):
                     xbmc.executebuiltin('ActivateWindow(10120)')
         elif (actionId in ACTION_CODEC):
             xbmc.executebuiltin('Action(PlayerProcessInfo)')
+        elif (actionId in ACTION_UPDOWN) and (self.controlId == 110) and WIN.getProperty('culrc.islrc') == 'true':
+            self.scrolltosync()
 
 class MyPlayer(xbmc.Player):
     def __init__(self, *args, **kwargs):

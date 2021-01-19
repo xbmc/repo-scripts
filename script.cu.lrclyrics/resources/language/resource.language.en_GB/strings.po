@@ -133,7 +133,11 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr ""
 
-# empty strings from id 32120 to 32148
+# empty strings from id 32120 to 32147
+
+msgctxt "#32148"
+msgid "Hide dialog background, show lyrics only"
+msgstr ""
 
 msgctxt "#32149"
 msgid "Expert"
@@ -209,6 +213,10 @@ msgstr ""
 
 msgctxt "#32167"
 msgid "Delete lyrics"
+msgstr ""
+
+msgctxt "#32168"
+msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr ""
 
 # Scrapers - do not translate!

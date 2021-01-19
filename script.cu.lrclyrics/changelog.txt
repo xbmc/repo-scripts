@@ -1,10 +1,30 @@
+v6.3.7
+- python 3.9 compatibility
+
+v6.3.6
+- display artist name and track title in the lyrics dialog
+- add option to hide the lyrics background
+- before searching for lyrics, check if the song hasn't changed
+
+v6.3.5
+- don't search for next lyrics if we've already skipped to another track
+
+v6.3.4
+- fix potential crash in minlyrics scraper
+
+v6.3.3
+- fix clear lyric list when next song starts
+
+v6.3.2
+- fix lyric selection
+
 v6.3.1
 - skin cosmetics
 - move all scrapers to python requests
 - fix bug with monitor class
 
 v6.3.0
-- remove the need for list control 200
+- remove the need for list control 120
 - remove support for manually searching for lyrics
 - don't use window properties for inter-thread communication
 - remove thread locking

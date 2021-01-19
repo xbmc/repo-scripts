@@ -3,7 +3,7 @@ import sys
 import re
 import urllib.parse
 import requests
-from html.parser import HTMLParser
+import html
 import xbmc
 import xbmcaddon
 import json
@@ -51,8 +51,7 @@ class LyricsFetcher:
             response = req.text
         except:
             return None
-        htmlparser = HTMLParser()
-        response = htmlparser.unescape(response)
+        response = html.unescape(response)
         matchcode = re.search('<div class="[lL]yrics.*?">(.*?)</div>', response, flags=re.DOTALL)
         try:
             lyricscode = (matchcode.group(1))

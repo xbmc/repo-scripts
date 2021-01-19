@@ -13,15 +13,15 @@ __title__ = "Syair"
 __priority__ = '130'
 __lrc__ = True
 
-UserAgent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"}
+UserAgent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
 
 
 class LyricsFetcher:
     def __init__(self, *args, **kwargs):
         self.DEBUG = kwargs['debug']
         self.settings = kwargs['settings']
-        self.SEARCH_URL = 'https://syair.info/search?q=%s'
-        self.LYRIC_URL = 'https://syair.info%s'
+        self.SEARCH_URL = 'https://www.syair.info/search?q=%s'
+        self.LYRIC_URL = 'https://www.syair.info%s'
 
     def get_lyrics(self, song):
         log("%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title), debug=self.DEBUG)
