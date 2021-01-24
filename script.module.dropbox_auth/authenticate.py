@@ -110,7 +110,7 @@ if code == '':
 try:
     token = flow.finish(code).access_token
 except Exception as e:
-    dialog.ok(utils.getString(32103), utils.getString(32706), str(e))
+    dialog.ok(utils.getString(32103), utils.getString(32706)+": " + str(e))
     sys.exit(1);
 
 # positive notification
