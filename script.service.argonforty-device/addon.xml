@@ -11,7 +11,7 @@
     <extension point="xbmc.service" library="main.py" start="startup"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">ArgonForty Device Configuration</summary>
-        <description lang="en_GB">Install services to manage ArgonForty Devices such as power button and fan speed. This will also enabled i2c and UART.
+        <description lang="en_GB">Install services to manage ArgonForty Devices such as power button and fan speed. This will also enable gpio-ir, i2c and UART.
 
         * Disable then Enable Service for settings to take effect (or reboot) 
         </description>
