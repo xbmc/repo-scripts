@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.argonforty-device" name="ArgonForty Device Configuration" version="0.0.1" provider-name="ArgonForty">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="virtual.rpi-tools" />
+        <import addon="virtual.system-tools" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="main.py" start="startup"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">ArgonForty Device Configuration</summary>
+        <description lang="en_GB">Install services to manage ArgonForty Devices such as power button and fan speed. This will also enable gpio-ir, i2c and UART.
+
+        * Disable then Enable Service for settings to take effect (or reboot) 
+        </description>
+        <language></language>
+        <platform>linux</platform>
+        <license>MIT</license>
+        <forum></forum>
+        <website>argon40.com</website>
+        <email>cs@argon40.com</email>
+        <source></source>
+        <news></news>
+        <disclaimer></disclaimer>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

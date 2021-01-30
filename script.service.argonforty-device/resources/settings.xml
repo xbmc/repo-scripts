@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="80100">
+		<setting id="fanspeed_disable" label="80104" type="bool" default="false" visible="true"/>
+		<setting id="fanspeed_alwayson" enable="eq(-1,false)" label="80103" type="bool" default="false" visible="true"/>
+
+		<setting label="80110" type="lsep"/>
+		<setting id="devtemp_a" enable="eq(-2,false)+eq(-3,false)" label="80101" default="55" type="slider" range="20,2,100" option="int"/>
+		<setting id="fanspeed_a" enable="eq(-3,false)+eq(-4,false)" label="80102" default="10" type="slider" range="10,5,100" option="int"/>
+
+		<setting label="80120" type="lsep"/>
+		<setting id="devtemp_b" enable="eq(-5,false)+eq(-6,false)" label="80101" default="60" type="slider" range="20,2,100" option="int"/>
+		<setting id="fanspeed_b" enable="eq(-6,false)+eq(-7,false)" label="80102" default="50" type="slider" range="10,5,100" option="int"/>
+
+		<setting label="80130" type="lsep"/>
+		<setting id="devtemp_c" enable="eq(-8,false)+eq(-9,false)" label="80101" default="65" type="slider" range="20,2,100" option="int"/>
+		<setting id="fanspeed_c" enable="eq(-9,false)+eq(-10,false)" label="80102" default="100" type="slider" range="10,5,100" option="int"/>
+	</category>
+
+	<category label="80200">
+		<setting id="powerbutton" label="80201" type="bool" default="true" visible="true"/>
+		<setting label="80202" type="lsep"/>
+		<setting id="debug" type="bool" label="32001" default="false" visible="false"/>
+	</category>
+</settings>
+
