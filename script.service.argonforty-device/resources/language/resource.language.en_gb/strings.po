@@ -1,0 +1,92 @@
+# Kodi Media Center language file
+# Addon Name: Argon Forty Device Configuration
+# Addon id: script.service.argonforty-device
+# Addon Provider: ArgonForty
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#This is a comment
+
+msgctxt "#32000"
+msgid "Argon Forty Device Configuration"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Debug"
+msgstr ""
+
+
+msgctxt "#80000"
+msgid "Disabled"
+msgstr ""
+
+msgctxt "#80001"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#80100"
+msgid "Fan Configuration"
+msgstr ""
+
+msgctxt "#80104"
+msgid "Fan Disabled"
+msgstr ""
+
+msgctxt "#80103"
+msgid "Fan Always On"
+msgstr ""
+
+msgctxt "#80101"
+msgid "Device Temperature (Celsius)"
+msgstr ""
+
+msgctxt "#80102"
+msgid "Fan Speed (Percent)"
+msgstr ""
+
+msgctxt "#80110"
+msgid "Temperature Threshold 1"
+msgstr ""
+
+msgctxt "#80120"
+msgid "Temperature Threshold 2"
+msgstr ""
+
+msgctxt "#80130"
+msgid "Temperature Threshold 3"
+msgstr ""
+
+
+
+msgctxt "#80200"
+msgid "Power Button"
+msgstr ""
+
+msgctxt "#80201"
+msgid "Handle Power Button Events"
+msgstr ""
+
+
+msgctxt "#80202"
+msgid "You need to reboot for changes to take effect"
+msgstr ""
+
+msgctxt "#80300"
+msgid "Argon Remote"
+msgstr ""
+
+msgctxt "#80301"
+msgid "Setup Argon Remote Control"
+msgstr ""
+
