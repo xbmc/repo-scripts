@@ -49,7 +49,7 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = '0.3.6'
+__version__    = '0.3.7'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
@@ -97,7 +97,6 @@ SUBTITLE_RE = re.compile(r'''<a\s+class="titulo_menu_izq2?"\s+
                          .+?<b>Downloads:</b>(?P<downloads>.+?)
                          <b>Cds:</b>
                          .+?<b>Comentarios:</b>
-                         .+?<b>Cds:</b>
                          .+?<b>Subido\ por:</b>\s*<a.+?>(?P<uploader>.+?)</a>.+?</div></div>''',
                          re.IGNORECASE | re.DOTALL | re.VERBOSE | re.UNICODE |
                          re.MULTILINE)

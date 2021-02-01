@@ -1,3 +1,6 @@
+0.3.7
+- Fix search result entry regexp
+
 0.3.6
 - Use direct download strategy discovred by user @tuxitos. Thanks!
 - Adapt to: subdivx.com now being served via HTTPS; changes in subtitles
