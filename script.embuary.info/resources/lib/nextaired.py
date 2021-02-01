@@ -21,9 +21,10 @@ class NextAired():
         local_media = get_local_media()
         self.local_media = local_media['shows']
 
-        for item in self.local_media:
-            del item['playcount']
-            del item['watchedepisodes']
+        if self.local_media:
+            for item in self.local_media:
+                del item['playcount']
+                del item['watchedepisodes']
 
         cache_key = 'nextaired_' + self.date_today + '_' + md5hash(self.local_media)
         self.airing_items = get_cache(cache_key)
