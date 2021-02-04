@@ -71,7 +71,7 @@ class ConfirmationLoop(threading.Thread):
         self._parent_window.close()
 
 
-class ConfirmationDialog(pyxbmct.AddonDialogWindow):
+class ConfirmationDialog(pyxbmct.AddonDialogWindow):  # pylint: disable=too-many-ancestors
     def __init__(self, email, token, confirm_url, qrcode_path):
         # type: (Text, Text, Text, Text) -> None
         super(ConfirmationDialog, self).__init__(_('Confirm Addon Authorization'))
