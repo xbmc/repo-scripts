@@ -1,0 +1,211 @@
+*** 21.204.0 ***
+
+Use xbmc.LOGINFO
+Updated youtube-dl core to 2021.02.04.1
+
+*** 20.616.0 ***
+
+Updated youtube-dl core to 2020.06.16.1
+Use new abortRequested API
+
+*** 20.324.0 ***
+
+Add Python 3 compatibility
+Updated youtube-dl core to 2020.03.24
+
+*** 19.912.1 ***
+
+Add German translation - (Thanks CurlingTongs)
+Updates for AddonSignals module
+
+*** 19.912.0 ***
+
+Updated youtube-dl core to 2019.09.12
+Fixes for Kodi 18
+
+*** 18.1107.0 ***
+
+Updated youtube-dl core to 2018.11.7
+
+*** 18.619.0 ***
+
+Updated youtube-dl core to 2018.06.19
+Added Dutch translation - (Thanks Quihico)
+Added Greek translations - (Thanks Twilight0)
+
+*** 18.425.0 ***
+
+Updated youtube-dl core to 2018.04.25
+
+*** 18.320.0 ***
+
+Updated youtube-dl core to 2018.03.20
+
+*** 18.225.0 ***
+
+Updated youtube-dl core to 2018.02.25
+Possible fix for import errors on Xbox One - Issue #33
+
+*** 17.1231.0 ***
+
+Update youtube-dl core to 2017.12.31
+Enable usage in WSGI scripts (Thanks koying)
+Add Spanish language strings (Thanks roliverosc)
+Add Hebrew language strings (Thanks Eng2Heb)
+
+*** 17.1228.0 ***
+
+Updated youtube-dl core to 2017.12.28
+
+*** 17.709.0 ***
+
+Updated youtube-dl core to 2017.07.09
+
+*** 17.518.2 ***
+
+Remove testing code that was spamming the log
+
+*** 17.518.1 ***
+
+Added setting 'Skip Videos Without Audio' to force choosing videos with audio
+
+*** 17.518.0 ***
+
+Updated youtube-dl core to 2017.05.18.1
+Fix errors caused by Kodi datetime.strptime() issue
+
+*** 17.310.0 ***
+
+Updated youtube-dl core to 2017.03.10
+
+*** 16.1026.0 ***
+
+Updated youtube-dl core to 2016.10.26
+
+*** 16.627.0 ***
+
+Updated youtube-dl core to 2016.06.27
+Downloads that fail to copy from temp to downloads now are kept in temp with a message
+
+*** 16.521.0 ***
+
+Updated youtube-dl core to 2016.05.21.2
+
+*** 16.327.0 ***
+
+Updated youtube-dl core to 2016.03.27
+Fix error caused by missing http_headers in info when ffmpeg is used
+
+*** 16.318.0 ***
+
+Updated youtube-dl core to 2016.03.18
+Fix error when viewing youtube-dl core info from settings
+Fix (hopefully) encoding error when checking for .part files on some platforms
+
+*** 16.306.0 ***
+
+Updated youtube-dl core to 2016.03.06
+
+*** 15.1223.0 ***
+
+Updated youtube-dl core to 2015.12.23
+
+*** 15.1124.0 ***
+
+Updated youtube-dl core to 2015.11.24
+
+*** 15.1123.0 ***
+
+Updated youtube-dl core to 2015.11.23
+
+*** 15.318.0 ***
+
+Updated youtube-dl core to 2015.03.18
+Fix error causing 'Download Current Video' to fail
+
+*** 14.1217.0 ***
+
+Updated youtube-dl core to 2014.12.17.2
+
+*** 14.1210.1 ***
+
+Removed core updating options
+
+*** 15.318.0 ***
+
+Fix error causing 'Download Currently Playing Video' video to fail
+Update youtube-dl core to 2015.03.18
+
+*** 14.1210.0 ***
+
+Update youtube-dl core to 2014.12.10.3
+Added auto-updating of the youtube-dl core
+Added the ability to download in the background
+Added to programs/addons/apps for controlling background downloads and queue management
+Added settings for stream selection defaults, download path defaults and auto-update defaults
+Deprecated the module function disableDASHVideo() which is now set in the addon settings
+Added the option to download the currently playing video (via the option from 'youtube-dl Control' in Programs)
+Changed the icon
+
+*** 14.1104.1 ***
+
+Fixed issue with poorly named internal module causing conflicts
+
+*** 14.1104.0 ***
+
+Update youtube-dl core to 2014.11.04
+Removed default entries from _BLACKLIST
+Added overrideParam() method
+Added generateBlacklist() method
+Added busy dialog to getVideoInfo()
+
+*** 14.1026.0 ***
+
+Update youtube-dl core to 2014.10.26
+
+*** 14.925.0 ***
+
+Update youtube-dl core to 2014.09.25
+
+*** 14.810.0 ***
+
+Update youtube-dl core to 2014.08.10
+Initial submission to official repository
+
+*** 14.624.0 ***
+
+Update youtube-dl core to 2014.06.24.1
+
+*** 14.519.1 ***
+
+Added argument resolve_redirects=False to getVideoInfo() and mightHaveVideo()
+
+*** 14.519.0 ***
+
+Update youtube-dl core
+
+*** 14.304.1 ***
+
+Use default User-Agent from youtube_dl module when creating xbmc url for rtmp streams - fix by: hojel (Hoje Lee)
+
+*** 14.304.0 ***
+
+Now uses VideoInfo object for item selection and for format selection when downloading
+
+*** 14.227.1 ***
+
+Separate out utility functions
+Fix for some sites with only one format causing errors
+
+*** 14.227.0 ***
+
+DownloadResult now includes filepath
+Added ability to select video and format
+
+*** 14.225.1 ***
+
+Added the ability to download videos
+
+*** 14.225.0 ***
+
+Initial beta release
