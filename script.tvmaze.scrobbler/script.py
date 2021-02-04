@@ -18,8 +18,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
+from libs.exception_logger import log_exception
 from libs.gui import DIALOG
-from libs.kodi_service import debug_exception, GETTEXT
+from libs.kodi_service import GETTEXT
 from libs.scrobbling_service import get_menu_actions
 
 _ = GETTEXT
@@ -36,5 +37,5 @@ def main():
 
 
 if __name__ == '__main__':
-    with debug_exception():
+    with log_exception():
         main()
