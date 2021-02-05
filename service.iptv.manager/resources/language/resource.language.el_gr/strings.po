@@ -3,7 +3,7 @@
 # Addon id: service.iptv.manager
 msgid ""
 msgstr ""
-"Language: ru\n"
+"Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -11,53 +11,53 @@ msgstr ""
 # CONTEXT MENU
 msgctxt "#30600"
 msgid "Play with IPTV Manager"
-msgstr "Воспроизвести в IPTV Manager"
+msgstr "Αναπαραγωγή με τον διαχειριστή IPTV"
 
 # MESSAGES
 msgctxt "#30700"
 msgid "Are you sure you want to setup IPTV Simple for the use with IPTV Manager? Any existing configuration of IPTV Simple will be overwritten."
-msgstr "Вы уверены, что хотите настроить IPTV Simple для работы с IPTV Manager? Существующие параметры IPTV Simple будут перезаписаны."
+msgstr "Είστε σίγουροι ότι θέλετε να ρυθμίσετε το IPTV Simple για χρήση με τον διαχειριστή IPTV; Όλες οι υπάρχουσες ρυθμίσεις του IPTV simple θα επαναγραφτούν."
 
 msgctxt "#30701"
 msgid "IPTV Simple is configured for use with IPTV Manager!"
-msgstr "IPTV Simple настроен для работы с IPTV Manager!"
+msgstr "Το IPTV Simple έχει ρυθμιστεί για χρήση με τον διαχειριστή IPTV!"
 
 msgctxt "#30702"
 msgid "The configuration of IPTV Simple has failed. Please check the log files for more information."
-msgstr "Настройка IPTV Simple не удалась. Пожалуйста, проверьте файлы журнала для получения дополнительной информации."
+msgstr "Η ρύθμιση του IPTV Simple έχει αποτύχει. Παρακαλώ ελέγξτε το αρχείο καταγραφής για περισσότερες πληροφορίες."
 
 msgctxt "#30703"
 msgid "Detecting IPTV add-ons..."
-msgstr "Обнаружение дополнений IPTV..."
+msgstr "Ανίχνευση των προσθέτων IPTV..."
 
 msgctxt "#30704"
 msgid "Fetching channels and guide of {addon}..."
-msgstr "Получение каналов и программы от {addon}..."
+msgstr "Λήψη καναλιών και οδηγού του {addon}..."
 
 msgctxt "#30705"
 msgid "Updating channels and guide..."
-msgstr "Обновление каналов и программы..."
+msgstr "Ενημέρωση καναλιών και οδηγού..."
 
 msgctxt "#30706"
 msgid "This program isn't available to play."
-msgstr ""
+msgstr "Το πρόγραμμα αυτό είναι μη διαθέσιμο για αναπαραγωγή."
 
 # SETTINGS
 msgctxt "#30800"
 msgid "Channels"
-msgstr "ТВ каналы"
+msgstr "Κανάλια"
 
 msgctxt "#30801"
 msgid "Refreshing"
-msgstr "Обновление"
+msgstr "Ανανέωση"
 
 msgctxt "#30802"
 msgid "Refresh interval [I](in hours)[/I]"
-msgstr "Интервал обновления [I](в часах)[/I]"
+msgstr "Διάστημα ανανέωσης [I](σε ώρες)[/I]"
 
 msgctxt "#30803"
 msgid "Refresh channels and guide now…"
-msgstr "Обновить каналы и программу сейчас…"
+msgstr "Ανανέωση καναλιών και οδηγού τώρα…"
 
 msgctxt "#30820"
 msgid "IPTV Simple"
@@ -65,19 +65,19 @@ msgstr "IPTV Simple"
 
 msgctxt "#30821"
 msgid "Configuration"
-msgstr "Параметры"
+msgstr "Ρυθμίσεις"
 
 msgctxt "#30822"
 msgid "Configure IPTV Simple automatically…"
-msgstr "Настроить IPTV Simple автоматически…"
+msgstr "Ρύθμιση του IPTV Simple αυτομάτως…"
 
 msgctxt "#30823"
 msgid "Open IPTV Simple settings…"
-msgstr "Открыть настройки IPTV Simple…"
+msgstr "Άνοιγμα των ρυθμίσεων του IPTV Simple"
 
 msgctxt "#30824"
 msgid "Automatically restart IPTV Simple to refresh the data"
-msgstr "Автоматически перезапускать IPTV Simple при обновлении данных"
+msgstr "Αυτόματη ανανέωση του IPTV Simple για ανανέωση των δεδομένων"
 
 msgctxt "#30880"
 msgid "Expert"

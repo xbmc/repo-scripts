@@ -3,7 +3,7 @@
 # Addon id: service.iptv.manager
 msgid ""
 msgstr ""
-"Language: ru\n"
+"Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -11,53 +11,53 @@ msgstr ""
 # CONTEXT MENU
 msgctxt "#30600"
 msgid "Play with IPTV Manager"
-msgstr "Воспроизвести в IPTV Manager"
+msgstr "Lejátszás ezzel: IPTV Manager"
 
 # MESSAGES
 msgctxt "#30700"
 msgid "Are you sure you want to setup IPTV Simple for the use with IPTV Manager? Any existing configuration of IPTV Simple will be overwritten."
-msgstr "Вы уверены, что хотите настроить IPTV Simple для работы с IPTV Manager? Существующие параметры IPTV Simple будут перезаписаны."
+msgstr "Biztos szeretnéd, hogy az IPTV Simple ezentúl az IPTV Manager-t használja forrásként? A teljes jelenlegi konfiguráció felülírásra kerül."
 
 msgctxt "#30701"
 msgid "IPTV Simple is configured for use with IPTV Manager!"
-msgstr "IPTV Simple настроен для работы с IPTV Manager!"
+msgstr "Az IPTV Simple mostantól az IPTV Manager-t használja forrásként!"
 
 msgctxt "#30702"
 msgid "The configuration of IPTV Simple has failed. Please check the log files for more information."
-msgstr "Настройка IPTV Simple не удалась. Пожалуйста, проверьте файлы журнала для получения дополнительной информации."
+msgstr "Az IPTV Simple konfigurációja sikertelen. Részletek a hibanaplóban."
 
 msgctxt "#30703"
 msgid "Detecting IPTV add-ons..."
-msgstr "Обнаружение дополнений IPTV..."
+msgstr "IPTV kiegészítők keresése..."
 
 msgctxt "#30704"
 msgid "Fetching channels and guide of {addon}..."
-msgstr "Получение каналов и программы от {addon}..."
+msgstr "Csatornák és műsorújság letöltése: {addon}..."
 
 msgctxt "#30705"
 msgid "Updating channels and guide..."
-msgstr "Обновление каналов и программы..."
+msgstr "Csatornák és műsorújság frissítése..."
 
 msgctxt "#30706"
 msgid "This program isn't available to play."
-msgstr ""
+msgstr "Ezt a műsort jelenleg nem lehet lejátszani."
 
 # SETTINGS
 msgctxt "#30800"
 msgid "Channels"
-msgstr "ТВ каналы"
+msgstr "Csatornák"
 
 msgctxt "#30801"
 msgid "Refreshing"
-msgstr "Обновление"
+msgstr "Frissítés"
 
 msgctxt "#30802"
 msgid "Refresh interval [I](in hours)[/I]"
-msgstr "Интервал обновления [I](в часах)[/I]"
+msgstr "Frissítési időköz [I](óra)[/I]"
 
 msgctxt "#30803"
 msgid "Refresh channels and guide now…"
-msgstr "Обновить каналы и программу сейчас…"
+msgstr "Csatornák és műsorújság frissítése most…"
 
 msgctxt "#30820"
 msgid "IPTV Simple"
@@ -65,19 +65,19 @@ msgstr "IPTV Simple"
 
 msgctxt "#30821"
 msgid "Configuration"
-msgstr "Параметры"
+msgstr "Konfiguráció"
 
 msgctxt "#30822"
 msgid "Configure IPTV Simple automatically…"
-msgstr "Настроить IPTV Simple автоматически…"
+msgstr "IPTV Simple automatikus konfigurációja…"
 
 msgctxt "#30823"
 msgid "Open IPTV Simple settings…"
-msgstr "Открыть настройки IPTV Simple…"
+msgstr "IPTV Simple beállításainak megnyitása…"
 
 msgctxt "#30824"
 msgid "Automatically restart IPTV Simple to refresh the data"
-msgstr "Автоматически перезапускать IPTV Simple при обновлении данных"
+msgstr "IPTV Simple automatikus újraindítása, frissítés után"
 
 msgctxt "#30880"
 msgid "Expert"
