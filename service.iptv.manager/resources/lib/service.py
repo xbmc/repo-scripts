@@ -12,7 +12,6 @@ from resources.lib import kodilogging, kodiutils
 from resources.lib.modules.addon import Addon
 from resources.lib.modules.iptvsimple import IptvSimple
 
-kodilogging.config()
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -53,4 +52,5 @@ class BackgroundService(Monitor):
 
 def run():
     """Run the BackgroundService"""
+    kodilogging.config()
     BackgroundService().run()
