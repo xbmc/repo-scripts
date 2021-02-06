@@ -2,6 +2,13 @@
 <settings>
     <setting label="32024" type="bool" id="pull_from_tvmaze" default="true" />
     <setting label="32023" type="bool" id="show_notifications" default="true" />
+    <setting label="32032" type="bool" id="periodic_pull" default="false" />
+    <setting label="32033" type="labelenum" id="pull_interval_hours" values="1|3|6|12|24"
+             enable="eq(-1,true)" />
+    <setting label="32034" type="bool" id="pull_during_playback" default="false"
+             enable="eq(-2,true)" />
+    <!-- Hidden settings -->
     <setting label="" type="text" id="username" default="" visible="false"/>
     <setting label="" type="text" id="apikey" default="" visible="false"/>
+    <setting label="" type="text" id="time_last_pulled" default="" visible="false"/>
 </settings>

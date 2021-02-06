@@ -18,10 +18,13 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from libs.kodi_monitor import UpdateMonitor
+from libs.exception_logger import log_exception
+from libs.kodi_monitor import KodiMonitor
 from libs.kodi_service import logger
+from libs.scheduled_tasks import periodic_pull
 
-MONITOR = UpdateMonitor()
-logger.info('Service started')
-MONITOR.waitForAbort()
-logger.info('Service stopped')
+with log_exception():
+    monitor = KodiMonitor()
+    while not monitor.waitForAbort(3.0):
+        periodic_pull()
+    logger.info('Service stopped')
