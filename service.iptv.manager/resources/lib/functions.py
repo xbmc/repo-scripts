@@ -10,7 +10,6 @@ from resources.lib.modules.addon import Addon
 from resources.lib.modules.contextmenu import ContextMenu
 from resources.lib.modules.iptvsimple import IptvSimple
 
-kodilogging.config()
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -53,6 +52,8 @@ def open_settings():
 
 def run(args):
     """Run the function"""
+    kodilogging.config()
+
     function = args[1]
     function_map = {
         'setup-iptv-simple': setup_iptv_simple,

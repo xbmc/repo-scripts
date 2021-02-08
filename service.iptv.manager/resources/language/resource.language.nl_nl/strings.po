@@ -1,18 +1,20 @@
+# Kodi Media Center language file
+# Addon Name: IPTV Manager
+# Addon id: service.iptv.manager
 msgid ""
 msgstr ""
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-### CONTEXT MENU
+# CONTEXT MENU
 msgctxt "#30600"
 msgid "Play with IPTV Manager"
 msgstr "Afspelen met IPTV Manager"
 
-
-### MESSAGES
+# MESSAGES
 msgctxt "#30700"
 msgid "Are you sure you want to setup IPTV Simple for the use with IPTV Manager? Any existing configuration of IPTV Simple will be overwritten."
 msgstr "Bent u zeker om IPTV Simple in te stellen om te gebruiken met IPTV Manager? De bestaande configuratie van IPTV Simple zal worden overschreven."
@@ -41,8 +43,7 @@ msgctxt "#30706"
 msgid "This program isn't available to play."
 msgstr "Dit programma is niet beschikbaar om af te spelen."
 
-
-### SETTINGS
+# SETTINGS
 msgctxt "#30800"
 msgid "Channels"
 msgstr "Kanalen"
@@ -78,3 +79,23 @@ msgstr "Open de IPTV Simple instellingen…"
 msgctxt "#30824"
 msgid "Automatically restart IPTV Simple to refresh the data"
 msgstr "Herstart IPTV Simple automatisch om de data te vernieuwen"
+
+msgctxt "#30880"
+msgid "Expert"
+msgstr "Expert"
+
+msgctxt "#30881"
+msgid "Logging"
+msgstr "Logboek"
+
+msgctxt "#30882"
+msgid "Enable debug logging"
+msgstr "Activeer debug logging"
+
+msgctxt "#30883"
+msgid "Install Kodi Logfile Uploader…"
+msgstr "Installeer Kodi Logfile Uploader…"
+
+msgctxt "#30884"
+msgid "Open Kodi Logfile Uploader…"
+msgstr "Open Kodi Logfile Uploader…"

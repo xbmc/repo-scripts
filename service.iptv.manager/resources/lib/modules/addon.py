@@ -3,9 +3,11 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
+import sys
 import json
 import logging
 import os
+import re
 import socket
 import time
 
@@ -24,6 +26,7 @@ def update_qs(url, **params):
         from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
     except ImportError:  # Python 2
         from urllib import urlencode
+
         from urlparse import parse_qsl, urlparse, urlunparse
     url_parts = list(urlparse(url))
     query = dict(parse_qsl(url_parts[4]))
@@ -48,7 +51,7 @@ class Addon:
     def refresh(cls, show_progress=False):
         """Update channels and EPG data"""
         channels = []
-        epg = dict()
+        epg = []
 
         if show_progress:
             progress = kodiutils.progress(message=kodiutils.localize(30703))  # Detecting IPTV add-ons...
@@ -76,7 +79,7 @@ class Addon:
                 return
 
             # Fetch EPG
-            epg.update(addon.get_epg())
+            epg.append(addon.get_epg())
 
             if progress and progress.iscanceled():
                 progress.close()
@@ -87,7 +90,7 @@ class Addon:
             progress.update(100, kodiutils.localize(30705))  # Updating channels and guide...
 
         IptvSimple.write_playlist(channels)
-        IptvSimple.write_epg(epg)
+        IptvSimple.write_epg(epg, channels)
 
         if kodiutils.get_setting_bool('iptv_simple_restart'):
             if show_progress:
@@ -130,7 +133,7 @@ class Addon:
         """Get channel data from this add-on"""
         _LOGGER.info('Requesting channels from %s...', self.channels_uri)
         if not self.channels_uri:
-            return {}
+            return []
 
         try:
             data = self._get_data_from_addon(self.channels_uri)
@@ -139,6 +142,11 @@ class Addon:
             _LOGGER.error('Something went wrong while calling %s: %s', self.addon_id, exc)
             return []
 
+        # Return M3U8-format as-is without headers
+        if not isinstance(data, dict):
+            return data.replace('#EXTM3U\n', '')
+
+        # JSON-STREAMS format
         if data.get('version', 1) > CHANNELS_VERSION:
             _LOGGER.warning('Skipping %s since it uses an unsupported version: %d', self.channels_uri,
                             data.get('version'))
@@ -152,15 +160,27 @@ class Addon:
                 continue
 
             # Fix logo path to be absolute
-            if channel.get('logo'):
-                if not channel.get('logo').startswith(('http://', 'https://', 'special://', '/')):
-                    channel['logo'] = os.path.join(self.addon_path, channel.get('logo'))
-            else:
+            if not channel.get('logo'):
                 channel['logo'] = kodiutils.addon_icon(self.addon_obj)
+            elif not channel.get('logo').startswith(('http://', 'https://', 'special://', 'resource://', '/')):
+                channel['logo'] = os.path.join(self.addon_path, channel.get('logo'))
 
-            # Add add-on name as group
+            # Ensure group is a set
             if not channel.get('group'):
-                channel['group'] = kodiutils.addon_name(self.addon_obj)
+                channel['group'] = set()
+            # Accept string values (backward compatible)
+            elif isinstance(channel.get('group'), (bytes, str)):
+                channel['group'] = set(channel.get('group').split(';'))
+            # Accept string values (backward compatible, py2 version)
+            elif sys.version_info.major == 2 and isinstance(channel.get('group'), unicode): # noqa: F821; pylint: disable=undefined-variable
+                channel['group'] = set(channel.get('group').split(';'))
+            elif isinstance(channel.get('group'), list):
+                channel['group'] = set(list(channel.get('group')))
+            else:
+                _LOGGER.warning('Channel group is not a list: %s', channel)
+                channel['group'] = set()
+            # Add add-on name as group, if not already
+            channel['group'].add(kodiutils.addon_name(self.addon_obj))
 
             channels.append(channel)
 
@@ -179,6 +199,11 @@ class Addon:
             _LOGGER.error('Something went wrong while calling %s: %s', self.addon_id, exc)
             return {}
 
+        # Return XMLTV-format as-is without headers and footers
+        if not isinstance(data, dict):
+            return re.search(r'<tv[^>]*>(.*)</tv>', data, flags=re.DOTALL).group(1).strip()
+
+        # JSON-EPG format
         if data.get('version', 1) > EPG_VERSION:
             _LOGGER.warning('Skipping EPG from %s since it uses an unsupported version: %d', self.epg_uri,
                             data.get('version'))
