@@ -1,5 +1,32 @@
 # Changelog
 
+## [v0.2.3](https://github.com/add-ons/service.iptv.manager/tree/v0.2.3) (2021-02-04)
+
+[Full Changelog](https://github.com/add-ons/service.iptv.manager/compare/v0.2.2...v0.2.3)
+
+**Implemented enhancements:**
+
+- Make JSON-STREAMS group a list [\#77](https://github.com/add-ons/service.iptv.manager/pull/77) ([dagwieers](https://github.com/dagwieers))
+- Fix logging for Kodi Matrix, allow to install script.kodi.loguploader from the settings [\#75](https://github.com/add-ons/service.iptv.manager/pull/75) ([michaelarnauts](https://github.com/michaelarnauts))
+- Add support for resource:// logos [\#74](https://github.com/add-ons/service.iptv.manager/pull/74) ([dagwieers](https://github.com/dagwieers))
+- Allow to process raw M3U8 or XMLTV data [\#69](https://github.com/add-ons/service.iptv.manager/pull/69) ([michaelarnauts](https://github.com/michaelarnauts))
+- Add support for \#KODIPROP [\#68](https://github.com/add-ons/service.iptv.manager/pull/68) ([michaelarnauts](https://github.com/michaelarnauts))
+
+**Fixed bugs:**
+
+- Fix empty space in start and stop fields when no timezone was specified [\#70](https://github.com/add-ons/service.iptv.manager/pull/70) ([michaelarnauts](https://github.com/michaelarnauts))
+
+**Merged pull requests:**
+
+- Fix/improve the add-on description and summary [\#73](https://github.com/add-ons/service.iptv.manager/pull/73) ([dagwieers](https://github.com/dagwieers))
+- Make use of git archive [\#72](https://github.com/add-ons/service.iptv.manager/pull/72) ([dagwieers](https://github.com/dagwieers))
+- Verify xmltv output against the xmltv.dtd [\#71](https://github.com/add-ons/service.iptv.manager/pull/71) ([michaelarnauts](https://github.com/michaelarnauts))
+- Testing improvements [\#66](https://github.com/add-ons/service.iptv.manager/pull/66) ([michaelarnauts](https://github.com/michaelarnauts))
+- Add Romanian strings. [\#65](https://github.com/add-ons/service.iptv.manager/pull/65) ([tmihai20](https://github.com/tmihai20))
+- Initial greek translation for IPTV Manager [\#62](https://github.com/add-ons/service.iptv.manager/pull/62) ([Twilight0](https://github.com/Twilight0))
+- Add hungarian language translation [\#59](https://github.com/add-ons/service.iptv.manager/pull/59) ([takraj](https://github.com/takraj))
+- Improve tests and run tests on Windows [\#58](https://github.com/add-ons/service.iptv.manager/pull/58) ([michaelarnauts](https://github.com/michaelarnauts))
+
 ## [v0.2.2](https://github.com/add-ons/service.iptv.manager/tree/v0.2.2) (2020-12-07)
 
 [Full Changelog](https://github.com/add-ons/service.iptv.manager/compare/v0.2.1...v0.2.2)

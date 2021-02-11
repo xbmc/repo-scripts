@@ -8,6 +8,7 @@ import logging
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 
 ADDON = xbmcaddon.Addon()
 
@@ -47,11 +48,6 @@ def addon_id(addon=None):
     return get_addon_info('id', addon)
 
 
-def addon_fanart(addon=None):
-    """Cache and return add-on fanart"""
-    return get_addon_info('fanart', addon)
-
-
 def addon_name(addon=None):
     """Cache and return add-on name"""
     return get_addon_info('name', addon)
@@ -66,63 +62,31 @@ def addon_profile(addon=None):
     """Return add-on profile"""
     if not addon:
         addon = ADDON
-    return to_unicode(xbmc.translatePath(addon.getAddonInfo('profile')))
-
-
-def get_search_string(heading='', message=''):
-    """Ask the user for a search string"""
-    search_string = None
-    keyboard = xbmc.Keyboard(message, heading)
-    keyboard.doModal()
-    if keyboard.isConfirmed():
-        search_string = to_unicode(keyboard.getText())
-    return search_string
+    try:  # Kodi 19
+        return to_unicode(xbmcvfs.translatePath(addon.getAddonInfo('profile')))
+    except AttributeError:  # Kodi 18
+        return to_unicode(xbmc.translatePath(addon.getAddonInfo('profile')))
 
 
 def ok_dialog(heading='', message=''):
     """Show Kodi's OK dialog"""
-    from xbmcgui import Dialog
     if not heading:
         heading = addon_name()
     if kodi_version_major() < 19:
-        return Dialog().ok(heading=heading, line1=message)
-    return Dialog().ok(heading=heading, message=message)
+        # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
+        return xbmcgui.Dialog().ok(heading=heading, line1=message)
+    return xbmcgui.Dialog().ok(heading=heading, message=message)
 
 
 def yesno_dialog(heading='', message='', nolabel=None, yeslabel=None, autoclose=0):
     """Show Kodi's Yes/No dialog"""
-    from xbmcgui import Dialog
     if not heading:
         heading = addon_name()
     if kodi_version_major() < 19:
-        return Dialog().yesno(heading=heading, line1=message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
-    return Dialog().yesno(heading=heading, message=message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
-
-
-def notification(heading='', message='', icon='info', time=4000):
-    """Show a Kodi notification"""
-    from xbmcgui import Dialog
-    if not heading:
-        heading = addon_name()
-    if not icon:
-        icon = addon_icon()
-    Dialog().notification(heading=heading, message=message, icon=icon, time=time)
-
-
-def select(heading='', options=None, autoclose=0, preselect=-1, use_details=False):
-    """Show a Kodi select dialog"""
-    from xbmcgui import Dialog
-    if not heading:
-        heading = addon_name()
-    return Dialog().select(heading, options, autoclose=autoclose, preselect=preselect, useDetails=use_details)
-
-
-def multiselect(heading='', options=None, autoclose=0, preselect=None, use_details=False):
-    """Show a Kodi multi-select dialog"""
-    from xbmcgui import Dialog
-    if not heading:
-        heading = addon_name()
-    return Dialog().multiselect(heading=heading, options=options, autoclose=autoclose, preselect=preselect, useDetails=use_details)
+        # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
+        return xbmcgui.Dialog().yesno(heading=heading, line1=message, nolabel=nolabel, yeslabel=yeslabel,
+                                      autoclose=autoclose)
+    return xbmcgui.Dialog().yesno(heading=heading, message=message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
 
 
 class progress(xbmcgui.DialogProgress, object):  # pylint: disable=invalid-name,useless-object-inheritance
@@ -140,6 +104,7 @@ class progress(xbmcgui.DialogProgress, object):  # pylint: disable=invalid-name,
         if kodi_version_major() < 19:
             lines = message.split('\n', 2)
             line1, line2, line3 = (lines + [None] * (3 - len(lines)))
+            # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
             return super(progress, self).create(heading, line1=line1, line2=line2, line3=line3)
         return super(progress, self).create(heading, message=message)
 
@@ -148,27 +113,9 @@ class progress(xbmcgui.DialogProgress, object):  # pylint: disable=invalid-name,
         if kodi_version_major() < 19:
             lines = message.split('\n', 2)
             line1, line2, line3 = (lines + [None] * (3 - len(lines)))
+            # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
             return super(progress, self).update(percent, line1=line1, line2=line2, line3=line3)
         return super(progress, self).update(percent, message=message)
-
-
-def set_locale():
-    """Load the proper locale for date strings, only once"""
-    if hasattr(set_locale, 'cached'):
-        return getattr(set_locale, 'cached')
-    from locale import Error, LC_ALL, setlocale
-    locale_lang = get_global_setting('locale.language').split('.')[-1]
-    locale_lang = locale_lang[:-2] + locale_lang[-2:].upper()
-    # NOTE: setlocale() only works if the platform supports the Kodi configured locale
-    try:
-        setlocale(LC_ALL, locale_lang)
-    except (Error, ValueError) as exc:
-        if locale_lang != 'en_GB':
-            _LOGGER.debug("Your system does not support locale '%s': %s", locale_lang, exc)
-            set_locale.cached = False
-            return False
-    set_locale.cached = True
-    return True
 
 
 def localize(string_id, **kwargs):
@@ -282,11 +229,6 @@ def get_cond_visibility(condition):
     return xbmc.getCondVisibility(condition)
 
 
-def has_addon(name):
-    """Checks if add-on is installed"""
-    return xbmc.getCondVisibility('System.HasAddon(%s)' % name) == 1
-
-
 def kodi_version():
     """Returns full Kodi version as string"""
     return xbmc.getInfoLabel('System.BuildVersion').split(' ')[0]
@@ -352,13 +294,3 @@ def execute_builtin(command, *args):
 def get_addon(name):
     """Return an instance of the specified Addon"""
     return xbmcaddon.Addon(name)
-
-
-def get_info_label(label):
-    """Returns a InfoLabel from Kodi"""
-    return xbmc.getInfoLabel(label)
-
-
-def get_region(key):
-    """Returns Region information from Kodi"""
-    return xbmc.getRegion(key)

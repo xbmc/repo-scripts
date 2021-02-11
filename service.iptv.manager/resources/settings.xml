@@ -12,4 +12,10 @@
         <setting label="30823" type="action" option="close" action="Addon.OpenSettings(pvr.iptvsimple)" enable="System.HasAddon(pvr.iptvsimple)"/> <!-- Open IPTV Simple settings -->
         <setting label="30824" type="bool" id="iptv_simple_restart" default="true" enable="System.HasAddon(pvr.iptvsimple)"/> <!-- Automatically restart IPTV Simple -->
     </category>
+    <category label="30880"> <!-- Expert -->
+        <setting label="30881" type="lsep"/> <!-- Logging -->
+        <setting label="30882" type="bool" id="debug_logging" default="false"/>
+        <setting label="30883" type="action" action="InstallAddon(script.kodi.loguploader)" option="close" visible="!System.HasAddon(script.kodi.loguploader)"/> <!-- Install Kodi Logfile Uploader -->
+        <setting label="30884" type="action" action="RunAddon(script.kodi.loguploader)" visible="String.StartsWith(System.BuildVersion,18) + System.HasAddon(script.kodi.loguploader) | System.AddonIsEnabled(script.kodi.loguploader)" /> <!-- Open Kodi Logfile Uploader -->
+    </category>
 </settings>
