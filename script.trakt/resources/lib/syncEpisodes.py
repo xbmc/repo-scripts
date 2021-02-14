@@ -472,10 +472,10 @@ class SyncEpisodes:
                 self.sync.UpdateProgress(toPercent, line1=kodiUtilities.getString(
                     1441), line2=kodiUtilities.getString(32129))
                 logger.debug(
-                    "[Episodes Sync] Kodi episode playbacks are up to date.")
+                    "[Episodes Sync] Kodi episode progress is up to date.")
                 return
 
-            logger.debug("[Episodes Sync] %i show(s) shows are missing playbacks on Kodi" % len(
+            logger.debug("[Episodes Sync] %i show(s) shows are missing progress in Kodi" % len(
                 kodiShowsUpdate['shows']))
             for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpdate['shows']]:
                 logger.debug("[Episodes Sync] Episodes updated: %s" % s)
@@ -495,8 +495,8 @@ class SyncEpisodes:
             # need to calculate the progress in int from progress in percent from Trakt
             # split episode list into chunks of 50
             chunksize = 50
-            chunked_episodes = utilities.chunks([{"jsonrpc": "2.0", "id": i, "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid": episodes[i]['episodeid'], "resume": {
-                                                "position": episodes[i]['runtime'] / 100.0 * episodes[i]['progress'], "total": episodes[i]['runtime']}}} for i in range(len(episodes))], chunksize)
+            chunked_episodes = utilities.chunks([{"jsonrpc": "2.0", "id": i, "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid": episode['episodeid'], "resume": {
+                                                "position": episode['runtime'] / 100.0 * episode['progress'], "total": episode['runtime']}}} for episode in episodes if episode['runtime'] > 0], chunksize)
             i = 0
             x = float(len(episodes))
             for chunk in chunked_episodes:
