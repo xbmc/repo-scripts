@@ -318,10 +318,10 @@ class SyncMovies():
                 self.sync.UpdateProgress(
                     toPercent, line1='', line2=kodiUtilities.getString(32125))
                 logger.debug(
-                    "[Movies Sync] Kodi movie playbacks are up to date.")
+                    "[Movies Sync] Kodi movie progress is up to date.")
                 return
 
-            logger.debug("[Movies Sync] %i movie(s) playbacks will be updated in Kodi" % len(
+            logger.debug("[Movies Sync] %i movie(s) progress will be updated in Kodi" % len(
                 kodiMoviesToUpdate))
 
             self.sync.UpdateProgress(fromPercent, line1='', line2=kodiUtilities.getString(
@@ -329,8 +329,8 @@ class SyncMovies():
             # need to calculate the progress in int from progress in percent from Trakt
             # split movie list into chunks of 50
             chunksize = 50
-            chunked_movies = utilities.chunks([{"jsonrpc": "2.0", "id": i, "method": "VideoLibrary.SetMovieDetails", "params": {"movieid": kodiMoviesToUpdate[i]['movieid'], "resume": {
-                                              "position": kodiMoviesToUpdate[i]['runtime'] / 100.0 * kodiMoviesToUpdate[i]['progress'], "total": kodiMoviesToUpdate[i]['runtime']}}} for i in range(len(kodiMoviesToUpdate))], chunksize)
+            chunked_movies = utilities.chunks([{"jsonrpc": "2.0", "id": i, "method": "VideoLibrary.SetMovieDetails", "params": {"movieid": movie['movieid'], "resume": {
+                                              "position": movie['runtime'] / 100.0 * movie['progress'], "total": movie['runtime']}}} for movie in kodiMoviesToUpdate if movie['runtime'] > 0], chunksize)
             i = 0
             x = float(len(kodiMoviesToUpdate))
             for chunk in chunked_movies:
