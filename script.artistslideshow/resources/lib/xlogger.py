@@ -1,19 +1,24 @@
-#v.0.4.1
+#v.0.4.10
 
 try:
     from kodi_six import xbmc
     LOGTYPE = 'xbmc'
 except ImportError:
-    import logging, logging.handlers
+    import os, logging, logging.handlers
     LOGTYPE = 'file'
 
 #this class creates an object used to log stuff to the xbmc log file
 class Logger( object ):
-    def __init__( self, logconfig="file", logformat='%(asctime)-15s %(levelname)-8s %(message)s', logfile='logfile.log',
-                  logname='_logger', numbackups=5, logdebug=False, maxsize=100000, when='midnight', interval=1, preamble='' ):
+    def __init__( self, logconfig="timed", logformat='%(asctime)-15s %(levelname)-8s %(message)s', logfile='logfile.log',
+                  logname='_logger', numbackups=5, logdebug=False, maxsize=100000, when='midnight', preamble='' ):
+        """Logs interactions."""
         self.LOGPREAMBLE = preamble
         self.LOGDEBUG = logdebug
         if LOGTYPE == 'file':
+            checkdir = os.sep.join( logfile.split(os.sep)[:-1] )
+            if not checkdir == 'logfile.log':
+                if not os.path.exists( checkdir ):
+                    os.makedirs( checkdir )
             self.logger = logging.getLogger( logname )
             self.logger.setLevel( logging.DEBUG )
             if logconfig == 'timed':
@@ -39,7 +44,6 @@ class Logger( object ):
                 loglevel = self.logger.critical
             else:
                 loglevel = self.logger.debug
-
         for line in loglines:
             try:
                 if type(line).__name__=='unicode':
@@ -63,16 +67,16 @@ class Logger( object ):
     def _output_file( self, line, loglevel ):
         if self.LOGDEBUG or loglevel != self.logger.debug:
             try:
-                loglevel( "%s %s" % (self.LOGPREAMBLE, line.__str__()) )
+                loglevel( '%s %s' % (self.LOGPREAMBLE, line.__str__()) )
             except Exception as e:
-                self.logger.debug( "%s unable to output logline" % self.LOGPREAMBLE )
-                self.logger.debug( "%s %s" % (self.LOGPREAMBLE, e.__str__()) )
+                self.logger.debug( '%s unable to output logline' % self.LOGPREAMBLE )
+                self.logger.debug( '%s %s' % (self.LOGPREAMBLE, e.__str__()) )
 
 
     def _output_xbmc( self, line, loglevel ):
-        if self.LOGDEBUG or (loglevel != xbmc.LOGDEBUG and loglevel != xbmc.LOGINFO):
+        if self.LOGDEBUG or loglevel != xbmc.LOGDEBUG:
             try:
-                xbmc.log( "%s %s" % (self.LOGPREAMBLE, line.__str__()), loglevel)
+                xbmc.log( '%s %s' % (self.LOGPREAMBLE, line.__str__()), loglevel)
             except Exception as e:
-                xbmc.log( "%s unable to output logline" % self.LOGPREAMBLE, loglevel)
-                xbmc.log ("%s %s" % (self.LOGPREAMBLE, e.__str__()), loglevel)
+                xbmc.log( '%s unable to output logline' % self.LOGPREAMBLE, loglevel)
+                xbmc.log ('%s %s' % (self.LOGPREAMBLE, e.__str__()), loglevel)
