@@ -1,4 +1,3 @@
-from kodi_six import xbmc
 import resources.lib.artistslideshow as ArtistSlideshow
 
 if ( __name__ == "__main__" ):
@@ -7,4 +6,3 @@ if ( __name__ == "__main__" ):
         slideshow.DoSettingsRoutines()
     elif not slideshow.SlideshowRunning():
         slideshow.Start()
-xbmc.log( '[Artist Slideshow] script stopped', xbmc.LOGINFO )

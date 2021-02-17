@@ -19,31 +19,23 @@ try:
 except ImportError:
     from itertools import zip_longest as _zip_longest
 import os, random, re, sys, threading, time
-from resources.plugins import *
 import json as _json
-from kodi_six import xbmc, xbmcaddon, xbmcgui, xbmcvfs
+from kodi_six import xbmc, xbmcgui, xbmcvfs
 from kodi_six.utils import py2_encode, py2_decode
-from resources.lib.fileops import checkPath, writeFile, readFile, deleteFile, deleteFolder, moveFile, naturalKeys
+from resources.plugins import *
+from resources.lib.fileops import *
 from resources.lib.url import URL
 from resources.lib.xlogger import Logger
-from resources.lib.kodisettings import getSettingBool, getSettingInt, getSettingString
+from resources.lib.kodisettings import *
 
-addon        = xbmcaddon.Addon()
-addonname    = addon.getAddonInfo('id')
-addonversion = addon.getAddonInfo('version')
-addonpath    = addon.getAddonInfo('path')
-addonicon    = xbmc.translatePath('%s/icon.png' % addonpath )
-language     = addon.getLocalizedString
-preamble     = '[Artist Slideshow]'
-logdebug     = getSettingBool( addon, 'logging' )
+LOGDEBUG     = getSettingBool( 'logging' )
+LW           = Logger( preamble='[Artist Slideshow]', logdebug=LOGDEBUG )
+JSONURL      = URL( 'json' )
+IMGURL       = URL( 'binary' )
 
-lw      = Logger( preamble=preamble, logdebug=logdebug )
-JSONURL = URL( 'json' )
-txtURL  = URL( 'text' )
-imgURL  = URL( 'binary' )
+LW.log( ['script version %s started' % ADDONVERSION], xbmc.LOGINFO )
+LW.log( ['debug logging set to %s' % LOGDEBUG], xbmc.LOGINFO )
 
-lw.log( ['script version %s started' % addonversion], xbmc.LOGINFO )
-lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGINFO )
 
 LANGUAGES = (
 # Full Language name[0]         ISO 639-1[1]   Script Language[2]
@@ -110,43 +102,43 @@ class Slideshow( threading.Thread ):
         self.IMAGESCLEARED = False
         self.SHOW = True
         self.PAUSESLIDESHOW = False
-        self.SLIDESHOWSLEEP = getSettingInt( addon, 'slideshow_sleep', default=1 )
+        self.SLIDESHOWSLEEP = getSettingInt( 'slideshow_sleep', default=1 )
         self.VALIDIMAGETYPES = tuple( xbmc.getSupportedMedia( 'picture' ).split( '|' )[:-2] )
-        lw.log( ['slideshow thread started'] )
+        LW.log( ['slideshow thread started'] )
 
 
     def AddImage( self, path ):
         if not path:
-            lw.log( ['Image path was empty, nothing added'] )
+            LW.log( ['Image path was empty, nothing added'] )
             return False
         if path.endswith( self.VALIDIMAGETYPES ):
             self.IMAGES.append( path )
-            lw.log( ['Added to image display group: ' + path] )
+            LW.log( ['Added to image display group: ' + path] )
             self.IMAGEADDED = True
             return True
         else:
-            lw.log( ['Image was not a valid Kodi image type, nothing added: ' + path] )
-            lw.log( ['Valid Kodi image types are:', self.VALIDIMAGETYPES] )
+            LW.log( ['Image was not a valid Kodi image type, nothing added: ' + path] )
+            LW.log( ['Valid Kodi image types are:', self.VALIDIMAGETYPES] )
             return False
 
 
     def ClearImages( self, fadetoblack ):
         self.IMAGES = []
         if fadetoblack:
-            self._set_property( 'ArtistSlideshow.Image', os.path.join( addonpath, 'resources', 'images', 'black-hd.png' ) )
+            self._set_property( 'ArtistSlideshow.Image', os.path.join( ADDONPATH, 'resources', 'images', 'black-hd.png' ) )
         else:
             self._set_property( 'ArtistSlideshow.Image' )
-        lw.log( ['images cleared'] )
+        LW.log( ['images cleared'] )
         self.IMAGESCLEARED = True
 
 
     def PauseSlideshow( self ):
-        lw.log( ['pausing slideshow'] )
+        LW.log( ['pausing slideshow'] )
         self.PAUSESLIDESHOW = True
 
 
     def ResumeSlideshow( self ):
-        lw.log( ['resuming slideshow'] )
+        LW.log( ['resuming slideshow'] )
         self.PAUSESLIDESHOW = False
 
 
@@ -172,17 +164,17 @@ class Slideshow( threading.Thread ):
                 if not self.SHOW:
                     break
                 if self.IMAGEADDED or self.IMAGESCLEARED:
-                    lw.log( ['image list changed, resetting loop'] )
+                    LW.log( ['image list changed, resetting loop'] )
                     break
-        lw.log( ['slideshow thread stopping'] )
+        LW.log( ['slideshow thread stopping'] )
 
 
     def _set_property( self, property_name, value='' ):
         try:
           self.WINDOW.setProperty( property_name, value )
-          lw.log( ['%s set to %s' % (property_name, value)] )
+          LW.log( ['%s set to %s' % (property_name, value)] )
         except Exception as e:
-          lw.log( ['Exception: Could not set property %s to value %s' % (property_name, value), e] )
+          LW.log( ['Exception: Could not set property %s to value %s' % (property_name, value), e] )
 
 
     def _wait( self, wait_time=1, sleep_time=1 ):
@@ -205,7 +197,7 @@ class SlideshowMonitor( xbmc.Monitor ):
 
 
     def onSettingsChanged( self ):
-        lw.log( ['the settings have changed'] )
+        LW.log( ['the settings have changed'] )
         self.SETTINGSCHANGED = True
 
 
@@ -231,13 +223,13 @@ class Main( xbmc.Player ):
 
 
     def onPlayBackPaused( self ):
-        lw.log( ['got a PlaybackPaused event'] )
+        LW.log( ['got a PlaybackPaused event'] )
         if self.PAUSESLIDESHOW:
             self.SLIDESHOW.PauseSlideshow()
 
 
     def onPlayBackResumed( self ):
-        lw.log( ['got a PlaybackResumed event'] )
+        LW.log( ['got a PlaybackResumed event'] )
         if self.PAUSESLIDESHOW:
             self.SLIDESHOW.ResumeSlideshow()
 
@@ -249,16 +241,16 @@ class Main( xbmc.Player ):
     def SlideshowRunning( self ):
         running = self._get_infolabel( self.ARTISTSLIDESHOWRUNNING )
         if running.lower() == 'true':
-            lw.log( ['script is already running'], xbmc.LOGINFO )
+            LW.log( ['script is already running'], xbmc.LOGINFO )
             return True
         else:
             return False
 
 
     def DoSettingsRoutines( self ):
-        lw.log( ['running script from a settings call with action ' + self.SETTINGSACTION], xbmc.LOGINFO )
+        LW.log( ['running script from a settings call with action ' + self.SETTINGSACTION], xbmc.LOGINFO )
         if self.SETTINGSACTION.lower() == 'movetokodistorage':
-            lw.log( ['starting process to move images to Kodi artist folder'] )
+            LW.log( ['starting process to move images to Kodi artist folder'] )
             self._move_to_kodi_storage()
 
 
@@ -268,10 +260,10 @@ class Main( xbmc.Player ):
         sleeping = False
         change_slideshow = True
         if self._is_playing():
-            lw.log( ['music playing'], xbmc.LOGINFO )
+            LW.log( ['music playing'], xbmc.LOGINFO )
             self._set_property( 'ArtistSlideshowRunning', 'True' )
         else:
-            lw.log( ['no music playing'], xbmc.LOGINFO )
+            LW.log( ['no music playing'], xbmc.LOGINFO )
             if self.DAEMON:
                 self._set_property( 'ArtistSlideshowRunning', 'True' )
         if self.MONITOR.waitForAbort( 1 ):
@@ -301,17 +293,18 @@ class Main( xbmc.Player ):
         self._clear_properties()
         self._set_property( 'ArtistSlideshowRunning' )
         self._set_property( 'ArtistSlideshow.CleanupComplete', 'True' )
+        LW.log( ['script version %s stopped' % ADDONVERSION], xbmc.LOGINFO )
 
 
     def _clean_dir( self, dir_path ):
         try:
             thedirs, old_files = xbmcvfs.listdir( dir_path )
         except Exception as e:
-            lw.log( ['unexpected error while getting directory list', e] )
+            LW.log( ['unexpected error while getting directory list', e] )
             return
         for old_file in old_files:
             success, loglines = deleteFile( os.path.join (dir_path, py2_encode( old_file ) ) )
-            lw.log( loglines )
+            LW.log( loglines )
 
 
     def _clean_text( self, text ):
@@ -326,7 +319,7 @@ class Main( xbmc.Player ):
 
 
     def _clear_properties( self, fadetoblack=False, clearartists=False ):
-        lw.log( ['main thread is cleaning all the properties'] )
+        LW.log( ['main thread is cleaning all the properties'] )
         self.MBID = ''
         self.FANARTNUMBER = False
         if clearartists:
@@ -356,9 +349,9 @@ class Main( xbmc.Player ):
     def _delete_folder( self, folder ):
         success, loglines = deleteFolder( os.path.join( folder, '' ) )
         if success:
-            lw.log( ['deleted folder ' + folder] )
+            LW.log( ['deleted folder ' + folder] )
         else:
-            lw.log( loglines )
+            LW.log( loglines )
 
 
     def _download( self ):
@@ -366,57 +359,57 @@ class Main( xbmc.Player ):
         image_downloaded = False
         image_dl_count = 0
         if not self.NAME:
-            lw.log( ['no artist name provided'] )
+            LW.log( ['no artist name provided'] )
             return False
-        lw.log( ['downloading images'] )
+        LW.log( ['downloading images'] )
         dialog_displayed = self._download_notification( 'before' )
         imgdb = os.path.join( self.INFODIR, self.IMGDB )
-        lw.log( ['checking download cache file ' + imgdb] )
+        LW.log( ['checking download cache file ' + imgdb] )
         loglines, cachelist_str = readFile( imgdb )
-        lw.log( loglines )
+        LW.log( loglines )
         for url in self._get_image_list():
-            lw.log( ['the url to check is ' + url] )
+            LW.log( ['the url to check is ' + url] )
             url_image_name = url.rsplit('/', 1)[-1]
             path = os.path.join( self.CACHEDIR, self._set_image_name( url, self.CACHEDIR, self.KODILOCALSTORAGE ) )
             if not self._playback_stopped_or_changed( wait_time=0.1 ):
-                lw.log( ['checking %s against %s' % (url_image_name, cachelist_str)] )
+                LW.log( ['checking %s against %s' % (url_image_name, cachelist_str)] )
                 if not (url_image_name in cachelist_str):
                     dialog_displayed = self._download_notification( 'begin', dialog_displayed=dialog_displayed )
-                    tmpname = os.path.join( self.DATAROOT, 'temp', url.rsplit('/', 1)[-1] )
-                    lw.log( ['the tmpname is ' + tmpname] )
+                    tmpname = os.path.join( ADDONDATAPATH, 'temp', url.rsplit('/', 1)[-1] )
+                    LW.log( ['the tmpname is ' + tmpname] )
                     if xbmcvfs.exists( tmpname ):
                         success, loglines = deleteFile( tmpname )
-                        lw.log( loglines )
-                    success, loglines, urldata = imgURL.Get( url, params=self.PARAMS )
-                    lw.log( loglines )
+                        LW.log( loglines )
+                    success, loglines, urldata = IMGURL.Get( url, params=self.PARAMS )
+                    LW.log( loglines )
                     if success:
                         success, loglines = writeFile( bytearray( urldata ), tmpname )
-                        lw.log( loglines )
+                        LW.log( loglines )
                     if not success:
                         return False
                     if xbmcvfs.Stat( tmpname ).st_size() > 999:
                         if not xbmcvfs.exists ( path ):
                             success, loglines = moveFile( tmpname, path )
-                            lw.log( loglines )
-                            lw.log( ['downloaded %s to %s' % (url, path)]  )
-                            lw.log( ['updating download database at ' + imgdb] )
+                            LW.log( loglines )
+                            LW.log( ['downloaded %s to %s' % (url, path)]  )
+                            LW.log( ['updating download database at ' + imgdb] )
                             cachelist_str = cachelist_str + url_image_name + '\r'
                             success, loglines = writeFile( cachelist_str, imgdb )
-                            lw.log( loglines )
+                            LW.log( loglines )
                             self.SLIDESHOW.AddImage( path )
                             self.IMAGESFOUND = True
                             image_downloaded = True
                             image_dl_count += 1
                         else:
-                            lw.log( ['image already exists, deleting temporary file'] )
+                            LW.log( ['image already exists, deleting temporary file'] )
                             success, loglines = deleteFile( tmpname )
-                            lw.log( loglines )
+                            LW.log( loglines )
                     else:
                         success, loglines = deleteFile( tmpname )
-                        lw.log( loglines )
+                        LW.log( loglines )
         self._download_notification( 'end', image_dl_count=image_dl_count, dialog_displayed=dialog_displayed )
         if not image_downloaded:
-            lw.log( ['no new images downloaded'] )
+            LW.log( ['no new images downloaded'] )
         return image_downloaded
 
 
@@ -424,18 +417,18 @@ class Main( xbmc.Player ):
         if not self.DOWNLOADNOTIFICATION:
             return False
         if dl_type == 'before' and not self.DNONLYONDOWNLOAD:
-            xbmcgui.Dialog().notification( language( 32204 ), language( 32307 ), icon=addonicon )
+            xbmcgui.Dialog().notification( ADDONLANGUAGE( 32204 ), ADDONLANGUAGE( 32307 ), icon=ADDONICON )
             dialog_displayed = True
         elif dl_type == 'begin' and self.DNONLYONDOWNLOAD and not dialog_displayed:
-            xbmcgui.Dialog().notification( language( 32204 ), language( 32307 ), icon=addonicon )
+            xbmcgui.Dialog().notification( ADDONLANGUAGE( 32204 ), ADDONLANGUAGE( 32307 ), icon=ADDONICON )
             dialog_displayed = True
         elif dl_type == 'end' and dialog_displayed:
             if image_dl_count == 1:
-                msg_end = language( 32309 )
+                msg_end = ADDONLANGUAGE( 32309 )
             else:
-                msg_end = language( 32308 )
+                msg_end = ADDONLANGUAGE( 32308 )
             msg = '%s %s' % (str( image_dl_count ), msg_end)
-            xbmcgui.Dialog().notification( language( 32205 ), msg, icon=addonicon )
+            xbmcgui.Dialog().notification( ADDONLANGUAGE( 32205 ), msg, icon=ADDONICON )
             dialog_displayed = True
         return dialog_displayed
 
@@ -454,12 +447,12 @@ class Main( xbmc.Player ):
         except TypeError:
             pass
         for plugin_name in self.BIOPLUGINS['names']:
-            lw.log( ['checking %s for bio' % plugin_name[1]] )
-            bio_params['donated'] = getSettingBool( addon, plugin_name[1] + '_donated' )
+            LW.log( ['checking %s for bio' % plugin_name[1]] )
+            bio_params['donated'] = getSettingBool( plugin_name[1] + '_donated' )
             bio, loglines = self.BIOPLUGINS['objs'][plugin_name[1]].getBio( bio_params )
-            lw.log( loglines )
+            LW.log( loglines )
             if bio:
-                lw.log( ['got a bio from %s, so stop looking' % plugin_name] )
+                LW.log( ['got a bio from %s, so stop looking' % plugin_name] )
                 break
         if bio:
             return self._clean_text(bio)
@@ -479,12 +472,12 @@ class Main( xbmc.Player ):
         except TypeError:
             pass
         for plugin_name in self.ALBUMPLUGINS['names']:
-            lw.log( ['checking %s for album info' % plugin_name[1]] )
-            album_params['donated'] = getSettingBool( addon, plugin_name[1] + '_donated' )
+            LW.log( ['checking %s for album info' % plugin_name[1]] )
+            album_params['donated'] = getSettingBool( plugin_name[1] + '_donated' )
             albums, loglines = self.ALBUMPLUGINS['objs'][plugin_name[1]].getAlbumList( album_params )
-            lw.log( loglines )
+            LW.log( loglines )
             if not albums == []:
-                lw.log( ['got album list from %s, so stop looking' % plugin_name] )
+                LW.log( ['got album list from %s, so stop looking' % plugin_name] )
                 break
         if albums:
             return albums
@@ -504,11 +497,11 @@ class Main( xbmc.Player ):
         except TypeError:
             pass
         for plugin_name in self.SIMILARPLUGINS['names']:
-            lw.log( ['checking %s for similar artist info' % plugin_name[1]] )
+            LW.log( ['checking %s for similar artist info' % plugin_name[1]] )
             similar_artists, loglines = self.SIMILARPLUGINS['objs'][plugin_name[1]].getSimilarArtists( similar_params )
-            lw.log( loglines )
+            LW.log( loglines )
             if not similar_artists == []:
-                lw.log( ['got similar artist list from %s, so stop looking' % plugin_name] )
+                LW.log( ['got similar artist list from %s, so stop looking' % plugin_name] )
                 break
         if similar_artists:
             return similar_artists
@@ -543,7 +536,7 @@ class Main( xbmc.Player ):
             artist_names = []
             mbids = []
         if not artist_names:
-            lw.log( ['No artist names returned from JSON call, assuming this is an internet stream'] )
+            LW.log( ['No artist names returned from JSON call, assuming this is an internet stream'] )
             playingartists = playing_song.split( ' - ', 1 )
             if not self.AGRESSIVESTREAMSEARCH and len( playingartists ) > 1:
                 del playingartists[1:]
@@ -554,15 +547,15 @@ class Main( xbmc.Player ):
 
     def _get_current_artists_filtered( self, artist_names, mbids ):
         artists_info = []
-        lw.log( ['starting with the following artists', artist_names] )
+        LW.log( ['starting with the following artists', artist_names] )
         if self.DISABLEMULTIARTIST:
             if len( artist_names ) > 1:
-                lw.log( ['deleting extra artists'] )
+                LW.log( ['deleting extra artists'] )
                 del artist_names[1:]
             if len( mbids ) > 1:
-                lw.log( ['deleting extra MBIDs'] )
+                LW.log( ['deleting extra MBIDs'] )
                 del mbids[1:]
-        lw.log( ['left with', artist_names] )
+        LW.log( ['left with', artist_names] )
         for artist_name, mbid in _zip_longest( artist_names, mbids, fillvalue='' ):
             if artist_name:
                 artists_info.append( (py2_encode( artist_name ), self._get_musicbrainz_id( py2_encode( artist_name ), mbid )) )
@@ -578,11 +571,11 @@ class Main( xbmc.Player ):
                 playing_file = self.getPlayingFile()
                 playing_song = self.getMusicInfoTag().getTitle()
             except RuntimeError:
-                lw.log( ['RuntimeError getting playing file/song back from Kodi'] )
+                LW.log( ['RuntimeError getting playing file/song back from Kodi'] )
                 self.ARTISTS_INFO = []
                 return
             except Exception as e:
-                lw.log( ['unexpected error getting playing file/song back from Kodi', e] )
+                LW.log( ['unexpected error getting playing file/song back from Kodi', e] )
                 self.ARTISTS_INFO = []
                 return
             if playing_file != self.LASTPLAYINGFILE or playing_song != self.LASTPLAYINGSONG:
@@ -591,7 +584,7 @@ class Main( xbmc.Player ):
                 artist_names, mbids = self._get_current_artist_names_mbids( playing_song )
                 featured_artists = self._get_featured_artists( playing_song )
             else:
-                lw.log( ['same file playing, using cached artists_info'] )
+                LW.log( ['same file playing, using cached artists_info'] )
                 return
         elif self._get_infolabel( self.SKININFO['artist'] ):
             artist_names = self._split_artists( self._get_infolabel(self.SKININFO['artist']) )
@@ -606,13 +599,13 @@ class Main( xbmc.Player ):
 
 
     def _get_file_list( self, path, do_filter=False ):
-        lw.log( ['checking %s for artist images' % path] )
+        LW.log( ['checking %s for artist images' % path] )
         try:
             dirs, files = xbmcvfs.listdir( path )
         except OSError:
             files = []
         except Exception as e:
-            lw.log( ['unexpected error getting directory list', e] )
+            LW.log( ['unexpected error getting directory list', e] )
             files = []
         if files and self.KODILOCALSTORAGE and do_filter:
             filtered_files = []
@@ -651,12 +644,12 @@ class Main( xbmc.Player ):
         image_params['infodir'] = self.INFODIR
         for plugin_name in self.IMAGEPLUGINS['names']:
             image_list = []
-            lw.log( ['checking %s for images' % plugin_name[1]] )
-            image_params['getall'] = getSettingBool( addon, plugin_name[1] + '_all' )
-            image_params['clientapikey'] = getSettingString( addon, plugin_name[1] + '_clientapikey' )
-            image_params['donated'] = getSettingBool( addon, plugin_name[1] + '_donated' )
+            LW.log( ['checking %s for images' % plugin_name[1]] )
+            image_params['getall'] = getSettingBool( plugin_name[1] + '_all' )
+            image_params['clientapikey'] = getSettingString( plugin_name[1] + '_clientapikey' )
+            image_params['donated'] = getSettingBool( plugin_name[1] + '_donated' )
             image_list, loglines = self.IMAGEPLUGINS['objs'][plugin_name[1]].getImageList( image_params )
-            lw.log( loglines )
+            LW.log( loglines )
             images.extend( image_list )
             image_params['mbid'] = self._get_musicbrainz_id( self.NAME, self.MBID )
         return images
@@ -667,7 +660,7 @@ class Main( xbmc.Player ):
             try:
                 infolabel = xbmc.getInfoLabel( 'Window(%s).Property(%s)' % (self.WINDOWID, item) )
             except:
-                lw.log( ['problem reading information from %s, returning blank' % item] )
+                LW.log( ['problem reading information from %s, returning blank' % item] )
                 infolabel = ''
         else:
             infolabel = ''
@@ -676,20 +669,20 @@ class Main( xbmc.Player ):
 
     def _get_musicbrainz_id( self, theartist, mbid ):
         self._set_infodir( theartist )
-        lw.log( ['Looking for a musicbrainz ID for artist ' + theartist] )
+        LW.log( ['Looking for a musicbrainz ID for artist ' + theartist] )
         if mbid:
-            lw.log( ['returning ' + mbid] )
+            LW.log( ['returning ' + mbid] )
             return mbid
         mbid_params = {}
         mbid_params['infodir'] = self.INFODIR
         for plugin_name in self.MBIDPLUGINS['names']:
-            lw.log( ['checking %s for mbid' % plugin_name[1]] )
+            LW.log( ['checking %s for mbid' % plugin_name[1]] )
             mbid, loglines = self.MBIDPLUGINS['objs'][plugin_name[1]].getMBID( mbid_params )
-            lw.log( loglines )
+            LW.log( loglines )
             if mbid:
-                lw.log( ['returning ' + mbid] )
+                LW.log( ['returning ' + mbid] )
                 return mbid
-        lw.log( ['no musicbrainz ID found for artist ' + theartist] )
+        LW.log( ['no musicbrainz ID found for artist ' + theartist] )
         return ''
 
 
@@ -709,7 +702,7 @@ class Main( xbmc.Player ):
                 got_item = False
             except Exception as e:
                 got_item = False
-                lw.log( ['unexpected error getting %s from Kodi' % item, e] )
+                LW.log( ['unexpected error getting %s from Kodi' % item, e] )
             if num_trys > max_trys:
                 break
             else:
@@ -724,11 +717,11 @@ class Main( xbmc.Player ):
     def _get_plugin_settings( self, service_name, module ):
         if module == 'local':
             return True, 0
-        return getSettingBool( addon, service_name + module ), getSettingInt( addon, service_name + 'priority_' + module, default=10 )
+        return getSettingBool( service_name + module ), getSettingInt( service_name + 'priority_' + module, default=10 )
 
 
     def _get_plugins( self ):
-        lw.log( ['loading plugins'] )
+        LW.log( ['loading plugins'] )
         self.BIOPLUGINS = {'names':[], 'objs':{}}
         self.IMAGEPLUGINS = {'names':[], 'objs':{}}
         self.ALBUMPLUGINS = {'names':[], 'objs':{}}
@@ -738,63 +731,63 @@ class Main( xbmc.Player ):
             full_plugin = 'resources.plugins.' + module
             imp_plugin = sys.modules[ full_plugin ]
             plugin = imp_plugin.objectConfig()
-            lw.log( ['loaded plugin ' + module] )
+            LW.log( ['loaded plugin ' + module] )
             scrapers = plugin.provides()
             if 'bio' in scrapers:
                 bio_active, bio_priority = self._get_plugin_settings( 'ab_', module )
                 if bio_active:
                     self.BIOPLUGINS['objs'][module] = plugin
                     self.BIOPLUGINS['names'].append( [bio_priority, module] )
-                    lw.log( ['added %s to bio plugins' % module] )
+                    LW.log( ['added %s to bio plugins' % module] )
             if 'images' in scrapers:
                 img_active, img_priority = self._get_plugin_settings( '', module )
                 if img_active:
                     self.IMAGEPLUGINS['objs'][module] = plugin
                     self.IMAGEPLUGINS['names'].append( [img_priority, module] )
-                    lw.log( ['added %s to image plugins' % module] )
+                    LW.log( ['added %s to image plugins' % module] )
             if 'albums' in scrapers:
                 ai_active, ai_priority = self._get_plugin_settings( 'ai_', module )
                 if ai_active:
                     self.ALBUMPLUGINS['objs'][module] = plugin
                     self.ALBUMPLUGINS['names'].append( [ai_priority, module] )
-                    lw.log( ['added %s to album info plugins' % module] )
+                    LW.log( ['added %s to album info plugins' % module] )
             if 'similar' in scrapers:
                 sa_active, sa_priority = self._get_plugin_settings( 'sa_', module )
                 if sa_active:
                     self.SIMILARPLUGINS['objs'][module] = plugin
                     self.SIMILARPLUGINS['names'].append( [ai_priority, module] )
-                    lw.log( ['added %s to similar artist plugins' % module] )
+                    LW.log( ['added %s to similar artist plugins' % module] )
             if 'mbid' in scrapers:
                 self.MBIDPLUGINS['objs'][module] = plugin
                 self.MBIDPLUGINS['names'].append( [1, module] )
-                lw.log( ['added %s to mbid plugins' % module] )
+                LW.log( ['added %s to mbid plugins' % module] )
 
 
     def _get_settings( self ):
-        lw.log( ['loading settings'] )
-        self.LANGUAGE = getSettingString( addon, 'language', default='11' )
+        LW.log( ['loading settings'] )
+        self.LANGUAGE = getSettingString( 'language', default='11' )
         for language in LANGUAGES:
             if self.LANGUAGE == language[2]:
                 self.LANGUAGE = language[1]
-                lw.log( ['language = %s' % self.LANGUAGE] )
+                LW.log( ['language = %s' % self.LANGUAGE] )
                 break
-        self.PAUSESLIDESHOW = getSettingBool( addon, 'pause_slideshow' )
-        self.USEFALLBACK = getSettingBool( addon, 'fallback' )
-        self.FALLBACKPATH = getSettingString( addon, 'fallback_path' )
-        self.USEOVERRIDE = getSettingBool( addon, 'slideshow' )
-        self.OVERRIDEPATH = getSettingString( addon, 'slideshow_path' )
-        self.INCLUDEARTISTFANART = getSettingBool( addon, 'include_artistfanart', default=True )
-        self.INCLUDEALBUMFANART = getSettingBool( addon, 'include_albumfanart' )
-        self.DISABLEMULTIARTIST = getSettingBool( addon, 'disable_multiartist' )
-        self.MAXCACHESIZE = getSettingInt( addon, 'max_cache_size', default=1024 ) * 1000000
-        self.SLIDEDELAY = getSettingInt( addon, 'slide_delay', default=10 )
-        self.FADETOBLACK = getSettingBool( addon, 'fadetoblack', default=True )
-        self.DOWNLOADNOTIFICATION = getSettingBool( addon, 'download_notification' )
-        self.DNONLYONDOWNLOAD = getSettingBool( addon, 'dn_download_only' )
-        self.MAINSLEEP = getSettingInt( addon, 'main_sleep', default=1 )
-        self.MAINIDLESLEEP = getSettingInt( addon, 'main_idle_sleep', default=10 )
-        self.AGRESSIVESTREAMSEARCH = getSettingBool( addon, 'agressive_stream_search' )
-        artist_image_storage = getSettingInt( addon, 'artist_image_storage' )
+        self.PAUSESLIDESHOW = getSettingBool( 'pause_slideshow' )
+        self.USEFALLBACK = getSettingBool( 'fallback' )
+        self.FALLBACKPATH = getSettingString( 'fallback_path' )
+        self.USEOVERRIDE = getSettingBool( 'slideshow' )
+        self.OVERRIDEPATH = getSettingString( 'slideshow_path' )
+        self.INCLUDEARTISTFANART = getSettingBool( 'include_artistfanart', default=True )
+        self.INCLUDEALBUMFANART = getSettingBool( 'include_albumfanart' )
+        self.DISABLEMULTIARTIST = getSettingBool( 'disable_multiartist' )
+        self.MAXCACHESIZE = getSettingInt( 'max_cache_size', default=1024 ) * 1000000
+        self.SLIDEDELAY = getSettingInt( 'slide_delay', default=10 )
+        self.FADETOBLACK = getSettingBool( 'fadetoblack', default=True )
+        self.DOWNLOADNOTIFICATION = getSettingBool( 'download_notification' )
+        self.DNONLYONDOWNLOAD = getSettingBool( 'dn_download_only' )
+        self.MAINSLEEP = getSettingInt( 'main_sleep', default=1 )
+        self.MAINIDLESLEEP = getSettingInt( 'main_idle_sleep', default=10 )
+        self.AGRESSIVESTREAMSEARCH = getSettingBool( 'agressive_stream_search' )
+        artist_image_storage = getSettingInt( 'artist_image_storage' )
         if artist_image_storage == 1:
             self.KODILOCALSTORAGE = True
             self.LOCALARTISTSTORAGE = False
@@ -802,24 +795,24 @@ class Main( xbmc.Player ):
             self.USEFANARTFOLDER = False
             self.FANARTFOLDER = ''
             response = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"musiclibrary.artistsfolder"}, "id":1}')
-            lw.log( ['got the following response back from Kodi for music artist folder', response] )
+            LW.log( ['got the following response back from Kodi for music artist folder', response] )
             try:
                 self.LOCALARTISTPATH = _json.loads(response)['result']['value']
             except (IndexError, KeyError, ValueError):
                 self.KODILOCALSTORAGE = False
                 self.LOCALARTISTSTORAGE = False
                 self.LOCALARTISTPATH = ''
-                self.RESTRICTCACHE = getSettingBool( addon, 'restrict_cache' )
+                self.RESTRICTCACHE = getSettingBool( 'restrict_cache' )
                 self.USEFANARTFOLDER = False
                 self.FANARTFOLDER = ''
         elif artist_image_storage == 2:
             self.KODILOCALSTORAGE = False
             self.LOCALARTISTSTORAGE = True
-            self.LOCALARTISTPATH = getSettingString( addon, 'local_artist_path' )
+            self.LOCALARTISTPATH = getSettingString( 'local_artist_path' )
             self.RESTRICTCACHE = False
-            self.USEFANARTFOLDER = getSettingBool( addon, 'use_extrafanart_folder', default=True )
+            self.USEFANARTFOLDER = getSettingBool( 'use_extrafanart_folder', default=True )
             if self.USEFANARTFOLDER:
-                self.FANARTFOLDER = getSettingString( addon, 'fanart_folder', default='extrafanart' )
+                self.FANARTFOLDER = getSettingString( 'fanart_folder', default='extrafanart' )
             else:
                 self.FANARTFOLDER = ''
         else:
@@ -828,16 +821,16 @@ class Main( xbmc.Player ):
             self.LOCALARTISTPATH = ''
             self.USEFANARTFOLDER = False
             self.FANARTFOLDER = ''
-            self.RESTRICTCACHE = getSettingBool( addon, 'restrict_cache' )
-        if getSettingInt( addon, 'artist_info_storage' ) == 1:
+            self.RESTRICTCACHE = getSettingBool( 'restrict_cache' )
+        if getSettingInt( 'artist_info_storage' ) == 1:
             self.LOCALINFOSTORAGE = True
-            self.LOCALINFOPATH = getSettingString( addon, 'local_info_path' )
+            self.LOCALINFOPATH = getSettingString( 'local_info_path' )
         else:
             self.LOCALINFOSTORAGE = False
             self.LOCALINFOPATH = ''
-        pl = getSettingInt( addon, 'storage_target' )
+        pl = getSettingInt( 'storage_target' )
         if pl == 0:
-            self.ENDREPLACE = getSettingString( addon, 'end_replace' )
+            self.ENDREPLACE = getSettingString( 'end_replace' )
             self.ILLEGALCHARS = list( '<>:"/\|?*' )
         elif pl == 2:
             self.ENDREPLACE = '.'
@@ -845,7 +838,7 @@ class Main( xbmc.Player ):
         else:
             self.ENDREPLACE = '.'
             self.ILLEGALCHARS = [os.path.sep]
-        self.ILLEGALREPLACE = getSettingString( addon, 'illegal_replace' )
+        self.ILLEGALREPLACE = getSettingString( 'illegal_replace' )
 
 
     def _init_vars( self ):
@@ -853,10 +846,9 @@ class Main( xbmc.Player ):
         self.FANARTNUMBER = False
         self.CACHEDIR = ''
         self.ARTISTS_INFO = []
-        self.DATAROOT = xbmc.translatePath( addon.getAddonInfo('profile') )
         self.IMGDB = '_imgdb.nfo'
         self._set_property( 'ArtistSlideshow.CleanupComplete' )
-        self._set_property( 'ArtistSlideshow', os.path.join( addonpath, 'resources', 'images', 'update-slide', '' ) )
+        self._set_property( 'ArtistSlideshow', os.path.join( ADDONPATH, 'resources', 'images', 'update-slide', '' ) )
         self.SKININFO = {}
         for item in self.FIELDLIST:
             if self.PASSEDFIELDS[item]:
@@ -864,7 +856,7 @@ class Main( xbmc.Player ):
             else:
                 self.SKININFO[item[0:-5]] = ''
         self.EXTERNALCALLSTATUS = self._get_infolabel( self.EXTERNALCALL )
-        lw.log( ['external call is set to ' + self._get_infolabel( self.EXTERNALCALL )] )
+        LW.log( ['external call is set to ' + self._get_infolabel( self.EXTERNALCALL )] )
         self.NAME = ''
         self.ALLARTISTS = []
         self.MBID = ''
@@ -888,35 +880,35 @@ class Main( xbmc.Player ):
 
 
     def _make_dirs( self ):
-        exists, loglines = checkPath( os.path.join( self.DATAROOT, '' ) )
-        lw.log( loglines )
+        exists, loglines = checkPath( os.path.join( ADDONDATAPATH, '' ) )
+        LW.log( loglines )
         thedirs = ['temp', 'ArtistSlideshow', 'ArtistInformation']
         for onedir in thedirs:
-            exists, loglines = checkPath( os.path.join( self.DATAROOT, onedir, '' ) )
-            lw.log( loglines )
+            exists, loglines = checkPath( os.path.join( ADDONDATAPATH, onedir, '' ) )
+            LW.log( loglines )
 
 
     def _get_kodi_artist_storage_path( self ):
         dialog = xbmcgui.Dialog()
-        ret = dialog.yesno( language(32200) + ': ' + language(32201), language(32300) )
+        ret = dialog.yesno( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32201), ADDONLANGUAGE(32300) )
         if not ret:
-            lw.log( ['Image move aborted by user'] )
+            LW.log( ['Image move aborted by user'] )
             return ''
         if self.KODILOCALSTORAGE:
-            lw.log( ['Kodi artist information storage already selected. Aborting.'] )
-            dialog.ok( language(32200) + ': ' + language(32202), language(32302) )
+            LW.log( ['Kodi artist information storage already selected. Aborting.'] )
+            dialog.ok( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32202), ADDONLANGUAGE(32302) )
             return ''
         response = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"musiclibrary.artistsfolder"}, "id":1}')
-        lw.log( ['Got the following response back from Kodi for artist information folder', response] )
+        LW.log( ['Got the following response back from Kodi for artist information folder', response] )
         try:
             kodi_music_artist_path = _json.loads( response )['result']['value']
         except (IndexError, KeyError, ValueError):
             kodi_music_artist_path = ''
         if not kodi_music_artist_path:
-            lw.log( ['No artist information folder setting found. Aborting.'] )
-            dialog.ok( language(32200) + ': ' + language(32202), language(32301) )
+            LW.log( ['No artist information folder setting found. Aborting.'] )
+            dialog.ok( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32202), ADDONLANGUAGE(32301) )
             return ''
-        lw.log( ['Artist information folder set to %s' % kodi_music_artist_path] )
+        LW.log( ['Artist information folder set to %s' % kodi_music_artist_path] )
         return kodi_music_artist_path
 
 
@@ -927,21 +919,21 @@ class Main( xbmc.Player ):
             return
         pdialog = xbmcgui.DialogProgress()
         if self.LOCALARTISTSTORAGE and self.LOCALARTISTPATH:
-            pdialog.create( language(32200) + ': ' + language(32203), language(32303) )
+            pdialog.create( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32203), ADDONLANGUAGE(32303) )
             src = self.LOCALARTISTPATH
         else:
-            pdialog.create( language(32200) + ': ' + language(32203), language(32304) )
-            src = os.path.join( self.DATAROOT, 'ArtistSlideshow' )
+            pdialog.create( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32203), ADDONLANGUAGE(32304) )
+            src = os.path.join( ADDONDATAPATH, 'ArtistSlideshow' )
         try:
             dirs, files = xbmcvfs.listdir( src )
         except OSError:
             dirs = []
         except Exception as e:
-            lw.log( ['unexpected error getting directory list', e] )
+            LW.log( ['unexpected error getting directory list', e] )
             dirs = []
         if not dirs:
             pdialog.close()
-            dialog.ok( language(32200) + ': ' + language(32203), language(32306) )
+            dialog.ok( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32203), ADDONLANGUAGE(32306) )
             return
         increment = 100/len( dirs )
         progress = 0.0
@@ -951,14 +943,14 @@ class Main( xbmc.Player ):
             else:
                 image_src = os.path.join( src, py2_decode( thedir ) )
             image_dest = os.path.join( kodi_music_artist_path, py2_decode( thedir ) )
-            lw.log( ['moving images from %s to %s' % (image_src, image_dest)] )
+            LW.log( ['moving images from %s to %s' % (image_src, image_dest)] )
             files = self._get_file_list( image_src )
             self.FANARTNUMBER = False
             for file in files:
                 file_src = os.path.join( image_src, file )
                 file_dst = os.path.join( image_dest, self._set_image_name( file, image_dest, True ) )
                 success, loglines = moveFile( file_src, file_dst  )
-                lw.log( loglines )
+                LW.log( loglines )
             self._delete_folder( image_src )
             if (src == self.LOCALARTISTPATH) and self.USEFANARTFOLDER:
                 self._delete_folder( os.path.abspath( os.path.join( image_src, os.pardir ) ) )
@@ -967,9 +959,9 @@ class Main( xbmc.Player ):
                 return
             progress = progress + increment
             pdialog.update( int( progress ) )
-            lw.log( ['using increment of %s updating progress to %s' % (str( increment ), str( progress ))] )
+            LW.log( ['using increment of %s updating progress to %s' % (str( increment ), str( progress ))] )
         pdialog.close()
-        dialog.ok( language(32200) + ': ' + language(32203), language(32306) )
+        dialog.ok( ADDONLANGUAGE(32200) + ': ' + ADDONLANGUAGE(32203), ADDONLANGUAGE(32306) )
 
 
     def _parse_argv( self ):
@@ -978,20 +970,20 @@ class Main( xbmc.Player ):
         except IndexError:
             params = {}
         except Exception as e:
-            lw.log( ['unexpected error while parsing arguments', e] )
+            LW.log( ['unexpected error while parsing arguments', e] )
             params = {}
-        lw.log( ['the params from the script are:', params] )
+        LW.log( ['the params from the script are:', params] )
         self.WINDOWID = params.get( 'windowid', '12006' )
-        lw.log( ['window id is set to %s' % self.WINDOWID] )
+        LW.log( ['window id is set to %s' % self.WINDOWID] )
         self.PASSEDFIELDS = {}
         self.FIELDLIST = ['artistfield', 'titlefield', 'albumfield', 'mbidfield']
         for item in self.FIELDLIST:
             self.PASSEDFIELDS[item] = params.get( item, '' )
-            lw.log( ['%s is set to %s' % (item, self.PASSEDFIELDS[item])] )
+            LW.log( ['%s is set to %s' % (item, self.PASSEDFIELDS[item])] )
         daemon = params.get( 'daemon', 'False' )
         if daemon == 'True':
             self.DAEMON = True
-            lw.log( ['daemonizing'], xbmc.LOGINFO )
+            LW.log( ['daemonizing'], xbmc.LOGINFO )
         else:
             self.DAEMON = False
         checkrun = params.get( 'runfromsettings', 'False' )
@@ -1043,7 +1035,7 @@ class Main( xbmc.Player ):
     def _set_fanart_number( self, thedir ):
         files = self._get_file_list( thedir, do_filter=True )
         files.sort( key=naturalKeys )
-        lw.log( files )
+        LW.log( files )
         if files:
             lastfile = files[-1]
             try:
@@ -1081,11 +1073,11 @@ class Main( xbmc.Player ):
         for count, item in enumerate( self.SIMILAR ):
             self._set_property( 'ArtistSlideshow.%d.SimilarName' % ( count + 1 ), item[0] )
             self._set_property( 'ArtistSlideshow.%d.SimilarThumb' % ( count + 1 ), item[1] )
-            similar_total = str( count )
+            similar_total = str( count + 1 )
         for count, item in enumerate( self.ALBUMS ):
             self._set_property( 'ArtistSlideshow.%d.AlbumName' % ( count + 1 ), item[0] )
             self._set_property( 'ArtistSlideshow.%d.AlbumThumb' % ( count + 1 ), item[1] )
-            album_total = str( count )
+            album_total = str( count + 1 )
         self._set_property( 'ArtistSlideshow.SimilarCount', similar_total )
         self._set_property( 'ArtistSlideshow.AlbumCount', album_total )
 
@@ -1093,14 +1085,14 @@ class Main( xbmc.Player ):
     def _set_property( self, property_name, value='' ):
         try:
           self.WINDOW.setProperty( property_name, value )
-          lw.log( ['%s set to %s' % (property_name, value)] )
+          LW.log( ['%s set to %s' % (property_name, value)] )
         except Exception as e:
-          lw.log( ['Exception: Could not set property %s to value %s' % (property_name, value), e])
+          LW.log( ['Exception: Could not set property %s to value %s' % (property_name, value), e])
 
 
     def _set_safe_artist_name( self, theartist ):
         s_name = ''
-        lw.log( ['the illegal characters are ', self.ILLEGALCHARS, 'the replacement is ' + self.ILLEGALREPLACE] )
+        LW.log( ['the illegal characters are ', self.ILLEGALCHARS, 'the replacement is ' + self.ILLEGALREPLACE] )
         for c in list( self._remove_trailing_dot( theartist ) ):
             if c in self.ILLEGALCHARS:
                 s_name = s_name + self.ILLEGALREPLACE
@@ -1125,10 +1117,10 @@ class Main( xbmc.Player ):
         elif dirtype == 'ArtistInformation' and self.LOCALINFOSTORAGE and self.LOCALINFOPATH:
             thedir = os.path.join( self.LOCALINFOPATH, cache_name, 'information' )
         else:
-            thedir = os.path.join( self.DATAROOT, dirtype, cache_name )
+            thedir = os.path.join( ADDONDATAPATH, dirtype, cache_name )
         exists, loglines = checkPath( os.path.join( thedir, '' ) )
         if exists:
-            lw.log( loglines )
+            LW.log( loglines )
         return thedir
 
 
@@ -1141,15 +1133,15 @@ class Main( xbmc.Player ):
             now = time.time()
             cache_trim_delay = 0
             if (now - self.LASTCACHETRIM > cache_trim_delay):
-                lw.log( ['trimming the cache down to %s bytes' % self.MAXCACHESIZE]  )
-                cache_root = py2_encode( os.path.join( self.DATAROOT, 'ArtistSlideshow', '') )
+                LW.log( ['trimming the cache down to %s bytes' % self.MAXCACHESIZE]  )
+                cache_root = py2_encode( os.path.join( ADDONDATAPATH, 'ArtistSlideshow', '') )
                 folders, fls = xbmcvfs.listdir( cache_root )
-                lw.log( ['cache folders returned:'] )
-                lw.log( folders )
+                LW.log( ['cache folders returned:'] )
+                LW.log( folders )
                 try:
                     folders.sort( key=lambda x: os.path.getmtime( os.path.join( cache_root, py2_encode( x ) ) ), reverse=True )
                 except Exception as e:
-                    lw.log( ['unexpected error sorting cache directory', e] )
+                    LW.log( ['unexpected error sorting cache directory', e] )
                     return
                 cache_size = 0
                 first_folder = True
@@ -1157,15 +1149,15 @@ class Main( xbmc.Player ):
                     if self._playback_stopped_or_changed( wait_time=0.1 ):
                         break
                     cache_size = cache_size + self._get_folder_size( os.path.join ( cache_root, py2_encode( folder ) ) )
-                    lw.log( ['looking at folder %s cache size is now %s' % (folder, cache_size)] )
+                    LW.log( ['looking at folder %s cache size is now %s' % (folder, cache_size)] )
                     if( cache_size > self.MAXCACHESIZE and not first_folder ):
                         self._clean_dir( os.path.join( cache_root, py2_encode( folder ) ) )
-                        lw.log( ['deleted files in folder %s' % folder] )
+                        LW.log( ['deleted files in folder %s' % folder] )
                         self._delete_folder( os.path.join( cache_root, py2_encode( folder ) ) )
                         if self.LOCALINFOSTORAGE and self.LOCALINFOPATH:
                             deleteFile( os.path.join( self.LOCALINFOPATH, py2_decode( folder ), 'information', self.IMGDB ) )
                         else:
-                            deleteFile( os.path.join( self.DATAROOT, 'ArtistInformation', py2_decode( folder ), self.IMGDB ) )
+                            deleteFile( os.path.join( ADDONDATAPATH, 'ArtistInformation', py2_decode( folder ), self.IMGDB ) )
                     first_folder = False
                 self.LASTCACHETRIM = now
 
@@ -1186,7 +1178,7 @@ class Main( xbmc.Player ):
 
     def _use_correct_artwork( self ):
         if self.USEOVERRIDE:
-            lw.log( ['using override directory for images'] )
+            LW.log( ['using override directory for images'] )
             self._set_artwork_from_dir( self.OVERRIDEPATH, self._get_file_list( self.OVERRIDEPATH ) )
             return
         self.ALLARTISTS = self._get_current_artists()
@@ -1223,10 +1215,10 @@ class Main( xbmc.Player ):
                 elif self.LOCALINFOSTORAGE:
                     self._delete_folder( os.path.abspath( os.path.join( self.INFODIR, os.pardir ) ) )
         if not self.IMAGESFOUND:
-            lw.log( ['no images found for any currently playing artists'] )
+            LW.log( ['no images found for any currently playing artists'] )
             if self.USEFALLBACK:
-                lw.log( ['using fallback slideshow'] )
-                lw.log( ['fallbackdir = ' + self.FALLBACKPATH] )
+                LW.log( ['using fallback slideshow'] )
+                LW.log( ['fallbackdir = ' + self.FALLBACKPATH] )
                 self._set_artwork_from_dir( self.FALLBACKPATH, self._get_file_list( self.FALLBACKPATH ) )
             else:
                 self._slideshow_thread_stop()
@@ -1235,32 +1227,32 @@ class Main( xbmc.Player ):
 
     def _update_check_file( self, path, text, message ):
         success, loglines = writeFile( text, path )
-        lw.log( loglines )
+        LW.log( loglines )
         if success:
-            lw.log( [message] )
+            LW.log( [message] )
 
 
     def _upgrade_settings( self ):
         #this is where any code goes for one time upgrade routines related to settings
-        checkfile = os.path.join( xbmc.translatePath( addon.getAddonInfo('profile') ), 'migrationcheck.nfo' )
+        checkfile = os.path.join(ADDONDATAPATH, 'migrationcheck.nfo' )
         loglines, data = readFile( checkfile )
-        lw.log( loglines )
+        LW.log( loglines )
         if '3.0.0' not in data:
-            if getSettingBool( addon, 'localstorageonly' ):
-                addon.setSetting( 'artist_image_storage', '2' )
-            if getSettingBool( addon, 'localinfostorage' ):
-                addon.setSetting( 'artist_info_storage', '1')
-                addon.setSetting( 'local_info_path', getSettingString( addon, 'local_artist_path', '' ) )
+            if getSettingBool( 'localstorageonly' ):
+                ADDON.setSetting( 'artist_image_storage', '2' )
+            if getSettingBool( 'localinfostorage' ):
+                ADDON.setSetting( 'artist_info_storage', '1')
+                ADDON.setSetting( 'local_info_path', getSettingString( 'local_artist_path', '' ) )
 
 
     def _upgrade( self ):
         #this is where any code goes for one time upgrade routines
-        checkfile = os.path.join( xbmc.translatePath( addon.getAddonInfo('profile') ), 'migrationcheck.nfo' )
+        checkfile = os.path.join(ADDONDATAPATH, 'migrationcheck.nfo' )
         loglines, data = readFile( checkfile )
-        lw.log( loglines )
+        LW.log( loglines )
         if '3.0.0' not in data:
-            src_root = os.path.join( self.DATAROOT, 'ArtistSlideshow' )
-            dst_root = os.path.join( self.DATAROOT, 'ArtistInformation')
+            src_root = os.path.join( ADDONDATAPATH, 'ArtistSlideshow' )
+            dst_root = os.path.join( ADDONDATAPATH, 'ArtistInformation')
             exists, loglines = checkPath( os.path.join( src_root, '' ) )
             if exists:
                 try:
@@ -1268,15 +1260,15 @@ class Main( xbmc.Player ):
                 except OSError:
                     dirs = []
                 except Exception as e:
-                    lw.log( ['unexpected error getting directory list', e] )
+                    LW.log( ['unexpected error getting directory list', e] )
                     dirs = []
                 if dirs:
                     for thedir in dirs:
                         src = os.path.join( src_root, py2_decode( thedir ), self.IMGDB )
                         dst = os.path.join( dst_root, py2_decode( thedir ), self.IMGDB )
                         success, loglines = moveFile( src, dst )
-                        lw.log( loglines )
-            src_root = getSettingString( addon, 'local_artist_path' )
+                        LW.log( loglines )
+            src_root = getSettingString( 'local_artist_path' )
             dst_root = src_root
             exists, loglines = checkPath( os.path.join( src_root, '' ) )
             if exists:
@@ -1285,20 +1277,20 @@ class Main( xbmc.Player ):
                 except OSError:
                     dirs = []
                 except Exception as e:
-                    lw.log( ['unexpected error getting directory list', e] )
+                    LW.log( ['unexpected error getting directory list', e] )
                     dirs = []
                 if dirs:
                     for thedir in dirs:
                         src = os.path.join( src_root, py2_decode( thedir ), self.FANARTFOLDER, self.IMGDB )
                         dst = os.path.join( dst_root, py2_decode( thedir ), 'information', self.IMGDB )
                         success, loglines = moveFile( src, dst )
-                        lw.log( loglines )
+                        LW.log( loglines )
             self._update_check_file( checkfile, '3.0.0', 'preference conversion complete' )
 
 
     def _waitForAbort( self, wait_time=1 ):
         if self.MONITOR.waitForAbort( wait_time ):
-            lw.log( ['saw an abort request in the main thread'] )
+            LW.log( ['saw an abort request in the main thread'] )
             self._set_property( 'ArtistSlideshowRunning' )
             return True
         else:

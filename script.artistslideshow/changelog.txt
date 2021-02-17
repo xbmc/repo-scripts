@@ -1,0 +1,400 @@
+v.3.3.0
+- fix for similar and album infolabels not being cleared property at artist change
+- updated language files
+- changed method for loading Kodi addon variables
+- code reformatting for consistent capitalization meaning in variables
+- updated read/write functions to use Python 3 features when running in Python 3
+
+v.3.2.3
+- changes in logging to accommodate new logging requirements for Kodi 19
+
+v.3.2.2
+- fix for crash if Artist Information folder is stored on a network volume
+
+v.3.2.1
+- added option to pause slideshow when playback pauses
+- logic change to load first slideshow image sooner
+- override slideshow no longer resets at each song change
+- fix for potential runaway loop
+- fix for slow slideshow change when artist changes
+- fix for AS not reloading settings properly when in daemon mode
+- fixes for miscellaneous UTF8 errors
+- internal change to the way the main thread talks to the slideshow thread
+
+v.3.1.0
+- In daemon mode you can now change AS settings without having to restart Kodi
+- added back option to show notifications when downloading new images
+- updated service plugins to use https for API calls
+- added options to change sleep time for main and slideshow threads
+- set slideshow thread to close if no music playing
+- added option to search stream titles more aggressively for an artist name
+- fix for crash if artist image name has an extended character in it
+- fix for crash when trying to get last fanart number from Kodi Artist Information Folder
+- fix for artist images not changing when using a radio stream
+- fix for theaudiodb.com plugin not downloading all three images for an artist
+- fix for unicode errors causing cache trimming not to work
+- fix for non-images getting added to image list and showing a black screen
+- fix for high CPU usage when using AS in daemon mode and no music playing
+- fix for issue where slideshow might not start when in daemon mode
+- fix for runaway loop if there is only one image in an artist's slideshow
+- fix for AS taking too long to quit on Kodi exit when in daemon mode
+- fix for Setting Type Error in Kodi logs
+- changed logic for deleting folders when no artist images are found
+- changed entry point default.py to be less complex
+- moved common libraries to lib folder
+- moved update image slideshow to images folder
+
+v.3.0.0
+- Python2/3 compatible
+- rewrite to use a single image control instead of multi-image control in skin
+- AS can now store and show music in Kodi 18 music artist folder
+- AS now shows the Kodi artist fanart (if available) before anything else (with option to disable)
+- added option to include Kodi album fanart in image list (defaults to False)
+- added routine in settings to move images to Kodi artist information folder
+- added option to disable extranfanart folder
+- added option to control time between slide transitions
+- AS can now store images and information files in separate directory structure
+- AS now deletes empty artist information and artwork folders
+- converted language files to current format for forward compatibility
+- removed option to have a pop up displayed when downloading artwork
+
+v.2.1.4
+- fix for fallback images not showing if all artists on a multi-artist song have no images
+
+v.2.1.3
+- fix for common library issue with moving a file
+
+v.2.1.2
+- fix for common library issue with moving a file
+- fix for crash when trying to trim cache folder
+
+v.2.1.1
+- added option to download artist thumb from theaudiodb.com
+- added option to store service information files in local artist path
+- change to cache timing including decreased cache time if donating to image services
+- rearranged settings
+- fixes to exception handling syntax to be consistent with Python3
+- refactored some common functions
+- change to fileops common module to not use subprocess (unavailable in Windows Store version of Kodi)
+
+v.2.1.0
+- updated AS to save and use unhashed artist and image names
+- created upgrade routine to rename hashed artist and image names
+- included new option to ONLY use local artist path for storage
+- cleaned up folder path creation routines
+- removed old download exclusion logic in favor of new _imgdb.nfo history
+
+v.2.0.8
+- fix for crash if Kodi plugin tries to load bio with oddly encoded characters
+- fix for crash if a services cache file contains a string that doesn't evaluate to int
+
+v.2.0.7
+- added last.fm bio file as option for finding Musicbrainz ID
+- moved all Musicbrainz ID functions into plugins
+- fix so featured artist parsing from song name is case insensitive
+- strip errant linefeed from readfile on musicbrainz.nfo (where manually created)
+
+v.2.0.6
+- removed some logging causing a unicode problem
+- fix for crash when no valid JSON returned from theaudiodb.com
+
+v.2.0.5
+- reverted to old logic for checking for start of new artist (more reliable)
+- fix for creation of empty artist folders when using fanart.jpg option
+
+v.2.0.4
+- added option to use local fanart and folder image outside extrafanart folder
+- added MusicBrainz ID extraction from theaudiodb.com information
+- added ArtistSlideshow.SimilarCount and ArtistSlideshow.AlbumCount to skin properties
+- fix for theaudiodb lookup when artists have ampersands in their name
+- fix for artist name separation leaving extra spaces
+
+v.2.0.3
+- removed support for htbackdrops.org (API access no longer available)
+- fix for crash when theaudiodb.com doesn't respond with valid JSON
+
+v.2.0.2
+- fixed crash when using fuzzy local path with non-Windows option
+- updated German strings
+
+v.2.0.1
+- added option for fuzzy local path search replacing illegal path characters
+- added option to search theaudiodb.com using artist name if mbid unavailable
+- fixed issue when merging separate artist images with same file name
+- added option to turn off featured or multi-artist image merge
+- fixed crash if htbackdrops or last.fm are unresponsive
+
+v.2.0.0
+- separated code for downloads into modules to make it easier to add other services
+- added preferences to allow selection of services and priority for use
+- removed remote MusicBrainz lookup, MBID must now be in Kodi
+- changed default to get bio from Kodi and images from htbackdrops
+- rewrite of cache mechanism to reduce load on external sites
+- changed cache expire range to 12 - 24 weeks (set randomly when cache is refreshed)
+- updated preference strings (only French and English included, other languages
+  will be added back later via Kodi Transifex project)
+
+v.1.8.8
+- updated cache logic to reduce API calls to external sites
+
+v.1.8.7
+- updated author id separator to comma to conform properly the addon.xml spec
+
+v.1.8.6
+- changed to http for fanart.tv api, https was depreciated without notice
+
+v.1.8.5
+- disabled SSL cert verification so connections to self-signed certs will work
+  (fixes problem with fanart.tv)
+
+v.1.8.4
+- fixed another UTF-8 encoding issue
+
+v.1.8.3
+- fixed reading of override data so it works properly with SMB shares
+- updates to other file read functions to work with SMB shares
+
+v.1.8.2
+- updated for Helix
+- fixed crash at exist when artist images have unicode characters in name
+
+v.1.7.0
+- added support for htbackdrops.org MusicBrainz ID search (falls back to old search method)
+- fixed crash when merging artist images where image has unicode character in name
+- fixed parsing error due to new JSON format from MusicBrainz
+- fixed error where window properties were not set properly at script exit
+
+v.1.6.9
+- added option to download artist thumbnails from htbackdrops and fanart.tv
+- update to current requests module (requests2 depreciated)
+- updated to v3 of fanart.tv API (including option to use client API key)
+
+v.1.6.8
+- fix for crash when using smb path
+- cleaned up startup process to better deal with script being started twice
+- added new window property Artistslideshow.ArtworkReady (true if artwork available)
+
+v.1.6.7
+- fix for required xbmc python version
+
+v.1.6.6
+- suppress all logging by default with option to turn debug logging on
+- added option to use transparent image if no artwork found
+- added skin property so skins can tell if transparency option has been set
+- updated language files
+
+v.1.6.5
+- fixed crash during version migration process related to UTF8 characters
+- fixed crash when using cache manager to trim size of image cache
+
+v.1.6.4
+- added full support for remote file systems without mapping drive in OS
+- fix for crash with access violation in random situations
+- fix for duplicate ArtistSlideshow folder showing up on Linux
+- fix for crash when attempting to delete temp file
+- fix for constant download of images
+- fix for exclusions file being ignored
+
+v.1.6.3
+- fixed AS not showing images when merging multiple artists' images
+- fixed AS not requesting correct language for bio from Last.FM
+- changes to get more consistent results from external sites
+- fixed crash when viewing artists with extended characters in their name
+- fixed bad searches with artists with extended characters in their name
+- fixed crash when unexpected http response code returned from web site
+- updated language files
+
+v.1.6.2
+- fixed crash from undefined global error in url.py
+- fix for bug that causes crash on socket.timeout in url.py
+- corrected string numbers to fit in specified developer range
+
+v.1.6.1
+- fixed crash when installing on clean install of XBMC
+
+v.1.6.0
+- image downloads now done in original format instead of .tbn files
+- one time migration routine run to rename all .tbn files to correct format
+- fixed crash when logging non-text objects
+- fixed attempts to copy temp file over existing file
+- fixed crash when attempting to migrate .nfo files
+- switched to using requests module and new method for URL handling
+- code refactoring
+
+v.1.5.9
+- fixed crash when merging images from multiple artists
+- fixed last.fm support so it requests results in the desired language
+- fixed issue where artwork wouldn't update with streaming media
+- songs tagged with artist of various artists download artwork correctly from fanart.tv
+- added some additional logic to MusicBrainz ID lookup
+- updated language files
+- moved some code to external modules
+- changed the way local module imports are done to follow best practice
+
+v.1.5.8
+- fixed crashes when using htbackdrops as an image source
+
+v.1.5.7
+- removed image support for last.fm (API call removed by last.fm)
+- changed to using built in ElementTree
+- added xbmc.addon as required dependency and set version for Frodo
+
+v.1.5.6
+- adjusted artist bio cleanup to better handle HTML code (thx to scott967)
+- fix for SpotiMC stuttering when using Artist Slideshow (thx to McMuzz4)
+
+v.1.5.5
+internal beta test
+
+v.1.5.4
+- artist bio and album list now come from theaudiodb.com by default (Last.fm as fallback)
+- added download of images from fanart.tv
+- added download of images from theaudiodb.com
+- added musicbrainz ID support
+- updated URL for htbackdrops to htbackdrops.org
+- added advanced feature to exclude files from download
+- rearranged settings some to make options clearer
+- set new location for .nfo files separate from image files
+- added migration code to move old .nfo files to new locations and names
+- updated cache manager to leave .nfo files intact
+- fixed bug where cached images wouldn't be merged for featured artists
+- fixed featured artist parsing
+- fixed last.fm showing unexpected results
+- fixed artists with unicode characters in name returning no results from Last.fm
+- changed over to urllib2 for downloads
+- additional error catching across the board
+
+v.1.5.3
+internal beta test
+
+v.1.5.2
+- added ability to parse multiple featured artists from title of song
+- fixed bug on Windows where once override or fallback were set they could not be unset
+- updated artist bio infolabel to filter out link to READ MORE on last.fm
+- changed to using JSON call to get artist array from XBMC rather than manually splitting
+- updated unicode support
+- fixed issue where files ending with capitalized extensions were ignored
+- fixed issue where artist bio not downloaded when using override image directory
+- fixed issue where selecting HD Aspect Ratio for Last.fm downloads resulted in no images
+- updated language files from Transifex
+- changed over to Frodo .po language files
+- updated addon.xml with new information and format for repo database
+
+v.1.5.1
+internal beta test
+
+v.1.5.0
+- updated language files from Transifex
+- branched Eden and Frodo versions and updated Frodo addon.xml information
+
+v.1.4.6
+- fix for improper parsing of multiple artists
+- fix multiartist display in cases where first artist has no images
+- fixed script error when using utf-8 encoded text in download pop up messages
+- added English strings.po file  for Frodo and added addon to transifex translation engine
+
+v.1.4.5
+- fix for improper clearing of info labels on XBMC abort request
+
+v.1.4.4
+- fix for non-ascii characters in windows user name
+- fix for non-ascii characters in artist name
+- download notifications disabled by default with option to enable them
+
+v.1.4.3
+unreleased beta
+
+v.1.4.2
+- updated featured artist parsing to support radio streams
+- updated featured artist parsing to support calls from external scripts
+- updated the notifications logic when downloading images
+- added notification if no images downloaded
+- added notification when all downloads complete
+- added ability to override artist bio, albums, and similar artists with local info
+- fixed bug when using both local and remote images
+- added French localization strings and description (thanks to mikebzh44)
+- updated Portuguese-Brazil strings (thanks to Wanilton)
+- UTF8 encoded message strings
+
+v.1.4.1
+- updated language files for Portuguese-Brazil (thanks to Wanilton)
+- fixed error causing information for 50th album to not be cleared
+
+v.1.4.0
+- added ability to display artwork from multiple artists simultaneously
+- added option for a folder name other than extrafanart
+- added notification when downloading first image for an artist
+- added option for user to set image to use during download of first artist image
+
+v1.3.2
+- added language files for Portuguese-Brazil (thanks to Wanilton)
+
+v1.3.1
+- changes to support for internet streams
+- fixed bug that caused artist .nfo files to never be updated
+
+v1.3.0
+- updated refresh during download logic to make it more aesthetically pleasing
+- refresh during downloads is now the default (and non-optional) behavior
+- removed option to change refresh timing
+- new cache manager (removes only files, not directories)
+- added one additional (smaller) option for cache size
+- experimental support for external scripts using artistslideshow
+- experimental support for internet streams
+
+v1.2.0
+- added ability to use local or remote images
+- added priority image control to use local first, remote first, or both
+- added option to restrict downloads to 16:9 images
+- added option to have slideshow refresh after every image download or after x seconds
+- added option for override folder that will be showed instead of artists images
+- updated logic to refresh images after all are downloaded
+- fixed potential script crash if remote sites unavailable
+- experimental support for limiting size of cache folder
+
+v1.1.5
+- blank window property a little longer
+
+v1.1.4
+- make sure we don't block xbmc on exit
+
+v1.1.3
+- add language selection for artists
+
+v1.1.2
+- added option to download additional artist info
+- use elementtree script module
+
+v1.1.1
+- added option to download images from htbackdrops.com
+
+v1.1.0
+- code refactoring
+
+v1.0.4
+- do not use the xbmc temp dir
+
+v1.0.3
+- allow the script to run without music playing
+
+v1.0.2
+- store images in addon_data
+
+v1.0.1
+- use xbmcvfs.mkdir
+
+v1.0.0
+- initial release
+
+v0.0.4 (beta 4)
+- added settings to specify minimal image width and height
+
+v0.0.3 (beta 3)
+- better song change detection
+- don't try to download when no artist name is provided
+- try to make sure the script doesn't fail when listening to online radio
+
+v0.0.2 (beta 2)
+- fixed: screen could go black when next track started before download finished
+
+v0.0.1 (beta 1)
