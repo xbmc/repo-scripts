@@ -1,4 +1,4 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.2.4">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.0">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0" />
 		<import addon="xbmc.addon" version="17.9.0" />
@@ -12,7 +12,7 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.3.2.4
+v.3.3.0
 - fix for similar and album infolabels not being cleared property at artist change
 - updated language files
 - changed method for loading Kodi addon variables
