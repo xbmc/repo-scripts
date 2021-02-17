@@ -5,13 +5,12 @@
 		<import addon="script.module.kodi-six" version="0.0.3" />
 		<import addon="script.module.requests" version="2.22.0" />
 	</requires>
-	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.python.script" library="default.py" />
 	<extension point="xbmc.service" library="service.py" />
 	<extension point="kodi.context.item">
 		<menu id="kodi.core.main">
-		    <menu>
+			<menu>
 				<label>32401</label>
-				<visible>String.IsEqual(Window(10000).Property(script.tvmi.hidemenu),false)</visible>
 				<item library="context-follow.py">
 					<label>32402</label>
 					<visible>String.IsEqual(Window(10000).Property(script.tvmi.hidemenu),false) + Container.Content(tvshows) + String.StartsWith(Container.FolderPath,videodb)</visible>
