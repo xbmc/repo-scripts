@@ -1,0 +1,28 @@
+v.0.6.2
+- better hiding of TVMaze context menu when it shouldn't be used
+- changed OnUpdate to cache raw data and then process it all when scan is finished
+
+v.0.6.1
+- added logic so if show is marked after playback it isn't marked again at delete
+
+v.0.6.0
+- fix for crash if marking shows from context menu
+- added option to mark shows as watched on TV Maze when deleting from Kodi library
+
+v.0.4.1
+- first public release
+
+v.0.4.0
+- support for context menu to manage show tags, show follows, and episode marks
+
+v.0.3.0
+- support to manually tag and untag shows
+
+v.0.2.0
+- support to manually follow and unfollow shows
+
+v.0.1.0
+- initial release
+- support for marking episodes as acquired on Library import
+- support for adding shows as followed during import
+- support for marking episodes as watched after watching x% of the show

@@ -10,6 +10,7 @@ SETTINGSLIST = [ {'name': 'version_upgrade', 'default':''},
                  {'name': 'mark_watched', 'default': True},
                  {'name': 'mark_on_remove', 'default': True},
                  {'name': 'percent_watched', 'default': 85},
+                 {'name': 'hidemenu', 'default': False},
                  {'name': 'debug', 'default': False}
                ]
 
