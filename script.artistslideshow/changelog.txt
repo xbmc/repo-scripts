@@ -1,4 +1,4 @@
-v.3.2.4
+v.3.3.0
 - fix for similar and album infolabels not being cleared property at artist change
 - updated language files
 - changed method for loading Kodi addon variables
