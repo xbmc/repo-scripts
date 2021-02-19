@@ -1,3 +1,6 @@
+v0.5.14
+- add Kodi 19.0 release
+
 v0.5.13
 - add Kodi 19.0 rc1 release
 
