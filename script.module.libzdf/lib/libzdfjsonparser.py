@@ -27,6 +27,7 @@ class parser:
 		self.template = {'params':{}, 'metadata':{'art':{}}, 'type':'video'}
 		self.playerId = 'ngplayer_2_3'
 		#self.playerId = 'ngplayer_2_4'
+		#self.playerId = 'ngplayer_2_5'
 		#self.playerId = 'ngplayer_2_2_modul'
 		#self.playerId = 'chromecast_1'
 		#self.playerId = 'android_native_1'
@@ -36,6 +37,7 @@ class parser:
 		#self.playerId = 'smarttv_2'
 		#self.playerId = 'smarttv_3'
 		#self.playerId = 'smarttv_4'
+		#self.playerId = 'smarttv_5'
 		#self.playerId = 'ios_native_1'
 		#self.playerId = 'ios_native_2'
 		#self.playerId = 'voice_1'
@@ -115,7 +117,6 @@ class parser:
 
 	def getAZ(self,uri='/content/documents/sendungen-100.json?contentTypes=teaser'):
 		response = self._getU(self.baseApi+uri,True)
-		print(response)
 		j = json.loads(response)
 		for brand in j['brand']:
 			if 'title' in brand:
@@ -182,6 +183,10 @@ class parser:
 	def _grepItem(self,target,forcedType=False):
 		if target['profile'] in ['http://zdf.de/rels/not-found','http://zdf.de/rels/gone']:
 			return False
+		else:
+			self._grepItemDefault(target,forcedType)
+
+	def _grepItemDefault(self,target,forcedType=False):
 
 		self.d = copy.deepcopy(self.template)
 		self.d['metadata']['name'] = target['teaserHeadline']

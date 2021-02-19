@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from libmediathek4 import lm4
-import libzdfjsonparser as jsonParser
-parser = jsonParser.parser()
 
 
 #https://api.zdf.de/content/documents/zdf-startseite-100.json?profile=default
@@ -39,11 +37,18 @@ class libzdf(lm4):
 			'libZdfPlayById':self.libZdfPlayById,
 			}
 
-		parser.baseApi = self.baseApi
-		parser.userAgent = self.userAgent
-		parser.tokenUrl = self.tokenUrl
-		parser.API_CLIENT_ID = self.API_CLIENT_ID
-		parser.API_CLIENT_KEY = self.API_CLIENT_KEY
+		if self.apiVersion == 1:
+			import libzdfjsonparser as jsonParser
+			self.parser = jsonParser.parser()
+		elif self.apiVersion == 2:
+			import libzdfjsonparser2 as jsonParser
+			self.parser = jsonParser.parser2()
+
+		self.parser.baseApi = self.baseApi
+		self.parser.userAgent = self.userAgent
+		self.parser.tokenUrl = self.tokenUrl
+		self.parser.API_CLIENT_ID = self.API_CLIENT_ID
+		self.parser.API_CLIENT_KEY = self.API_CLIENT_KEY
 
 	def libZdfListMain(self):
 		l = []
@@ -56,21 +61,21 @@ class libzdf(lm4):
 		return {'items':l,'name':'root'}
 	def libZdfListShows(self):
 		if 'uri' in self.params:
-			return parser.getAZ(self.params['uri'])
+			return self.parser.getAZ(self.params['uri'])
 		else:
-			return parser.getAZ()
+			return self.parser.getAZ()
 				
 	def libZdfListPage(self):
-		return parser.parsePage(self.params['url'])
+		return self.parser.parsePage(self.params['url'])
 		
 	def libZdfListVideos(self):
-		return parser.getVideos(self.params['url'])
+		return self.parser.getVideos(self.params['url'])
 
 	def libZdfPlay(self):
-		return parser.getVideoUrl(self.params['url'])
+		return self.parser.getVideoUrl(self.params['url'])
 		
 	def libZdfPlayById(self):
-		return parser.getVideoUrlById(self.params['id'])
+		return self.parser.getVideoUrlById(self.params['id'])
 		
 	def libZdfListChannel(self):
 		l = []
