@@ -32,7 +32,7 @@ except ImportError:
     pass
 
 
-class UpdateMonitor(xbmc.Monitor):  # pylint: disable=missing-docstring
+class KodiMonitor(xbmc.Monitor):  # pylint: disable=missing-docstring
 
     def onNotification(self, sender, method, data):
         # type: (Text, Text, Text) -> None

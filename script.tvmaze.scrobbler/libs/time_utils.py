@@ -13,6 +13,10 @@ except ImportError:
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+# Dummy call to overcome this bug:
+# https://stackoverflow.com/questions/16309650/python-importerror-for-strptime-in-spyder-for-windows-7
+_ = time.strptime('2021-01-01 00:00:00', DATETIME_FORMAT)
+
 
 class proxydt(datetime.datetime):  # pylint: disable=invalid-name
     """

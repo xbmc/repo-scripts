@@ -104,7 +104,7 @@ msgid "Show update notifications"
 msgstr ""
 
 msgctxt "#32024"
-msgid "Automatically pull watched episodes from TVmaze"
+msgid "Pull watched episodes from TVmaze before push"
 msgstr ""
 
 msgctxt "#32025"
@@ -133,4 +133,16 @@ msgstr ""
 
 msgctxt "#32031"
 msgid "Updating TV shows in Kodi: {} of {}"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Periodically pull watched episodes from TVmaze"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Pulling interval (hours)"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Pull during playback"
 msgstr ""
