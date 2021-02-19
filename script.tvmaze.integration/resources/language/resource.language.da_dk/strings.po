@@ -7,86 +7,84 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-02-07 14:28+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tvmaze-integration/da_dk/>\n"
+"Language: da_dk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.4.2\n"
 
 # Section Headings
-
 msgctxt "#32000"
 msgid "General"
-msgstr ""
+msgstr "Generel"
 
 msgctxt "#32001"
 msgid "Advanced"
-msgstr ""
+msgstr "Avanceret"
 
 msgctxt "#32002"
 msgid "TV Maze action"
-msgstr ""
+msgstr "TV Maze handling"
 
 # empty strings from id 32001 to 32099
-
 # Settings
-
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Aktivér fejlfindingslogføring"
 
 msgctxt "#32101"
 msgid "TV Maze User"
-msgstr ""
+msgstr "TV Maze bruger"
 
 msgctxt "#32102"
 msgid "TV Maze API Key"
-msgstr ""
+msgstr "TV Maze API-nøgle"
 
 msgctxt "#32103"
 msgid "Add new Kodi shows to followed list"
-msgstr ""
+msgstr "Tilføj nye Kodi-serier til den fulgte liste"
 
 msgctxt "#32104"
 msgid "Mark new Kodi episodes as acquired"
-msgstr ""
+msgstr "Marker nye Kodi-episoder som erhvervet"
 
 msgctxt "#32105"
 msgid "Mark watched Kodi episodes as watched"
-msgstr ""
+msgstr "Marker sete Kodi-episoder som sete"
 
 msgctxt "#32106"
 msgid "Mark watched after"
-msgstr ""
+msgstr "Marker som set efter"
 
 msgctxt "#32107"
 msgid "Mark watched when removing from Kodi"
-msgstr ""
+msgstr "Marker som set ved fjernelse fra Kodi"
 
 msgctxt "#32108"
 msgid "Hide context menu items"
 msgstr ""
 
 # empty strings from id 32108 to 32199
-
 # Dialog Headings
-
 msgctxt "#32200"
 msgid "API Credentials Needed"
-msgstr ""
+msgstr "API-legitimationsoplysninger påkrævet"
 
 msgctxt "#32201"
 msgid "Select action"
-msgstr ""
+msgstr "Vælg handling"
 
 msgctxt "#32202"
 msgid "Select shows to follow"
-msgstr ""
+msgstr "Vælg serier der skal følges"
 
 msgctxt "#32203"
 msgid "Select shows to unfollow"
-msgstr ""
+msgstr "Vælg serier der ikke skal følges"
 
 msgctxt "#32204"
 msgid "Select tag"
@@ -101,40 +99,36 @@ msgid "Select shows to untag"
 msgstr ""
 
 # empty strings from id 32207 to 32300
-
 # Dialog Messages
-
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
-msgstr ""
+msgstr "TV Maze API-legitimationsoplysninger skal angives, før der fortsættes."
 
 msgctxt "#32302"
 msgid "Open settings"
-msgstr ""
+msgstr "Åbn indstillinger"
 
 msgctxt "#32303"
 msgid "Select All (Click OK to reload list)"
-msgstr ""
+msgstr "Vælg alt (klik OK for at genindlæse listen)"
 
 msgctxt "#32304"
 msgid "Deselect All (Click OK to reload list)"
-msgstr ""
+msgstr "Fravælg alt (klik OK for at genindlæse listen)"
 
 # empty strings from 32305 to 32400
-
 # Context Menu
-
 msgctxt "#32401"
 msgid "TV Maze"
-msgstr ""
+msgstr "TV Maze"
 
 msgctxt "#32402"
 msgid "Follow show"
-msgstr ""
+msgstr "Følg serie"
 
 msgctxt "#32403"
 msgid "Unfollow show"
-msgstr ""
+msgstr "Følg ikke serie"
 
 msgctxt "#32404"
 msgid "Tag show"
@@ -146,16 +140,16 @@ msgstr ""
 
 msgctxt "#32406"
 msgid "Mark episode acquired"
-msgstr ""
+msgstr "Marker episode som erhvervet"
 
 msgctxt "#32407"
 msgid "Mark episode watched"
-msgstr ""
+msgstr "Marker episode som set"
 
 msgctxt "#32408"
 msgid "Mark episode skipped"
-msgstr ""
+msgstr "Marker episode som sprunget over"
 
 msgctxt "#32409"
 msgid "Unmark episode"
-msgstr ""
+msgstr "Marker ikke episode"

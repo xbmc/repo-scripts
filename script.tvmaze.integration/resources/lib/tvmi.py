@@ -4,7 +4,7 @@
 # *  original TV Maze Integration code by pkscout
 
 from kodi_six import xbmc, xbmcgui
-import json, os, re, sys
+import contextlib, json, os, re, sys
 from resources.lib.apis import tvmaze
 from resources.lib.fileops import readFile, writeFile
 from resources.lib.xlogger import Logger
@@ -147,6 +147,16 @@ def _startup( lw, settings, dialog ):
 
 
 
+class busyDialog():
+
+    def __enter__( self ):
+        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
+    
+    def __exit__( self, *args ):
+        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+
+
+
 class tvmContext:
 
     def __init__( self, action ):
@@ -194,27 +204,24 @@ class tvmContext:
 
 
     def _manage_show_follow( self, action ):
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        _manage_followed( sys.listitem.getLabel(), action, self.TVMAZE, self.LW )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            _manage_followed( sys.listitem.getLabel(), action, self.TVMAZE, self.LW )
 
 
     def _manage_show_tag( self, action ):
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        taglist, tagmap = _build_tag_list( self.TVMAZE, self.LW )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            taglist, tagmap = _build_tag_list( self.TVMAZE, self.LW )
         ret = self.DIALOG.select( self.SETTINGS['ADDONLANGUAGE']( 32204 ), taglist )
         if ret == -1:
             return
         tagid = tagmap[taglist[ret]]
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        showid = _manage_followed( re.sub( r' \([0-9]{4}\)', '', sys.listitem.getLabel() ), 'follow', self.TVMAZE, self.LW )
-        if action == 'tag':
-            success, loglines, result = self.TVMAZE.tagShow( showid, tagid )
-        else:
-            success, loglines, result = self.TVMAZE.unTagShow( showid, tagid )
-        self.LW.log( loglines )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            showid = _manage_followed( re.sub( r' \([0-9]{4}\)', '', sys.listitem.getLabel() ), 'follow', self.TVMAZE, self.LW )
+            if action == 'tag':
+                success, loglines, result = self.TVMAZE.tagShow( showid, tagid )
+            else:
+                success, loglines, result = self.TVMAZE.unTagShow( showid, tagid )
+            self.LW.log( loglines )
 
 
     def _manage_show_mark( self, action ):
@@ -227,9 +234,8 @@ class tvmContext:
             mark_type = 2
         else:
             mark_type = -1
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        _mark_one( show_info, mark_type, self.SETTINGS['add_followed'], [], self.TVMCACHEFILE, self.TVMAZE, self.LW )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            _mark_one( show_info, mark_type, self.SETTINGS['add_followed'], [], self.TVMCACHEFILE, self.TVMAZE, self.LW )
 
 
 
@@ -277,28 +283,24 @@ class tvmManual:
         if not ret:
             return
         else:
-            xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-            self._add_shows( ret, showlist )
-            xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+            with busyDialog():
+                self._add_shows( ret, showlist )
 
 
     def _option_unfollow_shows( self ):
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        followedlist, followedmap = self._build_tvmaze_list()
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            followedlist, followedmap = self._build_tvmaze_list()
         ret = self._select_shows_dialog( self.SETTINGS['ADDONLANGUAGE']( 32203 ), followedlist )
         if not ret:
             return
         else:
-            xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-            self._unfollow_shows( ret, followedlist, followedmap )
-            xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+            with busyDialog():
+                self._unfollow_shows( ret, followedlist, followedmap )
 
 
     def _option_tag_shows( self ):
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        taglist, tagmap = _build_tag_list( self.TVMAZE, self.LW )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            taglist, tagmap = _build_tag_list( self.TVMAZE, self.LW )
         ret = self.DIALOG.select( self.SETTINGS['ADDONLANGUAGE']( 32204 ), taglist )
         if ret == -1:
             return
@@ -308,29 +310,25 @@ class tvmManual:
         if not ret:
             return
         else:
-            xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-            self._add_shows( ret, showlist, tagid=tagid )
-            xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+            with busyDialog():
+                self._add_shows( ret, showlist, tagid=tagid )
 
 
     def _option_untag_shows( self ):
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        taglist, tagmap = _build_tag_list( self.TVMAZE, self.LW )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            taglist, tagmap = _build_tag_list( self.TVMAZE, self.LW )
         ret = self.DIALOG.select( self.SETTINGS['ADDONLANGUAGE']( 32204 ), taglist )
         if ret == -1:
             return
         tagid = tagmap[taglist[ret]]
-        xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-        taggedlist, taggedmap = self._build_tvmaze_list( tagid=tagid )
-        xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+        with busyDialog():
+            taggedlist, taggedmap = self._build_tvmaze_list( tagid=tagid )
         ret = self._select_shows_dialog( self.SETTINGS['ADDONLANGUAGE']( 32206 ), taggedlist )
         if not ret:
             return
         else:
-            xbmc.executebuiltin( 'ActivateWindow(busydialognocancel)' )
-            self._unfollow_shows( ret, taggedlist, taggedmap, tagid=tagid )
-            xbmc.executebuiltin( 'Dialog.Close(busydialognocancel)' )
+            with busyDialog():
+                self._unfollow_shows( ret, taggedlist, taggedmap, tagid=tagid )
         return
 
 
@@ -429,6 +427,7 @@ class tvmMonitor( xbmc.Monitor ):
         """Starts the background process for automatic marking of played TV shows."""
         xbmc.Monitor.__init__( self )
         _upgrade()
+        self.WINDOW = xbmcgui.Window(10000)
         self._init_vars()
         self.LW.log( ['background monitor version %s started' % self.SETTINGS['ADDONVERSION']], xbmc.LOGINFO )
         self.LW.log( ['debug logging set to %s' % self.SETTINGS['debug']], xbmc.LOGINFO )
@@ -440,6 +439,7 @@ class tvmMonitor( xbmc.Monitor ):
                     self.PLAYINGEPISODETIME = self.KODIPLAYER.getTime()
                 except RuntimeError:
                     self.PLAYINGEPISODETIME = self.PLAYINGEPISODETIME
+        self._set_property('script.tvmi.hidemenu', '' )
         self.LW.log( ['background monitor version %s stopped' % self.SETTINGS['ADDONVERSION']], xbmc.LOGINFO )
 
 
@@ -502,6 +502,7 @@ class tvmMonitor( xbmc.Monitor ):
         self.SETTINGS = loadSettings()
         self.LW = Logger( preamble='[TVMI Monitor]', logdebug=self.SETTINGS['debug'] )
         self.LW.log( ['the settings are:', _logsafe_settings( self.SETTINGS )] )
+        self._set_property('script.tvmi.hidemenu', str( self.SETTINGS['hidemenu']).lower() )
         self.TVMCACHEFILE = os.path.join( self.SETTINGS['ADDONDATAPATH'], 'tvm_followed_cache.json' )
         self.EPISODECACHE = os.path.join( self.SETTINGS['ADDONDATAPATH'], 'episode_cache.json' )
         self.KODIPLAYER = xbmc.Player()
@@ -571,6 +572,14 @@ class tvmMonitor( xbmc.Monitor ):
             elif thetype == 'removed':
                 self.REMOVEDITEMS.append( item )
                 self._update_episode_cache( epid=epid )
+
+
+    def _set_property( self, property_name, value='' ):
+        try:
+          self.WINDOW.setProperty( property_name, value )
+          self.LW.log( ['%s set to %s' % (property_name, value)] )
+        except Exception as e:
+          self.LW.log( ['Exception: Could not set property %s to value %s' % (property_name, value), e])
 
 
     def _update_episode_cache( self, epid=None, item=None, items=None ):

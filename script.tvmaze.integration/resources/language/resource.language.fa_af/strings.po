@@ -8,14 +8,13 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language: fa_af\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 # Section Headings
-
 msgctxt "#32000"
 msgid "General"
 msgstr ""
@@ -29,9 +28,7 @@ msgid "TV Maze action"
 msgstr ""
 
 # empty strings from id 32001 to 32099
-
 # Settings
-
 msgctxt "#32100"
 msgid "Enable debug logging"
 msgstr ""
@@ -69,9 +66,7 @@ msgid "Hide context menu items"
 msgstr ""
 
 # empty strings from id 32108 to 32199
-
 # Dialog Headings
-
 msgctxt "#32200"
 msgid "API Credentials Needed"
 msgstr ""
@@ -101,9 +96,7 @@ msgid "Select shows to untag"
 msgstr ""
 
 # empty strings from id 32207 to 32300
-
 # Dialog Messages
-
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
 msgstr ""
@@ -121,9 +114,7 @@ msgid "Deselect All (Click OK to reload list)"
 msgstr ""
 
 # empty strings from 32305 to 32400
-
 # Context Menu
-
 msgctxt "#32401"
 msgid "TV Maze"
 msgstr ""

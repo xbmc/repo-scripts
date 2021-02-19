@@ -54,7 +54,21 @@
 					</control>
 				</setting>
 			</group>
-			<group id="2" label="32002">
+			<group id="2" label="32001">
+				<setting help="" id="hidemenu" label="32108" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="debug" label="32100" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="action" label="32002">
+			<group id="1">
 				<setting help="" id="add_followed" label="32103" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -84,13 +98,6 @@
 				<setting help="" id="mark_on_remove" label="32107" type="boolean">
 					<level>0</level>
 					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="3" label="32001">
-				<setting help="" id="debug" label="32100" type="boolean">
-					<level>0</level>
-					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 			</group>
