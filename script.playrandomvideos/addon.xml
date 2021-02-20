@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.playrandomvideos" name="Play Random Videos" version="2.0.0" provider-name="rmrector">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+	</requires>
+	<extension point="kodi.context.item">
+		<menu id="kodi.core.main">
+			<item library="python/context.py">
+				<label>32100</label>
+				<visible>!Skin.HasSetting(disablecontext:script.playrandomvideos) + [Window.IsVisible(videos) | String.IsEqual(ListItem.DBTYPE, set) | String.IsEqual(ListItem.DBTYPE, tvshow) | String.IsEqual(ListItem.DBTYPE, season)] + ListItem.IsFolder + !ListItem.IsParentFolder + ![String.StartsWith(ListItem.FolderPath, plugin) | String.StartsWith(ListItem.FolderPath, addons) | String.StartsWith(ListItem.FolderPath, sources)] + !String.IsEqual(ListItem.FolderPath, add)</visible>
+			</item>
+			<item library="python/context_single.py">
+				<label>32099</label>
+				<visible>Skin.HasSetting(enablecontext:script.playrandomvideos.single) + [Window.IsVisible(videos) | String.IsEqual(ListItem.DBTYPE, set) | String.IsEqual(ListItem.DBTYPE, tvshow) | String.IsEqual(ListItem.DBTYPE, season)] + ListItem.IsFolder + !ListItem.IsParentFolder + ![String.StartsWith(ListItem.FolderPath, plugin) | String.StartsWith(ListItem.FolderPath, addons) | String.StartsWith(ListItem.FolderPath, sources)] + !String.IsEqual(ListItem.FolderPath, add)</visible>
+			</item>
+		</menu>
+	</extension>
+	<extension point="xbmc.python.library" library="python/script.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Plays random videos from all sorts of lists.</summary>
+		<description lang="en_GB">This add-on can quickly play random episodes from TV shows, movies from genres/sets/years/tags, and videos from playlists, the filesystem, and just about anything else, other than plugins.</description>
+		<news>v2.0.0 (2021-01-29)
+- Kodi 19 Matrix / Python 3 compatibility. Breaks compatibility with previous versions of Kodi.</news>
+		<platform>all</platform>
+		<source>https://github.com/rmrector/script.playrandomvideos</source>
+		<forum>https://forum.kodi.tv/showthread.php?tid=238613</forum>
+		<license>MIT</license>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+	</extension>
+</addon>
