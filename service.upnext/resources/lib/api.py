@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import, division, unicode_literals
 from xbmc import sleep
-from utils import event, get_setting_bool, get_setting_int, jsonrpc, log as ulog
+from utils import event, get_int, get_setting_bool, get_setting_int, jsonrpc, log as ulog
 
 
 class Api:
@@ -48,31 +48,48 @@ class Api:
         return bool(next_item)
 
     @staticmethod
+    def dequeue_next_item():
+        """Remove unplayed next item from video playlist"""
+        jsonrpc(method='Playlist.Remove', id=0, params=dict(playlistid=1, position=1))
+        return False
+
+    @staticmethod
     def reset_queue():
+        """Remove previously played item from video playlist"""
         jsonrpc(method='Playlist.Remove', id=0, params=dict(playlistid=1, position=0))
 
     def get_next_in_playlist(self, position):
         result = jsonrpc(method='Playlist.GetItems', params=dict(
             playlistid=1,
-            limits=dict(start=position + 1, end=position + 2),
+            # limits are zero indexed, position is one indexed
+            limits=dict(start=position, end=position + 1),
             properties=['art', 'dateadded', 'episode', 'file', 'firstaired', 'lastplayed',
                         'playcount', 'plot', 'rating', 'resume', 'runtime', 'season',
                         'showtitle', 'streamdetails', 'title', 'tvshowid', 'writer'],
         ))
 
-        if not result:
-            return None
+        item = result.get('result', {}).get('items')
 
-        self.log('Got details of next playlist item %s' % result, 2)
-        if result.get('result', {}).get('items') is None:
+        # Don't check if next item is an episode, just use it if it is there
+        if not item:  # item.get('type') != 'episode':
+            self.log('Error: no next item found in playlist', 1)
             return None
+        item = item[0]
 
-        item = result.get('result', {}).get('items', [])[0]
-        if item.get('type') != 'episode':
-            return None
+        # Playlist item may not have had video info details set
+        # Try and populate required details if missing
+        if not item.get('title'):
+            item['title'] = item.get('label', '')
+        item['episodeid'] = get_int(item, 'id')
+        item['tvshowid'] = get_int(item, 'tvshowid')
+        # If missing season/episode, change to empty string to avoid episode
+        # formatting issues ("S-1E-1") in UpNext popup
+        if get_int(item, 'season') == -1:
+            item['season'] = ''
+        if get_int(item, 'episode') == -1:
+            item['episode'] = ''
 
-        item['episodeid'] = item.get('id')
-        item['tvshowid'] = item.get('tvshowid', item.get('id'))
+        self.log('Next item in playlist: %s' % item, 2)
         return item
 
     def play_addon_item(self):
