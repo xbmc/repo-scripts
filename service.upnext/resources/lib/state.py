@@ -21,3 +21,4 @@ class State:
         self.track = False
         self.pause = False
         self.queued = False
+        self.playing_next = False
