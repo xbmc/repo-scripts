@@ -23,6 +23,11 @@ The add-on has various settings to fine-tune the experience, however the default
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Addon-Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+### v1.1.5 (2021-02-21)
+- Fix playlists to work with non-library content (@MoojMidge)
+- Fix to prevent unwanted playback when using playlist queueing method (@MoojMidge)
+- New translation for Finnish (@Dis90)
+
 ### v1.1.4 (2020-12-03)
 - Fix problem causing pop-up to not appear (@MoojMidge)
 - Translation updates to Romanian, Russian and Spanish (@tmihai20, @vlmaksime, @roliverosc)
