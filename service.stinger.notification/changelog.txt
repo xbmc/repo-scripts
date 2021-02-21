@@ -1,0 +1,38 @@
+v2.0.0 (2021-01-31)
+- Kodi 19 Matrix / Python 3 compatibility. Breaks compatibility with previous versions of Kodi.
+- remove ChapterDB
+
+v1.0.5 (2018-10-14)
+- Break Isengard compatibility
+- Fix finding last chapter on Kodi Leia
+
+v1.0.4 (2017-08-30)
++ Fix some issues with Kodi Leia
+- Fix: refine the Krypton bug workaround
+
+v1.0.3 (2017-04-14)
++ Work around Kodi bug introduced in Krypton when playing movie from Home window
+- Move code from resources/lib to lib
+
+v1.0.2 (2016-11-03)
+- Add an option to set amount of time to display the notification
+- Don't allow errors from web services to prevent the stinger notification
+
+v1.0.1 (2016-08-26)
+- Fix basic add-on text display in add-on info
+v1.0.0 (2016-07-24)
+- Text cleanup before official repo inclusion
+v0.7.0 (2016-02-25)
+- Grab missing chapters from the ChapterDb
+- Skinned notification by default, optional simple notification
+- Fix issue with Python 2.6
+v0.6.0 (2016-01-21)
+- Add an optional skinnable window
+- Add a once-off option to grab stinger tags for all movies
+v0.5.3 (2015-12-31)
+- Nope, compatible with Helix and up
+v0.5.2 (2015-12-31)
+- Compatible with Gotham and up
+- Add a different message for movies with scenes during and after the credits
+v0.5.1 (2015-12-30)
+- Fix dependency error
