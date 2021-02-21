@@ -1,0 +1,19 @@
+1.2.1
+- added function to get formatted date
+- code cleanup and improvements
+
+1.2.0
+- Support for passing inputstream
+- More Python 3.x functions and fixes
+- Datetime utils
+
+1.1.0
+- Added optional choice of BS parser (added html5lib dependency)
+- Added poster to quick addListItem
+- First compatibility with Python 3.x
+
+1.0.1
+- Added simplejson requirement
+
+1.0.0
+- Initial release
