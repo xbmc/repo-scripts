@@ -1,3 +1,7 @@
+1.2.1
+- added function to get formatted date
+- code cleanup and improvements
+
 1.2.0
 - Support for passing inputstream
 - More Python 3.x functions and fixes
