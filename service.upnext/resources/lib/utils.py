@@ -48,6 +48,21 @@ def clear_property(key, window_id=10000):
     return Window(window_id).clearProperty(key)
 
 
+def get_int(obj, key=None, default=-1):
+    """Returns an object or value for the given key in object, as an integer.
+       Returns default value if key or object is not available.
+       Returns value if value cannot be converted to integer."""
+
+    try:
+        val = obj.get(key, default) if key else obj
+    except (AttributeError, TypeError):
+        return default
+    try:
+        return int(val)
+    except (ValueError, TypeError):
+        return val if val else default
+
+
 def get_setting(key, default=None):
     """Get an add-on setting as string"""
     # We use Addon() here to ensure changes in settings are reflected instantly
