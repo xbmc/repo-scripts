@@ -1,0 +1,5 @@
+v1.0.1 (2021-02-20)
+- Update to python 3 for kodi matrix
+
+v1.0.0 (2018-02-26)
+- Initial Release

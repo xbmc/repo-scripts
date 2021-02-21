@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32001">
+		<setting id="intervalLength" label="32002" type="slider" default="1" range="1,1,5" option="int" />
+		<setting id="startLength" label="32003" type="slider" default="6" range="1,1,10" option="int" />        
+		<setting id="warningLength" label="32004" type="slider" default="10" range="0,1,30" option="int" />
+		<setting id="maxTimerLength" label="32005" type="slider" default="20" range="0,10,20" option="int" />
+	</category>
+	<category label="32011">
+		<setting label="32012" type="lsep" subsetting="false"/>
+	</category>
+	<category label="32021">
+		<setting label="32022" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32023" default="false"/>
+	</category>
+</settings>
