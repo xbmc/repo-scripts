@@ -1,3 +1,7 @@
+v1.0.2 (2021-02-22)
+- Added feature to open keymap editor from within addon settings
+- Added polish translation, thx to Atamans
+
 v1.0.1 (2021-02-20)
 - Update to python 3 for kodi matrix
 

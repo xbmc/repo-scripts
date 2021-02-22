@@ -7,7 +7,8 @@
 		<setting id="maxTimerLength" label="32005" type="slider" default="20" range="0,10,20" option="int" />
 	</category>
 	<category label="32011">
-		<setting label="32012" type="lsep" subsetting="false"/>
+		<setting label="32012" type="lsep"/>
+		<setting label="32013" type="action" action="RunScript(script.keymap)"/>
 	</category>
 	<category label="32021">
 		<setting label="32022" type="lsep"/>
