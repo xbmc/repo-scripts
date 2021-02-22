@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.adzapper" name="LiveTV Ad-Zapper" version="1.0.1" provider-name="pOpY">
+<addon id="script.adzapper" name="LiveTV Ad-Zapper" version="1.0.2" provider-name="pOpY">
 	<requires>
-    <import addon="xbmc.python" version="3.0.0"/>
+		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py"/>
 	<extension point="xbmc.service" library="service.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Rezap to current channel after some time (advertisment)</summary>
+		<summary lang="de_DE">Schaltet auf aktuellen Kanal zurück nach Ablauf einer gewissen Zeit (Werbung)</summary>
+		<summary lang="pl_PL">Powrót do aktualnego kanału po (reklamie) w ustalonym czasie</summary>
 		<description lang="en_GB">Add advertisment skipping to your Kodi system, allowing the user to define a time to switch back to the current channel. During this time the user can switch channel without thinking to switch back manually.</description>
+		<description lang="de_DE">Fügt eine einfache Möglichkeit zu Kodi hinzu, um Werbeblöcke zu überspringen. Der Benutzer kann eine Zeit definieren, nach der automatisch auf den aktuellen Kanal zurückgeschaltet wird. So verpasst man das Programm nach dem Werbeblock nicht.</description>
+		<description lang="pl_PL">Pomijanie reklam dla Live TV, umożliwiając użytkownikowi zdefiniowanie czasu reklamy, aby przełączyć się z powrotem na bieżący kanał.[CR]W tym czasie możesz przełączyć kanał bez zastanawiania się nad ręcznym przełączeniem, po określonym przez ciebie czasie dodatek sam przełączy na wcześniej zdefiniowany kanał.</description>
+		<language>en de pl</language>
 		<platform>all</platform>
 		<license>GPL-2.0-or-later</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=329102</forum>
 		<website>https://forum.kodi.tv/showthread.php?tid=329102</website>
 		<source>https://github.com/popy2k14/repo-scripts/tree/matrix/script.adzapper</source>
+		<news>
+[B]- v1.0.2 (2021-02-22)[/B]
+- (en) [new] Added feature to open keymap editor from within addon settings
+- (en) [new] Added polish translation, thx to Atamans
+
+- (de) [new] Feature hinzugefügt um dem Keymap Editor aus den Addon Einstellungen zu öffnen
+- (de) [new] Polnische Übersetzung hinzugefügt, Danke an Atamans
+
+- (pl) [nowość] Dodano funkcję otwierania edytora klawiszy z poziomu ustawień dodatku 
+- (pl) [nowość] Dodano polskie tłumaczenie, dzięki dla Atamans
+
+[B]- v1.0.1 (2021-02-20)[/B]
+- (en) Update to python 3 for kodi matrix
+
+- (de) Update zu python 3 für Kodi Matrix
+
+- (pl) Aktualizacja do Pythona 3 dla Kodi Matrix
+		</news>
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>

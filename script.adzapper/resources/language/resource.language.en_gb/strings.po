@@ -54,7 +54,11 @@ msgctxt "#32012"
 msgid "Use keymap editor addon!"
 msgstr ""
 
-#empty strings from id 32013 to 32020
+msgctxt "#32013"
+msgid "Open keymap editor"
+msgstr ""
+
+#empty strings from id 32014 to 32020
 
 msgctxt "#32021"
 msgid "Advanced"
