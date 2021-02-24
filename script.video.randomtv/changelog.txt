@@ -1,0 +1,32 @@
+v1.3.0 (23 February 2021)
+  - Added support for Matrix / python 3
+v1.2.2 (11 June 2019)
+  - Added Context Menu Item to play tv shows or seasons saved in Favourites
+v1.2.1 (27 May 2019)
+  - Updated addon.xml
+v1.2.0 (26 May 2019)
+  - Added Context Menu Item to play tv shows or seasons with RandomTV
+v1.1.2 (2 May 2017)
+  - Fixed Bugs in AutoStop Feature
+  - Fixed Bug where Playlist would be shuffled after each video ended
+  - Added Empty Window to prevent Kodi from being displayed between Playlist Shuffles
+  - Code Optimization
+v1.1.0 (28 April 2017)
+  - Added Auto Stop Feature
+  - Replaced xbmc.sleep with xbmc.Monitor().waitForAbort
+v1.0.1 (6 April 2017)
+  - Updated lang tag in addon.xml
+  - Added Localization
+  - Replaced deprecated xbmc.abortRequested
+v1.0.0 (1 April 2017)
+  - Public Release
+  - Added Settings for Repeat Playlist and Shuffle On Repeat
+  - Changed Playlist Repeat logic to restart playlist instead of changing Repeat Mode
+v0.2.1 (29 March 2017)
+  - Fixed condition where "Include All TV Shows"=true and "Include Unwatched"=false would result in Unwatched Episodes being included
+  - Added DialogBusy when starting and loading episode data
+v0.2 (26 March 2017)
+  - Bummed Code
+  - Changed Logic
+v0.1 (25 March 2017)
+  - Initial Build (Alpha)
