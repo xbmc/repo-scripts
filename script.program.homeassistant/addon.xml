@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.program.homeassistant" name="Home Assistant" version="1.1.0" provider-name="LaTrappe">
+	<requires>
+		<import addon="script.module.requests" version="2.18.0"/>
+		<import addon="script.module.iso8601" version="0.1.12"/>
+		<import addon="script.module.yaml" version="4.1"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en_GB">Home Assistant Kodi Addon</summary>
+		<description lang="en_GB">This is a unofficial Home Assistant Kodi Addon (HAKA!)</description>
+		<summary lang="nl_NL">Home Assistant Kodi Addon</summary>
+		<description lang="nl_NL">Dit is een onofficiele Home Assistant Kodi Addon (HAKA!)</description>
+		<license>GNU General Public License, v2</license>
+		<language>en nl</language>
+		<source>https://github.com/LaTrappe/HA-Kodi</source>
+		<website>https://www.home-assistant.io/</website>
+		<email>samsonjasper@gmail.com</email>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+			<screenshot>resources/screenshot-01.jpg</screenshot>
+			<screenshot>resources/screenshot-02.jpg</screenshot>
+			<screenshot>resources/screenshot-03.jpg</screenshot>
+			<screenshot>resources/screenshot-04.jpg</screenshot>			
+		</assets>
+		<news>
+Version 1.1.0 (2021-02-24)
+- Kodi Matrix support
+- HAKA! Favorites section added (add items via context menu)
+- Extra sensor icons and sensor attributes as label
+- Persons domain added
+- Navigate to settings from within addon menu
+- Sort items by friendly name by default
+- Fixed issue: Items in Kodi main menu keep refreshing
+- Fixed issue: Not ascii characters give errors when generating label
+
+---------------------------------------------------------------------
+
+Version 1.0.1 (2020-10-23)
+- Debug logging added
+
+---------------------------------------------------------------------
+
+Version 1.0.0 (2020-10-22)
+- First release!
+		</news>
+	</extension>
+</addon>

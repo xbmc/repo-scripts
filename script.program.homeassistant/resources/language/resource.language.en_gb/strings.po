@@ -1,0 +1,178 @@
+# XBMC Media Center language file
+# Addon Name: Home Assistant
+# Addon id: script.program.homeassistant
+# Addon version: 1.0.0
+# Addon Provider: LaTrappe
+msgid ""
+msgstr ""
+"Project-Id-Version: script.program.homeassistant\n"
+"Report-Msgid-Bugs-To: samsonjasper@gmail.com\n"
+"POT-Creation-Date: 2020-10-21 13:29+0000\n"
+"PO-Revision-Date: 2020-10-21 13:29+0000\n"
+"Last-Translator: samsonjasper@gmail.com\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Switching your home with Kodi"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "This is a first unofficial Home Assistant Kodi Addon (HAKA!)."
+msgstr ""
+
+msgctxt "#30001"
+msgid "Connection"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Home Assistant server"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Long life token"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Domains"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Automations"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Climate"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Groups"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Lights"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Scenes"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Scripts"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Sensors"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Switches"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Vacuum"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Persons"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Other"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Show HAKA! favourites in main menu"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Curr. temp: "
+msgstr ""
+
+msgctxt "#30021"
+msgid "Brightness: "
+msgstr ""
+
+msgctxt "#30022"
+msgid "Last triggered: "
+msgstr ""
+
+msgctxt "#30023"
+msgid "HA Version: "
+msgstr ""
+
+msgctxt "#30024"
+msgid "Last changed: "
+msgstr ""
+
+msgctxt "#30040"
+msgid "Start"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Stop"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Return to base"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Locate"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Error 401: Check your token."
+msgstr ""
+
+msgctxt "#30051"
+msgid "Error 405: Method not allowed."
+msgstr ""
+
+msgctxt "#30052"
+msgid "Unknown error: Check IP address or if server is online."
+msgstr ""
+
+msgctxt "#30053"
+msgid "Configure server in the addon settings menu first."
+msgstr ""
+
+msgctxt "#30054"
+msgid " is added to your HAKA! favourites."
+msgstr ""
+
+msgctxt "#30055"
+msgid " is removed from your HAKA! favourites."
+msgstr ""
+
+msgctxt "#30056"
+msgid "Something went wrong opening your HAKA! favourites. Check the file in the addon folder or check the logs."
+msgstr ""
+
+msgctxt "#30057"
+msgid "It seems you do no have any HAKA! favourites yet. Use the context menu to add some."
+msgstr ""
+
+msgctxt "#30058"
+msgid " is already a HAKA! favourite."
+msgstr ""
+
+msgctxt "#30070"
+msgid "Add to HAKA! favourites"
+msgstr ""
+
+msgctxt "#30071"
+msgid "Remove from HAKA! favourites"
+msgstr ""
