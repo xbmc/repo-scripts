@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32017">
+    <setting id="VideoSource"  type="enum"      label="32002" default="0" lvalues="32009|32010"/>
+    <setting id="VideoFile"    type="action"    label="32003" default="" subsetting="true" visible="eq(-1,0)" action="RunScript($CWD/browse.py, -file)"/>
+    <setting id="VideoFolder"  type="action"    label="32004" default="" subsetting="true" visible="eq(-2,1)" action="RunScript($CWD/browse.py, -folder)"/>
+    <setting id="VideoLimit"   type="labelenum" label="32005" default="5" values="5|25|50|100|250|500" subsetting="true" visible="eq(-3,1)"/>
+    <setting id="VideoRandom"  type="bool"      label="32006" default="false"                          subsetting="true" visible="eq(-4,1)"/>
+      
+    <setting id="Time"         type="bool"      label="32019" default="true" />
+    <setting id="TraktDisable" type="bool"      label="32007" default="true"/>
+    <setting id="LockAction"   type="bool"      label="32008" default="false"/>
+    <setting id="SetVolume"    type="slider"    label="32011" default="100" range="0,1,100" option="int" />
+    <setting id="RepeatState"  type="labelenum" label="32016" default="Off" values="Off|One|All"/>
+    <setting id="Enable_Debugging" type="bool"  label="32012" default="false" />
+  </category>
+</settings>
+        
