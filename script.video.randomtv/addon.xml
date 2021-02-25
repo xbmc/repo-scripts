@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.video.randomtv" name="RandomTV" version="1.3.0" provider-name="gmccauley">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="kodi.context.item">
+	<menu id="kodi.core.main">
+		<item library="addon.py">
+			<label>32018</label>
+			<visible>String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,season) | [String.StartsWith(ListItem.Path,favourites://) + String.Contains(ListItem.FolderPath,tvshows)]</visible>
+		</item>
+	</menu>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">RandomTV</summary>
+    <description lang="en_GB">
+RandomTV plays random TV episodes from your library.
+There are a few options:
+- Include unwatched episodes (only watched will be included by default)
+- Update Play Count
+- Repeat Playlist
+- Shuffle On Repeat
+- Show Notifications
+- Enable Auto Stop
+- Include All TV Shows or Select TV Shows
+It will also add a context menu item so that you can play a specific show or season with RandomTV
+	</description>
+    <disclaimer lang="en_GB">My First Add-On.  Please by gentle</disclaimer>
+    <platform>all</platform>
+    <license>GPL-3.0-or-later</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=310494</forum>
+    <source>https://github.com/gmccauley/script.video.randomtv</source>
+    <news>
+v1.3.0 (23 February 2021)
+  - Added support for Matrix / python 3
+	</news>
+    <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
