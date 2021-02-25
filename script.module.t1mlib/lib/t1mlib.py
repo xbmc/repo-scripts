@@ -15,6 +15,7 @@ import calendar
 import datetime
 import requests
 import string
+import locale
 
 
 qp = urllib.parse.quote_plus
@@ -41,6 +42,9 @@ class t1mAddon(object):
         self.defaultVidStream = {'codec': 'h264', 'width': 1280, 'height': 720, 'aspect': 1.78}
         self.defaultAudStream = {'codec': 'aac', 'language': 'en'}
         self.defaultSubStream = {'language': 'en'}
+        self.log(''.join(["Python version : ",str(sys.version)]))
+        self.log(''.join(["locale.getpreferredencoding : ",str(locale.getpreferredencoding())]))
+
 
     def log(self, txt):
             message = ''.join([self.addonName, ' : ', txt])
@@ -89,34 +93,59 @@ class t1mAddon(object):
     def getAddonSearch(self, url, ilist):
         return ilist
 
+
     def getAddonListing(self, url, ilist):
         url, sta, sids = url.split('|')
+        sid = sids.split('%',1)[0]
+        sid = int(sid)
         d = datetime.datetime.utcnow()
         now = calendar.timegm(d.utctimetuple())
-        a = requests.get(''.join(['http://mobilelistings.tvguide.com/Listingsweb/ws/rest/airings/',sta,'/start/',str(now),'/duration/20160?channelsourceids=',sids,'&formattype=json']), headers=self.defaultHeaders).json()
-        for b in a[:10]:
-            b = b['ProgramSchedule']
-            st = datetime.datetime.fromtimestamp(float(b['StartTime'])).strftime('%H:%M')
-            et = datetime.datetime.fromtimestamp(float(b['EndTime'])).strftime('%H:%M')
-            duration = int(float(b['EndTime']) - float(b['StartTime']))
-            name = ''.join([st,' - ',et,'  ',str(b.get('Title'))])
-            infoList = {'mediatype':'episode',
-                        'Title': name,
-                        'duration': duration,
-                        'Plot':  ''.join([st,' - ',et,'        ',str(duration/60),' min.\n\n[COLOR blue]',str(b.get('Title')),'\n',str(b.get('EpisodeTitle')),'[/COLOR]\n\n',str(b.get('CopyText'))]),
-                        'MPAA': b.get('Rating')
-                       }
-            c = requests.get(''.join(['https://mapi.tvguide.com/listings/expanded_details?v=1.5&program=',str(b.get('ProgramId'))]), headers=self.defaultHeaders).json()
+# fix some legacy stuff for existing add-ons
+        if sta == '20517':
+             sta = '9133006313'
+             if sid == 94072:
+                 sid = 95652
+        elif sta == '20534':
+             sta = '9133000248'
+             if sid == 35794:
+                 sid = 93301
+             elif sid == 39303:
+                 sid = 14506
+             elif sid ==17075:
+                 sid = 87003
+        a = requests.get(''.join(['https://cmg-prod.apigee.net/v1/xapi/tvschedules/tvguide/',sta,'/web?start=',str(now),'&duration=180']), headers=self.defaultHeaders).json()
+        for c in a["data"]["items"]:
+         if c["channel"]["legacySourceId"] == sid:
+           for b in c["programSchedules"]:
+            st = datetime.datetime.fromtimestamp(float(b['startTime'])).strftime('%H:%M')
+            et = datetime.datetime.fromtimestamp(float(b['endTime'])).strftime('%H:%M')
+            duration = int(float(b['endTime']) - float(b['startTime']))
+            name = ''.join([st,' - ',et,'  ',str(b.get('title'))])
+            d = requests.get(b["programDetails"], headers=self.defaultHeaders).json()['data']['item']
+            if d.get('type') == 'show' or d.get('type') == None:
+                name = b.get('title')
+                epiname = d.get('episodeTitle',name)
+                if epiname == None:
+                    epiname = ''
+                infoList = {'mediatype':'episode',
+                            'Title': name,
+                            'duration': duration,
+                            'Plot':  ''.join([st,' - ',et,'        ',str(duration/60),' min.\n\n[COLOR blue]',str(name),'\n',str(epiname),'[/COLOR]\n\n',str(d.get('description',''))]),
+                            'MPAA': b.get('rating')
+                           }
+            else:
+                name = d.get('title')
+                infoList = {'mediatype':'movie',
+                            'Title': name,
+                            'duration': duration,
+                            'Plot':  ''.join([st,' - ',et,'        ',str(duration/60),' min.\n\n[COLOR blue]',str(d.get('title')),'[/COLOR]\n\n',str(d.get('description'))]),
+                            'MPAA': b.get('rating')
+                           }
+
             thumb = self.addonIcon
             fanart = self.addonFanart
-            if not (c.get('tvobject') is None):
-                img = c['tvobject'].get('image')
-                if not (img is None):
-                    thumb = img.get('url')
-                img = c['tvobject'].get('backgroundImages')
-                if not (img is None):
-                    fanart = img[0].get('url')
             ilist = self.addMenuItem(name,'LV', ilist, url, thumb, fanart, infoList, isFolder=False)
+           break
         return(ilist)
 
 
