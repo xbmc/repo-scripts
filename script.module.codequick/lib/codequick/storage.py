@@ -3,8 +3,8 @@ from __future__ import absolute_import
 
 # Standard Library Imports
 from hashlib import sha1
+import sqlite3
 import time
-import sys
 import os
 
 try:
@@ -20,14 +20,33 @@ from codequick.utils import ensure_unicode, PY3
 if PY3:
     # noinspection PyUnresolvedReferences, PyCompatibility
     from collections.abc import MutableMapping, MutableSequence
+    buffer = bytes
 else:
     # noinspection PyUnresolvedReferences, PyCompatibility
     from collections import MutableMapping, MutableSequence
 
-__all__ = ["PersistentDict", "PersistentList"]
+__all__ = ["PersistentDict", "PersistentList", "Cache"]
 
 # The addon profile directory
 profile_dir = Script.get_info("profile")
+
+
+def check_filename(name):
+    # Filename is already a fullpath
+    if os.path.sep in name:
+        filepath = ensure_unicode(name)
+        data_dir = os.path.dirname(filepath)
+    else:
+        # Filename must be relative, joining profile directory with filename
+        filepath = os.path.join(profile_dir, ensure_unicode(name))
+        data_dir = profile_dir
+
+    # Create any missing data directory
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+
+    # The full file path
+    return filepath
 
 
 class _PersistentBase(object):
@@ -39,30 +58,13 @@ class _PersistentBase(object):
 
     def __init__(self, name):
         super(_PersistentBase, self).__init__()
+        self._filepath = check_filename(name)
         self._version_string = "__codequick_storage_version__"
         self._data_string = "__codequick_storage_data__"
         self._serializer_obj = object
         self._stream = None
         self._hash = None
         self._data = None
-
-        # Filename is already a fullpath
-        if os.path.sep in name:
-            self._filepath = ensure_unicode(name)
-            data_dir = os.path.dirname(self._filepath)
-        else:
-            # Filename must be relative, joining profile directory with filename
-            self._filepath = os.path.join(profile_dir, ensure_unicode(name))
-            data_dir = profile_dir
-
-        # Ensure that filepath is bytes when platform type is linux/bsd
-        if not sys.platform.startswith("win"):  # pragma: no branch
-            self._filepath = self._filepath.encode("utf8")
-            data_dir = data_dir.encode("utf8")
-
-        # Create any missing data directory
-        if not os.path.exists(data_dir):
-            os.makedirs(data_dir)
 
     def _load(self):
         """Load in existing data from disk."""
@@ -238,3 +240,95 @@ class PersistentList(_PersistentBase, MutableSequence):
 
     def append(self, value):
         self._data.append((value, time.time()))
+
+
+class Cache(object):
+    """
+    Handle control of listitem cache.
+
+    :param str name: Filename or path to storage file.
+    :param int ttl: [opt] The amount of time in "seconds" that a cached session can be stored before it expires.
+
+    .. note:: Any expired cache item will be removed on first access to that item.
+    """
+    def __init__(self, name, ttl):
+        self.filepath = check_filename(name)
+        self.buffer = {}
+        self.ttl = ttl
+        self._connect()
+
+    def _connect(self):
+        """Connect to sqlite cache database"""
+        self.db = db = sqlite3.connect(self.filepath, timeout=3)
+        self.cur = cur = db.cursor()
+        db.isolation_level = None
+
+        # Create cache table
+        cur.execute("CREATE TABLE IF NOT EXISTS itemcache (key TEXT PRIMARY KEY, value BLOB, timestamp INTEGER)")
+        db.commit()
+
+    def execute(self, sqlquery, args, repeat=False):  # type: (str, tuple, bool) -> None
+        self.cur.execute("BEGIN")
+        try:
+            self.cur.execute(sqlquery, args)
+
+        # Handle database errors
+        except sqlite3.DatabaseError as e:
+            # Check if database is currupted
+            if not repeat and os.path.exists(self.filepath) and \
+                    (str(e).find("file is encrypted") > -1 or str(e).find("not a database") > -1):
+                Script.log("Deleting broken database file: %s", (self.filepath,), lvl=Script.DEBUG)
+                self.close()
+                os.remove(self.filepath)
+                self._connect()
+                self.execute(sqlquery, args, repeat=True)
+            else:
+                raise e
+
+        # Just roll back database on error and raise again
+        except Exception as e:
+            self.db.rollback()
+            raise e
+        else:
+            self.db.commit()
+
+    def __getitem__(self, key):
+        if key in self.buffer:
+            return self.buffer[key]
+        else:
+            item = self.cur.execute("SELECT value, timestamp FROM itemcache WHERE key = ?", (key,)).fetchone()
+            if item is None:
+                raise KeyError(key)
+            else:
+                value, timestamp = item
+                if self.ttl > -1 and timestamp + self.ttl < time.time():  # Expired
+                    del self[key]
+                    raise KeyError(key)
+                else:
+                    return pickle.loads(bytes(value))
+
+    def __setitem__(self, key, value):
+        data = buffer(pickle.dumps(value))
+        self.execute("REPLACE INTO itemcache (key, value, timestamp) VALUES (?,?,?)", (key, data, time.time()))
+
+    def __delitem__(self, key):
+        self.execute("DELETE FROM itemcache WHERE key = ?", (key,))
+
+    def __contains__(self, key):
+        try:
+            if key in self.buffer:
+                return True
+            else:
+                self.buffer[key] = self[key]
+                return True
+        except KeyError:
+            return False
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        self.close()
+
+    def close(self):
+        self.db.close()

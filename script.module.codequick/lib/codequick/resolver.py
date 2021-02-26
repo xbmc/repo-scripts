@@ -4,7 +4,6 @@ from __future__ import absolute_import
 # Standard Library Imports
 import logging
 import inspect
-import re
 
 # Kodi imports
 import xbmcplugin
@@ -15,44 +14,12 @@ import xbmc
 from codequick.script import Script
 from codequick.support import build_path, logger_id
 from codequick.utils import unicode_type, ensure_unicode
+from codequick import localized
 
 __all__ = ["Resolver"]
 
 # Logger specific to this module
 logger = logging.getLogger("%s.resolver" % logger_id)
-
-# Localized string Constants
-SELECT_PLAYBACK_ITEM = 25006
-NO_VIDEO = 32401
-NO_DATA = 33077
-
-# Patterens to extract video url
-# Copied from the Youtube-DL project
-# https://github.com/rg3/youtube-dl/blob/4471affc348af40409188f133786780edd969623/youtube_dl/extractor/youtube.py#L329
-VALID_YOUTUBE_URL = r"""(?x)^
-(
- (?:https?://|//)                                     # http(s):// or protocol-independent URL
- (?:(?:(?:(?:\w+\.)?[yY][oO][uU][tT][uU][bB][eE](?:-nocookie)?\.com/|
-    youtube\.googleapis\.com/)                        # the various hostnames, with wildcard subdomains
- (?:.*?\#/)?                                          # handle anchor (#/) redirect urls
- (?:                                                  # the various things that can precede the ID:
-     (?:(?:v|embed|e)/(?!videoseries))                # v/ or embed/ or e/
-     |(?:                                             # or the v= param in all its forms
-         (?:(?:watch|movie)(?:_popup)?(?:\.php)?/?)?  # preceding watch(_popup|.php) or nothing (like /?v=xxxx)
-         (?:\?|\#!?)                                  # the params delimiter ? or # or #!
-         (?:.*?[&;])??                                # any other preceding param (like /?s=tuff&v=xxxx or
-         v=                                           # ?s=tuff&amp;v=V36LpHqtcDY)
-     )
- ))
- |(?:
-    youtu\.be|                                        # just youtu.be/xxxx
-    vid\.plus|                                        # or vid.plus/xxxx
-    zwearz\.com/watch|                                # or zwearz.com/watch/xxxx
- ))
-)?                                                       # all until now is optional -> you can pass the naked ID
-([0-9A-Za-z_-]{11})                                      # here is it! the YouTube video ID
-(?(1).+)?                                                # if we found the ID, everything can follow
-$"""
 
 
 class Resolver(Script):
@@ -63,7 +30,6 @@ class Resolver(Script):
     Resolver inherits all methods and attributes from :class:`script.Script<codequick.script.Script>`.
 
     The possible return types from Resolver Callbacks are.
-        * ``bytes``: URL as type "bytes".
         * ``str``: URL as type "str".
         * ``iterable``: "List" or "tuple", consisting of URL's, "listItem's" or a "tuple" consisting of (title, URL).
         * ``dict``: "Dictionary" consisting of "title" as the key and the URL as the value.
@@ -96,6 +62,10 @@ class Resolver(Script):
         super(Resolver, self).__init__()
         self.playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         self._extra_commands = {}  # Extra options that are passed to listitem
+
+    def __call__(self, route, args, kwargs):
+        results = super(Resolver, self).__call__(route, args, kwargs)
+        return self._process_results(results)
 
     def create_loopback(self, url, **next_params):  # Undocumented
         """
@@ -170,11 +140,6 @@ class Resolver(Script):
             The list of available parameters can be found at.
 
             https://github.com/rg3/youtube-dl#options
-
-        .. note::
-
-            Unfortunately the Kodi YouTube.DL module is Python 2 only. It should be
-            ported to Python 3 when Kodi switches to Python 3 for version 19.
         """
 
         def ytdl_logger(record):
@@ -214,42 +179,9 @@ class Resolver(Script):
         elif stored_errors:
             raise RuntimeError(stored_errors[0])
 
-    @staticmethod
-    def extract_youtube(source):  # pragma: no cover
-        msg = "This method was only temporary and will be removed in future release."
-        logger.warning("DeprecationWarning: " + msg)
-        # TODO: Remove this method now that youtube.dl works on kodi for Xbox
-        # noinspection PyPackageRequirements
-        import htmlement
-        import urlquick
-
-        # The Element class isn't been exposed directly by the C implementation
-        # So the type trick is needed here
-        if isinstance(source, type(htmlement.Etree.Element(None))):
-            video_elem = source
-        else:
-            # Tempeary method to extract video url from an embeded youtube video.
-            if source.startswith("http://") or source.startswith("https://"):
-                source = urlquick.get(source, max_age=0).text
-            try:
-                video_elem = htmlement.fromstring(source)
-            except RuntimeError:  # pragma: no cover
-                return None
-
-        # Search for all types of embeded videos
-        video_urls = []
-        video_urls.extend(video_elem.findall(".//iframe[@src]"))
-        video_urls.extend(video_elem.findall(".//embed[@src]"))
-
-        for url in video_urls:
-            match = re.match(VALID_YOUTUBE_URL, url.get("src"))
-            if match is not None:  # pragma: no branch
-                videoid = match.group(2)
-                return u"plugin://plugin.video.youtube/play/?video_id={}".format(videoid)
-
     def _source_selection(self, video_info):
         """
-        Ask user with video stream to play.
+        Ask user whitch video stream to play.
 
         :param video_info: YDStreamExtractor video_info object.
         :returns: video_info object with the video pre selection.
@@ -261,7 +193,7 @@ class Resolver(Script):
             display_list.append(data)
 
         dialog = xbmcgui.Dialog()
-        ret = dialog.select(self.localize(SELECT_PLAYBACK_ITEM), display_list)
+        ret = dialog.select(self.localize(localized.SELECT_PLAYBACK_ITEM), display_list)
         if ret >= 0:
             video_info.selectStream(ret)
             return video_info
@@ -299,7 +231,7 @@ class Resolver(Script):
         # Custom listitem object
         elif isinstance(url, Listitem):
             # noinspection PyProtectedMember
-            return url._close()[1]
+            return url.build()[1]
         else:
             # Not already a listitem object
             listitem = xbmcgui.ListItem()
@@ -344,7 +276,7 @@ class Resolver(Script):
             # Extract original kodi listitem from custom listitem
             elif isinstance(resolved, Listitem):
                 # noinspection PyProtectedMember
-                listitem = resolved._close()[1]
+                listitem = resolved.build()[1]
 
             # Create playlist if resolved object is a list of urls
             elif isinstance(resolved, (list, tuple)):
@@ -372,7 +304,7 @@ class Resolver(Script):
             # there is nothing that can be done about that.
             listitem = xbmcgui.ListItem()
         else:
-            raise RuntimeError(self.localize(NO_VIDEO))
+            raise RuntimeError(self.localize(localized.NO_VIDEO))
 
         # Add extra parameters to listitem
         if "setContentLookup" in self._extra_commands:

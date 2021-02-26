@@ -19,6 +19,7 @@ from codequick.route import Route
 from codequick.script import Script
 from codequick.support import auto_sort, build_path, logger_id, dispatcher, CallbackRef
 from codequick.utils import ensure_unicode, ensure_native_str, unicode_type, PY3, bold
+from codequick import localized
 
 if PY3:
     # noinspection PyUnresolvedReferences, PyCompatibility
@@ -87,16 +88,6 @@ quality_map = ((768, 576), (1280, 720), (1920, 1080), (3840, 2160))  # SD, 720p,
 # Re.sub to remove formatting from label strings
 strip_formatting = re.compile(r"\[[^\]]+?\]").sub
 
-# Localized string Constants
-RELATED_VIDEOS = 32201
-RECENT_VIDEOS = 32002
-RECENT_VIDEOS_PLOT = 32004
-ALLVIDEOS = 32003
-NEXT_PAGE = 33078
-NEXT_PAGE_PLOT = 32005
-SEARCH_PLOT = 32006
-SEARCH = 137
-
 
 class Params(MutableMapping):
     def __setstate__(self, state):
@@ -128,13 +119,10 @@ class Params(MutableMapping):
         del self.raw_dict[key]
 
     def __delattr__(self, name):
-        if name in self.raw_dict:
+        try:
             del self.raw_dict[name]
-        else:
+        except KeyError:
             raise AttributeError("'{0}' object has no attribute '{1}'".format(self.__class__.__name__, name))
-
-    def __contains__(self, key):  # type: (str) -> bool
-        return key in self.raw_dict
 
     def __len__(self):
         return len(self.raw_dict)
@@ -150,8 +138,9 @@ class Params(MutableMapping):
 
     def clean(self):
         """Remove any and all None values from the dictionary."""
-        for key in [key for key, val in self.raw_dict.items() if not val]:
-            del self.raw_dict[key]
+        for key, val in list(self.raw_dict.items()):
+            if not val:
+                del self.raw_dict[key]
 
 
 class Art(Params):
@@ -159,15 +148,11 @@ class Art(Params):
     Dictionary like object, that allows you to add various images. e.g. "thumb", "fanart".
 
     if "thumb", "fanart" or "icon"  is not set, then they will be set automaticly based on the add-on's
-    fanart and icon images.
+    fanart and icon images if available.
 
     .. note::
 
-        The automatic image values can be disabled by setting an empty string. e.g. item.art["thumb"] = "".
-
-    .. note::
-
-        This class inherits all methods and attributes from :class:`collections.MutableMapping`.
+        The automatic image values can be disabled by setting them to an empty string. e.g. item.art.thumb = "".
 
     Expected art values are.
         * thumb
@@ -248,8 +233,6 @@ class Info(Params):
         https://codedocs.xyz/xbmc/xbmc/group__python__xbmcgui__listitem.html#ga0b71166869bda87ad744942888fb5f14
 
     .. note:: Duration infolabel value can be either in "seconds" or as a "hh:mm:ss" string.
-
-    This class inherits all methods and attributes from :class:`collections.MutableMapping`.
 
     :examples:
         >>> item = Listitem()
@@ -375,12 +358,10 @@ class Stream(Params):
 
     Type convertion will be done automatically, so manual convertion is not required.
 
-    This class inherits all methods and attributes from :class:`collections.MutableMapping`.
-
     :example:
         >>> item = Listitem()
         >>> item.stream.video_codec = "h264"
-        >>> item.stream["audio_codec"] = "aac"
+        >>> item.stream.audio_codec = "aac"
     """
     def __setitem__(self, key, value):
         if not value:
@@ -440,12 +421,13 @@ class Stream(Params):
         video = {}
         subtitle = {}
         audio = {"channels": 2}
+
         # Populate the above dictionary with the appropriate key/value pairs
         for key, value in self.raw_dict.items():
             rkey = key.split("_")[-1]
-            if key in ("video_codec", "aspect", "width", "height", "duration"):
+            if key in {"video_codec", "aspect", "width", "height", "duration"}:
                 video[rkey] = value
-            elif key in ("audio_codec", "audio_language", "channels"):
+            elif key in {"audio_codec", "audio_language", "channels"}:
                 audio[rkey] = value
             elif key == "subtitle_language":
                 subtitle[rkey] = value
@@ -487,7 +469,7 @@ class Context(list):
         if path == dispatcher.get_route().path:
             kwargs["_updatelisting_"] = True
 
-        related_videos_text = Script.localize(RELATED_VIDEOS)
+        related_videos_text = Script.localize(localized.RELATED_VIDEOS)
         kwargs["_title_"] = related_videos_text
         self.container(callback, related_videos_text, *args, **kwargs)
 
@@ -502,7 +484,7 @@ class Context(list):
         :param args: [opt] "Positional" arguments that will be passed to the callback.
         :param kwargs: [opt] "Keyword" arguments that will be passed to the callback.
         """
-        command = "XBMC.Container.Update(%s)" % build_path(callback, args, kwargs)
+        command = "Container.Update(%s)" % build_path(callback, args, kwargs)
         self.append((label, command))
 
     def script(self, callback, label, *args, **kwargs):
@@ -515,7 +497,7 @@ class Context(list):
         :param args: [opt] "Positional" arguments that will be passed to the callback.
         :param kwargs: [opt] "Keyword" arguments that will be passed to the callback.
         """
-        command = "XBMC.RunPlugin(%s)" % build_path(callback, args, kwargs)
+        command = "RunPlugin(%s)" % build_path(callback, args, kwargs)
         self.append((label, command))
 
     def _close(self, listitem):  # type: (xbmcgui.ListItem) -> None
@@ -689,7 +671,7 @@ class Listitem(object):
         self._args = args
 
     # noinspection PyProtectedMember
-    def _close(self):
+    def build(self):
         listitem = self.listitem
         isfolder = self._is_folder
         listitem.setProperty("folder", str(isfolder).lower())
@@ -710,8 +692,8 @@ class Listitem(object):
                 self.listitem.setSubtitles(self.subtitles)
 
             # Add Video Specific Context menu items
-            self.context.append(("$LOCALIZE[13347]", "XBMC.Action(Queue)"))
-            self.context.append(("$LOCALIZE[13350]", "XBMC.ActivateWindow(videoplaylist)"))
+            self.context.append(("$LOCALIZE[13347]", "Action(Queue)"))
+            self.context.append(("$LOCALIZE[13350]", "ActivateWindow(videoplaylist)"))
 
             # Close video related datasets
             self.stream._close(listitem)
@@ -769,12 +751,8 @@ class Listitem(object):
         item = cls()
         item.label = label
 
-        if isinstance(callback, str):
-            if "://" in callback:
-                item.set_path(callback)
-            else:
-                # noinspection PyTypeChecker
-                item.set_callback(callback)
+        if isinstance(callback, str) and "://" in callback:
+            item.set_path(callback)
         else:
             item.set_callback(callback)
 
@@ -820,8 +798,8 @@ class Listitem(object):
 
         # Create listitem instance
         item = cls()
-        label = u"%s %i" % (Script.localize(NEXT_PAGE), kwargs["_nextpagecount_"])
-        item.info["plot"] = Script.localize(NEXT_PAGE_PLOT)
+        label = u"%s %i" % (Script.localize(localized.NEXT_PAGE), kwargs["_nextpagecount_"])
+        item.info["plot"] = Script.localize(localized.NEXT_PAGE_PLOT)
         item.label = bold(label)
         item.art.global_thumb("next.png")
         item.set_callback(callback, *args, **kwargs)
@@ -840,8 +818,8 @@ class Listitem(object):
         """
         # Create listitem instance
         item = cls()
-        item.label = bold(Script.localize(RECENT_VIDEOS))
-        item.info["plot"] = Script.localize(RECENT_VIDEOS_PLOT)
+        item.label = bold(Script.localize(localized.RECENT_VIDEOS))
+        item.info["plot"] = Script.localize(localized.RECENT_VIDEOS_PLOT)
         item.art.global_thumb("recent.png")
         item.set_callback(callback, *args, **kwargs)
         return item
@@ -871,9 +849,9 @@ class Listitem(object):
         kwargs["_route"] = route.path
 
         item = cls()
-        item.label = bold(Script.localize(SEARCH))
+        item.label = bold(Script.localize(localized.SEARCH))
         item.art.global_thumb("search.png")
-        item.info["plot"] = Script.localize(SEARCH_PLOT)
+        item.info["plot"] = Script.localize(localized.SEARCH_PLOT)
         item.set_callback(Route.ref("/codequick/search:saved_searches"), *args, **kwargs)
         return item
 
@@ -897,7 +875,7 @@ class Listitem(object):
         """
         # Youtube exists, Creating listitem link
         item = cls()
-        item.label = label if label else bold(Script.localize(ALLVIDEOS))
+        item.label = label if label else bold(Script.localize(localized.ALLVIDEOS))
         item.art.global_thumb("videos.png")
         item.params["contentid"] = content_id
         item.params["enable_playlists"] = False if content_id.startswith("PL") else enable_playlists

@@ -3,16 +3,21 @@ from __future__ import absolute_import
 
 # Standard Library Imports
 import logging
+import inspect
 import os
 
 # Kodi imports
 import xbmcaddon
+import xbmcvfs
 import xbmcgui
 import xbmc
 
 # Package imports
 from codequick.utils import ensure_unicode, ensure_native_str, unicode_type, string_map
-from codequick.support import dispatcher, script_data, addon_data, logger_id, CallbackRef
+from codequick.support import dispatcher, script_data, addon_data, logger_id, CallbackRef, PY3
+
+# Matrix changes
+translatePath = xbmcvfs.translatePath if PY3 else xbmc.translatePath
 
 __all__ = ["Script", "Settings"]
 
@@ -133,7 +138,7 @@ class Script(object):
     ERROR = 40
     #: Critical logging level, maps to "xbmc.LOGDEBUG".
     DEBUG = 10
-    #: Critical logging level, maps to "xbmc.LOGNOTICE".
+    #: Critical logging level, maps to "xbmc.LOGINFO".
     INFO = 20
 
     #: Kodi notification warning image.
@@ -158,6 +163,10 @@ class Script(object):
     def __init__(self):
         self._title = self.params.get(u"_title_", u"")
         self.handle = dispatcher.handle
+
+    def __call__(self, route, args, kwargs):
+        self.__dict__.update(route.parameters)
+        return route.function(self, *args, **kwargs)
 
     @classmethod
     def ref(cls, path):
@@ -193,14 +202,39 @@ class Script(object):
         return CallbackRef(path, cls)
 
     @classmethod
-    def register(cls, callback):
+    def register(cls, func=None, **kwargs):
         """
         Decorator used to register callback functions.
 
-        :param callback: The callback function to register.
-        :returns: The original callback function.
+        Can be called with or without arguments. If arguments are given, they have to be "keyword only" arguments.
+        The keyword arguments are parameters that are used by the plugin class instance.
+        e.g. autosort=False to disable auto sorting for Route callbacks
+
+        :example:
+            >>> from codequick import Route, Listitem
+            >>>
+            >>> @Route.register
+            >>> def root(_):
+            >>>     yield Listitem.from_dict("Extra videos", subfolder)
+            >>>
+            >>> @Route.register(cache_ttl=240, autosort=False, content_type="videos")
+            >>> def subfolder(_):
+            >>>     yield Listitem.from_dict("Play video", "http://www.example.com/video1.mkv")
+
+        :param function func: The callback function to register.
+        :param kwargs: Keyword only arguments to pass to callback handler.
+        :returns: A callback instance.
+        :rtype: Callback
         """
-        return dispatcher.register_callback(callback, parent=cls)
+        if inspect.isfunction(func):
+            return dispatcher.register_callback(func, parent=cls, parameters=kwargs)
+
+        elif func is None:
+            def wrapper(real_func):
+                return dispatcher.register_callback(real_func, parent=cls, parameters=kwargs)
+            return wrapper
+        else:
+            raise ValueError("Only keyword arguments are allowed")
 
     @staticmethod
     def register_delayed(func, *args, **kwargs):
@@ -290,7 +324,7 @@ class Script(object):
     @staticmethod
     def localize(string_id):
         """
-        Retruns a translated UI string from addon localization files.
+        Returns a translated UI string from addon localization files.
 
         .. note::
 
@@ -366,7 +400,7 @@ class Script(object):
 
         # Check if path needs to be translated first
         if resp[:10] == "special://":  # pragma: no cover
-            resp = xbmc.translatePath(resp)
+            resp = translatePath(resp)
 
         # Convert response to unicode
         path = resp.decode("utf8") if isinstance(resp, bytes) else resp
