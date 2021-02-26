@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
 		<summary lang="en">Napiprojekt.pl</summary>
 		<description lang="en_GB">Search and Download subtitles from napiprojekt.pl.</description>
-		<source>https://github.com/mkaflowski/repo-scripts</source>
+		<source>https://github.com/mkaflowski/repo-scripts/tree/matrix/service.subtitles.napiprojekt</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=186665</forum>
 		<license>GPL-2.0-only or GPL-2.0-or-later</license>
     <assets>
