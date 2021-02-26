@@ -22,6 +22,19 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+"""
+HTMLement
+---------
+Simple lightweight HTML parser with XPath support.
+
+Github: https://github.com/willforde/python-htmlement
+Documentation: https://python-htmlement.readthedocs.io/en/stable/?badge=stable
+Testing: https://www.travis-ci.com/willforde/python-htmlement
+Coverage: https://coveralls.io/github/willforde/python-htmlement?branch=master
+Maintainability: https://codeclimate.com/github/willforde/python-htmlement/maintainability
+"""
+
+
 # Python 2 compatibility
 from __future__ import unicode_literals
 
@@ -57,12 +70,7 @@ else:
         import xml.etree.ElementTree as Etree
 
 __all__ = ["HTMLement", "fromstring", "fromstringlist", "parse"]
-__repo__ = "https://github.com/willforde/python-htmlement"
-__copyright__ = "Copyright (C) 2016 William Forde"
-__author__ = "William Forde"
-__license__ = "MIT"
 __version__ = "1.0.0"
-__credit__ = "Rafael Marmelo"
 
 # Add missing codepoints
 name2codepoint["apos"] = 0x0027
