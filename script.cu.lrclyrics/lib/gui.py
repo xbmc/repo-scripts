@@ -144,7 +144,7 @@ class MAIN():
         if self.SETTING_SEARCH_EMBEDDED and song.analyze_safe and self.proceed():
             log('searching for embedded lrc lyrics', debug=self.DEBUG)
             try:
-                lyrics = getEmbedLyrics(song, True)
+                lyrics = getEmbedLyrics(song, True, self.lyricssettings)
             except:
                 lyrics = None
             if (lyrics):
@@ -169,7 +169,7 @@ class MAIN():
         if self.SETTING_SEARCH_EMBEDDED and song.analyze_safe and self.proceed():
             log('searching for embedded txt lyrics', debug=self.DEBUG)
             try:
-                lyrics = getEmbedLyrics(song, False)
+                lyrics = getEmbedLyrics(song, False, self.lyricssettings)
             except:
                 lyrics = None
             if lyrics:

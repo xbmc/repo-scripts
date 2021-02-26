@@ -16,8 +16,8 @@ class BinaryFile(xbmcvfs.File):
             return bytes(super().readBytes(numBytes))
 
 
-def getEmbedLyrics(song, getlrc):
-    lyrics = Lyrics()
+def getEmbedLyrics(song, getlrc, lyricssettings):
+    lyrics = Lyrics(settings=lyricssettings)
     lyrics.song = song
     lyrics.source = LANGUAGE(32002)
     lyrics.lrc = getlrc
