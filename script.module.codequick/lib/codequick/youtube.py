@@ -13,15 +13,11 @@ from codequick.utils import bold
 from codequick.listing import Listitem
 from codequick.resolver import Resolver
 from codequick.support import logger_id
+from codequick import localized
 import urlquick
 
 # Logger specific to this module
 logger = logging.getLogger("%s.youtube" % logger_id)
-
-# Localized string Constants
-ALLVIDEOS = 32003
-PLAYLISTS = 136
-PLAYLISTS_PLOT = 32007
 
 # Constants
 CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")  # Youtube cache directory
@@ -40,7 +36,6 @@ class Database(object):
         # Performance tweaks
         cur.execute('PRAGMA locking_mode=EXCLUSIVE')
         cur.execute('PRAGMA journal_mode=MEMORY')
-        cur.execute('PRAGMA temp_store=MEMORY')
 
         # Create missing channel table
         cur.execute("""CREATE TABLE IF NOT EXISTS channels
@@ -615,7 +610,7 @@ def playlists(plugin, channel_id, show_all=True, pagetoken=None, loop=False):
     # Display a link for listing all channel videos
     # This is usefull when the root of a addon is the playlist directory
     if show_all:
-        title = bold(plugin.localize(ALLVIDEOS))
+        title = bold(plugin.localize(localized.ALLVIDEOS))
         yield Listitem.youtube(channel_id, title, enable_playlists=False)
 
     # Loop Entries
@@ -692,8 +687,8 @@ def playlist(plugin, contentid, pagetoken=None, enable_playlists=True, loop=Fals
     # Add playlists item to results
     if enable_playlists and contentid.startswith("UC") and pagetoken is None:
         item = Listitem()
-        item.label = u"[B]%s[/B]" % plugin.localize(PLAYLISTS)
-        item.info["plot"] = plugin.localize(PLAYLISTS_PLOT)
+        item.label = u"[B]%s[/B]" % plugin.localize(localized.PLAYLISTS)
+        item.info["plot"] = plugin.localize(localized.PLAYLISTS_PLOT)
         item.art["icon"] = "DefaultVideoPlaylists.png"
         item.art.global_thumb("playlist.png")
         item.set_callback(playlists, channel_id=contentid, show_all=False)

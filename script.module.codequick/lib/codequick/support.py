@@ -44,26 +44,20 @@ logger = logging.getLogger("%s.support" % logger_id)
 # Listitem auto sort methods
 auto_sort = set()
 
+logging_map = {
+    10: xbmc.LOGDEBUG,
+    20: xbmc.LOGINFO if PY3 else xbmc.LOGNOTICE,
+    30: xbmc.LOGWARNING,
+    40: xbmc.LOGERROR,
+    50: xbmc.LOGFATAL,
+}
+
 
 class RouteMissing(KeyError):
     """
     Exception class that is raisd when no
     route is found in the registered routes.
     """
-
-
-class LoggingMap(dict):
-    def __init__(self):
-        super(LoggingMap, self).__init__()
-        self[10] = xbmc.LOGDEBUG    # logger.debug
-        self[20] = xbmc.LOGNOTICE   # logger.info
-        self[30] = xbmc.LOGWARNING  # logger.warning
-        self[40] = xbmc.LOGERROR    # logger.error
-        self[50] = xbmc.LOGFATAL    # logger.critical
-
-    def __missing__(self, key):
-        """Return log notice for any unexpected log level."""
-        return xbmc.LOGNOTICE
 
 
 class KodiLogHandler(logging.Handler):
@@ -79,7 +73,6 @@ class KodiLogHandler(logging.Handler):
     def __init__(self):
         super(KodiLogHandler, self).__init__()
         self.setFormatter(logging.Formatter("[%(name)s] %(message)s"))
-        self.log_level_map = LoggingMap()
         self.debug_msgs = []
 
     def emit(self, record):  # type: (logging.LogRecord) -> None
@@ -88,7 +81,7 @@ class KodiLogHandler(logging.Handler):
         log_level = record.levelno
 
         # Forward the log record to kodi with translated log level
-        xbmc.log(formatted_msg, self.log_level_map[log_level])
+        xbmc.log(formatted_msg, logging_map.get(log_level, 10))
 
         # Keep a history of all debug records so they can be logged later if a critical error occurred
         # Kodi by default, won't show debug messages unless debug logging is enabled
@@ -123,17 +116,11 @@ class Route(CallbackRef):
     :param callback: The callable callback function.
     :param parent: The parent class that will handle the response from callback.
     :param str path: The route path to func/class.
-
-    :ivar bool is_playable: True if callback is playable, else False.
-    :ivar bool is_folder: True if callback is a folder, else False.
-    :ivar callback: The decorated func/class.
-    :ivar callback: The callable callback function.
-    :ivar parent: The parent class that will handle the response from callback.
-    :ivar str path: The route path to func/class.
+    :param dict parameters: Dict of parameters to pass to plugin instance.
     """
-    __slots__ = ("function", "callback")
+    __slots__ = ("function", "callback", "parameters")
 
-    def __init__(self, callback, parent, path):
+    def __init__(self, callback, parent, path, parameters):
         # Register a class callback
         if inspect.isclass(callback):
             msg = "Use of class based callbacks are Deprecated, please use function callbacks"
@@ -146,8 +133,9 @@ class Route(CallbackRef):
                 raise NameError("missing required 'run' method for class: '{}'".format(callback.__name__))
         else:
             # Register a function callback
-            self.function = callback
             callback.test = self.unittest_caller
+            self.parameters = parameters
+            self.function = callback
 
         super(Route, self).__init__(path, parent)
         self.callback = callback
@@ -265,14 +253,8 @@ class Dispatcher(object):
         except KeyError:
             raise RouteMissing(path)
 
-    def register_callback(self, callback, parent):
-        """
-        Register route callback function
-
-        :param callback: The callback function.
-        :param parent: Parent class that will handle the callback, used when callback is a function.
-        :returns: The callback function with extra attributes added, 'route', 'testcall'.
-        """
+    def register_callback(self, callback, parent, parameters):
+        """Register route callback function"""
         # Construct route path
         path = callback.__name__.lower()
         if path != "root":
@@ -282,7 +264,7 @@ class Dispatcher(object):
         if path in self.registered_routes:
             logger.debug("encountered duplicate route: '%s'", path)
 
-        self.registered_routes[path] = route = Route(callback, parent, path)
+        self.registered_routes[path] = route = Route(callback, parent, path, parameters)
         callback.route = route
         return callback
 
@@ -317,15 +299,11 @@ class Dispatcher(object):
             # Fetch the controling class and callback function/method
             route = self.get_route(self.selector)
             execute_time = time.time()
-            redirect = None
 
             # Initialize controller and execute callback
             parent_ins = route.parent()
             arg_params = self.params.get("_args_", [])
-            results = route.function(parent_ins, *arg_params, **self.callback_params)
-            if hasattr(parent_ins, "_process_results"):
-                # noinspection PyProtectedMember
-                redirect = parent_ins._process_results(results)
+            redirect = parent_ins(route, arg_params, self.callback_params)
 
         except Exception as e:
             self.run_delayed(e)
@@ -379,7 +357,7 @@ class Dispatcher(object):
 
 def build_path(callback=None, args=None, query=None, **extra_query):
     """
-    Build addon url that can be passeed to kodi for kodi to use when calling listitems.
+    Build addon url that can be passed to kodi for kodi to use when calling listitems.
 
     :param callback: [opt] The route selector path referencing the callback object. (default => current route selector)
     :param tuple args: [opt] Positional arguments that will be add to plugin path.
