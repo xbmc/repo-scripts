@@ -7,11 +7,11 @@
     </requires>
     <extension point="xbmc.subtitle.module" library="service.py"/>
     <extension point="xbmc.addon.metadata">
-		<summary lang="en">Napiprojekt.pl</summary>
+		<summary lang="en_GB">Napiprojekt.pl</summary>
 		<description lang="en_GB">Search and Download subtitles from napiprojekt.pl.</description>
 		<source>https://github.com/mkaflowski/repo-scripts/tree/matrix/service.subtitles.napiprojekt</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=186665</forum>
-		<license>GPL-2.0-only or GPL-2.0-or-later</license>
+		<license>GPL-2.0-only</license>
     <assets>
         <icon>icon.png</icon>
     </assets>
