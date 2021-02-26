@@ -1,3 +1,9 @@
+v6.3.9
+- fix embedded lyrics
+
+v6.3.8
+- update japanese language file
+
 v6.3.7
 - python 3.9 compatibility
 
