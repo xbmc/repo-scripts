@@ -28,23 +28,14 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path'))
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', ''))
+__cwd__ = xbmcvfs.translatePath(__addon__.getAddonInfo('path'))
+__profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
+__resource__ = xbmcvfs.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
+__temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp', ''))
 
-sys.path.append(__resource__)
+# sys.path.append(__resource__)
 
-from NapiProjekt import NapiProjektHelper
-
-def log(msg=None, ex=None):
-    if ex:
-        level = xbmc.LOGERROR
-        msg = traceback.format_exc()
-    else:
-        level = xbmc.LOGINFO
-
-    xbmc.log((u"### [%s] - %s" % (__scriptname__, msg)), level=level)
+from resources.lib.NapiProjekt import NapiProjektHelper
 
 
 def f(z):
@@ -92,7 +83,6 @@ def Search(item):
         # # anything after "action=download&" will be sent to addon once user clicks listed subtitle to download
         url = "plugin://%s/?action=download&l=%s&f=%s&filename=%s" % (
             __scriptid__, result["language"], k, filename)
-        log(url)
         # # add it to list, this can be done as many times as needed for all subtitles found
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
@@ -159,7 +149,6 @@ def get_params():
 
 
 params = get_params()
-log(params)
 
 if params['action'] == 'search':
     item = {}
@@ -196,14 +185,12 @@ if params['action'] == 'search':
     elif (item['file_original_path'].find("stack://") > -1):
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
-    log(item)
 
     Search(item)
 
 elif params['action'] == 'download':
     ## we pickup all our arguments sent from def Search()
     subs = Download(params["l"], params["f"], params["filename"])
-    log(subs)
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)

@@ -4,6 +4,7 @@ import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error,
 from urllib import request, parse
 import xbmc
 import xbmcaddon
+import xbmcgui
 
 import base64
 import traceback
@@ -22,15 +23,15 @@ class NapiProjektHelper:
 
     def log(self, msg=None, ex=None):
         if ex:
-            level = xbmc.LOGERROR
             msg = traceback.format_exc()
-        else:
-            level = xbmc.LOGINFO
+            
+        level = xbmc.LOGDEBUG
 
         xbmc.log((u"### [%s] - %s" % (__scriptname__, msg)), level=level)
 
     def notify(self, msg):
-        xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, msg)))
+        xbmcgui.Dialog().notification(__scriptname__, msg, time=2000, sound=False)
+        # xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, msg)))
 
     def search(self, item, t):
         subtitle_list = []
@@ -92,7 +93,8 @@ class NapiProjektHelper:
                 return filename2
 
         except Exception as e:
-            self.notify('Download error, check log')
+            self.notify(xbmcaddon.Addon().getLocalizedString(32002))
+
             self.log(ex=e)
             pass
 
