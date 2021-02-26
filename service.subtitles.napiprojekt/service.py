@@ -66,21 +66,14 @@ def f(z):
 
 
 def Search(item):
-    print("search")
     filename = '.'.join(os.path.basename(item["file_original_path"]).split(".")[:-1])
 
     d = md5()
-    print(item["file_original_path"])
     ff = open(item["file_original_path"], 'rb')
     fff = ff.read(10485760)
     d.update(fff)
     k = d.hexdigest()
-    print(k)
     tt = f(d.hexdigest())
-    print(tt)
-
-    print(open(item["file_original_path"]))
-    print("yay")
 
     helper = NapiProjektHelper(filename, k)
     results = helper.search(item, tt)
@@ -108,8 +101,8 @@ def Download(language, hash, filename):
     subtitle_list = []
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     ## pass that to XBMC to copy and activate
-    if xbmcvfs.exists(__temp__):
-        shutil.rmtree(__temp__)
+    # if xbmcvfs.exists(__temp__):
+    #     shutil.rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
 
     filename = os.path.join(__temp__, filename + ".zip")
