@@ -1,0 +1,28 @@
+1.1.3 - by Kofii (26/02/2021)
+- Ported to Kodi 19 (Python 3)
+- modified icon
+
+1.1.3 - by CaTz (14/11/2018)
+- Remove empty fields
+
+1.1.2 - by mleczan (14/11/2018)
+- Fix subtitle download on Kodi 18
+
+1.1.1 - by CaTz (22/04/2017)
+- Sort results by preferred language
+
+1.1.0 - by CaTz (13/11/2015)
+- Refactor the code
+- Fix the download issue
+
+1.0.3 - by CaTz 08/11/2014
+- Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
+
+1.0.2 - by ciukacz 10/07/2014
+- fix: hash-based subtitle search for videos inside archives
+
+1.0.1 - by CaTz 15/03/2014
+- Change python version for Gotham
+
+1.0.0 - by CaTz 14/02/2014
+- Redesign the code to support Gotham version
