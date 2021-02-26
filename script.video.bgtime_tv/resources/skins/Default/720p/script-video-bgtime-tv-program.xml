@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="true">7000</defaultcontrol>
+	<backgroundcolor>0x00000000</backgroundcolor>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+    <visible>!Player.HasMedia</visible>
+	<!-- Program View-->
+
+	<controls id="5000">
+		<control type="videowindow">
+		    <posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
+		<control type="image">
+			<posx>360</posx>
+			<posy>90</posy>
+			<width>560</width>
+			<height>560</height>
+			<texture>script-video-bgtime-tv-logo-big.png</texture>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-darker-blue.png</texture>
+		</control>
+		<!-- Timebar-->
+		<control type="list" id='5003'>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1200</width>
+			<height>40</height>
+			<viewtype label="list">list</viewtype>
+			<orientation>horizontal</orientation>
+		</control>
+		<!-- Program Date-->
+		<control type="Button" id = '5010'>
+			<posx>1180</posx>
+			<posy>2</posy>
+			<width>120</width>
+			<height>36</height>
+			<font>font13</font>
+			<alignx>center</alignx>
+			<aligny>center</aligny>
+			<textcolor>ffffffff</textcolor>
+			<texturefocus>script-video-bgtime-tv-very-lighter-blue.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-very-light-blue.png</texturenofocus>
+			<label></label>
+		</control>
+		<control type="image" id = '5011'>
+			<posx>1144</posx>
+			<posy>2</posy>
+			<width>36</width>
+			<height>36</height>
+			<texture>cal.png</texture>
+		</control>
+		<!-- List Channels-->
+		<control type="list" id='5004'>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>100</width>
+			<height>70</height>
+			<viewtype label="list">list</viewtype>
+			<orientation>vertical</orientation>
+			<focusposition>1</focusposition>
+		</control>
+		<!-- List Shows-->
+		<control type="list" id="5001">
+			<posx>102</posx>
+			<posy>40</posy>
+			<width>1180</width>
+			<height>680</height>
+			<viewtype label="list">list</viewtype>
+			<orientation>horizontal</orientation>
+			<focusposition>1</focusposition>
+		</control >
+		<!-- Now Marker-->
+		<!-- <control type="image" id="5002">
+			<posx>0</posx>
+			<posy>40</posy>
+			<width>2</width>
+			<height>680</height>
+		</control> -->
+
+		<!--Loader-->
+		<control type="label" id="5100">
+			<description>visibility marker for loading group</description>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>!Control.IsVisible(5100)</visible>
+			<animation effect="fade" start="0" end="100" time="250" delay="1500">Visible</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>script-video-bgtime-tv-very-dark-grey.png</texture>
+			</control>
+			<control type="image">
+				<description>loading splash</description>
+				<posx>590</posx>
+				<posy>250</posy>
+				<width>100</width>
+				<height>100</height>
+				<texture>ring.gif</texture>
+			</control>
+		</control>
+
+	</controls>
+	
+</window>
