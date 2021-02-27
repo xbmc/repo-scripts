@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings version="1">
+    <section id="service.subsmangler">
+        <category id="main" label="32001" help="32130">
+            <group id="1" label="">
+                <setting id="AutoInvokeSubsDialog" type="boolean" label="32010" help="32110">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="AutoInvokeSubsDialogOnStream" type="boolean" label="32009" help="32111" parent="AutoInvokeSubsDialog">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoInvokeSubsDialog">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="NoAutoInvokeIfLocalUnprocSubsFound" type="boolean" label="32013" help="32112" parent="AutoInvokeSubsDialog">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoInvokeSubsDialog">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="NoConfirmationInvokeIfDownloadedSubsNotFound" type="boolean" label="32014" help="32113" parent="AutoInvokeSubsDialog">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoInvokeSubsDialog">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+            <group id="2" label="">
+                <setting id="LogLevel" type="integer" label="32020" help="32114">
+                    <level>0</level>
+                    <default>1</default>
+                    <constraints>
+                        <options>
+                            <option label="32022">0</option>
+                            <option label="32023">1</option>
+                            <option label="32025">2</option>
+                            <option label="32026">3</option>
+                            <option label="32028">4</option>
+                            <option label="32029">4</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32020</heading>
+                    </control>
+                </setting>
+                <setting id="SeparateLogFile" type="integer" label="32030" help="32115">
+                    <level>0</level>
+                    <default>1</default>
+                    <constraints>
+                        <options>
+                            <option label="32031">0</option>
+                            <option label="32032">1</option>
+                        </options>
+                    </constraints>
+                    <control type="spinner" format="string">
+                        <heading>32030</heading>
+                    </control>
+                </setting>
+            </group>
+            <group id="3" label="">
+                <setting id="ShowNoautosubsContextItem" type="boolean" label="32033" help="32116">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category  id="conversion" label="32080" help="32131">
+            <group id="4">
+                <setting id="ConversionServiceEnabled" type="boolean" label="32002" help="32117">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="AlsoConvertExistingSubtitles" type="boolean" label="32012" help="32118" parent="ConversionServiceEnabled">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+            <group id="5">
+                <setting id="RemoveCCmarks" type="boolean" label="32004" help="32119">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="RemoveAdds" type="boolean" label="32005" help="32120">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="AdjustSubDisplayTime" type="boolean" label="32081" help="32121">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="FixOverlappingSubDisplayTime" type="boolean" label="32082" help="32122" parent="AdjustSubDisplayTime">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AdjustSubDisplayTime">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="PauseOnConversion" type="boolean" label="32011" help="32123">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="BackupOldSubs" type="boolean" label="32071" help="32124">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+            <group id="6">
+                <setting id="AutoUpdateDef" type="boolean" label="32006" help="32125">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ConversionServiceEnabled">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+        </category>
+        <category id="housekeeping" label="32048" help="32132">
+            <group id="7">
+                <setting id="AutoRemoveOldSubs" type="boolean" label="32070" help="32129">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="RemoveSubsBackup" type="boolean" label="32072" help="32126" parent="AutoRemoveOldSubs">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoRemoveOldSubs">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="RemoveUnprocessedSubs" type="boolean" label="32074" help="32127" parent="AutoRemoveOldSubs">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoRemoveOldSubs">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="SimulateRemovalOnly" type="boolean" label="32073" help="32128" parent="AutoRemoveOldSubs">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoRemoveOldSubs">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+        </category>
+        <category id="subssetting" label="32140" help="32141">
+            <group id="8">
+                <setting id="FontSize" type="integer" label="32150" help="32151">
+                    <level>0</level>
+                    <default>28</default>
+                    <constraints>
+                        <minimum>12</minimum>
+                        <step>2</step>
+                        <maximum>74</maximum>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32150</heading>
+                    </control>
+                </setting>
+                <setting id="FontStyle" type="integer" label="32152" help="32153">
+                    <level>0</level>
+                    <default>1</default>
+                    <constraints>
+                        <options>
+                            <option label="32154">0</option>
+                            <option label="32155">1</option>
+                            <option label="32056">2</option>
+                            <option label="32157">3</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32152</heading>
+                    </control>
+                </setting>
+                <setting id="FontColor" type="integer" label="32049" help="32147">
+                    <level>0</level>
+                    <default>1</default>
+                    <constraints>
+                        <options>
+                            <option label="32058">0</option>
+                            <option label="32059">1</option>
+                            <option label="32054">2</option>
+                            <option label="32061">3</option>
+                            <option label="32062">4</option>
+                            <option label="32063">5</option>
+                            <option label="32060">6</option>
+                            <option label="32052">6</option>
+                            <option label="32053">6</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32049</heading>
+                    </control>
+                </setting>
+                <setting id="FontOpacity" type="integer" label="32148" help="32149">
+                    <level>0</level>
+                    <default>100</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>100</maximum>
+                    </constraints>
+                    <control type="slider" format="percentage">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="BackgroundColor" type="integer" label="32050" help="32145">
+                    <level>0</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="32051">0</option>
+                            <option label="32058">1</option>
+                            <option label="32059">2</option>
+                            <option label="32060">3</option>
+                            <option label="32052">4</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32050</heading>
+                    </control>
+                </setting>
+                <setting id="BackgroundOpacity" type="integer" label="32142" help="32143">
+                    <level>0</level>
+                    <default>0</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>100</maximum>
+                    </constraints>
+                    <control type="slider" format="percentage">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
