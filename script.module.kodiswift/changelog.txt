@@ -1,0 +1,73 @@
+0.0.12
+=====
+
+- improves python 2,3 compatibility by replacing instance compare functions with six.type.objects.
+
+0.0.11
+=====
+
+- improves python 2,3 compatibility by replacing original functions with six.moves functions.
+
+0.0.10
+=====
+
+- fixed the error in not importing python six library in addon.xml.
+
+0.0.9
+=====
+
+- enable script.module.kodiswift to support python 2 and python 3 by incorporating the six package.
+- add supports on subtitles.
+
+0.0.8
+=====
+
+- Set `listitem.is_folder` to `False` when setting `listitem.is_playable` to `True`.
+
+0.0.7
+=====
+
+- Made `listitem.playable` use it's own property to allow `is_folder` and `playable` to be independent
+
+0.0.6
+=====
+
+- Make sure list item has 'as_tuple' method
+
+0.0.5
+=====
+
+- Add xbmcvfs mock
+- Added listdir to xbmcvfs
+- Exclude tests from distribute package
+- Fix issue when path sets as icon for listitem object
+- Add test for plugin.set_resolved_url()
+- Add check of played
+- set_resolved_url test check playable
+- Improve mock of xbmc, to use xbmc libraries addons in python path
+- Fixed failing TestResolvedUrl test
+
+0.0.4
+=====
+
+- Merge pull request #6 More robust test before manipulation of item
+- Merge pull request #8 Fix notify
+
+0.0.3
+=====
+
+- Merge pull request #5 fix storage error on Windows
+
+0.0.2
+=====
+
+- Merge pull request #3 fix set_setting
+
+0.0.1
+=====
+
+- Initial fork of xbmcswift2
+- Code cleanup
+- Added art property to ListItem
+- Deprecated non-pythonic ListItem properties in favor of more pythonic ones
+- Re-wrote PersistentStorage and TimedStorage
