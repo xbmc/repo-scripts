@@ -61,7 +61,7 @@ def Search(item):
 
     d = md5()
     ff = open(item["file_original_path"], 'rb')
-    fff = ff.read(10485760)
+    fff = xbmcvfs.File(path, "rb").read(10485760)
     d.update(fff)
     k = d.hexdigest()
     tt = f(d.hexdigest())

@@ -54,8 +54,6 @@ class NapiProjektHelper:
             url = "http://napiprojekt.pl/unit_napisy/dl.php?" + urllib.parse.urlencode(params)
             subs = urllib.request.urlopen(url).read()
 
-            print(subs)
-
             if subs[0:3] != b'NPc':
                 subtitle_list.append({"language": language, "is_preferred": language == item["preferredlanguage"]})
 
@@ -87,8 +85,7 @@ class NapiProjektHelper:
                     cNodes[0].getElementsByTagName("subtitles")[0].getElementsByTagName("content")[0].childNodes[
                         0].data)
                 filename2 = self.filename + ".txt"
-                print(self.filename)
-                print(filename2)
+        
                 open(filename2, "wb").write(text)
                 return filename2
 
