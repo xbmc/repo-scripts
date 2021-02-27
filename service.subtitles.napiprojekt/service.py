@@ -60,8 +60,8 @@ def Search(item):
     filename = '.'.join(os.path.basename(item["file_original_path"]).split(".")[:-1])
 
     d = md5()
-    fff = xbmcvfs.File(item["file_original_path"]).read(10485760)
-    d.update(fff.encode())
+    movieBytes = xbmcvfs.File(item["file_original_path"], 'b').readBytes(10485760)
+    d.update(movieBytes)
     k = d.hexdigest()
     tt = f(d.hexdigest())
 
