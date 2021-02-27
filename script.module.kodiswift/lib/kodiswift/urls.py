@@ -122,7 +122,7 @@ class UrlRule(object):
         with the appropriate value from the items dict.
         """
         for key, val in items.items():
-            if not isinstance(val, basestring):
+            if not isinstance(val, six.string_types):
                 raise TypeError('Value "%s" for key "%s" must be an instance'
                                 ' of basestring' % (val, key))
             items[key] = six.moves.urllib.parse.quote_plus(val)
@@ -163,7 +163,7 @@ class UrlRule(object):
         """
         # Convert any ints and longs to strings
         for key, val in items.items():
-            if isinstance(val, (int, long)):
+            if isinstance(val, six.integer_types):
                 items[key] = str(val)
 
         # First use our defaults passed when registering the rule

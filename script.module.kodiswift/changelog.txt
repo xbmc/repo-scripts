@@ -1,3 +1,8 @@
+0.0.12
+=====
+
+- improves python 2,3 compatibility by replacing instance compare functions with six.type.objects.
+
 0.0.11
 =====
 

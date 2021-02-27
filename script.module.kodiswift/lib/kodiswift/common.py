@@ -71,7 +71,7 @@ def pickle_dict(items):
     ret = {}
     pickled_keys = []
     for k, v in items.items():
-        if isinstance(v, basestring):
+        if isinstance(v, six.string_types):
             ret[k] = v
         else:
             pickled_keys.append(k)

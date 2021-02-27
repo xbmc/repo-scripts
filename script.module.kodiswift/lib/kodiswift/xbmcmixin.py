@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-import os
+import os,six
 import warnings
 from datetime import timedelta
 from functools import wraps
@@ -215,8 +215,8 @@ class XBMCMixin(object):
         value = self.addon.getSetting(key)
         if converter is str:
             return value
-        elif converter is unicode:
-            return value.decode('utf-8')
+        elif converter is six.text_type: #unicode
+            return six.ensure_text(value, 'utf-8') #value.decode('utf-8')
         elif converter is bool:
             return value == 'true'
         elif converter is int:
@@ -337,7 +337,7 @@ class XBMCMixin(object):
             item = {}
             succeeded = False
 
-        if isinstance(item, basestring):
+        if isinstance(item, six.string_types):
             # caller is passing a url instead of an item dict
             item = {'path': item}
 

@@ -51,8 +51,8 @@ class ListItem(object):
         previous context menu items will be removed.
         """
         for label, action in items:
-            assert isinstance(label, basestring)
-            assert isinstance(action, basestring)
+            assert isinstance(label, six.string_types)
+            assert isinstance(action, six.string_types)
         if replace_items:
             self._context_menu_items = []
         self._context_menu_items.extend(items)
