@@ -84,7 +84,7 @@ class NapiProjektHelper:
                 text = base64.b64decode(
                     cNodes[0].getElementsByTagName("subtitles")[0].getElementsByTagName("content")[0].childNodes[
                         0].data)
-                filename2 = self.filename + ".txt"
+                filename2 = self.filename[:self.filename.rfind(".")] + ".txt"
         
                 open(filename2, "wb").write(text)
                 return filename2
