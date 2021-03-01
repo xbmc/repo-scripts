@@ -29,5 +29,9 @@
 		<website>https://bgtime.tv/</website>
 		<email>support@mytv.bg</email>
 		<news>v1.0.7 created by mariapmarkova@gmail.com</news>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
 	</extension>
 </addon>
