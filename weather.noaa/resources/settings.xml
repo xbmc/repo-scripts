@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32101">
+
+		<!--  -->
+		<setting label="32111" type="lsep"/>
+		<setting id="Location1LatLong"				label="32332" subsetting="true" type="text" default=""/>
+		<setting action="RunScript($ID,Location1)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
+		<setting id="Location1" 					label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
+		<setting id="Location1Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
+		<setting id="Location1StationName"			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
+		<setting id="Location1radarStation" 		type="text" visible="false" default=""/>
+		<setting id="Location1cwa"					type="text" visible="false" default=""/>
+		<setting id="Location1gridX"				type="text" visible="false" default=""/>
+		<setting id="Location1gridY"				type="text" visible="false" default=""/>
+		<setting id="Location1Zone"					type="text" visible="false" default=""/>
+		<setting id="Location1County"				type="text" visible="false" default=""/>
+		<setting id="Location1forecastGrid_url" 	type="text" visible="false" default=""/>
+		<setting id="Location1forecastHourly_url"	type="text" visible="false" default=""/>
+		<setting id="Location1forecast_url"			type="text" visible="false" default=""/>
+
+		<!--  -->
+		<setting label="32112" type="lsep"/>
+		<setting id="Location2LatLong"				label="32332" subsetting="true" type="text" default=""/>
+		<setting action="RunScript($ID,Location2)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
+		<setting id="Location2"						label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
+		<setting id="Location2Station"				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
+		<setting id="Location2StationName"			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
+		<setting id="Location2radarStation"			type="text" visible="false" default=""/>
+		<setting id="Location2cwa"					type="text" visible="false" default=""/>
+		<setting id="Location2gridX"				type="text" visible="false" default=""/>
+		<setting id="Location2gridY"				type="text" visible="false" default=""/>
+		<setting id="Location2Zone"					type="text" visible="false" default=""/>
+		<setting id="Location2County"				type="text" visible="false" default=""/>
+		<setting id="Location2forecastGrid_url"		type="text" visible="false" default=""/>
+		<setting id="Location2forecastHourly_url"	type="text" visible="false" default=""/>
+		<setting id="Location2forecast_url"			type="text" visible="false" default=""/>
+
+		<!--  -->
+		<setting label="32113" type="lsep"/>
+		<setting id="Location3LatLong"				label="32332" subsetting="true" type="text" default=""/>
+		<setting action="RunScript($ID,Location3)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
+		<setting id="Location3" 					label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
+		<setting id="Location3Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
+		<setting id="Location3StationName" 			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
+		<setting id="Location3radarStation" 		type="text" visible="false" default=""/>
+		<setting id="Location3cwa"					type="text" visible="false" default=""/>
+		<setting id="Location3gridX"				type="text" visible="false" default=""/>
+		<setting id="Location3gridY"				type="text" visible="false" default=""/>
+		<setting id="Location3Zone"					type="text" visible="false" default=""/>
+		<setting id="Location3County"				type="text" visible="false" default=""/>
+		<setting id="Location3forecastGrid_url" 	type="text" visible="false" default=""/>
+		<setting id="Location3forecastHourly_url" 	type="text" visible="false" default=""/>
+		<setting id="Location3forecast_url"			type="text" visible="false" default=""/>
+
+		<!--  -->
+		<setting label="32114" type="lsep"/>
+		<setting id="Location4LatLong"				label="32332" subsetting="true" type="text" default=""/>
+		<setting action="RunScript($ID,Location4)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
+		<setting id="Location4" 					label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
+		<setting id="Location4Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
+		<setting id="Location4StationName" 			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
+		<setting id="Location4radarStation" 		type="text" visible="false" default=""/>
+		<setting id="Location4cwa"					type="text" visible="false" default=""/>
+		<setting id="Location4gridX"				type="text" visible="false" default=""/>
+		<setting id="Location4gridY"				type="text" visible="false" default=""/>
+		<setting id="Location4Zone"					type="text" visible="false" default=""/>
+		<setting id="Location4County"				type="text" visible="false" default=""/>
+		<setting id="Location4forecastGrid_url" 	type="text" visible="false" default=""/>
+		<setting id="Location4forecastHourly_url" 	type="text" visible="false" default=""/>
+		<setting id="Location4forecast_url"			type="text" visible="false" default=""/>
+	
+		<!--  -->
+		<setting label="32115" type="lsep"/>
+		<setting id="Location5LatLong"				label="32332" subsetting="true" type="text" default=""/>
+		<setting action="RunScript($ID,Location5)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
+		<setting id="Location5" 					label="32339" subsetting="true" type="text" 	enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
+		<setting id="Location5Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
+		<setting id="Location5StationName" 			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
+		<setting id="Location5radarStation" 		type="text" visible="false" default=""/>
+		<setting id="Location5cwa"					type="text" visible="false" default=""/>
+		<setting id="Location5gridX"				type="text" visible="false" default=""/>
+		<setting id="Location5gridY"				type="text" visible="false" default=""/>
+		<setting id="Location5Zone"					type="text" visible="false" default=""/>
+		<setting id="Location5County"				type="text" visible="false" default=""/>
+		<setting id="Location5forecastGrid_url" 	type="text" visible="false" default=""/>
+		<setting id="Location5forecastHourly_url" 	type="text" visible="false" default=""/>
+		<setting id="Location5forecast_url"			type="text" visible="false" default=""/>
+	</category>
+
+	<category label="16000">
+		<setting id="DataSourcePreference"	label="32340" type="labelenum" values="api.weather.gov|forecast.weather.gov"/>
+		<setting id="Debug" 		label="14260" 	type="bool" default="false"/>
+		<setting id="Map2Sector"	label="32341" 	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
+		<setting id="Map2Type"		label="32342" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
+		<setting id="Map3Sector"	label="32343" 	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
+		<setting id="Map3Type"		label="32344" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
+		<setting id="Map4Sector"	label="32345"	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
+		<setting id="Map4Type"		label="32346" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
+		<setting id="Map5Sector"	label="32347" 	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
+		<setting id="Map5Type"		label="32348" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
+	</category>
+
+</settings>
