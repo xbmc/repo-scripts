@@ -70,7 +70,7 @@ def _has_inputstream():
 			xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{"addonid":"inputstream.adaptive","enabled":true}}')
 			return xbmcaddon.Addon('inputstream.adaptive')
 		except:
-			xbmcgui.Dialog().ok('Missing inputstream.adaptive add-on', 'inputstream.adaptive add-on not found or not enabled.This add-on is required to view DRM protected content.')
+			xbmcgui.Dialog().ok(const.LANG(32301), const.LANG(32302))
 		return False
 	else:
 		return True
@@ -368,7 +368,7 @@ class Controller(object):
 			token = self.getToken();
 
 			if not token:
-				ans = dialog.yesno(const.LANG(32003), 'За да използвате услугата трябва да се впишете')
+				ans = dialog.yesno(const.LANG(32003), const.LANG(32213))
 
 				if ans :
 					login = self.login.logIN();
@@ -523,16 +523,16 @@ class Login:
 		}
 
 	def writeInFile(self):
-		fopen = open(const.TOKEN_FILEPATH, "w+")
-		fopen.write(self.token + " " +  const.ADDON.getSetting('username'))
-		fopen.close()
+		with open(const.TOKEN_FILEPATH, "w+") as fopen:
+			fopen.write(self.token + " " +  const.ADDON.getSetting('username'))
+			fopen.close()
 
 	def openReadFile(self):
-
 		if os.path.isfile(const.TOKEN_FILEPATH):
-			fopen = open(const.TOKEN_FILEPATH, "r")
-			temp_token = fopen.read()
-			fopen.close()
+			with open(const.TOKEN_FILEPATH, "w+") as fopen:
+				temp_token = fopen.read()
+				fopen.close()
+			
 			if temp_token:
 				arr = temp_token.partition(" ")
 				self.token = arr[0]
@@ -698,10 +698,9 @@ class Sliders(xbmcgui.WindowXML):
 		if not curr_id :
 			return
 
-		if act_id in [const.ACTION_UP, const.ACTION_DOWN] 	:	
-			if curr_id in self.lists:	
-
-				next_id = curr_id- 1 if act_id == const.ACTION_UP else curr_id+1 
+		if act_id in [const.ACTION_UP, const.ACTION_DOWN]:
+			if curr_id in self.lists:
+				next_id = curr_id - 1 if act_id == const.ACTION_UP else curr_id+1 
 				idx = self.getControl(self.I_LIST + (curr_id - self.C_LIST))
 				idx = int(idx.getLabel())
 	
@@ -712,7 +711,7 @@ class Sliders(xbmcgui.WindowXML):
 					self.updateList(self.visible)
 					return
 
-				cont = self.getControl( curr_id + 1 )
+				cont = self.getControl(next_id)
 				self.setFocus(self.getControl( next_id ))
 				self.last_focused = cont
 			elif curr_id == const.MENU_CONTROL:
@@ -1381,8 +1380,12 @@ class ThumbView(xbmcgui.WindowXML):
 	def getInfoFromControl(self, control, page):
 		new_elem = None
 		for elem in self.pages[page]:
-			if elem.control.getId() == control.getId():
-				new_elem = elem
+			if isinstance(control, int):
+				if elem.control.getId() == control:
+					new_elem = elem
+			else:
+				if elem.control.getId() == control.getId():
+					new_elem = elem
 		
 		return new_elem
 

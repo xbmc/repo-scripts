@@ -11,7 +11,7 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<language>en bg</language>
-		<license>The MIT License (MIT)</license>
+		<license>MIT</license>
 		<summary lang="bg_BG">Видео адон за BGTime.TV - bgtime.tv</summary>
 		<summary lang="en_GB">Video addon for BGTime.TV - bgtime.tv</summary>
 		<description lang="bg_BG">

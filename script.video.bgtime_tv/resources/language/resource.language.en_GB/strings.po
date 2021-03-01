@@ -215,6 +215,11 @@ msgctxt "#32213"
 msgid "To use the service you need to login"
 msgstr ""
 
-msgctxt "#32214"
-msgid "Използвай Player GUI"
+
+msgctxt "#32301"
+msgid "Missing inputstream.adaptive add-on"
+msgstr ""
+
+msgctxt "#32302"
+msgid "inputstream.adaptive add-on not found or not enabled.This add-on is required to view DRM protected content."
 msgstr ""

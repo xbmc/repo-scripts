@@ -220,6 +220,11 @@ msgctxt "#32213"
 msgid "За да използвате услугата е необходимо да се впишете в акаунта си"
 msgstr ""
 
-msgctxt "#32215"
-msgid "Използвай Player GUI"
+
+msgctxt "#32301"
+msgid "Липсва inputstream.adaptive add-on"
+msgstr ""
+
+msgctxt "#32302"
+msgid "inputstream.adaptive add-on липсва или не е разрешен. Този адон е нужен за възпроизвеждане на DRM защитено съдържание."
 msgstr ""
