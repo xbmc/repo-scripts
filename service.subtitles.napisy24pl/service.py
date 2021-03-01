@@ -18,10 +18,10 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path'))
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', ''))
+__cwd__ = xbmcvfs.translatePath(__addon__.getAddonInfo('path'))
+__profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
+__resource__ = xbmcvfs.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
+__temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp', ''))
 
 
 from resources.lib.NapisyUtils import NapisyHelper, log, normalizeString, clean_title, parse_rls_title
@@ -50,24 +50,6 @@ def search(item):
             url = "plugin://%s/?action=download&id=%s" % (__scriptid__, it["id"])
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
     return
-
-
-def download(sub_id):  # standard input
-    subtitle_list = []
-    exts = [".srt", ".sub", ".txt"]
-
-    zip_filename = os.path.join(__temp__, "subs.zip")
-
-    helper = NapisyHelper()
-    helper.download(sub_id, zip_filename)
-
-    for file in xbmcvfs.listdir(__temp__)[1]:
-        full_path = os.path.join(__temp__, file)
-        if os.path.splitext(full_path)[1] in exts:
-            subtitle_list.append(full_path)
-
-    return subtitle_list
-
 
 def get_params():
     param = []
@@ -149,8 +131,8 @@ if params['action'] in ['search', 'manualsearch']:
     search(item)
 
 elif params['action'] == 'download':
-    ## we pickup all our arguments sent from def search()
-    subs = download(params["id"])
+    helper = NapisyHelper()
+    subs = helper.download(params["id"])
 
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
