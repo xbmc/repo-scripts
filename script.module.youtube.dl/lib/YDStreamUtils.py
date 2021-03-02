@@ -22,7 +22,12 @@ def showMessage(heading, line1, line2=None, line3=None, bg=False):
         icon = util.ADDON.getAddonInfo('icon')
         xbmcgui.Dialog().notification(heading, line1, icon=icon)
     else:
-        xbmcgui.Dialog().ok(heading, line1, line2, line3)
+        msg = line1
+        if line2:
+            msg = msg + ' ' + line2
+        if line3:
+            msg = msg + ' ' + line3
+        xbmcgui.Dialog().ok(heading, msg)
 
 
 class xbmcDialogProgressBase:
@@ -207,7 +212,7 @@ def getDownloadPath(use_default=None):
     path = util.getSetting('last_download_path', '')
     if path:
         if not use_default:
-            new = xbmcgui.Dialog().yesno(T(32005), T(32006), path, T(32007), T(32008), T(32009))
+            new = xbmcgui.Dialog().yesno(T(32005), T(32006) + ' ' + path + '. ' + T(32007), nolabel=T(32008), yeslabel=T(32009))
             if new:
                 path = ''
     if not path:
