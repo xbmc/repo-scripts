@@ -25,11 +25,11 @@ class YouPornIE(InfoExtractor):
             'title': 'Sex Ed: Is It Safe To Masturbate Daily?',
             'description': 'Love & Sex Answers: http://bit.ly/DanAndJenn -- Is It Unhealthy To Masturbate Daily?',
             'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 210,
             'uploader': 'Ask Dan And Jennifer',
             'upload_date': '20101217',
             'average_rating': int,
             'view_count': int,
-            'comment_count': int,
             'categories': list,
             'tags': list,
             'age_limit': 18,
@@ -48,7 +48,6 @@ class YouPornIE(InfoExtractor):
             'upload_date': '20110418',
             'average_rating': int,
             'view_count': int,
-            'comment_count': int,
             'categories': list,
             'tags': list,
             'age_limit': 18,
@@ -56,11 +55,15 @@ class YouPornIE(InfoExtractor):
         'params': {
             'skip_download': True,
         },
+        'skip': '404',
     }, {
         'url': 'https://www.youporn.com/embed/505835/sex-ed-is-it-safe-to-masturbate-daily/',
         'only_matching': True,
     }, {
         'url': 'http://www.youporn.com/watch/505835',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.youporn.com/watch/13922959/femdom-principal/',
         'only_matching': True,
     }]
 
@@ -90,7 +93,7 @@ class YouPornIE(InfoExtractor):
         # Main source
         definitions = self._parse_json(
             self._search_regex(
-                r'mediaDefinition\s*=\s*(\[.+?\]);', webpage,
+                r'mediaDefinition\s*[=:]\s*(\[.+?\])\s*[;,]', webpage,
                 'media definitions', default='[]'),
             video_id, fatal=False)
         if definitions:
@@ -102,7 +105,7 @@ class YouPornIE(InfoExtractor):
                     links.append(video_url)
 
         # Fallback #1, this also contains extra low quality 180p format
-        for _, link in re.findall(r'<a[^>]+href=(["\'])(http.+?)\1[^>]+title=["\']Download [Vv]ideo', webpage):
+        for _, link in re.findall(r'<a[^>]+href=(["\'])(http(?:(?!\1).)+\.mp4(?:(?!\1).)*)\1[^>]+title=["\']Download [Vv]ideo', webpage):
             links.append(link)
 
         # Fallback #2 (unavailable as at 22.06.2017)
@@ -130,8 +133,9 @@ class YouPornIE(InfoExtractor):
             # Video URL's path looks like this:
             #  /201012/17/505835/720p_1500k_505835/YouPorn%20-%20Sex%20Ed%20Is%20It%20Safe%20To%20Masturbate%20Daily.mp4
             #  /201012/17/505835/vl_240p_240k_505835/YouPorn%20-%20Sex%20Ed%20Is%20It%20Safe%20To%20Masturbate%20Daily.mp4
+            #  /videos/201703/11/109285532/1080P_4000K_109285532.mp4
             # We will benefit from it by extracting some metadata
-            mobj = re.search(r'(?P<height>\d{3,4})[pP]_(?P<bitrate>\d+)[kK]_\d+/', video_url)
+            mobj = re.search(r'(?P<height>\d{3,4})[pP]_(?P<bitrate>\d+)[kK]_\d+', video_url)
             if mobj:
                 height = int(mobj.group('height'))
                 bitrate = int(mobj.group('bitrate'))
@@ -151,12 +155,15 @@ class YouPornIE(InfoExtractor):
         thumbnail = self._search_regex(
             r'(?:imageurl\s*=|poster\s*:)\s*(["\'])(?P<thumbnail>.+?)\1',
             webpage, 'thumbnail', fatal=False, group='thumbnail')
+        duration = int_or_none(self._html_search_meta(
+            'video:duration', webpage, 'duration', fatal=False))
 
         uploader = self._html_search_regex(
             r'(?s)<div[^>]+class=["\']submitByLink["\'][^>]*>(.+?)</div>',
             webpage, 'uploader', fatal=False)
         upload_date = unified_strdate(self._html_search_regex(
-            [r'Date\s+[Aa]dded:\s*<span>([^<]+)',
+            [r'UPLOADED:\s*<span>([^<]+)',
+             r'Date\s+[Aa]dded:\s*<span>([^<]+)',
              r'(?s)<div[^>]+class=["\']videoInfo(?:Date|Time)["\'][^>]*>(.+?)</div>'],
             webpage, 'upload date', fatal=False))
 
@@ -171,7 +178,7 @@ class YouPornIE(InfoExtractor):
             webpage, 'view count', fatal=False, group='count'))
         comment_count = str_to_int(self._search_regex(
             r'>All [Cc]omments? \(([\d,.]+)\)',
-            webpage, 'comment count', fatal=False))
+            webpage, 'comment count', default=None))
 
         def extract_tag_box(regex, title):
             tag_box = self._search_regex(regex, webpage, title, default=None)
@@ -191,6 +198,7 @@ class YouPornIE(InfoExtractor):
             'title': title,
             'description': description,
             'thumbnail': thumbnail,
+            'duration': duration,
             'uploader': uploader,
             'upload_date': upload_date,
             'average_rating': average_rating,

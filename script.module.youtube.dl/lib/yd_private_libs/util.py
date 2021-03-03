@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from kodi_six import xbmc
+from kodi_six import xbmcvfs
 from kodi_six import xbmcaddon
+try:
+    from xbmcvfs import translatePath as xbmcTranslatePath
+except ImportError:
+    from xbmc import translatePath as xbmcTranslatePath
 import os
 import sys
 import traceback
@@ -15,10 +20,10 @@ except ImportError:
 ADDON = xbmcaddon.Addon(id='script.module.youtube.dl')
 T = ADDON.getLocalizedString
 
-PROFILE_PATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+PROFILE_PATH = xbmcTranslatePath(ADDON.getAddonInfo('profile'))
 if isinstance(PROFILE_PATH, bytes):
     PROFILE_PATH = PROFILE_PATH.decode('utf-8')
-ADDON_PATH = xbmc.translatePath(ADDON.getAddonInfo('path'))
+ADDON_PATH = xbmcTranslatePath(ADDON.getAddonInfo('path'))
 if isinstance(ADDON_PATH, bytes):
     ADDON_PATH = ADDON_PATH.decode('utf-8')
 TMP_PATH = os.path.join(PROFILE_PATH, 'tmp')
@@ -34,7 +39,7 @@ DEBUG = ADDON.getSetting('debug') == 'true'
 def LOG(msg, debug=False):
     if debug and not DEBUG:
         return
-    xbmc.log('script.module.youtube.dl: {0}'.format(msg), xbmc.LOGNOTICE)
+    xbmc.log('script.module.youtube.dl: {0}'.format(msg), xbmc.LOGINFO)
 
 
 def ERROR(msg=None, hide_tb=False):
@@ -44,7 +49,7 @@ def ERROR(msg=None, hide_tb=False):
         errtext = sys.exc_info()[1]
         LOG('%s::%s (%d) - %s' % (msg or '?', sys.exc_info()[2].tb_frame.f_code.co_name, sys.exc_info()[2].tb_lineno, errtext))
         return
-    xbmc.log(traceback.format_exc(), xbmc.LOGNOTICE)
+    xbmc.log(traceback.format_exc(), xbmc.LOGINFO)
 
 
 def getSetting(key, default=None):

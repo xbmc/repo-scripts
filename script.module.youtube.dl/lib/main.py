@@ -132,4 +132,4 @@ class main():
         version = youtube_dl.version.__version__
         line2 = T(32044).format('[B]{0}[/B]'.format(version))
 
-        xbmcgui.Dialog().ok(T(32045), line1, '', line2)
+        xbmcgui.Dialog().ok(T(32045), line1 + ' ' + line2)
