@@ -1,11 +1,16 @@
 from collections import namedtuple
 import time
 
+import requests
 import xbmc
 import xbmcaddon
 import xbmcgui
 
 from radioparadise import SLIDESHOW_URL, STREAM_INFO, NowPlaying
+
+
+RESTART_INTERVAL = 1.0
+RESTART_TIMEOUT = 1.0
 
 
 Song = namedtuple('Song', 'key data cover fanart')
@@ -19,6 +24,8 @@ class Player(xbmc.Player):
         super().__init__()
         self.last_key = None
         self.last_song = None
+        self.stream_url = None
+        self.restart_time = 0
         self.now_playing = NowPlaying()
         self.slideshow = Slideshow()
 
@@ -37,23 +44,72 @@ class Player(xbmc.Player):
         """Reset internal state when not playing RP."""
         self.last_key = None
         self.last_song = None
+        self.stream_url = None
+        self.restart_time = 0
         self.now_playing.set_channel(None)
         self.slideshow.set_slides(None)
 
-    def update(self):
-        """Update RP API and music player information."""
-        self.now_playing.update()
+    def restart(self):
+        """Restart playback, if necessary."""
+        now = time.time()
+        if not self.restart_time or now < self.restart_time:
+            return
+        try:
+            res = requests.head(self.stream_url, timeout=RESTART_TIMEOUT)
+            do_restart = res.status_code == 200
+        except Exception:
+            do_restart = False
+        if do_restart:
+            self.restart_time = 0
+            self.play(self.stream_url)
+        else:
+            self.restart_time = now + RESTART_INTERVAL
 
+    def update(self):
+        """Perform updates."""
+        if self.restart_time:
+            self.restart()
+        else:
+            self.now_playing.update()
+            self.update_slideshow()
+            self.update_song()
+
+    def update_player(self):
+        """Update the Kodi player with song metadata."""
+        song = self.last_song
+        if song and self.isPlayingAudio():
+            info = {
+                'artist': song.key[0],
+                'title': song.key[1],
+                'genre': '',
+            }
+            if 'album' in song.data:
+                info['album'] = song.data['album']
+            if 'rating' in song.data:
+                rating = float(song.data['rating'])
+                info['rating'] = rating
+                info['userrating'] = int(round(rating))
+            if 'year' in song.data:
+                info['year'] = int(song.data['year'])
+            item = xbmcgui.ListItem()
+            item.setPath(self.getPlayingFile())
+            item.setArt({'thumb': song.cover})
+            item.setArt({'fanart': song.fanart})
+            item.setInfo('music', info)
+            self.updateInfoTag(item)
+
+    def update_slideshow(self):
+        """Update the slideshow, if necessary."""
         next_slide = self.slideshow.next_slide()
         if next_slide and self.last_song:
             self.last_song = self.last_song._replace(fanart=next_slide)
             self.update_player()
 
+    def update_song(self):
+        """Update song metadata, if necessary."""
         song_key = self.get_song_key()
-        if song_key == self.last_key:
-            return
-        if song_key is None:
-            self.last_key = None
+        if song_key is None or song_key == self.last_key:
+            self.last_key = song_key
             return
 
         xbmc.log(f'rp_service: song_key {song_key}', xbmc.LOGDEBUG)
@@ -80,30 +136,6 @@ class Player(xbmc.Player):
         self.last_song = Song(song_key, song_data, cover, fanart)
         self.update_player()
 
-    def update_player(self):
-        """Update the Kodi player with song metadata."""
-        song = self.last_song
-        if song and self.isPlayingAudio():
-            info = {
-                'artist': song.key[0],
-                'title': song.key[1],
-                'genre': '',
-            }
-            if 'album' in song.data:
-                info['album'] = song.data['album']
-            if 'rating' in song.data:
-                rating = float(song.data['rating'])
-                info['rating'] = rating
-                info['userrating'] = int(round(rating))
-            if 'year' in song.data:
-                info['year'] = int(song.data['year'])
-            item = xbmcgui.ListItem()
-            item.setPath(self.getPlayingFile())
-            item.setArt({'thumb': song.cover})
-            item.setArt({'fanart': song.fanart})
-            item.setInfo('music', info)
-            self.updateInfoTag(item)
-
     def onAVStarted(self):
         if self.isPlaying() and self.getPlayingFile() in STREAM_INFO:
             url = self.getPlayingFile()
@@ -115,7 +147,10 @@ class Player(xbmc.Player):
             self.reset()
 
     def onPlayBackEnded(self):
-        self.reset()
+        if self.stream_url:
+            self.restart_time = time.time()
+        else:
+            self.reset()
 
     def onPlayBackError(self):
         self.reset()
@@ -123,6 +158,8 @@ class Player(xbmc.Player):
     def onPlayBackStarted(self):
         if self.isPlaying() and self.getPlayingFile() in STREAM_INFO:
             url = self.getPlayingFile()
+            self.stream_url = url
+            self.restart_time = 0
             info = STREAM_INFO[url]
             self.now_playing.set_channel(info['channel'])
         else:
