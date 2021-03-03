@@ -1,0 +1,190 @@
+# XBMC Media Center language file
+# Addon Name: Home Assistant
+# Addon id: script.program.homeassistant
+# Addon version: 1.0.0
+# Addon Provider: LaTrappe
+msgid ""
+msgstr ""
+"Project-Id-Version: script.program.homeassistant\n"
+"Report-Msgid-Bugs-To: samsonjasper@gmail.com\n"
+"POT-Creation-Date: 2020-10-21 13:29+0000\n"
+"PO-Revision-Date: 2020-10-21 13:29+0000\n"
+"Last-Translator: samsonjasper@gmail.com\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Switching your home with Kodi"
+msgstr "Bedien je huis met Kodi"
+
+msgctxt "Addon Description"
+msgid "This is a first unofficial Home Assistant Kodi Addon (HAKA!)."
+msgstr "Dit is een eerste niet-officiele versie van de Home Assistant Kodi Addon"
+
+msgctxt "#30001"
+msgid "Connection"
+msgstr "Verbinding"
+
+msgctxt "#30002"
+msgid "Home Assistant server"
+msgstr "Home Assistant server"
+
+msgctxt "#30003"
+msgid "Long life token"
+msgstr "Token"
+
+msgctxt "#30004"
+msgid "Domains"
+msgstr "Domeinen"
+
+msgctxt "#30005"
+msgid "Automations"
+msgstr "Automatiseringen"
+
+msgctxt "#30006"
+msgid "Climate"
+msgstr "Klimaat"
+
+msgctxt "#30007"
+msgid "Groups"
+msgstr "Groepen"
+
+msgctxt "#30008"
+msgid "Lights"
+msgstr "Verlichting"
+
+msgctxt "#30009"
+msgid "Scenes"
+msgstr "Scenes"
+
+msgctxt "#30010"
+msgid "Scripts"
+msgstr "Scripts"
+
+msgctxt "#30011"
+msgid "Sensors"
+msgstr "Sensoren"
+
+msgctxt "#30012"
+msgid "Switches"
+msgstr "Switches"
+
+msgctxt "#30013"
+msgid "Vacuum"
+msgstr "Stofzuiger"
+
+msgctxt "#30014"
+msgid "Persons"
+msgstr "Personen"
+
+msgctxt "#30015"
+msgid "Debug"
+msgstr "Debug"
+
+msgctxt "#30016"
+msgid "Enable debug logging"
+msgstr "Schakel debug logging in"
+
+msgctxt "#30017"
+msgid "Other"
+msgstr "Overig"
+
+msgctxt "#30018"
+msgid "Show HAKA! favourites in main menu"
+msgstr "Favorieten weergeven in hoofdmenu"
+
+msgctxt "#30020"
+msgid "Curr. temp: "
+msgstr "Huidige temp: "
+
+msgctxt "#30021"
+msgid "Brightness: "
+msgstr "Helderheid: "
+
+msgctxt "#30022"
+msgid "Last triggered: "
+msgstr "Laatst uitgevoerd: "
+
+msgctxt "#30023"
+msgid "HA Version: "
+msgstr "HA Versie: "
+
+msgctxt "#30024"
+msgid "Last changed: "
+msgstr "Laatst veranderd: "
+
+msgctxt "#30025"
+msgid "State: "
+msgstr "Status: "
+
+msgctxt "#30026"
+msgid "Battery: "
+msgstr "Batterij: "
+
+msgctxt "#30040"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "#30041"
+msgid "Stop"
+msgstr "Stop"
+
+msgctxt "#30042"
+msgid "Return to base"
+msgstr "Terug naar laadstation"
+
+msgctxt "#30043"
+msgid "Locate"
+msgstr "Localiseer"
+
+msgctxt "#30050"
+msgid "Error 401: Check your token."
+msgstr "Error 401: Controleer je token."
+
+msgctxt "#30051"
+msgid "Error 405: Method not allowed."
+msgstr "Error 405: Methode niet toegestaan."
+
+msgctxt "#30052"
+msgid "Unknown error: Check IP address or if server is online."
+msgstr "Onbekende fout: Controleer IP adres en of server online is."
+
+msgctxt "#30053"
+msgid "Configure server in the addon settings menu first."
+msgstr "Configureer eerst de server in de addon instellingen."
+
+msgctxt "#30054"
+msgid " is added to your HAKA! favourites."
+msgstr " is toegevoegd aan je HAKA! favorieten."
+
+msgctxt "#30055"
+msgid " is removed from your HAKA! favourites."
+msgstr " is verwijderd uit je HAKA! favorieten."
+
+msgctxt "#30056"
+msgid "Something went wrong opening your HAKA! favourites. Check the file in the addon folder or check the logs."
+msgstr "Er ging iets mis bij het openen van je HAKA! favorieten. Controleer het bestand in de addon folder of check de logs."
+
+msgctxt "#30057"
+msgid "It seems you do no have any HAKA! favourites added yet. Use the context menu to add some."
+msgstr "Het lijkt er op dat je nog geen HAKA! favorieten hebt toegevoegd. Gebruik het context menu om ze toe te voegen."
+
+msgctxt "#30058"
+msgid " is already a HAKA! favourite."
+msgstr " is al een HAKA! favoriet."
+
+msgctxt "#30070"
+msgid "Add to HAKA! favourites"
+msgstr "Toevoegen aan HAKA! favorieten"
+
+msgctxt "#30071"
+msgid "Remove from HAKA! favourites"
+msgstr "Verwijder uit HAKA! favorieten"
+
+msgctxt "#30080"
+msgid "Camera"
+msgstr "Camera"
