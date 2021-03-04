@@ -149,7 +149,7 @@ class MyePlayer(xbmc.Player):
             self.tearDown()
             return
 
-        # Try to find the title with the help of XBMC (Theses came from
+        # Try to find the title with the help of Kodi (Theses came from
         # XBMC.Subtitles add-ons)
         self.season = str(xbmc.getInfoLabel("VideoPlayer.Season"))
         logger.debug("Player - Season: {self.season}")
