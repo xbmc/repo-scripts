@@ -150,7 +150,7 @@ class MyePlayer(xbmc.Player):
             return
 
         # Try to find the title with the help of Kodi (Theses came from
-        # XBMC.Subtitles add-ons)
+        # Kodi.Subtitles add-ons)
         self.season = str(xbmc.getInfoLabel("VideoPlayer.Season"))
         logger.debug("Player - Season: {self.season}")
         self.episode = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
