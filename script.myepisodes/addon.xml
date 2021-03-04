@@ -15,7 +15,7 @@
     <platform>all</platform>
     <language>en fr it pt es</language>
     <website>https://www.myepisodes.com</website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <license>GPL-2.0-only</license>
     <source>https://github.com/maximeh/script.myepisodes</source>
     <email>maxime dot hadjinlian at gmail dot com</email>
     <assets>
@@ -23,4 +23,3 @@
     </assets>
   </extension>
 </addon>
-
