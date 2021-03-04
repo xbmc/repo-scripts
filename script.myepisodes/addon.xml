@@ -13,7 +13,6 @@
     <summary lang="en_GB">MyEpisodes</summary>
     <description lang="en_GB">Automatically set watched episodes on MyEpisodes.com</description>
     <platform>all</platform>
-    <language>en fr it pt es</language>
     <website>https://www.myepisodes.com</website>
     <license>GPL-2.0-only</license>
     <source>https://github.com/maximeh/script.myepisodes</source>
@@ -23,3 +22,4 @@
     </assets>
   </extension>
 </addon>
+

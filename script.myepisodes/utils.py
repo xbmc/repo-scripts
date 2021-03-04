@@ -2,6 +2,7 @@
 
 import logging
 import xbmc
+import xbmcgui
 import xbmcvfs
 import xbmcaddon
 
@@ -29,7 +30,7 @@ def getSettingAsInt(setting):
 
 
 def notif(msg, time=5000):
-    xbmc.executebuiltin(f"Notification(MyEpisodes, {msg}, {time}, {_icon})")
+    xbmcgui.Dialog().notification(f"MyEpisodes", msg, _icon, time)
 
 
 def is_excluded(filename):
