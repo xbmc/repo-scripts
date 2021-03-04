@@ -145,7 +145,7 @@ class NapisyHelper:
         for file in files:
             if os.path.splitext(file)[1] in exts:
                 filename_dest = os.path.join(__temp__, file)
-                flag = xbmcvfs.copy(os.path.join(zip_filepath, file), filename_dest)
+                flag = xbmcvfs.copy(zip_filepath + '/' + file, filename_dest)
                 if flag:
                     subtitle_list.append(filename_dest)
 
