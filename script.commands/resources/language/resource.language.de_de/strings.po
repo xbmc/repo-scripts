@@ -1,0 +1,59 @@
+# Kodi Media Center language file
+# Addon Name: Commands
+# Addon id: script.commands
+# Addon Provider: AddonScriptorDE
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30001"
+msgid "Befehl hinzufügen"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Aus Liste"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Aus Favoriten"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Befehl eingeben"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Befehle verwalten"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Ändern"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Entfernen"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Sortieren"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Befehl"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Titel"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Neue Position"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Kombination"
+msgstr ""
+
