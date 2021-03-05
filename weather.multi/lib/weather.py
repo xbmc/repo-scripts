@@ -76,14 +76,15 @@ class MAIN():
         return location, locationid, locationlat, locationlon
 
     def get_data(self, url):
+        headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36'}
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=headers, timeout=10)
             return response.json()
         except:
             return
     
     def get_forecast(self, loc, locid, lat, lon):
-        set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
+        set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
         log('weather location: %s' % locid)
         providers = 'provided by Yahoo'
         if MAPS and MAPID:

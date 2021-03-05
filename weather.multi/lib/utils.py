@@ -19,7 +19,7 @@ LANGUAGE = ADDON.getLocalizedString
 DEBUG = ADDON.getSettingBool('Debug')
 
 WEATHER_WINDOW = xbmcgui.Window(12600)
-WEATHER_ICON = xbmc.translatePath('%s.png')
+WEATHER_ICON = xbmcvfs.translatePath('%s.png')
 TEMPUNIT   = xbmc.getRegion('tempunit')
 DATEFORMAT = xbmc.getRegion('dateshort')
 TIMEFORMAT = xbmc.getRegion('meridiem')
