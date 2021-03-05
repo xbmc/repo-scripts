@@ -24,8 +24,7 @@
 
 """
 Urlquick II
---------
-
+-----------
 Urlquick II is a wrapper for requests that add's support for http caching.
 It act's just like requests but with a few extra parameters and features.
 'Requests' itself is left untouched.
@@ -148,6 +147,10 @@ class CacheError(RequestException):
 
 
 class Response(requests.Response):
+    def __init__(self):
+        super(Response, self).__init__()
+        self.from_cache = False
+
     def xml(self):
         """
         Parse's "XML" document into a element tree.
@@ -200,7 +203,8 @@ def to_bytes_string(value):  # type: (...) -> bytes
 def hash_url(req):  # type: (PreparedRequest) -> str
     """Return url as a sha1 encoded hash."""
     data = to_bytes_string(req.url + req.method)
-    return hashlib.sha1(b''.join((data, req.body or b''))).hexdigest()
+    body = to_bytes_string(req.body) if req.body else b''
+    return hashlib.sha1(b''.join((data, body))).hexdigest()
 
 
 class CacheRecord(object):
@@ -209,6 +213,7 @@ class CacheRecord(object):
     def __init__(self, record):  # type: (sqlite3.Row) -> None
         self._response = response = pickle.loads(bytes(record["response"]))
         self._fresh = record["fresh"] or response.status_code in REDIRECT_CODES
+        self._response.from_cache = True
 
     @property
     def response(self):  # type: () -> Response
@@ -296,8 +301,8 @@ class CacheHTTPAdapter(adapters.HTTPAdapter):
     def get_cache(self, urlhash, max_age):  # type: (str, int) -> CacheRecord
         """Return a cached response if one exists."""
         result = self.execute("""SELECT key, response,
-        CASE WHEN ? == -1 THEN 1 ELSE strftime('%s', 'now') - strftime('%s', cached_date, 'unixepoch') < ? END AS fresh
-        FROM urlcache WHERE key = ?""", (max_age, max_age, urlhash))
+        strftime('%s', 'now') - strftime('%s', cached_date, 'unixepoch') < ? AS fresh
+        FROM urlcache WHERE key = ?""", (max_age, urlhash))
         record = result.fetchone()
         if record is not None:
             try:
@@ -346,12 +351,12 @@ class CacheHTTPAdapter(adapters.HTTPAdapter):
 
     # noinspection PyShadowingNames
     def send(self, request, **kwargs):  # type: (PreparedRequest, ...) -> Response
-        urlhash = hash_url(request)
+        max_age = int(request.headers.pop("x-cache-max-age"))
+        urlhash = hash_url(request) if max_age >= 0 else None
         cache = None
 
         # Check if request is already cached and valid
-        if request.method in CACHEABLE_METHODS:
-            max_age = int(request.headers.pop("x-cache-max-age"))
+        if urlhash and request.method in CACHEABLE_METHODS:
             cache = self.get_cache(urlhash, max_age)
             if cache and cache.isfresh:
                 logger.debug("Cache is fresh")
@@ -363,7 +368,7 @@ class CacheHTTPAdapter(adapters.HTTPAdapter):
 
         # Send request for remote resource
         response = super(CacheHTTPAdapter, self).send(request, **kwargs)
-        return self.process_response(response, cache, urlhash)
+        return self.process_response(response, cache, urlhash) if urlhash else response
 
     def build_response(self, req, resp):  # type: (PreparedRequest, HTTPResponse) -> Response
         """Replace response object with our customized version."""
