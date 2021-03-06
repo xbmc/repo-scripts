@@ -312,9 +312,13 @@ class XBMCMixin(object):
         # this method.
         player = xbmc.Player()
         monitor = xbmc.Monitor()
-        for _ in range(30) and not monitor.abortRequested():
+        for _ in range(30):
             if player.isPlaying():
                 break
+
+            if monitor.abortRequested():
+                return
+
             monitor.waitForAbort(1)
         else:
             raise Exception('No video playing. Aborted after 30 seconds.')
