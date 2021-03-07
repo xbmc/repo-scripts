@@ -116,12 +116,7 @@ def location(loc):
     return locs, locids
 
 def get_data(api, search):
-    url = api % search
-    try:
-        response = requests.get(url)
-        return response.json()
-    except:
-        return
+    return
 
 def forecast(loc, locid):
     log('weather location: %s' % locid)
