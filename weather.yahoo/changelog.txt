@@ -1,3 +1,6 @@
+v5.1.0
+- broken due to site changes
+
 v5.0.7
 - fix crash when precipitation data is missing
 
