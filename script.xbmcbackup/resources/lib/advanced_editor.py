@@ -94,7 +94,7 @@ class AdvancedBackupEditor:
         if(name is not None):
 
             # give a choice to start in home or enter a root path
-            enterHome = self.dialog.yesno(utils.getString(30111), line1=utils.getString(30112) + " - " + utils.getString(30114), line2=utils.getString(30113) + " - " + utils.getString(30115), nolabel=utils.getString(30112), yeslabel=utils.getString(30113))
+            enterHome = self.dialog.yesno(utils.getString(30111), message=utils.getString(30112) + " - " + utils.getString(30114) + "\n" + utils.getString(30113) + " - " + utils.getString(30115), nolabel=utils.getString(30112), yeslabel=utils.getString(30113))
 
             rootFolder = 'special://home'
             if(enterHome):
@@ -161,7 +161,7 @@ class AdvancedBackupEditor:
                 contextOption = self.dialog.contextmenu(cOptions)
 
                 if(contextOption == 0):
-                    if(self.dialog.yesno(heading=utils.getString(30123), line1=utils.getString(30128))):
+                    if(self.dialog.yesno(heading=utils.getString(30123), message=utils.getString(30128))):
                         # remove folder
                         del backupSet['dirs'][optionSelected - 3]
                 elif(contextOption == 1 and backupSet['dirs'][optionSelected - 3]['type'] == 'include'):
@@ -217,7 +217,7 @@ class AdvancedBackupEditor:
                         customPaths.updateSet(aSet['name'], updatedSet)
 
                     elif(menuOption == 1):
-                        if(self.dialog.yesno(heading=utils.getString(30127), line1=utils.getString(30128))):
+                        if(self.dialog.yesno(heading=utils.getString(30127), message=utils.getString(30128))):
                             # delete this path - subtract one because of "add" item
                             customPaths.deleteSet(exitCondition - 1)
 
