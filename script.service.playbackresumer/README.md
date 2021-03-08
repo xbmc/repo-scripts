@@ -6,8 +6,7 @@ A simple addon to periodically update the resume point of the currently playing 
 
 Optionally, automatically resume playback automatically when Kodi is restarted after a crash, or trigger playback of a random video.
 
-Main Kodi forum thread here:
-https://forum.kodi.tv/showthread.php?tid=183084
+Kodi forum thread: <https://forum.kodi.tv/showthread.php?tid=355383>
 
 (Original code by bradvido88 recovered from the Kodi forum, and from May 2019 updated & maintained in this repo by bossanova808).
 

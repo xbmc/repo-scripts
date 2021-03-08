@@ -1,8 +1,27 @@
-2.0.1 - Update settings to Matrix format
-2.0.0 - Port to Python 3 and prepare for submission to Matrix repo
-1.2.0 - Updated for Kodi Leia.  Dev taken over by bossanova808@gmail.com.
-1.1.0 - added ability to Auto-Play a random video if nothing is playing
-1.0.3 - converted strings.xml to strings.po, updated license to be GPL v3, updated startup type to login
-1.0.2 - changed startup type and updated links to forum/source
-1.0.1 - updated descriptions in addon xml
-1.0.0 - initial commit for frodo
+v2.0.2
+- Update for Matrix logging changes
+
+v2.0.1 
+- Update settings to Matrix format
+
+v2.0.0 
+- Port to Python 3 and prepare for submission to Matrix repo
+
+v1.2.0 
+- Updated for Kodi Leia.  Dev taken over by bossanova808.
+
+v1.1.0 
+- added ability to Auto-Play a random video if nothing is playing
+
+v1.0.3 
+- converted strings.xml to strings.po
+- updated startup type to login
+
+v1.0.2 
+- changed startup type and updated links to forum/source
+
+v1.0.1 
+- updated descriptions in addon xml
+
+v1.0.0 
+- initial commit for frodo
