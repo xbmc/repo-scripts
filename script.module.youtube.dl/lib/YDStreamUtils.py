@@ -63,7 +63,7 @@ class xbmcDialogProgressBase:
         return self.start + int((pct / 100.0) * self.range)
 
     def create(self, heading, line1='', line2='', line3=''):
-        self.dialog.create(heading, line1, line2, line3)
+        self.dialog.create(heading, ' '.join([line1, line2, line3]))
 
     def update(self, pct, line1='', line2='', line3=''):
         if self._iscanceled():
@@ -105,7 +105,7 @@ class xbmcDialogProgress(xbmcDialogProgressBase):
         self.dialog = xbmcgui.DialogProgress()
 
     def _update(self, pct, line1, line2, line3):
-        self.dialog.update(pct, line1, line2, line3)
+        self.dialog.update(pct, ' '.join([line1, line2, line3]))
 
 
 class xbmcDialogProgressBG(xbmcDialogProgressBase):
@@ -201,10 +201,9 @@ def moveFile(file_path, dest_path, filename=None):
     destFilePath = os.path.join(dest_path, fname)
     if xbmcvfs.copy(file_path, destFilePath):
         xbmcvfs.delete(file_path)
-        return True
+        return destFilePath
 
-    return False
-
+    return ''
 
 def getDownloadPath(use_default=None):
     if use_default is None:

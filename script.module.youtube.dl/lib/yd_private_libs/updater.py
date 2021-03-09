@@ -26,6 +26,10 @@ def updateCore(force=False):
         return
     from kodi_six import xbmc
     from kodi_six import xbmcvfs
+    try:
+        from xbmcvfs import translatePath as xbmcTranslatePath
+    except ImportError:
+        from xbmc import translatePath as xbmcTranslatePath
     import os
     if PY3:
         from urllib.request import urlretrieve
@@ -48,7 +52,7 @@ def updateCore(force=False):
 
     util.LOG('Updating youtube_dl core to new version: {0}'.format(newVersion))
 
-    profile = xbmcvfs.translatePath(util.ADDON.getAddonInfo('profile')).decode('utf-8')
+    profile = xbmcTranslatePath(util.ADDON.getAddonInfo('profile')).decode('utf-8')
     archivePath = os.path.join(profile, 'youtube_dl.tar.gz')
     extractedPath = os.path.join(profile, 'youtube-dl')
 

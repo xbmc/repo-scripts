@@ -53,7 +53,8 @@ class Service():
 
         while info and not monitor.abortRequested():
             t = threading.Thread(target=YDStreamExtractor._handleDownload, args=(
-                info['data'],), kwargs={'path': info['path'], 'duration': info['duration'], 'bg': True})
+                info['data'],), kwargs={'path': info['path'], 'filename': info['filename'],
+                                        'duration': info['duration'], 'bg': True})
             t.start()
 
             while t.is_alive():
