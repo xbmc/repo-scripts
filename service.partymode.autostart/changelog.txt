@@ -1,0 +1,28 @@
+0.9.2
+- Migrate to Kodi 19 (thanks to outsideset pr#13)
+- Add Polish translation (thanks to forgottennick pr#10)
+- Other fixes and adds
+
+0.9.1b
+- Set new values default (fix issue #6) (thanks to andpei - pr#7)
+
+0.9.0b
+- The oft-requested playback controls (repeat and random) (thanks to eslindsey - pr#5)
+- A toggle to enable party mode when auto-starting a playlist (thanks to eslindsey - pr#4)
+- Explicit countdown window that actually tells you what it's going to do (thanks to eslindsey - pr#3)
+
+0.8.8b
+- Allow to add favourites to autostart (thanks to andpei  - pr#2)
+
+0.8.0b
+- Added volume control (thanks to gravewrought - pr#1)
+
+0.6.8b
+- Fixed default playlist folder
+
+0.6.6b
+- Added PartyMode Autostart to programs
+- Support for playlist instead of partymode
+
+0.6.0b
+- Hello PartyMode Autostart :)
