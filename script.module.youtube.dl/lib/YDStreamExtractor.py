@@ -45,6 +45,22 @@ class DownloadResult:
 ###############################################################################
 # Private Methods
 ###############################################################################
+def _getVideoFormat(info):
+    """
+    Quality is 0=SD, 1=720p, 2=1080p, 3=Highest Available
+    and represents a maximum.
+    """
+    try:
+        quality = info['quality']
+    except KeyError:
+        quality = util.getSetting('video_quality', 1)
+    qualities = {0: 'worstvideo+bestaudio/worst',
+                 1: 'bestvideo[height<=720]+bestaudio/best[height<=720]/bestvideo+bestaudio/best',
+                 2: 'bestvideo[height<=1080]+bestaudio/best[height<=1080]/bestvideo+bestaudio/best',
+                 3: 'bestvideo+bestaudio/best'}
+    return qualities[quality]
+
+
 def _getQualityLimits(quality):
     minHeight = 0
     maxHeight = 480
@@ -216,6 +232,8 @@ def _completeInfo(info):
         info['title'] = 'Unknown'
     if 'download.ID' not in info:
         info['download.ID'] = str(time.time())
+    if 'url' not in info:
+        info['url'] = info['requested_formats'][0]['url']
 
 
 def _getExtension(info):
@@ -314,8 +332,10 @@ def _cancelDownload(_cancel=True):
     YoutubeDLWrapper._DOWNLOAD_CANCEL = _cancel
 
 
-def _handleDownload(info, path=None, duration=None, bg=False):
-    path = path or StreamUtils.getDownloadPath(use_default=True)
+def _handleDownload(vidinfo, path=None, filename=None, duration=None, bg=False):
+    path = path or StreamUtils.getDownloadPath(use_default=True)  # this is already done in handleDownload...
+    template = u'{}.%(ext)s'.format(filename or u'%(title)s-%(id)s')
+
     if bg:
         downloader = StreamUtils.DownloadProgressBG
     else:
@@ -326,28 +346,30 @@ def _handleDownload(info, path=None, duration=None, bg=False):
         try:
             setOutputCallback(prog.updateCallback)
             _setDownloadDuration(duration)
-            result = download(info, util.TMP_PATH)
+            result = download(vidinfo, util.TMP_PATH, template=template)
         finally:
             setOutputCallback(None)
             _setDownloadDuration(duration)
 
     if not result and result.status != 'canceled':
         StreamUtils.showMessage(StreamUtils.T(32013), result.message, bg=bg)
-    elif result:
-        StreamUtils.showMessage(StreamUtils.T(32011), StreamUtils.T(32012), '', result.filepath, bg=bg)
-    filePath = result.filepath
 
-    part = result.filepath + u'.part'
+    filePath = result.filepath
+    part = filePath + u'.part'
     try:
         if os.path.exists(part):
-            os.rename(part, result.filepath)
+            os.rename(part, filePath)
     except UnicodeDecodeError:
         part = part.encode('utf-8')
         if os.path.exists(part):
-            os.rename(part, result.filepath)
+            os.rename(part, filePath)
 
-    if not StreamUtils.moveFile(filePath, path, filename=info.get('filename')):
-        StreamUtils.showMessage(StreamUtils.T(32036), StreamUtils.T(32037), '', result.filepath, bg=bg)
+    destpath = StreamUtils.moveFile(filePath, path)
+    if not destpath:
+        StreamUtils.showMessage(StreamUtils.T(32036), StreamUtils.T(32037), '', filePath, bg=bg)
+    else:
+        StreamUtils.showMessage(StreamUtils.T(32011), StreamUtils.T(32012), '', destpath, bg=bg)
+        result.filepath = destpath
 
     return result
 
@@ -389,51 +411,59 @@ def getVideoInfo(url, quality=None, resolve_redirects=False):
     return info
 
 
-def handleDownload(info, duration=None, bg=False, path=None):
+def handleDownload(info, duration=None, bg=False, path=None, filename=None):
     """
-    Download the selected video in vidinfo to a path the user chooses.
+    Download the selected video to a path the user chooses.
     Displays a progress dialog and ok/error message when finished.
     Set bg=True to download in the background.
     Returns a DownloadResult object for foreground transfers.
     """
-    info = _convertInfo(info)
+    if isinstance(info, YoutubeDLWrapper.VideoInfo):  # backward compatibility
+        info = info.info
+        info['url'] = info['webpage_url']
     path = path or StreamUtils.getDownloadPath()
     if bg:
-        servicecontrol.ServiceControl().download(info, path, duration)
+        servicecontrol.ServiceControl().download(info, path, filename, duration)
     else:
-        return _handleDownload(info, path, duration=duration, bg=False)
+        return _handleDownload(info, path=path, filename=filename, duration=duration, bg=False)
 
 
 def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     """
-    Download the selected video in vidinfo to path.
+    Download the selected video in info to path.
     Template sets the youtube-dl format which defaults to TITLE-ID.EXT.
     Returns a DownloadResult object.
     """
+
+    # kept temporarily for backward compatibilty with xbmcgui.ListItem objects (any test examples?)
     info = _convertInfo(info)  # Get the right format
-    _completeInfo(info)  # Make sure we have the needed bits
 
     _cancelDownload(_cancel=False)
     path_template = os.path.join(path, template)
     ytdl = YoutubeDLWrapper._getYTDL()
-    ytdl._lastDownloadedFilePath = ''
-    ytdl.params['quiet'] = True
-    ytdl.params['outtmpl'] = path_template
+    ytdl.clearDownloadParams()
+    ytdl.params.update({'outtmpl': path_template, 'format': _getVideoFormat(info)})
+
+    ie_result = ytdl.extract_info(info['url'], download=False)
+    filepath = ytdl.prepare_filename(ie_result)
+    _completeInfo(ie_result)  # Make sure we have the needed bits
+
     import AddonSignals
-    signalPayload = {'title': info.get('title'), 'url': info.get('url'), 'download.ID': info.get('download.ID')}
+    signalPayload = {'title': ie_result['title'], 'url': ie_result['url'], 'download.ID': ie_result['download.ID']}
+
     try:
         AddonSignals.sendSignal('download.started', signalPayload, source_id='script.module.youtube.dl')
-        YoutubeDLWrapper.download(info)
+        dl_result = YoutubeDLWrapper.download(ie_result)
     except YoutubeDLWrapper.youtube_dl.DownloadError as e:
-        return DownloadResult(False, e.message, filepath=ytdl._lastDownloadedFilePath)
+        return DownloadResult(False, e.message, filepath=filepath)
     except YoutubeDLWrapper.DownloadCanceledException:
-        return DownloadResult(False, status='canceled', filepath=ytdl._lastDownloadedFilePath)
+        return DownloadResult(False, status='canceled', filepath=filepath)
     finally:
         ytdl.clearDownloadParams()
-        signalPayload['path'] = ytdl._lastDownloadedFilePath
+        signalPayload['path'] = filepath
         AddonSignals.sendSignal('download.finished', signalPayload, source_id='script.module.youtube.dl')
 
-    return DownloadResult(True, filepath=ytdl._lastDownloadedFilePath)
+    return DownloadResult(True, filepath=filepath)
 
 
 def mightHaveVideo(url, resolve_redirects=False):

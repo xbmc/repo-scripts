@@ -1,3 +1,8 @@
+*** 21.303.0 ***
+
+Updated youtube-dl core to 2021.03.03
+Add merge capability (thanks jmzambon)
+
 *** 21.302.0 ***
 
 Updated youtube-dl core to 2021.03.02

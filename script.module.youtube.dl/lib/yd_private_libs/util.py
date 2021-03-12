@@ -2,6 +2,10 @@
 from kodi_six import xbmc
 from kodi_six import xbmcvfs
 from kodi_six import xbmcaddon
+try:
+    from xbmcvfs import translatePath as xbmcTranslatePath
+except ImportError:
+    from xbmc import translatePath as xbmcTranslatePath
 import os
 import sys
 import traceback
@@ -16,10 +20,10 @@ except ImportError:
 ADDON = xbmcaddon.Addon(id='script.module.youtube.dl')
 T = ADDON.getLocalizedString
 
-PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+PROFILE_PATH = xbmcTranslatePath(ADDON.getAddonInfo('profile'))
 if isinstance(PROFILE_PATH, bytes):
     PROFILE_PATH = PROFILE_PATH.decode('utf-8')
-ADDON_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+ADDON_PATH = xbmcTranslatePath(ADDON.getAddonInfo('path'))
 if isinstance(ADDON_PATH, bytes):
     ADDON_PATH = ADDON_PATH.decode('utf-8')
 TMP_PATH = os.path.join(PROFILE_PATH, 'tmp')
