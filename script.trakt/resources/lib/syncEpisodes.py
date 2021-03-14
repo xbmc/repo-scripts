@@ -118,7 +118,7 @@ class SyncEpisodes:
                     'tvshowid': show_col1['tvshowid'], 'seasons': []}
 
             data = kodiUtilities.kodiJsonRequest({'jsonrpc': '2.0', 'method': 'VideoLibrary.GetEpisodes', 'params': {'tvshowid': show_col1['tvshowid'], 'properties': [
-                                                 'season', 'episode', 'playcount', 'uniqueid', 'lastplayed', 'file', 'dateadded', 'runtime', 'userrating']}, 'id': 0})
+                                                 'season', 'episode', 'playcount', 'uniqueid', 'imdbnumber', 'lastplayed', 'file', 'dateadded', 'runtime', 'userrating']}, 'id': 0})
             if not data:
                 logger.debug(
                     "[Episodes Sync] There was a problem getting episode data for '%s', aborting sync." % show['title'])
@@ -296,7 +296,7 @@ class SyncEpisodes:
                 32068), line2=kodiUtilities.getString(32067) % (len(traktShowsAdd['shows'])))
 
             # split episode list into chunks of 50
-            chunksize = 1
+            chunksize = 50
             chunked_episodes = utilities.chunks(
                 traktShowsAdd['shows'], chunksize)
             errorcount = 0
