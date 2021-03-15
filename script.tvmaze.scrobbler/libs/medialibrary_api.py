@@ -95,8 +95,8 @@ def get_episodes(tvshowid, filter_=None):
     """
     params = {
         'tvshowid': tvshowid,
-        'properties': ['season', 'episode', 'playcount', 'tvshowid',
-                       'dateadded', 'lastplayed']
+        'properties': ['season', 'episode', 'playcount', 'tvshowid', 'uniqueid',
+                       'dateadded', 'lastplayed', 'firstaired']
     }
     if filter_ is not None:
         params['filter'] = filter_
@@ -116,7 +116,7 @@ def get_recent_episodes():
     """
     params = {
         'properties': ['playcount', 'tvshowid', 'season', 'episode', 'uniqueid',
-                       'dateadded', 'lastplayed']
+                       'dateadded', 'lastplayed', 'firstaired']
     }
     result = send_json_rpc('VideoLibrary.GetRecentlyAddedEpisodes', params)
     if not result.get('episodes'):
@@ -152,7 +152,7 @@ def get_episode_details(episode_id):
     params = {
         'episodeid': episode_id,
         'properties': ['playcount', 'tvshowid', 'season', 'episode', 'uniqueid',
-                       'dateadded', 'lastplayed']
+                       'dateadded', 'lastplayed', 'firstaired']
     }
     return send_json_rpc(method, params)['episodedetails']
 

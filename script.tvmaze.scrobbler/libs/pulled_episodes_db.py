@@ -37,8 +37,8 @@ class PulledEpisodesDb(object):
 
     def __init__(self):
         self._connection = sqlite3.connect(self.DB)
-        self._cursor = None  # type: Optional[sqlite3.Cursor]
-        self._connection.execute("""
+        self._cursor = self._connection.cursor()  # type: sqlite3.Cursor
+        self._cursor.execute("""
             CREATE TABLE IF NOT EXISTS pulled_episodes(
                 episode_id INTEGER PRIMARY KEY,
                 timestamp INTEGER NOT NULL
@@ -46,7 +46,6 @@ class PulledEpisodesDb(object):
         """)
 
     def __enter__(self):
-        self._cursor = self._connection.cursor()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
