@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="Backup" version="1.6.5" provider-name="robweber">
+    name="Backup" version="1.6.6" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.dateutil" version="2.8.0" />
@@ -89,10 +89,8 @@
 		<screenshot>resources/images/screenshot3.jpg</screenshot>
 		<screenshot>resources/images/screenshot4.jpg</screenshot>
     </assets>
-    <news>Version 1.6.5
- - updated to new settings format with levels
- - added ability to change path where temp zip file is built
- - fixed issues with xbmcgui Dialogs
+    <news>Version 1.6.6
+ - fixed issue with backup rotations not working properly
 </news>
   </extension>
 </addon>

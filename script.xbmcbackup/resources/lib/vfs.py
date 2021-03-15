@@ -73,7 +73,7 @@ class XBMCFileSystem(Vfs):
         return xbmcvfs.copy(xbmcvfs.translatePath(source), xbmcvfs.translatePath(dest))
 
     def rmdir(self, directory):
-        return xbmcvfs.rmdir(directory)
+        return xbmcvfs.rmdir(directory, force=True)  # use force=True to make sure it works recursively
 
     def rmfile(self, aFile):
         return xbmcvfs.delete(aFile)

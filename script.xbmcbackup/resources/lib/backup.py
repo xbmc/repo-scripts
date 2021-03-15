@@ -57,15 +57,14 @@ class XbmcBackup:
 
     def configureRemote(self):
         if(utils.getSetting('remote_selection') == '1'):
-            self.remote_base_path = utils.getSetting('remote_path_2')
             self.remote_vfs = XBMCFileSystem(utils.getSetting('remote_path_2'))
             utils.setSetting("remote_path", "")
         elif(utils.getSetting('remote_selection') == '0'):
-            self.remote_base_path = utils.getSetting('remote_path')
             self.remote_vfs = XBMCFileSystem(utils.getSetting("remote_path"))
         elif(utils.getSetting('remote_selection') == '2'):
-            self.remote_base_path = "/"
             self.remote_vfs = DropboxFileSystem("/")
+
+        self.remote_base_path = self.remote_vfs.root_path
 
     def remoteConfigured(self):
         result = True
