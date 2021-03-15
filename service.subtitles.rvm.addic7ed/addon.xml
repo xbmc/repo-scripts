@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="service.subtitles.rvm.addic7ed"
   name="Addic7ed.com"
-  version="3.1.4"
+  version="3.1.5"
   provider-name="Roman V.M.">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
@@ -32,7 +32,10 @@
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
   </assets>
-  <news>v.3.1.4:
+  <news>v.3.1.5:
+- Fixed a crash when downloading subs for the first time after installing the addon.
+
+v.3.1.4:
 - Fix cleaning a temp download directory.</news>
   <reuselanguageinvoker>false</reuselanguageinvoker>
 </extension>

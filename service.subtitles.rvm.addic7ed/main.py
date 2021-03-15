@@ -3,7 +3,7 @@
 # The main script contains minimum code to speed up launching on slower systems
 
 import sys
-from addic7ed.core import router
+from addic7ed.actions import router
 from addic7ed.exception_logger import log_exception
 
 if __name__ == '__main__':
