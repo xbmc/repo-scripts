@@ -1,0 +1,121 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi-add-on-for-Simkl\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-09-21 06:13\n"
+"Last-Translator: David Davó\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Crowdin-Project: Kodi-add-on-for-Simkl\n"
+"X-Crowdin-Project-ID: 308191\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /master/resources/language/resource.language.en_gb/strings.po\n"
+"X-Crowdin-File-ID: 9\n"
+
+msgctxt "#32001"
+msgid "Please click to Log In"
+msgstr "S'il vous plait, cliquez pour vous connecter"
+
+msgctxt "#32002"
+msgid "Other options"
+msgstr "Autres options"
+
+msgctxt "#32003"
+msgid "Sync library"
+msgstr "Synchroniser la bibliothèque"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "Synchroniser après avoir visionné"
+
+msgctxt "#32007"
+msgid "Checkin percentage"
+msgstr "Pourcentage de synchronisation"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "Afficher la notification lors de la synchronisation"
+
+msgctxt "#32009"
+msgid "See options to customize Simkl TV Tracker"
+msgstr "Voir les options pour personnaliser Simkl TV Tracker"
+
+msgctxt "#32010"
+msgid "You are not logged in"
+msgstr "Vous n'êtes pas connecté"
+
+msgctxt "#32011"
+msgid "You are logged in"
+msgstr "Vous êtes authentifié"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "Durée minimale du fichier, en minutes, pour activer la synchronisation"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Connectez-vous à Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \n"
+"computer or phone and enter this code"
+msgstr "Veuillez visiter à l'adresse {0} sur\n"
+"votre appareil et entrez le code suivant"
+
+msgctxt "#32023"
+msgid "Remaining time: {0}/{1}"
+msgstr "Temps restant: {0}/{1}"
+
+msgctxt "#32025"
+msgid "Hello again, {0}"
+msgstr "Bonjour à nouveau, {0}"
+
+msgctxt "#32026"
+msgid "Please Log In in addon settings"
+msgstr "Veuillez vous connecter dans les paramètres de l'addon"
+
+msgctxt "#32027"
+msgid "You don't have internet"
+msgstr "Tu n'as pas internet"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Error at scrobbling. Retrying ({0})"
+msgstr "Il y a eu une erreur de synchronisation. Réessayer ({0})"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "Connexion réussie, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "Impossible de se connecter"
+
+msgctxt "#32032"
+msgid "You are already logged in as {0}"
+msgstr "Vous êtes déjà connecté en tant que {0}"
+
+msgctxt "#32033"
+msgid "Continue"
+msgstr "Continuer"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr "Impossible de synchroniser les services, nous réessaierons bientôt"
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
+msgstr "Désolé, impossible de synchroniser"
+
