@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<allowoverlay>yes</allowoverlay>
+	
+	<controls>
+		<control type="group">
+			<!-- Background picture -->
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<aspectratio>scale</aspectratio>
+				<texture>bg.jpg</texture>
+			</control>
+			
+			<!-- Group for all the controls in MOTR -->
+			<control type="group">
+				<control type="image">
+					<posx>0</posx>
+					<posy>-50</posy>
+					<width>1150</width>
+					<height>285</height>
+					<texture>logo.png</texture>
+				</control>
+				<control type="image">
+					<posx>20</posx>
+					<posy>220r</posy>
+					<width>250</width>
+					<height>210</height>
+					<texture>motrlogo.png</texture>
+				</control>
+				
+
+				<control type="image">
+					<posx>15</posx>
+					<posy>140</posy>
+					<width>250</width>
+					<height>570</height>
+					<texture colordiffuse="80000000">list-focus.png</texture>
+				</control>
+
+				<control type="list" id="100">
+					<description>Directory browser in MOTR</description>
+					<left>15</left>
+					<top>140</top>
+					<width>250</width>
+					<height>570</height>
+					<visible>true</visible>
+					<onup>2</onup>
+					<ondown>3</ondown>
+					<onleft>1</onleft>
+					<onright>500</onright>
+					<viewtype label="3D list">list</viewtype>
+					<orientation>vertical</orientation>
+					<pagecontrol>25</pagecontrol>
+					<autoscroll>false</autoscroll>
+					<scrolltime tween="sine" easing="out">200</scrolltime>
+					<itemlayout width="250" height="49">
+								<control type="image">
+										<left>5</left>
+										<top>3</top>
+										<width>47</width>
+										<height>47</height>
+										<info>ListItem.Icon</info>
+								</control>
+								<control type="label">
+										<left>55</left>
+										<top>3</top>
+										<width>250</width>
+										<height>47</height>
+										<font>font6</font>
+										<aligny>center</aligny>
+										<align>left</align>
+										<info>ListItem.Label</info>
+								</control>
+					</itemlayout>
+					<focusedlayout width="250" height="49">
+								<control type="image">
+										<width>250</width>
+										<height>49</height>
+										<left>0</left>
+										<top>0</top>
+										<visible>Control.HasFocus(100)</visible>
+										<texture>list-focus.png</texture>
+								</control>
+								<control type="image">
+										<left>5</left>
+										<top>3</top>
+										<width>47</width>
+										<height>47</height>
+										<info>ListItem.Icon</info>
+								</control>
+								<control type="label">
+										<left>55</left>
+										<top>3</top>
+										<width>220</width>
+										<height>47</height>
+										<font>font6</font>
+										<aligny>center</aligny>
+										<selectedcolor>red</selectedcolor>
+										<textcolor>blue</textcolor>
+										<align>left</align>
+										<info>ListItem.Label</info>
+								</control>
+					</focusedlayout>
+				</control>
+			</control>
+
+			<control type="group">
+				<control type="image">
+					<posx>280</posx>
+					<posy>140</posy>
+					<width>850</width>
+					<height>570</height>
+					<texture colordiffuse="80000000">list-focus.png</texture>
+				</control>
+				
+				<control type="list" id="500">
+					<description>File browser in MOTR</description>
+					<left>280</left>
+					<top>140</top>
+					<width>850</width>
+					<height>570</height>
+					<visible>true</visible>
+					<onup>2</onup>
+					<ondown>3</ondown>
+					<onleft>100</onleft>
+					<onright>9500</onright>
+					<viewtype label="3D list">list</viewtype>
+					<orientation>vertical</orientation>
+					<pagecontrol>25</pagecontrol>
+					<autoscroll>false</autoscroll>
+					<scrolltime tween="sine" easing="out">200</scrolltime>
+					<itemlayout width="850" height="39">
+								<control type="image">
+										<left>5</left>
+										<top>3</top>
+										<width>37</width>
+										<height>37</height>
+										<info>ListItem.Icon</info>
+								</control>
+								<control type="label">
+										<left>50</left>
+										<top>3</top>
+										<width>680</width>
+										<height>37</height>
+										<font>font6</font>
+										<aligny>center</aligny>
+										<align>left</align>
+										<info>ListItem.Label</info>
+								</control>
+								<control type="label">
+										<left>700</left>
+										<top>3</top>
+										<width>120</width>
+										<height>37</height>
+										<font>font6</font>
+										<aligny>center</aligny>
+										<align>right</align>
+										<info>ListItem.Label2</info>
+								</control>
+					</itemlayout>
+					<focusedlayout width="850" height="39">
+								<control type="image">
+										<width>850</width>
+										<height>39</height>
+										<left>0</left>
+										<top>0</top>
+										<visible>Control.HasFocus(500)</visible>
+										<texture>list-focus.png</texture>
+								</control>
+								<control type="image">
+										<left>5</left>
+										<top>3</top>
+										<width>37</width>
+										<height>37</height>
+										<info>ListItem.Icon</info>
+								</control>
+								<control type="label">
+										<left>50</left>
+										<top>3</top>
+										<width>680</width>
+										<height>37</height>
+										<font>font6</font>
+										<aligny>center</aligny>
+										<selectedcolor>red</selectedcolor>
+										<textcolor>blue</textcolor>
+										<align>left</align>
+										<scroll>true</scroll>
+										<info>ListItem.Label</info>
+								</control>
+								<control type="label">
+										<left>700</left>
+										<top>3</top>
+										<width>120</width>
+										<height>37</height>
+										<font>font6</font>
+										<aligny>center</aligny>
+										<align>right</align>
+										<textcolor>blue</textcolor>
+										<info>ListItem.Label2</info>
+								</control>
+					</focusedlayout>
+				</control>
+			</control>
+		</control>
+
+		
+		
+		
+<!-- Just a test by temp removing the buttons  sort-name-down.png -->
+	<control type="group">
+		<control type="radiobutton" id="9500">
+			<description>Sorting name</description>
+			<type>radiobutton</type>
+			<left>1140</left>
+			<top>140</top>
+			<width>132</width>
+			<height>52</height>
+			<onup>9101</onup>
+			<onleft>500</onleft>
+			<ondown>9501</ondown>
+			<onright>600</onright>
+			<visible>true</visible>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<texturefocus>sort-name-down.png</texturefocus>
+			<texturenofocus>sort-name.png</texturenofocus>
+			<textureradioonfocus colordiffuse="77FFFFFF">checkmark.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="77FFFFFF">checkmark.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="00FFAAFF">checkmark.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="00FFAAFF">checkmark.png</textureradiooffnofocus>
+			<selected></selected>
+			<onclick></onclick>
+			<pulseonselect>false</pulseonselect>
+			<onfocus>-</onfocus>
+			<onunfocus>-</onunfocus>
+		</control>
+
+		<control type="radiobutton" id="9501">
+			<description>Sorting modified</description>
+			<type>radiobutton</type>
+			<left>1140</left>
+			<top>200</top>
+			<width>132</width>
+			<height>52</height>
+			<onleft>500</onleft>
+			<onup>9500</onup>
+			<ondown>9502</ondown>
+			<onright>600</onright>
+			<visible>true</visible>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<texturefocus>sort-modified-down.png</texturefocus>
+			<texturenofocus>sort-modified.png</texturenofocus>
+			<textureradioonfocus colordiffuse="77FFFFFF">checkmark.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="77FFFFFF">checkmark.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="00FFAAFF">checkmark.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="00FFAAFF">checkmark.png</textureradiooffnofocus>
+			<selected></selected>
+			<onclick></onclick>
+			<pulseonselect>false</pulseonselect>
+			<onfocus>-</onfocus>
+			<onunfocus>-</onunfocus>
+		</control>		
+		
+		<control type="radiobutton" id="9502">
+			<description>Sorting size</description>
+			<type>radiobutton</type>
+			<left>1140</left>
+			<top>260</top>
+			<width>132</width>
+			<height>52</height>
+			<onleft>500</onleft>
+			<onup>9501</onup>
+			<ondown>9503</ondown>
+			<onright>600</onright>
+			<visible>true</visible>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<texturefocus>sort-size-down.png</texturefocus>
+			<texturenofocus>sort-size.png</texturenofocus>
+			<textureradioonfocus colordiffuse="77FFFFFF">checkmark.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="77FFFFFF">checkmark.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="00FFAAFF">checkmark.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="00FFAAFF">checkmark.png</textureradiooffnofocus>
+			<selected></selected>
+			<onclick></onclick>
+			<pulseonselect>false</pulseonselect>
+			<onfocus>-</onfocus>
+			<onunfocus>-</onunfocus>
+		</control>		
+
+		<control type="radiobutton" id="9503">
+			<description>Clean filelist</description>
+			<type>radiobutton</type>
+			<left>1140</left>
+			<top>330</top>
+			<width>132</width>
+			<height>52</height>
+			<onleft>500</onleft>
+			<onup>9502</onup>
+			<ondown>9100</ondown>
+			<onright>600</onright>
+			<visible>true</visible>
+			<label>$ADDON[script.motr 30500]</label>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<texturefocus>button-down.png</texturefocus>
+			<texturenofocus>button.png</texturenofocus>
+			<textureradioonfocus colordiffuse="77FFFFFF">checkmark.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="77FFFFFF">checkmark.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="00FFAAFF">checkmark.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="00FFAAFF">checkmark.png</textureradiooffnofocus>
+			<selected></selected>
+			<onclick></onclick>
+			<pulseonselect>false</pulseonselect>
+			<onfocus>-</onfocus>
+			<onunfocus>-</onunfocus>
+		</control>	
+		
+		<control type="button" id="9100">
+			<description>Connectbutton to try to connect</description>
+			<posx>1140</posx>
+			<posy>120r</posy>
+			<width>132</width>
+			<height>52</height>
+			<onleft>500</onleft>
+			<onup>9503</onup>
+			<ondown>9101</ondown>
+			<texturefocus>connect-down.png</texturefocus>
+			<texturenofocus>connect.png</texturenofocus>
+		</control>
+
+		<control type="button" id="9102">
+			<description>Disconnect-button shows when connect is set</description>
+			<posx>1140</posx>
+			<posy>120r</posy>
+			<width>132</width>
+			<height>52</height>
+			<onleft>500</onleft>
+			<onup>9503</onup>
+			<ondown>9101</ondown>
+			<onright>600</onright>
+			<visible>!Control.IsVisible(9100)</visible>
+			<texturefocus>disconnect-down.png</texturefocus>
+			<texturenofocus>disconnect.png</texturenofocus>
+		</control>
+		
+		<control type="button" id="9101">
+			<description>Settings button to show settings</description>
+			<posx>1140</posx>
+			<posy>63r</posy>
+			<width>132</width>
+			<height>52</height>
+			<onleft>500</onleft>
+			<onup>9100</onup>
+			<onright>600</onright>
+			<ondown>9500</ondown>
+			<texturefocus>settings-down.png</texturefocus>
+			<texturenofocus>settings.png</texturenofocus>
+		</control>
+
+		<control type="label" id="9002">
+			<description>Shows host</description>
+			<posx>1140</posx>
+			<posy>150r</posy>
+			<width>132</width>
+			<height>20</height>
+			<label></label>
+			<align>center</align>
+			<font>font10</font>
+		</control>
+	</control>
+	
+<!-- Show time in the upper-right corner -->
+		<control type="group">
+			<posx>140r</posx>
+			<posy>0</posy>
+			<visible>true</visible>
+			<control type="image">
+				<description>time background</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>150</width>
+				<height>35</height>
+				<texture flipx="true" border="32,0,0,0">TVGuide-Header.png</texture>
+				<aspectratio>stretch</aspectratio>
+			</control>
+			<control type="label">
+				<description>time label</description>
+				<posx>30</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>28</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>font12</font>
+				<textcolor>white</textcolor>
+				<label>$INFO[System.Time]</label>
+			</control>
+			<control type="button" id="6000">
+				<posx>110r</posx>
+				<posy>50</posy>
+				<width>60</width>
+				<height>60</height>
+				<onup>-</onup>
+				<onleft>-</onleft>
+				<font>font10</font>
+				<label></label>
+				<texturefocus>close-down.png</texturefocus>
+				<texturenofocus>close.png</texturenofocus>
+			</control>
+			
+			
+		</control>
+		
+		<control type="group">
+			<control type="group">
+				<posx>0r</posx>
+				
+				<animation effect="slide" start="0,0r" end="-510,0r" time="400" tween="quadratic" easing="out" condition="ControlGroup(9000).HasFocus | Control.HasFocus(600) | Control.HasFocus(9001) | Control.HasFocus(8999)">Conditional</animation>				
+				<animation effect="slide" start="-100,0r" end="0,0r" time="300" tween="quadratic" easing="out">WindowOpen</animation>
+				<control type="button" id="8999">
+					<description>Fake button for mouse control</description>
+					<posx>0r</posx>
+					<posy>0</posy>
+					<width>510</width>
+					<height>720</height>
+					<visible>true</visible>
+				</control>
+				<control type="button" id="9001">
+					<posx>30r</posx>
+					<posy>410</posy>
+					<width>42</width>
+					<height>128</height>
+					<texturefocus>queue.png</texturefocus>
+					<texturenofocus>queue.png</texturenofocus>
+					<onclick>Control.SetFocus(600,1)</onclick>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>510</width>
+					<height>720</height>
+					<texture border="0,0,10,0">queuebackground.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>510</width>
+					<height>40</height>
+					<label>$ADDON[script.motr 30501]</label>
+					<textcolor>blue</textcolor>
+					<font>font30_title</font>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				<control type="group" id="9000">
+					<control type="image">
+						<posx>22</posx>
+						<posy>50</posy>
+						<width>480</width>
+						<height>600</height>
+						<texture colordiffuse="20555555">list-focus-invert.png</texture>
+					</control>
+				
+					<control type="list" id="600">
+						<description>Queue browser in MOTR</description>
+						<left>22</left>
+						<top>50</top>
+						<width>480</width>
+						<height>600</height>
+						<visible>true</visible>
+						<onup>2</onup>
+						<ondown>3</ondown>
+						<onleft>500</onleft>
+						<onright>601</onright>
+						<viewtype label="3D list">list</viewtype>
+						<orientation>vertical</orientation>
+						<pagecontrol>25</pagecontrol>
+						<autoscroll>false</autoscroll>
+						<scrolltime tween="sine" easing="out">200</scrolltime>
+						
+						<itemlayout width="480" height="100">
+								<control type="group">
+									<visible>!ListItem.Property(separator)</visible>
+									<control type="label">
+											<left>10</left>
+											<top>3</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>left</align>
+											<info>ListItem.Label</info>
+									</control>
+									<control type="label">
+											<left>10</left>
+											<top>21</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>left</align>
+											<label>[COLOR=FF00C8FA]$ADDON[script.motr 30502][/COLOR]$INFO[ListItem.Label2]</label>
+									</control>
+									<control type="label">
+											<left>10</left>
+											<top>38</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>left</align>
+											<label>[COLOR=FF00C8FA]$ADDON[script.motr 30503][/COLOR]$INFO[ListItem.Property(drive)]</label>
+									</control>
+									<control type="progress">
+										<left>10</left>
+										<top>60</top>
+										<width>460</width>
+										<height>15</height>
+										<info>ListItem.Property(progress)</info>
+										<texturebg border="3" colordiffuse="60FFFFFF">colors/white50.png</texturebg>
+										<midtexture colordiffuse="button_focus">colors/white.png</midtexture>
+									</control>
+									<control type="label">
+											<left>10</left>
+											<top>76</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>center</align>
+											<label>[COLOR=FF00C8FA]$INFO[ListItem.Property(eta)][/COLOR]</label>
+									</control>
+								</control>
+									
+								<control type="group">
+									<visible>ListItem.Property(separator)</visible>
+									<control type="image">
+											<left>0</left>
+											<top>0</top>
+											<width>480</width>
+											<height>100</height>
+											<texture>list-focus-invert.png</texture>
+									</control>
+									<control type="label">
+										<left>0</left>
+										<top>0</top>
+										<width>480</width>
+										<height>100</height>
+										<font>font60</font>
+										<aligny>center</aligny>
+										<align>center</align>
+										<textcolor>black</textcolor>
+										<label>$INFO[ListItem.Property(header)]</label>
+									</control>
+								</control>
+						</itemlayout>
+						<focusedlayout width="480" height="100">
+
+								<control type="group">
+									<visible>!ListItem.Property(separator)</visible>
+									
+									<control type="image">
+											<left>0</left>
+											<top>0</top>
+											<width>480</width>
+											<height>100</height>
+											<visible>Control.HasFocus(600)</visible>
+											<texture colordiffuse="44FFFFFF">list-focus-invert.png</texture>
+									</control>
+									
+									<control type="label">
+											<left>10</left>
+											<top>3</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>left</align>
+											<info>ListItem.Label</info>
+									</control>
+									<control type="label">
+											<left>10</left>
+											<top>21</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>left</align>
+											<label>[COLOR=FF00C8FA]$ADDON[script.motr 30502][/COLOR]$INFO[ListItem.Label2]</label>
+									</control>
+									<control type="label">
+											<left>10</left>
+											<top>38</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>left</align>
+											<label>[COLOR=FF00C8FA]$ADDON[script.motr 30503][/COLOR]$INFO[ListItem.Property(drive)]</label>
+									</control>
+									<control type="progress">
+										<left>10</left>
+										<top>60</top>
+										<width>460</width>
+										<height>15</height>
+										<info>ListItem.Property(progress)</info>
+										<texturebg border="3" colordiffuse="60FFFFFF">colors/white50.png</texturebg>
+										<midtexture colordiffuse="button_focus">colors/white.png</midtexture>
+									</control>
+									<control type="label">
+											<left>10</left>
+											<top>76</top>
+											<width>460</width>
+											<height>20</height>
+											<font>font10</font>
+											<aligny>center</aligny>
+											<align>center</align>
+											<label>[COLOR=FF00C8FA]$INFO[ListItem.Property(eta)][/COLOR]</label>
+									</control>
+								</control>
+									
+								<control type="group">
+									<visible>ListItem.Property(separator)</visible>
+									<control type="image">
+											<left>0</left>
+											<top>0</top>
+											<width>480</width>
+											<height>100</height>
+											<texture>list-focus-invert.png</texture>
+									</control>
+									<control type="label">
+										<left>0</left>
+										<top>0</top>
+										<width>480</width>
+										<height>100</height>
+										<font>font60</font>
+										<aligny>center</aligny>
+										<align>center</align>
+										<textcolor>black</textcolor>
+										<label>$INFO[ListItem.Property(header)]</label>
+									</control>
+								</control>						
+						</focusedlayout>
+					</control>
+					<control type="group">
+						<control type="button" id="601">
+							<posx>19</posx>
+							<posy>660</posy>
+							<width>160</width>
+							<height>51</height>
+							<onup>600</onup>
+							<onright>602</onright>
+							<onleft>500</onleft>
+							<font>font10</font>
+							<label>$ADDON[script.motr 30504]</label>
+							<align>center</align>
+							<aligny>center</aligny>
+							<texturefocus>button.png</texturefocus>
+							<texturenofocus>button-down.png</texturenofocus>
+						</control>
+						<control type="button" id="602">
+							<posx>183</posx>
+							<posy>660</posy>
+							<width>160</width>
+							<height>51</height>
+							<onup>600</onup>
+							<onleft>601</onleft>
+							<onright>603</onright>
+							<font>font10</font>
+							<label>$ADDON[script.motr 30505]</label>
+							<align>center</align>
+							<aligny>center</aligny>
+							<texturefocus>button.png</texturefocus>
+							<texturenofocus>button-down.png</texturenofocus>
+						</control>
+						<control type="button" id="603">
+							<posx>346</posx>
+							<posy>660</posy>
+							<width>160</width>
+							<height>51</height>
+							<onup>600</onup>
+							<onleft>602</onleft>
+							<font>font10</font>
+							<label>$ADDON[script.motr 30506]</label>
+							<align>center</align>
+							<aligny>center</aligny>
+							<texturefocus>button.png</texturefocus>
+							<texturenofocus>button-down.png</texturenofocus>
+						</control>
+					</control>
+				</control>
+			</control>		
+		</control>
+		<control type="image" id="11">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<aspectratio>scale</aspectratio>
+			<texture></texture>
+			<visible>true</visible>
+		</control>
+
+	</controls>
+</window>
