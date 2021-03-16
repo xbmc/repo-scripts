@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	  <defaultcontrol>2</defaultcontrol>
+	  <coordinates>
+		<posx>245</posx>
+		<posy>135</posy>
+		<width>870</width>
+		<height>450</height>
+		<align>center</align>
+		<aligny>center</aligny>
+	  </coordinates>
+	<controls>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>870</width>
+				<height>450</height>
+				<aspectratio>scale</aspectratio>
+				<texture>dialog.png</texture>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>870</width>
+				<height>35</height>
+				<aspectratio>scale</aspectratio>
+				<texture>list-focus.png</texture>
+			</control>
+			<control type="label">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>870</width>
+				<height>35</height>
+				<label>$ADDON[script.motr 30400]</label>
+				<textcolor>black</textcolor>
+				<font>font30_title</font>
+				<aligny>center</aligny>
+				<align>center</align>
+			</control>
+			
+			<control type="group">
+				<control type="image">
+					<posx>5</posx>
+					<posy>40</posy>
+					<width>200</width>
+					<height>400</height>
+					<texture colordiffuse="77555555">list-focus.png</texture>
+				</control>
+				
+				<!-- start of list -->
+				<control type="list" id="9601">
+					<description>Profiles in Handbreak</description>
+					<left>5</left>
+					<top>40</top>
+					<width>200</width>
+					<height>400</height>
+					<visible>true</visible>
+					<onup>2</onup>
+					<ondown>3</ondown>
+					<onleft>-</onleft>
+					<onright>9603</onright>
+					<viewtype label="3D list">list</viewtype>
+					<orientation>vertical</orientation>
+					<pagecontrol>10</pagecontrol>
+					<autoscroll>false</autoscroll>
+					<scrolltime tween="sine" easing="out">200</scrolltime>
+					<selected>true</selected>
+					
+					<itemlayout width="200" height="50">
+							<control type="group">
+								<visible>!ListItem.Property(separator)</visible>
+								<control type="label">
+										<left>5</left>
+										<top>3</top>
+										<width>190</width>
+										<height>50</height>
+										<font>font10</font>
+										<aligny>center</aligny>
+										<align>left</align>
+										<info>ListItem.Label</info>
+								</control>
+							</control>
+								
+							<control type="group">
+								<visible>ListItem.Property(separator)</visible>
+								<control type="image">
+										<left>0</left>
+										<top>0</top>
+										<width>200</width>
+										<height>50</height>
+										<texture>list-focus-invert.png</texture>
+								</control>
+								<control type="label">
+									<left>0</left>
+									<top>0</top>
+									<width>200</width>
+									<height>50</height>
+									<font>font14</font>
+									<aligny>center</aligny>
+									<align>center</align>
+									<textcolor>black</textcolor>
+									<label>$INFO[ListItem.Property(header)]</label>
+								</control>
+							</control>
+					</itemlayout>
+					<focusedlayout width="200" height="50">
+
+							<control type="group">
+								<visible>!ListItem.Property(separator)</visible>
+								
+								<control type="image">
+										<left>0</left>
+										<top>0</top>
+										<width>200</width>
+										<height>50</height>
+										<visible>Control.HasFocus(9601)</visible>
+										<texture>list-focus.png</texture>
+								</control>
+								<control type="label">
+										<left>5</left>
+										<top>3</top>
+										<width>190</width>
+										<height>50</height>
+										<font>font10</font>
+										<aligny>center</aligny>
+										<align>left</align>
+										<label>[COLOR=FF00C8FA]$INFO[ListItem.Label][/COLOR]</label>
+										<scroll>true</scroll>
+								</control>
+							</control>
+								
+							<control type="group">
+								<visible>ListItem.Property(separator)</visible>
+								<control type="image">
+										<left>0</left>
+										<top>0</top>
+										<width>200</width>
+										<height>50</height>
+										<texture>list-focus-invert.png</texture>
+								</control>
+								<control type="label">
+									<left>0</left>
+									<top>0</top>
+									<width>200</width>
+									<height>50</height>
+									<font>font14</font>
+									<aligny>center</aligny>
+									<align>center</align>
+									<textcolor>black</textcolor>
+									<label>$INFO[ListItem.Property(header)]</label>
+									<scroll>true</scroll>
+								</control>
+							</control>						
+					</focusedlayout>
+				</control>				
+
+				
+				<!-- the end -->
+				
+				<control type="label">
+					<posx>215</posx>
+					<posy>50</posy>
+					<width>650</width>
+					<height>25</height>
+					<label>$ADDON[script.motr 30401]</label>
+					<textcolor>black</textcolor>
+					<font>font25_title</font>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				<control type="image">
+					<posx>215</posx>
+					<posy>85</posy>
+					<width>650</width>
+					<height>100</height>
+					<texture colordiffuse="77555555">list-focus.png</texture>
+				</control>
+				<control type="textbox" id="9602">
+					<posx>215</posx>
+					<posy>85</posy>
+					<width>650</width>
+					<height>100</height>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<pulseonselect></pulseonselect>
+					<pagecontrol>13</pagecontrol>
+					<scrolltime>200</scrolltime>
+					<autoscroll delay="2000" time="1000" repeat="5000">true</autoscroll>
+					<label>$ADDON[script.motr 30402]</label>
+					<align>center</align>
+				</control>
+
+				<control type="label">
+					<posx>215</posx>
+					<posy>200</posy>
+					<width>650</width>
+					<height>25</height>
+					<label>$ADDON[script.motr 30403]</label>
+					<textcolor>black</textcolor>
+					<font>font25_title</font>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				<control type="edit" id="9603">
+					<posx>215</posx>
+					<posy>210</posy>
+					<width>650</width>
+					<height>80</height>
+					<onup>9601</onup>
+					<onleft>9601</onleft>
+					<ondown>9610</ondown>
+					<font>font13</font>
+					<textcolor>FFB2D4F5</textcolor>
+					<aligny>center</aligny>
+					<align>left</align>
+					<label></label>
+					<textoffsetx>30</textoffsetx>
+				</control>
+			</control>
+
+			<control type="group">
+				<control type="button" id="9610">
+					<posx>290</posx>
+					<posy>390</posy>
+					<width>160</width>
+					<height>51</height>
+					<onup>9603</onup>
+					<onright>9611</onright>
+					<onleft>9601</onleft>
+					<font>font10</font>
+					<label>$ADDON[script.motr 30404]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<texturefocus>button.png</texturefocus>
+					<texturenofocus>button-down.png</texturenofocus>
+				</control>
+				<control type="button" id="9611">
+					<posx>465</posx>
+					<posy>390</posy>
+					<width>160</width>
+					<height>51</height>
+					<onup>9603</onup>
+					<onright>9612</onright>
+					<onleft>9610</onleft>
+					<font>font10</font>
+					<label>$ADDON[script.motr 30405]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<texturefocus>button.png</texturefocus>
+					<texturenofocus>button-down.png</texturenofocus>
+				</control>
+				<control type="button" id="9612">
+					<posx>640</posx>
+					<posy>390</posy>
+					<width>160</width>
+					<height>51</height>
+					<onup>9603</onup>
+					<onright>-</onright>
+					<onleft>9611</onleft>
+					<font>font10</font>
+					<label>$ADDON[script.motr 30406]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<texturefocus>button.png</texturefocus>
+					<texturenofocus>button-down.png</texturenofocus>
+				</control>
+			</control>
+	</controls>
+</window>
