@@ -1,0 +1,139 @@
+# XBMC Media Center language file
+# Addon Name: Partymode autostart
+# Addon id: service.partymode.autostart
+# Addon Provider: Muttley
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: muttley.bd@gmail.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: muttley\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl_pl\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+# SETTINGS
+
+# Category
+msgctxt "#30000"
+msgid "Main"
+msgstr "Główne"
+
+msgctxt "#30001"
+msgid "Settings"
+msgstr "Ustawienia"
+
+# Separators
+msgctxt "#30010"
+msgid "Run on Startup"
+msgstr "Uruchamiaj przy Starcie"
+
+msgctxt "#30011"
+msgid "Run on Screensaver"
+msgstr "Uruchamiaj przy Wygaszaczu Ekranu"
+
+msgctxt "#30012"
+msgid "Fullscreen/Visualisation"
+msgstr "Pełny Ekran/Wizualizacja"
+
+msgctxt "#30013"
+msgid "Run Playlist"
+msgstr "Odtwórz Playlistę"
+
+msgctxt "#30014"
+msgid "Volume Adjust"
+msgstr "Regulacja Głośności"
+
+msgctxt "#30015"
+msgid "Run Favourites"
+msgstr "Odtwórz Ulubione"
+
+msgctxt "#30016"
+msgid "Playback Control"
+msgstr "Kontrola Odtwarzania"
+
+# setting items
+msgctxt "#30040"
+msgid "Enable"
+msgstr "Aktywuj"
+
+msgctxt "#30041"
+msgid "Delay (seconds)"
+msgstr "Opóźnienie (w sekundach)"
+
+msgctxt "#30042"
+msgid "Avoid whenever player is on pause"
+msgstr "Unikaj podczas pauzy"
+
+msgctxt "#30043"
+msgid "Select a playlist"
+msgstr "Wybierz playlistę"
+
+msgctxt "#30044"
+msgid "Enable Volume Adjust"
+msgstr "Aktywuj Regulację Głośności"
+
+msgctxt "#30045"
+msgid "Volume (%)"
+msgstr "Głośność (%)"
+
+msgctxt "#30046"
+msgid "Select from Favourites"
+msgstr "Wybierz z Ulubionych"
+
+msgctxt "#30054"
+msgid "Play in party mode"
+msgstr "Odtwarzaj w Trybie Imprezy"
+
+msgctxt "#30047"
+msgid "Random"
+msgstr "Losowo"
+
+msgctxt "#30048"
+msgid "Repeat"
+msgstr "Powtarzaj"
+
+msgctxt "#30049"
+msgid "Default"
+msgstr "Domyślne"
+
+msgctxt "#30050"
+msgid "Off"
+msgstr "Wył."
+
+msgctxt "#30051"
+msgid "On"
+msgstr "Wł."
+
+msgctxt "#30052"
+msgid "One"
+msgstr "Jedno"
+
+msgctxt "#30053"
+msgid "All"
+msgstr "Wszystko"
+
+# ADDON STRINGS
+
+msgctxt "#30100"
+msgid "Run PartyMode on Screensaver"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Countdown"
+msgstr "Odliczanie"
+
+msgctxt "#30102"
+msgid "PartyMode auto-start in %s seconds:"
+msgstr "PartyMode uruchomi się w ciągu %.1f sekund"
+
+msgctxt "#30103"
+msgid "Playlist auto-start in %s seconds:"
+msgstr "Playlista uruchomi się w ciągu %.1f sekund"
+
+msgctxt "#30104"
+msgid "Favourite auto-start in %s seconds:"
+msgstr "Odtwarzanie uruchomi się w ciągu %.1f sekund"
