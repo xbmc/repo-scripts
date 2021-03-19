@@ -51,7 +51,6 @@ class StatusType(object):  # pylint: disable=too-few-public-methods
     """Episode statuses on TVmaze"""
     WATCHED = 0
     ACQUIRED = 1
-    SKIPPED = 2
 
 
 def _create_and_save_qrcode(string):
@@ -122,7 +121,7 @@ def _handle_authentication_error():
     # type: () -> None
     tvmaze.clear_credentials()
     gui.DIALOG.notification(kodi.ADDON_NAME,
-                            'Authentication failed. You need to authorize the addon.',
+                            _('Authentication failed. You need to authorize the addon.'),
                             icon='error')
 
 
@@ -143,30 +142,37 @@ def _get_unique_id(uniqueid_dict):
     return None
 
 
-def _prepare_episode_list(kodi_episode_list):
-    # type: (List[Dict[Text, Any]]) -> List[Dict[Text, int]]
-    episodes_for_tvmaze = []
+def _prepare_episode_lists(kodi_episode_list):
+    # type: (List[Dict[Text, Any]]) -> Tuple[List[Dict[Text, int]], List[Dict[Text, int]]]
+    episodes_by_id = []
+    episodes_by_numbering = []
     for episode in kodi_episode_list:
-        if episode['season']:  # Todo: add support for specials
-            marked_at_sting = episode.get('lastplayed') or episode.get('dateadded')
-            if marked_at_sting:
-                marked_at = time_string_to_timestamp(marked_at_sting)
-            else:
-                marked_at = int(time.time())
-            episodes_for_tvmaze.append({
-                'season': episode['season'],
-                'episode': episode['episode'],
-                'marked_at': marked_at,
-                'type': StatusType.WATCHED if episode['playcount'] else StatusType.ACQUIRED,
-            })
-    return episodes_for_tvmaze
+        marked_at_sting = episode.get('lastplayed') or episode.get('dateadded')
+        if marked_at_sting:
+            marked_at = time_string_to_timestamp(marked_at_sting)
+        else:
+            marked_at = int(time.time())
+        scrobbling_info = {
+            'type': StatusType.WATCHED if episode['playcount'] else StatusType.ACQUIRED,
+            'marked_at': marked_at,
+        }
+        if episode.get('uniqueid') and 'tvmaze' in episode['uniqueid']:
+            scrobbling_info['episode_id'] = int(episode['uniqueid']['tvmaze'])
+            episodes_by_id.append(scrobbling_info)
+        elif episode['season'] and episode['episode']:
+            scrobbling_info['season'] = episode['season']
+            scrobbling_info['episode'] = episode['episode']
+            episodes_by_numbering.append(scrobbling_info)
+        else:
+            logger.error('Unable to scrobble the episode: {}'.format(pformat(episode)))
+    return episodes_by_id, episodes_by_numbering
 
 
 def _load_and_store_tvmaze_id(show_id, provider, kodi_tvshowid):
     # type: (Text, Text, int) -> Optional[int]
     try:
         show_info = tvmaze.get_show_info_by_external_id(show_id, provider)
-    except tvmaze.ApiError:
+    except tvmaze.TvMazeApiError:
         return None
     tvmaze_id = show_info['id']
     medialib.set_show_uniqueid(kodi_tvshowid, tvmaze_id)
@@ -181,8 +187,8 @@ def _get_tvmaze_id(kodi_show_info):
         return None
     if unique_id.provider == 'tvmaze':
         return int(unique_id.show_id)
-    return _load_and_store_tvmaze_id(
-        unique_id.show_id, unique_id.provider, kodi_show_info['tvshowid'])
+    return _load_and_store_tvmaze_id(unique_id.show_id, unique_id.provider,
+                                     kodi_show_info['tvshowid'])
 
 
 def _get_tv_shows_from_kodi():
@@ -194,39 +200,58 @@ def _get_tv_shows_from_kodi():
         return None
 
 
+def _filter_by_firstaired(kodi_episodes, firstaired):
+    # type:(List[Dict[Text, Any]], Text) -> Optional[Dict[Text, Any]]
+    for episode in kodi_episodes:
+        if episode['firstaired'] == firstaired:
+            return episode
+    return None
+
+
 def _check_and_set_episode_playcount(kodi_tvshowid, tvmaze_episode):
     # type: (int, Dict[Text, Any]) -> None
     """Check episode watched status and set episode playcount in Kodi accordingly"""
     tvmaze_episode_info = tvmaze_episode['_embedded']['episode']
-    if (tvmaze_episode['type'] == StatusType.WATCHED
-            and tvmaze_episode_info.get('season') is not None
-            and tvmaze_episode_info.get('number') is not None):
-        # Todo: add support for specials
+    if tvmaze_episode['type'] == StatusType.WATCHED:
+        if tvmaze_episode_info.get('type') == 'insignificant_special':
+            season = '0'
+        else:
+            season = str(tvmaze_episode_info['season'])
         filter_ = {
             'and': [
-                {
-                    'field': 'season',
-                    'operator': 'is',
-                    'value': str(tvmaze_episode_info['season']),
-                },
-                {
-                    'field': 'episode',
-                    'operator': 'is',
-                    'value': str(tvmaze_episode_info['number']),
-                },
                 {
                     'field': 'playcount',
                     'operator': 'is',
                     'value': '0',
                 },
+                {
+                    'field': 'season',
+                    'operator': 'is',
+                    'value': season,
+                },
             ]
         }
+        firstaired = None
+        if tvmaze_episode_info.get('number') is not None:
+            filter_['and'].append({
+                'field': 'episode',
+                'operator': 'is',
+                'value': str(tvmaze_episode_info['number']),
+            })
+        else:
+            firstaired = tvmaze_episode_info['airdate']
         try:
             kodi_episodes = medialib.get_episodes(kodi_tvshowid, filter_=filter_)
         except medialib.NoDataError:
             return
         if kodi_episodes:
-            kodi_episode_info = kodi_episodes[0]
+            if firstaired is not None:
+                # A workaround because filtering by firstaired doesn't seem to work
+                kodi_episode_info = _filter_by_firstaired(kodi_episodes, firstaired)
+                if kodi_episode_info is None:
+                    return
+            else:
+                kodi_episode_info = kodi_episodes[0]
             marked_at = tvmaze_episode.get('marked_at')
             if marked_at is not None:
                 last_played = timestamp_to_time_string(marked_at)
@@ -234,8 +259,7 @@ def _check_and_set_episode_playcount(kodi_tvshowid, tvmaze_episode):
                 last_played = None
             with PulledEpisodesDb() as database:
                 database.upsert_episode(kodi_episode_info['episodeid'])
-            medialib.set_episode_playcount(kodi_episode_info['episodeid'],
-                                           last_played=last_played)
+            medialib.set_episode_playcount(kodi_episode_info['episodeid'], last_played=last_played)
 
 
 def _pull_watched_episodes(kodi_tv_shows=None):
@@ -256,7 +280,7 @@ def _pull_watched_episodes(kodi_tv_shows=None):
             try:
                 tvmaze_episodes = tvmaze.get_episodes_from_watchlist(tvmaze_id,
                                                                      type_=StatusType.WATCHED)
-            except tvmaze.ApiError as exc:
+            except tvmaze.TvMazeApiError as exc:
                 logger.error('Unable to pull episodes from TVmaze for show "{}": {}'.format(
                     show['label'], exc
                 ))
@@ -315,10 +339,13 @@ def _push_all_episodes(kodi_tv_shows):
             except medialib.NoDataError:
                 logger.warning('TV show "{}" has no episodes'.format(show['label']))
                 continue
-            episodes_for_tvmaze = _prepare_episode_list(episodes)
+            episodes_by_id, episodes_by_numbering = _prepare_episode_lists(episodes)
             try:
-                tvmaze.push_episodes(episodes_for_tvmaze, tvmaze_id)
-            except tvmaze.ApiError as exc:
+                if episodes_by_id:
+                    tvmaze.push_episodes_by_id(episodes_by_id)
+                if episodes_by_numbering:
+                    tvmaze.push_episodes_by_show_id(episodes, tvmaze_id)
+            except tvmaze.TvMazeApiError as exc:
                 logger.error(
                     'Unable to push episodes for show "{}": {}'.format(show['label'], exc))
                 if six.text_type(exc) == tvmaze.AUTHENTICATION_ERROR:
@@ -365,16 +392,19 @@ def push_single_episode(episode_id):
         logger.error(
             'Unable to determine TVmaze id from show info: {}'.format(pformat(tvshow_info)))
         return
-    episodes_for_tvmaze = _prepare_episode_list([episode_info])
+    episodes_by_id, episodes_by_numbering = _prepare_episode_lists([episode_info])
     try:
-        tvmaze.push_episodes(episodes_for_tvmaze, tvmaze_id)
-    except tvmaze.ApiError as exc:
+        if episodes_by_id:
+            tvmaze.push_episodes_by_id(episodes_by_id)
+        if episodes_by_numbering:
+            tvmaze.push_episodes_by_show_id(episodes_by_numbering, tvmaze_id)
+    except tvmaze.TvMazeApiError as exc:
         logger.error('Failed to push episode status: {}'.format(exc))
         if six.text_type(exc) == tvmaze.AUTHENTICATION_ERROR:
             _handle_authentication_error()
         else:
             gui.DIALOG.notification(kodi.ADDON_NAME,
-                                    _('Failed to sync episode status: {}'.format(exc)),
+                                    _('Failed to sync episode status'),
                                     icon='error')
         return
     if kodi.ADDON.getSettingBool('show_notifications'):
@@ -396,23 +426,25 @@ def _push_recent_episodes(recent_episodes):
             tvmaze_id = _get_tvmaze_id(show_info)
             if tvmaze_id is None:
                 logger.error(
-                    'Unable to determine TVmaze id from show info: {}'.format(
-                        pformat(show_info)))
+                    'Unable to determine TVmaze id from show info: {}'.format(pformat(show_info)))
                 continue
             id_mapping[episode['tvshowid']] = tvmaze_id
             episode_mapping[tvmaze_id].append(episode)
         else:
             episode_mapping[id_mapping[episode['tvshowid']]].append(episode)
     for tvmaze_id, episodes in six.iteritems(episode_mapping):
-        episodes_for_tvmaze = _prepare_episode_list(episodes)
+        episodes_by_id, episodes_by_numbering = _prepare_episode_lists(episodes)
         try:
-            tvmaze.push_episodes(episodes_for_tvmaze, tvmaze_id)
-        except tvmaze.ApiError as exc:
-            logger.error(
-                'Unable to update episodes for show {}: {}'.format(tvmaze_id, exc))
+            if episodes_by_id:
+                tvmaze.push_episodes_by_id(episodes_by_id)
+            if episodes_by_numbering:
+                tvmaze.push_episodes_by_show_id(episodes_by_numbering, tvmaze_id)
+        except tvmaze.TvMazeApiError as exc:
+            logger.error('Unable to update episodes for show {}: {}'.format(tvmaze_id, exc))
             if six.text_type(exc) == tvmaze.AUTHENTICATION_ERROR:
                 _handle_authentication_error()
                 return
+            success = False
             continue
     if success and kodi.ADDON.getSettingBool('show_notifications'):
         gui.DIALOG.notification(kodi.ADDON_NAME, _('Sync completed'), icon=kodi.ADDON_ICON,
