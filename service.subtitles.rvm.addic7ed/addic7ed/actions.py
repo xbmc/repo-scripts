@@ -10,7 +10,7 @@ import shutil
 from collections import namedtuple
 from six import PY2
 from six.moves import urllib_parse as urlparse
-from kodi_six import xbmc, xbmcplugin, xbmcgui, xbmcvfs
+from kodi_six import xbmc, xbmcplugin, xbmcgui
 from . import parser
 from .addon import addon, profile, get_ui_string, icon
 from .exceptions import DailyLimitError, ParseError, SubsSearchError, \
@@ -24,7 +24,7 @@ temp_dir = os.path.join(profile, 'temp')
 handle = int(sys.argv[1])
 
 
-VIDEOFILES = frozenset(('.avi', '.mkv', '.mp4', '.ts', '.m2ts', '.mov'))
+VIDEOFILES = {'.avi', '.mkv', '.mp4', '.ts', '.m2ts', '.mov'}
 dialog = xbmcgui.Dialog()
 release_re = re.compile(r'-(.*?)(?:\[.*?\])?\.')
 
@@ -118,6 +118,8 @@ def download_subs(link, referrer, filename):
         label - the download location for subs.
     """
     # Re-create a download location in a temporary folder
+    if not os.path.exists(profile):
+        os.mkdir(profile)
     if os.path.exists(temp_dir):
         shutil.rmtree(temp_dir)
     os.mkdir(temp_dir)
