@@ -1,0 +1,139 @@
+# XBMC Media Center language file
+# Addon Name: Partymode autostart
+# Addon id: service.partymode.autostart
+# Addon Provider: Muttley
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: muttley.bd@gmail.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: muttley\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# SETTINGS
+
+# Category
+msgctxt "#30000"
+msgid "Main"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Settings"
+msgstr ""
+
+# Separators
+msgctxt "#30010"
+msgid "Run on Startup"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Run on Screensaver"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Fullscreen/Visualisation"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Run Playlist"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Volume Adjust"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Run Favourites"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Playback Control"
+msgstr ""
+
+# setting items
+msgctxt "#30040"
+msgid "Enable"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Delay (seconds)"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Avoid whenever player is on pause"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Select a playlist"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Enable Volume Adjust"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Volume (%)"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Select from Favourites"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Play in party mode"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Random"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Repeat"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Default"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Off"
+msgstr ""
+
+msgctxt "#30051"
+msgid "On"
+msgstr ""
+
+msgctxt "#30052"
+msgid "One"
+msgstr ""
+
+msgctxt "#30053"
+msgid "All"
+msgstr ""
+
+# ADDON STRINGS
+
+msgctxt "#30100"
+msgid "Run PartyMode on Screensaver"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Countdown"
+msgstr ""
+
+msgctxt "#30102"
+msgid "PartyMode auto-start in %.1f seconds"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Playlist auto-start in %.1f seconds"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Favourite auto-start in %.1f seconds"
+msgstr ""

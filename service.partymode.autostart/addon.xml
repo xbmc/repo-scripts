@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.partymode.autostart"
+       name="Partymode autostart"
+       version="0.9.2"
+       provider-name="muttley (elbowz)">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.favourites" version="8.1.1"/>
+    </requires>
+    <extension point="xbmc.service" library="PartymodeAutostart.py"/>
+    <extension point="xbmc.python.script" library="main.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">PartyMode Autostart</summary>
+        <description lang="en_GB">
+This service simply executes party mode or favourites on Kodi startup or on screensaver.
+
+Install, enable it (if not already) and enjoy!
+
+If you want change any delays, screensaver and other options go in addon settings.
+        </description>
+        <disclaimer lang="en_GB">The author is not responsible for anything. Please review the code if you do not trust.</disclaimer>
+        <license>GPL-3.0-only</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=203290</forum>
+        <website>https://github.com/elbowz/partymode-autostart-xbmc-service</website>
+        <source>https://github.com/elbowz/partymode-autostart-xbmc-service</source>
+        <platform>all</platform>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <screenshot>resources/screenshot01.png</screenshot>
+            <screenshot>resources/screenshot02.png</screenshot>
+            <screenshot>resources/screenshot03.png</screenshot>
+        </assets>
+    </extension>
+</addon>
