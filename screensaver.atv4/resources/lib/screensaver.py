@@ -8,12 +8,12 @@
 
 import xbmc
 import xbmcgui
-from .trans import ScreensaverTrans
+
 from .commonatv import translate, addon, addon_path, notification
+from .trans import ScreensaverTrans
 
 
 class ScreensaverPreview(xbmcgui.WindowXMLDialog):
-
     @staticmethod
     class ExitMonitor(xbmc.Monitor):
 

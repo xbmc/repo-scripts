@@ -19,8 +19,8 @@ msgid "Aerial Screensavers"
 msgstr ""
 
 msgctxt "#32001"
-msgid "Enable Hawaai"
-msgstr "Habilitar Hawaai"
+msgid "Enable Hawaii"
+msgstr "Habilitar Hawaii"
 
 msgctxt "#32002"
 msgid "Enable London"
@@ -135,8 +135,8 @@ msgid "Put playing device on standby via a CEC"
 msgstr "Poner el dispositivo en modo espera a través de CEC"
 
 msgctxt "#32030"
-msgid "Disable checksum verification"
-msgstr "Deshabilitar verificación checksum"
+msgid "Enable checksum validation of pre-existing files"
+msgstr "Verificación checksum"
 
 msgctxt "#32031"
 msgid "Videos"
@@ -187,7 +187,7 @@ msgid "Show preview window"
 msgstr "Mostrar ventana de vista previa"
 
 msgctxt "#32043"
-msgid "Use local files only (avoid external requests)"
+msgid "Local files only"
 msgstr "Usar solo archivos locales (evita solicitudes externas)"
 
 msgctxt "#32044"
@@ -205,3 +205,131 @@ msgstr "Solo noche"
 msgctxt "#32047"
 msgid "Smart mode"
 msgstr "Modo inteligente"
+
+msgctxt "#32049"
+msgid "Enable Africa and the Middle East"
+msgstr "Habilitar Africa and the Middle East"
+
+msgctxt "#32050"
+msgid "Enable Africa Night"
+msgstr "Habilitar Africa Night"
+
+msgctxt "#32051"
+msgid "Enable Antarctica"
+msgstr "Habilitar Antarctica"
+
+msgctxt "#32052"
+msgid "Enable California to Vegas"
+msgstr "Habilitar California to Vegas"
+
+msgctxt "#32053"
+msgid "Enable Caribbean"
+msgstr "Habilitar Caribbean"
+
+msgctxt "#32054"
+msgid "Enable Caribbean Day"
+msgstr "Habilitar Caribbean Day"
+
+msgctxt "#32055"
+msgid "Enable China"
+msgstr "Habilitar China"
+
+msgctxt "#32056"
+msgid "Enable Dubai"
+msgstr "Habilitar Dubai"
+
+msgctxt "#32057"
+msgid "Enable Greenland"
+msgstr "Habilitar Greenland"
+
+msgctxt "#32058"
+msgid "Enable Hawaii"
+msgstr "Habilitar Hawaii"
+
+msgctxt "#32059"
+msgid "Enable Hong Kong"
+msgstr "Habilitar Hong Kong"
+
+msgctxt "#32060"
+msgid "Enable Iran and Afghanistan"
+msgstr "Habilitar Iran and Afghanistan"
+
+msgctxt "#32061"
+msgid "Enable Ireland to Asia"
+msgstr "Habilitar Ireland to Asia"
+
+msgctxt "#32062"
+msgid "Enable Italy to Asia"
+msgstr "Habilitar Italy to Asia"
+
+msgctxt "#32063"
+msgid "Enable Korean and Japan Night"
+msgstr "Habilitar Korean and Japan Night"
+
+msgctxt "#32064"
+msgid "Enable Liwa"
+msgstr "Habilitar Liwa"
+
+msgctxt "#32065"
+msgid "Enable London"
+msgstr "Habilitar London"
+
+msgctxt "#32066"
+msgid "Enable Los Angeles"
+msgstr "Habilitar Los Angeles"
+
+msgctxt "#32067"
+msgid "Enable New York"
+msgstr "Habilitar New York"
+
+msgctxt "#32068"
+msgid "Enable New York Night"
+msgstr "Habilitar New York Night"
+
+msgctxt "#32069"
+msgid "Enable New Zealand"
+msgstr "Habilitar New Zealand"
+
+msgctxt "#32070"
+msgid "Enable North America Aurora"
+msgstr "Habilitar North America Aurora"
+
+msgctxt "#32071"
+msgid "Enable Sahara and Italy"
+msgstr "Habilitar Sahara and Italy"
+
+msgctxt "#32072"
+msgid "Enable San Francisco"
+msgstr "Habilitar San Francisco"
+
+msgctxt "#32073"
+msgid "Enable Southern California to Baja"
+msgstr "Habilitar Southern California to Baja"
+
+msgctxt "#32074"
+msgid "Enable West Africa to the Alps"
+msgstr "Habilitar West Africa to the Alps"
+
+msgctxt "#32075"
+msgid "Enable 4K (default 1080p)"
+msgstr "Habilitar 4K"
+
+msgctxt "#32076"
+msgid "Enable HDR"
+msgstr "Habilitar HDR"
+
+msgctxt "#32077"
+msgid "Enable HEVC (required for 4K/HDR)"
+msgstr "Habilitar HEVC"
+
+msgctxt "#32078"
+msgid "Try to update the video list from Apple"
+msgstr ""
+
+msgctxt "#32079"
+msgid "This setting will make the addon update the video list remotely from Apple servers. If disabled, the addon will use the included video list."
+msgstr ""
+
+msgctxt "#32080"
+msgid "The addon will use only the videos locally available videos, without attempting to connect to the Apple servers. You need to download the videos first"
+msgstr ""
