@@ -14,16 +14,14 @@ Convert, stream or download your movies in Kodi on the go.
 Remember queue is common for all users, hold the line.
 
 Addon has been tested with Android, Nvidia Shield, Linux/OpenElec, Mac and Windows.</summary>
-        <description lang="en_GB">Movies On The Run (MOTR) Client for Kodi</description>
+        <description lang="en_GB">Movies On The Run (MOTR) client for Kodi</description>
         <language>en</language>
         <platform>all</platform>
         <license>Apache-2.0</license>
-        <forum></forum>
         <website>http://motr.pw</website>
         <source>https://github.com/large/script.motr</source>
         <email>lars@werner.no</email>
-        <news>Support for v19 Matrix, now a Video-plugin, fixed https for selfsigned servers</news>
-        <disclaimer lang="en_GB">Session, username and password are stored in clear text in Kodi, use other clients for security</disclaimer>
+        <news>Support for v19 Matrix, now a Video-plugin, "fix" for https selfsigned servers</news>
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>

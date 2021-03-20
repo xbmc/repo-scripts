@@ -6,7 +6,7 @@ from traceback import print_exc
 import os, sys, re, socket, urllib, unicodedata, threading, time, traceback, ssl
 from urllib.request import urlopen
 from resources.lib import kodiutils
-#from resources.lib import kodilogging
+
 import logging
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 import datetime
@@ -28,7 +28,7 @@ __cwd__             = __addon__.getAddonInfo('path')
 __author__          = __addon__.getAddonInfo('author')
 __version__         = __addon__.getAddonInfo('version')
 __language__        = __addon__.getLocalizedString
-__internaldebug__   = True
+__internaldebug__   = False
 __loggerlevel__     = xbmc.LOGINFO
 
 
@@ -45,7 +45,6 @@ class MOTRPlayer(xbmc.Player):
         xbmc.Player.__init__(self)
         self.is_active = True
         self.seek_done = False
-        #print("MOTRPlayer initialized")
 
     def onInit(self):
         self.is_active = True
@@ -55,26 +54,20 @@ class MOTRPlayer(xbmc.Player):
         self.seek_done = True
         
     def onPlayBackStarted(self):
-        #print("MOTRPlayer playback started")
         self.is_active = True
 
     def onPlayBackStopped(self):
-        #print("MOTRPlayer playback stopped")
         self.is_active = False
 
     def onPlayBackEnded(self):
         self.is_active = False
         self.onPlayBackStopped()
     
-    def onPlayBackPaused(self):
-        #print("MOTRPlayer paused...")
-
     def sleep(self, s):
         xbmc.sleep(s) 
         
 class GUIandWebsocket(xbmcgui.WindowXML):
     def __init__(self, *args, **kwargs):
-        #print("MOTR Init main window")
         xbmcgui.WindowXML.__init__( self, *args, **kwargs )
         self.WS = MOTRWebsocket(self)
         self.Download = False #Set to true when downloading a file and not streaming
@@ -158,7 +151,7 @@ class GUIandWebsocket(xbmcgui.WindowXML):
             if file_extension.endswith(('.MP4','.M4V', '.MKV', '.MPG', '.MPEG', '.AVI', '.WMV', '.FLV', '.WEBM', '.TS', '.MTS', '.M2TS', '.MOV')):
                 myitem.setArt({'icon':'video.png'}) 
                 myitem.setProperty('bIsMovie', "True")
-                myitem.setInfo(type='video', infoLabels={'title': 'hest', 'plot': 'Jalla'})
+                myitem.setInfo(type='video', infoLabels={'title': 'DummyTitle', 'plot': 'DummyPlot'})
             elif file_extension == '.ZIP':
                 myitem.setArt({'icon':'zip.png'})
             elif file_extension == '.RAR' or re.search(r'\.R\d+$', file_extension):
@@ -453,7 +446,6 @@ class GUIandWebsocket(xbmcgui.WindowXML):
                 self.AddToDirectory(JSONData['aArray'][x]['sDisplayName'], JSONData['aArray'][x]['nID'])
             self.WS.SendMOTRCommand("GETFILESORTING", "")
         if Command == 'FILESORTING':
-            #print("Filesorting is: " + JSONData['aArray'][0])
             sTmpSorting = JSONData['aArray'][0]
             sTmpSetting = kodiutils.get_setting('sorting')
             if sTmpSetting == "":
@@ -472,7 +464,6 @@ class GUIandWebsocket(xbmcgui.WindowXML):
             self.WS.SendMOTRCommand("GETCLEANFILENAMES", "")
             
         if Command == 'GETCLEANFILENAMES':
-            #print("Clean filenames is: " + JSONData['aArray'][0])
             sTmpCleanFile = JSONData['aArray'][0]
             sTmpCleanSetting = kodiutils.get_setting('cleanfilename')
             if sTmpCleanFile == sTmpCleanSetting:
@@ -554,13 +545,10 @@ class GUIandWebsocket(xbmcgui.WindowXML):
             log("Download/stream link: " + sWebConnect)
             if self.Download == False:
                 listitem = xbmcgui.ListItem( self.Streamname ) #To add the filename / streamname we are showing
-                #xbmc.Player().play(sWebConnect, listitem)
                 self.MyPlayer.onInit() #Zero before start
-                #print("MOTRPlayer resume position: " + str(self.StreamResumePosition))
                 self.MyPlayer.play(sWebConnect + "|verifypeer=false", listitem, False, self.StreamResumePosition) #Resume position is not 0 when seek to is selected
                 if self.StreamResumePosition == 0: #No resume, no need to trigger seek
                     self.MyPlayer.SeekDone()
-                #print("MOTRPlayer In waiting loop")
                 self.TmpPosition = 0
                 nTimeCounter = 0
                 nTimeCheckSpan = 3
@@ -611,7 +599,6 @@ class GUIandWebsocket(xbmcgui.WindowXML):
                         #Store the position for saving 
                         self.TmpPosition = self.MyPlayer.getTime()
                     self.MyPlayer.sleep(1000)
-                #print("MOTRPlayer Out of waiting loop, time exited: " + str(self.TmpPosition) + " - Resumepos: " + str(self.StreamResumePosition))
                 #Set position only during the 30 first secs and no position was set. After that ignore if you past 30 secs and sets it below that (eg start from beginning with an error)
                 if (self.TmpPosition > 30 and self.StreamResumePosition > 0) or (self.TmpPosition <= 30 and self.StreamResumePosition <=30) or self.StreamResumePosition == 0:
                     self.WS.SendMOTRCommand("SETSTOREDPARAMETER", self.StreamID+";PLAYPOSITION;"+str(self.TmpPosition)) #Store the position
@@ -627,7 +614,6 @@ class GUIandWebsocket(xbmcgui.WindowXML):
             kodiutils.dialogtext(__language__(30018), sOutput)
             
         if Command == 'GETSTOREDPARAMETER':
-            #print("GETSTOREDPARAMETER - Command " + JSONData['aArray'][0] + " with value: " + JSONData['aArray'][1])
             sCommand = JSONData['aArray'][0]
             sValue = JSONData['aArray'][1]
             
@@ -738,12 +724,6 @@ class GUIandWebsocket(xbmcgui.WindowXML):
         dp.close()
         fp.flush()
         fp.close()
-
-    #def onPlayBackStopped( self ):
-        #print("Playback stopped")
-
-    #def onPlayBackEnded( self ):
-        #print("Playback ended")
 
 def show_dialog():
     mydisplay = GUIandWebsocket("motrwindow.xml", __cwd__, "Default")

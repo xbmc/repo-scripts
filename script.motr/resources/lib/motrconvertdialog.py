@@ -202,7 +202,6 @@ class DialogConvertSelect(xbmcgui.WindowXMLDialog):
             #print( '{0} = {1}'.format(name, value))
         
     def onInit(self):
-        print("Dialog init")
         self.AddProfiles()
         self.SetFilename("") #No profile selected at startup
 
