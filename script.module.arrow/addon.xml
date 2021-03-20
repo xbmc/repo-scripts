@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.arrow"
        name="arrow"
-       version="0.15.5+matrix.1"
+       version="1.0.3"
        provider-name="crsmithdev, Razzeee">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.dateutil" version="2.8.1+matrix.1"/>
+    <import addon="script.module.dateutil" version="2.8.1"/>
+    <import addon="script.module.backports.functools_lru_cache" version="1.5.0"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Arrow: better dates and times for Python</summary>
-    <description lang="en_GB">Packed for Kodi from https://github.com/crsmithdev/arrow</description>
+    <summary lang="en">Arrow: better dates and times for Python</summary>
+    <description lang="en">Packed for Kodi from https://github.com/crsmithdev/arrow</description>
     <platform>all</platform>
     <license>Apache2</license>
     <source>https://github.com/Razzeee/script.module.arrow</source>
