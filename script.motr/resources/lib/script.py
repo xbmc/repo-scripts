@@ -11,11 +11,7 @@ import logging
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 import datetime
 import gc
-
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import json
 
 from .motrwebsocket import MOTRWebsocket
 from .motrconvertdialog import DialogConvertSelect
@@ -29,7 +25,7 @@ __author__          = __addon__.getAddonInfo('author')
 __version__         = __addon__.getAddonInfo('version')
 __language__        = __addon__.getLocalizedString
 __internaldebug__   = False
-__loggerlevel__     = xbmc.LOGINFO
+__loggerlevel__     = xbmc.LOGDEBUG
 
 
 def log(msg, level=__loggerlevel__):
@@ -222,7 +218,7 @@ class GUIandWebsocket(xbmcgui.WindowXML):
                     self.MovieQueryID = nID #Store when replied
                     self.WS.SendMOTRCommand("MOVIEINFOQUERY", nID+";"+testitem.getLabel())                
                 elif ret == 2: #Convert dialog
-                    myconvertdlg = DialogConvertSelect("convertdialog.xml", __cwd__, "Default", filename = testitem.getLabel())
+                    myconvertdlg = DialogConvertSelect("script-motr-convertdialog.xml", __cwd__, "Default", filename = testitem.getLabel())
                     myconvertdlg.doModal( ) #Gives the selected item as parameter
                     sProfile = myconvertdlg.GetProfile()
                     sFileName = myconvertdlg.GetFilename()
@@ -726,7 +722,7 @@ class GUIandWebsocket(xbmcgui.WindowXML):
         fp.close()
 
 def show_dialog():
-    mydisplay = GUIandWebsocket("motrwindow.xml", __cwd__, "Default")
+    mydisplay = GUIandWebsocket("script-motr-main.xml", __cwd__, "Default")
     mydisplay.doModal()
     del mydisplay
     pass
