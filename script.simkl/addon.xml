@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.simkl"
+       name="Simkl TV Tracker"
+       version="3.0.0"
+       provider-name="David Davó, Simkl">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Simkl Scrobbler with AI file detection system</summary>
+    <summary lang="en_US">Simkl Scrobbler with AI file detection system</summary>
+    <description lang="en_GB">Automatically set Movies and TV Shows\Anime as watched on Simkl.com. Simkl knows what you're watching, tells you episodes you've missed, and connects you to what your friends are into. Sign up at https://simkl.com to get all of these features: &#10;&#10;- Automatically track what you’re watching.&#10;- Receive notifications about new episodes.&#10;- Find recommendations based on your watch history.&#10;- See your friend's ratings.&#10;&#10;Simkl was created to help people, like you, to keep track of what you watch and receive notifications about new episodes and new movie releases based on your preferences and watch history.</description>
+    <description lang="en_US">Automatically set Movies and TV Shows\Anime as watched on Simkl.com. Simkl knows what you're watching, tells you episodes you've missed, and connects you to what your friends are into. Sign up at https://simkl.com to get all of these features: &#10;&#10;- Automatically track what you’re watching.&#10;- Receive notifications about new episodes.&#10;- Find recommendations based on your watch history.&#10;- See your friend's ratings.&#10;&#10;Simkl was created to help people, like you, to keep track of what you watch and receive notifications about new episodes and new movie releases based on your preferences and watch history.</description>
+    <disclaimer lang="en_GB">Not tested on Android</disclaimer>
+    <platform>all</platform>
+    <license>GPL-3.0-or-later</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=305324</forum>
+    <website>https://simkl.com</website>
+    <email>david@ddavo.me</email>
+    <source>https://github.com/SIMKL/script.simkl</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
+    <language>en</language>
+    <news>
+      v3.0 (21-03-16)
+      - Kodi 19+ support
+      v2.2 (19-10-12)
+      - upgraded stream detection + fixed random scrobbling
+    </news>
+  </extension>
+</addon>
