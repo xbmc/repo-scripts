@@ -10,8 +10,8 @@
              library="lib" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">WebSocket client and server library for Python 2 and 3 as well as PyPy.</summary>
-    <description lang="en_GB">Packed for KODI from https://pypi.org/project/urllib3/</description>
-    <license>BSD</license>
+    <description lang="en_GB">Packed for KODI from https://pypi.org/project/ws4py/</description>
+    <license>BSD-3-Clause</license>
     <website>https://ws4py.readthedocs.io/en/latest/</website>
     <source>https://github.com/Lawouach/WebSocket-for-Python</source>
     <email>sh@defuze.org</email>
