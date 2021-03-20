@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.tvmaze.scrobbler"
    name="TVmaze Scrobbler/Tracker"
-   version="1.1.0"
+   version="1.1.1"
    provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="2.26.0" />
@@ -38,12 +38,11 @@ What this addon does:
       <icon>resources/images/icon.png</icon>
       <fanart>resources/images/background.jpg</fanart>
     </assets>
-    <news>1.1.0:
-- Added periodic pulling of episode watched statuses from TVmaze.
-- Improved error logging.
+    <news>1.1.1:
+- Fixed special episodes handling.
 
-1.0.1:
-- Fixed crashes because of malformed JSON responses from TVmaze.
-- Fixed crashes because of invalid SSL certificates.</news>
+1.1.0:
+- Added periodic pulling of episode watched statuses from TVmaze.
+- Improved error logging.</news>
   </extension>
 </addon>

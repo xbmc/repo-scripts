@@ -46,7 +46,7 @@ def _format_vars(variables):
     var_list.sort(key=lambda i: i[0])
     lines = []
     for var, val in var_list:
-        lines.append('{} = {}'.format(var, pformat(val)))
+        lines.append('{} = {}'.format(var, pformat(val, indent=4)))
     return '\n'.join(lines)
 
 
@@ -149,7 +149,7 @@ def log_exception(logger_func=logger.error):
             system_info=uname(),
             python_version=sys.version.replace('\n', ' '),
             kodi_version=xbmc.getInfoLabel('System.BuildVersion'),
-            sys_argv=pformat(sys.argv),
+            sys_argv=six.text_type(sys.argv),
             sys_path=pformat(sys.path),
             stack_trace=stack_trace
         )
