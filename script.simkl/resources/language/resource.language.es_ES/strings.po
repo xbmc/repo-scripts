@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi-add-on-for-Simkl\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-09-21 06:13\n"
+"Last-Translator: David Davó\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: Kodi-add-on-for-Simkl\n"
+"X-Crowdin-Project-ID: 308191\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: /master/resources/language/resource.language.en_gb/strings.po\n"
+"X-Crowdin-File-ID: 9\n"
+
+msgctxt "#32001"
+msgid "Please click to Log In"
+msgstr "Por favor haz click para iniciar sesión"
+
+msgctxt "#32002"
+msgid "Other options"
+msgstr "Otras opciones"
+
+msgctxt "#32003"
+msgid "Sync library"
+msgstr "Sincronizar librerías"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "Scrobble al llegar a..."
+
+msgctxt "#32007"
+msgid "Checkin percentage"
+msgstr "Checkin al llegar a..."
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "Mostrar notificación al scrobble"
+
+msgctxt "#32009"
+msgid "See options to customize Simkl TV Tracker"
+msgstr "Ver opciones para personalizar Simkl TV Tracker"
+
+msgctxt "#32010"
+msgid "You are not logged in"
+msgstr "Usted no se ha identificado"
+
+msgctxt "#32011"
+msgid "You are logged in"
+msgstr "Has iniciado sesión"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "Duración mínima del archivo para scrobblear (minutos)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Inicio de sesión en Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \n"
+"computer or phone and enter this code"
+msgstr "Por favor visite {0} en su dispositivo e introduzca el siguiente código"
+
+msgctxt "#32023"
+msgid "Remaining time: {0}/{1}"
+msgstr "Tiempo restante: {0}/{1}"
+
+msgctxt "#32025"
+msgid "Hello again, {0}"
+msgstr "Hola de nuevo, {0}"
+
+msgctxt "#32026"
+msgid "Please Log In in addon settings"
+msgstr "Por favor inicia sesión en la configuración del addon"
+
+msgctxt "#32027"
+msgid "You don't have internet"
+msgstr "No tienes conexión a internet"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "Scrobbling {0}"
+
+msgctxt "#32029"
+msgid "Error at scrobbling. Retrying ({0})"
+msgstr "Error en scrobbling. Reintentando ({0})"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "Sesión iniciada, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "No se ha podido autentificar"
+
+msgctxt "#32032"
+msgid "You are already logged in as {0}"
+msgstr "Ya has iniciado sesión como '{0}'"
+
+msgctxt "#32033"
+msgid "Continue"
+msgstr "Continuar"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr "No se han podido marcar como visto, se reintentará más tarde"
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
+msgstr "Finalmente, error al scrobblear"
+
