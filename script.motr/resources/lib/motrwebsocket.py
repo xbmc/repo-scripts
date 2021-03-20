@@ -1,8 +1,8 @@
 import xbmc, xbmcaddon
 from resources.lib import kodiutils
 
-from .ws4py import *
-from .ws4py.client.threadedclient import WebSocketClient
+from ws4py import *
+from ws4py.client.threadedclient import WebSocketClient
 
 import sys
 import threading
