@@ -7,6 +7,7 @@
 """
 
 import sys
+
 from resources.lib import atv
 
 atv.run(len(sys.argv) > 1)

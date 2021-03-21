@@ -1,3 +1,8 @@
+v3.0.2  (2021-03-20)
+- 4K, HDR, and HEVC versions available
+- New scenes added (ISS, undersea, recolored, extended)
+- Day/night toggle removed, Apple no longer supports this
+
 v3.0.0  (13/03/2021)
 - Transition to python 3
 - Autosubmissions to the Kodi repo
