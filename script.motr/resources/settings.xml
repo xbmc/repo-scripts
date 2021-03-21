@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="General">
+		<setting id="host" type="text" label="Hostname" default=""/>
+		<setting id="port" type="number" label="Port" default="80"/>
+		<setting id="usessl" type="bool" label="Use secure connection (SSL)" default="false"/>
+		<setting type="sep"/>
+		<setting id="username" type="text" label="Username" default=""/>
+		<setting id="password" type="text" option="hidden" label="Password" default=""/>
+		<setting type="sep"/>
+		<setting id="autoconnect" type="bool" label="Autoconnect on startup" default="false"/>
+		<setting type="sep"/>
+		<setting label="Storage path:" type="folder" id="saveto" source="auto" option="writeable"/>
+	</category>
+	<category label="Parameters">
+		<setting id="sorting" type="select" label="Sorting selected" lvalues="30510|30511|30512"/>
+		<setting id="cleanfilename" type="bool" label="Clean filenames" default="false"/>
+		<setting id="storeposition" type="bool" label="Enable resume in movies" default="true"/>
+	</category>
+</settings>
