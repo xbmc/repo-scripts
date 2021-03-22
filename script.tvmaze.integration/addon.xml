@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvmaze.integration" name="TV Maze Integration" version="0.7.0+matrix.1" provider-name="pkscout">
+<addon id="script.tvmaze.integration" name="TV Maze Integration" version="0.7.1+matrix.1" provider-name="pkscout">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
@@ -47,10 +47,8 @@
 	  </menu>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>v.0.7.0+matrix.1
-- added option to hide context menu items
-- new language support via Weblate
-- cleanup of backend code
+		<news>v.0.7.1
+fix for Python3 logging issue
 		</news>
 		<assets>
 			<icon>icon.png</icon>
