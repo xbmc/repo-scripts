@@ -1,0 +1,5 @@
+v.0.2.1
+- fix for issue with logging in Python3
+
+v.0.1.5
+- initial release

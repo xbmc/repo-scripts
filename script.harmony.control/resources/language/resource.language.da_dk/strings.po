@@ -1,0 +1,101 @@
+# plugin.whereareyou language file
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-02-07 14:28+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-harmony-control/da_dk/>\n"
+"Language: da_dk\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.4.2\n"
+
+#: Settings Heading
+msgctxt "#32000"
+msgid "General"
+msgstr "Generel"
+
+#: Settings
+msgctxt "#32100"
+msgid "Enable debug logging"
+msgstr "Aktivér fejlfindingslogføring"
+
+#: Settings
+msgctxt "#32101"
+msgid "Edit mappings"
+msgstr ""
+
+#: Settings
+msgctxt "#32102"
+msgid "Harmony hub IP address"
+msgstr "Harmony hub IP-adresse"
+
+#: Settings
+msgctxt "#32103"
+msgid "Use custom select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32104"
+msgid "Include skin mods"
+msgstr "Inkluder modificerede skins"
+
+#: Settings
+msgctxt "#32105"
+msgid "Enable advanced Harmony hub control"
+msgstr "Aktiver avanceret kontrol af Harmony hub"
+
+#: Settings
+msgctxt "#32106"
+msgid "Timeout (in seconds)"
+msgstr ""
+
+#: Settings
+msgctxt "#32107"
+msgid "Delay between remote commands (in milliseconds)"
+msgstr "Forsinkelse mellem kommandoer fra fjernbetjening (i millisekunder)"
+
+#: Dialog Heading
+msgctxt "#32200"
+msgid "Select action"
+msgstr "Vælg handling"
+
+#: Dialog Heading
+msgctxt "#32201"
+msgid "Enter name of action"
+msgstr "Indtast navnet for handlingen"
+
+#: Dialog Heading
+msgctxt "#32202"
+msgid "Additional commands to run"
+msgstr "Yderligere kommandoer der køres"
+
+#: Dialog Heading
+msgctxt "#32203"
+msgid "Enter Harmony activity"
+msgstr "Indtast Harmony aktivitet"
+
+#: Dialog Heading
+msgctxt "#32204"
+msgid "Select mapping"
+msgstr ""
+
+#: Dialog Heading
+msgctxt "#32205"
+msgid "Choose service"
+msgstr "Vælg tjeneste"
+
+#: Dialog
+msgctxt "#32300"
+msgid "Add mapping"
+msgstr ""
+
+#: Dialog
+msgctxt "#32301"
+msgid "Edit mapping"
+msgstr ""
+
+#: Dialog
+msgctxt "#32302"
+msgid "Delete mapping"
+msgstr ""
