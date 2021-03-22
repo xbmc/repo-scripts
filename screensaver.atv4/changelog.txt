@@ -1,0 +1,70 @@
+v3.0.2  (2021-03-20)
+- 4K, HDR, and HEVC versions available
+- New scenes added (ISS, undersea, recolored, extended)
+- Day/night toggle removed, Apple no longer supports this
+
+v3.0.0  (13/03/2021)
+- Transition to python 3
+- Autosubmissions to the Kodi repo
+- Deprecate all python2 references
+- Fixes for Kodi python api (v19)
+- Fixes for the skinning engine
+- Updated settings format
+
+v1.5.1  (08/04/2018)
+- Add spanish translation
+- Add missing strings
+
+v1.5.0  (11/03/2018)
+- Code refactoring
+- Remove playlist and control it manually (avoid setting repeat modes)
+- Option to avoid streaming (use only local files)
+- Fixes for Leia
+
+v1.4.2  (11/08/2017)
+- Code refactoring
+- Fix screensaver starting on party mode
+- Add option to start the screensaver without the preview window
+
+v1.4.1  (4/7/2017)
+- Fix wrong setting
+
+v1.4.0  (11/2/2017) (thanks graysky2)
+- Improve DPMS logic
+- New settings for DPMS
+- Fix windows
+- Video part turned into video addon
+- New screensaver init logic
+- Added service
+
+v1.3.4 - (18/1/2017)
+-New initialization logic - screensaver/script
+- Added DPMS settings
+- Redesign settings
+- Changes to interface
+- New settings
+
+v1.3.3 - (15/1/2017)
+- Added new videos from Apple
+- Added new automated script
+- Change downloaded function to support xbmc vfs
+- Added 1080i interface
+- Added Screenshots
+
+1.3.2 - (26/6/2015)
+-Added PT translation
+-Minor fixes
+-Checksums for downloaded content
+
+1.3.1 - (3/2/2015)
+-Added xbmc monitor
+
+1.3.0 - (24/11/2015)
+-Offline mode
+-Couple of fixes
+
+1.2.0 - (21/11/2015)
+-New window without OSD, fix screensaver preview, add smart mode and new settings
+
+1.0.0 - (7/11/2015)
+-First version

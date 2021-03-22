@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.ws4py"
+       name="ws4py"
+       version="0.4.3"
+       provider-name="Sylvain Hellegouarch">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">WebSocket client and server library for Python 2 and 3 as well as PyPy.</summary>
+    <description lang="en_GB">Packed for KODI from https://pypi.org/project/ws4py/</description>
+    <license>BSD-3-Clause</license>
+    <website>https://ws4py.readthedocs.io/en/latest/</website>
+    <source>https://github.com/Lawouach/WebSocket-for-Python</source>
+    <email>sh@defuze.org</email>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>

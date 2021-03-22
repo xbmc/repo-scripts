@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.commands"
+       name="Commands"
+       version="1.1.0"
+       provider-name="AddonScriptorDE, Roman Smolka">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+      <summary lang="en_GB">Map multiple Kodi commands to one remote button. All availabe commands: https://kodi.wiki/view/List_of_built-in_functions</summary>
+      <summary lang="de_DE">Mehrere Kodi Befehle einer Taste zuweisen. Alle verfügbaren Befehle: https://kodi.wiki/view/List_of_built-in_functions</summary>
+      <license>GPL-2.0-only</license>
+      <source>https://github.com/RomanSmolka/script.commands</source>
+      <forum>https://forum.kodi.tv/showthread.php?tid=134129</forum>
+      <assets>
+        <icon>icon.png</icon>
+      </assets>
+  </extension>
+</addon>

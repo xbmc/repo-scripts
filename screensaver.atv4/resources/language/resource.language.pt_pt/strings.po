@@ -1,0 +1,340 @@
+# Kodi Media Center language file
+# Addon Name: Screensaver ATV4
+# Addon id: screensaver.atv4
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#settings labels
+
+msgctxt "#32000"
+msgid "Aerial Screensavers"
+msgstr "Aerial Screensavers"
+
+msgctxt "#32001"
+msgid "Enable Hawaii"
+msgstr "Ativar Hawaii"
+
+msgctxt "#32002"
+msgid "Enable London"
+msgstr "Ativar Londres"
+
+msgctxt "#32003"
+msgid "Enable New York"
+msgstr "Ativar Nova Iorque"
+
+msgctxt "#32004"
+msgid "Enable San Francisco"
+msgstr "Ativar São Francisco"
+
+msgctxt "#32005"
+msgid "Enable China"
+msgstr "Ativar China"
+
+msgctxt "#32006"
+msgid "Time of day for videos"
+msgstr "Tempo do dia para os videos"
+
+msgctxt "#32007"
+msgid "No videos that match your criteria have been found"
+msgstr "Não existem videos que vão de encontro aos critérios de pesquisa"
+
+msgctxt "#32008"
+msgid "Getting video list..."
+msgstr "A obter videos..."
+
+msgctxt "#32009"
+msgid "Offline mode"
+msgstr "Modo Offline"
+
+msgctxt "#32010"
+msgid "Download folder"
+msgstr "Pasta de Transferências"
+
+msgctxt "#32011"
+msgid "Download Videos"
+msgstr "Transferir Vídeos"
+
+msgctxt "#32012"
+msgid "No videos found"
+msgstr "Não foram encontrados videos"
+
+msgctxt "#32013"
+msgid "You need to define a download folder."
+msgstr "É necessário definir a pasta de transferencias"
+
+msgctxt "#32014"
+msgid "Choose locations to download videos for:"
+msgstr "Escolher locais para transferencia de videos"
+
+msgctxt "#32015"
+msgid "downloaded"
+msgstr "transferidos"
+
+msgctxt "#32016"
+msgid "Time left:"
+msgstr "Tempo restante:"
+
+msgctxt "#32017"
+msgid "Instantiated. Please wait..."
+msgstr "Iniciado. Por favor aguarde..."
+
+msgctxt "#32018"
+msgid "Show start notification"
+msgstr "Mostrar notificação inicial"
+
+msgctxt "#32019"
+msgid "Checking which videos to download..."
+msgstr "A verificar que vídeos transferir"
+
+msgctxt "#32020"
+msgid "Enable Greenland"
+msgstr "Ativar Gronelandia"
+
+msgctxt "#32021"
+msgid "Enable Dubai"
+msgstr "Ativar Dubai"
+
+msgctxt "#32022"
+msgid "Enable Los Angeles"
+msgstr "Ativar Los Angeles"
+
+msgctxt "#32023"
+msgid "Enable Liwa"
+msgstr "Ativar Liwa"
+
+msgctxt "#32024"
+msgid "Enable Hong Kong"
+msgstr "Ativar Hong Kong"
+
+msgctxt "#32025"
+msgid "Initializing..."
+msgstr "A inicializar..."
+
+msgctxt "#32026"
+msgid "DPMS*"
+msgstr "DPMS*"
+
+msgctxt "#32027"
+msgid "DPMS"
+msgstr "DPMS"
+
+msgctxt "#32028"
+msgid "Toggle display off"
+msgstr "Desligar monitor"
+
+msgctxt "#32029"
+msgid "Put playing device on standby via a CEC"
+msgstr "Colocar dispositivo em standby via CEC"
+
+msgctxt "#32030"
+msgid "Enable checksum validation of pre-existing files"
+msgstr "Verficação de checksums"
+
+msgctxt "#32031"
+msgid "Videos"
+msgstr "Vídeos"
+
+msgctxt "#32032"
+msgid "General Settings"
+msgstr "Definições gerais"
+
+msgctxt "#32033"
+msgid "* DPMS will check for the Power Saving Kodi settings and stop the screensaver"
+msgstr "* O DPMS irá verificar as definiçoes de gestão de energia do kodi e parar o screensaver"
+
+msgctxt "#32034"
+msgid "if the maximum allowed time to put the display to sleep is exceeded"
+msgstr "se o tempo máximo permitido para desligar o monitor for atingido"
+
+msgctxt "#32035"
+msgid "Off"
+msgstr "Desligado"
+
+msgctxt "#32036"
+msgid "Kodi"
+msgstr "Kodi"
+
+msgctxt "#32037"
+msgid "Manual"
+msgstr "Manual"
+
+msgctxt "#32038"
+msgid "Manual timeout to activate DPMS (min)"
+msgstr "Timeout para ativar o DPMS manual (min)"
+
+msgctxt "#32039"
+msgid "DPMS action"
+msgstr "Acção após DPMS"
+
+msgctxt "#32040"
+msgid "Pause Video"
+msgstr "Pausar Video"
+
+msgctxt "#32041"
+msgid "Stop Video"
+msgstr "Parar Video"
+
+msgctxt "#32042"
+msgid "Show preview window"
+msgstr "Mostrar janela de pre-visualização"
+
+msgctxt "#32043"
+msgid "Local files only"
+msgstr "Usar apenas ficheiros locais (evitar pedidos externos)"
+
+msgctxt "#32044"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "#32045"
+msgid "Day only"
+msgstr "Apenas dia"
+
+msgctxt "#32046"
+msgid "Night only"
+msgstr "Apenas noite"
+
+msgctxt "#32047"
+msgid "Smart mode"
+msgstr "Modo inteligente"
+
+msgctxt "#32048"
+msgid "Offline mode but no downloaded videos!"
+msgstr "Modo offline ativo mas não existem videos no disco"
+
+
+msgctxt "#32049"
+msgid "Enable Africa and the Middle East"
+msgstr "Ativar Africa and the Middle East"
+
+msgctxt "#32050"
+msgid "Enable Africa Night"
+msgstr "Ativar Africa Night"
+
+msgctxt "#32051"
+msgid "Enable Antarctica"
+msgstr "Ativar Antarctica"
+
+msgctxt "#32052"
+msgid "Enable California to Vegas"
+msgstr "Ativar California to Vegas"
+
+msgctxt "#32053"
+msgid "Enable Caribbean"
+msgstr "Ativar Caribbean"
+
+msgctxt "#32054"
+msgid "Enable Caribbean Day"
+msgstr "Ativar Caribbean Day"
+
+msgctxt "#32055"
+msgid "Enable China"
+msgstr "Ativar China"
+
+msgctxt "#32056"
+msgid "Enable Dubai"
+msgstr "Ativar Dubai"
+
+msgctxt "#32057"
+msgid "Enable Greenland"
+msgstr "Ativar Greenland"
+
+msgctxt "#32058"
+msgid "Enable Hawaii"
+msgstr "Ativar Hawaii"
+
+msgctxt "#32059"
+msgid "Enable Hong Kong"
+msgstr "Ativar Hong Kong"
+
+msgctxt "#32060"
+msgid "Enable Iran and Afghanistan"
+msgstr "Ativar Iran and Afghanistan"
+
+msgctxt "#32061"
+msgid "Enable Ireland to Asia"
+msgstr "Ativar Ireland to Asia"
+
+msgctxt "#32062"
+msgid "Enable Italy to Asia"
+msgstr "Ativar Italy to Asia"
+
+msgctxt "#32063"
+msgid "Enable Korean and Japan Night"
+msgstr "Ativar Korean and Japan Night"
+
+msgctxt "#32064"
+msgid "Enable Liwa"
+msgstr "Ativar Liwa"
+
+msgctxt "#32065"
+msgid "Enable London"
+msgstr "Ativar London"
+
+msgctxt "#32066"
+msgid "Enable Los Angeles"
+msgstr "Ativar Los Angeles"
+
+msgctxt "#32067"
+msgid "Enable New York"
+msgstr "Ativar New York"
+
+msgctxt "#32068"
+msgid "Enable New York Night"
+msgstr "Ativar New York Night"
+
+msgctxt "#32069"
+msgid "Enable New Zealand"
+msgstr "Ativar New Zealand"
+
+msgctxt "#32070"
+msgid "Enable North America Aurora"
+msgstr "Ativar North America Aurora"
+
+msgctxt "#32071"
+msgid "Enable Sahara and Italy"
+msgstr "Ativar Sahara and Italy"
+
+msgctxt "#32072"
+msgid "Enable San Francisco"
+msgstr "Ativar San Francisco"
+
+msgctxt "#32073"
+msgid "Enable Southern California to Baja"
+msgstr "Ativar Southern California to Baja"
+
+msgctxt "#32074"
+msgid "Enable West Africa to the Alps"
+msgstr "Ativar West Africa to the Alps"
+
+msgctxt "#32075"
+msgid "Enable 4K (default 1080p)"
+msgstr "Ativar 4K"
+
+msgctxt "#32076"
+msgid "Enable HDR"
+msgstr "Ativar HDR"
+
+msgctxt "#32077"
+msgid "Enable HEVC (required for 4K/HDR)"
+msgstr "Ativar HEVC"
+
+msgctxt "#32078"
+msgid "Try to update the video list from Apple"
+msgstr "Obter update a lista de videos a partir dos servidores da Apple"
+
+msgctxt "#32079"
+msgid "This setting will make the addon update the video list remotely from Apple servers. If disabled, the addon will use the included video list."
+msgstr "Esta definição irá fazer com que o addon tente obter uma lista de vídeos atualizados a partir dos servidores da Apple. Se desativado, o addon irá utilizar a lista de vídeos incluida no addon."
+
+msgctxt "#32080"
+msgid "The addon will use only the videos locally available videos, without attempting to connect to the Apple servers. You need to download the videos first"
+msgstr "O addon irá utilizar apenas os vídeos disponíveis localmente, sem tentar contactar os servidores da Apple. Necessita de transferir os vídeos primeiro"

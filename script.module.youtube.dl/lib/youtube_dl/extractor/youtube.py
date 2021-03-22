@@ -308,7 +308,9 @@ class YoutubeBaseInfoExtractor(InfoExtractor):
             r'^([\d,]+)', re.sub(r'\s', '', view_count_text),
             'view count', default=None))
         uploader = try_get(
-            renderer, lambda x: x['ownerText']['runs'][0]['text'], compat_str)
+            renderer,
+            (lambda x: x['ownerText']['runs'][0]['text'],
+             lambda x: x['shortBylineText']['runs'][0]['text']), compat_str)
         return {
             '_type': 'url_transparent',
             'ie_key': YoutubeIE.ie_key(),
@@ -324,52 +326,57 @@ class YoutubeBaseInfoExtractor(InfoExtractor):
 
 class YoutubeIE(YoutubeBaseInfoExtractor):
     IE_DESC = 'YouTube.com'
+    _INVIDIOUS_SITES = (
+        # invidious-redirect websites
+        r'(?:www\.)?redirect\.invidious\.io',
+        r'(?:(?:www|dev)\.)?invidio\.us',
+        # Invidious instances taken from https://github.com/iv-org/documentation/blob/master/Invidious-Instances.md
+        r'(?:(?:www|no)\.)?invidiou\.sh',
+        r'(?:(?:www|fi)\.)?invidious\.snopyta\.org',
+        r'(?:www\.)?invidious\.kabi\.tk',
+        r'(?:www\.)?invidious\.13ad\.de',
+        r'(?:www\.)?invidious\.mastodon\.host',
+        r'(?:www\.)?invidious\.zapashcanon\.fr',
+        r'(?:www\.)?invidious\.kavin\.rocks',
+        r'(?:www\.)?invidious\.tube',
+        r'(?:www\.)?invidiou\.site',
+        r'(?:www\.)?invidious\.site',
+        r'(?:www\.)?invidious\.xyz',
+        r'(?:www\.)?invidious\.nixnet\.xyz',
+        r'(?:www\.)?invidious\.drycat\.fr',
+        r'(?:www\.)?tube\.poal\.co',
+        r'(?:www\.)?tube\.connect\.cafe',
+        r'(?:www\.)?vid\.wxzm\.sx',
+        r'(?:www\.)?vid\.mint\.lgbt',
+        r'(?:www\.)?yewtu\.be',
+        r'(?:www\.)?yt\.elukerio\.org',
+        r'(?:www\.)?yt\.lelux\.fi',
+        r'(?:www\.)?invidious\.ggc-project\.de',
+        r'(?:www\.)?yt\.maisputain\.ovh',
+        r'(?:www\.)?invidious\.13ad\.de',
+        r'(?:www\.)?invidious\.toot\.koeln',
+        r'(?:www\.)?invidious\.fdn\.fr',
+        r'(?:www\.)?watch\.nettohikari\.com',
+        r'(?:www\.)?kgg2m7yk5aybusll\.onion',
+        r'(?:www\.)?qklhadlycap4cnod\.onion',
+        r'(?:www\.)?axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid\.onion',
+        r'(?:www\.)?c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid\.onion',
+        r'(?:www\.)?fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad\.onion',
+        r'(?:www\.)?invidious\.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd\.onion',
+        r'(?:www\.)?owxfohz4kjyv25fvlqilyxast7inivgiktls3th44jhk3ej3i7ya\.b32\.i2p',
+        r'(?:www\.)?4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd\.onion',
+    )
     _VALID_URL = r"""(?x)^
                      (
                          (?:https?://|//)                                    # http(s):// or protocol-independent URL
-                         (?:(?:(?:(?:\w+\.)?[yY][oO][uU][tT][uU][bB][eE](?:-nocookie|kids)?\.com/|
-                            (?:www\.)?deturl\.com/www\.youtube\.com/|
-                            (?:www\.)?pwnyoutube\.com/|
-                            (?:www\.)?hooktube\.com/|
-                            (?:www\.)?yourepeat\.com/|
-                            tube\.majestyc\.net/|
-                            # Invidious instances taken from https://github.com/omarroth/invidious/wiki/Invidious-Instances
-                            (?:(?:www|dev)\.)?invidio\.us/|
-                            (?:(?:www|no)\.)?invidiou\.sh/|
-                            (?:(?:www|fi)\.)?invidious\.snopyta\.org/|
-                            (?:www\.)?invidious\.kabi\.tk/|
-                            (?:www\.)?invidious\.13ad\.de/|
-                            (?:www\.)?invidious\.mastodon\.host/|
-                            (?:www\.)?invidious\.zapashcanon\.fr/|
-                            (?:www\.)?invidious\.kavin\.rocks/|
-                            (?:www\.)?invidious\.tube/|
-                            (?:www\.)?invidiou\.site/|
-                            (?:www\.)?invidious\.site/|
-                            (?:www\.)?invidious\.xyz/|
-                            (?:www\.)?invidious\.nixnet\.xyz/|
-                            (?:www\.)?invidious\.drycat\.fr/|
-                            (?:www\.)?tube\.poal\.co/|
-                            (?:www\.)?tube\.connect\.cafe/|
-                            (?:www\.)?vid\.wxzm\.sx/|
-                            (?:www\.)?vid\.mint\.lgbt/|
-                            (?:www\.)?yewtu\.be/|
-                            (?:www\.)?yt\.elukerio\.org/|
-                            (?:www\.)?yt\.lelux\.fi/|
-                            (?:www\.)?invidious\.ggc-project\.de/|
-                            (?:www\.)?yt\.maisputain\.ovh/|
-                            (?:www\.)?invidious\.13ad\.de/|
-                            (?:www\.)?invidious\.toot\.koeln/|
-                            (?:www\.)?invidious\.fdn\.fr/|
-                            (?:www\.)?watch\.nettohikari\.com/|
-                            (?:www\.)?kgg2m7yk5aybusll\.onion/|
-                            (?:www\.)?qklhadlycap4cnod\.onion/|
-                            (?:www\.)?axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid\.onion/|
-                            (?:www\.)?c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid\.onion/|
-                            (?:www\.)?fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad\.onion/|
-                            (?:www\.)?invidious\.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd\.onion/|
-                            (?:www\.)?owxfohz4kjyv25fvlqilyxast7inivgiktls3th44jhk3ej3i7ya\.b32\.i2p/|
-                            (?:www\.)?4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd\.onion/|
-                            youtube\.googleapis\.com/)                        # the various hostnames, with wildcard subdomains
+                         (?:(?:(?:(?:\w+\.)?[yY][oO][uU][tT][uU][bB][eE](?:-nocookie|kids)?\.com|
+                            (?:www\.)?deturl\.com/www\.youtube\.com|
+                            (?:www\.)?pwnyoutube\.com|
+                            (?:www\.)?hooktube\.com|
+                            (?:www\.)?yourepeat\.com|
+                            tube\.majestyc\.net|
+                            %(invidious)s|
+                            youtube\.googleapis\.com)/                        # the various hostnames, with wildcard subdomains
                          (?:.*?\#/)?                                          # handle anchor (#/) redirect urls
                          (?:                                                  # the various things that can precede the ID:
                              (?:(?:v|embed|e)/(?!videoseries))                # v/ or embed/ or e/
@@ -384,6 +391,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                             youtu\.be|                                        # just youtu.be/xxxx
                             vid\.plus|                                        # or vid.plus/xxxx
                             zwearz\.com/watch|                                # or zwearz.com/watch/xxxx
+                            %(invidious)s
                          )/
                          |(?:www\.)?cleanvideosearch\.com/media/action/yt/watch\?videoId=
                          )
@@ -396,9 +404,13 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                         )
                      )
                      (?(1).+)?                                                # if we found the ID, everything can follow
-                     $""" % {'playlist_id': YoutubeBaseInfoExtractor._PLAYLIST_ID_RE}
+                     $""" % {
+        'playlist_id': YoutubeBaseInfoExtractor._PLAYLIST_ID_RE,
+        'invidious': '|'.join(_INVIDIOUS_SITES),
+    }
     _PLAYER_INFO_RE = (
-        r'/(?P<id>[a-zA-Z0-9_-]{8,})/player_ias\.vflset(?:/[a-zA-Z]{2,3}_[a-zA-Z]{2,3})?/base\.js$',
+        r'/s/player/(?P<id>[a-zA-Z0-9_-]{8,})/player',
+        r'/(?P<id>[a-zA-Z0-9_-]{8,})/player(?:_ias\.vflset(?:/[a-zA-Z]{2,3}_[a-zA-Z]{2,3})?|-plasma-ias-(?:phone|tablet)-[a-z]{2}_[A-Z]{2}\.vflset)/base\.js$',
         r'\b(?P<id>vfl[a-zA-Z0-9_-]+)\b.*?\.js$',
     )
     _SUBTITLE_FORMATS = ('srv1', 'srv2', 'srv3', 'ttml', 'vtt')
@@ -500,6 +512,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                 'uploader': 'AfrojackVEVO',
                 'uploader_id': 'AfrojackVEVO',
                 'upload_date': '20131011',
+                'abr': 129.495,
             },
             'params': {
                 'youtube_include_dash_manifest': True,
@@ -903,6 +916,15 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'only_matching': True,
         },
         {
+            'url': 'https://redirect.invidious.io/watch?v=BaW_jenozKc',
+            'only_matching': True,
+        },
+        {
+            # from https://nitter.pussthecat.org/YouTube/status/1360363141947944964#m
+            'url': 'https://redirect.invidious.io/Yh0AhrY9GjA',
+            'only_matching': True,
+        },
+        {
             # DRM protected
             'url': 'https://www.youtube.com/watch?v=s7_qI6_mIXc',
             'only_matching': True,
@@ -1016,6 +1038,33 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         },
         {
             'url': 'https://www.youtube.com/watch_popup?v=63RmMXCd_bQ',
+            'only_matching': True,
+        },
+        {
+            # https://github.com/ytdl-org/youtube-dl/pull/28094
+            'url': 'OtqTfy26tG0',
+            'info_dict': {
+                'id': 'OtqTfy26tG0',
+                'ext': 'mp4',
+                'title': 'Burn Out',
+                'description': 'md5:8d07b84dcbcbfb34bc12a56d968b6131',
+                'upload_date': '20141120',
+                'uploader': 'The Cinematic Orchestra - Topic',
+                'uploader_id': 'UCIzsJBIyo8hhpFm1NK0uLgw',
+                'uploader_url': r're:https?://(?:www\.)?youtube\.com/channel/UCIzsJBIyo8hhpFm1NK0uLgw',
+                'artist': 'The Cinematic Orchestra',
+                'track': 'Burn Out',
+                'album': 'Every Day',
+                'release_data': None,
+                'release_year': None,
+            },
+            'params': {
+                'skip_download': True,
+            },
+        },
+        {
+            # controversial video, only works with bpctr when authenticated with cookies
+            'url': 'https://www.youtube.com/watch?v=nGC3D_FkCmg',
             'only_matching': True,
         },
     ]
@@ -1214,6 +1263,9 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         funcname = self._search_regex(
             (r'\b[cs]\s*&&\s*[adf]\.set\([^,]+\s*,\s*encodeURIComponent\s*\(\s*(?P<sig>[a-zA-Z0-9$]+)\(',
              r'\b[a-zA-Z0-9]+\s*&&\s*[a-zA-Z0-9]+\.set\([^,]+\s*,\s*encodeURIComponent\s*\(\s*(?P<sig>[a-zA-Z0-9$]+)\(',
+             r'\bm=(?P<sig>[a-zA-Z0-9$]{2})\(decodeURIComponent\(h\.s\)\)',
+             r'\bc&&\(c=(?P<sig>[a-zA-Z0-9$]{2})\(decodeURIComponent\(c\)\)',
+             r'(?:\b|[^a-zA-Z0-9$])(?P<sig>[a-zA-Z0-9$]{2})\s*=\s*function\(\s*a\s*\)\s*{\s*a\s*=\s*a\.split\(\s*""\s*\);[a-zA-Z0-9$]{2}\.[a-zA-Z0-9$]{2}\(a,\d+\)',
              r'(?:\b|[^a-zA-Z0-9$])(?P<sig>[a-zA-Z0-9$]{2})\s*=\s*function\(\s*a\s*\)\s*{\s*a\s*=\s*a\.split\(\s*""\s*\)',
              r'(?P<sig>[a-zA-Z0-9$]+)\s*=\s*function\(\s*a\s*\)\s*{\s*a\s*=\s*a\.split\(\s*""\s*\)',
              # Obsolete patterns
@@ -1378,7 +1430,8 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         video_id = self._match_id(url)
         base_url = self.http_scheme() + '//www.youtube.com/'
         webpage_url = base_url + 'watch?v=' + video_id
-        webpage = self._download_webpage(webpage_url, video_id, fatal=False)
+        webpage = self._download_webpage(
+            webpage_url + '&bpctr=9999999999', video_id, fatal=False)
 
         player_response = None
         if webpage:
@@ -1397,7 +1450,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                     'Refetching age-gated info webpage',
                     'unable to download video info webpage', query={
                         'video_id': video_id,
-                        'eurl': 'https://www.youtube.com/embed/' + video_id,
+                        'eurl': 'https://youtube.googleapis.com/v/' + video_id,
                     }, fatal=False)),
                 lambda x: x['player_response'][0],
                 compat_str) or '{}', video_id)
@@ -1477,6 +1530,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
 
         formats = []
         itags = []
+        itag_qualities = {}
         player_url = None
         q = qualities(['tiny', 'small', 'medium', 'large', 'hd720', 'hd1080', 'hd1440', 'hd2160', 'hd2880', 'highres'])
         streaming_data = player_response.get('streamingData') or {}
@@ -1484,6 +1538,16 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         streaming_formats.extend(streaming_data.get('adaptiveFormats') or [])
         for fmt in streaming_formats:
             if fmt.get('targetDurationSec') or fmt.get('drmFamilies'):
+                continue
+
+            itag = str_or_none(fmt.get('itag'))
+            quality = fmt.get('quality')
+            if itag and quality:
+                itag_qualities[itag] = quality
+            # FORMAT_STREAM_TYPE_OTF(otf=1) requires downloading the init fragment
+            # (adding `&sq=0` to the URL) and parsing emsg box to determine the
+            # number of fragment that would subsequently requested with (`&sq=N`)
+            if fmt.get('type') == 'FORMAT_STREAM_TYPE_OTF':
                 continue
 
             fmt_url = fmt.get('url')
@@ -1505,10 +1569,10 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                 sp = try_get(sc, lambda x: x['sp'][0]) or 'signature'
                 fmt_url += '&' + sp + '=' + signature
 
-            itag = str_or_none(fmt.get('itag'))
             if itag:
                 itags.append(itag)
-            quality = fmt.get('quality')
+            tbr = float_or_none(
+                fmt.get('averageBitrate') or fmt.get('bitrate'), 1000)
             dct = {
                 'asr': int_or_none(fmt.get('audioSampleRate')),
                 'filesize': int_or_none(fmt.get('contentLength')),
@@ -1517,8 +1581,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                 'fps': int_or_none(fmt.get('fps')),
                 'height': int_or_none(fmt.get('height')),
                 'quality': q(quality),
-                'tbr': float_or_none(fmt.get(
-                    'averageBitrate') or fmt.get('bitrate'), 1000),
+                'tbr': tbr,
                 'url': fmt_url,
                 'width': fmt.get('width'),
             }
@@ -1529,11 +1592,19 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                 if mobj:
                     dct['ext'] = mimetype2ext(mobj.group(1))
                     dct.update(parse_codecs(mobj.group(2)))
-            if dct.get('acodec') == 'none' or dct.get('vcodec') == 'none':
+            no_audio = dct.get('acodec') == 'none'
+            no_video = dct.get('vcodec') == 'none'
+            if no_audio:
+                dct['vbr'] = tbr
+            if no_video:
+                dct['abr'] = tbr
+            if no_audio or no_video:
                 dct['downloader_options'] = {
                     # Youtube throttles chunks >~10M
                     'http_chunk_size': 10485760,
                 }
+                if dct.get('ext'):
+                    dct['container'] = dct['ext'] + '_dash'
             formats.append(dct)
 
         hls_manifest_url = streaming_data.get('hlsManifestUrl')
@@ -1549,22 +1620,19 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         if self._downloader.params.get('youtube_include_dash_manifest'):
             dash_manifest_url = streaming_data.get('dashManifestUrl')
             if dash_manifest_url:
-                dash_formats = []
                 for f in self._extract_mpd_formats(
                         dash_manifest_url, video_id, fatal=False):
+                    itag = f['format_id']
+                    if itag in itags:
+                        continue
+                    if itag in itag_qualities:
+                        f['quality'] = q(itag_qualities[itag])
                     filesize = int_or_none(self._search_regex(
                         r'/clen/(\d+)', f.get('fragment_base_url')
                         or f['url'], 'file size', default=None))
                     if filesize:
                         f['filesize'] = filesize
-                    dash_formats.append(f)
-                # Until further investigation prefer DASH formats as non-DASH
-                # may not be available (see [1])
-                # 1. https://github.com/ytdl-org/youtube-dl/issues/28070
-                if dash_formats:
-                    dash_formats_keys = [f['format_id'] for f in dash_formats]
-                    formats = [f for f in formats if f['format_id'] not in dash_formats_keys]
-                    formats.extend(dash_formats)
+                    formats.append(f)
 
         if not formats:
             if streaming_data.get('licenseInfos'):
@@ -1729,7 +1797,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                     'artist': mobj.group('clean_artist') or ', '.join(a.strip() for a in mobj.group('artist').split('·')),
                     'track': mobj.group('track').strip(),
                     'release_date': release_date,
-                    'release_year': int(release_year),
+                    'release_year': int_or_none(release_year),
                 })
 
         initial_data = None
@@ -2334,9 +2402,9 @@ class YoutubeTabIE(YoutubeBaseInfoExtractor):
         next_continuation = cls._extract_next_continuation_data(renderer)
         if next_continuation:
             return next_continuation
-        contents = renderer.get('contents')
-        if not isinstance(contents, list):
-            return
+        contents = []
+        for key in ('contents', 'items'):
+            contents.extend(try_get(renderer, lambda x: x[key], list) or [])
         for content in contents:
             if not isinstance(content, dict):
                 continue
@@ -2410,24 +2478,37 @@ class YoutubeTabIE(YoutubeBaseInfoExtractor):
         headers = {
             'x-youtube-client-name': '1',
             'x-youtube-client-version': '2.20201112.04.01',
+            'content-type': 'application/json',
         }
         if identity_token:
             headers['x-youtube-identity-token'] = identity_token
 
+        data = {
+            'context': {
+                'client': {
+                    'clientName': 'WEB',
+                    'clientVersion': '2.20201021.03.00',
+                }
+            },
+        }
+
         for page_num in itertools.count(1):
             if not continuation:
                 break
+            data['continuation'] = continuation['continuation']
+            data['clickTracking'] = {
+                'clickTrackingParams': continuation['itct']
+            }
             count = 0
             retries = 3
             while count <= retries:
                 try:
                     # Downloading page may result in intermittent 5xx HTTP error
                     # that is usually worked around with a retry
-                    browse = self._download_json(
-                        'https://www.youtube.com/browse_ajax', None,
-                        'Downloading page %d%s'
-                        % (page_num, ' (retry #%d)' % count if count else ''),
-                        headers=headers, query=continuation)
+                    response = self._download_json(
+                        'https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8',
+                        None, 'Downloading page %d%s' % (page_num, ' (retry #%d)' % count if count else ''),
+                        headers=headers, data=json.dumps(data).encode('utf8'))
                     break
                 except ExtractorError as e:
                     if isinstance(e.cause, compat_HTTPError) and e.cause.code in (500, 503):
@@ -2435,9 +2516,6 @@ class YoutubeTabIE(YoutubeBaseInfoExtractor):
                         if count <= retries:
                             continue
                     raise
-            if not browse:
-                break
-            response = try_get(browse, lambda x: x[1]['response'], dict)
             if not response:
                 break
 
@@ -2468,6 +2546,13 @@ class YoutubeTabIE(YoutubeBaseInfoExtractor):
             if continuation_items:
                 continuation_item = continuation_items[0]
                 if not isinstance(continuation_item, dict):
+                    continue
+                renderer = continuation_item.get('gridVideoRenderer')
+                if renderer:
+                    grid_renderer = {'items': continuation_items}
+                    for entry in self._grid_entries(grid_renderer):
+                        yield entry
+                    continuation = self._extract_continuation(grid_renderer)
                     continue
                 renderer = continuation_item.get('playlistVideoRenderer') or continuation_item.get('itemSectionRenderer')
                 if renderer:

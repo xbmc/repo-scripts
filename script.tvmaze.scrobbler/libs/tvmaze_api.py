@@ -37,6 +37,7 @@ USER_API_URL = 'https://api.tvmaze.com/v1'
 AUTH_START_PATH = '/auth/start'
 AUTH_POLL_PATH = '/auth/poll'
 SCROBBLE_SHOWS_PATH = '/scrobble/shows'
+SCROBBLE_EPISODES_PATH = '/scrobble/episodes'
 SHOW_LOOKUP_PATH = '/lookup/shows'
 
 SESSION = requests.Session()
@@ -48,7 +49,7 @@ SESSION.headers.update({
 AUTHENTICATION_ERROR = 'Invalid username or API key'
 
 
-class ApiError(Exception):
+class TvMazeApiError(Exception):
 
     @staticmethod
     def extract_error_message_from_response(response):
@@ -74,10 +75,10 @@ class ApiError(Exception):
             error_message = self.extract_error_message_from_response(response)
             if error_message:
                 self.error_message = error_message
-        super(ApiError, self).__init__(self.error_message)
+        super(TvMazeApiError, self).__init__(self.error_message)
 
 
-class AuthorizationError(ApiError):
+class AuthorizationError(TvMazeApiError):
     pass
 
 
@@ -200,6 +201,7 @@ def poll_authorization(token):
     Poll authorization confirmation
 
     :return: (TVmaze username, API key) tuple
+    :raises AuthorizationError:
     """
     try:
         response = _call_user_api(AUTH_POLL_PATH, 'post', json={'token': token})
@@ -211,21 +213,36 @@ def poll_authorization(token):
     return response_data.get('username'), response_data.get('apikey')
 
 
-def push_episodes(episodes, show_id, provider='tvmaze'):
+def push_episodes_by_show_id(episodes, show_id, provider='tvmaze'):
     # type: (List[Dict[Text, int]], Union[int, Text], Text) -> None
     """
-    Send statuses of episodes to TVmase
+    Send statuses of episodes to TVmaze using a TV show ID
 
     :param episodes: the list of episodes to update
     :param show_id: TV show ID in tvmaze, thetvdb or imdb online databases
     :param provider: ID provider
+    :raises TvMazeApiError: on any API error
     """
     provider += '_id'
     params = {provider: show_id}
     try:
         _call_user_api(SCROBBLE_SHOWS_PATH, 'post', authenticate=True, params=params, json=episodes)
     except requests.HTTPError as exc:
-        raise ApiError(response=exc.response)
+        raise TvMazeApiError(response=exc.response)
+
+
+def push_episodes_by_id(episodes):
+    # type(List[Dict[Text, int]) -> None
+    """
+    Send statuses of episodes to TVmaze using TVmaze episode IDs
+
+    :param episodes: the list of episodes to update
+    :raises TvMazeApiError: on any API error
+    """
+    try:
+        _call_user_api(SCROBBLE_EPISODES_PATH, 'post', authenticate=True, json=episodes)
+    except requests.HTTPError as exc:
+        raise TvMazeApiError(response=exc.response)
 
 
 def get_show_info_by_external_id(show_id, provider):
@@ -236,13 +253,13 @@ def get_show_info_by_external_id(show_id, provider):
     :param show_id: show ID in an external online DB
     :param provider: online DB provider
     :return: show info from TVmaze
-    :raises ApiError: on any API error
+    :raises TvMazeApiError: on any API error
     """
     params = {provider: show_id}
     try:
         response = _call_common_api(SHOW_LOOKUP_PATH, 'get', params=params)
     except requests.HTTPError as exc:
-        raise ApiError(response=exc.response)
+        raise TvMazeApiError(response=exc.response)
     return response.json()
 
 
@@ -254,7 +271,7 @@ def get_episodes_from_watchlist(tvmaze_id, type_=None):
     :param tvmaze_id: show ID on TVmaze
     :param type_: get only episodes with the given status type
     :return: the list of episode infos from TVmaze
-    :raises ApiError: on any API error
+    :raises TvMazeApiError: on any API error
     """
     path = '{}/{}'.format(SCROBBLE_SHOWS_PATH, tvmaze_id)
     params = {'embed': 'episode'}
@@ -263,5 +280,5 @@ def get_episodes_from_watchlist(tvmaze_id, type_=None):
     try:
         response = _call_user_api(path, 'get', authenticate=True, params=params)
     except requests.HTTPError as exc:
-        raise ApiError(response=exc.response)
+        raise TvMazeApiError(response=exc.response)
     return response.json()

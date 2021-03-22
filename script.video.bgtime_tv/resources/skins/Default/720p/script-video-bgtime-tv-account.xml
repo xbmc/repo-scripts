@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="1139">
+	<allowoverlay>no</allowoverlay>
+	<backgroundcolor>0x00000000</backgroundcolor>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+		<width>1280</width>
+		<height>720</height>
+	</coordinates>
+	<controls>
+		<control type="videowindow">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-black07.png</texture>
+		</control>
+		<control type="label" id="6900">
+			<description> title </description>
+			<posx>200</posx>
+			<posy>100</posy>
+			<alignment>2</alignment>  
+			<align>center</align>
+			<aligny>center</aligny>
+			<width>1280</width>
+			<height>40</height>
+		</control>
+		<control type="label" id="6901">
+			<description>label email</description>
+			<posx>200</posx>
+			<posy>150</posy>
+			<alignment>2</alignment>  
+			<aligny>center</aligny>
+			<font>font14</font>
+			<textcolor>FF15A29C</textcolor>
+			<width>1280</width>
+			<height>40</height>
+		</control>
+		<control type="label" id="6902">
+			<description>email</description>
+			<posx>400</posx>
+			<posy>150</posy>
+			<font>font14</font>
+			<width>1280</width>
+			<height>30</height>
+		</control>
+		<control type="label" id="6903">
+			<description>label active</description>
+			<posx>200</posx>
+			<posy>200</posy>
+			<textcolor>FF15A29C</textcolor>
+			<alignment>2</alignment>  
+			<font>font14</font>
+			<width>1280</width>
+			<height>30</height>
+		</control>
+		<control type="label" id="6904">
+			<description>active</description>
+			<posx>400</posx>
+			<posy>200</posy>
+			<font>font14</font>
+			<width>1280</width>
+			<height>30</height>
+		</control>
+		<control type="edit" id="6905">
+			<description>input old password</description>
+			<left>200</left>
+			<top>280</top>
+			<width>600</width>
+			<height>50</height>
+			<visible>true</visible>
+			<aligny>center</aligny>
+			<font>font14</font>
+			<textoffsetx>10</textoffsetx>
+			<textcolor>FFFFFFFF</textcolor>
+			<disabledcolor>FF000000</disabledcolor>
+			<invalidcolor>FF333333</invalidcolor>
+			<ondown>6906</ondown>
+			<onleft>6001</onleft>
+			<onright>6906</onright>
+			<texturenofocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-grey10.png</texturenofocus>
+			<texturefocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-gblue10.png</texturefocus>
+		</control>
+		<control type="edit" id="6906">
+			<description>input old password</description>
+			<left>200</left>
+			<top>340</top>
+			<width>600</width>
+			<height>50</height>
+			<visible>true</visible>
+			<aligny>center</aligny>
+			<font>font14</font>
+			<textoffsetx>10</textoffsetx>
+			<textcolor>FFFFFFFF</textcolor>
+			<disabledcolor>FF000000</disabledcolor>
+			<invalidcolor>FF333333</invalidcolor>
+			<texturenofocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-grey10.png</texturenofocus>
+			<texturefocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-gblue10.png</texturefocus>
+			<ondown>6908</ondown>
+			<onleft>6001</onleft>
+			<onright>6908</onright>
+			<onup>6905</onup>
+		</control>
+		<control type="edit" id="6908">
+			<description>input old password</description>
+			<left>200</left>
+			<top>400</top>
+			<width>600</width>
+			<height>50</height>
+			<visible>true</visible>
+			<aligny>center</aligny>
+			<font>font14</font>
+			<textoffsetx>10</textoffsetx>
+			<textcolor>FFFFFFFF</textcolor>
+			<disabledcolor>FF000000</disabledcolor>
+			<invalidcolor>FF333333</invalidcolor>
+			<texturenofocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-grey10.png</texturenofocus>
+			<texturefocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-gblue10.png</texturefocus>
+			<ondown>6909</ondown>
+			<onleft>6001</onleft>
+			<onright>6909</onright>
+			<onup>6906</onup>
+		</control>
+		<control type="button" id="6909">
+			<posx>200</posx>
+			<posy>500</posy>
+			<width>200</width>
+			<height>40</height>
+			<texturefocus   diffuse="border-radius-400x50.png">script-video-bgtime-tv-gblue10.png</texturefocus>
+			<texturenofocus diffuse="border-radius-400x50.png">script-video-bgtime-tv-gblue07.png</texturenofocus>
+			<onleft>6001</onleft>
+			<onup>6908</onup>
+		</control>
+
+			<!-- MENU START -->
+		<!-- Menu handler-->
+		<control type="button" id="6001">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>50</width>
+			<height>720</height>
+			<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-grey10.png</texturenofocus>
+		</control>
+
+
+
+		<control type="image">
+			<description>logo</description>
+			<posx>13</posx>
+			<posy>15</posy>
+			<width>25</width>
+			<height>28</height>
+			<texture>scipt-video-bgtime-tv-logo-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>menu</description>
+			<posx>15</posx>
+			<posy>300</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-menu-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>340</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-profile-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>380</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-search-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>420</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-logout-icon.png</texture>
+		</control>
+
+		<!--Loader-->
+		<control type="label" id="5100">
+			<description>visibility marker for loading group</description>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>!Control.IsVisible(5100)</visible>
+			<animation effect="fade" start="0" end="100" time="250" delay="1500">Visible</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>script-video-bgtime-tv-very-dark-grey.png</texture>
+			</control>
+			<control type="image">
+				<description>loading splash</description>
+				<posx>590</posx>
+				<posy>250</posy>
+				<width>100</width>
+				<height>100</height>
+				<texture>ring.gif</texture>
+			</control>
+		</control>
+	</controls>
+</window>

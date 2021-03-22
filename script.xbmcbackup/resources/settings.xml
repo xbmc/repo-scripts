@@ -1,46 +1,392 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<settings>
-	<category id="general" label="30011" level="expert">
-		<setting id="compress_backups" type="bool" label="30087" default="false" />
-		<setting id="backup_rotation" type="number" label="30026" default="0" />
-    <setting id="always_prompt_restore_settings" type="bool" label="30148" default="false" />
-		<setting id="progress_mode" type="enum" label="30022" lvalues="30082|30083|30084" default="0" />
-		<setting type="sep" />
-		<setting id="verbose_logging" type="bool" label="Enable Verbose Logging" default="false" />
-		<setting id="upgrade_notes" type="number" label="upgrade_notes" visible="false" default="1" />
-	</category>
-	<category id="backup_path" label="30048">
-		<setting id="remote_selection" type="enum" lvalues="30018|30019|30027" default="0" label="30025"/>
-		<setting id="remote_path_2" type="text" label="30024" default="" visible="eq(-1,1)" />
-		<setting id="remote_path" type="folder" label="30020" visible="eq(-2,0)" />
-		<setting id="dropbox_key" type="text" label="30028" visible="eq(-3,2)" default="" />
-		<setting id="dropbox_secret" type="text" label="30029" visible="eq(-4,2)" default="" />
-		<setting id="google_drive_id" type="text" label="Client ID" visible="eq(-5,3)" default="" />
-		<setting id="google_drive_secret" type="text" label="Client Secret" visible="eq(-6,3)" default="" />
-		<setting id="auth_dropbox_button" type="action" label="30104" action="RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=authorize_cloud,provider=dropbox)" visible="eq(-7,2)"/>
-		<setting id="auth_google_button" type="action" label="30104" action="RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=authorize_cloud,provider=google_drive)" visible="eq(-8,3)"/>
-		<setting id="remove_auth_button" type="action" label="30093" action="RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=remove_auth)" visible="gt(-9,1)"/>
-	</category>
-	<category id="selection" label="30012">
-		<setting id="backup_selection_type" type="enum" lvalues="30014|30015" default="0" label="30023" />
-		<setting id="backup_addon_data" type="bool" label="30031" default="false" visible="eq(-1,0)"/>
-		<setting id="backup_config" type="bool" label="30035" default="true" visible="eq(-2,0)"/>
-		<setting id="backup_database" type="bool" label="30032" default="true" visible="eq(-3,0)"/>
-		<setting id="backup_game_saves" type="bool" label="30133" default="false" visible="eq(-4,0)" />
-		<setting id="backup_playlists" type="bool" label="30033" default="true" visible="eq(-5,0)"/>
-		<setting id="backup_profiles" type="bool" label="30080" default="false" visible="eq(-6,0)"/>
-		<setting id="backup_thumbnails" type="bool" label="30034" default="true" visible="eq(-7,0)"/>
-		<setting id="backup_addons" type="bool" label="30030" default="true" visible="eq(-8,0)" />
-		<setting id="advanced_button" type="action" label="30125" visible="eq(-9,1)" action="RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=advanced_editor)" />
-		<setting id="advanced_defaults" type="action" label="30139" visible="eq(-10,1)" action="RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=advanced_copy_config)" />
-	</category>
-	<category id="scheduling" label="30013">
-		<setting id="enable_scheduler" type="bool" label="30060" default="false" />
-		<setting id="schedule_interval" type="enum" label="30061" lvalues="30079|30072|30073|30074|30075" default="1" enable="eq(-1,true)"/>
-		<setting id="schedule_time" type="labelenum" label="30062" values="00:00|01:00|02:00|03:00|04:00|05:00|06:00|07:00|08:00|09:00|10:00|11:00|12:00|13:00|14:00|15:00|16:00|17:00|18:00|19:00|20:00|21:00|22:00|23:00" default="00:00" visible="!eq(-1,4)"  enable="eq(-2,true)"/>
-		<setting id="day_of_week" type="enum" label="30063" lvalues="30065|30066|30067|30068|30069|30070|30071" default="0" visible="eq(-2,2)"  enable="eq(-3,true)"/>
-		<setting id="cron_schedule" type="text" label="30064" default="0 0 * * *" visible="eq(-3,4)"  enable="eq(-4,true)"/>
-		<setting id="schedule_miss" type="bool" label="30109" default="false" enable="eq(-5,true)" />
-		<setting id="cron_shutdown" type="bool" label="30076" default="false" enable="eq(-6,true)" />
-	</category>
+<?xml version="1.0"?>
+<settings version="1">
+  <section id="service.xbmcbackup">
+    <category id="general" label="30011" help="">
+      <group id="1" label="">
+        <!-- compress backups -->
+        <setting id="compress_backups" type="boolean" label="30087" help="">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <!-- zip folder staging path -->
+        <setting id="zip_temp_path" type="string" label="30152" help="30153">
+	        <level>3</level>
+	          <default>special://temp</default>
+	          <constraints>
+		          <allowempty>true</allowempty>
+	          </constraints>
+            <dependencies>
+              <dependency type="visible" setting="compress_backups">true</dependency>
+            </dependencies>
+	          <control type="edit" format="string">
+		          <heading>30152</heading>
+	          </control>
+        </setting>
+        <!-- backup rotation -->
+        <setting id="backup_rotation" type="integer" label="30026" help="">
+          <level>0</level>
+          <default>0</default>
+          <control type="edit" format="integer">
+            <heading>30026</heading>
+          </control>
+        </setting>
+        <!-- prompt to restore settings -->
+        <setting id="always_prompt_restore_settings" type="boolean" label="30148" help="30154">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <!-- progress mode -->
+        <setting id="progress_mode" type="integer" label="30022" help="">
+          <level>1</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="30082">0</option>
+              <option label="30083">1</option>
+              <option label="30084">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+        </setting>
+      </group>
+      <group id="2" label="">
+        <!-- verbose logging -->
+        <setting id="verbose_logging" type="boolean" label="30151" help="30155">
+          <level>3</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <!-- upgrade notes not visible to users -->
+        <setting id="upgrade_notes" type="integer" label="upgrade_notes" help="">
+          <level>4</level>
+          <default>1</default>
+          <visible>false</visible>
+          <control type="edit" format="integer">
+            <heading>upgrade_notes</heading>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="backup_path" label="30048" help="">
+      <group id="1" label="">
+        <!-- backup repo type -->
+        <setting id="remote_selection" type="integer" label="30025" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="30018">0</option>
+              <option label="30019">1</option>
+              <option label="30027">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+        </setting>
+        <!-- folder select path -->
+        <setting id="remote_path" type="path" label="30020" help="">
+	        <level>0</level>
+	          <default/>
+	          <constraints>
+		          <allowempty>true</allowempty>
+	          </constraints>
+            <dependencies>
+              <dependency type="visible" setting="remote_selection">0</dependency>
+            </dependencies>
+	          <control type="button" format="path">
+		          <heading>30020</heading>
+	          </control>
+        </setting>
+        <!-- type remote path -->
+        <setting id="remote_path_2" type="string" label="30024" help="">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="visible" setting="remote_selection">1</dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30024</heading>
+          </control>
+        </setting>
+        <!-- dropbox key and secret -->
+        <setting id="dropbox_key" type="string" label="30028" help="30156">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="visible" setting="remote_selection">2</dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30028</heading>
+          </control>
+        </setting>
+        <setting id="dropbox_secret" type="string" label="30029" help="30156">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="visible" setting="remote_selection">2</dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30029</heading>
+          </control>
+        </setting>
+        <!-- authorize dropbox -->
+        <setting id="auth_dropbox_button" type="action" label="30104" help="">
+          <level>0</level>
+          <default />
+          <dependencies>
+            <dependency type="visible" setting="remote_selection">2</dependency>
+          </dependencies>
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=authorize_cloud,provider=dropbox)</data>
+          </control>
+        </setting>
+      </group>
+      <group id="2" label="">
+        <!-- remove auth button -->
+        <setting id="remove_auth_button" type="action" label="30093" help="">
+          <level>2</level>
+          <default />
+          <dependencies>
+            <dependency type="visible" setting="remote_selection">2</dependency>
+          </dependencies>
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=remove_auth)</data>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="selection" label="30012">
+      <group id="1" label="">
+        <!-- selection type (simple/advanced) -->
+        <setting id="backup_selection_type" type="integer" label="30023" help="30157">
+          <level>2</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="30014">0</option>
+              <option label="30015">1</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+        </setting>
+        <!-- simple selection settings -->
+        <setting id="backup_addon_data" type="boolean" label="30031" help="">
+          <level>0</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_config" type="boolean" label="30035" help="">
+          <level>0</level>
+          <default>true</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_database" type="boolean" label="30032" help="">
+          <level>0</level>
+          <default>true</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_game_saves" type="boolean" label="30133" help="">
+          <level>0</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_playlists" type="boolean" label="30033" help="">
+          <level>0</level>
+          <default>true</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_profiles" type="boolean" label="30080" help="">
+          <level>0</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_thumbnails" type="boolean" label="30034" help="">
+          <level>0</level>
+          <default>true</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <setting id="backup_addons" type="boolean" label="30030" help="">
+          <level>0</level>
+          <default>true</default>
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">0</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <!-- advanced editor options -->
+        <setting id="advanced_button" type="action" label="30125" help="">
+          <level>2</level>
+          <default />
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">1</dependency>
+          </dependencies>
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=advanced_editor)</data>
+          </control>
+        </setting>
+        <setting id="advanced_defaults" type="action" label="30139" help="">
+          <level>2</level>
+          <default />
+          <dependencies>
+            <dependency type="visible" setting="backup_selection_type">1</dependency>
+          </dependencies>
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=advanced_copy_config)</data>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="scheduling" label="30013">
+      <group id="1" label="">
+        <!-- enable scheduler -->
+        <setting id="enable_scheduler" type="boolean" label="30060" help="30158">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <!-- schedule interval -->
+        <setting id="schedule_interval" type="integer" label="30061" help="">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="30079">0</option>
+              <option label="30072">1</option>
+              <option label="30073">2</option>
+              <option label="30074">3</option>
+              <option label="30075">4</option>
+            </options>
+          </constraints>
+          <dependencies>
+            <dependency type="enable" setting="enable_scheduler">true</dependency>
+          </dependencies>
+          <control type="spinner" format="string"/>
+        </setting>
+        <!-- hour of the day -->
+        <setting id="schedule_time" type="string" label="30062" help="">
+	        <level>0</level>
+	        <default>00:00</default>
+	        <constraints>
+		        <options sort="ascending">
+			        <option>00:00</option>
+			        <option>01:00</option>
+			        <option>02:00</option>
+			        <option>03:00</option>
+              <option>04:00</option>
+              <option>05:00</option>
+              <option>06:00</option>
+              <option>07:00</option>
+              <option>08:00</option>
+              <option>09:00</option>
+              <option>10:00</option>
+              <option>11:00</option>
+              <option>12:00</option>
+              <option>13:00</option>
+              <option>14:00</option>
+              <option>15:00</option>
+              <option>16:00</option>
+              <option>17:00</option>
+              <option>18:00</option>
+              <option>19:00</option>
+              <option>20:00</option>
+              <option>21:00</option>
+              <option>22:00</option>
+              <option>23:00</option>
+		        </options>
+		        <allowempty>false</allowempty>
+	        </constraints>
+          <dependencies>
+            <dependency type="visible" setting="schedule_interval" operator="!is">4</dependency>
+            <dependency type="enable" setting="enable_scheduler">true</dependency>
+          </dependencies>
+	        <control type="spinner" format="string"/>
+        </setting>
+        <!-- day of the week -->
+        <setting id="day_of_week" type="integer" label="30063" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="30065">0</option>
+              <option label="30066">1</option>
+              <option label="30067">2</option>
+              <option label="30068">3</option>
+              <option label="30069">4</option>
+              <option label="30070">5</option>
+              <option label="30071">6</option>
+            </options>
+          </constraints>
+          <dependencies>
+            <dependency type="visible" setting="schedule_interval">2</dependency>
+            <dependency type="enable" setting="enable_scheduler">true</dependency>
+          </dependencies>
+          <control type="spinner" format="string"/>
+        </setting>
+        <!-- cron schedule -->
+        <setting id="cron_schedule" type="string" label="30064" help="">
+          <level>0</level>
+          <default>0 0 * * *</default>
+          <constraints>
+            <allowempty>false</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="visible" setting="schedule_interval">4</dependency>
+            <dependency type="enable" setting="enable_scheduler">true</dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30064</heading>
+          </control>
+        </setting>
+        <!-- run if schedule missed -->
+        <setting id="schedule_miss" type="boolean" label="30109" help="">
+          <level>1</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="enable" setting="enable_scheduler">true</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <!-- shutdown on complete -->
+        <setting id="cron_shutdown" type="boolean" label="30076" help="">
+          <level>1</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="enable" setting="enable_scheduler">true</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+  </section>
 </settings>

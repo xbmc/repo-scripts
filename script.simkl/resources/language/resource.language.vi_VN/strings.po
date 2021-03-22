@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi-add-on-for-Simkl\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-09-21 06:13\n"
+"Last-Translator: David Davó\n"
+"Language-Team: Vietnamese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: Kodi-add-on-for-Simkl\n"
+"X-Crowdin-Project-ID: 308191\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /master/resources/language/resource.language.en_gb/strings.po\n"
+"X-Crowdin-File-ID: 9\n"
+
+msgctxt "#32001"
+msgid "Please click to Log In"
+msgstr "Vui lòng nhấp để đăng nhập"
+
+msgctxt "#32002"
+msgid "Other options"
+msgstr "Tùy chọn khác"
+
+msgctxt "#32003"
+msgid "Sync library"
+msgstr "Đồng bộ thư viện"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Checkin percentage"
+msgstr "Tỷ lệ kiểm tra"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr ""
+
+msgctxt "#32009"
+msgid "See options to customize Simkl TV Tracker"
+msgstr "Xem tùy chọn để tùy chỉnh Simkl TV Tracker"
+
+msgctxt "#32010"
+msgid "You are not logged in"
+msgstr "Bạn không thể đăng nhập"
+
+msgctxt "#32011"
+msgid "You are logged in"
+msgstr "Bạn đã đăng nhập"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "Độ dài tập tin tối thiểu để quét (phút)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Đăng nhập Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \n"
+"computer or phone and enter this code"
+msgstr "Vui lòng truy cập {0} trên máy tính hoặc điện thoại và nhập mã này"
+
+msgctxt "#32023"
+msgid "Remaining time: {0}/{1}"
+msgstr "Thời gian còn lại: {0}/{1}"
+
+msgctxt "#32025"
+msgid "Hello again, {0}"
+msgstr "Xin chào, {0}"
+
+msgctxt "#32026"
+msgid "Please Log In in addon settings"
+msgstr "Vui lòng đăng nhập trong cài đặt tiện ích"
+
+msgctxt "#32027"
+msgid "You don't have internet"
+msgstr "Bạn không có internet"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Error at scrobbling. Retrying ({0})"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "Đăng nhập thành công, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "Không thể đăng nhập"
+
+msgctxt "#32032"
+msgid "You are already logged in as {0}"
+msgstr "Bạn đã đăng nhập với tên {0}"
+
+msgctxt "#32033"
+msgid "Continue"
+msgstr "Tiếp tục"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "Hủy"
+
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
+msgstr ""
+

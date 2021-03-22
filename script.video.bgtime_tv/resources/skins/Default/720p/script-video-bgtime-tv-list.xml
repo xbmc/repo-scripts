@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="1136">
+	<allowoverlay>no</allowoverlay>
+  <menucontrol></menucontrol>
+ 
+<!--   <animation effect="slide" end="0" time="500">WindowClose</animation>
+  <animation effect="slide" end="0" time="500">WindowOpen</animation> -->
+  <zorder>10</zorder>
+  <coordinates>
+    <left>0</left>
+    <top>0</top>
+    <origin x="100" y="50">Window.IsActive(Home)</origin>
+  </coordinates>
+
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>320</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-gblue10.png</texture>
+		</control>
+		<control type="list" id="6001">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>320</width>
+			<height>720</height>
+			<viewtype label="list">list</viewtype>
+			<visible>!Control.IsVisible(6002)</visible>
+			<focusposition>7</focusposition>
+			<onright>6003</onright>
+			<itemlayout width="600" height="40">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>320</width>
+					<height>38</height>
+				</control>
+				<control type="label">
+					<posx>26</posx>
+					<posy>0</posy>
+					<width>320</width>
+					<height>38</height>
+					<aligny>center</aligny>
+					<font>font13</font>
+					<textcolor>0xffffffff</textcolor>
+					<info>ListItem.Label</info>
+				</control>
+				<control type="image">
+					<posx>500</posx>
+					<posy>0</posy>
+					<width>40</width>
+					<height>40</height>
+					<info>ListItem.Icon</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="520" height="40">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>320</width>
+					<height>38</height>
+					<visible>Control.HasFocus(6000)</visible>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>320</width>
+					<height>38</height>
+					<texture>script-video-bgtime-tv-dgblue10.png</texture>
+				</control>
+				<control type="label">
+					<posx>25</posx>
+					<posy>0</posy>
+					<width>320</width>
+					<height>38</height>
+					<aligny>center</aligny>
+					<font>font26</font>
+					<textcolor>ffffffff</textcolor>
+					<label>[B]$INFO[ListItem.Label][/B]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="button" id="6004">
+			<posx>321</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texturefocus>script-video-bgtime-tv-transparent.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-transparent.png</texturenofocus>
+		</control>
+		<!--Loader-->
+		<control type="label" id="5100">
+			<description>visibility marker for loading group</description>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>!Control.IsVisible(5100)</visible>
+			<animation effect="fade" start="0" end="100" time="250" delay="1500">Visible</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>script-video-bgtime-tv-very-dark-grey.png</texture>
+			</control>
+			<control type="image">
+				<description>loading splash</description>
+				<posx>590</posx>
+				<posy>250</posy>
+				<width>100</width>
+				<height>100</height>
+				<texture>ring.gif</texture>
+			</control>
+		</control>
+	 
+		
+	</controls>
+</window>

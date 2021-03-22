@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="1137">
+	<allowoverlay>no</allowoverlay>
+  <menucontrol></menucontrol>
+ 
+  <animation effect="slide" end="0" time="500">WindowClose</animation>
+  <animation effect="slide" end="0" time="500">WindowOpen</animation>
+  <zorder>10</zorder>
+  <coordinates>
+    <left>0</left>
+    <top>0</top>
+    <origin x="100" y="50">Window.IsActive(Home)</origin>
+  </coordinates>
+
+	<controls>
+		<control type="videowindow">
+		    <posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-black07.png</texture>
+		</control>
+		<control type="label" id="7009">
+			<posx>0</posx>
+			<posy>0</posy>
+			<alignment>2</alignment>  
+			<align>center</align>
+			<aligny>center</aligny>
+			<width>1280</width>
+			<height>40</height>
+		</control>
+		<control type="label" id="7000"></control>
+		<control type="label" id="7101">
+			<posy>50</posy>
+			<posx>60</posx>
+			<alignment>2</alignment>  
+			<font>font14</font>
+			<width>1280</width>
+			<height>30</height>
+		</control>
+		<control type="label" id="7201">
+			<description>idx marker</description>
+			<visible>!Control.IsVisible(7000)</visible>
+		</control>
+		<control type="list" id="7001">
+			<posy>80</posy>
+			<posx>60</posx>
+			<width>1200</width>
+			<height>190</height>
+			<onleft>6001</onleft>
+			<viewtype label="list">list</viewtype>
+			<orientation>horizontal</orientation>
+			<itemlayout width="256" height="200">
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>256</width>
+					<height>190</height>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>ListItem.Icon</info>
+				</control>
+					<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>script-video-bgtime-tv-very-dark-grey.png</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>140</posy>
+					<width>235</width>
+					<height>40</height>
+					<info>ListItem.Label</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="256" height="200">
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>256</width>
+					<height>190</height>
+					<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>ListItem.Icon</info>
+				</control>
+					<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>script-video-bgtime-tv-very-dark-grey.png</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>140</posy>
+					<width>235</width>
+					<height>40</height>
+		<!-- 			<aligny>center</aligny> -->
+<!-- 					<font>font26</font> -->
+					<!-- <textcolor>ffffffff</textcolor> -->
+					<info>ListItem.Label</info>
+				</control>
+			</focusedlayout>
+		</control>
+
+		<control type="label" id="7102">
+			<posy>270</posy>
+			<posx>60</posx>
+			<alignment>2</alignment>  
+			<font>font14</font>
+			<width>1280</width>
+			<height>30</height>
+		</control>
+		<control type="label" id="7202">
+			<visible>!Control.IsVisible(7000)</visible>
+			<description>idx marker</description>
+		</control>
+		<control type="list" id="7002">
+			<posy>300</posy>
+			<posx>60</posx>
+			<width>1200</width>
+			<onleft>6001</onleft>
+			<height>190</height>
+			<viewtype label="list">list</viewtype>
+			<orientation>horizontal</orientation>
+			<itemlayout width="256" height="200">
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>256</width>
+					<height>190</height>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>ListItem.Icon</info>
+				</control>
+					<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>script-video-bgtime-tv-very-dark-grey.png</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>140</posy>
+					<width>235</width>
+					<height>40</height>
+					<info>ListItem.Label</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="256" height="200">
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>256</width>
+					<height>190</height>
+					<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>ListItem.Icon</info>
+				</control>
+					<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>script-video-bgtime-tv-very-dark-grey.png</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>140</posy>
+					<width>235</width>
+					<height>40</height>
+					<info>ListItem.Label</info>
+				</control>
+			</focusedlayout>
+		</control>
+
+		<control type="label" id="7103">
+			<posy>490</posy>
+			<posx>60</posx>
+			<alignment>2</alignment>  
+			<font>font14</font>
+			<width>1280</width>
+			<height>30</height>
+		</control>
+		<control type="label" id="7203">
+			<visible>!Control.IsVisible(7000)</visible>
+			<description>idx marker</description>
+		</control>
+		<control type="list" id="7003">
+			<posy>520</posy>
+			<posx>60</posx>
+			<onleft>6001</onleft>
+			<width>1200</width>
+			<height>190</height>
+			<viewtype label="list">list</viewtype>
+			<orientation>horizontal</orientation>
+			<itemlayout width="256" height="200">
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>256</width>
+					<height>190</height>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>ListItem.Icon</info>
+				</control>
+					<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>script-video-bgtime-tv-very-dark-grey.png</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>140</posy>
+					<width>235</width>
+					<height>40</height>
+					<info>ListItem.Label</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="256" height="200">
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>256</width>
+					<height>190</height>
+					<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>ListItem.Icon</info>
+				</control>
+					<control type="image">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>236</width>
+					<height>130</height>
+					<info>script-video-bgtime-tv-very-dark-grey.png</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>140</posy>
+					<width>235</width>
+					<height>40</height>
+					<info>ListItem.Label</info>
+				</control>
+			</focusedlayout>
+		</control>
+		<!-- MENU START -->
+		<!-- Menu handler-->
+		<control type="button" id="6001">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>50</width>
+			<height>720</height>
+			<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-grey10.png</texturenofocus>
+		</control>
+
+
+
+		<control type="image">
+			<description>logo</description>
+			<posx>13</posx>
+			<posy>15</posy>
+			<width>25</width>
+			<height>28</height>
+			<texture>scipt-video-bgtime-tv-logo-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>menu</description>
+			<posx>15</posx>
+			<posy>300</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-menu-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>340</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-profile-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>380</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-search-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>420</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-logout-icon.png</texture>
+		</control>
+		
+		<!--Loader-->
+		<control type="label" id="5100">
+			<description>visibility marker for loading group</description>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>!Control.IsVisible(5100)</visible>
+			<animation effect="fade" start="0" end="100" time="250" delay="1500">Visible</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>script-video-bgtime-tv-very-dark-grey.png</texture>
+			</control>
+			<control type="image">
+				<description>loading splash</description>
+				<posx>590</posx>
+				<posy>250</posy>
+				<width>100</width>
+				<height>100</height>
+				<texture>ring.gif</texture>
+			</control>
+		</control>
+	 
+	</controls>
+</window>

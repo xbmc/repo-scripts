@@ -59,8 +59,10 @@ def guess_content_type(mediatypes):  # type: (defaultdict) -> str
     if len(mediatypes) > 1:
         # Sort mediatypes by there count, and return the highest count mediatype
         mediatype = sorted(mediatypes.items(), key=itemgetter(1))[-1][0]
-    else:
+    elif mediatypes:
         mediatype = mediatypes.popitem()[0]
+    else:
+        return ""
 
     # Convert mediatype to a content_type, not all mediatypes can be converted directly
     if mediatype in ("video", "movie", "tvshow", "episode", "musicvideo", "song", "album", "artist"):
@@ -104,9 +106,8 @@ def send_to_kodi(handle, session):
             if listitem_tuple[2]:
                 folder_counter += 1
 
-        if mediatypes:
-            # Guess content type based on set mediatypes
-            session["content_type"] = guess_content_type(mediatypes)
+        # Guess content type based on set mediatypes
+        session["content_type"] = guess_content_type(mediatypes)
 
         if not session["content_type"]:  # Fallback
             # Set content type based on type of content being listed

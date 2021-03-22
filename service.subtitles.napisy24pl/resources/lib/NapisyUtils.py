@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from http.cookiejar import LWPCookieJar
 from urllib.request import HTTPCookieProcessor, build_opener
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote_plus
 import json
 import os
 import re
-import shutil
 import unicodedata
 import zlib
 import bs4
+import uuid
 
 import xbmc
 import xbmcvfs
@@ -19,8 +19,8 @@ __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version')  # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
 __language__ = __addon__.getLocalizedString
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', ''))
+__profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
+__temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp', ''))
 
 regexHelper = re.compile('\W+', re.UNICODE)
 
@@ -108,12 +108,15 @@ class NapisyHelper:
 
         return results
 
-    def download(self, id, zip_filename):
+    def download(self, id):
         ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
         ## pass that to XBMC to copy and activate
         if xbmcvfs.exists(__temp__):
-            shutil.rmtree(__temp__)
-        xbmcvfs.mkdirs(__temp__)
+            (dirs, files) = xbmcvfs.listdir(__temp__)
+            for file in files:
+                xbmcvfs.delete(os.path.join(__temp__, file))
+        else:
+            xbmcvfs.mkdirs(__temp__)
 
         subtitle_type_map = ["sru", "sr", "tmp", "mdvd", "mpl2"]
         subs_format = int(__addon__.getSetting("subs_format"))
@@ -129,12 +132,24 @@ class NapisyHelper:
         if f is None:
             return
 
+        zip_filename = os.path.join(__temp__, '%s.zip' % str(uuid.uuid4()))
+
         with open(zip_filename, "wb") as subFile:
             subFile.write(f)
         subFile.close()
-        xbmc.Monitor().waitForAbort(1)
 
-        xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip_filename, __temp__,)), True)
+        exts = [".srt", ".sub", ".txt"]
+        zip_filepath = 'zip://%s' % quote_plus(zip_filename)
+        (dirs, files) = xbmcvfs.listdir(zip_filepath)
+        subtitle_list = []
+        for file in files:
+            if os.path.splitext(file)[1] in exts:
+                filename_dest = os.path.join(__temp__, file)
+                flag = xbmcvfs.copy(zip_filepath + '/' + file, filename_dest)
+                if flag:
+                    subtitle_list.append(filename_dest)
+
+        return subtitle_list
 
     def login(self, notify_success=False):
         username = __addon__.getSetting("username")
@@ -160,7 +175,8 @@ class NapisyHelper:
         search_string = re.split(r'\s\(\w+\)$', item["tvshow"])[0]
 
         data = {"serial": search_string.encode("utf-8").lower(), "sezon": item["season"], "epizod": item["episode"]}
-        search_result = self.urlHandler.request(self.BASE_URL + "/run/pages/serial_napis.php", None, data)
+        search_result = self.urlHandler.request(self.BASE_URL + "/run/pages/serial_napis.php", data=data)
+
         if search_result is None:
             return results  # return empty set
 
@@ -302,10 +318,11 @@ class URLHandler:
                                   ('Pragma', 'no-cache'),
                                   ('Cache-Control', 'no-cache'),
                                   ('User-Agent',
-                                   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.2924.87 Safari/537.36')]
+                                   'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36')]
 
     def request(self, url, query_string=None, data=None, ajax=False, referer=None, cookie=None, decode_zlib=True):
         if data is not None:
+            self.opener.addheaders += [('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')]
             data = urlencode(data).encode("utf-8")
         if query_string is not None:
             query_string = urlencode(query_string)
@@ -325,15 +342,15 @@ class URLHandler:
             if response.code == 200:
                 content = response.read()
 
-                if decode_zlib and response.headers.get('content-encoding', '') == 'gzip':
+                if decode_zlib and 'gzip' in response.headers.get('content-encoding', ''):
                     try:
                         content = zlib.decompress(content, 16 + zlib.MAX_WBITS)
                     except zlib.error:
                         pass
 
-                if response.headers.get('content-type', '') == 'application/json':
+                if 'application/json' in response.headers.get('content-type', ''):
                     content = json.loads(content, encoding="utf-8")
-                elif response.headers.get('content-type', '').startswith('text/html'):
+                elif 'text/html' in response.headers.get('content-type', ''):
                     content = content.decode('utf-8')
 
             response.close()

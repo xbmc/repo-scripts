@@ -97,7 +97,7 @@ class main():
         util.LOG(repr(info), debug=True)
 
         from lib import YDStreamExtractor
-        YDStreamExtractor.handleDownload(info, bg=True)
+        YDStreamExtractor.handleDownload(info, filename=title, bg=True)
 
     def stopDownload(self):
         yes = xbmcgui.Dialog().yesno(T(32039), T(32040))

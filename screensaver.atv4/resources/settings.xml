@@ -1,0 +1,302 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="screensaver.atv4">
+		<category id="aerial screensavers" label="32000" help="">
+			<group id="1" label="32032">
+				<setting id="show-notifications" type="boolean" label="32018" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="show-previewwindow" type="boolean" label="32042" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-4k" type="boolean" label="32075" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-hdr" type="boolean" label="32076" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-hevc" type="boolean" label="32077" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2" label="32026">
+				<setting id="check-dpms" type="integer" label="32027" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32035">0</option>
+							<option label="32036">1</option>
+							<option label="32037">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="dpms-action" type="integer" label="32039" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32040">0</option>
+							<option label="32041">1</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="check-dpms">1</condition>
+								<condition operator="is" setting="check-dpms">2</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="manual-dpms" type="integer" label="32038" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>5</step>
+						<maximum>120</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="check-dpms">2</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="toggle-displayoff" type="boolean" label="32028" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="check-dpms">1</condition>
+								<condition operator="is" setting="check-dpms">2</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="toggle-cecoff" type="boolean" label="32029" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="check-dpms">1</condition>
+								<condition operator="is" setting="check-dpms">2</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="3" label="32033"/>
+			<group id="4" label="32034">
+				<setting id="is_locked" type="boolean" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="videos" label="32031" help="">
+			<group id="1">
+				<setting id="enable-africaandthemiddleeast" type="boolean" label="32049" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-africanight" type="boolean" label="32050" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-antarctica" type="boolean" label="32051" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-californiatovegas" type="boolean" label="32052" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-caribbean" type="boolean" label="32053" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-caribbeanday" type="boolean" label="32054" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-china" type="boolean" label="32055" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-dubai" type="boolean" label="32056" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-greenland" type="boolean" label="32057" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-hawaii" type="boolean" label="32058" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-hongkong" type="boolean" label="32059" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-iranandafghanistan" type="boolean" label="32060" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-irelandtoasia" type="boolean" label="32061" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-italytoasia" type="boolean" label="32062" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-koreanandjapannight" type="boolean" label="32063" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-liwa" type="boolean" label="32064" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-london" type="boolean" label="32065" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-losangeles" type="boolean" label="32066" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-newyork" type="boolean" label="32067" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-newyorknight" type="boolean" label="32068" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-newzealand" type="boolean" label="32069" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-northamericaaurora" type="boolean" label="32070" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-saharaanditaly" type="boolean" label="32071" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-sanfrancisco" type="boolean" label="32072" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-southerncaliforniatobaja" type="boolean" label="32073" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-westafricatothealps" type="boolean" label="32074" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="offline mode" label="32009" help="">
+			<group id="1">
+				<setting id="download-folder" type="path" label="32010" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="path">
+						<heading>32010</heading>
+					</control>
+				</setting>
+				<setting id="force-offline" type="boolean" label="32043" help="32080">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="get-videos-from-apple" type="boolean" label="32078" help="32079">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="force-offline">false</condition>
+							</or>
+						</dependency>
+					</dependencies>
+				</setting>
+				<setting id="enable-checksums" type="boolean" label="32030" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="run-downloader" type="action" label="32011" help="">
+					<level>0</level>
+					<data>RunAddon(screensaver.atv4,offline)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
