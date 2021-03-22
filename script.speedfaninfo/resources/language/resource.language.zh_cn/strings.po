@@ -10,10 +10,10 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgctxt "#30000"
@@ -44,6 +44,14 @@ msgctxt "#30006"
 msgid "Log File Location"
 msgstr "日志文件位置"
 
+msgctxt "#30007"
+msgid "Celcius"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Fahrenheit"
+msgstr ""
+
 msgctxt "#30010"
 msgid " Additional Logs"
 msgstr "附加日志"
@@ -68,6 +76,15 @@ msgctxt "#30021"
 msgid "    Log File Location"
 msgstr "日志文件位置"
 
+# empty strings from id 30022 to 30029
+msgctxt "#30030"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Set Line Read Size"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Temperature Information"
 msgstr "温度信息"
@@ -87,6 +104,10 @@ msgstr "日志文件错误"
 msgctxt "#30104"
 msgid "No log file found."
 msgstr "没有找到日志文件。"
+
+msgctxt "#30105"
+msgid "Other Information"
+msgstr ""
 
 msgctxt "#32209"
 msgid "Enable debug logging"
