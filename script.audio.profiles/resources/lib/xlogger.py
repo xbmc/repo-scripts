@@ -1,4 +1,4 @@
-#v.0.4.10
+#v.0.4.14
 
 try:
     from kodi_six import xbmc
@@ -22,9 +22,9 @@ class Logger( object ):
             self.logger = logging.getLogger( logname )
             self.logger.setLevel( logging.DEBUG )
             if logconfig == 'timed':
-                lr = logging.handlers.TimedRotatingFileHandler( logfile, when=when, backupCount=numbackups)
+                lr = logging.handlers.TimedRotatingFileHandler( logfile, when=when, backupCount=numbackups, encoding='utf-8')
             else:
-                lr = logging.handlers.RotatingFileHandler( logfile, maxBytes=maxsize, backupCount=numbackups )
+                lr = logging.handlers.RotatingFileHandler( logfile, maxBytes=maxsize, backupCount=numbackups, encoding='utf-8' )
             lr.setLevel( logging.DEBUG )
             lr.setFormatter( logging.Formatter( logformat ) )
             self.logger.addHandler( lr )
@@ -46,8 +46,6 @@ class Logger( object ):
                 loglevel = self.logger.debug
         for line in loglines:
             try:
-                if type(line).__name__=='unicode':
-                    line = line.encode('utf-8')
                 str_line = line.__str__()
             except Exception as e:
                 str_line = ''
@@ -67,7 +65,7 @@ class Logger( object ):
     def _output_file( self, line, loglevel ):
         if self.LOGDEBUG or loglevel != self.logger.debug:
             try:
-                loglevel( '%s %s' % (self.LOGPREAMBLE, line.__str__()) )
+                loglevel( '%s %s' % (self.LOGPREAMBLE, line ) )
             except Exception as e:
                 self.logger.debug( '%s unable to output logline' % self.LOGPREAMBLE )
                 self.logger.debug( '%s %s' % (self.LOGPREAMBLE, e.__str__()) )

@@ -1,0 +1,406 @@
+# script.audio.profiles language file
+msgid ""
+msgstr ""
+"Language: te_in\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Settings
+msgctxt "#32000"
+msgid "Profiles 1-5"
+msgstr ""
+
+#: Settings
+msgctxt "#32001"
+msgid " Name of profile 1"
+msgstr ""
+
+#: Settings
+msgctxt "#32002"
+msgid "Settings"
+msgstr ""
+
+#: Settings
+msgctxt "#32003"
+msgid " Name of profile 2"
+msgstr ""
+
+#: Settings
+msgctxt "#32004"
+msgid "Include volume level"
+msgstr ""
+
+#: Settings
+msgctxt "#32005"
+msgid " Name of profile 3"
+msgstr ""
+
+#: Settings
+msgctxt "#32006"
+msgid " Name of profile 4"
+msgstr ""
+
+#: Settings
+msgctxt "#32007"
+msgid "Profile 1"
+msgstr ""
+
+#: Settings
+msgctxt "#32008"
+msgid "Profile 2"
+msgstr ""
+
+#: Settings
+msgctxt "#32009"
+msgid "Profile 3"
+msgstr ""
+
+#: Settings
+msgctxt "#32010"
+msgid "Profile 4"
+msgstr ""
+
+#: Settings
+msgctxt "#32011"
+msgid "Include video player settings"
+msgstr ""
+
+#: Settings
+msgctxt "#32012"
+msgid "Include display settings"
+msgstr ""
+
+#: Settings
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr ""
+
+#: Settings
+msgctxt "#32014"
+msgid "Auto Switch"
+msgstr ""
+
+#: Settings
+msgctxt "#32015"
+msgid "Show audio profile select menu on media playback"
+msgstr ""
+
+#: Settings
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32018"
+msgid "Notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32019"
+msgid "Notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32021"
+msgid "Profile for GUI"
+msgstr ""
+
+#: Settings
+msgctxt "#32022"
+msgid "Profile for movies"
+msgstr ""
+
+#: Settings
+msgctxt "#32023"
+msgid "Profile for TV shows"
+msgstr ""
+
+#: Settings
+msgctxt "#32024"
+msgid "Profile for PVR TV"
+msgstr ""
+
+#: Settings
+msgctxt "#32025"
+msgid "Profile for music"
+msgstr ""
+
+#: Settings
+msgctxt "#32026"
+msgid "None"
+msgstr ""
+
+#: Settings
+msgctxt "#32027"
+msgid "HDMI-CEC"
+msgstr ""
+
+#: Settings
+msgctxt "#32028"
+msgid "Wake Up"
+msgstr ""
+
+#: Settings
+msgctxt "#32029"
+msgid "StandBy"
+msgstr ""
+
+#: Settings
+msgctxt "#32030"
+msgid "Toggle state"
+msgstr ""
+
+#: Settings
+msgctxt "#32031"
+msgid "Profile for videos (not in library)"
+msgstr ""
+
+#: Settings
+msgctxt "#32032"
+msgid "Profile for music videos"
+msgstr ""
+
+#: Settings
+msgctxt "#32033"
+msgid "Profile for unknown content type"
+msgstr ""
+
+#: Settings
+msgctxt "#32034"
+msgid "Profile for PVR radio"
+msgstr ""
+
+#: Settings
+msgctxt "#32035"
+msgid "Video"
+msgstr ""
+
+#: Settings
+msgctxt "#32036"
+msgid "Audio"
+msgstr ""
+
+#: Settings
+msgctxt "#32037"
+msgid "Other"
+msgstr ""
+
+#: Settings
+msgctxt "#32038"
+msgid "Profile for KODI Start/Wakeup (Default)"
+msgstr ""
+
+#: Settings
+msgctxt "#32039"
+msgid " Delay before close"
+msgstr ""
+
+#: Settings
+msgctxt "#32040"
+msgid "Enable debug logging"
+msgstr ""
+
+#: Settings
+msgctxt "#32041"
+msgid " Force load profile at startup"
+msgstr ""
+
+#: Settings
+msgctxt "#32042"
+msgid " Auto switch notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32043"
+msgid " Manual switch notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32044"
+msgid " Maintenance notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32045"
+msgid "Select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32046"
+msgid "Use custom select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32047"
+msgid "Include skin mods"
+msgstr ""
+
+#: Settings
+msgctxt "#32048"
+msgid "Extras"
+msgstr ""
+
+#: Settings
+msgctxt "#32049"
+msgid "By number of channels"
+msgstr ""
+
+#: Settings
+msgctxt "#32050"
+msgid "Menu Options"
+msgstr ""
+
+#: Settings
+msgctxt "#32051"
+msgid "Profile 5"
+msgstr ""
+
+#: Settings
+msgctxt "#32052"
+msgid "Name of profile 5"
+msgstr ""
+
+#: Settings
+msgctxt "#32053"
+msgid "Profile 6"
+msgstr ""
+
+#: Settings
+msgctxt "#32054"
+msgid "Name of profile 6"
+msgstr ""
+
+#: Settings
+msgctxt "#32055"
+msgid "Profile 7"
+msgstr ""
+
+#: Settings
+msgctxt "#32056"
+msgid "Name of profile 7"
+msgstr ""
+
+#: Settings
+msgctxt "#32057"
+msgid "Profile 8"
+msgstr ""
+
+#: Settings
+msgctxt "#32058"
+msgid "Name of profile 8"
+msgstr ""
+
+#: Settings
+msgctxt "#32059"
+msgid "Profile 9"
+msgstr ""
+
+#: Settings
+msgctxt "#32060"
+msgid "Name of profile 9"
+msgstr ""
+
+#: Settings
+msgctxt "#32061"
+msgid "Profile 10"
+msgstr ""
+
+#: Settings
+msgctxt "#32062"
+msgid "Name of profile 10"
+msgstr ""
+
+#: Settings
+msgctxt "#32063"
+msgid "Codec Detection"
+msgstr ""
+
+#: Settings
+msgctxt "#32064"
+msgid "Profile for AC3"
+msgstr ""
+
+#: Settings
+msgctxt "#32065"
+msgid "Profile for E-AC3"
+msgstr ""
+
+#: Settings
+msgctxt "#32066"
+msgid "Profile for DTS"
+msgstr ""
+
+#: Settings
+msgctxt "#32067"
+msgid "Profile for DTS HD"
+msgstr ""
+
+#: Settings
+msgctxt "#32068"
+msgid "Profile for True HD"
+msgstr ""
+
+#: Settings
+msgctxt "#32069"
+msgid "Profile for any other audio codec"
+msgstr ""
+
+#: Settings
+msgctxt "#32070"
+msgid "Profiles 6-10"
+msgstr ""
+
+#: Settings
+msgctxt "#32071"
+msgid "Stereo audio"
+msgstr ""
+
+#: Settings
+msgctxt "#32072"
+msgid "Multi channel audio"
+msgstr ""
+
+#: Settings
+msgctxt "#32073"
+msgid "delay before reading codec info"
+msgstr ""
+
+#: Settings
+msgctxt "#32074"
+msgid "match streams with no codec details as music"
+msgstr ""
+
+#: Script
+msgctxt "#32100"
+msgid "Select profile to save settings"
+msgstr ""
+
+#: Script
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr ""
+
+#: Script
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr ""
+
+#: Script
+msgctxt "#32103"
+msgid "This profile is disabled"
+msgstr ""
+
+#: Script
+msgctxt "#32104"
+msgid "Invalid file for profile"
+msgstr ""
+
+#: Script
+msgctxt "#32105"
+msgid "Enable profiles"
+msgstr ""
+
+#: Script
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr ""
