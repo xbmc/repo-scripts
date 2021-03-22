@@ -1,3 +1,7 @@
+v.3.3.1
+- fix for Python3 logging issue
+- new translations
+
 v.3.3.0
 - fix for similar and album infolabels not being cleared property at artist change
 - updated language files
