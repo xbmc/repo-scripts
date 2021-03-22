@@ -468,35 +468,284 @@ msgctxt "#32340"
 msgid "Preffered Data Source"
 msgstr ""
 
-msgctxt "#32341"
-msgid "Map2 Sector"
+##RESERVED
+## 32341-32348
+
+msgctxt "#32349"
+msgid "Select Map Region"
 msgstr ""
 
-msgctxt "#32342"
-msgid "Map2 Type"
+msgctxt "#32350"
+msgid "Select Map Color Type"
 msgstr ""
 
-msgctxt "#32343"
-msgid "Map3 Sector"
+msgctxt "#32351"
+msgid "Map 1"
 msgstr ""
 
-msgctxt "#32344"
-msgid "Map3 Type"
+msgctxt "#32352"
+msgid "Map 2"
 msgstr ""
 
-msgctxt "#32345"
-msgid "Map4 Sector"
+msgctxt "#32353"
+msgid "Map 3"
 msgstr ""
 
-msgctxt "#32346"
-msgid "Map4 Type"
+msgctxt "#32354"
+msgid "Map 4"
 msgstr ""
 
-msgctxt "#32347"
-msgid "Map5 Sector"
+msgctxt "#32355"
+msgid "Map 5"
 msgstr ""
 
-msgctxt "#32348"
-msgid "Map5 Type"
+## RESERVED
+## 32356-32359
+
+msgctxt "#32360"
+msgid "US East"
+msgstr ""
+
+msgctxt "#32361"
+msgid "US West"
+msgstr ""
+
+msgctxt "#32362"
+msgid "GLM Fed East"
+msgstr ""
+
+msgctxt "#32363"
+msgid "GLM Fed West"
+msgstr ""
+
+msgctxt "#32364"
+msgid "Alaska"
+msgstr ""
+
+msgctxt "#32365"
+msgid "Central Alaska"
+msgstr ""
+
+msgctxt "#32366"
+msgid "Southeastern Alaska"
+msgstr ""
+
+msgctxt "#32367"
+msgid "Northern Pacific"
+msgstr ""
+
+msgctxt "#32368"
+msgid "US Pacific Coast"
+msgstr ""
+
+msgctxt "#32369"
+msgid "Pacific Northwest (w)"
+msgstr ""
+
+msgctxt "#32370"
+msgid "Pacific Northwest (e)"
+msgstr ""
+
+msgctxt "#32371"
+msgid "Pacific Southwest (w)"
+msgstr ""
+
+msgctxt "#32371"
+msgid "Pacific Southwest (e)"
+msgstr ""
+
+msgctxt "#32373"
+msgid "Northern Rockies"
+msgstr ""
+
+msgctxt "#32374"
+msgid "Southern Rockies"
+msgstr ""
+
+msgctxt "#32375"
+msgid "Southern Plains"
+msgstr ""
+
+msgctxt "#32376"
+msgid "Upper Mississippi Valley"
+msgstr ""
+
+msgctxt "#32377"
+msgid "Southern Mississippi Valley"
+msgstr ""
+
+msgctxt "#32378"
+msgid "Canada"
+msgstr ""
+
+msgctxt "#32379"
+msgid "Great Lakes"
+msgstr ""
+
+msgctxt "#32380"
+msgid "U.S. Atlantic Coast"
+msgstr ""
+
+msgctxt "#32381"
+msgid "Northeast"
+msgstr ""
+
+msgctxt "#32382"
+msgid "Northern Atlantic"
+msgstr ""
+
+msgctxt "#32383"
+msgid "Southeast"
+msgstr ""
+
+msgctxt "#32384"
+msgid "Caribbean"
+msgstr ""
+
+msgctxt "#32385"
+msgid "Puerto Rico"
+msgstr ""
+
+msgctxt "#32386"
+msgid "Gulf of Mexico"
+msgstr ""
+
+msgctxt "#32387"
+msgid "Tropical Atlantic"
+msgstr ""
+
+msgctxt "#32388"
+msgid "Mexico"
+msgstr ""
+
+msgctxt "#32389"
+msgid "Hawaii"
+msgstr ""
+
+msgctxt "#32390"
+msgid "Tropical Pacific"
+msgstr ""
+
+msgctxt "#32391"
+msgid "South Pacific"
+msgstr ""
+
+msgctxt "#32392"
+msgid "Eastern East Pacific"
+msgstr ""
+
+msgctxt "#32393"
+msgid "Central America"
+msgstr ""
+
+msgctxt "#32394"
+msgid "South America - Northern"
+msgstr ""
+
+msgctxt "#32395"
+msgid "South America - Southern"
+msgstr ""
+
+##RESERVED
+## 32396-32399
+
+msgctxt "#32400"
+msgid "True Color/IR"
+msgstr ""
+
+msgctxt "#32401"
+msgid "Lightning Mapper"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Sandwich RGB"
+msgstr ""
+
+msgctxt "#32403"
+msgid ""
+msgstr ""
+
+msgctxt "#32404"
+msgid "Air Mass RBG"
+msgstr ""
+
+msgctxt "#32405"
+msgid "Day Cloud Phase RBG"
+msgstr ""
+
+msgctxt "#32406"
+msgid "Nighttime Microphysics"
+msgstr ""
+
+msgctxt "#32407"
+msgid "Derived Motion Winds"
+msgstr ""
+
+msgctxt "#32408"
+msgid "Dust"
+msgstr ""
+
+msgctxt "#32409"
+msgid "Blue"
+msgstr ""
+
+msgctxt "#32410"
+msgid "Red"
+msgstr ""
+
+msgctxt "#32411"
+msgid "Veggie"
+msgstr ""
+
+msgctxt "#32412"
+msgid "Cirris"
+msgstr ""
+
+msgctxt "#32413"
+msgid "Snow/Ice"
+msgstr ""
+
+msgctxt "#32414"
+msgid "Cloud Particle"
+msgstr ""
+
+msgctxt "#32415"
+msgid "Shortwave Window"
+msgstr ""
+
+msgctxt "#32416"
+msgid "Upper-Level Water Vapor"
+msgstr ""
+
+msgctxt "#32417"
+msgid "Mid-Level Water Vapor"
+msgstr ""
+
+msgctxt "#32418"
+msgid "Lower-Level Water Vapor"
+msgstr ""
+
+msgctxt "#32419"
+msgid "Cloud Top"
+msgstr ""
+
+msgctxt "#32420"
+msgid "Ozone"
+msgstr ""
+
+msgctxt "#32421"
+msgid "Clean Longwave Window"
+msgstr ""
+
+msgctxt "#32422"
+msgid "Longwave Window"
+msgstr ""
+
+msgctxt "#32423"
+msgid "Dirty Longwave Window"
+msgstr ""
+
+msgctxt "#32424"
+msgid "CO2 Longwave"
 msgstr ""
 

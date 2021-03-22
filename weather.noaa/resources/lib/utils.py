@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 
 from future import standard_library
 import math
-import sys, time
+import time
 
-import xbmc, xbmcgui, xbmcaddon
+import xbmc, xbmcaddon
 
 from dateutil.parser import parse
 import socket, urllib.request
@@ -14,13 +14,10 @@ import json
 standard_library.install_aliases()
 
 
-
-
 ADDON		= xbmcaddon.Addon()
 ADDONID		= ADDON.getAddonInfo('id')
 LANGUAGE	= ADDON.getLocalizedString
 
-WEATHER_WINDOW  = xbmcgui.Window(12600)
 DEBUG		= ADDON.getSetting('Debug')
 TEMPUNIT	= xbmc.getRegion('tempunit')
 SPEEDUNIT	= xbmc.getRegion('speedunit')
@@ -30,16 +27,8 @@ TIMEFORMAT	= xbmc.getRegion('meridiem')
 
 def log(txt):
 	if DEBUG == 'true':
-		if isinstance (txt,str):
-			txt = decode_utf8(txt)
 		message = u'%s: %s' % (ADDONID, txt)
-		xbmc.log(msg=encode_utf8(message), level=xbmc.LOGDEBUG)
-
-def set_property(name, value):
-	WEATHER_WINDOW.setProperty(name, value)
-
-def clear_property(name):
-	WEATHER_WINDOW.clearProperty(name)
+		xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 
 
@@ -57,7 +46,7 @@ def get_url_JSON(url):
 			response = urllib.request.urlopen(req)
 
 			#responsedata = decode_utf8(urlopen(url, timeout=25).read())
-			responsedata = decode_utf8(response.read())
+			responsedata = response.read()
 			data = json.loads(responsedata)
 			log('data: %s' % data)
 			# Happy path, we found and parsed data
@@ -80,7 +69,7 @@ def get_url_response(url):
 		req.add_header('User-Agent', ' Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
 		response = urllib.request.urlopen(req)
 
-		responsedata = decode_utf8(response.read())
+		responsedata = response.read()
 		log('data: %s' % responsedata)
 		# Happy path, we found and parsed data
 		return responsedata
@@ -288,7 +277,6 @@ def SPEED(mps):
 
 
 def FtoC(Fahrenheit):
-	#xbmc.log('Fahrenheit %s' % Fahrenheit,level=xbmc.LOGDEBUG)
 
 	Celsius = (float(Fahrenheit) - 32.0) * 5.0/9.0 
 	return str(int(round(Celsius))) 
@@ -456,24 +444,9 @@ def zip_x(fill, *args):
 			values.append(value)
 		yield tuple(values)
 
-def encode_utf8(_string):
-	if sys.version_info < (3, 0):
-		return _string.encode('utf-8')
-	else:
-		return _string
-
-def decode_utf8(_string):
-	if sys.version_info < (3, 0):
-		return _string.decode('utf-8')
-	else:
-		return _string
-
-
 def get_timestamp(datestr):
 	#"2019-04-29T16:00:00-04:00"
 	#iso_fmt = '%Y-%m-%dT%H:%M:%S%z'
-	#newtext = datestr[:21] + datestr[23:]
-	#datestamp=datetime.datetime.strptime(datestr,iso_fmt)
 	datestamp=parse(datestr)
 	return time.mktime(datestamp.timetuple())
 
@@ -527,6 +500,73 @@ def get_month(stamp, form):
 		label = xbmc.getLocalizedString(MONTH_NAME_LONG[month]) + ' ' + day
 	return label
 
+# Satellite Imagery paths
 
+MAPSECTORS = {
+	"conus-e":	{"name":LANGUAGE(32360),"path":"GOES16/ABI/CONUS/%s/1250x750.jpg"},
+	"conus-w":	{"name":LANGUAGE(32361),"path":"GOES17/ABI/CONUS/%s/1250x750.jpg"},
+	"glm-e":	{"name":LANGUAGE(32362),"path":"GOES16/GLM/CONUS/EXTENT/1250x750.jpg"},
+	"glm-w":	{"name":LANGUAGE(32363),"path":"GOES17/GLM/CONUS/EXTENT/1250x750.jpg"},
+	"ak":		{"name":LANGUAGE(32364),"path":"GOES17/ABI/SECTOR/ak/%s/1000x1000.jpg"},
+	"cak":		{"name":LANGUAGE(32365),"path":"GOES17/ABI/SECTOR/cak/%s/1200x1200.jpg"},
+	"sea":		{"name":LANGUAGE(32366),"path":"GOES17/ABI/SECTOR/sea/%s/1200x1200.jpg"},
+	"np":		{"name":LANGUAGE(32367),"path":"GOES17/ABI/SECTOR/np/%s/900x540.jpg"},
+	"wus":		{"name":LANGUAGE(32368),"path":"GOES17/ABI/SECTOR/wus/%s/1000x1000.jpg"},
+	"pnw-w":	{"name":LANGUAGE(32369),"path":"GOES17/ABI/SECTOR/pnw/%s/1200x1200.jpg"},
+	"pnw-e":	{"name":LANGUAGE(32370),"path":"GOES16/ABI/SECTOR/pnw/%s/1200x1200.jpg"},
+	"psw-w":	{"name":LANGUAGE(32371),"path":"GOES17/ABI/SECTOR/psw/%s/1200x1200.jpg"},
+	"psw-e":	{"name":LANGUAGE(32371),"path":"GOES16/ABI/SECTOR/psw/%s/1200x1200.jpg"},
+	"nr":		{"name":LANGUAGE(32373),"path":"GOES16/ABI/SECTOR/nr/%s/1200x1200.jpg"},
+	"sr":		{"name":LANGUAGE(32374),"path":"GOES16/ABI/SECTOR/sr/%s/1200x1200.jpg"},
+	"sp":		{"name":LANGUAGE(32375),"path":"GOES16/ABI/SECTOR/sp/%s/1200x1200.jpg"},
+	"umv":		{"name":LANGUAGE(32376),"path":"GOES16/ABI/SECTOR/umv/%s/1200x1200.jpg"},
+	"smv":		{"name":LANGUAGE(32377),"path":"GOES16/ABI/SECTOR/smv/%s/1200x1200.jpg"},
+	"can":		{"name":LANGUAGE(32378),"path":"GOES16/ABI/SECTOR/can/%s/1125x560.jpg"},
+	"cgl":		{"name":LANGUAGE(32379),"path":"GOES16/ABI/SECTOR/cgl/%s/1200x1200.jpg"},
+	"eus":		{"name":LANGUAGE(32380),"path":"GOES16/ABI/SECTOR/eus/%s/1000x1000.jpg"},
+	"ne":		{"name":LANGUAGE(32381),"path":"GOES16/ABI/SECTOR/ne/%s/1200x1200.jpg"},
+	"na":		{"name":LANGUAGE(32382),"path":"GOES16/ABI/SECTOR/na/%s/900x540.jpg"},
+	"se":		{"name":LANGUAGE(32383),"path":"GOES16/ABI/SECTOR/se/%s/1200x1200.jpg"},
+	"car":		{"name":LANGUAGE(32384),"path":"GOES16/ABI/SECTOR/car/%s/1000x1000.jpg"},
+	"pr":		{"name":LANGUAGE(32385),"path":"GOES16/ABI/SECTOR/pr/%s/1200x1200.jpg"},
+	"gm":		{"name":LANGUAGE(32386),"path":"GOES16/ABI/SECTOR/gm/%s/1000x1000.jpg"},
+	"taw":		{"name":LANGUAGE(32387),"path":"GOES16/ABI/SECTOR/taw/%s/900x540.jpg"},
+	"mex":		{"name":LANGUAGE(32388),"path":"GOES16/ABI/SECTOR/mex/%s/1000x1000.jpg"},
+	"hi":		{"name":LANGUAGE(32389),"path":"GOES17/ABI/SECTOR/hi/%s/1200x1200.jpg"},
+	"tpw":		{"name":LANGUAGE(32390),"path":"GOES17/ABI/SECTOR/tpw/%s/900x540.jpg"},
+	"tsp":		{"name":LANGUAGE(32391),"path":"GOES17/ABI/SECTOR/tsp/%s/900x540.jpg"},
+	"eep":		{"name":LANGUAGE(32392),"path":"GOES16/ABI/SECTOR/eep/%s/900x540.jpg"},
+	"cam":		{"name":LANGUAGE(32393),"path":"GOES16/ABI/SECTOR/cam/%s/1000x1000.jpg"},
+	"nsa":		{"name":LANGUAGE(32394),"path":"GOES16/ABI/SECTOR/nsa/%s/900x540.jpg"},
+	"ssa":		{"name":LANGUAGE(32395),"path":"GOES16/ABI/SECTOR/ssa/%s/900x540.jpg"}
+	}
+
+
+MAPTYPES = {
+	"GEOCOLOR":	LANGUAGE(32400),
+	"EXTENT":	LANGUAGE(32401),
+	"Sandwich":	LANGUAGE(32402),
+	"AirMass":	LANGUAGE(32404),
+	"DayCloudPhase":LANGUAGE(32405),   
+	"NightMicrophysics":LANGUAGE(32406),  
+	"DMW":		LANGUAGE(32407),
+	"Dust":		LANGUAGE(32408),
+	"01":		LANGUAGE(32409),
+	"02":		LANGUAGE(32410),
+	"03":		LANGUAGE(32411),
+	"04":		LANGUAGE(32412), 
+	"05":		LANGUAGE(32413), 
+	"06":		LANGUAGE(32414), 
+	"07":		LANGUAGE(32415), 
+	"08":		LANGUAGE(32416),
+	"09":		LANGUAGE(32417),
+	"10":		LANGUAGE(32418),
+	"11":		LANGUAGE(32419),
+	"12":		LANGUAGE(32420),
+	"13":		LANGUAGE(32421),
+	"14":		LANGUAGE(32422),
+	"15":		LANGUAGE(32423),
+	"16":		LANGUAGE(32424)		
+	}
 
 

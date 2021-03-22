@@ -5,35 +5,26 @@ from future import standard_library
 standard_library.install_aliases()
 
 import os, sys, time
-import xbmc, xbmcgui, xbmcaddon
+import xbmc, xbmcgui, xbmcvfs
 
-
-#from datetime import datetime
-from resources.lib.utils import FtoC, set_property, clear_property, log
-from resources.lib.utils import WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x
-from resources.lib.utils import get_url_JSON, decode_utf8  #, encode_utf8
+from resources.lib.utils import FtoC, log, ADDON, LANGUAGE,MAPSECTORS,MAPTYPES
+from resources.lib.utils import WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x 
+from resources.lib.utils import get_url_JSON 
 from resources.lib.utils import get_month, get_timestamp, get_weekday, get_time
 
 
-
-ADDON           = xbmcaddon.Addon()
-ADDONNAME       = ADDON.getAddonInfo('name')
-ADDONID         = ADDON.getAddonInfo('id')
-CWD             = decode_utf8(ADDON.getAddonInfo('path'))
-ADDONVERSION    = ADDON.getAddonInfo('version')
-LANGUAGE        = ADDON.getLocalizedString
-RESOURCE        = decode_utf8(xbmc.translatePath(os.path.join( CWD, 'resources', 'lib' ).encode("utf-8") ))
-PROFILE         = decode_utf8(xbmc.translatePath(ADDON.getAddonInfo('profile')))
-
-sys.path.append(RESOURCE)
-
-
-WEATHER_ICON	= decode_utf8(xbmc.translatePath('%s.png'))
+WEATHER_WINDOW  = xbmcgui.Window(12600)
+WEATHER_ICON	= xbmcvfs.translatePath('%s.png')
 DATEFORMAT	= xbmc.getRegion('dateshort')
 TIMEFORMAT	= xbmc.getRegion('meridiem')
-KODILANGUAGE	= xbmc.getLanguage().lower()
 MAXDAYS		= 10
 
+
+def set_property(name, value):
+	WEATHER_WINDOW.setProperty(name, value)
+
+def clear_property(name):
+	WEATHER_WINDOW.clearProperty(name)
 
 def clear():
 	set_property('Current.Condition'	, 'N/A')
@@ -105,16 +96,11 @@ def fetchLocation(locstr,prefix):
 		log('failed to retrieve location data')
 		return None
 	if data != '' and 'properties' in data:
-		#radarStation = data['properties']['radarStation']
 
 		city	=	data['properties']['relativeLocation']['properties']['city']
 		state =		data['properties']['relativeLocation']['properties']['state']
 		locationName=	city+", "+state
 		ADDON.setSetting(prefix, locationName)
-#		lat =		str(data['geometry']['coordinates'][1])
-#		lon =		str(data['geometry']['coordinates'][0])
-#		locationLatLong=lat+','+lon
-		#ADDON.setSetting(prefix, locationLatLong)
 
 		gridX=data['properties']['gridX']
 		ADDON.setSetting(prefix+'gridX',str(gridX))
@@ -149,7 +135,6 @@ def fetchLocation(locstr,prefix):
 		stations_url =	data['properties']['observationStations']
 		odata = get_url_JSON(stations_url)
 
-#		log('location data: %s' % query)
 		if odata != '' and 'features' in odata:
 			stations={}
 			stationlist=[]
@@ -160,13 +145,11 @@ def fetchLocation(locstr,prefix):
 				stationlist.append(stationName)
 				stations[stationName]=stationId
 
-			#xbmc.log('stationlist: %s' % stationlist,level=xbmc.LOGINFO)
-			#xbmc.log('stations: %s' % stations,level=xbmc.LOGINFO)
-
 			dialog = xbmcgui.Dialog()
 			i=dialog.select(LANGUAGE(32331),stationlist)
-			#xbmc.log('selected station name: %s' % stationlist[i],level=xbmc.LOGINFO)
-			#xbmc.log('selected station: %s' % stations[stationlist[i]],level=xbmc.LOGINFO)
+			# clean up reference to dialog object
+			del dialog
+
 
 			ADDON.setSetting(prefix+'Station',stations[stationlist[i]])
 			ADDON.setSetting(prefix+'StationName',stationlist[i])
@@ -181,34 +164,28 @@ def fetchDaily(num):
 
 	url=ADDON.getSetting('Location'+str(num)+'forecast_url')		
 	log('forecast url: %s' % url)
-		
-	##current_props(current_weather,loc)
 
 	daily_weather = get_url_JSON(url)
 
 	if daily_weather and daily_weather != '' and 'properties' in daily_weather:
 		data=daily_weather['properties']
 	else:
+		#api.weather.gov is acting up, so fall back to alternate api
 		xbmc.log('failed to find weather data from : %s' % url,level=xbmc.LOGERROR)
 		xbmc.log('%s' % daily_weather,level=xbmc.LOGERROR)
-		###return None
 		return fetchAltDaily(num)
 
 	for count, item in enumerate(data['periods']):
-		#code = str(item['weather'][0].get('id',''))
 		icon = item['icon']
 		#https://api.weather.gov/icons/land/night/ovc?size=small
 		icon=icon.rsplit('?', 1)[0]
 		code, rain=code_from_icon(icon)
-		#xbmc.log('icon %s' % icon,level=xbmc.LOGINFO)
-		#xbmc.log('code %s' % code,level=xbmc.LOGINFO)
 
 		weathercode = WEATHER_CODES.get(code)
 		starttime=item['startTime']
 		startstamp=get_timestamp(starttime)
 		set_property('Day%i.isDaytime'		% (count),str(item['isDaytime']))
 		set_property('Day%i.Title'		% (count), item['name'])
-		#xbmc.log('temperature %s' % item['temperature'],level=xbmc.LOGINFO)
 
 		if item['isDaytime'] == True:
 			set_property('Day%i.HighTemp'	% (count), str(FtoC(item['temperature'])))
@@ -217,7 +194,6 @@ def fetchDaily(num):
 			set_property('Day%i.HighTemp'	% (count), str(FtoC(item['temperature'])))
 			set_property('Day%i.LowTemp'	% (count), str(FtoC(item['temperature'])))
 		set_property('Day%i.Outlook'		% (count), item['shortForecast'])
-		#set_property('Day%i.Details'		% (count+1), item['detailedForecast'])
 		set_property('Day%i.OutlookIcon'	% (count), weathercode)
 		set_property('Day%i.RemoteIcon'		% (count), icon)
 
@@ -246,8 +222,6 @@ def fetchDaily(num):
 			set_property('Daily.%i.HighTemperature'	% (count+1), '')
 			set_property('Daily.%i.TempNight'	% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
 			set_property('Daily.%i.LowTemperature'	% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
-		#set_property('Daily.%i.LongDay'		% (count+1), get_weekday(startstamp, 'l'))
-		#set_property('Daily.%i.ShortDay'		% (count+1), get_weekday(startstamp,'s'))
 		if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
 			set_property('Daily.%i.LongDate'	% (count+1), get_month(startstamp, 'dl'))
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ds'))
@@ -259,19 +233,6 @@ def fetchDaily(num):
 			set_property('Daily.%i.Precipitation'	% (count+1), rain + '%')
 		else:
 			set_property('Daily.%i.Precipitation'	% (count+1), '')
-			
-#		set_property('Daily.%i.WindDegree'	% (count+1), str(item.get('deg','')) + u'\N{DEGREE SIGN}')
-#		set_property('Daily.%i.Humidity'	% (count+1), str(item.get('humidity','')) + '%')
-#		set_property('Daily.%i.TempMorn'	% (count+1), TEMP(item['temp']['morn']) + TEMPUNIT)
-#		set_property('Daily.%i.TempDay'		% (count+1), TEMP(item['temp']['day']) + TEMPUNIT)
-#		set_property('Daily.%i.TempEve'		% (count+1), TEMP(item['temp']['eve']) + TEMPUNIT)
-#		set_property('Daily.%i.TempNight'	% (count+1), TEMP(item['temp']['night']) + TEMPUNIT)
-#		set_property('Daily.%i.HighTemperature' % (count+1), TEMP(item['temp']['max']) + TEMPUNIT)
-#		set_property('Daily.%i.LowTemperature'	% (count+1), TEMP(item['temp']['min']) + TEMPUNIT)
-#		set_property('Daily.%i.FeelsLike'	% (count+1), FEELS_LIKE(item['temp']['day'], item['speed'] * 3.6, item['humidity']) + TEMPUNIT)
-#		set_property('Daily.%i.DewPoint'	% (count+1), DEW_POINT(item['temp']['day'], item['humidity']) + TEMPUNIT)
-
-
 
 
 
@@ -291,7 +252,6 @@ def fetchAltDaily(num):
 
 	daily_weather = get_url_JSON(url)
 
-	####	[{"Title": t, "Score": s} for t, s in zip(titles, scores)]if daily_weather and daily_weather != '' and 'data' in daily_weather:
 	if daily_weather and daily_weather != '' and 'data' in daily_weather:
 
 		dailydata=[
@@ -325,40 +285,28 @@ def fetchAltDaily(num):
 		return None
 
 	for count, item in enumerate(dailydata):
-		#code = str(item['weather'][0].get('id',''))
-
 		icon = item['iconLink']
 
 		#https://api.weather.gov/icons/land/night/ovc?size=small
-		#icon=icon.rsplit('?', 1)[0]
 		code, rain=code_from_icon(icon)
-		#xbmc.log('icon %s' % icon,level=xbmc.LOGINFO)
-		#xbmc.log('code %s' % code,level=xbmc.LOGINFO)
 		weathercode = WEATHER_CODES.get(code)
 
 		starttime=item['startValidTime']
 		startstamp=get_timestamp(starttime)
 		set_property('Day%i.Title'		% (count), item['startPeriodName'])
 
-#		if item['tempLabel'] == 'High':
-#			set_property('Day%i.HighTemp'	% (count), str(FtoC(item['temperature'])))
-#		if item['tempLabel'] == 'Low':
-#			set_property('Day%i.LowTemp'	% (count), str(FtoC(item['temperature'])))
 		set_property('Day%i.Outlook'		% (count), item['weather'])
 		set_property('Day%i.Details'		% (count), item['text'])
 		set_property('Day%i.OutlookIcon'	% (count), weathercode)
 		set_property('Day%i.RemoteIcon'		% (count), icon)
 
 		# NOTE: Day props are 0 based, but Daily/Hourly are 1 based
-		####set_property('Daily.%i.isDaytime'	% (count+1),str(item['isDaytime']))
 		set_property('Daily.%i.Outlook'		% (count+1), item['text'])
 		set_property('Daily.%i.ShortOutlook'	% (count+1), item['weather'])
 		
 		set_property('Daily.%i.RemoteIcon'	% (count+1), icon)
 		set_property('Daily.%i.OutlookIcon'	% (count+1), WEATHER_ICON % weathercode)
 		set_property('Daily.%i.FanartCode'	% (count+1), weathercode)
-		##set_property('Daily.%i.WindDirection'	% (count+1), item['windDirection'])
-		##set_property('Daily.%i.WindSpeed'	% (count+1), item['windSpeed'])
 
 		if item['tempLabel'] == 'High':
 			set_property('Daily.%i.LongDay'		% (count+1), item['startPeriodName'])
@@ -374,8 +322,6 @@ def fetchAltDaily(num):
 			set_property('Daily.%i.HighTemperature'	% (count+1), '')
 			set_property('Daily.%i.TempNight'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
 			set_property('Daily.%i.LowTemperature'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
-		#set_property('Daily.%i.LongDay'		% (count+1), get_weekday(startstamp, 'l'))
-		#set_property('Daily.%i.ShortDay'		% (count+1), get_weekday(startstamp,'s'))
 		if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
 			set_property('Daily.%i.LongDate'	% (count+1), get_month(startstamp, 'dl'))
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ds'))
@@ -389,22 +335,11 @@ def fetchAltDaily(num):
 		else:
 			set_property('Daily.%i.Precipitation'	% (count+1), '')
 			
-#		set_property('Daily.%i.WindDegree'	% (count+1), str(item.get('deg','')) + u'\N{DEGREE SIGN}')
-#		set_property('Daily.%i.Humidity'	% (count+1), str(item.get('humidity','')) + '%')
-#		set_property('Daily.%i.TempMorn'	% (count+1), TEMP(item['temp']['morn']) + TEMPUNIT)
-#		set_property('Daily.%i.TempDay'		% (count+1), TEMP(item['temp']['day']) + TEMPUNIT)
-#		set_property('Daily.%i.TempEve'		% (count+1), TEMP(item['temp']['eve']) + TEMPUNIT)
-#		set_property('Daily.%i.TempNight'	% (count+1), TEMP(item['temp']['night']) + TEMPUNIT)
-#		set_property('Daily.%i.HighTemperature' % (count+1), TEMP(item['temp']['max']) + TEMPUNIT)
-#		set_property('Daily.%i.LowTemperature'	% (count+1), TEMP(item['temp']['min']) + TEMPUNIT)
-#		set_property('Daily.%i.FeelsLike'	% (count+1), FEELS_LIKE(item['temp']['day'], item['speed'] * 3.6, item['humidity']) + TEMPUNIT)
-#		set_property('Daily.%i.DewPoint'	% (count+1), DEW_POINT(item['temp']['day'], item['humidity']) + TEMPUNIT)
 
 
 
 	if daily_weather and daily_weather != '' and 'currentobservation' in daily_weather:
 		data=daily_weather['currentobservation']
-		#xbmc.log('data %s' % data,level=xbmc.LOGINFO)
 		icon = "http://forecast.weather.gov/newimages/large/%s" % data.get('Weatherimage')
 		code, rain=code_from_icon(icon)
 		weathercode = WEATHER_CODES.get(code)
@@ -437,7 +372,6 @@ def fetchAltDaily(num):
 		except:
 			set_property('Current.WindGust'	, '')
 
-		#set_property('Current.Precipitation',	str(round(data.get('precipitationLast3Hours').get('value') *	0.04 ,2)) + ' in')
 		if (rain != ''):
 			set_property('Current.ChancePrecipitaion', str(rain)+'%');
 		else :
@@ -462,19 +396,16 @@ def fetchCurrent(num):
 	current=get_url_JSON(url)
 	if current and current != '' and 'properties' in current:
 		data=current['properties']
-		#xbmc.log('data: %s' % data,level=xbmc.LOGINFO)
 	else:
 		xbmc.log('failed to find weather data from : %s' % url,level=xbmc.LOGERROR)
 		xbmc.log('%s' % current,level=xbmc.LOGERROR)
 		return
 	
-	#xbmc.log('data %s' % data,level=xbmc.LOGINFO)
 	icon = data['icon']
 	#https://api.weather.gov/icons/land/night/ovc?size=small
 	icon=icon.rsplit('?', 1)[0]
 	code, rain=code_from_icon(icon)
 	weathercode = WEATHER_CODES.get(code)
-	#set_property('Current.Location', loc)
 	set_property('Current.RemoteIcon',icon) 
 	set_property('Current.OutlookIcon', '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
 	set_property('Current.FanartCode', weathercode)
@@ -486,8 +417,6 @@ def fetchCurrent(num):
 				
 	try:
 		temp=int(round(data.get('temperature').get('value')))
-		#xbmc.log('raw temp %s' % data.get('temperature').get('value'),level=xbmc.LOGINFO)
-		#xbmc.log('temp %s' % temp,level=xbmc.LOGINFO)
 		set_property('Current.Temperature',str(temp)) # api values are in C
 	except:
 		set_property('Current.Temperature','') 
@@ -501,7 +430,6 @@ def fetchCurrent(num):
 	except:
 		set_property('Current.WindDirection', '')
 
-	#set_property('Current.Precipitation',	str(round(data.get('precipitationLast3Hours').get('value') *	0.04 ,2)) + ' in')
 	if (rain != ''):
 		set_property('Current.ChancePrecipitaion', str(rain)+'%');
 	else :
@@ -519,26 +447,13 @@ def fetchCurrent(num):
 		set_property('Current.DewPoint', '') 
 
 
-#	#set_property('Current.UVIndex'			, '') # no idea how the api returns it, use data from current_props()
 
-# # extended properties
+## extended properties
 
-#		set_property('Current.Cloudiness'	, data['last']['clouds'][0].get('condition',''))
 	try:
 		set_property('Current.WindGust'	, SPEED(float(data.get('windGust').get('value',0))/3.6) + SPEEDUNIT)
 	except:
 		set_property('Current.WindGust'	, '')
-		
-#		if 'F' in TEMPUNIT:
-#			set_property('Current.Precipitation', str(round(data['last']['rain']['1h'] *	0.04 ,2)) + ' in')
-#		else:
-#			set_property('Current.Precipitation', str(int(round(data['last']['rain']['1h']))) + ' mm')
-#		if 'F' in TEMPUNIT:
-#			set_property('Current.Pressure'	, str(round(data['last']['main']['pressure'] / 33.86 ,2)) + ' in')
-#		else:
-#			set_property('Current.Pressure'	, str(data['last']['main']['pressure']) + ' mb')
-
-
 
 
 ########################################################################################
@@ -546,31 +461,31 @@ def fetchCurrent(num):
 ########################################################################################
 
 
-#https://api.weather.gov/alerts/active/zone/CTZ006
-#https://api.weather.gov/alerts/active/zone/CTC009
 def fetchWeatherAlerts(num):
 
-	#a_zone=ADDON.getSetting('Location'+str(num)+'Zone')
+	### we could fetch alerts for either 'County', or 'Zone'
+	#https://api.weather.gov/alerts/active/zone/CTZ006
+	#https://api.weather.gov/alerts/active/zone/CTC009
+	#for now, lets use County
+
 	a_zone=ADDON.getSetting('Location'+str(num)+'County')
 	url="https://api.weather.gov/alerts/active/zone/%s" %a_zone	
 	alerts=get_url_JSON(url)
-	#xbmc.log('current data: %s' % current_data,level=xbmc.LOGINFO)
 	# if we have a valid response then clear our current alerts
 	if alerts and alerts != '' and 'features' in alerts:
 		for count in range (1, 10):
 			clear_property('Alerts.%i.event' % (count))	
 	else:
 		xbmc.log('failed to get proper alert response %s' % url,level=xbmc.LOGERROR)
-		xbmc.log('%s' % alerts,level=xbmc.LOGINFO)
+		xbmc.log('%s' % alerts,level=xbmc.LOGDEBUG)
 		return
 		
 	if 'features' in alerts and alerts['features']:
 		data=alerts['features']
-		#xbmc.log('data: %s' % data,level=xbmc.LOGINFO)
 		set_property('Alerts.IsFetched'	, 'true')
 	else:
 		clear_property('Alerts.IsFetched')
-		xbmc.log('No current weather alerts from  %s' % url,level=xbmc.LOGINFO)
+		xbmc.log('No current weather alerts from  %s' % url,level=xbmc.LOGDEBUG)
 		return
 	
 	for count, item in enumerate(data):
@@ -651,10 +566,65 @@ def fetchHourly(num):
 		else:
 			set_property('Hourly.%i.Precipitation'	% (count+1), '')
 			set_property('Hourly.%i.ChancePrecipitation'	% (count+1), '')
-			
-	
 	count = 1
 
+
+########################################################################################
+##  Grabs map selection from user in settings
+########################################################################################
+
+def mapSettings(mapid):
+	s_sel = ADDON.getSetting(mapid+"Sector")
+	t_sel   = ADDON.getSetting(mapid+"Type")
+
+	# convert our map data into matching arrays to pass into dialog
+	s_keys = []
+	s_values= []
+
+	#1st option is blank for removing map
+	s_keys.append("")
+	s_values.append("")
+
+	for key,value in MAPSECTORS.items():
+		s_keys.append(key)
+		s_values.append(value['name'])		
+
+	t_keys = []
+	t_values= []
+	for key,value in MAPTYPES.items():
+		t_keys.append(key)
+		t_values.append(value)		
+
+	dialog = xbmcgui.Dialog()
+
+	# grab index of current region, and pass in as default to dialog
+	si=0
+	try:
+		si=s_keys.index(s_sel.lower())
+	except:
+		#ignore if we did not find
+		si=0
+	si=dialog.select(LANGUAGE(32349),s_values,0,si)
+	s_sel=s_keys[si]
+	ADDON.setSetting(mapid+"Sector",s_sel)
+
+	if si > 0:
+		ti=0	
+		try:
+			ti=t_keys.index(t_sel)
+		except:
+			ti=0	
+		ti=dialog.select(LANGUAGE(32350), t_values,0,ti)
+		t_sel=t_keys[ti]
+		ADDON.setSetting(mapid+"Type",t_keys[ti])
+		ADDON.setSetting(mapid+"Label",MAPSECTORS[s_sel]['name']+":"+MAPTYPES[t_sel])
+	else:
+		ADDON.setSetting(mapid+"Label","")
+	
+	# clean up referenced dialog object	
+	del dialog
+	
+	
 
 
 ########################################################################################
@@ -665,7 +635,7 @@ class MyMonitor(xbmc.Monitor):
 	def __init__(self, *args, **kwargs):
 		xbmc.Monitor.__init__(self)
 
-log('version %s started with argv: %s' % (ADDONVERSION, sys.argv[1]))
+log('version %s started with argv: %s' % (ADDON.getAddonInfo('version'), sys.argv[1]))
 
 MONITOR = MyMonitor()
 set_property('Forecast.IsFetched'	, 'true')
@@ -678,13 +648,13 @@ set_property('36Hour.IsFetched'		, '')
 set_property('Hourly.IsFetched'		, 'true')
 set_property('NOAA.IsFetched'		, 'true')
 set_property('WeatherProvider'		, 'NOAA')
-set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'media', 'skin-banner.png')))
+set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'media', 'skin-banner.png')))
 
 if sys.argv[1].startswith('Location'):
 	log("argument: %s" % (sys.argv[1]))
 	text = ADDON.getSetting(sys.argv[1]+"LatLong")
 	if text == '' :
-		# request lattitude,longitude
+		# request latitude,longitude
 		keyboard = xbmc.Keyboard('', LANGUAGE(32332), False)
 		keyboard.doModal()
 		if (keyboard.isConfirmed() and keyboard.getText() != ''):
@@ -692,6 +662,11 @@ if sys.argv[1].startswith('Location'):
 	if text != '':
 		log("calling location with %s and %s" % (text, sys.argv[1]))
 		fetchLocation(text,sys.argv[1])
+
+elif sys.argv[1].startswith('Map'):
+
+	mapSettings(sys.argv[1])
+
 else:
 
 	num=sys.argv[1]
@@ -713,55 +688,34 @@ else:
 			fetchAltDaily(num)
 		else:
 			fetchCurrent(num)
-			#currentforecast(num)
 			fetchDaily(num)
 		fetchHourly(num)
-		##Station=ADDON.getSetting('Location%scwa' % num)
 		Station=ADDON.getSetting('Location%sradarStation' % num)
 		
 		set_property('Map.IsFetched', 'true')
-#		url="https://radar.weather.gov/ridge/lite/NCR/%s_0.png?d=%s" % (Station,str(time.time()))
-##https://radar.weather.gov/ridge/lite/KOKX_loop.gif
-##https://radar.weather.gov/ridge/lite/KOKX_0.gif
-
-#		xbmc.log('radar url:  %s' % url,level=xbmc.LOGINFO)
 		nowtime=str(time.time())
 		#Radar
 		#KODI will cache and not re-fetch the weather image, so inject a dummy time-stamp into the url to trick kodi because we want the new image
-###		set_property('Map.%i.Area' % 1, "https://radar.weather.gov/ridge/lite/NCR/%s_0.png?t=%s" % (Station,str(time.time())))
 		url="https://radar.weather.gov/ridge/lite/%s_0.gif?%s" % (Station,nowtime)
 		set_property('Map.%i.Area' % 1, url)
-		#xbmc.log('radar url: %s' % url,level=xbmc.LOGINFO)
-
-
-		#set_property('Map.%i.Layer' % 1, url)
 		set_property('Map.%i.Heading' % 1, LANGUAGE(32334))
-#		set_property('Map.%i.Legend' % 1, '')
 
-		#Long Range Radar
-##		set_property('Map.%i.Area' % 2, "https://radar.weather.gov/ridge/lite/N0Z/%s_0.png?t=%s" % (Station,str(time.time())))
-#		url="https://radar.weather.gov/ridge/lite/%s_loop.gif?t=%s.gif" % (Station,str(time.time()))
-#		#xbmc.log('radarloop url: %s' % url,level=xbmc.LOGINFO)
-#		set_property('Map.%i.Area' % 2, url)
-#		set_property('Map.%i.Heading' % 2, LANGUAGE(32333))
 		
 		# add satellite maps if we configured any
 		for count in range (1, 5):
 			mcount=count+1
 			mapsector = ADDON.getSetting('Map%iSector' % (mcount))
 			maptype = ADDON.getSetting('Map%iType' % (mcount))
-			#xbmc.log('Map%iSector: %s' % (mcount,mapsector),level=xbmc.LOGINFO)
-			#xbmc.log('Map%iType: %s' % (mcount,maptype),level=xbmc.LOGINFO)
+			maplabel = ADDON.getSetting('Map%iLabel' % (mcount))
 
 			if (mapsector != '' and maptype != ''):
-				if mapsector == 'CONUS':
-					url="https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/%s/1250x750.jpg?%s" % (maptype,nowtime)
-				else:
-					url="https://cdn.star.nesdis.noaa.gov/GOES16/ABI/SECTOR/%s/%s/1200x1200.jpg?%s" % (mapsector,maptype,nowtime)
+				path=MAPSECTORS.get(mapsector)['path']
+				if mapsector != 'glm-e' and mapsector != 'glm-w':
+					path=path.replace("%s",maptype)
+				url="https://cdn.star.nesdis.noaa.gov/%s?%s" % (path,nowtime)
 				
-				#xbmc.log('map %i url: %s' % (mcount,url),level=xbmc.LOGINFO)
 				set_property('Map.%i.Area' % (mcount), url)
-				set_property('Map.%i.Heading' % (mcount), "%s:%s" % (mapsector,maptype) )
+				set_property('Map.%i.Heading' % (mcount), "%s" % (maplabel) )
 				clear_property('Map.%i.Layer' % (mcount))
 			else:
 				clear_property('Map.%i.Area' % (mcount))
@@ -771,6 +725,13 @@ else:
 		log('no location provided')
 		clear()
 
-log('finished')
+# clean up references to classes that we used
+del MONITOR, xbmc, xbmcgui, xbmcvfs, WEATHER_WINDOW
+# clean up everything we referenced from the utils to prevent any dangling classes hanging around
+del FtoC, log, ADDON, LANGUAGE, MAPSECTORS, MAPTYPES
+del WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x 
+del get_url_JSON 
+del get_month, get_timestamp, get_weekday, get_time
+
 
 

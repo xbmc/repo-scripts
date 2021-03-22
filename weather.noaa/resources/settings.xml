@@ -1,104 +1,1349 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-	<category label="32101">
-
-		<!--  -->
-		<setting label="32111" type="lsep"/>
-		<setting id="Location1LatLong"				label="32332" subsetting="true" type="text" default=""/>
-		<setting action="RunScript($ID,Location1)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
-		<setting id="Location1" 					label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
-		<setting id="Location1Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
-		<setting id="Location1StationName"			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
-		<setting id="Location1radarStation" 		type="text" visible="false" default=""/>
-		<setting id="Location1cwa"					type="text" visible="false" default=""/>
-		<setting id="Location1gridX"				type="text" visible="false" default=""/>
-		<setting id="Location1gridY"				type="text" visible="false" default=""/>
-		<setting id="Location1Zone"					type="text" visible="false" default=""/>
-		<setting id="Location1County"				type="text" visible="false" default=""/>
-		<setting id="Location1forecastGrid_url" 	type="text" visible="false" default=""/>
-		<setting id="Location1forecastHourly_url"	type="text" visible="false" default=""/>
-		<setting id="Location1forecast_url"			type="text" visible="false" default=""/>
-
-		<!--  -->
-		<setting label="32112" type="lsep"/>
-		<setting id="Location2LatLong"				label="32332" subsetting="true" type="text" default=""/>
-		<setting action="RunScript($ID,Location2)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
-		<setting id="Location2"						label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
-		<setting id="Location2Station"				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
-		<setting id="Location2StationName"			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
-		<setting id="Location2radarStation"			type="text" visible="false" default=""/>
-		<setting id="Location2cwa"					type="text" visible="false" default=""/>
-		<setting id="Location2gridX"				type="text" visible="false" default=""/>
-		<setting id="Location2gridY"				type="text" visible="false" default=""/>
-		<setting id="Location2Zone"					type="text" visible="false" default=""/>
-		<setting id="Location2County"				type="text" visible="false" default=""/>
-		<setting id="Location2forecastGrid_url"		type="text" visible="false" default=""/>
-		<setting id="Location2forecastHourly_url"	type="text" visible="false" default=""/>
-		<setting id="Location2forecast_url"			type="text" visible="false" default=""/>
-
-		<!--  -->
-		<setting label="32113" type="lsep"/>
-		<setting id="Location3LatLong"				label="32332" subsetting="true" type="text" default=""/>
-		<setting action="RunScript($ID,Location3)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
-		<setting id="Location3" 					label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
-		<setting id="Location3Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
-		<setting id="Location3StationName" 			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
-		<setting id="Location3radarStation" 		type="text" visible="false" default=""/>
-		<setting id="Location3cwa"					type="text" visible="false" default=""/>
-		<setting id="Location3gridX"				type="text" visible="false" default=""/>
-		<setting id="Location3gridY"				type="text" visible="false" default=""/>
-		<setting id="Location3Zone"					type="text" visible="false" default=""/>
-		<setting id="Location3County"				type="text" visible="false" default=""/>
-		<setting id="Location3forecastGrid_url" 	type="text" visible="false" default=""/>
-		<setting id="Location3forecastHourly_url" 	type="text" visible="false" default=""/>
-		<setting id="Location3forecast_url"			type="text" visible="false" default=""/>
-
-		<!--  -->
-		<setting label="32114" type="lsep"/>
-		<setting id="Location4LatLong"				label="32332" subsetting="true" type="text" default=""/>
-		<setting action="RunScript($ID,Location4)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
-		<setting id="Location4" 					label="32339" subsetting="true" type="text"		enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
-		<setting id="Location4Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
-		<setting id="Location4StationName" 			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
-		<setting id="Location4radarStation" 		type="text" visible="false" default=""/>
-		<setting id="Location4cwa"					type="text" visible="false" default=""/>
-		<setting id="Location4gridX"				type="text" visible="false" default=""/>
-		<setting id="Location4gridY"				type="text" visible="false" default=""/>
-		<setting id="Location4Zone"					type="text" visible="false" default=""/>
-		<setting id="Location4County"				type="text" visible="false" default=""/>
-		<setting id="Location4forecastGrid_url" 	type="text" visible="false" default=""/>
-		<setting id="Location4forecastHourly_url" 	type="text" visible="false" default=""/>
-		<setting id="Location4forecast_url"			type="text" visible="false" default=""/>
-	
-		<!--  -->
-		<setting label="32115" type="lsep"/>
-		<setting id="Location5LatLong"				label="32332" subsetting="true" type="text" default=""/>
-		<setting action="RunScript($ID,Location5)"	label="32337" subsetting="true" type="action"	enable="!eq(-1,)"	visible="!eq(-1,)"/>
-		<setting id="Location5" 					label="32339" subsetting="true" type="text" 	enable="!eq(-2,)"	visible="!eq(-2,)" default=""/>
-		<setting id="Location5Station" 				label="32338" subsetting="true" type="text"		enable="false"		visible="!eq(-3,)" default=""/>
-		<setting id="Location5StationName" 			label="32336" subsetting="true" type="text"		enable="false"		visible="!eq(-4,)" default=""/>
-		<setting id="Location5radarStation" 		type="text" visible="false" default=""/>
-		<setting id="Location5cwa"					type="text" visible="false" default=""/>
-		<setting id="Location5gridX"				type="text" visible="false" default=""/>
-		<setting id="Location5gridY"				type="text" visible="false" default=""/>
-		<setting id="Location5Zone"					type="text" visible="false" default=""/>
-		<setting id="Location5County"				type="text" visible="false" default=""/>
-		<setting id="Location5forecastGrid_url" 	type="text" visible="false" default=""/>
-		<setting id="Location5forecastHourly_url" 	type="text" visible="false" default=""/>
-		<setting id="Location5forecast_url"			type="text" visible="false" default=""/>
-	</category>
-
-	<category label="16000">
-		<setting id="DataSourcePreference"	label="32340" type="labelenum" values="api.weather.gov|forecast.weather.gov"/>
-		<setting id="Debug" 		label="14260" 	type="bool" default="false"/>
-		<setting id="Map2Sector"	label="32341" 	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
-		<setting id="Map2Type"		label="32342" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
-		<setting id="Map3Sector"	label="32343" 	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
-		<setting id="Map3Type"		label="32344" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
-		<setting id="Map4Sector"	label="32345"	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
-		<setting id="Map4Type"		label="32346" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
-		<setting id="Map5Sector"	label="32347" 	type="labelenum" values=" |CONUS|CGL|NE|NR|PNW|PR|PSW|SE|SMV|SP|SR|UMV"/>
-		<setting id="Map5Type"		label="32348" 	type="labelenum" values=" |GEOCOLOR|Sandwich|AirMass|DayCloudPhase|NightMicrophysics|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01"/>
-	</category>
-
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="weather.noaa">
+		<category id="location setup" label="32101" help="">
+			<group id="1" label="32111">
+				<setting id="Location1LatLong" type="string" label="32332" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>32332</heading>
+					</control>
+				</setting>
+				<setting id="Location1Fetch" type="action" label="32337" help="" parent="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Location1)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location1LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location1LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Location1" type="string" label="32339" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location1LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location1LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32339</heading>
+					</control>
+				</setting>
+				<setting id="Location1Station" type="string" label="32338" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location1LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32338</heading>
+					</control>
+				</setting>
+				<setting id="Location1StationName" type="string" label="32336" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location1LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32336</heading>
+					</control>
+				</setting>
+				<setting id="Location1radarStation" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1cwa" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1gridX" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1gridY" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1Zone" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1County" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1forecastGrid_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1forecastHourly_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location1forecast_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+			</group>
+			<group id="2" label="32112">
+				<setting id="Location2LatLong" type="string" label="32332" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>32332</heading>
+					</control>
+				</setting>
+				<setting id="Location2Fetch" type="action" label="32337" help="" parent="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Location2)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location2LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location2LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Location2" type="string" label="32339" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location2LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location2LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32339</heading>
+					</control>
+				</setting>
+				<setting id="Location2Station" type="string" label="32338" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location2LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32338</heading>
+					</control>
+				</setting>
+				<setting id="Location2StationName" type="string" label="32336" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location2LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32336</heading>
+					</control>
+				</setting>
+				<setting id="Location2radarStation" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2cwa" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2gridX" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2gridY" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2Zone" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2County" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2forecastGrid_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2forecastHourly_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2forecast_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+			</group>
+			<group id="3" label="32113">
+				<setting id="Location3LatLong" type="string" label="32332" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>32332</heading>
+					</control>
+				</setting>
+				<setting id="Location3Fetch" type="action" label="32337" help="" parent="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Location3)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location3LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location3LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Location3" type="string" label="32339" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location3LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location3LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32339</heading>
+					</control>
+				</setting>
+				<setting id="Location3Station" type="string" label="32338" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location3LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32338</heading>
+					</control>
+				</setting>
+				<setting id="Location3StationName" type="string" label="32336" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location3LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32336</heading>
+					</control>
+				</setting>
+				<setting id="Location3radarStation" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3cwa" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3gridX" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3gridY" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3Zone" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3County" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3forecastGrid_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3forecastHourly_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location3forecast_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+			</group>
+			<group id="4" label="32114">
+				<setting id="Location4LatLong" type="string" label="32332" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>32332</heading>
+					</control>
+				</setting>
+				<setting id="Location4Fetch" type="action" label="32337" help="" parent="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Location4)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location4LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location4LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Location4" type="string" label="32339" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location4LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location4LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32339</heading>
+					</control>
+				</setting>
+				<setting id="Location4Station" type="string" label="32338" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location4LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32338</heading>
+					</control>
+				</setting>
+				<setting id="Location4StationName" type="string" label="32336" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location4LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32336</heading>
+					</control>
+				</setting>
+				<setting id="Location4radarStation" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4cwa" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4gridX" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4gridY" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4Zone" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4County" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4forecastGrid_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4forecastHourly_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location4forecast_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+			</group>
+			<group id="5" label="32115">
+				<setting id="Location5LatLong" type="string" label="32332" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>32332</heading>
+					</control>
+				</setting>
+				<setting id="Location5Fetch" type="action" label="32337" help="" parent="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Location5)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location5LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location5LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Location5" type="string" label="32339" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location5LatLong" />
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location5LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32339</heading>
+					</control>
+				</setting>
+				<setting id="Location5Station" type="string" label="32338" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location5LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32338</heading>
+					</control>
+				</setting>
+				<setting id="Location5StationName" type="string" label="32336" help="" parent="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="!is" setting="Location5LatLong" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32336</heading>
+					</control>
+				</setting>
+				<setting id="Location5radarStation" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5cwa" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5gridX" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5gridY" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5Zone" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5County" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5forecastGrid_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5forecastHourly_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5forecast_url" type="string" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="general" label="16000" help="">
+			<group id="1">
+				<setting id="DataSourcePreference" type="string" label="32340" help="">
+					<level>0</level>
+					<default />
+					<constraints>
+						<options>
+							<option label="api.weather.gov">api.weather.gov</option>
+							<option label="forecast.weather.gov">forecast.weather.gov</option>
+						</options>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+				<setting id="Debug" type="boolean" label="14260" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="Map2Select" type="action" label="32352" help="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Map2)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Map2Label" type="string" label="" help="" parent="Map2Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="Map2Sector" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map2Sector" type="string" label="" help="" parent="Map2Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map2Type" type="string" label="" help="" parent="Map2Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map3Select" type="action" label="32353" help="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Map3)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Map3Label" type="string" label="" help="" parent="Map3Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="Map3Sector" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map3Sector" type="string" label="" help="" parent="Map3Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map3Type" type="string" label="" help="" parent="Map3Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map4Select" type="action" label="32354" help="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Map4)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Map4Label" type="string" label="" help="" parent="Map4Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="Map4Sector" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map4Sector" type="string" label="" help="" parent="Map4Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map4Type" type="string" label="" help="" parent="Map4Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map5Select" type="action" label="32355" help="">
+					<level>0</level>
+					<data>RunScript(weather.noaa,Map5)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action" />
+				</setting>
+				<setting id="Map5Label" type="string" label="" help="" parent="Map5Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="Map5Sector" />
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map5Sector" type="string" label="" help="" parent="Map5Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Map5Type" type="string" label="" help="" parent="Map5Select">
+					<level>0</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
 </settings>
