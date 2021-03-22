@@ -92,7 +92,7 @@ class HubControl:
             theid = item.get( 'id' )
             if label and theid:
                 activities[label] = { 'activity':label, 'id':str( theid ) }
-                self.LOGLINES.extend( ['added activity:', activities[label]] )
+                self.LOGLINES.append( 'added activity:', activities[label] )
         return activities
 
 
