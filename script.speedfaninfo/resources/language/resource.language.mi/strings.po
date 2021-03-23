@@ -1,0 +1,117 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: mi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr ""
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Celcius"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Fahrenheit"
+msgstr ""
+
+# empty strings from id 30007 to 30009
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr ""
+
+# empty strings from id 30014 to 30019
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr ""
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr ""
+
+# empty strings from id 30022 to 30029
+msgctxt "#30030"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Set Line Read Size"
+msgstr ""
+
+# empty strings from 30032 to 30099
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr ""
+
+msgctxt "#30104"
+msgid "No log file found."
+msgstr ""
+
+msgctxt "#30105"
+msgid "Other Information"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr ""

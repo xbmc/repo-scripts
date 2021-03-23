@@ -18,6 +18,6 @@
     </category>
     <category label="30030">
         <setting id="read_size" type="number" label="30031" default="256" />
-        <setting id="logging" type="bool" label="32209" default="false" />
+        <setting id="debug" type="bool" label="32209" default="false" />
     </category>
 </settings>
