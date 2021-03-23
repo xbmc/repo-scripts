@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
-"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"PO-Revision-Date: 2021-01-18 17:11+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Indonesian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-speedfaninfo/id_id/>\n"
+"Language: id_id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.4.2\n"
 
 msgctxt "#30000"
 msgid "General"
@@ -40,6 +41,53 @@ msgctxt "#30005"
 msgid "    Background Transparency"
 msgstr "Transparansi Latar"
 
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Celcius"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Fahrenheit"
+msgstr ""
+
+# empty strings from id 30007 to 30009
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr ""
+
+# empty strings from id 30014 to 30019
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr ""
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr ""
+
+# empty strings from id 30022 to 30029
+msgctxt "#30030"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Set Line Read Size"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Temperature Information"
 msgstr "Informasi Temperatur"
@@ -52,6 +100,18 @@ msgctxt "#30102"
 msgid "Voltage Information"
 msgstr "Informasi Voltase"
 
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr ""
+
+msgctxt "#30104"
+msgid "No log file found."
+msgstr ""
+
+msgctxt "#30105"
+msgid "Other Information"
+msgstr ""
+
 msgctxt "#32209"
 msgid "Enable debug logging"
-msgstr "Mendeteksi  Nilai HDD"
+msgstr "Mendeteksi Nilai HDD"
