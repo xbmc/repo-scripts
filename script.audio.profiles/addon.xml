@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audio.profiles" name="Audio Profiles" version="2.0.100" provider-name="pkscout, notoco, Regss">
+<addon id="script.audio.profiles" name="Audio Profiles" version="2.1.0+matrix.1" provider-name="pkscout, notoco, Regss">
 	<requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.kodi-six" version="0.1.3.1" />
@@ -8,24 +8,8 @@
 	<extension point="xbmc.service" library="service.py" />
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.2.0.100
-- added support for up to 10 audio profiles
-- added more granular control over notifications
-- added option to have select menu show only for certain media types
-- added auto switching by codec kind and channel count (for videos only)
-- added option to use built in select dialog instead of custom menu
-- added option for more agressive matching of unknown content to auto_music
-- added ability to support skin specific custom select menu
-- added skin support for Ace2, Aeon MQ8, Aeon Nox Silvo, Aeon Tajo, Amber, AppTV, Aura, Arctic Horizon, Arctic Zephyr2Bello 7, Box, Confluence, Embuary, Eminence, Estuary, fTV, Pellucid, Quartz, Rapier, Revolve, Transparency, Unity, and Xperience1080
-- added Matrix specific settings file (HDMI-CEC and Codec Detection are now ADVANCED settings for Matrix)
-- updated language files
-- updated skin support to make it easier to support new skins
-- changed general logic for auto switching
-- changed method for centering select menu
-- fix so PVR recordings are categorized as auto_pvr_tv during auto switch
-- fix for crash in service when changing settings
-- reorganized settings
-- substantial rewrite to eliminate need for service to call main addon via executebuiltin
+v.2.1.0
+- fix for logging issue with Python3
 		</news>
 		<assets>
 			<icon>icon.png</icon>

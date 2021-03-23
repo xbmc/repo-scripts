@@ -1,0 +1,98 @@
+v.2.1.0
+- fix for logging issue with Python3
+
+v.2.0.0
+- added support for up to 10 audio profiles
+- added more granular control over notifications
+- added option to have select menu show only for certain media types
+- added auto switching by codec kind and channel count (for videos only)
+- added option to use built in select dialog instead of custom menu
+- added option for more agressive matching of unknown content to auto_music
+- added ability to support skin specific custom select menu
+- added skin support for Ace2, Aeon MQ8, Aeon Nox Silvo, Aeon Tajo, Amber, AppTV, Aura, Arctic Horizon,
+  Arctic Zephyr2Bello 7, Box, Confluence, Embuary, Eminence, Estuary, fTV, Pellucid, Quartz, Rapier,
+  Revolve, Transparency, Unity, and Xperience1080
+- added Matrix specific settings file (HDMI-CEC and Codec Detection are now ADVANCED settings for Matrix)
+- updated language files
+- updated skin support to make it easier to support new skins
+- changed general logic for auto switching
+- changed method for centering select menu
+- fix so PVR recordings are categorized as auto_pvr_tv during auto switch
+- fix for crash in service when changing settings
+- reorganized settings
+- substantial rewrite to eliminate need for service to call main addon via executebuiltin
+
+v.1.4.3~beta3
+- fix for GUI profile auto loading during playback if you skip to next item
+- added option to change amount of time notification window shows
+
+v.1.4.3~beta1
+- fix for switch dialog box not switching profiles during playback
+
+v.1.4.2
+- added option to disable auto load of profile at startup if it's the one that was enabled at shutdown
+- added option to set delay before pop up dialog automatically closes
+- added option to enable debug logging
+- fix for keymap option to pop up dialog not working
+- fix so the auto loaded profile for startup is always loaded
+- fix so setting to pop up dialog box when playback start works again
+- fix so save notifications show even if notifications are off
+- fix so you don't have to restart Kodi for settings changes to be reflected
+- fix for crash when trying to toggle profiles
+- updated language files
+- cleaned up some setting descriptions
+- changes for better code compatibility between Kodi 18 and 19
+- changes in logging to accomodate new logging requirements for Kodi 19
+
+v1.4.0
+- add basic compatibilityto python3 and Kodi Matrix
+
+v1.2.5
+- fix: assign cdda Audio CD from unknown to audio type
+- fix: prevent auto change immediately after change profile manually
+
+v1.2.4
+- add: kodi start/wakeup (Default) profile
+
+v1.2.3
+- fix: read setting for CEC Command
+
+v1.2.2
+- fix: JSON parse lookandfeel.soundskin value
+- fix: automatic content change for GUI
+
+v1.2.1
+- fix: automatic content detection
+
+v1.2.0
+- add: automatic content detection and enable suitable profile
+- add: sending HDMI-CEC Commands to wake up or sleep your AVR or TV
+
+v1.1.1
+- fix: unicode characters for profiles name
+
+v1.1.0
+- fix: compatibility with KODI 17 Krypton 
+- fix: rewrite window dialog to use WindowXML
+- add: service to auto open menu when star playing video
+
+v1.0.5
+- fix: update addon.xml
+
+v1.0.4
+- fix: writing unicode chars to file profile
+
+v1.0.3
+- add: auto open menu to select audio profile on start playing
+- add: auto close menu after a certain time
+- add: optional save settings from video section
+
+v1.0.2
+- add: now is 4 profile to save settings
+
+v1.0.1
+- fix: case sensitive bolean values
+- add: volume level
+
+v1.0.0
+- init
