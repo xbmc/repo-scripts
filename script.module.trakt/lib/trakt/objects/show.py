@@ -34,12 +34,20 @@ class Show(Media):
         **Note:** this field might not be available with some methods
         """
 
-        self.watchers = None
+        self.watchers = None  # trending
         """
         :type: :class:`~python:int`
 
         Number of active watchers (returned by the :code:`Trakt['movies'].trending()`
         and :code:`Trakt['shows'].trending()` methods)
+        """
+
+        self.user_count = None  # recommended
+        """
+        :type: :class:`~python:int`
+
+        Number of user recommendations (returned by the :code:`Trakt['movies'].recommended()`
+        and :code:`Trakt['shows'].recommended()` methods)
         """
 
         self.first_aired = None
@@ -242,6 +250,9 @@ class Show(Media):
 
         update_attributes(self, info, [
             'title',
+
+            # Recommended
+            'user_count',
 
             # Trending
             'watchers',
