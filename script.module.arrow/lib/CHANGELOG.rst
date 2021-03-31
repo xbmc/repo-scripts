@@ -1,6 +1,213 @@
 Changelog
 =========
 
+1.0.3 (2021-03-05)
+------------------
+
+- [FIX] Updated internals to avoid issues when running ``mypy --strict``.
+- [FIX] Corrections to Swedish locale.
+- [INTERNAL] Lowered required coverage limit until ``humanize`` month tests are fixed.
+
+1.0.2 (2021-02-28)
+------------------
+
+- [FIXED] Fixed an ``OverflowError`` that could occur when running Arrow on a 32-bit OS.
+
+1.0.1 (2021-02-27)
+------------------
+
+- [FIXED] A ``py.typed`` file is now bundled with the Arrow package to conform to PEP 561.
+
+1.0.0 (2021-02-26)
+------------------
+
+After 8 years we're pleased to announce Arrow v1.0. Thanks to the entire Python community for helping make Arrow the amazing package it is today!
+
+- [CHANGE] Arrow has **dropped support** for Python 2.7 and 3.5.
+- [CHANGE] There are multiple **breaking changes** with this release, please see the `migration guide <https://github.com/arrow-py/arrow/issues/832>`_ for a complete overview.
+- [CHANGE] Arrow is now following `semantic versioning <https://semver.org/>`_.
+- [CHANGE] Made ``humanize`` granularity="auto" limits more accurate to reduce strange results.
+- [NEW] Added support for Python 3.9.
+- [NEW] Added a new keyword argument "exact" to ``span``, ``span_range`` and ``interval`` methods. This makes timespans begin at the start time given and not extend beyond the end time given, for example:
+
+.. code-block:: python
+
+    >>> start = Arrow(2021, 2, 5, 12, 30)
+    >>> end = Arrow(2021, 2, 5, 17, 15)
+    >>> for r in arrow.Arrow.span_range('hour', start, end, exact=True):
+    ...     print(r)
+    ...
+    (<Arrow [2021-02-05T12:30:00+00:00]>, <Arrow [2021-02-05T13:29:59.999999+00:00]>)
+    (<Arrow [2021-02-05T13:30:00+00:00]>, <Arrow [2021-02-05T14:29:59.999999+00:00]>)
+    (<Arrow [2021-02-05T14:30:00+00:00]>, <Arrow [2021-02-05T15:29:59.999999+00:00]>)
+    (<Arrow [2021-02-05T15:30:00+00:00]>, <Arrow [2021-02-05T16:29:59.999999+00:00]>)
+    (<Arrow [2021-02-05T16:30:00+00:00]>, <Arrow [2021-02-05T17:14:59.999999+00:00]>)
+
+- [NEW] Arrow now natively supports PEP 484-style type annotations.
+- [FIX] Fixed handling of maximum permitted timestamp on Windows systems.
+- [FIX] Corrections to French, German, Japanese and Norwegian locales.
+- [INTERNAL] Raise more appropriate errors when string parsing fails to match.
+
+0.17.0 (2020-10-2)
+-------------------
+
+- [WARN] Arrow will **drop support** for Python 2.7 and 3.5 in the upcoming 1.0.0 release. This is the last major release to support Python 2.7 and Python 3.5.
+- [NEW] Arrow now properly handles imaginary datetimes during DST shifts. For example:
+
+.. code-block:: python
+
+    >>> just_before = arrow.get(2013, 3, 31, 1, 55, tzinfo="Europe/Paris")
+    >>> just_before.shift(minutes=+10)
+    <Arrow [2013-03-31T03:05:00+02:00]>
+
+.. code-block:: python
+
+    >>> before = arrow.get("2018-03-10 23:00:00", "YYYY-MM-DD HH:mm:ss", tzinfo="US/Pacific")
+    >>> after = arrow.get("2018-03-11 04:00:00", "YYYY-MM-DD HH:mm:ss", tzinfo="US/Pacific")
+    >>> result=[(t, t.to("utc")) for t in arrow.Arrow.range("hour", before, after)]
+    >>> for r in result:
+    ...     print(r)
+    ...
+    (<Arrow [2018-03-10T23:00:00-08:00]>, <Arrow [2018-03-11T07:00:00+00:00]>)
+    (<Arrow [2018-03-11T00:00:00-08:00]>, <Arrow [2018-03-11T08:00:00+00:00]>)
+    (<Arrow [2018-03-11T01:00:00-08:00]>, <Arrow [2018-03-11T09:00:00+00:00]>)
+    (<Arrow [2018-03-11T03:00:00-07:00]>, <Arrow [2018-03-11T10:00:00+00:00]>)
+    (<Arrow [2018-03-11T04:00:00-07:00]>, <Arrow [2018-03-11T11:00:00+00:00]>)
+
+- [NEW] Added ``humanize`` week granularity translation for Tagalog.
+- [CHANGE] Calls to the ``timestamp`` property now emit a ``DeprecationWarning``. In a future release, ``timestamp`` will be changed to a method to align with Python's datetime module. If you would like to continue using the property, please change your code to use the ``int_timestamp`` or ``float_timestamp`` properties instead.
+- [CHANGE] Expanded and improved Catalan locale.
+- [FIX] Fixed a bug that caused ``Arrow.range()`` to incorrectly cut off ranges in certain scenarios when using month, quarter, or year endings.
+- [FIX] Fixed a bug that caused day of week token parsing to be case sensitive.
+- [INTERNAL] A number of functions were reordered in arrow.py for better organization and grouping of related methods. This change will have no impact on usage.
+- [INTERNAL] A minimum tox version is now enforced for compatibility reasons. Contributors must use tox >3.18.0 going forward.
+
+0.16.0 (2020-08-23)
+-------------------
+
+- [WARN] Arrow will **drop support** for Python 2.7 and 3.5 in the upcoming 1.0.0 release. The 0.16.x and 0.17.x releases are the last to support Python 2.7 and 3.5.
+- [NEW] Implemented `PEP 495 <https://www.python.org/dev/peps/pep-0495/>`_ to handle ambiguous datetimes. This is achieved by the addition of the ``fold`` attribute for Arrow objects. For example:
+
+.. code-block:: python
+
+    >>> before = Arrow(2017, 10, 29, 2, 0, tzinfo='Europe/Stockholm')
+    <Arrow [2017-10-29T02:00:00+02:00]>
+    >>> before.fold
+    0
+    >>> before.ambiguous
+    True
+    >>> after = Arrow(2017, 10, 29, 2, 0, tzinfo='Europe/Stockholm', fold=1)
+    <Arrow [2017-10-29T02:00:00+01:00]>
+    >>> after = before.replace(fold=1)
+    <Arrow [2017-10-29T02:00:00+01:00]>
+
+- [NEW] Added ``normalize_whitespace`` flag to ``arrow.get``. This is useful for parsing log files and/or any files that may contain inconsistent spacing. For example:
+
+.. code-block:: python
+
+    >>> arrow.get("Jun 1 2005     1:33PM", "MMM D YYYY H:mmA", normalize_whitespace=True)
+    <Arrow [2005-06-01T13:33:00+00:00]>
+    >>> arrow.get("2013-036 \t  04:05:06Z", normalize_whitespace=True)
+    <Arrow [2013-02-05T04:05:06+00:00]>
+
+0.15.8 (2020-07-23)
+-------------------
+
+- [WARN] Arrow will **drop support** for Python 2.7 and 3.5 in the upcoming 1.0.0 release. The 0.15.x, 0.16.x, and 0.17.x releases are the last to support Python 2.7 and 3.5.
+- [NEW] Added ``humanize`` week granularity translation for Czech.
+- [FIX] ``arrow.get`` will now pick sane defaults when weekdays are passed with particular token combinations, see `#446 <https://github.com/arrow-py/arrow/issues/446>`_.
+- [INTERNAL] Moved arrow to an organization. The repo can now be found `here <https://github.com/arrow-py/arrow>`_.
+- [INTERNAL] Started issuing deprecation warnings for Python 2.7 and 3.5.
+- [INTERNAL] Added Python 3.9 to CI pipeline.
+
+0.15.7 (2020-06-19)
+-------------------
+
+- [NEW] Added a number of built-in format strings. See the `docs <https://arrow.readthedocs.io/#built-in-formats>`_ for a complete list of supported formats. For example:
+
+.. code-block:: python
+
+    >>> arw = arrow.utcnow()
+    >>> arw.format(arrow.FORMAT_COOKIE)
+    'Wednesday, 27-May-2020 10:30:35 UTC'
+
+- [NEW] Arrow is now fully compatible with Python 3.9 and PyPy3.
+- [NEW] Added Makefile, tox.ini, and requirements.txt files to the distribution bundle.
+- [NEW] Added French Canadian and Swahili locales.
+- [NEW] Added ``humanize`` week granularity translation for Hebrew, Greek, Macedonian, Swedish, Slovak.
+- [FIX] ms and μs timestamps are now normalized in ``arrow.get()``, ``arrow.fromtimestamp()``, and ``arrow.utcfromtimestamp()``. For example:
+
+.. code-block:: python
+
+    >>> ts = 1591161115194556
+    >>> arw = arrow.get(ts)
+    <Arrow [2020-06-03T05:11:55.194556+00:00]>
+    >>> arw.timestamp
+    1591161115
+
+- [FIX] Refactored and updated Macedonian, Hebrew, Korean, and Portuguese locales.
+
+0.15.6 (2020-04-29)
+-------------------
+
+- [NEW] Added support for parsing and formatting `ISO 8601 week dates <https://en.wikipedia.org/wiki/ISO_week_date>`_ via a new token ``W``, for example:
+
+.. code-block:: python
+
+    >>> arrow.get("2013-W29-6", "W")
+    <Arrow [2013-07-20T00:00:00+00:00]>
+    >>> utc=arrow.utcnow()
+    >>> utc
+    <Arrow [2020-01-23T18:37:55.417624+00:00]>
+    >>> utc.format("W")
+    '2020-W04-4'
+
+- [NEW] Formatting with ``x`` token (microseconds) is now possible, for example:
+
+.. code-block:: python
+
+    >>> dt = arrow.utcnow()
+    >>> dt.format("x")
+    '1585669870688329'
+    >>> dt.format("X")
+    '1585669870'
+
+- [NEW] Added ``humanize`` week granularity translation for German, Italian, Polish & Taiwanese locales.
+- [FIX] Consolidated and simplified German locales.
+- [INTERNAL] Moved testing suite from nosetest/Chai to pytest/pytest-mock.
+- [INTERNAL] Converted xunit-style setup and teardown functions in tests to pytest fixtures.
+- [INTERNAL] Setup Github Actions for CI alongside Travis.
+- [INTERNAL] Help support Arrow's future development by donating to the project on `Open Collective <https://opencollective.com/arrow>`_.
+
+0.15.5 (2020-01-03)
+-------------------
+
+- [WARN] Python 2 reached EOL on 2020-01-01. arrow will **drop support** for Python 2 in a future release to be decided (see `#739 <https://github.com/arrow-py/arrow/issues/739>`_).
+- [NEW] Added bounds parameter to ``span_range``, ``interval`` and ``span`` methods. This allows you to include or exclude the start and end values.
+- [NEW] ``arrow.get()`` can now create arrow objects from a timestamp with a timezone, for example:
+
+.. code-block:: python
+
+    >>> arrow.get(1367900664, tzinfo=tz.gettz('US/Pacific'))
+    <Arrow [2013-05-06T21:24:24-07:00]>
+
+- [NEW] ``humanize`` can now combine multiple levels of granularity, for example:
+
+.. code-block:: python
+
+    >>> later140 = arrow.utcnow().shift(seconds=+8400)
+    >>> later140.humanize(granularity="minute")
+    'in 139 minutes'
+    >>> later140.humanize(granularity=["hour", "minute"])
+    'in 2 hours and 19 minutes'
+
+- [NEW] Added Hong Kong locale (``zh_hk``).
+- [NEW] Added ``humanize`` week granularity translation for Dutch.
+- [NEW] Numbers are now displayed when using the seconds granularity in ``humanize``.
+- [CHANGE] ``range`` now supports both the singular and plural forms of the ``frames`` argument (e.g. day and days).
+- [FIX] Improved parsing of strings that contain punctuation.
+- [FIX] Improved behaviour of ``humanize`` when singular seconds are involved.
+
 0.15.4 (2019-11-02)
 -------------------
 
@@ -28,7 +235,7 @@ Changelog
 
 - [NEW] Added ``humanize`` week granularity translations for Chinese, Spanish and Vietnamese.
 - [CHANGE] Added ``ParserError`` to module exports.
-- [FIX] Added support for midnight at end of day. See `#703 <https://github.com/crsmithdev/arrow/issues/703>`_ for details.
+- [FIX] Added support for midnight at end of day. See `#703 <https://github.com/arrow-py/arrow/issues/703>`_ for details.
 - [INTERNAL] Created Travis build for macOS.
 - [INTERNAL] Test parsing and formatting against full timezone database.
 
@@ -37,7 +244,7 @@ Changelog
 
 - [NEW] Added ``humanize`` week granularity translations for Portuguese and Brazilian Portuguese.
 - [NEW] Embedded changelog within docs and added release dates to versions.
-- [FIX] Fixed a bug that caused test failures on Windows only, see `#668 <https://github.com/crsmithdev/arrow/issues/668>`_ for details.
+- [FIX] Fixed a bug that caused test failures on Windows only, see `#668 <https://github.com/arrow-py/arrow/issues/668>`_ for details.
 
 0.15.1 (2019-09-10)
 -------------------
@@ -52,7 +259,7 @@ Changelog
 - [NEW] Added support for DDD and DDDD ordinal date tokens. The following functionality is now possible: ``arrow.get("1998-045")``, ``arrow.get("1998-45", "YYYY-DDD")``, ``arrow.get("1998-045", "YYYY-DDDD")``.
 - [NEW] ISO 8601 basic format for dates and times is now supported (e.g. ``YYYYMMDDTHHmmssZ``).
 - [NEW] Added ``humanize`` week granularity translations for French, Russian and Swiss German locales.
-- [CHANGE] Timestamps of type ``str`` are no longer supported **without a format string** in the ``arrow.get()`` method. This change was made to support the ISO 8601 basic format and to address bugs such as `#447 <https://github.com/crsmithdev/arrow/issues/447>`_.
+- [CHANGE] Timestamps of type ``str`` are no longer supported **without a format string** in the ``arrow.get()`` method. This change was made to support the ISO 8601 basic format and to address bugs such as `#447 <https://github.com/arrow-py/arrow/issues/447>`_.
 
 The following will NOT work in v0.15.0:
 
@@ -72,9 +279,9 @@ The following will work in v0.15.0:
 
 - [CHANGE] When a meridian token (a|A) is passed and no meridians are available for the specified locale (e.g. unsupported or untranslated) a ``ParserError`` is raised.
 - [CHANGE] The timestamp token (``X``) will now match float timestamps of type ``str``: ``arrow.get(“1565358758.123415”, “X”)``.
-- [CHANGE] Strings with leading and/or trailing whitespace will no longer be parsed without a format string. Please see `the docs <https://arrow.readthedocs.io/en/latest/#regular-expressions>`_ for ways to handle this.
+- [CHANGE] Strings with leading and/or trailing whitespace will no longer be parsed without a format string. Please see `the docs <https://arrow.readthedocs.io/#regular-expressions>`_ for ways to handle this.
 - [FIX] The timestamp token (``X``) will now only match on strings that **strictly contain integers and floats**, preventing incorrect matches.
-- [FIX] Most instances of ``arrow.get()`` returning an incorrect ``Arrow`` object from a partial parsing match have been eliminated. The following issue have been addressed: `#91 <https://github.com/crsmithdev/arrow/issues/91>`_, `#196 <https://github.com/crsmithdev/arrow/issues/196>`_, `#396 <https://github.com/crsmithdev/arrow/issues/396>`_, `#434 <https://github.com/crsmithdev/arrow/issues/434>`_, `#447 <https://github.com/crsmithdev/arrow/issues/447>`_, `#456 <https://github.com/crsmithdev/arrow/issues/456>`_, `#519 <https://github.com/crsmithdev/arrow/issues/519>`_, `#538 <https://github.com/crsmithdev/arrow/issues/538>`_, `#560 <https://github.com/crsmithdev/arrow/issues/560>`_.
+- [FIX] Most instances of ``arrow.get()`` returning an incorrect ``Arrow`` object from a partial parsing match have been eliminated. The following issue have been addressed: `#91 <https://github.com/arrow-py/arrow/issues/91>`_, `#196 <https://github.com/arrow-py/arrow/issues/196>`_, `#396 <https://github.com/arrow-py/arrow/issues/396>`_, `#434 <https://github.com/arrow-py/arrow/issues/434>`_, `#447 <https://github.com/arrow-py/arrow/issues/447>`_, `#456 <https://github.com/arrow-py/arrow/issues/456>`_, `#519 <https://github.com/arrow-py/arrow/issues/519>`_, `#538 <https://github.com/arrow-py/arrow/issues/538>`_, `#560 <https://github.com/arrow-py/arrow/issues/560>`_.
 
 0.14.7 (2019-09-04)
 -------------------
@@ -102,13 +309,13 @@ The following will work in v0.15.0:
 -------------------
 
 - [FIX] Fixed a regression in 0.14.3 that prevented a tzinfo argument of type string to be passed to the ``get()`` function. Functionality such as ``arrow.get("2019072807", "YYYYMMDDHH", tzinfo="UTC")`` should work as normal again.
-- [CHANGE] Moved ``backports.functools_lru_cache`` dependency from ``extra_requires`` to ``install_requires`` for ``Python 2.7`` installs to fix `#495 <https://github.com/crsmithdev/arrow/issues/495>`_.
+- [CHANGE] Moved ``backports.functools_lru_cache`` dependency from ``extra_requires`` to ``install_requires`` for ``Python 2.7`` installs to fix `#495 <https://github.com/arrow-py/arrow/issues/495>`_.
 
 0.14.3 (2019-07-28)
 -------------------
 
 - [NEW] Added full support for Python 3.8.
-- [CHANGE] Added warnings for upcoming factory.get() parsing changes in 0.15.0. Please see `#612 <https://github.com/crsmithdev/arrow/issues/612>`_ for full details.
+- [CHANGE] Added warnings for upcoming factory.get() parsing changes in 0.15.0. Please see `#612 <https://github.com/arrow-py/arrow/issues/612>`_ for full details.
 - [FIX] Extensive refactor and update of documentation.
 - [FIX] factory.get() can now construct from kwargs.
 - [FIX] Added meridians to Spanish Locale.
