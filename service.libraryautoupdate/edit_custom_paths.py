@@ -5,7 +5,7 @@ from resources.lib.cronclasses import CustomPathFile
 dialog = xbmcgui.Dialog()
 
 # show the disclaimer - do this every time
-dialog.ok(utils.getString(30031), "", utils.getString(30032), utils.getString(30033))
+dialog.ok(utils.getString(30031), "%s\n%s" % (utils.getString(30032), utils.getString(30033)))
 
 
 def selectPath(contentType):
@@ -47,7 +47,7 @@ def showMainScreen(contentType):
                     customPaths.addPath(path)
             else:
                 # delete?
-                if(dialog.yesno(heading=utils.getString(30021), line1=utils.getString(30022))):
+                if(dialog.yesno(heading=utils.getString(30021), message=utils.getString(30022))):
                     # get the id of the selected item
                     aPath = customPaths.getPaths()[exitCondition - 1]
                     # delete that id

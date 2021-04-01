@@ -67,16 +67,16 @@ msgid "Run during playback"
 msgstr "Run during playback"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Startup Delay (minutes)"
+msgid "Startup Delay"
+msgstr "Startup Delay"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Used Advanced Timer"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Amount of time between updates (hours)"
+msgid "Amount of time between updates"
+msgstr "Amount of time between updates"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -217,3 +217,95 @@ msgstr "Update will run again "
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "Do you wish to manually run an update?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "No Delay"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 Minute"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 Minutes"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 Minutes"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 Minutes"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 Minutes"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 Hour"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 Hours"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 Hours"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 Hours"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 Hours"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 Hours"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "How long to delay missed scan after system startup"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Allow library scans when media is playing"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "Only allow scans to start when system is idle (screensaver active)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "Disables the dialog box when starting a Manual Run"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "Toggle use a cron timer instead of the simple timer"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "Select how often to start library scans"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "Launch the custom paths editor to select specific scan directories instead of the entire library"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "Run the Kodi library clean process to remove deleted media"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "Adds additional confirmation prompt before clean process runs"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
