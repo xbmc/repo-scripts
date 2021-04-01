@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.8" provider-name="Paul VW">
+<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.10" provider-name="Paul VW">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
      <import addon="script.module.requests"   version="1.0.0"/>
@@ -8,18 +8,25 @@
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="nl_NL">Start scenes in Domoticz vanuit Kodi</summary>
+    <summary lang="nl_NL">Bedien Domoticz vanuit Kodi</summary>
+    <summary lang="en_GB">Control Domoticz from Kodi</summary>
     <description lang="nl_NL">Start scenes in Domoticz vanuit Kodi. </description>
     <disclaimer lang="nl_NL">Disclaimer</disclaimer>
+    <disclaimer lang="en_GB">Disclaimer</disclaimer>
     <platform>all</platform>
     <license>GPL-2.0-or-later</license>
     <website>https://github.com/Paul-VW/script.domoticz.scenes</website> <!-- the url of the website that contains the videos (or the official website of your plugin). May be omitted.  -->
     <email>paulvw@live.com</email> <!-- may be omitted  -->
     <source>https://github.com/Paul-VW/script.domoticz.scenes</source>
     <news>v0.0.1 (22/03/2021)
-      [new] beta Release
-      v0.0.8 (24/03/2021)
-      [new] Support for scenes, switches and favorites
+[new] beta Release
+
+v0.0.8 (24/03/2021)
+[new] Support for scenes, switches and favorites
+
+v0.0.10 (01/04/2021)
+[fix] code cleanup
+[fix] Domoticz authentication
     </news>
     <assets>
         <icon>resources/icon.png</icon>

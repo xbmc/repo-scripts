@@ -51,3 +51,11 @@ msgstr "Switches"
 msgctxt "#30407"
 msgid "Favorites"
 msgstr "Favorites"
+
+msgctxt "#30498"
+msgid "Domoticz in Kodi"
+msgstr "Domoticz in Kodi"
+
+msgctxt "#30499"
+msgid "------End of list------"
+msgstr "------End of list------"

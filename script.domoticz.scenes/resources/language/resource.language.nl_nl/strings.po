@@ -48,3 +48,11 @@ msgctxt "#30407"
 msgid "Favorites"
 msgstr "Favorieten"
 
+msgctxt "#30498"
+msgid "Domoticz in Kodi"
+msgstr "Domoticz in Kodi"
+
+msgctxt "#30499"
+msgid "------End of list------"
+msgstr "------Einde------"
+
