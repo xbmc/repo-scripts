@@ -1,3 +1,26 @@
+4.4.0 (2021-03-19)
+------------------
+**Added**
+
+- **Interfaces:**
+
+  - :code:`Trakt['movies']` :code:`recommended()`
+  - :code:`Trakt['shows']` :code:`recommended()`
+
+4.3.0 (2021-03-19)
+------------------
+**Added**
+
+- **Interfaces:**
+
+  - :code:`Trakt['movies']` :code:`popular()`
+  - :code:`Trakt['shows']` :code:`popular()`
+
+**Changed**
+
+- Updated "arrow" requirement to support v1.0.0 (#91)
+- Updated "requests" requirement to exclude v2.16.0 (#88)
+
 4.2.0 (2020-06-29)
 ------------------
 **Added**
