@@ -132,7 +132,7 @@ def from_iso8601_datetime(value):
         raise Exception('"arrow" module is not available')
 
     # Parse ISO8601 datetime
-    dt = arrow.get(value, 'YYYY-MM-DDTHH:mm:ss.SZ')
+    dt = arrow.get(value, 'YYYY-MM-DDTHH:mm:ss.SZZ')
 
     # Convert to UTC
     dt = dt.to('UTC')

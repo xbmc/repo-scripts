@@ -32,6 +32,14 @@ class Movie(Video):
         and :code:`Trakt['shows'].trending()` methods)
         """
 
+        self.user_count = None  # recommended
+        """
+        :type: :class:`~python:int`
+
+        Number of user recommendations (returned by the :code:`Trakt['movies'].recommended()`
+        and :code:`Trakt['shows'].recommended()` methods)
+        """
+
         self.tagline = None
         """
         :type: :class:`~python:str`
@@ -194,6 +202,9 @@ class Movie(Video):
 
         update_attributes(self, info, [
             'title',
+
+            # Recommended
+            'user_count',
 
             # Trending
             'watchers',
