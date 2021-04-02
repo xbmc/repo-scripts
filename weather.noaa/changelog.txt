@@ -1,0 +1,48 @@
+v2.0.3
+- fix an import
+
+v2.0.2
+- rework settings to new xml structure
+- move satellite map options into function call instead of hard coded in settings (may grab from api in the future)
+- code cleanup for matrix submission
+- abandon/break all Leia compatibility to meet matrix submission requirements.
+
+v2.0.1
+- move some settings labels into strings.po
+
+v2.0.0
+- Version bump for matrix
+
+v1.0.11
+- Fix logger error in Matrix
+
+v1.0.10
+- Fetch various satellite images for maps 2-5, configured via advanced settings
+
+v1.0.9
+- Weather service changed the Radar images.  Only crappy ones available now without tons of front-end browser layering
+
+v1.0.8
+- clean up code
+- add header to http request to avoid proxy complaints
+
+v1.0.7
+- add in a couple weather radar maps
+
+v1.0.6
+- several fixes
+- allow switching between forecast.weather.gov and api.weather.gov as primary source for current and daily data
+
+v1.0.2
+- handle missing data in fallback forecast bettter
+
+v1.0.1
+- updates for python3
+- unset alert var when there are no alerts so that skins can hide them
+- fix missing degree symbol temps 
+
+v0.8.4
+- add in NOAA weather alerts
+
+v0.8.3 
+- initial release
