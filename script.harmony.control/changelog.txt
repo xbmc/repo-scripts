@@ -1,0 +1,5 @@
+v.0.2.2
+- fix for logging error
+
+v.0.1.5
+- initial release
