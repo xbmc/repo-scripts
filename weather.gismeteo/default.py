@@ -10,6 +10,7 @@ import time
 import xbmc
 
 from resources.libs import Gismeteo, GismeteoError, Location, Weather, WebClientError
+from simpleplugin import translate_path
 
 weather = Weather()
 _ = weather.initialize_gettext()
@@ -490,7 +491,7 @@ if __name__ == '__main__':
     description['Hourly.IsFetched'] = 'true'
 
     description['WeatherProvider'] = weather.name
-    description['WeatherProviderLogo'] = xbmc.translatePath(os.path.join(weather.path, 'resources', 'media', 'banner.png'))
+    description['WeatherProviderLogo'] = translate_path(os.path.join(weather.path, 'resources', 'media', 'banner.png'))
 
     weather.set_properties(description)
 

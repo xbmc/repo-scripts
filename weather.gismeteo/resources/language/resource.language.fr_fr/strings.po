@@ -1,0 +1,275 @@
+# Kodi Media Center language file
+# Addon Name: Gismeteo
+# Addon id: weather.gismeteo
+# Addon Provider: vl.maksime
+
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+# Categories
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Configuration de l'emplacement"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Avancé"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Expert"
+
+# Location setup
+
+msgctxt "#32110"
+msgid "Current Location"
+msgstr "Emplacement actuel"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Emplacement 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Emplacement 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Emplacement 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Emplacement 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Emplacement 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "Emplacement 1 ID"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "Emplacement 2 ID"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "Emplacement 3 ID"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "Emplacement 4 ID"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "Emplacement 5 ID"
+
+# Advanced
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Week-end"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Samedi/Dimanche"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Vendredi/Samedi"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Jeudi/Vendredi"
+
+msgctxt "#32130"
+msgid "Time zone"
+msgstr "Fuseau horaire"
+
+msgctxt "#32131"
+msgid "from system settings"
+msgstr "À partir des paramètres"
+
+msgctxt "#32132"
+msgid "from location"
+msgstr "Depuis l'emplacement"
+
+msgctxt "#32133"
+msgid "Measure units"
+msgstr "Unités de mesure"
+
+msgctxt "#32134"
+msgid "Pressure"
+msgstr "Pression"
+
+msgctxt "#32135"
+msgid "Precipitation"
+msgstr "Précipitations"
+
+msgctxt "#32136"
+msgid "Clear cache"
+msgstr "Vider le cache"
+
+msgctxt "#32200"
+msgid "User interface language"
+msgstr "Langue de l'interface utilisateur"
+
+msgctxt "#32201"
+msgid "Russian"
+msgstr "Russe"
+
+msgctxt "#32202"
+msgid "Ukrainian"
+msgstr "Ukrainien"
+
+msgctxt "#32203"
+msgid "Lithuanian"
+msgstr "Lituanien"
+
+msgctxt "#32204"
+msgid "Latvian"
+msgstr "Letton"
+
+msgctxt "#32205"
+msgid "English"
+msgstr "Anglais"
+
+msgctxt "#32206"
+msgid "Romanian"
+msgstr "Roumain"
+
+msgctxt "#32207"
+msgid "German"
+msgstr "Allemand"
+
+msgctxt "#32208"
+msgid "Polish"
+msgstr "Polonais"
+
+msgctxt "#32220"
+msgid "Gismeteo icons"
+msgstr "Icônes de Gismeteo"
+
+msgctxt "#32221"
+msgid "Use Gismeteo icons"
+msgstr "Utiliser les icônes de Gismeteo"
+
+msgctxt "#32222"
+msgid "Install icon package"
+msgstr "Installer le paquet des icônes"
+
+msgctxt "#32223"
+msgid "Requires Kodi 16+ and skin support"
+msgstr "Nécessite Kodi 16+ et le support des thèmes"
+
+msgctxt "#32299"
+msgid "Language"
+msgstr "Langue"
+
+msgctxt "#32301"
+msgid "a/p"
+msgstr "a/p"
+
+# Speed
+
+msgctxt "#32401"
+msgid "m/s"
+msgstr "m/s"
+
+msgctxt "#32402"
+msgid "km/h"
+msgstr "km/h"
+
+msgctxt "#32403"
+msgid "m/min"
+msgstr "m/min"
+
+msgctxt "#32404"
+msgid "ft/h"
+msgstr "ft/h"
+
+msgctxt "#32405"
+msgid "ft/min"
+msgstr "ft/min"
+
+msgctxt "#32406"
+msgid "ft/s"
+msgstr "ft/s"
+
+msgctxt "#32407"
+msgid "knots"
+msgstr "nœuds"
+
+msgctxt "#32408"
+msgid "Beaufort"
+msgstr "Beaufort"
+
+msgctxt "#32409"
+msgid "inch/s"
+msgstr "inch/s"
+
+msgctxt "#32410"
+msgid "yard/s"
+msgstr "yard/s"
+
+msgctxt "#32411"
+msgid "Furlong/Fortnight"
+msgstr "Furlong/2 semaines"
+
+msgctxt "#32412"
+msgid "mph"
+msgstr "mph"
+
+msgctxt "#32413"
+msgid "kts"
+msgstr "kts"
+
+# Wind direction
+
+msgctxt "#32420"
+msgid "calm"
+msgstr "Doux"
+
+# Precipitation
+
+msgctxt "#32430"
+msgid "mm"
+msgstr "mm"
+
+msgctxt "#32431"
+msgid "inch"
+msgstr "centimètres"
+
+msgctxt "#32432"
+msgid "n/a"
+msgstr "n/a"
+
+# Pressure
+
+msgctxt "#32440"
+msgid "mmHg"
+msgstr "mmHg"
+
+msgctxt "#32441"
+msgid "hPa"
+msgstr "hPa"
+
+msgctxt "#32442"
+msgid "mbar"
+msgstr "mbar"
+
+msgctxt "#32443"
+msgid "inHg"
+msgstr "inHg"
+
+# Messages
+
+msgctxt "#32501"
+msgid "Connection error"
+msgstr "Erreur de connexion"
