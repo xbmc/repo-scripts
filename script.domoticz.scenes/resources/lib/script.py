@@ -5,11 +5,13 @@ import xbmcaddon
 import sys
 import requests
 import json
+import base64
+
 
 addon_handle = int(sys.argv[1])
 xbmcplugin.setContent(addon_handle, 'videos')
 addonID = 'script.domoticz.scenes'
-addonVersion = '0.0.10'
+addonVersion = '0.0.11'
 addonDate = "4/1/2021"
 
 
@@ -39,8 +41,11 @@ def get_base_url(host, port, useSsl, username=None, password=None):
     else:
         base_url = "http://" + host + ":" + str(port)
 
+    username64 = base64.b64encode(username.encode("utf-8"))
+    password64 = base64.b64encode(password.encode("utf-8"))
+
     if username is not None:
-        setcreds = 'username=' + username + '&password=' + password + '&'
+        setcreds = 'username=' + str(username64.decode("utf-8")) + '&password=' + str(password64.decode("utf-8")) + '&'
     else:
         setcreds = ''
 
