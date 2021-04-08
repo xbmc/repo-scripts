@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<<<<<<< HEAD
 <addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.11" provider-name="Paul VW">
-=======
-<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.8" provider-name="Paul VW">
->>>>>>> 69b2f74fb... Add files via upload
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
      <import addon="script.module.requests"   version="1.0.0"/>
@@ -12,7 +8,6 @@
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-<<<<<<< HEAD
     <summary lang="nl_NL">Bedien Domoticz vanuit Kodi</summary>
     <summary lang="en_GB">Control Domoticz from Kodi</summary>
     <description lang="nl_NL">Start scenes in Domoticz vanuit Kodi. </description>
@@ -34,7 +29,6 @@ v0.0.10 (01/04/2021)
 
 v0.0.11 (01/04/2021)
 [fix] Domoticz authentication
-=======
     <summary lang="nl_NL">Start scenes in Domoticz vanuit Kodi</summary>
     <description lang="nl_NL">Start scenes in Domoticz vanuit Kodi. </description>
     <disclaimer lang="nl_NL">Disclaimer</disclaimer>
@@ -47,15 +41,11 @@ v0.0.11 (01/04/2021)
       [new] beta Release
       v0.0.8 (24/03/2021)
       [new] Support for scenes, switches and favorites
->>>>>>> 69b2f74fb... Add files via upload
+[fix] Domoticz authentication
     </news>
     <assets>
         <icon>resources/icon.png</icon>
         <fanart>resources/fanart.jpg</fanart>
     </assets>
   </extension>
-<<<<<<< HEAD
 </addon>
-=======
-</addon>
->>>>>>> 69b2f74fb... Add files via upload

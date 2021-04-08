@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import resources.lib.script as script
-
-script.run()
-=======
 import xbmcplugin
 import xbmcgui
 import xbmc
@@ -309,4 +304,3 @@ if action != "------End of list------":
     else:
         idx = get_idx(optionsDict=optionsDict, action=action)
         switch_switch(host=domoticz_host, port=domoticz_port, idx=idx, useSsl=False)
->>>>>>> 69b2f74fb... Add files via upload
