@@ -1,4 +1,4 @@
-<addon id="script.speedfaninfo" name="SpeedFan Information Display" provider-name="pkscout" version="1.2.0+matrix.1">
+<addon id="script.speedfaninfo" name="SpeedFan Information Display" provider-name="pkscout" version="1.2.1+matrix.1">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.kodi-six" version="0.1.3.1" />
@@ -8,8 +8,8 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.1.2.0
-- fix for logging issue with Python3
+v.1.2.1
+- fix for code reversion that used the wrong logging levels on Matrix
 		</news>
 		<assets>
         	<icon>icon.png</icon>
