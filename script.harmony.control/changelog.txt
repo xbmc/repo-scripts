@@ -1,3 +1,6 @@
+v.0.2.3
+- fix for crash when running activity
+
 v.0.2.2
 - fix for logging error
 
