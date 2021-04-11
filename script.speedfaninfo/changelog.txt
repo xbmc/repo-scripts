@@ -1,3 +1,6 @@
+v.1.2.1
+- fix for code reversion that used the wrong logging levels on Matrix
+
 v.1.2.0
 - fix for logging issue with Python3
 
