@@ -1,4 +1,4 @@
-# 0.1.3
+# 0.1.4
 
 import json
 import websocket
@@ -89,7 +89,8 @@ class HubControl:
             theid = item.get('id')
             if label and theid:
                 activities[label] = {'activity': label, 'id': str(theid)}
-                self.LOGLINES.append('added activity: ' + activities[label])
+                self.LOGLINES.append(
+                    'added activity %s with id of %s' % (label, theid))
         return activities
 
     def _get_commands(self):
