@@ -48,7 +48,7 @@ class CinemaMode(object):
                 trailer_rating = str(round(trailer['rating'], 1))
                 trailer_thumb = trailer['art'].get('landscape') or trailer['art'].get('fanart') or trailer['art'].get('poster', '')
 
-                listitem = xbmcgui.ListItem(trailer_title)
+                listitem = xbmcgui.ListItem(trailer_title, offscreen=True)
                 listitem.setInfo('video', {'Title': trailer_title,
                                            'mediatype': 'video',
                                            'plot': trailer.get('plot', ''),
@@ -69,7 +69,7 @@ class CinemaMode(object):
         if self.intro_path:
             intro = self.get_intros()
             if intro:
-                listitem = xbmcgui.ListItem('Intro')
+                listitem = xbmcgui.ListItem('Intro', offscreen=True)
                 listitem.setInfo('video', {'Title': 'Intro',
                                            'mediatype': 'video'}
                                            )
