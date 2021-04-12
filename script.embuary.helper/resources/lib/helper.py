@@ -20,9 +20,9 @@ import urllib.request as urllib
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
-ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
-ADDON_DATA_IMG_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img" % ADDON_ID))
-ADDON_DATA_IMG_TEMP_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img/tmp" % ADDON_ID))
+ADDON_DATA_PATH = os.path.join(xbmcvfs.translatePath("special://profile/addon_data/%s" % ADDON_ID))
+ADDON_DATA_IMG_PATH = os.path.join(xbmcvfs.translatePath("special://profile/addon_data/%s/img" % ADDON_ID))
+ADDON_DATA_IMG_TEMP_PATH = os.path.join(xbmcvfs.translatePath("special://profile/addon_data/%s/img/tmp" % ADDON_ID))
 
 INFO = xbmc.LOGINFO
 WARNING = xbmc.LOGWARNING

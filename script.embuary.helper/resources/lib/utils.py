@@ -568,7 +568,7 @@ def details_by_season(params):
 
 def txtfile(params):
     prop = params.get('prop')
-    path = xbmc.translatePath(remove_quotes(params.get('path')))
+    path = xbmcvfs.translatePath(remove_quotes(params.get('path')))
 
     if os.path.isfile(path):
         log('Reading file %s' % path)

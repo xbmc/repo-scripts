@@ -9,7 +9,7 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 import os
-from PIL import ImageFilter,Image,ImageOps
+from PIL import ImageFilter,Image,ImageOps,ImageEnhance
 
 from resources.lib.helper import *
 
@@ -17,6 +17,7 @@ from resources.lib.helper import *
 
 BLUR_CONTAINER = xbmc.getInfoLabel('Skin.String(BlurContainer)') or 100000
 BLUR_RADIUS = xbmc.getInfoLabel('Skin.String(BlurRadius)') or ADDON.getSetting('blur_radius')
+BLUR_SATURATION = xbmc.getInfoLabel('Skin.String(BlurSaturation)') or '1.0'
 OLD_IMAGE = ''
 
 #################################################################################################
@@ -39,16 +40,14 @@ except OSError as e:
 ''' blur image and store result in addon data folder
 '''
 class ImageBlur():
-    def __init__(self,prop='listitem',file=None,radius=None):
+    def __init__(self,prop='listitem',file=None,radius=None,saturation=None):
         global OLD_IMAGE
         self.image = file if file is not None else xbmc.getInfoLabel('Control.GetLabel(%s)' % BLUR_CONTAINER)
         self.radius = int(radius) if radius is not None else int(BLUR_RADIUS)
+        self.saturation = float(saturation) if saturation is not None else float(BLUR_SATURATION)
 
         if self.image:
-            if self.image == OLD_IMAGE:
-                log('Image blurring: Image has not changed. Skip %s.' % self.image, DEBUG)
-
-            else:
+            if self.image != OLD_IMAGE:
                 log('Image blurring: Image changed. Blur %s.' % self.image, DEBUG)
                 OLD_IMAGE = self.image
 
@@ -63,7 +62,7 @@ class ImageBlur():
         return self.filepath, self.avgcolor
 
     def blur(self):
-        filename = md5hash(self.image) + str(self.radius) + '.png'
+        filename = md5hash(self.image) + str(self.radius) + str(self.saturation) + '.png'
         targetfile = os.path.join(ADDON_DATA_IMG_PATH, filename)
 
         try:
@@ -74,6 +73,11 @@ class ImageBlur():
                 img.thumbnail((200, 200), Image.ANTIALIAS)
                 img = img.convert('RGB')
                 img = img.filter(ImageFilter.GaussianBlur(self.radius))
+
+                if self.saturation:
+                    converter = ImageEnhance.Color(img)
+                    img = converter.enhance(self.saturation)
+
                 img.save(targetfile)
 
             return targetfile
@@ -92,7 +96,7 @@ class ImageBlur():
             col = imgResize.getpixel((0,0))
             imagecolor = 'FF%s%s%s' % (format(col[0], '02x'), format(col[1], '02x'), format(col[2], '02x'))
             log('Average color: ' + imagecolor, DEBUG)
-            
+
         except:
             log('Use fallback average color: ' + imagecolor, DEBUG)
             pass
@@ -206,7 +210,7 @@ def _openimage(image,targetpath,filename):
             for cache in cached_files:
                 if xbmcvfs.exists(cache):
                     try:
-                        img = Image.open(xbmc.translatePath(cache))
+                        img = Image.open(xbmcvfs.translatePath(cache))
                         return img
 
                     except Exception as error:
@@ -220,7 +224,7 @@ def _openimage(image,targetpath,filename):
                     image = os.path.join('special://skin/media/', image)
 
                 try: # in case image is packed in textures.xbt
-                    img = Image.open(xbmc.translatePath(image))
+                    img = Image.open(xbmcvfs.translatePath(image))
                     return img
 
                 except Exception:
