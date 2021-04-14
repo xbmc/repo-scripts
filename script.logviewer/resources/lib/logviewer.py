@@ -7,6 +7,7 @@ import time
 
 import xbmc
 import xbmcgui
+import xbmcvfs
 
 from resources.lib.dialog import ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU
 from resources.lib.logreader import LogReader
@@ -38,13 +39,13 @@ def log_location(old=False):
         elif xbmc.getCondVisibility("system.platform.ios"):
             log_path = "/var/mobile/Library/Preferences"
         elif xbmc.getCondVisibility("system.platform.windows"):
-            log_path = xbmc.translatePath("special://home")
+            log_path = xbmcvfs.translatePath("special://home")
         elif xbmc.getCondVisibility("system.platform.linux"):
-            log_path = xbmc.translatePath("special://home/temp")
+            log_path = xbmcvfs.translatePath("special://home/temp")
         else:
-            log_path = xbmc.translatePath("special://logpath")
+            log_path = xbmcvfs.translatePath("special://logpath")
     else:
-        log_path = xbmc.translatePath("special://logpath")
+        log_path = xbmcvfs.translatePath("special://logpath")
 
     try:
         app_name = get_application_name().lower()

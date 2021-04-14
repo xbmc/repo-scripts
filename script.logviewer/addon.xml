@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.logviewer" name="Log Viewer for Kodi" provider-name="i96751414" version="2.1.4+matrix.1">
+<addon id="script.logviewer" name="Log Viewer for Kodi" provider-name="i96751414" version="2.1.5+matrix.1">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -19,7 +19,7 @@
         <description lang="pt_PT">Ferramenta para verificar e ler facilmente o log do Kodi.</description>
         <platform>all</platform>
         <news>
-            - Updated to support Matrix log format
+            - Move xbmc.translatePath to xbmcvfs.translatePath (removed in v20)
         </news>
         <assets>
             <icon>icon.png</icon>
