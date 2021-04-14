@@ -65,7 +65,7 @@ class TMDBSeasons(object):
         if not tvshow_details:
             tvshow_details = tmdb_query(action='tv',
                                         call=self.tmdb_id,
-                                        params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations'}
+                                        params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'}
                                         )
 
             write_cache(tvshow_cache_key,tvshow_details)
