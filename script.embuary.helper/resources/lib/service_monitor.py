@@ -134,7 +134,7 @@ class Service(xbmc.Monitor):
                 '''
                 if condition('Skin.HasSetting(BlurEnabled)'):
                     radius = xbmc.getInfoLabel('Skin.String(BlurRadius)') or ADDON.getSetting('blur_radius')
-                    saturation = xbmc.getInfoLabel('Skin.String(BlurSaturation)')
+                    saturation = xbmc.getInfoLabel('Skin.String(BlurSaturation)') or '1.0'
                     ImageBlur(radius=radius, saturation=saturation)
 
                 ''' Refresh widgets
