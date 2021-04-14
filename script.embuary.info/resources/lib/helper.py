@@ -176,7 +176,18 @@ def winprop(key,value=None,clear=False,window_id=10000):
 
         return result
 
+def date_year(value):
+    if not value:
+        return value
 
+    try:
+        year = str(arrow.get(value).year)
+
+    except Exception:
+        pass
+
+    return year
+    
 def date_format(value,date='short'):
     if not value:
         return value
