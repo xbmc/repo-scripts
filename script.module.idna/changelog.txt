@@ -1,7 +1,0 @@
-[B]Version 2.8[/B]
-
-- idna v2.8
-
-[B]Version 2.6[/B]
-
-- idna v2.6
