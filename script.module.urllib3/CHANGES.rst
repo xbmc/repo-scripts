@@ -1,6 +1,157 @@
 Changes
 =======
 
+1.26.4 (2021-03-15)
+-------------------
+
+* Changed behavior of the default ``SSLContext`` when connecting to HTTPS proxy
+  during HTTPS requests. The default ``SSLContext`` now sets ``check_hostname=True``.
+
+
+1.26.3 (2021-01-26)
+-------------------
+
+* Fixed bytes and string comparison issue with headers (Pull #2141)
+
+* Changed ``ProxySchemeUnknown`` error message to be
+  more actionable if the user supplies a proxy URL without
+  a scheme. (Pull #2107)
+
+
+1.26.2 (2020-11-12)
+-------------------
+
+* Fixed an issue where ``wrap_socket`` and ``CERT_REQUIRED`` wouldn't
+  be imported properly on Python 2.7.8 and earlier (Pull #2052)
+
+
+1.26.1 (2020-11-11)
+-------------------
+
+* Fixed an issue where two ``User-Agent`` headers would be sent if a
+  ``User-Agent`` header key is passed as ``bytes`` (Pull #2047)
+
+
+1.26.0 (2020-11-10)
+-------------------
+
+* **NOTE: urllib3 v2.0 will drop support for Python 2**.
+  `Read more in the v2.0 Roadmap <https://urllib3.readthedocs.io/en/latest/v2-roadmap.html>`_.
+
+* Added support for HTTPS proxies contacting HTTPS servers (Pull #1923, Pull #1806)
+
+* Deprecated negotiating TLSv1 and TLSv1.1 by default. Users that
+  still wish to use TLS earlier than 1.2 without a deprecation warning
+  should opt-in explicitly by setting ``ssl_version=ssl.PROTOCOL_TLSv1_1`` (Pull #2002)
+  **Starting in urllib3 v2.0: Connections that receive a ``DeprecationWarning`` will fail**
+
+* Deprecated ``Retry`` options ``Retry.DEFAULT_METHOD_WHITELIST``, ``Retry.DEFAULT_REDIRECT_HEADERS_BLACKLIST``
+  and ``Retry(method_whitelist=...)`` in favor of ``Retry.DEFAULT_ALLOWED_METHODS``,
+  ``Retry.DEFAULT_REMOVE_HEADERS_ON_REDIRECT``, and ``Retry(allowed_methods=...)``
+  (Pull #2000) **Starting in urllib3 v2.0: Deprecated options will be removed**
+
+* Added default ``User-Agent`` header to every request (Pull #1750)
+
+* Added ``urllib3.util.SKIP_HEADER`` for skipping ``User-Agent``, ``Accept-Encoding``, 
+  and ``Host`` headers from being automatically emitted with requests (Pull #2018)
+
+* Collapse ``transfer-encoding: chunked`` request data and framing into
+  the same ``socket.send()`` call (Pull #1906)
+
+* Send ``http/1.1`` ALPN identifier with every TLS handshake by default (Pull #1894)
+
+* Properly terminate SecureTransport connections when CA verification fails (Pull #1977)
+
+* Don't emit an ``SNIMissingWarning`` when passing ``server_hostname=None``
+  to SecureTransport (Pull #1903)
+
+* Disabled requesting TLSv1.2 session tickets as they weren't being used by urllib3 (Pull #1970)
+
+* Suppress ``BrokenPipeError`` when writing request body after the server
+  has closed the socket (Pull #1524)
+
+* Wrap ``ssl.SSLError`` that can be raised from reading a socket (e.g. "bad MAC")
+  into an ``urllib3.exceptions.SSLError`` (Pull #1939)
+
+
+1.25.11 (2020-10-19)
+--------------------
+
+* Fix retry backoff time parsed from ``Retry-After`` header when given
+  in the HTTP date format. The HTTP date was parsed as the local timezone
+  rather than accounting for the timezone in the HTTP date (typically
+  UTC) (Pull #1932, Pull #1935, Pull #1938, Pull #1949)
+
+* Fix issue where an error would be raised when the ``SSLKEYLOGFILE``
+  environment variable was set to the empty string. Now ``SSLContext.keylog_file``
+  is not set in this situation (Pull #2016)
+
+
+1.25.10 (2020-07-22)
+--------------------
+
+* Added support for ``SSLKEYLOGFILE`` environment variable for
+  logging TLS session keys with use with programs like
+  Wireshark for decrypting captured web traffic (Pull #1867)
+
+* Fixed loading of SecureTransport libraries on macOS Big Sur
+  due to the new dynamic linker cache (Pull #1905)
+
+* Collapse chunked request bodies data and framing into one
+  call to ``send()`` to reduce the number of TCP packets by 2-4x (Pull #1906)
+
+* Don't insert ``None`` into ``ConnectionPool`` if the pool
+  was empty when requesting a connection (Pull #1866)
+
+* Avoid ``hasattr`` call in ``BrotliDecoder.decompress()`` (Pull #1858)
+
+
+1.25.9 (2020-04-16)
+-------------------
+
+* Added ``InvalidProxyConfigurationWarning`` which is raised when
+  erroneously specifying an HTTPS proxy URL. urllib3 doesn't currently
+  support connecting to HTTPS proxies but will soon be able to
+  and we would like users to migrate properly without much breakage.
+
+  See `this GitHub issue <https://github.com/urllib3/urllib3/issues/1850>`_
+  for more information on how to fix your proxy config. (Pull #1851)
+
+* Drain connection after ``PoolManager`` redirect (Pull #1817)
+
+* Ensure ``load_verify_locations`` raises ``SSLError`` for all backends (Pull #1812)
+
+* Rename ``VerifiedHTTPSConnection`` to ``HTTPSConnection`` (Pull #1805)
+
+* Allow the CA certificate data to be passed as a string (Pull #1804)
+
+* Raise ``ValueError`` if method contains control characters (Pull #1800)
+
+* Add ``__repr__`` to ``Timeout`` (Pull #1795)
+
+
+1.25.8 (2020-01-20)
+-------------------
+
+* Drop support for EOL Python 3.4 (Pull #1774)
+
+* Optimize _encode_invalid_chars (Pull #1787)
+
+
+1.25.7 (2019-11-11)
+-------------------
+
+* Preserve ``chunked`` parameter on retries (Pull #1715, Pull #1734)
+
+* Allow unset ``SERVER_SOFTWARE`` in App Engine (Pull #1704, Issue #1470)
+
+* Fix issue where URL fragment was sent within the request target. (Pull #1732)
+
+* Fix issue where an empty query section in a URL would fail to parse. (Pull #1732)
+
+* Remove TLS 1.3 support in SecureTransport due to Apple removing support (Pull #1703)
+
+
 1.25.6 (2019-09-24)
 -------------------
 
@@ -75,7 +226,7 @@ Changes
 * Add TLSv1.3 support to CPython, pyOpenSSL, and SecureTransport ``SSLContext``
   implementations. (Pull #1496)
 
-* Switched the default multipart header encoder from RFC 2231 to HTML 5 working draft. (Issue #303, PR #1492)
+* Switched the default multipart header encoder from RFC 2231 to HTML 5 working draft. (Issue #303, Pull #1492)
 
 * Fixed issue where OpenSSL would block if an encrypted client private key was
   given and no password was given. Instead an ``SSLError`` is raised. (Pull #1489)
@@ -306,13 +457,13 @@ Changes
   interprets the presence of any flag as requesting certificate validation.
 
   There is no PR for this patch, as it was prepared for simultaneous disclosure
-  and release. The master branch received the same fix in PR #1010.
+  and release. The master branch received the same fix in Pull #1010.
 
 
 1.18 (2016-09-26)
 -----------------
 
-* Fixed incorrect message for IncompleteRead exception. (PR #973)
+* Fixed incorrect message for IncompleteRead exception. (Pull #973)
 
 * Accept ``iPAddress`` subject alternative name fields in TLS certificates.
   (Issue #258)
@@ -341,32 +492,32 @@ Changes
   contains retries history. (Issue #848)
 
 * Timeout can no longer be set as boolean, and must be greater than zero.
-  (PR #924)
+  (Pull #924)
 
 * Removed pyasn1 and ndg-httpsclient from dependencies used for PyOpenSSL. We
   now use cryptography and idna, both of which are already dependencies of
-  PyOpenSSL. (PR #930)
+  PyOpenSSL. (Pull #930)
 
 * Fixed infinite loop in ``stream`` when amt=None. (Issue #928)
 
 * Try to use the operating system's certificates when we are using an
-  ``SSLContext``. (PR #941)
+  ``SSLContext``. (Pull #941)
 
 * Updated cipher suite list to allow ChaCha20+Poly1305. AES-GCM is preferred to
-  ChaCha20, but ChaCha20 is then preferred to everything else. (PR #947)
+  ChaCha20, but ChaCha20 is then preferred to everything else. (Pull #947)
 
-* Updated cipher suite list to remove 3DES-based cipher suites. (PR #958)
+* Updated cipher suite list to remove 3DES-based cipher suites. (Pull #958)
 
-* Removed the cipher suite fallback to allow HIGH ciphers. (PR #958)
+* Removed the cipher suite fallback to allow HIGH ciphers. (Pull #958)
 
 * Implemented ``length_remaining`` to determine remaining content
-  to be read. (PR #949)
+  to be read. (Pull #949)
 
 * Implemented ``enforce_content_length`` to enable exceptions when
-  incomplete data chunks are received. (PR #949)
+  incomplete data chunks are received. (Pull #949)
 
 * Dropped connection start, dropped connection reset, redirect, forced retry,
-  and new HTTPS connection log levels to DEBUG, from INFO. (PR #967)
+  and new HTTPS connection log levels to DEBUG, from INFO. (Pull #967)
 
 
 1.16 (2016-06-11)
