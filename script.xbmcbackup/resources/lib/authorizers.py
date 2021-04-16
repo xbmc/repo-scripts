@@ -1,5 +1,6 @@
 import xbmcgui
 import xbmcvfs
+import pyqrcode
 import resources.lib.tinyurl as tinyurl
 import resources.lib.utils as utils
 
@@ -9,6 +10,30 @@ try:
     from dropbox import oauth
 except ImportError:
     pass
+
+
+class QRCode(xbmcgui.WindowXMLDialog):
+    def __init__(self, *args, **kwargs):
+        self.image = kwargs["image"]
+        self.text = kwargs["text"]
+        self.url = kwargs['url']
+
+    def onInit(self):
+        self.imagecontrol = 501
+        self.textbox1 = 502
+        self.textbox2 = 504
+        self.okbutton = 503
+        self.showdialog()
+
+    def showdialog(self):
+        self.getControl(self.imagecontrol).setImage(self.image)
+        self.getControl(self.textbox1).setText(self.text)
+        self.getControl(self.textbox2).setText(self.url)
+        self.setFocus(self.getControl(self.okbutton))
+
+    def onClick(self, controlId):
+        if (controlId == self.okbutton):
+            self.close()
 
 
 class DropboxAuthorizer:
@@ -52,7 +77,20 @@ class DropboxAuthorizer:
 
         # print url in log
         utils.log("Authorize URL: " + url)
-        xbmcgui.Dialog().ok(utils.getString(30010), '%s\n%s\n%s' % (utils.getString(30056), utils.getString(30057), str(tinyurl.shorten(url), 'utf-8')))
+
+        # create a QR Code
+        shortUrl = str(tinyurl.shorten(url), 'utf-8')
+        imageFile = xbmcvfs.translatePath(utils.data_dir() + '/qrcode.png')
+        qrIMG = pyqrcode.create(shortUrl)
+        qrIMG.png(imageFile, scale=10)
+
+        # show the dialog prompt to authorize
+        qr = QRCode("script-backup-qrcode.xml", utils.addon_dir(), "default", image=imageFile, text=utils.getString(30056), url=shortUrl)
+        qr.doModal()
+
+        # cleanup
+        del qr
+        xbmcvfs.delete(imageFile)
 
         # get the auth code
         code = xbmcgui.Dialog().input(utils.getString(30027) + ' ' + utils.getString(30103))

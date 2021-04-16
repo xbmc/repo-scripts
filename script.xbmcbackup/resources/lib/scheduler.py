@@ -22,6 +22,21 @@ class BackupScheduler:
         self.enabled = utils.getSettingBool("enable_scheduler")
         self.next_run_path = xbmcvfs.translatePath(utils.data_dir()) + 'next_run.txt'
 
+        # display upgrade messages if they exist
+        if(utils.getSettingInt('upgrade_notes') < UPGRADE_INT):
+            xbmcgui.Dialog().ok(utils.getString(30010), utils.getString(30132))
+            utils.setSetting('upgrade_notes', str(UPGRADE_INT))
+
+        # check if a backup should be resumed
+        resumeRestore = self._resumeCheck()
+
+        if(resumeRestore):
+            restore = XbmcBackup()
+            restore.selectRestore(self.restore_point)
+            # skip the advanced settings check
+            restore.skipAdvanced()
+            restore.restore()
+
         if(self.enabled):
 
             # sleep for 2 minutes so Kodi can start and time can update correctly
@@ -55,21 +70,6 @@ class BackupScheduler:
         self.findNextRun(time.time())
 
     def start(self):
-
-        # display upgrade messages if they exist
-        if(utils.getSettingInt('upgrade_notes') < UPGRADE_INT):
-            xbmcgui.Dialog().ok(utils.getString(30010), utils.getString(30132))
-            utils.setSetting('upgrade_notes', str(UPGRADE_INT))
-
-        # check if a backup should be resumed
-        resumeRestore = self._resumeCheck()
-
-        if(resumeRestore):
-            restore = XbmcBackup()
-            restore.selectRestore(self.restore_point)
-            # skip the advanced settings check
-            restore.skipAdvanced()
-            restore.restore()
 
         while(not self.monitor.abortRequested()):
 
@@ -178,7 +178,7 @@ class BackupScheduler:
             self.restore_point = rFile.read()
             rFile.close()
             xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "resume.txt"))
-            shouldContinue = xbmcgui.Dialog().yesno(utils.getString(30042), utils.getString(30043), utils.getString(30044))
+            shouldContinue = xbmcgui.Dialog().yesno(utils.getString(30042), "%s\n%s" % (utils.getString(30043), utils.getString(30044)))
 
         return shouldContinue
 

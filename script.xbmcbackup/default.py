@@ -1,7 +1,37 @@
-import xbmc
 import xbmcgui
+import xbmcvfs
 import resources.lib.utils as utils
 from resources.lib.backup import XbmcBackup
+from resources.lib.authorizers import DropboxAuthorizer
+from resources.lib.advanced_editor import AdvancedBackupEditor
+
+# mode constants
+BACKUP = 0
+RESTORE = 1
+SETTINGS = 2
+ADVANCED_EDITOR = 3
+LAUNCHER = 4
+
+
+def authorize_cloud(cloudProvider):
+    # drobpox
+    if(cloudProvider == 'dropbox'):
+        authorizer = DropboxAuthorizer()
+
+        if(authorizer.authorize()):
+            xbmcgui.Dialog().ok(utils.getString(30010), '%s %s' % (utils.getString(30027), utils.getString(30106)))
+        else:
+            xbmcgui.Dialog().ok(utils.getString(30010), '%s %s' % (utils.getString(30107), utils.getString(30027)))
+
+
+def remove_auth():
+    # triggered from settings.xml - asks if user wants to delete OAuth token information
+    shouldDelete = xbmcgui.Dialog().yesno(utils.getString(30093), utils.getString(30094), utils.getString(30095), autoclose=7000)
+
+    if(shouldDelete):
+        # delete any of the known token file types
+        xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "tokens.txt"))  # dropbox
+        xbmcvfs.delete(xbmcvfs.translatePath(utils.data_dir() + "google_drive.dat"))  # google drive
 
 
 def get_params():
@@ -13,6 +43,7 @@ def get_params():
                 if(args.startswith('?')):
                     args = args[1:]  # legacy in case of url params
                 splitString = args.split('=')
+                utils.log(splitString[1])
                 param[splitString[0]] = splitString[1]
     except:
         pass
@@ -24,13 +55,13 @@ def get_params():
 mode = -1
 params = get_params()
 
-
 if("mode" in params):
     if(params['mode'] == 'backup'):
-        mode = 0
+        mode = BACKUP
     elif(params['mode'] == 'restore'):
-        mode = 1
-
+        mode = RESTORE
+    elif(params['mode'] == 'launcher'):
+        mode = LAUNCHER
 
 # if mode wasn't passed in as arg, get from user
 if(mode == -1):
@@ -49,15 +80,30 @@ if(mode != -1):
     # run the profile backup
     backup = XbmcBackup()
 
-    if(mode == 2):
+    if(mode == SETTINGS):
         # open the settings dialog
         utils.openSettings()
-    elif(mode == 3 and utils.getSettingInt('backup_selection_type') == 1):
-        # open the advanced editor
-        xbmc.executebuiltin('RunScript(special://home/addons/script.xbmcbackup/launcher.py, action=advanced_editor)')
+    elif(mode == ADVANCED_EDITOR and utils.getSettingInt('backup_selection_type') == 1):
+        # open the advanced editor but only if in advanced mode
+        editor = AdvancedBackupEditor()
+        editor.showMainScreen()
+    elif(mode == LAUNCHER):
+        # copied from old launcher.py
+        if(params['action'] == 'authorize_cloud'):
+            authorize_cloud(params['provider'])
+        elif(params['action'] == 'remove_auth'):
+            remove_auth()
+        elif(params['action'] == 'advanced_editor'):
+            editor = AdvancedBackupEditor()
+            editor.showMainScreen()
+        elif(params['action'] == 'advanced_copy_config'):
+            editor = AdvancedBackupEditor()
+            editor.copySimpleConfig()
+
     elif(backup.remoteConfigured()):
 
-        if(mode == backup.Restore):
+        # if mode was RESTORE
+        if(mode == RESTORE):
             # get list of valid restore points
             restorePoints = backup.listBackups()
             pointNames = []
@@ -90,6 +136,7 @@ if(mode != -1):
             else:
                 backup.restore()
         else:
+            # mode was BACKUP
             backup.backup()
     else:
         # can't go any further
