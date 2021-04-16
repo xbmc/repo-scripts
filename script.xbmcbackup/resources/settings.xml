@@ -147,7 +147,7 @@
             <dependency type="visible" setting="remote_selection">2</dependency>
           </dependencies>
           <control type="button" format="action">
-            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=authorize_cloud,provider=dropbox)</data>
+            <data>RunScript(script.xbmcbackup,mode=launcher,action=authorize_cloud,provider=dropbox)</data>
           </control>
         </setting>
       </group>
@@ -160,7 +160,7 @@
             <dependency type="visible" setting="remote_selection">2</dependency>
           </dependencies>
           <control type="button" format="action">
-            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=remove_auth)</data>
+            <data>RunScript(script.xbmcbackup,mode=launcher,action=remove_auth)</data>
           </control>
         </setting>
       </group>
@@ -252,7 +252,7 @@
             <dependency type="visible" setting="backup_selection_type">1</dependency>
           </dependencies>
           <control type="button" format="action">
-            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=advanced_editor)</data>
+            <data>RunScript(script.xbmcbackup,mode=launcher,action=advanced_editor)</data>
           </control>
         </setting>
         <setting id="advanced_defaults" type="action" label="30139" help="">
@@ -262,7 +262,7 @@
             <dependency type="visible" setting="backup_selection_type">1</dependency>
           </dependencies>
           <control type="button" format="action">
-            <data>RunScript(special://home/addons/script.xbmcbackup/launcher.py,action=advanced_copy_config)</data>
+            <data>RunScript(script.xbmcbackup,mode=launcher,action=advanced_copy_config)</data>
           </control>
         </setting>
       </group>

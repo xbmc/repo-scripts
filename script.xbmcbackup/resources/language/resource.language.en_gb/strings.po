@@ -213,8 +213,8 @@ msgid "Removing backup"
 msgstr "Removing backup"
 
 msgctxt "#30056"
-msgid "Go to this URL to authorize"
-msgstr "Go to this URL to authorize"
+msgid "Scan or click this URL to authorize, click OK AFTER completion"
+msgstr "Scan or click this URL to authorize, click OK AFTER completion"
 
 msgctxt "#30057"
 msgid "Click OK AFTER completion"
