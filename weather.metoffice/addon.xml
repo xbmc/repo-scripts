@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="weather.metoffice" version="2.0.2" name="Met Office" provider-name="powlo">
+  <requires>
+    <import addon="xbmc.python" version="2.26.0" />
+    <import addon="script.module.pytz" version="2014.2" />
+    <import addon="script.module.pil" />
+  </requires>
+  <extension point="xbmc.python.weather" library="src/metoffice/default.py" />
+  <extension point="xbmc.addon.metadata">
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+    <summary lang="en_GB">UK weather forecast from the Met Office.</summary>
+    <description lang="en_GB">UK weather forecast provided by Met Office (http://www.metoffice.gov.uk/)</description>
+    <platform>all</platform>
+    <license>GPL-2.0-or-later</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=166362</forum>
+    <website>https://www.metoffice.gov.uk/services/data/datapoint</website>
+    <source>https://github.com/powlo/weather.metoffice</source>
+    <disclaimer lang="en_GB">In using this addon you agree to the terms and conditions specified under the Met Office Datapoint terms and conditions. http://www.metoffice.gov.uk/datapoint/terms-conditions. Data provided by Met Office Datapoint is covered by the Open Government License. http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/. Use at your own risk. The authors accept no liability.</disclaimer>
+  </extension>
+</addon>
