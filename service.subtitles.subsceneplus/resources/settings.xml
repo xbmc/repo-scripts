@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32006">
+      <setting id="SDomain" type="text" label="32007" default="https://www.subscene.com"/>
+    </category>   
+</settings>
