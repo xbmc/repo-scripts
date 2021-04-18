@@ -6,7 +6,8 @@ import math
 import xbmc  # @UnresolvedImport
 import xbmcgui  # @UnresolvedImport
 
-from constants import WEATHER_WINDOW_ID, ADDON_BROWSER_WINDOW_ID, DIALOG, WINDOW, TEMPERATUREUNITS, ADDON
+from constants import (WEATHER_WINDOW_ID, ADDON_BROWSER_WINDOW_ID,
+                       DIALOG, WINDOW, TEMPERATUREUNITS, ADDON)
 
 
 def log(msg, level=xbmc.LOGNOTICE):
@@ -31,7 +32,8 @@ def failgracefully(f):
                 e.args = ('Error',)
             if len(e.args) == 1:
                 e.args = e.args + ('See log file for details',)
-            if xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID or xbmcgui.getCurrentWindowId() == ADDON_BROWSER_WINDOW_ID:
+            if xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID or \
+                    xbmcgui.getCurrentWindowId() == ADDON_BROWSER_WINDOW_ID:
                 args = (e.args[0].title(),) + e.args[1:4]
                 DIALOG.ok(*args)  # @UndefinedVariable
     return wrapper
@@ -41,11 +43,11 @@ def xbmcbusy(f):
     @wraps(f)
     def wrapper(*args, **kwds):
         if xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID or xbmcgui.getCurrentWindowId() == ADDON_BROWSER_WINDOW_ID:
-            xbmc.executebuiltin("ActivateWindow(busydialog)")
+            xbmc.executebuiltin("ActivateWindow(busydialognocancel)")
         try:
             return f(*args, **kwds)
         finally:
-            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            xbmc.executebuiltin("Dialog.Close(busydialognocancel)")
     return wrapper
 
 
@@ -67,7 +69,7 @@ def f_or_nla(f):
     def wrapper(*args, **kwds):
         try:
             return f(*args, **kwds)
-        except KeyError as e:
+        except KeyError:
             return 'n/a'
     return wrapper
 
@@ -77,7 +79,7 @@ def f_or_na(f):
     def wrapper(*args, **kwds):
         try:
             return f(*args, **kwds)
-        except KeyError as e:
+        except KeyError:
             return 'na'
     return wrapper
 
