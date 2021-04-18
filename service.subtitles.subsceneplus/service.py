@@ -18,11 +18,12 @@ from resources.lib.Subscene import *
 
 ADD_ON = xbmcaddon.Addon()
 SCRIPT_ID = ADD_ON.getAddonInfo('id')
-SCRIPT_NAME = ADD_ON.getAddonInfo('name')
-PROFILE = xbmc.translatePath(ADD_ON.getAddonInfo('profile'))
+SCRIPT_NAME = ADD_ON.getAddonInfo('name').encode('utf-8')
+PROFILE = xbmc.translatePath(ADD_ON.getAddonInfo('profile')).encode('utf-8')
 #TEMP = xbmc.translatePath(os.path.join(PROFILE, 'temp', '')).encode('utf-8')
 TEMP = xbmc.translatePath(PROFILE)
 START_TIME = time.time()
+DOMAIN_NAME = ADD_ON.getSetting("SDomain")
 
 
 subscene_languages = {
@@ -92,7 +93,7 @@ def log(module, msg):
     xbmc.log((u"### [%s] %f - %s" % (module, time.time() - START_TIME, msg,)), level=xbmc.LOGDEBUG)
 
 def _xmbc_localized_string_utf8(string_id):
-    return ADD_ON.getLocalizedString(string_id)
+    return ADD_ON.getLocalizedString(string_id).encode('utf-8')
 
 def _xbmc_notification(string_id, heading=SCRIPT_NAME, icon=xbmcgui.NOTIFICATION_INFO):
     message = _xmbc_localized_string_utf8(string_id)
@@ -163,13 +164,14 @@ class Subtitle:
 
 def Search(item):
     tvshow = False
+    service = SubsceneSubtitleService(DOMAIN_NAME)
     if item['manualsearch']:
-        movies = SearchMovie(item['manualsearchstring'], item['year'])
+        movies = service.SearchMovie(item['manualsearchstring'], item['year'])
     elif item['tvshow']:
         tvshow = True
-        movies = SearchMovie(item['tvshow'], item['year'])
+        movies = service.SearchMovie(item['tvshow'], item['year'])
     else:
-        movies = SearchMovie(item['title'], item['year'])
+        movies = service.SearchMovie(item['title'], item['year'])
     year = item['year']
     # import web_pdb; web_pdb.set_trace()
 
@@ -216,7 +218,7 @@ def Search(item):
         return
 
     url = matches[idx][1]
-    allsubs = EnumSubtitles(DOMAIN_NAME + url)
+    allsubs = service.EnumSubtitles(DOMAIN_NAME + url)
 
     if allsubs is None:
         return
@@ -279,7 +281,8 @@ def Search(item):
 
 
 def Download(subtitle_link):
-    sub_content = DownloadSubtitle(subtitle_link)
+    service = SubsceneSubtitleService(DOMAIN_NAME)
+    sub_content = service.DownloadSubtitle(subtitle_link)
 
     subtitle_list = []
     if sub_content is None:
