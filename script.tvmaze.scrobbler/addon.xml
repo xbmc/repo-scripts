@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.tvmaze.scrobbler"
    name="TVmaze Scrobbler/Tracker"
-   version="1.1.1+matrix.1"
+   version="1.2.0+matrix.1"
    provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -38,11 +38,10 @@ What this addon does:
       <icon>resources/images/icon.png</icon>
       <fanart>resources/images/background.jpg</fanart>
     </assets>
-    <news>1.1.1:
-- Fixed special episodes handling.
+    <news>1.2.0:
+- Added a setting to enable/disable episodes sync on medialibrary update (disabled by default).
 
-1.1.0:
-- Added periodic pulling of episode watched statuses from TVmaze.
-- Improved error logging.</news>
+1.1.1:
+- Fixed special episodes handling.</news>
   </extension>
 </addon>
