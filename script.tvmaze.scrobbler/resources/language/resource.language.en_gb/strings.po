@@ -146,3 +146,7 @@ msgstr ""
 msgctxt "#32034"
 msgid "Pull during playback"
 msgstr ""
+
+msgctxt "#32035"
+msgid "Sync episodes on medialibrary update"
+msgstr ""

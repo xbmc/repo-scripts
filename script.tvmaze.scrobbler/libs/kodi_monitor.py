@@ -24,7 +24,7 @@ import xbmc
 
 from .pulled_episodes_db import PulledEpisodesDb
 from . import scrobbling_service as scrobbler
-from .kodi_service import logger
+from .kodi_service import logger, ADDON
 
 try:
     from typing import Text  # pylint: disable=unused-import
@@ -53,6 +53,6 @@ class KodiMonitor(xbmc.Monitor):  # pylint: disable=missing-docstring
 
     def onScanFinished(self, library):
         # type: (Text) -> None
-        if library == 'video':
+        if library == 'video' and ADDON.getSettingBool('sync_on_update'):
             scrobbler.sync_recent_episodes(show_warning=False)
             logger.debug('Recent episodes updated')
