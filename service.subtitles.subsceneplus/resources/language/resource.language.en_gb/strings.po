@@ -28,3 +28,13 @@ msgstr ""
 msgctxt "#32005"
 msgid "Select TV Show"
 msgstr ""
+
+#: Script
+msgctxt "#32006"
+msgid "Settings"
+msgstr ""
+
+#: Script
+msgctxt "#32007"
+msgid "Base domain"
+msgstr ""
