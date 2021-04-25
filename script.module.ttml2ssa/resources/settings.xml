@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32016">
+        <setting label="32200" type="enum" id="subtitle_type" lvalues="32204|32203|32205"/>
+        <setting label="32000" type="lsep"/>
+        <setting label="32001" type="text" id="fontname" default="Arial"/>
+        <setting label="32002" type="number" id="fontsize" default="50"/>
+        <setting label="32003" type="text" id="primarycolor" default="white"/>
+        <setting label="32004" type="text" id="backcolor" default="40000000"/>
+        <setting label="32005" type="text" id="outlinecolor" default="black"/>
+        <setting label="32006" type="enum" id="borderstyle" lvalues="32007|32008"/>
+        <setting label="32009" type="number" id="outline" default="2"/>
+        <setting label="32010" type="number" id="shadow" default="3"/>
+        <setting label="32011" type="bool" id="bold" default="true"/>
+        <setting label="32012" type="bool" id="italic" default="false"/>
+        <setting label="32013" type="number" id="marginv" default="40"/>
+        <setting label="32014" type="number" id="marginl" default="40"/>
+        <setting label="32015" type="number" id="marginr" default="40"/>
+    </category>
+    <category label="32100">
+        <setting label="32101" type="bool" id="allow_italics" default="true"/>
+        <setting label="32102" type="bool" id="allow_top_pos" default="true"/>
+        <setting label="32103" type="bool" id="cosmetic_filter" default="true"/>
+        <setting label="32108" type="bool" id="fix_amazon" default="true" enable="eq(-1,true)"/>
+        <setting label="32104" type="bool" id="language_filter" default="true"/>
+        <setting label="32109" type="bool" id="cache_downloaded" default="true"/>
+        <setting label="32106" type="bool" id="timestamp manipulation" default="true"/>
+        <setting label="32107" type="bool" id="fix_collisions" default="true" enable="eq(-1,true)"/>
+        <setting label="32105" type="number" id="min_sep" default="200" enable="eq(-2,true)"/>
+    </category>
+</settings>
