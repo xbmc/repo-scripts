@@ -1,0 +1,166 @@
+# XBMC Media Center language file
+# Addon Name: Ttml2Ssa
+# Addon id: script.module.ttml2ssa
+# Addon version: 0.1.1
+# Addon Provider: Paco8
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-28 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#32000"
+msgid "SSA Style"
+msgstr "Estilo SSA"
+
+msgctxt "#32001"
+msgid "Font name"
+msgstr "Fuente"
+
+msgctxt "#32002"
+msgid "Font size"
+msgstr "Tamaño de la fuente"
+
+msgctxt "#32003"
+msgid "Primary colour (AABBGGRR or colour name)"
+msgstr "Color principal (AABBGGRR o nombre de color)"
+
+msgctxt "#32004"
+msgid "Back colour (AABBGGRR or colour name)"
+msgstr "Color de fondo (AABBGGRR o nombre de color)"
+
+msgctxt "#32005"
+msgid "Outline colour (AABBGGRR or colour name)"
+msgstr "Color del contorno (AABBGGRR o nombre de color)"
+
+msgctxt "#32006"
+msgid "Border style"
+msgstr "Estilo del borde"
+
+msgctxt "#32007"
+msgid "Outline with shadow"
+msgstr "Contorno com sombra"
+
+msgctxt "#32008"
+msgid "Opaque box"
+msgstr "Opaco"
+
+msgctxt "#32009"
+msgid "Outline"
+msgstr "Contorno"
+
+msgctxt "#32010"
+msgid "Shadow"
+msgstr "Sombra"
+
+msgctxt "#32011"
+msgid "Bold"
+msgstr "Negrita"
+
+msgctxt "#32012"
+msgid "Italic"
+msgstr "Cursiva"
+
+msgctxt "#32013"
+msgid "Vertical margin"
+msgstr "Margen vertical"
+
+msgctxt "#32014"
+msgid "Left margin"
+msgstr "Margen izquierdo"
+
+msgctxt "#32015"
+msgid "Right margin"
+msgstr "Margen derecho"
+
+msgctxt "#32016"
+msgid "Main"
+msgstr "Principal"
+
+msgctxt "#32100"
+msgid "Misc"
+msgstr "Misc"
+
+msgctxt "#32101"
+msgid "Allow italics"
+msgstr "Permitir cursivas"
+
+msgctxt "#32102"
+msgid "Allow text on the top"
+msgstr "Permitir texto en la parte superior"
+
+msgctxt "#32103"
+msgid "Allow cosmetic changes"
+msgstr "Permitir cambios cosméticos"
+
+msgctxt "#32104"
+msgid "Allow fixes for some languages"
+msgstr "Permitir arreglos para algunos idiomas"
+
+msgctxt "#32105"
+msgid "Timestamp minimum separation (SSA only) in ms"
+msgstr "Separación minima entre tiempos (solo SSA) en ms"
+
+msgctxt "#32106"
+msgid "Allow timestamp manipulation"
+msgstr "Permitir manipulación de las marcas de tiempo"
+
+msgctxt "#32107"
+msgid "Fix collisions"
+msgstr "Arreglar colisiones"
+
+msgctxt "#32108"
+msgid "Try to fix Amazon errors"
+msgstr "Intentar arreglar errores de Amazon"
+
+msgctxt "#32109"
+msgid "Cache downloaded subtitles"
+msgstr "Guardar subtítulos descargados en cache"
+
+msgctxt "#32200"
+msgid "Subtitle type"
+msgstr "Tipo de subtítulo"
+
+msgctxt "#32201"
+msgid "Improved Subtitles Settings"
+msgstr "Configuración subtítulos mejorados"
+
+msgctxt "#32202"
+msgid "Improved subtitles"
+msgstr "Subtítulos mejorados"
+
+msgctxt "#32203"
+msgid "Normal (SRT)"
+msgstr "Normal (SRT)"
+
+msgctxt "#32204"
+msgid "Improved (SSA)"
+msgstr "Mejorado (SSA)"
+
+msgctxt "#32205"
+msgid "Both"
+msgstr "Ambos"
+
+#~ msgctxt "#32003"
+#~ msgid "Primary colour (AABBGGRR)"
+#~ msgstr "Color principal (AABBGGRR)"
+
+#~ msgctxt "#32004"
+#~ msgid "Back colour (AABBGGRR)"
+#~ msgstr "Color de fondo (AABBGGRR)"
+
+#~ msgctxt "#32005"
+#~ msgid "Outline colour (AABBGGRR)"
+#~ msgstr "Color del contorno (AABBGGRR)"
+
+#~ msgctxt "#32201"
+#~ msgid "SSA Settings"
+#~ msgstr "Configuración SSA"

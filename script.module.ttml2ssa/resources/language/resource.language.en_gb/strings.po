@@ -1,0 +1,150 @@
+# XBMC Media Center language file
+# Addon Name: Ttml2Ssa
+# Addon id: script.module.ttml2ssa
+# Addon version: 0.1.1
+# Addon Provider: Paco8
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-28 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#32000"
+msgid "SSA Style"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Font name"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Font size"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Primary colour (AABBGGRR or colour name)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Back colour (AABBGGRR or colour name)"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Outline colour (AABBGGRR or colour name)"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Border style"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Outline with shadow"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Opaque box"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Outline"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Shadow"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Bold"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Italic"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Vertical margin"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Left margin"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Right margin"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Main"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Misc"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Allow italics"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Allow text on the top"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Allow cosmetic changes"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Allow fixes for some languages"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Timestamp minimum separation (SSA only) in ms"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Allow timestamp manipulation"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Fix collisions"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Try to fix Amazon errors"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Cache downloaded subtitles"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Subtitle type"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Improved Subtitles Settings"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Improved subtitles"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Normal (SRT)"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Improved (SSA)"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Both"
+msgstr ""

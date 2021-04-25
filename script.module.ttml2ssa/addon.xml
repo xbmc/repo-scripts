@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon	id="script.module.ttml2ssa"
+		name="Improved Subtitles"
+		version="0.3.4"
+		provider-name="Paco8">
+	<requires>
+		<import addon="xbmc.python" version="2.26.0"/>
+		<import addon="script.module.defusedxml" version="0.6.0" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension
+		point="xbmc.python.module" library="resources/lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Ttml2Ssa Library.</summary>
+		<description lang="en_GB">Ttml2Ssa is a library that allows other addons to convert TTML/XML/DFXP/VTT/SRT subtitles to SRT and SSA/ASS formats. It also provides a configuration window where the user can adjust the SSA/ASS style and other options.</description>
+		<platform>all</platform>
+		<license>LGPL-2.1-or-later</license>
+		<website>https://github.com/Paco8/ttml2ssa</website>
+		<source>https://github.com/Paco8/ttml2ssa</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screen1.jpg</screenshot>
+			<screenshot>resources/screen2.jpg</screenshot>
+		</assets>
+	</extension>
+</addon>
