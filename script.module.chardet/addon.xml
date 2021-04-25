@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.chardet"
-       name="chardet"
-       version="3.0.4+matrix.3"
-       provider-name="Dan Blanchard">
+<addon id="script.module.chardet" name="chardet" version="4.0.0+matrix.1" provider-name="Character Encoding Detector">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
+  <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Universal encoding detector</summary>
-    <description lang="en_GB">Packed for Kodi from https://github.com/chardet/chardet</description>
-    <license>LGPL</license>
+    <summary lang="en_GB">The Universal Character Encoding Detector</summary>
+    <description lang="en_GB">The Universal Character Encoding Detector</description>
+    <license>LGPL-2.1</license>
     <platform>all</platform>
     <website>https://chardet.readthedocs.io/en/latest/</website>
-    <source>https://github.com/Freso/script.module.chardet</source>
-    <email>beenje AT gmail.com</email>
+    <source>https://github.com/chardet/chardet</source>
     <assets>
-      <icon>icon.png</icon>
+      <icon>resources/icon.png</icon>
     </assets>
   </extension>
 </addon>
