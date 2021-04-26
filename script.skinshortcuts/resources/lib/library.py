@@ -1528,6 +1528,17 @@ class LibraryFunctions():
                     listitem.setProperty( "widgetName", dialogLabel )
                     listitem.setProperty( "widgetPath", location )
 
+                elif itemType == "32123":
+                    action = 'ActivateWindow(Games,"' + location + '",return)'
+                    listitem.setProperty( "windowID", "Games" )
+
+                    # Add widget details
+                    listitem.setProperty( "widget", "Addon" )
+                    listitem.setProperty( "widgetType", "game" )
+                    listitem.setProperty( "widgetTarget", "games" )
+                    listitem.setProperty( "widgetName", dialogLabel )
+                    listitem.setProperty( "widgetPath", location )
+                    
                 else:
                     action = "RunAddon(" + location + ")"
 
