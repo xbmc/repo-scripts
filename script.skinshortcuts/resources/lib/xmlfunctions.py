@@ -971,7 +971,7 @@ class XMLFunctions():
                 propertyPattern = propertyPatterns[propertyName][0]
                 for original, replacement in propertyReplacements:
                     regexpPattern = re.compile(re.escape(original), re.IGNORECASE)
-                    propertyPattern = regexpPattern.sub(replacement, propertyPattern)
+                    propertyPattern = regexpPattern.sub(replacement.replace("\\", r"\\"), propertyPattern)
 
                 additionalproperty = xmltree.SubElement(newelement, "property")
                 additionalproperty.set("name", propertyName)
