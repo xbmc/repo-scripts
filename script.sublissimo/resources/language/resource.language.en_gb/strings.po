@@ -140,7 +140,7 @@ msgid "Please select a .srt or a .sub file"
 msgstr ""
 
 msgctxt "#32017"
-msgid "Succes"
+msgid "Success"
 msgstr ""
 
 msgctxt "#32018"
@@ -643,5 +643,62 @@ msgctxt "#32136"
 msgid "This file does not appear to be a valid .sub file."
 msgstr ""
 
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr ""
 
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr ""
 
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Not a valid code for a color. Use 8 digits in a hexadecimal notation: 'FF00FF00'"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr ""
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr ""
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr ""
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr ""
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr ""
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr ""
+
+msgctxt "#35005"
+msgid "A subtitlefile could not be found. Do you want to select one manually and continue with current video?"
+msgstr ""
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr ""
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr ""
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr ""
