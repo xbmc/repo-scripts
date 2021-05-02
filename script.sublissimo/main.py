@@ -9,4 +9,4 @@ import sys
 
 ADDON = xbmcaddon.Addon()
 
-script.show_dialog()
+script.check_active_player()
