@@ -1,3 +1,9 @@
+v0.5.18
+- Update translations from Weblate
+
+v0.5.17
+- Fix-up exception on non linux platforms due to missing variable definition
+
 v0.5.16
 - Bump minimum Kodi version from Gotham to Leia
 
