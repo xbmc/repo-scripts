@@ -8,7 +8,7 @@ from time import time
 
 from .. import config
 from ..kodiutils import addon_profile, exists, get_setting_int, listdir, localize, log, mkdirs, ok_dialog, open_file, set_setting, translate_path, yesno_dialog
-from ..utils import arch, cmd_exists, hardlink, http_download, http_get, remove_tree, run_cmd, store, system_os
+from ..utils import arch, cmd_exists, hardlink, http_download, http_get, http_head, remove_tree, run_cmd, store, system_os
 from ..unicodes import compat_path, to_unicode
 
 
@@ -28,13 +28,13 @@ def install_cdm_from_backup(version):
 
 def widevine_eula():
     """Displays the Widevine EULA and prompts user to accept it."""
-
-    cdm_version = latest_widevine_version(eula=True)
     if 'x86' in arch():
+        cdm_version = latest_available_widevine_from_repo().get('version')
         cdm_os = config.WIDEVINE_OS_MAP[system_os()]
         cdm_arch = config.WIDEVINE_ARCH_MAP_X86[arch()]
     else:  # grab the license from the x86 files
         log(0, 'Acquiring Widevine EULA from x86 files.')
+        cdm_version = latest_widevine_version(eula=True)
         cdm_os = 'mac'
         cdm_arch = 'x64'
 
@@ -168,6 +168,20 @@ def latest_widevine_version(eula=False):
         ok_dialog(localize(30004), localize(30005))
         return ''
     return arm_device['version']
+
+
+def latest_available_widevine_from_repo():
+    """Returns the latest available Widevine CDM version and url from Google's library CDM repository"""
+    cdm_versions = http_get(config.WIDEVINE_VERSIONS_URL).strip('\n').split('\n')
+    cdm_os = config.WIDEVINE_OS_MAP[system_os()]
+    cdm_arch = config.WIDEVINE_ARCH_MAP_X86[arch()]
+    available_cdms = []
+    for cdm_version in cdm_versions:
+        cdm_url = config.WIDEVINE_DOWNLOAD_URL.format(version=cdm_version, os=cdm_os, arch=cdm_arch)
+        http_status = http_head(cdm_url)
+        if http_status == 200:
+            available_cdms.append(dict(version=cdm_version, url=cdm_url))
+    return available_cdms[-1]
 
 
 def remove_old_backups(bpath):
