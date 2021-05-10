@@ -11,8 +11,8 @@ from .kodiutils import (addon_version, delete, exists, get_proxies, get_setting,
                         set_setting, set_setting_bool, textviewer, translate_path, yesno_dialog)
 from .utils import arch, http_download, remove_tree, run_cmd, store, system_os, temp_path, unzip
 from .widevine.arm import install_widevine_arm, unmount
-from .widevine.widevine import (backup_path, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_widevine_version,
-                                load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevinecdm_path)
+from .widevine.widevine import (backup_path, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_available_widevine_from_repo,
+                                latest_widevine_version, load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevinecdm_path)
 from .unicodes import compat_path
 
 # NOTE: Work around issue caused by platform still using os.popen()
@@ -171,14 +171,11 @@ class Helper:
     @staticmethod
     def _install_widevine_x86(bpath):
         """Install Widevine CDM on x86 based architectures."""
-        cdm_version = latest_widevine_version()
+        cdm = latest_available_widevine_from_repo()
+        cdm_version = cdm.get('version')
 
         if not store('download_path'):
-            cdm_os = config.WIDEVINE_OS_MAP[system_os()]
-            cdm_arch = config.WIDEVINE_ARCH_MAP_X86[arch()]
-            url = config.WIDEVINE_DOWNLOAD_URL.format(version=cdm_version, os=cdm_os, arch=cdm_arch)
-
-            downloaded = http_download(url)
+            downloaded = http_download(cdm.get('url'))
         else:
             downloaded = True
 
@@ -279,13 +276,13 @@ class Helper:
         elif 'x86' in arch():
             component = 'Widevine CDM'
             current_version = wv_config['version']
+            latest_version = latest_available_widevine_from_repo().get('version')
         else:
             component = 'Chrome OS'
             current_version = wv_config['version']
-
-        latest_version = latest_widevine_version()
+            latest_version = latest_widevine_version()
         if not latest_version:
-            log(3, 'Updating widevine failed. Could not determine latest version.')
+            log(3, 'Updating Widevine CDM failed. Could not determine latest version.')
             return
 
         log(0, 'Latest {component} version is {version}', component=component, version=latest_version)

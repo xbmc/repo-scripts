@@ -82,21 +82,31 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 # To keep the Chrome OS ARM hardware ID list up to date, the following resources can be used:
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://cros-updates-serving.appspot.com/
-# Last updated: 2020-10-05
+# Last updated: 2021-05-10
+# Temporary fix for https://github.com/emilsvennesson/script.module.inputstreamhelper/issues/437
+# Widevine on ARM hardware will probably fail again on June 1st 2021 when Chrome OS 91 will be released: https://chromiumdash.appspot.com/schedule
 CHROMEOS_RECOVERY_ARM_HWIDS = [
-    'BOB',
-    'DRUWL',
-    'DUMO',
-    'ELM',
-    'FIEVEL',
-    'HANA',
-    'JUNIPER-HVPU',
-    'KEVIN',
-    'KODAMA',
-    'KRANE-ZDKS',
-    'MICKEY',
+    # 'BOB',
+    # 'BURNET',
+    # 'DAMU',
+    # 'DRUWL',
+    # 'DUMO',
+    # 'ELM',
+    # 'ESCHE',
+    # 'FIEVEL',
+    # 'HANA',
+    # 'JUNIPER-HVPU',
+    # 'KAKADU-WFIQ',
+    # 'KAPPA',
+    # 'KENZO-IGRW',
+    # 'KEVIN',
+    # 'KODAMA',
+    # 'KRANE-ZDKS',
+    # 'LAZOR',
+    # 'POMPOM',
     'SCARLET',
-    'TIGER',
+    # 'TIGER',
+    # 'WILLOW-TFIY',
 ]
 
 CHROMEOS_BLOCK_SIZE = 512

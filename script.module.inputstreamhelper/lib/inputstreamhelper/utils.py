@@ -73,6 +73,17 @@ def http_get(url):
     return content.decode()
 
 
+def http_head(url):
+    """Perform an HTTP HEAD request and return status code"""
+    req = Request(url)
+    req.get_method = lambda: 'HEAD'
+    try:
+        resp = urlopen(req)
+        return resp.getcode()
+    except HTTPError as exc:
+        return exc.getcode()
+
+
 def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=None, background=False):  # pylint: disable=too-many-statements
     """Makes HTTP request and displays a progress dialog on download."""
     if checksum:
@@ -170,19 +181,19 @@ def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disabl
         mkdirs(destination)
 
     from zipfile import ZipFile
-    zip_obj = ZipFile(compat_path(source))
-    for filename in zip_obj.namelist():
-        if file_to_unzip and filename != file_to_unzip:
-            continue
+    with ZipFile(compat_path(source)) as zip_obj:
+        for filename in zip_obj.namelist():
+            if file_to_unzip and filename != file_to_unzip:
+                continue
 
-        # Detect and remove (dangling) symlinks before extraction
-        fullname = os.path.join(destination, filename)
-        if os.path.islink(compat_path(fullname)):
-            log(3, 'Remove (dangling) symlink at {symlink}', symlink=fullname)
-            delete(fullname)
+            # Detect and remove (dangling) symlinks before extraction
+            fullname = os.path.join(destination, filename)
+            if os.path.islink(compat_path(fullname)):
+                log(3, 'Remove (dangling) symlink at {symlink}', symlink=fullname)
+                delete(fullname)
 
-        zip_obj.extract(filename, compat_path(destination))
-        result.append(True)  # Pass by reference for Thread
+            zip_obj.extract(filename, compat_path(destination))
+            result.append(True)  # Pass by reference for Thread
 
     return bool(result)
 
