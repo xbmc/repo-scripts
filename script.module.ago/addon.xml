@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.ago"
+       name="ago"
+       version="0.0.93"
+       provider-name="Russell Ballestrini (russell@ballestrini.net)">
+  <requires>
+    <import addon="xbmc.python"
+            version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">ago</summary>
+    <description lang="en_GB">ago</description>
+    <license>Public Domain</license>
+    <platform>all</platform>
+    <website>https://pypi.org/project/ago/</website>
+	  <source>https://pypi.org/project/ago/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
