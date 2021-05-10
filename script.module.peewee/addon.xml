@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.peewee"
+       name="peewee"
+       version="3.13.3"
+       provider-name="Charles Leifer (coleifer@gmail.com)">
+  <requires>
+    <import addon="xbmc.python"
+            version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">ORM library</summary>
+    <description lang="en_GB">Peewee is a simple and small ORM. It has few (but expressive) concepts, making it easy to learn and intuitive to use.</description>
+    <license>MIT License</license>
+    <platform>all</platform>
+    <website>http://docs.peewee-orm.com/en/latest/</website>
+	<source>https://github.com/coleifer/peewee</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
