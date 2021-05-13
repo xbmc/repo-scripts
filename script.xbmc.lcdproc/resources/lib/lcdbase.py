@@ -247,7 +247,7 @@ class LcdBase():
       log(LOGERROR, "Parsing of %s failed" % (xmlFile))
       return False
 
-    for element in doc.getiterator():
+    for element in doc.iter():
       #PARSE LCD infos
       if element.tag == "lcd":
         # load our settings

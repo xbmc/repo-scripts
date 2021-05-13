@@ -1,3 +1,5 @@
+3.90.2
+- fix compatibility with Python 3.9
 3.90.1
 - replace LOGNOTICE with LOGINFO, remove LOGSEVERE
 - use translatePath from xbmcvfs instead of xbmc
