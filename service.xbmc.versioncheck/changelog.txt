@@ -1,3 +1,6 @@
+v0.5.19
+- add Kodi 19.1 release
+
 v0.5.18
 - Update translations from Weblate
 
