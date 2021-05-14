@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.tornado"
+       name="tornado"
+       version="6.0.2"
+       provider-name="Facebook (python-tornado@googlegroups.com)">
+  <requires>
+    <import addon="xbmc.python"
+            version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed.</summary>
+    <description lang="en_GB">Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed.</description>
+    <license>Apache-2.0</license>
+    <platform>all</platform>
+    <website>https://pypi.org/project/tornado/</website>
+	  <source>https://pypi.org/project/tornado/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
