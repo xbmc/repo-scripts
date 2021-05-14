@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.mock"
+       name="mock"
+       version="4.0.3"
+       provider-name="Testing Cabal (testing-in-python@lists.idyll.org)">
+  <requires>
+    <import addon="xbmc.python"
+            version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Rolling backport of unittest.mock for all Pythons</summary>
+    <description lang="en_GB">Rolling backport of unittest.mock for all Pythons</description>
+    <license>BSD</license>
+    <platform>all</platform>
+    <website>https://pypi.org/project/mock/</website>
+	  <source>https://pypi.org/project/mock/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
