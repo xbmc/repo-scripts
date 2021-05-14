@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.cached-property"
+       name="cached-property"
+       version="1.5.2"
+       provider-name="Daniel Greenfeld (pydanny@gmail.com)">
+  <requires>
+    <import addon="xbmc.python"
+            version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">A decorator for caching properties in classes.</summary>
+    <description lang="en_GB">A decorator for caching properties in classes.</description>
+    <license>BSD</license>
+    <platform>all</platform>
+    <website>https://pypi.org/project/cached-property/</website>
+	  <source>https://pypi.org/project/cached-property/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
