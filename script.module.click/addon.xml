@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.click"
+       name="click"
+       version="8.0.0"
+       provider-name="Armin Ronacher (armin.ronacher@active-4.com)">
+  <requires>
+    <import addon="xbmc.python"
+            version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Composable command line interface toolkit</summary>
+    <description lang="en_GB">Composable command line interface toolkit</description>
+    <license>BSD-3-Clause</license>
+    <platform>all</platform>
+    <website>https://pypi.org/project/click/</website>
+	  <source>https://pypi.org/project/click/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
