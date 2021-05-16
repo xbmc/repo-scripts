@@ -1,0 +1,267 @@
+
+
+{% extends "../page_layout.html" %}
+{% block title %}Dashboard | Unmanic{% end %}
+{% block page %}main{% end %}
+
+
+{% block head %}
+<link href="/assets/pages/css/dashboard.css?version={{ escape(handler.config.read_version()) }}" rel="stylesheet"
+      type="text/css"/>
+{% end %}
+
+{% block style %}
+<link href="../assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
+{% end %}
+
+{% block plugins %}
+<script src="../assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/themes/patterns.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+<script src="../assets/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+{% end %}
+
+{% block scripts %}
+
+<script src="../assets/pages/scripts/dashboard.js?version={{ escape(handler.config.read_version()) }}"
+        type="text/javascript"></script>
+
+<script src="../assets/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+<script src="../assets/pages/scripts/pending.js?version={{ escape(handler.config.read_version()) }}"
+        type="text/javascript"></script>
+{% end %}
+
+
+{% block content %}
+<div class="row">
+    <!-- BEGIN JOB STATISTICS -->
+    <div class="col-md-12 col-sm-12 ">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-disc font-purple"></i>
+                    <span class="caption-subject font-purple bold uppercase"
+                          title="Each worker can process one re-encoding job.
+                                                This allows you to process more than one task at a time.
+                                                Configure the number of Workers in the General Settings screen">Workers</span>
+                    <span class="caption-helper">   </span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <!-- BEGIN WORKER PIE CHARTS -->
+                <div class="row" id="worker_pie_charts"></div>
+                <!-- END WORKER PIE CHARTS -->
+                <!-- BEGIN WORKER PIE CHARTS TEMPLATE -->
+                <div id="unmanic_worker_piechart_template" class="hidden">
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <div class="easy-pie-chart worker-pie-chart">
+                            <div class="portlet light" style="box-shadow: none;">
+                                <div class="portlet-title" style="border: none;">
+                                    <div class="caption">
+                                        <div class="row">
+                                            <div class="worker-chart">
+                                                <div class="number idle" data-percent="100">
+                                                    <span style="margin-left:-7px;"> - </span>
+                                                </div>
+                                                {% if session.level == 0 %}
+                                                    {% set data_target = "data-target=#login-popup data-toggle=modal" %}
+                                                    {% set link_class = "" %}
+                                                {% elif session.level == 1 %}
+                                                    {% set data_target = "data-target=#insufficient-permissions-popup data-toggle=modal" %}
+                                                    {% set link_class = "" %}
+                                                {% elif session.level > 1 %}
+                                                    {% set data_target = "" %}
+                                                    {% set link_class = "worker-full-screen-toggle" %}
+                                                {% end %}
+                                                <a class="title {{ link_class }}" {{ data_target }} href="javascript:;">
+                                                    <span class="worker-name"></span>
+                                                    <i class="icon-arrow-right"></i>
+                                                    <br>
+                                                    <span class="worker-subtitle"></span>
+                                                </a>
+                                            </div>
+
+                                            <div class="worker-status col-md-6 text-left hidden">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">Status</h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="col-md-12">
+                                                            <label class="col-md-5 control-label">
+                                                                <b>State:</b>
+                                                            </label>
+                                                            <div class="col-md-7">
+                                                                <span class="worker-status-state"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="col-md-5 control-label">
+                                                                <b>Current Runner:</b>
+                                                            </label>
+                                                            <div class="col-md-7">
+                                                                <span class="worker-status-current-runner"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="col-md-5 control-label">
+                                                                <b>Start Time:</b>
+                                                            </label>
+                                                            <div class="col-md-7">
+                                                                <span class="worker-status-start-time"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="col-md-5 control-label">
+                                                                <b>Total Processing Time:</b>
+                                                            </label>
+                                                            <div class="col-md-7">
+                                                                <span class="worker-status-total-proc-time"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="actions hidden">
+                                        <a class="btn btn-circle btn-icon-only btn-default worker-full-screen-toggle"
+                                           href="javascript:;"
+                                           data-original-title="" title=""><i class="fa fa-expand"></i></a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body hidden" style="height: auto;">
+                                    <div class="worker-details hidden">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="margin-bottom-10 visible-sm"></div>
+                </div>
+                <!-- END WORKER PIE CHARTS TEMPLATE -->
+            </div>
+        </div>
+    </div>
+    <!-- END JOB STATISTICS -->
+    <!-- BEGIN SERVER STATISTICS -->
+    <!-- TODO: Implement stats -->
+    <!-- <div class="col-md-6 col-sm-6">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-yellow"></i>
+                    <span class="caption-subject font-yellow bold uppercase">Server Stats</span>
+                    <span class="caption-helper">monthly stats...</span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse"> </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                    <a href="" class="reload"> </a>
+                    <a href="" class="remove"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="sparkline-chart">
+                            <div class="number" id="sparkline_bar5"></div>
+                            <a class="title" href="javascript:;"> Disk I/O
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="margin-bottom-10 visible-sm"> </div>
+                    <div class="col-md-4">
+                        <div class="sparkline-chart">
+                            <div class="number" id="sparkline_bar6"></div>
+                            <a class="title" href="javascript:;"> CPU Load
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="margin-bottom-10 visible-sm"> </div>
+                    <div class="col-md-4">
+                        <div class="sparkline-chart">
+                            <div class="number" id="sparkline_line"></div>
+                            <a class="title" href="javascript:;"> Load Rate
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- END SERVER STATISTICS -->
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet light tasks-widget bordered dashboard-task-list dashboard-task-list-pending dashboard-task-list-preview"
+             id="portlet-pending-tasks-list">
+            <!-- START TASK LIST -->
+            {% include "main-pending-tasks.html" %}
+            <!-- END START TASK LIST -->
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet light bordered dashboard-task-list">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-tasks font-blue"></i>
+                    <span class="caption-subject font-blue bold uppercase">Completed Tasks</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
+                    <!-- START TASK LIST -->
+                    <div id="completed_tasks"></div>
+                    <!-- END START TASK LIST -->
+                </div>
+                <div class="scroller-footer">
+                    <div class="btn-arrow-link pull-right">
+                        <a href="/history/">See All Records</a>
+                        <i class="icon-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% if session.level == 0 %}
+        {% include "../global/login-popup.html" %}
+    {% elif session.level == 1 %}
+        {% set minimum_required_sponsorship_level = "Supporter" %}
+        {% include "../global/insufficient-permissions.html" %}
+    {% end %}
+{% end %}
