@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Configuration"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Webgui port"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Unmanic can download and install a static FFMPEG binary."
+msgstr ""
+
+msgctxt "#30015"
+msgid "Download Unmanic's Dependencies"
+msgstr ""
+
+msgctxt "#31001"
+msgid "Open the Unmanic Add-on settings[CR]to download FFMPEG."
+msgstr ""
+
+msgctxt "#31010"
+msgid "Fetching FFMPEG "
+msgstr ""
+
+msgctxt "#31011"
+msgid "Please wait... "
+msgstr ""
+
+msgctxt "#31012"
+msgid "Downloading... "
+msgstr ""
+
+msgctxt "#31013"
+msgid "Checking downloaded file... "
+msgstr ""
+
+msgctxt "#31014"
+msgid "Extracting... "
+msgstr ""
+
+msgctxt "#31015"
+msgid "Complete!"
+msgstr ""
+
+msgctxt "#31016"
+msgid "Filename: "
+msgstr ""
+
+msgctxt "#31017"
+msgid "Error!"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Unmanic"
+msgstr ""
+
+msgctxt "#32002"
+msgid "FFMPEG"
+msgstr ""
+
+msgctxt "#33001"
+msgid "Add file to Unmanic"
+msgstr ""
+
+msgctxt "#33002"
+msgid "Could not resolve path info for: {}"
+msgstr ""
+
+msgctxt "#33003"
+msgid "Selected path is not a file: {}"
+msgstr ""
+
+msgctxt "#33004"
+msgid "Unable to reach Unmanic API. Please check that it is running locally on port `{}`."
+msgstr ""

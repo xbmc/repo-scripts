@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30000">
+        <setting label="30001" type="number" id="P_port" default="8888"/>
+        <setting type="sep"/>
+        <setting label="30010" type="lsep"/>
+        <setting label="30015" type="action" action="RunScript(service.unmanic, download_dependencies)"/>
+    </category>
+</settings>
