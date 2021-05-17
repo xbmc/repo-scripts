@@ -319,8 +319,8 @@ class ChromeOSImage:
     def get_bstream(imgpath):
         """Get a bytestream of the image"""
         if imgpath.endswith('.zip'):
-            bstream = ZipFile(compat_path(imgpath), 'r').open(os.path.basename(imgpath).strip('.zip'), 'r')
+            bstream = ZipFile(compat_path(imgpath), 'r').open(os.path.basename(imgpath).strip('.zip'), 'r')  # pylint: disable=consider-using-with
         else:
-            bstream = open(compat_path(imgpath), 'rb')
+            bstream = open(compat_path(imgpath), 'rb')  # pylint: disable=consider-using-with
 
         return [bstream, 0]
