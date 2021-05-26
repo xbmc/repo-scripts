@@ -52,6 +52,14 @@ class NowPlaying():
         """Constructor"""
         self.set_channel(None)
 
+    @property
+    def current(self):
+        """Return a dict for the current "nowplaying" song, or None.
+
+        The "cover" value will be an absolute URL.
+        """
+        return self._current
+
     def get_song_data(self, song_key):
         """Return a dict for the (artist, title) key, or None.
 
@@ -66,6 +74,7 @@ class NowPlaying():
             self.url = NOWPLAYING_URL.format(channel)
         else:
             self.url = None
+        self._current = None
         self.next_update = 0
         self.songs = {}
 
@@ -84,14 +93,22 @@ class NowPlaying():
         res = requests.get(self.url, timeout=2)
         res.raise_for_status()
         data = res.json()
+        current = None
         songs = {}
-        for song in data['song'].values():
+        for index, song in data['song'].items():
             song['cover'] = COVER_URL.format(song['cover'])
             key = build_key((song['artist'], song['title']))
             songs[key] = song
+            if index == '0':
+                current = song
         if BREAK_KEY not in songs:
             key = build_key(BREAK_KEY)
-            songs[key] = {'cover': BREAK_COVER_URL}
+            songs[key] = {
+                'artist': BREAK_KEY[0],
+                'cover': BREAK_COVER_URL,
+                'title': BREAK_KEY[1],
+            }
+        self._current = current
         self.songs = songs
         self.next_update = now + data['refresh']
 
