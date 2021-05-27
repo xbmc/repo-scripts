@@ -8,8 +8,8 @@ import json
 from time import time
 
 from .. import config
-from ..kodiutils import browsesingle, copy, exists, localize, log, mkdir, ok_dialog, open_file, progress_dialog, yesno_dialog
-from ..utils import cmd_exists, diskspace, http_download, http_get, run_cmd, sizeof_fmt, store, system_os, temp_path, update_temp_path
+from ..kodiutils import browsesingle, copy, exists, kodi_os, localize, log, mkdir, ok_dialog, open_file, progress_dialog, yesno_dialog
+from ..utils import cmd_exists, diskspace, http_download, http_get, http_head, run_cmd, sizeof_fmt, store, system_os, temp_path, update_temp_path
 from ..unicodes import compat_path, to_unicode
 from .arm_chromeos import ChromeOSImage
 
@@ -122,14 +122,42 @@ def chromeos_config():
     return json.loads(http_get(config.CHROMEOS_RECOVERY_URL))
 
 
+def hardcoded_chromeos_image():
+    """Gets a hardcoded ChromeOS image"""
+    arm_device = config.HARDCODED_CHROMEOS_IMAGE
+    http_status = http_head(arm_device['url'])
+    if http_status == 200:
+        return arm_device
+    return None
+
+
 def install_widevine_arm(backup_path):
     """Installs Widevine CDM on ARM-based architectures."""
-    devices = chromeos_config()
-    arm_device = select_best_chromeos_image(devices)
+    # With the release of Widevine CDM 4.10.2252.0, Google uses a newer dynamic library that needs TCMalloc support and a patched glibc to work
+    # Google will remove support for older Widevine CDM's on May 31, 2021
+    # More info at https://github.com/xbmc/inputstream.adaptive/issues/678 and https://www.widevine.com/news
+
+    # Experimental: Check for TCMalloc support
+    tcmalloc_path = '/usr/lib/libtcmalloc_minimal.so'
+    arm_device = None
+    if not exists(tcmalloc_path):
+        # Propose user to install older version
+        if yesno_dialog(localize(30066), localize(30067, os=kodi_os())):  # Your operating system probably doesn't support the newest Widevine CDM. Try older one?
+            # Install hardcoded ChromeOS image
+            ok_dialog(localize(30066), localize(30068))  # Please note that Google will remove support for older Widevine CDM's on May 31, 2021
+            arm_device = hardcoded_chromeos_image()
+            devices = arm_device
+
+    # Select newest and smallest ChromeOS image
+    if arm_device is None:
+        devices = chromeos_config()
+        arm_device = select_best_chromeos_image(devices)
+
     if arm_device is None:
         log(4, 'We could not find an ARM device in the Chrome OS recovery.json')
         ok_dialog(localize(30004), localize(30005))
         return False
+
     # Estimated required disk space: takes into account an extra 20 MiB buffer
     required_diskspace = 20971520 + int(arm_device['zipfilesize'])
     if yesno_dialog(localize(30001),  # Due to distributing issues, this takes a long time
@@ -147,7 +175,7 @@ def install_widevine_arm(backup_path):
                       localize(30018, diskspace=sizeof_fmt(required_diskspace)))
             return False
 
-        log(2, 'Downloading best ChromeOS image for Widevine: {hwid} ({version})'.format(**arm_device))
+        log(2, 'Downloading ChromeOS image for Widevine: {hwid} ({version})'.format(**arm_device))
         url = arm_device['url']
         downloaded = http_download(url, message=localize(30022), checksum=arm_device['sha1'], hash_alg='sha1',
                                    dl_size=int(arm_device['zipfilesize']))  # Downloading the recovery image
