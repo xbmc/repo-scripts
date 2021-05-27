@@ -13,7 +13,7 @@ RESTART_INTERVAL = 1.0
 RESTART_TIMEOUT = 1.0
 
 
-Song = namedtuple('Song', 'key data cover fanart')
+Song = namedtuple('Song', 'data cover fanart')
 
 
 class Player(xbmc.Player):
@@ -69,7 +69,7 @@ class Player(xbmc.Player):
         """Perform updates."""
         if self.restart_time:
             self.restart()
-        else:
+        elif self.stream_url:
             self.now_playing.update()
             self.update_slideshow()
             self.update_song()
@@ -79,8 +79,8 @@ class Player(xbmc.Player):
         song = self.last_song
         if song and self.isPlayingAudio():
             info = {
-                'artist': song.key[0],
-                'title': song.key[1],
+                'artist': song.data['artist'],
+                'title': song.data['title'],
                 'genre': '',
             }
             if 'album' in song.data:
@@ -107,14 +107,20 @@ class Player(xbmc.Player):
 
     def update_song(self):
         """Update song metadata, if necessary."""
+        last_key = self.last_key
+        last_song = self.last_song
         song_key = self.get_song_key()
-        if song_key is None or song_key == self.last_key:
-            self.last_key = song_key
+        if song_key is None or song_key == last_key:
             return
 
-        xbmc.log(f'rp_service: song_key {song_key}', xbmc.LOGDEBUG)
-        song_data = self.now_playing.get_song_data(song_key)
-        if song_data is None:
+        if song_key != ('', ''):
+            xbmc.log(f'rp_service: song_key {song_key}', xbmc.LOGDEBUG)
+            song_data = self.now_playing.get_song_data(song_key)
+            if song_data:
+                self.last_key = song_key
+        else:
+            song_data = self.now_playing.current
+        if song_data is None or last_song and last_song.data == song_data:
             return
 
         cover = song_data.get('cover')
@@ -132,8 +138,7 @@ class Player(xbmc.Player):
             self.slideshow.set_slides(None)
             fanart = None
 
-        self.last_key = song_key
-        self.last_song = Song(song_key, song_data, cover, fanart)
+        self.last_song = Song(song_data, cover, fanart)
         self.update_player()
 
     def onAVStarted(self):
