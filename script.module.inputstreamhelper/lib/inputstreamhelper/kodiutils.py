@@ -65,6 +65,16 @@ def kodi_version_major():
     return int(kodi_version().split('.')[0])
 
 
+def kodi_os():
+    """Returns Kodi OS name as string"""
+    # It takes a while to get this info
+    count = 0
+    while ' (kernel: ' not in xbmc.getInfoLabel('System.OSVersionInfo') and count < 10:
+        count += 1
+        xbmc.sleep(100)
+    return xbmc.getInfoLabel('System.OSVersionInfo').split(' (kernel: ')[0]
+
+
 def translate_path(path):
     """Translate special xbmc paths"""
     return to_unicode(translatePath(from_unicode(path)))
