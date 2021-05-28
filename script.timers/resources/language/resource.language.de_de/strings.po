@@ -1,0 +1,378 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Timers"
+msgstr "Timer"
+
+msgctxt "#32009"
+msgid "Sleep timer"
+msgstr "Einschlafen"
+
+msgctxt "#32010"
+msgid "Snooze timer"
+msgstr "Schlummern"
+
+msgctxt "#32011"
+msgid "Timer 1"
+msgstr "Timer 1"
+
+msgctxt "#32012"
+msgid "Timer 2"
+msgstr "Timer 2"
+
+msgctxt "#32013"
+msgid "Timer 3"
+msgstr "Timer 3"
+
+msgctxt "#32014"
+msgid "Timer 4"
+msgstr "Timer 4"
+
+msgctxt "#32015"
+msgid "Timer 5"
+msgstr "Timer 5"
+
+msgctxt "#32016"
+msgid "Timer 6"
+msgstr "Timer 6"
+
+msgctxt "#32017"
+msgid "Timer 7"
+msgstr "Timer 7"
+
+msgctxt "#32018"
+msgid "Timer 8"
+msgstr "Timer 8"
+
+msgctxt "#32019"
+msgid "Timer 9"
+msgstr "Timer 9"
+
+msgctxt "#32020"
+msgid "Timer 10"
+msgstr "Timer 10"
+
+msgctxt "#32021"
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgctxt "#32022"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgctxt "#32023"
+msgid "Apply"
+msgstr "Übernehmen"
+
+msgctxt "#32024"
+msgid "%s at %s until %s"
+msgstr "%s von %s bis %s"
+
+msgctxt "#32025"
+msgid "%s at %s%s"
+msgstr "%s um %s%s"
+
+msgctxt "#32026"
+msgid "Name"
+msgstr "Name"
+
+msgctxt "#32027"
+msgid "Timers"
+msgstr "Timers"
+
+msgctxt "#32028"
+msgid "Update succeeded"
+msgstr "Aktualisierung erfolgt"
+
+msgctxt "#32030"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#32031"
+msgid "Preset volume"
+msgstr "Voreingestellte Lautstärke"
+
+msgctxt "#32032"
+msgid "Prevent lock screen"
+msgstr "Verhindere Bildschirmsperre"
+
+msgctxt "#32033"
+msgid "Execution"
+msgstr "Ausführung"
+
+msgctxt "#32034"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "#32035"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "#32036"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "#32037"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "#32038"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "#32039"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "#32040"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgctxt "#32041"
+msgid "Mondays"
+msgstr "Montags"
+
+msgctxt "#32042"
+msgid "Tuedays"
+msgstr "Dienstags"
+
+msgctxt "#32043"
+msgid "Wednesdays"
+msgstr "Mittwochs"
+
+msgctxt "#32044"
+msgid "Thursdays"
+msgstr "Donnerstags"
+
+msgctxt "#32045"
+msgid "Fridays"
+msgstr "Freitags"
+
+msgctxt "#32046"
+msgid "Saturdays"
+msgstr "Samstags"
+
+msgctxt "#32047"
+msgid "Sundays"
+msgstr "Sonntags"
+
+msgctxt "#32048"
+msgid "Mondays to Thursdays"
+msgstr "Montags bis Donnerstags"
+
+msgctxt "#32049"
+msgid "Mondays to Fridays"
+msgstr "Montags bis Freitags"
+
+msgctxt "#32050"
+msgid "Tuesdays to Fridays"
+msgstr "Dienstags bis Freitags"
+
+msgctxt "#32051"
+msgid "Thursdays to Saturdays"
+msgstr "Donnerstags bis Samstags"
+
+msgctxt "#32052"
+msgid "Fridays to Saturdays"
+msgstr "Freitags bis Samstags"
+
+msgctxt "#32053"
+msgid "Fridays to Sundays"
+msgstr "Freitags bis Sonntags"
+
+msgctxt "#32054"
+msgid "Saturdays to Sundays"
+msgstr "Samstags bis Sonntags"
+
+msgctxt "#32055"
+msgid "Saturdays to Mondays"
+msgstr "Samstags bis Montags"
+
+msgctxt "#32056"
+msgid "Sundays to Wednesdays"
+msgstr "Sonntags bis Mittwochs"
+
+msgctxt "#32057"
+msgid "Sundays to Thursdays"
+msgstr "Sonntags bis Donnerstags"
+
+msgctxt "#32058"
+msgid "Everyday"
+msgstr "täglich"
+
+msgctxt "#32059"
+msgid "off"
+msgstr "aus"
+
+msgctxt "#32060"
+msgid "Schedule"
+msgstr "Zeitplanung"
+
+msgctxt "#32061"
+msgid "Start time"
+msgstr "Startzeit"
+
+msgctxt "#32062"
+msgid "End after"
+msgstr "Ende"
+
+msgctxt "#32063"
+msgid "No end"
+msgstr "kein Ende"
+
+msgctxt "#32064"
+msgid "Duration"
+msgstr "Dauer"
+
+msgctxt "#32065"
+msgid "Time"
+msgstr "zur Uhrzeit"
+
+msgctxt "#32070"
+msgid "Action"
+msgstr "Aktion"
+
+msgctxt "#32071"
+msgid "Do nothing with media"
+msgstr "mache nichts mit Medien"
+
+msgctxt "#32072"
+msgid "start media and stop at end"
+msgstr "starte Wiedergabe und beende diese nach Ablauf"
+
+msgctxt "#32073"
+msgid "just start media"
+msgstr "starte Wiedergabe"
+
+msgctxt "#32074"
+msgid "start media at end"
+msgstr "starte Wiedergabe nach Ablauf"
+
+msgctxt "#32075"
+msgid "stop media immediately"
+msgstr "stoppe Wiedergabe sofort"
+
+msgctxt "#32076"
+msgid "stop media at end"
+msgstr "stoppe Wiedergabe nach Ablauf"
+
+msgctxt "#32077"
+msgid "powerdown system"
+msgstr "fahre System herunter"
+
+msgctxt "#32082"
+msgid "Media"
+msgstr "Wiedergabe"
+
+msgctxt "#32090"
+msgid "Volume"
+msgstr "Lautstärke"
+
+msgctxt "#32091"
+msgid "Fading"
+msgstr "Ein-/Ausblenden"
+
+msgctxt "#32095"
+msgid "Low volume"
+msgstr "Niedrige Lautstärke"
+
+msgctxt "#32096"
+msgid "High volume"
+msgstr "Hohe Lautstärke"
+
+msgctxt "#32097"
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+msgctxt "#32098"
+msgid "Timer Notifications"
+msgstr "Benachrichtigungen anzeigen"
+
+msgctxt "#32100"
+msgid "Timer starts"
+msgstr "Timer gestartet"
+
+msgctxt "#32101"
+msgid "Timer ended"
+msgstr "Timer beendet"
+
+msgctxt "#32102"
+msgid "Open settings ..."
+msgstr "Öffne Einstellungen ..."
+
+msgctxt "#32103"
+msgid "Select timer"
+msgstr "Wähle Timer"
+
+msgctxt "#32104"
+msgid "Select execution"
+msgstr "Wähle Ausführung"
+
+msgctxt "#32105"
+msgid "Enter start time"
+msgstr "Gebe Startzeit ein"
+
+msgctxt "#32106"
+msgid "Enter duration"
+msgstr "Gebe Dauer ein"
+
+msgctxt "#32107"
+msgid "Confirm %s"
+msgstr "Bestätige %s"
+
+msgctxt "#32108"
+msgid "play now"
+msgstr "jetzt abspielen"
+
+msgctxt "#32109"
+msgid "Media not set. Nothing to play."
+msgstr "Media ist nicht gesetzt. Es gibt nichts zum Abspielen."
+
+msgctxt "#32110"
+msgid "Play %s"
+msgstr "Spiele %s"
+
+msgctxt "#32111"
+msgid "Reset volume"
+msgstr "Lautstärke zurücksetzen"
+
+msgctxt "#32112"
+msgid "Reset volume done"
+msgstr "Lautstärke zurückgesetzt"
+
+msgctxt "#32113"
+msgid "Seek to correct time if timer starts belatedly"
+msgstr "Springe zu korrekter Zeitmarke wenn Timer verspätet startet"
+
+msgctxt "#32114"
+msgid "Select media and set timer via context menu first."
+msgstr "Wähle zuerst Media über Timer Kontext Menü aus!"
+
+msgctxt "#32120"
+msgid "off"
+msgstr "aus"
+
+msgctxt "#32121"
+msgid "fade in from low"
+msgstr "einblenden"
+
+msgctxt "#32122"
+msgid "fade out from high"
+msgstr "ausblenden"
+
+msgctxt "#32123"
+msgid "fade out from current"
+msgstr "ausblenden von aktueller Lautstärke"
