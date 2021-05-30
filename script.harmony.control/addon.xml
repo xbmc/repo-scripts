@@ -1,4 +1,4 @@
-<addon id="script.harmony.control" name="Harmony Hub Controller" provider-name="pkscout" version="0.2.0+matrix.1">
+<addon id="script.harmony.control" name="Harmony Hub Controller" provider-name="pkscout" version="0.2.3+matrix.1">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.kodi-six" version="0.1.3.1" />
@@ -9,9 +9,8 @@
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>
-v.0.2.0
-- initial release
+		<news>v.0.2.3
+- fix for crash when running activity
 		</news>
 		<assets>
 			<icon>icon.png</icon>
@@ -20,6 +19,8 @@ v.0.2.0
 		<description lang="en_GB">Harmony Hub Controller let's you setup actions to run a Harmony activity and/or a sequence of remote commands. Running the addon gives you a menu of your actions, and you can also send an action name as an arg to have the script run a specific action.</description>
 		<platform>all</platform>
 		<license>GPL-2.0-only</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=361342</forum>
+		<website>https://kodi.wiki/view/Add-on:Harmony_Hub_Controller</website>
 		<source>https://github.com/pkscout/script.harmony.control</source>
 	</extension>
 </addon>

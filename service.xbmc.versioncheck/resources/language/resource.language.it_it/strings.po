@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
-"Language: it\n"
+"PO-Revision-Date: 2021-04-30 09:25+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/it_it/>\n"
+"Language: it_it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.6\n"
 
 msgctxt "#32001"
 msgid "We would like to recommend you to upgrade."
@@ -79,7 +80,7 @@ msgstr "Linux: Aggiorna utilizzando apt"
 #. Used in OK dialog
 msgctxt "#32030"
 msgid "A new stable version of Kodi is available."
-msgstr "Una nuova versione stabile di di Kodi è disponibile "
+msgstr "Una nuova versione stabile di Kodi è disponibile."
 
 #. Direct people to the website. Used in OK dialog
 msgctxt "#32031"
@@ -89,7 +90,7 @@ msgstr "Visita http://kodi.tv per più informazioni."
 #. Used in OK dialog
 msgctxt "#32032"
 msgid "A new stable version of Kodi is available."
-msgstr "Una nuova versione stabile di di Kodi è disponibile."
+msgstr "Una nuova versione stabile di Kodi è disponibile."
 
 #. Direct people to the website. Used in OK dialog
 msgctxt "#32033"

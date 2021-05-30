@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.subtitles.subsceneplus"
        name="Subscene Subtitles"
-       version="1.1.27"
+       version="1.2.9"
        provider-name="Cih2001">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -16,7 +16,9 @@
     </description>
     <platform>all</platform>
     <license>GPL-2.0-or-later</license>
-	<news>Version 1.1.*
+    <news>Version 1.2.*
+- New: Subscene domain name can be selected from the settings.
+Version 1.1.*
 - New: Subscene plus now works with TV shows.
 - New: When Movie/TV-show cannot be determined accurately, It allows you to select the correct one from a list.
 - New: Subtitles from archives with multiple items can be selected from a list.

@@ -191,7 +191,7 @@ class PluginListing(object):
 
     def _add_item(self,label,url):
         icon = 'special://home/addons/' + ADDON_ID + '/resources/icon.png'
-        list_item = xbmcgui.ListItem(label=label)
+        list_item = xbmcgui.ListItem(label=label, offscreen=True)
         list_item.setInfo('video', {'title': label, 'mediatype': 'video'})
         list_item.setArt({'icon': 'DefaultFolder.png','thumb': icon})
         self.li.append((url, list_item, True))

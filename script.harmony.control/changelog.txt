@@ -1,0 +1,11 @@
+v.0.2.3
+- fix for crash when running activity
+
+v.0.2.2
+- fix for logging error
+
+v.0.2.1
+- fix for issue with logging in Python3
+
+v.0.1.5
+- initial release

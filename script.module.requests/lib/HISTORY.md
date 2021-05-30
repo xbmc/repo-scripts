@@ -4,9 +4,69 @@ Release History
 dev
 ---
 
+-   \[Short description of non-trivial change.\]
+
+2.25.1 (2020-12-16)
+-------------------
+
 **Bugfixes**
 
--   \[Short description of non-trivial change.\]
+- Requests now treats `application/json` as `utf8` by default. Resolving
+  inconsistencies between `r.text` and `r.json` output. (#5673)
+
+**Dependencies**
+
+- Requests now supports chardet v4.x.
+
+2.25.0 (2020-11-11)
+------------------
+
+**Improvements**
+
+- Added support for NETRC environment variable. (#5643)
+
+**Dependencies**
+
+- Requests now supports urllib3 v1.26.
+
+**Deprecations**
+
+- Requests v2.25.x will be the last release series with support for Python 3.5.
+- The `requests[security]` extra is officially deprecated and will be removed
+  in Requests v2.26.0.
+
+2.24.0 (2020-06-17)
+-------------------
+
+**Improvements**
+
+- pyOpenSSL TLS implementation is now only used if Python
+  either doesn't have an `ssl` module or doesn't support
+  SNI. Previously pyOpenSSL was unconditionally used if available.
+  This applies even if pyOpenSSL is installed via the
+  `requests[security]` extra (#5443)
+
+- Redirect resolution should now only occur when
+  `allow_redirects` is True. (#5492)
+
+- No longer perform unnecessary Content-Length calculation for
+  requests that won't use it. (#5496)
+
+2.23.0 (2020-02-19)
+-------------------
+
+**Improvements**
+
+- Remove defunct reference to `prefetch` in Session `__attrs__` (#5110)
+
+**Bugfixes**
+
+- Requests no longer outputs password in basic auth usage warning. (#5099)
+
+**Dependencies**
+
+- Pinning for `chardet` and `idna` now uses major version instead of minor.
+  This hopefully reduces the need for releases everytime a dependency is updated.
 
 2.22.0 (2019-05-15)
 -------------------
@@ -549,7 +609,7 @@ Or, even better:
 
 **Bugfixes**
 
--   For file-like objects that are not seeked to the very beginning, we
+-   For file-like objects that are not sought to the very beginning, we
     now send the content length for the number of bytes we will actually
     read, rather than the total size of the file, allowing partial file
     uploads.
@@ -629,7 +689,7 @@ Or, even better:
 
 This is the first release that follows our new release process. For
 more, see [our
-documentation](http://docs.python-requests.org/en/latest/community/release-process/).
+documentation](https://requests.readthedocs.io/en/latest/community/release-process/).
 
 **Bugfixes**
 
@@ -793,7 +853,7 @@ documentation](http://docs.python-requests.org/en/latest/community/release-proce
 -   Unicode URL improvements for Python 2.
 -   Re-order JSON param for backwards compat.
 -   Automatically defrag authentication schemes from host/pass URIs.
-    ([\#2249](https://github.com/requests/requests/issues/2249))
+    ([\#2249](https://github.com/psf/requests/issues/2249))
 
 2.4.2 (2014-10-05)
 ------------------
@@ -801,26 +861,26 @@ documentation](http://docs.python-requests.org/en/latest/community/release-proce
 **Improvements**
 
 -   FINALLY! Add json parameter for uploads!
-    ([\#2258](https://github.com/requests/requests/pull/2258))
+    ([\#2258](https://github.com/psf/requests/pull/2258))
 -   Support for bytestring URLs on Python 3.x
-    ([\#2238](https://github.com/requests/requests/pull/2238))
+    ([\#2238](https://github.com/psf/requests/pull/2238))
 
 **Bugfixes**
 
 -   Avoid getting stuck in a loop
-    ([\#2244](https://github.com/requests/requests/pull/2244))
+    ([\#2244](https://github.com/psf/requests/pull/2244))
 -   Multiple calls to iter\* fail with unhelpful error.
-    ([\#2240](https://github.com/requests/requests/issues/2240),
-    [\#2241](https://github.com/requests/requests/issues/2241))
+    ([\#2240](https://github.com/psf/requests/issues/2240),
+    [\#2241](https://github.com/psf/requests/issues/2241))
 
 **Documentation**
 
 -   Correct redirection introduction
-    ([\#2245](https://github.com/requests/requests/pull/2245/))
+    ([\#2245](https://github.com/psf/requests/pull/2245/))
 -   Added example of how to send multiple files in one request.
-    ([\#2227](https://github.com/requests/requests/pull/2227/))
+    ([\#2227](https://github.com/psf/requests/pull/2227/))
 -   Clarify how to pass a custom set of CAs
-    ([\#2248](https://github.com/requests/requests/pull/2248/))
+    ([\#2248](https://github.com/psf/requests/pull/2248/))
 
 2.4.1 (2014-09-09)
 ------------------

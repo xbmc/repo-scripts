@@ -15,8 +15,7 @@ Copyright (C) 2010 Hiroki Ohtani(liris)
 
     You should have received a copy of the GNU Lesser General Public
     License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor,
-    Boston, MA  02110-1335  USA
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 """
 import hashlib
@@ -115,7 +114,7 @@ def _get_handshake_headers(resource, host, port, options):
             headers.append("Origin: http://%s" % hostport)
 
     key = _create_sec_websocket_key()
-    
+
     # Append Sec-WebSocket-Key & Sec-WebSocket-Version if not manually specified
     if not 'header' in options or 'Sec-WebSocket-Key' not in options['header']:
         key = _create_sec_websocket_key()
@@ -127,7 +126,7 @@ def _get_handshake_headers(resource, host, port, options):
         headers.append("Sec-WebSocket-Version: %s" % VERSION)
 
     if not 'connection' in options or options['connection'] is None:
-        headers.append('Connection: upgrade')
+        headers.append('Connection: Upgrade')
     else:
         headers.append(options['connection'])
 
@@ -183,10 +182,11 @@ def _validate(headers, key, subprotocols):
             return False, None
 
     if subprotocols:
-        subproto = headers.get("sec-websocket-protocol", None).lower()
-        if not subproto or subproto not in [s.lower() for s in subprotocols]:
+        subproto = headers.get("sec-websocket-protocol", None)
+        if not subproto or subproto.lower() not in [s.lower() for s in subprotocols]:
             error("Invalid subprotocol: " + str(subprotocols))
             return False, None
+        subproto = subproto.lower()
 
     result = headers.get("sec-websocket-accept", None)
     if not result:

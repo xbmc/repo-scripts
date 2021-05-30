@@ -10,10 +10,10 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: English (US) (http://www.transifex.com/projects/p/xbmc-addons/language/en_US/)\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#30000"
@@ -44,6 +44,14 @@ msgctxt "#30006"
 msgid "Log File Location"
 msgstr "Log File Location"
 
+msgctxt "#30007"
+msgid "Celcius"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Fahrenheit"
+msgstr ""
+
 msgctxt "#30010"
 msgid " Additional Logs"
 msgstr " Additional Logs"
@@ -68,6 +76,15 @@ msgctxt "#30021"
 msgid "    Log File Location"
 msgstr "    Log File Location"
 
+# empty strings from id 30022 to 30029
+msgctxt "#30030"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Set Line Read Size"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Temperature Information"
 msgstr "Temperature Information"
@@ -87,6 +104,10 @@ msgstr "Log File Error"
 msgctxt "#30104"
 msgid "No log file found."
 msgstr "No log file found."
+
+msgctxt "#30105"
+msgid "Other Information"
+msgstr ""
 
 msgctxt "#32209"
 msgid "Enable debug logging"

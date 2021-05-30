@@ -1,7 +1,7 @@
 Certifi: Python SSL Certificates
 ================================
 
-`Certifi`_ is a carefully curated collection of Root Certificates for
+`Certifi`_ provides Mozilla's carefully curated collection of Root Certificates for
 validating the trustworthiness of SSL certificates while verifying the identity
 of TLS hosts. It has been extracted from the `Requests`_ project.
 
@@ -21,12 +21,12 @@ built-in function::
     >>> import certifi
 
     >>> certifi.where()
-    '/usr/local/lib/python2.7/site-packages/certifi/cacert.pem'
+    '/usr/local/lib/python3.7/site-packages/certifi/cacert.pem'
 
 Or from the command line::
 
     $ python -m certifi
-    /usr/local/lib/python2.7/site-packages/certifi/cacert.pem
+    /usr/local/lib/python3.7/site-packages/certifi/cacert.pem
 
 Enjoy!
 
@@ -44,5 +44,13 @@ In previous versions, ``certifi`` provided the ``certifi.old_where()`` function
 to intentionally re-add the 1024-bit roots back into your bundle. This was not
 recommended in production and therefore was removed at the end of 2018.
 
-.. _`Certifi`: https://certifi.io/en/latest/
-.. _`Requests`: http://docs.python-requests.org/en/latest/
+.. _`Certifi`: https://certifiio.readthedocs.io/en/latest/
+.. _`Requests`: https://requests.readthedocs.io/en/master/
+
+Addition/Removal of Certificates
+--------------------------------
+
+Certifi does not support any addition/removal or other modification of the
+CA trust store content. This project is intended to provide a reliable and
+highly portable root of trust to python deployments. Look to upstream projects
+for methods to use alternate trust.

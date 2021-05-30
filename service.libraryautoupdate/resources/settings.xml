@@ -1,38 +1,296 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<settings>
-	<category id="general" label="30001">
-		<setting id="startup_delay" type="enum" values="0|1|2|3|4|5" label="30008" default="0"  />
-		<setting id="notify_next_run" type="bool" label="30006" default="true" />
-		<setting id="run_during_playback" type="bool" label="30007" default="false" />
-		<setting id="run_on_idle" type="bool" label="30014" default="false" />
-		<setting id="check_sources" type="bool" label="30017" default="false" />
-		<setting id="disable_manual_prompt" type="bool" label="30015" default="false" />
-		<setting id="upgrade_notes" type="number" label="upgrade_notes" visible="false" default="1" />
-	</category>
-	<category id="video_timer" label="30002">
-		<setting id="update_video" type="bool" label="30004" default="true" />
-		<setting id="video_advanced_timer" type="bool" label="30009" default="false" enable="eq(-1,true)"/>
-		<setting id="video_timer" type="enum" values="1|2|4|6|12|24" label="30010" default="2" enable="!eq(-1,true) + eq(-2,true)" visible="!eq(-1,true)" />
-		<setting id="video_cron_expression" type="text" label="30011" visible="eq(-2,true)" enable="eq(-2,true) + eq(-3,true)" default="0 * * * *" />
-		<setting type="sep" />
-		<!-- custom paths -->
-		<setting id="run_custom_paths" type="action" action="RunScript(special://home/addons/service.libraryautoupdate/edit_custom_paths.py,type=video)" label="30020" />
-	</category>
-	<category id="music_timer" label="30003">
-		<setting id="update_music" type="bool" label="30005" default="false" />
-		<setting id="music_advanced_timer" type="bool" label="30009" default="false" enable="eq(-1,true)" />
-		<setting id="music_timer" type="enum" values="1|2|4|6|12|24" label="30010" default="2" enable="!eq(-1,true) + eq(-2,true)" visible="!eq(-1,true)" />
-		<setting id="music_cron_expression" type="text" label="30011" enable="eq(-2,true) + eq(-3,true)" default="0 * * * *" visible="eq(-2,true)" />
-		<setting type="sep" />
-		<!-- custom paths -->
-		<setting id="run_custom_paths_music" type="action" action="RunScript(special://home/addons/service.libraryautoupdate/edit_custom_paths.py,type=music)" label="30020" />
-	</category>
-	<category id="clean_timer" label="30040">
-		<setting id="clean_libraries" type="bool" label="30041" default="false" />
-		<setting id="library_to_clean" type="enum" lvalues="30055|30002|30003" label="30054" default="0" enable="eq(-1,true)" />
-		<setting id="user_confirm_clean" type="bool" label="30051" default="false" enable="eq(-2,true) + !eq(1,0)" />
-		<setting id="clean_timer" type="enum" lvalues="30044|30045|30046|30047|30011" label="30043" default="0" enable="eq(-3,true)" />
-		<setting id="clean_video_cron_expression" type="text" label="30056" default="0 0 * * *" enable="eq(-4,true)" visible="eq(-1,4)" />
-		<setting id="clean_music_cron_expression" type="text" label="30057" default="0 2 * * *" enable="eq(-5,true)" visible="eq(-2,4)" />
-	</category>
+<?xml version="1.0"?>
+<settings version="1">
+  <section id="service.libraryautoupdate">
+    <category id="general" label="30001" help="">
+      <group id="1" label="">
+        <!-- startup delay 0 to 5 min -->
+        <setting id="startup_delay" type="integer" label="30008" help="30074">
+          <level>1</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="30062">0</option>
+              <option label="30063">1</option>
+              <option label="30064">2</option>
+              <option label="30065">3</option>
+              <option label="30066">4</option>
+              <option label="30067">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+        </setting>
+        <setting id="notify_next_run" type="boolean" label="30006" help="">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+    		<setting id="run_during_playback" type="boolean" label="30007" help="30075">
+          <level>1</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+    		<setting id="run_on_idle" type="boolean" label="30014" help="30076">
+          <level>1</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+    		<setting id="check_sources" type="boolean" label="30017" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="disable_manual_prompt" type="boolean" label="30015" help="30077">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <!-- upgrade notes not visible to users -->
+        <setting id="upgrade_notes" type="integer" label="upgrade_notes" help="">
+          <level>4</level>
+          <default>1</default>
+          <visible>false</visible>
+          <control type="edit" format="integer">
+            <heading>upgrade_notes</heading>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="video_timer" label="30002">
+      <group id="1" label="">
+    		<setting id="update_video" type="boolean" label="30004" help="">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+    		<setting id="video_advanced_timer" type="boolean" label="30009" help="30078">
+          <level>2</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="enable" setting="update_video">true</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <!-- timer options 1 hr, 2 hr, 4 hr, 6 hr, 12 hr, 24 hr -->
+    		<setting id="video_timer" type="integer" label="30010" help="30079">
+          <level>0</level>
+          <default>2</default>
+          <constraints>
+            <options>
+              <option label="30068">1</option>
+              <option label="30069">2</option>
+              <option label="30070">4</option>
+              <option label="30071">6</option>
+              <option label="30072">12</option>
+              <option label="30073">24</option>
+            </options>
+          </constraints>
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="update_video">true</condition>
+                <condition setting="video_advanced_timer" operator="!is">true</condition>
+              </and>
+            </dependency>
+            <dependency type="visible" setting="video_advanced_timer" operator="!is">true</dependency>
+          </dependencies>
+          <control type="spinner" format="string"/>
+        </setting>
+    		<setting id="video_cron_expression" type="string" label="30011" help="30080">
+          <level>2</level>
+          <default>0 * * * *</default>
+          <constraints>
+            <allowempty>false</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="update_video">true</condition>
+                <condition setting="video_advanced_timer">true</condition>
+              </and>
+            </dependency>
+            <dependency type="visible" setting="video_advanced_timer">true</dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30011</heading>
+          </control>
+        </setting>
+      </group>
+      <group id="2" label="">
+        <!-- custom paths editor -->
+    		<setting id="run_custom_paths" type="action" label="30020" help="30081">
+          <level>3</level>
+          <default />
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/service.libraryautoupdate/edit_custom_paths.py,type=video)</data>
+          </control>
+        </setting>
+      </group>
+  	</category>
+    <category id="music_timer" label="30003">
+      <group id="1" label="">
+        <setting id="update_music" type="boolean" label="30005" help="">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="music_advanced_timer" type="boolean" label="30009" help="30078">
+          <level>2</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="enable" setting="update_music">true</dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <!-- timer options 1 hr, 2 hr, 4 hr, 6 hr, 12 hr, 24 hr -->
+        <setting id="music_timer" type="integer" label="30010" help="30079">
+          <level>0</level>
+          <default>2</default>
+          <constraints>
+            <options>
+              <option label="30068">1</option>
+              <option label="30069">2</option>
+              <option label="30070">4</option>
+              <option label="30071">6</option>
+              <option label="30072">12</option>
+              <option label="30073">24</option>
+            </options>
+          </constraints>
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="update_music">true</condition>
+                <condition setting="music_advanced_timer" operator="!is">true</condition>
+              </and>
+            </dependency>
+            <dependency type="visible" setting="music_advanced_timer" operator="!is">true</dependency>
+          </dependencies>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="music_cron_expression" type="string" label="30011" help="30080">
+          <level>2</level>
+          <default>0 * * * *</default>
+          <constraints>
+            <allowempty>false</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="update_music">true</condition>
+                <condition setting="music_advanced_timer">true</condition>
+              </and>
+            </dependency>
+            <dependency type="visible" setting="music_advanced_timer">true</dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30011</heading>
+          </control>
+        </setting>
+      </group>
+      <group id="2" label="">
+        <!-- custom paths editor -->
+    		<setting id="run_custom_paths_music" type="action" label="30020" help="30081">
+          <level>3</level>
+          <default />
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/service.libraryautoupdate/edit_custom_paths.py,type=music)</data>
+          </control>
+        </setting>
+      </group>
+  	</category>
+    <category id="clean_timer" label="30040">
+      <group id="1" label="">
+        <setting id="clean_libraries" type="boolean" label="30041" help="30082">
+          <level>1</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <!-- options are both, video and music -->
+        <setting id="library_to_clean" type="integer" label="30054" help="">
+          <level>1</level>
+          <default>30055</default>
+          <constraints>
+            <options>
+              <option label="30055">0</option>
+              <option label="30002">1</option>
+              <option label="30003">2</option>
+            </options>
+          </constraints>
+          <dependencies>
+            <dependency type="enable" setting="clean_libraries">true</dependency>
+          </dependencies>
+          <control type="spinner" format="string"/>
+        </setting>
+        <!-- can only check this when not on the both setting above -->
+        <setting id="user_confirm_clean" type="boolean" label="30051" help="30083">
+          <level>2</level>
+          <default>false</default>
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="clean_libraries">true</condition>
+                <condition setting="library_to_clean" operator="!is">0</condition>
+              </and>
+            </dependency>
+          </dependencies>
+          <control type="toggle" />
+        </setting>
+        <!-- clean options are after update, daily, weekly, monthly, and custom cron -->
+        <setting id="clean_timer" type="integer" label="30043" help="30084">
+          <level>1</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="30044">0</option>
+              <option label="30045">1</option>
+              <option label="30046">2</option>
+              <option label="30047">3</option>
+              <option label="30011">4</option>
+            </options>
+          </constraints>
+          <dependencies>
+            <dependency type="enable" setting="clean_libraries">true</dependency>
+          </dependencies>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="clean_video_cron_expression" type="string" label="30056" help="30080">
+          <level>1</level>
+          <default>0 0 * * *</default>
+          <constraints>
+            <allowempty>false</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="enable" setting="clean_libraries">true</dependency>
+            <dependency type="visible">
+              <and>
+                <condition setting="library_to_clean" operator="!is">2</condition>
+                <condition type="visible" setting="clean_timer">4</condition>
+              </and>
+            </dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30056</heading>
+          </control>
+        </setting>
+        <setting id="clean_music_cron_expression" type="string" label="30057" help="30080">
+          <level>1</level>
+          <default>0 2 * * *</default>
+          <constraints>
+            <allowempty>false</allowempty>
+          </constraints>
+          <dependencies>
+            <dependency type="enable" setting="clean_libraries">true</dependency>
+            <dependency type="visible">
+              <and>
+                <condition setting="library_to_clean" operator="!is">1</condition>
+                <condition type="visible" setting="clean_timer">4</condition>
+              </and>
+            </dependency>
+          </dependencies>
+          <control type="edit" format="string">
+            <heading>30057</heading>
+          </control>
+        </setting>
+      </group>
+  	</category>
+  </section>
 </settings>

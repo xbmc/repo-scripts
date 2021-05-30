@@ -25,6 +25,7 @@ _  = __addon__.getLocalizedString
 logger = logging.getLogger(ADDON.getAddonInfo('id'))
 backupfile = None
 videodbfilename = None
+videofilename = None
 player_instances = []
 
 def select_line_subtitle(subtitlefile, start, end):
@@ -384,8 +385,8 @@ def sync_after_wizard(starting_time, ending_time, subtitlefile, filename):
     show_dialog(subtitlefile3, filename)
 
 def retrieve_video(subtitlefile, filename):
-    global videodbfilename
-    if videodbfilename == None:
+    global videodbfilename, videofilename
+    if videodbfilename == None and videofilename == None:
         choice = xbmcgui.Dialog().contextmenu([_(32093), _(32094), _(32095), _(32005)])
         if choice == 3 or choice == -1:
             show_dialog(subtitlefile, filename)
@@ -395,12 +396,18 @@ def retrieve_video(subtitlefile, filename):
             show_dialog(subtitlefile, filename)
         videodbfilename = location
     else:
-        choice = xbmcgui.Dialog().contextmenu([_(32116) , _(32093), _(32094), _(32095), _(32005)])
+        if not videofilename:
+            choice = xbmcgui.Dialog().contextmenu([_(32116) , _(32093), _(32094), _(32095), _(32005)])
+        else:
+            choice = xbmcgui.Dialog().contextmenu([_(35008) + os.path.basename(videofilename), _(32093), _(32094), _(32095), _(32005)])
         if choice == 4 or choice == -1:
             show_dialog(subtitlefile, filename)
         pos_locations = [videodbfilename, "videodb://movies/titles/", "videodb://tvshows/titles/", "videodb://"]
         if choice == 0:
-            location = videodbfilename
+            if not videofilename:
+                location = videodbfilename
+            else:
+                location = videofilename
         else:
             location = xbmcgui.Dialog().browse(1, _(32020), 'video', '', False, False, pos_locations[choice])
         if location in pos_locations[1:]:
@@ -479,11 +486,12 @@ def check_validity(subtitlefile):
             return False
     return True
 
-def load_subtitle(with_warning):
+def load_subtitle(with_warning, filename=""):
     #Sublissimo, select sub, select sub
     if with_warning:
         xbmcgui.Dialog().ok(_(31001), _(32034))
-    filename = xbmcgui.Dialog().browse(1, _(32035), 'video', ".srt|.sub")
+    if not filename:
+        filename = xbmcgui.Dialog().browse(1, _(32035), 'video', ".srt|.sub")
     if filename == "":
         sys.exit()
     if filename[-3:] == 'sub':
@@ -550,14 +558,52 @@ def stretch_subtitle_menu(subtitlefile, filename):
     if menuchoice == 2 or menuchoice == -1:
         show_dialog(subtitlefile, filename)
 
+def check_valid_hexadecimal(hex_input):
+    if len(hex_input) != 8:
+        return False
+    letters = ["A", "B", "C", "D", "E", "F"]
+    for char in hex_input:
+        if not char.isdigit():
+            if char not in letters:
+                return False
+    return True
+
+def filter_out_color(subtitlefile, filename, color_code=""):
+    if not color_code:
+        color_code = xbmcgui.Dialog().input(_(32141))
+        if not color_code:
+            advanced_options(subtitlefile, filename)
+        if not check_valid_hexadecimal(color_code):
+            xbmcgui.Dialog().ok(_(32014), _(32140))
+            filter_out_color(subtitlefile, filename)
+    new_subtitlefile = []
+    for line in subtitlefile:
+        if "<font color" in line:
+            starts = [m.start() + len('<font color="#') for m in re.finditer('<font color="#', line)]
+            ends = [m.start() for m in re.finditer('">', line)]
+            for start, end in zip(starts, ends):
+                line = line[:start] + color_code + line[end:]
+            new_subtitlefile.append(line)
+        else:
+            new_subtitlefile.append(line)
+    if color_code == "FFFFFFFF":
+        xbmcgui.Dialog().ok(_(32017), _(32137))
+    else:
+        xbmcgui.Dialog().ok(_(32017), _(32142) + "#" + color_code)
+    show_dialog(new_subtitlefile, filename)
+
 def advanced_options(subtitlefile, filename):
     # Search, Check integrity, Back
-    menuchoice = xbmcgui.Dialog().contextmenu([_(31006), _(31007), _(32005)])
+    menuchoice = xbmcgui.Dialog().contextmenu([_(32138), _(32139), _(31006), _(31007), _(32005)])
     if menuchoice == 0:
-        search_subtitles(subtitlefile, filename)
+        filter_out_color(subtitlefile, filename, "FFFFFFFF")
     if menuchoice == 1:
+        filter_out_color(subtitlefile, filename)
+    if menuchoice == 2:
+        search_subtitles(subtitlefile, filename)
+    if menuchoice == 3:
         check_integrity_menu(subtitlefile, filename)
-    if menuchoice == 2 or menuchoice == -1:
+    if menuchoice == 4 or menuchoice == -1:
         show_dialog(subtitlefile, filename)
 
 # --------------------- SUB FILES-----------------------
@@ -643,16 +689,66 @@ def create_new_sub(subtitlefile, filename, frame_rate):
 
 # -------------END OF SUB FILES ---------------
 
-def check_player_instances():
+def check_player_instances(filename=""):
     global player_instances
     if player_instances:
         for instance in player_instances:
             instance.proper_exit = True   
+    temp_file = filename[:-4] + "_temp.srt"
+    if xbmcvfs.exists(temp_file):
+        xbmcvfs.delete(temp_file)
+
+def check_active_player():
+    global videofilename
+    if xbmc.Player().isPlayingVideo():
+        current_subs = xbmc.Player().getAvailableSubtitleStreams()
+        playingfile = xbmc.Player().getPlayingFile()
+        if any(current_subs):
+            active_sub_lang = xbmc.Player().getSubtitles()
+            lang = xbmc.convertLanguage(active_sub_lang, xbmc.ISO_639_1)
+
+            if not lang:
+                filename = os.path.splitext(playingfile)[0] + ".srt"
+            else:
+                filename = os.path.splitext(playingfile)[0] + "." + lang + ".srt"
+            if xbmcvfs.exists(filename):
+                subtitlefile, filename = load_subtitle(False, filename)
+                videofilename = playingfile
+                if len(os.path.basename(playingfile)) < 50:
+                    playbase = os.path.basename(playingfile)
+                    subbase = os.path.basename(filename)
+                else:
+                    playbase = os.path.basename(playingfile)[:35] + "(...)" + os.path.basename(playingfile)[-10:]
+                    subbase = os.path.basename(filename)[:35] + "(...)" + os.path.basename(filename)[-10:]
+                result = xbmcgui.Dialog().yesno(_(31001), _(35003) + "\n"
+                                + _(35006).ljust(11) + playbase + "\n"
+                                + _(35007).ljust(11) + subbase
+                                + "\n" + _(35004),
+                                yeslabel=_(35000),
+                                nolabel=_(35001))
+                if not result:
+                    xbmc.Player().stop()
+                    show_dialog(subtitlefile, filename)
+                else:
+                    sys.exit()
+        res = xbmcgui.Dialog().yesno(_(31001), _(35005) + "\n" + _(35004),
+                            nolabel=_(35000), yeslabel=_(35002))
+        if not res:
+            sys.exit()
+        playing_dir = os.path.dirname(playingfile) + "/"
+        filename = xbmcgui.Dialog().browse(1, _(32035), 'files', ".srt|.sub", False, False, playing_dir)
+        if filename == playing_dir:
+            sys.exit()
+        videofilename = playingfile
+        subtitlefile, filename = load_subtitle(False, filename)
+        xbmc.Player().stop()
+        show_dialog(subtitlefile, filename)
+    show_dialog()
 
 def show_dialog(subtitlefile="", filename=""):
     if not subtitlefile:
         subtitlefile, filename = load_subtitle(True)
-    check_player_instances()    
+    check_player_instances(filename)    
     #Scroll, edit, move, stretch, syncwsub, syncwvideo, playalong, advanced, save, quit
     options = [_(31000), _(30001), _(31002), _(31003), _(31004), _(31005),
                _(31010), _(31011), _(31013), _(31008), _(31009)]

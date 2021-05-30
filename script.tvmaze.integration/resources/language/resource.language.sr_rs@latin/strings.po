@@ -1,0 +1,153 @@
+# Kodi Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.tvmaze.integration
+# Addon Provider: pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language: sr_Latn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+# Section Headings
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32002"
+msgid "TV Maze action"
+msgstr ""
+
+# empty strings from id 32001 to 32099
+# Settings
+msgctxt "#32100"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32101"
+msgid "TV Maze User"
+msgstr ""
+
+msgctxt "#32102"
+msgid "TV Maze API Key"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Add new Kodi shows to followed list"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Mark new Kodi episodes as acquired"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Mark watched Kodi episodes as watched"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Mark watched after"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Mark watched when removing from Kodi"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Hide context menu items"
+msgstr ""
+
+# empty strings from id 32108 to 32199
+# Dialog Headings
+msgctxt "#32200"
+msgid "API Credentials Needed"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Select action"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Select shows to follow"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Select shows to unfollow"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Select tag"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Select shows to tag"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Select shows to untag"
+msgstr ""
+
+# empty strings from id 32207 to 32300
+# Dialog Messages
+msgctxt "#32301"
+msgid "TV Maze api credentials must be provided before continuing."
+msgstr ""
+
+msgctxt "#32302"
+msgid "Open settings"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Select All (Click OK to reload list)"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Deselect All (Click OK to reload list)"
+msgstr ""
+
+# empty strings from 32305 to 32400
+# Context Menu
+msgctxt "#32401"
+msgid "TV Maze"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Follow show"
+msgstr ""
+
+msgctxt "#32403"
+msgid "Unfollow show"
+msgstr ""
+
+msgctxt "#32404"
+msgid "Tag show"
+msgstr ""
+
+msgctxt "#32405"
+msgid "Untag show"
+msgstr ""
+
+msgctxt "#32406"
+msgid "Mark episode acquired"
+msgstr ""
+
+msgctxt "#32407"
+msgid "Mark episode watched"
+msgstr ""
+
+msgctxt "#32408"
+msgid "Mark episode skipped"
+msgstr ""
+
+msgctxt "#32409"
+msgid "Unmark episode"
+msgstr ""

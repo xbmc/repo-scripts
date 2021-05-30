@@ -1,0 +1,406 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <section id="script.service.janitor">
+        <category id="actions" label="32100" help="">
+            <group id="0" label="32118">
+                <setting id="cleaning_type" type="integer" label="32105" help="">
+                    <level>0</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="32106">0</option>
+                            <option label="32107">1</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32105</heading>
+                    </control>
+                </setting>
+                <setting id="recycle_bin" type="path" label="32109" help="">
+                    <level>0</level>
+                    <default />
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="cleaning_type">0</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32109</heading>
+                    </control>
+                </setting>
+                <setting id="create_subdirs" type="boolean" label="32110" help="" parent="cleaning_type">
+                    <level>1</level>
+                    <default>false</default>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="cleaning_type">0</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="1" label="32101">
+                <setting id="clean_movies" type="boolean" label="32111" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="clean_tv_shows" type="boolean" label="32112" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="clean_music_videos" type="boolean" label="32113" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="2" label="32119">
+                <setting id="clean_library" type="boolean" label="32114" help="">
+                    <level>1</level>
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="delete_folders" type="boolean" label="32115" help="">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="ignore_extensions" type="string" label="32116" help="" parent="delete_folders">
+                    <level>2</level>
+                    <default>.nfo, .nfo-orig, .tbn, .srt, .ass, .srr, .sfv, .nzb, .jpg, .png, .txt</default>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="delete_folders">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>32116</heading>
+                    </control>
+                </setting>
+                <setting id="clean_related" type="boolean" label="32117" help="">
+                    <level>2</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="default_action" type="integer" label="32102" help="">
+                    <level>2</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="32103">0</option>
+                            <option label="32104">1</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string" />
+                </setting>
+            </group>
+        </category>
+        <category id="frequency" label="32200" help="">
+            <group id="0" label="32200">
+                <setting id="service_enabled" type="boolean" label="32202" help="">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="delayed_start" type="integer" label="32203" help="" parent="service_enabled">
+                    <level>2</level>
+                    <default>0</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>10</step>
+                        <maximum>120</maximum>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="service_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="scan_interval" type="integer" label="32204" help="" parent="service_enabled">
+                    <level>2</level>
+                    <default>30</default>
+                    <constraints>
+                        <minimum>15</minimum>
+                        <step>15</step>
+                        <maximum>1440</maximum>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="service_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="clean_when_idle" type="boolean" label="32205" help="" parent="service_enabled">
+                    <level>1</level>
+                    <default>false</default>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="service_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+            </group>
+        </category>
+        <category id="conditions" label="32300" help="">
+            <group id="0" label="32342">
+                <setting id="enable_expiration" type="boolean" label="32302" help="">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="expire_after" type="integer" label="32303" help="" parent="enable_expiration">
+                    <level>1</level>
+                    <default>7</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>30</maximum>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="enable_expiration">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+            <group id="1" label="32344">
+                <setting id="clean_when_low_rated" type="boolean" label="32304" help="">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="minimum_rating" type="integer" label="32306" help="" parent="clean_when_low_rated">
+                    <level>1</level>
+                    <default>6</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>10</maximum>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="clean_when_low_rated">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="ignore_no_rating" type="boolean" label="32307" help="" parent="clean_when_low_rated">
+                    <level>2</level>
+                    <default>true</default>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="clean_when_low_rated">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="2" label="32343">
+                <setting id="clean_when_low_disk_space" type="boolean" label="32308" help="">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="disk_space_threshold" type="integer" label="32309" help="" parent="clean_when_low_disk_space">
+                    <level>1</level>
+                    <default>0</default>
+                    <constraints>
+                        <minimum>5</minimum>
+                        <step>5</step>
+                        <maximum>80</maximum>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="clean_when_low_disk_space">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="disk_space_check_path" type="path" label="32310" help="" parent="clean_when_low_disk_space">
+                    <level>1</level>
+                    <default>special://home</default>
+                    <constraints>
+                        <writable>false</writable>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="clean_when_low_disk_space">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32310</heading>
+                    </control>
+                </setting>
+                <setting id="keep_hard_linked" type="boolean" label="32313" help="">
+                    <level>3</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="3" label="32345">
+                <setting id="not_in_progress" type="boolean" label="32311" help="">
+                    <level>1</level>
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+        </category>
+        <category id="exclusions" label="32400" help="">
+            <group id="0" label="32400">
+                <setting id="exclusion_enabled" type="boolean" label="32402" help="">
+                    <level>2</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="exclusion1" type="path" label="32404" help="" parent="exclusion_enabled">
+                    <level>2</level>
+                    <default />
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="exclusion_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32404</heading>
+                    </control>
+                </setting>
+                <setting id="exclusion2" type="path" label="32404" help="" parent="exclusion_enabled">
+                    <level>2</level>
+                    <default />
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="exclusion_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32404</heading>
+                    </control>
+                </setting>
+                <setting id="exclusion3" type="path" label="32404" help="" parent="exclusion_enabled">
+                    <level>2</level>
+                    <default />
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="exclusion_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32404</heading>
+                    </control>
+                </setting>
+                <setting id="exclusion4" type="path" label="32404" help="" parent="exclusion_enabled">
+                    <level>2</level>
+                    <default />
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="exclusion_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32404</heading>
+                    </control>
+                </setting>
+                <setting id="exclusion5" type="path" label="32404" help="" parent="exclusion_enabled">
+                    <level>2</level>
+                    <default />
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="exclusion_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="path">
+                        <heading>32404</heading>
+                    </control>
+                </setting>
+                <setting id="reset_exclusions" type="action" label="32405" help="">
+                    <level>2</level>
+                    <data>RunScript(script.service.janitor, reset)</data>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="exclusion_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="action" />
+                </setting>
+            </group>
+        </category>
+        <category id="notifications" label="32500" help="">
+            <group id="0" label="32500">
+                <setting id="notifications_enabled" type="boolean" label="32502" help="">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="notify_when_idle" type="boolean" label="32503" help="" parent="notifications_enabled">
+                    <level>1</level>
+                    <default>true</default>
+                    <dependencies>
+                        <dependency type="visible">
+                            <condition operator="is" setting="notifications_enabled">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+                <setting id="debugging_enabled" type="boolean" label="32504" help="">
+                    <level>3</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+        </category>
+        <category id="history" label="32600" help="">
+            <group id="0" label="32600">
+                <setting id="view_log" type="action" label="32602" help="">
+                    <level>0</level>
+                    <data>RunScript(script.service.janitor, log)</data>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="action" />
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>

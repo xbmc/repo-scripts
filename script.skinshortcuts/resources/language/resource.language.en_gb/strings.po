@@ -513,3 +513,7 @@ msgstr ""
 msgctxt "#32122"
 msgid "Enable debug logging"
 msgstr ""
+
+msgctxt "#32123"
+msgid "Games"
+msgstr ""

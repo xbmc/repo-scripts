@@ -1,0 +1,349 @@
+# XBMC Media Center language file
+# Addon Name: Janitor
+# Addon id: script.service.janitor
+# Addon version: 5.0.0
+# Addon Provider: Anthirian, drewzh
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-04-10 16:23+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Regularly deletes old movies, TV show episodes and music videos"
+msgstr "Regularnie usuwa stare filmy, seriale i teledyski"
+
+msgctxt "Addon Description"
+msgid "This addon will automatically scan your library for watched movies, TV show episodes and music videos, and delete them from the file system based on numerous critia such as age, rating, free disk space, etc. All these options and more can be configured via the addon's settings. Also make sure you set the correct path to the disk you wish to check for free space, especially when you store your videos on a secondary drive or a network share. Through the settings you can view which videos have been cleaned.\n\nBeware!\nThis addon has the potential to erase your entire video collection! Please make sure you understand exactly what this addon is designed to do before enabling any type of cleaning in the settings. I will not be held responsible for loss of data due to user error.\n\nOriginally developed by Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)"
+msgstr "Ta wtyczka automatycznie skanuje bibliotekę w poszukiwaniu obejrzanych filmów, seriali i teledysków następnie usuwa je na podstawie wielu kryteriów takie jak: wiek, ocena, ilość miejsca na dysku, itd. Wszystkie te i więcej opcji można skonfigurować poprzez menu ustawień wtyczki. Upewnij się, że podałeś poprawną ścieżkę do dysku w celu sprawdzania wolnego miejsca, zwłaszcza w sytuacji posiadania filmów na innym dysku lub udziale sieciowym. W ustawieniach możesz sprawdzić, które wideo zostało usunięte.\n\nUWAGA!\nTa wtyczka może potencjalnie usunąć całą Twoją kolekcję! Upewnij się, że w pełni rozumiesz do czego jest ta wtyczka stworzona zanim włączysz jakąkolwiek opcję czyszczenia. Nie odpowiadam za stracone dane w wyniku błędu użytkownika.\n\nStworzony przez Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)"
+
+msgctxt "Addon Disclaimer"
+msgid "It is recommended to not delete videos permanently until you are familiar with all of the settings."
+msgstr "Zalecamy nie usuwać permanentnie wideo dopóki nie znasz wszystkich opcji"
+
+
+# Actions section
+# =======================
+msgctxt "#32100"
+msgid "Actions"
+msgstr "Akcje"
+
+msgctxt "#32101"
+msgid "What to clean"
+msgstr "Co czyścić"
+
+msgctxt "#32102"
+msgid "Default action"
+msgstr "Domyślna akcja"
+
+msgctxt "#32103"
+msgid "Clean up"
+msgstr "Wyczyść"
+
+msgctxt "#32104"
+msgid "View log"
+msgstr "Pokaż log"
+
+msgctxt "#32105"
+msgid "Cleaning type"
+msgstr "Typ czyszczenia"
+
+msgctxt "#32106"
+msgid "Recycle"
+msgstr "Przenieść do kosza"
+
+msgctxt "#32107"
+msgid "Delete permanently"
+msgstr "Usuń permanentnie"
+
+msgctxt "#32109"
+msgid "Recycle bin location"
+msgstr "lokalizacja kosza"
+
+msgctxt "#32110"
+msgid "Create subfolders per movie, show and artist"
+msgstr "Twórz podfoldery według filmu, programu i artysty"
+
+msgctxt "#32111"
+msgid "Clean movies"
+msgstr "Wyczyść filmy"
+
+msgctxt "#32112"
+msgid "Clean TV shows"
+msgstr "Wyczyść seriale"
+
+msgctxt "#32113"
+msgid "Clean music videos"
+msgstr "Wyczyść teledyski"
+
+msgctxt "#32114"
+msgid "Clean Kodi video library afterwards"
+msgstr "Wyczyść bibliotekę wideo Kodi po zakończeniu"
+
+msgctxt "#32115"
+msgid "Delete empty folders"
+msgstr "Usuń puste foldery"
+
+msgctxt "#32116"
+msgid "Ignore files with the following extensions (separate with commas)"
+msgstr "Ignoruj pliki z następującymi rozszerzeniami (oddziel je przecinkiem)"
+
+msgctxt "#32117"
+msgid "Clean related files with similar names (e.g. subtitles)"
+msgstr "Wyczyść pliki z podobną nazwą (np. napisy)"
+
+msgctxt "#32118"
+msgid "How to clean"
+msgstr "Jak czyścić"
+
+msgctxt "#32119"
+msgid "Additional cleanup"
+msgstr "Dodatkowe porządki"
+
+
+# Automation section
+# =======================
+msgctxt "#32200"
+msgid "Automation"
+msgstr "Częstotliwość"
+
+msgctxt "#32202"
+msgid "Run as a service"
+msgstr "Uruchom jako usługę"
+
+msgctxt "#32203"
+msgid "Delayed start (in minutes)"
+msgstr "Opóźniony start (w minutach)"
+
+msgctxt "#32204"
+msgid "Scan interval (in minutes)"
+msgstr "Interwał skanowania (w minutach)"
+
+msgctxt "#32205"
+msgid "Do not clean during playback"
+msgstr "Nie czyść podczas odtwarzania"
+
+
+# Conditions section
+# =======================
+msgctxt "#32300"
+msgid "Conditions"
+msgstr "Warunki"
+
+msgctxt "#32302"
+msgid "Wait a certain number of days after watching before cleaning"
+msgstr "Odczekaj określoną ilość dni po obejrzeniu zanim wyczyścisz"
+
+msgctxt "#32303"
+msgid "Days after which a video is considered to have expired"
+msgstr "Dni po których wideo jest określane jako wygasłe"
+
+msgctxt "#32304"
+msgid "Only clean videos with low ratings"
+msgstr "Usuwaj tylko wideo z niską oceną"
+
+msgctxt "#32306"
+msgid "Clean a video with a rating lower than"
+msgstr "Usuń wideo z oceną niższą niż"
+
+msgctxt "#32307"
+msgid "Ignore videos without rating"
+msgstr "Ignoruj wideo bez oceny"
+
+msgctxt "#32308"
+msgid "Only clean videos if low on disk space"
+msgstr "Czyść wideo tylko jeżeli jest mało wolnego miejsca na dysku"
+
+msgctxt "#32309"
+msgid "Minimum percentage of free disk space"
+msgstr "Minimalny procent wolnego miejsca na dysku"
+
+msgctxt "#32310"
+msgid "Path to check for free disk space"
+msgstr "Ścieżka do sprawdzania ilości wolnego miejsca"
+
+msgctxt "#32311"
+msgid "Do not clean videos that are still in progress"
+msgstr "Nie czyść wideo, które są w trakcie oglądania"
+
+msgctxt "#32313"
+msgid "Do not clean videos that have hard links (e.g. seeding torrents)"
+msgstr "Nie czyść filmy, które mają twarde linki (np wysiewu torrentów)"
+
+msgctxt "#32342"
+msgid "Time"
+msgstr "Czas"
+
+msgctxt "#32343"
+msgid "Disk space"
+msgstr "Miejsca na dysku"
+
+msgctxt "#32344"
+msgid "Rating"
+msgstr "Ocena"
+
+msgctxt "#32345"
+msgid "Progress"
+msgstr "Postęp"
+
+
+# Exclusions section
+# ==================
+msgctxt "#32400"
+msgid "Exclusions"
+msgstr "Wyjątki"
+
+msgctxt "#32402"
+msgid "Enable exclusions"
+msgstr "Włącz wyjątki"
+
+msgctxt "#32404"
+msgid "Path to exclude"
+msgstr "Ścieżka do wykluczenia"
+
+msgctxt "#32405"
+msgid "Reset all exclusions"
+msgstr "Zresetuj wszystkie wykluczenia"
+
+# Notifications section
+# =======================
+msgctxt "#32500"
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+msgctxt "#32502"
+msgid "Show notifications"
+msgstr "Pokaż powiadomienia"
+
+msgctxt "#32503"
+msgid "Do not show notifications during video playback"
+msgstr "Nie pokazuj powiadomień podczas odtwarzania"
+
+msgctxt "#32504"
+msgid "Enable debug messages"
+msgstr "Włącz wiadomości debugera"
+
+
+# Localization strings
+# for Kodi notifications
+# =======================
+msgctxt "#32511"
+msgid "Error reading hard disk. Please check your settings."
+msgstr "Błąd odczytu dysku twardego. Sprawdź swoje ustawienia."
+
+msgctxt "#32512"
+msgid "Could not check disk space. Access denied."
+msgstr "Nie można sprawdzić wolnego miejsca. Brak dostępu."
+
+msgctxt "#32513"
+msgid "Could not check disk space. Path does not exist."
+msgstr "Nie można sprawdzić wolnego miejsca. Ścieżka nie istnieje."
+
+msgctxt "#32514"
+msgid "Cleaning results"
+msgstr "Wynik czyszczenia"
+
+msgctxt "#32518"
+msgid "Janitor cleaned {amount} video files in accordance with your chosen settings"
+msgstr "Janitor wyczyścił {amount} plików wideo zgodnie z wybranymi ustawieniami"
+
+msgctxt "#32519"
+msgid "Janitor cleaned {amount} video files in accordance with your chosen settings. Would you like to view the cleaning log?"
+msgstr "Janitor wyczyścił {amount} plików wideo zgodnie z wybranymi ustawieniami. Chcesz wyświetlić dziennik czyszczenia?"
+
+msgctxt "#32520"
+msgid "Finished cleaning"
+msgstr "Zakończone czyszczenie"
+
+msgctxt "#32521"
+msgid "The recycle bin is not configured yet and Janitor cannot continue without it. Would you like to configure it now?"
+msgstr "Kosz nie jest jeszcze skonfigurowany i Janitor nie może bez niego działać. Czy chcesz go teraz skonfigurować?"
+
+# Temporary, until Linux remote share disk space checks are supported
+msgctxt "#32524"
+msgid "Remote disk space checking is not supported for your operating system yet"
+msgstr "Zdalne sprawdzanie pojemności dysku nie jest obsługiwane przez Twój system operacyjny"
+
+# Log section
+# =======================
+
+msgctxt "#32600"
+msgid "History"
+msgstr "Historia"
+
+msgctxt "#32602"
+msgid "View cleaning history"
+msgstr "Pokaż historię czyszczenia"
+
+msgctxt "#32603"
+msgid "[B]Cleaning Log[/B]"
+msgstr "[B]Dziennik czyszczenia[/B]"
+
+msgctxt "#32604"
+msgid "Are you sure?"
+msgstr "Jesteś pewny?"
+
+msgctxt "#32605"
+msgid "This will trim the log file, keeping the first 25 lines. This action is irreversible. Do you wish to continue?"
+msgstr "Ta akcja ograniczy dziennik do pierwszych 25 linijek. Ta akcja jest nieodwracalna. Chcesz kontynuować?"
+
+msgctxt "#32606"
+msgid "This will delete the entire contents of the log file. This action is irreversible. Do you wish to continue?"
+msgstr "Ta akcja wyczyści cały dziennik. Ta akcja jest nieodwracalna. Chcesz kontynuować?"
+
+msgctxt "#32608"
+msgid "Trim"
+msgstr "Trymować"
+
+msgctxt "#32609"
+msgid "Clear"
+msgstr "Oczyścić"
+
+msgctxt "#32610"
+msgid "This will reset any exclusions you have set up."
+msgstr "Wszystkie Twoje wykluczenia zostaną zresetowane."
+
+msgctxt "#32611"
+msgid "Errors occurred while moving"
+msgstr "Błedy podczas przenoszenia"
+
+msgctxt "#32612"
+msgid "Not all files could be moved to the recycle bin. Please check the log file for details and move the particular files manually if necessary."
+msgstr "Nie wszystkie pliki można było przenieść do kosza. Sprawdź plik dziennika, aby uzyskać szczegółowe informacje i w razie potrzeby przenieś poszczególne pliki ręcznie."
+
+msgctxt "#32616"
+msgid "Finished cleaning {type}"
+msgstr "Zakończone czyszczenie {type}"
+
+# Create progress dialog
+msgctxt "#32618"
+msgid "Cleaning {type}"
+msgstr "Czyszczenie {type}"
+
+msgctxt "#32626"
+msgid "movies"
+msgstr "filmów"
+
+msgctxt "#32627"
+msgid "music videos"
+msgstr "teledysków"
+
+msgctxt "#32628"
+msgid "episodes"
+msgstr "odcineków"
+
+msgctxt "#32630"
+msgid "Done"
+msgstr "Zrobione"
+
+msgctxt "#32631"
+msgid "Don't forget to save your settings"
+msgstr "Nie zapomnij zapisać zmian"

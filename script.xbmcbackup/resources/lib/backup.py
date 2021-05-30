@@ -272,10 +272,12 @@ class XbmcBackup:
             # check for the existance of an advancedsettings file
             if(self.remote_vfs.exists(self.remote_vfs.root_path + "config/advancedsettings.xml") and not self.skip_advanced):
                 # let the user know there is an advanced settings file present
-                restartXbmc = xbmcgui.Dialog().yesno(utils.getString(30038), "%s\n%s" % (utils.getString(30039), utils.getString(30040)), utils.getString(30041))
+                restartXbmc = xbmcgui.Dialog().yesno(utils.getString(30038), "%s\n%s\n%s" % (utils.getString(30039), utils.getString(30040), utils.getString(30041)))
 
                 if(restartXbmc):
                     # add only this file to the file list
+                    self.transferSize = 1
+                    self.transferLeft = 1
                     fileManager.addFile(self.remote_vfs.root_path + "config/advancedsettings.xml")
                     self._copyFiles(fileManager.getFiles(), self.remote_vfs, self.xbmc_vfs)
 

@@ -34,7 +34,7 @@ def handle_movies(li,item,searchstring=None):
     director = item.get('director', '')
     writer = item.get('writer', '')
 
-    li_item = xbmcgui.ListItem(item['title'])
+    li_item = xbmcgui.ListItem(item['title'], offscreen=True)
     li_item.setInfo(type='Video', infoLabels={'title': item['title'],
                                               'originaltitle': item['originaltitle'],
                                               'sorttitle': item['sorttitle'],
@@ -118,7 +118,7 @@ def handle_tvshows(li,item,searchstring=None):
         folder = False
         item['file'] = 'plugin://script.embuary.helper/?action=folderjump&type=tvshow&dbid=%s' % dbid
 
-    li_item = xbmcgui.ListItem(item['title'])
+    li_item = xbmcgui.ListItem(item['title'], offscreen=True)
     li_item.setInfo(type='Video', infoLabels={'title': item['title'],
                                               'year': item['year'],
                                               'tvshowtitle': item['title'],
@@ -190,7 +190,7 @@ def handle_seasons(li,item):
         folder = False
         file = 'plugin://script.embuary.helper/?action=folderjump&type=season&dbid=%s&season=%s' % (tvshowdbid, season)
 
-    li_item = xbmcgui.ListItem(title)
+    li_item = xbmcgui.ListItem(title, offscreen=True)
     li_item.setInfo(type='Video', infoLabels={'title': title,
                                               'season': season,
                                               'episode': episode,
@@ -227,7 +227,7 @@ def handle_episodes(li,item):
     else:
       label = '%sx%s' % (item['season'], label)
 
-    li_item = xbmcgui.ListItem(label)
+    li_item = xbmcgui.ListItem(label, offscreen=True)
     li_item.setInfo(type='Video', infoLabels={'title': item['title'],
                                               'episode': item['episode'],
                                               'season': item['season'],
@@ -290,7 +290,7 @@ def handle_episodes(li,item):
 
 
 def handle_cast(li,item):
-    li_item = xbmcgui.ListItem(item['name'])
+    li_item = xbmcgui.ListItem(item['name'], offscreen=True)
     li_item.setLabel(item['name'])
     li_item.setLabel2(item['role'])
     li_item.setProperty('role', item['role'])
@@ -303,7 +303,7 @@ def handle_cast(li,item):
 
 
 def handle_genre(li,item):
-    li_item = xbmcgui.ListItem(item['label'])
+    li_item = xbmcgui.ListItem(item['label'], offscreen=True)
     li_item.setInfo(type='Video', infoLabels={'title': item['label'],
                                               'dbid': str(item['genreid']),
                                               'path': item['url']

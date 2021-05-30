@@ -1,261 +1,342 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
+"Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
 
-#: Settings
 msgctxt "#32000"
-msgid "Profiles"
-msgstr "Profilok"
+msgid "Profiles 1-5"
+msgstr ""
 
-#: Settings
 msgctxt "#32001"
 msgid " Name of profile 1"
 msgstr " 1. Profil neve"
 
-#: Settings
 msgctxt "#32002"
 msgid "Settings"
 msgstr "Beállítások"
 
-#: Settings
 msgctxt "#32003"
 msgid " Name of profile 2"
 msgstr " 2. Profil neve"
 
-#: Settings
 msgctxt "#32004"
 msgid "Include volume level"
 msgstr "Hangerő beállítások mentése"
 
-#: Settings
 msgctxt "#32005"
 msgid " Name of profile 3"
 msgstr " 3. Profil neve"
 
-#: Settings
 msgctxt "#32006"
 msgid " Name of profile 4"
 msgstr " 4. Profil neve"
 
-#: Settings
 msgctxt "#32007"
 msgid "Profile 1"
 msgstr "Profil 1"
 
-#: Settings
 msgctxt "#32008"
 msgid "Profile 2"
 msgstr "Profil 2"
 
-#: Settings
 msgctxt "#32009"
 msgid "Profile 3"
 msgstr "Profil 3"
 
-#: Settings
 msgctxt "#32010"
 msgid "Profile 4"
 msgstr "Profil 4"
 
-#: Settings
 msgctxt "#32011"
 msgid "Include video player settings"
 msgstr "Tartalmazza a videolejátszó beállításait"
 
-#: Settings
 msgctxt "#32012"
 msgid "Include display settings"
 msgstr "Tartalmazza a megjelenítési beállításokat"
 
-#: Settings
 msgctxt "#32013"
 msgid "Includes Settings"
 msgstr "Beállításokkal együtt"
 
-#: Settings
 msgctxt "#32014"
-msgid "Automatic Switch"
-msgstr "Automatikus váltás"
+msgid "Auto Switch"
+msgstr ""
 
-#: Settings
 msgctxt "#32015"
 msgid "Show audio profile select menu on media playback"
 msgstr "Profilváltó ablak megjelenítése lejátszás indításakor"
 
-#: Settings
 msgctxt "#32016"
 msgid "Auto close select menu"
 msgstr "Profilváltó ablak automatikus bezárása"
 
-#: Settings
 msgctxt "#32018"
-msgid "Debug"
-msgstr "Hibakeresés"
+msgid "Notifications"
+msgstr ""
 
-#: Settings
 msgctxt "#32019"
 msgid "Notifications"
 msgstr "Értesítések"
 
-#: Settings
 msgctxt "#32021"
 msgid "Profile for GUI"
 msgstr "Profil a Grafikus Felülethez GUI"
 
-#: Settings
 msgctxt "#32022"
 msgid "Profile for movies"
 msgstr "Profil a Filmekhez"
 
-#: Settings
 msgctxt "#32023"
 msgid "Profile for TV shows"
 msgstr "Profil a Sorozatokhoz"
 
-#: Settings
 msgctxt "#32024"
 msgid "Profile for PVR TV"
 msgstr "Profil a TV-hez PVR"
 
-#: Settings
 msgctxt "#32025"
 msgid "Profile for music"
 msgstr "Profil a Zenékhez"
 
-#: Settings
 msgctxt "#32026"
 msgid "None"
 msgstr "Nincs"
 
-#: Settings
 msgctxt "#32027"
-msgid " Send HDMI-CEC command"
-msgstr " HDMI-CEC parancs küldése"
+msgid "HDMI-CEC"
+msgstr ""
 
-#: Settings
 msgctxt "#32028"
 msgid "Wake Up"
 msgstr "Ébresztés"
 
-#: Settings
 msgctxt "#32029"
 msgid "StandBy"
 msgstr "Készenlét"
 
-#: Settings
 msgctxt "#32030"
 msgid "Toggle state"
 msgstr "Váltás"
 
-#: Settings
 msgctxt "#32031"
 msgid "Profile for videos (not in library)"
 msgstr "Profil a videókhoz (Nem a scrapperből)"
 
-#: Settings
 msgctxt "#32032"
 msgid "Profile for music videos"
 msgstr "Profil a Videoklipekhez"
 
-#: Settings
 msgctxt "#32033"
 msgid "Profile for unknown content type"
 msgstr "Profil az ismeretlen tartalom típusokhoz"
 
-#: Settings
 msgctxt "#32034"
 msgid "Profile for PVR radio"
 msgstr "Profil a Rádiókhoz PVR"
 
-#: Settings
 msgctxt "#32035"
 msgid "Video"
 msgstr "Videó"
 
-#: Settings
 msgctxt "#32036"
 msgid "Audio"
 msgstr "Hang"
 
-#: Settings
 msgctxt "#32037"
 msgid "Other"
 msgstr "Más"
 
-#: Settings
 msgctxt "#32038"
 msgid "Profile for KODI Start/Wakeup (Default)"
 msgstr "Profil a KODI Indításakor (Alapértelmezett)"
 
-#: Settings
 msgctxt "#32039"
 msgid " Delay before close"
 msgstr " Késleltetés a bezárás előtt"
 
-#: Settings
 msgctxt "#32040"
 msgid "Enable debug logging"
 msgstr "A hibakeresési naplózás engedélyezése"
 
-#: Settings
 msgctxt "#32041"
 msgid " Force load profile at startup"
 msgstr " A terhelési profil kényszerítése indításkor"
 
-#: Settings
 msgctxt "#32042"
 msgid " Auto switch notifications"
 msgstr " Automatikus váltás értesítések"
 
-#: Settings
 msgctxt "#32043"
 msgid " Manual switch notifications"
 msgstr " Kézi kapcsolási értesítések"
 
-#: Settings
 msgctxt "#32044"
 msgid " Maintenance notifications"
 msgstr " Karbantartási értesítések"
 
-#: Settings
 msgctxt "#32045"
 msgid "Select menu"
 msgstr "Profilváltó ablak"
 
-#: Script
+msgctxt "#32046"
+msgid "Use custom select menu"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Include skin mods"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Extras"
+msgstr ""
+
+msgctxt "#32049"
+msgid "By number of channels"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Menu Options"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Profile 5"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Name of profile 5"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Profile 6"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Name of profile 6"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Profile 7"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Name of profile 7"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Profile 8"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Name of profile 8"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Profile 9"
+msgstr ""
+
+msgctxt "#32060"
+msgid "Name of profile 9"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Profile 10"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Name of profile 10"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Codec Detection"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Profile for AC3"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Profile for E-AC3"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Profile for DTS"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Profile for DTS HD"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Profile for True HD"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Profile for any other audio codec"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Profiles 6-10"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Stereo audio"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Multi channel audio"
+msgstr ""
+
+msgctxt "#32073"
+msgid "delay before reading codec info"
+msgstr ""
+
+msgctxt "#32074"
+msgid "match streams with no codec details as music"
+msgstr ""
+
 msgctxt "#32100"
 msgid "Select profile to save settings"
 msgstr "Hangprofil kiválasztása a mentéshez"
 
-#: Script
 msgctxt "#32101"
 msgid "Configure profile"
 msgstr "Profilok beállítása"
 
-#: Script
 msgctxt "#32102"
 msgid "Saved as profile"
 msgstr "Profil mentve"
 
-#: Script
 msgctxt "#32103"
 msgid "This profile is disabled"
 msgstr "Ez a profil ki van kapcsolva"
 
-#: Script
 msgctxt "#32104"
 msgid "Invalid file for profile"
 msgstr "Érvénytelen profil fájl"
 
-#: Script
 msgctxt "#32105"
 msgid "Enable profiles"
 msgstr "Profilok engedélyezése"
 
-#: Script
 msgctxt "#32106"
 msgid "Select audio profile"
 msgstr "Hangprofil kiválasztása"
+
+#~ msgctxt "#32000"
+#~ msgid "Profiles"
+#~ msgstr "Profilok"
+
+#~ msgctxt "#32014"
+#~ msgid "Automatic Switch"
+#~ msgstr "Automatikus váltás"
+
+#~ msgctxt "#32018"
+#~ msgid "Debug"
+#~ msgstr "Hibakeresés"
+
+#~ msgctxt "#32027"
+#~ msgid " Send HDMI-CEC command"
+#~ msgstr " HDMI-CEC parancs küldése"
