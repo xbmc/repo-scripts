@@ -7,7 +7,7 @@ standard_library.install_aliases()
 import os, sys, time
 import xbmc, xbmcgui, xbmcvfs
 
-from resources.lib.utils import FtoC, log, ADDON, LANGUAGE,MAPSECTORS,MAPTYPES
+from resources.lib.utils import FtoC, CtoF, log, ADDON, LANGUAGE,MAPSECTORS,MAPTYPES
 from resources.lib.utils import WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x 
 from resources.lib.utils import get_url_JSON 
 from resources.lib.utils import get_month, get_timestamp, get_weekday, get_time
@@ -18,7 +18,7 @@ WEATHER_ICON	= xbmcvfs.translatePath('%s.png')
 DATEFORMAT	= xbmc.getRegion('dateshort')
 TIMEFORMAT	= xbmc.getRegion('meridiem')
 MAXDAYS		= 10
-
+TEMPUNIT	= xbmc.getRegion('tempunit')
 
 def set_property(name, value):
 	WEATHER_WINDOW.setProperty(name, value)
@@ -48,11 +48,11 @@ def clear():
 def refresh_locations():
 	locations = 0
 	for count in range(1, 6):
-		loc = ADDON.getSetting('Location%sLatLong' % count)
+		LatLong = ADDON.getSetting('Location%sLatLong' % count)
 		loc_name = ADDON.getSetting('Location%s' % count)
-		if loc != '':
+		if LatLong:
 			locations += 1
-			if loc_name == '':
+			if not loc_name:
 				loc_name = 'Location %s' % count
 			set_property('Location%s' % count, loc_name)
 
@@ -71,8 +71,13 @@ def get_initial(loc):
 	return responsedata
 	
 def code_from_icon(icon):
-		icon=icon.rsplit('?', 1)[0]
-		code=icon.rsplit('/',1)[1]
+	if icon:
+		if '?' in icon:
+			icon=icon.rsplit('?', 1)[0]
+		if '/' in icon:	
+			code=icon.rsplit('/',1)[1]
+		else:
+			code=icon
 		thing=code.split(",")
 		if len(thing) > 1:
 			rain=thing[1]
@@ -83,19 +88,60 @@ def code_from_icon(icon):
 			return code, ''
 		
 
+########################################################################################
+##  Dialog for getting Latitude and Longitude
+########################################################################################
+
+def enterLocation(num):	
+##	log("argument: %s" % (sys.argv[1]))
+	text = ADDON.getSetting("Location"+num+"LatLong")
+	Latitude=""
+	Longitude=""
+	if text and "," in text:
+		thing=text.split(",")
+		Latitude=thing[0]
+		Longitude=thing[1]
+
+	dialog = xbmcgui.Dialog()
+	
+	Latitude=dialog.input(LANGUAGE(32341),defaultt=Latitude,type=xbmcgui.INPUT_ALPHANUM)
+	
+#	xbmc.Keyboard(line, heading, hidden)
+#	keyboard = xbmc.Keyboard(Latitude, 32341, False)
+#	keyboard.doModal()
+#	if (keyboard.isConfirmed()):
+#		Latitude= keyboard.getText()
+	if not Latitude:
+		ADDON.setSetting("Location"+num+"LatLong","")
+		return False
+
+	Longitude=dialog.input(heading=LANGUAGE(32342),defaultt=Longitude,type=xbmcgui.INPUT_ALPHANUM)
+
+#	keyboard = xbmc.Keyboard(Longitude, 32342, False)
+#	keyboard.doModal()
+#	if (keyboard.isConfirmed()):
+#		Longitude= keyboard.getText()
+	if not Longitude:
+		ADDON.setSetting("Location"+num+"LatLong","")
+		return False
+	LatLong=Latitude+","+Longitude
+	ADDON.setSetting("Location"+num+"LatLong",LatLong)
+	fetchLocation(num,LatLong)
+	return
 
 ########################################################################################
 ##  fetches location data (weather grid point, station, etc, for lattitude,logngitude
 ########################################################################################
 
-def fetchLocation(locstr,prefix):
-	log('searching for location: %s' % locstr)
-	data = get_initial(locstr)
+def fetchLocation(num,LatLong):
+	prefix="Location"+num
+	log('searching for location: %s' % LatLong)
+	data = get_initial(LatLong)
 	log('location data: %s' % data)
 	if not data:
 		log('failed to retrieve location data')
 		return None
-	if data != '' and 'properties' in data:
+	if data and 'properties' in data:
 
 		city	=	data['properties']['relativeLocation']['properties']['city']
 		state =		data['properties']['relativeLocation']['properties']['state']
@@ -135,7 +181,7 @@ def fetchLocation(locstr,prefix):
 		stations_url =	data['properties']['observationStations']
 		odata = get_url_JSON(stations_url)
 
-		if odata != '' and 'features' in odata:
+		if odata and 'features' in odata:
 			stations={}
 			stationlist=[]
 			
@@ -167,7 +213,7 @@ def fetchDaily(num):
 
 	daily_weather = get_url_JSON(url)
 
-	if daily_weather and daily_weather != '' and 'properties' in daily_weather:
+	if daily_weather and 'properties' in daily_weather:
 		data=daily_weather['properties']
 	else:
 		#api.weather.gov is acting up, so fall back to alternate api
@@ -178,7 +224,8 @@ def fetchDaily(num):
 	for count, item in enumerate(data['periods']):
 		icon = item['icon']
 		#https://api.weather.gov/icons/land/night/ovc?size=small
-		icon=icon.rsplit('?', 1)[0]
+		if icon and '?' in icon:
+			icon=icon.rsplit('?', 1)[0]
 		code, rain=code_from_icon(icon)
 
 		weathercode = WEATHER_CODES.get(code)
@@ -211,17 +258,30 @@ def fetchDaily(num):
 		if item['isDaytime'] == True:
 			set_property('Daily.%i.LongDay'		% (count+1), item['name'])
 			set_property('Daily.%i.ShortDay'	% (count+1), get_weekday(startstamp,'s')+" (d)")
-			set_property('Daily.%i.TempDay'		% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
-			set_property('Daily.%i.HighTemperature'	% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
+				#set_property('Daily.%i.TempDay'		% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
+				#set_property('Daily.%i.HighTemperature'	% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
+			if 'F' in TEMPUNIT:
+				set_property('Daily.%i.TempDay'		% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+				set_property('Daily.%i.HighTemperature'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+			elif 'C' in TEMPUNIT:
+				set_property('Daily.%i.TempDay'		% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+				set_property('Daily.%i.HighTemperature'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
 			set_property('Daily.%i.TempNight'	% (count+1), '')
 			set_property('Daily.%i.LowTemperature'	% (count+1), '')
+
 		if item['isDaytime'] == False:
 			set_property('Daily.%i.LongDay'		% (count+1), item['name'])
 			set_property('Daily.%i.ShortDay'	% (count+1), get_weekday(startstamp,'s')+" (n)")
+
 			set_property('Daily.%i.TempDay'		% (count+1), '')
 			set_property('Daily.%i.HighTemperature'	% (count+1), '')
-			set_property('Daily.%i.TempNight'	% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
-			set_property('Daily.%i.LowTemperature'	% (count+1), u'%i\N{DEGREE SIGN}%s' % (item['temperature'], item['temperatureUnit']))
+			if 'F' in TEMPUNIT:
+				set_property('Daily.%i.TempNight'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+				set_property('Daily.%i.LowTemperature'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+			elif 'C' in TEMPUNIT:
+				set_property('Daily.%i.TempNight'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+				set_property('Daily.%i.LowTemperature'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+
 		if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
 			set_property('Daily.%i.LongDate'	% (count+1), get_month(startstamp, 'dl'))
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ds'))
@@ -229,7 +289,7 @@ def fetchDaily(num):
 			set_property('Daily.%i.LongDate'	% (count+1), get_month(startstamp, 'ml'))
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ms'))
 		
-		if (rain !=''):
+		if rain:
 			set_property('Daily.%i.Precipitation'	% (count+1), rain + '%')
 		else:
 			set_property('Daily.%i.Precipitation'	% (count+1), '')
@@ -252,7 +312,7 @@ def fetchAltDaily(num):
 
 	daily_weather = get_url_JSON(url)
 
-	if daily_weather and daily_weather != '' and 'data' in daily_weather:
+	if daily_weather and 'data' in daily_weather:
 
 		dailydata=[
 			{"startPeriodName": a,
@@ -311,17 +371,31 @@ def fetchAltDaily(num):
 		if item['tempLabel'] == 'High':
 			set_property('Daily.%i.LongDay'		% (count+1), item['startPeriodName'])
 			set_property('Daily.%i.ShortDay'	% (count+1), get_weekday(startstamp,'s')+" (d)")
-			set_property('Daily.%i.TempDay'		% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
-			set_property('Daily.%i.HighTemperature'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
+
+			if 'F' in TEMPUNIT:
+				set_property('Daily.%i.TempDay'		% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+				set_property('Daily.%i.HighTemperature'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+			elif 'C' in TEMPUNIT:
+				set_property('Daily.%i.TempDay'		% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+				set_property('Daily.%i.HighTemperature'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+#			set_property('Daily.%i.TempDay'		% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
+#			set_property('Daily.%i.HighTemperature'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
 			set_property('Daily.%i.TempNight'	% (count+1), '')
 			set_property('Daily.%i.LowTemperature'	% (count+1), '')
+
 		if item['tempLabel'] == 'Low':
 			set_property('Daily.%i.LongDay'		% (count+1), item['startPeriodName'])
 			set_property('Daily.%i.ShortDay'	% (count+1), get_weekday(startstamp,'s')+" (n)")
 			set_property('Daily.%i.TempDay'		% (count+1), '')
 			set_property('Daily.%i.HighTemperature'	% (count+1), '')
-			set_property('Daily.%i.TempNight'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
-			set_property('Daily.%i.LowTemperature'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
+			if 'F' in TEMPUNIT:
+				set_property('Daily.%i.TempNight'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+				set_property('Daily.%i.LowTemperature'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+			elif 'C' in TEMPUNIT:
+				set_property('Daily.%i.TempNight'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+				set_property('Daily.%i.LowTemperature'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+			#set_property('Daily.%i.TempNight'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
+			#set_property('Daily.%i.LowTemperature'	% (count+1), u'%s\N{DEGREE SIGN}%s' % (item['temperature'], "F"))
 		if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
 			set_property('Daily.%i.LongDate'	% (count+1), get_month(startstamp, 'dl'))
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ds'))
@@ -330,7 +404,7 @@ def fetchAltDaily(num):
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ms'))
 
 		rain=str(item['pop'])
-		if (rain !=''):
+		if rain:
 			set_property('Daily.%i.Precipitation'	% (count+1), rain + '%')
 		else:
 			set_property('Daily.%i.Precipitation'	% (count+1), '')
@@ -338,7 +412,7 @@ def fetchAltDaily(num):
 
 
 
-	if daily_weather and daily_weather != '' and 'currentobservation' in daily_weather:
+	if daily_weather and 'currentobservation' in daily_weather:
 		data=daily_weather['currentobservation']
 		icon = "http://forecast.weather.gov/newimages/large/%s" % data.get('Weatherimage')
 		code, rain=code_from_icon(icon)
@@ -372,7 +446,7 @@ def fetchAltDaily(num):
 		except:
 			set_property('Current.WindGust'	, '')
 
-		if (rain != ''):
+		if rain:
 			set_property('Current.ChancePrecipitaion', str(rain)+'%');
 		else :
 			set_property('Current.ChancePrecipitaion'		, '');
@@ -394,7 +468,7 @@ def fetchCurrent(num):
 	station=ADDON.getSetting('Location'+str(num)+'Station')
 	url="https://api.weather.gov/stations/%s/observations/latest" %station	
 	current=get_url_JSON(url)
-	if current and current != '' and 'properties' in current:
+	if current and 'properties' in current:
 		data=current['properties']
 	else:
 		xbmc.log('failed to find weather data from : %s' % url,level=xbmc.LOGERROR)
@@ -403,12 +477,16 @@ def fetchCurrent(num):
 	
 	icon = data['icon']
 	#https://api.weather.gov/icons/land/night/ovc?size=small
-	icon=icon.rsplit('?', 1)[0]
-	code, rain=code_from_icon(icon)
-	weathercode = WEATHER_CODES.get(code)
-	set_property('Current.RemoteIcon',icon) 
-	set_property('Current.OutlookIcon', '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
-	set_property('Current.FanartCode', weathercode)
+	code=''
+	rain=''
+	if icon:
+		if '?' in icon:
+			icon=icon.rsplit('?', 1)[0]
+		code, rain=code_from_icon(icon)
+		weathercode = WEATHER_CODES.get(code)
+		set_property('Current.RemoteIcon',icon) 
+		set_property('Current.OutlookIcon', '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
+		set_property('Current.FanartCode', weathercode)
 	set_property('Current.Condition', FORECAST.get(data.get('textDescription'), data.get('textDescription')))
 	try:
 		set_property('Current.Humidity'	, str(round(data.get('relativeHumidity').get('value'))))
@@ -430,7 +508,7 @@ def fetchCurrent(num):
 	except:
 		set_property('Current.WindDirection', '')
 
-	if (rain != ''):
+	if rain:
 		set_property('Current.ChancePrecipitaion', str(rain)+'%');
 	else :
 		set_property('Current.ChancePrecipitaion'		, '');
@@ -472,7 +550,7 @@ def fetchWeatherAlerts(num):
 	url="https://api.weather.gov/alerts/active/zone/%s" %a_zone	
 	alerts=get_url_JSON(url)
 	# if we have a valid response then clear our current alerts
-	if alerts and alerts != '' and 'features' in alerts:
+	if alerts and 'features' in alerts:
 		for count in range (1, 10):
 			clear_property('Alerts.%i.event' % (count))	
 	else:
@@ -514,7 +592,7 @@ def fetchHourly(num):
 	url=ADDON.getSetting('Location'+str(num)+'forecastHourly_url')		
 		
 	hourly_weather = get_url_JSON(url)
-	if hourly_weather and hourly_weather != '' and 'properties' in hourly_weather:
+	if hourly_weather and 'properties' in hourly_weather:
 		data=hourly_weather['properties']
 	else:
 		xbmc.log('failed to find proper hourly weather from %s' % url,level=xbmc.LOGERROR)
@@ -525,8 +603,10 @@ def fetchHourly(num):
 		
 		icon=item['icon']
 		#https://api.weather.gov/icons/land/night/ovc?size=small
-		icon=icon.rsplit('?', 1)[0]
-		code, rain=code_from_icon(icon)
+		if icon:
+			if '?' in icon:
+				icon=icon.rsplit('?', 1)[0]
+			code, rain=code_from_icon(icon)
 		set_property('Hourly.%i.RemoteIcon'	% (count+1), icon)	
 		
 		weathercode = WEATHER_CODES.get(code)
@@ -557,10 +637,14 @@ def fetchHourly(num):
 		set_property('Hourly.%i.WindDirection'	% (count+1), item['windDirection'])
 		set_property('Hourly.%i.WindSpeed'	% (count+1), item['windSpeed'])
 
-		set_property('Hourly.%i.Temperature'		% (count+1),	str(item['temperature'])+u'\N{DEGREE SIGN}'+item['temperatureUnit'])
-		
+		#set_property('Hourly.%i.Temperature'		% (count+1),	str(item['temperature'])+u'\N{DEGREE SIGN}'+item['temperatureUnit'])
+		if 'F' in TEMPUNIT:
+			set_property('Hourly.%i.Temperature'	% (count+1), u'%s%s' % (item['temperature'], TEMPUNIT))
+		elif 'C' in TEMPUNIT:
+			set_property('Hourly.%i.Temperature'	% (count+1), u'%s%s' % (FtoC(item['temperature']), TEMPUNIT))
+	
 
-		if rain !='':
+		if rain:
 			set_property('Hourly.%i.Precipitation'	% (count+1), rain + '%')
 			set_property('Hourly.%i.ChancePrecipitation'	% (count+1), rain + '%')
 		else:
@@ -618,12 +702,13 @@ def mapSettings(mapid):
 		t_sel=t_keys[ti]
 		ADDON.setSetting(mapid+"Type",t_keys[ti])
 		ADDON.setSetting(mapid+"Label",MAPSECTORS[s_sel]['name']+":"+MAPTYPES[t_sel])
+		ADDON.setSetting(mapid+"Select",MAPSECTORS[s_sel]['name']+":"+MAPTYPES[t_sel])
 	else:
 		ADDON.setSetting(mapid+"Label","")
+		ADDON.setSetting(mapid+"Select","")
 	
 	# clean up referenced dialog object	
 	del dialog
-	
 	
 
 
@@ -650,18 +735,18 @@ set_property('NOAA.IsFetched'		, 'true')
 set_property('WeatherProvider'		, 'NOAA')
 set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'media', 'skin-banner.png')))
 
-if sys.argv[1].startswith('Location'):
-	log("argument: %s" % (sys.argv[1]))
-	text = ADDON.getSetting(sys.argv[1]+"LatLong")
-	if text == '' :
-		# request latitude,longitude
-		keyboard = xbmc.Keyboard('', LANGUAGE(32332), False)
-		keyboard.doModal()
-		if (keyboard.isConfirmed() and keyboard.getText() != ''):
-			text = keyboard.getText()
-	if text != '':
-		log("calling location with %s and %s" % (text, sys.argv[1]))
-		fetchLocation(text,sys.argv[1])
+
+if sys.argv[1].startswith('EnterLocation'):
+	num=sys.argv[2]
+	enterLocation(num)
+
+if sys.argv[1].startswith('FetchLocation'):
+	num=sys.argv[2]
+	LatLong = ADDON.getSetting("Location"+num+"LatLong")
+	if not LatLong:
+		enterLocation(num)
+	elif LatLong:
+		fetchLocation(num,LatLong)
 
 elif sys.argv[1].startswith('Map'):
 
@@ -670,19 +755,19 @@ elif sys.argv[1].startswith('Map'):
 else:
 
 	num=sys.argv[1]
-	locationLatLong = ADDON.getSetting('Location%sLatLong' % num)
+	LatLong = ADDON.getSetting('Location%sLatLong' % num)
 	
 	station=ADDON.getSetting('Location'+str(num)+'Station')
 	if station == '' :
-		log("calling location with %s" % (locationLatLong))
-		fetchLocation(locationLatLong,'Location%s' % str(num))
+		log("calling location with %s" % (LatLong))
+		fetchLocation(str(num),LatLong)
 
 	refresh_locations()
 
-	locationLatLong = ADDON.getSetting('Location%s' % num)
+	LatLong = ADDON.getSetting('Location%s' % num)
 	sourcePref=ADDON.getSetting("DataSourcePreference")
 
-	if not locationLatLong == '':
+	if LatLong:
 		fetchWeatherAlerts(num)
 		if "forecast.weather.gov" == sourcePref:
 			fetchAltDaily(num)
@@ -708,7 +793,7 @@ else:
 			maptype = ADDON.getSetting('Map%iType' % (mcount))
 			maplabel = ADDON.getSetting('Map%iLabel' % (mcount))
 
-			if (mapsector != '' and maptype != ''):
+			if (mapsector and maptype):
 				path=MAPSECTORS.get(mapsector)['path']
 				if mapsector != 'glm-e' and mapsector != 'glm-w':
 					path=path.replace("%s",maptype)
@@ -728,7 +813,7 @@ else:
 # clean up references to classes that we used
 del MONITOR, xbmc, xbmcgui, xbmcvfs, WEATHER_WINDOW
 # clean up everything we referenced from the utils to prevent any dangling classes hanging around
-del FtoC, log, ADDON, LANGUAGE, MAPSECTORS, MAPTYPES
+del FtoC, CtoF, log, ADDON, LANGUAGE, MAPSECTORS, MAPTYPES
 del WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x 
 del get_url_JSON 
 del get_month, get_timestamp, get_weekday, get_time

@@ -468,8 +468,20 @@ msgctxt "#32340"
 msgid "Preffered Data Source"
 msgstr ""
 
+msgctxt "#32341"
+msgid "Latitude (example: 45.2123)"
+msgstr ""
+
+msgctxt "#32342"
+msgid "Longitude (example: -90.4392)"
+msgstr ""
+
+msgctxt "#32343"
+msgid "Enter Location"
+msgstr ""
+
 ##RESERVED
-## 32341-32348
+## 32344-32348
 
 msgctxt "#32349"
 msgid "Select Map Region"
