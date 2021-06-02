@@ -137,10 +137,13 @@ def install_widevine_arm(backup_path):
     # Google will remove support for older Widevine CDM's on May 31, 2021
     # More info at https://github.com/xbmc/inputstream.adaptive/issues/678 and https://www.widevine.com/news
 
-    # Experimental: Check for TCMalloc support
-    tcmalloc_path = '/usr/lib/libtcmalloc_minimal.so'
+    # Experimental: Check if TCMalloc library is preloaded or linked
+    libtcmalloc = 'libtcmalloc'
+    process_maps = open('/proc/self/maps', 'r').read()
+    is_tcmalloc_preloaded = bool(libtcmalloc in process_maps)
+
     arm_device = None
-    if not exists(tcmalloc_path):
+    if not is_tcmalloc_preloaded:
         # Propose user to install older version
         if yesno_dialog(localize(30066), localize(30067, os=kodi_os())):  # Your operating system probably doesn't support the newest Widevine CDM. Try older one?
             # Install hardcoded ChromeOS image

@@ -69,10 +69,10 @@ def kodi_os():
     """Returns Kodi OS name as string"""
     # It takes a while to get this info
     count = 0
-    while ' (kernel: ' not in xbmc.getInfoLabel('System.OSVersionInfo') and count < 10:
+    while ' (kernel: ' not in to_unicode(xbmc.getInfoLabel('System.OSVersionInfo')) and count < 10:
         count += 1
         xbmc.sleep(100)
-    return xbmc.getInfoLabel('System.OSVersionInfo').split(' (kernel: ')[0]
+    return to_unicode(xbmc.getInfoLabel('System.OSVersionInfo')).split(' (kernel: ')[0]
 
 
 def translate_path(path):
