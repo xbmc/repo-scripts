@@ -15,10 +15,10 @@ LANGUAGE = ADDON.getLocalizedString
 
 # supported image types by the screensaver
 IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef', '.webp', '.jp2', '.apng')
-CACHEFOLDER = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+CACHEFOLDER = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 CACHEFILE = os.path.join(CACHEFOLDER, 'cache_%s')
 RESUMEFILE = os.path.join(CACHEFOLDER, 'offset')
-ASFILE = xbmc.translatePath('special://profile/advancedsettings.xml')
+ASFILE = xbmcvfs.translatePath('special://profile/advancedsettings.xml')
 
 def log(txt):
     message = '%s: %s' % (ADDONID, txt)
@@ -72,7 +72,7 @@ def walk(path):
     else:
         folders.append(path)
     for folder in folders:
-        if xbmcvfs.exists(xbmc.translatePath(folder)):
+        if xbmcvfs.exists(xbmcvfs.translatePath(folder)):
             # get all files and subfolders
             dirs,files = xbmcvfs.listdir(folder)
             log('dirs: %s' % len(dirs))

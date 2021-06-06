@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <settings version="1">
-	<section id="addon">
+	<section id="screensaver.picture.slideshow">
 		<category id="30024" label="30024">
 			<group id="1">
 				<setting help="" id="type" label="30000" type="integer">
