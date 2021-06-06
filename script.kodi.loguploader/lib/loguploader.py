@@ -19,7 +19,7 @@ LANGUAGE = ADDON.getLocalizedString
 socket.setdefaulttimeout(5)
 
 URL = 'https://paste.kodi.tv/'
-LOGPATH = xbmc.translatePath('special://logpath')
+LOGPATH = xbmcvfs.translatePath('special://logpath')
 LOGFILE = os.path.join(LOGPATH, 'kodi.log')
 OLDLOG = os.path.join(LOGPATH, 'kodi.old.log')
 REPLACES = (('//.+?:.+?@', '//USER:PASSWORD@'),('<user>.+?</user>', '<user>USER</user>'),('<pass>.+?</pass>', '<pass>PASSWORD</pass>'),)
@@ -188,7 +188,7 @@ class Main():
 
     def showResult(self, message, url=None):
         if url:
-            imagefile = os.path.join(xbmc.translatePath(PROFILE),'%s.png' % str(url.split('/')[-1]))
+            imagefile = os.path.join(xbmcvfs.translatePath(PROFILE),'%s.png' % str(url.split('/')[-1]))
             qrIMG = pyqrcode.create(url)
             qrIMG.png(imagefile, scale=10)
             qr = QRCode( "script-loguploader-main.xml" , CWD, "default", image=imagefile, text=message)
