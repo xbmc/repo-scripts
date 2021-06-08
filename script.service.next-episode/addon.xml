@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.next-episode"
    name="Next Episode (next-episode.net)"
-   version="1.2.3"
+   version="1.2.4"
    provider-name="next-episode.net">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
@@ -29,7 +29,7 @@
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <news>1.2.3:
-- Fix broken service.</news>
+    <news>1.2.4:
+- Fixed compatibility with Kodi 20 "Nexus".</news>
   </extension>
 </addon>
