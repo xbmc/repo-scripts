@@ -40,7 +40,7 @@ class Session(object):
         logger.debug('Opening URL: {0}'.format(url))
         self._session.headers['Referer'] = referer
         try:
-            response = self._session.get(url, params=params)
+            response = self._session.get(url, params=params, verify=False)
         except requests.RequestException:
             logger.error('Unable to connect to Addic7ed.com!')
             raise Add7ConnectionError
