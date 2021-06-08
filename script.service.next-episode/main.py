@@ -6,6 +6,7 @@
 from __future__ import unicode_literals
 import sys
 import pyxbmct
+from libs.exception_logger import log_exception
 from libs.gui import NextEpDialog, ui_string
 from libs.utils import sync_library, login
 
@@ -39,11 +40,12 @@ class MainDialog(NextEpDialog):
 
 
 if __name__ == '__main__':
-    if 'sync_library' in sys.argv:
-        sync_library()
-    elif 'login' in sys.argv:
-        login()
-    else:
-        main_dialog = MainDialog(520, 160, 2, 1, 'next-episode.net')
-        main_dialog.doModal()
-        del main_dialog
+    with log_exception():
+        if 'sync_library' in sys.argv:
+            sync_library()
+        elif 'login' in sys.argv:
+            login()
+        else:
+            main_dialog = MainDialog(520, 160, 2, 1, 'next-episode.net')
+            main_dialog.doModal()
+            del main_dialog
