@@ -28,6 +28,11 @@ from kodi_six.xbmcaddon import Addon
 from six.moves import cPickle as pickle
 
 try:
+    from kodi_six.xbmcvfs import translatePath
+except (ImportError, AttributeError):
+    from kodi_six.xbmc import translatePath
+
+try:
     from typing import Text, Dict, Callable, Generator  # pylint: disable=unused-import
 except ImportError:
     pass
@@ -37,9 +42,9 @@ ADDON = Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_NAME = ADDON.getAddonInfo('name')
 ADDON_VERSION = ADDON.getAddonInfo('version')
-ADDON_PROFILE_DIR = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-ADDON_DIR = xbmc.translatePath(ADDON.getAddonInfo('path'))
-ADDON_ICON = xbmc.translatePath(ADDON.getAddonInfo('icon'))
+ADDON_PROFILE_DIR = translatePath(ADDON.getAddonInfo('profile'))
+ADDON_DIR = translatePath(ADDON.getAddonInfo('path'))
+ADDON_ICON = translatePath(ADDON.getAddonInfo('icon'))
 
 if not os.path.exists(ADDON_PROFILE_DIR):
     os.mkdir(ADDON_PROFILE_DIR)
