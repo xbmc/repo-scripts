@@ -161,7 +161,8 @@ def extract_episode_data():
     :raises ParseError: if cannot determine episode data
     """
     now_played = get_now_played()
-    filename = os.path.basename(urlparse.unquote(now_played['file']))
+    parsed = urlparse.urlparse(now_played['file'])
+    filename = os.path.basename(parsed.path)
     if addon.getSetting('use_filename') == 'true' or not now_played['showtitle']:
         # Try to get showname/season/episode data from
         # the filename if 'use_filename' setting is true
