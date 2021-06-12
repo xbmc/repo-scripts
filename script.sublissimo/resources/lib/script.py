@@ -236,9 +236,9 @@ def synchronize_with_other_subtitle(subtitlefile, filename, fail=False):
 
     factor, correction = create_new_factor2(starting_line[:12], ending_line[:12],
                                             old_starting_time, old_ending_time)
-    current_sub2 = Subtitle(subtitlefile)
+    current_sub2 = Subtitle(subtitlefile, filename)
     subtitlefile3 = current_sub2.create_new_times(False, factor, correction)
-    current_sub = Subtitle(subtitlefile3)
+    current_sub = Subtitle(subtitlefile3, filename)
     subtitlefile2 = current_sub.move_subtitles(starting_line[:12], old_starting_time, old_ending_time)
     if subtitlefile2:
         #Succes, subs succes synced
@@ -254,11 +254,11 @@ def move_subtitle(subtitlefile, filename, menuchoice=""):
         timestring = xbmcgui.Dialog().input(_(32054))
         movement = decimal_timeline_with_checker(timestring)
         if movement:
-            current_moving_sub = Subtitle(subtitlefile)
-            subtitlefile = current_moving_sub.create_new_times(movement, None, None)
+            current_moving_sub = Subtitle(subtitlefile, filename)
+            new_subtitlefile = current_moving_sub.create_new_times(movement, None, None)
             # Succes, subs moved forward by
             xbmcgui.Dialog().ok(_(32017), _(32070).format(timestring))
-            show_dialog(subtitlefile, filename)
+            show_dialog(new_subtitlefile, filename)
         else:
             # error, valid timecode
             xbmcgui.Dialog().ok(_(32014), _(32056))
@@ -268,7 +268,7 @@ def move_subtitle(subtitlefile, filename, menuchoice=""):
         timestring = xbmcgui.Dialog().input(_(32055))
         movement = decimal_timeline_with_checker(timestring)
         if movement:
-            current_moving_sub1 = Subtitle(subtitlefile)
+            current_moving_sub1 = Subtitle(subtitlefile, filename)
             subtitlefile = current_moving_sub1.create_new_times(movement*-1, None, None)
             #Succes, subs moved back by
             xbmcgui.Dialog().ok(_(32017), _(32071).format(timestring))
@@ -278,7 +278,7 @@ def move_subtitle(subtitlefile, filename, menuchoice=""):
             xbmcgui.Dialog().ok(_(32014), _(32056))
             move_subtitle(subtitlefile, filename)
     if menuchoice == 2:
-        current_start_sub = Subtitle(subtitlefile)
+        current_start_sub = Subtitle(subtitlefile, filename)
         # timecode, write new timecode, for example
         xbmcgui.Dialog().ok(_(32068), _(32069))
         timestring = xbmcgui.Dialog().input(_(32029))
@@ -352,7 +352,7 @@ def stretch_subtitle(subtitlefile, filename):
     timestring = xbmcgui.Dialog().input(_(32029))
     movement = decimal_timeline_with_checker(timestring)
     if movement:
-        current_sub = Subtitle(subtitlefile)
+        current_sub = Subtitle(subtitlefile, filename)
         subtitlefile = current_sub.create_new_factor(timestring)
         xbmcgui.Dialog().ok(_(32017), _(33072).format(timestring))
         show_dialog(subtitlefile, filename)
@@ -374,9 +374,9 @@ def make_timelines_classical(decimal):
 def sync_after_wizard(starting_time, ending_time, subtitlefile, filename):
     start = make_timelines_classical(starting_time*1000)
     end = make_timelines_classical(ending_time*1000)
-    current_start_sub = Subtitle(subtitlefile)
+    current_start_sub = Subtitle(subtitlefile, filename)
     subtitlefile2 = current_start_sub.move_subtitles(start)
-    current_sub = Subtitle(subtitlefile2)
+    current_sub = Subtitle(subtitlefile2, filename)
     subtitlefile3 = current_sub.create_new_factor(end)
     if subtitlefile3:
         # Succes, Your subs starts at, your subs end at.
@@ -443,6 +443,37 @@ def check_integrity_menu(subtitlefile, filename):
     show_dialog(subtitlefile, filename)
 
 
+def read_problematic_file_final(filename, backup):
+    global backupfile
+    xbmcgui.Dialog().ok(_(35017), _(35018))
+    with closing(xbmcvfs.File(filename)) as fo:
+        byte_string = bytes(fo.readBytes())
+        text_string = byte_string.decode("utf-8", errors="replace")
+    b = text_string.split("\n")
+    subtitlefile = [sentence+"\n" for sentence in b]
+    if backup:
+        backupfile = copy.deepcopy(subtitlefile)
+    return subtitlefile, filename
+
+def read_problematic_file(filename, backup):
+    global backupfile
+    import chardet
+    try:
+        with closing(xbmcvfs.File(filename)) as fo:
+            byte_string = bytes(fo.readBytes())
+            result = chardet.detect(byte_string)
+            char_set = result["encoding"]
+
+        text_string = byte_string.decode(char_set)
+        lines = text_string.split("\n")
+        subtitlefile = [sentence+"\n" for sentence in lines]
+        if backup:
+            backupfile = copy.deepcopy(subtitlefile)
+        return subtitlefile, filename
+    except:
+        subtitlefile, filename = read_problematic_file_final(filename, backup)
+        return subtitlefile, filename
+
 def read_file(filename, backup):
     global backupfile
     try:
@@ -454,19 +485,8 @@ def read_file(filename, backup):
         f.close()
         return subtitlefile, filename
     except UnicodeDecodeError:
-        try:
-            with closing(xbmcvfs.File(filename)) as fo:
-                byte_string = bytes(fo.readBytes())
-                text_string = byte_string.decode('utf-8', errors='ignore')
-            b = text_string.split("\n")
-            subtitlefile = [sentence+"\n" for sentence in b]
-            if backup:
-                backupfile = copy.deepcopy(subtitlefile)
-            return subtitlefile, filename
-        except:
-            # Error, file not found
-            xbmcgui.Dialog().ok(_(32014), _(32027) + filename)
-            sys.exit()
+        subtitlefile, filename = read_problematic_file(filename, backup)
+        return subtitlefile, filename
     except:
         # Error, file not found
         xbmcgui.Dialog().ok(_(32014), _(32027) + filename)
@@ -504,7 +524,7 @@ def load_subtitle(with_warning, filename=""):
     if check_validity(subtitlefile):
         return subtitlefile, filename
     else:
-        return load_subtitle(False)    
+        return load_subtitle(False)
 
 
 def synchronize_by_frame_rate(subtitlefile, filename):
@@ -535,7 +555,7 @@ def stretch_by_providing_factor(subtitlefile, filename):
         new_factor = float(response)
     except:
         return stretch_by_providing_factor(subtitlefile, filename)
-    cur_sub = Subtitle(subtitlefile)
+    cur_sub = Subtitle(subtitlefile, filename)
     old_starting_time, old_ending_time = cur_sub.make_timelines_decimal()
     new_timestamp = make_timelines_classical(new_factor * old_ending_time)
     start_timestamp = make_timelines_classical(old_starting_time)
@@ -651,7 +671,7 @@ def load_sub_subtitlefile(filename="", subtitlefile=[]):
             check += 1
     if check == 0:
         xbmcgui.Dialog().ok(_(32135), _(32136))
-        show_dialog()        
+        show_dialog()
     options = ["23.976", "24", "25", "29.976", "30", _(32127), _(32104), _(32129)]
     menuchoice = xbmcgui.Dialog().select(_(32105), options)
     if menuchoice == 5:
@@ -689,11 +709,23 @@ def create_new_sub(subtitlefile, filename, frame_rate):
 
 # -------------END OF SUB FILES ---------------
 
+def error_handling(subtitlefile, filename, error):
+    # "Error", "The following error has occurred", "Return to Menu", "More Info"
+    response = xbmcgui.Dialog().yesno(_(32014), _(35012) + "\n" + str(type(error))
+                                                         + "\n" + str(error.args),
+                                                         yeslabel=_(35011),
+                                                         nolabel=_(32013))
+    if response:
+        show_dialog(subtitlefile, filename)
+    else:
+        xbmcgui.Dialog().textviewer(_(35013), _(35016))
+        show_dialog(subtitlefile, filename)
+
 def check_player_instances(filename=""):
     global player_instances
     if player_instances:
         for instance in player_instances:
-            instance.proper_exit = True   
+            instance.proper_exit = True
     temp_file = filename[:-4] + "_temp.srt"
     if xbmcvfs.exists(temp_file):
         xbmcvfs.delete(temp_file)
@@ -748,7 +780,7 @@ def check_active_player():
 def show_dialog(subtitlefile="", filename=""):
     if not subtitlefile:
         subtitlefile, filename = load_subtitle(True)
-    check_player_instances(filename)    
+    check_player_instances(filename)
     #Scroll, edit, move, stretch, syncwsub, syncwvideo, playalong, advanced, save, quit
     options = [_(31000), _(30001), _(31002), _(31003), _(31004), _(31005),
                _(31010), _(31011), _(31013), _(31008), _(31009)]
