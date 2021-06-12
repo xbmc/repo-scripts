@@ -1,3 +1,10 @@
+V2.0.0
+- N.B. If you have run a version before 2.0, please re-configure the addon to set-up your BOM locations!
+- Rewrite to use BOM API directly, leave Weatherzone in as a fallback option if BOM not configured or available
+- Add mechanism to manually purge radar backgrounds via addon settings
+- Remove periodic refresh of backgrounds in favour of the above
+- Update settings.xml to new Kodi format
+- Modernise code throughout
 
 v1.2.2
  - Change xbmc.translatePath (deprecated) to xbmcvfs.translatePath
