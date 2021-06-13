@@ -194,7 +194,13 @@ class MyPlayer(xbmc.Player):
 
         # If the addon is set to do a jump back when playback is started from a resume point...
         if self.jump_back_on_playback_started:
-            current_time = self.getTime()
+            try:
+                current_time = self.getTime()
+            except RuntimeError as exc:
+                log('No file is playing, stopping UnpauseJumpBack')
+                xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
+                pass
+
             log(f'onAVStarted at {current_time}')
 
             # check for exclusion
@@ -216,7 +222,13 @@ class MyPlayer(xbmc.Player):
             direction = 1
             abs_last_speed = abs(self.last_playback_speed)
             # default value, just in case
-            resume_time = self.getTime()
+            try:
+                resume_time = self.getTime()
+            except RuntimeError as exc:
+                log('No file is playing, stopping UnpauseJumpBack')
+                xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
+                pass
+                
             if self.last_playback_speed < 0:
                 log('Resuming. Was rewound with speed X%d.' % (abs(self.last_playback_speed)))
             if self.last_playback_speed > 1:
