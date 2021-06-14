@@ -21,31 +21,31 @@ msgid "OzWeather Settings"
 msgstr ""
 
 msgctxt "#32111"
-msgid "Suburb 1"
+msgid "Weatherzone Location 1"
 msgstr ""
 
 msgctxt "#32112"
-msgid "Suburb 2"
+msgid "Weatherzone Location 2"
 msgstr ""
 
 msgctxt "#32113"
-msgid "Suburb 3"
+msgid "Weatherzone Location 3"
 msgstr ""
 
 msgctxt "#32155"
-msgid "Radar ID for Suburb 1 (e.g. IDR023)"
+msgid "Overrule Closest Radar ID for Location 1"
 msgstr ""
 
 msgctxt "#32156"
-msgid "Radar ID for Suburb 2"
+msgid "Overrule Closest Radar ID for Location 2"
 msgstr ""
 
 msgctxt "#32157"
-msgid "Radar ID for Suburb 3"
+msgid "Overrule Closest Radar ID for Location 3"
 msgstr ""
 
 msgctxt "#32194"
-msgid "Use extended features (long forecast, radar loop)"
+msgid "Use extended features (longer forecast, radar loop, ABC weather video)"
 msgstr ""
 
 msgctxt "#32195"
@@ -60,3 +60,50 @@ msgctxt "#32197"
 msgid "Periodically Update Radar Backgrounds?"
 msgstr ""
 
+msgctxt "#32200"
+msgid "BOM Locations"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Fallback Locations"
+msgstr ""
+
+msgctxt "#32202"
+msgid "BOM Location 1"
+msgstr ""
+
+msgctxt "#32203"
+msgid "BOM Location 2"
+msgstr ""
+
+msgctxt "#32204"
+msgid "BOM Location 3"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Extended Features"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Weatherzone location used as a fallback only if BOM not available."
+msgstr "
+
+msgctxt "#32208"
+msgid "Enter postcode, suburb or area."
+msgstr "
+
+msgctxt "#32209"
+msgid "Radar backgrounds not showing?  Try forcing a refresh"
+msgstr "
+
+msgctxt "#32210"
+msgid "Refresh all radar backgrounds on next weather fetch?"
+msgstr "
+
+msgctxt "#32211"
+msgid "Closest Radar "
+msgstr "
+
+msgctxt "#32212"
+msgid "If entered, these radar codes overrule the closest found."
+msgstr "
