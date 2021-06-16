@@ -14,40 +14,40 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "A module to access YouTube's Data API"
-msgstr ""
+msgstr "Μονάδα για προσπέλαση του API δεδομένων του Youtube"
 
 msgctxt "Addon Description"
 msgid "The Tubed API module provides a convenient way to access YouTube's Data API in Kodi 19+"
-msgstr ""
+msgstr "Η μονάδα Tubed API παρέχει έναν βολικό τρόπο προσπέλασης του API δεδομένων του Youtube στο Kodi 19+"
 
 msgctxt "#30000"
 msgid "MPEG-DASH HTTPD"
-msgstr ""
+msgstr "MPEG-DASH HTTPD"
 
 msgctxt "#30001"
 msgid "Configure the HTTP server that MPEG-DASH manifests are hosted from"
-msgstr ""
+msgstr "Ρύθμιση του εξυπηρετητή HTTP για τα μανιφέστα MPEG-DASH που φιλοξενούνται"
 
 msgctxt "#30002"
 msgid "Port"
-msgstr ""
+msgstr "Θύρα"
 
 msgctxt "#30003"
 msgid "Configure the HTTP server port that MPEG-DASH manifests are hosted from"
-msgstr ""
+msgstr "Ρύθμιση της θύρας του εξυπηρετητή HTTP στον οποίο φιλοξενούνται τα μανιφέστα MPEG-DASH"
 
 msgctxt "#30004"
 msgid "Debug"
-msgstr ""
+msgstr "Αποσφαλμάτωση"
 
 msgctxt "#30005"
 msgid "Component Logging"
-msgstr ""
+msgstr "Καταγραφή στοιχείων"
 
 msgctxt "#30006"
 msgid "Manifest generator"
-msgstr ""
+msgstr "Γεννήτρια μανιφέστων"
 
 msgctxt "#30007"
 msgid "Enable logging of more detailed information from the manifest generator"
-msgstr ""
+msgstr "Ενεργοποίηση καταγραφής σφαλμάτων για πιο λεπτομερείς πληροφορίες που αφορουν την γεννήτρια μανιφέστων"

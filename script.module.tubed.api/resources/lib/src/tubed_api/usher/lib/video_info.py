@@ -92,11 +92,15 @@ class VideoInfo:
             'bpctr': '9999999999',
         }
 
+        cookies = {
+            'CONSENT': 'YES+cb.20210615-14-p0.en+FX+294'
+        }
+
         if self._access_token:
             parameters['access_token'] = self._access_token
 
         result = requests.get('https://www.youtube.com/watch', params=parameters,
-                              headers=self.headers, allow_redirects=True)
+                              headers=self.headers, cookies=cookies, allow_redirects=True)
         result.encoding = 'utf-8'
 
         return {
@@ -112,12 +116,17 @@ class VideoInfo:
             'gl': self.region
         }
 
+        cookies = {
+            'CONSENT': 'YES+cb.20210615-14-p0.en+FX+294'
+        }
+
         if self._access_token:
             parameters['access_token'] = self._access_token
 
         url = 'https://www.youtube.com/embed/{video_id}'.format(video_id=video_id)
 
-        result = requests.get(url, params=parameters, headers=self.headers, allow_redirects=True)
+        result = requests.get(url, params=parameters, headers=self.headers,
+                              cookies=cookies, allow_redirects=True)
         result.encoding = 'utf-8'
 
         return {
@@ -140,7 +149,8 @@ class VideoInfo:
         config = {}
 
         found = re.search(
-            r'window\.ytplayer\s*=\s*{}\s*;\s*ytcfg\.set\((?P<config>.+?)\)\s*;\s*ytcfg', html
+            r'window\.ytplayer\s*=\s*{}\s*;\s*ytcfg\.set\((?P<config>.+?)\)\s*;'
+            r'\s*(?:ytcfg|var setMessage\s*=\s*)', html
         )
         if found:
             config = json.loads(found.group('config'))
@@ -148,16 +158,21 @@ class VideoInfo:
         return config
 
     @staticmethod
-    def get_player_client(html):
-        context = {}
+    def get_player_client(config):
+        return config.get('INNERTUBE_CONTEXT', {}).get('client', {})
+
+    @staticmethod
+    def get_player_response(html):
+        response = {}
 
         found = re.search(
-            r'ytcfg\.set\((?P<context>{"INNERTUBE_CONTEXT":.+?)\)\s*;', html
+            r'ytInitialPlayerResponse\s*=\s*(?P<response>{.+?})\s*;'
+            r'\s*(?:var\s+meta|</script|\n)', html
         )
         if found:
-            context = json.loads(found.group('context'))
+            response = json.loads(found.group('response'))
 
-        return context.get('INNERTUBE_CONTEXT', {}).get('client', {})
+        return response
 
     @staticmethod
     def _curl_headers(cookies):
@@ -331,9 +346,12 @@ class VideoInfo:
         page_result = self.get_watch_page(video_id)
         html = page_result.get('html')
         cookies = page_result.get('cookies')
-
+        cookies.update({
+            'CONSENT': 'YES+cb.20210615-14-p0.en+FX+294'
+        })
         player_config = self.get_player_config(html)
-        player_client = self.get_player_client(html)
+        player_client = self.get_player_client(player_config)
+        player_response = self.get_player_response(html)
         curl_headers = self._curl_headers(cookies)
 
         if not cookies:
@@ -355,11 +373,14 @@ class VideoInfo:
             'cosver': player_client.get('osVersion', '10.0')
         }
 
-        player_response = {}
         playability_status = {}
 
         el_values = ['detailpage', 'embedded']
         for el_value in el_values:
+            if player_response.get('streamingData', {}).get('formats', []) or \
+                    player_response.get('streamingData', {}).get('hlsManifestUrl', ''):
+                break
+
             params['el'] = el_value
             response = requests.get('https://www.youtube.com/get_video_info', params=params,
                                     headers=headers, cookies=cookies, allow_redirects=True)
@@ -368,11 +389,9 @@ class VideoInfo:
 
             parameters = dict(parse_qsl(data))
             playability_status['fallback'] = parameters.get('status', '') != 'fail'
-            player_response = json.loads(parameters.get('player_response', '{}'))
-
-            if (player_response.get('streamingData', {}).get('formats', []) or
-                    player_response.get('streamingData', {}).get('hlsManifestUrl', '')):
-                break
+            video_info_player_response = json.loads(parameters.get('player_response', '{}'))
+            if video_info_player_response:
+                player_response = video_info_player_response
 
         playability_status.update(player_response.get('playabilityStatus', {}))
 
