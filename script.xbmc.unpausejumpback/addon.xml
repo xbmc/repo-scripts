@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.1" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
+<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.2" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -22,10 +22,13 @@
     <license>GPL-3.0-only</license>
     <website>https://github.com/bossanova808/script.xbmc.unpausejumpback/</website>
     <source>https://github.com/bossanova808/script.xbmc.unpausejumpback/</source>
-    <forum>http://forum.xbmc.org/showthread.php?tid=134837</forum>
+    <forum>https://forum.kodi.tv/showthread.php?tid=355778</forum>
     <email>bossonav808@gmail.com</email>
-    <news>v3.0.1
+    <news>v3.0.2
+        [fix] "XBMC is not playing any media file" errors
+        v3.0.1
         [fix] minor bugfix for http/s sources (plugins)
+        [fix] Update for changes to Kodi Matrix logging functions
         v3.0.0
         [new] Update for Kodi Matrix / Python 3, make unpause on resume vs. pause a choice, bugfixes and tidy up.
     </news>

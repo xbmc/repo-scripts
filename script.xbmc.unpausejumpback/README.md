@@ -3,6 +3,8 @@ Kodi Unpause Jumpback
 
 `script.xbmc.unpausejumpback`
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/bossanova808) 
+
 Simple Kodi Service to jump back a configurable number of seconds after pause, or rewind/fast-forward events.
 
 By default the actual jump back happens on **resumption** of playback.  
