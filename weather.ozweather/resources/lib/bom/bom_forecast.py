@@ -3,6 +3,7 @@ import datetime
 import pytz
 import sys
 import requests
+import math
 import xbmc
 
 # Small hack to allow for unit testing - see common.py for explanation
@@ -151,6 +152,7 @@ def bom_forecast(geohash):
         r = requests.get(bom_api_current_observations_url)
         current_observations = r.json()["data"]
         weather_data['ObservationsUpdated'] = utc_str_to_local_str(r.json()["metadata"]["issue_time"], time_zone=location_timezone)
+        weather_data['ObservationsStation'] = r.json()["data"]['station']['name']
         log(current_observations)
 
     except Exception as inst:
@@ -201,15 +203,43 @@ def bom_forecast(geohash):
     #     raise
 
     # CURRENT OBSERVATIONS
+
+    # IMPORTANT - to avoid issues with Kodi malforming weather values due to 'magic'
+    # (the magic is presumably because Kodi seeks to support both farenheit and celsius, so unofrtunately tends to return 0
+    # for any non-numeric value in these labels...
+    # ...So, we set the normal Kodi weather labels as best we can.
+    # ...But, we also set a version with OzW_ prepended to the label name, which is used in OzWeather Skin files to avoid this.
+
     if current_observations:
-        weather_data['Current.Temperature'] = str(round(current_observations['temp']))
-        weather_data['Current.FeelsLike'] = str(round(current_observations['temp_feels_like']))
-        weather_data['Current.Humidity'] = current_observations['humidity']
+        weather_data['Current.Temperature'] = current_observations['temp']
+        weather_data['Current.Ozw_Temperature'] = current_observations['temp']
+        weather_data['Current.Humidity'] = current_observations['humidity'] or 0
+        weather_data['Current.Ozw_Humidity'] = current_observations['humidity'] or "N/A"
         weather_data['Current.WindSpeed'] = current_observations['wind']['speed_kilometre']
+        weather_data['Current.OzW_WindSpeed'] = current_observations['wind']['speed_kilometre']
         weather_data['Current.WindDirection'] = current_observations['wind']['direction']
         weather_data['Current.Wind'] = f'From {current_observations["wind"]["direction"]} at {current_observations["wind"]["speed_kilometre"]} kph'
         weather_data['Current.WindGust'] = f'{current_observations["gust"]["speed_kilometre"]}'
-        weather_data["Current.Precipitation"] = weather_data["Current.RainSince9"] = f'{current_observations["rain_since_9am"]}'
+        weather_data['Current.Precipitation'] = weather_data["Current.RainSince9"] = current_observations["rain_since_9am"] or 0
+
+    # Sometimes this is not provided...
+    if current_observations['temp_feels_like']:
+        weather_data['Current.FeelsLike'] = current_observations['temp_feels_like']
+        weather_data['Current.OzW_FeelsLike'] = current_observations['temp_feels_like']
+    # if not provided, attempt to calculate it - https://www.vcalc.com/wiki/rklarsen/Australian+Apparent+Temperature+%28AT%29
+    # AT = Ta + 0.33•ρ − 0.70•ws − 4.00
+    else:
+        try:
+            log("Feels Like not provided by BOM.  Attempting to calculate feels like...but will likely fail...")
+            water_vapour_pressure = current_observations['humidity'] * 6.105 * math.exp((17.27 * current_observations['temp'])/(237.7 + current_observations['temp']))
+            calculated_feels_like = current_observations['temp'] + (0.33 * water_vapour_pressure) - (0.70 * current_observations['wind']['speed_kilometre']) - 4.00
+            weather_data['Current.FeelsLike'] = calculated_feels_like
+            weather_data['Current.Ozw_FeelsLike'] = calculated_feels_like
+            log(f"Success!  Using calculated feels like of {calculated_feels_like}")
+        # Not provided, could not calculate it, so set it to the current temp (avoids Kodi showing a random '0' value!)
+        except:
+            log("Feels like not provided, could not calculate - setting to current temperature to avoid kodi displaying random 0s.")
+            weather_data['Current.FeelsLike'] = str(round(current_observations['temp']))
 
     # WARNINGS
     warnings_text = ""
@@ -217,7 +247,7 @@ def bom_forecast(geohash):
         for i, warning in enumerate(warnings):
             # Warnings header...
             if i == 0 and area_information:
-                warnings_text = f"[B]Major Warnings[/B], current for {area_information['name']}:\n\n"
+                warnings_text += f"[B]Major Warnings[/B], current for {area_information['name']}:\n\n"
             # Warnings body...only major warnings as we don't need every little message about sheep grazing etc..
             if warning['warning_group_type'] == 'major':
                 # Don't really care when it was issue, if it hasn't expired, it's current, so show it..
@@ -238,6 +268,8 @@ def bom_forecast(geohash):
                     warnings_text += '\n'
                     if i == len(warnings):
                         warnings_text += '\n'
+
+    warnings_text += f"\n(Current weather observations retrieved from {weather_data['ObservationsStation']} station).\n\n"
 
     weather_data['Current.WarningsText'] = warnings_text
 

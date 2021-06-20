@@ -139,12 +139,18 @@ def getWeatherData(url_path):
             div_current_details_lhs = soup.find("div", class_="details_lhs")
             lhs = div_current_details_lhs.find_all("td", class_="hilite")
 
+            # Labels we set to emulate the BOM data...
+            weather_data["Current.NowLabel"] = "Predicted Min"
+            weather_data["Current.LaterLabel"] = "Predicted Max"
+
             # LHS
             try:
                 weather_data["Current.Temperature"] = str(int(round(float(lhs[0].text[:-2]))))
+                weather_data["Current.OzW_Temperature"] = str(int(round(float(lhs[0].text[:-2]))))
             except Exception as inst:
                 log(str(inst))
                 weather_data["Current.Temperature"] = "?"
+                weather_data["Current.OzW_Temperature"] = "?"
             try:
                 weather_data["Current.DewPoint"] = str(int(round(float(lhs[1].text[:-2]))))
             except Exception as inst:
@@ -152,14 +158,18 @@ def getWeatherData(url_path):
                 weather_data["Current.DewPoint"] = "?"
             try:
                 weather_data["Current.FeelsLike"] = str(int(round(float(lhs[2].text[:-2]))))
+                weather_data["Current.Ozw_FeelsLike"] = str(int(round(float(lhs[2].text[:-2]))))
             except Exception as inst:
                 log(str(inst))
                 weather_data["Current.FeelsLike"] = "?"
+                weather_data["Current.Ozw_FeelsLike"] = "N/A"
             try:
                 weather_data["Current.Humidity"] = str(int(round(float(lhs[3].text[:-1]))))
+                weather_data["Current.Ozw_Humidity"] = str(int(round(float(lhs[3].text[:-1]))))
             except Exception as inst:
                 log(str(inst))
                 weather_data["Current.Humidity"] = "?"
+                weather_data["Current.OzW_Humidity"] = "N/A"
             try:
                 weather_data["Current.WindDirection"] = str(lhs[4].text.split(" ")[0])
                 weather_data["Current.WindDegree"] = weather_data["Current.WindDirection"]
@@ -329,6 +339,8 @@ def getWeatherData(url_path):
                         try:
                             value = '%s' % td.text[:-2]
                             set_keys(weather_data, i, ["HighTemp", "HighTemperature"], value)
+                            if i == 0:
+                                set_key(weather_data, i, "NowValue", value)
                         except Exception as inst:
                             log(str(inst))
                             log("Exception in HighTemp,HighTemperature")
@@ -341,6 +353,8 @@ def getWeatherData(url_path):
                         try:
                             value = '%s' % td.text[:-2]
                             set_keys(weather_data, i, ["LowTemp", "LowTemperature"], value)
+                            if i == 0:
+                                set_key(weather_data, i, "LaterValue", value)
                         except Exception as inst:
                             log(str(inst))
                             log("Exception in LowTemp,LowTemperature")
@@ -368,11 +382,13 @@ def getWeatherData(url_path):
                             value = '%s' % td.text
                             set_key(weather_data, i, "Precipitation", value)
                             set_key(weather_data, i, "RainChanceAmount", value)
+                            set_key(weather_data, i, "RainAmount", value)
                         except Exception as inst:
                             log(str(inst))
                             log("Exception in Precipitation,RainChanceAmount")
                             set_key(weather_data, i, "Precipitation", "?")
                             set_key(weather_data, i, "RainChanceAmount", "?")
+                            set_key(weather_data, i, "RainAmount", "?")
                 # UV
                 if index == 6:
 
@@ -424,6 +440,7 @@ def getWeatherData(url_path):
             for i in range(0, len(wind_speeds9am)):
                 # set_key(i, "WindSpeed", "9am - " + wind_speeds9am[i] + ", 3pm - " + wind_speeds3pm[i])
                 set_key(weather_data, i, "WindSpeed", wind_speeds3pm[i])
+                set_key(weather_data, i, "OzW_WindSpeed", wind_speeds3pm[i])
                 # set_key(i, "WindDirection", "9am - " + wind_directions9am[i] + ", 3pm - " + windDirections3pm[i])
                 set_key(weather_data, i, "WindDirection", wind_directions3pm[i])
 

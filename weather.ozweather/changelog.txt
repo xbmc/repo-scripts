@@ -1,4 +1,8 @@
-V2.0.0
+v2.0.1
+- Deal better with observation stations that don't provide data
+- Set some custom skin labels to improve custom skin file behaviours
+
+v2.0.0
 - N.B. If you have run a version before 2.0, please re-configure the addon to set-up your BOM locations!
 - Rewrite to use BOM API directly, leave Weatherzone in as a fallback option if BOM not configured or available
 - Add mechanism to manually purge radar backgrounds via addon settings
