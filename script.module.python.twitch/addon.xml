@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.16+matrix.1" provider-name="anxdpanic, A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.17+matrix.1" provider-name="anxdpanic, A Talented Community">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.six" version="1.11.0"/>
@@ -9,18 +9,19 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] playback, change access token to use gql endpoints
-[chg] change followed, following, and unfollowing games to use gql endpoints
+[fix] playback of clips
         </news>
         <assets>
             <icon>icon.png</icon>
         </assets>
         <platform>all</platform>
-        <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
-        <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
         <license>GPL-3.0-only</license>
         <source>https://github.com/anxdpanic/script.module.python.twitch</source>
         <forum>https://twitchaddon.panicked.xyz/forum</forum>
         <reuselanguageinvoker>true</reuselanguageinvoker>
+        <summary lang="da_DK">Modul til interaktion med Twitch.tv API</summary>
+        <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
+        <description lang="da_DK">python-twitch til Kodi er et modul til interaktion med Twitch.tv API baseret på python-twitch af ingwinlu.</description>
+        <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
     </extension>
 </addon>
