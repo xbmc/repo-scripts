@@ -12,6 +12,8 @@
 
 import re
 
+from six.moves.urllib_parse import urlencode
+
 from . import keys
 from .log import log
 
@@ -58,7 +60,11 @@ def m3u8(f):
             else:
                 error = re.search(_error_pattern, results)
                 if error:
-                    return {'error': 'Error', 'message': error.group('message'), 'status': 404}
+                    return {
+                        'error': 'Error',
+                        'message': error.group('message'),
+                        'status': 404
+                    }
         return m3u8_to_list(results)
 
     return m3u8_wrapper
@@ -132,7 +138,18 @@ def m3u8_to_list(string):
 
 def clip_embed_to_list(response):
     log.debug('clip_embed_to_list called for:\n{0}'.format(response))
-    qualities = list()
+
+    clip_json = response.get('data', {}).get('clip', {})
+    access_token = clip_json.get('playbackAccessToken', {})
+    token = access_token.get('value', '')
+    signature = access_token.get('signature', '')
+    qualities = clip_json.get('videoQualities', [])
+
+    params = urlencode({
+        'sig': signature,
+        'token': token
+    })
+
     l = list()
 
     if isinstance(response, dict):
@@ -143,7 +160,7 @@ def clip_embed_to_list(response):
         l = [{
             'id': item['quality'],
             'name': item['quality'],
-            'url': item['sourceURL'],
+            'url': item['sourceURL'] + '?' + params,
             'bandwidth': -1
         } for item in qualities]
         if l:

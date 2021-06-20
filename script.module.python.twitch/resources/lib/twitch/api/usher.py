@@ -216,31 +216,18 @@ def video(video_id, platform=keys.WEB, headers={}):
 @clip_embed
 @query
 def clip(slug, headers={}):
-    data = json.dumps({
-        'query': '''{
-      clip(slug: "%s") {
-        broadcaster {
-          displayName
+    qry = {
+        "operationName": "VideoAccessToken_Clip",
+        "extensions": {
+            "persistedQuery": {
+                "version": 1,
+                "sha256Hash": "36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11"
+            }
+        },
+        "variables": {
+            "slug": slug
         }
-        createdAt
-        curator {
-          displayName
-          id
-        }
-        durationSeconds
-        id
-        tiny: thumbnailURL(width: 86, height: 45)
-        small: thumbnailURL(width: 260, height: 147)
-        medium: thumbnailURL(width: 480, height: 272)
-        title
-        videoQualities {
-          frameRate
-          quality
-          sourceURL
-        }
-        viewCount
-      }
-    }''' % slug,
-    })
-    q = ClipsQuery(headers=headers, data=data)
+    }
+
+    q = ClipsQuery(headers=headers, data=json.dumps(qry))
     return q

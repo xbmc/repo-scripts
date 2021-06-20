@@ -1,3 +1,6 @@
+2.0.17
+[fix] playback of clips
+
 2.0.16
 [fix] playback, change access token to use gql endpoints
 [chg] change followed, following, and unfollowing games to use gql endpoints
