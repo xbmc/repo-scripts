@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30100"
+msgid "Site Config for ZiMuKu"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Site URL"
+msgstr ""
+
+msgctxt "#30200"
+msgid "Sub Preference"
+msgstr ""
+
+msgctxt "#30210"
+msgid "Preferred Sub Type"
+msgstr ""
+
+msgctxt "#30211"
+msgid "No Preference"
+msgstr ""
+
+msgctxt "#30212"
+msgid "ASS - colorful with various fonts"
+msgstr ""
+
+msgctxt "#30213"
+msgid "SRT - text only"
+msgstr ""
+
+msgctxt "#30220"
+msgid "Preferred Sub Language"
+msgstr ""
+
+msgctxt "#30221"
+msgid "No Preference"
+msgstr ""
+
+msgctxt "#30222"
+msgid "Simplified Chinese"
+msgstr ""
+
+msgctxt "#30223"
+msgid "Traditional Chinese"
+msgstr ""
+
+msgctxt "#30224"
+msgid "Eng + Chs"
+msgstr ""
+
+msgctxt "#30225"
+msgid "Eng + Cht"
+msgstr ""
