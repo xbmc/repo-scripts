@@ -40,7 +40,10 @@ def clear_properties():
         set_property(WEATHER_WINDOW, 'Current.Condition')
         set_property(WEATHER_WINDOW, 'Current.ConditionLong')
         set_property(WEATHER_WINDOW, 'Current.Temperature')
+        set_property(WEATHER_WINDOW, 'Current.Ozw_Temperature')
         set_property(WEATHER_WINDOW, 'Current.Wind')
+        set_property(WEATHER_WINDOW, 'Current.WindSpeed')
+        set_property(WEATHER_WINDOW, 'Current.Ozw_WindSpeed')
         set_property(WEATHER_WINDOW, 'Current.WindDirection')
         set_property(WEATHER_WINDOW, 'Current.WindDegree')
         set_property(WEATHER_WINDOW, 'Current.WindGust')
@@ -49,7 +52,9 @@ def clear_properties():
         set_property(WEATHER_WINDOW, 'Current.FireDangerText')
         set_property(WEATHER_WINDOW, 'Current.Visibility')
         set_property(WEATHER_WINDOW, 'Current.Humidity')
+        set_property(WEATHER_WINDOW, 'Current.Ozw_Humidity')
         set_property(WEATHER_WINDOW, 'Current.FeelsLike')
+        set_property(WEATHER_WINDOW, 'Current.Ozw_FeelsLike')
         set_property(WEATHER_WINDOW, 'Current.DewPoint')
         set_property(WEATHER_WINDOW, 'Current.UVIndex')
         set_property(WEATHER_WINDOW, 'Current.OutlookIcon')
@@ -179,7 +184,7 @@ def forecast(geohash, url_path, radar_code):
 
     # At this point, we should have _something_ - if not, log the issue and we're done...
     if not weather_data:
-        log_info("Unable to get weather_data from BOM or from Weatherzone - internet connection issue or addon not configured?")
+        log("Unable to get weather_data from BOM OR from Weatherzone - internet connection issue or addon not configured?", level=xbmc.LOGINFO)
         return
 
     # We have weather_data - set all the properties on Kodi's weather window...
@@ -195,8 +200,9 @@ def forecast(geohash, url_path, radar_code):
 
     # And announce everything is fetched..
     set_property(WEATHER_WINDOW, "Weather.IsFetched", "true")
+    set_property(WEATHER_WINDOW, "Daily.IsFetched", "true")
+    set_property(WEATHER_WINDOW, "Today.IsFetched", "true")
     set_property(WEATHER_WINDOW, 'Forecast.Updated', time.strftime("%d/%m/%Y %H:%M"))
-    set_property(WEATHER_WINDOW, 'Today.IsFetched', "true")
 
 
 def get_weather():
