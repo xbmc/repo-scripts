@@ -67,7 +67,15 @@ class Zimuku_Agent:
             s.mount('http://', a)
             # self.logger.log(sys._getframe().f_code.co_name, 'requests GET [%s]' % (url))
 
+            # https://github.com/pizzamx/zimuku_for_kodi/pull/5/commits/5d4ed2fbd87dc08682884c874018ac0f9f35b25c
+            url1 = url + '&security_verify_data=313932302c31303830'
+            url2 = url + '?security_verify_data=313932302c31303830'
+            s.get(url, headers=request_headers)
+            s.get(url1, headers=request_headers)
             http_response = s.get(url, headers=request_headers)
+            if http_response.status_code != 200:
+                s.get(url2, headers=request_headers)
+                http_response = s.get(url2, headers=request_headers)
 
             headers = http_response.headers
             http_body = http_response.content
@@ -154,7 +162,8 @@ class Zimuku_Agent:
         elif 'English' in langs:
             lang_vals = ['English', 'en']
         else:
-            self.logger.log(sys._getframe().f_code.co_name, "Unrecognized lang: %s" % (langs))
+            self.logger.log(sys._getframe().f_code.co_name,
+                            "Unrecognized lang: %s" % (langs))
             lang_vals = ['Unknown', '']
 
         return {
@@ -187,7 +196,8 @@ class Zimuku_Agent:
         subtitle_list = []
 
         url = self.ZIMUKU_API % (urllib.parse.quote(title))
-        self.logger.log(sys._getframe().f_code.co_name, "Search API url: %s" % (url))
+        self.logger.log(sys._getframe().f_code.co_name,
+                        "Search API url: %s" % (url))
         try:
             # Search page.
             headers, data = self.get_page(url)
@@ -230,7 +240,8 @@ class Zimuku_Agent:
                 try:
                     headers, data = self.get_page(url)
                     soup = BeautifulSoup(data, 'html.parser')
-                    season_list.extend(soup.find_all("div", class_='item prel clearfix'))
+                    season_list.extend(soup.find_all(
+                        "div", class_='item prel clearfix'))
                 except:
                     self.logger.log(sys._getframe().f_code.co_name,
                                     'ERROR GETTING PAGE', level=3)
@@ -324,14 +335,16 @@ class Zimuku_Agent:
             tpe = self.plugin_settings['subtype']
             lang = self.plugin_settings['sublang']
             self.logger.log(sys._getframe().f_code.co_name,
-                            "按照偏好筛选字幕：%s，类型=%s，语言=%s" % (sub_name_list, tpe, lang),
+                            "按照偏好筛选字幕：%s，类型=%s，语言=%s" % (
+                                sub_name_list, tpe, lang),
                             level=1)
 
             if tpe == 'none ' and lang == 'none':
                 return sub_name_list, sub_file_list
             filtered_name_list = sub_name_list
             if tpe != 'none':
-                filtered_name_list = self.find_in_list(filtered_name_list, True, "." + tpe)
+                filtered_name_list = self.find_in_list(
+                    filtered_name_list, True, "." + tpe)
                 self.logger.log(sys._getframe().f_code.co_name, "筛完类型：%s" %
                                 filtered_name_list, level=1)
             if lang != 'none':
@@ -340,14 +353,18 @@ class Zimuku_Agent:
                     filtered_name_list = self.find_in_list(
                         filtered_name_list, True, '英', 'eng', '双语')
                     if lang == 'dualchs':
-                        filtered_name_list = self.find_in_list(filtered_name_list, True, '简', 'chs')
+                        filtered_name_list = self.find_in_list(
+                            filtered_name_list, True, '简', 'chs')
                     else:
-                        filtered_name_list = self.find_in_list(filtered_name_list, True, '繁', 'cht')
+                        filtered_name_list = self.find_in_list(
+                            filtered_name_list, True, '繁', 'cht')
                 else:
                     if lang == 'chs':
-                        filtered_name_list = self.find_in_list(filtered_name_list, True, '简', 'chs')
+                        filtered_name_list = self.find_in_list(
+                            filtered_name_list, True, '简', 'chs')
                     else:
-                        filtered_name_list = self.find_in_list(filtered_name_list, True, '繁', 'cht')
+                        filtered_name_list = self.find_in_list(
+                            filtered_name_list, True, '繁', 'cht')
                     filtered_name_list = self.find_in_list(
                         filtered_name_list, False, '英', 'eng', '双语')
                 self.logger.log(sys._getframe().f_code.co_name, "筛完语言：%s" %
@@ -380,7 +397,8 @@ class Zimuku_Agent:
 
             if not (url.startswith(('http://', 'https://'))):
                 url = urllib.parse.urljoin(self.ZIMUKU_BASE, url)
-            self.logger.log(sys._getframe().f_code.co_name, "GET SUB DETAIL PAGE: %s" % (url))
+            self.logger.log(sys._getframe().f_code.co_name,
+                            "GET SUB DETAIL PAGE: %s" % (url))
 
             # Subtitle download-list page.
             headers, data = self.get_page(url)
@@ -410,7 +428,8 @@ class Zimuku_Agent:
             # 返回的文件名不能做乱码修正，不然找不到……
             sub_file_list = [os.path.join(archive_path, x).replace('\\', '/')
                              for x in sub_name_list]
-            sub_name_list = [self.fix_garbled_filename(x) for x in sub_name_list]
+            sub_name_list = [self.fix_garbled_filename(
+                x) for x in sub_name_list]
 
             return sub_name_list, sub_file_list
         else:
@@ -443,7 +462,8 @@ class Zimuku_Agent:
         """
         # Store file in an ascii name since some chars may cause some problems.
         t = time.time()
-        ts = time.strftime("%Y%m%d%H%M%S", time.localtime(t)) + str(int((t - int(t)) * 1000))
+        ts = time.strftime("%Y%m%d%H%M%S", time.localtime(t)
+                           ) + str(int((t - int(t)) * 1000))
         tempfile = os.path.join(self.DOWNLOAD_LOCATION, "subtitles%s%s" % (
             ts, os.path.splitext(filename)[1])).replace('\\', '/')
         with open(tempfile, "wb") as sub_file:
@@ -477,7 +497,8 @@ class Zimuku_Agent:
             link_string += url + ' '
 
             try:
-                self.logger.log(sys._getframe().f_code.co_name, "DOWNLOAD SUBTITLE: %s" % (url))
+                self.logger.log(sys._getframe().f_code.co_name,
+                                "DOWNLOAD SUBTITLE: %s" % (url))
                 # Download subtitle one by one until success.
                 headers, data = self.get_page(url, Referer=referer)
 
@@ -492,12 +513,14 @@ class Zimuku_Agent:
             except Exception:
                 if filename is not None:
                     self.logger.log(sys._getframe().f_code.co_name,
-                                    "Failed to download subtitle data of %s." % (filename),
+                                    "Failed to download subtitle data of %s." % (
+                                        filename),
                                     level=2)
                     filename = None
                 else:
                     self.logger.log(sys._getframe().f_code.co_name,
-                                    "Failed to download subtitle from %s" % (url),
+                                    "Failed to download subtitle from %s" % (
+                                        url),
                                     level=2)
 
         if filename is not None:

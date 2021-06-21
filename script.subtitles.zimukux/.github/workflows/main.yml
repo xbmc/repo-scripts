@@ -1,6 +1,11 @@
-name: Zip&Rlz
+name: Zip and Release
 
-on: push
+on: 
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
       
 jobs:
   build:

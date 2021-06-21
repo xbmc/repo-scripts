@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Subtitle add-on for Kodi 19+ derived from https://github.com/taxigps/xbmc-addons-chinese/tree/master/service.subtitles.zimuku
 Copyright (C) <2021>  <root@wokanxing.info>
@@ -21,6 +22,7 @@ import os
 import sys
 import time
 import urllib
+import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
@@ -36,10 +38,10 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path'))
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp'))
+__cwd__ = xbmcvfs.translatePath(__addon__.getAddonInfo('path'))
+__profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
+__resource__ = xbmcvfs.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
+__temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp'))
 
 sys.path.append(__resource__)
 
@@ -66,7 +68,7 @@ def Search(item):
 
     subtitle_list = agent.search(search_str, item)
 
-    if subtitle_list:
+    if len(subtitle_list) != 0:
         for s in subtitle_list:
             listitem = xbmcgui.ListItem(label=s["language_name"], label2=s["filename"])
             listitem.setArt({
@@ -81,7 +83,7 @@ def Search(item):
                 handle=int(sys.argv[1]),
                 url=url, listitem=listitem, isFolder=False)
     else:
-        logger.log(sys._getframe().f_code.co_name, "字幕未找到，参数：" % item, level=xbmc.LOGINFO)
+        logger.log(sys._getframe().f_code.co_name, "字幕未找到，参数：%s" % item, level=xbmc.LOGINFO)
 
 
 def Download(url):
@@ -103,7 +105,7 @@ def Download(url):
     if len(sub_name_list) == 1:
         selected_sub = sub_file_list[0]
     else:
-        sel = xbmcgui.Dialog().select(__language__(30901), sub_name_list)
+        sel = xbmcgui.Dialog().select('请选择压缩包中的字幕', sub_name_list)
         if sel == -1:
             sel = 0
         selected_sub = sub_file_list[sel]
@@ -113,7 +115,22 @@ def Download(url):
 
 
 def get_params():
-    return dict(urllib.parse.parse_qsl(sys.argv[2][1:]))
+    param = []
+    paramstring = sys.argv[2]
+    if len(paramstring) >= 2:
+        params = paramstring
+        cleanedparams = params.replace('?', '')
+        if (params[len(params) - 1] == '/'):
+            params = params[0:len(params) - 2]
+        pairsofparams = cleanedparams.split('&')
+        param = {}
+        for i in range(len(pairsofparams)):
+            splitparams = {}
+            splitparams = pairsofparams[i].split('=')
+            if (len(splitparams)) == 2:
+                param[splitparams[0]] = splitparams[1]
+
+    return param
 
 
 def handle_params(params):
@@ -147,18 +164,19 @@ def handle_params(params):
                 item['year'] = year
 
         # Check if season is "Special"
-        if 's' in item['episode'].lower():
+        if item['episode'].lower().find("s") > -1:
+            #
             item['season'] = "0"
             item['episode'] = item['episode'][-1:]
 
-        if 'http' in item['file_original_path']:
+        if (item['file_original_path'].find("http") > -1):
             item['temp'] = True
 
-        elif 'rar://' in item['file_original_path']:
+        elif (item['file_original_path'].find("rar://") > -1):
             item['rar'] = True
             item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
 
-        elif 'stack://' in item['file_original_path']:
+        elif (item['file_original_path'].find("stack://") > -1):
             stackPath = item['file_original_path'].split(" , ")
             item['file_original_path'] = stackPath[0][8:]
 

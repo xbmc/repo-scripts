@@ -9,7 +9,7 @@
 					<control type="edit" format="string">
 						<heading>30101</heading>
 					</control>
-                	<default>http://zmk.pw</default>
+                	<default>http://zimuku.org</default>
                 	<constraints>
                 		<allowempty>false</allowempty>
                 	</constraints>
