@@ -19,8 +19,8 @@ from ...queries import query
 # required scope: none
 @query
 def by_id(channel_id, stream_type=StreamType.LIVE):
-    q = Qry('streams/{channel_id}', use_token=False)
-    q.add_urlkw(keys.CHANNEL_ID, channel_id)
+    q = Qry('streams', use_token=False)
+    q.add_param(keys.CHANNEL, channel_id)
     q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
     return q
 

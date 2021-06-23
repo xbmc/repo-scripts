@@ -1,3 +1,6 @@
+2.0.18
+[fix] fix v5.streams.by_id request - apo86
+
 2.0.17
 [fix] playback of clips
 
