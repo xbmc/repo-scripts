@@ -160,14 +160,18 @@ def latest_widevine_version(eula=False):
         versions = http_get(url)
         return versions.split()[-1]
 
-    from .arm import chromeos_config, select_best_chromeos_image
-    devices = chromeos_config()
-    arm_device = select_best_chromeos_image(devices)
+    from .arm import chromeos_config, hardcoded_chromeos_image, select_best_chromeos_image, supports_widevine_arm64tls
+    # Return hardcoded Chrome OS version for systems not supporting newer Widevine CDM's
+    if not supports_widevine_arm64tls():
+        arm_device = hardcoded_chromeos_image()
+    else:
+        devices = chromeos_config()
+        arm_device = select_best_chromeos_image(devices)
     if arm_device is None:
         log(4, 'We could not find an ARM device in the Chrome OS recovery.json')
         ok_dialog(localize(30004), localize(30005))
         return ''
-    return arm_device['version']
+    return arm_device.get('version')
 
 
 def latest_available_widevine_from_repo():

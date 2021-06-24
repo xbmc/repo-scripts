@@ -131,23 +131,33 @@ def hardcoded_chromeos_image():
     return None
 
 
-def install_widevine_arm(backup_path):
-    """Installs Widevine CDM on ARM-based architectures."""
-    # With the release of Widevine CDM 4.10.2252.0, Google uses a newer dynamic library that needs TCMalloc support and a patched glibc to work
-    # Google will remove support for older Widevine CDM's on May 31, 2021
+def supports_widevine_arm64tls():
+    """Whether the system supports newer Widevine CDM's that use TLS with 64-byte alignment"""
+    # With the release of Widevine CDM 4.10.2252.0, Google uses a newer dynamic library that uses TLS with 64-byte alignment and needs a patched glibc to work
+    # Google will remove support for older ARM Widevine CDM's at some point
     # More info at https://github.com/xbmc/inputstream.adaptive/issues/678 and https://www.widevine.com/news
 
-    # Experimental: Check if TCMalloc library is preloaded or linked
+    # LibreELEC 9.2.7: Check if TCMalloc library is preloaded or linked
     libtcmalloc = 'libtcmalloc'
     process_maps = open('/proc/self/maps', 'r').read()
     is_tcmalloc_preloaded = bool(libtcmalloc in process_maps)
 
+    # Experimental: detect TLS 64-byte alignment support, searching for 'arm64tls' string in ldd version
+    cmd = ['ldd', '--version']
+    ldd_version = run_cmd(cmd).get('output').split('\n')[0].split(' ')[-1]
+    has_tls64bytes_support = bool('arm64tls' in ldd_version)
+
+    return is_tcmalloc_preloaded or has_tls64bytes_support
+
+
+def install_widevine_arm(backup_path):
+    """Installs Widevine CDM on ARM-based architectures."""
     arm_device = None
-    if not is_tcmalloc_preloaded:
+    if not supports_widevine_arm64tls():
         # Propose user to install older version
-        if yesno_dialog(localize(30066), localize(30067, os=kodi_os())):  # Your operating system probably doesn't support the newest Widevine CDM. Try older one?
+        if yesno_dialog(localize(30066), localize(30067, os=kodi_os())):  # Your os probably doesn't support the newest Widevine CDM. Try older one?
             # Install hardcoded ChromeOS image
-            ok_dialog(localize(30066), localize(30068))  # Please note that Google will remove support for older Widevine CDM's on May 31, 2021
+            ok_dialog(localize(30066), localize(30068))  # Please note that Google will remove support for older Widevine CDM's at some point
             arm_device = hardcoded_chromeos_image()
             devices = arm_device
 

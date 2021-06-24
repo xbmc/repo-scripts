@@ -263,6 +263,11 @@ class Helper:
         """Prompts user to upgrade Widevine CDM when a newer version is available."""
         from time import localtime, strftime, time
 
+        update_declined_at = get_setting_float('update_declined_at', 0.0)
+        if update_declined_at + 3600 * 24 * 2 >= time():
+            log(2, 'User had declined an update on {date}', date=strftime('%Y-%m-%d %H:%M', localtime(update_declined_at)))
+            return
+
         last_check = get_setting_float('last_check', 0.0)
         if last_check and not self._first_run():
             if last_check + 3600 * 24 * get_setting_int('update_frequency', 14) >= time():
@@ -294,6 +299,7 @@ class Helper:
             if yesno_dialog(localize(30040), localize(30033), nolabel=localize(30028), yeslabel=localize(30034)):
                 self.install_widevine()
             else:
+                set_setting('update_declined_at', time())
                 log(3, 'User declined to update {component}.', component=component)
         else:
             set_setting('last_check', time())
