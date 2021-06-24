@@ -278,7 +278,7 @@ msgid "{os} probably doesn't support the newest Widevine CDM. Would you try to i
 msgstr ""
 
 msgctxt "#30068"
-msgid "You're going to install an older Widevine CDM. Please note that Google will remove support for older Widevine CDM's on May 31, 2021."
+msgid "You're going to install an older Widevine CDM. Please note that Google will remove support for older Widevine CDM's at some point."
 msgstr ""
 
 

@@ -3,6 +3,7 @@
     <category label="30900"> <!-- Expert -->
         <setting id="last_modified" default="0.0" visible="false"/>
         <setting id="last_check" default="0.0" visible="false"/>
+        <setting id="update_declined_at" default="0.0" visible="false"/>
         <setting id="version" default="" visible="false"/>
         <setting label="30901" help="30902" type="action" action="RunScript(script.module.inputstreamhelper, info)"/>
         <setting type="sep"/>
