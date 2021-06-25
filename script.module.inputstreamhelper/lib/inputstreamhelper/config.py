@@ -69,6 +69,7 @@ WIDEVINE_MINIMUM_KODI_VERSION = {
 
 HARDCODED_CHROMEOS_IMAGE = {
     'hwid': 'FIEVEL',
+    'hwidmatch': '^FIEVEL .*',
     'url': 'https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_13505.73.0_veyron-fievel_recovery_stable-channel_fievel-mp.bin.zip',
     'sha1': '9904e3141a2537f28469c7653c62200c1b03b057',
     'version': '13505.73.0',
