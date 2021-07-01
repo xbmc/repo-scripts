@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 """
 Archive module for service.subtitle.zimuku.
 

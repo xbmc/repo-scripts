@@ -9,12 +9,12 @@
     </requires>
     <extension point="xbmc.subtitle.module" library="resources/lib/addon_entry.py" />
     <extension point="xbmc.addon.metadata">
-        <summary lang="en">zimuku subtitle</summary>
-        <summary lang="zh">字幕库</summary>
-        <description lang="en">Search and download subtitles from ZiMuKu</description>
-        <description lang="zh">从「字幕库」下载字幕（网址经常变）。感谢 taxigps 大神的原创，这是一个衍生品</description>
+        <summary lang="en_GB">zimuku subtitle</summary>
+        <summary lang="zh_CN">字幕库</summary>
+        <description lang="en_GB">Search and download subtitles from ZiMuKu</description>
+        <description lang="zh_CN">从「字幕库」下载字幕（网址经常变）。感谢 taxigps 大神的原创，这是一个衍生品</description>
         <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <license>GPL-2.0-or-later</license>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.png</fanart>

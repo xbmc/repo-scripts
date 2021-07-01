@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Subtitle add-on for Kodi 19+ derived from https://github.com/taxigps/xbmc-addons-chinese/tree/master/service.subtitles.zimuku
 Copyright (C) <2021>  <root@wokanxing.info>
@@ -22,7 +21,6 @@ import os
 import sys
 import time
 import urllib
-import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
@@ -68,7 +66,7 @@ def Search(item):
 
     subtitle_list = agent.search(search_str, item)
 
-    if len(subtitle_list) != 0:
+    if subtitle_list:
         for s in subtitle_list:
             listitem = xbmcgui.ListItem(label=s["language_name"], label2=s["filename"])
             listitem.setArt({
@@ -115,22 +113,7 @@ def Download(url):
 
 
 def get_params():
-    param = []
-    paramstring = sys.argv[2]
-    if len(paramstring) >= 2:
-        params = paramstring
-        cleanedparams = params.replace('?', '')
-        if (params[len(params) - 1] == '/'):
-            params = params[0:len(params) - 2]
-        pairsofparams = cleanedparams.split('&')
-        param = {}
-        for i in range(len(pairsofparams)):
-            splitparams = {}
-            splitparams = pairsofparams[i].split('=')
-            if (len(splitparams)) == 2:
-                param[splitparams[0]] = splitparams[1]
-
-    return param
+    return dict(urllib.parse.parse_qsl(sys.argv[2][1:]))
 
 
 def handle_params(params):
@@ -164,19 +147,18 @@ def handle_params(params):
                 item['year'] = year
 
         # Check if season is "Special"
-        if item['episode'].lower().find("s") > -1:
-            #
+        if 's' in item['episode'].lower():
             item['season'] = "0"
             item['episode'] = item['episode'][-1:]
 
-        if (item['file_original_path'].find("http") > -1):
+        if 'http' in item['file_original_path']:
             item['temp'] = True
 
-        elif (item['file_original_path'].find("rar://") > -1):
+        elif 'rar://' in item['file_original_path']:
             item['rar'] = True
             item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
 
-        elif (item['file_original_path'].find("stack://") > -1):
+        elif 'stack://' in item['file_original_path']:
             stackPath = item['file_original_path'].split(" , ")
             item['file_original_path'] = stackPath[0][8:]
 

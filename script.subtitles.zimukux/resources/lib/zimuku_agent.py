@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Subtitle add-on for Kodi 19+ derived from https://github.com/taxigps/xbmc-addons-chinese/tree/master/service.subtitles.zimuku
 Copyright (C) <2021>  <root@wokanxing.info>

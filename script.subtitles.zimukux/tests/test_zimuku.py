@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 import tempfile
@@ -144,14 +142,14 @@ class TestZimukuAgent(unittest.TestCase):
     def test_sub_rating(self):
         agent = self.get_agent({'subtype': 'none', 'sublang': 'none'})
         items = {
-            'temp': False, 'rar': False, 'mansearch': False, 'year': '', 'season': '6',
-            'episode': '5', 'tvshow': '9号秘事', 'title': '',
+            'temp': False, 'rar': False, 'mansearch': False, 'year': '', 'season': '2',
+            'episode': '4', 'tvshow': '9号秘事', 'title': '',
             'file_original_path':
             'tv.mkv', '3let_language': ['eng']}
         result = agent.search('9号秘事', items)
         self.assertEqual(len(result), 1)
         sub = result[0]
-        self.assertEqual(sub['rating'], '2')
+        self.assertEqual(sub['rating'], '4')
 
 
 if __name__ == '__main__':
