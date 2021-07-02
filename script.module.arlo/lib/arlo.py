@@ -18,13 +18,23 @@ limitations under the License.
 # 17 Jul 2017, Andreas Jakl: Port to Python 3 (https://www.andreasjakl.com/using-netgear-arlo-security-cameras-for-periodic-recording/)
 
 # Import helper classes that are part of this library.
-from request import Request
-from eventstream import EventStream
 
+import sys
+
+try:
+    from request import Request
+    from eventstream import EventStream
+    import Queue as queue
+except ImportError:
+    from request import Request
+    from eventstream import EventStream
+    import queue as queue
+   
 # Import all of the other stuff.
 from six import string_types, text_type
 from datetime import datetime
 
+import base64
 import calendar
 import json
 #import logging
@@ -34,12 +44,6 @@ import random
 import requests
 import signal
 import time
-import sys
-
-if sys.version[0] == '2':
-    import Queue as queue
-else:
-    import queue as queue
 
 #logging.basicConfig(level=logging.DEBUG,format='[%(levelname)s] (%(threadName)-10s) %(message)s',)
 
@@ -53,7 +57,7 @@ class Arlo(object):
         except:
             pass
 
-        self.event_streams = {}
+        self.event_stream = None
         self.request = None
 
         self.Login(username, password)
@@ -123,20 +127,28 @@ class Arlo(object):
         }
         """
         self.username = username
-        self.password = password
+        self.password = base64.b64encode(password.encode()).decode()
 
         self.request = Request()
+
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_1_2 like Mac OS X) AppleWebKit/604.3.5 (KHTML, like Gecko) Mobile/15B202 NETGEAR/v1 (iOS Vuezone)',
+        }
+        self.request.options('https://ocapi-app.arlo.com/api/auth', headers=headers)
         
         headers = {
             'DNT': '1',
             'schemaVersion': '1',
-            'Host': 'my.arlo.com',
-            'Content-Type': 'application/json; charset=utf-8;',
-            'Referer': 'https://my.arlo.com/',
+            'Auth-Version': '2',
+            'Content-Type': 'application/json; charset=UTF-8',
             'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_1_2 like Mac OS X) AppleWebKit/604.3.5 (KHTML, like Gecko) Mobile/15B202 NETGEAR/v1 (iOS Vuezone)',
+            'Origin': 'https://my.arlo.com',
+            'Referer': 'https://my.arlo.com/',
+            'Source': 'arloCamWeb',
         }
 
-        body = self.request.post('https://my.arlo.com/hmsweb/login/v2', {'email': self.username, 'password': self.password}, headers=headers)
+        #body = self.request.post('https://my.arlo.com/hmsweb/login/v2', {'email': self.username, 'password': self.password}, headers=headers)
+        body = self.request.post('https://ocapi-app.arlo.com/api/auth', {'email': self.username, 'password': self.password, 'EnvSource': 'prod', 'language': 'en'}, headers=headers)
 
         headers['Authorization'] = body['token']
       
@@ -146,9 +158,7 @@ class Arlo(object):
         return body
 
     def Logout(self):
-        event_streams = self.event_streams.copy()
-        for basestation_id in event_streams.keys():
-            self.Unsubscribe(basestation_id)
+        self.Unsubscribe()
         return self.request.put('https://my.arlo.com/hmsweb/logout')
 
     def Subscribe(self, basestation):
@@ -170,13 +180,13 @@ class Arlo(object):
         basestation_id = basestation.get('deviceId')
 
         def Register(self):
-            if basestation_id in self.event_streams and self.event_streams[basestation_id].connected:
+            if self.event_stream and self.event_stream.connected and not self.event_stream.registered:
                 self.Notify(basestation, {"action":"set","resource":"subscriptions/"+self.user_id+"_web","publishResponse":False,"properties":{"devices":[basestation_id]}})
-                event = self.event_streams[basestation_id].Get()
-                if event is None or self.event_streams[basestation_id].event_stream_stop_event.is_set():
+                event = self.event_stream.Get()
+                if event is None or self.event_stream.event_stream_stop_event.is_set():
                     return None
                 elif event:
-                    self.event_streams[basestation_id].Register()
+                    self.event_stream.Register()
                 return event
 
         def QueueEvents(self, event_stream, stop_event):
@@ -185,15 +195,14 @@ class Arlo(object):
                     return None
 
                 response = json.loads(event.data)
-                if basestation_id in self.event_streams:
-                    if self.event_streams[basestation_id].connected:
-                        if response.get('action') == 'logout':
-                            self.event_streams[basestation_id].Disconnect()
-                            return None
-                        else:
-                            self.event_streams[basestation_id].queue.put(response)
-                    elif response.get('status') == 'connected':
-                        self.event_streams[basestation_id].Connect()
+                if self.event_stream and self.event_stream.connected:
+                    if response.get('action') == 'logout':
+                        self.event_stream.Disconnect()
+                        return None
+                    else:
+                        self.event_stream.queue.put(response)
+                elif response.get('status') == 'connected':
+                    self.event_stream.Connect()
 
         def Heartbeat(self, stop_event):
             while not stop_event.wait(30.0):
@@ -202,27 +211,22 @@ class Arlo(object):
                 except:
                     pass
 
-        if basestation_id not in self.event_streams or not self.event_streams[basestation_id].connected:
-            self.event_streams[basestation_id] = EventStream(QueueEvents, Heartbeat, args=(self, ))
-            self.event_streams[basestation_id].Start()
-            while not self.event_streams[basestation_id].connected and not self.event_streams[basestation_id].event_stream_stop_event.is_set():
+        if not self.event_stream or not self.event_stream.connected:
+            self.event_stream = EventStream(QueueEvents, Heartbeat, args=(self, ))
+            self.event_stream.Start()
+            while not self.event_stream.connected and not self.event_stream.event_stream_stop_event.is_set():
                 time.sleep(0.5)
 
-        if not self.event_streams[basestation_id].registered:
+        if not self.event_stream.registered:
             Register(self)
 
-    def Unsubscribe(self, basestation):
+    def Unsubscribe(self):
         """ This method stops the EventStream subscription and removes it from the event_stream collection. """
-        if isinstance(basestation, (text_type, string_types)):
-            basestation_id = basestation
-        else:
-            basestation_id = basestation.get('deviceId')
-        if basestation_id in self.event_streams:
-            if self.event_streams[basestation_id].connected:
-                self.request.get('https://my.arlo.com/hmsweb/client/unsubscribe')
-                self.event_streams[basestation_id].Disconnect()
+        if self.event_stream and self.event_stream.connected:
+            self.request.get('https://my.arlo.com/hmsweb/client/unsubscribe')
+            self.event_stream.Disconnect()
 
-            del self.event_streams[basestation_id]
+        self.event_stream = None
 
     def Notify(self, basestation, body):
         """
@@ -278,21 +282,21 @@ class Arlo(object):
 
         self.Subscribe(basestation)
 
-        if basestation_id in self.event_streams and self.event_streams[basestation_id].connected and self.event_streams[basestation_id].registered:
+        if self.event_stream and self.event_stream.connected and self.event_stream.registered:
             transId = self.Notify(basestation, body)
 
-            event = self.event_streams[basestation_id].Get(timeout=timeout)
-            if event is None or self.event_streams[basestation_id].event_stream_stop_event.is_set():
+            event = self.event_stream.Get(timeout=timeout)
+            if event is None or self.event_stream.event_stream_stop_event.is_set():
                 return None
 
-            while basestation_id in self.event_streams and self.event_streams[basestation_id].connected and self.event_streams[basestation_id].registered:
+            while self.event_stream.connected and self.event_stream.registered:
                 tid = event.get('transId', '')
                 if tid != transId:
                     if tid.startswith(self.TRANSID_PREFIX):
-                        self.event_streams[basestation_id].queue.put(event)
+                        self.event_stream.queue.put(event)
 
-                    event = self.event_streams[basestation_id].Get(timeout=timeout)
-                    if event is None or self.event_streams[basestation_id].event_stream_stop_event.is_set():
+                    event = self.event_stream.Get(timeout=timeout)
+                    if event is None or self.event_stream.event_stream_stop_event.is_set():
                         return None
                 else: break
 
@@ -329,17 +333,17 @@ class Arlo(object):
         basestation_id = basestation.get('deviceId')
 
         self.Subscribe(basestation)
-        if basestation_id in self.event_streams and self.event_streams[basestation_id].connected and self.event_streams[basestation_id].registered:
-            while basestation_id in self.event_streams and self.event_streams[basestation_id].connected:
-                event = self.event_streams[basestation_id].Get(timeout=timeout)
-                if event is None or self.event_streams[basestation_id].event_stream_stop_event.is_set():
+        if self.event_stream and self.event_stream.connected and self.event_stream.registered:
+            while self.event_stream.connected:
+                event = self.event_stream.Get(timeout=timeout)
+                if event is None or self.event_stream.event_stream_stop_event.is_set():
                     return None
 
                 # If this event has is of resource type "subscriptions", then it's a ping reply event.
                 # For now, these types of events will be requeued, since they are generated in response to and expected as a reply by the Ping() method.
                 # HACK: Take a quick nap here to give the Ping() method's thread a chance to get the queued event.
                 if event.get('resource', '').startswith('subscriptions'):
-                    self.event_streams[basestation_id].queue.put(event)
+                    self.event_stream.queue.put(event)
                     time.sleep(0.05)
                 else:
                     response = callback(self, event)
@@ -595,7 +599,9 @@ class Arlo(object):
         return self.NotifyAndGetResponse(basestation, {"action":"get","resource":"audioPlayback","publishResponse":False})
 
     def PlayTrack(self, basestation, track_id="2391d620-e491-4412-99f6-e9a40d6046ed", position=0):
-        """ Defaulting to 'hugh little baby', which is a supplied track. I hope the ID is the same for all. """
+        """
+        Defaulting to 'hugh little baby', which is a supplied track. I hope the ID is the same for all
+        """
         return self.Notify(basestation, {"action":"playTrack","resource":"audioPlayback/player","properties":{"trackId":track_id,"position":position}})
 
     def PauseTrack(self, basestation):
@@ -769,7 +775,74 @@ class Arlo(object):
         return self.request.get('https://my.arlo.com/hmsweb/users/ocprofile')
 
     def GetProfile(self):
+        """
+        This call returns the following:
+        {
+          "data": {
+              "_type": "User",
+              "firstName": "Joe",
+              "lastName": "Bloggs",
+              "language": "en",
+              "country": "GB",
+              "acceptedPolicy": 1,
+              "currentPolicy": 1,
+              "validEmail": true
+          },
+          "success": true
+        }
+        """
         return self.request.get('https://my.arlo.com/hmsweb/users/profile')
+
+    def GetAccount(self):
+        """
+        This call returns the following:
+        {
+          "data": {
+            "userId": "XXX-XXXXXXX",
+            "email": "joe.bloggs@gmail.com",
+            "dateCreated": 1585157000819,
+            "dateDeviceRegistered": 1585161139527,
+            "countryCode": "GB",
+            "language": "en-gb",
+            "firstName": "Joe",
+            "lastName": "Bloggs",
+            "s3StorageId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "tosVersion": "5",
+            "tosAgreeDate": 1593126066795,
+            "tosShownVersion": "5",
+            "lastModified": 1585161137898,
+            "accountStatus": "registered",
+            "paymentId": "xxxxxxxx",
+            "serialNumber": "xxxxxxxxxxxxx",
+            "mobilePushData": {
+                "mobilePushOsMap": {
+                    "android": [
+                        {
+                            "token": "xxxxxxxxxxxxxxxxxxx",
+                            "endpoint": "arn:aws:sns:eu-west-1:xxxxxxxxxxxx:endpoint/GCM/Arlo_Android_Prod/xxxxxxxxxxxxxxxxxxxxxx",
+                            "createdDate": "20201310_0622",
+                            "iosDebugModeFlag": false
+                        },
+                        {
+                            "token": "xxxxxxxxxxxxxxxxxxxx",
+                            "endpoint": "arn:aws:sns:eu-west-1:xxxxxxxxxxxx:endpoint/GCM/Arlo_Android_Prod/xxxxxxxxxxxxxxxxxxxxxxx",
+                            "createdDate": "20210801_0335",
+                            "iosDebugModeFlag": false
+                        }
+                    ]
+                }
+            },
+            "recycleBinQuota": 0,
+            "favoriteQuota": 0,
+            "validEmail": true,
+            "locationCreated": false,
+            "readyToClose": false,
+            "lastMessageTimeToBS": 1608375685602
+          },
+          "success": true
+        }
+        """
+        return self.request.get('https://my.arlo.com/hmsweb/users/account')
 
     def GetSession(self):
         """
