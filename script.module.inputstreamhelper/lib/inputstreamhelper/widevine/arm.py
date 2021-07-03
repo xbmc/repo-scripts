@@ -139,13 +139,22 @@ def supports_widevine_arm64tls():
 
     # LibreELEC 9.2.7: Check if TCMalloc library is preloaded or linked
     libtcmalloc = 'libtcmalloc'
-    process_maps = open('/proc/self/maps', 'r').read()
+    with open('/proc/self/maps', 'r') as maps:
+        process_maps = maps.read()
     is_tcmalloc_preloaded = bool(libtcmalloc in process_maps)
 
     # Experimental: detect TLS 64-byte alignment support, searching for 'arm64tls' string in ldd version
     cmd = ['ldd', '--version']
     ldd_version = run_cmd(cmd).get('output').split('\n')[0].split(' ')[-1]
     has_tls64bytes_support = bool('arm64tls' in ldd_version)
+
+    # Experimental: detect TLS 64-byte alignment support, checking environment variable
+    if not has_tls64bytes_support:
+        try:
+            libc_patchlevel = int(os.environ['LIBC_WIDEVINE_PATCHLEVEL'])
+            has_tls64bytes_support = libc_patchlevel >= 1
+        except KeyError:
+            has_tls64bytes_support = False
 
     return is_tcmalloc_preloaded or has_tls64bytes_support
 
