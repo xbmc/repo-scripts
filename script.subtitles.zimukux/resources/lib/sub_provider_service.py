@@ -103,7 +103,7 @@ def Download(url):
     if len(sub_name_list) == 1:
         selected_sub = sub_file_list[0]
     else:
-        sel = xbmcgui.Dialog().select('请选择压缩包中的字幕', sub_name_list)
+        sel = xbmcgui.Dialog().select(__language__(30901), sub_name_list)
         if sel == -1:
             sel = 0
         selected_sub = sub_file_list[sel]

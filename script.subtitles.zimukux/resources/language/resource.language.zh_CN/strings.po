@@ -53,5 +53,6 @@ msgctxt "#30225"
 msgid "Eng + Cht"
 msgstr "双语（繁）"
 
-
-
+msgctxt "#30901"
+msgid "Choose subtitle"
+msgstr "请选择压缩包中的字幕"

@@ -52,3 +52,7 @@ msgstr ""
 msgctxt "#30225"
 msgid "Eng + Cht"
 msgstr ""
+
+msgctxt "#30901"
+msgid "Choose subtitle"
+msgstr ""
