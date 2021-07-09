@@ -5,17 +5,17 @@
 			<group id="1" label="32111">
 				<setting id="Location1LatLong" type="string" label="32332" help="" parent="">
 					<level>0</level>
-					<default />
+					<default>40.7649,-73.9759</default>
 					<constraints>
-						<allowempty>true</allowempty>
+						<allowempty>false</allowempty>
 					</constraints>
-					<control type="edit" format="string">
-						<heading>32332</heading>
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,EnterLocation,1)</data>
 					</control>
 				</setting>
-				<setting id="Location1Fetch" type="action" label="32337" help="" parent="">
+				<setting id="Location1StationName" type="string" label="32336" help="" parent="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Location1)</data>
+					<default />
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
@@ -27,8 +27,11 @@
 							<condition operator="!is" setting="Location1LatLong" />
 						</dependency>
 					</dependencies>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,FetchLocation,1)</data>
+					</control>
 				</setting>
+				
 				<setting id="Location1" type="string" label="32339" help="" parent="">
 					<level>0</level>
 					<default />
@@ -48,7 +51,7 @@
 					</control>
 				</setting>
 				<setting id="Location1Station" type="string" label="32338" help="" parent="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -56,6 +59,7 @@
 					<dependencies>
 						<dependency type="enable">
 							<condition on="property" name="InfoBool">false</condition>
+							<condition operator="!is" setting="Location1LatLong" />
 						</dependency>
 						<dependency type="visible">
 							<condition operator="!is" setting="Location1LatLong" />
@@ -65,26 +69,8 @@
 						<heading>32338</heading>
 					</control>
 				</setting>
-				<setting id="Location1StationName" type="string" label="32336" help="" parent="">
-					<level>0</level>
-					<default />
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition operator="!is" setting="Location1LatLong" />
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>32336</heading>
-					</control>
-				</setting>
 				<setting id="Location1radarStation" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -99,7 +85,7 @@
 					</control>
 				</setting>
 				<setting id="Location1cwa" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -114,7 +100,7 @@
 					</control>
 				</setting>
 				<setting id="Location1gridX" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -129,7 +115,7 @@
 					</control>
 				</setting>
 				<setting id="Location1gridY" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -144,7 +130,7 @@
 					</control>
 				</setting>
 				<setting id="Location1Zone" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -159,7 +145,7 @@
 					</control>
 				</setting>
 				<setting id="Location1County" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -174,7 +160,7 @@
 					</control>
 				</setting>
 				<setting id="Location1forecastGrid_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -189,7 +175,7 @@
 					</control>
 				</setting>
 				<setting id="Location1forecastHourly_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -204,7 +190,7 @@
 					</control>
 				</setting>
 				<setting id="Location1forecast_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -222,17 +208,17 @@
 			<group id="2" label="32112">
 				<setting id="Location2LatLong" type="string" label="32332" help="" parent="">
 					<level>0</level>
-					<default />
+					<default>37.7669,-122.4426</default>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="edit" format="string">
-						<heading>32332</heading>
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,EnterLocation,2)</data>
 					</control>
 				</setting>
-				<setting id="Location2Fetch" type="action" label="32337" help="" parent="">
+				<setting id="Location2StationName" type="string" label="32336" help="" parent="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Location2)</data>
+					<default />
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
@@ -244,7 +230,9 @@
 							<condition operator="!is" setting="Location2LatLong" />
 						</dependency>
 					</dependencies>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,FetchLocation,2)</data>
+					</control>
 				</setting>
 				<setting id="Location2" type="string" label="32339" help="" parent="">
 					<level>0</level>
@@ -265,7 +253,7 @@
 					</control>
 				</setting>
 				<setting id="Location2Station" type="string" label="32338" help="" parent="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -282,26 +270,8 @@
 						<heading>32338</heading>
 					</control>
 				</setting>
-				<setting id="Location2StationName" type="string" label="32336" help="" parent="">
-					<level>0</level>
-					<default />
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition operator="!is" setting="Location2LatLong" />
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>32336</heading>
-					</control>
-				</setting>
 				<setting id="Location2radarStation" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -316,7 +286,7 @@
 					</control>
 				</setting>
 				<setting id="Location2cwa" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -331,7 +301,7 @@
 					</control>
 				</setting>
 				<setting id="Location2gridX" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -346,7 +316,7 @@
 					</control>
 				</setting>
 				<setting id="Location2gridY" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -361,7 +331,7 @@
 					</control>
 				</setting>
 				<setting id="Location2Zone" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -376,7 +346,7 @@
 					</control>
 				</setting>
 				<setting id="Location2County" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -391,7 +361,7 @@
 					</control>
 				</setting>
 				<setting id="Location2forecastGrid_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -406,7 +376,7 @@
 					</control>
 				</setting>
 				<setting id="Location2forecastHourly_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -421,7 +391,7 @@
 					</control>
 				</setting>
 				<setting id="Location2forecast_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -443,13 +413,13 @@
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="edit" format="string">
-						<heading>32332</heading>
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,EnterLocation,3)</data>
 					</control>
 				</setting>
-				<setting id="Location3Fetch" type="action" label="32337" help="" parent="">
+				<setting id="Location3StationName" type="string" label="32336" help="" parent="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Location3)</data>
+					<default />
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
@@ -461,7 +431,9 @@
 							<condition operator="!is" setting="Location3LatLong" />
 						</dependency>
 					</dependencies>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,FetchLocation,3)</data>
+					</control>
 				</setting>
 				<setting id="Location3" type="string" label="32339" help="" parent="">
 					<level>0</level>
@@ -482,7 +454,7 @@
 					</control>
 				</setting>
 				<setting id="Location3Station" type="string" label="32338" help="" parent="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -499,26 +471,8 @@
 						<heading>32338</heading>
 					</control>
 				</setting>
-				<setting id="Location3StationName" type="string" label="32336" help="" parent="">
-					<level>0</level>
-					<default />
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition operator="!is" setting="Location3LatLong" />
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>32336</heading>
-					</control>
-				</setting>
 				<setting id="Location3radarStation" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -533,7 +487,7 @@
 					</control>
 				</setting>
 				<setting id="Location3cwa" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -548,7 +502,7 @@
 					</control>
 				</setting>
 				<setting id="Location3gridX" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -563,7 +517,7 @@
 					</control>
 				</setting>
 				<setting id="Location3gridY" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -578,7 +532,7 @@
 					</control>
 				</setting>
 				<setting id="Location3Zone" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -593,7 +547,7 @@
 					</control>
 				</setting>
 				<setting id="Location3County" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -608,7 +562,7 @@
 					</control>
 				</setting>
 				<setting id="Location3forecastGrid_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -623,7 +577,7 @@
 					</control>
 				</setting>
 				<setting id="Location3forecastHourly_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -638,7 +592,7 @@
 					</control>
 				</setting>
 				<setting id="Location3forecast_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -660,13 +614,13 @@
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="edit" format="string">
-						<heading>32332</heading>
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,EnterLocation,4)</data>
 					</control>
 				</setting>
-				<setting id="Location4Fetch" type="action" label="32337" help="" parent="">
+				<setting id="Location4StationName" type="string" label="32336" help="" parent="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Location4)</data>
+					<default />
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
@@ -678,7 +632,9 @@
 							<condition operator="!is" setting="Location4LatLong" />
 						</dependency>
 					</dependencies>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,FetchLocation,4)</data>
+					</control>
 				</setting>
 				<setting id="Location4" type="string" label="32339" help="" parent="">
 					<level>0</level>
@@ -699,7 +655,7 @@
 					</control>
 				</setting>
 				<setting id="Location4Station" type="string" label="32338" help="" parent="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -716,26 +672,8 @@
 						<heading>32338</heading>
 					</control>
 				</setting>
-				<setting id="Location4StationName" type="string" label="32336" help="" parent="">
-					<level>0</level>
-					<default />
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition operator="!is" setting="Location4LatLong" />
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>32336</heading>
-					</control>
-				</setting>
 				<setting id="Location4radarStation" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -750,7 +688,7 @@
 					</control>
 				</setting>
 				<setting id="Location4cwa" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -765,7 +703,7 @@
 					</control>
 				</setting>
 				<setting id="Location4gridX" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -780,7 +718,7 @@
 					</control>
 				</setting>
 				<setting id="Location4gridY" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -795,7 +733,7 @@
 					</control>
 				</setting>
 				<setting id="Location4Zone" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -810,7 +748,7 @@
 					</control>
 				</setting>
 				<setting id="Location4County" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -825,7 +763,7 @@
 					</control>
 				</setting>
 				<setting id="Location4forecastGrid_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -840,7 +778,7 @@
 					</control>
 				</setting>
 				<setting id="Location4forecastHourly_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -855,7 +793,7 @@
 					</control>
 				</setting>
 				<setting id="Location4forecast_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -877,13 +815,13 @@
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="edit" format="string">
-						<heading>32332</heading>
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,EnterLocation,5)</data>
 					</control>
 				</setting>
-				<setting id="Location5Fetch" type="action" label="32337" help="" parent="">
+				<setting id="Location5StationName" type="string" label="32336" help="" parent="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Location5)</data>
+					<default />
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
@@ -895,7 +833,9 @@
 							<condition operator="!is" setting="Location5LatLong" />
 						</dependency>
 					</dependencies>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,FetchLocation,5)</data>
+					</control>
 				</setting>
 				<setting id="Location5" type="string" label="32339" help="" parent="">
 					<level>0</level>
@@ -916,7 +856,7 @@
 					</control>
 				</setting>
 				<setting id="Location5Station" type="string" label="32338" help="" parent="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -933,26 +873,8 @@
 						<heading>32338</heading>
 					</control>
 				</setting>
-				<setting id="Location5StationName" type="string" label="32336" help="" parent="">
-					<level>0</level>
-					<default />
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition operator="!is" setting="Location5LatLong" />
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>32336</heading>
-					</control>
-				</setting>
 				<setting id="Location5radarStation" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -967,7 +889,7 @@
 					</control>
 				</setting>
 				<setting id="Location5cwa" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -982,7 +904,7 @@
 					</control>
 				</setting>
 				<setting id="Location5gridX" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -997,7 +919,7 @@
 					</control>
 				</setting>
 				<setting id="Location5gridY" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1012,7 +934,7 @@
 					</control>
 				</setting>
 				<setting id="Location5Zone" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1027,7 +949,7 @@
 					</control>
 				</setting>
 				<setting id="Location5County" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1042,7 +964,7 @@
 					</control>
 				</setting>
 				<setting id="Location5forecastGrid_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1057,7 +979,7 @@
 					</control>
 				</setting>
 				<setting id="Location5forecastHourly_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1072,7 +994,7 @@
 					</control>
 				</setting>
 				<setting id="Location5forecast_url" type="string" help="">
-					<level>0</level>
+					<level>3</level>
 					<default />
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1107,15 +1029,16 @@
 					<default>false</default>
 					<control type="toggle" />
 				</setting>
-				<setting id="Map2Select" type="action" label="32352" help="">
+				<setting id="Map2Select" type="string" label="32352" help="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Map2)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,Map2)</data>
+					</control>
 				</setting>
-				<setting id="Map2Label" type="string" label="" help="" parent="Map2Select">
+				<setting id="Map2Label" type="string" label="21899" help="" parent="Map2Select">
 					<level>0</level>
 					<default />
 					<constraints>
@@ -1166,15 +1089,16 @@
 						<heading />
 					</control>
 				</setting>
-				<setting id="Map3Select" type="action" label="32353" help="">
+				<setting id="Map3Select" type="string" label="32353" help="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Map3)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,Map3)</data>
+					</control>
 				</setting>
-				<setting id="Map3Label" type="string" label="" help="" parent="Map3Select">
+				<setting id="Map3Label" type="string" label="21899" help="" parent="Map3Select">
 					<level>0</level>
 					<default />
 					<constraints>
@@ -1191,7 +1115,7 @@
 				</setting>
 				<setting id="Map3Sector" type="string" label="" help="" parent="Map3Select">
 					<level>0</level>
-					<default />
+					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
@@ -1225,15 +1149,16 @@
 						<heading />
 					</control>
 				</setting>
-				<setting id="Map4Select" type="action" label="32354" help="">
+				<setting id="Map4Select" type="string" label="32354" help="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Map4)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,Map4)</data>
+					</control>
 				</setting>
-				<setting id="Map4Label" type="string" label="" help="" parent="Map4Select">
+				<setting id="Map4Label" type="string" label="21899" help="" parent="Map4Select">
 					<level>0</level>
 					<default />
 					<constraints>
@@ -1284,15 +1209,16 @@
 						<heading />
 					</control>
 				</setting>
-				<setting id="Map5Select" type="action" label="32355" help="">
+				<setting id="Map5Select" type="string" label="32355" help="">
 					<level>0</level>
-					<data>RunScript(weather.noaa,Map5)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="button" format="action" />
+					<control type="button" format="action">
+						<data>RunScript(weather.noaa,Map5)</data>
+					</control>
 				</setting>
-				<setting id="Map5Label" type="string" label="" help="" parent="Map5Select">
+				<setting id="Map5Label" type="string" label="21899" help="" parent="Map5Select">
 					<level>0</level>
 					<default />
 					<constraints>

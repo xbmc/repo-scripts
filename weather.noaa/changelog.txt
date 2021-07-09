@@ -1,3 +1,11 @@
+v2.0.5
+- version bump for release
+
+v2.0.4-b8
+- clean up some if/then logic
+- revamp some settings
+- properly return Celsius for users who set their regional temp to that
+
 v2.0.3
 - fix an import
 
