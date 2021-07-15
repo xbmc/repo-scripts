@@ -1,0 +1,58 @@
+3.0.5
+  - Fixed compatibility with Kodi Matrix.
+3.0.4
+  - Add compatibiliti for xbmc.translatePath at Kodi Matrix.
+3.0.3
+  - Changed loglevel for NOTICE at Kodi Matrix.
+3.0.2
+  - Fixed compatibility with Kodi for XBox One.
+3.0.1
+  - Addon compatibility downgraded to Helix.
+3.0.0
+  - Reworked ans simplified API that is incompatible with previous versions.
+2.3.4:
+  - Fixed '__gettext__.pcl' hash error.
+2.3.3:
+  - Fixed various bugs.
+2.3.2:
+  - Fixed various bugs.
+2.3.1:
+  - Fixed NOTICE logging.
+2.3.0:
+  - Added more list item properties according to recent ListItem API updates.
+2.2.1:
+  - Added support for the new language files layout.
+2.2.0:
+  - Added "debug_exception" diagnostic context manager.
+  - Action parameters are now optional and can be omitted if an action does not use them.
+  - Plugin category is now set via Plugin.create_listing() method.
+  - Added MemStorage class to be used as a temporary in-memory storage
+  - Added mem_cached decorator to cache function return data in memory.
+  - Now Params instance attributes return None for missing parameters.
+2.1.0:
+  - Added "version" property to Addon class.
+2.0.0:
+  - Added action decorator for defining plugin actions.
+  - Added convenience logging methods.
+1.11.0:
+  - Added support for setting list item properties.
+1.10.0:
+  - Added support for generators as action return values.
+  - Various internal changes.
+1.9.1:
+  - Fixed paramstring encoding for lists as parameters.
+1.9.0:
+  - Removed support for replacing context menu because of depreciation of the respective feature in Kodi.
+1.8.0:
+  - Added GNU Gettext emulation.
+1.7.0:
+  - Storage contents are not saved to disk if the contents haven't been changed.
+  - Storage class inherits from collections.MutableMapping.
+1.6.8:
+  - Added functools.wraps to cached decorator.
+1.6.6:
+  - Added GPLv3 license and this changelog.
+1.6.5:
+  - Implemented Travis CI.
+1.6.0:
+  - Added support for list_item graphics processing according to Kodi Jarvis Python API changes.
