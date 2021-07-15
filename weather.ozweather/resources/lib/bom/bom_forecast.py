@@ -219,7 +219,10 @@ def bom_forecast(geohash):
         weather_data['Current.OzW_WindSpeed'] = current_observations['wind']['speed_kilometre']
         weather_data['Current.WindDirection'] = current_observations['wind']['direction']
         weather_data['Current.Wind'] = f'From {current_observations["wind"]["direction"]} at {current_observations["wind"]["speed_kilometre"]} kph'
-        weather_data['Current.WindGust'] = f'{current_observations["gust"]["speed_kilometre"]}'
+        if current_observations["gust"] is not None:
+            weather_data['Current.WindGust'] = f'{current_observations["gust"]["speed_kilometre"]}'
+        else:
+            weather_data['Current.WindGust'] = "N/A "
         weather_data['Current.Precipitation'] = weather_data["Current.RainSince9"] = current_observations["rain_since_9am"] or 0
 
     # Sometimes this is not provided...
@@ -245,9 +248,6 @@ def bom_forecast(geohash):
     warnings_text = ""
     if warnings:
         for i, warning in enumerate(warnings):
-            # Warnings header...
-            if i == 0 and area_information:
-                warnings_text += f"[B]Major Warnings[/B], current for {area_information['name']}:\n\n"
             # Warnings body...only major warnings as we don't need every little message about sheep grazing etc..
             if warning['warning_group_type'] == 'major':
                 # Don't really care when it was issue, if it hasn't expired, it's current, so show it..
@@ -269,6 +269,11 @@ def bom_forecast(geohash):
                     if i == len(warnings):
                         warnings_text += '\n'
 
+        # Did we actually add any warnings once expired/minor were filtered out?  If so, add the Warning Header
+        if warnings_text and area_information:
+            warnings_text = f"[B]Major Warnings[/B], current for {area_information['name']}:\n" + warnings_text
+
+    # Pop where the observations are from on the end of the extended text
     warnings_text += f"\n(Current weather observations retrieved from {weather_data['ObservationsStation']} station).\n\n"
 
     weather_data['Current.WarningsText'] = warnings_text
@@ -336,7 +341,7 @@ def bom_forecast(geohash):
             # Which is a thoroughly sh*t way to design an API...
             # All that being said, with the re-design of the skin files, we now use the 'now' info for the current day
             # And not the forecast info, but left here for compatibility (see Current.X above for what we do use now)
-            temp_max = forecast_seven_days[i]['temp_max'] or ""
+            temp_max = forecast_seven_days[i]['temp_max']
             if i == 0 and not temp_max:
                 if forecast_seven_days[i]['now']['now_label'] == "Tomorrow's Max":
                     log("Using now->temp_now as now->now_label is Tomorrow's Max")
@@ -346,7 +351,7 @@ def bom_forecast(geohash):
                     temp_max = forecast_seven_days[i]['now']['temp_later']
             set_keys(weather_data, i, ["HighTemp", "HighTemperature"], temp_max)
 
-            temp_min = forecast_seven_days[i]['temp_min'] or ""
+            temp_min = forecast_seven_days[i]['temp_min']
             if i == 0 and not temp_min:
                 if forecast_seven_days[i]['now']['now_label'] == 'Overnight Min':
                     log("Using now->temp_now as now->now_label is Overnight Min")
