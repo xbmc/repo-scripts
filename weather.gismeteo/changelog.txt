@@ -1,3 +1,13 @@
+v0.6.2 (2021-05-31)
+- Updated compatibility with Kodi 19
+- Added Icelandic translation (sveinki) 
+
+v0.6.1 (2021-04-03)
+- SimplePlugin 3 module moved into external addon
+- Small changes in the add-on structure 
+- Added French translation (DavidHenryThoreau)
+- Added Swedish translation (Sopor)
+
 v0.5.2 (2020-10-15)
 - Fixed bug with parsing XML data
 
