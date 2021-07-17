@@ -1,0 +1,130 @@
+<settings>
+<!-- GENERAL SECTION -->
+    <category label="30510">
+        <setting type="lsep" label="30512" />
+        <setting id="createScene" type="action" label="9007" action="RunScript(script.service.hue,createHueScene)" /> -->
+        <setting id="deleteScene" type="action" label="9008" action="RunScript(script.service.hue,deleteHueScene)" />
+
+
+<!-- Bridge -->
+        <setting type="lsep" label="30500" />
+        <setting id="discoverBridge" type="action" label="30501" action="RunScript(script.service.hue,discover)" option="close"/>
+        <setting id="bridgeIP" type="text" label="30502" enable="false" default="" />
+        <setting id="bridgeUser" type="text" label="30503" enable="false" default="" visible="false" />
+    </category>
+
+<!--  GROUP SECTION  0 VIDEO-->    
+    <category label="32100">
+        <setting id="group0_enabled" type="bool" label="30520" default="false" />
+        <!--  Group playback start setting -->
+        <setting type="sep" visible="eq(-1,true)" />
+        <setting id="group0_startBehavior" type="bool" label="30513"  visible="eq(-2,true)" />
+        <setting id="group0_startSceneName" type="text" label="30036" default="Not selected" enable="false" visible="eq(-1,true) + eq(-3,true)" />
+        <setting id="group0_startSelectScene" type="action" label="32512" enable="true" action="RunScript(script.service.hue,sceneSelect,0,start)" visible="eq(-2,true) + eq(-4,true)" option="close" />
+        <setting id="group0_startSceneID" type="text" label="32511"  default="-1" enable="false" visible="false" />
+
+        <!--  Group playback pause setting -->
+        <setting type="sep"  visible="eq(-6,true)"/>
+        <setting id="group0_pauseBehavior" type="bool" label="30514"  visible="eq(-7,true)" />
+		<setting id="group0_pauseSceneName" type="text" label="30036" default="Not selected" enable="false" visible="eq(-1,true) + eq(-8,true)" />
+        <setting id="group0_pauseSelectScene" type="action" label="32512" enable="true" action="RunScript(script.service.hue,sceneSelect,0,pause)" visible="eq(-2,true) + eq(-9,true)" option="close"/>
+        <setting id="group0_pauseSceneID" type="text" label="32511"  default="-1" enable="false" visible="false" />
+
+		<!--  Group playback stop setting --> 
+        <setting type="sep" visible="eq(-11,true)"/>
+        <setting id="group0_stopBehavior" type="bool" label="30515"  visible="eq(-12,true)"/>
+        <setting id="group0_stopSceneName" type="text" label="30036" default="Not selected" enable="false" visible="eq(-1,true) + eq(-13,true)" />
+        <setting id="group0_stopSelectScene" type="action" label="32512" enable="true" action="RunScript(script.service.hue,sceneSelect,0,stop)" visible="eq(-2,true) + eq(-14,true)" option="close"/>
+        <setting id="group0_stopSceneID" type="text" label="32511"  default="-1" enable="false" visible="false" />
+    </category>
+<!--  /GROUP SECTION  0-->
+
+<!-- VIDEO ACTIVATION  --> 
+    <category label="32106">
+        <setting id="video_MinimumDuration" type="number" label="30800" default="0" />
+        <setting id="video_Movie" type="bool" label="30801" default="True" />
+        <setting id="video_Episode" type="bool" label="30802" default="True" />
+        <setting id="video_PVR" type="bool" label="30805" default="True" />
+        <setting id="video_MusicVideo" type="bool" label="30803" default="True" />
+        <setting id="video_Other" type="bool" label="30804" default="True" />
+	</category>
+
+<!--  GROUP SECTION  1 AUDIO -->    
+    <category label="32102">
+        <setting id="group1_enabled" type="bool" label="30520" default="false" />
+        <!--  Group playback start setting -->
+        <setting type="sep" visible="eq(-1,true)" />
+        <setting id="group1_startBehavior" type="bool" label="30513"  visible="eq(-2,true)" />
+        <setting id="group1_startSceneName" type="text" label="30036" default="Not selected" enable="false" visible="eq(-1,true) + eq(-3,true)" />
+        <setting id="group1_startSelectScene" type="action" label="32512" action="RunScript(script.service.hue,sceneSelect,1,start)" visible="eq(-2,true) + eq(-4,true)" option="close" />
+        <setting id="group1_startSceneID" type="text" label="32511"  default="-1" enable="false" visible="false" />
+
+        <!--  Group playback pause setting -->
+        <setting type="sep"  visible="eq(-6,true)"/>
+        <setting id="group1_pauseBehavior" type="bool" label="30514"  visible="eq(-7,true)" />
+		<setting id="group1_pauseSceneName" type="text" label="30036" default="Not selected" enable="false" visible="eq(-1,true) + eq(-8,true)" />
+        <setting id="group1_pauseSelectScene" type="action" label="32512" action="RunScript(script.service.hue,sceneSelect,1,pause)" visible="eq(-2,true) + eq(-9,true)" option="close"/>
+        <setting id="group1_pauseSceneID" type="text" label="32511"  default="-1" enable="false" visible="false" />
+
+		<!--  Group playback stop setting --> 
+        <setting type="sep" visible="eq(-11,true)"/>
+        <setting id="group1_stopBehavior" type="bool" label="30515"  visible="eq(-12,true)"/>
+        <setting id="group1_stopSceneName" type="text" label="30036" default="Not selected" enable="false" visible="eq(-1,true) + eq(-13,true)" />
+        <setting id="group1_stopSelectScene" type="action" label="32512" action="RunScript(script.service.hue,sceneSelect,1,stop)" visible="eq(-2,true) + eq(-14,true)" option="close"/>
+        <setting id="group1_stopSceneID" type="text" label="32511"  default="-1" enable="false" visible="false" />
+    </category>
+<!--  /GROUP SECTION  0-->
+ 
+
+<!--  GROUP SECTION  3 AMBILIGHT -->    
+    <category label="30523">
+    	<setting type="lsep" label="30521" />
+        <setting id="group3_enabled" type="bool" label="30520" default="false" />
+        <setting id="group3_SelectLights" type="action" label="30015" action="RunScript(script.service.hue,ambiLightSelect,3)" visible="eq(-1,true)" option="close" />
+        <setting id="group3_LightNames" type="text" label="30058"  default="Not configured" enable="false" visible="eq(-2,true)"/>
+        
+        <setting type="sep" label="" visible="eq(-3,true)"/>
+        <setting id="group3_forceOn" type="bool" label="30057"  default="false" visible="eq(-4,true)"/>
+        <setting id="group3_MinBrightness" type="slider" label="30810"  range="1,1,100" default="10" option="percent" enable="true" visible="eq(-5,true)"/>
+        <setting id="group3_MaxBrightness" type="slider" label="30811"  range="1,1,100" default="100" option="percent" enable="true" visible="eq(-6,true)"/>
+        <setting id="group3_Saturation" type="slider" label="30809"  range="1.00,0.1,5.00" default="1.5" option="float" enable="true" visible="eq(-7,true)"/>
+
+        <setting type="lsep" label="30522" visible="eq(-8,true)"/>
+        <setting id="group3_Interval" type="slider" label="30065" default="200" range="100,50,1000" option="int" visible="eq(-9,true)" />
+        <setting id="group3_TransitionTime" type="slider" label="30066" default="200" range="0,50,500" option="int" visible="eq(-10,true)"/>
+        <setting id="group3_CaptureSize" type="slider" label="30067" default="400" range="150,50,1920" option="int" visible="eq(-11,true)"/>
+        <setting id="average_process_time" type="text" label="30813"  enable="false" visible="eq(-12,true)"/>
+
+        <setting type="lsep" label="30814" visible="eq(-13,true)"/>
+        <setting id="group3_ResumeState" type="bool" label="30815"  default="false" visible="eq(-14,true)"/>
+        <setting id="group3_ResumeTransition" type="slider" label="30816" default="10" range="0,1,30" option="int" visible="eq(-15,true)"/>
+
+        <setting id="group3_Lights" type="text" label="30035"  default="-1" enable="false" visible="false" />
+    </category>
+<!--  /GROUP SECTION  3-->
+
+
+<!-- SCHEDULE SECTION -->
+    <category label="30511">
+        <setting id="forceOnSunset" type="bool" label="30509" default="False" />
+        <setting id="daylightDisable" type="bool" label="30508" default="False" />
+        <setting id="enable_if_already_active" type="bool" label="30516" default="False" />
+        <setting id="keep_lights_off" type="bool" label="30517" default="False" />
+        <setting type="sep" />
+        <setting id="enableSchedule" type="bool" label="30505" default="False" />
+		<setting id="startTime" type="time" label="30506" enable="eq(-1,true)" default="18:00"/>
+        <setting id="endTime" type="time" label="30507" enable="eq(-2,true)" default="22:00"/>
+    </category>
+
+<!-- ADVANCED SECTION -->
+	<category label = "32101">
+	    <setting id="initialFlash" type="bool" label="5110" default="False" />
+        <setting id="reloadFlash" type="bool" label="5111" default="False" visible="False"/>
+        <setting id="disableConnectionMessage" type="bool" label="30812" default="False"/>
+		<setting id="separateLogFile" type="bool" label="32105" default="False" visible="False"/>
+		<setting id="performanceLogging" type="bool" label="30068" default="False" visible="False"/>
+        <setting id="show500Error" type="bool" label="30068" default="True" visible="False"/>
+		
+		
+	</category>
+</settings>
