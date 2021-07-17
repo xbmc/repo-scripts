@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+
+  <category label="32030">
+    <setting label="32113" type="bool" id="resume" default="false" />
+    <setting visible="System.Platform.Windows" label="32032" type="bool" id="windows_unlock" default="true" />
+    <setting label="32031" type="slider" id="vol_default" default="100" range="0,1,100" option="int" />
+    <setting label="32111" type="action" action="RunScript($ID,reset_volume)" />
+    <setting visible="false" id="onSettingChangeEvents" type="number" default="0" />
+  </category>
+
+  <category label="32009">
+    <setting label="32026" type="text" id="timer_0_label" default="Sleep Timer" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_0" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_0_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_0_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="01:00" id="timer_0_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_0_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_0_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_0_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_0_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_0_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_0_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_0_notify" default="true" />
+
+  </category>
+
+  <category label="32010">
+    <setting label="32026" type="text" id="timer_1_label" default="Snooze Timer" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_1" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_1_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_1_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:10" id="timer_1_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_1_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_1_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_1_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_1_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_1_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_1_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_1_notify" default="true" />
+  </category>
+
+  <category label="32011">
+    <setting label="32026" type="text" id="timer_2_label" default="Timer 1" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_2" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_2_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_2_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_2_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_2_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_2_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_2_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_2_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_2_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_2_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_2_notify" default="true" />
+
+  </category>
+
+  <category label="32012">
+    <setting label="32026" type="text" id="timer_3_label" default="Timer 2" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_3" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_3_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_3_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_3_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_3_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_3_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_3_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_3_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_3_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_3_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_3_notify" default="true" />
+
+  </category>
+
+  <category label="32013">
+    <setting label="32026" type="text" id="timer_4_label" default="Timer 3" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_4" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_4_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_4_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_4_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_4_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_4_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_4_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_4_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_4_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_4_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_4_notify" default="true" />
+
+  </category>
+
+  <category label="32014">
+    <setting label="32026" type="text" id="timer_5_label" default="Timer 4" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_5" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_5_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_5_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_5_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_5_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_5_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_5_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_5_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_5_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_5_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_5_notify" default="true" />
+
+  </category>
+
+  <category label="32015">
+    <setting label="32026" type="text" id="timer_6_label" default="Timer 5" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_6" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_6_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_6_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_6_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_6_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_6_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_6_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_6_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_6_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_6_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_6_notify" default="true" />
+
+  </category>
+
+  <category label="32016">
+    <setting label="32026" type="text" id="timer_7_label" default="Timer 6" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_7" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_7_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_7_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_7_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_7_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_7_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_7_filename" default="" />
+    <setting enable="!eq(-1,)" label="32108" type="action" action="RunScript($ID,play,7)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_7_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_7_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_7_notify" default="true" />
+
+  </category>
+
+  <category label="32017">
+    <setting label="32026" type="text" id="timer_8_label" default="Timer 7" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_8" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_8_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_8_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_8_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_8_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_8_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_8_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_8_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_8_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_8_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_8_notify" default="true" />
+
+  </category>
+
+  <category label="32018">
+    <setting label="32026" type="text" id="timer_9_label" default="Timer 8" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_9" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_9_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_9_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_9_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_9_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_9_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_9_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_9_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_9_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_9_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_9_notify" default="true" />
+
+  </category>
+
+  <category label="32019">
+    <setting label="32026" type="text" id="timer_10_label" default="Timer 9" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_10" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_10_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_10_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_10_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_10_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_10_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_10_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_10_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_10_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_10_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_10_notify" default="true" />
+
+  </category>
+
+  <category label="32020">
+    <setting label="32026" type="text" id="timer_11_label" default="Timer 10" />
+
+    <setting label="32060" type="lsep" />
+    <setting label="32033" type="enum" id="timer_11" lvalues="32034|32035|32036|32037|32038|32039|32040|32041|32042|32043|32044|32045|32046|32047|32048|32049|32050|32051|32052|32053|32054|32055|32056|32057|32058|32059" default="25" />
+    <setting enable="!eq(-1,25)" label="32061" type="time" default="00:00" id="timer_11_start" />
+    <setting enable="!eq(-2,25)" label="32062" type="enum" id="timer_11_end_type" lvalues="32063|32064|32065" default="0" />
+    <setting enable="!eq(-3,25)" visible="eq(-1,1)" label="32064" type="time" default="00:00" id="timer_11_duration" />
+    <setting enable="!eq(-4,25)" visible="eq(-2,2)" label="32065" type="time" default="00:00" id="timer_11_end" />
+
+    <setting label="32070" type="lsep" />
+    <setting label="32070" type="enum" id="timer_11_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
+    <setting visible="false" label="32082" type="text" id="timer_11_filename" default="" />
+    <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+
+    <setting label="32090" type="lsep" />
+    <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_11_fade" lvalues="32120|32121|32122|32123" default="0" />
+    <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_11_vol_min" default="50" range="0,1,100" option="int" />
+    <setting visible="!eq(-2,0) + !eq(-2,3)" label="32096" type="slider" id="timer_11_vol_max" default="100" range="0,1,100" option="int" />
+
+    <setting label="32097" type="lsep" />
+    <setting label="32098" type="bool" id="timer_11_notify" default="true" />
+
+  </category>
+
+</settings>
