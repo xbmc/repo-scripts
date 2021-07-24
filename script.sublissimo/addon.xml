@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="0.0.7" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="0.0.8" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
+        <import addon="script.module.chardet" version="3.0.4"/>
     </requires>
     <extension point="xbmc.python.script" library="main.py">
 	<provides>executable</provides>
@@ -16,7 +17,7 @@
  - New: Frame rate conversion on the fly
  - New: Play modified subtitle directly on video
  - Minor bugfixes
- 
+
  Version 0.0.3
  - New: Added support for .sub files
  - Minor bugfixes
