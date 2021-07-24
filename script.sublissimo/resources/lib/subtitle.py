@@ -1,22 +1,27 @@
 # -*- coding: utf-8 -*-
+import script
 
 class Subtitle(object):
-    def __init__(self, subtitlefile):
+    def __init__(self, subtitlefile, filename):
         self.subtitlefile = subtitlefile
+        self.filename = filename
         self.timelines = []
-        
+
     def make_timelines_decimal(self):
         for index, lines in enumerate(self.subtitlefile):
             if len(lines) == 31 or len(lines) == 30:
                 if lines[0] == "0" and lines[17] == "0":
                     self.timelines.append(lines)
-        starting_line = self.timelines[0]
-        ending_line = self.timelines[-1]
-        old_starting_time = (3600000 * int(starting_line[:2]) + 60000
-                    * int(starting_line[3:5]) + 1000 * int(starting_line[6:8]) + int(starting_line[9:12]))
-        old_ending_time = (3600000 * int(ending_line[:2]) + 60000
-                    * int(ending_line[3:5]) + 1000 * int(ending_line[6:8]) + int(ending_line[9:12]))
-        return old_starting_time, old_ending_time
+        try:
+            starting_line = self.timelines[0]
+            ending_line = self.timelines[-1]
+            old_starting_time = (3600000 * int(starting_line[:2]) + 60000
+                        * int(starting_line[3:5]) + 1000 * int(starting_line[6:8]) + int(starting_line[9:12]))
+            old_ending_time = (3600000 * int(ending_line[:2]) + 60000
+                        * int(ending_line[3:5]) + 1000 * int(ending_line[6:8]) + int(ending_line[9:12]))
+            return old_starting_time, old_ending_time
+        except Exception as e:
+            script.error_handling(self.subtitlefile, self.filename, e)
 
     def rehash_time_string(self, timestring):
         hours = int(timestring[:2])
@@ -59,10 +64,13 @@ class Subtitle(object):
                     line_2 = ""
                     if len(text_file[index + 2]) != 1:
                         line_2 = text_file[index + 2]
-                    starting_time = (3600000 * int(lines[:2]) + 60000
-                        * int(lines[3:5]) + 1000 * int(lines[6:8]) + int(lines[9:12]))
-                    ending_time = (3600000 * int(lines[17:19]) + 60000
-                        * int(lines[20:22]) + 1000 * int(lines[23:25]) + int(lines[26:29]))
+                    try:
+                        starting_time = (3600000 * int(lines[:2]) + 60000
+                            * int(lines[3:5]) + 1000 * int(lines[6:8]) + int(lines[9:12]))
+                        ending_time = (3600000 * int(lines[17:19]) + 60000
+                            * int(lines[20:22]) + 1000 * int(lines[23:25]) + int(lines[26:29]))
+                    except Exception as e:
+                        script.error_handling(self.subtitlefile, self.filename, e)
                     if not factor:
                         new_starting_time = starting_time + movement
                         new_ending_time = ending_time + movement
