@@ -68,6 +68,11 @@ class StorageServer:
             import xbmcgui
             self.xbmcgui = xbmcgui
 
+        if hasattr(self.xbmcvfs, "translatePath"):
+            self.translate_path = self.xbmcvfs.translatePath
+        else:
+            self.translate_path = self.xbmc.translatePath
+
         self.instance = instance
         self._sock = None
         self.die = False
@@ -81,7 +86,7 @@ class StorageServer:
         self.version = to_unicode(self.settings.getAddonInfo('version'))
         self.plugin = u"StorageClient-" + self.version
 
-        self.path = to_unicode(self.xbmc.translatePath('special://temp/'))
+        self.path = to_unicode(self.translate_path('special://temp/'))
         if not self.xbmcvfs.exists(self.path):
             self._log(u"Making path structure: " + self.path)
             self.xbmcvfs.mkdir(self.path)
@@ -157,7 +162,7 @@ class StorageServer:
 
             if self._usePosixSockets():
                 self._log("POSIX")
-                self.socket = os.path.join(to_unicode(self.xbmc.translatePath('special://temp/')),
+                self.socket = os.path.join(to_unicode(self.translate_path('special://temp/')),
                                            'commoncache.socket')
                 if self.xbmcvfs.exists(self.socket) and check_stale:
                     self._log("Deleting stale socket file : " + self.socket)
