@@ -17,6 +17,14 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
+msgctxt "Addon Summary"
+msgid "A common caching API for Kodi add-ons."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "A common caching API for Kodi add-ons."
+msgstr ""
+
 msgctxt "#32001"
 msgid "General"
 msgstr ""
