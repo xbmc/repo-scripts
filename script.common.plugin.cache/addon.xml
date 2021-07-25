@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="anxdpanic, TheCollective" version="2.6.1">
+<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="anxdpanic, TheCollective" version="2.6.3">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -7,15 +7,15 @@
     <extension point="xbmc.python.module" library="resources/lib/storage_server/"/>
     <extension point="xbmc.addon.metadata">
         <news>
-[fix] shutdown taking longer than 5 seconds
-[fix] ignore encoding issues for socket data
+[fix] use xbmcvfs.translatePath when available, xbmc.translatePath deprecated(Matrix) and removed(Nexus) |contrib: Gujal00|
         </news>
         <assets>
             <icon>icon.png</icon>
         </assets>
         <platform>all</platform>
-        <summary lang="en_GB">A common caching API for Kodi add-ons.</summary>
         <license>GPL-3.0-only</license>
         <source>https://github.com/anxdpanic/script.common.plugin.cache</source>
+        <summary lang="en_GB">A common caching API for Kodi add-ons.</summary>
+        <description lang="en_GB">A common caching API for Kodi add-ons.</description>
     </extension>
 </addon>
