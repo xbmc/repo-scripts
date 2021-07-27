@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.favourites" name="Favourites script" version="8.1.1" provider-name="ronie, `Black">
+<addon id="script.favourites" name="Favourites script" version="8.1.2" provider-name="ronie, `Black">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
 	<extension point="xbmc.python.library" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="be_BY">Favourites script</summary>
 		<summary lang="bg_BG">Скрипт "Любими"</summary>
 		<summary lang="ca_ES">Script Preferit</summary>
 		<summary lang="cs_CZ">Script pro Oblíbené</summary>
@@ -38,7 +37,6 @@
 		<summary lang="sv_SE">Favoritskript</summary>
 		<summary lang="tr_TR">Sık kullanılanlar betiği</summary>
 		<summary lang="zh_CN">收藏夹脚本</summary>
-		<description lang="be_BY">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
 		<description lang="bg_BG">Извлича информация от вашето меню "Любими" и показва допълнителни бутони в главното меню и подменюто.</description>
 		<description lang="ca_ES">Obtenir els temes Preferits dels seus Kodi per omplir el menú Inici / submenú amb botons personalitzats.</description>
 		<description lang="cs_CZ">Přenese položky z Oblíbených do Home menu/submenu pod vlastní tlačítka. </description>

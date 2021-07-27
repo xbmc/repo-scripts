@@ -1,0 +1,41 @@
+# Kodi Media Center language file
+# Addon Name: Favourites script
+# Addon id: script.favourites
+# Addon Provider: ronie|`Black
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Favourites script"
+msgstr "Script favorit"
+
+msgctxt "Addon Description"
+msgid "Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons."
+msgstr "Ambil item dari favorit Kodi Anda untuk mengisi menu/submenu Beranda dengan tombol suka-suka."
+
+msgctxt "Addon Disclaimer"
+msgid "Needs skin support for it to be used properly"
+msgstr "Memerlukan dukungan kulit untuk dapat digunakan dengan baik"
+
+msgctxt "#32000"
+msgid "Do you want to play the playlist instead of entering?"
+msgstr "Apakah Anda ingin memainkan daftar putar ketimbang memasukkan?"
+
+msgctxt "#32001"
+msgid "None (clear current settings)"
+msgstr "Tiada (bersihkan pengaturan saat ini)"
+
+msgctxt "#32002"
+msgid "(no action)"
+msgstr "(tak ada aksi)"
