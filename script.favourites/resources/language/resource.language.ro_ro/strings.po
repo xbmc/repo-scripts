@@ -1,0 +1,41 @@
+# Kodi Media Center language file
+# Addon Name: Favourites script
+# Addon id: script.favourites
+# Addon Provider: ronie|`Black
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Romanian (http://www.transifex.com/projects/p/xbmc-addons/language/ro/)\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+msgctxt "Addon Summary"
+msgid "Favourites script"
+msgstr "Script Favorite"
+
+msgctxt "Addon Description"
+msgid "Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "Needs skin support for it to be used properly"
+msgstr "Necesită suport din partea costumului pentru a fi folosit cum trebuie"
+
+msgctxt "#32000"
+msgid "Do you want to play the playlist instead of entering?"
+msgstr ""
+
+msgctxt "#32001"
+msgid "None (clear current settings)"
+msgstr ""
+
+msgctxt "#32002"
+msgid "(no action)"
+msgstr "(nicio acțiune)"
