@@ -1,0 +1,80 @@
+# Kodi Media Center language file
+# Addon Name: Legendas.TV
+# Addon id: service.subtitles.legendastv
+# Addon Provider: gfjardim
+
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-04-27 12:08-0300\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/"
+"language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.7\n"
+"Last-Translator: \n"
+"Language: pt\n"
+
+msgctxt "#32001"
+msgid "Choose subtitle for:"
+msgstr "Escolha a legenda para:"
+
+msgctxt "#32002"
+msgid "Advanced"
+msgstr "Avançadas"
+
+msgctxt "#32003"
+msgid "Portuguese"
+msgstr "Português"
+
+msgctxt "#32004"
+msgid "Portuguese (Brazil)"
+msgstr "Português (Brasil)"
+
+msgctxt "#32005"
+msgid "English"
+msgstr "Inglês"
+
+msgctxt "#32006"
+msgid "Others"
+msgstr "Outras"
+
+msgctxt "#32007"
+msgid "Subtitles priority on search"
+msgstr "Prioridade de legendas na pesquisa"
+
+msgctxt "#32008"
+msgid "User"
+msgstr "Usuário"
+
+msgctxt "#32009"
+msgid "Password"
+msgstr "Senha"
+
+msgctxt "#32010"
+msgid "Import all subtitles"
+msgstr "Importar todas as legendas"
+
+msgctxt "#32011"
+msgid "Search using original title"
+msgstr "Pesquisar usando título original"
+
+msgctxt "#32012"
+msgid "RAR Extraction"
+msgstr "Extração RAR"
+
+msgctxt "#32013"
+msgid "RAR virtual file system must be enabled."
+msgstr "O sistema de arquivos virtual RAR precisa estar ativado."
+
+msgctxt "#32014"
+msgid ""
+"You must enable it under Addons -> My add-ons -> Virtual filesystems -> RAR"
+"archive support"
+msgstr ""
+"Você deve ativá-lo em Addons -> Meus add-ons -> Virtual filesystems -> "
+"Suporte a arquivos RAR"
