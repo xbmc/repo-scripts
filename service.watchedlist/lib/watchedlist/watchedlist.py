@@ -409,7 +409,7 @@ class WatchedList:
                 # load the db path
                 if utils.getSetting("extdb") == 'false':
                     # use the default file
-                    self.dbdirectory = xbmc.translatePath(utils.data_dir())
+                    self.dbdirectory = xbmcvfs.translatePath(utils.data_dir())
                     buggalo.addExtraData('dbdirectory', self.dbdirectory)
                     self.dbpath = os.path.join(self.dbdirectory, "watchedlist.db")
                 else:
@@ -417,7 +417,7 @@ class WatchedList:
 
                     while not self.monitor.abortRequested():
                         # use a user specified file, for example to synchronize multiple clients
-                        self.dbdirectory = xbmc.translatePath(utils.getSetting("dbpath"))
+                        self.dbdirectory = xbmcvfs.translatePath(utils.getSetting("dbpath"))
                         self.dbfileaccess = utils.fileaccessmode(self.dbdirectory)
                         self.dbpath = os.path.join(self.dbdirectory, utils.getSetting("dbfilename"))
 
@@ -446,7 +446,7 @@ class WatchedList:
                     buggalo.addExtraData('dbdirectory_copy', self.dbdirectory_copy)
                     buggalo.addExtraData('dbpath_copy', self.dbpath_copy)
                     # work in copy directory in the Kodi profile folder
-                    self.dbdirectory = os.path.join(xbmc.translatePath(utils.data_dir()), 'dbcopy' + os.sep)
+                    self.dbdirectory = os.path.join(xbmcvfs.translatePath(utils.data_dir()), 'dbcopy' + os.sep)
                     if not xbmcvfs.exists(self.dbdirectory):  # directory has to end with '/' (os.sep)
                         xbmcvfs.mkdir(self.dbdirectory)
                         utils.log(u'created directory %s' % str(self.dbdirectory))
