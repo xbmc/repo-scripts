@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+   id="service.subtitles.legendastv"
+   name="Legendas.TV"
+   version="3.0.0"
+   provider-name="gfjardim,andrebrait">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Legendas.TV</summary>
+    <description lang="en_GB">Search and download subtitles from Legendas.TV</description>
+    <description lang="pt_PT">Procura e baixa legendas de Legendas.TV</description>
+    <disclaimer lang="en_GB">For bugs, requests or general questions visit the 'Subtitle add-on' subforum on the KODI forum.</disclaimer>
+    <disclaimer lang="pt_PT">Para bugs, pedidos ou perguntas visite o subfórum 'Subtitle add-on' no fórum oficial do KODI.</disclaimer>
+    <platform>all</platform>
+    <license>GPL-3.0-or-later</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=360127</forum>
+    <source>https://github.com/andrebrait/service.subtitles.legendastv</source>
+    <assets>
+      <icon>icon.png</icon>
+      <clearlogo>logo.png</clearlogo>
+    </assets>
+    <news>
+3.0.0
+- Port the source code to Python 3
+- Support for Kodi 19 (Matrix)
+- Various improvements for sorting and filtering results
+
+2.4.4
+- Use quote_plus to encode URL
+- Fix: 'str' object has no attribute 'read'
+- Fix: incorrect domain name for searching
+
+2.4.3
+- Add: Lots of debug info
+- Rewrite extraction method
+
+2.4.2
+- Fix: Handling packs with multiple subtitles (henricos)
+- Fix: Download location on temp folder (henricos)
+- Fix: Fully clean temp folder (henricos)
+
+2.4.1
+- Add: Automatic installation of LibArchive addon (henricos)
+- Fix: Fixed file extraction (henricos)
+
+2.4.0
+- Fix: Use RAR Archive support addon on Kodi 18 (Leia) (henricos)
+- Fix: handling non-ascii content on log method (ecsousa)
+- Fix: Use new URL for searches; idex starts at 0 now (fernandog)
+- Fix: Kodi 18 (Leia): check if RAR Archive support plugin is enabled
+- Fix: better subtitle extraction handling
+- Fix: rating stars not appearing correctly
+
+2.3.2
+- Fix: addon version mismatch
+
+2.3.1
+- Fix: subtitles not downloading
+- Fix: better error handling
+- Add: Search Using Original Title option
+
+2.3.0
+- Fix: use IMDB to filter results, if possible
+- Add: Use TheTVDB to retrieve tv shows original titles
+
+2.2.5
+- Fix cleanup
+- Fix string in pt_PT (thanks to Mafarricos)
+- Fix manual search not working with tv shows
+- Add batch import of subtitle packs
+
+2.2.4
+- Added login support (thanks to Eduardo Franceschi)
+- Highlights are now displayed correctly
+
+2.2.3
+- Change the way pack's are detected
+    </news>
+  </extension>
+</addon>
