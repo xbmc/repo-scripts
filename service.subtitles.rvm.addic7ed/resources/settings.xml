@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <category label="128">
+    <setting id="use_filename" type="bool" label="32007" default="false" />
+  </category>
+</settings>
