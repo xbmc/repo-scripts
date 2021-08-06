@@ -5,6 +5,7 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 from __future__ import absolute_import, unicode_literals
+import json
 import re
 from collections import namedtuple
 from kodi_six import xbmc
@@ -57,20 +58,22 @@ class logger(object):
 
 def get_now_played():
     """
-    Get info about the currently played file via Kodi InfoLabels.
-    Alternatively this can be done via JSON-RPC
-    but looks like it does not return correct file path if file path
-    is actually an url and it there was a redirect.
+    Get info about the currently played file via JSON-RPC
 
     :return: currently played item's data
     :rtype: dict
     """
-    item = {
-        'season': xbmc.getInfoLabel('VideoPlayer.Season'),
-        'episode': xbmc.getInfoLabel('VideoPlayer.Episode'),
-        'showtitle': xbmc.getInfoLabel('VideoPlayer.TVShowTitle'),
-        'file': xbmc.Player().getPlayingFile(),
-    }
+    request = json.dumps({
+        'jsonrpc': '2.0',
+        'method': 'Player.GetItem',
+        'params': {
+            'playerid': 1,
+            'properties': ['showtitle', 'season', 'episode']
+         },
+        'id': '1'
+    })
+    item = json.loads(xbmc.executeJSONRPC(request))['result']['item']
+    item['file'] = xbmc.Player().getPlayingFile()  # It provides more correct result
     return item
 
 
