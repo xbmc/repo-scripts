@@ -18,6 +18,8 @@ import re
 from copy import deepcopy
 from urllib.parse import parse_qsl
 from urllib.parse import quote
+from urllib.parse import urlencode
+from urllib.parse import urlsplit
 
 import requests
 import xbmcaddon  # pylint: disable=import-error
@@ -30,6 +32,7 @@ from ...utils.logger import Log
 from .cipher import Cipher
 from .mpeg_dash import ManifestGenerator
 from .quality import Quality
+from .ratebypass import CalculateN
 from .subtitles import Subtitles
 
 LOG = Log('usher', __file__)
@@ -55,6 +58,7 @@ class VideoInfo:
         self._language = language
         self._region = region
         self._itags = {}
+        self._calculate_n = None
 
         self.addon = xbmcaddon.Addon('script.module.tubed.api')
 
@@ -80,6 +84,26 @@ class VideoInfo:
         filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'itags.json')
         with xbmcvfs.File(filename, 'r') as itag_file:
             self._itags = json.load(itag_file)
+
+    def calculate_n(self, url):
+        if not self._calculate_n:
+            return url
+
+        parsed_query = dict(parse_qsl(urlsplit(url).query))
+
+        if parsed_query.get('ratebypass', 'no') != 'yes' and 'n' in parsed_query:
+            # Cipher n to get the updated value
+            initial_n = list(parsed_query['n'])
+            new_n = self._calculate_n.calculate_n(initial_n)
+            if new_n:
+                parsed_query['n'] = new_n
+                parsed_query['ratebypass'] = 'yes'
+                parsed_url = urlsplit(url)
+                url = '%s://%s%s?%s' % \
+                      (parsed_url.scheme, parsed_url.netloc,
+                       parsed_url.path, urlencode(parsed_query))
+
+        return url
 
     def get_watch_page(self, video_id):
         LOG.debug('Retrieving watch page /watch?v=%s' % video_id)
@@ -287,11 +311,7 @@ class VideoInfo:
                 url = 'https://www.youtube.com/%s' % \
                       url.lstrip('/').replace('www.youtube.com/', '')
 
-            LOG.debug('Found javascript player @ %s' % url)
             return url
-
-        if javascript_url:
-            return _normalize(javascript_url)
 
         page_result = self.get_embed_page(video_id)
         html = page_result.get('html')
@@ -301,11 +321,26 @@ class VideoInfo:
         if not html:
             return ''
 
-        found = re.search(r'"jsUrl":"(?P<url>[^"]*base\.js)"', html)
+        found = re.search(r'"jsUrl":"(?P<url>[^"]*base.js)"', html)
+
         if found:
             javascript_url = found.group('url')
 
-        return _normalize(javascript_url)
+        javascript_url = _normalize(javascript_url)
+
+        headers = {
+            'Connection': 'keep-alive',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '
+                          '(KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'DNT': '1',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'en-US,en;q=0.8,de;q=0.6'
+        }
+        result = requests.get(javascript_url, headers=headers, verify=False, allow_redirects=True)
+        javascript = result.text
+
+        return javascript
 
     @staticmethod
     def _decipher_signature(cipher, url):
@@ -490,11 +525,11 @@ class VideoInfo:
                         .getSettingInt('httpd.port') or 52520
                     license_data['token'] = self._access_token
                     break
-
+        javascript = self.get_player_javascript(video_id,
+                                                player_config.get('PLAYER_JS_URL', ''))
+        self._calculate_n = CalculateN(javascript)
         if self.requires_cipher(adaptive_formats):
-            javascript_url = \
-                self.get_player_javascript(video_id, player_config.get('PLAYER_JS_URL', ''))
-            cipher = Cipher(javascript_url)
+            cipher = Cipher(javascript)
 
         generated_manifest = False
         if not is_live:
@@ -502,7 +537,7 @@ class VideoInfo:
                 quality = Quality('mp4')
 
             mpd_url, stream_info = \
-                ManifestGenerator(self.itags, cipher, license_data).generate(
+                ManifestGenerator(self.itags, cipher, self.calculate_n, license_data).generate(
                     video_id,
                     adaptive_formats,
                     video_details.get('lengthSeconds', '0'),
@@ -518,6 +553,7 @@ class VideoInfo:
                     'error_description': 'Failed to decipher signature',
                     'code': '500'
                 })
+            mpd_url = self.calculate_n(mpd_url)
 
         video_stream = {
             'url': mpd_url,
