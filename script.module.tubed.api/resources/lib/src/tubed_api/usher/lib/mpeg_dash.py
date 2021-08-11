@@ -29,10 +29,11 @@ LOG = Log('usher', __file__)
 class ManifestGenerator:
     path = xbmcvfs.translatePath('special://temp/script.module.tubed.api/')
 
-    def __init__(self, itags, cipher, license_data=None):
+    def __init__(self, itags, cipher, calculate_n, license_data=None):
         self.addon = xbmcaddon.Addon('script.module.tubed.api')
 
         self._cipher = cipher
+        self.calculate_n = calculate_n
         self._itags = itags
         self._discarded = []
         if license_data is None:
@@ -252,6 +253,7 @@ class ManifestGenerator:
             elif 's' in stream_map:
                 url = ''.join([url, signature_parameter, self.cipher.signature(stream_map['s'])])
 
+            url = self.calculate_n(url)
             url = url.replace("&", "&amp;").replace('"', "&quot;")
             url = url.replace("<", "&lt;").replace(">", "&gt;")
 
