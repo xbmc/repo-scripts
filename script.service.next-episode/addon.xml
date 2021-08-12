@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.next-episode"
    name="Next Episode (next-episode.net)"
-   version="1.2.4"
+   version="1.2.5"
    provider-name="next-episode.net">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
@@ -29,7 +29,10 @@
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <news>1.2.4:
+    <news>1.2.5:
+- Fixed crashes when movies do not have IMDB ID.
+
+1.2.4:
 - Fixed compatibility with Kodi 20 "Nexus".</news>
   </extension>
 </addon>
