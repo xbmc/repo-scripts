@@ -34,6 +34,10 @@ Support will only be provided via the forum thread in [Kodi's Forums](https://fo
 
 None, for now at least :)
 
+### Translations
+
+You can help translating this addon at [Kodi's weblate](https://www.[google](https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tubecast/).com).
+
 ### Notes
 
 - Tubecast uses the `System.FriendlyName` infolabel to get the name to be advertised to the youtube application. In some systems this value is not available and the value defined for the setting `Kodi advertisement name (fallback)` will be used instead
