@@ -140,12 +140,14 @@ def prepare_movies_list(raw_movies):
     """
     listing = []
     for movie in raw_movies:
+        imdb_id = None
         if 'tt' in movie['imdbnumber']:
             imdb_id = movie['imdbnumber']
-        else:
+        elif 'uniqueid' in movie and movie['uniqueid'].get('imdb'):
             imdb_id = movie['uniqueid']['imdb']
-        watched = '1' if movie['playcount'] else '0'
-        listing.append({'imdb_id': imdb_id, 'watched': watched})
+        if imdb_id is not None:
+            watched = '1' if movie['playcount'] else '0'
+            listing.append({'imdb_id': imdb_id, 'watched': watched})
     return listing
 
 
@@ -161,15 +163,19 @@ def prepare_episodes_list(raw_episodes):
     listing = []
     thetvdb_id_map = {}
     for episode in raw_episodes:
-        season_num = str(episode['season'])
-        episode_num = str(episode['episode'])
-        watched = '1' if episode['playcount'] else '0'
         if episode['tvshowid'] not in thetvdb_id_map:
-            thetvdb_id_map[episode['tvshowid']] = get_tvdb_id(episode['tvshowid'])
-        listing.append(
-            {'thetvdb_id': thetvdb_id_map[episode['tvshowid']],
-             'season': season_num,
-             'episode': episode_num,
-             'watched': watched}
-        )
+            tvdb_id = get_tvdb_id(episode['tvshowid'])
+            thetvdb_id_map[episode['tvshowid']] = tvdb_id
+        else:
+            tvdb_id = thetvdb_id_map[episode['tvshowid']]
+        if tvdb_id is not None:
+            season_num = str(episode['season'])
+            episode_num = str(episode['episode'])
+            watched = '1' if episode['playcount'] else '0'
+            listing.append(
+                {'thetvdb_id': tvdb_id,
+                 'season': season_num,
+                 'episode': episode_num,
+                 'watched': watched}
+            )
     return listing
