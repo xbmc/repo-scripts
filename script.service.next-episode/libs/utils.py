@@ -206,22 +206,28 @@ def update_single_item(item):
             'hash': ADDON.getSetting('hash')
         }}
     if item['type'] == 'episode':
-        data['tvshows'] = [{
-            'thetvdb_id': get_tvdb_id(item['tvshowid']),
-            'season': str(item['season']),
-            'episode': str(item['episode']),
-            'watched': '1' if item['playcount'] else '0'
+        tvdb_id = get_tvdb_id(item['tvshowid'])
+        if tvdb_id is not None:
+            data['tvshows'] = [{
+                'thetvdb_id': tvdb_id,
+                'season': str(item['season']),
+                'episode': str(item['episode']),
+                'watched': '1' if item['playcount'] else '0'
             }]
     elif item['type'] == 'movie':
-        data['movies'] = [{
-            'watched': '1' if item['playcount'] else '0'
-        }]
+        imdb_id = None
         if 'tt' in item['imdbnumber']:
-            data['imdb_id'] = item['imdbnumber']
-        else:
-            data['imdb_id'] = item['uniqueid']['imdb']
-    log_data_sent(data)
-    send_data(data)
+            imdb_id = item['imdbnumber']
+        elif 'uniqueid' in item and item['uniqueid'].get('imdb'):
+            imdb_id = item['uniqueid']['imdb']
+        if imdb_id is not None:
+            data['movies'] = [{
+                'imdb_id': imdb_id,
+                'watched': '1' if item['playcount'] else '0'
+            }]
+    if data.get('movies') or data.get('tvshows'):
+        log_data_sent(data)
+        send_data(data)
 
 
 def login():
