@@ -235,7 +235,8 @@ class YoutubeCastV1(object):
                 "app": self.default_screen_app,
                 "pairing_code": pairing_code,
                 "screen_id": self.screen_id,
-                "screen_name": self.default_screen_name
+                "screen_name": self.default_screen_name,
+                "device_id": self.default_screen_name
             },
             verify=get_setting_as_bool("verify-ssl")
         )
@@ -249,7 +250,8 @@ class YoutubeCastV1(object):
                 "app": self.default_screen_app,
                 "lounge_token": self.lounge_token,
                 "screen_id": self.screen_id,
-                "screen_name": self.default_screen_name
+                "screen_name": self.default_screen_name,
+                "device_id": self.default_screen_name
             },
             verify=get_setting_as_bool("verify-ssl")
         )

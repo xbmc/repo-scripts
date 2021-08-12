@@ -1,0 +1,81 @@
+# Kodi Media Center language file
+# Addon Name: TubeCast
+# Addon id: script.tubecast
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-06-21 01:15+0700\n"
+"Last-Translator: Dmitry Petrov <dimakrm361@gmail.com>\n"
+"Language: ru_ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language-Team: \n"
+
+msgctxt "#32000"
+msgid "TubeCast"
+msgstr "TubeCast"
+
+msgctxt "#32001"
+msgid "Getting pairing code..."
+msgstr "Получение кода..."
+
+msgctxt "#32002"
+msgid "Please insert the following code in YouTube app settings"
+msgstr "Пожалуйста введите указанный ниже код в приложении Youtube"
+
+msgctxt "#32003"
+msgid "General"
+msgstr "Общие"
+
+msgctxt "#32004"
+msgid "Enable service discovery (SSDP)"
+msgstr "Включить протокол обнаружения SSDP"
+
+msgctxt "#32005"
+msgid "Debug SSDP datagrams"
+msgstr "Отладка SSDP датаграмм"
+
+msgctxt "#32006"
+msgid "connected"
+msgstr "подключен"
+
+msgctxt "#32007"
+msgid "disconnected"
+msgstr "отключен"
+
+msgctxt "#32008"
+msgid "Do you want to generate a new pairing code?"
+msgstr "Вы хотите получить новый код для подключения?"
+
+msgctxt "#32009"
+msgid "Yes"
+msgstr "Да"
+
+msgctxt "#32010"
+msgid "No"
+msgstr "Нет"
+
+msgctxt "#32011"
+msgid "Debug youtube cmds"
+msgstr "Отладка команд youtube"
+
+msgctxt "#32012"
+msgid "Debug"
+msgstr "Отладка"
+
+msgctxt "#32013"
+msgid "Verify SSL connections"
+msgstr "Проверять SSL соединения"
+
+msgctxt "#32014"
+msgid "Debug HTTP requests"
+msgstr "Отладка HTTP запросов"
+
+msgctxt "#32015"
+msgid "Kodi advertisement name (fallback)"
+msgstr "Имя устройства (альтернатива)"
