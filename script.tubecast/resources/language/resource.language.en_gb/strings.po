@@ -80,3 +80,15 @@ msgstr ""
 msgctxt "#32015"
 msgid "Kodi advertisement name (fallback)"
 msgstr ""
+
+msgctxt "#32016"
+msgid "Playback adddon"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Tubed"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Youtube"
+msgstr ""

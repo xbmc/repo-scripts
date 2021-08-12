@@ -80,3 +80,15 @@ msgstr "Depuração de pedidos HTTP"
 msgctxt "#32015"
 msgid "Kodi advertisement name (fallback)"
 msgstr "Nome para o Kodi (fallback)"
+
+msgctxt "#32016"
+msgid "Playback addon"
+msgstr "Addon para playback"
+
+msgctxt "#32017"
+msgid "Tubed"
+msgstr "Tubed"
+
+msgctxt "#32018"
+msgid "Youtube"
+msgstr "Youtube"

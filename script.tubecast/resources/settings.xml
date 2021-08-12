@@ -3,7 +3,8 @@
 	<category label="32003">
 		<setting label="32004" type="bool" id="enable-ssdp" default="true"/>
 		<setting label="32013" type="bool" id="verify-ssl" default="true"/>
-		<setting label="32015" type="text" id="kodi-advertise" default="Kodi-TV" />
+		<setting label="32015" type="text" id="kodi-advertise" default="Kodi-TV"/>
+		<setting label="32016" type="labelenum" id="playback-addon" lvalues="32017|32018"/>
 	</category>
 	<category label="32012">
 		<setting label="32005" type="bool" id="debug-ssdp" default="false"/>
