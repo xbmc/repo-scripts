@@ -47,6 +47,10 @@ msgctxt "#32052"
 msgid "Remove a show from your ignored list..."
 msgstr ""
 
+msgctxt "#32053"
+msgid "Browse to All Seasons rather than episode season"
+msgstr ""
+
 msgctxt "#32060"
 msgid "No ignored shows to manage."
 msgstr ""
@@ -54,3 +58,7 @@ msgstr ""
 msgctxt "#32061"
 msgid "General"
 msgstr ""
+
+msgctxt "#32062"
+msgid "Select show to stop ignoring"
+msgstr "

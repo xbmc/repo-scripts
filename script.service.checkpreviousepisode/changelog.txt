@@ -1,3 +1,7 @@
+v0.4.3
+- Re-write to modern Python & to match my other addons
+- Add option to force browse to the 'All Seasons' view
+
 v0.4.2
 - Update for changes to Kodi Matrix logging functions
 
