@@ -13,6 +13,7 @@
 from ... import keys, methods
 from ...api.parameters import Boolean, Direction, SortBy
 from ...queries import V5Query as Qry
+from ...queries import GQLQuery as GQLQry
 from ...queries import query
 
 
@@ -80,20 +81,44 @@ def check_follows(user_id, channel_id):
 
 # required scope: user_follows_edit
 @query
-def follow_channel(user_id, channel_id, notifications=Boolean.FALSE):
-    q = Qry('users/{user_id}/follows/channels/{channel_id}', method=methods.PUT)
-    q.add_urlkw(keys.USER_ID, user_id)
-    q.add_urlkw(keys.CHANNEL_ID, channel_id)
-    q.add_data(keys.NOTIFICATIONS, Boolean.validate(notifications), Boolean.FALSE)
+def follow_channel(channel_id, headers={}, notifications=False):
+    data = [{
+        "operationName": "FollowButton_FollowUser",
+        "variables": {
+            "input": {
+                "disableNotifications": notifications,
+                "targetID": str(channel_id)
+            }
+        },
+        "extensions": {
+            "persistedQuery": {
+                "version": 1,
+                "sha256Hash": "14319edb840c1dfce880dc64fa28a1f4eb69d821901e9e96eb9610d2e52b54f2"
+            }
+        }
+    }]
+    q = GQLQry('', headers=headers, data=data, use_token=False)
     return q
 
 
 # required scope: user_follows_edit
 @query
-def unfollow_channel(user_id, channel_id):
-    q = Qry('users/{user_id}/follows/channels/{channel_id}', method=methods.DELETE)
-    q.add_urlkw(keys.USER_ID, user_id)
-    q.add_urlkw(keys.CHANNEL_ID, channel_id)
+def unfollow_channel(channel_id, headers={}):
+    data = [{
+        "operationName": "FollowButton_UnfollowUser",
+        "variables": {
+            "input": {
+                "targetID": str(channel_id)
+            }
+        },
+        "extensions": {
+            "persistedQuery": {
+                "version": 1,
+                "sha256Hash": "29783a1dac24124e02f7295526241a9f1476cd2f5ce1e394f93ea50c253d8628"
+            }
+        }
+    }]
+    q = GQLQry('', headers=headers, data=data, use_token=False)
     return q
 
 
