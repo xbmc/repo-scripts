@@ -1,3 +1,9 @@
+v2.0.6
+- handle error in temp conversion function when we did not receive a valid temperature from the api
+- switch alerts api to use grid location instead of picking zone or county
+- pass in "international" units request to api for hourly and daily forcasts if user selected Celcius as their temp unit of choice
+- option to pull radar loop (animated gif) instead of static image
+
 v2.0.5
 - version bump for release
 
