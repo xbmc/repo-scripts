@@ -1029,6 +1029,13 @@
 					<default>false</default>
 					<control type="toggle" />
 				</setting>
+				<setting id="RadarLoop" type="boolean" label="32333" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+				
+				
 				<setting id="Map2Select" type="string" label="32352" help="">
 					<level>0</level>
 					<constraints>
