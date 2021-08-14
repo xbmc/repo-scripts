@@ -8,6 +8,14 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="" id="ForceBrowseAllSeasons" label="32053" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" setting="ForceBrowseForShow">true</dependency>
+					</dependencies>
+				</setting>
 				<setting help="" id="IgnoreIfEpisodeAbsentFromLibrary" label="32051" type="boolean">
 					<level>0</level>
 					<default>false</default>

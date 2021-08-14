@@ -21,7 +21,7 @@ def data_dir():
     """"get user data directory of this addon.
     according to http://wiki.xbmc.org/index.php?title=Add-on_Rules#Requirements_for_scripts_and_plugins
     """
-    _datapath = xbmc.translatePath(_Addon.getAddonInfo('profile'))
+    _datapath = xbmcvfs.translatePath(_Addon.getAddonInfo('profile'))
     if not xbmcvfs.exists(_datapath):
         xbmcvfs.mkdir(_datapath)
     return _datapath

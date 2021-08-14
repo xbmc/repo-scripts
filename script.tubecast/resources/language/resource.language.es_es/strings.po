@@ -76,3 +76,16 @@ msgstr "Verificar conexiones SSL"
 msgctxt "#32014"
 msgid "Debug HTTP requests"
 msgstr "Mostrar solicitudes HTTP"
+
+msgctxt "#32016"
+msgid "Playback addon"
+msgstr ""
+
+
+msgctxt "#32017"
+msgid "Tubed"
+msgstr "Tubed"
+
+msgctxt "#32018"
+msgid "Youtube"
+msgstr "Youtube"

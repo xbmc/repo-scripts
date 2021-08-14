@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.litebox" name="litebox Script" version="1.0.0" provider-name="BADMS, Angelinas, drinfernoo">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.simplejson" version="2.0.10"/>
+		<import addon="script.module.pil" version="1.1.7"/>
+	</requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+	<extension point="xbmc.addon.metadata">
+	    <summary lang="en_GB">colour matching tools</summary>
+		<description lang="en_GB">for skinners</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/</forum>
+		<source>https://github.com/BADMS/script.litebox</source>
+		<email>philipkdick@gmail.com</email>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/fanart.jpg</screenshot>
+		</assets>
+	</extension>
+</addon>

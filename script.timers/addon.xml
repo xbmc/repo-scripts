@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.timers" name="Timers" version="2.0.0" provider-name="Heckie">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+	</requires>
+	<extension point="xbmc.service" library="addon.py" />
+	<extension point="xbmc.python.script" library="program.py"/>
+	<extension point="kodi.context.item">
+		<menu id="kodi.core.main">
+			<item library="context_setsleep.py">
+				<label>32009</label>
+				<visible>true</visible>
+			</item>
+			<item library="context_setsnooze.py">
+				<label>32010</label>
+				<visible>Window.IsMedia+!ListItem.IsFolder</visible>
+			</item>
+			<item library="context_settimer.py">
+				<label>32000</label>
+				<visible>Window.IsMedia+!ListItem.IsFolder</visible>
+			</item>
+		</menu>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Timers</summary>
+		<summary lang="de_DE">Timers</summary>
+		<description lang="en_GB">A powerful timer addon with the following features
+* 10 timer slots. All of them can be quickly set up by using context menu
+* 2 additional slots for sleep and doze timers with single-click-setup 
+* Timers can play any ressource that it available in Kodi, e.g. music, video files, TV/radio programs, ressources from 3rd party plugins, e.g. Zattoo channels. 
+* Timers can be set from TV / Radio EPG
+* Different schedule modes: once, everyday, Mon-Fri, Fri-Sat, Sat-Sun, Sun-Thu, Mon-Thu, specific weekday and many more
+* Date change is supported, e.g. from 23:30 (p.m.) until 1:30 (a.m.) 
+* Two end modes, i.e. duration or specific time
+* Actions related to media: start media and stop at end, just start media, start media at end, stop media immediately, stop media at end, powerdown system
+* Linear fading in timer period: fade-in, fade-out, no fading. Min and max volume can be set for each timer
+* Custom label for timer
+* After KODI startup timers, that are in period, start retroactivly altought KODI was not running at start time. Fading volume is calculated correctly.
+* MS Windows only: Feature in order to prevent that Windows displays lock screen if Kodi idles
+		</description>
+		<description lang="de_DE">Timer Addon mit folgenden Funktionen
+* 10 Timer, die eingestellt werden können. Alle Timer können über das Kontextmenü geöffnet werden
+* 2 zusätzliche Timer für "Einschlaf"- und "Schlummer"-Timer mit nur einem Klick 
+* Timer können alle Medien starten, die in Kodi sind wie Musik, Video, TV/Radio programme, andere Addons, z.B. Zattoo. 
+* Verschiedene Zeitplanungen möglich: einmalig, pro Wochentag, Mo-Fr, Fr-Sa, Sa-So, So-Do, Mo-Do u.v.m.
+* Tageswechsel wird unterstützt, z.B. Timer von 23:30 bis 1:30 am nächsten Tag
+* Dauer kann über Zeitraum oder Zeitpunkt eingestellt werden
+* Aktionen mit Medien: starte Wiedergabe und beende diese nach Ablauf, starte Wiedergabe, starte Wiedergabe bei Ablauf, stoppe Wiedergabe sofort, stoppe Wiedergabe nach Ablauf, fahre System herunter
+* Lautstärke während der Laufzeit ein-/ausblenden. Einstellung pro Timer mit max. und minimaler Lautstärke
+* Beschriftung der Timer
+* Nachdem Kodi startet, werden aktive Timer ebenfalls gestartet.
+* MS Windows: Feature um Windows daran zu hindern in den Sperrbildschirm zu schalten, während Kodi keine Medien abspielt 
+		</description>
+		<language>en_GB</language>
+		<language>de_DE</language>
+		<platform>all</platform>
+		<license>MIT</license>
+		<website>https://github.com/Heckie75/kodi-addon-timers</website>
+		<source>https://github.com/Heckie75/kodi-addon-timers</source>
+		<news>
+v2.0.0 (2021-05-28)
+- Migration to Kodi 19 (Matrix)
+- Total refactoring of earlier version</news>
+		<assets>
+			<icon>resources/assets/icon.png</icon>
+			<fanart>resources/assets/fanart.png</fanart>
+			<screenshot>resources/assets/screenshot_01.png</screenshot>
+			<screenshot>resources/assets/screenshot_02.png</screenshot>
+			<screenshot>resources/assets/screenshot_03.png</screenshot>
+			<screenshot>resources/assets/screenshot_04.png</screenshot>
+			<screenshot>resources/assets/screenshot_05.png</screenshot>
+			<screenshot>resources/assets/screenshot_06.png</screenshot>
+			<screenshot>resources/assets/screenshot_07.png</screenshot>
+			<screenshot>resources/assets/screenshot_08.png</screenshot>
+			<screenshot>resources/assets/screenshot_09.png</screenshot>
+			<screenshot>resources/assets/screenshot_10.png</screenshot>
+		</assets>
+	</extension>
+</addon>

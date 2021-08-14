@@ -11,7 +11,8 @@ INFO FOR SKINNERS - How to use this addon in your skin:
    CustomFavourite.1.Path
    CustomFavourite.1.List (the absolute path without the 'Activate.Window()' part)
 
-   Additionally you can pass 'changetitle=true' to the script, this will allow the user to change the name of the label.
+   Additionally you can pass 'changetitle=true' to the script, this will allow the user to change the name of the label:
+   RunScript(script.favourites,property=CustomFavourite.1&amp;changetitle=true)
 
    The first item in the list (none) can be used to remove the current favourite from a button.
    The last item in the list (no action) can be used to change the label of a button without asigning an action to it.

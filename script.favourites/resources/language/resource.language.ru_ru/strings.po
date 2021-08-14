@@ -1,0 +1,41 @@
+# Kodi Media Center language file
+# Addon Name: Favourites script
+# Addon id: script.favourites
+# Addon Provider: ronie|`Black
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/xbmc-addons/language/ru/)\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid "Favourites script"
+msgstr "Скрипт Избранное"
+
+msgctxt "Addon Description"
+msgid "Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons."
+msgstr "Извлекает информацию из Вашего меню Избранное и отображает дополнительные кнопки в главном меню и подменю."
+
+msgctxt "Addon Disclaimer"
+msgid "Needs skin support for it to be used properly"
+msgstr "Необходима поддержка скинов для корректного отображения"
+
+msgctxt "#32000"
+msgid "Do you want to play the playlist instead of entering?"
+msgstr "Хотите ли Вы проиграть плейлист вместо его открытия?"
+
+msgctxt "#32001"
+msgid "None (clear current settings)"
+msgstr "Ничего (Очистить текущие настройки)"
+
+msgctxt "#32002"
+msgid "(no action)"
+msgstr "(без действия)"

@@ -1,0 +1,41 @@
+# Kodi Media Center language file
+# Addon Name: Favourites script
+# Addon id: script.favourites
+# Addon Provider: ronie|`Black
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/xbmc-addons/language/es_AR/)\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Favourites script"
+msgstr "Favoritos"
+
+msgctxt "Addon Description"
+msgid "Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons."
+msgstr "Obtiene medios de sus favoritos en Kodi para enriquecer su menu inicio y sub carpetas con botones personalizados"
+
+msgctxt "Addon Disclaimer"
+msgid "Needs skin support for it to be used properly"
+msgstr "Necesita soporte de mascara para ser usada correctamente"
+
+msgctxt "#32000"
+msgid "Do you want to play the playlist instead of entering?"
+msgstr "Reproducir la lista de reproducción en lugar de aceptarla?"
+
+msgctxt "#32001"
+msgid "None (clear current settings)"
+msgstr "Ninguno (Limpia los ajustes actuales)"
+
+msgctxt "#32002"
+msgid "(no action)"
+msgstr "(no hacer nada)"

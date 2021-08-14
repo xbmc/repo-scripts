@@ -1,0 +1,41 @@
+# Kodi Media Center language file
+# Addon Name: Favourites script
+# Addon id: script.favourites
+# Addon Provider: ronie|`Black
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Favourites script"
+msgstr "סקריפט מועדפים"
+
+msgctxt "Addon Description"
+msgid "Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons."
+msgstr "מייבא פריט מהמועדפים שלך לאכלוס תפריט/תת תפריט עם לחצנים מותאמים אישית במסך הבית."
+
+msgctxt "Addon Disclaimer"
+msgid "Needs skin support for it to be used properly"
+msgstr "להפעלה כראוי נדרשת תמיכה במעטפת"
+
+msgctxt "#32000"
+msgid "Do you want to play the playlist instead of entering?"
+msgstr "האם ברצונך לנגן את רשימת ההשמעה במקום פתיחתה?"
+
+msgctxt "#32001"
+msgid "None (clear current settings)"
+msgstr "כלום (נקה הגדרות נוכחיות)"
+
+msgctxt "#32002"
+msgid "(no action)"
+msgstr "(אין פעולה)"

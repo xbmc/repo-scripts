@@ -72,7 +72,7 @@ msgid "Sublissimo"
 msgstr ""
 
 msgctxt "#33000"
-msgid "Select the subtitle to synchronize with. Then:\n- Select a timecode in the beginning to a line as reference\n- Select the roughly the same line in your subtitle\n- Then do same with two lines near the end of both files."
+msgid "Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the beginning to a line as reference[CR]- Select the roughly the same line in your subtitle[CR]- Then do same with two lines near the end of both files."
 msgstr ""
 
 msgctxt "#32001"
@@ -252,7 +252,7 @@ msgid "Written to: "
 msgstr ""
 
 msgctxt "#32044"
-msgid "\nTo use the file, select it in the Kodi player subtitle menu when playing the file"
+msgid "To use the file, select it in the Kodi player subtitle menu when playing the file"
 msgstr ""
 
 msgctxt "#32045"
@@ -308,7 +308,7 @@ msgid "How to sync two subtitles"
 msgstr ""
 
 msgctxt "#32058"
-msgid "In order to synchronize, you will need a subtitle which matches the video perfectly, but has different subtitles, usually from a different language. In the next slide, first select this subtitle.\n\nThen, you'll be asked to select a timecode in this file, which will be used as reference. Ideally, it is the first spoken line from the video. In the next screen, select the line from your original subtitle which matches the first.\n\nSubsequently, you'll be asked again to select a line from your reference subtitle and to match this with the same line in your original subtitle. Usually the best choice is the last spoken line from the video. After this your two subtitles will sync!\n\nCheck 'Scroll subtitles' to view them and 'Save subtitles' to write them to a file."
+msgid "In order to synchronize, you will need a subtitle which matches the video perfectly, but has different subtitles, usually from a different language. In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked to select a timecode in this file, which will be used as reference. Ideally, it is the first spoken line from the video. In the next screen, select the line from your original subtitle which matches the first.[CR][CR]Subsequently, you'll be asked again to select a line from your reference subtitle and to match this with the same line in your original subtitle. Usually the best choice is the last spoken line from the video. After this your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them and 'Save subtitles' to write them to a file."
 msgstr ""
 
 msgctxt "#32059"
@@ -324,7 +324,7 @@ msgid "How to sync with a video file"
 msgstr ""
 
 msgctxt "#32062"
-msgid "In the next screen, open the videofile from the library which belongs to the subtitle you have opened. Skip or fast forward to the point where the subtitle should roughly be placed. Pause. \n\nWhen you paused the video, a menu will pop up with several options. Select 'View or edit first subtitle'. When your first subtitle is not the first line from the video, select 'Delete' until the first subtitle is also the first line from the video. \n\nThen finetune the position of the video, possibly by using the 'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position is perfect, choose 'Select as start'. \nNow fast forward to the end of the video, and repeat the same process. \n\nAfter this, your file will be synced to the video."
+msgid "In the next screen, open the videofile from the library which belongs to the subtitle you have opened. Skip or fast forward to the point where the subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, a menu will pop up with several options. Select 'View or edit first subtitle'. When your first subtitle is not the first line from the video, select 'Delete' until the first subtitle is also the first line from the video.[CR][CR]Then finetune the position of the video, possibly by using the 'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the video, and repeat the same process.[CR][CR]After this, your file will be synced to the video."
 msgstr ""
 
 msgctxt "#32063"
@@ -436,7 +436,7 @@ msgid "Your first subtitle starts at: "
 msgstr ""
 
 msgctxt "#32088"
-msgid "Your last subtitle starts at:  "
+msgid "Your last subtitle starts at: "
 msgstr ""
 
 msgctxt "#32089"
@@ -456,7 +456,7 @@ msgid "Select a line with a timecode"
 msgstr ""
 
 msgctxt "#32092"
-msgid "Please select a line with a timecode, like: \n'01:23:45,679 --> 01:23:45,679'"
+msgid "Please select a line with a timecode, like:[CR]'01:23:45,679 --> 01:23:45,679'"
 msgstr ""
 
 msgctxt "#32093"
@@ -701,4 +701,36 @@ msgstr ""
 
 msgctxt "#35008"
 msgid "Play with "
+msgstr ""
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr ""
+
+msgctxt "#35010"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr ""
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr ""
+
+msgctxt "#35016"
+msgid "Somewhere in the process of syncing an error occurred. Most of the time this is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A .srt file which has a digit missing in one of its timestamps.[CR] - A file which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr ""
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr ""
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr ""
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr ""
+
+msgctxt "#35018"
+msgid "The correct characterset of this file could not be detected. The file is now loading with the UTF-8 set and errors are replaced with questionmarks."
 msgstr ""

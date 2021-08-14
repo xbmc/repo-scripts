@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <settings version="1">
-	<section id="addon">
+	<section id="script.kodi.loguploader">
 		<category id="32501" label="32501">
 			<group id="1" label="32502">
 				<setting help="" id="oldlog" label="32503" type="boolean">

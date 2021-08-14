@@ -13,36 +13,20 @@
 
 import re
 
-import requests
-
 from ...exceptions import CipherUnknownMethod
 
 
 class Cipher:
-    def __init__(self, url):
+    def __init__(self, javascript):
         self._data = {
 
         }
-        self._javascript = ''
+        self._javascript = javascript
         self._json = {}
-        self._url = url
 
     def signature(self, signature):
-        self._download_javascript()
         self._create_json()
         return Engine(self.json).decipher(signature)
-
-    @property
-    def url(self):
-        if not self._url.startswith('http'):
-            self._url = ''.join(['http://', self._url])
-        return self._url
-
-    @url.setter
-    def url(self, value):
-        self._url = value
-        if not value.startswith('http'):
-            self._url = ''.join(['http://', value])
 
     @property
     def data(self):
@@ -59,25 +43,6 @@ class Cipher:
     @javascript.setter
     def javascript(self, value):
         self._javascript = value
-
-    def _download_javascript(self):
-        if self.javascript:
-            return
-
-        headers = {
-            'Connection': 'keep-alive',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'DNT': '1',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-US,en;q=0.8,de;q=0.6'
-        }
-
-        response = requests.get(self.url, headers=headers, allow_redirects=True)
-        response.encoding = 'utf-8'
-
-        self.javascript = response.text
 
     def _get_entry_point(self):
         # patterns source is youtube-dl
@@ -131,9 +96,8 @@ class Cipher:
             return {}
 
         function_name = function_name.replace('$', '\\$')
-
-        pattern = r'\s?%s=function\((?P<parameter>[^)]+)\)\s?{\s?' \
-                  r'(?P<body>[^}]+)\s?}' % function_name
+        pattern = r'%s=function\((?P<parameter>\w)\){(?P<body>[a-z=\.\("\)]*;(.*);(?:.+))}' \
+                  % function_name
 
         match = re.search(pattern, self.javascript)
         if match:

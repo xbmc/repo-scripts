@@ -44,6 +44,8 @@ DATEFORMAT = xbmc.getRegion('dateshort')
 
 class BinaryFile(xbmcvfs.File):
     def read(self, numBytes: int = 0) -> bytes:
+        if not numBytes:
+            return b""
         return bytes(self.readBytes(numBytes))
 
 
@@ -414,7 +416,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             log(SKINDIR)
             log(json_query)
             return
-        skinxml = xbmc.translatePath(os.path.join(skinpath, 'addon.xml'))
+        skinxml = xbmcvfs.translatePath(os.path.join(skinpath, 'addon.xml'))
         try:
             # parse the skin addon.xml
             self.xml = parse(skinxml)

@@ -1,0 +1,41 @@
+<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="1.0.0">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.module.requests" version="2.22.0" />
+		<import addon="script.module.pil" />
+		<import addon="script.module.simplecache" version="2.0.2" />
+		<import addon="script.module.pyrollbar" version="0.15.2" />
+        <!-- <import addon="script.module.pydevd"/> -->
+	</requires>
+	<extension point="xbmc.service" name="service.hue" library="service.py" />
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<license>MIT License</license>
+		<assets>
+			<icon>resources/icons/icon.png</icon>
+			<fanart>resources/icons/fanart.jpg</fanart>
+			<screenshot>resources/icons/fanart.jpg</screenshot>
+		</assets>
+		<source>https://github.com/zim514/script.service.hue</source>
+		<forum>https://forum.kodi.tv/showthread.php?tid=344886</forum>
+		<summary lang="en_GB">Automate Hue lights with Kodi playback</summary>
+		<description lang="en_GB">Automate your Philips Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support.</description>
+		<disclaimer lang="en_GB">Automate Hue lights with Kodi playback</disclaimer>
+		<news>v1.0.0
+Final version with requested edits.
+v0.14.0
+Python 3/Matrix support
+v0.13.2
+Fix wrong scene being activated when paused at sunset
+Fix exception adding bridge with old firmware
+v0.13.0
+Add option to disable scenes if lights are off (thanks @cyberden!)
+Add option to always enable scenes if any lights are on (thanks @cyberden!)
+Add video activation toggle for PVR
+		</news>
+	</extension>
+</addon>
+

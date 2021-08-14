@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="1.2.2" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="Oz Weather" version="2.0.2" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
     	<import addon="script.module.requests" version="2.22.0+matrix.1"/>
     	<import addon="script.module.beautifulsoup4" version="4.8.2+matrix.1"/>
+		<import addon="script.module.pytz" version="3.0+matrix.2"/>
 	</requires>
 	<extension point="xbmc.python.weather" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Weather forecasting and radar images for Australia using Bureau of Meteorology data</summary>
-		<description lang="en_GB">Weather forecast data scraped from the Australian Bureau of Meteorology via WeatherZone - www.bom.gov.au and www.weatherzone.com.au.  For full features (e.g. radar) make sure you install the replacement skin files found via the addon wiki (https://kodi.wiki/index.php?title=Add-on:Oz_Weather).</description>
+		<description lang="en_GB">Weather forecasting and radar images for Australia using Bureau of Meteorology data.  For full features (animated radars &amp; ABC weather videos) - make sure you install the replacement skin files - see information at the addon wiki (https://kodi.wiki/index.php?title=Add-on:Oz_Weather).</description>
 		<disclaimer lang="en_GB">Use of this addon implies you agree to the following terms and conditions - http://reg.bom.gov.au/other/copyright.shtml and http://reg.bom.gov.au/other/disclaimer.shtml</disclaimer>
 		<platform>all</platform>
 		<language>en</language>
@@ -21,12 +22,18 @@
        		<icon>icon.png</icon>
        		<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>V1.2.2
-			- Fix for setting of new locations
-			V1.2.1
-			- Updated for change in Kodi logging functions (LOGNOTICE -> LOGINFO)
-			v1.2.0
-			- Updated for Kodi Matrix and Python 3
+		<news>v2.0.2
+			- Minor bugfixes and improvements
+			v2.01
+			- Tweaks to cope with some BOM weather stations that return incomplete data
+			v2.0.0
+			- N.B. If you have run a version before 2.0, please re-configure the addon to set-up your new BOM locations
+			- Rewrite to use BOM API directly, leave Weatherzone in as a fallback option. if BOM not configured or available
+			- Auto-locate closest radar
+			- Add mechanism to manually purge radar backgrounds via addon settings
+			- Remove periodic refresh of backgrounds in favour of the above
+			- Update settings.xml to new Kodi format
+			- Modernise code throughout
     	</news>
 	</extension>
 </addon>

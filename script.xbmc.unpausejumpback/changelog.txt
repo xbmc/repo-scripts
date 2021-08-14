@@ -1,3 +1,6 @@
+3.0.2
+- fix "Kodi is not playing any media file" when skipping beyond end of file
+
 3.0.1
 - Minor bugfix with http/s sources (plugins)
 

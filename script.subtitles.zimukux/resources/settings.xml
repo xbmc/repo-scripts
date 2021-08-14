@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <level>0</level>
+	<section id="script.subtitles.zimukux">
+		<category id="general" label="30100" help="">
+			<group id="1" label="">
+                <setting id="ZiMuKuUrl" type="string" label="30101" help="">
+                	<level>0</level>
+					<control type="edit" format="string">
+						<heading>30101</heading>
+					</control>
+                	<default>http://zmk.pw</default>
+                	<constraints>
+                		<allowempty>false</allowempty>
+                	</constraints>
+                </setting>
+			</group>
+		</category>
+		<category id="subpref" label="30200" help="">
+			<group id="1" label="">
+				<setting id="subtype" type="string" label="30210" help="">
+					<level>0</level>
+					<control type="list" format="string">
+						<heading>30210</heading>
+					</control>
+					<default>none</default>
+					<constraints>
+						<options>
+							<option label="30211">none</option>
+							<option label="30212">ass</option>
+							<option label="30213">srt</option>
+						</options>
+					</constraints>
+				</setting>
+				<setting id="sublang" type="string" label="30220" help="">
+					<level>1</level>
+					<control type="list" format="string">
+						<heading>30220</heading>
+					</control>
+					<default>none</default>
+					<constraints>
+						<options>
+							<option label="30221">none</option>
+							<option label="30222">chs</option>
+							<option label="30223">cht</option>
+							<option label="30224">dualchs</option>
+							<option label="30225">dualcht</option>
+						</options>
+					</constraints>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

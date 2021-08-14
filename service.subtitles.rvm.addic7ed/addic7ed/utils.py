@@ -58,22 +58,23 @@ class logger(object):
 
 def get_now_played():
     """
-    Get info about the currently played file via JSON-RPC.
-    Alternatively this can be done via Kodi InfoLabels.
+    Get info about the currently played file via JSON-RPC
 
     :return: currently played item's data
     :rtype: dict
     """
-    request = json.dumps(
-        {'jsonrpc': '2.0',
-         'method': 'Player.GetItem',
-         'params': {
-             'playerid': 1,
-             'properties': ['file', 'showtitle', 'season', 'episode']
+    request = json.dumps({
+        'jsonrpc': '2.0',
+        'method': 'Player.GetItem',
+        'params': {
+            'playerid': 1,
+            'properties': ['showtitle', 'season', 'episode']
          },
-         'id': '1'}
-    )
-    return json.loads(xbmc.executeJSONRPC(request))['result']['item']
+        'id': '1'
+    })
+    item = json.loads(xbmc.executeJSONRPC(request))['result']['item']
+    item['file'] = xbmc.Player().getPlayingFile()  # It provides more correct result
+    return item
 
 
 def normalize_showname(showname):

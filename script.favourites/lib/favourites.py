@@ -39,7 +39,8 @@ class MAIN():
     def _get_favs(self):
         data = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Favourites.GetFavourites", "params":{"properties":["window", "windowparameter", "thumbnail", "path"]}, "id":1}')
         favs = json.loads(data)
-        return favs['result']['favourites']
+        if 'result' in favs:
+            return favs['result']['favourites']
 
     def _set_properties(self, listing):
         self.WINDOW = xbmcgui.Window(10000)

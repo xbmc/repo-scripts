@@ -17,8 +17,12 @@ def set_kodi_volume(volume):
 
 
 def get_youtube_plugin_path(videoid, seek=0):  # type: (str, str) -> str
-    return "plugin://plugin.video.tubed/?mode=play&video_id={}&start_offset={}".format(
-        videoid, float(seek))
+    if utils.get_setting("playback-addon") == "Tubed":
+        return "plugin://plugin.video.tubed/?mode=play&video_id={}&start_offset={}".format(
+            videoid, float(seek))
+    else:
+        return "plugin://plugin.video.youtube/play/?video_id={}&seek={}".format(
+            videoid, float(seek))
 
 
 def remote_connected(name):

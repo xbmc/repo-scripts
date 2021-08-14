@@ -11,7 +11,7 @@ from lib.utils import *
 
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD = ADDON.getAddonInfo('path')
-PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 
 socket.setdefaulttimeout(10)
 
@@ -138,21 +138,21 @@ class Main():
         set_property('Map.4.Heading', xbmc.getLocalizedString(383))
         set_property('Map.5.Heading', xbmc.getLocalizedString(1376))
         if 'F' in TEMPUNIT:
-            set_property('Map.1.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'precip-in.png')))
+            set_property('Map.1.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'precip-in.png')))
         else:
-            set_property('Map.1.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'precip-mm.png')))
-        set_property('Map.2.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'clouds.png')))
+            set_property('Map.1.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'precip-mm.png')))
+        set_property('Map.2.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'clouds.png')))
         if 'F' in TEMPUNIT:
-            set_property('Map.3.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'temp-f.png')))
+            set_property('Map.3.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'temp-f.png')))
         else:
-            set_property('Map.3.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'temp-c.png')))
+            set_property('Map.3.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'temp-c.png')))
         if SPEEDUNIT == 'mph':
-            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-mi.png')))
+            set_property('Map.4.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-mi.png')))
         elif SPEEDUNIT == 'Beaufort':
-            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-bft.png')))
+            set_property('Map.4.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-bft.png')))
         else:
-            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-kmh.png')))
-        set_property('Map.5.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'press.png')))
+            set_property('Map.4.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-kmh.png')))
+        set_property('Map.5.Legend' , xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'graphics', 'press.png')))
 
 
 class get_tiles(threading.Thread):
@@ -194,7 +194,7 @@ class get_tiles(threading.Thread):
                     num = img[2]
                 else:
                     num = str(count)
-                tilefile = xbmc.translatePath(os.path.join(mapdir, num + '.png'))
+                tilefile = xbmcvfs.translatePath(os.path.join(mapdir, num + '.png'))
                 try:
                     tmpmap = open(tilefile, 'wb')
                     tmpmap.write(data)
