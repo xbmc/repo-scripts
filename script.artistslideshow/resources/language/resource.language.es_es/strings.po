@@ -16,6 +16,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Download images and additional info of the currently playing artist"
+msgstr "Descarga imágenes e información adicional del artista que esté sonando"
+
+msgctxt "Addon Description"
+msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
+msgstr "Addon para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del artista que se está reproduciendo. Las imágenes, junto con imágenes de artistas locales, y la información puede ser utilizada por la piel para crear una presentación de diapositivas para el artista que se está escuchando."
+
 # Section Headings
 msgctxt "#32000"
 msgid "Slideshow"
