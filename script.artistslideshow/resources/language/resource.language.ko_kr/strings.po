@@ -5,91 +5,100 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-08-04 13:29+0000\n"
+"Last-Translator: Joe Baek <aalive1@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/ko_kr/>\n"
 "Language: ko_kr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.7.2\n"
+
+msgctxt "Addon Summary"
+msgid "Download images and additional info of the currently playing artist"
+msgstr "현재 재생중인 아티스트의 이미지와 추가 정보 다운로드"
+
+msgctxt "Addon Description"
+msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
+msgstr "현재 재생중인 아티스트의 이미지와 추가정보를 fanart.tv 와 theaudiodb.com 에서 다운로드합니다. 다운로드한 이미지와 정보는 로컬 이미지와 함께 현재 재생중인 음악의 아티스트 슬라이드쇼에 사용할 수 있습니다."
 
 # Section Headings
 msgctxt "#32000"
 msgid "Slideshow"
-msgstr ""
+msgstr "슬라이드쇼"
 
 msgctxt "#32001"
 msgid "Storage"
-msgstr ""
+msgstr "저장장치"
 
 msgctxt "#32002"
 msgid "Images"
-msgstr ""
+msgstr "이미지"
 
 msgctxt "#32003"
 msgid "Album Info"
-msgstr ""
+msgstr "앨범 정보"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr ""
+msgstr "아티스트 약력"
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr ""
+msgstr "유사한 아티스트"
 
 msgctxt "#32006"
 msgid "Advanced"
-msgstr ""
+msgstr "고급"
 
 # empty strings from id 32007 to 32099
 # Settings
 msgctxt "#32101"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "fanart.tv에서 이미지 다운로드"
 
 msgctxt "#32102"
 msgid "Download images from theaudiodb.com"
-msgstr ""
+msgstr "theaudiodb.com에서 이미지 다운로드"
 
 msgctxt "#32103"
 msgid "Download album info from the audiodb.com"
-msgstr ""
+msgstr "audiodb.com에서 앨범 정보 다운로드"
 
 msgctxt "#32104"
 msgid "Download album info from the last.fm"
-msgstr ""
+msgstr "last.fm에서 앨범 정보 다운로드"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr ""
+msgstr "theaudiodb.com에서 아티스트 약력 다운로드"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr ""
+msgstr "last.fm에서 아티스트 약력 다운로드"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr ""
+msgstr "last.fm에서 유사한 아티스트 다운로드"
 
 msgctxt "#32108"
 msgid "- Download all images regardless of resolution"
-msgstr ""
+msgstr "- 해상도 상관없이 모든 이미지 다운로드"
 
 msgctxt "#32109"
 msgid "- Client API key"
-msgstr ""
+msgstr "- 클라이언트 API 키"
 
 msgctxt "#32110"
 msgid "- I donate to this service"
-msgstr ""
+msgstr "- 이 서비스에 기부합니다"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "기본 슬라이드쇼 사용"
 
 msgctxt "#32112"
 msgid "Use override slideshow"
