@@ -3,6 +3,7 @@
 
 import os
 import xbmc
+import xbmcgui
 import json
 import threading
 
@@ -43,7 +44,7 @@ class Player(xbmc.Player):
                "properties": ["showtitle", "title", "season", "episode", "file", "tvshowid", "imdbnumber","genre" ,"year","uniqueid"]
             },
             "id": 1})))["result"]["item"]
-        is_tv = _data["tvshowid"] != -1 and _data["season"] > 0 and _data["episode"] > 0
+        is_tv = _data["season"] > 0 and _data["episode"] > 0
         _data["ids"] = {}
 
         if 'id' not in _data:
@@ -52,8 +53,8 @@ class Player(xbmc.Player):
             showtitle = xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
             title = xbmc.getInfoLabel('VideoPlayer.Title')
             year = xbmc.getInfoLabel('VideoPlayer.Year')
-            if season: _data["season"] = season
-            if episode: _data["episode"] = episode
+            if season and int(season)>-1: _data["season"] = int(season)
+            if episode and int(episode)>-1: _data["episode"] = int(episode)
             if showtitle: _data["showtitle"] = showtitle
             if year: _data["year"] = year
             if title: _data["title"] = title
@@ -66,9 +67,15 @@ class Player(xbmc.Player):
                 })))["result"]["tvshowdetails"]
                 if _tmp["uniqueid"].get("tvdb"): _data["ids"]["tvdb"] = _tmp["uniqueid"]["tvdb"]
                 if _tmp["uniqueid"].get("tmdb"): _data["ids"]["tmdb"] = _tmp["uniqueid"]["tmdb"]
-            elif "uniqueid" in _data:
-                if _data["uniqueid"].get("tmdb"): _data["ids"]["tmdb"] = _data["uniqueid"]["tmdb"]
-                if _data["uniqueid"].get("imdb"): _data["ids"]["imdb"] = _data["uniqueid"]["imdb"]
+
+        if not _data["ids"] and "uniqueid" in _data:
+            if _data["uniqueid"].get("tmdb") and _data["uniqueid"]["tmdb"]!='0': _data["ids"]["tmdb"] = _data["uniqueid"]["tmdb"]
+            if _data["uniqueid"].get("tvdb") and _data["uniqueid"]["tvdb"]!='0': _data["ids"]["tvdb"] = _data["uniqueid"]["tvdb"]
+            if _data["uniqueid"].get("imdb") and _data["uniqueid"]["imdb"]!='0': _data["ids"]["imdb"] = _data["uniqueid"]["imdb"]
+
+        video_ids = xbmcgui.Window(10000).getProperty('scrip.simkl.ids')
+        if video_ids:
+            _data['ids'] = json.loads(video_ids)
 
         log("Full: {0}".format(_data))
         if not _data["ids"] and _data['file']:
@@ -102,7 +109,7 @@ class Player(xbmc.Player):
                     "season": _data["season"],
                     "episode": _data["episode"]
                 }
-            else:
+            elif _data["year"]:
                 # TESTED
                 self._item = {
                     "type": "movies",
