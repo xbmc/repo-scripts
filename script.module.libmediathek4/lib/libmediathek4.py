@@ -215,7 +215,7 @@ class lm4:
 				streamType = 'AUDIO'
 		listitem = xbmcgui.ListItem(path=url)
 		if streamType == 'DASH':
-			listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+			listitem.setProperty('inputstream', 'inputstream.adaptive')
 			listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
 			if 'licenseserverurl' in item:
 				listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
