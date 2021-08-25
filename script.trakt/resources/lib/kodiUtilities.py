@@ -355,26 +355,39 @@ def checkAndConfigureProxy():
         proxyPassword = kodiJsonRequest({'jsonrpc': '2.0', "method": "Settings.GetSettingValue", "params": {
             "setting": "network.httpproxypassword"}, 'id': 1})['value']
 
+
         if proxyUsername and proxyPassword and proxyURL and proxyPort:
             regexUrl = re.compile(REGEX_URL)
             matchURL = regexUrl.search(proxyURL)
             if matchURL:
                 return matchURL.group(1) + proxyUsername + ':' + proxyPassword + '@' + matchURL.group(2) + ':' + proxyPort
+            else:
+                return 'http://' + proxyUsername + ':' + proxyPassword + '@' + proxyURL + ':' + proxyPort
         elif proxyURL and proxyPort:
-            return proxyURL + ':' + proxyPort
+            regexUrl = re.compile(REGEX_URL)
+            hasScheme = regexUrl.search(proxyURL)
+            if hasScheme:
+                return proxyURL + ':' + proxyPort
+            else:
+                return 'http://' + proxyURL + ':' + proxyPort
+
 
     return None
 
 
 def getMediaType():
-    if xbmc.getCondVisibility('Container.Content(tvshows)'):
-        return "show"
-    elif xbmc.getCondVisibility('Container.Content(seasons)'):
-        return "season"
-    elif xbmc.getCondVisibility('Container.Content(episodes)'):
-        return "episode"
-    elif xbmc.getCondVisibility('Container.Content(movies)'):
+    listType = xbmc.getInfoLabel('ListItem.DBTYPE')
+
+    xbmc.log("list item type: %s" % listType, xbmc.LOGINFO)
+
+    if listType == "movie":
         return "movie"
+    if listType == "tvshow":
+        return "show"
+    if listType == "season":
+        return "season"
+    if listType == "episode":
+        return "episode"
     else:
         return None
 
