@@ -54,7 +54,7 @@ class SyncWizardFrameRate(xbmc.Player):
     def rearrange(self, new_factor, from_pause):
         if from_pause:
             self.flag = False
-        cur_sub = Subtitle(self.subtitlefile)
+        cur_sub = Subtitle(self.subtitlefile, self.filename)
         old_starting_time, old_ending_time = cur_sub.make_timelines_decimal()
         old_start_timestamp = script.make_timelines_classical(old_starting_time)
         old_ending_timestamp = script.make_timelines_classical(old_ending_time)
