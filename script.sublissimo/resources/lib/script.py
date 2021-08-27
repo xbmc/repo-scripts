@@ -489,7 +489,6 @@ def read_problematic_file(filename, backup):
         subtitlefile = [sentence+"\n" for sentence in lines]
         if backup:
             backupfile = copy.deepcopy(subtitlefile)
-        xbmcgui.Dialog().multiselect(_(32010), subtitlefile)
         return subtitlefile, filename
     except:
         subtitlefile, filename = read_problematic_file_final(filename, backup)
