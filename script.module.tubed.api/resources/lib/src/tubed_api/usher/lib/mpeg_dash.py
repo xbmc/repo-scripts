@@ -501,8 +501,8 @@ class ManifestGenerator:
                             self.discard_video(mime, itag, data[key][itag], 'hdr not selected')
                             continue
 
-                        if (video_codec.lower().startswith(('av01', 'av1')) and
-                                not quality_object.av1):
+                        if video_codec.lower().startswith(('av01', 'av1') and
+                                                          not quality_object.av1):
                             self.discard_video(mime, itag, data[key][itag], 'av1 not selected')
                             continue
 
