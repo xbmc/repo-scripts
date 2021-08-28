@@ -1,3 +1,7 @@
+v2.0.3
+- Bug fix for playing non-library videos
+- Use common code, better logging
+
 v2.0.2
 - Complete re-write into more modular, modern Python 3
 - Add support for advancedsettings ignoresecondsatstart and ignorepercentatend
