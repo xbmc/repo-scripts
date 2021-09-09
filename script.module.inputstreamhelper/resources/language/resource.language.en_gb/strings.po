@@ -145,14 +145,6 @@ msgctxt "#30034"
 msgid "Update"
 msgstr ""
 
-msgctxt "#30035"
-msgid "[B]loop[/B] is still loaded"
-msgstr ""
-
-msgctxt "#30036"
-msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr ""
-
 msgctxt "#30037"
 msgid "Success!"
 msgstr ""
@@ -241,10 +233,6 @@ msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
 msgstr ""
 
-msgctxt "#30059"
-msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
-msgstr ""
-
 msgctxt "#30060"
 msgid "Identifying wanted partition..."
 msgstr ""
@@ -268,19 +256,6 @@ msgstr ""
 msgctxt "#30065"
 msgid "Shall we try again?"
 msgstr ""
-
-msgctxt "#30066"
-msgid "Warning"
-msgstr ""
-
-msgctxt "#30067"
-msgid "{os} probably doesn't support the newest Widevine CDM. Would you try to install an older Widevine CDM instead?"
-msgstr ""
-
-msgctxt "#30068"
-msgid "You're going to install an older Widevine CDM. Please note that Google will remove support for older Widevine CDM's at some point."
-msgstr ""
-
 
 
 ### INFORMATION DIALOG

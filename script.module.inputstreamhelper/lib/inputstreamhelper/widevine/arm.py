@@ -5,70 +5,11 @@
 from __future__ import absolute_import, division, unicode_literals
 import os
 import json
-from time import time
 
 from .. import config
-from ..kodiutils import browsesingle, copy, exists, kodi_os, localize, log, mkdir, ok_dialog, open_file, progress_dialog, yesno_dialog
-from ..utils import cmd_exists, diskspace, http_download, http_get, http_head, run_cmd, sizeof_fmt, store, system_os, temp_path, update_temp_path
-from ..unicodes import compat_path, to_unicode
+from ..kodiutils import browsesingle, localize, log, ok_dialog, open_file, progress_dialog, yesno_dialog
+from ..utils import diskspace, http_download, http_get, sizeof_fmt, store, system_os, update_temp_path
 from .arm_chromeos import ChromeOSImage
-
-
-def mnt_path(make=True):
-    """Return mount path, usually ~/.kodi/userdata/addon_data/script.module.inputstreamhelper/temp/mnt/"""
-    mount_path = os.path.join(temp_path(), 'mnt', '')
-    if make and not exists(mount_path):
-        mkdir(mount_path)
-
-    return mount_path
-
-
-def check_loop():
-    """Check if loop module needs to be loaded into system."""
-    if not run_cmd(['modinfo', 'loop'])['success']:
-        log(0, 'loop is built in the kernel.')
-        return True  # assume loop is built in the kernel
-
-    store('modprobe_loop', True)
-    cmd = ['modprobe', '-q', 'loop']
-    output = run_cmd(cmd, sudo=True)
-    return output['success']
-
-
-def set_loop_dev():
-    """Set an unused loop device that's available for use."""
-    cmd = ['losetup', '-f']
-    output = run_cmd(cmd, sudo=False)
-    if output['success']:
-        store('loop_dev', output['output'].strip())
-        log(0, 'Found free loop device: {device}', device=store('loop_dev'))
-        return True
-
-    log(4, 'Failed to find free loop device.')
-    return False
-
-
-def losetup(bin_path):
-    """Setup Chrome OS loop device."""
-    cos_offset = str(ChromeOSImage(bin_path).chromeos_offset())
-
-    cmd = ['losetup', '-o', cos_offset, store('loop_dev'), bin_path]
-    output = run_cmd(cmd, sudo=True)
-    if output['success']:
-        store('attached_loop_dev', True)
-        return True
-
-    return False
-
-
-def mnt_loop_dev():
-    """Mount loop device to mnt_path()"""
-    cmd = ['mount', '-t', 'ext2', '-o', 'ro', store('loop_dev'), compat_path(mnt_path())]
-    output = run_cmd(cmd, sudo=True)
-    if output['success']:
-        return True
-
-    return False
 
 
 def select_best_chromeos_image(devices):
@@ -122,58 +63,11 @@ def chromeos_config():
     return json.loads(http_get(config.CHROMEOS_RECOVERY_URL))
 
 
-def hardcoded_chromeos_image():
-    """Gets a hardcoded ChromeOS image"""
-    arm_device = config.HARDCODED_CHROMEOS_IMAGE
-    http_status = http_head(arm_device['url'])
-    if http_status == 200:
-        return arm_device
-    return None
-
-
-def supports_widevine_arm64tls():
-    """Whether the system supports newer Widevine CDM's that use TLS with 64-byte alignment"""
-    # With the release of Widevine CDM 4.10.2252.0, Google uses a newer dynamic library that uses TLS with 64-byte alignment and needs a patched glibc to work
-    # Google will remove support for older ARM Widevine CDM's at some point
-    # More info at https://github.com/xbmc/inputstream.adaptive/issues/678 and https://www.widevine.com/news
-
-    # LibreELEC 9.2.7: Check if TCMalloc library is preloaded or linked
-    libtcmalloc = 'libtcmalloc'
-    with open('/proc/self/maps', 'r') as maps:
-        process_maps = maps.read()
-    is_tcmalloc_preloaded = bool(libtcmalloc in process_maps)
-
-    # Experimental: detect TLS 64-byte alignment support, searching for 'arm64tls' string in ldd version
-    cmd = ['ldd', '--version']
-    ldd_version = run_cmd(cmd).get('output').split('\n')[0].split(' ')[-1]
-    has_tls64bytes_support = bool('arm64tls' in ldd_version)
-
-    # Experimental: detect TLS 64-byte alignment support, checking environment variable
-    if not has_tls64bytes_support:
-        try:
-            libc_patchlevel = int(os.environ['LIBC_WIDEVINE_PATCHLEVEL'])
-            has_tls64bytes_support = libc_patchlevel >= 1
-        except KeyError:
-            has_tls64bytes_support = False
-
-    return is_tcmalloc_preloaded or has_tls64bytes_support
-
-
 def install_widevine_arm(backup_path):
     """Installs Widevine CDM on ARM-based architectures."""
-    arm_device = None
-    if not supports_widevine_arm64tls():
-        # Propose user to install older version
-        if yesno_dialog(localize(30066), localize(30067, os=kodi_os())):  # Your os probably doesn't support the newest Widevine CDM. Try older one?
-            # Install hardcoded ChromeOS image
-            ok_dialog(localize(30066), localize(30068))  # Please note that Google will remove support for older Widevine CDM's at some point
-            arm_device = hardcoded_chromeos_image()
-            devices = arm_device
-
     # Select newest and smallest ChromeOS image
-    if arm_device is None:
-        devices = chromeos_config()
-        arm_device = select_best_chromeos_image(devices)
+    devices = chromeos_config()
+    arm_device = select_best_chromeos_image(devices)
 
     if arm_device is None:
         log(4, 'We could not find an ARM device in the Chrome OS recovery.json')
@@ -211,19 +105,13 @@ def install_widevine_arm(backup_path):
                 progress=progress)
 
             if not extracted:
-                log(3, 'Directly extracting widevine from the zip failed, using legacy method.')
+                log(4, 'Extracting widevine from the zip failed!')
                 progress.close()
-                if yesno_dialog(heading=localize(30004),
-                                message='{line1}\n{line2}\n{line3}'.format(
-                                    line1=localize(30016),
-                                    line2=localize(30830, url=config.ISSUE_URL),
-                                    line3=localize(30059))):
-                    return install_wv_arm_legacy(backup_path)
                 return False
 
             recovery_file = os.path.join(backup_path, arm_device['version'], os.path.basename(config.CHROMEOS_RECOVERY_URL))
             config_file = os.path.join(backup_path, arm_device['version'], 'config.json')
-            with open_file(recovery_file, 'w') as reco_file:
+            with open_file(recovery_file, 'w') as reco_file:  # pylint: disable=unspecified-encoding
                 reco_file.write(json.dumps(devices, indent=4))
             with open_file(config_file, 'w') as conf_file:
                 conf_file.write(json.dumps(arm_device))
@@ -231,122 +119,3 @@ def install_widevine_arm(backup_path):
             return (progress, arm_device['version'])
 
     return False
-
-
-def install_wv_arm_legacy(backup_path):
-    """Legacy method to install Widevine CDM on ARM-based architectures."""
-    root_cmds = ['mount', 'umount', 'losetup', 'modprobe']
-    devices = chromeos_config()
-    arm_device = select_best_chromeos_image(devices)
-    if arm_device is None:
-        log(4, 'We could not find an ARM device in the Chrome OS recovery.json')
-        ok_dialog(localize(30004), localize(30005))
-        return False
-    # Estimated required disk space: takes into account an extra 20 MiB buffer
-    required_diskspace = 20971520 + int(arm_device['zipfilesize']) + int(arm_device['filesize'])
-    if yesno_dialog(localize(30001),  # Due to distributing issues, this takes a long time
-                    localize(30006, diskspace=sizeof_fmt(required_diskspace))):
-        if system_os() != 'Linux':
-            ok_dialog(localize(30004), localize(30019, os=system_os()))
-            return False
-
-        while required_diskspace >= diskspace():
-            if yesno_dialog(localize(30004), localize(30055)):  # Not enough space, alternative path?
-                update_temp_path(browsesingle(3, localize(30909), 'files'))  # Temporary path
-                continue
-
-            ok_dialog(localize(30004),  # Not enough free disk space
-                      localize(30018, diskspace=sizeof_fmt(required_diskspace)))
-            return False
-
-        if not cmd_exists('fdisk') and not cmd_exists('parted'):
-            ok_dialog(localize(30004), localize(30020, command1='fdisk', command2='parted'))  # Commands are missing
-            return False
-
-        if not cmd_exists('mount'):
-            ok_dialog(localize(30004), localize(30021, command='mount'))  # Mount command is missing
-            return False
-
-        if not cmd_exists('losetup'):
-            ok_dialog(localize(30004), localize(30021, command='losetup'))  # Losetup command is missing
-            return False
-
-        if os.getuid() != 0 and not yesno_dialog(localize(30001),  # Ask for permission to run cmds as root
-                                                 localize(30030, cmds=', '.join(root_cmds)),
-                                                 nolabel=localize(30028), yeslabel=localize(30027)):
-            return False
-
-        url = arm_device['url']
-        progress = progress_dialog()
-        progress.create(heading=localize(30043), message=localize(30044))  # Extracting Widevine CDM
-        bin_filename = url.split('/')[-1].replace('.zip', '')
-        bin_path = compat_path(os.path.join(temp_path(), bin_filename))
-        starttime = time()
-
-        progress.update(
-            0,
-            message='{line1}\n{line2}\n{line3}'.format(
-                line1=localize(30045),  # Uncompressing image
-                line2=localize(30058, mins=0, secs=0),  # Time remaining
-                line3=localize(30047))  # Please do not interrupt this process
-        )
-
-        from zipfile import ZipFile
-
-        with ZipFile(compat_path(store('download_path'))) as zip_obj:
-            bin_size = zip_obj.getinfo(bin_filename).file_size
-            chunksize = 1024**2
-
-            with zip_obj.open(bin_filename) as member:
-                with open(bin_path, 'wb') as bin_file:
-                    bytes_to_read = bin_size
-                    while bytes_to_read > 0:
-                        chunk = member.read(chunksize)
-                        bytes_to_read -= chunksize
-                        bin_file.write(chunk)
-                        percent = 100 * (1 - bytes_to_read / bin_size) - 5
-                        time_left = int(bytes_to_read * (time() - starttime) / (bin_size - bytes_to_read))
-                        progress.update(
-                            int(percent),
-                            message='{line1}\n{line2}\n{line3}'.format(
-                                line1=localize(30045),  # Uncompressing image
-                                line2=localize(30058, mins=time_left // 60, secs=time_left % 60),  # Time remaining
-                                line3=localize(30047))  # Please do not interrupt this process
-                        )
-
-        if check_loop() and set_loop_dev() and losetup(bin_path) and mnt_loop_dev():
-            progress.update(96, message=localize(30048))  # Extracting Widevine CDM
-            extract_widevine_from_img(os.path.join(backup_path, arm_device['version'], ''))
-            json_file = os.path.join(backup_path, arm_device['version'], os.path.basename(config.CHROMEOS_RECOVERY_URL))
-            with open_file(json_file, 'w') as config_file:
-                config_file.write(json.dumps(devices, indent=4))
-
-            return (progress, arm_device['version'])
-        progress.close()
-
-    return False
-
-
-def extract_widevine_from_img(backup_path):
-    """Extract the Widevine CDM binary from the mounted Chrome OS image"""
-    for root, _, files in os.walk(compat_path(mnt_path())):
-        if compat_path('libwidevinecdm.so') not in files:
-            continue
-        cdm_path = os.path.join(to_unicode(root), 'libwidevinecdm.so')
-        log(0, 'Found libwidevinecdm.so in {path}', path=cdm_path)
-        if not exists(backup_path):
-            mkdir(backup_path)
-        copy(cdm_path, os.path.join(backup_path, 'libwidevinecdm.so'))
-        return True
-
-    log(4, 'Failed to find Widevine CDM binary in Chrome OS image.')
-    return False
-
-
-def unmount():
-    """Unmount mountpoint if mounted"""
-    while os.path.ismount(compat_path(mnt_path(make=False))):
-        log(0, 'Unmount {mountpoint}', mountpoint=mnt_path())
-        umount_output = run_cmd(['umount', compat_path(mnt_path())], sudo=True)
-        if not umount_output['success']:
-            break

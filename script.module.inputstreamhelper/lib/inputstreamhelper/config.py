@@ -67,15 +67,6 @@ WIDEVINE_MINIMUM_KODI_VERSION = {
     'Darwin': '18.0'
 }
 
-HARDCODED_CHROMEOS_IMAGE = {
-    'hwid': 'FIEVEL',
-    'hwidmatch': '^FIEVEL .*',
-    'url': 'https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_13505.73.0_veyron-fievel_recovery_stable-channel_fievel-mp.bin.zip',
-    'sha1': '9904e3141a2537f28469c7653c62200c1b03b057',
-    'version': '13505.73.0',
-    'zipfilesize': '1032442523'
-}
-
 WIDEVINE_VERSIONS_URL = 'https://dl.google.com/widevine-cdm/versions.txt'
 
 WIDEVINE_DOWNLOAD_URL = 'https://dl.google.com/widevine-cdm/{version}-{os}-{arch}.zip'
@@ -91,7 +82,7 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 # To keep the Chrome OS ARM hardware ID list up to date, the following resources can be used:
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://cros-updates-serving.appspot.com/
-# Last updated: 2021-05-05
+# Last updated: 2021-09-06
 CHROMEOS_RECOVERY_ARM_HWIDS = [
     'BOB',
     'BURNET',
@@ -100,6 +91,8 @@ CHROMEOS_RECOVERY_ARM_HWIDS = [
     'DUMO',
     'ELM',
     'ESCHE',
+    'FENNEL',
+    'FENNEL14',
     'FIEVEL',
     'HANA',
     'JUNIPER-HVPU',
@@ -110,7 +103,8 @@ CHROMEOS_RECOVERY_ARM_HWIDS = [
     'KODAMA',
     'KRANE-ZDKS',
     'LAZOR',
-    'POMPOM',
+    'LIMOZEEN',
+    'POMPOM-MZVS',
     'SCARLET',
     'TIGER',
     'WILLOW-TFIY',

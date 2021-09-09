@@ -145,14 +145,6 @@ msgctxt "#30034"
 msgid "Update"
 msgstr "업데이트"
 
-msgctxt "#30035"
-msgid "[B]loop[/B] is still loaded"
-msgstr "[B]loop[/B]이 아직 올라와 있습니다 "
-
-msgctxt "#30036"
-msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr "터미널에서 [B]modprobe -r loop[/B]을 이용하여 내리십시오."
-
 msgctxt "#30037"
 msgid "Success!"
 msgstr "성공!"
@@ -241,10 +233,6 @@ msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
 msgstr "남은 시간: {mins:d}:{secs:02d}"
 
-msgctxt "#30059"
-msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
-msgstr "그러면, Widevine CDM을 예전방식으로 풀어낼까요?"
-
 msgctxt "#30060"
 msgid "Identifying wanted partition..."
 msgstr "파티션 확인 중..."
@@ -268,6 +256,19 @@ msgstr "내려받기를 끝내지 못 했습니다."
 msgctxt "#30065"
 msgid "Shall we try again?"
 msgstr "다시 할까요?"
+
+msgctxt "#30066"
+msgid "Warning"
+msgstr "경고"
+
+msgctxt "#30067"
+msgid "{os} probably doesn't support the newest Widevine CDM. Would you try to install an older Widevine CDM instead?"
+msgstr "{os}에서는 최신의 Widevine CDM을 사용하지 못할 수 있으니, 이전의 Widevine CDM을 설치할까요?"
+
+msgctxt "#30068"
+msgid "You're going to install an older Widevine CDM. Please note that Google will remove support for older Widevine CDM's at some point."
+msgstr "이전의 Widevine CDM을 설치하려고 합니다. Google이 어느 시점에 지원을 중단할 수 있습니다."
+
 
 
 ### INFORMATION DIALOG
