@@ -145,14 +145,6 @@ msgctxt "#30034"
 msgid "Update"
 msgstr "アップデート"
 
-msgctxt "#30035"
-msgid "[B]loop[/B] is still loaded"
-msgstr "[B]loop[/B]がまだロードされている。"
-
-msgctxt "#30036"
-msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr "アンロードするには、ターミナルで[B]modprobe -r loop[/B]を実行してください。"
-
 msgctxt "#30037"
 msgid "Success!"
 msgstr "成功！"
@@ -241,10 +233,6 @@ msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
 msgstr "残り時間: {mins:d}:{secs:02d}"
 
-msgctxt "#30059"
-msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
-msgstr "そしたら、Widevine CDMを既存の方法で抽出しましょうか。"
-
 msgctxt "#30060"
 msgid "Identifying wanted partition..."
 msgstr "パーティション確認中。。。"
@@ -268,6 +256,19 @@ msgstr "ダウンロードを終えませんでした。"
 msgctxt "#30065"
 msgid "Shall we try again?"
 msgstr "もう一度やって見ましょうか。"
+
+msgctxt "#30066"
+msgid "Warning"
+msgstr "警告"
+
+msgctxt "#30067"
+msgid "{os} probably doesn't support the newest Widevine CDM. Would you try to install an older Widevine CDM instead?"
+msgstr "{os}は最新のWidevine CDMをサーポートしないかも知れないので少し古いのをインストールしましょうか。"
+
+msgctxt "#30068"
+msgid "You're going to install an older Widevine CDM. Please note that Google will remove support for older Widevine CDM's at some point."
+msgstr "古いWidevine CDMをインストールしようとします。グーグルが突然サーポートをしなくなる場合もあります。"
+
 
 
 ### INFORMATION DIALOG
