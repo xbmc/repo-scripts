@@ -9,12 +9,12 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/projects/p/kodi-addons/language/en_GB/)\n"
+"Language-Team: French (France) (http://www.transifex.com/projects/p/kodi-addons/language/fr_FR/)\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "Addon Summary"
 msgid "Digital clock screensaver"
@@ -22,14 +22,13 @@ msgstr ""
 
 msgctxt "Addon Description"
 msgid "Digital clock screensaver with date, now playing information, weather information, image slideshow and several options."
-msgstr ""
+msgstr "Économiseur d'écran horloge numérique avec date, informations de lecture, informations météo, avec diaporama d'images et plusieurs options."
 
 msgctxt "Addon Disclaimer"
 msgid "For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum."
-msgstr ""
+msgstr "Pour les bogues, demandes ou questions générales, merci de visiter le fil de discussion de l'économiseur d'écran horloge numérique, Digital clock screensaver, sur le forum Kodi."
 
-#settings labels
-
+# settings labels
 msgctxt "#32000"
 msgid "Movement"
 msgstr ""
@@ -38,97 +37,83 @@ msgctxt "#32001"
 msgid "Format"
 msgstr ""
 
-#empty strings from id 32002 to 32004
-
 msgctxt "#32005"
 msgid "Additional Information"
-msgstr ""
+msgstr "infos supplémentaires"
 
-#empty strings from id 32006 to 32009
-
+# empty strings from id 32006 to 32009
 msgctxt "#32010"
 msgid "Color | Opacity"
 msgstr ""
 
-#empty strings from id 32011 to 32019
-
 msgctxt "#32020"
 msgid "Background"
-msgstr ""
+msgstr "Arrière-plan"
 
-#empty strings from id 32021 to 32024
-
+# empty strings from id 32021 to 32024
 msgctxt "#32025"
 msgid "Extra Options"
 msgstr ""
 
-#empty strings from id 32026 to 32099
-
 msgctxt "#32100"
 msgid "Movement on the screen"
-msgstr ""
+msgstr "Mouvement à l'écran"
 
 msgctxt "#32101"
 msgid "Random position"
-msgstr ""
+msgstr "Position aléatoire"
 
 msgctxt "#32102"
 msgid "Bounce"
-msgstr ""
+msgstr "Rebondir"
 
 msgctxt "#32103"
 msgid "Fixed in the center"
-msgstr ""
+msgstr "Fixe au centre"
 
 msgctxt "#32104"
 msgid "Custom fixed position"
-msgstr ""
-
-#empty strings from id 32105 to 32109
+msgstr "Position fixe personnalisée"
 
 msgctxt "#32110"
 msgid "Movement speed"
-msgstr ""
+msgstr "Vitesse du mouvement"
 
 msgctxt "#32111"
 msgid "Slow"
-msgstr ""
+msgstr "Lente"
 
 msgctxt "#32112"
 msgid "Normal"
-msgstr ""
+msgstr "Normale"
 
 msgctxt "#32113"
 msgid "Fast"
-msgstr ""
-
-#empty strings from id 32114 to 32119
+msgstr "Rapide"
 
 msgctxt "#32120"
 msgid "Number of seconds to stay in place"
-msgstr ""
+msgstr "Nombre de secondes en conservant la position"
 
 msgctxt "#32121"
 msgid "Warning! Having static text on your screen can cause a burn in!"
-msgstr ""
-
-#empty strings from id 32122 to 32129
+msgstr "Attention ! N'avoir qu'une seule image fixe à l'écran peut l'endommager !"
 
 msgctxt "#32130"
 msgid "Time format"
-msgstr ""
+msgstr "Format de l'heure"
 
 msgctxt "#32131"
 msgid "17:14"
-msgstr ""
+msgstr "17:14"
 
 msgctxt "#32132"
 msgid "05:14"
-msgstr ""
+msgstr "05:14"
 
 msgctxt "#32133"
 msgid "05:14 PM"
-msgstr ""
+msgstr "05:14 PM"
 
 msgctxt "#32134"
 msgid "5:14 No hour zero padding Windows"
@@ -146,50 +131,44 @@ msgctxt "#32137"
 msgid "5:14 PM No hour zero padding Unix"
 msgstr ""
 
-#empty strings from id 32138 to 32138
-
+# empty strings from id 32138 to 32138
 msgctxt "#32139"
 msgid "Colon blink"
 msgstr ""
 
 msgctxt "#32140"
 msgid "Date format"
-msgstr ""
+msgstr "Format de la date"
 
 msgctxt "#32141"
 msgid "Hide date"
-msgstr ""
+msgstr "Masquer la date"
 
 msgctxt "#32142"
 msgid "Saturday 30. May 2015"
-msgstr ""
+msgstr "Samedi 30. mai 2015"
 
 msgctxt "#32143"
 msgid "30.05.2015"
-msgstr ""
+msgstr "30.05.2015"
 
 msgctxt "#32144"
 msgid "05.30.2015"
-msgstr ""
+msgstr "05.30.2015"
 
 msgctxt "#32145"
 msgid "Custom"
 msgstr ""
 
-#empty strings from id 32146 to 32149
-
 msgctxt "#32150"
 msgid "Custom value for X position (1-1280)"
-msgstr ""
-
-#empty strings from id 32151 to 32159
+msgstr "Position horizontale personnalisée (1-1280)"
 
 msgctxt "#32160"
 msgid "Custom value for Y position (1-720)"
-msgstr ""
+msgstr "Position verticale personnalisée (1-720)"
 
-#empty strings from id 32161 to 32169
-
+# empty strings from id 32161 to 32169
 msgctxt "#32170"
 msgid "Enter custom date format (Empty=Regional settings):"
 msgstr ""
@@ -206,23 +185,17 @@ msgctxt "#32173"
 msgid "Year: yy(2-digit year) yyyy(4-digit year)"
 msgstr ""
 
-#empty strings from id 32174 to 32199
-
 msgctxt "#32200"
 msgid "Enable additional information"
-msgstr ""
-
-#empty strings from id 32201 to 32209
+msgstr "Activer les infos supplémentaires"
 
 msgctxt "#32210"
 msgid "Number of seconds for information switch"
-msgstr ""
-
-#empty strings from id 32211 to 32219
+msgstr "Intervalle entre deux informations"
 
 msgctxt "#32220"
 msgid "Enable now playing information"
-msgstr ""
+msgstr "Activer les infos de lecture en cours"
 
 msgctxt "#32221"
 msgid "Show only music information"
@@ -236,46 +209,39 @@ msgctxt "#32223"
 msgid "Merge song artist and title"
 msgstr ""
 
-#empty strings from id 32224 to 32229
-
 msgctxt "#32230"
 msgid "Enable weather information"
-msgstr ""
-
-#empty strings from id 32231 to 32239
+msgstr "Activer les infos météo"
 
 msgctxt "#32240"
 msgid "Weather icons"
-msgstr ""
+msgstr "Icônes météo"
 
 msgctxt "#32241"
 msgid "Hide weather icon"
-msgstr ""
+msgstr "Masquer les icônes météo"
 
 msgctxt "#32242"
 msgid "Icon set 1"
-msgstr ""
+msgstr "Jeu d'icônes 1"
 
 msgctxt "#32243"
 msgid "Icon set 2"
-msgstr ""
+msgstr "Jeu d'icônes 2"
 
 msgctxt "#32244"
 msgid "Icon set 3"
-msgstr ""
+msgstr "Jeu d'icônes 3"
 
 msgctxt "#32245"
 msgid "Icon set 4"
-msgstr ""
-
-#empty strings from id 32246 to 32249
+msgstr "Jeu d'icônes 4"
 
 msgctxt "#32250"
 msgid "Enable album art"
-msgstr ""
+msgstr "Activer l'illustration d'album"
 
-#empty strings from id 32251 to 32259
-
+# empty strings from id 32251 to 32259
 msgctxt "#32260"
 msgid "Enable CPU usage information"
 msgstr ""
@@ -324,8 +290,7 @@ msgctxt "#32271"
 msgid "Enable total uptime"
 msgstr ""
 
-#empty strings from id 32272 to 32279
-
+# empty strings from id 32272 to 32279
 msgctxt "#32280"
 msgid "CPU:"
 msgstr ""
@@ -410,8 +375,7 @@ msgctxt "#32300"
 msgid "Total uptime:"
 msgstr ""
 
-#empty strings from id 32301 to 32309
-
+# empty strings from id 32301 to 32309
 msgctxt "#32310"
 msgid "Choose hour color and opacity  - [COLOR $INFO[Skin.String(screensaver.digitalclock.hourcolor)]]($INFO[Skin.String(screensaver.digitalclock.hourcolor.name)])[/COLOR]"
 msgstr ""
@@ -424,8 +388,7 @@ msgctxt "#32312"
 msgid "Random hour opacity"
 msgstr ""
 
-#empty strings from id 32313 to 32319
-
+# empty strings from id 32313 to 32319
 msgctxt "#32320"
 msgid "Choose colon color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.coloncolor)]]($INFO[Skin.String(screensaver.digitalclock.coloncolor.name)])[/COLOR]"
 msgstr ""
@@ -438,8 +401,7 @@ msgctxt "#32322"
 msgid "Random colon opacity"
 msgstr ""
 
-#empty strings from id 32323 to 32329
-
+# empty strings from id 32323 to 32329
 msgctxt "#32330"
 msgid "Choose minute color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.minutecolor)]]($INFO[Skin.String(screensaver.digitalclock.minutecolor.name)])[/COLOR]"
 msgstr ""
@@ -452,8 +414,7 @@ msgctxt "#32332"
 msgid "Random minute opacity"
 msgstr ""
 
-#empty strings from id 32333 to 32339
-
+# empty strings from id 32333 to 32339
 msgctxt "#32340"
 msgid "Choose AM/PM color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.ampmcolor)]]($INFO[Skin.String(screensaver.digitalclock.ampmcolor.name)])[/COLOR]"
 msgstr ""
@@ -466,8 +427,7 @@ msgctxt "#32342"
 msgid "Random AM/PM opacity"
 msgstr ""
 
-#empty strings from id 32343 to 32349
-
+# empty strings from id 32343 to 32349
 msgctxt "#32350"
 msgid "Choose date color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.datecolor)]]($INFO[Skin.String(screensaver.digitalclock.datecolor.name)])[/COLOR]"
 msgstr ""
@@ -480,8 +440,7 @@ msgctxt "#32352"
 msgid "Random date opacity"
 msgstr ""
 
-#empty strings from id 32353 to 32359
-
+# empty strings from id 32353 to 32359
 msgctxt "#32360"
 msgid "Choose additional information color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.informationcolor)]]($INFO[Skin.String(screensaver.digitalclock.informationcolor.name)])[/COLOR]"
 msgstr ""
@@ -494,8 +453,7 @@ msgctxt "#32362"
 msgid "Random additional information opacity"
 msgstr ""
 
-#empty strings from id 32363 to 32369
-
+# empty strings from id 32363 to 32369
 msgctxt "#32370"
 msgid "Choose icon color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.iconcolor)]]($INFO[Skin.String(screensaver.digitalclock.iconcolor.name)])[/COLOR]"
 msgstr ""
@@ -508,14 +466,12 @@ msgctxt "#32372"
 msgid "Random icon opacity"
 msgstr ""
 
-#empty strings from id 32373 to 32499
-
+# empty strings from id 32373 to 32499
 msgctxt "#32500"
 msgid "Choose text shadow color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.shadowcolor)]]($INFO[Skin.String(screensaver.digitalclock.shadowcolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32501 to 32504
-
+# empty strings from id 32501 to 32504
 msgctxt "#32505"
 msgid "Choose background image aspect ratio:"
 msgstr ""
@@ -528,23 +484,21 @@ msgctxt "#32507"
 msgid "Original size"
 msgstr ""
 
-#empty strings from id 32508 to 32509
-
 msgctxt "#32510"
 msgid "Choose background"
-msgstr ""
+msgstr "Choisir l'arrière-plan"
 
 msgctxt "#32511"
 msgid "One color"
-msgstr ""
+msgstr "Une couleur"
 
 msgctxt "#32512"
 msgid "Single image"
-msgstr ""
+msgstr "Image unique"
 
 msgctxt "#32513"
 msgid "Slideshow"
-msgstr ""
+msgstr "Diaporama"
 
 msgctxt "#32514"
 msgid "Skin Helper Backgrounds"
@@ -558,90 +512,80 @@ msgctxt "#32516"
 msgid "Brightness level"
 msgstr ""
 
-#empty strings from id 32517 to 32519
-
+# empty strings from id 32517 to 32519
 msgctxt "#32520"
 msgid "Choose background color - [COLOR $INFO[Skin.String(screensaver.digitalclock.backgroundcolor)]]($INFO[Skin.String(screensaver.digitalclock.backgroundcolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32521 to 32529
-
 msgctxt "#32530"
 msgid "Choose image"
-msgstr ""
+msgstr "Choisir une image"
 
 msgctxt "#32531"
 msgid "Warning! Having only one image on your screen can cause a burn in!"
-msgstr ""
-
-#empty strings from id 32532 to 32539
+msgstr "Attention ! N'avoir qu'une seule image fixe à l'écran peut l'endommager !"
 
 msgctxt "#32540"
 msgid "Choose slideshow directory"
-msgstr ""
-
-#empty strings from id 32541 to 32549
+msgstr "Choisir un répertoire pour le diaporama"
 
 msgctxt "#32550"
 msgid "Random images"
-msgstr ""
-
-#empty strings from id 32551 to 32559
+msgstr "Images aléatoires"
 
 msgctxt "#32560"
 msgid "Change background picture every:"
-msgstr ""
+msgstr "Modifier l'image d'arrière-plan toutes les :"
 
 msgctxt "#32561"
 msgid "15 sec"
-msgstr ""
+msgstr "15 s"
 
 msgctxt "#32562"
 msgid "30 sec"
-msgstr ""
+msgstr "30 s"
 
 msgctxt "#32563"
 msgid "1 min"
-msgstr ""
+msgstr "1 min"
 
 msgctxt "#32564"
 msgid "2 min"
-msgstr ""
+msgstr "2 min"
 
 msgctxt "#32565"
 msgid "3 min"
-msgstr ""
+msgstr "3 min"
 
 msgctxt "#32566"
 msgid "4 min"
-msgstr ""
+msgstr "4 min"
 
 msgctxt "#32567"
 msgid "5 min"
-msgstr ""
+msgstr "5 min"
 
 msgctxt "#32568"
 msgid "6 min"
-msgstr ""
+msgstr "6 min"
 
 msgctxt "#32569"
 msgid "7 min"
-msgstr ""
+msgstr "7 min"
 
 msgctxt "#32570"
 msgid "8 min"
-msgstr ""
+msgstr "8 min"
 
 msgctxt "#32571"
 msgid "9 min"
-msgstr ""
+msgstr "9 min"
 
 msgctxt "#32572"
 msgid "10 min"
-msgstr ""
+msgstr "10 min"
 
-#empty strings from id 32573 to 32578
-
+# empty strings from id 32573 to 32578
 msgctxt "#32579"
 msgid "Requires skin.helper.backgrounds!"
 msgstr ""
@@ -666,8 +610,7 @@ msgctxt "#32584"
 msgid "Random fanart of all media types"
 msgstr ""
 
-#empty strings from id 32585 to 32599
-
+# empty strings from id 32585 to 32599
 msgctxt "#32600"
 msgid "Element size increase (%)"
 msgstr ""
@@ -691,3 +634,175 @@ msgstr ""
 msgctxt "#32621"
 msgid "RSS needs to be properly configured in Kodi and enabled!"
 msgstr ""
+
+#~ msgctxt "#32010"
+#~ msgid "Colors"
+#~ msgstr "Couleurs"
+
+#~ msgctxt "#32015"
+#~ msgid "Transparency"
+#~ msgstr "Transparence"
+
+#~ msgctxt "#32025"
+#~ msgid "Element Size Increase"
+#~ msgstr "Augmentation de la taille des éléments"
+
+#~ msgctxt "#32300"
+#~ msgid "Random color"
+#~ msgstr "Couleur aléatoire"
+
+#~ msgctxt "#32310"
+#~ msgid "Hour color"
+#~ msgstr "Couleur de l'heure"
+
+#~ msgctxt "#32311"
+#~ msgid "White"
+#~ msgstr "Blanc"
+
+#~ msgctxt "#32312"
+#~ msgid "Red"
+#~ msgstr "Rouge"
+
+#~ msgctxt "#32313"
+#~ msgid "Green"
+#~ msgstr "Vert"
+
+#~ msgctxt "#32314"
+#~ msgid "Blue"
+#~ msgstr "Bleu"
+
+#~ msgctxt "#32315"
+#~ msgid "Yellow"
+#~ msgstr "Jaune"
+
+#~ msgctxt "#32316"
+#~ msgid "Black"
+#~ msgstr "Noir"
+
+#~ msgctxt "#32320"
+#~ msgid "Colon color"
+#~ msgstr "Couleur des icônes"
+
+#~ msgctxt "#32330"
+#~ msgid "Minute color"
+#~ msgstr "Couleur des minutes"
+
+#~ msgctxt "#32340"
+#~ msgid "AM/PM color"
+#~ msgstr "Couleur AM/PM"
+
+#~ msgctxt "#32350"
+#~ msgid "Date color"
+#~ msgstr "Couleur de la date"
+
+#~ msgctxt "#32360"
+#~ msgid "Additional information color"
+#~ msgstr "Couleur des infos supplémentaires"
+
+#~ msgctxt "#32370"
+#~ msgid "Icon color"
+#~ msgstr "Couleur des icônes"
+
+#~ msgctxt "#32400"
+#~ msgid "Random transparency"
+#~ msgstr "Transparence aléatoire"
+
+#~ msgctxt "#32410"
+#~ msgid "Hour transparency"
+#~ msgstr "Transparence de l'heure"
+
+#~ msgctxt "#32411"
+#~ msgid "0%"
+#~ msgstr "0%"
+
+#~ msgctxt "#32412"
+#~ msgid "10%"
+#~ msgstr "10%"
+
+#~ msgctxt "#32413"
+#~ msgid "20%"
+#~ msgstr "20%"
+
+#~ msgctxt "#32414"
+#~ msgid "30%"
+#~ msgstr "30%"
+
+#~ msgctxt "#32415"
+#~ msgid "40%"
+#~ msgstr "40%"
+
+#~ msgctxt "#32416"
+#~ msgid "50%"
+#~ msgstr "50%"
+
+#~ msgctxt "#32417"
+#~ msgid "60%"
+#~ msgstr "60%"
+
+#~ msgctxt "#32418"
+#~ msgid "70%"
+#~ msgstr "70%"
+
+#~ msgctxt "#32419"
+#~ msgid "80%"
+#~ msgstr "80%"
+
+#~ msgctxt "#32420"
+#~ msgid "90%"
+#~ msgstr "90%"
+
+#~ msgctxt "#32421"
+#~ msgid "100%"
+#~ msgstr "100%"
+
+#~ msgctxt "#32430"
+#~ msgid "Colon transparency"
+#~ msgstr "Transparence des deux-points"
+
+#~ msgctxt "#32440"
+#~ msgid "Minute transparency"
+#~ msgstr "Transparence des minutes"
+
+#~ msgctxt "#32450"
+#~ msgid "AM/PM transparency"
+#~ msgstr "Transparence de AM/PM"
+
+#~ msgctxt "#32460"
+#~ msgid "Date transparency"
+#~ msgstr "Transparence de la date"
+
+#~ msgctxt "#32470"
+#~ msgid "Additional information transparency"
+#~ msgstr "Transparence des infos supplémentaires"
+
+#~ msgctxt "#32480"
+#~ msgid "Icon transparency"
+#~ msgstr "Transparence des icônes"
+
+#~ msgctxt "#32500"
+#~ msgid "Text shadow color"
+#~ msgstr "Transparence des couleurs"
+
+#~ msgctxt "#32501"
+#~ msgid "None"
+#~ msgstr "Aucune"
+
+#~ msgctxt "#32502"
+#~ msgid "White"
+#~ msgstr "Blanc"
+
+#~ msgctxt "#32503"
+#~ msgid "Gray"
+#~ msgstr "Gris"
+
+#~ msgctxt "#32504"
+#~ msgid "Black"
+#~ msgstr "Noir"
+
+#~ msgctxt "#32520"
+#~ msgid "Choose color"
+#~ msgstr "Choisir une couleur"
+
+#~ msgctxt "#32600"
+#~ msgid "Size (%)"
+#~ msgstr "Taille (%)"
