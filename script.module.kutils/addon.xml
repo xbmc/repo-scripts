@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.kutils" name="Utilities for Kodi" version="1.3.0"
+       provider-name="Philipp Temminghoff (phil65), Frank Feuerbacher (fbacher)">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.youtube.dl" version="21.303.0+matrix.1"/>
+        <import addon="script.module.pil" version="5.1.0"/>
+        <import addon="script.module.autocompletion" version="2.0.3"/>
+        <import addon="script.module.requests" version="2.25.1+matrix.1"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Helper module for Kodi add-ons</summary>
+        <description lang="en_GB">Helper module for commonly needed tasks</description>
+        <platform>all</platform>
+        <license>LGPL-2.1-only</license>
+        <source>https://github.com/fbacher/script.module.kutils</source>
+        <news>
+            08/18/2021 Forked from phil65 master prior to python3/future
+            changes. Renamed addon, updated dependencies, adjust to
+            latest kodi API changes. Updated version to 1.3.0 due to the
+            significant changes (particularly name changes).
+
+            Changed youtube.py to require YouTube api_key to be passed as
+            argument. Hard-coded key no longer used.
+
+            Resolved Kodi crash issue caused by a known limitation of numpy,
+            which was indirectly loaded by another library, PIL.
+            Forced numpy to NEVER be loaded. The use of numpy provided a
+            small performance improvement.
+        </news>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>
