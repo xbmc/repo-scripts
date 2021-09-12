@@ -49,7 +49,7 @@
     <setting label="32070" type="enum" id="timer_1_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_1_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,1)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_1_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -74,7 +74,7 @@
     <setting label="32070" type="enum" id="timer_2_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_2_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,2)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_2_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -100,7 +100,7 @@
     <setting label="32070" type="enum" id="timer_3_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_3_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,3)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_3_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -126,7 +126,7 @@
     <setting label="32070" type="enum" id="timer_4_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_4_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,4)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_4_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -152,7 +152,7 @@
     <setting label="32070" type="enum" id="timer_5_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_5_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,5)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_5_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -178,7 +178,7 @@
     <setting label="32070" type="enum" id="timer_6_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_6_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,6)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_6_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -209,7 +209,6 @@
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_7_fade" lvalues="32120|32121|32122|32123" default="0" />
     <setting visible="!eq(-1,0)" label="32095" type="slider" id="timer_7_vol_min" default="50" range="0,1,100" option="int" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
 
     <setting label="32097" type="lsep" />
     <setting label="32098" type="bool" id="timer_7_notify" default="true" />
@@ -230,7 +229,7 @@
     <setting label="32070" type="enum" id="timer_8_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_8_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,8)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_8_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -256,7 +255,7 @@
     <setting label="32070" type="enum" id="timer_9_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_9_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,9)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_9_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -282,7 +281,7 @@
     <setting label="32070" type="enum" id="timer_10_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_10_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,10)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_10_fade" lvalues="32120|32121|32122|32123" default="0" />
@@ -308,7 +307,7 @@
     <setting label="32070" type="enum" id="timer_11_action" lvalues="32071|32072|32073|32074|32075|32076|32077" default="1" />
     <setting visible="false" label="32082" type="text" id="timer_11_filename" default="" />
     <setting visible="eq(-1,) + gt(-2,0) + lt(-2,4)" enable="false" label="32114" type="text" />
-    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,0)" />
+    <setting enable="!eq(-2,)" label="32108" type="action" action="RunScript($ID,play,11)" />
 
     <setting label="32090" type="lsep" />
     <setting enable="!eq(-9,0)" label="32091" type="enum" id="timer_11_fade" lvalues="32120|32121|32122|32123" default="0" />
