@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="2.0.0" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="2.0.1" provider-name="Heckie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -58,7 +58,10 @@
 		<website>https://github.com/Heckie75/kodi-addon-timers</website>
 		<source>https://github.com/Heckie75/kodi-addon-timers</source>
 		<news>
-v2.0.0 (2021-05-28)
+v2.0.1 (2021-09-12)
+- Bugfix: actions in settings dialog don't work, i.e. 'reset volume' and 'play now'
+
+v2.0.0 (2021-07-18)
 - Migration to Kodi 19 (Matrix)
 - Total refactoring of earlier version</news>
 		<assets>
