@@ -1,14 +1,9 @@
-# -*- coding: utf-8 -*-
+import xbmc
 
+from resources.lib import core, reporting
 
-from resources.lib import core, logger, ADDONVERSION, KODIVERSION
-from resources.lib import reporting
-
-logger.debug("Starting service.py, version {}, Kodi: {}".format(ADDONVERSION, KODIVERSION))
 try:
-    core.core() #Run Hue service
+    core.core()
 except Exception as exc:
-    logger.debug("Core service exception")
+    xbmc.log(f"[script.service.hue][EXCEPTION] Service exception: {exc}")
     reporting.process_exception(exc)
-
-logger.debug("Shutting down service.py, version {}, Kodi: {}".format(ADDONVERSION, KODIVERSION))

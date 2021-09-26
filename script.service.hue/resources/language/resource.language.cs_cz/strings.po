@@ -1,0 +1,673 @@
+# Kodi Media Center language file
+# Addon Name: Hue Service
+# Addon id: script.service.hue
+# Addon Provider: zim514
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2021-09-20 10:04+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/cs_cz/>\n"
+"Language: cs_cz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Automate Hue lights with Kodi playback"
+msgstr "Automatizace Hue světel s přehráváním Kodi"
+
+msgctxt "Addon Description"
+msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
+msgstr "Ovládejte Hue světla automaticky pomocí Kodi. Vytvořte scény pro začátek, přestávku i ukončení přehrávání a nechte Kodi reagovat automaticky na Vaše akce. Je možné využít východ i západ slunce. Obsahuje podporu pro Ambilight."
+
+msgctxt "Addon Disclaimer"
+msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
+msgstr "Vyžaduje Hue Bridge V2 (čtvercový). Ambilight není podporován na všech zařízeních."
+
+msgctxt "#32100"
+msgid "Video Actions"
+msgstr "Akce videa"
+
+msgctxt "#32102"
+msgid "Audio Actions"
+msgstr "Akce audia"
+
+msgctxt "#32201"
+msgid "Start/Resume"
+msgstr "Začátek/Pokračování"
+
+msgctxt "#32202"
+msgid "Pause"
+msgstr "Pauza"
+
+msgctxt "#32203"
+msgid "Stop"
+msgstr "Konec"
+
+msgctxt "#32510"
+msgid "Scene Name:"
+msgstr "Název scény:"
+
+msgctxt "#32511"
+msgid "Scene ID"
+msgstr "ID scény"
+
+msgctxt "#32512"
+msgid "Select..."
+msgstr "Vybrat..."
+
+msgctxt "#30500"
+msgid "Bridge"
+msgstr "Bridge (most)"
+
+msgctxt "#30501"
+msgid "Discover Hue Bridge"
+msgstr "Vyhledat Hue Bridge"
+
+msgctxt "#30502"
+msgid "Bridge IP"
+msgstr "Bridge IP adresa"
+
+msgctxt "#30503"
+msgid "Bridge User"
+msgstr "Bridge uživatel"
+
+msgctxt "#30505"
+msgid "Enable Schedule (24h format)"
+msgstr ""
+
+msgctxt "#30506"
+msgid "Start time:"
+msgstr "Čas začátku:"
+
+msgctxt "#30507"
+msgid "End time:"
+msgstr "Šas konce:"
+
+msgctxt "#30508"
+msgid "Disable during daylight"
+msgstr "Vypnout ve dne"
+
+msgctxt "#30509"
+msgid "Activate during playback at sunset"
+msgstr "Zapnout při západu slunce"
+
+msgctxt "#30510"
+msgid "General"
+msgstr "Hlavní"
+
+msgctxt "#30511"
+msgid "Schedule"
+msgstr "Plán"
+
+msgctxt "#30512"
+msgid "Scenes"
+msgstr "Scény"
+
+msgctxt "#30513"
+msgid "Play Scene Enabled"
+msgstr ""
+
+msgctxt "#30514"
+msgid "Pause Scene Enabled"
+msgstr "Scéna Pauza aktivována"
+
+msgctxt "#30515"
+msgid "Stop Scene Enabled"
+msgstr "Scéna Konec aktivována"
+
+msgctxt "#30516"
+msgid "Disable time check if any light already on"
+msgstr "Vypnout kontrolu již zapnutých světel"
+
+msgctxt "#30517"
+msgid "Don't enable scene if any light is off"
+msgstr "Neaktivovat scény pokud jsou světla vypnuta"
+
+msgctxt "#30521"
+msgid "[B][I]Warning: Not supported on all hardware[/B][/I]"
+msgstr "[B][I]Upozornění: Není podporované na všech zařízeních[/B][/I]"
+
+msgctxt "#30522"
+msgid "CPU & Hue performance"
+msgstr "Výkon CPU & Hue"
+
+msgctxt "#30523"
+msgid "Ambilight"
+msgstr "Ambilight"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32105"
+msgid "Separate debug log"
+msgstr "Oddělený debug log"
+
+msgctxt "#32106"
+msgid "Video Activation"
+msgstr "Aktivování videa"
+
+msgctxt "#6101"
+msgid "Select Lights"
+msgstr "Vyberte světla"
+
+msgctxt "#30520"
+msgid "Enabled"
+msgstr "Aktivováno"
+
+msgctxt "#9001"
+msgid "Press connect button on Hue bridge"
+msgstr "Stiskněte tlačítko na Hue Bridge"
+
+msgctxt "#9007"
+msgid "Create Scene"
+msgstr "Vytvořit scénu"
+
+msgctxt "#9008"
+msgid "Delete Scene"
+msgstr "Smazat scénu"
+
+msgctxt "#30000"
+msgid "Hue Service"
+msgstr "Služba Hue"
+
+msgctxt "#30004"
+msgid "Check your bridge and network"
+msgstr "Zkontrolujte Bridge a síť"
+
+msgctxt "#30006"
+msgid "Hue connected"
+msgstr "Hue připojeno"
+
+msgctxt "#30007"
+msgid "Press link button on bridge"
+msgstr "Stiskněte tlačítko na Hue Bridge"
+
+msgctxt "#30008"
+msgid "Bridge not found"
+msgstr "Bridge nebyl nalezen"
+
+msgctxt "#30009"
+msgid "Waiting for 90 seconds..."
+msgstr "Čekám 90 vteřin..."
+
+msgctxt "#30010"
+msgid "User not found"
+msgstr "Uživatel neby nalezen"
+
+msgctxt "#30011"
+msgid "Complete!"
+msgstr "Hotovo!"
+
+msgctxt "#30013"
+msgid "Cancelled"
+msgstr "Ukončeno"
+
+msgctxt "#30015"
+msgid "Select Hue Lights..."
+msgstr "Vyberte Hue světla..."
+
+msgctxt "#30017"
+msgid "Found bridge: "
+msgstr "Bridge nalezen: "
+
+msgctxt "#30018"
+msgid "Discover bridge..."
+msgstr "Hledat Bridge..."
+
+msgctxt "#30021"
+msgid "Bridge connection failed"
+msgstr "Připojení k Bridge selhalo"
+
+msgctxt "#30022"
+msgid "Discovery started"
+msgstr "Hledání začalo"
+
+msgctxt "#30023"
+msgid "Bridge not configured"
+msgstr "Bridge není nastaven"
+
+msgctxt "#30024"
+msgid "Check Hue Bridge configuration"
+msgstr "Zkontrolujte konfiguraci Hue Bridge"
+
+msgctxt "#30025"
+msgid "ERROR: Scene not deleted"
+msgstr ""
+
+msgctxt "#30026"
+msgid "Scene Created"
+msgstr "Scéna vytvořena"
+
+msgctxt "#30027"
+msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Delete Hue Scene"
+msgstr "Smazat Hue scénu"
+
+msgctxt "#30030"
+msgid "Enter Scene Name"
+msgstr "Vložte název scény"
+
+msgctxt "#30031"
+msgid "Transition Time:"
+msgstr "Čas přechodu:"
+
+msgctxt "#30033"
+msgid "{} secs."
+msgstr "{} vteřin"
+
+msgctxt "#30034"
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgctxt "#30035"
+msgid "Lights:"
+msgstr "Světla:"
+
+msgctxt "#30036"
+msgid "Scene Name:"
+msgstr "Název scény:"
+
+msgctxt "#30037"
+msgid "Save"
+msgstr "Uložit"
+
+msgctxt "#30038"
+msgid "Create Hue Scene"
+msgstr "Vytvořit Hue scénu"
+
+msgctxt "#30002"
+msgid "Scene not created."
+msgstr ""
+
+msgctxt "#30039"
+msgid "Set a fade time in seconds, or 0 for an instant transition."
+msgstr ""
+
+msgctxt "#30040"
+msgid "Scene deleted"
+msgstr "Scéna smazána!"
+
+msgctxt "#30041"
+msgid "You may now assign your Scene to player actions."
+msgstr "Teď můžete přiřadit Scénu k Akcím"
+
+msgctxt "#30042"
+msgid "Fade Time (Seconds)"
+msgstr "Čas slábnutí (vteřiny)"
+
+msgctxt "#30043"
+msgid "Error"
+msgstr "Chyba"
+
+msgctxt "#30044"
+msgid "Create New Scene"
+msgstr "Vytvořit novou scénu"
+
+msgctxt "#30045"
+msgid "Scene successfully created!"
+msgstr "Scéna úspěšně vytvořena"
+
+msgctxt "#30046"
+msgid "Adjust lights to desired state in the Hue App to save as new scene."
+msgstr "Pro uložení upravte nastavení světel v Hue aplikaci."
+
+msgctxt "#30047"
+msgid "Connection lost. Check settings. Shutting down"
+msgstr "Spojení přerušeno. Zkontrolujte nastavení. Vypínám"
+
+msgctxt "#30048"
+msgid "Connection lost. Trying again in 2 minutes"
+msgstr "Spojení přerušeno. Další pokus za 2 minuty"
+
+msgctxt "#30049"
+msgid "Scene Name"
+msgstr "Název scény"
+
+msgctxt "#30050"
+msgid "N-UPnP discovery..."
+msgstr "Hledání N-UPnP..."
+
+msgctxt "#30051"
+msgid "UPnP discovery..."
+msgstr "Hledání UPnP..."
+
+msgctxt "#30005"
+msgid "Searching for bridge..."
+msgstr "Hledám Bridge..."
+
+msgctxt "#30052"
+msgid "Invalid start or end time, schedule disabled"
+msgstr "Chybný čas začátku nebo konce. Plán deaktivován"
+
+msgctxt "#30056"
+msgid "Set brightness on start"
+msgstr "Jas na začátku"
+
+msgctxt "#30057"
+msgid "Force on"
+msgstr "Vynutit zapnutí"
+
+msgctxt "#30058"
+msgid "Light Names:"
+msgstr "Názvy světel:"
+
+msgctxt "#30059"
+msgid "Light Gamut:"
+msgstr "Stupnice světel"
+
+msgctxt "#30065"
+msgid "Update interval (ms)"
+msgstr "Interval aktualizace (ms)"
+
+msgctxt "#30066"
+msgid "Hue transition time (ms)"
+msgstr "Čas přechodu (ms)"
+
+msgctxt "#30067"
+msgid "Frame capture size"
+msgstr "Velikost analyzovaného snímku"
+
+msgctxt "#30068"
+msgid "Show Hue bridge capacity errors"
+msgstr ""
+
+msgctxt "#30800"
+msgid "Minimum duration (Minutes)"
+msgstr "Minimální trvání (minuty)"
+
+msgctxt "#30801"
+msgid "Enable for Movies"
+msgstr "Zapnout pro Filmy"
+
+msgctxt "#30802"
+msgid "Enable for TV episodes"
+msgstr "Zapnout pro Seriály"
+
+msgctxt "#30803"
+msgid "Enable for music videos"
+msgstr "Zapnout pro hudební videa"
+
+msgctxt "#30804"
+msgid "Enable for other videos (Discs)"
+msgstr "Zapnout pro ostatní videa (CD/DVD)"
+
+msgctxt "#30805"
+msgid "Enable for live TV"
+msgstr "Zapnotu pro TV"
+
+msgctxt "#30809"
+msgid "Saturation"
+msgstr "Saturace"
+
+msgctxt "#30810"
+msgid "Minimum Brightness"
+msgstr "Minimální jas"
+
+msgctxt "#30811"
+msgid "Maximum Brightness"
+msgstr "Maximální jas"
+
+msgctxt "#30812"
+msgid "Disable connection message"
+msgstr "Vpnout zprávu o připojení"
+
+msgctxt "#30813"
+msgid "Average image processing time:"
+msgstr "Průměrný čas zpracování obrázku:"
+
+msgctxt "#30814"
+msgid "On playback stop"
+msgstr "Při vypnutí přehrávání"
+
+msgctxt "#30815"
+msgid "Resume light state"
+msgstr "Obnovit stav světel"
+
+msgctxt "#30816"
+msgid "Resume transition time (secs.)"
+msgstr "Pokračovat v přechodu (vteřiny)"
+
+msgctxt "#30071"
+msgid "Only colour lights are supported"
+msgstr "Pouze barevná světla jsou podporována"
+
+msgctxt "#30072"
+msgid "Unsupported Hue Bridge"
+msgstr "Nepodporovaný Hue Bridge"
+
+msgctxt "#30055"
+msgid "Disabled"
+msgstr "Deaktivováno"
+
+msgctxt "#30060"
+msgid "Play"
+msgstr "Přehrát"
+
+msgctxt "#30061"
+msgid "Hue Status: "
+msgstr "Hue stav: "
+
+msgctxt "#30062"
+msgid "Settings"
+msgstr "Nastavení"
+
+msgctxt "#30063"
+msgid "Disabled by daylight"
+msgstr "Deaktivováno ve dne"
+
+msgctxt "#30064"
+msgid "ERROR: Scene not found"
+msgstr "Chyba: Scéna nebyla nalezena"
+
+msgctxt "#30080"
+msgid "The following error occurred:"
+msgstr "Došlo k následující chybě:"
+
+msgctxt "#30081"
+msgid "Automatically report this error?"
+msgstr "Odeslat report?"
+
+msgctxt "#30069"
+msgid "No lights selected for Ambilight."
+msgstr "Nebyla vybrána žádná světla pro Ambilight."
+
+msgctxt "#30070"
+msgid "Ok"
+msgstr "Ok"
+
+msgctxt "#30075"
+msgid "Hue Bridge over capacity"
+msgstr "Hue Bridge kapacita vyčerpána"
+
+msgctxt "#30076"
+msgid "Network not ready"
+msgstr "Síť není připravena"
+
+msgctxt "#30077"
+msgid "The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."
+msgstr "Hue Bridge kapacita vyčerpána. Zvyště obnovovací frekvenci nebo snižte počet světel."
+
+msgctxt "#30078"
+msgid "Bridge not found[CR]Check your bridge and network."
+msgstr "Bridge nenalezen[CR]Zkontrolujte Bridge a spojení."
+
+msgctxt "#30082"
+msgid "Press link button on bridge. Waiting for 90 seconds..."
+msgstr "Stiskněte tlačítko na Bridge. Čekám 90 vteřin..."
+
+msgctxt "#30083"
+msgid "Unknown"
+msgstr "Neznámé"
+
+msgctxt "#30084"
+msgid "User Found![CR]Saving settings..."
+msgstr "Uživatel nalezen![CR]Ukládám nastavení..."
+
+msgctxt "#30085"
+msgid "Adjust lights to desired state in the Hue App to save as new scene.[CR]Set a fade time in seconds, or 0 for an instant transition."
+msgstr ""
+
+msgctxt "#30086"
+msgid "User not found[CR]Check your bridge and network."
+msgstr "Uživatel nenalezen[CR]Zkontrolujte Bridge a spojení."
+
+msgctxt "#30087"
+msgid "Scene successfully created![CR]You may now assign your scene to player actions."
+msgstr ""
+
+msgctxt "#30073"
+msgid "Do not show again"
+msgstr "Nezobrazovat znovu"
+
+msgctxt "#30074"
+msgid "Disable Hue Labs during playback"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
+msgstr ""
+
+msgctxt "#30003"
+msgid "Bridge API: {api_version}, update your bridge"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Unknown colour gamut for light {light}"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Report errors"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Never report errors"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Hue Service Error"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Connection Error"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Error: Lights incompatible with Ambilight"
+msgstr ""
+
+#~ msgctxt "#30014"
+#~ msgid "Saving settings"
+#~ msgstr "Ukládám nastavení"
+
+#~ msgctxt "#30019"
+#~ msgid "User Found!"
+#~ msgstr "Uživatel nalezen!"
+
+#~ msgctxt "#6100"
+#~ msgid "Light Selection"
+#~ msgstr "Výběr světel"
+
+#~ msgctxt "#5110"
+#~ msgid "Initial flash"
+#~ msgstr "Probliknutí světel při spuštění"
+
+#~ msgctxt "#30504"
+#~ msgid "Bridge Serial"
+#~ msgstr "Bridge sériové číslo"
+
+#~ msgctxt "#30505"
+#~ msgid "Enable Schedule (24-h format)"
+#~ msgstr "Zapnout plán (24h formát)"
+
+#~ msgctxt "#30085"
+#~ msgid "Adjust lights to desired state in the Hue App to save as new scene.[CR]Set a fade time in seconds, or set to 0 seconds for an instant transition."
+#~ msgstr "Upravte nastavení světel v aplikaci Hue a uložte scénu.[CR]Vložte čas slábnutí ve vteřinách nebo 0 pro okamžitý přechod."
+
+#~ msgctxt "#30087"
+#~ msgid "Scene successfully created![CR]You may now assign your Scene to player actions."
+#~ msgstr "Scéna vytvořena![CR]Teď můžete přiřadit Scénu k Akcím."
+
+#~ msgctxt "#30027"
+#~ msgid "Are you sure you want to delete this scene: "
+#~ msgstr "Opravdu chcete smazat scénu: "
+
+#~ msgctxt "#30029"
+#~ msgid "Create a Hue Scene from current light state"
+#~ msgstr "Vytvořit Hue scénu podle aktuálního nastavení světel"
+
+#~ msgctxt "#30039"
+#~ msgid "Set a fade time in seconds, or set to 0 seconds for an instant transition."
+#~ msgstr "Vložte čas slábnutí ve vteřinách nebo 0 pro okamžitý přechod"
+
+#~ msgctxt "#30053"
+#~ msgid "Hue Calls/sec (max 10): {}"
+#~ msgstr "Hue spojení za vteřinu (max. 10): {}"
+
+#~ msgctxt "#30054"
+#~ msgid "Est. Hue Calls/sec (max 10): {}"
+#~ msgstr "Odhad spojení za vteřinu (max 10): {}"
+
+#~ msgctxt "#30513"
+#~ msgid "Start Scene Enabled"
+#~ msgstr "Scéna Začátek aktivována"
+
+#~ msgctxt "#30068"
+#~ msgid "Performance debug logging"
+#~ msgstr "Logování výkonu"
+
+#~ msgctxt "#5111"
+#~ msgid "Flash on settings reload"
+#~ msgstr "Probliknutí světel při změně nastavení"
+
+#~ msgctxt "#6102"
+#~ msgid "Select Hue Group"
+#~ msgstr "Zvolte skupinu Hue"
+
+#~ msgctxt "#6200"
+#~ msgid "Group Behavior"
+#~ msgstr "Chování skupiny"
+
+#~ msgctxt "#30001"
+#~ msgid "ERROR: Group not created"
+#~ msgstr "Chyba: Skupina nebyla vytvořena"
+
+#~ msgctxt "#30003"
+#~ msgid "Group deleted"
+#~ msgstr "Skupina smazána"
+
+#~ msgctxt "#30012"
+#~ msgid "Group Created"
+#~ msgstr "Skupina vytvořena"
+
+#~ msgctxt "#30016"
+#~ msgid "Are you sure you want to delete this group: "
+#~ msgstr "Opravdu chcete tuto skupinu smazat: "
+
+#~ msgctxt "#30020"
+#~ msgid "Delete Hue Group"
+#~ msgstr "Smazat Hue skupinu"
+
+#~ msgctxt "#30025"
+#~ msgid "ERROR: Scene not created"
+#~ msgstr "Chyba: Scéna nebyla vytvořena"
+
+#~ msgctxt "#30032"
+#~ msgid "Fade time must be saved as part of the scene."
+#~ msgstr "Čas slábnutí musí být uložen jako součást scény."
+
+#~ msgctxt "#30002"
+#~ msgid "Error: Scene not created."
+#~ msgstr "Chyba: Scéna nebyla vytvořena."
+
+#~ msgctxt "#32102"
+#~ msgid "Debug Logs"
+#~ msgstr "Debug logy"
