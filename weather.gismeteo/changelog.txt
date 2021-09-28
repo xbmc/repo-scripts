@@ -1,3 +1,6 @@
+v0.6.3 (2021-09-27)
+- Fixed identified bugs
+
 v0.6.2 (2021-05-31)
 - Updated compatibility with Kodi 19
 - Added Icelandic translation (sveinki) 
