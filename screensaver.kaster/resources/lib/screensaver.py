@@ -98,7 +98,7 @@ class Kaster(xbmcgui.WindowXMLDialog):
                     if "line2" in self.images[rand_index]:
                         self.metadata_line3.setLabel(self.images[rand_index]["line2"])
                     else:
-                        self.metadata_line2.setLabel("")
+                        self.metadata_line3.setLabel("")
                 # Insert photo
                 self.backgroud.setImage(self.images[rand_index]["url"])
                 # Pop image and wait

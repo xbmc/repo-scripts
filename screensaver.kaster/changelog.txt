@@ -1,3 +1,7 @@
+v1.3.6 (21/09/2021)
+ - [fix] line2 does not get cleared with user photos (tks @fuse314)
+ - [fix] allow pictures folder to be read-only (tks @fuse314)
+
 v1.3.5 (23/12/2020)
 - [fix] Unicode fixes for python3 (tks @roidy)
 
