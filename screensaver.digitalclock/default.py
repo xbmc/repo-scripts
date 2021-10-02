@@ -183,8 +183,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         elif self.background == '2':
             self.folder = Addon.getSetting('folder')
             self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])
-            self.number = len(os.walk(self.folder).next()[2])-1
-            self.files = os.walk(self.folder).next()[2]
+            self.files = os.walk(self.folder).__next__()[2]
+            self.number = len(self.files)-1
             self.files.sort()
             self.nextfile = 0
             if self.randomimages =='true':
@@ -567,17 +567,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
 if __name__ == '__main__':
     xbmc.log('Digital Clock Screensaver %s: Started' %Addonversion)
-    if(os.path.isfile(xbmcvfs.translatePath('special://skin/1080i/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/1080i/'), 'default')
-    elif(os.path.isfile(xbmcvfs.translatePath('special://skin/720p/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/720p/'), 'default')
-    elif(os.path.isfile(xbmcvfs.translatePath('special://skin/21x9/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/21x9/'), 'default')
-    elif(os.path.isfile(xbmcvfs.translatePath('special://skin/16x9/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/16x9/'), 'default')
-    elif(os.path.isfile(xbmcvfs.translatePath('special://skin/4x3Hirez/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/4x3Hirez/'), 'default')
-    elif(os.path.isfile(os.path.join(path,"resources/skins/default/720p/",scriptname))):
+    if(os.path.isfile(os.path.join(path,"resources/skins/default/720p/",scriptname))):
         screensaver = Screensaver(scriptname, path, 'default')
     else:
         screensaver = Screensaver('skin.default.xml', path, 'default')
