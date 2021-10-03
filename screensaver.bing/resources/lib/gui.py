@@ -21,7 +21,7 @@ import json, os, random, datetime, requests
 from six.moves     import urllib
 from simplecache   import use_cache, SimpleCache
 from kodi_six      import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs, py2_encode, py2_decode
-
+from itertools     import cycle
 
 # Plugin Info
 ADDON_ID       = 'screensaver.bing'
@@ -36,9 +36,11 @@ LANGUAGE       = REAL_SETTINGS.getLocalizedString
 KODI_MONITOR   = xbmc.Monitor()
 
 BASE_URL       = 'https://www.bing.com'
-POTD_JSON      = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8'
+POTD_JSON      = 'https://www.bing.com/hpimagearchive.aspx?format=js&idx=%i&n=8&mkt=%s'%(random.randint(0,7),xbmc.getLanguage(xbmc.ISO_639_1, True))
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
 RANDOM         = REAL_SETTINGS.getSetting("Randomize") == 'true'
+IDX_LST        = [1,2,3,4,5,6,7,0]
+CYC_INTER      = cycle(IDX_LST).__next__
 
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -60,7 +62,7 @@ class GUI(xbmcgui.WindowXMLDialog):
          
     def onInit( self ):
         self.winid = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
-        self.winid.setProperty('bing_time'     , 'okay' if REAL_SETTINGS.getSetting("Time") == 'true' else 'nope')
+        self.winid.setProperty('bing_time'     , 'okay' if REAL_SETTINGS.getSetting("Time")    == 'true' else 'nope')
         self.winid.setProperty('bing_animation', 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope')
         self.winid.setProperty('bing_overlay'  , 'okay' if REAL_SETTINGS.getSetting("Overlay") == 'true' else 'nope')
         self.PanelItems = self.getControl(101)
@@ -69,14 +71,13 @@ class GUI(xbmcgui.WindowXMLDialog):
         
         
     def startRotation(self):
-        while not KODI_MONITOR.abortRequested():
+        while not KODI_MONITOR.abortRequested() and not self.isExiting:
             xbmc.executebuiltin('SetFocus(101)')
-            xbmc.executebuiltin("Control.Move(101,%s)"%str(random.randint(1,7)) if RANDOM == True else '0')
-            if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True: 
-                break
+            xbmc.executebuiltin("Control.Move(101,%s)"%(str(random.randint(0,7)) if RANDOM else str(CYC_INTER())))
+            if KODI_MONITOR.waitForAbort(TIMER): break
 
         
-    def onAction( self, action ):
+    def onAction(self, action ):
         self.isExiting = True
         self.close()
         
