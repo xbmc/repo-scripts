@@ -1,0 +1,80 @@
+# XBMC Media Center language file
+# Addon Name: Unsplash Photo ScreenSaver
+# Addon id: screensaver.unsplash
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ms_my\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32002"
+msgid "Rotate Image Every"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Animate Image"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Display Time & Weather"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Preferred Mode"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Enable Keywords"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Enter Search Parameters Ex.(City,Night)"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Enter User Name"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Enter Collection ID"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Preferred Resolution"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Use Vignette Overlay"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Something went wrong, Try again..."
+msgstr ""
+
+msgctxt "#30002"
+msgid "General"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Register for API-KEY @ https://unsplash.com/oauth/applications"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Enter API-KEY"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Enter Category"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Enter Search Query"
+msgstr ""
