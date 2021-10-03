@@ -1,5 +1,9 @@
 CHANGES
 =======
+Version 13.0.4 (3/10/2021)
+-------------
+- Add plugin.container_refresh (builtin Container.Refresh)
+
 Version 13.0.3 (15/12/2020)
 - Remove offscreen support (only supported in leia++)
 
