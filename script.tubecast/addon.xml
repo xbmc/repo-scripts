@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tubecast" name="TubeCast" version="1.4.7+matrix.1" provider-name="enen92">
+<addon id="script.tubecast" name="TubeCast" version="1.4.8+matrix.1" provider-name="enen92">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.bottle" version="0.12.0"/>
@@ -10,30 +10,14 @@
     <extension point="xbmc.python.script" library="script.py" />
     <extension point="xbmc.service" library="main.py"/>
     <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">Cast videos from the Youtube application to Kodi</summary>
-        <summary lang="pt_PT">Cast de vídeos a partir da aplicação móvel Youtube para o Kodi</summary>
-        <summary lang="es_ES">Transmitir videos desde la aplicación de Youtube a Kodi</summary>
-        <summary lang="ru_RU">Транслируйте видео из приложения Youtube в Kodi</summary>
-        <description lang="en_GB">An implementation of the Cast V1 protocol in Kodi to act as a player for the Youtube mobile application</description>
-        <description lang="pt_PT">Uma implementação do protocolo Cast V1 no Kodi para este funcionar como player externo remotamente controlado pela aplicação móvel do YouTube</description>
-        <description lang="es_ES">Una implementación del protocolo Cast V1 en Kodi para actuar como reproductor externo para la aplicación móvil de Youtube</description>
-        <description lang="ru_RU">Реализация протокола Cast V1 для работы в качестве проигрывателя в мобильном приложении Youtube</description>
         <platform>all</platform>
         <license>MIT</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=329153</forum>
         <email>enen92@kodi.tv</email>
         <source>https://github.com/enen92/script.tubecast</source>
         <news>
-            [fix] Fix cast with new youtube app (tks @ivanich @Chalanxe @patrickkfkan)
-            [fix] Bump requirements
-            [new] Added translation support via weblate
-            [new] russian translation (tks @DimmKG)
-            [new] Add setting to allow the use of youtube instead of tubed
+            [new] sync translations
         </news>
-        <disclaimer lang="en_GB">This is not a full chromecast implementation nor will it ever be. It will only work as long as Google keep backwards compatibility with the cast v1 protocol in the Youtube application. Deeply inspired by Leapcast and gotubecast projects</disclaimer>
-        <disclaimer lang="pt_PT">Este addon não é uma implementação completa do protocolo cast nem nunca será. Apenas funcionará enquanto a Google mantiver a retrocompatibilidade com o protocolo cast v1 na aplicação móvel do youtube. Inspirado no Leapcast e gotubecast</disclaimer>
-        <disclaimer lang="es_ES">Esta no es una implementación completa de Chromecast ni lo será nunca. Solo funcionará mientras Google mantenga la compatibilidad con el protocolo Cast v1 en la aplicación Youtube. Profundamente inspirado por los proyectos Leapcast y gotubecast</disclaimer>
-        <disclaimer lang="ru_RU">Это не полная реализация протокола Chromecast и не будет таковой. Это будет работать только до тех пор, пока Google не прекратит поддержку обратной совместимости с протоколом cast v1 в приложении Youtube. Вдохновленный проектами Leapcast и gotubecast</disclaimer>
         <assets>
             <icon>resources/img/icon.png</icon>
             <fanart>resources/img/fanart.jpg</fanart>
@@ -42,5 +26,26 @@
             <screenshot>resources/img/screenshot-2.jpg</screenshot>
             <screenshot>resources/img/screenshot-3.jpg</screenshot>
         </assets>
+        <summary lang="da_DK">Cast videoer fra Youtube-applikationen til Kodi</summary>
+        <summary lang="de_DE">Videos von der Youtube-Anwendung zu Kodi übertragen</summary>
+        <summary lang="en_GB">Cast videos from the Youtube application to Kodi</summary>
+        <summary lang="es_ES">Transmitir videos desde la aplicación de Youtube a Kodi</summary>
+        <summary lang="ko_KR">유튜브 응용 프로그램에서 Kodi로 비디오 전송</summary>
+        <summary lang="pt_PT">Cast de vídeos a partir da aplicação móvel Youtube para o Kodi</summary>
+        <summary lang="ru_RU">Транслируйте видео из приложения Youtube в Kodi</summary>
+        <description lang="da_DK">En implementering af Cast V1-protokollen i Kodi, der fungerer som afspiller for Youtube-mobilapplikationen</description>
+        <description lang="de_DE">Eine Implementierung des Cast V1-Protokolls in Kodi, um als Player für die mobile Youtube-Anwendung zu fungieren</description>
+        <description lang="en_GB">An implementation of the Cast V1 protocol in Kodi to act as a player for the Youtube mobile application</description>
+        <description lang="es_ES">Una implementación del protocolo Cast V1 en Kodi para actuar como reproductor externo para la aplicación móvil de Youtube</description>
+        <description lang="ko_KR">유튜브 모바일 애플리케이션의 플레이어 역할을 하는 Kodi의 Cast V1 프로토콜 구현</description>
+        <description lang="pt_PT">Uma implementação do protocolo Cast V1 no Kodi para este funcionar como player externo remotamente controlado pela aplicação móvel do YouTube</description>
+        <description lang="ru_RU">Реализация протокола Cast V1 для работы в качестве проигрывателя в мобильном приложении Youtube</description>
+        <disclaimer lang="da_DK">Dette er ikke en fuldstændig chromecast-implementering, og det vil den aldrig blive. Det fungerer kun, så længe Google beholder bagudkompatibilitet med cast v1-protokollen i Youtube-applikationen. Kraftigt inspireret af Leapcast og gotubecast-projekter</disclaimer>
+        <disclaimer lang="de_DE">Dies ist keine volle Chromecast-Implementierung, noch wird sie es jemals sein. Sie wird nur so lange funktionieren, wie Google die Abwärtskompatibilität zum Cast V1-Protokoll in der Youtube-Anwendung erhalten wird. Zutiefst durch die Leacast- und gotubecast-Projekte inspiriert</disclaimer>
+        <disclaimer lang="en_GB">This is not a full chromecast implementation nor will it ever be. It will only work as long as Google keep backwards compatibility with the cast v1 protocol in the Youtube application. Deeply inspired by Leapcast and gotubecast projects</disclaimer>
+        <disclaimer lang="es_ES">Esta no es una implementación completa de Chromecast ni lo será nunca. Solo funcionará mientras Google mantenga la compatibilidad con el protocolo Cast v1 en la aplicación Youtube. Profundamente inspirado por los proyectos Leapcast y gotubecast</disclaimer>
+        <disclaimer lang="ko_KR">이것은 완전한 크롬캐스트 구현이 아니며 앞으로도 없을 것입니다. 구글이 유튜브 애플리케이션에서 캐스트 v1 프로토콜과의 역호환성을 유지하는 한 작동합니다. Leapcast 및 gotubecast 프로젝트에서 많은 영향을 받았습니다</disclaimer>
+        <disclaimer lang="pt_PT">Este addon não é uma implementação completa do protocolo cast nem nunca será. Apenas funcionará enquanto a Google mantiver a retrocompatibilidade com o protocolo cast v1 na aplicação móvel do youtube. Inspirado no Leapcast e gotubecast</disclaimer>
+        <disclaimer lang="ru_RU">Это не полная реализация протокола Chromecast и не будет таковой. Это будет работать только до тех пор, пока Google не прекратит поддержку обратной совместимости с протоколом cast v1 в приложении Youtube. Вдохновленный проектами Leapcast и gotubecast</disclaimer>
     </extension>
 </addon>
