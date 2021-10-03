@@ -18,7 +18,7 @@ from optparse import OptionParser
 from urllib.parse import urlencode, parse_qs
 
 
-from xbmcswift2 import xbmcvfs, xbmcgui, xbmcplugin, xbmcaddon, Request
+from xbmcswift2 import xbmc, xbmcvfs, xbmcgui, xbmcplugin, xbmcaddon, Request
 from xbmcswift2.listitem import ListItem
 from xbmcswift2.logger import log, setup_log
 from xbmcswift2.common import enum, clean_dict, Modes, DEBUG_MODES
@@ -345,3 +345,7 @@ class Plugin(XBMCMixin):
                 storage.close()
 
         return items
+
+
+    def refresh_container(self):
+        xbmc.executebuiltin('Container.Refresh')
