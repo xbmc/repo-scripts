@@ -349,3 +349,7 @@ class Plugin(XBMCMixin):
                 storage.close()
 
         return items
+
+
+    def refresh_container(self):
+        xbmc.executebuiltin('Container.Refresh')
