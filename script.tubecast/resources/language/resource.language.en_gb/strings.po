@@ -16,6 +16,18 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Cast videos from the Youtube application to Kodi"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "An implementation of the Cast V1 protocol in Kodi to act as a player for the Youtube mobile application"
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "This is not a full chromecast implementation nor will it ever be. It will only work as long as Google keep backwards compatibility with the cast v1 protocol in the Youtube application. Deeply inspired by Leapcast and gotubecast projects"
+msgstr ""
+
 
 msgctxt "#32000"
 msgid "TubeCast"
