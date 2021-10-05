@@ -1,0 +1,45 @@
+# Kodi Media Center language file
+# Addon Name: Autostop
+# Addon id: service.autostop
+# Addon Provider: Jeff B.
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: jeff@thebinks.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jeff B.\n"
+"Language-Team: English"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Timers"
+msgstr ""
+
+msgctxt "#30301"
+msgid "Pause Autostop Minutes"
+msgstr ""
+
+msgctxt "#30302"
+msgid "Activate Screensaver"
+msgstr ""
+
+msgctxt "#30303"
+msgid "Sleep Timer Minutes"
+msgstr ""
+
+msgctxt "#30501"
+msgid "Automatically stop paused video or music in minutes.  0 = never automatically stop paused playback."
+msgstr ""
+
+msgctxt "#30502"
+msgid "Activate Kodi screensaver when addon autostops paused playback."
+msgstr ""
+
+msgctxt "#30503"
+msgid "Automatically stop playing video or music in minutes.  0 = never automatically stop playback."
+msgstr ""

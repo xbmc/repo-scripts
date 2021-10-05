@@ -1,0 +1,17 @@
+1.0.0.0
+- Initial Matrix release
+
+0.0.1.3
+-  Increased sleep timer to 120 minutes maximum
+-  Added the ability to increment sleep timer value
+   by calling addon from favourites or keyboard.xml.
+   See the readme.txt file for an example.
+
+0.0.1.2
+-  Added autostopping playing music or video
+
+0.0.1.1:
+- Initial Alpha release for Kodi 19
+
+
+
