@@ -1,4 +1,4 @@
-<addon id="script.module.pytz" name="pytz" version="2019.3.0+matrix.2" provider-name="Stuart Bishop, Paul Backhouse">
+<addon id="script.module.pytz" name="pytz" version="2021.3.0+matrix.1" provider-name="Stuart Bishop, Paul Backhouse">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
