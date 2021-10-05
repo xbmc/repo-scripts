@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.tzlocal"
        name="tzlocal"
-       version="2.0.0+matrix.1"
+       version="3.0.0+matrix.1"
        provider-name="Lennart Regebro">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
