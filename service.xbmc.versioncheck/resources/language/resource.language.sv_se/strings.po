@@ -16,6 +16,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Kodi Version Check checks if you are running latest released version."
+msgstr "Kodi Version Check kontrollerar om du använder den senaste versionen."
+
+msgctxt "Addon Description"
+msgid "Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website."
+msgstr "Kodi Version Check stöder endeast ett antal plattformar/distributioner eftersom utgivningar kan skilja mellan dessa. För mer information besök kodi.tv webplatsen."
+
+msgctxt "Addon Disclaimer"
+msgid "Feel free to use this script. For information visit kodi.tv"
+msgstr "Använd gärna detta skript. För information, besök kodi.tv"
+
 msgctxt "#32001"
 msgid "We would like to recommend you to upgrade."
 msgstr "Vi rekommenderar dig att uppgradera."
