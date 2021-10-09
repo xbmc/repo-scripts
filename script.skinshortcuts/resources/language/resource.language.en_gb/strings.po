@@ -1,20 +1,20 @@
-# Kodi Media Center language file
-# Addon Name: Skin Shortcuts
-# Addon id: script.skinshortcuts
-# Addon Provider: Unfledged
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr ""
 
 msgctxt "#32000"
 msgid "Add"
@@ -160,9 +160,8 @@ msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
 msgstr ""
 
-#. ::MENUNAME:: is used internally and should NOT be translated :)
 msgctxt "#32036"
-msgid "Choose shortcuts for ::MENUNAME::"
+msgid "Choose shortcuts for %s"
 msgstr ""
 
 msgctxt "#32037"
@@ -173,9 +172,8 @@ msgctxt "#32038"
 msgid "Are you sure you want to reset all menu items back to default?"
 msgstr ""
 
-#. ::MENUNAME:: is used internally and should NOT be translated :)
 msgctxt "#32039"
-msgid "Pick widget for ::MENUNAME::"
+msgid "Pick widget for %s"
 msgstr ""
 
 msgctxt "#32040"
@@ -338,9 +336,8 @@ msgctxt "#32079"
 msgid "Files view"
 msgstr ""
 
-#. ::MENUNAME:: is used internally and should NOT be translated :)
 msgctxt "#32080"
-msgid "Edit ::MENUNAME:: Submenu"
+msgid "Edit %s Submenu"
 msgstr ""
 
 msgctxt "#32081"
@@ -479,12 +476,10 @@ msgctxt "#32114"
 msgid "Where should menu item be created"
 msgstr ""
 
-#: /resources/lib/nodefunctions.py
 msgctxt "#32115"
 msgid "Unable to get directory listings[CR][CR]See log for details"
 msgstr ""
 
-#: /default.py
 msgctxt "#32116"
 msgid "The skin you are using does not support adding items directly to the main menu"
 msgstr ""
@@ -501,7 +496,6 @@ msgctxt "#32119"
 msgid "Default widgets"
 msgstr ""
 
-#: /resources/settings.xml
 msgctxt "#32120"
 msgid "Never hide PVR shortcuts"
 msgstr ""
@@ -516,4 +510,8 @@ msgstr ""
 
 msgctxt "#32123"
 msgid "Games"
+msgstr ""
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
 msgstr ""
