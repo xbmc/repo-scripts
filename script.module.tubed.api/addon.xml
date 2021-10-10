@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.tubed.api" name="Tubed API" version="1.0.9" provider-name="anxdpanic">
+<addon id="script.module.tubed.api" name="Tubed API" version="1.0.10" provider-name="anxdpanic">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -9,7 +9,6 @@
     <extension point="xbmc.addon.metadata">
         <news>
 - fix ratebypass |contrib: RNavega|
-- fixup issue caused by bad linting
         </news>
         <assets>
             <icon>resources/media/icon.png</icon>
