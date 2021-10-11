@@ -17,6 +17,10 @@ msgctxt "#32000"
 msgid "Timers"
 msgstr "Timer"
 
+msgctxt "#32001"
+msgid "Restart Kodi in order to activate timer addon"
+msgstr "Neustart erforderlich um Timer Addon neu zu laden"
+
 msgctxt "#32009"
 msgid "Sleep timer"
 msgstr "Einschlafen"

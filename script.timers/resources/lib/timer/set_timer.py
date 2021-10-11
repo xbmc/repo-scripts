@@ -1,7 +1,7 @@
 import xbmc
 import xbmcgui
 from resources.lib.timer.abstract_set_timer import AbstractSetTimer, CONFIRM_EDIT, DURATION_NO
-from resources.lib.timer.scheduler import (ACTION_PLAY, ACTION_START,
+from resources.lib.timer.scheduler import (ACTION_START_STOP, ACTION_START,
                                            TIMER_DAYS_PRESETS, TIMER_OFF,
                                            TIMERS)
 
@@ -71,7 +71,7 @@ class SetTimer(AbstractSetTimer):
 
     def ask_action(self, listitem, preselection):
 
-        return ACTION_PLAY if preselection["duration"] != DURATION_NO else ACTION_START
+        return ACTION_START_STOP if preselection["duration"] != DURATION_NO else ACTION_START
 
     def confirm(self, preselection):
 
