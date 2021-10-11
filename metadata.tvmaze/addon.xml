@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="metadata.tvmaze"
+  name="TVmaze"
+  version="1.1.2+matrix.1"
+  provider-name="Roman V.M.">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="xbmc.metadata" version="2.1.0"/>
+    <import addon="script.module.six" />
+    <import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.metadata.scraper.tvshows" library="main.py" cachepersistence="48:00"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Fetch TV Show metadata from TVmaze.com</summary>
+    <description lang="en_GB">TVmaze is a free user driven TV database curated by TV lovers all over the world. You can track your favorite shows from anywhere.
+We provide an API that can be used by anyone or service like Kodi to retrieve TV Metadata, show/episode/cast images, and much more.</description>
+    <platform>all</platform>
+    <license>GPL-3.0-or-later</license>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/background.jpg</fanart>
+    </assets>
+    <website>https://www.tvmaze.com</website>
+    <source>https://github.com/romanvm/kodi.tvmaze</source>
+    <news>1.1.2:
+- Performance optimization.
+
+1.1.1:
+- Fixed scraping some alternative episode orders.
+- Fixed compatibility with Kodi 20 "N".
+- Reworked caching mechanism.</news>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+  </extension>
+</addon>
