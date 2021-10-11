@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pyqrcode" version="1.2.1+matrix.3" name="pyQRcode" provider-name="Michael Nooner">
+<addon id="script.module.pyqrcode" version="1.2.1+matrix.4" name="pyQRcode" provider-name="Michael Nooner">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     </requires>
