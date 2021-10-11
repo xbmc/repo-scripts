@@ -1,0 +1,44 @@
+# Kodi Media Center language file
+# Translators: put your translations in msgstr lines. Preserve items in curly {} and square [] brackets.
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Preferred Episode Order"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Default"
+msgstr ""
+
+msgctxt "#32003"
+msgid "DVD/BluRay Release"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Verbatim"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Country Premiere"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Streaming Premiere"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Broadcast Premiere"
+msgstr ""
+
+msgctxt "#32008"
+msgid "English Language Premiere"
+msgstr ""
