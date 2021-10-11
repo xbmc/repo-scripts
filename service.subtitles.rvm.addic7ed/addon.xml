@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="service.subtitles.rvm.addic7ed"
   name="Addic7ed.com"
-  version="3.1.7+matrix.1"
+  version="3.1.8+matrix.1"
   provider-name="Roman V.M.">
 <requires>
   <import addon="xbmc.python" version="3.0.0"/>
@@ -32,11 +32,11 @@
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
   </assets>
-  <news>3.1.7
-- Fixed crashes when playing non-medialibrary items.
-3.1.6:
-- Fixed compatibility with Kodi 20 "Nexus".
-- Various internal changes.</news>
-  <reuselanguageinvoker>false</reuselanguageinvoker>
+  <news>3.1.8:
+- Performance optimization.
+
+3.1.7:
+- Fixed crashes when playing non-medialibrary items.</news>
+  <reuselanguageinvoker>true</reuselanguageinvoker>
 </extension>
 </addon>
