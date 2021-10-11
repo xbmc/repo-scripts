@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+      <setting label="32001" type="enum" id="episode_order"
+               lvalues="32002|32003|32004|32005|32006|32007|32008"/>
+    </category>
+</settings>
