@@ -1,3 +1,6 @@
+v2.0.4
+- Handle unicode characters in video names
+
 v2.0.3
 - Bug fix for playing non-library videos
 - Use common code, better logging
