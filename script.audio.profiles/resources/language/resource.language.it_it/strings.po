@@ -13,6 +13,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them."
+msgstr "Salva il profilo audio e cambia facilmente da uno all'altro."
+
+msgctxt "Addon Description"
+msgid "Save audio profile and easily switch between them."
+msgstr "Salva il profilo audio e cambia facilmente da uno all'altro."
+
 msgctxt "#32000"
 msgid "Profiles 1-5"
 msgstr "Profili 1-5"
