@@ -1,3 +1,8 @@
+v.2.1.1
+- fix for depreciated xbmc.translatepath call
+- stopped using kodi-six (not needed for Matrix only addons)
+- updated language files
+
 v.2.1.0
 - fix for logging issue with Python3
 

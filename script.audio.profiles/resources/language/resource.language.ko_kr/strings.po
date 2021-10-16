@@ -1,406 +1,340 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2021-08-30 04:29+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/ko_kr/>\n"
 "Language: ko_kr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
 
-#: Settings
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them."
+msgstr "오디오 프로필을 저장하고 쉽게 전환합니다."
+
+msgctxt "Addon Description"
+msgid "Save audio profile and easily switch between them."
+msgstr "오디오 프로필을 저장하고 쉽게 전환합니다."
+
 msgctxt "#32000"
 msgid "Profiles 1-5"
-msgstr ""
+msgstr "프로필 1-5"
 
-#: Settings
 msgctxt "#32001"
 msgid " Name of profile 1"
-msgstr ""
+msgstr " 프로필 1의 이름"
 
-#: Settings
 msgctxt "#32002"
 msgid "Settings"
-msgstr ""
+msgstr "설정"
 
-#: Settings
 msgctxt "#32003"
 msgid " Name of profile 2"
-msgstr ""
+msgstr " 프로필 2의 이름"
 
-#: Settings
 msgctxt "#32004"
 msgid "Include volume level"
-msgstr ""
+msgstr "볼륨 수준 포함"
 
-#: Settings
 msgctxt "#32005"
 msgid " Name of profile 3"
-msgstr ""
+msgstr " 프로필 3의 이름"
 
-#: Settings
 msgctxt "#32006"
 msgid " Name of profile 4"
-msgstr ""
+msgstr " 프로필 4의 이름"
 
-#: Settings
 msgctxt "#32007"
 msgid "Profile 1"
-msgstr ""
+msgstr "프로필 1"
 
-#: Settings
 msgctxt "#32008"
 msgid "Profile 2"
-msgstr ""
+msgstr "프로필 2"
 
-#: Settings
 msgctxt "#32009"
 msgid "Profile 3"
-msgstr ""
+msgstr "프로필 3"
 
-#: Settings
 msgctxt "#32010"
 msgid "Profile 4"
-msgstr ""
+msgstr "프로필 4"
 
-#: Settings
 msgctxt "#32011"
 msgid "Include video player settings"
-msgstr ""
+msgstr "비디오 플레이어 설정 포함"
 
-#: Settings
 msgctxt "#32012"
 msgid "Include display settings"
-msgstr ""
+msgstr "디스플레이 설정 포함"
 
-#: Settings
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr ""
+msgstr "설정 포함"
 
-#: Settings
 msgctxt "#32014"
 msgid "Auto Switch"
-msgstr ""
+msgstr "자동 스위치"
 
-#: Settings
 msgctxt "#32015"
 msgid "Show audio profile select menu on media playback"
-msgstr ""
+msgstr "미디어 재생 시 오디오 프로필 선택 메뉴 표시"
 
-#: Settings
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr ""
+msgstr "자동 닫기 선택 메뉴"
 
-#: Settings
 msgctxt "#32018"
 msgid "Notifications"
-msgstr ""
+msgstr "알림"
 
-#: Settings
 msgctxt "#32019"
 msgid "Notifications"
-msgstr ""
+msgstr "알림"
 
-#: Settings
 msgctxt "#32021"
 msgid "Profile for GUI"
-msgstr ""
+msgstr "GUI용 프로필"
 
-#: Settings
 msgctxt "#32022"
 msgid "Profile for movies"
-msgstr ""
+msgstr "영화 프로필"
 
-#: Settings
 msgctxt "#32023"
 msgid "Profile for TV shows"
-msgstr ""
+msgstr "TV 프로그램 프로필"
 
-#: Settings
 msgctxt "#32024"
 msgid "Profile for PVR TV"
-msgstr ""
+msgstr "PVR TV용 프로필"
 
-#: Settings
 msgctxt "#32025"
 msgid "Profile for music"
-msgstr ""
+msgstr "음악용 프로필"
 
-#: Settings
 msgctxt "#32026"
 msgid "None"
-msgstr ""
+msgstr "없음"
 
-#: Settings
 msgctxt "#32027"
 msgid "HDMI-CEC"
-msgstr ""
+msgstr "HDMI-CEC"
 
-#: Settings
 msgctxt "#32028"
 msgid "Wake Up"
-msgstr ""
+msgstr "깨우기"
 
-#: Settings
 msgctxt "#32029"
 msgid "StandBy"
-msgstr ""
+msgstr "대기"
 
-#: Settings
 msgctxt "#32030"
 msgid "Toggle state"
-msgstr ""
+msgstr "상태 전환"
 
-#: Settings
 msgctxt "#32031"
 msgid "Profile for videos (not in library)"
-msgstr ""
+msgstr "비디오용 프로필(라이브러리에 없음)"
 
-#: Settings
 msgctxt "#32032"
 msgid "Profile for music videos"
-msgstr ""
+msgstr "뮤직 비디오용 프로필"
 
-#: Settings
 msgctxt "#32033"
 msgid "Profile for unknown content type"
-msgstr ""
+msgstr "알 수 없는 콘텐츠 유형에 대한 프로필"
 
-#: Settings
 msgctxt "#32034"
 msgid "Profile for PVR radio"
-msgstr ""
+msgstr "PVR 라디오용 프로필"
 
-#: Settings
 msgctxt "#32035"
 msgid "Video"
-msgstr ""
+msgstr "동영상"
 
-#: Settings
 msgctxt "#32036"
 msgid "Audio"
-msgstr ""
+msgstr "오디오"
 
-#: Settings
 msgctxt "#32037"
 msgid "Other"
-msgstr ""
+msgstr "기타"
 
-#: Settings
 msgctxt "#32038"
 msgid "Profile for KODI Start/Wakeup (Default)"
-msgstr ""
+msgstr "KODI 시작/깨우기용 프로필(기본값)"
 
-#: Settings
 msgctxt "#32039"
 msgid " Delay before close"
-msgstr ""
+msgstr " 닫기 전 지연"
 
-#: Settings
 msgctxt "#32040"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "디버그 로그 사용"
 
-#: Settings
 msgctxt "#32041"
 msgid " Force load profile at startup"
-msgstr ""
+msgstr " 시작 시 프로필 강제로 읽기"
 
-#: Settings
 msgctxt "#32042"
 msgid " Auto switch notifications"
-msgstr ""
+msgstr " 자동 전환 알림"
 
-#: Settings
 msgctxt "#32043"
 msgid " Manual switch notifications"
-msgstr ""
+msgstr " 수동 전환 알림"
 
-#: Settings
 msgctxt "#32044"
 msgid " Maintenance notifications"
-msgstr ""
+msgstr " 유지 보수 알림"
 
-#: Settings
 msgctxt "#32045"
 msgid "Select menu"
-msgstr ""
+msgstr "메뉴 선택"
 
-#: Settings
 msgctxt "#32046"
 msgid "Use custom select menu"
-msgstr ""
+msgstr "사용자 선택 메뉴 사용"
 
-#: Settings
 msgctxt "#32047"
 msgid "Include skin mods"
-msgstr ""
+msgstr "스킨 모드 포함"
 
-#: Settings
 msgctxt "#32048"
 msgid "Extras"
-msgstr ""
+msgstr "추가"
 
-#: Settings
 msgctxt "#32049"
 msgid "By number of channels"
-msgstr ""
+msgstr "채널 수별"
 
-#: Settings
 msgctxt "#32050"
 msgid "Menu Options"
-msgstr ""
+msgstr "메뉴 옵션"
 
-#: Settings
 msgctxt "#32051"
 msgid "Profile 5"
-msgstr ""
+msgstr "프로필 5"
 
-#: Settings
 msgctxt "#32052"
 msgid "Name of profile 5"
-msgstr ""
+msgstr "프로필 5의 이름"
 
-#: Settings
 msgctxt "#32053"
 msgid "Profile 6"
-msgstr ""
+msgstr "프로필 6"
 
-#: Settings
 msgctxt "#32054"
 msgid "Name of profile 6"
-msgstr ""
+msgstr "프로필 6의 이름"
 
-#: Settings
 msgctxt "#32055"
 msgid "Profile 7"
-msgstr ""
+msgstr "프로필 7"
 
-#: Settings
 msgctxt "#32056"
 msgid "Name of profile 7"
-msgstr ""
+msgstr "프로필 7의 이름"
 
-#: Settings
 msgctxt "#32057"
 msgid "Profile 8"
-msgstr ""
+msgstr "프로필 8"
 
-#: Settings
 msgctxt "#32058"
 msgid "Name of profile 8"
-msgstr ""
+msgstr "프로필 8의 이름"
 
-#: Settings
 msgctxt "#32059"
 msgid "Profile 9"
-msgstr ""
+msgstr "프로필 9"
 
-#: Settings
 msgctxt "#32060"
 msgid "Name of profile 9"
-msgstr ""
+msgstr "프로필 9의 이름"
 
-#: Settings
 msgctxt "#32061"
 msgid "Profile 10"
-msgstr ""
+msgstr "프로필 10"
 
-#: Settings
 msgctxt "#32062"
 msgid "Name of profile 10"
-msgstr ""
+msgstr "프로필 10의 이름"
 
-#: Settings
 msgctxt "#32063"
 msgid "Codec Detection"
-msgstr ""
+msgstr "코덱 감지"
 
-#: Settings
 msgctxt "#32064"
 msgid "Profile for AC3"
-msgstr ""
+msgstr "AC3용 프로필"
 
-#: Settings
 msgctxt "#32065"
 msgid "Profile for E-AC3"
-msgstr ""
+msgstr "E-AC3용 프로필"
 
-#: Settings
 msgctxt "#32066"
 msgid "Profile for DTS"
-msgstr ""
+msgstr "DTS용 프로필"
 
-#: Settings
 msgctxt "#32067"
 msgid "Profile for DTS HD"
-msgstr ""
+msgstr "DTS HD용 프로필"
 
-#: Settings
 msgctxt "#32068"
 msgid "Profile for True HD"
-msgstr ""
+msgstr "True HD용 프로필"
 
-#: Settings
 msgctxt "#32069"
 msgid "Profile for any other audio codec"
-msgstr ""
+msgstr "기타 오디오 코덱에 대한 프로필"
 
-#: Settings
 msgctxt "#32070"
 msgid "Profiles 6-10"
-msgstr ""
+msgstr "프로필 6-10"
 
-#: Settings
 msgctxt "#32071"
 msgid "Stereo audio"
-msgstr ""
+msgstr "스테레오 오디오"
 
-#: Settings
 msgctxt "#32072"
 msgid "Multi channel audio"
-msgstr ""
+msgstr "다중 채널 오디오"
 
-#: Settings
 msgctxt "#32073"
 msgid "delay before reading codec info"
-msgstr ""
+msgstr "코덱 정보를 읽기 전에 지연"
 
-#: Settings
 msgctxt "#32074"
 msgid "match streams with no codec details as music"
-msgstr ""
+msgstr "코덱 세부 정보가 없는 스트림을 음악으로 일치시킵니다"
 
-#: Script
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr ""
+msgstr "설정을 저장할 프로필 선택"
 
-#: Script
 msgctxt "#32101"
 msgid "Configure profile"
-msgstr ""
+msgstr "프로필 구성"
 
-#: Script
 msgctxt "#32102"
 msgid "Saved as profile"
-msgstr ""
+msgstr "프로필로 저장됨"
 
-#: Script
 msgctxt "#32103"
 msgid "This profile is disabled"
-msgstr ""
+msgstr "이 프로필 사용 안 함"
 
-#: Script
 msgctxt "#32104"
 msgid "Invalid file for profile"
-msgstr ""
+msgstr "잘못된 프로필 파일"
 
-#: Script
 msgctxt "#32105"
 msgid "Enable profiles"
-msgstr ""
+msgstr "프로필 사용함"
 
-#: Script
 msgctxt "#32106"
 msgid "Select audio profile"
-msgstr ""
+msgstr "오디오 프로필 선택"
