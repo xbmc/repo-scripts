@@ -5,6 +5,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them."
+msgstr "Hangbeállítások profilba mentése, és könnyű váltás közöttük."
+
+msgctxt "Addon Description"
+msgid "Save audio profile and easily switch between them."
+msgstr "Hangbeállítások profilba mentése, és könnyű váltás közöttük."
+
 msgctxt "#32000"
 msgid "Profiles 1-5"
 msgstr ""

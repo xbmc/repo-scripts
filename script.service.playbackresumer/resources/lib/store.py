@@ -87,7 +87,7 @@ class Store:
         Store.type_of_video = None
         Store.paused_time = None
         Store.length_of_currently_playing_file = None
-        with open(Store.file_to_store_last_played, 'w+') as f:
+        with open(Store.file_to_store_last_played, 'w+', encoding='utf-8') as f:
             f.write('')
         with open(Store.file_to_store_resume_point, 'w+') as f:
             f.write('')
@@ -170,7 +170,7 @@ class Store:
         Store.currently_playing_file_path = filepath
 
         # write the full path to a file for persistent tracking
-        with open(Store.file_to_store_last_played, 'w+') as f:
+        with open(Store.file_to_store_last_played, 'w+', encoding='utf8') as f:
             f.write(filepath)
 
         log(f'Last played file set to: {filepath}')

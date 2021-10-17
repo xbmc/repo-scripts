@@ -243,7 +243,9 @@ def build_images(radar_code, backgrounds_path, overlay_loop_path):
     log("Get files list")
     # connected, so let's get the list
     try:
+        # BOM FTP still, in 2021, does not support the nicer mdst() operation
         files = ftp.nlst()
+        files.sort(reverse=True)
     except ftplib.error_perm as resp:
         if str(resp) == "550 No files found":
             log("No files in BOM ftp directory!")
@@ -251,33 +253,39 @@ def build_images(radar_code, backgrounds_path, overlay_loop_path):
             log("Something wrong in the ftp bit of radar images")
             log(str(resp))
 
-    log("Download the files...")
+    log("Download new files, and rename existing files, to avoid Kodi caching issues with the animated radar")
     # ok now we need just the matching radar files...
+    # Maximum of 25 files (125 minutes, just over 2 hours, at 5 minutes each)
     loop_pic_names = []
     for f in files:
         if radar_code in f:
-            loop_pic_names.append(f)
+            loop_pic_names.insert(0, f)
+            if len(loop_pic_names) > 25:
+                log("Retrieved names of latest 25 radar images (2 hours), that's enough.")
+                break
 
-    # download the actual images, might as well get the longest loop they have (2 hours typically)
-    for f in loop_pic_names:
-        # don't re-download ones we already have
-        if not os.path.isfile(overlay_loop_path + time_now + "." + f):
-            # ignore the composite gif...
-            if f[-3:] == "png":
-                image_to_retrieve = Store.BOM_RADAR_FTPSTUB + f
-                output_file = time_now + "." + f
-                log("Retrieving new radar image: " + image_to_retrieve)
-                log("Output to file: " + output_file)
+    # Download the actual images
+    # (note existing images have already been renamed above with time_now to prevent caching issues
+    #  which is why we can test here with the current time_now to see if we already have the images)
+    if loop_pic_names:
+        for f in loop_pic_names:
+            if not os.path.isfile(overlay_loop_path + time_now + "." + f):
+                # ignore the composite gif...
+                if f[-3:] == "png":
+                    image_to_retrieve = Store.BOM_RADAR_FTPSTUB + f
+                    output_file = time_now + "." + f
+                    log("Retrieving new radar image: " + image_to_retrieve)
+                    log("Output to file: " + output_file)
 
-                try:
-                    radar_image = urllib.request.urlopen(image_to_retrieve)
-                    with open(overlay_loop_path + "/" + output_file, "wb") as fh:
-                        fh.write(radar_image.read())
+                    try:
+                        radar_image = urllib.request.urlopen(image_to_retrieve)
+                        with open(overlay_loop_path + "/" + output_file, "wb") as fh:
+                            fh.write(radar_image.read())
 
-                except Exception as e:
-                    log(f"Failed to retrieve radar image: {image_to_retrieve}, exception: {str(e)}")
-        else:
-            log("Using cached radar image: " + time_now + "." + f)
+                    except Exception as e:
+                        log(f"Failed to retrieve radar image: {image_to_retrieve}, exception: {str(e)}")
+            else:
+                log("Using cached radar image: " + time_now + "." + f)
 
 
 ###########################################################
