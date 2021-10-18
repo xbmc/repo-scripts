@@ -4,9 +4,8 @@ from datetime import datetime
 import xbmc
 import xbmcaddon
 from resources.lib.timer import util
-from resources.lib.timer.scheduler import (ACTION_PLAY, END_TYPE_DURATION,
-                                           END_TYPE_NO, END_TYPE_TIME,
-                                           TIMER_OFF)
+from resources.lib.timer.scheduler import (ACTION_START_STOP, END_TYPE_DURATION,
+                                           END_TYPE_NO, END_TYPE_TIME)
 
 DURATION_NO = util.DEFAULT_TIME
 
@@ -101,7 +100,7 @@ class AbstractSetTimer:
 
     def ask_action(self, listitem, preselection):
 
-        return ACTION_PLAY
+        return ACTION_START_STOP
 
     def confirm(self, preselection):
 

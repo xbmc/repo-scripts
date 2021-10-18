@@ -7,8 +7,9 @@ import xbmcgui
 import xbmcvfs
 from resources.lib.timer import util
 from resources.lib.timer.player import Player
+from resources.lib.timer.util import DEFAULT_TIME
 
-CHECK_INTERVAL = 12
+CHECK_INTERVAL = 10
 
 TIMERS = 12
 SLEEP_TIMER = 0
@@ -51,7 +52,7 @@ END_TYPE_DURATION = "1"
 END_TYPE_TIME = "2"
 
 ACTION_NO = "0"
-ACTION_PLAY = "1"
+ACTION_START_STOP = "1"
 ACTION_START = "2"
 ACTION_START_AT_END = "3"
 ACTION_STOP = "4"
@@ -81,10 +82,10 @@ class Scheduler(xbmc.Monitor):
                 "s_schedule": TIMER_OFF,
                 "days": [],
                 "s_label": "",
-                "s_start": "00:00",
+                "s_start": DEFAULT_TIME,
                 "s_end_type": END_TYPE_NO,
-                "s_end": "00:00",
-                "s_duration": "00:00",
+                "s_end": DEFAULT_TIME,
+                "s_duration": DEFAULT_TIME,
                 "td_duration": None,
                 "s_action": ACTION_NO,
                 "s_filename": "",
@@ -232,28 +233,27 @@ class Scheduler(xbmc.Monitor):
 
         return td_end
 
-    def _start_action(self, timer, td_now):
+    def _get_current_volume(self):
 
         try:
             _result = util.json_rpc("Application.GetProperties", {
                 "properties": ["volume"]})
-            timer["i_return_vol"] = _result["volume"]
+            return _result["volume"]
 
         except:
             xbmc.log(
                 "jsonrpc call failed in order to get current volume: Application.GetProperties", xbmc.LOGERROR)
-            timer["i_return_vol"] = int(self.addon.getSetting("vol_default"))
+            return int(self.addon.getSetting("vol_default"))
 
-        if timer["s_fade"] == FADE_OUT_FROM_CURRENT and timer["s_end_type"] != END_TYPE_NO:
-            pass
+    def _start_action(self, timer, td_now, force_return_vol=None):
 
-        elif timer["s_fade"] == FADE_OUT_FROM_MAX and timer["s_end_type"] != END_TYPE_NO:
-            xbmc.executebuiltin("SetVolume(%i)" % timer["i_vol_max"])
+        if self._is_fading_timer(timer):
+            if force_return_vol is not None:
+                timer["i_return_vol"] = force_return_vol
+            else:
+                timer["i_return_vol"] = self._get_current_volume()
 
-        elif timer["s_fade"] == FADE_IN_FROM_MIN and timer["s_end_type"] != END_TYPE_NO:
-            xbmc.executebuiltin("SetVolume(%i)" % timer["i_vol_min"])
-
-        if timer["s_action"] in [ACTION_PLAY, ACTION_START] and timer["s_filename"] != "":
+        if timer["s_action"] in [ACTION_START_STOP, ACTION_START] and timer["s_filename"] != "":
             if self.addon.getSetting("resume") == "true":
                 td_start = util.parse_time(
                     timer["s_start"], datetime.today().weekday())
@@ -275,9 +275,9 @@ class Scheduler(xbmc.Monitor):
 
         timer["b_active"] = True
 
-    def _stop_action(self, timer):
+    def _stop_action(self, timer, reset_vol=True):
 
-        if timer["s_action"] in [ACTION_PLAY, ACTION_STOP_AT_END]:
+        if timer["s_action"] in [ACTION_START_STOP, ACTION_STOP_AT_END]:
             self.player.stop()
 
         elif timer["s_action"] == ACTION_START_AT_END and timer["s_filename"] != "":
@@ -287,24 +287,48 @@ class Scheduler(xbmc.Monitor):
             xbmcgui.Dialog().notification(self.addon.getLocalizedString(
                 32101), timer["s_label"])
 
-        if timer["s_schedule"] in TIMER_ONCE:
-            timer["s_schedule"] == TIMER_OFF
-            self.addon.setSetting("timer_%i" % timer["i_timer"], TIMER_OFF)
-
-        if timer["s_fade"] != FADE_OFF and timer["s_end_type"] != END_TYPE_NO:
+        if self._is_fading_timer(timer) and reset_vol:
             xbmc.sleep(3000)
-            reset_vol = timer["i_return_vol"]
-            xbmc.executebuiltin("SetVolume(%s)" % reset_vol)
+            xbmc.executebuiltin("SetVolume(%s)" % timer["i_return_vol"])
 
         timer["b_active"] = False
+
+        if timer["s_schedule"] in TIMER_ONCE:
+            self._reset_settings(timer)
 
         if timer["s_action"] in [ACTION_POWERDOWN_AT_END]:
             xbmc.shutdown()
 
+    def _reset_settings(self, timer):
+
+        timer["s_schedule"] == TIMER_OFF
+
+        i = timer["i_timer"]
+        util.deactivateOnSettingsChangedEvents(self.addon)
+        self.addon.setSetting("timer_%i_label" %
+                              i, self.addon.getLocalizedString(32009 + i))
+        self.addon.setSetting("timer_%i" % i, TIMER_OFF)
+        self.addon.setSetting("timer_%i_start" % i, DEFAULT_TIME)
+        self.addon.setSetting("timer_%i_end_type" % i, END_TYPE_NO)
+        self.addon.setSetting("timer_%i_duration" % i, "00:10")
+        self.addon.setSetting("timer_%i_end" % i, DEFAULT_TIME)
+        self.addon.setSetting("timer_%i_action" % i, ACTION_START_STOP)
+        self.addon.setSetting("timer_%i_filename" % i, "")
+        if i not in [SNOOZE_TIMER, SLEEP_TIMER]:
+            self.addon.setSetting("timer_%i_fade" % i)
+        util.activateOnSettingsChangedEvents(self.addon)
+
+    def _is_fading_timer(self, timer):
+
+        return timer["s_fade"] != FADE_OFF and timer["s_end_type"] != END_TYPE_NO
+
     def _fade(self, timer, td_now, td_start, td_end):
 
-        if timer["s_fade"] == FADE_OFF or timer["s_end_type"] == END_TYPE_NO:
+        if not self._is_fading_timer(timer):
             return
+
+        if "i_return_vol" not in timer:
+            timer["i_return_vol"] = self._get_current_volume()
 
         delta_now_start = util.abs_time_diff(td_now, td_start)
         delta_end_start = util.abs_time_diff(td_end, td_start)
@@ -349,6 +373,10 @@ class Scheduler(xbmc.Monitor):
 
         starters, stoppers = list(), list()
 
+        timer_to_fade = None
+        timer_to_fade_td_start = None
+        timer_to_fade_td_end = None
+
         timers = self._timer_state["timers"]
         for timer in timers:
             in_period, td_start, td_end = self._check_period(timer, td_now)
@@ -359,11 +387,19 @@ class Scheduler(xbmc.Monitor):
             elif not in_period and timer["b_active"]:
                 stoppers.append(timer)
 
-            elif in_period:  # fade
-                self._fade(timer, td_now, td_start, td_end)
-
-        for t in starters:
-            self._start_action(t, td_now)
+            if in_period and self._is_fading_timer(timer):
+                if timer_to_fade_td_start == None or td_start < timer_to_fade_td_start:
+                    timer_to_fade = timer
+                    timer_to_fade_td_start = td_start
+                    timer_to_fade_td_end = td_end
 
         for t in stoppers:
-            self._stop_action(t)
+            self._stop_action(t, reset_vol=(timer_to_fade is None))
+
+        for t in starters:
+            self._start_action(
+                t, td_now, force_return_vol=timer_to_fade["i_return_vol"] if timer_to_fade is not None and timer_to_fade != t else None)
+
+        if timer_to_fade:
+            self._fade(timer=timer_to_fade, td_now=td_now,
+                       td_start=timer_to_fade_td_start, td_end=timer_to_fade_td_end)
