@@ -3,9 +3,6 @@ import requests
 import json 
 import libmediathek4utils as lm4utils
 
-#https://player-v5-dev.arte.tv/static
-
-#https://api.arte.tv/api/emac/v3/en/web/data/MANUAL_TEASERS/?imageFormats=landscape&code=highlights_category&page=2&limit=6
 
 headers = {'Authorization':'Bearer YTEwZWE3M2UxMTVmYmRjZmE0YTdmNjA4ZTI2NDczZDU3YjdjYmVmMmRmNGFjOTM3M2RhNTM5ZjIxYmI3NTc1Zg'}
 
@@ -13,7 +10,7 @@ headers = {'Authorization':'Bearer YTEwZWE3M2UxMTVmYmRjZmE0YTdmNjA4ZTI2NDczZDU3Y
 class APIParser:
 	def __init__(self):
 		self.result = {'items':[],'pagination':{'currentPage':0}}
-		self.baseURL = 'https://www.arte.tv/guide/api/emac/v3'
+		self.baseURL = 'https://www.arte.tv/api/rproxy/emac/v3'
 		self.baseURLGuide = 'https://www.arte.tv/api/emac/v3'
 		self.baseURLApp = 'https://api-cdn.arte.tv/api/emac/v3/'
 		self.token = 'YTEwZWE3M2UxMTVmYmRjZmE0YTdmNjA4ZTI2NDczZDU3YjdjYmVmMmRmNGFjOTM3M2RhNTM5ZjIxYmI3NTc1Zg'
@@ -24,10 +21,6 @@ class APIParser:
 		self.playerURL = 'https://api.arte.tv/api'
 		self.generalUrl = 'https://static-cdn.arte.tv/static/artevp/5.0.6/config/json/general.json'
 		self._setLang()
-		#https://api-preprod.arte.tv/api/opa/v3
-		#https://api.arte.tv/api/opa/v3/
-		#https://static-cdn.arte.tv/static-preprod/artevp
-		#https://player-v5-dev.arte.tv/static/artevp/5.0.6/config/json/general.json
 
 	def parseHome(self):
 		j = requests.get(f'{self.baseURL}/{self.lang}/web/HOME/').json()
@@ -80,7 +73,7 @@ class APIParser:
 			if item['images']['square'] != None:
 				d['metadata']['art']['icon'] = item['images']['square']['resolutions'][2]['url']
 			if item['images']['portrait'] != None:
-				d['metadata']['art']['poster'] = item['images']['portrait']['resolutions'][2]['url']
+				d['metadata']['art']['poster'] = item['images']['portrait']['resolutions'][1]['url']
 
 			self.result['items'].append(d)
 		return self.result
