@@ -4,27 +4,21 @@ import requests
 import hashlib
 import libardgraphqlqueries as q
 
-graphqlUrl = 'https://api.ardmediathek.de/public-gateway'
-#graphqlUrl = 'https://api-ifa.ardmediathek.de/public-gateway'
-#graphqlUrl = 'https://api-origin-test.ardmediathek.de/public-gateway'
-#graphqlUrl = 'https://api-origin-dev.ardmediathek.de/public-gateway'
-#graphqlUrl = 'https://api-beta.ardmediathek.de/public-gateway'
+apiUrl = 'https://api.ardmediathek.de/page-gateway'
 
-#api-test.ardmediathek.de/public-gateway
-#api-dev.ardmediathek.de/public-gateway
-#api-origin.ardmediathek.de/public-gateway
-
-deviceType = 'pc'
-#deviceType = 'tv'
-#deviceType = 'responsive'
-#deviceType = 'mobile'
-#deviceType = 'amazon'
 
 headers = {'content-type':'application/json'}
 
 class parser:
 	def __init__(self):
 		self.result = {'items':[], 'content':'movies', 'pagination':{'currentPage':0}}
+		self.deviceType = 'pc'
+		#self.deviceType = 'tv'
+		#self.deviceType = 'responsive'
+		#self.deviceType = 'mobile'
+		#self.deviceType = 'amazon'
+		#self.deviceType = 'tablet'
+		#self.deviceType = 'phone'
 
 	def setContend(self,content):
 		self.result['content'] = content
@@ -35,10 +29,9 @@ class parser:
 	def setPlugin(self,plugin):
 		self.plugin = plugin
 
-	def parseDefaultPage(self,client,name):
-		#j = self._getRequest({'query': q.queryDefaultPage ,'variables':{'client':client, 'name': name}})
-		j = self._getRequest({'query': q.queryDefaultPage ,'variables':f'{{"client":"{client}", "name": "{name}"}}'})
-		for widget in j['data']['defaultPage']['widgets']:
+	def parseDefaultPage(self,client):
+		j = requests.get(f'{apiUrl}/pages/{client}/home',headers=headers).json()
+		for widget in j['widgets']:
 			d = {'type':'dir', 'params':{'mode':'libArdListWidget'}, 'metadata':{}}
 			d['metadata']['name'] = widget['title']
 			d['params']['widgetId'] = widget['id']
@@ -48,66 +41,91 @@ class parser:
 		return self.result
 
 	def parseShows(self,client='ard'):
-		j = self._getRequest({'query': q.queryShows + q.fragmentTeaser + q.fragmentTeaserImages,'variables':f'{{"client":"{client}"}}'})
-		for letter in j['data']['showsPage']['glossary']:
-			for teaser in j['data']['showsPage']['glossary'][letter]:
+		j = requests.get(f'{apiUrl}/pages/{client}/editorial/experiment-a-z?embedded=true',headers=headers).json()
+		for widget in j['widgets']:
+			for teaser in widget['teasers']:
 				self._grabTeaser(teaser,client)
 		return self.result
 
 	def parseShow(self,client='ard',showId=''):
-		j = self._getRequest({'query': q.queryShow + q.fragmentTeaser + q.fragmentTeaserImages,'variables':f'{{"client":"{client}","showId":"{showId}"}}'})
-		for teaser in j['data']['showPage']['teasers']:
-			self._grabTeaser(teaser,client)
-		self.result['fanart'] = j['data']['showPage']['image']['src'].format(width='1920')
+		j = requests.get(f'{apiUrl}/pages/{client}/grouping/{showId}?seasoned=true&embedded=false',headers=headers).json()
+		if len(j['widgets']) == 1:
+			j = requests.get(f'{apiUrl}/widgets/{client}/asset/{showId}?pageNumber=0&pageSize=100&embedded=true&seasoned=false',headers=headers).json()
+			for teaser in j['teasers']:
+				self._grabTeaser(teaser,client)
+		elif len(j['widgets']) > 1:
+			for widget in j['widgets']:
+				if 'seasonNumber' in widget:
+					d = {'params':{}, 'metadata':{'art':{}}}
+					d['metadata']['name'] = widget['title']
+					if 'images' in widget:
+						if 'aspect16x9' in widget['images']:
+							d['metadata']['art']['thumb'] = widget['images']['aspect16x9']['src'].format(width='512')
+						if 'aspect3x4' in widget['images']:
+							d['metadata']['art']['poster'] = widget['images']['aspect3x4']['src'].format(width='512')
+					d['params']['season'] = widget['seasonNumber']
+					d['params']['client'] = client
+					d['params']['showId'] = widget['id']
+					d['params']['withAudiodescription'] = str(widget['withAudiodescription'])
+					d['params']['withOriginalVersion'] = str(widget['withOriginalVersion'])
+					d['params']['withOriginalWithSubtitle'] = str(widget['withOriginalWithSubtitle'])
+					d['params']['withSignLanguage'] = str(widget['withSignLanguage'])
+					d['params']['mode'] = 'libArdListEpisodes'
+					d['type'] = 'dir'
+					self.result['items'].append(d)
 		return self.result
 
-	def parseChannels(self):
-		j = self._getRequest({'query': q.queryChannels,'variables':'{}'})
-		for channel in j['data']['channels']:
-			if not channel['title'].startswith('Neu'):#Hack bc of an weird API quirk
-				d = {'type':'dir', 'params':{}, 'metadata':{}}
-				d['metadata']['name'] = channel['title'].replace('Stage ','')
-				d['params']['channel'] = channel['channelKey']
-				self.result['items'].append(d)
+	def parseEpisodes(self,client='ard',showId='',season='1',withAudiodescription='false',withOriginalVersion='false',withOriginalWithSubtitle='false',withSignLanguage='false'):
+		print(f'{apiUrl}/widgets/{client}/asset/{showId}?pageNumber=0&pageSize=100&embedded=true&seasoned=true&seasonNumber={season}&withAudiodescription={withAudiodescription}&withOriginalWithSubtitle={withOriginalWithSubtitle}&withAudiodescription={withAudiodescription}&withSignLanguage={withSignLanguage}')
+		j = requests.get(f'{apiUrl}/widgets/{client}/asset/{showId}?pageNumber=0&pageSize=100&embedded=true&seasoned=true&seasonNumber={season}&withAudiodescription={withAudiodescription}&withOriginalWithSubtitle={withOriginalWithSubtitle}&withAudiodescription={withAudiodescription}&withSignLanguage={withSignLanguage}',headers=headers).json()
+		for teaser in j['teasers']:
+			self._grabTeaser(teaser,client)
+		#self._grabPagination(j['data']['widget']['pagination'])
 		return self.result
 
 	def parseProgram(self,client='daserste',startDate='2019-08-30'):
-		j = self._getRequest({'query': q.queryProgramPage + q.fragmentTeaser + q.fragmentTeaserImages,'variables':f'{{"client":"{client}","startDate":"{startDate}"}}'})
-		for teaser in j['data']['programPage']['widgets'][0]['teasers']:
+		j = requests.get(f'{apiUrl}/compilations/{client}/pastbroadcasts?startDateTime={startDate}T00%3A00%3A00.000Z&endDateTime={startDate}T23%3A59%3A59.999Z&pageSize=200',headers=headers).json()
+		#https://api.ardmediathek.de/page-gateway/compilations/alpha/pastbroadcasts?startDateTime=2021-05-06T04%3A30%3A00.000Z&endDateTime=2021-05-07T04%3A29%3A59.000Z&pageSize=200
+		for teaser in j[0]['teasers']:
 			self._grabTeaser(teaser)
 		return self.result
 
 	def parseWidget(self,widgetId='4o5DEpNx9uMOSmAceOCass',client='ard'):
-		j = self._getRequest({'query': q.queryWidgets + q.fragmentTeaser + q.fragmentTeaserImages,'variables':f'{{"widgetId":"{widgetId}","client":"{client}"}}'})
-		print(json.dumps(j))
-		for teaser in j['data']['widget']['teasers']:
+		j = requests.get(f'{apiUrl}/widgets/{client}/editorials/{widgetId}?pageNumber=0&pageSize=20',headers=headers).json()
+		for teaser in j['teasers']:
 			self._grabTeaser(teaser,client)
-		self._grabPagination(j['data']['widget']['pagination'])
 		return self.result
 
+	"""
+	#disabled atm
 	def parseMorePage(self,client,compilationId):
 		j = self._getRequest({'query': q.queryMorePage + q.fragmentTeaser + q.fragmentTeaserImages,'variables':f'{{"compilationId":"{compilationId}","client":"{client}"}}'})
 		if j['data']['morePage']['widget']['teasers'] != None:
 			for teaser in j['data']['morePage']['widget']['teasers']:
 				self._grabTeaser(teaser)#,client)
 		return self.result
+	"""
 
+
+	"""
+	#disabled atm
 	def parseSearchVOD(self,client='ard',text=''):
 		j = self._getRequest({'query': q.querySearchPageVOD + q.fragmentTeaser + q.fragmentTeaserImages,'variables':f'{{"client":"{client}", "text":"{text}"}}'})
 		for teaser in j['data']['searchPage']['vodResults']:
 			self._grabTeaser(teaser,client)
 		return self.result
+	"""
 
 	def parseVideo(self,clipId='Y3JpZDovL2JyLmRlL3ZpZGVvL2NkNzBjODMwLTM2ZTAtNDljNC1iMDJiLTQyNWNhMWIyZDg3NA',client="ard"):
-		j = self._getRequest({'query': q.queryVideo ,'variables':{'client':client, 'clipId': clipId, 'deviceType': deviceType}})
-		for item in j['data']['playerPage']['mediaCollection']['_mediaArray'][0]['_mediaStreamArray']:
+		j = requests.get(f'{apiUrl}/mediacollection/{clipId}?devicetype={self.deviceType}',headers=headers).json()
+		for item in j['_mediaArray'][0]['_mediaStreamArray']:
 			if item['_quality'] == 'auto':
-				url = item['_stream'][0]
+				url = item['_stream']
 		if url.startswith('//'): 
 			url = 'http:' + url
 		d = {'media':[{'url':url, 'stream':'HLS'}]}
-		if j['data']['playerPage']['mediaCollection']['_subtitleUrl'] != None:
-			d['subtitle'] = [{'url':j['data']['playerPage']['mediaCollection']['_subtitleUrl'], 'type':'ttml', 'lang':'de', 'colour':True}]
+		if '_subtitleUrl' in j:
+			d['subtitle'] = [{'url':j['_subtitleUrl'], 'type':'ttml', 'lang':'de', 'colour':True}]
 		return d
 
 
@@ -115,11 +133,19 @@ class parser:
 		d = {'params':{}, 'metadata':{'art':{}}}
 		d['metadata']['name'] = teaser['shortTitle']
 		d['metadata']['plotoutline'] = teaser['longTitle']
-		d['metadata']['duration'] = teaser['duration']
-		if teaser['images']['aspect16x9']:
-			d['metadata']['art']['thumb'] = teaser['images']['aspect16x9']['src'].format(width='512')
-		if teaser['images']['aspect3x4']:
-			d['metadata']['art']['poster'] = teaser['images']['aspect3x4']['src'].format(width='512')
+		if 'shortSynopsis' in teaser:
+			d['metadata']['plotoutline'] = teaser['shortSynopsis']
+		if 'synopsis' in teaser:
+			d['metadata']['plot'] = teaser['synopsis']
+		if 'duration' in teaser:
+			d['metadata']['duration'] = teaser['duration']
+		if 'images' in teaser:
+			if 'aspect16x9' in teaser['images']:
+				d['metadata']['art']['thumb'] = teaser['images']['aspect16x9']['src'].format(width='512')
+			if 'aspect3x4' in teaser['images']:
+				d['metadata']['art']['poster'] = teaser['images']['aspect3x4']['src'].format(width='512')
+		if 'show' in teaser and 'images' in teaser['show'] and '16x9' in teaser['show']['images']:
+			d['metadata']['art']['fanart'] = teaser['show']['images']['16x9']['src'].format(width='512')
 		if client:
 			d['params']['client'] = client
 		if teaser['type'] == 'compilation':
@@ -140,31 +166,17 @@ class parser:
 			d['type'] = 'video'
 			d['params']['mode'] = 'libArdPlay'
 
-		if teaser['broadcastedOn']:
+		if 'broadcastedOn' in teaser:
 			d['metadata']['aired'] = {'ISO8601':teaser['broadcastedOn']}
 
 		
-		if teaser['subtitled']:
+		if 'subtitled' in teaser:
 			d['metadata']['hassubtitles'] = True
 
 		if 'links' in teaser and 'target' in teaser['links'] and 'id' in teaser['links']['target']:
 			d['params']['id'] = teaser['links']['target']['id']
 			self.result['items'].append(d)
 		return
-
-	def _getRequest(self,data):
-		s256 = hashlib.sha256(data['query'].encode('utf-8')).hexdigest()
-
-		cacheData = {'variables':data['variables']}
-		cacheData['extensions'] = {'persistedQuery':{'version':1,'sha256Hash':s256}}
-		j = requests.post(graphqlUrl,headers=headers,data=json.dumps(cacheData)).json()
-		if not 'errors' in j:
-			return j
-		else:
-			data['extensions'] = {'persistedQuery':{'version':1,'sha256Hash':s256}}
-			j = requests.post(graphqlUrl,headers=headers,data=json.dumps(data)).json()
-			return j
-
 
 	def _grabPagination(self,p):
 		return
