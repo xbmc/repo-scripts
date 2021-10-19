@@ -6,9 +6,15 @@ import sys
 import urllib
 import xbmc
 import xbmcaddon
-import xbmcgui,xbmcplugin
+import xbmcgui
+import xbmcplugin
 import xbmcvfs
 import uuid
+
+try:
+  from xbmcvfs import translatePath
+except (ImportError, AttributeError):
+  from xbmc import translatePath
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -17,9 +23,9 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 
-__cwd__        = xbmcvfs.translatePath( __addon__.getAddonInfo('path') )
-__profile__    = xbmcvfs.translatePath( __addon__.getAddonInfo('profile') )
-__temp__       = xbmcvfs.translatePath( os.path.join( __profile__, 'temp', '') )
+__cwd__        = translatePath( __addon__.getAddonInfo('path') )
+__profile__    = translatePath( __addon__.getAddonInfo('profile') )
+__temp__       = translatePath( os.path.join( __profile__, 'temp', '') )
 
 if xbmcvfs.exists(__temp__):
   shutil.rmtree(__temp__)
