@@ -1,0 +1,130 @@
+# Kodi Media Center language file
+# Addon Name: Kodi Android Installer
+# Addon id: script.kodi.android.update
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: script.kodi.android.update\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-10-18 11:30+0000\n"
+"Last-Translator: vdkbsd <valexgus@gmail.com>\n"
+"Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-kodi-android-update/ru_ru/>\n"
+"Language: ru_ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Download and Install Kodi packages."
+msgstr "Скачиваете и устанавливайте пакеты Kodi."
+
+msgctxt "Addon Description"
+msgid "Download and Install Kodi android packages; select from  Nightlies, Releases, Snapshots and Test-builds."
+msgstr ""
+
+msgctxt "#30000"
+msgid "Enable Debugging [Log errors]"
+msgstr "Включить отладку [Журнал ошибок]"
+
+msgctxt "#30001"
+msgid "Something went wrong, Try again later..."
+msgstr "Что-то пошло не так, Повторите попытку позже..."
+
+msgctxt "#30002"
+msgid "Preparing to download: %s"
+msgstr "Подготовка к загрузке: %s"
+
+msgctxt "#30003"
+msgid "Keep all downloads?"
+msgstr "Сохранить все загрузки?"
+
+msgctxt "#30004"
+msgid "File already exists"
+msgstr "Файл уже существует"
+
+msgctxt "#30005"
+msgid "Install"
+msgstr "Установить"
+
+msgctxt "#30006"
+msgid "Redownload"
+msgstr "Загрузить заново"
+
+msgctxt "#30007"
+msgid "Installation complete, file removed"
+msgstr "Установка завершена, файл удалён"
+
+msgctxt "#30008"
+msgid "Cleanup download after installation"
+msgstr "Очищать загрузку после установки"
+
+msgctxt "#30009"
+msgid "Plugin disabled"
+msgstr "Плагин выключен"
+
+msgctxt "#30010"
+msgid "Unknown Android version"
+msgstr "Неизвестная версия Android"
+
+msgctxt "#30011"
+msgid "Android v.%s.0.0 is incompatible with new Kodi versions,"
+msgstr "Android v.%s.0.0 не совместим с новыми версиями Kodi,"
+
+msgctxt "#30012"
+msgid "Would you like to disable this plugin?"
+msgstr "Отключить это дополнение?"
+
+msgctxt "#30013"
+msgid "Detecting Android version..."
+msgstr "Проверка версии Android..."
+
+msgctxt "#30014"
+msgid "Current Android platform (%s)"
+msgstr "Текущая платформа Android (%s)"
+
+msgctxt "#30015"
+msgid "Semi-stable (Monthly builds)."
+msgstr "Полустабильная (ежемесячные сборки)."
+
+msgctxt "#30016"
+msgid "Stable (Final releases)."
+msgstr "Стабильная (финальные версии)."
+
+msgctxt "#30017"
+msgid "Unstable (Daily builds)."
+msgstr "Нестабильная (ежедневные сборки)."
+
+msgctxt "#30018"
+msgid "Experimental (Debugging builds)."
+msgstr "Экспериментальная (для отладки)."
+
+msgctxt "#30019"
+msgid "Incompatible platform"
+msgstr "Несовместимая версия"
+
+msgctxt "#30020"
+msgid "Select File Explorer"
+msgstr "Выбрать файловый менеджер"
+
+msgctxt "#30021"
+msgid "File Explorer"
+msgstr "Файловый менеджер"
+
+msgctxt "#30022"
+msgid "Current Kodi Branch (%s.%s-%s)"
+msgstr "Текущая ветка Kodi (%s.%s-%s)"
+
+msgctxt "#30023"
+msgid "[B]Downloading:[/B]"
+msgstr "[B]Загрузка:[/B]"
+
+msgctxt "#30024"
+msgid " | [B]Speed:[/B]"
+msgstr " | [B]Скорость:[/B]"
+
+msgctxt "#30025"
+msgid " | [B]ETA:[/B]"
+msgstr " | [B]Осталось:[/B]"

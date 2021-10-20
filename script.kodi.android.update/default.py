@@ -34,11 +34,16 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 VERSION   = REAL_SETTINGS.getSetting("Version") #VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
 BASE_URL  = 'http://mirrors.kodi.tv/'
-BRANCHS   =  {19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
+BRANCHS   =  {20:'nexus',19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
 BUILD_OPT = {'nightlies':LANGUAGE(30017),'releases':LANGUAGE(30016),'snapshots':LANGUAGE(30015),'test-builds':LANGUAGE(30018)}
-try: BUILD = json.loads(REAL_SETTINGS.getSetting("Build"))
-except: BUILD = ''
-BRANCH    = BRANCHS[int(BUILD.get('major',''))]
+
+try:    
+    BUILD  = json.loads(REAL_SETTINGS.getSetting("Build"))
+    BRANCH = BRANCHS[int(BUILD.get('major',''))]
+except: 
+    BUILD = ''
+    BRANCH = 'master'
+    
 DROID_URL = BASE_URL + '%s/android/%s/'
 DEVICESTR = (REAL_SETTINGS.getSetting("Platform") or None)
 USERAPP   = REAL_SETTINGS.getSetting("USERAPP")
@@ -168,8 +173,9 @@ class Installer(object):
             label  = items[select].getLabel()
             newURL = items[select].getPath()
             preURL = url.rsplit('/', 2)[0] + '/'
-            if newURL.endswith('.apk'): 
-                dest = xbmc.translatePath(os.path.join(SETTINGS_LOC,label))
+            if newURL.endswith('.apk'):
+                if not xbmcvfs.exists(SETTINGS_LOC): xbmcvfs.mkdir(SETTINGS_LOC)
+                dest = xbmcvfs.translatePath(os.path.join(SETTINGS_LOC,label))
                 self.setLastPath(url,dest)
                 return self.downloadAPK(newURL,dest)
             elif label.lower() == 'parent directory' and "android" in preURL.lower():
