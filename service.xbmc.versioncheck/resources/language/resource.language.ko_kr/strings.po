@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-08-25 22:29+0000\n"
-"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"PO-Revision-Date: 2021-10-25 10:08+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/ko_kr/>\n"
 "Language: ko_kr\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr "현재 사용 중인 버전은 %s 이며 최신 버전 %s 을(를) 사�
 
 #. Used in OK dialog
 msgctxt "#32035"
-msgid "It is recommended that you to upgrade to a newer version."
+msgid "It is recommended that you upgrade to a newer version."
 msgstr "새 버전으로 업그레이드 하기를 권장합니다."
 
 # empty strings from id 32036 to 32039
@@ -131,3 +131,7 @@ msgstr "운영 체제를 업그레이드하십시오."
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "자세한 내용은 https://kodi.wiki/view/Linux를 참조하십시오"
+
+#~ msgctxt "#32035"
+#~ msgid "It is recommended that you to upgrade to a newer version."
+#~ msgstr "새 버전으로 업그레이드 하기를 권장합니다."

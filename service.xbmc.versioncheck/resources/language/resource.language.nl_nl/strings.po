@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-09-18 19:01+0000\n"
-"Last-Translator: Klojum <klojum@kodi.tv>\n"
+"PO-Revision-Date: 2021-10-25 10:08+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Dutch <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/nl_nl/>\n"
 "Language: nl_nl\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr "In gebruik %s terwijl %s beschikbaar is."
 
 #. Used in OK dialog
 msgctxt "#32035"
-msgid "It is recommended that you to upgrade to a newer version."
+msgid "It is recommended that you upgrade to a newer version."
 msgstr "Het is aanbevolen dat je upgrade naar een nieuwere versie."
 
 # empty strings from id 32036 to 32039
@@ -131,3 +131,7 @@ msgstr ""
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "Voor meer informatie, kijk op https://kodi.wiki/view/Linux"
+
+#~ msgctxt "#32035"
+#~ msgid "It is recommended that you to upgrade to a newer version."
+#~ msgstr "Het is aanbevolen dat je upgrade naar een nieuwere versie."

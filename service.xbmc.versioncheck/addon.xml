@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.20" provider-name="Team Kodi">
+<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.21" provider-name="Team Kodi">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
     </requires>
     <extension point="xbmc.service" library="resources/lib/runner.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-- add Kodi 19.2 release
+- add Kodi 19.3 release
 - Update translations from Weblate
         </news>
         <assets>
@@ -39,11 +39,12 @@
         <summary lang="hu_HU">Az Kodi verzió ellenőrző megvizsgálja, hogy a legújabb kiadást futtatja-e.</summary>
         <summary lang="id_ID">Kodi Version Check mengecek apakah Anda menggunakan versi rilis terbaru.</summary>
         <summary lang="is_IS">Kodi Version Check athugar hvort þú sért að keyra nýjustu viðurkennda útgáfu.</summary>
-        <summary lang="it_IT">Kodi Version Check verifica se hai l'ultima versione rilasciata</summary>
+        <summary lang="it_IT">Kodi Version Check verifica se hai l'ultima versione rilasciata.</summary>
         <summary lang="ko_KR">Kodi Version Checks는 최신 정식 릴리즈 버전을 사용중인지 검사해줍니다.</summary>
         <summary lang="lt_LT">Kodi Version Check patikrina ar naudojate naujausią versiją.</summary>
         <summary lang="nb_NO">Kodi Versjonsettersyn sjekker om du kjører den sist utgitte versjonen.</summary>
         <summary lang="nl_NL">Kodi versie-check controleert of je de laatst beschikbare versie hebt.</summary>
+        <summary lang="oc_FR">Kodi Version Check verifica s’executatz la darrièra version sortida.</summary>
         <summary lang="pl_PL">Dodatek Version Check sprawdza, czy używasz najnowszej wersji Kodi.</summary>
         <summary lang="pt_BR">Kodi Version Check verifica se você está executando a versão mais recente.</summary>
         <summary lang="pt_PT">O Kodi Version Check verifica se a sua versão de lançamento do Kodi está actualizada.</summary>
@@ -119,6 +120,7 @@
         <disclaimer lang="lt_LT">Galite laisvai naudoti šį scenarijų. Apsilankykite kodi.tv, norėdami gauti daugiau informacijos.</disclaimer>
         <disclaimer lang="nb_NO">Du har fri tillatelse til å benytte dette skriptet. Besøk kodi.tv for informasjon</disclaimer>
         <disclaimer lang="nl_NL">Gebruik dit script vrijblijvend. Voor meer informatie bezoek kodi.tv</disclaimer>
+        <disclaimer lang="oc_FR">Siatz liure d’utilizar aqueste script. Per d’informacions consultatz kodi.tv</disclaimer>
         <disclaimer lang="pl_PL">Zapraszamy do używania tego dodatku. Więcej informacji na stronie kodi.tv</disclaimer>
         <disclaimer lang="pt_BR">Sinta-se livre para usar este script. Para maiores informações visite kodi.tv</disclaimer>
         <disclaimer lang="pt_PT">Esteja à vontade para usar este script. Para mais informação, visite kodi.tv.</disclaimer>
