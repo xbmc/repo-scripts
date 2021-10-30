@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-09-18 19:01+0000\n"
-"Last-Translator: Tommi Raulahti <traulahti@gmail.com>\n"
+"PO-Revision-Date: 2021-10-25 10:08+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/fi_fi/>\n"
 "Language: fi_fi\n"
 "MIME-Version: 1.0\n"
@@ -44,11 +44,11 @@ msgstr "Haluatko poistaa tämän muistutuksen?"
 
 msgctxt "#32010"
 msgid "You can enable/disable it through add-on settings."
-msgstr ""
+msgstr "Voit ottaa sen käyttöön/poistaa sen käytöstä lisäosan asetuksista."
 
 msgctxt "#32011"
 msgid "Use your package manager(apt) to upgrade."
-msgstr ""
+msgstr "Käytä paketinhallintaa(apt) päivittääksesi."
 
 msgctxt "#32012"
 msgid "A new version is available, do you want to upgrade now?"
@@ -64,7 +64,7 @@ msgstr "Haluatko käynnistää Kodin viimeistellääksesi päivityksen?"
 
 msgctxt "#32015"
 msgid "Do you want to check the repository for a new version?"
-msgstr ""
+msgstr "Haluatko tarkistaa onko uusi versio saatavilla?"
 
 msgctxt "#32016"
 msgid "There is a newer stable Kodi version available."
@@ -84,7 +84,7 @@ msgstr "Ole hyvä ja syötä salasanasi"
 
 msgctxt "#32023"
 msgid "Linux: Upgrade complete system"
-msgstr ""
+msgstr "Linux: Päivitä koko järjestelmä"
 
 msgctxt "#32024"
 msgid "Linux: Upgrade using apt"
@@ -117,7 +117,7 @@ msgstr "Käytät %s , mutta %s on saatavilla."
 
 #. Used in OK dialog
 msgctxt "#32035"
-msgid "It is recommended that you to upgrade to a newer version."
+msgid "It is recommended that you upgrade to a newer version."
 msgstr "On suositeltavaa, että päivität uudempaan versioon."
 
 # empty strings from id 32036 to 32039
@@ -132,3 +132,7 @@ msgstr "Ole hyvä ja päivitä käyttöjärjestelmäsi."
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "Lisää tietoa sivulta https://kodi.wiki/view/Linux"
+
+#~ msgctxt "#32035"
+#~ msgid "It is recommended that you to upgrade to a newer version."
+#~ msgstr "On suositeltavaa, että päivität uudempaan versioon."

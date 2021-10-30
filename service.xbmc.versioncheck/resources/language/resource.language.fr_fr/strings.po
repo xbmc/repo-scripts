@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-09-30 07:30+0000\n"
-"Last-Translator: Thomas <tomspycell@gmail.com>\n"
+"PO-Revision-Date: 2021-10-25 10:08+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/fr_fr/>\n"
 "Language: fr_fr\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr "%s est utilisée alors que %s est disponible."
 
 #. Used in OK dialog
 msgctxt "#32035"
-msgid "It is recommended that you to upgrade to a newer version."
+msgid "It is recommended that you upgrade to a newer version."
 msgstr "Il est recommandé de mettre à niveau vers une nouvelle version."
 
 # empty strings from id 32036 to 32039
@@ -131,3 +131,7 @@ msgstr "Veuillez mettre à jour votre système d’exploitation."
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "Plus d’informations disponibles sur https://kodi.wiki/view/Linux"
+
+#~ msgctxt "#32035"
+#~ msgid "It is recommended that you to upgrade to a newer version."
+#~ msgstr "Il est recommandé de mettre à niveau vers une nouvelle version."
