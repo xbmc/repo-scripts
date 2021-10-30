@@ -115,7 +115,7 @@ msgstr ""
 
 #. Used in OK dialog
 msgctxt "#32035"
-msgid "It is recommended that you to upgrade to a newer version."
+msgid "It is recommended that you upgrade to a newer version."
 msgstr ""
 
 # empty strings from id 32036 to 32039
