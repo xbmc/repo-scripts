@@ -660,14 +660,18 @@ class WatchedList:
                             break
                         if modus == 'movie':
                             name = item['title'] + ' (' + str(item['year']) + ')'
-                            res = re.compile(r'tt(\d+)').findall(item['imdbnumber'])
-                            if not res:
-                                # no imdb-number for this movie in database. Skip
-                                utils.log(u'get_watched_xbmc: Movie %s has no imdb-number in database. movieid=%d. Try rescraping' % (name, int(item['movieid'])), xbmc.LOGINFO)
-                                continue
-                            imdbId = int(res[0])
-                            if imdbId == 0:
-                                utils.log(u'get_watched_xbmc: Movie %s has no valid imdb-number in database (is Null). movieid=%d. Try rescraping' % (name, int(item['movieid'])), xbmc.LOGINFO)
+                            try:
+                                # check if movie number is in imdb-format (scraper=imdb)
+                                res = re.compile(r'tt(\d+)').findall(item['imdbnumber'])
+                                if not res:
+                                    # movie number is in themoviedb format
+                                    imdbId = int(item['imdbnumber'])
+                                else:
+                                    imdbId = int(res[0])
+                            except BaseException: 
+                                # no imdb-number or themoviedb-number for this movie in database. Skip
+                                utils.log(u'get_watched_xbmc: Movie %s has no imdb-number or themoviedb-number in database. movieid=%d. Try rescraping' % (name, int(item['movieid'])), xbmc.LOGINFO)
+                                imdbId = 0
                                 continue
                         else:  # episodes
                             tvshowId_xbmc = item['tvshowid']
