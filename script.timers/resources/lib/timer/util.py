@@ -102,6 +102,7 @@ def get_current_epg_view():
 def get_pvr_channel_path(type, channelno):
 
     try:
+        channelno = int(channelno)
         _result = json_rpc("PVR.GetChannelGroups", {
             "channeltype": type})
         channelGroupAll = _result["channelgroups"][0]["label"]
@@ -110,8 +111,11 @@ def get_pvr_channel_path(type, channelno):
         pvrClients = _result["clients"]
 
         _result = json_rpc("PVR.GetChannels", {
-            "channelgroupid": "all%s" % type, "properties": ["uniqueid", "clientid"]})
-        channel = _result["channels"][int(channelno) - 1]
+            "channelgroupid": "all%s" % type, "properties": ["uniqueid", "clientid", "channelnumber"]})
+        channel = next(filter(lambda c: c["channelnumber"] == channelno, _result["channels"]), None)
+
+        if not channel:
+            return None
 
         pvrClient = list(filter(
             lambda _c: _c["supportsepg"] == True and _c["clientid"] == channel["clientid"], pvrClients))[0]

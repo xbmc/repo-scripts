@@ -44,7 +44,8 @@ TIMER_DAYS_PRESETS = {
     "22": [6, 0, 1, 2],           # sun-wed
     "23": [6, 0, 1, 2, 3],        # sun-thu
     "24": [0, 1, 2, 3, 4, 5, 6],  # everyday
-    "25": []                      # off
+    "25": [],                     # off
+    "" : []                       # off
 }
 
 END_TYPE_NO = "0"
@@ -314,8 +315,8 @@ class Scheduler(xbmc.Monitor):
         self.addon.setSetting("timer_%i_end" % i, DEFAULT_TIME)
         self.addon.setSetting("timer_%i_action" % i, ACTION_START_STOP)
         self.addon.setSetting("timer_%i_filename" % i, "")
-        if i not in [SNOOZE_TIMER, SLEEP_TIMER]:
-            self.addon.setSetting("timer_%i_fade" % i)
+        if i != SLEEP_TIMER:
+            self.addon.setSetting("timer_%i_fade" % i, FADE_OFF)
         util.activateOnSettingsChangedEvents(self.addon)
 
     def _is_fading_timer(self, timer):
