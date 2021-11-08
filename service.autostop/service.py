@@ -3,7 +3,7 @@ import time
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-from common import GLOBAL_SETUP  #Needed first to setup import locations
+from common import settings
 
 pos = 0
 file = ''
@@ -12,13 +12,6 @@ pacount = 0
 plcount = 0
 
 xbmc.log("Autostop addon service started." , xbmc.LOGINFO)
-
-def settings(setting, value = None):
-    # Get or add addon setting
-    if value:
-        xbmcaddon.Addon().setSetting(setting, value)
-    else:
-        return xbmcaddon.Addon().getSetting(setting)
   
 class XBMCPlayer(xbmc.Player):
     
@@ -58,9 +51,10 @@ player = XBMCPlayer()
  
 monitor = xbmc.Monitor()      
  
-while True:
+#while True:
+while not monitor.abortRequested():
 
-    pacount += 1 
+    pacount += 1
     if pacount % 10 == 0:                          # Check for paused video every 10 seconds
         pastoptime = int(settings('pastop'))
         xbmc.log('Autostop pause count and stop time ' + str(pacount) + ' ' + str(pastoptime) +    \
@@ -117,7 +111,6 @@ while True:
 
     if monitor.waitForAbort(1): # Sleep/wait for abort for 1 second.
         xbmc.log("Autostop addon service stopped." , xbmc.LOGINFO)
-            
         break # Abort was requested while waiting. Exit the while loop.
 
 

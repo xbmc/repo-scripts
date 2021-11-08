@@ -2,18 +2,7 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
-
-#xbmc.log('Name of script: ' + str(sys.argv[0]), xbmc.LOGNOTICE)
-#xbmc.log('Number of arguments: ' + str(len(sys.argv)), xbmc.LOGNOTICE)
-#xbmc.log('The arguments are: ' + str(sys.argv), xbmc.LOGNOTICE)
-
-
-def settings(setting, value = None):
-    # Get or add addon setting
-    if value:
-        xbmcaddon.Addon().setSetting(setting, value)
-    else:
-        return xbmcaddon.Addon().getSetting(setting)
+from common import settings
 
 
 def sleepTimer():
