@@ -19,6 +19,7 @@ def ms_to_timestamp(ms):
 
 
 class SubripFormat(FormatBase):
+    """SubRip Text (SRT) subtitle format implementation"""
     TIMESTAMP = TIMESTAMP
 
     @staticmethod
@@ -27,6 +28,7 @@ class SubripFormat(FormatBase):
 
     @classmethod
     def guess_format(cls, text):
+        """See :meth:`pysubs2.formats.FormatBase.guess_format()`"""
         if "[Script Info]" in text or "[V4+ Styles]" in text:
             # disambiguation vs. SSA/ASS
             return None
@@ -41,6 +43,19 @@ class SubripFormat(FormatBase):
 
     @classmethod
     def from_file(cls, subs, fp, format_, keep_unknown_html_tags=False, **kwargs):
+        """
+        See :meth:`pysubs2.formats.FormatBase.from_file()`
+
+        Supported tags:
+
+          - ``<i>``
+          - ``<u>``
+          - ``<s>``
+
+        Keyword args:
+            keep_unknown_html_tags: If True, HTML tags other than i/u/s will be kept as-is.
+                Otherwise, they will be stripped from input.
+        """
         timestamps = [] # (start, end)
         following_lines = [] # contains lists of lines following each timestamp
 
@@ -58,8 +73,8 @@ class SubripFormat(FormatBase):
             # Handle the "happy" empty subtitle case, which is timestamp line followed by blank line(s)
             # followed by number line and timestamp line of the next subtitle. Fixes issue #11.
             if (len(lines) >= 2
-                    and all(re.match("\s*$", line) for line in lines[:-1])
-                    and re.match("\s*\d+\s*$", lines[-1])):
+                    and all(re.match(r"\s*$", line) for line in lines[:-1])
+                    and re.match(r"\s*\d+\s*$", lines[-1])):
                 return ""
 
             # Handle the general case.
@@ -80,16 +95,26 @@ class SubripFormat(FormatBase):
                        for (start, end), lines in zip(timestamps, following_lines)]
 
     @classmethod
-    def to_file(cls, subs, fp, format_, **kwargs):
+    def to_file(cls, subs, fp, format_, apply_styles=True, **kwargs):
+        """
+        See :meth:`pysubs2.formats.FormatBase.to_file()`
+
+        Italic, underline and strikeout styling is supported.
+
+        Keyword args:
+            apply_styles: If False, do not write any styling.
+
+        """
         def prepare_text(text, style):
             body = []
             for fragment, sty in parse_tags(text, style, subs.styles):
                 fragment = fragment.replace(r"\h", " ")
                 fragment = fragment.replace(r"\n", "\n")
                 fragment = fragment.replace(r"\N", "\n")
-                if sty.italic: fragment = "<i>%s</i>" % fragment
-                if sty.underline: fragment = "<u>%s</u>" % fragment
-                if sty.strikeout: fragment = "<s>%s</s>" % fragment
+                if apply_styles:
+                    if sty.italic: fragment = "<i>%s</i>" % fragment
+                    if sty.underline: fragment = "<u>%s</u>" % fragment
+                    if sty.strikeout: fragment = "<s>%s</s>" % fragment
                 if sty.drawing: raise ContentNotUsable
                 body.append(fragment)
 

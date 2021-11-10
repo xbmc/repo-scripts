@@ -24,8 +24,10 @@ def ms_to_timestamp(ms):
 
 
 class TmpFormat(FormatBase):
+    """TMP subtitle format implementation"""
     @classmethod
     def guess_format(cls, text):
+        """See :meth:`pysubs2.formats.FormatBase.guess_format()`"""
         if "[Script Info]" in text or "[V4+ Styles]" in text:
             # disambiguation vs. SSA/ASS
             return None
@@ -36,6 +38,7 @@ class TmpFormat(FormatBase):
 
     @classmethod
     def from_file(cls, subs, fp, format_, **kwargs):
+        """See :meth:`pysubs2.formats.FormatBase.from_file()`"""
         events = []
 
         def prepare_text(text):
@@ -66,7 +69,16 @@ class TmpFormat(FormatBase):
         subs.events = events
 
     @classmethod
-    def to_file(cls, subs, fp, format_, **kwargs):
+    def to_file(cls, subs, fp, format_, apply_styles=True, **kwargs):
+        """
+        See :meth:`pysubs2.formats.FormatBase.to_file()`
+
+        Italic, underline and strikeout styling is supported.
+
+        Keyword args:
+            apply_styles: If False, do not write any styling.
+
+        """
         def prepare_text(text, style):
             body = []
             skip = False
@@ -74,9 +86,10 @@ class TmpFormat(FormatBase):
                 fragment = fragment.replace(r"\h", " ")
                 fragment = fragment.replace(r"\n", "\n")
                 fragment = fragment.replace(r"\N", "\n")
-                if sty.italic: fragment = "<i>%s</i>" % fragment
-                if sty.underline: fragment = "<u>%s</u>" % fragment
-                if sty.strikeout: fragment = "<s>%s</s>" % fragment
+                if apply_styles:
+                    if sty.italic: fragment = "<i>%s</i>" % fragment
+                    if sty.underline: fragment = "<u>%s</u>" % fragment
+                    if sty.strikeout: fragment = "<s>%s</s>" % fragment
                 if sty.drawing: skip = True
                 body.append(fragment)
 
