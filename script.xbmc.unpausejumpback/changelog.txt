@@ -1,33 +1,36 @@
-3.0.2
+v3.0.3
+- Minor bugfix for http/s sources
+
+v3.0.2
 - fix "Kodi is not playing any media file" when skipping beyond end of file
 
-3.0.1
+v3.0.1
 - Minor bugfix with http/s sources (plugins)
 
-3.0.0
+v3.0.0
 - Update for Matrix / Python3 (work borrowed from https://github.com/dkadioglu/script.xbmc.unpausejumpback)
 - Add setting for jump back occurring at time of un-pause vs. at time of pause
 - Bug fixes & tidy-ups
 
-2.3.3
+v2.3.3
 - fixed format of authors tag in addon.xml
 - removed the XBMC from the name
 
-2.3.2
+v2.3.2
 - jump back "in the background" when paused (i.e. while still paused instead of upon resuming)
 
-2.3.1
+v2.3.1
 - revert jumpback after playback started due to XBMC video timer bug - can not add this until xbmc properly reports the playback position immediately on playback start
 
-2.3.0
+v2.3.0
 - add jumpback after playback started from non zero starting time (needs gotham for working properly!)
 
-2.2.0
+v2.2.0
 - add exclude settings
 - add jumpback/forward after fwd or rwd based on the fwd/rwd speed (can be adjusted for each speed separately for fwd and rwd).
 
-2.1.0
+v2.1.0
 - add setting for specifying the minimum pause time before jumping back
 
-2.0.0
+v2.0.0
 - initial commit for frodo
