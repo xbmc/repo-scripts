@@ -12,6 +12,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n==1 || n%10==1 ? 0 : 1;\n"
 
+msgctxt "Addon Summary"
+msgid "A comprehensive subtitle companion"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Automatically invokes subtitle search dialog if local subtitles matching user's preferences are not detected. Removes subtitle files if original video was deleted. Also, allows to remove advertisement texts and texts for the Hearing Impaired. Supports: microDVD, SubRip, MPL2 and TMP formats."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "A comprehensive subtitle companion"
+msgstr ""
+
 msgctxt "#32001"
 msgid "Main"
 msgstr ""
