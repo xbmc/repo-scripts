@@ -17,7 +17,7 @@
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=168767</forum>
-		<source>https://github.com/tamland/xbmc-keymap-editor</source>
+		<source>https://github.com/pkscout/script.keymap</source>
 		<summary lang="de_DE">Ein Editor für Keymap-Dateien</summary>
 		<summary lang="en_GB">An editor for keymap files</summary>
 		<summary lang="hu_HU">Távvezérlő fájlok kezelője</summary>
