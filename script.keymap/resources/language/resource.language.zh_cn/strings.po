@@ -1,0 +1,1280 @@
+# Kodi Media Center language file
+# Addon Name: Keymap Editor
+# Addon id: script.keymap
+# Addon Provider: takoi|pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-11-09 09:30+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/zh_cn/>\n"
+"Language: zh_cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8.1\n"
+
+msgctxt "Addon Summary"
+msgid "An editor for keymap files"
+msgstr "一个键映射文件的编辑器"
+
+msgctxt "Addon Description"
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgstr "键映射编辑器是一个用于配置 Kodi 支持的遥控器、键盘和其他输入设备的功能映射的图形界面。注意：现有的用户定义键映射将重命名为.bak。"
+
+# Text Messages
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr "键映射编辑器"
+
+msgctxt "#30001"
+msgid "Failed to remove old keymap file"
+msgstr "删除旧键映射文件失败"
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr "现在按要分配的键"
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr "编辑"
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr "重置为默认值"
+
+msgctxt "#30005"
+msgid "Save"
+msgstr "保存"
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr "放弃更改？"
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr "选择窗口以管理快捷方式"
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr "选择动作类别"
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr "选择要分配给键的操作"
+
+msgctxt "#30010"
+msgid "Timeout in %.0f seconds..."
+msgstr "超时 %.0f 秒内..."
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr "编辑键"
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr "删除"
+
+# empty strings from id 30013 to 30099
+# Window names
+msgctxt "#30100"
+msgid "Global"
+msgstr "全局"
+
+msgctxt "#30101"
+msgid "Fullscreen Video"
+msgstr "全屏视频"
+
+msgctxt "#30102"
+msgid "Fullscreen Live TV"
+msgstr "全屏直播电视"
+
+msgctxt "#30103"
+msgid "Fullscreen Radio"
+msgstr "全屏电台"
+
+msgctxt "#30104"
+msgid "Fullscreen Game"
+msgstr "全屏游戏"
+
+msgctxt "#30105"
+msgid "Home"
+msgstr "主界面"
+
+msgctxt "#30106"
+msgid "Programs"
+msgstr "程序"
+
+msgctxt "#30107"
+msgid "Videos"
+msgstr "视频"
+
+msgctxt "#30108"
+msgid "Music"
+msgstr "音乐"
+
+msgctxt "#30109"
+msgid "Pictures"
+msgstr "图片"
+
+msgctxt "#30110"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#30111"
+msgid "Filemanager"
+msgstr "文件管理"
+
+msgctxt "#30112"
+msgid "Virtual Keyboard"
+msgstr "虚拟键盘"
+
+msgctxt "#30113"
+msgid "Player Controls"
+msgstr "游戏控制器"
+
+msgctxt "#30114"
+msgid "Seek bar"
+msgstr "搜索条"
+
+msgctxt "#30115"
+msgid "Music OSD"
+msgstr "音乐 OSD"
+
+msgctxt "#30116"
+msgid "Video OSD Settings"
+msgstr "视频 OSD 设置"
+
+msgctxt "#30117"
+msgid "Audio OSD Settings"
+msgstr "音乐 OSD 设置"
+
+msgctxt "#30118"
+msgid "Visualisation"
+msgstr "可视化效果"
+
+msgctxt "#30119"
+msgid "Slideshow"
+msgstr "幻灯片"
+
+# empty strings from id 30120 to 30199
+# Navigation
+msgctxt "#30200"
+msgid "Move Left"
+msgstr "左移"
+
+msgctxt "#30201"
+msgid "Move Right"
+msgstr "右移"
+
+msgctxt "#30202"
+msgid "Move Up"
+msgstr "上移"
+
+msgctxt "#30203"
+msgid "Move Down"
+msgstr "下移"
+
+msgctxt "#30204"
+msgid "Page Up"
+msgstr "上翻页"
+
+msgctxt "#30205"
+msgid "Page Down"
+msgstr "下翻页"
+
+msgctxt "#30206"
+msgid "Select Item"
+msgstr "选择项目"
+
+msgctxt "#30207"
+msgid "Highlight Item"
+msgstr "高亮项目"
+
+msgctxt "#30208"
+msgid "Parent Directory"
+msgstr "父目录"
+
+msgctxt "#30209"
+msgid "Back"
+msgstr "返回"
+
+msgctxt "#30210"
+msgid "Previous Menu"
+msgstr "前一菜单"
+
+msgctxt "#30211"
+msgid "Show Info"
+msgstr "显示信息"
+
+msgctxt "#30212"
+msgid "Context Menu"
+msgstr "上下文菜单"
+
+msgctxt "#30213"
+msgid "Menu"
+msgstr "菜单"
+
+msgctxt "#30214"
+msgid "First Page"
+msgstr "首页"
+
+msgctxt "#30215"
+msgid "Last Page"
+msgstr "末页"
+
+msgctxt "#30216"
+msgid "Next Letter"
+msgstr "下一字母"
+
+msgctxt "#30217"
+msgid "Previous Letter"
+msgstr "上一字母"
+
+msgctxt "#30218"
+msgid "Scroll Up"
+msgstr "上滚"
+
+msgctxt "#30219"
+msgid "Scroll Down"
+msgstr "下滚"
+
+msgctxt "#30220"
+msgid "Cursor Left"
+msgstr "光标向左"
+
+msgctxt "#30221"
+msgid "Cursor Right"
+msgstr "光标向右"
+
+# empty strings from id 30222 to 30299
+# Playback
+msgctxt "#30300"
+msgid "Play"
+msgstr "播放"
+
+msgctxt "#30301"
+msgid "Pause"
+msgstr "暂停"
+
+msgctxt "#30302"
+msgid "Play/Pause"
+msgstr "播放/暂停"
+
+msgctxt "#30303"
+msgid "Stop"
+msgstr "停止"
+
+msgctxt "#30304"
+msgid "Next"
+msgstr "下一个"
+
+msgctxt "#30305"
+msgid "Previous"
+msgstr "上一个"
+
+msgctxt "#30306"
+msgid "Fast Forward"
+msgstr "快进"
+
+msgctxt "#30307"
+msgid "Rewind"
+msgstr "快退"
+
+msgctxt "#30308"
+msgid "Small Step Back"
+msgstr "小步退"
+
+msgctxt "#30309"
+msgid "Step Forward"
+msgstr "步进"
+
+msgctxt "#30310"
+msgid "Step Back"
+msgstr "步退"
+
+msgctxt "#30311"
+msgid "Big Step Forward"
+msgstr "大步进"
+
+msgctxt "#30312"
+msgid "Big Step Back"
+msgstr "大步退"
+
+msgctxt "#30313"
+msgid "Next Chapter or Big Step Forward"
+msgstr "下一章或大步进"
+
+msgctxt "#30314"
+msgid "Previous Chapter or Big Step Back"
+msgstr "上一章或大步退"
+
+msgctxt "#30315"
+msgid "Show OSD"
+msgstr "显示 OSD"
+
+msgctxt "#30316"
+msgid "Show current play time"
+msgstr "显示当前播放时间"
+
+msgctxt "#30317"
+msgid "Show Playlist"
+msgstr "显示播放列表"
+
+msgctxt "#30318"
+msgid "Toggle Fullscreen"
+msgstr "全屏切换"
+
+msgctxt "#30319"
+msgid "Change Aspect Ratio"
+msgstr "改变宽高比"
+
+msgctxt "#30320"
+msgid "Go to DVD Video Menu"
+msgstr "转到 DVD 视频菜单"
+
+msgctxt "#30321"
+msgid "Toggle Repeat"
+msgstr "切换重复"
+
+msgctxt "#30322"
+msgid "Repeat One"
+msgstr "重复单个"
+
+msgctxt "#30323"
+msgid "Repeat All"
+msgstr "重复全部"
+
+msgctxt "#30324"
+msgid "Repeat Off"
+msgstr "重复关"
+
+msgctxt "#30325"
+msgid "Toggle Random"
+msgstr "切换随机"
+
+msgctxt "#30326"
+msgid "Random On"
+msgstr "随机开"
+
+msgctxt "#30327"
+msgid "Random Off"
+msgstr "随机关"
+
+msgctxt "#30328"
+msgid "Playback Speed Faster"
+msgstr "播放速度更快"
+
+msgctxt "#30329"
+msgid "Playback Speed Slower"
+msgstr "播放速度更慢"
+
+msgctxt "#30330"
+msgid "Create Bookmark"
+msgstr "创建书签"
+
+msgctxt "#30331"
+msgid "Create Episode Bookmark"
+msgstr "创建集书签"
+
+msgctxt "#30332"
+msgid "Toggle 3D/Stereoscopic mode"
+msgstr "切换3D/立体模式"
+
+msgctxt "#30333"
+msgid "Switch Player"
+msgstr "切换播放器"
+
+msgctxt "#30334"
+msgid "Play Next"
+msgstr "播放下一个"
+
+msgctxt "#30335"
+msgid "Select Program"
+msgstr "选择程序"
+
+msgctxt "#30336"
+msgid "Select Resolution"
+msgstr "选择分辨率"
+
+msgctxt "#30337"
+msgid "Shift Video Up"
+msgstr "将视频上移"
+
+msgctxt "#30338"
+msgid "Shift Video Down"
+msgstr "将视频下移"
+
+msgctxt "#30339"
+msgid "Show Time"
+msgstr "显示时间"
+
+msgctxt "#30340"
+msgid "Next Scene"
+msgstr "下一场"
+
+msgctxt "#30341"
+msgid "Previous Scene"
+msgstr "上一场"
+
+msgctxt "#30342"
+msgid "Next Video Stream"
+msgstr "下一视频流"
+
+msgctxt "#30343"
+msgid "Toggle HDHR"
+msgstr "切换 HDHR"
+
+msgctxt "#30344"
+msgid "Cycle 3D Mode"
+msgstr "循环3D模式"
+
+msgctxt "#30345"
+msgid "Next 3D Mode"
+msgstr "下一3D模式"
+
+msgctxt "#30346"
+msgid "Previous 3D Mode"
+msgstr "上一3D模式"
+
+msgctxt "#30347"
+msgid "3D Mono"
+msgstr "3D单声道"
+
+# empty strings from id 30348 to 30399
+# Audio
+msgctxt "#30400"
+msgid "Mute"
+msgstr "静音"
+
+msgctxt "#30401"
+msgid "Volume Up"
+msgstr "增大音量"
+
+msgctxt "#30402"
+msgid "Volume Down"
+msgstr "减小音量"
+
+msgctxt "#30403"
+msgid "Next Language"
+msgstr "下一语言"
+
+msgctxt "#30404"
+msgid "Delay"
+msgstr "延迟"
+
+msgctxt "#30405"
+msgid "Delay Minus"
+msgstr "延迟减"
+
+msgctxt "#30406"
+msgid "Delay Plus"
+msgstr "延迟加"
+
+msgctxt "#30407"
+msgid "Toggle Digital/Analog"
+msgstr "切换数字/模拟"
+
+msgctxt "#30408"
+msgid "Volume Amp Up"
+msgstr "音量放大器升"
+
+msgctxt "#30409"
+msgid "Volume Amp Down"
+msgstr "音量放大器降"
+
+msgctxt "#30410"
+msgid "Volume Amplification"
+msgstr "音量放大器"
+
+# empty strings from id 30411 to 30499
+# Pictures
+msgctxt "#30500"
+msgid "Next Picture"
+msgstr "下一图片"
+
+msgctxt "#30501"
+msgid "Previous Picture"
+msgstr "上一图片"
+
+msgctxt "#30502"
+msgid "Rotate Picture"
+msgstr "旋转图片"
+
+msgctxt "#30503"
+msgid "Rotate Picture CCW"
+msgstr "逆时针旋转图片"
+
+msgctxt "#30504"
+msgid "Zoom Out"
+msgstr "缩小"
+
+msgctxt "#30505"
+msgid "Zoom In "
+msgstr "放大 "
+
+msgctxt "#30506"
+msgid "Zoom level Normal"
+msgstr "缩放级别正常"
+
+msgctxt "#30507"
+msgid "Zoom level 1"
+msgstr "缩放级别1"
+
+msgctxt "#30508"
+msgid "Zoom level 2"
+msgstr "缩放级别2"
+
+msgctxt "#30509"
+msgid "Zoom level 3"
+msgstr "缩放级别3"
+
+msgctxt "#30510"
+msgid "Zoom level 4"
+msgstr "缩放级别4"
+
+msgctxt "#30511"
+msgid "Zoom level 5"
+msgstr "缩放级别5"
+
+msgctxt "#30512"
+msgid "Zoom level 6"
+msgstr "缩放级别6"
+
+msgctxt "#30513"
+msgid "Zoom level 7"
+msgstr "缩放级别7"
+
+msgctxt "#30514"
+msgid "Zoom level 8"
+msgstr "缩放级别8"
+
+msgctxt "#30515"
+msgid "Zoom level 9"
+msgstr "缩放级别9"
+
+# empty strings from id 30516 to 30599
+# Subtitle
+msgctxt "#30600"
+msgid "Show Subtitles"
+msgstr "显示字幕"
+
+msgctxt "#30601"
+msgid "Next Subtitle"
+msgstr "下一字幕"
+
+msgctxt "#30602"
+msgid "Browse Subtitle"
+msgstr "浏览字幕"
+
+msgctxt "#30603"
+msgid "Cycle Subtitle"
+msgstr "循环字幕"
+
+msgctxt "#30604"
+msgid "Delay"
+msgstr "延迟"
+
+msgctxt "#30605"
+msgid "Delay Minus"
+msgstr "延迟减"
+
+msgctxt "#30606"
+msgid "Delay Plus"
+msgstr "延迟加"
+
+msgctxt "#30607"
+msgid "Align"
+msgstr "对齐"
+
+msgctxt "#30608"
+msgid "Shift Subtitle Up"
+msgstr "上移字幕"
+
+msgctxt "#30609"
+msgid "Shift Subtitle Down"
+msgstr "下移字幕"
+
+# empty strings from id 30610 to 30699
+# PVR
+msgctxt "#30700"
+msgid "Channel Up"
+msgstr "频道上"
+
+msgctxt "#30701"
+msgid "Channel Down"
+msgstr "频道下"
+
+msgctxt "#30702"
+msgid "Previous channel group"
+msgstr "上一频道组"
+
+msgctxt "#30703"
+msgid "Next channel group"
+msgstr "下一频道组"
+
+msgctxt "#30704"
+msgid "PVR Play"
+msgstr "PVR 播放"
+
+msgctxt "#30705"
+msgid "PVR Play TV"
+msgstr "PVR 播放电视"
+
+msgctxt "#30706"
+msgid "PVR Play Radio"
+msgstr "PVR 播放电台"
+
+msgctxt "#30707"
+msgid "Record"
+msgstr "录像"
+
+msgctxt "#30708"
+msgid "Toggle Commskip"
+msgstr "切换 Commskip"
+
+msgctxt "#30709"
+msgid "PVR Show Timer Rule"
+msgstr "PVR 显示计时器规则"
+
+msgctxt "#30710"
+msgid "Channel Number Separator"
+msgstr "频道号分隔符"
+
+# empty strings from id 30711 to 30799
+# Item Actions
+msgctxt "#30800"
+msgid "Queue item"
+msgstr "队列项目"
+
+msgctxt "#30801"
+msgid "Delete item"
+msgstr "删除项目"
+
+msgctxt "#30802"
+msgid "Copy item"
+msgstr "复制项目"
+
+msgctxt "#30803"
+msgid "Move item"
+msgstr "移动项目"
+
+msgctxt "#30804"
+msgid "Move item up"
+msgstr "项目上移"
+
+msgctxt "#30805"
+msgid "Move item down"
+msgstr "项目下移"
+
+msgctxt "#30806"
+msgid "Rename item"
+msgstr "重命名项目"
+
+msgctxt "#30807"
+msgid "Scan item"
+msgstr "扫描项目"
+
+msgctxt "#30808"
+msgid "Toggle Watched"
+msgstr "切换已观看"
+
+msgctxt "#30809"
+msgid "Increase Rating"
+msgstr "提高评分"
+
+msgctxt "#30810"
+msgid "Decrease Rating"
+msgstr "降低评分"
+
+msgctxt "#30811"
+msgid "Set Rating"
+msgstr "设置星级"
+
+# empty strings from id 30812 to 30899
+# System
+msgctxt "#30900"
+msgid "Toggle Fullscreen"
+msgstr "全屏切换"
+
+msgctxt "#30901"
+msgid "Minimise"
+msgstr "最小化"
+
+msgctxt "#30902"
+msgid "Shutdown"
+msgstr "关机"
+
+msgctxt "#30903"
+msgid "Reboot"
+msgstr "重启"
+
+msgctxt "#30904"
+msgid "Hibernate"
+msgstr "休眠"
+
+msgctxt "#30905"
+msgid "Suspend"
+msgstr "待机"
+
+msgctxt "#30906"
+msgid "Restart Kodi"
+msgstr "重启 Kodi"
+
+msgctxt "#30907"
+msgid "Log off"
+msgstr "注销"
+
+msgctxt "#30908"
+msgid "Quit Kodi"
+msgstr "退出 Kodi"
+
+msgctxt "#30909"
+msgid "Reset Settings"
+msgstr "重置设置"
+
+msgctxt "#30910"
+msgid "Change Settings Level"
+msgstr "更改设置级别"
+
+msgctxt "#30911"
+msgid "Toggle Font"
+msgstr "切换字体"
+
+# empty strings from id 30912 to 30999
+# Virtual Keyboard
+msgctxt "#31000"
+msgid "Enter"
+msgstr "Enter"
+
+msgctxt "#31001"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#31002"
+msgid "Symbols"
+msgstr "符号"
+
+msgctxt "#31003"
+msgid "Backspace"
+msgstr "退格"
+
+msgctxt "#31004"
+msgid "0"
+msgstr "0"
+
+msgctxt "#31005"
+msgid "1"
+msgstr "1"
+
+msgctxt "#31006"
+msgid "2"
+msgstr "2"
+
+msgctxt "#31007"
+msgid "3"
+msgstr "3"
+
+msgctxt "#31008"
+msgid "4"
+msgstr "4"
+
+msgctxt "#31009"
+msgid "5"
+msgstr "5"
+
+msgctxt "#31010"
+msgid "6"
+msgstr "6"
+
+msgctxt "#31011"
+msgid "7"
+msgstr "7"
+
+msgctxt "#31012"
+msgid "8"
+msgstr "8"
+
+msgctxt "#31013"
+msgid "9"
+msgstr "9"
+
+msgctxt "#31014"
+msgid "Teletext Red"
+msgstr "图文电视红色"
+
+msgctxt "#31015"
+msgid "Teletext Green"
+msgstr "图文电视绿色"
+
+msgctxt "#31016"
+msgid "Teletext Yellow"
+msgstr "图文电视黄色"
+
+msgctxt "#31017"
+msgid "Teletext Blue"
+msgstr "图文电视蓝色"
+
+# empty strings from id 31018 to 31099
+# Other
+msgctxt "#31100"
+msgid "Update Video Library"
+msgstr "更新视频资料库"
+
+msgctxt "#31101"
+msgid "Update Music Library"
+msgstr "更新音乐资料库"
+
+msgctxt "#31102"
+msgid "Clean Video Library"
+msgstr "清理视频资料库"
+
+msgctxt "#31103"
+msgid "Clean Music Library"
+msgstr "清理音乐资料库"
+
+msgctxt "#31104"
+msgid "Player Process Info"
+msgstr "播放器进程信息"
+
+msgctxt "#31105"
+msgid "Player debug"
+msgstr "播放器调试"
+
+msgctxt "#31106"
+msgid "Take screenshot"
+msgstr "截屏"
+
+msgctxt "#31107"
+msgid "Reload Keymaps"
+msgstr "重载键映射"
+
+msgctxt "#31108"
+msgid "Increase PAR"
+msgstr "增加 PAR"
+
+msgctxt "#31109"
+msgid "Decrease PAR"
+msgstr "减少 PAR"
+
+msgctxt "#31110"
+msgid "Change resolution"
+msgstr "更改分辨率"
+
+msgctxt "#31111"
+msgid "Next calibration"
+msgstr "下一校准"
+
+msgctxt "#31112"
+msgid "Reset calibration"
+msgstr "重置校准"
+
+msgctxt "#31113"
+msgid "Show current visualisation preset"
+msgstr "显示当前可视化效果预设"
+
+msgctxt "#31114"
+msgid "Show visualisation preset list"
+msgstr "显示可视化效果预设列表"
+
+msgctxt "#31115"
+msgid "Next visualisation preset"
+msgstr "下一可视化效果预设"
+
+msgctxt "#31116"
+msgid "Previous visualisation preset"
+msgstr "上一可视化效果预设"
+
+msgctxt "#31117"
+msgid "Lock current visualisation preset"
+msgstr "锁定当前可视化效果预设"
+
+msgctxt "#31118"
+msgid "Switch to a new random preset"
+msgstr "切换到新的随机预设"
+
+# empty strings from id 31119 to 31199
+# Activate Window
+msgctxt "#31200"
+msgid "Settings"
+msgstr "设置"
+
+msgctxt "#31201"
+msgid "Player Settings"
+msgstr "播放器设置"
+
+msgctxt "#31202"
+msgid "Programs Settings"
+msgstr "程序设置"
+
+msgctxt "#31203"
+msgid "Information Provider Settings"
+msgstr "信息提供者设置"
+
+msgctxt "#31204"
+msgid "Interface Settings"
+msgstr "界面设置"
+
+msgctxt "#31205"
+msgid "System Settings"
+msgstr "系统设置"
+
+msgctxt "#31206"
+msgid "Media Settings"
+msgstr "媒体设置"
+
+msgctxt "#31207"
+msgid "Service Settings"
+msgstr "服务设置"
+
+msgctxt "#31208"
+msgid "Appearance Settings"
+msgstr "外观设置"
+
+msgctxt "#31209"
+msgid "Peripherals Settings"
+msgstr "外围设备设置"
+
+msgctxt "#31210"
+msgid "Library Export Settings"
+msgstr "资料库导出设置"
+
+msgctxt "#31211"
+msgid "PVR Settings"
+msgstr "PVR 设置"
+
+msgctxt "#31212"
+msgid "PVR Recording Settings"
+msgstr "PVR 录像设置"
+
+msgctxt "#31213"
+msgid "Game Settings"
+msgstr "游戏设置"
+
+msgctxt "#31214"
+msgid "Advanced Game Settings"
+msgstr "高级游戏设置"
+
+msgctxt "#31215"
+msgid "Game Controllers"
+msgstr "游戏控制器"
+
+msgctxt "#31216"
+msgid "Game Video Filters"
+msgstr "游戏视频滤镜"
+
+msgctxt "#31217"
+msgid "Game Video Rotation"
+msgstr "游戏视频旋转"
+
+msgctxt "#31218"
+msgid "Game View Mode"
+msgstr "游戏视图模式"
+
+msgctxt "#31219"
+msgid "Skin Settings"
+msgstr "皮肤设置"
+
+msgctxt "#31220"
+msgid "Addon Browser"
+msgstr "插件浏览器"
+
+msgctxt "#31221"
+msgid "Addon Settings"
+msgstr "插件设置"
+
+msgctxt "#31222"
+msgid "Profile Settings"
+msgstr "配置文件设置"
+
+msgctxt "#31223"
+msgid "Lock Settings"
+msgstr "锁定设置"
+
+msgctxt "#31224"
+msgid "Content Settings"
+msgstr "内容设置"
+
+msgctxt "#31225"
+msgid "Profiles"
+msgstr "配置文件"
+
+msgctxt "#31226"
+msgid "System info"
+msgstr "系统信息"
+
+msgctxt "#31227"
+msgid "Test Pattern"
+msgstr "测试图样"
+
+msgctxt "#31228"
+msgid "Screen Calibration"
+msgstr "屏幕校准"
+
+msgctxt "#31229"
+msgid "Login Screen"
+msgstr "登录屏"
+
+msgctxt "#31230"
+msgid "File Browser"
+msgstr "文件浏览器"
+
+msgctxt "#31231"
+msgid "Network Setup"
+msgstr "网络设置"
+
+msgctxt "#31232"
+msgid "Access Points"
+msgstr "接入点"
+
+msgctxt "#31233"
+msgid "Mediasource Dialog"
+msgstr "媒体源对话框"
+
+msgctxt "#31234"
+msgid "Start"
+msgstr "开始"
+
+msgctxt "#31235"
+msgid "Favourites"
+msgstr "收藏"
+
+msgctxt "#31236"
+msgid "Context Menu"
+msgstr "上下文菜单"
+
+msgctxt "#31237"
+msgid "Media filter"
+msgstr "媒体筛选器"
+
+msgctxt "#31238"
+msgid "Visualisation Preset List"
+msgstr "可视化效果预置列表"
+
+msgctxt "#31239"
+msgid "Smart Playlist Editor"
+msgstr "智能播放列表编辑器"
+
+msgctxt "#31240"
+msgid "Smart Playlist Rule"
+msgstr "智能播放列表规则"
+
+msgctxt "#31241"
+msgid "Shutdown Menu"
+msgstr "关机菜单"
+
+msgctxt "#31242"
+msgid "Fullscreen Info"
+msgstr "全屏信息"
+
+msgctxt "#31243"
+msgid "Subtitle Search"
+msgstr "字幕搜索"
+
+msgctxt "#31244"
+msgid "Weather"
+msgstr "天气"
+
+msgctxt "#31245"
+msgid "Screensaver"
+msgstr "屏幕保护程序"
+
+msgctxt "#31246"
+msgid "Picture Info"
+msgstr "图片信息"
+
+msgctxt "#31247"
+msgid "Addon Info"
+msgstr "插件信息"
+
+# empty string 31248
+msgctxt "#31249"
+msgid "Music Playlist"
+msgstr "音乐播放列表"
+
+msgctxt "#31250"
+msgid "Music Playlist Editor"
+msgstr "音乐播放列表编辑器"
+
+msgctxt "#31251"
+msgid "Music Info"
+msgstr "音乐信息"
+
+msgctxt "#31252"
+msgid "Song Info"
+msgstr "歌曲信息"
+
+msgctxt "#31253"
+msgid "Movie Info"
+msgstr "电影信息"
+
+msgctxt "#31254"
+msgid "Player Process Info"
+msgstr "播放器处理信息"
+
+msgctxt "#31255"
+msgid "Video Menu"
+msgstr "视频菜单"
+
+msgctxt "#31256"
+msgid "Video OSD"
+msgstr "视频 OSD"
+
+msgctxt "#31257"
+msgid "Colour Management Settings"
+msgstr "颜色管理设置"
+
+msgctxt "#31258"
+msgid "Subtitle Settings"
+msgstr "字幕设置"
+
+msgctxt "#31259"
+msgid "Video Time Seek"
+msgstr "视频时间搜索"
+
+msgctxt "#31260"
+msgid "Video Bookmarks"
+msgstr "视频书签"
+
+msgctxt "#31261"
+msgid "Video Playlist"
+msgstr "视频播放列表"
+
+msgctxt "#31262"
+msgid "PVR Guide Info"
+msgstr "PVR 指南信息"
+
+msgctxt "#31263"
+msgid "PVR Recording Info"
+msgstr "PVR 录像信息"
+
+msgctxt "#31264"
+msgid "PVR Timer Setting"
+msgstr "PVR 定时器设置"
+
+msgctxt "#31265"
+msgid "PVR Group Manager"
+msgstr "PVR 组管理"
+
+msgctxt "#31266"
+msgid "PVR Channel Manager"
+msgstr "PVR 频道管理"
+
+msgctxt "#31267"
+msgid "PVR Guide Search"
+msgstr "PVR 指南搜索"
+
+msgctxt "#31268"
+msgid "PVR Channel Scan"
+msgstr "PVR 频道扫描"
+
+msgctxt "#31269"
+msgid "PVR Update Progress"
+msgstr "PVR 更新进度"
+
+msgctxt "#31270"
+msgid "PVR OSD Channels"
+msgstr "PVR OSD 频道"
+
+msgctxt "#31271"
+msgid "PVR OSD Guide"
+msgstr "PVR OSD 指南"
+
+msgctxt "#31272"
+msgid "TV Channels"
+msgstr "电视频道"
+
+msgctxt "#31273"
+msgid "TV Recordings"
+msgstr "电视录像"
+
+msgctxt "#31274"
+msgid "TV Guide"
+msgstr "电视指南"
+
+msgctxt "#31275"
+msgid "TV Timers"
+msgstr "电视定时器"
+
+msgctxt "#31276"
+msgid "TV Search"
+msgstr "电视搜索"
+
+msgctxt "#31277"
+msgid "Radio Channels"
+msgstr "电台频道"
+
+msgctxt "#31278"
+msgid "Radio Recordings"
+msgstr "电台录音"
+
+msgctxt "#31279"
+msgid "Radio Guide"
+msgstr "电台指南"
+
+msgctxt "#31280"
+msgid "Radio Timers"
+msgstr "电台定时器"
+
+msgctxt "#31281"
+msgid "Radio Timer Rules"
+msgstr "电台定时器规则"
+
+msgctxt "#31282"
+msgid "Radio Search"
+msgstr "电台搜索"
+
+msgctxt "#31283"
+msgid "RDS Info"
+msgstr "RDS 信息"
+
+msgctxt "#31284"
+msgid "Movies"
+msgstr "电影"
+
+msgctxt "#31285"
+msgid "Movie Titles"
+msgstr "电影片名"
+
+msgctxt "#31286"
+msgid "TV Shows"
+msgstr "剧集"
+
+msgctxt "#31287"
+msgid "TV Show Titles"
+msgstr "剧集片名"
+
+msgctxt "#31288"
+msgid "Music Videos"
+msgstr "音乐电视"
+
+msgctxt "#31289"
+msgid "Recently Added Movies"
+msgstr "最近添加电影"
+
+msgctxt "#31290"
+msgid "Recently Added Episodes"
+msgstr "最近添加分集"
+
+msgctxt "#31291"
+msgid "Recently Added Music Videos"
+msgstr "最近添加音乐电视"
+
+msgctxt "#31292"
+msgid "Games"
+msgstr "游戏"
+
+msgctxt "#31293"
+msgid "Games OSD"
+msgstr "游戏 OSD"
+
+msgctxt "#31294"
+msgid "Game Pad Input"
+msgstr "游戏手柄输入"
+
+msgctxt "#31295"
+msgid "Game Volume"
+msgstr "游戏音量"

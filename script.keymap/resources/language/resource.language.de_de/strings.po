@@ -1,0 +1,1280 @@
+# Kodi Media Center language file
+# Addon Name: Keymap Editor
+# Addon id: script.keymap
+# Addon Provider: takoi|pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-09-27 10:30+0000\n"
+"Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/de_de/>\n"
+"Language: de_de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "An editor for keymap files"
+msgstr "Ein Editor für Keymap-Dateien"
+
+msgctxt "Addon Description"
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgstr "Keymap Editor ist eine grafische Oberfläche zum Konfigurieren von Tastenzuordnungen für Fernbedienungen, Tastaturen und anderen von Kodi unterstützten Eingabegeräten. Hinweis: Existierende benutzerdefinierte Tastenzuordnungen werden zu .bak umbenannt."
+
+# Text Messages
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr "Keymap Editor"
+
+msgctxt "#30001"
+msgid "Failed to remove old keymap file"
+msgstr "Entfernen der alten Keymap-Datei fehlgeschlagen"
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr "Bitte die zuzuweisende Taste drücken"
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr "Auf Standard zurücksetzen"
+
+msgctxt "#30005"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr "Änderungen verwerfen?"
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr "Fenster zum Verwalten der Verknüpfungen auswählen"
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr "Handlungskategorie auswählen"
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr "Auswählen der einer Taste zuzuweisenden Handlung"
+
+msgctxt "#30010"
+msgid "Timeout in %.0f seconds..."
+msgstr "Zeitüberschreitung in %.0f Sekunden..."
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr "Taste bearbeiten"
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr "Entfernen"
+
+# empty strings from id 30013 to 30099
+# Window names
+msgctxt "#30100"
+msgid "Global"
+msgstr "Global"
+
+msgctxt "#30101"
+msgid "Fullscreen Video"
+msgstr "Vollbildvideo"
+
+msgctxt "#30102"
+msgid "Fullscreen Live TV"
+msgstr "Vollbild-TV"
+
+msgctxt "#30103"
+msgid "Fullscreen Radio"
+msgstr "Vollbild-Radio"
+
+msgctxt "#30104"
+msgid "Fullscreen Game"
+msgstr "Vollbild-Spiel"
+
+msgctxt "#30105"
+msgid "Home"
+msgstr "Home"
+
+msgctxt "#30106"
+msgid "Programs"
+msgstr "Programme"
+
+msgctxt "#30107"
+msgid "Videos"
+msgstr "Videos"
+
+msgctxt "#30108"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "#30109"
+msgid "Pictures"
+msgstr "Bilder"
+
+msgctxt "#30110"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#30111"
+msgid "Filemanager"
+msgstr "Dateimanager"
+
+msgctxt "#30112"
+msgid "Virtual Keyboard"
+msgstr "Virtuelle Tastatur"
+
+msgctxt "#30113"
+msgid "Player Controls"
+msgstr "Playersteuerung"
+
+msgctxt "#30114"
+msgid "Seek bar"
+msgstr "Spulleiste"
+
+msgctxt "#30115"
+msgid "Music OSD"
+msgstr "Musik-OSD"
+
+msgctxt "#30116"
+msgid "Video OSD Settings"
+msgstr "Video-OSD-Einstellungen"
+
+msgctxt "#30117"
+msgid "Audio OSD Settings"
+msgstr "Audio-OSD-Einstellungen"
+
+msgctxt "#30118"
+msgid "Visualisation"
+msgstr "Visualisierung"
+
+msgctxt "#30119"
+msgid "Slideshow"
+msgstr "Diashow"
+
+# empty strings from id 30120 to 30199
+# Navigation
+msgctxt "#30200"
+msgid "Move Left"
+msgstr "Nach links bewegen"
+
+msgctxt "#30201"
+msgid "Move Right"
+msgstr "Nach rechts bewegen"
+
+msgctxt "#30202"
+msgid "Move Up"
+msgstr "Nach oben bewegen"
+
+msgctxt "#30203"
+msgid "Move Down"
+msgstr "Nach unten bewegen"
+
+msgctxt "#30204"
+msgid "Page Up"
+msgstr "Seite nach oben"
+
+msgctxt "#30205"
+msgid "Page Down"
+msgstr "Seite nach unten"
+
+msgctxt "#30206"
+msgid "Select Item"
+msgstr "Eintrag auswählen"
+
+msgctxt "#30207"
+msgid "Highlight Item"
+msgstr "Eintrag hervorheben"
+
+msgctxt "#30208"
+msgid "Parent Directory"
+msgstr "Übergeordnetes Verzeichnis"
+
+msgctxt "#30209"
+msgid "Back"
+msgstr "Zurück"
+
+msgctxt "#30210"
+msgid "Previous Menu"
+msgstr "Vorheriges Menü"
+
+msgctxt "#30211"
+msgid "Show Info"
+msgstr "Information anzeigen"
+
+msgctxt "#30212"
+msgid "Context Menu"
+msgstr "Kontextmenü"
+
+msgctxt "#30213"
+msgid "Menu"
+msgstr "Menü"
+
+msgctxt "#30214"
+msgid "First Page"
+msgstr "Erste Seite"
+
+msgctxt "#30215"
+msgid "Last Page"
+msgstr "Letzte Seite"
+
+msgctxt "#30216"
+msgid "Next Letter"
+msgstr "Nächster Buchstabe"
+
+msgctxt "#30217"
+msgid "Previous Letter"
+msgstr "Vorheriger Buchstabe"
+
+msgctxt "#30218"
+msgid "Scroll Up"
+msgstr "Nach oben scrollen"
+
+msgctxt "#30219"
+msgid "Scroll Down"
+msgstr "Nach unten scrollen"
+
+msgctxt "#30220"
+msgid "Cursor Left"
+msgstr "Cursor nach links"
+
+msgctxt "#30221"
+msgid "Cursor Right"
+msgstr "Cursor nach rechts"
+
+# empty strings from id 30222 to 30299
+# Playback
+msgctxt "#30300"
+msgid "Play"
+msgstr "Wiedergabe"
+
+msgctxt "#30301"
+msgid "Pause"
+msgstr "Pause"
+
+msgctxt "#30302"
+msgid "Play/Pause"
+msgstr "Wiedergabe/Pause"
+
+msgctxt "#30303"
+msgid "Stop"
+msgstr "Stopp"
+
+msgctxt "#30304"
+msgid "Next"
+msgstr "Nächster"
+
+msgctxt "#30305"
+msgid "Previous"
+msgstr "Vorheriger"
+
+msgctxt "#30306"
+msgid "Fast Forward"
+msgstr "Schneller Vorlauf"
+
+msgctxt "#30307"
+msgid "Rewind"
+msgstr "Rücklauf"
+
+msgctxt "#30308"
+msgid "Small Step Back"
+msgstr "Kleiner Schritt zurück"
+
+msgctxt "#30309"
+msgid "Step Forward"
+msgstr "Kleiner Schritt vorwärts"
+
+msgctxt "#30310"
+msgid "Step Back"
+msgstr "Schritt zurück"
+
+msgctxt "#30311"
+msgid "Big Step Forward"
+msgstr "Großer Schritt vorwärts"
+
+msgctxt "#30312"
+msgid "Big Step Back"
+msgstr "Großer Schritt zurück"
+
+msgctxt "#30313"
+msgid "Next Chapter or Big Step Forward"
+msgstr "Nächstes Kapitel oder großer Schritt vorwärts"
+
+msgctxt "#30314"
+msgid "Previous Chapter or Big Step Back"
+msgstr "Vorheriges Kapitel oder großer Schritt zurück"
+
+msgctxt "#30315"
+msgid "Show OSD"
+msgstr "OSD anzeigen"
+
+msgctxt "#30316"
+msgid "Show current play time"
+msgstr "Aktuelle Wiedergabezeit anzeigen"
+
+msgctxt "#30317"
+msgid "Show Playlist"
+msgstr "Wiedergabeliste anzeigen"
+
+msgctxt "#30318"
+msgid "Toggle Fullscreen"
+msgstr "Vollbild umschalten"
+
+msgctxt "#30319"
+msgid "Change Aspect Ratio"
+msgstr "Seitenverhältnis anpassen"
+
+msgctxt "#30320"
+msgid "Go to DVD Video Menu"
+msgstr "Zum DVD-Videomenü gehen"
+
+msgctxt "#30321"
+msgid "Toggle Repeat"
+msgstr "Wiederholung umschalten"
+
+msgctxt "#30322"
+msgid "Repeat One"
+msgstr "Einen wiederholen"
+
+msgctxt "#30323"
+msgid "Repeat All"
+msgstr "Alle wiederholen"
+
+msgctxt "#30324"
+msgid "Repeat Off"
+msgstr "Wiederholung aus"
+
+msgctxt "#30325"
+msgid "Toggle Random"
+msgstr "Zufällig umschalten"
+
+msgctxt "#30326"
+msgid "Random On"
+msgstr "Zufällig an"
+
+msgctxt "#30327"
+msgid "Random Off"
+msgstr "Zufällig aus"
+
+msgctxt "#30328"
+msgid "Playback Speed Faster"
+msgstr "Wiedergabegeschwindigkeit schneller"
+
+msgctxt "#30329"
+msgid "Playback Speed Slower"
+msgstr "Wiedergabegeschwindigkeit langsamer"
+
+msgctxt "#30330"
+msgid "Create Bookmark"
+msgstr "Lesezeichen erstellen"
+
+msgctxt "#30331"
+msgid "Create Episode Bookmark"
+msgstr "Episodenlesezeichen erstellen"
+
+msgctxt "#30332"
+msgid "Toggle 3D/Stereoscopic mode"
+msgstr "3D/Stereoskopie-Modus umschalten"
+
+msgctxt "#30333"
+msgid "Switch Player"
+msgstr "Player wechseln"
+
+msgctxt "#30334"
+msgid "Play Next"
+msgstr "Nächsten wiedergeben"
+
+msgctxt "#30335"
+msgid "Select Program"
+msgstr "Programm auswählen"
+
+msgctxt "#30336"
+msgid "Select Resolution"
+msgstr "Auflösung auswählen"
+
+msgctxt "#30337"
+msgid "Shift Video Up"
+msgstr "Video nach oben verschieben"
+
+msgctxt "#30338"
+msgid "Shift Video Down"
+msgstr "Video nach unten verschieben"
+
+msgctxt "#30339"
+msgid "Show Time"
+msgstr "Zeit anzeigen"
+
+msgctxt "#30340"
+msgid "Next Scene"
+msgstr "Nächste Szene"
+
+msgctxt "#30341"
+msgid "Previous Scene"
+msgstr "Vorherige Szene"
+
+msgctxt "#30342"
+msgid "Next Video Stream"
+msgstr "Nächster Videostream"
+
+msgctxt "#30343"
+msgid "Toggle HDHR"
+msgstr "HDHR umschalten"
+
+msgctxt "#30344"
+msgid "Cycle 3D Mode"
+msgstr "3D-Modus durchwechseln"
+
+msgctxt "#30345"
+msgid "Next 3D Mode"
+msgstr "Nächster 3D-Modus"
+
+msgctxt "#30346"
+msgid "Previous 3D Mode"
+msgstr "Vorheriger 3D-Modus"
+
+msgctxt "#30347"
+msgid "3D Mono"
+msgstr "3D-Mono"
+
+# empty strings from id 30348 to 30399
+# Audio
+msgctxt "#30400"
+msgid "Mute"
+msgstr "Stumm"
+
+msgctxt "#30401"
+msgid "Volume Up"
+msgstr "Lautstärke erhöhen"
+
+msgctxt "#30402"
+msgid "Volume Down"
+msgstr "Lautstärke verringern"
+
+msgctxt "#30403"
+msgid "Next Language"
+msgstr "Nächste Sprache"
+
+msgctxt "#30404"
+msgid "Delay"
+msgstr "Verzögerung"
+
+msgctxt "#30405"
+msgid "Delay Minus"
+msgstr "Verzögerung minus"
+
+msgctxt "#30406"
+msgid "Delay Plus"
+msgstr "Verzögerung plus"
+
+msgctxt "#30407"
+msgid "Toggle Digital/Analog"
+msgstr "Digital/Analog wechseln"
+
+msgctxt "#30408"
+msgid "Volume Amp Up"
+msgstr "Verstärkerlautstärke erhöhen"
+
+msgctxt "#30409"
+msgid "Volume Amp Down"
+msgstr "Verstärkerlautstärke verringern"
+
+msgctxt "#30410"
+msgid "Volume Amplification"
+msgstr "Lautstärkeverstärkung"
+
+# empty strings from id 30411 to 30499
+# Pictures
+msgctxt "#30500"
+msgid "Next Picture"
+msgstr "Nächstes Bild"
+
+msgctxt "#30501"
+msgid "Previous Picture"
+msgstr "Vorheriges Bild"
+
+msgctxt "#30502"
+msgid "Rotate Picture"
+msgstr "Bild drehen"
+
+msgctxt "#30503"
+msgid "Rotate Picture CCW"
+msgstr "Bild gegen den Uhrzeigersinn drehen"
+
+msgctxt "#30504"
+msgid "Zoom Out"
+msgstr "Herauszoomen"
+
+msgctxt "#30505"
+msgid "Zoom In "
+msgstr "Einzoomen- "
+
+msgctxt "#30506"
+msgid "Zoom level Normal"
+msgstr "Zoomlevel normal"
+
+msgctxt "#30507"
+msgid "Zoom level 1"
+msgstr "Zoomlevel 1"
+
+msgctxt "#30508"
+msgid "Zoom level 2"
+msgstr "Zoomlevel 2"
+
+msgctxt "#30509"
+msgid "Zoom level 3"
+msgstr "Zoomlevel 3"
+
+msgctxt "#30510"
+msgid "Zoom level 4"
+msgstr "Zoomlevel 4"
+
+msgctxt "#30511"
+msgid "Zoom level 5"
+msgstr "Zoomlevel 5"
+
+msgctxt "#30512"
+msgid "Zoom level 6"
+msgstr "Zoomlevel 6"
+
+msgctxt "#30513"
+msgid "Zoom level 7"
+msgstr "Zoomlevel 7"
+
+msgctxt "#30514"
+msgid "Zoom level 8"
+msgstr "Zoomlevel 8"
+
+msgctxt "#30515"
+msgid "Zoom level 9"
+msgstr "Zoomlevel 9"
+
+# empty strings from id 30516 to 30599
+# Subtitle
+msgctxt "#30600"
+msgid "Show Subtitles"
+msgstr "Untertitel anzeigen"
+
+msgctxt "#30601"
+msgid "Next Subtitle"
+msgstr "Nächster Untertitel"
+
+msgctxt "#30602"
+msgid "Browse Subtitle"
+msgstr "Untertitel durchsuchen"
+
+msgctxt "#30603"
+msgid "Cycle Subtitle"
+msgstr "Untertitel durchwechseln"
+
+msgctxt "#30604"
+msgid "Delay"
+msgstr "Verzögerung"
+
+msgctxt "#30605"
+msgid "Delay Minus"
+msgstr "Verzögerung minus"
+
+msgctxt "#30606"
+msgid "Delay Plus"
+msgstr "Verzögerung plus"
+
+msgctxt "#30607"
+msgid "Align"
+msgstr "Ausrichten"
+
+msgctxt "#30608"
+msgid "Shift Subtitle Up"
+msgstr "Untertitel nach oben verschieben"
+
+msgctxt "#30609"
+msgid "Shift Subtitle Down"
+msgstr "Untertitel nach unten verschieben"
+
+# empty strings from id 30610 to 30699
+# PVR
+msgctxt "#30700"
+msgid "Channel Up"
+msgstr "Kanal nach oben"
+
+msgctxt "#30701"
+msgid "Channel Down"
+msgstr "Kanal nach unten"
+
+msgctxt "#30702"
+msgid "Previous channel group"
+msgstr "Vorherige Kanalgruppe"
+
+msgctxt "#30703"
+msgid "Next channel group"
+msgstr "Nächste Kanalgruppe"
+
+msgctxt "#30704"
+msgid "PVR Play"
+msgstr "PVR wiedergeben"
+
+msgctxt "#30705"
+msgid "PVR Play TV"
+msgstr "TV wiedergeben"
+
+msgctxt "#30706"
+msgid "PVR Play Radio"
+msgstr "Radio wiedergeben"
+
+msgctxt "#30707"
+msgid "Record"
+msgstr "Aufnehmen"
+
+msgctxt "#30708"
+msgid "Toggle Commskip"
+msgstr "Werbungsüberspringen umschalten"
+
+msgctxt "#30709"
+msgid "PVR Show Timer Rule"
+msgstr "Timer-Regel anzeigen"
+
+msgctxt "#30710"
+msgid "Channel Number Separator"
+msgstr "Kanalnummer-Trennung"
+
+# empty strings from id 30711 to 30799
+# Item Actions
+msgctxt "#30800"
+msgid "Queue item"
+msgstr "Eintrag einreihen"
+
+msgctxt "#30801"
+msgid "Delete item"
+msgstr "Eintrag löschen"
+
+msgctxt "#30802"
+msgid "Copy item"
+msgstr "Eintrag kopieren"
+
+msgctxt "#30803"
+msgid "Move item"
+msgstr "Eintrag bewegen"
+
+msgctxt "#30804"
+msgid "Move item up"
+msgstr "Eintrag nach oben bewegen"
+
+msgctxt "#30805"
+msgid "Move item down"
+msgstr "Eintrag nach unten bewegen"
+
+msgctxt "#30806"
+msgid "Rename item"
+msgstr "Eintrag umbenennen"
+
+msgctxt "#30807"
+msgid "Scan item"
+msgstr "Eintrag durchsuchen"
+
+msgctxt "#30808"
+msgid "Toggle Watched"
+msgstr "Gesehen umschalten"
+
+msgctxt "#30809"
+msgid "Increase Rating"
+msgstr "Bewertung erhöhen"
+
+msgctxt "#30810"
+msgid "Decrease Rating"
+msgstr "Bewertung verringern"
+
+msgctxt "#30811"
+msgid "Set Rating"
+msgstr "Bewertung festlegen"
+
+# empty strings from id 30812 to 30899
+# System
+msgctxt "#30900"
+msgid "Toggle Fullscreen"
+msgstr "Vollbild umschalten"
+
+msgctxt "#30901"
+msgid "Minimise"
+msgstr "Minimieren"
+
+msgctxt "#30902"
+msgid "Shutdown"
+msgstr "Ausschalten"
+
+msgctxt "#30903"
+msgid "Reboot"
+msgstr "Neustart"
+
+msgctxt "#30904"
+msgid "Hibernate"
+msgstr "Ruhezustand"
+
+msgctxt "#30905"
+msgid "Suspend"
+msgstr "Bereitschaft"
+
+msgctxt "#30906"
+msgid "Restart Kodi"
+msgstr "Kodi neustarten"
+
+msgctxt "#30907"
+msgid "Log off"
+msgstr "Abmelden"
+
+msgctxt "#30908"
+msgid "Quit Kodi"
+msgstr "Kodi beenden"
+
+msgctxt "#30909"
+msgid "Reset Settings"
+msgstr "Einstellungen zurücksetzen"
+
+msgctxt "#30910"
+msgid "Change Settings Level"
+msgstr "Einstellungsstufe ändern"
+
+msgctxt "#30911"
+msgid "Toggle Font"
+msgstr "Schriftart umschalten"
+
+# empty strings from id 30912 to 30999
+# Virtual Keyboard
+msgctxt "#31000"
+msgid "Enter"
+msgstr "Eingabe"
+
+msgctxt "#31001"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#31002"
+msgid "Symbols"
+msgstr "Symbole"
+
+msgctxt "#31003"
+msgid "Backspace"
+msgstr "Rücktaste"
+
+msgctxt "#31004"
+msgid "0"
+msgstr "0"
+
+msgctxt "#31005"
+msgid "1"
+msgstr "1"
+
+msgctxt "#31006"
+msgid "2"
+msgstr "2"
+
+msgctxt "#31007"
+msgid "3"
+msgstr "3"
+
+msgctxt "#31008"
+msgid "4"
+msgstr "4"
+
+msgctxt "#31009"
+msgid "5"
+msgstr "5"
+
+msgctxt "#31010"
+msgid "6"
+msgstr "6"
+
+msgctxt "#31011"
+msgid "7"
+msgstr "7"
+
+msgctxt "#31012"
+msgid "8"
+msgstr "8"
+
+msgctxt "#31013"
+msgid "9"
+msgstr "9"
+
+msgctxt "#31014"
+msgid "Teletext Red"
+msgstr "Teletext Rot"
+
+msgctxt "#31015"
+msgid "Teletext Green"
+msgstr "Teletext Grün"
+
+msgctxt "#31016"
+msgid "Teletext Yellow"
+msgstr "Teletext Gelb"
+
+msgctxt "#31017"
+msgid "Teletext Blue"
+msgstr "Teletext Blau"
+
+# empty strings from id 31018 to 31099
+# Other
+msgctxt "#31100"
+msgid "Update Video Library"
+msgstr "Videobibliothek aktualisieren"
+
+msgctxt "#31101"
+msgid "Update Music Library"
+msgstr "Musikbibliothek aktualisieren"
+
+msgctxt "#31102"
+msgid "Clean Video Library"
+msgstr "Videobibliothek bereinigen"
+
+msgctxt "#31103"
+msgid "Clean Music Library"
+msgstr "Musikbibliothek bereinigen"
+
+msgctxt "#31104"
+msgid "Player Process Info"
+msgstr "Player-Information"
+
+msgctxt "#31105"
+msgid "Player debug"
+msgstr "Player-Debug"
+
+msgctxt "#31106"
+msgid "Take screenshot"
+msgstr "Bildschirmfoto aufnehmen"
+
+msgctxt "#31107"
+msgid "Reload Keymaps"
+msgstr "Tastenzuordnungen neuladen"
+
+msgctxt "#31108"
+msgid "Increase PAR"
+msgstr "PAR erhöhen"
+
+msgctxt "#31109"
+msgid "Decrease PAR"
+msgstr "PAR verringern"
+
+msgctxt "#31110"
+msgid "Change resolution"
+msgstr "Auflösung ändern"
+
+msgctxt "#31111"
+msgid "Next calibration"
+msgstr "Nächste Kalibrierung"
+
+msgctxt "#31112"
+msgid "Reset calibration"
+msgstr "Kalibrierung zurücksetzen"
+
+msgctxt "#31113"
+msgid "Show current visualisation preset"
+msgstr "Aktuelle Visualisierungsvoreinstellung anzeigen"
+
+msgctxt "#31114"
+msgid "Show visualisation preset list"
+msgstr "Liste der Visualisierungsvoreinstellungen anzeigen"
+
+msgctxt "#31115"
+msgid "Next visualisation preset"
+msgstr "Nächste Visualisierungsvoreinstellung"
+
+msgctxt "#31116"
+msgid "Previous visualisation preset"
+msgstr "Vorherige Visualisierungsvoreinstellung"
+
+msgctxt "#31117"
+msgid "Lock current visualisation preset"
+msgstr "Aktuelle Visualisierungsvoreinstellung sperren"
+
+msgctxt "#31118"
+msgid "Switch to a new random preset"
+msgstr "Zu einer neuen zufälligen Voreinstellung wechseln"
+
+# empty strings from id 31119 to 31199
+# Activate Window
+msgctxt "#31200"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#31201"
+msgid "Player Settings"
+msgstr "Playereinstellungen"
+
+msgctxt "#31202"
+msgid "Programs Settings"
+msgstr "Programmeinstellungen"
+
+msgctxt "#31203"
+msgid "Information Provider Settings"
+msgstr "Informationsanbieter-Einstellungen"
+
+msgctxt "#31204"
+msgid "Interface Settings"
+msgstr "Oberflächeneinstellungen"
+
+msgctxt "#31205"
+msgid "System Settings"
+msgstr "Systemeinstellungen"
+
+msgctxt "#31206"
+msgid "Media Settings"
+msgstr "Medieneinstellungen"
+
+msgctxt "#31207"
+msgid "Service Settings"
+msgstr "Diensteinstellungen"
+
+msgctxt "#31208"
+msgid "Appearance Settings"
+msgstr "Darstellungseinstellungen"
+
+msgctxt "#31209"
+msgid "Peripherals Settings"
+msgstr "Peripheriegeräte-Einstellungen"
+
+msgctxt "#31210"
+msgid "Library Export Settings"
+msgstr "Bibliotheksexport-Einstellungen"
+
+msgctxt "#31211"
+msgid "PVR Settings"
+msgstr "PVR-Einstellungen"
+
+msgctxt "#31212"
+msgid "PVR Recording Settings"
+msgstr "PVR-Aufnahme-Einstellungen"
+
+msgctxt "#31213"
+msgid "Game Settings"
+msgstr "Spieleinstellungen"
+
+msgctxt "#31214"
+msgid "Advanced Game Settings"
+msgstr "Erweiterte Spieleinstellungen"
+
+msgctxt "#31215"
+msgid "Game Controllers"
+msgstr "Spiel-Controller"
+
+msgctxt "#31216"
+msgid "Game Video Filters"
+msgstr "Spiel-Videofilter"
+
+msgctxt "#31217"
+msgid "Game Video Rotation"
+msgstr "Spiel-Videodrehung"
+
+msgctxt "#31218"
+msgid "Game View Mode"
+msgstr "Spiel-Ansichtsmodus"
+
+msgctxt "#31219"
+msgid "Skin Settings"
+msgstr "Skineinstellungen"
+
+msgctxt "#31220"
+msgid "Addon Browser"
+msgstr "Addonbrowser"
+
+msgctxt "#31221"
+msgid "Addon Settings"
+msgstr "Addoneinstellungen"
+
+msgctxt "#31222"
+msgid "Profile Settings"
+msgstr "Profileinstellungen"
+
+msgctxt "#31223"
+msgid "Lock Settings"
+msgstr "Sperreinstellungen"
+
+msgctxt "#31224"
+msgid "Content Settings"
+msgstr "Inhaltseinstellungen"
+
+msgctxt "#31225"
+msgid "Profiles"
+msgstr "Profile"
+
+msgctxt "#31226"
+msgid "System info"
+msgstr "Systeminformation"
+
+msgctxt "#31227"
+msgid "Test Pattern"
+msgstr "Testmuster"
+
+msgctxt "#31228"
+msgid "Screen Calibration"
+msgstr "Bildschirmkalibrierung"
+
+msgctxt "#31229"
+msgid "Login Screen"
+msgstr "Anmeldebildschirm"
+
+msgctxt "#31230"
+msgid "File Browser"
+msgstr "Dateibrowser"
+
+msgctxt "#31231"
+msgid "Network Setup"
+msgstr "Netzwerkeinrichtung"
+
+msgctxt "#31232"
+msgid "Access Points"
+msgstr "Zugangspunkte"
+
+msgctxt "#31233"
+msgid "Mediasource Dialog"
+msgstr "Medienquellen-Dialog"
+
+msgctxt "#31234"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "#31235"
+msgid "Favourites"
+msgstr "Favoriten"
+
+msgctxt "#31236"
+msgid "Context Menu"
+msgstr "Kontextmenü"
+
+msgctxt "#31237"
+msgid "Media filter"
+msgstr "Medienfilter"
+
+msgctxt "#31238"
+msgid "Visualisation Preset List"
+msgstr "Liste der Visualisierungsvoreinstellungen"
+
+msgctxt "#31239"
+msgid "Smart Playlist Editor"
+msgstr "Intelligente Wiedergabelisten-Editor"
+
+msgctxt "#31240"
+msgid "Smart Playlist Rule"
+msgstr "Intelligente Wiedergabelisten-Regel"
+
+msgctxt "#31241"
+msgid "Shutdown Menu"
+msgstr "Ausschaltmenü"
+
+msgctxt "#31242"
+msgid "Fullscreen Info"
+msgstr "Vollbildinformation"
+
+msgctxt "#31243"
+msgid "Subtitle Search"
+msgstr "Untertitelsuche"
+
+msgctxt "#31244"
+msgid "Weather"
+msgstr "Wetter"
+
+msgctxt "#31245"
+msgid "Screensaver"
+msgstr "Bildschirmschoner"
+
+msgctxt "#31246"
+msgid "Picture Info"
+msgstr "Bildinformation"
+
+msgctxt "#31247"
+msgid "Addon Info"
+msgstr "Addoninformation"
+
+# empty string 31248
+msgctxt "#31249"
+msgid "Music Playlist"
+msgstr "Musikwiedergabeliste"
+
+msgctxt "#31250"
+msgid "Music Playlist Editor"
+msgstr "Musikwiedergabelisteneditor"
+
+msgctxt "#31251"
+msgid "Music Info"
+msgstr "Musikinformation"
+
+msgctxt "#31252"
+msgid "Song Info"
+msgstr "Titelinformation"
+
+msgctxt "#31253"
+msgid "Movie Info"
+msgstr "Filminformation"
+
+msgctxt "#31254"
+msgid "Player Process Info"
+msgstr "Player-Information"
+
+msgctxt "#31255"
+msgid "Video Menu"
+msgstr "Videomenü"
+
+msgctxt "#31256"
+msgid "Video OSD"
+msgstr "Video-OSD"
+
+msgctxt "#31257"
+msgid "Colour Management Settings"
+msgstr "Farbanpassungseinstellungen"
+
+msgctxt "#31258"
+msgid "Subtitle Settings"
+msgstr "Untertiteleinstellungen"
+
+msgctxt "#31259"
+msgid "Video Time Seek"
+msgstr "Video-Zeitsuche"
+
+msgctxt "#31260"
+msgid "Video Bookmarks"
+msgstr "Video-Lesezeichen"
+
+msgctxt "#31261"
+msgid "Video Playlist"
+msgstr "Videowiedergabeliste"
+
+msgctxt "#31262"
+msgid "PVR Guide Info"
+msgstr "PVR-Programm-Guide-Information"
+
+msgctxt "#31263"
+msgid "PVR Recording Info"
+msgstr "PVR-Aufnahme-Information"
+
+msgctxt "#31264"
+msgid "PVR Timer Setting"
+msgstr "PVR-Timer-Einstellung"
+
+msgctxt "#31265"
+msgid "PVR Group Manager"
+msgstr "PVR-Kanalgruppen-Manager"
+
+msgctxt "#31266"
+msgid "PVR Channel Manager"
+msgstr "PVR-Kanal-Manager"
+
+msgctxt "#31267"
+msgid "PVR Guide Search"
+msgstr "PVR-Programm-Guide-Suche"
+
+msgctxt "#31268"
+msgid "PVR Channel Scan"
+msgstr "PVR-Kanalsuche"
+
+msgctxt "#31269"
+msgid "PVR Update Progress"
+msgstr "PVR-Aktualisierungsfortschritt"
+
+msgctxt "#31270"
+msgid "PVR OSD Channels"
+msgstr "PVR-OSD-Kanäle"
+
+msgctxt "#31271"
+msgid "PVR OSD Guide"
+msgstr "PVR-OSD-Programm-Guide"
+
+msgctxt "#31272"
+msgid "TV Channels"
+msgstr "TV-Kanäle"
+
+msgctxt "#31273"
+msgid "TV Recordings"
+msgstr "TV-Aufnahmen"
+
+msgctxt "#31274"
+msgid "TV Guide"
+msgstr "TV-Programm-Guide"
+
+msgctxt "#31275"
+msgid "TV Timers"
+msgstr "TV-Timer"
+
+msgctxt "#31276"
+msgid "TV Search"
+msgstr "TV-Suche"
+
+msgctxt "#31277"
+msgid "Radio Channels"
+msgstr "Radio-Kanäle"
+
+msgctxt "#31278"
+msgid "Radio Recordings"
+msgstr "Radio-Aufnahmen"
+
+msgctxt "#31279"
+msgid "Radio Guide"
+msgstr "Radio-Programm-Guide"
+
+msgctxt "#31280"
+msgid "Radio Timers"
+msgstr "Radio-Timer"
+
+msgctxt "#31281"
+msgid "Radio Timer Rules"
+msgstr "Radio-Timer-Regeln"
+
+msgctxt "#31282"
+msgid "Radio Search"
+msgstr "Radio-Suche"
+
+msgctxt "#31283"
+msgid "RDS Info"
+msgstr "RDS-Information"
+
+msgctxt "#31284"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#31285"
+msgid "Movie Titles"
+msgstr "Film-Titel"
+
+msgctxt "#31286"
+msgid "TV Shows"
+msgstr "Serien"
+
+msgctxt "#31287"
+msgid "TV Show Titles"
+msgstr "Serientitel"
+
+msgctxt "#31288"
+msgid "Music Videos"
+msgstr "Musikvideos"
+
+msgctxt "#31289"
+msgid "Recently Added Movies"
+msgstr "Kürzlich hinzugefügte Filme"
+
+msgctxt "#31290"
+msgid "Recently Added Episodes"
+msgstr "Kürzlich hinzugefügte Episoden"
+
+msgctxt "#31291"
+msgid "Recently Added Music Videos"
+msgstr "Kürzlich hinzugefügte Musikvideos"
+
+msgctxt "#31292"
+msgid "Games"
+msgstr "Spiele"
+
+msgctxt "#31293"
+msgid "Games OSD"
+msgstr "Spiele-OSD"
+
+msgctxt "#31294"
+msgid "Game Pad Input"
+msgstr "Gamepad-Eingabe"
+
+msgctxt "#31295"
+msgid "Game Volume"
+msgstr "Spiele-Lautstärke"

@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.keymap" name="Keymap Editor" version="1.1.3+matrix.1" provider-name="takoi,pkscout">
+<addon id="script.keymap" name="Keymap Editor" version="1.1.4" provider-name="takoi,pkscout">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
-		<import addon="script.module.kodi-six" version="0.1.3.1" />
 		<import addon="script.module.defusedxml" version="0.6.0+matrix.1" />
 	</requires>
 	<extension point="xbmc.python.script" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
-		<news>
-v1.1.3
-- Added support for v19 Matrix
-- Fix so script only backups user defined keymaps if trying to save new keymap file
-- Moved all text into language file for easier internationalization
+		<news>v1.1.4
+- fixed depreciacted translatepath call
+- removed dependancy on kodi-six
+- updated language files
 		</news>
 		<assets>
         	<icon>icon.png</icon>
         </assets>
-		<summary lang="en_GB">An editor for keymap files</summary>
-		<description lang="en_GB">Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak.</description>
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=168767</forum>
 		<source>https://github.com/tamland/xbmc-keymap-editor</source>
+		<summary lang="de_DE">Ein Editor für Keymap-Dateien</summary>
+		<summary lang="en_GB">An editor for keymap files</summary>
+		<summary lang="hu_HU">Távvezérlő fájlok kezelője</summary>
+		<summary lang="ko_KR">키맵 파일용 편집기</summary>
+		<summary lang="ru_RU">Редактор файлов раскладки клавиатуры</summary>
+		<summary lang="zh_CN">一个键映射文件的编辑器</summary>
+		<description lang="de_DE">Keymap Editor ist eine grafische Oberfläche zum Konfigurieren von Tastenzuordnungen für Fernbedienungen, Tastaturen und anderen von Kodi unterstützten Eingabegeräten. Hinweis: Existierende benutzerdefinierte Tastenzuordnungen werden zu .bak umbenannt.</description>
+		<description lang="en_GB">Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak.</description>
+		<description lang="hu_HU">A Keymap Editor egy grafikus felhasználói felület a távvezérlők, a billentyűzet és a Kodi által támogatott egyéb bemenetek konfigurálásához. Megjegyzés: a meglévő, felhasználó által definiált keymap fájlok át lesznek nevezve .bak -ra.</description>
+		<description lang="ko_KR">키맵 편집기는 Kodi에서 지원하는 리모컨, 키보드 및 기타 입력에 대한 매핑을 구성하기 위한 GUI입니다. 참고: 기존 사용자 정의 키 매핑은 .bak으로 이름이 바뀝니다.</description>
+		<description lang="ru_RU">Keymap Editor - это графический интерфейс для настройки привязки клавиш пультов, клавиатуры и других устройств ввода, поддерживаемых Kodi. Примечание: существующие пользовательские привязки клавиш будут переименованы в .bak.</description>
+		<description lang="zh_CN">键映射编辑器是一个用于配置 Kodi 支持的遥控器、键盘和其他输入设备的功能映射的图形界面。注意：现有的用户定义键映射将重命名为.bak。</description>
 	</extension>
 </addon>

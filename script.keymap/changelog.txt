@@ -1,0 +1,46 @@
+v.1.1.4
+- fixed depreciacted translatepath call
+- removed dependancy on kodi-six
+- updated language files
+
+v1.1.2
+- Added support for v19 Matrix
+- Updates for better support in v18 Leia
+- Fix so script only backups user defined keymaps if trying to save new keymap file
+- Moved all text into language file for easier internationalization
+
+v1.0.10
+- Added support for v17 Krypton
+
+v1.0.9
+- Fixed error in XML writer causing no keys to work
+
+v1.0.8
+- Added new Helix PVR Window IDs
+- Added ability to remove key mappings
+
+v0.9.7
+- Added UpdateLibrary and CleanLibrary actions
+
+v0.9.6
+- Added more actions new in Gotham
+- Fixed: permission error during save on android
+
+v0.9.5
+- Added reapeat and shuffle actions
+- Added action for opening subtitle search
+- Fixed: script sometimes failing to remove old keymap files on Windows
+
+v0.9.4
+- Fixed: script failing to start when no audio/video add-ons is installed
+
+v0.9.3
+- Added actions for launching Add-ons
+- Added timeout to dialog that abort if no key is pressed
+- "Delete" option changed to load defaults instead of deleting keymap file
+
+v0.9.2
+- Added System.LogOff action
+
+v0.9.1
+- Fixed: script not working on os x due to missing python libraries
