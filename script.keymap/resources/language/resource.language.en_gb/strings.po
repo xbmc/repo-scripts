@@ -14,6 +14,14 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "An editor for keymap files"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgstr ""
+
 # Text Messages
 
 msgctxt "#30000"
@@ -1293,4 +1301,3 @@ msgstr ""
 msgctxt "#31295"
 msgid "Game Volume"
 msgstr ""
-
