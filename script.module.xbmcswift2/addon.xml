@@ -1,4 +1,4 @@
-<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel), enen92" version="19.0.6">
+<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel), enen92" version="19.0.7">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -9,7 +9,7 @@
     <license>GPL-3.0</license>
     <summary lang="en_GB">xbmcswift2 is a small framework to ease development of KODI addons.</summary>
     <description lang="en_GB">xbmcswift2 is a small framework to ease development of KODI addons.</description>
-    <news>Add container.refresh</news>
+    <news>Fixes for python 3.10 - move collections.MutableMapping to collections.abc.MutableMapping</news>
     <assets>
       <icon>icon.png</icon>
     </assets>
