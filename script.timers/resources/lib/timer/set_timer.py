@@ -1,9 +1,10 @@
 import xbmc
 import xbmcgui
-from resources.lib.timer.abstract_set_timer import AbstractSetTimer, CONFIRM_EDIT, DURATION_NO
-from resources.lib.timer.scheduler import (ACTION_START_STOP, ACTION_START,
-                                           TIMER_DAYS_PRESETS, TIMER_OFF,
-                                           TIMERS)
+from resources.lib.timer.abstract_set_timer import (CONFIRM_EDIT, DURATION_NO,
+                                                    AbstractSetTimer)
+from resources.lib.timer.scheduler import TIMERS
+from resources.lib.timer.timer import (ACTION_START, ACTION_START_STOP,
+                                       TIMER_DAYS_PRESETS, TIMER_OFF)
 
 
 class SetTimer(AbstractSetTimer):
@@ -25,7 +26,8 @@ class SetTimer(AbstractSetTimer):
         if selection == -1:
             return None
         elif selection == 0:
-            xbmc.executebuiltin("Addon.OpenSettings(%s)" % self.addon.getAddonInfo("id"))
+            xbmc.executebuiltin("Addon.OpenSettings(%s)" %
+                                self.addon.getAddonInfo("id"))
             return None
         else:
             return selection + 1
@@ -90,7 +92,7 @@ class SetTimer(AbstractSetTimer):
         line4 = "%s: %s" % (self.addon.getLocalizedString(32091),
                             self.addon.getLocalizedString(32120 + int(self.addon.getSetting("timer_%i_fade" % preselection["timer"]))))
 
-        return xbmcgui.Dialog().yesnocustom(self.addon.getLocalizedString(32107) % self.addon.getLocalizedString(32011 + preselection["timer"] - 2),
+        return xbmcgui.Dialog().yesnocustom(self.addon.getLocalizedString(32107) % self.addon.getLocalizedString(32009 + preselection["timer"] - 2),
                                             "\n".join(
                                                 [line1, line2, line3, line4]),
                                             self.addon.getLocalizedString(
@@ -102,4 +104,5 @@ class SetTimer(AbstractSetTimer):
     def post_apply(self, selection, confirm):
 
         if confirm == CONFIRM_EDIT:
-            xbmc.executebuiltin("Addon.OpenSettings(%s)" % self.addon.getAddonInfo("id"))
+            xbmc.executebuiltin("Addon.OpenSettings(%s)" %
+                                self.addon.getAddonInfo("id"))

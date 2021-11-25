@@ -4,7 +4,7 @@ from datetime import datetime
 import xbmc
 import xbmcaddon
 from resources.lib.timer import util
-from resources.lib.timer.scheduler import (ACTION_START_STOP, END_TYPE_DURATION,
+from resources.lib.timer.timer import (ACTION_START_STOP, END_TYPE_DURATION,
                                            END_TYPE_NO, END_TYPE_TIME)
 
 DURATION_NO = util.DEFAULT_TIME
@@ -18,10 +18,12 @@ CONFIRM_EDIT = 2
 class AbstractSetTimer:
 
     addon = None
+    listitem = None
 
     def __init__(self, listitem):
 
         self.addon = xbmcaddon.Addon()
+        self.listitem = listitem
 
         timer = self.ask_timer()
         if timer == None:
@@ -29,6 +31,10 @@ class AbstractSetTimer:
 
         preselection = self._get_timer_preselection(timer, listitem)
         path = preselection["path"]
+
+        ok = self.perform_ahead(preselection)
+        if not ok:
+            return
 
         label = self.ask_label(listitem, preselection)
         if label == None:
@@ -69,6 +75,10 @@ class AbstractSetTimer:
         else:
             self._apply(preselection)
             self.post_apply(preselection, confirm)
+
+    def perform_ahead(self, preselection):
+
+        return True
 
     def ask_label(self, listitem, preselection):
 
@@ -121,6 +131,9 @@ class AbstractSetTimer:
         self.addon.setSetting("timer_%s_end" % timer, selection["endtime"])
         self.addon.setSetting("timer_%s_action" % timer, selection["action"])
         self.addon.setSetting("timer_%s_filename" % timer, selection["path"])
+        if selection["fade"] is not None:
+            self.addon.setSetting("timer_%s_fade" % timer, str(selection["fade"]))
+
         util.activateOnSettingsChangedEvents(self.addon)
 
     def post_apply(self, selection, confirm):
@@ -170,5 +183,6 @@ class AbstractSetTimer:
             "duration": duration,
             "endtime": endTime,
             "action": action,
-            "epg": is_epg
+            "epg": is_epg,
+            "fade" : None
         }

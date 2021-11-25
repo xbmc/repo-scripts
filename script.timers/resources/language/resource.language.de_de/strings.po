@@ -21,53 +21,77 @@ msgctxt "#32001"
 msgid "Restart Kodi in order to activate timer addon"
 msgstr "Neustart erforderlich um Timer Addon neu zu laden"
 
-msgctxt "#32009"
+msgctxt "#32002"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32004"
 msgid "Sleep timer"
 msgstr "Einschlafen"
 
-msgctxt "#32010"
+msgctxt "#32005"
 msgid "Snooze timer"
 msgstr "Schlummern"
 
-msgctxt "#32011"
+msgctxt "#32006"
 msgid "Timer 1"
 msgstr "Timer 1"
 
-msgctxt "#32012"
+msgctxt "#32007"
 msgid "Timer 2"
 msgstr "Timer 2"
 
-msgctxt "#32013"
+msgctxt "#32008"
 msgid "Timer 3"
 msgstr "Timer 3"
 
-msgctxt "#32014"
+msgctxt "#32009"
 msgid "Timer 4"
 msgstr "Timer 4"
 
-msgctxt "#32015"
+msgctxt "#32010"
 msgid "Timer 5"
 msgstr "Timer 5"
 
-msgctxt "#32016"
+msgctxt "#32011"
 msgid "Timer 6"
 msgstr "Timer 6"
 
-msgctxt "#32017"
+msgctxt "#32012"
 msgid "Timer 7"
 msgstr "Timer 7"
 
-msgctxt "#32018"
+msgctxt "#32013"
 msgid "Timer 8"
 msgstr "Timer 8"
 
-msgctxt "#32019"
+msgctxt "#32014"
 msgid "Timer 9"
 msgstr "Timer 9"
 
-msgctxt "#32020"
+msgctxt "#32015"
 msgid "Timer 10"
 msgstr "Timer 10"
+
+msgctxt "#32016"
+msgid "Timer 11"
+msgstr "Timer 11"
+
+msgctxt "#32017"
+msgid "Timer 12"
+msgstr "Timer 12"
+
+msgctxt "#32018"
+msgid "Timer 13"
+msgstr "Timer 13"
+
+msgctxt "#32019"
+msgid "Timer 14"
+msgstr "Timer 14"
+
+msgctxt "#32020"
+msgid "Timer 15"
+msgstr "Timer 15"
 
 msgctxt "#32021"
 msgid "Edit"
@@ -365,6 +389,18 @@ msgctxt "#32114"
 msgid "Select media and set timer via context menu first."
 msgstr "Wähle zuerst Media über Timer Kontext Menü aus!"
 
+msgctxt "#32115"
+msgid "No free timer slots."
+msgstr "Kein freier Timer mehr vorhanden."
+
+msgctxt "#32116"
+msgid "Quick %s"
+msgstr "Quick %s"
+
+msgctxt "#32117"
+msgid "Quick Timer"
+msgstr "Quick Timer"
+
 msgctxt "#32120"
 msgid "off"
 msgstr "aus"
@@ -380,3 +416,111 @@ msgstr "ausblenden"
 msgctxt "#32123"
 msgid "fade out from current"
 msgstr "ausblenden von aktueller Lautstärke"
+
+msgctxt "#32130"
+msgid "Put display only in fullscreen mode to sleep"
+msgstr "Ruhezustand des Bildschirms bei Vollbild"
+
+msgctxt "#32131"
+msgid "acc. system setting"
+msgstr "entspr. Systemeinstellung"
+
+msgctxt "#32132"
+msgid "5 min"
+msgstr "5 min"
+
+msgctxt "#32133"
+msgid "10 min"
+msgstr "10 min"
+
+msgctxt "#32134"
+msgid "15 min"
+msgstr "15 min"
+
+msgctxt "#32135"
+msgid "20 min"
+msgstr "20 min"
+
+msgctxt "#32136"
+msgid "25 min"
+msgstr "25 min"
+
+msgctxt "#32137"
+msgid "30 min"
+msgstr "30 min"
+
+msgctxt "#32138"
+msgid "35 min"
+msgstr "35 min"
+
+msgctxt "#32139"
+msgid "40 min"
+msgstr "40 min"
+
+msgctxt "#32140"
+msgid "45 min"
+msgstr "45 min"
+
+msgctxt "#32141"
+msgid "50 min"
+msgstr "50 min"
+
+msgctxt "#32142"
+msgid "55 min"
+msgstr "55 min"
+
+msgctxt "#32143"
+msgid "60 min"
+msgstr "60 min"
+
+msgctxt "#32144"
+msgid "65 min"
+msgstr "65 min"
+
+msgctxt "#32145"
+msgid "70 min"
+msgstr "70 min"
+
+msgctxt "#32146"
+msgid "75 min"
+msgstr "75 min"
+
+msgctxt "#32147"
+msgid "80 min"
+msgstr "80 min"
+
+msgctxt "#32148"
+msgid "85 min"
+msgstr "85 min"
+
+msgctxt "#32149"
+msgid "90 min"
+msgstr "90 min"
+
+msgctxt "#32150"
+msgid "95 min"
+msgstr "95 min"
+
+msgctxt "#32151"
+msgid "100 min"
+msgstr "100 min"
+
+msgctxt "#32152"
+msgid "105 min"
+msgstr "105 min"
+
+msgctxt "#32153"
+msgid "110 min"
+msgstr "110 min"
+
+msgctxt "#32154"
+msgid "115 min"
+msgstr "115 min"
+
+msgctxt "#32155"
+msgid "120 min"
+msgstr "120 min"
+
+msgctxt "#32156"
+msgid "Mondays to Saturdays"
+msgstr "Montags bis Samstags"

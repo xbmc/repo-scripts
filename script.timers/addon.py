@@ -29,8 +29,12 @@ if __name__ == "__main__":
         import ctypes
         ctypes.windll.kernel32.SetThreadExecutionState(0x80000002)
 
-    scheduler.start()
+    try:
+        scheduler.start()
 
-    if xbmc.getCondVisibility("system.platform.windows") and "true" == addon.getSetting("windows_unlock"):
-        import ctypes
-        ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
+    finally:
+        scheduler.reset_powermanagement_displaysoff()
+
+        if xbmc.getCondVisibility("system.platform.windows") and "true" == addon.getSetting("windows_unlock"):
+            import ctypes
+            ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
