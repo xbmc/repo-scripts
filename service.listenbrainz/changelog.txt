@@ -1,0 +1,22 @@
+v0.2.1
+- Backport a couple of bugfixes from v0.3.0
+
+v0.2.0
+- Added validation for ListenBrainz server and token
+- Fixed fatal error on malformed queue files
+- Fixed artist names for music video listens
+
+v0.1.0
+- Fixed getting disc number.
+- Various code enhancements and QoL for development
+
+v0.0.3
+- Added Lithuanian translation.
+- Fixed getting track number.
+
+v0.0.2
+- Fixed wrong dependency version.
+
+v0.0.1
+- Initial release, based on official Last.FM add‐on.
+  Supports basic listen and “playing now” submission.

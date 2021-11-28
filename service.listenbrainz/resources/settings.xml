@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30000">
+		<setting id="listenbrainzsubmitsongs" type="bool" label="30001" default="true"/>
+		<setting id="listenbrainzsubmitvideos" type="bool" label="30002" default="false"/>
+		<setting id="listenbrainzsubmitradio" type="bool" label="30003" default="false"/>
+		<setting id="listenbrainzuser" type="text" label="30004" default=""/>
+		<setting id="listenbrainztoken" type="text" label="30005" default="" option="hidden"/>
+		<setting id="listenbrainzserver" type="text" label="30006" default="https://api.listenbrainz.org/"/>
+	</category>
+</settings>
