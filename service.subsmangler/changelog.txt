@@ -1,6 +1,9 @@
+v2.0.1 (2021-11-08)
+- fix encoding crashes
+- improve matching multiline texts
 v2.0.0 (2021-03-01)
 - support for Kodi 19 Matrix (Python 3 only)
-- the plugin is no longer fully self contained and it depends on the external pysubs2 library
+- the plugin is no longer fully self-contained and it depends on the external pysubs2 library
 Known issues:
 - so far the plugin does not work well with streaming services
 - Kodi's subtitle settings (Font size, Font style, Font color, Font opacity, Background color, Background opacity) are synchronized from Kodi UI to the plugin only at Kodi start
