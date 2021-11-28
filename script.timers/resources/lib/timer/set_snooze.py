@@ -3,9 +3,9 @@ import xbmcgui
 from resources.lib.timer import util
 from resources.lib.timer.abstract_set_timer import (DURATION_NO,
                                                     AbstractSetTimer)
-from resources.lib.timer.scheduler import (ACTION_START, ACTION_START_AT_END,
-                                           END_TYPE_DURATION, END_TYPE_TIME,
-                                           SNOOZE_TIMER)
+from resources.lib.timer.timer import (ACTION_START, ACTION_START_AT_END,
+                                       END_TYPE_DURATION, END_TYPE_TIME,
+                                       SNOOZE_TIMER)
 
 
 class SetSnooze(AbstractSetTimer):
@@ -16,7 +16,7 @@ class SetSnooze(AbstractSetTimer):
 
     def ask_label(self, listitem, preselection):
 
-        return self.addon.getLocalizedString(32010)
+        return self.addon.getLocalizedString(32005)
 
     def ask_duration(self, listitem, preselection):
 

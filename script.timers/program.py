@@ -18,7 +18,7 @@ def play(timer):
             addon_dir, "resources", "assets", "icon_sleep.png")
 
         xbmcgui.Dialog().notification(addon.getLocalizedString(
-            32027), addon.getLocalizedString(32110) % addon.getLocalizedString(32009 + timer),
+            32027), addon.getLocalizedString(32110) % addon.getLocalizedString(32004 + timer),
             icon=icon_file)
 
         xbmc.Player().play(path)

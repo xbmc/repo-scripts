@@ -21,53 +21,77 @@ msgctxt "#32001"
 msgid "Restart Kodi in order to reload timer addon"
 msgstr ""
 
-msgctxt "#32009"
-msgid "Sleep timer"
+msgctxt "#32002"
+msgid "Extras"
 msgstr ""
+
+msgctxt "#32004"
+msgid "Sleep timer"
+msgstr "Einschlafen"
+
+msgctxt "#32005"
+msgid "Snooze timer"
+msgstr "Schlummern"
+
+msgctxt "#32006"
+msgid "Timer 1"
+msgstr "Timer 1"
+
+msgctxt "#32007"
+msgid "Timer 2"
+msgstr "Timer 2"
+
+msgctxt "#32008"
+msgid "Timer 3"
+msgstr "Timer 3"
+
+msgctxt "#32009"
+msgid "Timer 4"
+msgstr "Timer 4"
 
 msgctxt "#32010"
-msgid "Snooze timer"
-msgstr ""
+msgid "Timer 5"
+msgstr "Timer 5"
 
 msgctxt "#32011"
-msgid "Timer 1"
-msgstr ""
+msgid "Timer 6"
+msgstr "Timer 6"
 
 msgctxt "#32012"
-msgid "Timer 2"
-msgstr ""
+msgid "Timer 7"
+msgstr "Timer 7"
 
 msgctxt "#32013"
-msgid "Timer 3"
-msgstr ""
+msgid "Timer 8"
+msgstr "Timer 8"
 
 msgctxt "#32014"
-msgid "Timer 4"
-msgstr ""
+msgid "Timer 9"
+msgstr "Timer 9"
 
 msgctxt "#32015"
-msgid "Timer 5"
-msgstr ""
+msgid "Timer 10"
+msgstr "Timer 10"
 
 msgctxt "#32016"
-msgid "Timer 6"
-msgstr ""
+msgid "Timer 11"
+msgstr "Timer 11"
 
 msgctxt "#32017"
-msgid "Timer 7"
-msgstr ""
+msgid "Timer 12"
+msgstr "Timer 12"
 
 msgctxt "#32018"
-msgid "Timer 8"
-msgstr ""
+msgid "Timer 13"
+msgstr "Timer 13"
 
 msgctxt "#32019"
-msgid "Timer 9"
-msgstr ""
+msgid "Timer 14"
+msgstr "Timer 14"
 
 msgctxt "#32020"
-msgid "Timer 10"
-msgstr ""
+msgid "Timer 15"
+msgstr "Timer 15"
 
 msgctxt "#32021"
 msgid "Edit"
@@ -369,6 +393,18 @@ msgctxt "#32114"
 msgid "Select media and set timer via context menu first."
 msgstr ""
 
+msgctxt "#32115"
+msgid "No free timer slots."
+msgstr ""
+
+msgctxt "#32116"
+msgid "Quick %s"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Quick Timer"
+msgstr ""
+
 msgctxt "#32120"
 msgid "off"
 msgstr ""
@@ -383,4 +419,112 @@ msgstr ""
 
 msgctxt "#32123"
 msgid "fade out from current"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Put display only in fullscreen mode to sleep"
+msgstr ""
+
+msgctxt "#32131"
+msgid "acc. system setting"
+msgstr ""
+
+msgctxt "#32132"
+msgid "5 min"
+msgstr ""
+
+msgctxt "#32133"
+msgid "10 min"
+msgstr ""
+
+msgctxt "#32134"
+msgid "15 min"
+msgstr ""
+
+msgctxt "#32135"
+msgid "20 min"
+msgstr ""
+
+msgctxt "#32136"
+msgid "25 min"
+msgstr ""
+
+msgctxt "#32137"
+msgid "30 min"
+msgstr ""
+
+msgctxt "#32138"
+msgid "35 min"
+msgstr ""
+
+msgctxt "#32139"
+msgid "40 min"
+msgstr ""
+
+msgctxt "#32140"
+msgid "45 min"
+msgstr ""
+
+msgctxt "#32141"
+msgid "50 min"
+msgstr ""
+
+msgctxt "#32142"
+msgid "55 min"
+msgstr ""
+
+msgctxt "#32143"
+msgid "60 min"
+msgstr ""
+
+msgctxt "#32144"
+msgid "65 min"
+msgstr ""
+
+msgctxt "#32145"
+msgid "70 min"
+msgstr ""
+
+msgctxt "#32146"
+msgid "75 min"
+msgstr ""
+
+msgctxt "#32147"
+msgid "80 min"
+msgstr ""
+
+msgctxt "#32148"
+msgid "85 min"
+msgstr ""
+
+msgctxt "#32149"
+msgid "90 min"
+msgstr ""
+
+msgctxt "#32150"
+msgid "95 min"
+msgstr ""
+
+msgctxt "#32151"
+msgid "100 min"
+msgstr ""
+
+msgctxt "#32152"
+msgid "105 min"
+msgstr ""
+
+msgctxt "#32153"
+msgid "110 min"
+msgstr ""
+
+msgctxt "#32154"
+msgid "115 min"
+msgstr ""
+
+msgctxt "#32155"
+msgid "120 min"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Mondays to Saturdays"
 msgstr ""

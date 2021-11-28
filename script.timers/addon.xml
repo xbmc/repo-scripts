@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="2.0.3" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="2.1.0" provider-name="Heckie">
 	<requires>
-		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
 	<extension point="xbmc.service" library="addon.py" />
-	<extension point="xbmc.python.script" library="program.py"/>
+	<extension point="xbmc.python.script" library="program.py" />
 	<extension point="kodi.context.item">
 		<menu id="kodi.core.main">
 			<item library="context_setsleep.py">
-				<label>32009</label>
+				<label>32004</label>
 				<visible>true</visible>
 			</item>
 			<item library="context_setsnooze.py">
-				<label>32010</label>
+				<label>32005</label>
 				<visible>Window.IsMedia+!ListItem.IsFolder</visible>
 			</item>
 			<item library="context_settimer.py">
 				<label>32000</label>
 				<visible>Window.IsMedia+!ListItem.IsFolder</visible>
+			</item>
+			<item library="context_setquickepgtimer.py">
+				<label>32117</label>
+				<visible>Window.IsVisible(tvguide)|Window.IsVisible(radioguide)</visible>
 			</item>
 		</menu>
 	</extension>
@@ -25,10 +29,11 @@
 		<summary lang="en_GB">Timers</summary>
 		<summary lang="de_DE">Timers</summary>
 		<description lang="en_GB">A powerful timer addon with the following features
-* 10 timer slots. All of them can be quickly set up by using context menu
+* 15 timer slots. All of them can be quickly set up by using context menu
 * 2 additional slots for sleep and doze timers with single-click-setup 
 * Timers can play any ressource that it available in Kodi, e.g. music, video files, TV/radio programs, ressources from 3rd party plugins, e.g. Zattoo channels. 
 * Timers can be set from TV / Radio EPG
+* One-click-setup from epg (Quick Timer)
 * Different schedule modes: once, everyday, Mon-Fri, Fri-Sat, Sat-Sun, Sun-Thu, Mon-Thu, specific weekday and many more
 * Date change is supported, e.g. from 23:30 (p.m.) until 1:30 (a.m.) 
 * Two end modes, i.e. duration or specific time
@@ -36,12 +41,14 @@
 * Linear fading in timer period: fade-in, fade-out, no fading. Min and max volume can be set for each timer
 * Custom label for timer
 * After KODI startup timers, that are in period, start retroactivly altought KODI was not running at start time. Fading volume is calculated correctly.
+* Feature in order to prevent that display is turned off if Kodi idles but is not in fullscreen mode
 * MS Windows only: Feature in order to prevent that Windows displays lock screen if Kodi idles
 		</description>
 		<description lang="de_DE">Timer Addon mit folgenden Funktionen
-* 10 Timer, die eingestellt werden können. Alle Timer können über das Kontextmenü geöffnet werden
+* 15 Timer, die eingestellt werden können. Alle Timer können über das Kontextmenü geöffnet werden
 * 2 zusätzliche Timer für "Einschlaf"- und "Schlummer"-Timer mit nur einem Klick 
 * Timer können alle Medien starten, die in Kodi sind wie Musik, Video, TV/Radio programme, andere Addons, z.B. Zattoo. 
+* Einstellung mit nur einem Klick aus EPG (Quick Timer)
 * Verschiedene Zeitplanungen möglich: einmalig, pro Wochentag, Mo-Fr, Fr-Sa, Sa-So, So-Do, Mo-Do u.v.m.
 * Tageswechsel wird unterstützt, z.B. Timer von 23:30 bis 1:30 am nächsten Tag
 * Dauer kann über Zeitraum oder Zeitpunkt eingestellt werden
@@ -49,6 +56,7 @@
 * Lautstärke während der Laufzeit ein-/ausblenden. Einstellung pro Timer mit max. und minimaler Lautstärke
 * Beschriftung der Timer
 * Nachdem Kodi startet, werden aktive Timer ebenfalls gestartet.
+* Feature um Kodi darin zu hindern den Bildschirm abzuschalten, wenn Kodi nicht im Vollbildmodus ist
 * MS Windows: Feature um Windows daran zu hindern in den Sperrbildschirm zu schalten, während Kodi keine Medien abspielt 
 		</description>
 		<language>en_GB</language>
@@ -58,6 +66,15 @@
 		<website>https://github.com/Heckie75/kodi-addon-timers</website>
 		<source>https://github.com/Heckie75/kodi-addon-timers</source>
 		<news>
+v2.1.0 (2021-11-20):
+- Improved start and stop action in case that multiple timers are running in parallel, see also https://github.com/Heckie75/kodi-addon-timers/issues/5 
+- One-click-setup from epg (Quick Timer)
+- Improved procedure of update state after one-time-timers have run out or settings have been changed
+- Added 5 more timer slots
+- Added feature in order to prevent that display is turned off if Kodi idles but is not in fullscreen mode
+- Migrated to new XML settings format
+- Major refactoring, better structured code
+
 v2.0.3 (2021-10-31)
 - Fixed issue related to reset to default settings after one-time timers has finished
 - Fixed issue that wrong pvr channel was taken from epg if some channels are deactivated in PVR
