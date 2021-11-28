@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: ListenBrainz
+# Addon id: service.listenbrainz
+# Addon Provider: Freso
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frederik “Freso” S. Olesen\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allmän"
+
+msgctxt "#30001"
+msgid "Submit tracks to ListenBrainz"
+msgstr "Skicka låtar till ListenBrainz"
+
+msgctxt "#30002"
+msgid "Submit music videos to ListenBrainz"
+msgstr "Skicka musikvideor till ListenBrainz"
+
+msgctxt "#30003"
+msgid "Submit streaming radio to ListenBrainz"
+msgstr "Skicka strömmande radio till ListenBrainz"
+
+msgctxt "#30004"
+msgid "ListenBrainz username"
+msgstr "ListenBrainz‐användarnamn"
+
+msgctxt "#30005"
+msgid "ListenBrainz token"
+msgstr "ListenBrainz‐symbol (token)"
+
+msgctxt "#30006"
+msgid "ListenBrainz server"
+msgstr "ListenBrainz‐server"
+
+msgctxt "#32011"
+msgid "ListenBrainz"
+msgstr "ListenBrainz"
+
+msgctxt "#32027"
+msgid "No token provided"
+msgstr "Ingen symbol/token angivet"
+
+msgctxt "#32028"
+msgid "Failed to validate token"
+msgstr ""
