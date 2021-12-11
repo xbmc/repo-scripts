@@ -5,129 +5,129 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-22 14:29+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
-"Language-Team: Esperanto <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/eo/>\n"
-"Language: eo\n"
+"PO-Revision-Date: 2021-08-03 14:29+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew (Israel) <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/he_il/>\n"
+"Language: he_il\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Weblate 4.7.2\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
-msgstr ""
+msgstr "שומר מסך אשר יציג מצגת של תמונות"
 
 msgctxt "Addon Description"
 msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
-msgstr ""
+msgstr "השומר מסך יציג לך מצגת של תמונות אשר עושה שימוש במעברים שונים. יש אפשרות להגדיר את תמונות הפאנארט של ספריות המוזיקה והוידאו, או תיקיית תמונות אישית"
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr ""
+msgstr "מקור תמונות המצגת"
 
 msgctxt "#30001"
 msgid "Folder"
-msgstr ""
+msgstr "תיקיה"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr ""
+msgstr "וידאו פאנארט"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr ""
+msgstr "מוזיקה פאנארט"
 
 msgctxt "#30004"
 msgid "Image Folder"
-msgstr ""
+msgstr "תיקיית תמונות"
 
 msgctxt "#30005"
 msgid "Dim level"
-msgstr ""
+msgstr "רמת עמעום"
 
 msgctxt "#30006"
 msgid "Effect"
-msgstr ""
+msgstr "אפקט"
 
 msgctxt "#30007"
 msgid "Slide"
-msgstr ""
+msgstr "מצגת"
 
 msgctxt "#30008"
 msgid "Crossfade"
-msgstr ""
+msgstr "התמזגות"
 
 msgctxt "#30009"
 msgid "Pan and zoom"
-msgstr ""
+msgstr "תקריב וחיתוך מסך"
 
 msgctxt "#30010"
 msgid "Amount of seconds to display each image"
-msgstr ""
+msgstr "כמות השניות כדי להציג כל תמונה"
 
 msgctxt "#30011"
 msgid "Scale images fullscreen"
-msgstr ""
+msgstr "הגדל תמונות למסף מלא"
 
 msgctxt "#30012"
 msgid "Display image name"
-msgstr ""
+msgstr "הצג שם תמונה"
 
 msgctxt "#30013"
 msgid "Disabled"
-msgstr "Malŝaltita"
+msgstr "מנוטרל"
 
 msgctxt "#30014"
 msgid "Use filename"
-msgstr ""
+msgstr "השתמש בשם קובץ"
 
 msgctxt "#30015"
 msgid "Use foldername"
-msgstr ""
+msgstr "השתמש בשם תיקיה"
 
 msgctxt "#30016"
 msgid "Display images in random order"
-msgstr ""
+msgstr "הצגת התמונות בסדר אקראי"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "להשתמש בנתיב המלא"
 
 # empty string with id 30017
 msgctxt "#30018"
 msgid "Use folder- and filename"
-msgstr ""
+msgstr "להשתמש בתיקייה- ובשם הקובץ"
 
 # empty strings from id 30019 to 30020
 msgctxt "#30021"
 msgid "Display picture date"
-msgstr ""
+msgstr "הצג תאריך תמונה"
 
 msgctxt "#30022"
 msgid "Display additional picture tags"
-msgstr ""
+msgstr "הצג תוויות תמונה נוספות"
 
 msgctxt "#30023"
 msgid "Display music info during audio playback"
-msgstr ""
+msgstr "הצג פרטי מוזיקה בזמן ניגון אודיו"
 
 msgctxt "#30024"
 msgid "Basic"
-msgstr ""
+msgstr "בסיסי"
 
 msgctxt "#30025"
 msgid "Additional"
-msgstr ""
+msgstr "נוסף"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "להמשיך את המצגת מאין שהופסקה"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
 msgid "Display background picture"
-msgstr ""
+msgstr "הצג תמונת רקע"

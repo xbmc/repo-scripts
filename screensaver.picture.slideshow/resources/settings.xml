@@ -19,6 +19,7 @@
 					<level>0</level>
 					<default/>
 					<constraints>
+						<writable>false</writable>
 						<allowempty>true</allowempty>
 						<sources>
 							<source>pictures</source>
@@ -123,6 +124,7 @@
 							<option label="30014">1</option>
 							<option label="30015">2</option>
 							<option label="30018">3</option>
+							<option label="30017">4</option>
 						</options>
 					</constraints>
 				</setting>

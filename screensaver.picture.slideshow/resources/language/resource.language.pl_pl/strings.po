@@ -5,129 +5,129 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-22 14:29+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
-"Language-Team: Esperanto <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/eo/>\n"
-"Language: eo\n"
+"PO-Revision-Date: 2021-07-30 12:29+0000\n"
+"Last-Translator: Marek Adamski <fevbew@wp.pl>\n"
+"Language-Team: Polish <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/pl_pl/>\n"
+"Language: pl_pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.7.2\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
-msgstr ""
+msgstr "Wygaszacz ekranu wyświetlający pokaz slajdów"
 
 msgctxt "Addon Description"
 msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
-msgstr ""
+msgstr "Ten wygaszacz ekranu wyświetla pokaz slajdów z różnymi efektami przejścia. Można go skonfigurować tak, aby wyświetlał fototapety filmów, muzyki lub obrazy z niestandardowego folderu"
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr ""
+msgstr "Źródło obrazów dla pokazu slajdów"
 
 msgctxt "#30001"
 msgid "Folder"
-msgstr ""
+msgstr "Folder"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr ""
+msgstr "Fototapeta wideo"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr ""
+msgstr "Fototapeta muzyki"
 
 msgctxt "#30004"
 msgid "Image Folder"
-msgstr ""
+msgstr "Folder obrazów"
 
 msgctxt "#30005"
 msgid "Dim level"
-msgstr ""
+msgstr "Poziom przyciemnienia"
 
 msgctxt "#30006"
 msgid "Effect"
-msgstr ""
+msgstr "Efekt"
 
 msgctxt "#30007"
 msgid "Slide"
-msgstr ""
+msgstr "Przesuwania"
 
 msgctxt "#30008"
 msgid "Crossfade"
-msgstr ""
+msgstr "Przejścia"
 
 msgctxt "#30009"
 msgid "Pan and zoom"
-msgstr ""
+msgstr "Efekt Kena Burnsa"
 
 msgctxt "#30010"
 msgid "Amount of seconds to display each image"
-msgstr ""
+msgstr "Liczba sekund wyświetlania każdego obrazu"
 
 msgctxt "#30011"
 msgid "Scale images fullscreen"
-msgstr ""
+msgstr "Dopasowuj obrazy do pełnego ekranu"
 
 msgctxt "#30012"
 msgid "Display image name"
-msgstr ""
+msgstr "Wyświetlaj nazwę obrazu"
 
 msgctxt "#30013"
 msgid "Disabled"
-msgstr "Malŝaltita"
+msgstr "Nieaktywny"
 
 msgctxt "#30014"
 msgid "Use filename"
-msgstr ""
+msgstr "Używaj nazwy pliku"
 
 msgctxt "#30015"
 msgid "Use foldername"
-msgstr ""
+msgstr "Używaj nazwy folderu"
 
 msgctxt "#30016"
 msgid "Display images in random order"
-msgstr ""
+msgstr "Wyświetlaj obrazy w losowej kolejności"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "Używaj pełnej ścieżki"
 
 # empty string with id 30017
 msgctxt "#30018"
 msgid "Use folder- and filename"
-msgstr ""
+msgstr "Używaj folderu i nazwy pliku"
 
 # empty strings from id 30019 to 30020
 msgctxt "#30021"
 msgid "Display picture date"
-msgstr ""
+msgstr "Wyświetlaj datę obrazu"
 
 msgctxt "#30022"
 msgid "Display additional picture tags"
-msgstr ""
+msgstr "Wyświetlaj dodatkowe znaczniki obrazu"
 
 msgctxt "#30023"
 msgid "Display music info during audio playback"
-msgstr ""
+msgstr "Wyświetlaj informacje o odtwarzanej muzyce"
 
 msgctxt "#30024"
 msgid "Basic"
-msgstr ""
+msgstr "Podstawowe"
 
 msgctxt "#30025"
 msgid "Additional"
-msgstr ""
+msgstr "Dodatkowe"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "Wznów pokaz slajdów z ostatniej pozycji"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
 msgid "Display background picture"
-msgstr ""
+msgstr "Pokazuj obraz tła"
