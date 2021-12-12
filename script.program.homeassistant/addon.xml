@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.program.homeassistant" name="Home Assistant" version="1.1.0" provider-name="LaTrappe">
+<addon id="script.program.homeassistant" name="Home Assistant" version="1.2.0" provider-name="LaTrappe">
 	<requires>
 		<import addon="script.module.requests" version="2.18.0"/>
 		<import addon="script.module.iso8601" version="0.1.12"/>
@@ -12,9 +12,9 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en_GB">Home Assistant Kodi Addon</summary>
-		<description lang="en_GB">This is a unofficial Home Assistant Kodi Addon (HAKA!)</description>
+		<description lang="en_GB">This is Home Assistant Kodi Addon (HAKA!)</description>
 		<summary lang="nl_NL">Home Assistant Kodi Addon</summary>
-		<description lang="nl_NL">Dit is een onofficiele Home Assistant Kodi Addon (HAKA!)</description>
+		<description lang="nl_NL">Dit is een Home Assistant Kodi Addon (HAKA!)</description>
 		<license>GPL-2.0-or-later</license>
 		<source>https://github.com/LaTrappe/HAKA</source>
 		<website>https://www.home-assistant.io/</website>
@@ -28,15 +28,12 @@
 			<screenshot>resources/screenshots/screenshot-04.jpg</screenshot>			
 		</assets>
 		<news>
-Version 1.1.0 (2021-02-24)
-- Kodi Matrix support
-- HAKA! Favorites section added (add items via context menu)
-- Extra sensor icons and sensor attributes as label
-- Persons domain added
-- Navigate to settings from within addon menu
-- Sort items by friendly name by default
-- Fixed issue: Items in Kodi main menu keep refreshing
-- Fixed issue: Not ascii characters give errors when generating label
+Version 1.2.0 (2021-05-10)
+- Camera support (view picture of HA camera's)
+- Fan support (toggle)
+- Fixed issue: Crash when friendly name is not available
+- Fixed issue: Persons state not visible
+- Translations: Updated NL with some items previously not translated
 		</news>
 	</extension>
 </addon>
