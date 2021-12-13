@@ -20,18 +20,6 @@ msgctxt "#32101"
 msgid "OzWeather Settings"
 msgstr ""
 
-msgctxt "#32111"
-msgid "Weatherzone Location 1"
-msgstr ""
-
-msgctxt "#32112"
-msgid "Weatherzone Location 2"
-msgstr ""
-
-msgctxt "#32113"
-msgid "Weatherzone Location 3"
-msgstr ""
-
 msgctxt "#32155"
 msgid "Overrule Closest Radar ID for Location 1"
 msgstr ""
@@ -83,10 +71,6 @@ msgstr ""
 msgctxt "#32205"
 msgid "Extended Features"
 msgstr ""
-
-msgctxt "#32206"
-msgid "Weatherzone location used as a fallback only if BOM not available."
-msgstr "
 
 msgctxt "#32208"
 msgid "Enter postcode, suburb or area."

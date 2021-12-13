@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="2.0.3" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="Oz Weather" version="2.0.4" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
     	<import addon="script.module.requests" version="2.22.0+matrix.1"/>
@@ -22,21 +22,11 @@
        		<icon>icon.png</icon>
        		<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>v2.0.3
+		<news>v2.0.4
+			- Remove WeatherZone support due to upstream site being totally revised
+			v2.0.3
 			- Set some limits to prevent issues with the BOM suddenly supplying days, not hours, worth of images
 			- Fix missing weathercode
-			v2.0.2
-			- Minor bugfixes and improvements
-			v2.01
-			- Tweaks to cope with some BOM weather stations that return incomplete data
-			v2.0.0
-			- N.B. If you have run a version before 2.0, please re-configure the addon to set-up your new BOM locations
-			- Rewrite to use BOM API directly, leave Weatherzone in as a fallback option. if BOM not configured or available
-			- Auto-locate closest radar
-			- Add mechanism to manually purge radar backgrounds via addon settings
-			- Remove periodic refresh of backgrounds in favour of the above
-			- Update settings.xml to new Kodi format
-			- Modernise code throughout
     	</news>
 	</extension>
 </addon>
