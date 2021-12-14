@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class Store:
     """
-    Helper class to to provide a centralised store for CONSTANTS and globals
+    Helper class to provide a centralised store for CONSTANTS and globals
     """
 
     # Static class variables, referred to by Store.whatever
@@ -12,9 +12,6 @@ class Store:
     ABC_URL = "https://www.abc.net.au/news/newschannel/weather-in-90-seconds/"
     ABC_WEATHER_VIDEO_PATTERN = "//abcmedia.akamaized.net/news/news24/wins/(.+?)/WIN(.*?)_512k.mp4"
     ABC_STUB = "https://abcmedia.akamaized.net/news/news24/wins/"
-    # WEATHERZONE - scraping, only used as a fallback data source if BOM not configured or fails
-    WEATHERZONE_URL = 'https://www.weatherzone.com.au'
-    WEATHERZONE_SEARCH_URL = WEATHERZONE_URL + "/search/"
     # BOM - JSON API
     BOM_URL = 'http://www.bom.gov.au'
     BOM_API_URL = 'https://api.weather.bom.gov.au/v1'

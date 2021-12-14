@@ -1,6 +1,5 @@
 import xbmcplugin
 
-from .weatherzone.weatherzone_forecast import *
 from .abc.abc_video import *
 from .bom.bom_radar import *
 from .bom.bom_forecast import *
@@ -119,12 +118,11 @@ def clear_properties():
         log("********** Oz Weather Couldn't clear all the properties, sorry!!", inst)
 
 
-def forecast(geohash, url_path, radar_code):
+def forecast(geohash, radar_code):
     """
     The main weather data retrieval function
     Does either a basic forecast, or a more extended forecast with radar etc.
     :param geohash: the BOM geohash for the location
-    :param url_path: the WeatherZone url path if still using that...
     :param radar_code: the BOM radar code (e.g. 'IDR063') to retrieve the radar loop for
     """
 
@@ -170,21 +168,16 @@ def forecast(geohash, url_path, radar_code):
         set_property(WEATHER_WINDOW, 'RadarOldest', time_oldest)
         set_property(WEATHER_WINDOW, 'RadarNewest', time_newest)
 
-    # Get all the weather & forecast data from the BOM API, fall back to weatherzone if there's issues...
+    # Get all the weather & forecast data from the BOM API
     weather_data = False
 
     if geohash:
         log(f'Using the BOM API.  Getting weather data for {geohash}')
         weather_data = bom_forecast(geohash)
 
-    if not weather_data and url_path:
-        log(f'FALLBACK - Scraping Weatherzone.  Using url_path {url_path}. '
-            f'User is encouraged to re-configure the addon as WeatherZone support will later be removed.')
-        weather_data = getWeatherData(url_path)
-
     # At this point, we should have _something_ - if not, log the issue and we're done...
     if not weather_data:
-        log("Unable to get weather_data from BOM OR from Weatherzone - internet connection issue or addon not configured?", level=xbmc.LOGINFO)
+        log("Unable to get weather_data from BOM - internet connection issue or addon not configured?", level=xbmc.LOGINFO)
         return
 
     # We have weather_data - set all the properties on Kodi's weather window...
@@ -224,9 +217,8 @@ def get_weather():
     except:
         pass
 
-    # Retrieve the currently chosen location geohash, backup weatherzone url_path, & radar code
+    # Retrieve the currently chosen location geohash & radar code
     geohash = ADDON.getSetting(f'Location{sys.argv[1]}BOMGeoHash')
-    url_path = ADDON.getSetting(f'Location{sys.argv[1]}WeatherzoneUrlPath')
     radar = ADDON.getSetting(f'Radar{sys.argv[1]}') or ADDON.getSetting(f'Location{sys.argv[1]}ClosestRadar')
 
     # With the new closest radar system, the radar is store as e.g. 'Melbourne - IDR023' so strip the name off...
@@ -235,8 +227,8 @@ def get_weather():
         log(f"Radar code: transforming [{radar}] to: [{split_code[-1]}]")
         radar = split_code[-1]
 
-    if not geohash and not url_path:
-        log("No BOM location geohash or Weatherzone URL Path - can't retrieve weather data!")
+    if not geohash:
+        log("No BOM location geohash - can't retrieve weather data!")
         return
 
     # If we don't have a radar code, get the national radar by default
@@ -244,10 +236,10 @@ def get_weather():
         radar = 'IDR00004'
         log(f'Radar code empty for location, so using default radar code {radar} (= national radar)')
 
-    log(f'Current location: BOM geohash "{geohash}", Weatherzone urlpath "{url_path}", radar code {radar}')
+    log(f'Current location: BOM geohash "{geohash}", radar code {radar}')
 
     # Now scrape the weather data & radar images
-    forecast(geohash, url_path, radar)
+    forecast(geohash, radar)
 
     # Set basic properties/'brand'
     set_property(WEATHER_WINDOW, 'WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
@@ -255,7 +247,7 @@ def get_weather():
     set_property(WEATHER_WINDOW, 'WeatherVersion', ADDON_NAME + "-" + ADDON_VERSION)
 
     # Set the location we updated
-    location_in_use = ADDON.getSetting(f'Location{sys.argv[1]}BOM') or ADDON.getSetting(f'Location{sys.argv[1]}WeatherZone')
+    location_in_use = ADDON.getSetting(f'Location{sys.argv[1]}BOM')
     try:
         location_in_use = location_in_use[0:location_in_use.index(' (')]
     except ValueError:

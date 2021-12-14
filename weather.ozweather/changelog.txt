@@ -1,11 +1,17 @@
+v2.0.4
+- Remove WeatherZone support due to upstream site being totally revised
+
 v2.0.3
 - Set some limits to prevent issues with the BOM suddenly supplying days, not hours, worth of images
 - Fix missing weathercode
+
 v2.0.2
 - Minor bugfixes and improvements
+
 v2.0.1
 - Deal better with observation stations that don't provide data
 - Set some custom skin labels to improve custom skin file behaviours
+
 v2.0.0
 - N.B. If you have run a version before 2.0, please re-configure the addon to set-up your BOM locations!
 - Rewrite to use BOM API directly, leave Weatherzone in as a fallback option if BOM not configured or available
@@ -199,7 +205,7 @@ V 0.2.5
 - Added DialogSeekBar.xml - if you want radar/weather when live video is paused...
 
 V 0.2.4
-- increased timout if weatherzone is taking a while and if they're down plugin will not crash
+- increased timeout if weatherzone is taking a while and if they're down plugin will not crash
 - added hack for the national radar IDR00004 that oddly uses a different background number
 
 v 0.2.3
