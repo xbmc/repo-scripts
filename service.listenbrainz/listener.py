@@ -17,7 +17,8 @@ import time
 import xbmc
 
 from utils import (
-    __version__, LANGUAGE, log, read_file, write_file, read_settings,
+    __version__, LANGUAGE, notification,
+    log, read_file, write_file, read_settings,
     Listen, listenbrainz,
 )
 from helpers import is_local
@@ -67,10 +68,7 @@ class Main(object):
             token=token,
             server=server)
         if not listenbrainz.validate_server():
-            xbmc.executebuiltin(
-                'Notification(%s,%s,%i)' %
-                (LANGUAGE(32011), LANGUAGE(32029), 12000)
-            )
+            notification(LANGUAGE(32011), LANGUAGE(32029), time=12000)
 
     def _init_vars(self):
         # init vars
@@ -105,9 +103,7 @@ class Main(object):
             return
         elif 'error' in result:
             msg = result['error']
-            xbmc.executebuiltin(
-                'Notification(%s,%s,%i)' %
-                (LANGUAGE(32011), msg, 7000))
+            notification(LANGUAGE(32011), msg, time=7000)
             log('ListenBrainz nowplaying returned failed response: %s' %
                 msg, SESSION)
             return
@@ -164,9 +160,7 @@ class Main(object):
         elif 'error' in result:
             code = result['code']
             msg = result['error']
-            xbmc.executebuiltin(
-                'Notification(%s,%s,%i)' %
-                (LANGUAGE(32011), msg, 7000))
+            notification(LANGUAGE(32011), msg, time=7000)
             log('ListenBrainz listen returned failed response: %s' % msg,
                 SESSION)
             # evaluate error response

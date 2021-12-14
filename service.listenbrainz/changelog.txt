@@ -1,3 +1,6 @@
+v0.3.1
+- Some code modernisations/updates, nothing user facing
+
 v0.3.0
 - Removed Python 2 support
 - Update tag mappings for Kodi 19/Matrix

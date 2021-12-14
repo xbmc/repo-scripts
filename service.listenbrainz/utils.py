@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 import requests
 import xbmc
 import xbmcaddon
+import xbmcgui
 import xbmcvfs
 
 from helpers import is_local, get_url_data
@@ -17,8 +18,10 @@ __version__ = __addon__.getAddonInfo('version')
 
 HEADERS = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
 LANGUAGE = __addon__.getLocalizedString
-DATAPATH = xbmc.translatePath(
+DATAPATH = xbmcvfs.translatePath(
     xbmcaddon.Addon().getAddonInfo('profile'))
+
+notification = xbmcgui.Dialog().notification
 
 socket.setdefaulttimeout(10)
 
@@ -47,9 +50,7 @@ def read_settings(session, puser=False, ptoken=False, pserver=False):
             listenbrainz.validate_token()
     elif not (user and token):
         # no username or token
-        xbmc.executebuiltin(
-            'Notification(%s,%s,%i)' %
-            (LANGUAGE(32011), LANGUAGE(32027), 7000))
+        notification(LANGUAGE(32011), LANGUAGE(32027), time=7000)
     if pserver:
         if pserver != server:
             pass  # TODO: Implement check here
@@ -164,18 +165,15 @@ class ListenBrainz(object):
         """Validate a ListenBrainz token."""
         endpoint = 'validate-token'
         if not self.token:
-            xbmc.executebuiltin(
-                'Notification(%s,%s,%i)' %
-                (LANGUAGE(32011), LANGUAGE(32027), 7000))
+            notification(LANGUAGE(32011), LANGUAGE(32027), time=7000)
             return False
         payload = {'token': self.token}
         response = self._get(endpoint, payload=payload).json()
         if 'message' in response:
             token_valid = response['message'] == 'Token valid.'
             if token_valid is False:
-                xbmc.executebuiltin(
-                    'Notification(%s,%s,%i)' %
-                    (LANGUAGE(32011), LANGUAGE(32028), 7000))
+                notification(LANGUAGE(32011), LANGUAGE(32028),
+                             time=7000)
             return token_valid
 
     def submit_listens(self, listen_type, payload):
