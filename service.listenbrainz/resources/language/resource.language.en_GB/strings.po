@@ -1,0 +1,65 @@
+# Kodi Media Center language file
+# Addon Name: ListenBrainz
+# Addon id: service.listenbrainz
+# Addon Provider: Freso
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Submit tracks to ListenBrainz"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Submit music videos to ListenBrainz"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Submit streaming radio to ListenBrainz"
+msgstr ""
+
+msgctxt "#30004"
+msgid "ListenBrainz username"
+msgstr ""
+
+msgctxt "#30005"
+msgid "ListenBrainz token"
+msgstr ""
+
+msgctxt "#30006"
+msgid "ListenBrainz server"
+msgstr ""
+
+# empty strings from id 30007 to 32010
+
+msgctxt "#32011"
+msgid "ListenBrainz"
+msgstr ""
+
+# empty strings from id 32012 to 32026
+
+msgctxt "#32027"
+msgid "No token provided"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Failed to validate token"
+msgstr ""
+
+msgctxt "#32029"
+msgid "It doesn’t seem like your specified ListenBrainz server is responding, this might be an issue on the server. If it persists, check if you’ve entered the correct address in your settings."
+msgstr ""
