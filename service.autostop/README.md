@@ -9,5 +9,5 @@ Features:
 - Automatically engage Kodi screensaver when stopping paused playback.
 - Ability to change sleep timer by calling addon from favourites or keyboard.xml (see Readme)
 
-<img src="/resources/icon.png" width="40%">
+<img src="resources/icon.png" width="40%">
 
