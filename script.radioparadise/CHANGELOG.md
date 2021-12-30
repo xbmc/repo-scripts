@@ -1,3 +1,7 @@
+## v1.0.3
+
+- Add mix selection by script parameter
+
 ## v1.0.2
 
 - Handle missing stream metadata
