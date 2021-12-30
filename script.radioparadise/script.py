@@ -1,3 +1,5 @@
+import sys
+
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -42,9 +44,12 @@ def play_channel(channel_number):
 
 if __name__ == '__main__':
     addon = xbmcaddon.Addon()
-    addon_path = addon.getAddonInfo('path')
-    auto_play = addon.getSettingInt('auto_play')
+    if len(sys.argv) == 2:
+        auto_play = int(sys.argv[1])
+    else:
+        auto_play = addon.getSettingInt('auto_play')
     if auto_play == -1:
+        addon_path = addon.getAddonInfo('path')
         window = Window('script-radioparadise.xml', addon_path)
         window.doModal()
         del window
