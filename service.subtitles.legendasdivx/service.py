@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.4.0
+# Service LegendasDivx.com version 1.0.5
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -34,6 +34,7 @@ _scriptid   = _addon.getAddonInfo('id')
 _scriptname = _addon.getAddonInfo('name')
 _version    = _addon.getAddonInfo('version')
 _language   = _addon.getLocalizedString
+_dialog     = xbmcgui.Dialog()
 
 _cwd        = xbmc.translatePath(_addon.getAddonInfo('path'))
 _profile    = xbmc.translatePath(_addon.getAddonInfo('profile'))
@@ -177,11 +178,11 @@ def urlpost(query, lang, page):
         response = urllib.request.urlopen(request, None, 6.5).read().decode('ISO-8859-1')
     except urllib.error.URLError as e:
         response = ''
-        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32025).encode('utf8'),5000)))
+        _dialog.notification(_scriptname, _language(32025).encode('utf8'), xbmcgui.NOTIFICATION_ERROR)
         log("Oops, site down?")
     except socket.timeout:
         response = ''
-        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32026).encode('utf8'),5000)))
+        _dialog.notification(_scriptname, _language(32026).encode('utf8'), xbmcgui.NOTIFICATION_ERROR)
         log("Timed out!")
     return response
         
@@ -316,11 +317,11 @@ class Main:
         #### CHECKING FOR ANYTHING IN THE USERNAME AND PASSWORD, IF NULL IT STOPS THE SCRIPT WITH A WARNING
         username = _addon.getSetting( 'LDuser' )
         password = _addon.getSetting( 'LDpass' )
-        if username == '' or password == '':
+        if not username or not password:
             xbmcplugin.endOfDirectory(int(sys.argv[1]))
-            if username == '' and password != '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32016).encode('utf-8'),5000)))
-            if username != '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32017).encode('utf-8'),5000)))
-            if username == '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32018).encode('utf-8'),5000)))
+            if username == '' and password != '': _dialog.notification(_scriptname, _language(32016).encode('utf8'), xbmcgui.NOTIFICATION_ERROR)
+            if username != '' and password == '': _dialog.notification(_scriptname, _language(32017).encode('utf8'), xbmcgui.NOTIFICATION_ERROR)
+            if username == '' and password == '': _dialog.notification(_scriptname, _language(32018).encode('utf8'), xbmcgui.NOTIFICATION_ERROR)
         #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
         file_original_path = item['file_original_path']
         _parentfolder = _addon.getSetting( 'PARENT' )
@@ -440,8 +441,8 @@ class Main:
             subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
             for sub in subtitles_list: append_subtitle(sub)
         if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
-            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',5000)))
-    
+            _dialog.notification(_scriptname, 'Only Portuguese | Portuguese Brazilian | English | Spanish.', xbmcgui.NOTIFICATION_ERROR)
+            
     def Download(id, filename):
         """Called when subtitle download request from KODI."""
         # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
@@ -460,7 +461,7 @@ class Main:
         content = content.read()
         #### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
         if 'url=sair.php?referer=login' in content.decode('ISO-8859-1'):
-            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
+            _dialog.notification(_scriptname, _language(32019).encode('utf8'), xbmcgui.NOTIFICATION_ERROR)
             xbmcplugin.endOfDirectory(int(sys.argv[1]))
         if content.decode('ISO-8859-1') is not None:
             header = content[:4].decode('ISO-8859-1')
