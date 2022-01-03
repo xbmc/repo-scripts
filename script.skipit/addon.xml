@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.skipit" name="SkipIt" version="1.0.0" provider-name="shartrec">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en_GB">Skip It</summary>
+		<description lang="en_GB">Quick skip over Ads. This add-on is based on the ideas from the original Topfield SkipIt TAP. It uses a binary search technique to quickly get you to the place you want in a video.</description>
+		<license>GPL-2.0-or-later</license>
+ 		<source>https://github.com/shartrec/skipit</source>
+		<assets>
+			<icon>icon.png</icon>
+			<screenshot>resources/screenshot-01.jpg</screenshot>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+		<news>ShipIt first release</news>
+	</extension>
+</addon>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+	<section id="script.skipit">
+		<category id="general" label="32200" help="">
+			<group id="1" label="">
+				<setting id="skipsecs" label="32210" type="integer"
+					help="32215">
+					<level>0</level>
+					<default>180</default>
+					<constraints>
+						<minimum>60</minimum>
+						<step>10</step>
+						<maximum>360</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="minskipsecs" label="32240" type="integer"
+					help="32245">
+					<level>0</level>
+					<default>3</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="slippage" label="32220" type="integer"
+					help="32225">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<minimum>0</minimum>
+						<step>1</step>
+						<maximum>5</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="timeout" label="32230" type="number"
+					help="32235">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>3</minimum>
+						<step>1</step>
+						<maximum>15</maximum>
+					</constraints>
+					<control type="slider" format="number">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
