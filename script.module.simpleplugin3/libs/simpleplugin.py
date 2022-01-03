@@ -27,7 +27,7 @@ import inspect
 import time
 import hashlib
 import pickle
-from collections import MutableMapping, namedtuple
+from collections import namedtuple
 from copy import deepcopy
 from functools import wraps
 from shutil import copyfile
@@ -36,9 +36,12 @@ from pprint import pformat
 from platform import uname
 if PY3:
     from urllib.parse import urlencode, quote_plus, urlparse, unquote_plus, parse_qs
+    from typing import MutableMapping
 else:
     from future.backports.urllib.parse import urlencode, quote_plus, urlparse, unquote_plus
     from urlparse import parse_qs
+    from collections import MutableMapping
+
 import xbmcaddon
 import xbmc
 import xbmcgui
