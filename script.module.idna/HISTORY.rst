@@ -3,6 +3,40 @@
 History
 -------
 
+3.3 (2021-10-13)
+++++++++++++++++
+
+- Update to Unicode 14.0.0
+- Update to in-line type annotations
+- Throw IDNAError exception correctly for some malformed input
+- Advertise support for Python 3.10
+- Improve testing regime on Github
+- Fix Russian typo in documentation
+
+Thanks to Jon Defresne, Hugo van Kemenade, Seth Michael Larson,
+Patrick Ventuzelo and Boris Verhovsky for contributions to this
+release.
+
+3.2 (2021-05-29)
+++++++++++++++++
+
+- Add type hints (Thanks, Seth Michael Larson!)
+- Remove support for Python 3.4
+
+3.1 (2021-01-04)
+++++++++++++++++
+
+- Ensure license is included in package (Thanks, Julien Schueller)
+- No longer mark wheel has universal (Thanks, Matthieu Darbois)
+- Test on PowerPC using Travis CI
+
+3.0 (2021-01-01)
+++++++++++++++++
+
+- Python 2 is no longer supported (the 2.x branch supports Python 2,
+  use "idna<3" in your requirements file if you need Python 2 support)
+- Support for V2 UTS 46 test vectors.
+
 2.10 (2020-06-27)
 +++++++++++++++++
 

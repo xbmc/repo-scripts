@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.idna" name="idna" version="2.10.0+matrix.1" provider-name="Kim Davies">
+<addon id="script.module.idna" name="idna" version="3.3.0+matrix.1" provider-name="Kim Davies">
   <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="xbmc.python" version="3.0.0" />
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Internationalized Domain Names for Python</summary>
-    <description lang="en_GB">Internationalized Domain Names for Python</description>
+    <summary lang="en_GB">Internationalized Domain Names in Applications (IDNA)</summary>
+    <description lang="en_GB">Internationalized Domain Names in Applications (IDNA)</description>
     <license>BSD-3-Clause</license>
     <platform>all</platform>
-    <website>https://github.com/kjd/idna</website>
+    <website>https://pypi.org/project/idna</website>
     <source>https://github.com/kjd/idna</source>
     <assets>
       <icon>resources/icon.png</icon>
