@@ -1,3 +1,8 @@
+1.0.1
+-  Fixed exception bug which could occur if Kodi stopped 
+   playing a file at exactly the same time the addon 
+   attempted to stop playback.
+
 1.0.0
 - Initial Matrix release
 
