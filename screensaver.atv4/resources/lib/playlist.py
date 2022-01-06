@@ -18,7 +18,7 @@ import xbmcvfs
 from .commonatv import addon, addon_path, find_ranked_key_in_dict, compute_block_key_list
 
 # Apple's URL of the resources.tar file containing entries.json
-apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources.tar"
+apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources-15.tar"
 
 # Local temporary save location of the Apple TAR file
 apple_local_tar_path = os.path.join(addon_path, "resources.tar")
@@ -93,7 +93,12 @@ class AtvPlaylist:
                 if not current_location_enabled:
                     continue
 
+                # Get the URL from the current block to download
                 url = find_ranked_key_in_dict(block, block_key_list)
+
+                # If the URL is empty/None, skip the rest of the loop
+                if not url:
+                    continue
 
                 # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
                 # NOTE: Old Apple URLs were HTTP, new URLs are HTTPS with a bad cert
