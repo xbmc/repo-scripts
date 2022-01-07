@@ -1,0 +1,69 @@
+# Kodi Media Center language file
+# Addon Name: SkipIt
+# Addon id: org.shartrec.skipit
+# Addon Provider: shartrec
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: anon@example.com\n"
+"POT-Creation-Date: 2021-11-21 00:00+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator:  Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "SkipIt"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Skipping %gt;%gt; ..."
+msgstr ""
+
+msgctxt "#32110"
+msgid "Skipping {0} {1} seconds"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Skip It settings"
+msgstr ""
+
+msgctxt "#32200"
+msgid "General"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Initial seconds to skip forward"
+msgstr ""
+
+msgctxt "#32215"
+msgid "This is the number of seconds the video will skip forward when first activated with the -> Key "
+msgstr ""
+
+msgctxt "#32220"
+msgid "Drift adjustment"
+msgstr ""
+
+msgctxt "#32225"
+msgid "Because the video plays while the viewer is pressing buttons we need to adjust the stepping a little"
+msgstr ""
+
+msgctxt "#32230"
+msgid "Auto close timeout"
+msgstr ""
+
+msgctxt "#32235"
+msgid "How long to remain active before closing when no key is pressed"
+msgstr ""
+
+msgctxt "#32240"
+msgid "Minimum seconds to skip"
+msgstr ""
+
+msgctxt "#32245"
+msgid "This is the smallest number of seconds the video will skip forward or backwards"
+msgstr ""
