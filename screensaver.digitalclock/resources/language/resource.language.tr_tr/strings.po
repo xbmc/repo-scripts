@@ -1,0 +1,808 @@
+# Kodi Media Center language file
+# Addon Name: Digital Clock Screensaver
+# Addon id: screensaver.digitalclock
+# Addon Provider: Vojislav Vlasic
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/kodi-addons/language/tr_TR/)\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Digital clock screensaver"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Digital clock screensaver with date, now playing information, weather information, image slideshow and several options."
+msgstr "Dijital saat ekran koruyucu, tarih ve saatin yanı sıra şimdi oynatılıyor bilgisi, hava durumu bilgisi, resim slayt gösterisi gibi çeşitli seçenekler sunar."
+
+msgctxt "Addon Disclaimer"
+msgid "For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum."
+msgstr "Hata bildirme, istek ve genel sorularınız için Kodi forumunda dijital saat ekran koruyucu başlığını ziyaret edebilirsiniz."
+
+# settings labels
+msgctxt "#32000"
+msgid "Movement"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Format"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Additional Information"
+msgstr "Ek bilgi"
+
+# empty strings from id 32006 to 32009
+msgctxt "#32010"
+msgid "Color | Opacity"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Background"
+msgstr "Arka plan"
+
+# empty strings from id 32021 to 32024
+msgctxt "#32025"
+msgid "Extra Options"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Movement on the screen"
+msgstr "Ekrandaki hareket"
+
+msgctxt "#32101"
+msgid "Random position"
+msgstr "Rastgele konum"
+
+msgctxt "#32102"
+msgid "Bounce"
+msgstr "Sekmek"
+
+msgctxt "#32103"
+msgid "Fixed in the center"
+msgstr "Merkezde sabitlenmiş"
+
+msgctxt "#32104"
+msgid "Custom fixed position"
+msgstr "Özel sabit konum"
+
+msgctxt "#32110"
+msgid "Movement speed"
+msgstr "Hareket hızı"
+
+msgctxt "#32111"
+msgid "Slow"
+msgstr "Yavaş"
+
+msgctxt "#32112"
+msgid "Normal"
+msgstr "Normal"
+
+msgctxt "#32113"
+msgid "Fast"
+msgstr "Hızlı"
+
+msgctxt "#32120"
+msgid "Number of seconds to stay in place"
+msgstr "Hareketsiz kalınacak saniye"
+
+msgctxt "#32121"
+msgid "Warning! Having static text on your screen can cause a burn in!"
+msgstr "Uyarı! Ekranda sabit metin tutmak, uzun vadede iz kalmasına sebep olabilir."
+
+msgctxt "#32130"
+msgid "Time format"
+msgstr "Zaman biçimi"
+
+msgctxt "#32131"
+msgid "17:14"
+msgstr "17:14"
+
+msgctxt "#32132"
+msgid "05:14"
+msgstr "05:14"
+
+msgctxt "#32133"
+msgid "05:14 PM"
+msgstr "05:14 ÖS"
+
+msgctxt "#32134"
+msgid "5:14 No hour zero padding Windows"
+msgstr ""
+
+msgctxt "#32135"
+msgid "5:14 PM No hour zero padding Windows"
+msgstr ""
+
+msgctxt "#32136"
+msgid "5:14 No hour zero padding Unix"
+msgstr ""
+
+msgctxt "#32137"
+msgid "5:14 PM No hour zero padding Unix"
+msgstr ""
+
+# empty strings from id 32138 to 32138
+msgctxt "#32139"
+msgid "Colon blink"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Date format"
+msgstr "Tarih biçimi"
+
+msgctxt "#32141"
+msgid "Hide date"
+msgstr "Tarihi gizle"
+
+msgctxt "#32142"
+msgid "Saturday 30. May 2015"
+msgstr "Cumartesi 30. May 2015"
+
+msgctxt "#32143"
+msgid "30.05.2015"
+msgstr "30.05.2015"
+
+msgctxt "#32144"
+msgid "05.30.2015"
+msgstr "05.30.2015"
+
+msgctxt "#32145"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Custom value for X position (1-1280)"
+msgstr "Yatay konum için özel değer (1-1280)"
+
+msgctxt "#32160"
+msgid "Custom value for Y position (1-720)"
+msgstr "Düşey konum için özel değer (1-720)"
+
+# empty strings from id 32161 to 32169
+msgctxt "#32170"
+msgid "Enter custom date format (Empty=Regional settings):"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Day: d(1-31) dd(01-31) ddd(Mon-Sun) DDD(Monday-Sunday)"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Month: m(1-12) mm(01-12) mmm(Jan-Dec) MMM(January-December)"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Year: yy(2-digit year) yyyy(4-digit year)"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Enable additional information"
+msgstr "Ek bilgiyi etkinleştir"
+
+msgctxt "#32210"
+msgid "Number of seconds for information switch"
+msgstr "Bilgi ekranında değiştirme süresi (saniye)"
+
+msgctxt "#32220"
+msgid "Enable now playing information"
+msgstr "Şimdi oynatılıyor bilgisini etkinleştir"
+
+msgctxt "#32221"
+msgid "Show only music information"
+msgstr ""
+
+msgctxt "#32222"
+msgid "This will hide all other info while the music is playing!"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Merge song artist and title"
+msgstr ""
+
+msgctxt "#32230"
+msgid "Enable weather information"
+msgstr "Hava durumu bilgisini etkinleştir"
+
+msgctxt "#32240"
+msgid "Weather icons"
+msgstr "Hava durumu simgeleri"
+
+msgctxt "#32241"
+msgid "Hide weather icon"
+msgstr "Hava durumu simgesini gizle"
+
+msgctxt "#32242"
+msgid "Icon set 1"
+msgstr "Simge seti 1"
+
+msgctxt "#32243"
+msgid "Icon set 2"
+msgstr "Simge seti 2"
+
+msgctxt "#32244"
+msgid "Icon set 3"
+msgstr "Simge seti 3"
+
+msgctxt "#32245"
+msgid "Icon set 4"
+msgstr "Simge seti 4"
+
+msgctxt "#32250"
+msgid "Enable album art"
+msgstr "Albüm kapağını etkinleştir"
+
+# empty strings from id 32251 to 32259
+msgctxt "#32260"
+msgid "Enable CPU usage information"
+msgstr ""
+
+msgctxt "#32261"
+msgid "Enable battery level information"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Enable free memory information"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Enable movie library information"
+msgstr ""
+
+msgctxt "#32264"
+msgid "Enable TV show library information"
+msgstr ""
+
+msgctxt "#32265"
+msgid "Enable music library information"
+msgstr ""
+
+msgctxt "#32266"
+msgid "Enable CPU temperature"
+msgstr ""
+
+msgctxt "#32267"
+msgid "Enable GPU temperature"
+msgstr ""
+
+msgctxt "#32268"
+msgid "Enable HDD temperature"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Enable FPS"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Enable current uptime"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Enable total uptime"
+msgstr ""
+
+# empty strings from id 32272 to 32279
+msgctxt "#32280"
+msgid "CPU:"
+msgstr ""
+
+msgctxt "#32281"
+msgid "Battery:"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Free memory:"
+msgstr ""
+
+msgctxt "#32283"
+msgid "Total movies:"
+msgstr ""
+
+msgctxt "#32284"
+msgid "Watched movies:"
+msgstr ""
+
+msgctxt "#32285"
+msgid "Unwatched movies:"
+msgstr ""
+
+msgctxt "#32286"
+msgid "Total TV shows:"
+msgstr ""
+
+msgctxt "#32287"
+msgid "Total episodes:"
+msgstr ""
+
+msgctxt "#32288"
+msgid "Watched TV shows:"
+msgstr ""
+
+msgctxt "#32289"
+msgid "Watched episodes:"
+msgstr ""
+
+msgctxt "#32290"
+msgid "Unwatched TV shows:"
+msgstr ""
+
+msgctxt "#32291"
+msgid "Unwatched episodes:"
+msgstr ""
+
+msgctxt "#32292"
+msgid "Artists:"
+msgstr ""
+
+msgctxt "#32293"
+msgid "Albums:"
+msgstr ""
+
+msgctxt "#32294"
+msgid "Songs:"
+msgstr ""
+
+msgctxt "#32295"
+msgid "CPU temperature:"
+msgstr ""
+
+msgctxt "#32296"
+msgid "GPU temperature:"
+msgstr ""
+
+msgctxt "#32297"
+msgid "HDD temperature:"
+msgstr ""
+
+msgctxt "#32298"
+msgid "FPS:"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Current uptime:"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Total uptime:"
+msgstr ""
+
+# empty strings from id 32301 to 32309
+msgctxt "#32310"
+msgid "Choose hour color and opacity  - [COLOR $INFO[Skin.String(screensaver.digitalclock.hourcolor)]]($INFO[Skin.String(screensaver.digitalclock.hourcolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Random hour color"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Random hour opacity"
+msgstr ""
+
+# empty strings from id 32313 to 32319
+msgctxt "#32320"
+msgid "Choose colon color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.coloncolor)]]($INFO[Skin.String(screensaver.digitalclock.coloncolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32321"
+msgid "Random colon color"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Random colon opacity"
+msgstr ""
+
+# empty strings from id 32323 to 32329
+msgctxt "#32330"
+msgid "Choose minute color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.minutecolor)]]($INFO[Skin.String(screensaver.digitalclock.minutecolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32331"
+msgid "Random minute color"
+msgstr ""
+
+msgctxt "#32332"
+msgid "Random minute opacity"
+msgstr ""
+
+# empty strings from id 32333 to 32339
+msgctxt "#32340"
+msgid "Choose AM/PM color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.ampmcolor)]]($INFO[Skin.String(screensaver.digitalclock.ampmcolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32341"
+msgid "Random AM/PM color"
+msgstr ""
+
+msgctxt "#32342"
+msgid "Random AM/PM opacity"
+msgstr ""
+
+# empty strings from id 32343 to 32349
+msgctxt "#32350"
+msgid "Choose date color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.datecolor)]]($INFO[Skin.String(screensaver.digitalclock.datecolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32351"
+msgid "Random date color"
+msgstr ""
+
+msgctxt "#32352"
+msgid "Random date opacity"
+msgstr ""
+
+# empty strings from id 32353 to 32359
+msgctxt "#32360"
+msgid "Choose additional information color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.informationcolor)]]($INFO[Skin.String(screensaver.digitalclock.informationcolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32361"
+msgid "Random additional information color"
+msgstr ""
+
+msgctxt "#32362"
+msgid "Random additional information opacity"
+msgstr ""
+
+# empty strings from id 32363 to 32369
+msgctxt "#32370"
+msgid "Choose icon color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.iconcolor)]]($INFO[Skin.String(screensaver.digitalclock.iconcolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32371"
+msgid "Random icon color"
+msgstr ""
+
+msgctxt "#32372"
+msgid "Random icon opacity"
+msgstr ""
+
+# empty strings from id 32373 to 32499
+msgctxt "#32500"
+msgid "Choose text shadow color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.shadowcolor)]]($INFO[Skin.String(screensaver.digitalclock.shadowcolor.name)])[/COLOR]"
+msgstr ""
+
+# empty strings from id 32501 to 32504
+msgctxt "#32505"
+msgid "Choose background image aspect ratio:"
+msgstr ""
+
+msgctxt "#32506"
+msgid "Fill the screen"
+msgstr ""
+
+msgctxt "#32507"
+msgid "Original size"
+msgstr ""
+
+msgctxt "#32510"
+msgid "Choose background"
+msgstr "Arka planı seç"
+
+msgctxt "#32511"
+msgid "One color"
+msgstr "Tek renk"
+
+msgctxt "#32512"
+msgid "Single image"
+msgstr "Tek resim"
+
+msgctxt "#32513"
+msgid "Slideshow"
+msgstr "Slayt gösterisi"
+
+msgctxt "#32514"
+msgid "Skin Helper Backgrounds"
+msgstr ""
+
+msgctxt "#32515"
+msgid "Dim"
+msgstr ""
+
+msgctxt "#32516"
+msgid "Brightness level"
+msgstr ""
+
+# empty strings from id 32517 to 32519
+msgctxt "#32520"
+msgid "Choose background color - [COLOR $INFO[Skin.String(screensaver.digitalclock.backgroundcolor)]]($INFO[Skin.String(screensaver.digitalclock.backgroundcolor.name)])[/COLOR]"
+msgstr ""
+
+msgctxt "#32530"
+msgid "Choose image"
+msgstr "Resim seç"
+
+msgctxt "#32531"
+msgid "Warning! Having only one image on your screen can cause a burn in!"
+msgstr "Uyarı! Ekranda tek bir resim tutmak, uzun vadede iz kalmasına sebep olabilir."
+
+msgctxt "#32540"
+msgid "Choose slideshow directory"
+msgstr "Slayt gösterisi dizinini seçin"
+
+msgctxt "#32550"
+msgid "Random images"
+msgstr "Rastgele resimler"
+
+msgctxt "#32560"
+msgid "Change background picture every:"
+msgstr "Arka plan resmini değiştirme sıklığı:"
+
+msgctxt "#32561"
+msgid "15 sec"
+msgstr "15 saniye"
+
+msgctxt "#32562"
+msgid "30 sec"
+msgstr "30 saniye"
+
+msgctxt "#32563"
+msgid "1 min"
+msgstr "1 dakika"
+
+msgctxt "#32564"
+msgid "2 min"
+msgstr "2 dakika"
+
+msgctxt "#32565"
+msgid "3 min"
+msgstr "3 dakika"
+
+msgctxt "#32566"
+msgid "4 min"
+msgstr "4 dakika"
+
+msgctxt "#32567"
+msgid "5 min"
+msgstr "5 dakika"
+
+msgctxt "#32568"
+msgid "6 min"
+msgstr "6 dakika"
+
+msgctxt "#32569"
+msgid "7 min"
+msgstr "7 dakika"
+
+msgctxt "#32570"
+msgid "8 min"
+msgstr "8 dakika"
+
+msgctxt "#32571"
+msgid "9 min"
+msgstr "9 dakika"
+
+msgctxt "#32572"
+msgid "10 min"
+msgstr "10 dakika"
+
+# empty strings from id 32573 to 32578
+msgctxt "#32579"
+msgid "Requires skin.helper.backgrounds!"
+msgstr ""
+
+msgctxt "#32580"
+msgid "Choose Skin Helper background"
+msgstr ""
+
+msgctxt "#32581"
+msgid "Movie random fanart"
+msgstr ""
+
+msgctxt "#32582"
+msgid "TV show random fanart"
+msgstr ""
+
+msgctxt "#32583"
+msgid "Music artist random fanart"
+msgstr ""
+
+msgctxt "#32584"
+msgid "Random fanart of all media types"
+msgstr ""
+
+# empty strings from id 32585 to 32599
+msgctxt "#32600"
+msgid "Element size increase (%)"
+msgstr ""
+
+msgctxt "#32610"
+msgid "Log out"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Stop now playing media"
+msgstr ""
+
+msgctxt "#32612"
+msgid "Log out after (minutes)"
+msgstr ""
+
+msgctxt "#32620"
+msgid "Enable RSS"
+msgstr ""
+
+msgctxt "#32621"
+msgid "RSS needs to be properly configured in Kodi and enabled!"
+msgstr ""
+
+#~ msgctxt "#32010"
+#~ msgid "Colors"
+#~ msgstr "Renkler"
+
+#~ msgctxt "#32015"
+#~ msgid "Transparency"
+#~ msgstr "Şeffaflık"
+
+#~ msgctxt "#32025"
+#~ msgid "Element Size Increase"
+#~ msgstr "Öğe boyutunu artır"
+
+#~ msgctxt "#32300"
+#~ msgid "Random color"
+#~ msgstr "Rastgele renk"
+
+#~ msgctxt "#32310"
+#~ msgid "Hour color"
+#~ msgstr "Saat rengi"
+
+#~ msgctxt "#32311"
+#~ msgid "White"
+#~ msgstr "Beyaz"
+
+#~ msgctxt "#32312"
+#~ msgid "Red"
+#~ msgstr "Kırmızı"
+
+#~ msgctxt "#32313"
+#~ msgid "Green"
+#~ msgstr "Yeşil"
+
+#~ msgctxt "#32314"
+#~ msgid "Blue"
+#~ msgstr "Mavi"
+
+#~ msgctxt "#32315"
+#~ msgid "Yellow"
+#~ msgstr "Sarı"
+
+#~ msgctxt "#32316"
+#~ msgid "Black"
+#~ msgstr "Siyah"
+
+#~ msgctxt "#32320"
+#~ msgid "Colon color"
+#~ msgstr "İki nokta üst üste işaretinin rengi"
+
+#~ msgctxt "#32330"
+#~ msgid "Minute color"
+#~ msgstr "Dakika rengi"
+
+#~ msgctxt "#32340"
+#~ msgid "AM/PM color"
+#~ msgstr "ÖÖ/ÖS rengi"
+
+#~ msgctxt "#32350"
+#~ msgid "Date color"
+#~ msgstr "Tarih rengi"
+
+#~ msgctxt "#32360"
+#~ msgid "Additional information color"
+#~ msgstr "Ek bilgi rengi"
+
+#~ msgctxt "#32370"
+#~ msgid "Icon color"
+#~ msgstr "Simge rengi"
+
+#~ msgctxt "#32400"
+#~ msgid "Random transparency"
+#~ msgstr "Rastgele şeffaflık"
+
+#~ msgctxt "#32410"
+#~ msgid "Hour transparency"
+#~ msgstr "Saat şeffaflığı"
+
+#~ msgctxt "#32411"
+#~ msgid "0%"
+#~ msgstr "%0"
+
+#~ msgctxt "#32412"
+#~ msgid "10%"
+#~ msgstr "%10"
+
+#~ msgctxt "#32413"
+#~ msgid "20%"
+#~ msgstr "%20"
+
+#~ msgctxt "#32414"
+#~ msgid "30%"
+#~ msgstr "%30"
+
+#~ msgctxt "#32415"
+#~ msgid "40%"
+#~ msgstr "%40"
+
+#~ msgctxt "#32416"
+#~ msgid "50%"
+#~ msgstr "%50"
+
+#~ msgctxt "#32417"
+#~ msgid "60%"
+#~ msgstr "%60"
+
+#~ msgctxt "#32418"
+#~ msgid "70%"
+#~ msgstr "%70"
+
+#~ msgctxt "#32419"
+#~ msgid "80%"
+#~ msgstr "%80"
+
+#~ msgctxt "#32420"
+#~ msgid "90%"
+#~ msgstr "%90"
+
+#~ msgctxt "#32421"
+#~ msgid "100%"
+#~ msgstr "%100"
+
+#~ msgctxt "#32430"
+#~ msgid "Colon transparency"
+#~ msgstr "İki nokta üst üste işareti şeffaflığı"
+
+#~ msgctxt "#32440"
+#~ msgid "Minute transparency"
+#~ msgstr "Dakika şefafflığı"
+
+#~ msgctxt "#32450"
+#~ msgid "AM/PM transparency"
+#~ msgstr "ÖÖ/ÖS şeffaflığı"
+
+#~ msgctxt "#32460"
+#~ msgid "Date transparency"
+#~ msgstr "Tarih şeffaflığı"
+
+#~ msgctxt "#32470"
+#~ msgid "Additional information transparency"
+#~ msgstr "Ek bilgi şeffaflığı"
+
+#~ msgctxt "#32480"
+#~ msgid "Icon transparency"
+#~ msgstr "Simge şeffaflığı"
+
+#~ msgctxt "#32500"
+#~ msgid "Text shadow color"
+#~ msgstr "Metin gölge rengi"
+
+#~ msgctxt "#32501"
+#~ msgid "None"
+#~ msgstr "Hiçbiri"
+
+#~ msgctxt "#32502"
+#~ msgid "White"
+#~ msgstr "Beyaz"
+
+#~ msgctxt "#32503"
+#~ msgid "Gray"
+#~ msgstr "Gri"
+
+#~ msgctxt "#32504"
+#~ msgid "Black"
+#~ msgstr "Siyah"
+
+#~ msgctxt "#32520"
+#~ msgid "Choose color"
+#~ msgstr "Renk seç"
+
+#~ msgctxt "#32600"
+#~ msgid "Size (%)"
+#~ msgstr "Boyut (%)"

@@ -46,7 +46,11 @@ class KodiPlayer(xbmc.Player):
             # Only do something is this is an episode of a TV show
             if json_object['result']['item']['type'] == 'episode':
 
-                log("A TV show episode is playing.")
+                if 'id' not in json_object['result']['item']:
+                    log("An episode is playing, but it doesn't have an id, so can't check previous episode in Kodi library.")
+                    return
+
+                log(f"A TV show episode is playing (id: {json_object['result']['item']['id']}).")
 
                 command = json.dumps({
                     "jsonrpc": "2.0",

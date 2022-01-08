@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-02-05 10:28+0000\n"
+"PO-Revision-Date: 2021-07-26 22:29+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/da_dk/>\n"
 "Language: da_dk\n"
@@ -15,7 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.7.2\n"
+
+msgctxt "Addon Summary"
+msgid "Download images and additional info of the currently playing artist"
+msgstr "Download billeder og ekstra info om kunstneren, der spiller i øjeblikket"
+
+msgctxt "Addon Description"
+msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
+msgstr ""
 
 # Section Headings
 msgctxt "#32000"
@@ -36,7 +44,7 @@ msgstr "Albuminformation"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr "Kunstner-biografi"
+msgstr "Kunstnerbiografi"
 
 msgctxt "#32005"
 msgid "Similar Artists"
@@ -66,11 +74,11 @@ msgstr "Hent albuminformation fra last.fm"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr "Hent kunstner-biografi fra theaudiodb.com"
+msgstr "Hent kunstnerbiografi fra theaudiodb.com"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr "Hent kunstner-biografi fra last.fm"
+msgstr "Hent kunstnerbiografi fra last.fm"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"

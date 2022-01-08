@@ -121,132 +121,262 @@
 		</category>
 		<category id="videos" label="32031" help="">
 			<group id="1">
-				<setting id="enable-africaandthemiddleeast" type="boolean" label="32049" help="">
+				<setting id="enable-africaandthemiddleeast" type="boolean" label="32081" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-africanight" type="boolean" label="32050" help="">
+				<setting id="enable-africanight" type="boolean" label="32082" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-antarctica" type="boolean" label="32051" help="">
+				<setting id="enable-alaskanjellies" type="boolean" label="32083" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-californiatovegas" type="boolean" label="32052" help="">
+				<setting id="enable-antarctica" type="boolean" label="32084" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-caribbean" type="boolean" label="32053" help="">
+				<setting id="enable-atlanticoceantospainandfrance" type="boolean" label="32085" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-caribbeanday" type="boolean" label="32054" help="">
+				<setting id="enable-australia" type="boolean" label="32086" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-china" type="boolean" label="32055" help="">
+				<setting id="enable-barracuda" type="boolean" label="32087" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-dubai" type="boolean" label="32056" help="">
+				<setting id="enable-bumpheads" type="boolean" label="32088" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-greenland" type="boolean" label="32057" help="">
+				<setting id="enable-californiadolphins" type="boolean" label="32089" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-hawaii" type="boolean" label="32058" help="">
+				<setting id="enable-californiakelpforest" type="boolean" label="32090" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-hongkong" type="boolean" label="32059" help="">
+				<setting id="enable-californiatovegas" type="boolean" label="32091" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-iranandafghanistan" type="boolean" label="32060" help="">
+				<setting id="enable-caribbeanday" type="boolean" label="32092" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-irelandtoasia" type="boolean" label="32061" help="">
+				<setting id="enable-caribbean" type="boolean" label="32093" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-italytoasia" type="boolean" label="32062" help="">
+				<setting id="enable-china" type="boolean" label="32094" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-koreanandjapannight" type="boolean" label="32063" help="">
+				<setting id="enable-costaricadolphins" type="boolean" label="32095" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-liwa" type="boolean" label="32064" help="">
+				<setting id="enable-cownoserays" type="boolean" label="32096" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-london" type="boolean" label="32065" help="">
+				<setting id="enable-dubai" type="boolean" label="32097" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-losangeles" type="boolean" label="32066" help="">
+				<setting id="enable-grandcanyon" type="boolean" label="32098" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-newyork" type="boolean" label="32067" help="">
+				<setting id="enable-grayreefsharks" type="boolean" label="32099" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-newyorknight" type="boolean" label="32068" help="">
+				<setting id="enable-greenland" type="boolean" label="32100" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-newzealand" type="boolean" label="32069" help="">
+				<setting id="enable-hawaii" type="boolean" label="32101" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-northamericaaurora" type="boolean" label="32070" help="">
+				<setting id="enable-hongkong" type="boolean" label="32102" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-saharaanditaly" type="boolean" label="32071" help="">
+				<setting id="enable-humpbackwhale" type="boolean" label="32103" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-sanfrancisco" type="boolean" label="32072" help="">
+				<setting id="enable-iceland" type="boolean" label="32104" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-southerncaliforniatobaja" type="boolean" label="32073" help="">
+				<setting id="enable-iranandafghanistan" type="boolean" label="32105" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-westafricatothealps" type="boolean" label="32074" help="">
+				<setting id="enable-irelandtoasia" type="boolean" label="32106" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-italytoasia" type="boolean" label="32107" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-jacks" type="boolean" label="32108" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-kelp" type="boolean" label="32109" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-koreaandjapannight" type="boolean" label="32110" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-liwa" type="boolean" label="32111" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-london" type="boolean" label="32112" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-losangeles" type="boolean" label="32113" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-newyorknight" type="boolean" label="32114" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-newyork" type="boolean" label="32115" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-newzealand" type="boolean" label="32116" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-niledelta" type="boolean" label="32117" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-northamericaaurora" type="boolean" label="32118" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-palaucoral" type="boolean" label="32119" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-palaujellies" type="boolean" label="32120" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-patagonia" type="boolean" label="32121" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-redseacoral" type="boolean" label="32122" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-saharaanditaly" type="boolean" label="32123" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-sanfrancisco" type="boolean" label="32124" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-scotland" type="boolean" label="32125" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-seastars" type="boolean" label="32126" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-seals" type="boolean" label="32127" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-southafricatonorthasia" type="boolean" label="32128" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-southerncaliforniatobaja" type="boolean" label="32129" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-tahitiwaves" type="boolean" label="32130" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-westafricatothealps" type="boolean" label="32131" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-yosemite" type="boolean" label="32132" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>

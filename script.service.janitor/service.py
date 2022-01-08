@@ -23,13 +23,13 @@ def autostart():
 
             if delayed_completed and ticker >= scan_interval_ticker:
                 results, _ = janitor.clean()
-                if janitor.exit_status == janitor.STATUS_SUCCESS and len(results) > 0:
+                if results and janitor.exit_status == janitor.STATUS_SUCCESS:
                     notify(translate(32518).format(amount=len(results)))
                 ticker = 0
             elif not delayed_completed and ticker >= delayed_start_ticker:
                 delayed_completed = True
                 results, _ = janitor.clean()
-                if janitor.exit_status == janitor.STATUS_SUCCESS and len(results) > 0:
+                if results and janitor.exit_status == janitor.STATUS_SUCCESS:
                     notify(translate(32518).format(amount=len(results)))
                 ticker = 0
 

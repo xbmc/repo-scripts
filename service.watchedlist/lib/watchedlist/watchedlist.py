@@ -148,8 +148,8 @@ class WatchedList:
         self.watchedmovielist_xbmc = list([])  # 0imdbnumber, 1empty, 2empty, 3lastPlayed, 4playCount, 5title, 6empty, 7movieid
         self.watchedepisodelist_xbmc = list([])  # 0tvdbnumber, 1season, 2episode, 3lastplayed, 4playcount, 5name, 6empty, 7episodeid
 
-        self.tvshows = {}  # dict: key=xbmcid, value=[imdbnumber, showname]
-        self.tvshownames = {}  # dict: key=imdbnumber, value=showname
+        self.tvshows = {}  # dict: key=xbmcid, value=[tvdbnumber, showname]
+        self.tvshownames = {}  # dict: key=tvdbnumber, value=showname
 
         self.sqlcon_wl = 0
         self.sqlcursor_wl = 0
@@ -588,7 +588,7 @@ class WatchedList:
                     "jsonrpc": "2.0",
                     "method": "VideoLibrary.GetTVShows",
                     "params": {
-                        "properties": ["title", "imdbnumber"],
+                        "properties": ["title", "uniqueid"],
                         "sort": {"order": "ascending", "method": "title"}
                     },
                     "id": 1})
@@ -598,23 +598,19 @@ class WatchedList:
                             self.close_db(3)
                             return 4
                         tvshowId_xbmc = int(item['tvshowid'])
+                        if not 'uniqueid' in item:
+                            utils.log(u'get_watched_xbmc: tv show "%s" has no field uniqueid in database. tvshowid=%d. Try rescraping.' % (item['title'], tvshowId_xbmc), xbmc.LOGINFO)
+                            continue
                         try:
-                            # check if series number is in imdb-format (scraper=imdb?)
-                            res = re.compile(r'tt(\d+)').findall(item['imdbnumber'])
-                            if not res:
-                                # number in thetvdb-format
-                                tvshowId_imdb = int(item['imdbnumber'])
-                            else:
-                                # number in imdb-format
-                                tvshowId_imdb = int(res[0])
+                            tvshowId_tvdb = int(item['uniqueid']['tvdb'])
                         except BaseException:
-                            utils.log(u'get_watched_xbmc: tv show "%s" has no imdb-number in database. tvshowid=%d. Try rescraping.' % (item['title'], tvshowId_xbmc), xbmc.LOGINFO)
+                            utils.log(u'get_watched_xbmc: tv show "%s" has no tvdb-number in database. tvshowid=%d. Unique IDs: %s. Try rescraping.' % (item['title'], tvshowId_xbmc, str(list(item['uniqueid'].keys()))), xbmc.LOGINFO)
                             if not silent:
                                 utils.showNotification(utils.getString(32101), utils.getString(32297) % (item['title'], tvshowId_xbmc), xbmc.LOGINFO)
-                            tvshowId_imdb = int(0)
-                        self.tvshows[tvshowId_xbmc] = list([tvshowId_imdb, item['title']])
-                        if tvshowId_imdb > 0:
-                            self.tvshownames[tvshowId_imdb] = item['title']
+                            tvshowId_tvdb = int(0)
+                        self.tvshows[tvshowId_xbmc] = list([tvshowId_tvdb, item['title']])
+                        if tvshowId_tvdb > 0:
+                            self.tvshownames[tvshowId_tvdb] = item['title']
 
             # Get all watched movies and episodes by unique id from xbmc-database via JSONRPC
             self.watchedmovielist_xbmc = list([])
@@ -635,7 +631,7 @@ class WatchedList:
                         "jsonrpc": "2.0",
                         "method": "VideoLibrary.GetMovies",
                         "params": {
-                            "properties": ["title", "year", "imdbnumber", "lastplayed", "playcount"],
+                            "properties": ["title", "year", "lastplayed", "playcount", "uniqueid"],
                             "sort": {"order": "ascending", "method": "title"}
                         },
                         "id": 1
@@ -645,7 +641,7 @@ class WatchedList:
                         "jsonrpc": "2.0",
                         "method": "VideoLibrary.GetEpisodes",
                         "params": {
-                            "properties": ["tvshowid", "season", "episode", "playcount", "showtitle", "lastplayed"]
+                            "properties": ["tvshowid", "season", "episode", "playcount", "showtitle", "lastplayed", "uniqueid"]
                         },
                         "id": 1
                     })
@@ -658,16 +654,22 @@ class WatchedList:
                     for item in json_response['result'][searchkey]:
                         if self.monitor.abortRequested():
                             break
+                        if not 'uniqueid' in item:
+                            if modus == 'movie':
+                                utils.log(u'get_watched_xbmc: Movie %s has no field uniqueid in database. Try rescraping.' % (item['title']), xbmc.LOGINFO)
+                            else:  # episode
+                                utils.log(u'get_watched_xbmc: Episode id %d (show %d, S%02dE%02d) has no field uniqueid in database. Try rescraping.' % (item['episodeid'], item['tvshowid'], item['season'], item['episode']), xbmc.LOGINFO)
+                            continue
                         if modus == 'movie':
                             name = item['title'] + ' (' + str(item['year']) + ')'
-                            res = re.compile(r'tt(\d+)').findall(item['imdbnumber'])
-                            if not res:
+                            try:
+                                # check if movie number is in imdb-format (scraper=imdb)
+                                res = re.compile(r'tt(\d+)').findall(item['uniqueid']['imdb'])
+                                imdbId = int(res[0])
+                            except BaseException: 
                                 # no imdb-number for this movie in database. Skip
-                                utils.log(u'get_watched_xbmc: Movie %s has no imdb-number in database. movieid=%d. Try rescraping' % (name, int(item['movieid'])), xbmc.LOGINFO)
-                                continue
-                            imdbId = int(res[0])
-                            if imdbId == 0:
-                                utils.log(u'get_watched_xbmc: Movie %s has no valid imdb-number in database (is Null). movieid=%d. Try rescraping' % (name, int(item['movieid'])), xbmc.LOGINFO)
+                                utils.log(u'get_watched_xbmc: Movie %s has no imdb-number in database. movieid=%d. IDs are %s. Try rescraping' % (name, int(item['movieid']), str(list(item['uniqueid'].keys()))), xbmc.LOGINFO)
+                                imdbId = 0
                                 continue
                         else:  # episodes
                             tvshowId_xbmc = item['tvshowid']
@@ -679,12 +681,12 @@ class WatchedList:
                                 continue
                             name = '%s S%02dE%02d' % (tvshowName_xbmc, item['season'], item['episode'])
                             try:
-                                tvshowId_imdb = self.tvshows[tvshowId_xbmc][0]
+                                tvshowId_tvdb = self.tvshows[tvshowId_xbmc][0]
                             except BaseException:
                                 utils.log(u'get_watched_xbmc: Kodi tv showid %d is not in Kodi-table tvshows. Skipping episode id %d (%s)' % (item['tvshowid'], item['episodeid'], name), xbmc.LOGINFO)
                                 continue
-                            if tvshowId_imdb == 0:
-                                utils.log(u'get_watched_xbmc: tvshow %d has no imdb-number. Skipping episode id %d (%s)' % (item['tvshowid'], item['episodeid'], name), xbmc.LOGDEBUG)
+                            if tvshowId_tvdb == 0:
+                                utils.log(u'get_watched_xbmc: tvshow %d has no tvdb-number. Skipping episode id %d (%s)' % (item['tvshowid'], item['episodeid'], name), xbmc.LOGDEBUG)
                                 continue
                         lastplayed = utils.sqlDateTimeToTimeStamp(item['lastplayed'])  # convert to integer-timestamp
                         playcount = int(item['playcount'])
@@ -692,7 +694,7 @@ class WatchedList:
                         if modus == 'movie':
                             self.watchedmovielist_xbmc.append(list([imdbId, 0, 0, lastplayed, playcount, name, 0, int(item['movieid'])]))  # 0imdbnumber, 1empty, 2empty, 3lastPlayed, 4playCount, 5title, 6empty, 7movieid
                         else:
-                            self.watchedepisodelist_xbmc.append(list([tvshowId_imdb, int(item['season']), int(item['episode']), lastplayed, playcount, name, 0, int(item['episodeid'])]))  # 0tvdbnumber, 1season, 2episode, 3lastplayed, 4playcount, 5name, 6empty, 7episodeid
+                            self.watchedepisodelist_xbmc.append(list([tvshowId_tvdb, int(item['season']), int(item['episode']), lastplayed, playcount, name, 0, int(item['episodeid'])]))  # 0tvdbnumber, 1season, 2episode, 3lastplayed, 4playcount, 5name, 6empty, 7episodeid
             if not silent:
                 utils.showNotification(utils.getString(32101), utils.getString(32299) % (len(self.watchedmovielist_xbmc), len(self.watchedepisodelist_xbmc)), xbmc.LOGINFO)
             if self.monitor.abortRequested():

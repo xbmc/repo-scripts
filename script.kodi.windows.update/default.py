@@ -33,12 +33,17 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 BASE_URL  = 'http://mirrors.kodi.tv/'
 WIND_URL  = BASE_URL + '%s/windows/%s/'
-BRANCHS   =  {19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
+BRANCHS   =  {20:'nexus',19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
 BUILD_OPT = {'nightlies':LANGUAGE(30017),'releases':LANGUAGE(30016),'snapshots':LANGUAGE(30015),'test-builds':LANGUAGE(30018)}
 VERSION   = REAL_SETTINGS.getSetting("Version")
-try: BUILD = json.loads(REAL_SETTINGS.getSetting("Build"))
-except: BUILD = ''
-BRANCH    = BRANCHS[int(BUILD.get('major',''))]
+
+try:    
+    BUILD  = json.loads(REAL_SETTINGS.getSetting("Build"))
+    BRANCH = BRANCHS[int(BUILD.get('major',''))]
+except: 
+    BUILD = ''
+    BRANCH = 'master'
+
 PLATFORM  = {True:"win64", False:"win32", None:""}[('64' in REAL_SETTINGS.getSetting("Platform") or None)]
 
 def log(msg, level=xbmc.LOGDEBUG):
@@ -71,7 +76,7 @@ class Installer(object):
         
     
     def chkUWP(self):
-        isUWP = (xbmc.getCondVisibility("system.platform.uwp") or sys.platform == "win10" or re.search(r"[/\\]WindowsApps[/\\]XBMCFoundation\.Kodi_", xbmc.translatePath("special://xbmc/")))
+        isUWP = (xbmc.getCondVisibility("system.platform.uwp") or sys.platform == "win10" or re.search(r"[/\\]WindowsApps[/\\]XBMCFoundation\.Kodi_", xbmcvfs.translatePath("special://xbmc/")))
         if isUWP: return self.disable()
         return isUWP
         
@@ -164,7 +169,7 @@ class Installer(object):
             newURL = items[select].getPath()
             preURL = url.rsplit('/', 2)[0] + '/'
             if newURL.endswith('.exe'): 
-                dest = xbmc.translatePath(os.path.join(SETTINGS_LOC,label))
+                dest = xbmcvfs.translatePath(os.path.join(SETTINGS_LOC,label))
                 self.setLastPath(url,dest)
                 return self.downloadEXE(newURL,dest)
             elif label.lower() == 'parent directory' and "windows" in preURL.lower():

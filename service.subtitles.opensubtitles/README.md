@@ -4,6 +4,12 @@ Search and download subtitles for movies and TV-Series from OpenSubtitles.org. S
                             
 Changelog
 
+5.1.3
+- Safely import translatePath. (by [antonsoroko](https://github.com/antonsoroko))
+
+5.1.2
+- Fixes for python3/matrix. Remove sys.path.append.
+
 5.1.1
 - Fixed issue with language flag icons
 

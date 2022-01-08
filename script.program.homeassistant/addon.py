@@ -33,9 +33,9 @@ imgFanartResourcePath = os.path.join(__addonpath__,'resources','img','fanart')
 fileHakaFavourites = os.path.join(__addonpath__,'hakaFavourites.yaml')
 dummyWav = os.path.join(__addonpath__,'resources','1.wav')
 
-haDomainNames =         ['automation','climate','group','light','scene','script','sensor','switch','vacuum','person']
-haDomainSettings =         [ False, False, False, False, False, False, False, False, False, False, False]
-haDomainTranslations =     [30005,30006,30007,30008,30009,30010,30011,30012,30013,30014,30019]
+haDomainNames =         ['automation',  'camera',   'climate',  'fan',      'group',    'light',    'person',   'scene',    'script',   'sensor',   'switch',   'vacuum',   ]
+haDomainSettings =      [ False,        False,      False,      False,      False,      False,      False,      False,      False,      False,      False,      False,      ]
+haDomainTranslations =  [30005,         30080,      30006,      30081,      30007,      30008,      30014,      30009,      30010,      30011,      30012,      30013,      ]
 
 haServer = __addon__.getSetting('haServer')
 haToken = __addon__.getSetting('haToken')
@@ -100,26 +100,30 @@ def write_favourite(entity_list, open_param):
 
 
 def importDomainSettings():
-    if __addon__.getSetting('importAutomation') == 'true':
+    if __addon__.getSetting('importAutomations') == 'true':
         haDomainSettings[0] = True
-    if __addon__.getSetting('importClimate') == 'true':
+    if __addon__.getSetting('importCameras') == 'true':
         haDomainSettings[1] = True
-    if __addon__.getSetting('importGroups') == 'true':
+    if __addon__.getSetting('importClimate') == 'true':
         haDomainSettings[2] = True
-    if __addon__.getSetting('importLights') == 'true':
+    if __addon__.getSetting('importFans') == 'true':
         haDomainSettings[3] = True
-    if __addon__.getSetting('importScenes') == 'true':
+    if __addon__.getSetting('importGroups') == 'true':
         haDomainSettings[4] = True
-    if __addon__.getSetting('importScripts') == 'true':
+    if __addon__.getSetting('importLights') == 'true':
         haDomainSettings[5] = True
-    if __addon__.getSetting('importSensors') == 'true':
-        haDomainSettings[6] = True
-    if __addon__.getSetting('importSwitches') == 'true':
-        haDomainSettings[7] = True
-    if __addon__.getSetting('importVacuums') == 'true':
-        haDomainSettings[8] = True
     if __addon__.getSetting('importPersons') == 'true':
+        haDomainSettings[6] = True        
+    if __addon__.getSetting('importScenes') == 'true':
+        haDomainSettings[7] = True
+    if __addon__.getSetting('importScripts') == 'true':
+        haDomainSettings[8] = True
+    if __addon__.getSetting('importSensors') == 'true':
         haDomainSettings[9] = True
+    if __addon__.getSetting('importSwitches') == 'true':
+        haDomainSettings[10] = True
+    if __addon__.getSetting('importVacuums') == 'true':
+        haDomainSettings[11] = True
     log('Domain settings imported: ' + str(haDomainSettings))
 
 def getRequest(api_ext):
@@ -171,7 +175,7 @@ def browseByDomain():
             url = build_url({'mode': 'loadfolder', 'type': 'domain', 'domain': haDomainNames[d]})
             icon = os.path.join(imgIconResourcePath, haDomainNames[d] + '.png')
             li = xbmcgui.ListItem(__addon__.getLocalizedString(haDomainTranslations[d]))
-            li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg')})
+            li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg'), 'poster': icon})
             listing.append((url, li, isFolder))
 
     #Add the favourites folder
@@ -179,14 +183,14 @@ def browseByDomain():
         url = build_url({'mode': 'loadfolder', 'type': 'favourites', 'domain': 'none'})
         icon = os.path.join(imgIconResourcePath, 'favourites.png')
         li = xbmcgui.ListItem('Favourites')
-        li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg')})
+        li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg'), 'poster': icon})
         listing.append((url, li, isFolder))
 
     #Add the version number as folder
     url = build_url({'mode': 'config'})
     icon = os.path.join(imgIconResourcePath, 'config.png')
     li = xbmcgui.ListItem(__addon__.getLocalizedString(30023) + ': ' + response['version'])
-    li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg')})
+    li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg'), 'poster': icon})
     listing.append((url, li, isFolder))
 
     xbmcplugin.addDirectoryItems(addon_handle, listing, len(listing))
@@ -232,7 +236,12 @@ def createFolderList(searchKey, response, domain, folderType):
             contextMenuItems = []
             entity_id = response[entity]['entity_id']
             entity_state =response[entity]['state']
-            label = response[entity]['attributes']['friendly_name']
+            
+            if 'friendly_name' in response[entity]['attributes']:
+                label = response[entity]['attributes']['friendly_name']
+            else:
+                label = response[entity]['entity_id']
+
             icon = os.path.join(imgIconResourcePath, domain + '.png')
 
             if domain == 'automation':
@@ -242,11 +251,24 @@ def createFolderList(searchKey, response, domain, folderType):
                         if entity_state == 'off':
                             icon = os.path.join(imgIconResourcePath,'automation_off.png')
 
+            elif domain == 'camera':
+                if 'entity_picture' in response[entity]['attributes']:
+                    icon = str(haServer + response[entity]['attributes']['entity_picture'])
+                    url = build_url({'mode': 'play', 'domain': domain, 'entity_id': entity_id, 'entity_picture' : response[entity]['attributes']['entity_picture']})
+                    li = xbmcgui.ListItem(label)
+                    li.setArt({'icon': icon, 'fanart' : icon, 'poster': icon})
+                    li.setProperty('IsPlayable', 'false')
+                    listing.append((url, li, isFolder))
+                
             elif domain == 'climate':
                 label = label + markup + entity_state + ' - '  + __addon__.getLocalizedString(30020) + str(response[entity]['attributes']['current_temperature']) + '[/LIGHT]'
                 
                 if entity_state == 'off':
                     icon = os.path.join(imgIconResourcePath,'climate_off.png')
+
+            elif domain == 'fan':
+                if entity_state == 'off':
+                    icon = os.path.join(imgIconResourcePath,'fan_off.png')
 
             elif domain == 'group':
                 if entity_state == 'off':
@@ -261,14 +283,14 @@ def createFolderList(searchKey, response, domain, folderType):
                     icon = os.path.join(imgIconResourcePath,'light_off.png')
                     
             elif domain == 'person':
+                if entity_state == 'home':
+                    label = label + markup + __addon__.getLocalizedString(30090) + '[/LIGHT]'
+                else:
+                    label = label + markup + __addon__.getLocalizedString(30091) + '[/LIGHT]'
+                    icon = os.path.join(imgIconResourcePath,'person_off.png')
                 if 'entity_picture' in response[entity]['attributes']:
                     icon = str(haServer + response[entity]['attributes']['entity_picture'])
-                    if entity_state == 'home':
-                        label = label + markup + 'Home' + '[/LIGHT]'
-                    else:
-                        label = label + markup + 'Not home' + '[/LIGHT]'
                     
-
             elif domain == 'scene':
                 icon = os.path.join(imgIconResourcePath,'scene.png')
         
@@ -327,7 +349,7 @@ def createFolderList(searchKey, response, domain, folderType):
                 label = '[B]' + label + '[/B][CR][LIGHT] ' + __addon__.getLocalizedString(30025) + response[entity]['attributes']['status'] + ' - ' + __addon__.getLocalizedString(30026) + str(response[entity]['attributes']['battery_level']) + '[/LIGHT]' 
                 url = build_url({'mode': 'service', 'domain': domain, 'entity_id': entity_id, 'state' : entity_state, 'service': 'toggle'})
                 li = xbmcgui.ListItem(label)
-                li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg')})
+                li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg'), 'poster': icon})
                 li.setProperty('IsPlayable', 'false')
                 listing.append((url, li, isFolder))
 
@@ -337,13 +359,13 @@ def createFolderList(searchKey, response, domain, folderType):
                     labelService = '[LIGHT]' + __addon__.getLocalizedString(vacuumServiceTranslations[s]) + '[/LIGHT]' 
                     url = build_url({'mode': 'service', 'domain': domain, 'entity_id': entity_id, 'state' : entity_state, 'service': vacuumService[s],})
                     li = xbmcgui.ListItem(labelService)
-                    li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg')})
+                    li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg'), 'poster': icon})
                     listing.append((url, li, isFolder))
 
             else:
                 icon = os.path.join(imgIconResourcePath,'unknown.png')
 
-            if domain != 'vacuum':
+            if domain != 'vacuum' and domain != 'camera':
                 url = build_url({'mode': 'service', 'domain': domain, 'entity_id': entity_id, 'state' : entity_state})
                 li = xbmcgui.ListItem(label)
 
@@ -355,7 +377,7 @@ def createFolderList(searchKey, response, domain, folderType):
                     contextMenuItems.append([__addon__.getLocalizedString(30071), cmd ])
                 li.addContextMenuItems(contextMenuItems)
                 li.setProperty('IsPlayable', 'false')
-                li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg')})
+                li.setArt({'icon': icon, 'fanart' : os.path.join(imgFanartResourcePath,'fanart.jpg'), 'poster': icon})
                 listing.append((url, li, isFolder))
     xbmcplugin.addDirectoryItems(addon_handle, listing, len(listing))
 
@@ -418,16 +440,24 @@ else:
     elif mode[0] == 'config':
         xbmcaddon.Addon().openSettings()
 
+    elif mode[0] == 'play':
+        camera_url = haServer + params['entity_picture']
+        xbmc.executebuiltin('ShowPicture("{0}")'.format( camera_url ))
+
     elif mode[0] == 'service':
         if params['domain'] == 'automation':
             api_ext = '/services/automation/toggle'
             postRequest(api_ext, params['entity_id'])
-            
+          
         elif params['domain'] == 'climate':
             if params['state'] == 'off':
                 api_ext = '/services/climate/turn_on'
             else:
                 api_ext = '/services/climate/turn_off'
+            postRequest(api_ext, params['entity_id'])
+            
+        elif params['domain'] == 'fan':
+            api_ext = '/services/fan/toggle'
             postRequest(api_ext, params['entity_id'])
 
         elif params['domain'] == 'group':
@@ -458,6 +488,6 @@ else:
             postRequest(api_ext, params['entity_id'])
 
         #Play a dummy wav file to prevent errors when starting a service as widget
-        xbmcplugin.setResolvedUrl(addon_handle, True, xbmcgui.ListItem(path=dummyWav)) 
+        xbmcplugin.setResolvedUrl(addon_handle, True, xbmcgui.ListItem(path=os.path.join(imgFanartResourcePath,'fanart.jpg'))) 
         loadFolder('domain', params['domain'])
         xbmc.executebuiltin("Container.Refresh")

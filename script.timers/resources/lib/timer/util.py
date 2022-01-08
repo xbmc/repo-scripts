@@ -99,9 +99,15 @@ def get_current_epg_view():
         return None
 
 
+def is_fullscreen():
+
+    return xbmc.getCondVisibility("System.IsFullscreen")
+
+
 def get_pvr_channel_path(type, channelno):
 
     try:
+        channelno = int(channelno)
         _result = json_rpc("PVR.GetChannelGroups", {
             "channeltype": type})
         channelGroupAll = _result["channelgroups"][0]["label"]
@@ -110,8 +116,12 @@ def get_pvr_channel_path(type, channelno):
         pvrClients = _result["clients"]
 
         _result = json_rpc("PVR.GetChannels", {
-            "channelgroupid": "all%s" % type, "properties": ["uniqueid", "clientid"]})
-        channel = _result["channels"][int(channelno) - 1]
+            "channelgroupid": "all%s" % type, "properties": ["uniqueid", "clientid", "channelnumber"]})
+        channel = next(
+            filter(lambda c: c["channelnumber"] == channelno, _result["channels"]), None)
+
+        if not channel:
+            return None
 
         pvrClient = list(filter(
             lambda _c: _c["supportsepg"] == True and _c["clientid"] == channel["clientid"], pvrClients))[0]
@@ -123,6 +133,30 @@ def get_pvr_channel_path(type, channelno):
         pass
 
     return None
+
+
+def get_volume(or_default=100):
+
+    try:
+        _result = json_rpc("Application.GetProperties",
+                           {"properties": ["volume"]})
+        return _result["volume"]
+
+    except:
+        xbmc.log(
+            "jsonrpc call failed in order to get current volume: Application.GetProperties", xbmc.LOGERROR)
+        return or_default
+
+
+def set_volume(vol):
+
+    xbmc.executebuiltin("SetVolume(%i)" % vol)
+
+
+def set_powermanagement_displaysoff(value):
+
+    json_rpc("Settings.SetSettingValue", {
+             "setting": "powermanagement.displaysoff", "value": value})
 
 
 def json_rpc(jsonmethod, params=None):

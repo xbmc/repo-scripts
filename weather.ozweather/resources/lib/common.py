@@ -33,7 +33,7 @@ WEATHER_WINDOW = xbmcgui.Window(12600)
 """
 Determine if we are unit testing outside of Kodi, or actually running within Kodi
 Because we're using Kodi stubs https://romanvm.github.io/Kodistubs/ we can't rely on 'import xbmc' failing
-So we use this hack - Kodi will return a user agent string, but Kodistrubs just returns and empty string.
+So we use this hack - Kodi will return a user agent string, but Kodistubs just returns an empty string.
 If we are unit testing, change logs -> print
 
 In other files, minimal code to make this work is:

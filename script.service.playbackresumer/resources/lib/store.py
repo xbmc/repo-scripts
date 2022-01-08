@@ -76,6 +76,23 @@ class Store:
         log(f"Using ignoresecondsatstart: {Store.ignore_seconds_at_start}, ignorepercentatend: {Store.ignore_percent_at_end}")
 
     @staticmethod
+    def clear_old_play_details():
+        """
+        As soon as a new file is played, clear out all old references to anything that was being stored as the currently playing file
+        :return:
+        """
+        log("New playback - clearing legacy now playing details")
+        Store.library_id = None
+        Store.currently_playing_file_path = None
+        Store.type_of_video = None
+        Store.paused_time = None
+        Store.length_of_currently_playing_file = None
+        with open(Store.file_to_store_last_played, 'w+', encoding='utf-8') as f:
+            f.write('')
+        with open(Store.file_to_store_resume_point, 'w+') as f:
+            f.write('')
+
+    @staticmethod
     def load_config_from_settings():
         """
         Load in the addon settings, at start or reload them if they have been changed
@@ -153,7 +170,7 @@ class Store:
         Store.currently_playing_file_path = filepath
 
         # write the full path to a file for persistent tracking
-        with open(Store.file_to_store_last_played, 'w+') as f:
+        with open(Store.file_to_store_last_played, 'w+', encoding='utf8') as f:
             f.write(filepath)
 
         log(f'Last played file set to: {filepath}')

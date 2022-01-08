@@ -1,3 +1,6 @@
+[B][I]Version 5.0.1[/I][/B]
+- [FIX] Cleaning service failed to start
+
 [B][I]Version 5.0.0[/I][/B]
 - [NEW] Completely rewritten Janitor in Python 3 to support Kodi Matrix
 - [NEW] Much improved progress dialogs focusing on showing what matters

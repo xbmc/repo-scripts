@@ -16,6 +16,18 @@ msgstr ""
 "Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Digital clock screensaver"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Digital clock screensaver with date, now playing information, weather information, image slideshow and several options."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum."
+msgstr ""
+
 #settings labels
 
 msgctxt "#32000"
@@ -631,7 +643,7 @@ msgstr ""
 #empty strings from id 32573 to 32578
 
 msgctxt "#32579"
-msgid "Requires Skin Helper Service!"
+msgid "Requires skin.helper.backgrounds!"
 msgstr ""
 
 msgctxt "#32580"

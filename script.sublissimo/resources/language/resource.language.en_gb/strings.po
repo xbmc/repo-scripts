@@ -15,6 +15,14 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr ""
+
 msgctxt "#31000"
 msgid "Scroll subtitles"
 msgstr ""
@@ -734,3 +742,4 @@ msgstr ""
 msgctxt "#35018"
 msgid "The correct characterset of this file could not be detected. The file is now loading with the UTF-8 set and errors are replaced with questionmarks."
 msgstr ""
+

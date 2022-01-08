@@ -1,0 +1,129 @@
+# Kodi Media Center language file
+# Addon Name: Kodi Android Installer
+# Addon id: script.kodi.android.update
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: script.kodi.android.update\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: te_in\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Download and Install Kodi packages."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Download and Install Kodi android packages; select from  Nightlies, Releases, Snapshots and Test-builds."
+msgstr ""
+
+msgctxt "#30000"
+msgid "Enable Debugging [Log errors]"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Something went wrong, Try again later..."
+msgstr ""
+
+msgctxt "#30002"
+msgid "Preparing to download: %s"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Keep all downloads?"
+msgstr ""
+
+msgctxt "#30004"
+msgid "File already exists"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Install"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Redownload"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Installation complete, file removed"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Cleanup download after installation"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Plugin disabled"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Unknown Android version"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Android v.%s.0.0 is incompatible with new Kodi versions,"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Would you like to disable this plugin?"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Detecting Android version..."
+msgstr ""
+
+msgctxt "#30014"
+msgid "Current Android platform (%s)"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Semi-stable (Monthly builds)."
+msgstr ""
+
+msgctxt "#30016"
+msgid "Stable (Final releases)."
+msgstr ""
+
+msgctxt "#30017"
+msgid "Unstable (Daily builds)."
+msgstr ""
+
+msgctxt "#30018"
+msgid "Experimental (Debugging builds)."
+msgstr ""
+
+msgctxt "#30019"
+msgid "Incompatible platform"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Select File Explorer"
+msgstr ""
+
+msgctxt "#30021"
+msgid "File Explorer"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Current Kodi Branch (%s.%s-%s)"
+msgstr ""
+
+msgctxt "#30023"
+msgid "[B]Downloading:[/B]"
+msgstr ""
+
+msgctxt "#30024"
+msgid " | [B]Speed:[/B]"
+msgstr ""
+
+msgctxt "#30025"
+msgid " | [B]ETA:[/B]"
+msgstr ""

@@ -5,7 +5,9 @@
 	</category>
 	<category label="30004">
 		<setting id="importAutomations" type="bool" label="30005" default="true" />
+		<setting id="importCameras" type="bool" label="30080" default="true" />
 		<setting id="importClimate" type="bool" label="30006" default="true" />
+		<setting id="importFans" type="bool" label="30081" default="true" />
 		<setting id="importGroups" type="bool" label="30007" default="true" />
 		<setting id="importLights" type="bool" label="30008" default="true" />
 		<setting id="importPersons" type="bool" label="30014" default="true" />
@@ -19,7 +21,7 @@
 		<setting id="useFavourites" type="bool" label="30018" default="true"/>
 	</category>
 	<category label="30015">
-		<setting id="logEnabled" type="bool" label="30016" default="true"/>
-	</category>		
+		<setting id="logEnabled" type="bool" label="30016" default="false"/>
+	</category>
 </settings>
 

@@ -40,7 +40,7 @@ class GismeteoClient(object):
 
         try:
             x = etree.fromstring(r.content)
-        except ValueError as e:
+        except (ValueError, etree.ParseError) as e:
             raise GismeteoError(e)
 
         return x

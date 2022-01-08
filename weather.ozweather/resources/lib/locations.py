@@ -7,9 +7,9 @@ def refresh_locations():
     """
     log("Refreshing locations from settings")
 
-    location1 = ADDON.getSetting('Location1BOM') or ADDON.getSetting('Location1WeatherZone') or ""
-    location2 = ADDON.getSetting('Location2BOM') or ADDON.getSetting('Location2WeatherZone') or ""
-    location3 = ADDON.getSetting('Location3BOM') or ADDON.getSetting('Location3WeatherZone') or ""
+    location1 = ADDON.getSetting('Location1BOM') or ""
+    location2 = ADDON.getSetting('Location2BOM') or ""
+    location3 = ADDON.getSetting('Location3BOM') or ""
 
     log("Location1: " + location1)
     log("Location2: " + location2)

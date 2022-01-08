@@ -2,6 +2,7 @@
 
 import os
 import logging
+import unicodedata
 import xbmc
 import xbmcvfs
 
@@ -67,7 +68,7 @@ def Log(message, severity=xbmc.LOGDEBUG):
                 logtext += "   FATAL: "
             else:
                 logtext += "    NONE: "
-            logtext += message
+            logtext += unicodedata.normalize('NFKD', message).encode('ascii', 'ignore').decode('ascii')
             # append line to external log file
             # logging via warning level to prevent filtering of messages by default filtering level of ROOT logger
             globals.logger.warning(logtext)

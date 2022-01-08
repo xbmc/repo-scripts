@@ -1,10 +1,13 @@
-from collections import MutableSequence
+try:
+    from collections import abc
+except ImportError:
+    import collections as abc  # type: ignore[no-redef]
 import io
 from io import open
 from itertools import chain
 import os.path
 import logging
-from typing import Optional, List, Dict, Iterable
+from typing import Optional, List, Dict, Iterable, Any
 
 from .common import IntOrFloat
 from .formats import autodetect_format, get_format_class, get_format_identifier
@@ -14,7 +17,8 @@ from .ssastyle import SSAStyle
 from .time import make_time, ms_to_str
 
 
-class SSAFile(MutableSequence):
+# TODO fix mypy errors regarding SSAFile
+class SSAFile(abc.MutableSequence):
     """
     Subtitle file in SubStation Alpha format.
 
@@ -43,6 +47,7 @@ class SSAFile(MutableSequence):
         self.styles: Dict[str, SSAStyle] = {"Default": SSAStyle.DEFAULT_STYLE.copy()}  #: Dict of :class:`SSAStyle` instances.
         self.info: Dict[str, str] = self.DEFAULT_INFO.copy()  #: Dict with script metadata, ie. ``[Script Info]``.
         self.aegisub_project: Dict[str, str] = {}  #: Dict with Aegisub project, ie. ``[Aegisub Project Garbage]``.
+        self.fonts_opaque: Dict[str, Any] = {}  #: Dict with embedded fonts, ie. ``[Fonts]``.
         self.fps: Optional[float] = None  #: Framerate used when reading the file, if applicable.
         self.format: Optional[str] = None  #: Format of source subtitle file, if applicable, eg. ``"srt"``.
 
@@ -54,6 +59,13 @@ class SSAFile(MutableSequence):
     def load(cls, path: str, encoding: str="utf-8", format_: Optional[str]=None, fps: Optional[float]=None, **kwargs) -> "SSAFile":
         """
         Load subtitle file from given path.
+
+        This method is implemented in terms of :meth:`SSAFile.from_file()`.
+
+        See also:
+            Specific formats may implement additional loading options,
+            please refer to documentation of the implementation classes
+            (eg. :meth:`pysubs2.subrip.SubripFormat.from_file()`)
 
         Arguments:
             path (str): Path to subtitle file.
@@ -68,14 +80,7 @@ class SSAFile(MutableSequence):
                 be detected from the file, in which case you don't need
                 to specify it here (when given, this argument overrides
                 autodetection).
-            keep_unknown_html_tags (bool): This affects SubRip only (SRT),
-                for other formats this argument is ignored.
-                By default, HTML tags are converted to equivalent SubStation tags
-                (eg. ``<i>`` to ``{\\i1}`` and any remaining tags are removed
-                to keep the text clean. Set this parameter to ``True``
-                if you want to pass through these tags (eg. ``<sub>``).
-                This is useful if your output format is SRT and your player
-                supports these tags.
+            kwargs: Extra options for the reader.
 
         Returns:
             SSAFile
@@ -165,6 +170,13 @@ class SSAFile(MutableSequence):
     def save(self, path: str, encoding: str="utf-8", format_: Optional[str]=None, fps: Optional[float]=None, **kwargs):
         """
         Save subtitle file to given path.
+
+        This method is implemented in terms of :meth:`SSAFile.to_file()`.
+
+        See also:
+            Specific formats may implement additional saving options,
+            please refer to documentation of the implementation classes
+            (eg. :meth:`pysubs2.subrip.SubripFormat.to_file()`)
 
         Arguments:
             path (str): Path to subtitle file.
@@ -381,40 +393,52 @@ class SSAFile(MutableSequence):
 
         if isinstance(other, SSAFile):
             for key in set(chain(self.info.keys(), other.info.keys())) - {"ScriptType"}:
-                sv, ov = self.info.get(key), other.info.get(key)
-                if sv is None:
+                self_info, other_info = self.info.get(key), other.info.get(key)
+                if self_info is None:
                     logging.debug("%r missing in self.info", key)
                     return False
-                elif ov is None:
+                elif other_info is None:
                     logging.debug("%r missing in other.info", key)
                     return False
-                elif sv != ov:
-                    logging.debug("info %r differs (self=%r, other=%r)", key, sv, ov)
+                elif self_info != other_info:
+                    logging.debug("info %r differs (self=%r, other=%r)", key, self_info, other_info)
+                    return False
+
+            for key in set(chain(self.fonts_opaque.keys(), other.fonts_opaque.keys())):
+                self_font, other_font = self.fonts_opaque.get(key), other.fonts_opaque.get(key)
+                if self_font is None:
+                    logging.debug("%r missing in self.fonts_opaque", key)
+                    return False
+                elif other_font is None:
+                    logging.debug("%r missing in other.fonts_opaque", key)
+                    return False
+                elif self_font != other_font:
+                    logging.debug("fonts_opaque %r differs (self=%r, other=%r)", key, self_font, other_font)
                     return False
 
             for key in set(chain(self.styles.keys(), other.styles.keys())):
-                sv, ov = self.styles.get(key), other.styles.get(key)
-                if sv is None:
+                self_style, other_style = self.styles.get(key), other.styles.get(key)
+                if self_style is None:
                     logging.debug("%r missing in self.styles", key)
                     return False
-                elif ov is None:
+                elif other_style is None:
                     logging.debug("%r missing in other.styles", key)
                     return False
-                elif sv != ov:
-                    for k in sv.FIELDS:
-                        if getattr(sv, k) != getattr(ov, k): logging.debug("difference in field %r", k)
-                    logging.debug("style %r differs (self=%r, other=%r)", key, sv.as_dict(), ov.as_dict())
+                elif self_style != other_style:
+                    for k in self_style.FIELDS:
+                        if getattr(self_style, k) != getattr(other_style, k): logging.debug("difference in field %r", k)
+                    logging.debug("style %r differs (self=%r, other=%r)", key, self_style.as_dict(), other_style.as_dict())
                     return False
 
             if len(self) != len(other):
                 logging.debug("different # of subtitles (self=%d, other=%d)", len(self), len(other))
                 return False
 
-            for i, (se, oe) in enumerate(zip(self.events, other.events)):
-                if not se.equals(oe):
-                    for k in se.FIELDS:
-                        if getattr(se, k) != getattr(oe, k): logging.debug("difference in field %r", k)
-                    logging.debug("event %d differs (self=%r, other=%r)", i, se.as_dict(), oe.as_dict())
+            for i, (self_event, other_event) in enumerate(zip(self.events, other.events)):
+                if not self_event.equals(other_event):
+                    for k in self_event.FIELDS:
+                        if getattr(self_event, k) != getattr(other_event, k): logging.debug("difference in field %r", k)
+                    logging.debug("event %d differs (self=%r, other=%r)", i, self_event.as_dict(), other_event.as_dict())
                     return False
 
             return True

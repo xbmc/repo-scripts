@@ -1,0 +1,32 @@
+<window id="1191" type="dialog">
+    <coordinates>
+       <left>500</left>
+       <top>40</top>
+	</coordinates>
+	<controls>
+		<control type="group" id="15">
+			<left>10</left>
+			<top>10</top>
+			<width>auto</width>
+		    <colordiffuse>grey</colordiffuse>
+			<control type="label" id="1">
+		        <description>Skip info</description>
+		        <left>10</left>
+		        <top>10</top>
+		        <width>auto</width>
+		        <visible>true</visible>
+		        <align>center</align>
+		        <aligny>center</aligny>
+		        <scroll>false</scroll>
+		        <label>32100</label>
+		        <haspath>false</haspath>
+		        <font>font14</font>
+		        <textcolor>ffffffff</textcolor>
+		        <shadowcolor>ff000000</shadowcolor>
+		        <wrapmultiline>false</wrapmultiline>
+		        <scrollspeed>50</scrollspeed>
+		        <scrollsuffix> - </scrollsuffix>
+		  	</control>
+	  	</control>
+	</controls>
+</window>

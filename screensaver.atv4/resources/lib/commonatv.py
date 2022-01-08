@@ -29,6 +29,8 @@ def find_ranked_key_in_dict(dict, key_list):
     for key in key_list:
         if key in dict:
             return dict[key]
+    # Explicitly return None if no value exists
+    return None
 
 
 # Compute the struct where we'll keep the preferred URL key ordering. The earlier we append, the higher the priority

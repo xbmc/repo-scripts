@@ -38,8 +38,8 @@
                     <height>auto</height> 
                     <aspectratio scalediffuse="false">scale</aspectratio>
                     <animation effect="fade" time="1000">VisibleChange</animation>
-                    <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.IsEqual(Window(10000).Property(bing_animation),okay)" pulse="true">Conditional</animation>
-                    <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.IsEqual(Window(10000).Property(bing_animation),okay)" pulse="true">Conditional</animation>
+                    <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.IsEqual(Window.Property(bing_animation),okay)" pulse="true">Conditional</animation>
+                    <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.IsEqual(Window.Property(bing_animation),okay)" pulse="true">Conditional</animation>
                     <info>ListItem.Thumb</info>
                 </control>
                 <control type="image">
@@ -97,7 +97,7 @@
                   <width>auto</width>
                   <label>$INFO[Weather.Temperature]</label>
                   <animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
-                  <visible>Weather.IsFetched</visible>
+                  <visible>[Weather.IsFetched + String.isEqual(Window.Property(bing_time),okay)]</visible>
               </control>
             </focusedlayout >
         </control>

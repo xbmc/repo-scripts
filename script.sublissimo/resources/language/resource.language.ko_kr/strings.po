@@ -1,0 +1,746 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-08-31 05:29+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/ko_kr/>\n"
+"Language: ko_kr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "리모컨으로 자막 편집 및 동기화"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "이 스크립트를 사용하면 특정 줄을 편집하고, 자막을 이동하거나 늘리고, 다른 자막과 동기화할 수 있습니다. 비디오 파일과 동기화할 수도 있습니다."
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "스크롤 자막"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "라인 편집 또는 삭제"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "자막 이동"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "자막 늘이기/줄이기"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "다른 자막과 동기화"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "비디오 파일과 동기화"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "자막에서 검색"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "무결성 확인"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "자막 저장"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "취소"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "프레임률로 동기화"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "편집된 자막으로 동영상 재생"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "고급 옵션"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid "Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the beginning to a line as reference[CR]- Select the roughly the same line in your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "동기화할 자막을 선택합니다. 그런 다음:[CR]- 줄의 시작 부분에서 참조로 타임코드를 선택합니다.[CR]- 자막에서 거의 같은 줄을 선택합니다.[CR]- 그런 다음 두 파일의 끝 근처에 두 줄로 동일하게 실행합니다."
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "라인 수정"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "첫 번째 자막 삭제"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "마지막 자막 삭제"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "수동으로 스크롤하고 삭제"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "뒤로"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "이 자막을 지울까요?"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "수정할 자막 선택"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "반환"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "삭제"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "모든 자막"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "찾음:"
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "확인"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "더 많은 정보"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "오류"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "동기화할 자막 선택"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr ".srt 또는 .sub 파일 선택"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "성공"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "현재 첫 번째 자막"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "현재 첫 번째 자막:"
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "동영상 파일을 선택하세요."
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "현재 마지막 자막"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "현재 마지막 자막:"
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "검색 문자열 입력"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "예"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "아니오"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "이 편집기는 .srt 또는 .sub 파일에서만 동작합니다"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "파일을 찾을 수 없음: "
+
+msgctxt "#32028"
+msgid "Write the new timestamp for the end position, seperated by a ':'. For instance: 01:22:23:000"
+msgstr "끝 위치에 대한 새 타임스탬프를 ':'로 구분하여 작성합니다. 예: 01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "예: 01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "보고서"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "감지된 문제 없음"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "줄:"
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "줄 "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "가능한 문제: "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "계속하려면 자막을 선택하세요..."
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "편집할 자막 선택"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "자막 시작 시간 "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "자막은 다음 시간에 끝납니다 "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "_edited.srt를 추가하여 저장"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "현재 파일 이름으로 저장"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "사용자 정의 파일 이름으로 저장"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "저장하지 않고 종료"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "새 파일 이름 지정: "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "다음으로 작성: "
+
+msgctxt "#32044"
+msgid "To use the file, select it in the Kodi player subtitle menu when playing the file"
+msgstr "이 파일을 사용하려면, 파일 재생 시 Kodi 플레이어 자막 메뉴에서 선택하세요"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "파일이 작성되지 않음"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "경고"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "파일에 저장되지 않은 진행 상황이 있을 수 있습니다"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "어쨌든 종료"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "저장"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "자막이 성공적으로 동기화됨"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "앞으로 이동"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "뒤로 이동"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "첫 자막에 새로운 시간 주기"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "앞으로 이동: HH:MM:SS:MSE"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "앞으로 이동: HH:MM:SS:MSE"
+
+msgctxt "#32056"
+msgid "Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, milliseconds. For instance: 01:23:45:000"
+msgstr "유효한 시간 코드를 입력하십시오: HH:MM:SS:MSE. 시간, 분, 초, 밀리초. 예: 01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "두 개의 자막을 동기화하는 방법"
+
+msgctxt "#32058"
+msgid "In order to synchronize, you will need a subtitle which matches the video perfectly, but has different subtitles, usually from a different language. In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked to select a timecode in this file, which will be used as reference. Ideally, it is the first spoken line from the video. In the next screen, select the line from your original subtitle which matches the first.[CR][CR]Subsequently, you'll be asked again to select a line from your reference subtitle and to match this with the same line in your original subtitle. Usually the best choice is the last spoken line from the video. After this your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them and 'Save subtitles' to write them to a file."
+msgstr "동기화하려면, 비디오와 완벽하게 일치하지만 일반적으로 다른 언어의 다른 자막이 있는 자막이 필요합니다. 다음 슬라이드에서 먼저 이 자막을 선택합니다.[CR][CR]그런 다음 이 파일에서 참조로 사용할 시간 코드를 선택하라는 메시지가 표시됩니다. 이상적으로는 비디오의 첫 번째 대사입니다. 다음 화면에서 원본 자막에서 첫 번째와 일치하는 줄을 선택합니다.[CR][CR]다음에는 참조 자막에서 줄을 선택하고 이를 원본의 동일한 줄과 일치시키라는 메시지가 다시 표시됩니다. 일반적으로 가장 좋은 선택은 비디오의 마지막 대사입니다. 그런 다음 두 자막이 동기화됩니다![CR][CR]'자막 스크롤'을 선택하여 자막을 보고 '자막 저장'을 선택하여 파일에 씁니다."
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "파일을 찾을 수 없음"
+
+msgctxt "#32060"
+msgid "In the next screen, select the video to synchronize with. Go to the point in the video where the first subtitle starts. When you pause the video, choose 'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "다음 화면에서 동기화할 영상을 선택하세요. 동영상에서 첫 번째 자막이 시작되는 지점으로 이동합니다. 비디오를 일시 중지할 때, 메뉴에서 '시작으로 선택'을 선택한 다음, 마지막 자막과 동일한 작업을 수행합니다."
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "비디오 파일과 동기화하는 방법"
+
+msgctxt "#32062"
+msgid "In the next screen, open the videofile from the library which belongs to the subtitle you have opened. Skip or fast forward to the point where the subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, a menu will pop up with several options. Select 'View or edit first subtitle'. When your first subtitle is not the first line from the video, select 'Delete' until the first subtitle is also the first line from the video.[CR][CR]Then finetune the position of the video, possibly by using the 'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the video, and repeat the same process.[CR][CR]After this, your file will be synced to the video."
+msgstr "다음 화면에서 열어본 자막에 속한 라이브러리의 비디오 파일을 엽니다. 자막이 대략적으로 배치되어야 하는 지점으로 건너뛰거나 빨리 감습니다. 일시 중지.[CR][CR]동영상을 일시 중지하면 여러 옵션이 있는 메뉴가 나타납니다. '첫 번째 자막 보기 또는 편집'을 선택합니다. 첫 번째 자막이 동영상의 첫 번째 줄이 아닌 경우, 첫 번째 자막이 동영상의 첫 번째 줄이 될 때까지 '삭제'를 선택합니다.[CR][CR]그런 다음 '건너뛰기'를 사용하여 동영상의 위치를 미세 조정합니다. 1초 앞으로' 또는 '1초 뒤로 건너뛰기' 버튼. 위치가 완벽하면 '시작으로 선택'을 선택합니다.[CR]이제 동영상의 끝으로 빨리감기하고 동일한 과정을 반복합니다.[CR][CR]이후 파일이 동영상에 동기화됩니다."
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "동기화할 첫 번째 자막의 타임코드 선택"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "선택한 시간"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "선택한 시간"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "거의 동일한 자막의 타임코드를 선택하십시오"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "동기화할 마지막 자막 시간 선택"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "마지막 자막 시간 선택"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "새로운 타임코드"
+
+msgctxt "#32069"
+msgid "Write the new timestamp for the start position, seperated by a ':'. For instance: 01:22:23:000"
+msgstr "시작 위치에 대한 새 타임스탬프를 ':'로 구분하여 작성합니다. 예: 01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "자막이 앞으로 이동: {}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "자막이 {}만큼 뒤로 이동됨"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "이제 첫 번째 자막이 {}에서 시작됩니다"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "이제 마지막 자막이 {}에서 시작됩니다"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " 일시 중지: "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "계속 재생"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "첫 번째 자막의 시작으로 선택"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "1초 뒤로 건너뛰기"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "1초 앞으로 건너뛰기"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "메인 메뉴로 나가기"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "첫 번째 자막 보기 또는 삭제"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "마지막 자막 보기 또는 삭제"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "마지막 자막의 시작으로 선택"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "첫 번째 자막으로 설정할까요?"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "자막을 다음 위치에서 시작할까요: "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "시작 시간 재설정"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "선택한 시작: "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "선택한 시간:"
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "첫 번째 자막은 다음에서 시작됩니다: "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "마지막 자막은 다음에서 시작됩니다: "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "선택"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "재설정 시간"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "선택한 시간"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "타임코드가 있는 라인 선택"
+
+msgctxt "#32092"
+msgid "Please select a line with a timecode, like:[CR]'01:23:45,679 --> 01:23:45,679'"
+msgstr "타임코드가 있는 라인을 선택하세요. 예:[CR]'01:23:45,679 --> 01:23:45,679'"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "영화 선택"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "TV 쇼 선택"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "전체 라이브러리 보기"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "변경 사항이 있는 주 메뉴로 나가기"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "표시된 자막 저장"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "변경 없이 주 메뉴로 나가기"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "완전히 종료"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "다른 프레임 속도로 재설정"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "저장하고 계속 재생"
+
+msgctxt "#32102"
+msgid "The subtitle is loaded with the new framerate. Pause to reset to another frame rate or to save."
+msgstr "자막을 새 프레임 속도로 읽습니다. 다른 프레임 속도로 재설정하거나 저장하려면 일시 중지하십시오."
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "유효한 숫자를 입력하세요"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "비디오에서 프레임 속도 가져오기"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "프레임 속도별 동기화 옵션"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "프레임 속도"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "새로운 종료 시간"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "이전 시작 시간: "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "시작 시간: "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "이전 종료 시간: "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "새로운 시작 시간: "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "새로운 종료 시간: "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "저장하고 나가기"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "수동으로 계산"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "합계나 비율 제공"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "비율 계산 또는 제공"
+
+msgctxt "#32115"
+msgid "In the next screen, write a sum with the current framerate divided by the real frame rate. If the current frame rate is 25 and it should be 24, type '25/24'. Or type your own factor, like '1.2'"
+msgstr "다음 화면에서 현재 프레임 속도를 실제 프레임 속도로 나눈 합계를 씁니다. 현재 프레임 속도가 25이고 24여야 하는 경우 '25/24'를 입력합니다. 또는 '1.2'와 같이 비율를 입력합니다"
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "이전에 열었던 파일로 재생"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "비율 제공"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "주어진 비율로 늘이기"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "새로운 종료 시간을 주어 늘이기"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "이 영상의 프레임 속도는 "
+
+msgctxt "#32121"
+msgid "The video is playing with the modified subtitle. Pause to save or to return to the menu."
+msgstr "수정된 자막으로 영상이 재생되고 있습니다. 저장하거나 메뉴로 돌아가려면 일시 중지합니다."
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "자막 읽음"
+
+msgctxt "#32123"
+msgid "The video is playing with the saved subtitle. The filename of the subtitle is: "
+msgstr "저장된 자막으로 영상이 재생되고 있습니다. 자막 파일 이름은 다음과 같습니다: "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "현재 첫 번째 자막 시간으로 이동"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "마지막 자막 시간으로 이동"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "다른 것 선택"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "프레임 속도 입력"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "다른 자막 열기"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "이 화면이 표시되는 이유는 무엇입니까?"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr ".sub 파일을 선택했습니다"
+
+msgctxt "#32131"
+msgid "You have selected a .sub file, which uses frame rates to indicate when subtitles should be shown. To edit these subtitles, you have to select a frame rate. You can start a video to see what frame rate it has or just pick a random one if you want to use a sync option."
+msgstr "프레임 속도를 사용하여 자막을 표시해야 하는 시기를 나타내는 .sub 파일을 선택했습니다. 이 자막을 편집하려면 프레임 속도를 선택해야 합니다. 비디오를 시작하여 프레임 속도를 확인하거나 동기화 옵션을 사용하려는 경우 임의의 프레임 속도를 선택할 수 있습니다."
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "이 파일은 유효한 자막이 아닐 수 있습니다"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "어쨌든 읽음"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "기타 선택"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr "유효한 .sub 파일이 아님"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "이 파일은 유효한 .sub 파일이 아닌 것 같습니다."
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "발견된 모든 HTML 색상 코드가 흰색으로 재설정됩니다."
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "색상 코드를 흰색으로 재설정"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "색상 코드를 흰색으로 재설정"
+
+msgctxt "#32140"
+msgid "Not a valid code for a color. Use 8 digits in a hexadecimal notation: 'FF00FF00'"
+msgstr "색상에 대한 유효한 코드가 아닙니다. 16진수 표기법으로 8자리 사용: 'FF00FF00'"
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "색상 코딩을 제공합니다. 8자리를 사용합니다. 취소하려면 비워두세요"
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "발견된 모든 HTML 색상 코드가 다음으로 재설정됨 "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "자막 읽음"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "수동으로"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "이 자막을 수정할까요?"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "재생은 중지되지만, 메뉴에서 다시 시작할 수 있습니다."
+
+msgctxt "#35005"
+msgid "A subtitlefile could not be found. Do you want to select one manually and continue with current video?"
+msgstr "자막 파일을 찾을 수 없습니다. 수동으로 하나를 선택하고 현재 비디오를 계속할까요?"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "동영상:"
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "자막:"
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "다음으로 재생 "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "리모컨으로 자막 편집 및 동기화"
+
+msgctxt "#35010"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "이 스크립트를 사용하면 특정 줄을 편집하고, 자막을 이동하거나 늘리고, 다른 자막과 동기화할 수 있습니다. 비디오 파일과 동기화할 수도 있습니다."
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "메뉴로 돌아가기"
+
+msgctxt "#35016"
+msgid "Somewhere in the process of syncing an error occurred. Most of the time this is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A .srt file which has a digit missing in one of its timestamps.[CR] - A file which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "동기화 과정에서 오류가 발생했습니다. 대부분 다음으로 인해 발생합니다.[CR] - 비표준 타임스탬프를 사용하는 .srt 파일.[CR] - 타임스탬프 중 하나에 숫자가 누락된 .srt 파일.[CR] - 실제 .srt 파일이 아닙니다.[CR][CR]주 메뉴 -> 고급 옵션 -> 무결성 검사를 사용하여 잘못된 타임스탬프를 검색하거나 다른 .srt 파일을 사용하십시오."
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "다음 오류 발생:"
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "오류 내용"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "문자세트가 감지되지 않음"
+
+msgctxt "#35018"
+msgid "The correct characterset of this file could not be detected. The file is now loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "이 파일의 올바른 문자세트를 검색할 수 없습니다. 이제 파일이 UTF-8 세트로 로드되고 오류가 물음표로 바뀝니다."

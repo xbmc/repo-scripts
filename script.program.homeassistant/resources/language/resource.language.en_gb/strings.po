@@ -186,5 +186,21 @@ msgid "Remove from HAKA! favourites"
 msgstr ""
 
 msgctxt "#30080"
-msgid "Camera"
+msgid "Cameras"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Fans"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Favourites"
+msgstr ""
+
+msgctxt "#30090"
+msgid "Home"
+msgstr ""
+
+msgctxt "#30091"
+msgid "Not home"
 msgstr ""

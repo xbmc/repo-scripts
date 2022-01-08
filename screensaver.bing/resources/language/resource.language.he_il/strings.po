@@ -1,0 +1,44 @@
+# XBMC Media Center language file
+# Addon Name: Bing ScreenSaver
+# Addon id: screensaver.bing
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: he_il\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+
+msgctxt "#30001"
+msgid "Something went wrong, Try again..."
+msgstr ""
+
+msgctxt "#30002"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Rotate Image Every"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Randomize"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Animate"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Display Time & Weather"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Use Vignette Overlay"
+msgstr ""

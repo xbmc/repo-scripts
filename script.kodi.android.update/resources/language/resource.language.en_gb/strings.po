@@ -4,8 +4,8 @@
 # Addon Provider: Lunatixz
 msgid ""
 msgstr ""
-"Project-Id-Version:\script.kodi.android.update\n"
-"Report-Msgid-Bugs-To: https://forum.kodi.tv/"
+"Project-Id-Version: script.kodi.android.update\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Lunatixz Translation Team\n"
@@ -15,6 +15,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Download and Install Kodi packages."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Download and Install Kodi android packages; select from  Nightlies, Releases, Snapshots and Test-builds."
+msgstr ""
 
 msgctxt "#30000"
 msgid "Enable Debugging [Log errors]"

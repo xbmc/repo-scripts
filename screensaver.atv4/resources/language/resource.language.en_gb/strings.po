@@ -210,111 +210,6 @@ msgctxt "#32048"
 msgid "No downloaded videos for offline mode!"
 msgstr ""
 
-
-msgctxt "#32049"
-msgid "Enable Africa and the Middle East"
-msgstr ""
-
-msgctxt "#32050"
-msgid "Enable Africa Night"
-msgstr ""
-
-msgctxt "#32051"
-msgid "Enable Antarctica"
-msgstr ""
-
-msgctxt "#32052"
-msgid "Enable California to Vegas"
-msgstr ""
-
-msgctxt "#32053"
-msgid "Enable Caribbean"
-msgstr ""
-
-msgctxt "#32054"
-msgid "Enable Caribbean Day"
-msgstr ""
-
-msgctxt "#32055"
-msgid "Enable China"
-msgstr ""
-
-msgctxt "#32056"
-msgid "Enable Dubai"
-msgstr ""
-
-msgctxt "#32057"
-msgid "Enable Greenland"
-msgstr ""
-
-msgctxt "#32058"
-msgid "Enable Hawaii"
-msgstr ""
-
-msgctxt "#32059"
-msgid "Enable Hong Kong"
-msgstr ""
-
-msgctxt "#32060"
-msgid "Enable Iran and Afghanistan"
-msgstr ""
-
-msgctxt "#32061"
-msgid "Enable Ireland to Asia"
-msgstr ""
-
-msgctxt "#32062"
-msgid "Enable Italy to Asia"
-msgstr ""
-
-msgctxt "#32063"
-msgid "Enable Korean and Japan Night"
-msgstr ""
-
-msgctxt "#32064"
-msgid "Enable Liwa"
-msgstr ""
-
-msgctxt "#32065"
-msgid "Enable London"
-msgstr ""
-
-msgctxt "#32066"
-msgid "Enable Los Angeles"
-msgstr ""
-
-msgctxt "#32067"
-msgid "Enable New York"
-msgstr ""
-
-msgctxt "#32068"
-msgid "Enable New York Night"
-msgstr ""
-
-msgctxt "#32069"
-msgid "Enable New Zealand"
-msgstr ""
-
-msgctxt "#32070"
-msgid "Enable North America Aurora"
-msgstr ""
-
-msgctxt "#32071"
-msgid "Enable Sahara and Italy"
-msgstr ""
-
-msgctxt "#32072"
-msgid "Enable San Francisco"
-msgstr ""
-
-msgctxt "#32073"
-msgid "Enable Southern California to Baja"
-msgstr ""
-
-msgctxt "#32074"
-msgid "Enable West Africa to the Alps"
-msgstr ""
-
 msgctxt "#32075"
 msgid "Enable 4K (default 1080p)"
 msgstr ""
@@ -337,4 +232,212 @@ msgstr ""
 
 msgctxt "#32080"
 msgid "The addon will use only the videos locally available videos, without attempting to connect to the Apple servers. You need to download the videos first"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Enable Africa and the Middle East"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Enable Africa Night"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Enable Alaskan Jellies"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Enable Antarctica"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Enable Atlantic Ocean to Spain and France"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Enable Australia"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Enable Barracuda"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Enable Bumpheads"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Enable California Dolphins"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Enable California Kelp Forest"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Enable California to Vegas"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Enable Caribbean Day"
+msgstr ""
+
+msgctxt "#32093"
+msgid "Enable Caribbean"
+msgstr ""
+
+msgctxt "#32094"
+msgid "Enable China"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Enable Costa Rica Dolphins"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Enable Cownose Rays"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Enable Dubai"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Enable Grand Canyon"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Enable Gray Reef Sharks"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Enable Greenland"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Enable Hawaii"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Enable Hong Kong"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Enable Humpback Whale"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Enable Iceland"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Enable Iran and Afghanistan"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Enable Ireland to Asia"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Enable Italy to Asia"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Enable Jacks"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Enable Kelp"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Enable Korea and Japan Night"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Enable Liwa"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Enable London"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Enable Los Angeles"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Enable New York Night"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Enable New York"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Enable New Zealand"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Enable Nile Delta"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Enable North America Aurora"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Enable Palau Coral"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Enable Palau Jellies"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Enable Patagonia"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Enable Red Sea Coral"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Enable Sahara and Italy"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Enable San Francisco"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Enable Scotland"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Enable Sea Stars"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Enable Seals"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Enable South Africa to North Asia"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Enable Southern California to Baja"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Enable Tahiti Waves"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Enable West Africa to the Alps"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Enable Yosemite"
 msgstr ""

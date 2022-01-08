@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.janitor" name="Janitor" version="5.0.0" provider-name="Anthirian, drewzh">
+<addon id="script.service.janitor" name="Janitor" version="5.0.1" provider-name="Anthirian, drewzh">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     </requires>
@@ -53,12 +53,8 @@ Ten dodatek może wymazać całą Twoją kolekcję wideo! Upewnij się, że dok�
         <website>https://forum.kodi.tv/showthread.php?tid=162517</website>
         <email>anthirian@users.noreply.github.com</email>
         <news>
-[B][I]Version 5.0.0[/I][/B]
-- [NEW] Completely rewritten Janitor in Python 3 to support Kodi Matrix
-- [NEW] Much improved progress dialogs focusing on showing what matters
-- [NEW] Overhaul settings page to use the new format
-- [FIX] Checking hard links once again works properly
-- [FIX] Improved handling of special characters
+[B][I]Version 5.0.1[/I][/B]
+- [FIX] Cleaning service failed to start
         </news>
         <assets>
             <icon>resources/icon.png</icon>

@@ -2,9 +2,8 @@ import xbmc
 import xbmcgui
 from resources.lib.timer import util
 from resources.lib.timer.abstract_set_timer import AbstractSetTimer
-from resources.lib.timer.scheduler import (ACTION_STOP_AT_END,
-                                           END_TYPE_DURATION, END_TYPE_TIME,
-                                           SLEEP_TIMER)
+from resources.lib.timer.timer import (ACTION_STOP_AT_END, END_TYPE_DURATION,
+                                       END_TYPE_TIME, SLEEP_TIMER)
 
 
 class SetSleep(AbstractSetTimer):
@@ -15,7 +14,7 @@ class SetSleep(AbstractSetTimer):
 
     def ask_label(self, listitem, preselection):
 
-        return self.addon.getLocalizedString(32009)
+        return self.addon.getLocalizedString(32004)
 
     def ask_duration(self, listitem, preselection):
 

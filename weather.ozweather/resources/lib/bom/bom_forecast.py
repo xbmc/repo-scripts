@@ -95,7 +95,6 @@ def bom_forecast(geohash):
     """
     Return are information, current observations, warnings, and forecast for the given geohash
     If we're unable to get the key data (current observations and forecast) then return False
-    ...will then fall back to scraping Weatherzone (if that is configured).
 
     :param: geohash - the BOM location geohash
     """
@@ -400,7 +399,7 @@ def bom_forecast(geohash):
             set_key(weather_data, i, "ConditionLong", extended_text)
 
         # Cleanup & Final Data massaging
-        # Missing data that was available at Weatherzone but is not available from the BOM API
+        # Historical - these are not available from the BOM API
         weather_data['Current.DewPoint'] = "N/A"
         weather_data['Current.Pressure'] = "N/A"
         weather_data['Current.FireDangerText'] = ""  # -> use only FireDanger with the BOM as is now text already

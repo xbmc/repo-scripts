@@ -386,7 +386,7 @@ class Janitor(object):
 
         if get_value(clean_when_idle) and xbmc.Player().isPlaying():
             debug("Kodi is currently playing a file. Skipping cleaning.", xbmc.LOGWARNING)
-            return None, self.exit_status
+            return None, self.STATUS_ABORTED
 
         cleaning_results = []
 

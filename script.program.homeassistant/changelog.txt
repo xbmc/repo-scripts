@@ -1,3 +1,12 @@
+Version 1.2.0 (2021-10-12)
+- Camera support (view picture of HA camera's)
+- Fan support (toggle)
+- Fixed issue: Crash when friendly name is not available
+- Fixed issue: Persons state not visible
+- Translations: Updated NL with some items previously not translated
+
+---------------------------------------------------------------------
+
 Version 1.1.0 (2021-02-24)
 - Kodi Matrix Support
 - HAKA! Favorites section added (add items via context menu)

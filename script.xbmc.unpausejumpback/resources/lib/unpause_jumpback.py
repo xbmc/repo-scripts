@@ -110,7 +110,7 @@ class MyPlayer(xbmc.Player):
             log("Video is playing via Live TV, which is set as an excluded location.")
             return True
 
-        if (full_path.find("http://") > -1) or (full_path.find("https://") > -1) and self.exclude_http:
+        if ((full_path.find("http://") > -1) or (full_path.find("https://") > -1)) and self.exclude_http:
             log("Video is playing via HTTP source, which is set as an excluded location.")
             return True
 
