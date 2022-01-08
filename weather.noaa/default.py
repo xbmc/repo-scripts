@@ -7,7 +7,7 @@ standard_library.install_aliases()
 import os, glob, sys, time
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
-from resources.lib.utils import FtoC, CtoF, log, ADDON, LANGUAGE,MAPSECTORS,MAPTYPES
+from resources.lib.utils import FtoC, CtoF, log, ADDON, LANGUAGE, MAPSECTORS, LOOPSECTORS, MAPTYPES
 from resources.lib.utils import WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x 
 from resources.lib.utils import get_url_JSON, get_url_image 
 from resources.lib.utils import get_month, get_timestamp, get_weekday, get_time
@@ -697,51 +697,65 @@ def mapSettings(mapid):
 	s_sel = ADDON.getSetting(mapid+"Sector")
 	t_sel   = ADDON.getSetting(mapid+"Type")
 
-	# convert our map data into matching arrays to pass into dialog
-	s_keys = []
-	s_values= []
-
-	#1st option is blank for removing map
-	s_keys.append("")
-	s_values.append("")
-
-	for key,value in MAPSECTORS.items():
-		s_keys.append(key)
-		s_values.append(value['name'])		
-
 	t_keys = []
 	t_values= []
+
+	#1st option is blank for removing map
+	t_keys.append("")
+	t_values.append("")
+
+
 	for key,value in MAPTYPES.items():
 		t_keys.append(key)
 		t_values.append(value)		
 
+
 	dialog = xbmcgui.Dialog()
 
-	# grab index of current region, and pass in as default to dialog
-	si=0
+	ti=0	
 	try:
-		si=s_keys.index(s_sel.lower())
+		ti=t_keys.index(t_sel)
 	except:
-		#ignore if we did not find
-		si=0
-	si=dialog.select(LANGUAGE(32349),s_values,0,si)
-	s_sel=s_keys[si]
-	ADDON.setSetting(mapid+"Sector",s_sel)
-
-	if si > 0:
 		ti=0	
+	ti=dialog.select(LANGUAGE(32350), t_values,0,ti)
+	t_sel=t_keys[ti]
+	ADDON.setSetting(mapid+"Type",t_keys[ti])
+
+
+
+
+
+	if ti > 0:
+
+		if ("LOOP" == t_sel):
+			Sectors=LOOPSECTORS
+		else:
+			Sectors=MAPSECTORS	
+
+		# convert our map data into matching arrays to pass into dialog
+		s_keys = []
+		s_values= []
+
+		for key,value in Sectors.items():
+			s_keys.append(key)
+			s_values.append(value['name'])		
+
+		# grab index of current region, and pass in as default to dialog
+		si=0
 		try:
-			ti=t_keys.index(t_sel)
+			si=s_keys.index(s_sel.lower())
 		except:
-			ti=0	
-		ti=dialog.select(LANGUAGE(32350), t_values,0,ti)
-		t_sel=t_keys[ti]
-		ADDON.setSetting(mapid+"Type",t_keys[ti])
-		ADDON.setSetting(mapid+"Label",MAPSECTORS[s_sel]['name']+":"+MAPTYPES[t_sel])
-		ADDON.setSetting(mapid+"Select",MAPSECTORS[s_sel]['name']+":"+MAPTYPES[t_sel])
+			#ignore if we did not find
+			si=0
+		si=dialog.select(LANGUAGE(32349),s_values,0,si)
+		s_sel=s_keys[si]
+		ADDON.setSetting(mapid+"Sector",s_sel)
+		ADDON.setSetting(mapid+"Label",Sectors[s_sel]['name']+":"+MAPTYPES[t_sel])
+		ADDON.setSetting(mapid+"Select",Sectors[s_sel]['name']+":"+MAPTYPES[t_sel])
 	else:
 		ADDON.setSetting(mapid+"Label","")
 		ADDON.setSetting(mapid+"Select","")
+
 	
 	# clean up referenced dialog object	
 	del dialog
@@ -818,17 +832,19 @@ else:
 		nowtime=str(time.time())
 		#Radar
 		radarLoop=ADDON.getSetting('RadarLoop')
+
+		#clean up previously fetched radar loop images
+		imagepath=xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+		for f in glob.glob(imagepath+"radar*.gif"):
+			os.remove(f)
+		
 		if ("true" == radarLoop):
 			#kodi will not loop gifs from a url, we have to actually 
 			#download to a local file to get it to loop
 			
-			imagepath=xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-			#clean up previously fetched images
-			for f in glob.glob(imagepath+"radar*.gif"):
-				os.remove(f)
 			xbmc.log('Option To Loop Radar Selected',level=xbmc.LOGDEBUG)
 			url="https://radar.weather.gov/ridge/lite/%s_loop.gif" % (Station)
-			radarfilename="radar_%s.gif" % (nowtime)
+			radarfilename="radar_%s_%s.gif" % (Station,nowtime)
 			dest=imagepath+radarfilename
 			loop_image=get_url_image(url, dest)
 			set_property('Map.%i.Area' % 1, loop_image)
@@ -850,14 +866,29 @@ else:
 			maplabel = ADDON.getSetting('Map%iLabel' % (mcount))
 
 			if (mapsector and maptype):
-				path=MAPSECTORS.get(mapsector)['path']
-				if mapsector != 'glm-e' and mapsector != 'glm-w':
-					path=path.replace("%s",maptype)
-				url="https://cdn.star.nesdis.noaa.gov/%s?%s" % (path,nowtime)
+
+				if ("LOOP" == maptype):
+				# want looping radar gifs
+					path=LOOPSECTORS.get(mapsector)['path']
+					imagepath=xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+					url="https://radar.weather.gov/%s" % (path)
+					radarfilename="radar_%s_%s.gif" % (mapsector,nowtime)
+					dest=imagepath+radarfilename
+					loop_image=get_url_image(url, dest)
+
+					set_property('Map.%i.Area' % (mcount), loop_image)
+					set_property('Map.%i.Heading' % (mcount), "%s" % (maplabel) )
+					clear_property('Map.%i.Layer' % (mcount))
+				else:
+				# want normal satellite images
+					path=MAPSECTORS.get(mapsector)['path']
+					if mapsector != 'glm-e' and mapsector != 'glm-w':
+						path=path.replace("%s",maptype)
+						url="https://cdn.star.nesdis.noaa.gov/%s?%s" % (path,nowtime)
 				
-				set_property('Map.%i.Area' % (mcount), url)
-				set_property('Map.%i.Heading' % (mcount), "%s" % (maplabel) )
-				clear_property('Map.%i.Layer' % (mcount))
+					set_property('Map.%i.Area' % (mcount), url)
+					set_property('Map.%i.Heading' % (mcount), "%s" % (maplabel) )
+					clear_property('Map.%i.Layer' % (mcount))
 			else:
 				clear_property('Map.%i.Area' % (mcount))
 				clear_property('Map.%i.Heading' % (mcount))
@@ -869,7 +900,7 @@ else:
 # clean up references to classes that we used
 del MONITOR, xbmc, xbmcgui, xbmcvfs, xbmcaddon, WEATHER_WINDOW
 # clean up everything we referenced from the utils to prevent any dangling classes hanging around
-del FtoC, CtoF, log, ADDON, LANGUAGE, MAPSECTORS, MAPTYPES
+del FtoC, CtoF, log, ADDON, LANGUAGE, MAPSECTORS, LOOPSECTORS, MAPTYPES
 del WEATHER_CODES, FORECAST, FEELS_LIKE, SPEED, WIND_DIR, SPEEDUNIT, zip_x 
 del get_url_JSON, get_url_image
 del get_month, get_timestamp, get_weekday, get_time

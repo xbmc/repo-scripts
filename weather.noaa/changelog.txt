@@ -1,3 +1,6 @@
+v2.0.7
+- add in regional radar loop composits to map options
+
 v2.0.6
 - handle error in temp conversion function when we did not receive a valid temperature from the api
 - switch alerts api to use grid location instead of picking zone or county

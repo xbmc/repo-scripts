@@ -557,8 +557,8 @@ MAPSECTORS = {
 	"ssa":		{"name":LANGUAGE(32395),"path":"GOES16/ABI/SECTOR/ssa/%s/900x540.jpg"}
 	}
 
-
 MAPTYPES = {
+	"LOOP":		LANGUAGE(32333),
 	"GEOCOLOR":	LANGUAGE(32400),
 	"EXTENT":	LANGUAGE(32401),
 	"Sandwich":	LANGUAGE(32402),
@@ -585,4 +585,22 @@ MAPTYPES = {
 	"16":		LANGUAGE(32424)		
 	}
 
+LOOPSECTORS = {
+	##ridge/lite/CONUS_loop.gif
+	"us":	{"name":LANGUAGE(32396),"path":"ridge/lite/CONUS-LARGE_loop.gif"},
+	"pnw":	{"name":LANGUAGE(32369),"path":"ridge/lite/PACNORTHWEST_loop.gif"},
+	"psw":	{"name":LANGUAGE(32371),"path":"ridge/lite/PACSOUTHWEST_loop.gif"},
+	"nr":	{"name":LANGUAGE(32373),"path":"ridge/lite/NORTHROCKIES_loop.gif"},
+	"sr":	{"name":LANGUAGE(32374),"path":"ridge/lite/SOUTHROCKIES_loop.gif"},
+	"sp":	{"name":LANGUAGE(32375),"path":"ridge/lite/SOUTHPLAINS_loop.gif"},
+	"umv":	{"name":LANGUAGE(32376),"path":"ridge/lite/UPPERMISSVLY_loop.gif"},
+	"smv":	{"name":LANGUAGE(32377),"path":"ridge/lite/SOUTHMISSVLY_loop.gif"},
+	"cgl":	{"name":LANGUAGE(32379),"path":"ridge/lite/CENTGRLAKES_loop.gif"},
+	"ne":	{"name":LANGUAGE(32381),"path":"ridge/lite/NORTHEAST_loop.gif"},
+	"se":	{"name":LANGUAGE(32383),"path":"ridge/lite/SOUTHEAST_loop.gif"},
+	"car":	{"name":LANGUAGE(32384),"path":"ridge/lite/CARIB_loop.gif"},
+	"ak":	{"name":LANGUAGE(32364),"path":"ridge/lite/ALASKA_loop.gif"},
+	"hi":	{"name":LANGUAGE(32389),"path":"ridge/lite/HAWAII_loop.gif"},
+	"guam":	{"name":LANGUAGE(32397),"path":"ridge/lite/GUAM_loop.gif"}
+	}
 
