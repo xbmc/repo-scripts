@@ -658,8 +658,16 @@ msgctxt "#32395"
 msgid "South America - Southern"
 msgstr ""
 
+msgctxt "#32396"
+msgid "Contentinental US"
+msgstr ""
+
+msgctxt "#32397"
+msgid "Guam"
+msgstr ""
+
 ##RESERVED
-## 32396-32399
+## 32398-32399
 
 msgctxt "#32400"
 msgid "True Color/IR"
