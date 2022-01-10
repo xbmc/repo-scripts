@@ -1,24 +1,11 @@
-![Kodi logo](https://raw.githubusercontent.com/xbmc/xbmc/master/media/banner.png)
-# Kodi Home Theater Software
+# Bluetooth Delay for Kodi
+## script.bluetooth.delay
+This addon makes it easy to use Kodi with bluetooth headphones.
 
+With this addon you can set up Audio Delay for one or two devices, and toggle between them via a shortcut on your home screen, or a shortcut on your keyboard.
 
-## Contents
+<img width="633" alt="1" src="https://user-images.githubusercontent.com/75268095/148041185-eedda990-01a0-4985-84e5-fe9e6ccaa2a6.png">
 
-This branch is not used for public. Please use one of the other branches available for submitting add-ons.
+<img width="633" alt="2" src="https://user-images.githubusercontent.com/75268095/147893663-3e1f0b8b-90a2-4a63-89b2-e074739edaff.png">
 
-## Quick Kodi development links
-
-* [Add-on rules](https://github.com/xbmc/repo-scripts/blob/master/CONTRIBUTING.md)
-* [Submitting an add-on details](http://kodi.wiki/view/Submitting_Add-ons)
-* [Code guidelines](http://kodi.wiki/view/Official:Code_guidelines_and_formatting_conventions)
-* [Kodi development](http://kodi.wiki/view/Development)
-* [Kodi Addon checker](https://pypi.org/project/kodi-addon-checker/)
-
-## Other useful links
-
-* [Kodi wiki](http://kodi.wiki/)
-* [Kodi bug tracker](http://trac.kodi.tv)
-* [Kodi community forums](http://forum.kodi.tv/)
-* [Kodi website](http://kodi.tv)
-
-**Enjoy Kodi and help us improve it today. :)**
+<img width="633" alt="3" src="https://user-images.githubusercontent.com/75268095/148233137-be6b1f61-8e9a-4b5b-bcf5-af4e13fe4d31.png">
