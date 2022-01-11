@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<views>100</views>
+	<controls>
+		<control type="image">
+			<right>50%</right>
+			<centertop>50%</centertop>
+			<width>180</width>
+			<height>180</height>
+			<aspectratio>keep</aspectratio>
+			<bordersize>10</bordersize>
+			<texture>logo.png</texture>
+		</control>
+		<control type="list" id="100">
+			<left>50%</left>
+			<centertop>50%</centertop>
+			<width>180</width>
+			<height>120</height>
+			<viewtype>list</viewtype>
+			<itemlayout height="30">
+				<control type="label">
+					<left>10</left>
+					<label>$INFO[ListItem.Label]</label>
+					<textcolor>ffeeeeee</textcolor>
+				</control>
+			</itemlayout>
+			<focusedlayout height="30">
+				<control type="image">
+					<left>0</left>
+					<texture>menu-focus.png</texture>
+				</control>
+				<control type="label">
+					<left>10</left>
+					<label>$INFO[ListItem.Label]</label>
+					<textcolor>ffeeeeee</textcolor>
+				</control>
+			</focusedlayout>
+		</control>
+	</controls>
+</window>
