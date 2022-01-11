@@ -27,7 +27,6 @@ class Player(xbmc.Player):
         self.stream_url = None
         self.restart_time = 0
         self.now_playing = NowPlaying()
-   #     self.slideshow = Slideshow()
 
     def get_song_key(self):
         """Return (artist, title) for the current song, or None."""
@@ -162,7 +161,7 @@ if __name__ == '__main__':
     player = Player()
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
-        if monitor.waitForAbort(0.1):
+        if monitor.waitForAbort(1):
             break
         try:
             player.update()

@@ -10,7 +10,7 @@
     <extension point="xbmc.service" library="service.py"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">Mother Earth Radio addon for Kodi</summary>
-        <description lang="en_GB">Free High Resolution FLAC 96kHz/24bit Radio. 429hz music tuned to the Faslak's Frequency. Choose FLAC or AAC stream in addon-options</description>
+        <description lang="en_GB">Free High Resolution FLAC 96kHz/24bit Radio. 429hz music tuned to the Faslak's Frequency. Choose FLAC or ALAC stream in addon-options</description>
         <website>https://motherearthradio.de/</website>
         <source>http://github.com/FlorianReiterer/script.audio.motherearth</source>
         <license>GPL-3.0-or-later</license>
