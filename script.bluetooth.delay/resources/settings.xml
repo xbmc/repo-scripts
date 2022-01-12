@@ -22,21 +22,8 @@
 
         <setting label=" " type="select" id="Mode" lvalues="30005|30006|30007" default="1"/>
 
-    </category>
-
-
-    <category label="30008">
-
-        <setting label="30008" type="lsep"/>
-
-        <setting label="30009" type="labelenum" id="Toggle" values="None|B|D|F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12|" default="None"/>
-
-        <setting label="30010" type="labelenum" id="s1" values="None|B|D|F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12|"  default="None"/>
-
-        <setting label="30011" type="labelenum" id="s2" values="None|B|D|F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12|" default="None"/>
-
         <setting label="First Run" type="bool" id="firstRun" default="false" visible="false"/>
-
+        
     </category>
 
 </settings>
