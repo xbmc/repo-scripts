@@ -48,22 +48,6 @@ msgctxt "#30007"
 msgid "[Slow] Try if not working"
 msgstr ""
 
-msgctxt "#30008"
-msgid "Shortcut"
-msgstr ""
-
-msgctxt "#30009"
-msgid "Toggle"
-msgstr ""
-
-msgctxt "#30010"
-msgid "Device 1"
-msgstr ""
-
-msgctxt "#30011"
-msgid "Device 2"
-msgstr ""
-
 msgctxt "#30013"
 msgid "Attention"
 msgstr ""
