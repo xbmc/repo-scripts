@@ -8,10 +8,6 @@
 	<string id="30005">[Fast] Recommended for PC</string>
 	<string id="30006">[Normal] Recommended for Android</string>
 	<string id="30007">[Slow] Try if not working</string>
-	<string id="30008">Shortcut</string>
-	<string id="30009">Toggle</string>
-	<string id="30010">Device 1</string>
-	<string id="30011">Device 2</string>
 	<string id="30013">Attention</string>
 	<string id="30014">This addon uses the ''Set as default for all media'' setting in the audio settings. This includes: \n-Volume amplification \n-Center Mix Level</string>
 	<string id="30015">Play media to toggle Ahead/Delayed</string>
