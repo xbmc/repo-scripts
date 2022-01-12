@@ -3,17 +3,11 @@
 	<extension point="xbmc.python.script" library="addon.py">
 		<provides>executable</provides>
 	</extension>
-	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">Toggle audio delay</summary>
 		<description lang="en">Set audio delay for one or two devices, and toggle between them.</description>
-		<license></license>
-		<language></language>
-		<forum>http://</forum>
-		<source>https://</source>
-		<website></website>
-		<email></email>
+		<license>GPL-2.0-only</license>
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
