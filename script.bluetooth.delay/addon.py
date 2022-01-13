@@ -2,7 +2,6 @@ import xbmc
 import xbmcaddon
 import os
 import xbmcvfs
-import AudioDelay
 
 import sys
 if sys.version > '3':
@@ -25,4 +24,5 @@ script = xbmc.translatePath(os.path.join('special://home/addons/script.bluetooth
 if d2 == d1:
 	xbmcaddon.Addon().openSettings()
 else:
+	import AudioDelay
 	AudioDelay
