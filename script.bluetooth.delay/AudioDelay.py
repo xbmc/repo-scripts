@@ -145,7 +145,7 @@ else:
             xbmc.executebuiltin("Action(close)", wait=True)
             sourcesXML = minidom.parse(xbmc.translatePath('special://profile/guisettings.xml'))
             sources = sourcesXML.getElementsByTagName('audiodelay')[0].firstChild.nodeValue
-            xbmcgui.Dialog().notification(format(float(sources), '.3f') + Addon.getLocalizedString(30019),"", t*6)
+            xbmcgui.Dialog().notification(format(float(sources), '.3f') + Addon.getLocalizedString(30019),"","", t*6)
             dialog.ok(Addon.getLocalizedString(30016), Addon.getLocalizedString(30018))
             sys.exit()
         else:
