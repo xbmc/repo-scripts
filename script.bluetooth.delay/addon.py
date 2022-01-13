@@ -25,4 +25,3 @@ if d2 == d1:
 	xbmcaddon.Addon().openSettings()
 else:
 	import AudioDelay
-	AudioDelay
