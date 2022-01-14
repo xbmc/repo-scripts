@@ -1,3 +1,10 @@
+*** 2021.12.01.01 ***
+
+Replaced obsolete youtube-dl package with it's successor, yt-dlp.
+Changed versioning to follow yt-dlp scheme.
+Disabled automatic update
+Updated License files, etc.
+
 *** 21.303.0 ***
 
 Updated youtube-dl core to 2021.03.03
