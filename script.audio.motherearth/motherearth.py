@@ -25,14 +25,14 @@ STREAMS = [
     {
         'channel': 1,
         'title': 'Mother Earth Klassik',
-           'url_aac': 'http://server9.streamserver24.com:18900/motherearth.klassik.aac',
-           'url_flac': 'http://server9.streamserver24.com:18900/motherearth.klassik',
+           'url_aac': 'http://server9.streamserver24.com:18910/motherearth.klassik.aac',
+           'url_flac': 'http://server9.streamserver24.com:18910/motherearth.klassik',
     },
     {
         'channel': 2,
         'title': 'Mother Earth Instrumental',
-           'url_aac': 'http://server9.streamserver24.com:18900/motherearth.instrumental.aac',
-           'url_flac': 'http://server9.streamserver24.com:18900/motherearth.instrumental',
+           'url_aac': 'http://server9.streamserver24.com:18920/motherearth.instrumental.aac',
+           'url_flac': 'http://server9.streamserver24.com:18920/motherearth.instrumental',
     },
 ]
 STREAM_INFO = {s['url_aac']: s for s in STREAMS}
