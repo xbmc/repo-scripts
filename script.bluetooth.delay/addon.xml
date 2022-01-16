@@ -11,6 +11,7 @@
 		<summary lang="en">Toggle audio delay</summary>
 		<description lang="en">Set audio delay for one or two devices, and toggle between them.</description>
 		<license>GPL-2.0-only</license>
+		<source>https://github.com/MHR-official</source>		
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
