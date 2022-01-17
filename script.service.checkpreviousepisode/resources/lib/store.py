@@ -12,9 +12,9 @@ class Store:
     # https://docs.python.org/3/faq/programming.html#how-do-i-create-static-class-data-and-static-class-methods
     ignored_shows_file = None
     ignored_shows = {}
-    force_browse = False
-    force_all_seasons = False
-    ignore_if_absent_from_library = False
+    force_browse = None
+    force_all_seasons = None
+    ignore_if_episode_absent_from_library = None
 
     def __init__(self):
         """
