@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.charset-normalizer" name="charset-normalizer" version="2.0.10+matrix.1" provider-name="Ahmed TAHRI">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet.</summary>
+    <description lang="en_GB">The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://pypi.org/project/charset-normalizer/</website>
+    <source>https://github.com/Ousret/charset_normalizer</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>
