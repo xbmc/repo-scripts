@@ -889,11 +889,12 @@ class XMLFunctions:
         fallback_properties, fallbacks = self.data_func.get_custom_property_fallbacks(group_name)
 
         # Add fallback properties
+        source_properties = dict(properties)
         for key in fallback_properties:
             if key not in all_props:
                 # Check whether we have a fallback for the value
                 for property_match in fallbacks[key]:
-                    if has_fallback_property(property_match, properties):
+                    if has_fallback_property(property_match, source_properties):
                         additionalproperty = ETree.SubElement(newelement, "property")
                         additionalproperty.set("name", key)
                         additionalproperty.text = property_match[0]
