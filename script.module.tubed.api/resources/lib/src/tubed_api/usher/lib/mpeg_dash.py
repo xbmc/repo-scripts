@@ -29,11 +29,9 @@ LOG = Log('usher', __file__)
 class ManifestGenerator:
     path = xbmcvfs.translatePath('special://temp/script.module.tubed.api/')
 
-    def __init__(self, itags, cipher, calculate_n, license_data=None):
+    def __init__(self, itags, license_data=None):
         self.addon = xbmcaddon.Addon('script.module.tubed.api')
 
-        self._cipher = cipher
-        self.calculate_n = calculate_n
         self._itags = itags
         self._discarded = []
         if license_data is None:
@@ -41,10 +39,6 @@ class ManifestGenerator:
         self.license_data = license_data
 
         self.component_logging = self.addon.getSettingBool('log.manifest.generator')
-
-    @property
-    def cipher(self):
-        return self._cipher
 
     @property
     def itags(self):
@@ -250,10 +244,6 @@ class ManifestGenerator:
             if 'sig' in stream_map:
                 url = ''.join([url, signature_parameter, stream_map['sig']])
 
-            elif 's' in stream_map:
-                url = ''.join([url, signature_parameter, self.cipher.signature(stream_map['s'])])
-
-            url = self.calculate_n(url)
             url = url.replace("&", "&amp;").replace('"', "&quot;")
             url = url.replace("<", "&lt;").replace(">", "&gt;")
 
@@ -475,7 +465,7 @@ class ManifestGenerator:
 
                                 bitrate = int(stream_format.get('audio', {}).get('bitrate', 0))
                                 if bitrate > 0:
-                                    stream_info['audio']['bitrate'] = bitrate
+                                    stream_info['audio']['bitrate'] = str(bitrate)
 
                                 stream_info['audio']['codec'] = \
                                     stream_format.get('audio', {}).get('encoding')
