@@ -46,7 +46,7 @@ class Player(xbmc.Player):
         self.stream_url = None
         self.restart_time = 0
         self.now_playing.set_channel(None)
-        self.slideshow.set_slides(None)
+  #      self.slideshow.set_slides(None)
 
     def restart(self):
         """Restart playback, if necessary."""
@@ -106,7 +106,7 @@ class Player(xbmc.Player):
             return
 
         if song_key != ('', ''):
-            xbmc.log(f'rp_service: song_key {song_key}', xbmc.LOGDEBUG)
+            xbmc.log(f'mer_service: song_key {song_key}', xbmc.LOGDEBUG)
             song_data = self.now_playing.get_song_data(song_key)
             if song_data:
                 self.last_key = song_key
@@ -116,7 +116,7 @@ class Player(xbmc.Player):
             return
 
         cover = song_data.get('cover')
-        xbmc.log(f'me_service: cover {cover}', xbmc.LOGDEBUG)
+        xbmc.log(f'mer_service: cover {cover}', xbmc.LOGDEBUG)
 
         addon = xbmcaddon.Addon()
 
