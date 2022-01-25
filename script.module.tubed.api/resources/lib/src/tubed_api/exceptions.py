@@ -49,15 +49,7 @@ class ResourceUnavailable(TubedAPIException):
     pass
 
 
-class CipherNotFound(TubedAPIException):
-    pass
-
-
-class CipherUnknownMethod(TubedAPIException):
-    pass
-
-
-class CipherFailedDecipher(TubedAPIException):
+class ContentNoResponse(TubedAPIException):
     pass
 
 
