@@ -1248,8 +1248,8 @@ class LibraryFunctions:
                             # noinspection PyDeprecation
                             iterator = xmldata.getiterator()
 
+                        media_content = ''
                         for line in iterator:
-                            media_content = ""
 
                             if line.tag == "smartplaylist":
                                 media_type = line.attrib['type']

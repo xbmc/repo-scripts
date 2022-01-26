@@ -10,6 +10,11 @@
     See LICENSES/GPL-2.0-only for more information.
 """
 
+from urllib.parse import parse_qs
+from urllib.parse import urlencode
+from urllib.parse import urlsplit
+from urllib.parse import urlunsplit
+
 
 class Subtitles:
     def __init__(self, video_id, captions):
@@ -45,7 +50,8 @@ class Subtitles:
     def retrieve(self):
         list_of_subs = []
 
-        for language in self.translation_languages:
+        all_captions = self.translation_languages + self.caption_tracks
+        for language in all_captions:
             subtitle = self._get(language=language.get('languageCode'))
             if subtitle:
                 list_of_subs.append(subtitle)
@@ -75,14 +81,16 @@ class Subtitles:
         if not caption and has_translation:
             base_url = self.caption_track.get('baseUrl')
             if base_url:
-                subtitle_url = ''.join([base_url, '&fmt=vtt&type=track&tlang=', language])
+                subtitle_url = self.set_query_param(base_url, 'tlang', language)
 
         elif caption:
             base_url = caption.get('baseUrl')
             if base_url:
-                subtitle_url = ''.join([base_url, '&fmt=vtt&type=track'])
+                subtitle_url = base_url
 
         if subtitle_url:
+            subtitle_url = self.set_query_param(subtitle_url, 'type', 'track')
+            subtitle_url = self.set_query_param(subtitle_url, 'fmt', 'vtt')
             return (caption.get('languageCode'),
                     self._get_language_name(caption),
                     caption.get('kind'),
@@ -105,3 +113,15 @@ class Subtitles:
                 return track_name[0].get('text')
 
         return ''
+
+    @staticmethod
+    def set_query_param(url, name, value):
+        scheme, netloc, path, query_string, fragment = urlsplit(url)
+        query_params = parse_qs(query_string)
+
+        query_params[name] = [value]
+        new_query_string = urlencode(query_params, doseq=True)
+        if isinstance(scheme, bytes):
+            new_query_string = new_query_string.encode('utf-8')
+
+        return urlunsplit((scheme, netloc, path, new_query_string, fragment))

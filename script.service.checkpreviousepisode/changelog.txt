@@ -1,3 +1,6 @@
+v0.4.5
+- Fix logic of ignore if previous episode not actually in library 
+    
 v0.4.4
 - Handle apparently possible scenario of Kodi playing an episode without an id
 

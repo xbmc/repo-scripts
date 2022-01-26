@@ -45,8 +45,11 @@ class ShowDialog(xbmcgui.WindowXMLDialog):
             self.getControl(5).setVisible(False)
         self.getControl(1).setLabel(self.window_title)
 
-        # Set Cancel label (Kodi 17+)
-        self.getControl(7).setLabel(xbmc.getLocalizedString(222))
+        try:
+            # Set Cancel label (Kodi 17+)
+            self.getControl(7).setLabel(xbmc.getLocalizedString(222))
+        except RuntimeError:
+            pass
 
         for item in self.listing:
             listitem = xbmcgui.ListItem(label=item.getLabel(), label2=item.getLabel2(),

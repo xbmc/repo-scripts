@@ -9,6 +9,7 @@ msgctxt "#30102"
 msgid "Auto Play"
 msgstr ""
 
+
 msgctxt "#30103"
 msgid "Credentials"
 msgstr ""
@@ -20,7 +21,6 @@ msgstr ""
 msgctxt "#30105"
 msgid "Password"
 msgstr ""
-
 
 msgctxt "#30201"
 msgid "AAC"

@@ -50,3 +50,4 @@ if __name__ == '__main__':
         del window
     else:
         play_channel(auto_play)
+        

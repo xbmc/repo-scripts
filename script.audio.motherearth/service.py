@@ -106,6 +106,7 @@ class Player(xbmc.Player):
             return
 
         if song_key != ('', ''):
+
             xbmc.log(f'mer_service: song_key {song_key}', xbmc.LOGDEBUG)
             song_data = self.now_playing.get_song_data(song_key)
             if song_data:
