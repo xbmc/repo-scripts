@@ -6,35 +6,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Estonian (http://www.transifex.com/teamxbmc/xbmc-addons/language/et/)\n"
+"PO-Revision-Date: 2022-01-09 15:13+0000\n"
+"Last-Translator: rimasx <riks_12@hot.ee>\n"
+"Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/et_ee/>\n"
+"Language: et_ee\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Backup and restore your Kodi database and configuration files in the event "
-"of a crash or file corruption."
-msgstr ""
+msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
+msgstr "Varunda ja taasta Kodi andmebaas ja seadistusfailid krahhi või failikahjustuse korral."
 
 msgctxt "Addon Description"
-msgid ""
-"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
-"can with one easy click. You can export your database, playlist, thumbnails,"
-" addons and other configuration details to any source writeable by Kodi or "
-"directly to Dropbox cloud storage. Backups can be run on demand or via a "
-"scheduler. "
-msgstr ""
+msgid "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
+msgstr "Kas oled vahel seadistanud Kodi ja soovinud, et oleks varukoopia? Nüüd saab seda teha ühe lihtsa klõpsuga. Võimalik on eksportida oma andmebaasi, esitusloendeid, pisipilte, lisamooduleid ja muid seadistuse üksikasju mis tahes Kodi poolt kirjutatavasse allikasse või otse Dropbox pilve. Varukoopiaid saab luua käsitsi või ajakava abil. "
 
 msgctxt "#30010"
 msgid "Backup"
-msgstr ""
+msgstr "Varukoopia"
 
 msgctxt "#30011"
 msgid "General"
@@ -42,39 +36,47 @@ msgstr "Üldine"
 
 msgctxt "#30012"
 msgid "File Selection"
-msgstr ""
+msgstr "Failivalik"
 
 msgctxt "#30013"
 msgid "Scheduling"
-msgstr ""
+msgstr "Ajakava"
+
+msgctxt "#30014"
+msgid "Simple"
+msgstr "Lihtne"
+
+msgctxt "#30015"
+msgid "Advanced"
+msgstr "Täpsem"
 
 msgctxt "#30016"
 msgid "Backup"
-msgstr ""
+msgstr "Varunda"
 
 msgctxt "#30017"
 msgid "Restore"
-msgstr ""
+msgstr "Taasta"
 
 msgctxt "#30018"
 msgid "Browse Path"
-msgstr ""
+msgstr "Vali rada"
 
 msgctxt "#30019"
 msgid "Type Path"
-msgstr ""
+msgstr "Trüki rada"
 
 msgctxt "#30020"
 msgid "Browse Remote Path"
-msgstr ""
+msgstr "Vali kaugrada"
 
 msgctxt "#30021"
 msgid "Backup Folder Name"
-msgstr ""
+msgstr "Varukoopia kausta nimi"
 
 msgctxt "#30022"
 msgid "Progress Display"
-msgstr ""
+msgstr "Edenemise kuvamine"
 
 msgctxt "#30023"
 msgid "Mode"
@@ -82,23 +84,23 @@ msgstr "Režiim"
 
 msgctxt "#30024"
 msgid "Type Remote Path"
-msgstr ""
+msgstr "Tipi kaugrada"
 
 msgctxt "#30025"
 msgid "Remote Path Type"
-msgstr ""
+msgstr "Kaugraja tüüp"
 
 msgctxt "#30026"
 msgid "Backups to keep (0 for all)"
-msgstr ""
+msgstr "Hoitavaid varukoopiaid (0 = kõik)"
 
 msgctxt "#30027"
 msgid "Dropbox"
-msgstr ""
+msgstr "Dropbox"
 
 msgctxt "#30028"
 msgid "Dropbox Key"
-msgstr ""
+msgstr "Dropbox võti"
 
 msgctxt "#30029"
 msgid "Dropbox Secret"
@@ -106,11 +108,11 @@ msgstr ""
 
 msgctxt "#30030"
 msgid "User Addons"
-msgstr ""
+msgstr "Kasutaja lisamoodulid"
 
 msgctxt "#30031"
 msgid "Addon Data"
-msgstr ""
+msgstr "Lisamoodulite andmed"
 
 msgctxt "#30032"
 msgid "Database"
@@ -118,111 +120,111 @@ msgstr "Andmebaas"
 
 msgctxt "#30033"
 msgid "Playlist"
-msgstr "Mängukava"
+msgstr "Esitusloend"
 
 msgctxt "#30034"
 msgid "Thumbnails/Fanart"
-msgstr ""
+msgstr "Pisipildid/fännipildid"
 
 msgctxt "#30035"
 msgid "Config Files"
-msgstr ""
+msgstr "Seadistusfailid"
 
 msgctxt "#30036"
-msgid "Custom Directory 1"
-msgstr ""
+msgid "Disclaimer"
+msgstr "Märkus"
 
 msgctxt "#30037"
-msgid "Custom Directory 2"
-msgstr ""
+msgid "Canceling this menu will close and save changes"
+msgstr "Selle menüü tühistamisel suletakse ja salvestatakse muudatused"
 
 msgctxt "#30038"
 msgid "Advanced Settings Detected"
-msgstr ""
+msgstr "Tuvastati täpsemad sätted"
 
 msgctxt "#30039"
 msgid "The advancedsettings file should be restored first"
-msgstr ""
+msgstr "Esmalt tuleks taastada fail 'advancedsettings.xml'"
 
 msgctxt "#30040"
 msgid "Select Yes to restore this file and restart Kodi"
-msgstr ""
+msgstr "Selle faili taastamiseks ja Kodi taaskäivitamiseks vali 'Jah'"
 
 msgctxt "#30041"
 msgid "Select No to continue"
-msgstr ""
+msgstr "Jätkamiseks vali 'Ei'"
 
 msgctxt "#30042"
 msgid "Resume Restore"
-msgstr ""
+msgstr "Jätka taastamist"
 
 msgctxt "#30043"
 msgid "The Backup addon has detected an unfinished restore"
-msgstr ""
+msgstr "Varundamise lisamoodul tuvastas lõpetamata taastamise"
 
 msgctxt "#30044"
 msgid "Would you like to continue?"
-msgstr ""
+msgstr "Kas soovid jätkata?"
 
 msgctxt "#30045"
-msgid "Error: Remote path doesn't exist"
-msgstr ""
+msgid "Error: Remote or zip file path doesn't exist"
+msgstr "Viga: kaug- või ZIP-faili rada pole olemas"
 
 msgctxt "#30046"
 msgid "Starting"
-msgstr ""
+msgstr "Algus"
 
 msgctxt "#30047"
 msgid "Local Dir"
-msgstr ""
+msgstr "Kohalik kataloog"
 
 msgctxt "#30048"
 msgid "Remote Dir"
-msgstr ""
+msgstr "Kaugkataloog"
 
 msgctxt "#30049"
 msgid "Gathering file list"
-msgstr ""
+msgstr "Faililoendi kogumine"
 
 msgctxt "#30050"
 msgid "Remote Path exists - may have old files in it!"
-msgstr ""
+msgstr "Kaugrada on olemas – selles võib olla vanu faile!"
 
 msgctxt "#30051"
 msgid "Creating Files List"
-msgstr ""
+msgstr "Faililoendi loomine"
 
 msgctxt "#30052"
 msgid "Writing file"
-msgstr ""
+msgstr "Faili kirjutamine"
 
 msgctxt "#30053"
 msgid "Starting scheduled backup"
-msgstr ""
+msgstr "Ajastatud varundamise alustamine"
 
 msgctxt "#30054"
 msgid "Removing backup"
-msgstr ""
+msgstr "Varukoopia eemaldamine"
 
 msgctxt "#30056"
-msgid "Check log for Dropbox authorize URL"
+msgid "Scan or click this URL to authorize, click OK AFTER completion"
 msgstr ""
 
 msgctxt "#30057"
-msgid "Click OK when authorized"
-msgstr ""
+msgid "Click OK AFTER completion"
+msgstr "Klõpsa 'OK' PÄRAST lõpetamist"
 
 msgctxt "#30058"
-msgid "Dropbox Developer Code Needed"
-msgstr ""
+msgid "Developer Code Needed"
+msgstr "Vaja on arendajakoodi"
 
 msgctxt "#30059"
 msgid "Visit https://www.dropbox.com/developers"
-msgstr ""
+msgstr "Mine https://www.dropbox.com/developers"
 
 msgctxt "#30060"
 msgid "Enable Scheduler"
-msgstr ""
+msgstr "Luba ajakava"
 
 msgctxt "#30061"
 msgid "Schedule"
@@ -230,15 +232,15 @@ msgstr "Ajakava"
 
 msgctxt "#30062"
 msgid "Hour of Day"
-msgstr ""
+msgstr "Tund"
 
 msgctxt "#30063"
 msgid "Day of Week"
-msgstr ""
+msgstr "Nädalapäev"
 
 msgctxt "#30064"
 msgid "Cron Schedule"
-msgstr ""
+msgstr "Cron-ajakava"
 
 msgctxt "#30065"
 msgid "Sunday"
@@ -270,23 +272,23 @@ msgstr "laupäev"
 
 msgctxt "#30072"
 msgid "Every Day"
-msgstr ""
+msgstr "Iga päev"
 
 msgctxt "#30073"
 msgid "Every Week"
-msgstr ""
+msgstr "Iga nädal"
 
 msgctxt "#30074"
 msgid "First Day of Month"
-msgstr ""
+msgstr "Kuu esimene päev"
 
 msgctxt "#30075"
 msgid "Custom Schedule"
-msgstr ""
+msgstr "Kohandatud ajakava"
 
 msgctxt "#30076"
 msgid "Shutdown After Backup"
-msgstr ""
+msgstr "Pärast varundamist lülita välja"
 
 msgctxt "#30077"
 msgid "Restart Kodi"
@@ -294,11 +296,11 @@ msgstr "Taaskäivita Kodi"
 
 msgctxt "#30078"
 msgid "You should restart Kodi to continue"
-msgstr ""
+msgstr "Jätkamiseks peaksid Kodi taaskäivitama"
 
 msgctxt "#30079"
 msgid "Just Today"
-msgstr ""
+msgstr "Ainult täna"
 
 msgctxt "#30080"
 msgid "Profiles"
@@ -306,85 +308,316 @@ msgstr "Profiilid"
 
 msgctxt "#30081"
 msgid "Scheduler will run again on"
-msgstr ""
+msgstr "Planeerija käivitub uuesti"
 
 msgctxt "#30082"
 msgid "Progress Bar"
-msgstr ""
+msgstr "Edenemisriba"
 
 msgctxt "#30083"
 msgid "Background Progress Bar"
-msgstr ""
+msgstr "Edenemisriba taustal"
 
 msgctxt "#30084"
 msgid "None (Silent)"
-msgstr ""
+msgstr "Puudub (vaikne)"
 
 msgctxt "#30085"
 msgid "Version Warning"
-msgstr ""
+msgstr "Versiooni hoiatus"
 
 msgctxt "#30086"
-msgid ""
-"This version of Kodi is different than the one used to create the archive"
-msgstr ""
+msgid "This version of Kodi is different than the one used to create the archive"
+msgstr "See Kodi versioon erineb arhiivi loomisel kasutatud versioonist"
 
 msgctxt "#30087"
 msgid "Compress Archives"
-msgstr ""
+msgstr "Paki arhiivid"
 
 msgctxt "#30088"
 msgid "Copying Zip Archive"
-msgstr ""
+msgstr "Zip-arhiivi kopeerimine"
 
 msgctxt "#30089"
 msgid "Write Error Detected"
-msgstr ""
+msgstr "Tuvastati kirjutamisviga"
 
 msgctxt "#30090"
 msgid "The destination may not be writeable"
-msgstr ""
+msgstr "Sihtkaust ei pruugi olla kirjutatav"
 
 msgctxt "#30091"
 msgid "Zip archive could not be copied"
-msgstr ""
+msgstr "ZIP-arhiivi kopeerimine nurjus"
 
 msgctxt "#30092"
 msgid "Not all files were copied"
-msgstr ""
+msgstr "Kõiki faile ei kopeeritud"
 
 msgctxt "#30093"
 msgid "Delete Authorization Info"
-msgstr ""
+msgstr "Kustuta volitamisinfo"
 
 msgctxt "#30094"
 msgid "This will delete any OAuth token files"
-msgstr ""
+msgstr "See kustutab kõik OAuth loafailid"
 
 msgctxt "#30095"
 msgid "Do you want to do this?"
-msgstr ""
+msgstr "Kas soovid seda teha?"
 
 msgctxt "#30096"
 msgid "Old Zip Archive could not be deleted"
-msgstr ""
+msgstr "Vana ZIP-arhiivi ei saanud kustutada"
 
 msgctxt "#30097"
 msgid "This needs to happen before a backup can run"
-msgstr ""
+msgstr "See peab juhtuma enne varundamise käivitamist"
 
 msgctxt "#30098"
 msgid "Google Drive"
-msgstr ""
+msgstr "Google Drive"
 
 msgctxt "#30099"
 msgid "Open Settings"
-msgstr ""
+msgstr "Ava seaded"
 
 msgctxt "#30100"
 msgid "Extracting Archive"
-msgstr ""
+msgstr "Arhiivi lahti pakkimine"
 
 msgctxt "#30101"
 msgid "Error extracting the zip archive"
+msgstr "Viga ZIP-arhiivi lahti pakkimisel"
+
+msgctxt "#30102"
+msgid "Click OK to enter code"
+msgstr "Koodi sisestamiseks klõpsa 'OK'"
+
+msgctxt "#30103"
+msgid "Validation Code"
+msgstr "Valideerimiskood"
+
+msgctxt "#30104"
+msgid "Authorize Now"
+msgstr "Volita kohe"
+
+msgctxt "#30105"
+msgid "Authorize this remote service in the settings first"
+msgstr "Volita see kaugteenus esmalt seadetes"
+
+msgctxt "#30106"
+msgid "is authorized"
+msgstr "on volitatud"
+
+msgctxt "#30107"
+msgid "error authorizing"
+msgstr "viga volitamisel"
+
+msgctxt "#30108"
+msgid "Visit https://console.developers.google.com/"
+msgstr "Mine https://console.developers.google.com/"
+
+msgctxt "#30109"
+msgid "Run on startup if missed"
+msgstr "Kui jäi vahele, teosta käivitamisel"
+
+msgctxt "#30110"
+msgid "Set Name"
+msgstr "Määra nimi"
+
+msgctxt "#30111"
+msgid "Root folder selection"
+msgstr "Juurkausta valik"
+
+msgctxt "#30112"
+msgid "Browse Folder"
+msgstr "Vali kaust"
+
+msgctxt "#30113"
+msgid "Enter Own"
+msgstr "Sisesta oma"
+
+msgctxt "#30114"
+msgid "starts in Kodi home"
+msgstr "käivitub Kodi peaaknas"
+
+msgctxt "#30115"
+msgid "enter path to start there"
+msgstr "sisesta rada sealt alustamiseks"
+
+msgctxt "#30116"
+msgid "Enter root path"
+msgstr "Määra juurkausta rada"
+
+msgctxt "#30117"
+msgid "Path Error"
+msgstr "Raja viga"
+
+msgctxt "#30118"
+msgid "Path does not exist"
+msgstr "Rada ei eksisteeri"
+
+msgctxt "#30119"
+msgid "Select root"
+msgstr "Vali juurkataloog"
+
+msgctxt "#30120"
+msgid "Add Exclude Folder"
+msgstr "Välista kaust"
+
+msgctxt "#30121"
+msgid "Root Folder"
+msgstr "Juurkaust"
+
+msgctxt "#30122"
+msgid "Edit"
+msgstr "Muuda"
+
+msgctxt "#30123"
+msgid "Delete"
+msgstr "Kustuta"
+
+msgctxt "#30124"
+msgid "Choose Action"
+msgstr "Vali toiming"
+
+msgctxt "#30125"
+msgid "Advanced Editor"
+msgstr "Laiendatud redaktor"
+
+msgctxt "#30126"
+msgid "Add Set"
+msgstr "Lisa reegel"
+
+msgctxt "#30127"
+msgid "Delete Set"
+msgstr "Eemalda reegel"
+
+msgctxt "#30128"
+msgid "Are you sure you want to delete?"
+msgstr "Kas soovid kindlasti kustutada?"
+
+msgctxt "#30129"
+msgid "Exclude"
+msgstr "Välista"
+
+msgctxt "#30130"
+msgid "The root folder cannot be changed"
+msgstr "Juurkausta ei saa muuta"
+
+msgctxt "#30131"
+msgid "Choose Sets to Restore"
 msgstr ""
+
+msgctxt "#30132"
+msgid "Version 1.5.0 requires you to setup your file selections again - this is a breaking change"
+msgstr "Versioon 1.5.0 nõuab failivalikute uuesti seadistamist – see on oluline muudatus"
+
+msgctxt "#30133"
+msgid "Game Saves"
+msgstr "Mängu salvestused"
+
+msgctxt "#30134"
+msgid "Include"
+msgstr "Hõlma"
+
+msgctxt "#30135"
+msgid "Add Include Folder"
+msgstr "Hõlma kaust"
+
+msgctxt "#30136"
+msgid "Path must be within root folder"
+msgstr "Rada peab asuma juurkaustas"
+
+msgctxt "#30137"
+msgid "This path is part of a rule already"
+msgstr "See rada on juba osa reeglist"
+
+msgctxt "#30138"
+msgid "Set Name exists already"
+msgstr "See nimi on juba olemas"
+
+msgctxt "#30139"
+msgid "Copy Simple Config"
+msgstr "Kopeeri lihtsad seaded"
+
+msgctxt "#30140"
+msgid "This will copy the default Simple file selection to the Advanced Editor"
+msgstr "See kopeerib vaikimisi lihtsa failivaliku laiendatud redaktorisse"
+
+msgctxt "#30141"
+msgid "This will erase any current Advanced Editor settings"
+msgstr "See kustutab kõik praegused laiendatud redaktori sätted"
+
+msgctxt "#30142"
+msgid "Enable Verbose Logging"
+msgstr "Luba üksikasjalik logimine"
+
+msgctxt "#30143"
+msgid "Exclude a specific folder from this backup set"
+msgstr "Välista konkreetne kaust sellest varundamise reeglist"
+
+msgctxt "#30144"
+msgid "Include a specific folder to this backup set"
+msgstr "Hõlma konkreetne kaust sellesse varundamise reeglisse"
+
+msgctxt "#30145"
+msgid "Type"
+msgstr "Tüüp"
+
+msgctxt "#30146"
+msgid "Include Sub Folders"
+msgstr "Kaasa alamkaustad"
+
+msgctxt "#30147"
+msgid "Toggle Sub Folders"
+msgstr "Alamkaustade lüliti"
+
+msgctxt "#30148"
+msgid "Ask before restoring Kodi UI settings"
+msgstr "Küsi enne Kodi kasutajaliidese seadete taastamist"
+
+msgctxt "#30149"
+msgid "Restore Kodi UI Settings"
+msgstr "Taasta Kodi kasutajaliidese seaded"
+
+msgctxt "#30150"
+msgid "Restore saved Kodi system settings from backup?"
+msgstr "Kas taastada salvestatud Kodi süsteemiseaded varukoopiast?"
+
+msgctxt "#30151"
+msgid "Enable Verbose Logging"
+msgstr "Luba üksikasjalik logimine"
+
+msgctxt "#30152"
+msgid "Set Zip File Location"
+msgstr "Määra ZIP-faili asukoht"
+
+msgctxt "#30153"
+msgid "Full path to where the zip file will be staged during backup or restore - must be local to this device"
+msgstr "Täielik rada, kuhu ZIP-fail varundamise või taastamise ajal paigutatakse – peab olema selle seadme kohalik"
+
+msgctxt "#30154"
+msgid "Always prompt if Kodi settings should be restored - no by default"
+msgstr "Küsi alati, kas Kodi sätted tuleks taastada – vaikimisi 'Ei'"
+
+msgctxt "#30155"
+msgid "Adds additional information to the log file"
+msgstr "Lisab logifaili täiendavat teavet"
+
+msgctxt "#30156"
+msgid "Must save key/secret first, then return to settings to authorize"
+msgstr ""
+
+msgctxt "#30157"
+msgid "Simple uses pre-defined folder locations, use Advanced Editor to define custom paths"
+msgstr "'Lihtne' kasutab eelmääratletud kausta asukohti, kohandatud asukoha määramiseks kasuta laiendatud redaktorit"
+
+msgctxt "#30158"
+msgid "Run backup on daily, weekly, monthly, or custom schedule"
+msgstr "Varunda üks kord päevas, nädalas, kuus või kohandatud ajakava alusel"
+
+msgctxt "#30159"
+msgid "Backup started with unknown mode"
+msgstr "Varundamine algas tundmatus režiimis"

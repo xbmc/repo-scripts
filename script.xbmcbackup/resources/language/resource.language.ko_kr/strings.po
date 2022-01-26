@@ -10,31 +10,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Korean (http://www.transifex.com/teamxbmc/xbmc-addons/language/ko/)\n"
+"PO-Revision-Date: 2021-08-26 03:29+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/ko_kr/>\n"
+"Language: ko_kr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Backup and restore your Kodi database and configuration files in the event "
-"of a crash or file corruption."
+msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
 msgstr "Kodi 데이터베이스와 설정 파일을 백업하고 복구합니다."
 
 msgctxt "Addon Description"
-msgid ""
-"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
-"can with one easy click. You can export your database, playlist, thumbnails,"
-" addons and other configuration details to any source writeable by Kodi or "
-"directly to Dropbox cloud storage. Backups can be run on demand or via a "
-"scheduler. "
-msgstr "Kodi 설정 백업본이 있었으면 하고 원했던 적이 있습니까? 이제 한 번의 클릭으로 가능합니다. 데이터베이스, 재생목록, 썸네일, 애드온과 기타  세부 설정을 어디에나 내보내거나 직접 Dropbox 에  저장할 수 있습니다. 백업은 수동 또는 예약으로 실행할 수 있습니다."
+msgid "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
+msgstr "Kodi 설정 백업본이 있었으면 하고 원했던 적이 있습니까? 이제 한 번의 클릭으로 가능합니다. 데이터베이스, 재생목록, 썸네일, 애드온과 기타 세부 설정을 어디에나 내보내거나 직접 Dropbox 에 저장할 수 있습니다. 백업은 수동 또는 예약으로 실행할 수 있습니다. "
 
 msgctxt "#30010"
 msgid "Backup"
@@ -51,6 +45,14 @@ msgstr "파일 선택"
 msgctxt "#30013"
 msgid "Scheduling"
 msgstr "스케쥴"
+
+msgctxt "#30014"
+msgid "Simple"
+msgstr "단순"
+
+msgctxt "#30015"
+msgid "Advanced"
+msgstr "고급"
 
 msgctxt "#30016"
 msgid "Backup"
@@ -133,12 +135,12 @@ msgid "Config Files"
 msgstr "설정 파일"
 
 msgctxt "#30036"
-msgid "Custom Directory 1"
-msgstr "사용자 디렉터리 1"
+msgid "Disclaimer"
+msgstr "포기"
 
 msgctxt "#30037"
-msgid "Custom Directory 2"
-msgstr "사용자 디렉터리 2"
+msgid "Canceling this menu will close and save changes"
+msgstr "이 메뉴를 취소하면 닫고 변경 사항을 저장합니다"
 
 msgctxt "#30038"
 msgid "Advanced Settings Detected"
@@ -169,8 +171,8 @@ msgid "Would you like to continue?"
 msgstr "계속 하겠습니까?"
 
 msgctxt "#30045"
-msgid "Error: Remote path doesn't exist"
-msgstr "오류: 존재하지 않는 원격 경로"
+msgid "Error: Remote or zip file path doesn't exist"
+msgstr "오류: 원격 또는 zip 파일 경로가 없음"
 
 msgctxt "#30046"
 msgid "Starting"
@@ -209,16 +211,16 @@ msgid "Removing backup"
 msgstr "백업 삭제"
 
 msgctxt "#30056"
-msgid "Check log for Dropbox authorize URL"
-msgstr "로그에서 Dropbox 인증 URL을 확인하세요"
+msgid "Scan or click this URL to authorize, click OK AFTER completion"
+msgstr "승인하려면 이 URL을 스캔하거나 클릭하고, 완료 후 확인을 누릅니다"
 
 msgctxt "#30057"
-msgid "Click OK when authorized"
-msgstr "인증이 완료되면 확인을 누르세요"
+msgid "Click OK AFTER completion"
+msgstr "완료 후 확인 누름"
 
 msgctxt "#30058"
-msgid "Dropbox Developer Code Needed"
-msgstr "Dropbox 개발자 코드가 필요합니다"
+msgid "Developer Code Needed"
+msgstr "개발자 코드 필요"
 
 msgctxt "#30059"
 msgid "Visit https://www.dropbox.com/developers"
@@ -310,7 +312,7 @@ msgstr "프로파일"
 
 msgctxt "#30081"
 msgid "Scheduler will run again on"
-msgstr "다음 예약 실행: "
+msgstr "다음 예약 실행"
 
 msgctxt "#30082"
 msgid "Progress Bar"
@@ -329,9 +331,8 @@ msgid "Version Warning"
 msgstr "버전 경고"
 
 msgctxt "#30086"
-msgid ""
-"This version of Kodi is different than the one used to create the archive"
-msgstr "이 Kodi 버전은 보관되어 있는 Kodi와 다른 버전입니다."
+msgid "This version of Kodi is different than the one used to create the archive"
+msgstr "이 버전의 Kodi는 아카이브를 만드는 데 사용된 버전과 다릅니다"
 
 msgctxt "#30087"
 msgid "Compress Archives"
@@ -392,3 +393,259 @@ msgstr "압축파일 푸는 중"
 msgctxt "#30101"
 msgid "Error extracting the zip archive"
 msgstr "zip 압축파일 풀기 오류"
+
+msgctxt "#30102"
+msgid "Click OK to enter code"
+msgstr "확인을 눌러 코드 입력"
+
+msgctxt "#30103"
+msgid "Validation Code"
+msgstr "검증 코드"
+
+msgctxt "#30104"
+msgid "Authorize Now"
+msgstr "지금 승인"
+
+msgctxt "#30105"
+msgid "Authorize this remote service in the settings first"
+msgstr "첫 설정에서 이 원격 서비스를 승인합니다"
+
+msgctxt "#30106"
+msgid "is authorized"
+msgstr "승인됨"
+
+msgctxt "#30107"
+msgid "error authorizing"
+msgstr "승인 오류"
+
+msgctxt "#30108"
+msgid "Visit https://console.developers.google.com/"
+msgstr "https://console.developers.google.com/ 방문"
+
+msgctxt "#30109"
+msgid "Run on startup if missed"
+msgstr "놓치면 시작 시 실행"
+
+msgctxt "#30110"
+msgid "Set Name"
+msgstr "세트 이름"
+
+msgctxt "#30111"
+msgid "Root folder selection"
+msgstr "루트 폴더 선택"
+
+msgctxt "#30112"
+msgid "Browse Folder"
+msgstr "폴더 찾아보기"
+
+msgctxt "#30113"
+msgid "Enter Own"
+msgstr "소유 입력"
+
+msgctxt "#30114"
+msgid "starts in Kodi home"
+msgstr "Kodi 홈에서 시작"
+
+msgctxt "#30115"
+msgid "enter path to start there"
+msgstr "거기에서 시작하는 경로를 입력"
+
+msgctxt "#30116"
+msgid "Enter root path"
+msgstr "루트 경로 입력"
+
+msgctxt "#30117"
+msgid "Path Error"
+msgstr "경로 오류"
+
+msgctxt "#30118"
+msgid "Path does not exist"
+msgstr "경로가 없음"
+
+msgctxt "#30119"
+msgid "Select root"
+msgstr "루트 선택"
+
+msgctxt "#30120"
+msgid "Add Exclude Folder"
+msgstr "제외 폴더 추가"
+
+msgctxt "#30121"
+msgid "Root Folder"
+msgstr "루트 폴더"
+
+msgctxt "#30122"
+msgid "Edit"
+msgstr "편집"
+
+msgctxt "#30123"
+msgid "Delete"
+msgstr "삭제"
+
+msgctxt "#30124"
+msgid "Choose Action"
+msgstr "작업 선택"
+
+msgctxt "#30125"
+msgid "Advanced Editor"
+msgstr "고급 편집기"
+
+msgctxt "#30126"
+msgid "Add Set"
+msgstr "세트 추가"
+
+msgctxt "#30127"
+msgid "Delete Set"
+msgstr "세트 삭제"
+
+msgctxt "#30128"
+msgid "Are you sure you want to delete?"
+msgstr "삭제 할까요?"
+
+msgctxt "#30129"
+msgid "Exclude"
+msgstr "제외"
+
+msgctxt "#30130"
+msgid "The root folder cannot be changed"
+msgstr "루트 폴더를 바꿀 수 없음"
+
+msgctxt "#30131"
+msgid "Choose Sets to Restore"
+msgstr "복원할 세트 선택"
+
+msgctxt "#30132"
+msgid "Version 1.5.0 requires you to setup your file selections again - this is a breaking change"
+msgstr "버전 1.5.0에서는 파일 선택을 다시 설정해야 합니다 - 주요 변경 사항"
+
+msgctxt "#30133"
+msgid "Game Saves"
+msgstr "게임 저장"
+
+msgctxt "#30134"
+msgid "Include"
+msgstr "포함"
+
+msgctxt "#30135"
+msgid "Add Include Folder"
+msgstr "포함 폴더 추가"
+
+msgctxt "#30136"
+msgid "Path must be within root folder"
+msgstr "루트 폴더안에 경로가 있어야 함"
+
+msgctxt "#30137"
+msgid "This path is part of a rule already"
+msgstr "이 경로는 이미 규칙의 일부임"
+
+msgctxt "#30138"
+msgid "Set Name exists already"
+msgstr "세트 이름이 이미 있음"
+
+msgctxt "#30139"
+msgid "Copy Simple Config"
+msgstr "단순 구성 복사"
+
+msgctxt "#30140"
+msgid "This will copy the default Simple file selection to the Advanced Editor"
+msgstr "기본 단순 파일 선택 항목을 고급 편집기에 복사함"
+
+msgctxt "#30141"
+msgid "This will erase any current Advanced Editor settings"
+msgstr "현재 고급 편집기 설정이 지워짐"
+
+msgctxt "#30142"
+msgid "Enable Verbose Logging"
+msgstr "자세한 로그 사용"
+
+msgctxt "#30143"
+msgid "Exclude a specific folder from this backup set"
+msgstr "이 백업 세트에서 특정 폴더 제외"
+
+msgctxt "#30144"
+msgid "Include a specific folder to this backup set"
+msgstr "이 백업 세트에 특정 폴더 포함"
+
+msgctxt "#30145"
+msgid "Type"
+msgstr "형식"
+
+msgctxt "#30146"
+msgid "Include Sub Folders"
+msgstr "하위 폴더 포함"
+
+msgctxt "#30147"
+msgid "Toggle Sub Folders"
+msgstr "하위 폴더 전환"
+
+msgctxt "#30148"
+msgid "Ask before restoring Kodi UI settings"
+msgstr "Kodi UI 설정을 복원하기 전에 확인"
+
+msgctxt "#30149"
+msgid "Restore Kodi UI Settings"
+msgstr "Kodi UI 설정 복원"
+
+msgctxt "#30150"
+msgid "Restore saved Kodi system settings from backup?"
+msgstr "백업에서 저장된 Kodi 시스템 설정을 복원할까요?"
+
+msgctxt "#30151"
+msgid "Enable Verbose Logging"
+msgstr "자세한 로그 활성화"
+
+msgctxt "#30152"
+msgid "Set Zip File Location"
+msgstr "Zip 파일 위치 설정"
+
+msgctxt "#30153"
+msgid "Full path to where the zip file will be staged during backup or restore - must be local to this device"
+msgstr "백업 또는 복원 중에 zip 파일이 준비될 전체 경로 - 이 장치에 로컬이어야 함"
+
+msgctxt "#30154"
+msgid "Always prompt if Kodi settings should be restored - no by default"
+msgstr "Kodi 설정의 복원 여부를 항상 확인합니다 - 기본 하지 않음"
+
+msgctxt "#30155"
+msgid "Adds additional information to the log file"
+msgstr "로그 파일에 추가 정보를 추가"
+
+msgctxt "#30156"
+msgid "Must save key/secret first, then return to settings to authorize"
+msgstr "먼저 키/비밀을 저장한 다음, 설정으로 돌아가서 인증해야 합니다"
+
+msgctxt "#30157"
+msgid "Simple uses pre-defined folder locations, use Advanced Editor to define custom paths"
+msgstr "단순은 사전 정의된 폴더 위치를 사용하고, 고급 편집기를 사용하여 사용자 정의 경로를 정의합니다"
+
+msgctxt "#30158"
+msgid "Run backup on daily, weekly, monthly, or custom schedule"
+msgstr "매일, 매주, 매월 또는 사용자 지정 일정에 따라 백업 실행"
+
+msgctxt "#30159"
+msgid "Backup started with unknown mode"
+msgstr "알 수 없는 모드로 백업이 시작됨"
+
+#~ msgctxt "#30036"
+#~ msgid "Custom Directory 1"
+#~ msgstr "사용자 디렉터리 1"
+
+#~ msgctxt "#30037"
+#~ msgid "Custom Directory 2"
+#~ msgstr "사용자 디렉터리 2"
+
+#~ msgctxt "#30045"
+#~ msgid "Error: Remote path doesn't exist"
+#~ msgstr "오류: 존재하지 않는 원격 경로"
+
+#~ msgctxt "#30056"
+#~ msgid "Check log for Dropbox authorize URL"
+#~ msgstr "로그에서 Dropbox 인증 URL을 확인하세요"
+
+#~ msgctxt "#30057"
+#~ msgid "Click OK when authorized"
+#~ msgstr "인증이 완료되면 확인을 누르세요"
+
+#~ msgctxt "#30058"
+#~ msgid "Dropbox Developer Code Needed"
+#~ msgstr "Dropbox 개발자 코드가 필요합니다"

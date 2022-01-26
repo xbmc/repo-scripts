@@ -90,6 +90,9 @@
 	          <default/>
 	          <constraints>
 		          <allowempty>true</allowempty>
+              <sources>
+                <source>files</source>
+              </sources>
 	          </constraints>
             <dependencies>
               <dependency type="visible" setting="remote_selection">0</dependency>
