@@ -40,7 +40,7 @@ class VideoInfo:
         from ... import ACCESS_TOKEN_TV  # pylint: disable=import-outside-toplevel
         from ... import API_KEY_TV  # pylint: disable=import-outside-toplevel
 
-        self._access_token_tv = b64decode(ACCESS_TOKEN_TV).decode('utf-8')
+        self._access_token_tv = ACCESS_TOKEN_TV
         self._api_key_tv = b64decode(API_KEY_TV).decode('utf-8')
         self._language = language
         self._region = region

@@ -115,20 +115,29 @@ class ManifestGenerator:
             mime_webm = 'video/webm'
             if container == 'mp4' or (container == 'webm' and idx == 1):
                 discard_mime = mime_webm
-                discarded_mime_streams = data[mime_webm]
+                try:
+                    discarded_mime_streams = data[mime_webm]
+                except KeyError:
+                    discarded_mime_streams = []
 
                 selected_mime = mime_mp4
                 streams = deepcopy(data[mime_mp4])
             elif container == 'webm':
                 discard_mime = mime_mp4
-                discarded_mime_streams = data[mime_mp4]
+                try:
+                    discarded_mime_streams = data[mime_mp4]
+                except KeyError:
+                    discarded_mime_streams = []
 
                 selected_mime = mime_webm
                 streams = deepcopy(data[mime_webm])
 
                 if not streams:
                     discard_mime = mime_webm
-                    discarded_mime_streams = data[mime_webm]
+                    try:
+                        discarded_mime_streams = data[mime_webm]
+                    except KeyError:
+                        discarded_mime_streams = []
 
                     selected_mime = mime_mp4
                     streams = deepcopy(data[mime_mp4])
