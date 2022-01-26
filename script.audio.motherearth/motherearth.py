@@ -84,4 +84,3 @@ class NowPlaying():
         self._current = current
         self.songs = songs
         self.next_update = now + data['refresh']
-        
