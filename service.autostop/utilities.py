@@ -12,6 +12,8 @@ def sleepTimer():
         newval = str(currval + 10)
     elif currval < 120 :
         newval = str(currval + 30)
+    elif currval < 180 :
+        newval = str(currval + 60)
     elif currval == 120 :
         newval = str('0')
     settings('plstop', newval)
