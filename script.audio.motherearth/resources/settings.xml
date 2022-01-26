@@ -28,8 +28,7 @@
 					</constraints>
 					<control type="spinner" format="string"/>
 				</setting>
-			</group>
-			
+			</group>	
 		</category>
 	</section>
 </settings>
