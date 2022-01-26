@@ -8,3 +8,4 @@ Choose FLAC or AAC-stream (AAC is the default) in addon options.
 To Do's:
 - login system for password-protected streams
 - metadata from AzuraCast NowPlaying API
+

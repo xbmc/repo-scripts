@@ -1,7 +1,5 @@
-#import re
 import time
 import requests
-#import web_pdb; web_pdb.set_trace()
 
 NOWPLAYING_URL = 'http://server9.streamserver24.com:9090/api/nowplaying/3'
 
