@@ -1,40 +1,18 @@
-import datetime
-
-# prevent Error: Failed to import _strptime because the import lockis held by another thread.
-# see https://www.raspberrypi.org/forums/viewtopic.php?t=166912
-import _strptime
-import xbmc
 import xbmcaddon
-import xbmcgui
 
-from resources.lib.timer.scheduler import CHECK_INTERVAL, Scheduler
-
-addon = xbmcaddon.Addon()
-
+from resources.lib.timer import migration, scheduler, util
 
 if __name__ == "__main__":
 
-    # prevent Error: Failed to import _strptime because the import locks held by another thread.
-    # see https://www.raspberrypi.org/forums/viewtopic.php?t=166912
-    try:
-        datetime.datetime.strptime("2016", "%Y")
-    except:
-        xbmcgui.Dialog().notification(addon.getLocalizedString(
-            32000), addon.getLocalizedString(32001))
-        exit(1)
+    util.prevent_strptime_error()
 
-    scheduler = Scheduler(addon)
+    migration.migrate()
 
-    if xbmc.getCondVisibility("system.platform.windows") and "true" == addon.getSetting("windows_unlock"):
-        import ctypes
-        ctypes.windll.kernel32.SetThreadExecutionState(0x80000002)
+    scheduler = scheduler.Scheduler(xbmcaddon.Addon())
 
     try:
         scheduler.start()
 
     finally:
         scheduler.reset_powermanagement_displaysoff()
-
-        if xbmc.getCondVisibility("system.platform.windows") and "true" == addon.getSetting("windows_unlock"):
-            import ctypes
-            ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
+        util.set_windows_unlock(False)

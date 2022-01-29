@@ -12,7 +12,7 @@ class SetQuickEpgTimer(AbstractSetTimer):
 
         found = -1
         for i in range(2, TIMERS):
-            if found == -1 and self.addon.getSetting("timer_%i" % i) == str(preselection["activation"]) and preselection["starttime"] == self.addon.getSetting("timer_%s_start" % i) and preselection["path"] == self.addon.getSetting("timer_%s_filename" % i):
+            if found == -1 and self.addon.getSettingInt("timer_%i" % i) == preselection["activation"] and preselection["starttime"] == self.addon.getSettingString("timer_%s_start" % i) and preselection["path"] == self.addon.getSettingString("timer_%s_filename" % i):
                 found = i
 
         if found != -1:
@@ -23,7 +23,7 @@ class SetQuickEpgTimer(AbstractSetTimer):
 
     def ask_timer(self):
 
-        free_slots = [i for i in range(2, TIMERS) if self.addon.getSetting(
+        free_slots = [i for i in range(2, TIMERS) if self.addon.getSettingInt(
             "timer_%i" % i) == TIMER_OFF]
 
         if len(free_slots) > 0:
@@ -45,7 +45,7 @@ class SetQuickEpgTimer(AbstractSetTimer):
         line1 = preselection["label"]
 
         line2 = (self.addon.getLocalizedString(32024)) % (
-            self.addon.getLocalizedString(32034 + preselection["activation"]),
+            self.addon.getLocalizedString(32200 + preselection["activation"]),
             preselection["starttime"],
             preselection["endtime"])
 

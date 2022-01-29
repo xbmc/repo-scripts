@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="2.1.0" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="2.1.1" provider-name="Heckie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
 	<extension point="xbmc.service" library="addon.py" />
-	<extension point="xbmc.python.script" library="program.py" />
+	<extension point="xbmc.python.script" library="script.py" />
 	<extension point="kodi.context.item">
 		<menu id="kodi.core.main">
 			<item library="context_setsleep.py">
@@ -66,6 +66,13 @@
 		<website>https://github.com/Heckie75/kodi-addon-timers</website>
 		<source>https://github.com/Heckie75/kodi-addon-timers</source>
 		<news>
+v2.1.1 (2022-01-29)
+- Improved behaviour after update addon. No need to restart Kodi anymore after update
+- Improved prevention lock screen, no restart of Kodi required anymore after setting has changed
+- Refactoring: Usage of modern Kodi API (read and write settings)
+- Added timer actions, i.e. quit Kodi, suspend system, hibernate system, shutdown system
+- Minor bugfixes, e.g. displayed wrong timer no. in some dialogs 
+
 v2.1.0 (2021-11-20):
 - Improved start and stop action in case that multiple timers are running in parallel, see also https://github.com/Heckie75/kodi-addon-timers/issues/5 
 - One-click-setup from epg (Quick Timer)
@@ -83,14 +90,7 @@ v2.0.3 (2021-10-31)
 v2.0.2 (2021-10-03)
 - Improvement: prevent multiple fading action of overlapping fading timers. Strategy is 'First starts first served.'
 - reset to default settings after one-time timers finished
-- minor refactoring
-
-v2.0.1 (2021-09-12)
-- Bugfix: actions in settings dialog don't work, i.e. 'reset volume' and 'play now'
-
-v2.0.0 (2021-07-18)
-- Migration to Kodi 19 (Matrix)
-- Total refactoring of earlier version</news>
+- minor refactoring</news>
 		<assets>
 			<icon>resources/assets/icon.png</icon>
 			<fanart>resources/assets/fanart.png</fanart>

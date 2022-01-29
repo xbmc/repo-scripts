@@ -14,10 +14,10 @@ class SetTimer(AbstractSetTimer):
         options = [self.addon.getLocalizedString(32102)]
         options += ["%i: %s (%s%s)" % (
             i - 1,
-            self.addon.getSetting("timer_%i_label" % i),
+            self.addon.getSettingString("timer_%i_label" % i),
             self.addon.getLocalizedString(
-                32034 + int(self.addon.getSetting("timer_%i" % i))),
-            ", %s" % self.addon.getSetting("timer_%i_start" % i) if self.addon.getSetting(
+                32200 + self.addon.getSettingInt("timer_%i" % i)),
+            ", %s" % self.addon.getSetting("timer_%i_start" % i) if self.addon.getSettingInt(
                 "timer_%i" % i) != TIMER_OFF else "",
         ) for i in range(2, TIMERS)]
 
@@ -37,15 +37,15 @@ class SetTimer(AbstractSetTimer):
         if preselection["epg"]:
             return preselection["activation"]
 
-        options = [self.addon.getLocalizedString(32034 + i)
-                   for i in range(len(TIMER_DAYS_PRESETS))]
+        options = [self.addon.getLocalizedString(32200 + i)
+                   for i in range(1, len(TIMER_DAYS_PRESETS))]
 
         selection = xbmcgui.Dialog().select(
             self.addon.getLocalizedString(32104), options, preselect=preselection["activation"])
         if selection == -1:
             return None
         else:
-            return selection
+            return selection + 1
 
     def ask_starttime(self, listitem, preselection):
 
@@ -80,7 +80,7 @@ class SetTimer(AbstractSetTimer):
         line1 = preselection["label"]
 
         line2 = (self.addon.getLocalizedString(32024) if preselection["duration"] != DURATION_NO else self.addon.getLocalizedString(32025)) % (
-            self.addon.getLocalizedString(32034 + preselection["activation"]),
+            self.addon.getLocalizedString(32200 + preselection["activation"]),
             preselection["starttime"],
             preselection["endtime"] if preselection["duration"] != DURATION_NO else "")
 
@@ -90,9 +90,9 @@ class SetTimer(AbstractSetTimer):
                             )
 
         line4 = "%s: %s" % (self.addon.getLocalizedString(32091),
-                            self.addon.getLocalizedString(32120 + int(self.addon.getSetting("timer_%i_fade" % preselection["timer"]))))
+                            self.addon.getLocalizedString(32120 + self.addon.getSettingInt("timer_%i_fade" % preselection["timer"])))
 
-        return xbmcgui.Dialog().yesnocustom(self.addon.getLocalizedString(32107) % self.addon.getLocalizedString(32009 + preselection["timer"] - 2),
+        return xbmcgui.Dialog().yesnocustom(self.addon.getLocalizedString(32107) % self.addon.getLocalizedString(32004 + preselection["timer"]),
                                             "\n".join(
                                                 [line1, line2, line3, line4]),
                                             self.addon.getLocalizedString(

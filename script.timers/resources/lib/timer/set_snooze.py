@@ -25,11 +25,11 @@ class SetSnooze(AbstractSetTimer):
 
         timer = preselection["timer"]
 
-        if self.addon.getSetting("timer_%i_end_type" % timer) == END_TYPE_DURATION:
+        if self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_DURATION:
             _current = self.addon.getSetting("timer_%i_duration" % timer)
 
-        elif self.addon.getSetting("timer_%i_end_type" % timer) == END_TYPE_TIME:
-            _current = util.time_duration_str(self.addon.getSetting(
+        elif self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_TIME:
+            _current = util.time_duration_str(self.addon.getSettingString(
                 "timer_%i_start" % timer), self.addon.getSetting("timer_%i_end" % timer))
 
         else:

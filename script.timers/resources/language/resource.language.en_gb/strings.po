@@ -17,10 +17,6 @@ msgctxt "#32000"
 msgid "Timers"
 msgstr ""
 
-msgctxt "#32001"
-msgid "Restart Kodi in order to reload timer addon"
-msgstr ""
-
 msgctxt "#32002"
 msgid "Extras"
 msgstr ""
@@ -141,110 +137,6 @@ msgctxt "#32033"
 msgid "Execution"
 msgstr ""
 
-msgctxt "#32034"
-msgid "Monday"
-msgstr ""
-
-msgctxt "#32035"
-msgid "Tuesday"
-msgstr ""
-
-msgctxt "#32036"
-msgid "Wednesday"
-msgstr ""
-
-msgctxt "#32037"
-msgid "Thursday"
-msgstr ""
-
-msgctxt "#32038"
-msgid "Friday"
-msgstr ""
-
-msgctxt "#32039"
-msgid "Saturday"
-msgstr ""
-
-msgctxt "#32040"
-msgid "Sunday"
-msgstr ""
-
-msgctxt "#32041"
-msgid "Mondays"
-msgstr ""
-
-msgctxt "#32042"
-msgid "Tuedays"
-msgstr ""
-
-msgctxt "#32043"
-msgid "Wednesdays"
-msgstr ""
-
-msgctxt "#32044"
-msgid "Thursdays"
-msgstr ""
-
-msgctxt "#32045"
-msgid "Fridays"
-msgstr ""
-
-msgctxt "#32046"
-msgid "Saturdays"
-msgstr ""
-
-msgctxt "#32047"
-msgid "Sundays"
-msgstr ""
-
-msgctxt "#32048"
-msgid "Mondays to Thursdays"
-msgstr ""
-
-msgctxt "#32049"
-msgid "Mondays to Fridays"
-msgstr ""
-
-msgctxt "#32050"
-msgid "Tuesdays to Fridays"
-msgstr ""
-
-msgctxt "#32051"
-msgid "Thursdays to Saturdays"
-msgstr ""
-
-msgctxt "#32052"
-msgid "Fridays to Saturdays"
-msgstr ""
-
-msgctxt "#32053"
-msgid "Fridays to Sundays"
-msgstr ""
-
-msgctxt "#32054"
-msgid "Saturdays to Sundays"
-msgstr ""
-
-msgctxt "#32055"
-msgid "Saturdays to Mondays"
-msgstr ""
-
-msgctxt "#32056"
-msgid "Sundays to Wednesdays"
-msgstr ""
-
-msgctxt "#32057"
-msgid "Sundays to Thursdays"
-msgstr ""
-
-msgctxt "#32058"
-msgid "Everyday"
-msgstr ""
-
-msgctxt "#32059"
-msgid "off"
-msgstr ""
-
 msgctxt "#32060"
 msgid "Schedule"
 msgstr ""
@@ -298,6 +190,22 @@ msgid "stop media at end"
 msgstr ""
 
 msgctxt "#32077"
+msgid "shutdown Kodi"
+msgstr ""
+
+msgctxt "#32078"
+msgid "quit Kodi"
+msgstr ""
+
+msgctxt "#32079"
+msgid "suspend system"
+msgstr ""
+
+msgctxt "#32080"
+msgid "hibernate system"
+msgstr ""
+
+msgctxt "#32081"
 msgid "powerdown system"
 msgstr ""
 
@@ -525,6 +433,110 @@ msgctxt "#32155"
 msgid "120 min"
 msgstr ""
 
-msgctxt "#32156"
+msgctxt "#32200"
+msgid "off"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Mondays"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Tuedays"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Wednesdays"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Thursdays"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Fridays"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Saturdays"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Sundays"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Mondays to Thursdays"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Mondays to Fridays"
+msgstr ""
+
+msgctxt "#32217"
 msgid "Mondays to Saturdays"
+msgstr ""
+
+msgctxt "#32218"
+msgid "Tuesdays to Fridays"
+msgstr ""
+
+msgctxt "#32219"
+msgid "Thursdays to Saturdays"
+msgstr ""
+
+msgctxt "#32220"
+msgid "Fridays to Saturdays"
+msgstr ""
+
+msgctxt "#32221"
+msgid "Fridays to Sundays"
+msgstr ""
+
+msgctxt "#32222"
+msgid "Saturdays to Sundays"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Saturdays to Mondays"
+msgstr ""
+
+msgctxt "#32224"
+msgid "Sundays to Wednesdays"
+msgstr ""
+
+msgctxt "#32225"
+msgid "Sundays to Thursdays"
+msgstr ""
+
+msgctxt "#32226"
+msgid "Everyday"
 msgstr ""

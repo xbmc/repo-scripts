@@ -7,11 +7,14 @@ import xbmcgui
 import xbmcvfs
 from resources.lib.timer import util
 from resources.lib.timer.player import Player
-from resources.lib.timer.timer import (ACTION_POWERDOWN_AT_END,
+from resources.lib.timer.timer import (ACTION_HIBERNATE_AT_END,
+                                       ACTION_POWERDOWN_AT_END,
+                                       ACTION_QUIT_AT_END,
+                                       ACTION_SHUTDOWN_AT_END,
                                        ACTION_START_AT_END, ACTION_STOP,
-                                       END_TYPE_NO, FADE_IN_FROM_MIN,
-                                       FADE_OUT_FROM_CURRENT, TIMER_ONCE,
-                                       Timer)
+                                       ACTION_SUSPEND_AT_END, END_TYPE_NO,
+                                       FADE_IN_FROM_MIN, FADE_OUT_FROM_CURRENT,
+                                       TIMER_ONCE, Timer)
 
 CHECK_INTERVAL = 10
 
@@ -31,6 +34,7 @@ class Scheduler(xbmc.Monitor):
     _resume = None
     _powermanagement_displaysoff = 0
     _disabled_powermanagement_displaysoff = False
+    _windows_unlock = False
 
     def __init__(self, addon):
 
@@ -57,10 +61,11 @@ class Scheduler(xbmc.Monitor):
         for i, timer in enumerate(self._timers):
             self._timers[i] = timer.update_or_replace_from_settings()
 
-        self._default_vol = int("0%s" % self._addon.getSetting("vol_default"))
-        self._resume = ("true" == self._addon.getSetting("resume"))
-        self._powermanagement_displaysoff = int(
-            "0%s" % self._addon.getSetting("powermanagement_displaysoff"))
+        self._default_vol = self._addon.getSettingInt("vol_default")
+        self._resume = self._addon.getSettingBool("resume")
+        self._powermanagement_displaysoff = self._addon.getSettingInt(
+            "powermanagement_displaysoff")
+        self._windows_unlock = self._addon.getSettingBool("windows_unlock")
         self.reset_powermanagement_displaysoff()
 
     def start(self):
@@ -138,13 +143,13 @@ class Scheduler(xbmc.Monitor):
                 else:
                     self._player.play(timer.s_filename)
 
-            elif timer.s_action in [ACTION_STOP, ACTION_START_AT_END]:
+            elif timer.i_action in [ACTION_STOP, ACTION_START_AT_END]:
                 self._player.stop()
 
             if timer.b_notify:
                 icon_file = os.path.join(self._addon_dir,
                                          "resources",
-                                         "assets", "icon_alarm.png" if timer.s_end_type == END_TYPE_NO else "icon_sleep.png")
+                                         "assets", "icon_alarm.png" if timer.i_end_type == END_TYPE_NO else "icon_sleep.png")
                 xbmcgui.Dialog().notification(self._addon.getLocalizedString(
                     32100), timer.s_label, icon=icon_file)
 
@@ -157,10 +162,10 @@ class Scheduler(xbmc.Monitor):
                 self._player.stop()
                 has_stopped_player = True
 
-            elif timer.s_action == ACTION_START_AT_END and timer.s_filename != "":
+            elif timer.i_action == ACTION_START_AT_END and timer.s_filename != "":
                 self._player.play(timer.s_filename)
 
-            if timer.b_notify and timer.s_end_type != END_TYPE_NO:
+            if timer.b_notify and timer.i_end_type != END_TYPE_NO:
                 xbmcgui.Dialog().notification(self._addon.getLocalizedString(
                     32101), timer.s_label)
 
@@ -170,11 +175,19 @@ class Scheduler(xbmc.Monitor):
 
             timer.b_active = False
 
-            if timer.s_schedule in TIMER_ONCE:
+            if timer.i_schedule in TIMER_ONCE:
                 Timer(timer.i_timer).save_to_settings()
 
-            if timer.s_action == ACTION_POWERDOWN_AT_END:
+            if timer.i_action == ACTION_SHUTDOWN_AT_END:
                 xbmc.shutdown()
+            elif timer.i_action == ACTION_QUIT_AT_END:
+                xbmc.executebuiltin("Quit()")
+            elif timer.i_action == ACTION_SUSPEND_AT_END:
+                xbmc.executebuiltin("Suspend()")
+            elif timer.i_action == ACTION_HIBERNATE_AT_END:
+                xbmc.executebuiltin("Hibernate()")
+            elif timer.i_action == ACTION_POWERDOWN_AT_END:
+                xbmc.executebuiltin("Powerdown()")
 
             return has_stopped_player
 
@@ -188,20 +201,25 @@ class Scheduler(xbmc.Monitor):
             delta_percent = delta_now_start / delta_end_start
 
             vol_min = timer.i_vol_min
-            vol_max = timer.i_return_vol if timer.s_fade == FADE_OUT_FROM_CURRENT else timer.i_vol_max
+            vol_max = timer.i_return_vol if timer.i_fade == FADE_OUT_FROM_CURRENT else timer.i_vol_max
             vol_diff = vol_max - vol_min
 
-            if timer.s_fade == FADE_IN_FROM_MIN:
+            if timer.i_fade == FADE_IN_FROM_MIN:
                 new_vol = int(vol_min + vol_diff * delta_percent)
             else:
                 new_vol = int(vol_max - vol_diff * delta_percent)
 
             util.set_volume(new_vol)
 
+        prev_windows_unlock = False
         while not self.abortRequested():
 
             t_now = time.localtime()
             _check_timers(t_now)
+
+            if self._windows_unlock != prev_windows_unlock:
+                prev_windows_unlock = util.set_windows_unlock(
+                    self._windows_unlock)
 
             if self._powermanagement_displaysoff:
                 self._prevent_powermanagement_displaysoff()
