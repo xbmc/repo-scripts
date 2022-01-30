@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.reset_watchedstate">
+		<category id="32501" label="32501">
+			<group id="1" label="32501">
+				<setting help="32007" id="active" label="32503" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="32010" id="preventdialog" label="32505" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="32008" id="dryrun" label="32504" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="32009" id="numberofdays" label="32502" type="integer">
+					<level>0</level>
+					<default>9999</default>
+					<control type="edit" format="integer">
+						<heading>32502</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
