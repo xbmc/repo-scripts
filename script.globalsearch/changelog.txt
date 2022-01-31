@@ -1,3 +1,10 @@
+v9.0.7
+- fix itemcount
+- fix navigating back from directors
+
+v9.0.6
+- cosmetics
+
 v9.0.5
 - fix setting focus to the list
 - fix incorrect list layout was shown in icons view

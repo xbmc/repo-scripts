@@ -9,8 +9,8 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: Esperanto (http://www.transifex.com/projects/p/xbmc-addons/language/eo/)\n"
-"Language: eo\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,43 +18,43 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Search your library."
-msgstr ""
+msgstr "Cerca a la teva biblioteca."
 
 msgctxt "Addon Description"
 msgid "This addon can find any item in your video and music library."
-msgstr ""
+msgstr "Aquest complement pot trobat qualsevol article en la teva biblioteca de vídeo i música"
 
 msgctxt "#32000"
 msgid "General"
-msgstr "Generalo"
+msgstr "General"
 
 msgctxt "#32001"
 msgid "Search Movies"
-msgstr ""
+msgstr "Cerca Pel·lícules"
 
 msgctxt "#32002"
 msgid "Search TV Shows"
-msgstr ""
+msgstr "Cerca Sèries de TV"
 
 msgctxt "#32003"
 msgid "Search Episodes"
-msgstr ""
+msgstr "Cerca Episodis"
 
 msgctxt "#32004"
 msgid "Search Music Videos"
-msgstr ""
+msgstr "Cerca Vídeos Musicals"
 
 msgctxt "#32005"
 msgid "Search Artists"
-msgstr ""
+msgstr "Cerca Artistes"
 
 msgctxt "#32006"
 msgid "Search Albums"
-msgstr ""
+msgstr "Cerca Àlbums"
 
 msgctxt "#32007"
 msgid "Search Songs"
-msgstr ""
+msgstr "Cerca Cançons"
 
 # empty string with id 32008
 msgctxt "#32009"
@@ -77,7 +77,7 @@ msgstr ""
 # empty strings from id 32012 to 32100
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "Tajpi Search String"
+msgstr "Introdueix la cerca"
 
 msgctxt "#32102"
 msgid "Items"
@@ -85,35 +85,35 @@ msgstr ""
 
 msgctxt "#32203"
 msgid "Browse album"
-msgstr ""
+msgstr "Examinar àlbum"
 
 msgctxt "#32204"
 msgid "Season information"
-msgstr ""
+msgstr "Informació de la temporada"
 
 msgctxt "#32205"
 msgid "Play trailer"
-msgstr ""
+msgstr "Reprodueix el tràiler"
 
 msgctxt "#32206"
 msgid "Find album"
-msgstr ""
+msgstr "Troba l'àlbum"
 
 msgctxt "#32207"
 msgid "Find all seasons"
-msgstr ""
+msgstr "Troba totes les temporades"
 
 msgctxt "#32208"
 msgid "Find all episodes"
-msgstr ""
+msgstr "Troba tots els episodis"
 
 msgctxt "#32209"
 msgid "Find all albums"
-msgstr ""
+msgstr "Troba tots els àlbums"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr ""
+msgstr "Troba totes les cançons"
 
 msgctxt "#32211"
 msgid "Movies starring"
@@ -143,4 +143,4 @@ msgstr ""
 
 msgctxt "#32299"
 msgid "New search"
-msgstr ""
+msgstr "NOVA CERCA"

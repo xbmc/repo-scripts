@@ -9,8 +9,8 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: Esperanto (http://www.transifex.com/projects/p/xbmc-addons/language/eo/)\n"
-"Language: eo\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,43 +18,43 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Search your library."
-msgstr ""
+msgstr "Keresés a médiatárban"
 
 msgctxt "Addon Description"
 msgid "This addon can find any item in your video and music library."
-msgstr ""
+msgstr "Ez a kiegészítő bármely elemet megtalálja a videó és audió médiatárban."
 
 msgctxt "#32000"
 msgid "General"
-msgstr "Generalo"
+msgstr "Általános"
 
 msgctxt "#32001"
 msgid "Search Movies"
-msgstr ""
+msgstr "Filmek keresése"
 
 msgctxt "#32002"
 msgid "Search TV Shows"
-msgstr ""
+msgstr "Sorozatok keresése"
 
 msgctxt "#32003"
 msgid "Search Episodes"
-msgstr ""
+msgstr "Epizódok keresése"
 
 msgctxt "#32004"
 msgid "Search Music Videos"
-msgstr ""
+msgstr "Videóklippek keresése"
 
 msgctxt "#32005"
 msgid "Search Artists"
-msgstr ""
+msgstr "Előadók keresése"
 
 msgctxt "#32006"
 msgid "Search Albums"
-msgstr ""
+msgstr "Albumok keresése"
 
 msgctxt "#32007"
 msgid "Search Songs"
-msgstr ""
+msgstr "Számok keresése"
 
 # empty string with id 32008
 msgctxt "#32009"
@@ -77,7 +77,7 @@ msgstr ""
 # empty strings from id 32012 to 32100
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "Tajpi Search String"
+msgstr "Adja meg a keresendő szöveget/szövegrészt"
 
 msgctxt "#32102"
 msgid "Items"
@@ -85,39 +85,39 @@ msgstr ""
 
 msgctxt "#32203"
 msgid "Browse album"
-msgstr ""
+msgstr "ALbumok tallózása"
 
 msgctxt "#32204"
 msgid "Season information"
-msgstr ""
+msgstr "Évad információk"
 
 msgctxt "#32205"
 msgid "Play trailer"
-msgstr ""
+msgstr "Előzetes lejátszása"
 
 msgctxt "#32206"
 msgid "Find album"
-msgstr ""
+msgstr "Album találatok"
 
 msgctxt "#32207"
 msgid "Find all seasons"
-msgstr ""
+msgstr "Találatok az évadok között"
 
 msgctxt "#32208"
 msgid "Find all episodes"
-msgstr ""
+msgstr "Találatok az epizódok között"
 
 msgctxt "#32209"
 msgid "Find all albums"
-msgstr ""
+msgstr "Találatok az albumok között"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr ""
+msgstr "Találatok a számok között"
 
 msgctxt "#32211"
 msgid "Movies starring"
-msgstr ""
+msgstr "Filmekben szerepel"
 
 msgctxt "#32212"
 msgid "Resume from %s"
@@ -143,4 +143,4 @@ msgstr ""
 
 msgctxt "#32299"
 msgid "New search"
-msgstr ""
+msgstr "ÚJ KERESÉS"
