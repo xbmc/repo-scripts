@@ -39,6 +39,62 @@
                                                         <option>60</option>
                                                         <option>90</option>
                                                         <option>120</option>
+                                                        <option>180</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="plnotify" type="string" label="30305" help="30505">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option>0</option>
+							<option>30</option>
+							<option>60</option>
+							<option>120</option>
+							<option>180</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="plextend" type="string" label="30306" help="30506">
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<options>
+							<option label="Variable">0</option>
+							<option>10</option>
+                                                        <option>20</option>
+                                                        <option>30</option>
+                                                        <option>40</option>
+                                                        <option>50</option>
+                                                        <option>60</option>
+                                                        <option>90</option>
+                                                        <option>120</option>
+                                                        <option>180</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="plnotify">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="stopplay" type="boolean" label="30316" help="30508">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="padjust" type="string" label="30304" help="30504">
+					<level>0</level>
+					<default>None</default>
+					<constraints>
+						<options>
+							<option>None</option>
+							<option>Pause</option>
+							<option>Reset</option>
 						</options>
 					</constraints>
 					<control type="spinner" format="string"/>
@@ -47,6 +103,47 @@
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
+				</setting>
+				<setting id="asevlog" type="boolean" label="30312" help="30507">
+					<level>3</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="notifyset" type="string" label="30314" help="">
+					<level>4</level>
+					<default>no</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30314</heading>
+					</control>
+				</setting>
+				<setting id="extime" type="string" label="30314" help="">
+					<level>4</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30314</heading>
+					</control>
+				</setting>
+				<setting id="varextnotify" type="string" label="30314" help="">
+					<level>4</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30314</heading>
+					</control>
 				</setting>
 			</group>
 		</category>

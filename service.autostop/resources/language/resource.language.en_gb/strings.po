@@ -32,6 +32,58 @@ msgctxt "#30303"
 msgid "Sleep Timer Minutes"
 msgstr ""
 
+msgctxt "#30304"
+msgid "Sleep Timer Pause Adjustment"
+msgstr ""
+
+msgctxt "#30305"
+msgid "Sleep Timer Notification 0-180 (seconds)"
+msgstr ""
+
+msgctxt "#30306"
+msgid "Sleep Timer Extension Minutes"
+msgstr ""
+
+msgctxt "#30307"
+msgid "Autostop Sleep Timer Notification"
+msgstr ""
+
+msgctxt "#30308"
+msgid "Click cancel to extend playback.  Playback will stop in "
+msgstr ""
+
+msgctxt "#30309"
+msgid "Autostop sleep timer extended "
+msgstr ""
+
+msgctxt "#30310"
+msgid "Autostop sleep timer"
+msgstr ""
+
+msgctxt "#30311"
+msgid "  seconds."
+msgstr ""
+
+msgctxt "#30312"
+msgid "Autostop Event Logging"
+msgstr ""
+
+msgctxt "#30313"
+msgid " minutes."
+msgstr ""
+
+msgctxt "#30314"
+msgid "Not visible"
+msgstr ""
+
+msgctxt "#30315"
+msgid "Autostop Sleep Timer Extension"
+msgstr ""
+
+msgctxt "#30316"
+msgid "Sleep Timer Playback Stop Option"
+msgstr ""
+
 msgctxt "#30501"
 msgid "Automatically stop paused video or music in minutes.  0 = never automatically stop paused playback."
 msgstr ""
@@ -42,4 +94,24 @@ msgstr ""
 
 msgctxt "#30503"
 msgid "Automatically stop playing video or music in minutes.  0 = never automatically stop playback."
+msgstr ""
+
+msgctxt "#30504"
+msgid "Adjust sleep timer when playback is paused.  None = no change to timer.  Pause = pause sleep timer during paused playback and resume when playback restarts.  Reset = pause sleep timer during paused playback and reset back to 0 when playback restarts."
+msgstr ""
+
+msgctxt "#30505"
+msgid "Display sleep timer notification prior to stopping playback.  0 = never and is default"
+msgstr ""
+
+msgctxt "#30506"
+msgid "Amount of time to extend sleep timer via notification popup.  This is like the amount of time on a snooze bar.  Variable allows selection of the the extension time when the notification appears."
+msgstr ""
+
+msgctxt "#30507"
+msgid "Enable event logging to recod Autostop sleep timer events.  Default is disabled."
+msgstr ""
+
+msgctxt "#30508"
+msgid "Adds option to stop playback when the sleep timer extension option is set to variable.  Default is disabled."
 msgstr ""
