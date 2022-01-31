@@ -202,10 +202,14 @@ class GUI(xbmcgui.WindowXML):
                     listitem.setProperty('content', cat['type'])
                     listitems.append(listitem)
         if len(listitems) > 0:
-            if cat['type'] != 'actors' and cat['type'] != 'tvactors': 
-                menuitem = xbmcgui.ListItem(xbmc.getLocalizedString(cat['label']), str(len(listitems)), offscreen=True)
+            if self.level > 1:
+                numitems = str(len(listitems) - 1)
             else:
-                menuitem = xbmcgui.ListItem(LANGUAGE(cat['label']), str(len(listitems)), offscreen=True)
+                numitems = str(len(listitems))
+            if cat['type'] != 'actors' and cat['type'] != 'tvactors': 
+                menuitem = xbmcgui.ListItem(xbmc.getLocalizedString(cat['label']), numitems, offscreen=True)
+            else:
+                menuitem = xbmcgui.ListItem(LANGUAGE(cat['label']), numitems, offscreen=True)
             menuitem.setArt({'icon':cat['menuthumb']})
             menuitem.setProperty('type', cat['type'])
             if cat['type'] != 'actors' and cat['type'] != 'directors' and cat['type'] != 'tvactors':
@@ -227,6 +231,8 @@ class GUI(xbmcgui.WindowXML):
                     elif cat['type'] == 'directors':
                         self.setContent('directors')
                     self.addItems(listitems)
+                    # wait for items to be added before we can set focus
+                    xbmc.sleep(100)
                     self.setCurrentListPosition(self.history[self.level]['containerposition'])
                     self.menutype = cat['type']
                     self.focusset = 'true'
@@ -238,6 +244,8 @@ class GUI(xbmcgui.WindowXML):
                 elif cat['type'] == 'directors':
                     self.setContent('directors')
                 self.addItems(listitems)
+                # wait for items to be added before we can set focus
+                xbmc.sleep(100)
                 self.setFocusId(self.getCurrentContainerId())
                 self.menutype = cat['type']
                 self.focusset = 'true'
@@ -312,7 +320,7 @@ class GUI(xbmcgui.WindowXML):
                 self.setContent(cat['content'])
                 self.addItems(listitems)
                 # wait for items to be added before we can set focus
-                xbmc.sleep(50)
+                xbmc.sleep(100)
                 self.setFocusId(self.getCurrentContainerId())
                 self.focusset = 'true'
 
@@ -638,6 +646,7 @@ class GUI(xbmcgui.WindowXML):
             if listitem.getLabel() == '..':
                 self.level -= 1
                 self._nav_back()
+                return
             if listitem.getVideoInfoTag().getMediaType():
                 media = listitem.getVideoInfoTag().getMediaType()
             elif listitem.getMusicInfoTag().getMediaType():

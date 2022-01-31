@@ -9,8 +9,8 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: Esperanto (http://www.transifex.com/projects/p/xbmc-addons/language/eo/)\n"
-"Language: eo\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"Language: no\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,43 +18,43 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Search your library."
-msgstr ""
+msgstr "Søk i biblioteket ditt"
 
 msgctxt "Addon Description"
 msgid "This addon can find any item in your video and music library."
-msgstr ""
+msgstr "Dette tillegget kan finne hva som helst i ditt film eller musikk bibliotek."
 
 msgctxt "#32000"
 msgid "General"
-msgstr "Generalo"
+msgstr "Generelt"
 
 msgctxt "#32001"
 msgid "Search Movies"
-msgstr ""
+msgstr "Søk i Filmer"
 
 msgctxt "#32002"
 msgid "Search TV Shows"
-msgstr ""
+msgstr "Søk i TV Serier"
 
 msgctxt "#32003"
 msgid "Search Episodes"
-msgstr ""
+msgstr "Søk i Episoder"
 
 msgctxt "#32004"
 msgid "Search Music Videos"
-msgstr ""
+msgstr "Søk i Musikk Videoer"
 
 msgctxt "#32005"
 msgid "Search Artists"
-msgstr ""
+msgstr "Søk i Artister"
 
 msgctxt "#32006"
 msgid "Search Albums"
-msgstr ""
+msgstr "Søk i Album"
 
 msgctxt "#32007"
 msgid "Search Songs"
-msgstr ""
+msgstr "Søk i Sanger"
 
 # empty string with id 32008
 msgctxt "#32009"
@@ -77,7 +77,7 @@ msgstr ""
 # empty strings from id 32012 to 32100
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "Tajpi Search String"
+msgstr "Skriv inn søketekst"
 
 msgctxt "#32102"
 msgid "Items"
@@ -85,39 +85,39 @@ msgstr ""
 
 msgctxt "#32203"
 msgid "Browse album"
-msgstr ""
+msgstr "Bla gjennom album"
 
 msgctxt "#32204"
 msgid "Season information"
-msgstr ""
+msgstr "Sesong informasjon"
 
 msgctxt "#32205"
 msgid "Play trailer"
-msgstr ""
+msgstr "Spill av trailer"
 
 msgctxt "#32206"
 msgid "Find album"
-msgstr ""
+msgstr "Finn album"
 
 msgctxt "#32207"
 msgid "Find all seasons"
-msgstr ""
+msgstr "Finn alle sesonger"
 
 msgctxt "#32208"
 msgid "Find all episodes"
-msgstr ""
+msgstr "Finn alle episoder"
 
 msgctxt "#32209"
 msgid "Find all albums"
-msgstr ""
+msgstr "Finn alle album"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr ""
+msgstr "Finn alle sanger"
 
 msgctxt "#32211"
 msgid "Movies starring"
-msgstr ""
+msgstr "Filmer med skuespiller"
 
 msgctxt "#32212"
 msgid "Resume from %s"
@@ -143,4 +143,4 @@ msgstr ""
 
 msgctxt "#32299"
 msgid "New search"
-msgstr ""
+msgstr "NYTT SØK"
