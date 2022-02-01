@@ -1,3 +1,21 @@
+1.0.3
+
+-  Fixed exception bug when Kodi begins but is unable to play
+   a file properly.  Autostop will now ignore those playback
+   errors.
+
+1.0.2
+
+-  Extended sleep timer settings to 180 minutes
+-  Added pause sleep timer adjust option to select what
+   to do with the sleep timer when playback is paused.
+     None - Do nothing and sleep counter continues
+     Pause - Pause sleep timer
+     Reset - Reset sleep timer to beginning
+-  Added 0 -180 secs adjustable GUI sleep timer notification 
+   feature with fixed and adjustable sleep timer extension.
+-  Added event logging option to aid troubleshooting  
+
 1.0.1
 -  Fixed exception bug which could occur if Kodi stopped 
    playing a file at exactly the same time the addon 
