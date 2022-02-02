@@ -84,6 +84,22 @@ msgctxt "#30316"
 msgid "Sleep Timer Playback Stop Option"
 msgstr ""
 
+msgctxt "#30317"
+msgid "Autostop Paused Timer"
+msgstr ""
+
+msgctxt "#30318"
+msgid "Autostop user stopped current playback: "
+msgstr ""
+
+msgctxt "#30319"
+msgid "Autostop stopped paused playback: "
+msgstr ""
+
+msgctxt "#30320"
+msgid "Autostop stopped current playback: "
+msgstr ""
+
 msgctxt "#30501"
 msgid "Automatically stop paused video or music in minutes.  0 = never automatically stop paused playback."
 msgstr ""

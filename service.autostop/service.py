@@ -2,7 +2,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-from common import settings, playCount, sleepNotify, stopPlayback
+from common import settings, playCount, sleepNotify, stopPlayback, translate
 
 pos = 0
 count = 0 
@@ -66,8 +66,8 @@ while not monitor.abortRequested():
             ' ' + str(player.paflag), xbmc.LOGDEBUG)
             if pastoptime > 0 and pacount >= pastoptime * 60 and player.paflag == 1:
                 pos = xbmc.Player().getTime()
-                logmsg = 'Autostop stopped paused playback: '
-                notifymsg = 'Autostop Paused Timer'
+                logmsg = translate(30319)
+                notifymsg = translate(30317)
                 pacount = 0
                 stopPlayback(notifymsg, logmsg)      # Stop playback if paused too long
             elif player.paflag == 0:
@@ -93,8 +93,8 @@ while not monitor.abortRequested():
                 str(plstoptime) + ' ' + str(player.plflag), xbmc.LOGINFO)
             if plstoptime > 0 and plcount >= totalstoptime * 60 and (player.plflag > 0 or    \
             (player.plflag == 0 and player.paflag == 1)):
-                logmsg = 'Autostop stopped current playback: '
-                notifymsg = 'Autostop Sleep Timer'
+                logmsg = translate(30320)
+                notifymsg = translate(30310)
                 plcount = 0
                 stopPlayback(notifymsg, logmsg)      # Stop playback if playing too long
         except:

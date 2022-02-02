@@ -128,8 +128,8 @@ def varExtension(plstoptime, plcount, asevlog):                 # Get variable e
         extension = checkTime(plstoptime, plcount, asevlog)     # Get remaining playback time
     elif 'Stop' in (pselect[selection]):
         extension = '0'
-        notifymsg = 'Autostop Sleep Timer'
-        logmsg = 'Autostop user stopped current playback: '
+        notifymsg = translate(30310)
+        logmsg = translate(30318)
         stopPlayback(notifymsg, logmsg)                         # User requested stop playback
 
     return extension
@@ -159,7 +159,6 @@ def stopPlayback(notifymsg, logmsg):                            # Function to st
         settings('varextnotify', 'no')                          # Clear notification flag
     except:
         xbmc.log('Autostop error when stopping playback.', xbmc.LOGINFO)        
-        pass
 
 
 def checkTime(plstoptime, plcount, asevlog):                    # Calculate remaining playback time
@@ -181,6 +180,7 @@ def checkTime(plstoptime, plcount, asevlog):                    # Calculate rema
     except:
         xbmc.log('Autostop error getting remaining extension time.', xbmc.LOGINFO)
         return '-1'
-        pass         
+
+    
 
 

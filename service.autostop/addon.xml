@@ -16,7 +16,7 @@
     </assets>
     <summary lang="en_GB">Automatically gives you better control over paused and playing media.</summary>
     <description lang="en_GB">Autostop can automatically stop paused videos and music or set a sleep timer for them to stop playing after a set period of time.  You can also have Autostop automatically start the Kodi screensaver.</description>
-    <forum>http://forum.kodi.tv/showthread.php?tid=211971</forum>
-    <source>https://forum.kodi.tv/showthread.php?tid=365429</source>
+    <forum>https://forum.kodi.tv/showthread.php?tid=365429</forum>
+    <source>https://github.com/jbinkley60/service.autostop</source>
   </extension>
 </addon>
