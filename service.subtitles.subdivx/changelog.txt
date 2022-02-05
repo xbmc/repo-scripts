@@ -1,3 +1,7 @@
+0.3.8
+- Fix search after changes in subdivx.com. Thanks alvarezj81 for the report
+  and pedrochiuaua for the fix
+
 0.3.7
 - Fix search result entry regexp
 

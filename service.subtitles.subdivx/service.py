@@ -49,7 +49,7 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = '0.3.7'
+__version__    = '0.3.8'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
@@ -63,7 +63,7 @@ QS_DICT = {
     'masdesc': '',
     'oxdown': '1',
 }
-QS_KEY_QUERY = 'q'
+QS_KEY_QUERY = 'buscar2'
 QS_KEY_PAGE = 'pg'
 MAX_RESULTS_COUNT = 40
 
@@ -301,12 +301,22 @@ def append_subtitle(item, filename):
         item_label = item['uploader']
     else:
         item_label = 'Spanish'
-    listitem = xbmcgui.ListItem(
-        label=item_label,
-        label2=item['descr'],
-        iconImage=str(item['rating']),
-        thumbnailImage=''
-    )
+    if kodi_major_version >= 16:
+        listitem = xbmcgui.ListItem(
+            label=item_label,
+            label2=item['descr']
+        )
+        listitem.setArt({
+            'icon': str(item['rating']),
+            'thumb': '',
+        })
+    else:
+        listitem = xbmcgui.ListItem(
+            label=item_label,
+            label2=item['descr'],
+            iconImage=str(item['rating']),
+            thumbnailImage=''
+        )
     listitem.setProperty("sync", 'true' if item["sync"] else 'false')
     listitem.setProperty("hearing_imp",
                          'true' if item.get("hearing_imp", False) else 'false')
