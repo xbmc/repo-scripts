@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.reset_watchedstate" name="Reset Watchedstate" version="0.0.2" provider-name="DaVu">
+<addon id="script.reset_watchedstate" name="Reset Watchedstate" version="0.0.3" provider-name="DaVu">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>

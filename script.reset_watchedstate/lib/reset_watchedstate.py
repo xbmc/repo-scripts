@@ -13,7 +13,9 @@ LANGUAGE = ADDON.getLocalizedString
 DIALOG = xbmcgui.Dialog()
 
 def getSettings():
-    build = xbmc.getInfoLabel('System.BuildVersionShort')
+    build_all = xbmc.getInfoLabel('System.BuildVersionShort')
+    build_split = build_all.split('-')
+    build = float(build_split[0])
     if float(build) >= 20.0:
         # read settings for v20
         SETTINGS = xbmcaddon.Addon().getSettings()
