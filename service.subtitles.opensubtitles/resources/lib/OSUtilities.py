@@ -39,9 +39,11 @@ class OSDBServer:
           return None
 
       if len(item['tvshow']) > 0:
+        season = int(item['season']) if item['season'].isdigit() else 0
+        episode = int(item['episode']) if item['episode'].isdigit() else 0
         OS_search_string = ("%s S%.2dE%.2d" % (item['tvshow'],
-                                                int(item['season']),
-                                                int(item['episode']),)
+                                                season,
+                                                episode,)
                                               ).replace(" ","+")
       else:
         if str(item['year']) == "":

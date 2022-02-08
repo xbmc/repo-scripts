@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr "Le resultat de la recherche a retourne une erreur"
+
+msgctxt "#32002"
+msgid "Username"
+msgstr "Utilisateur"
+
+msgctxt "#32003"
+msgid "Password"
+msgstr "Mot de passe"
+
+msgctxt "#32004"
+msgid "Login Details"
+msgstr "Identification"
+
+msgctxt "#32005"
+msgid "Le nom d'utilisateur et le mot de passe opensubtitles.org est vide ou faux"
+msgstr ""
