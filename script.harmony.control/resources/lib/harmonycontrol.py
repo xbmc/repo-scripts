@@ -1,5 +1,5 @@
-from kodi_six import xbmc, xbmcgui
-from kodi_six.utils import py2_decode
+import xbmc
+import xbmcgui
 import json
 import os
 import sys
@@ -92,8 +92,26 @@ class Main:
             self.SETTINGS['ADDONLANGUAGE'](32201), defaultt=default_match)
         if not thematch:
             return
-        activity = self.DIALOG.input(
-            self.SETTINGS['ADDONLANGUAGE'](32203), defaultt=default_activity)
+        activity_list = []
+        activities, loglines = self.MYHUB.getActivities()
+        self.LW.log(loglines)
+        for activity_key in activities:
+            activity_list.append(activity_key)
+        activity_list.sort()
+        if activity_list:
+            try:
+                default_index = activity_list.index(default_activity)
+            except ValueError:
+                default_index = -1
+            ret = self.DIALOG.select(
+                self.SETTINGS['ADDONLANGUAGE'](32203), activity_list, 0, default_index)
+            if ret == -1:
+                return
+            else:
+                activity = activity_list[ret]
+        else:
+            activity = self.DIALOG.input(
+                self.SETTINGS['ADDONLANGUAGE'](32203), defaultt=default_activity)
         if self.SETTINGS['harmonyadvanced']:
             cmds = self.DIALOG.input(
                 self.SETTINGS['ADDONLANGUAGE'](32202), defaultt=default_cmds)

@@ -1,29 +1,30 @@
 # plugin.whereareyou language file
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-02-07 14:28+0000\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2021-11-21 00:13+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-harmony-control/da_dk/>\n"
 "Language: da_dk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.9\n"
 
 #: Settings Heading
 msgctxt "#32000"
 msgid "General"
-msgstr "Generel"
+msgstr "Generelt"
 
 #: Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr "Aktivér fejlfindingslogføring"
+msgstr "Aktiver fejlfindingslogføring"
 
 #: Settings
 msgctxt "#32101"
 msgid "Edit mappings"
-msgstr ""
+msgstr "Rediger mappinger"
 
 #: Settings
 msgctxt "#32102"
@@ -33,7 +34,7 @@ msgstr "Harmony hub IP-adresse"
 #: Settings
 msgctxt "#32103"
 msgid "Use custom select menu"
-msgstr ""
+msgstr "Anvend brugerdefineret menu til valg"
 
 #: Settings
 msgctxt "#32104"
@@ -48,7 +49,7 @@ msgstr "Aktiver avanceret kontrol af Harmony hub"
 #: Settings
 msgctxt "#32106"
 msgid "Timeout (in seconds)"
-msgstr ""
+msgstr "Tidsfrist (i sekunder)"
 
 #: Settings
 msgctxt "#32107"
@@ -78,7 +79,7 @@ msgstr "Indtast Harmony aktivitet"
 #: Dialog Heading
 msgctxt "#32204"
 msgid "Select mapping"
-msgstr ""
+msgstr "Vælg mapping"
 
 #: Dialog Heading
 msgctxt "#32205"
@@ -88,14 +89,14 @@ msgstr "Vælg tjeneste"
 #: Dialog
 msgctxt "#32300"
 msgid "Add mapping"
-msgstr ""
+msgstr "Tilføj mapping"
 
 #: Dialog
 msgctxt "#32301"
 msgid "Edit mapping"
-msgstr ""
+msgstr "Rediger mapping"
 
 #: Dialog
 msgctxt "#32302"
 msgid "Delete mapping"
-msgstr ""
+msgstr "Slet mapping"

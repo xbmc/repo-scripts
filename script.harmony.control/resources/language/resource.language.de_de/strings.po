@@ -1,96 +1,102 @@
 # plugin.whereareyou language file
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2021-07-27 12:29+0000\n"
+"Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-harmony-control/de_de/>\n"
 "Language: de_de\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7.2\n"
 
 #: Settings Heading
 msgctxt "#32000"
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Debug-Protokollierung aktivieren"
 
 #: Settings
 msgctxt "#32101"
 msgid "Edit mappings"
-msgstr ""
+msgstr "Mappings ändern"
 
 #: Settings
 msgctxt "#32102"
 msgid "Harmony hub IP address"
-msgstr ""
+msgstr "IP-Adresse des Harmony-Hubs"
 
 #: Settings
 msgctxt "#32103"
 msgid "Use custom select menu"
-msgstr ""
+msgstr "Eigenes Auswahlmenü verwenden"
 
 #: Settings
 msgctxt "#32104"
 msgid "Include skin mods"
-msgstr ""
+msgstr "Skin-Mods einschließen"
 
 #: Settings
 msgctxt "#32105"
 msgid "Enable advanced Harmony hub control"
-msgstr ""
+msgstr "Erweiterte Steuerung für den Harmony-Hub aktivieren"
 
 #: Settings
 msgctxt "#32106"
 msgid "Timeout (in seconds)"
-msgstr ""
+msgstr "Timeout (in Sekunden)"
 
 #: Settings
 msgctxt "#32107"
 msgid "Delay between remote commands (in milliseconds)"
-msgstr ""
+msgstr "Verzögerung zwischen Fernbedienungskommandos (in Millisekunden)"
 
 #: Dialog Heading
 msgctxt "#32200"
 msgid "Select action"
-msgstr ""
+msgstr "Auswahlaktion"
 
 #: Dialog Heading
 msgctxt "#32201"
 msgid "Enter name of action"
-msgstr ""
+msgstr "Namen der Aktion eingeben"
 
 #: Dialog Heading
 msgctxt "#32202"
 msgid "Additional commands to run"
-msgstr ""
+msgstr "Zusätzlich auszuführende Kommandos"
 
 #: Dialog Heading
 msgctxt "#32203"
 msgid "Enter Harmony activity"
-msgstr ""
+msgstr "Harmony-Aktivität eingeben"
 
 #: Dialog Heading
 msgctxt "#32204"
 msgid "Select mapping"
-msgstr ""
+msgstr "Mapping auswählen"
 
 #: Dialog Heading
 msgctxt "#32205"
 msgid "Choose service"
-msgstr ""
+msgstr "Service auswählen"
 
 #: Dialog
 msgctxt "#32300"
 msgid "Add mapping"
-msgstr ""
+msgstr "Mapping hinzufügen"
 
 #: Dialog
 msgctxt "#32301"
 msgid "Edit mapping"
-msgstr ""
+msgstr "Mapping bearbeiten"
 
 #: Dialog
 msgctxt "#32302"
 msgid "Delete mapping"
-msgstr ""
+msgstr "Mapping löschen"

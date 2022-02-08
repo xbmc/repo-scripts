@@ -1,14 +1,16 @@
-# v.0.3.4
+# v.0.3.5
 
-from kodi_six import xbmc, xbmcaddon
+import xbmc
+import xbmcaddon
+import xbmcvfs
 
 ADDON = xbmcaddon.Addon()
 ADDONNAME = ADDON.getAddonInfo('id')
 ADDONLONGNAME = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
 ADDONPATH = ADDON.getAddonInfo('path')
-ADDONDATAPATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-ADDONICON = xbmc.translatePath('%s/icon.png' % ADDONPATH)
+ADDONDATAPATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+ADDONICON = xbmcvfs.translatePath('%s/icon.png' % ADDONPATH)
 ADDONLANGUAGE = ADDON.getLocalizedString
 SKINNAME = xbmc.getSkinDir()
 
