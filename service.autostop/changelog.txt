@@ -1,3 +1,10 @@
+1.0.4
+
+- Fixed a bug where the sleep timer could execute prematurely
+  when calling timer change via keyboard.xml or favourites.xml
+  due to playcount timer running when the sleep timer was set
+  to 0. 
+
 1.0.3
 
 -  Fixed exception bug when Kodi begins but is unable to play
