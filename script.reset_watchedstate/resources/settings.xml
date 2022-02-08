@@ -8,22 +8,31 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="32010" id="preventdialog" label="32505" type="boolean">
+				<setting help="32010" id="preventdialog" label="32505" type="boolean" parent="active">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" setting="active">true</dependency>
+					</dependencies>
 				</setting>
-				<setting help="32008" id="dryrun" label="32504" type="boolean">
+				<setting help="32008" id="dryrun" label="32504" type="boolean" parent="active">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" setting="active">true</dependency>
+					</dependencies>
 				</setting>
-				<setting help="32009" id="numberofdays" label="32502" type="integer">
+				<setting help="32009" id="numberofdays" label="32502" type="integer" parent="active">
 					<level>0</level>
 					<default>9999</default>
 					<control type="edit" format="integer">
 						<heading>32502</heading>
 					</control>
+					<dependencies>
+						<dependency type="enable" setting="active">true</dependency>
+					</dependencies>
 				</setting>
 			</group>
 		</category>
