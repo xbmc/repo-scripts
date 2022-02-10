@@ -1,24 +1,23 @@
-![Kodi logo](https://raw.githubusercontent.com/xbmc/xbmc/master/media/banner.png)
-# Kodi Home Theater Software
+# KodiPlexSkipIntro
 
+Kodi plugin that uses plex to get intro start/end times and provides a button to skip intros
 
-## Contents
+## Name
+KodiPlexSkipIntro
 
-This branch is not used for public. Please use one of the other branches available for submitting add-ons.
+[![.](https://github.com/Darkmadda/PlexSkipIntro/blob/main/resources/media/plexskipintroSS.png?raw=true)](#)
+## Description
+This add-on will display a button on screen when an tv intro starts allowing you to skip the intro. The button will display for 10 seconds (this period can be changed in the settings)
 
-## Quick Kodi development links
+## Installation
+Download repository as zip file, then install add-on from zip file
 
-* [Add-on rules](https://github.com/xbmc/repo-scripts/blob/master/CONTRIBUTING.md)
-* [Submitting an add-on details](http://kodi.wiki/view/Submitting_Add-ons)
-* [Code guidelines](http://kodi.wiki/view/Official:Code_guidelines_and_formatting_conventions)
-* [Kodi development](http://kodi.wiki/view/Development)
-* [Kodi Addon checker](https://pypi.org/project/kodi-addon-checker/)
+## Usage
+Wait for intro to start and click the skip intro if desired or wait for the timeout to pass and the button will display.
 
-## Other useful links
+You will need to get a plex auth token and the base url for plex. look [here](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/) to find out how to obtain this (the screenshot will help)
 
-* [Kodi wiki](http://kodi.wiki/)
-* [Kodi bug tracker](http://trac.kodi.tv)
-* [Kodi community forums](http://forum.kodi.tv/)
-* [Kodi website](http://kodi.tv)
+[![.](https://github.com/Darkmadda/PlexSkipIntro/blob/main/resources/media/plexskipintroTokenSS.png?raw=true)](#)
 
-**Enjoy Kodi and help us improve it today. :)**
+## License
+GNU GENERAL PUBLIC LICENSE

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="9999">
+	<defaultcontrol always="true">9001</defaultcontrol>
+	<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+	<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
+	<controls>
+		<control type="grouplist" id="9001">
+			<posx>25</posx>
+			<posy>293</posy>
+			<width>800</width>
+			<height>150</height>
+			<align>left</align>
+			<itemgap>15</itemgap>
+			<orientation>vertical</orientation>
+			<control type="button" id="201">
+				<description>Later Button</description>
+				<width>200</width>
+				<height>40</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<label>Skip Intro</label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<texturenofocus>button-nofo.png</texturenofocus>
+				<texturefocus>button-fo.png</texturefocus>				
+				<textoffsetx>10</textoffsetx>
+			</control>
+		</control>
+	</controls>
+</window>
