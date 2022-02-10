@@ -3,9 +3,12 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 
+YURL = 'https://www.yahoo.com/news/weather/'
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
-FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=%%5B%s%%5D'
+FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
 AURL = 'https://api.weatherbit.io/v2.0/%s'
+
+HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36'}
 
 WADD = ADDON.getSettingBool('WAdd')
 APPID = ADDON.getSettingString('API')
@@ -25,7 +28,11 @@ class MAIN():
         else:
             location, locationid, locationlat, locationlon = self.get_location(mode)
             if locationid > 0:
-                self.get_forecast(location, locationid, locationlat, locationlon)
+                ycookie, ycrumb = self.get_ycreds()
+                if not ycookie:
+                    log('no cookie')
+                else:
+                    self.get_forecast(location, locationid, locationlat, locationlon, ycookie, ycrumb)
             else:
                 log('empty location id')
                 self.clear_props()
@@ -75,15 +82,50 @@ class MAIN():
             locationlon = ADDON.getSettingNumber('loc1lon')
         return location, locationid, locationlat, locationlon
 
-    def get_data(self, url):
-        headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36'}
+    def get_ycreds(self):
+        ycookie = ADDON.getSettingString('ycookie')
+        ycrumb = ADDON.getSettingString('ycrumb')
+        ystamp = ADDON.getSettingString('ystamp')
+        log('cookie from settings: %s' % ycookie)
+        log('crumb from settings: %s' % ycrumb)
+        log('stamp from settings: %s' % ystamp)
+        if ystamp == '' or (int(time.time()) - int(ystamp) > 31536000): # cookie expires after 1 year
+            try:
+                retry = 0
+                while (retry < 6) and (not self.MONITOR.abortRequested()):
+                    response = requests.get(YURL, headers=HEADERS, timeout=10)
+                    if response.status_code == 200:
+                        break
+                    else:
+                        self.MONITOR.waitForAbort(10)
+                        retry += 1
+                        log('getting cookie failed')
+                ycookie = response.cookies['B']
+                match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
+                ycrumb = match.group(1)
+                ystamp = time.time()
+                ADDON.setSettingString('ycookie', ycookie)
+                ADDON.setSettingString('ycrumb', ycrumb)
+                ADDON.setSettingString('ystamp', str(int(ystamp)))
+                log('save cookie to settings: %s' % ycookie)
+                log('save crumb to settings: %s' % ycrumb)
+                log('save stamp to settings: %s' % str(int(ystamp)))
+            except:
+                log('exception while getting cookie')
+                return '', ''
+        return ycookie, ycrumb
+
+    def get_data(self, url, cookie='', crumb=''):
         try:
-            response = requests.get(url, headers=headers, timeout=10)
+            if cookie:
+                response = requests.get(url, headers=HEADERS, cookies=dict(B=cookie), timeout=10)
+            else:
+                response = requests.get(url, headers=HEADERS, timeout=10)
             return response.json()
         except:
             return
     
-    def get_forecast(self, loc, locid, lat, lon):
+    def get_forecast(self, loc, locid, lat, lon, ycookie='', ycrumb=''):
         set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
         log('weather location: %s' % locid)
         providers = 'provided by Yahoo'
@@ -91,9 +133,9 @@ class MAIN():
             providers = providers + ', Openweathermaps'
             openweathermap.Weather.get_weather(lat, lon, ZOOM, MAPID)
         retry = 0
-        url = FCURL % locid
+        url = FCURL.format(crumb=ycrumb, woeid=locid)
         while (retry < 6) and (not self.MONITOR.abortRequested()):
-            data = self.get_data(url)
+            data = self.get_data(url, ycookie, ycrumb)
             if data:
                 break
             else:

@@ -148,6 +148,30 @@
 					<visible>false</visible>
 					<control format="number" type="edit"/>
 				</setting>
+				<setting id="ycookie" type="string">
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit"/>
+				</setting>
+				<setting id="ycrumb" type="string">
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit"/>
+				</setting>
+				<setting id="ystamp" type="string">
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit"/>
+				</setting>
 			</group>
 		</category>
 		<category id="2" label="32102">
