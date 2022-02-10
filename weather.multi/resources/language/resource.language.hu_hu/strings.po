@@ -1,0 +1,278 @@
+# Kodi Media Center language file
+# Addon Name: Multi Weather
+# Addon id: weather.multi
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-09-03 08:29+0000\n"
+"Last-Translator: Frodo19 <bilbohu@gmail.com>\n"
+"Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/hu_hu/>\n"
+"Language: hu_hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Weather forecast from several providers"
+msgstr "Időjárás -előrejelzés több szolgáltatótól"
+
+msgctxt "Addon Description"
+msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
+msgstr "Az időjárás -előrejelzést a Yahoo, a Weatherbit és az Openweathermap biztosítja"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Helyszín beállítás"
+
+msgctxt "#32102"
+msgid "Additional"
+msgstr "Továbbiak"
+
+msgctxt "#32103"
+msgid "Maps"
+msgstr "Térképek"
+
+msgctxt "#32104"
+msgid "Logging"
+msgstr "Bejelentkezés"
+
+msgctxt "#32110"
+msgid "API key"
+msgstr "Api kulcs"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Helyszín 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Helyszín 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Helyszín 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Helyszín 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Helyszín 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "A koordináták megjelenítése helyek keresésekor"
+
+msgctxt "#32125"
+msgid "Download additional weather data"
+msgstr "Kiegészítő adatok letöltése"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Térkép nagyítási szint"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Napló engedélyezés"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Időjárási térképek letöltése"
+
+msgctxt "#32131"
+msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
+msgstr "További időjárási adatok beszerzéséhez szerezzen be egy API kulcsot a következő címen: https://weatherbit.io/"
+
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
+msgstr "A térképek használatához szerezzen be egy API kulcsot a következő címen: http://openweathermap.org/appid"
+
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "Vihar gyenge esővel"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "Vihar esővel"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "Vihar erős esővel"
+
+msgctxt "#32204"
+msgid "Thunderstorm with light drizzle"
+msgstr "Vihar enyhe szitálással"
+
+msgctxt "#32205"
+msgid "Thunderstorm with drizzle"
+msgstr "Vihar szitálással"
+
+msgctxt "#32206"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "Vihar erős szitálással"
+
+msgctxt "#32207"
+msgid "Thunderstorm with Hail"
+msgstr "Vihar jégesővel"
+
+msgctxt "#32208"
+msgid "Light Drizzle"
+msgstr "Enyhe szitálás"
+
+msgctxt "#32209"
+msgid "Drizzle"
+msgstr "Szitálás"
+
+msgctxt "#32210"
+msgid "Heavy Drizzle"
+msgstr "Erős szitálás"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Gyenge eső"
+
+msgctxt "#32212"
+msgid "Moderate Rain"
+msgstr "Közepes eső"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Erős eső"
+
+msgctxt "#32214"
+msgid "Freezing rain"
+msgstr "Fagyos eső"
+
+msgctxt "#32215"
+msgid "Light shower rain"
+msgstr "Gyenge zápor eső"
+
+msgctxt "#32216"
+msgid "Shower rain"
+msgstr "Záporeső"
+
+msgctxt "#32217"
+msgid "Heavy shower rain"
+msgstr "Erős záporeső"
+
+msgctxt "#32218"
+msgid "Light snow"
+msgstr "Gyenge havazás"
+
+msgctxt "#32219"
+msgid "Snow"
+msgstr "Havazás"
+
+msgctxt "#32220"
+msgid "Heavy snow"
+msgstr "Erős havazás"
+
+msgctxt "#32221"
+msgid "Mix snow/rain"
+msgstr "Havaseső"
+
+msgctxt "#32222"
+msgid "Sleet"
+msgstr "Ónoseső"
+
+msgctxt "#32223"
+msgid "Heavy sleet"
+msgstr "Erős ónoseső"
+
+msgctxt "#32224"
+msgid "Snow shower"
+msgstr "Hószitálás"
+
+msgctxt "#32225"
+msgid "Heavy snow shower"
+msgstr "Erős hószitálás"
+
+msgctxt "#32226"
+msgid "Flurries"
+msgstr "Zivatar"
+
+msgctxt "#32227"
+msgid "Mist"
+msgstr "Köd"
+
+msgctxt "#32228"
+msgid "Smoke"
+msgstr "Füst"
+
+msgctxt "#32229"
+msgid "Haze"
+msgstr "Pára"
+
+msgctxt "#32230"
+msgid "Sand/dust"
+msgstr "Por"
+
+msgctxt "#32231"
+msgid "Fog"
+msgstr "Köd"
+
+msgctxt "#32232"
+msgid "Freezing fog"
+msgstr "Fagy köddel"
+
+msgctxt "#32233"
+msgid "Clear sky"
+msgstr "Tiszta égbolt"
+
+msgctxt "#32234"
+msgid "Few clouds"
+msgstr "Felhős"
+
+msgctxt "#32235"
+msgid "Scattered clouds"
+msgstr "Szétszórt felhőzet"
+
+msgctxt "#32236"
+msgid "Broken clouds"
+msgstr "felszakadozott felhőzet"
+
+msgctxt "#32237"
+msgid "Overcast clouds"
+msgstr "borult felhős"
+
+msgctxt "#32238"
+msgid "Unknown Precipitation"
+msgstr "Ismeretlen csapadék"
+
+msgctxt "#32300"
+msgid "New Moon"
+msgstr "Újhold"
+
+msgctxt "#32301"
+msgid "Waxing Crescent"
+msgstr "Növekvő holdsarló"
+
+msgctxt "#32302"
+msgid "First Quarter"
+msgstr "Első negyed"
+
+msgctxt "#32303"
+msgid "Waxing Gibbous"
+msgstr "Növekvő hold"
+
+msgctxt "#32304"
+msgid "Full Moon"
+msgstr "Telihold"
+
+msgctxt "#32305"
+msgid "Waning Gibbous"
+msgstr "Fogyó hold"
+
+msgctxt "#32306"
+msgid "Last Quarter"
+msgstr "Utolsó negyed"
+
+msgctxt "#32307"
+msgid "Waning Crescent"
+msgstr "fogyó félhold"

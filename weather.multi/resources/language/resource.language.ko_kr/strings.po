@@ -1,0 +1,278 @@
+# Kodi Media Center language file
+# Addon Name: Multi Weather
+# Addon id: weather.multi
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-08-23 02:08+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/ko_kr/>\n"
+"Language: ko_kr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Weather forecast from several providers"
+msgstr "여러 공급자의 일기 예보"
+
+msgctxt "Addon Description"
+msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
+msgstr "Yahoo, Weatherbit 및 Openweathermap에서 제공하는 일기 예보"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "위치 설정"
+
+msgctxt "#32102"
+msgid "Additional"
+msgstr "추가"
+
+msgctxt "#32103"
+msgid "Maps"
+msgstr "지도"
+
+msgctxt "#32104"
+msgid "Logging"
+msgstr "로그"
+
+msgctxt "#32110"
+msgid "API key"
+msgstr "API 키"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "위치 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "위치 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "위치 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "위치 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "위치 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "위치 검색 시 위도/경도 표시"
+
+msgctxt "#32125"
+msgid "Download additional weather data"
+msgstr "추가 날씨 데이터 다운로드"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "지도 확대/축소 수준"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "로그 사용함"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "날씨 지도 다운로드"
+
+msgctxt "#32131"
+msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
+msgstr "추가 날씨 데이터를 얻으려면 https://weatherbit.io/에서 API 키를 받으세요"
+
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
+msgstr "지도를 사용하려면 http://openweathermap.org/appid에서 API 키를 받으십시오"
+
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "천둥번개를 동반한 비가 약간 내림"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "천둥번개를 동반한 비"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "천둥번개를 동반한 많은 비"
+
+msgctxt "#32204"
+msgid "Thunderstorm with light drizzle"
+msgstr "천둥번개를 동반한 가벼운 이슬비"
+
+msgctxt "#32205"
+msgid "Thunderstorm with drizzle"
+msgstr "천둥번개를 동반한 이슬비"
+
+msgctxt "#32206"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "천둥번개를 동반한 많은 이슬비"
+
+msgctxt "#32207"
+msgid "Thunderstorm with Hail"
+msgstr "천둥번개를 동반한 우박"
+
+msgctxt "#32208"
+msgid "Light Drizzle"
+msgstr "가벼운 이슬비"
+
+msgctxt "#32209"
+msgid "Drizzle"
+msgstr "이슬비"
+
+msgctxt "#32210"
+msgid "Heavy Drizzle"
+msgstr "많은 이슬비"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "가벼운 비"
+
+msgctxt "#32212"
+msgid "Moderate Rain"
+msgstr "보통의 비"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "많은 비"
+
+msgctxt "#32214"
+msgid "Freezing rain"
+msgstr "얼어붙는 비"
+
+msgctxt "#32215"
+msgid "Light shower rain"
+msgstr "가벼운 소나기 비"
+
+msgctxt "#32216"
+msgid "Shower rain"
+msgstr "소나기 비"
+
+msgctxt "#32217"
+msgid "Heavy shower rain"
+msgstr "거센 소나기"
+
+msgctxt "#32218"
+msgid "Light snow"
+msgstr "가벼운 눈"
+
+msgctxt "#32219"
+msgid "Snow"
+msgstr "눈"
+
+msgctxt "#32220"
+msgid "Heavy snow"
+msgstr "많은 눈"
+
+msgctxt "#32221"
+msgid "Mix snow/rain"
+msgstr "눈/비 같이 옴"
+
+msgctxt "#32222"
+msgid "Sleet"
+msgstr "진눈깨비"
+
+msgctxt "#32223"
+msgid "Heavy sleet"
+msgstr "많은 진눈깨비"
+
+msgctxt "#32224"
+msgid "Snow shower"
+msgstr "눈 소나기"
+
+msgctxt "#32225"
+msgid "Heavy snow shower"
+msgstr "많은 눈 소나기"
+
+msgctxt "#32226"
+msgid "Flurries"
+msgstr "돌풍"
+
+msgctxt "#32227"
+msgid "Mist"
+msgstr "안개"
+
+msgctxt "#32228"
+msgid "Smoke"
+msgstr "연기"
+
+msgctxt "#32229"
+msgid "Haze"
+msgstr "안개"
+
+msgctxt "#32230"
+msgid "Sand/dust"
+msgstr "모래/먼지"
+
+msgctxt "#32231"
+msgid "Fog"
+msgstr "안개"
+
+msgctxt "#32232"
+msgid "Freezing fog"
+msgstr "얼어붙은 안개"
+
+msgctxt "#32233"
+msgid "Clear sky"
+msgstr "맑은 하늘"
+
+msgctxt "#32234"
+msgid "Few clouds"
+msgstr "구름 약간"
+
+msgctxt "#32235"
+msgid "Scattered clouds"
+msgstr "흩어진 구름"
+
+msgctxt "#32236"
+msgid "Broken clouds"
+msgstr "부서진 구름"
+
+msgctxt "#32237"
+msgid "Overcast clouds"
+msgstr "흐린 구름"
+
+msgctxt "#32238"
+msgid "Unknown Precipitation"
+msgstr "강수량 알 수 없음"
+
+msgctxt "#32300"
+msgid "New Moon"
+msgstr "초승달"
+
+msgctxt "#32301"
+msgid "Waxing Crescent"
+msgstr "초승달"
+
+msgctxt "#32302"
+msgid "First Quarter"
+msgstr "반달"
+
+msgctxt "#32303"
+msgid "Waxing Gibbous"
+msgstr "상현달"
+
+msgctxt "#32304"
+msgid "Full Moon"
+msgstr "보름달"
+
+msgctxt "#32305"
+msgid "Waning Gibbous"
+msgstr "하현달"
+
+msgctxt "#32306"
+msgid "Last Quarter"
+msgstr "반달"
+
+msgctxt "#32307"
+msgid "Waning Crescent"
+msgstr "그믐달"

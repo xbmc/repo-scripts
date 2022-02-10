@@ -1,3 +1,12 @@
+v0.0.9
+- bump for repo release
+
+v0.0.8
+- fix fetching weather for wrong location
+
+v0.0.7
+- fix yahoo weather again
+
 v0.0.6
 - fix yahoo weather
 
