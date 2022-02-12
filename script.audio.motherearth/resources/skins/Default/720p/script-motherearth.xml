@@ -5,7 +5,7 @@
 		<control type="image">
 			<right>50%</right>
 			<centertop>50%</centertop>
-			<width>180</width>
+			<width>250</width>
 			<height>180</height>
 			<aspectratio>keep</aspectratio>
 			<bordersize>10</bordersize>
@@ -14,7 +14,7 @@
 		<control type="list" id="100">
 			<left>50%</left>
 			<centertop>50%</centertop>
-			<width>180</width>
+			<width>250</width>
 			<height>120</height>
 			<viewtype>list</viewtype>
 			<itemlayout height="30">

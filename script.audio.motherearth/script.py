@@ -1,12 +1,15 @@
 import sys
+
 import xbmc
 import xbmcaddon
 import xbmcgui
+
 from motherearth import STREAMS
+
 
 class Window(xbmcgui.WindowXML):
     def onInit(self):
-        xbmc.executebuiltin('Container.SetViewMode(50)')
+        xbmc.executebuiltin('Container.SetViewMode(100)')
         listitems = []
         for s in STREAMS:
             item = xbmcgui.ListItem(s['title'])
@@ -24,6 +27,7 @@ class Window(xbmcgui.WindowXML):
             play_channel(channel)
             self.close()
 
+
 def play_channel(channel_number):
     """Play the channel, unless it's already playing."""
     stream = STREAMS[channel_number]
@@ -36,6 +40,7 @@ def play_channel(channel_number):
     if not player.isPlayingAudio() or player.getPlayingFile() != url:
         player.stop()
         player.play(url)
+
 
 if __name__ == '__main__':
     addon = xbmcaddon.Addon()
@@ -50,4 +55,3 @@ if __name__ == '__main__':
         del window
     else:
         play_channel(auto_play)
-        
