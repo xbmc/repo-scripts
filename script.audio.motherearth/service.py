@@ -153,7 +153,7 @@ if __name__ == '__main__':
     player = Player()
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
-        if monitor.waitForAbort(0.1):
+        if monitor.waitForAbort(1):
             break
         try:
             player.update()
