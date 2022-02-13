@@ -1,11 +1,9 @@
-from collections import namedtuple
 import time
-
 import requests
 import xbmc
 import xbmcaddon
 import xbmcgui
-
+from collections import namedtuple
 from motherearth import STREAM_INFO, NowPlaying
 
 
@@ -13,7 +11,7 @@ RESTART_INTERVAL = 1.0
 RESTART_TIMEOUT = 1.0
 
 
-Song = namedtuple('Song', 'data cover fanart')
+Song = namedtuple('Song', 'data cover')
 
 
 class Player(xbmc.Player):
@@ -40,13 +38,12 @@ class Player(xbmc.Player):
         return result
 
     def reset(self):
-        """Reset internal state when not playing."""
+        """Reset internal state when not playing ."""
         self.last_key = None
         self.last_song = None
         self.stream_url = None
         self.restart_time = 0
         self.now_playing.set_channel(None)
-        self.slideshow.set_slides(None)
 
     def restart(self):
         """Restart playback, if necessary."""
@@ -70,7 +67,6 @@ class Player(xbmc.Player):
             self.restart()
         elif self.stream_url:
             self.now_playing.update()
-#      self.update_slideshow()
             self.update_song()
 
     def update_player(self):
@@ -80,7 +76,7 @@ class Player(xbmc.Player):
             info = {
                 'artist': song.data['artist'],
                 'title': song.data['title'],
-                'genre': '',
+                'genre': song.data['genre'],
             }
             if 'album' in song.data:
                 info['album'] = song.data['album']
@@ -93,21 +89,22 @@ class Player(xbmc.Player):
             item = xbmcgui.ListItem()
             item.setPath(self.getPlayingFile())
             item.setArt({'thumb': song.cover})
-            item.setArt({'fanart': song.fanart})
+            item.setArt({'fanart': song.cover})
             item.setInfo('music', info)
             self.updateInfoTag(item)
+
 
     def update_song(self):
         """Update song metadata, if necessary."""
         last_key = self.last_key
         last_song = self.last_song
         song_key = self.get_song_key()
-        if song_key is None or song_key == last_key:
+        if song_key is None:
             return
 
         if song_key != ('', ''):
-            xbmc.log(f'rp_service: song_key {song_key}', xbmc.LOGDEBUG)
-            song_data = self.now_playing.get_song_data(song_key)
+      
+            song_data = self.now_playing.current
             if song_data:
                 self.last_key = song_key
         else:
@@ -116,11 +113,8 @@ class Player(xbmc.Player):
             return
 
         cover = song_data.get('cover')
-        xbmc.log(f'me_service: cover {cover}', xbmc.LOGDEBUG)
-
-        addon = xbmcaddon.Addon()
-
-        self.last_song = Song(song_data, cover, fanart)
+        
+        self.last_song = Song(song_data, cover)
         self.update_player()
 
     def onAVStarted(self):
@@ -154,8 +148,6 @@ class Player(xbmc.Player):
 
     def onPlayBackStopped(self):
         self.reset()
-
-
 
 if __name__ == '__main__':
     player = Player()

@@ -9,14 +9,6 @@ msgctxt "#30102"
 msgid "Auto Play"
 msgstr ""
 
-#msgctxt "#30103"
-#msgid "Visuals"
-#msgstr ""
-
-#msgctxt "#30104"
-#msgid "Slide Duration (seconds)"
-#msgstr ""
-
 msgctxt "#30201"
 msgid "AAC"
 msgstr ""
@@ -36,11 +28,3 @@ msgstr ""
 msgctxt "#30205"
 msgid "Mother Earth Instrumental"
 msgstr ""
-
-#msgctxt "#30206"
-#msgid "RP World/Etc Mix"
-#msgstr ""
-
-#msgctxt "#30207"
-#msgid "RP Slideshow"
-#msgstr ""
