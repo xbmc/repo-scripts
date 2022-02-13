@@ -97,6 +97,9 @@ while not monitor.abortRequested():
                 notifymsg = translate(30310)
                 plcount = 0
                 stopPlayback(notifymsg, logmsg)      # Stop playback if playing too long
+            if plstoptime == 0:                      # Don't increment plcount if sleep setting is 0
+                plcount = 0
+            #xbmc.log("Autostop plstoptime." + str(plstoptime) + ' ' + str(plcount), xbmc.LOGINFO)
         except:
             xbmc.log('Autostop play count and stop time exception error' + str(pacount) + ' ' \
             + str(pastoptime) + ' ' + str(player.paflag), xbmc.LOGINFO)
