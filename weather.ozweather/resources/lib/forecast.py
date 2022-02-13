@@ -146,27 +146,26 @@ def forecast(geohash, radar_code):
         build_images(radar_code, backgrounds_path, overlay_loop_path)
         set_property(WEATHER_WINDOW, 'Radar', radar_code)
 
-        # Finally set some labels so we can see when the loop runs from, to
-        list_of_loop_files = glob.glob(overlay_loop_path + "*")
-
+        # Finally, set some labels, so we can see the time period the loop covers
         list_of_loop_files = list(filter(os.path.isfile, glob.glob(overlay_loop_path + "*")))
         list_of_loop_files.sort(key=lambda x: os.path.getmtime(x))
 
-        oldest_file = list_of_loop_files[0]
-        newest_file = list_of_loop_files[-1]
-        # utc - get from filename of oldest and newest - it's the last number before the .png
-        utc_oldest = oldest_file.split('.')[-2]
-        utc_newest = newest_file.split('.')[-2]
-        log(f"utc_oldest {utc_oldest}")
-        log(f"utc_newest {utc_newest}")
+        if list_of_loop_files:
+            oldest_file = list_of_loop_files[0]
+            newest_file = list_of_loop_files[-1]
+            # utc - get from filename of oldest and newest - it's the last number before the .png
+            utc_oldest = oldest_file.split('.')[-2]
+            utc_newest = newest_file.split('.')[-2]
+            log(f"utc_oldest {utc_oldest}")
+            log(f"utc_newest {utc_newest}")
 
-        time_oldest = utc_str_to_local_str(utc_oldest, "%Y%m%d%H%M")
-        time_newest = utc_str_to_local_str(utc_newest, "%Y%m%d%H%M")
+            time_oldest = utc_str_to_local_str(utc_oldest, "%Y%m%d%H%M")
+            time_newest = utc_str_to_local_str(utc_newest, "%Y%m%d%H%M")
 
-        oldest_dt = datetime.datetime.fromtimestamp(os.path.getctime(oldest_file))
-        newest_dt = datetime.datetime.fromtimestamp(os.path.getctime(newest_file))
-        set_property(WEATHER_WINDOW, 'RadarOldest', time_oldest)
-        set_property(WEATHER_WINDOW, 'RadarNewest', time_newest)
+            oldest_dt = datetime.datetime.fromtimestamp(os.path.getctime(oldest_file))
+            newest_dt = datetime.datetime.fromtimestamp(os.path.getctime(newest_file))
+            set_property(WEATHER_WINDOW, 'RadarOldest', time_oldest)
+            set_property(WEATHER_WINDOW, 'RadarNewest', time_newest)
 
     # Get all the weather & forecast data from the BOM API
     weather_data = False
@@ -184,7 +183,7 @@ def forecast(geohash, radar_code):
     for weather_key in sorted(weather_data):
         set_property(WEATHER_WINDOW, weather_key, weather_data[weather_key])
 
-    # Get the ABC 90 second weather video link if extended features is enabled
+    # Get the ABC 90-second weather video link if extended features is enabled
     if extended_features:
         log("Getting the ABC weather video link")
         url = get_abc_weather_video_link(ADDON.getSetting("ABCQuality"))
@@ -209,7 +208,7 @@ def get_weather():
     clear_properties()
 
     # This is/was an attempt to use conditions in skins to basically auto-adapt the MyWeather.xml and all OzWeather
-    # components to the currently in use skin.  However not matter what I try I can't get the coditions to work
+    # components to the currently-in-use skin.  However, no matter what I try I can't get the conditions to work
     # in the skin files.
     try:
         skin_in_use = xbmc.getSkinDir().split('.')[1]
