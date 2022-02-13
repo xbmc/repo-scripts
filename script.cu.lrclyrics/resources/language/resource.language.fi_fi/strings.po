@@ -1,0 +1,282 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-10-24 14:30+0000\n"
+"Last-Translator: G0mez82 <jalehto_99@hotmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fi_fi/>\n"
+"Language: fi_fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"
+
+msgctxt "Addon Description"
+msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
+msgstr "CU LRC Lyrics on sanoitus skripti Kodille. Se tukee sekä tavallisia että LRC-lyriikoita. Skripti pystyy etsimään synkronoituja/synkronoimattomia sanoituksia upotetuista, tiedostosta tai skreippaamalla. Se pystyy lukemaan .lrc/.txt -sanoitustiedoston, joka on tallennettu samaan polkuun samalla tiedostonimellä kuin .mp3 tiedosto (tai muu musiikkityyppi)."
+
+# Script labels
+msgctxt "#32000"
+msgid "File"
+msgstr "Tiedosto"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Sanotuksia ei löydy!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Upotettu"
+
+msgctxt "#32003"
+msgid "Lyrics offset"
+msgstr "Sanoitusten ajoitus"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Etsitään sanoituksia..."
+
+msgctxt "#32005"
+msgid "Select lyrics:"
+msgstr "Valitse sanoitukset:"
+
+msgctxt "#32006"
+msgid "Select different lyrics"
+msgstr "Valitse eri sanoitukset"
+
+msgctxt "#32007"
+msgid "Manually sync lyrics"
+msgstr "Manuaalisesti synkronoi sanoitukset"
+
+msgctxt "#32008"
+msgid "Delayed by: %ss"
+msgstr "Viivästetty: %ss"
+
+msgctxt "#32009"
+msgid "Ahead by: %ss"
+msgstr "Edellä: %ss"
+
+# empty strings from id 32010 to 32100
+# Settings labels
+msgctxt "#32100"
+msgid "Search for and save lrc lyrics in separate lyrics folder"
+msgstr "Etsi ja tallenna lrc sanoitukset erilliseen sanoituskansioon"
+
+msgctxt "#32101"
+msgid "Search for and save txt lyrics in separate lyrics folder"
+msgstr "Etsi ja tallenna txt sanoitukset erilliseen sanoituskansioon"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "Kansioon:"
+
+msgctxt "#32103"
+msgid "- Filename format"
+msgstr "- Tiedostonimen muoto"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Haetaan vain tiedostonimeä"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Tiedostonimen muoto"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N (-) %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "- Lyrics are in a subfolder"
+msgstr "- Sanoitukset ovat alikansiossa"
+
+msgctxt "#32112"
+msgid "-- Subfolder name"
+msgstr "-- Alikansion nimi"
+
+msgctxt "#32113"
+msgid "Search for and save lrc lyrics in song folder"
+msgstr "Etsi ja tallenna lrc sanoitukset kappalekansioon"
+
+msgctxt "#32114"
+msgid "%N - %A - %T"
+msgstr "%N - %A - %T"
+
+msgctxt "#32115"
+msgid "Display options"
+msgstr "näytön asetukset"
+
+msgctxt "#32116"
+msgid "Search options"
+msgstr "Haun asetukset"
+
+msgctxt "#32117"
+msgid "Lyrics files"
+msgstr "Sanoitustiedostot"
+
+msgctxt "#32118"
+msgid "Debugging"
+msgstr "Virheenkorjaus"
+
+msgctxt "#32119"
+msgid "Search for and save txt lyrics in song folder"
+msgstr "Etsi ja tallenna txt sanoitukset laulukansioon"
+
+# empty strings from id 32120 to 32146
+msgctxt "#32147"
+msgid "Search for local .txt lyrics files"
+msgstr "Etsi paikallisia .txt sanoitustiedostoja"
+
+# empty strings from id 32120 to 32147
+msgctxt "#32148"
+msgid "Hide dialog background, show lyrics only"
+msgstr "Piilota ikkunan tausta, näytä pelkästään sanoitukset"
+
+msgctxt "#32149"
+msgid "Expert"
+msgstr "Asiantuntija"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Hakupaikat"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Asetukset"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Etsi upotettuja sanoituksia"
+
+msgctxt "#32153"
+msgid "Search for local .lrc lyrics files"
+msgstr "Etsi paikallisia .lrc sanoitustiedostoja"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Synkronoidut sanoitus -skreipperit"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Normaalit sanoitus -skreipperit"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Näytä sanoitukset automaattisesti"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Puhdista kappaleen nimi (poista suluissa olevat tiedot)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Skripti on jo käynnissä!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Suorituslokin tallennus (debug log)"
+
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Piilota ilmoitukset"
+
+msgctxt "#32161"
+msgid "Remove Chinese/Korean text from lyrics"
+msgstr "Poista kiinalainen/korealainen teksti sanoituksista"
+
+msgctxt "#32162"
+msgid "Scraper test"
+msgstr "Skreipperitesti"
+
+msgctxt "#32163"
+msgid "Testing: %s"
+msgstr "Testataan: %s"
+
+msgctxt "#32164"
+msgid "All scrapers are working ok"
+msgstr "Kaikki skreipperit toimivat oikein"
+
+msgctxt "#32165"
+msgid "Failed scrapers: %s"
+msgstr "Epäonnistuneet skreipperit: %s"
+
+msgctxt "#32166"
+msgid "Time offset for synchronised lyrics"
+msgstr "Synkronoitujen sanoitusten ajoitus"
+
+msgctxt "#32167"
+msgid "Delete lyrics"
+msgstr "Poista sanoitukset"
+
+msgctxt "#32168"
+msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
+msgstr "Jos piilotat Musiikin OSD-näytön ja \"Nyt toistetaan\" tiedot, myös sanoitusikkunan tausta piilotetaan."
+
+# Scrapers - do not translate!
+msgctxt "#32901"
+msgid "MiniLyrics"
+msgstr "MiniLyrics"
+
+msgctxt "#32903"
+msgid "GomAudio"
+msgstr "GomAudio"
+
+msgctxt "#32904"
+msgid "Music 163"
+msgstr "Music 163"
+
+msgctxt "#32905"
+msgid "Syair"
+msgstr "Syair"
+
+msgctxt "#32912"
+msgid "Genius"
+msgstr "Genius"
+
+msgctxt "#32913"
+msgid "Lyrics Mode"
+msgstr "Lyrics Mode"
+
+msgctxt "#32914"
+msgid "AZLyrics"
+msgstr "AZLyrics"
+
+msgctxt "#32915"
+msgid "Lyrics.com"
+msgstr "Lyrics.com"
+
+msgctxt "#32916"
+msgid "Dark Lyrics"
+msgstr "Dark Lyrics"
+
+# empty strings from id 32010 to 32100
+# Settings labels
+#~ msgctxt "#32101"
+#~ msgid "Search for and save lyrics in separate lyrics folder"
+#~ msgstr "Tallenna sanoitukset"

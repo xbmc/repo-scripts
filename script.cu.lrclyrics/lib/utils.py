@@ -30,7 +30,7 @@ def log(*args, **kwargs):
         xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 def deAccent(str):
-    return unicodedata.normalize('NFKD', str)
+    return unicodedata.normalize('NFKD', str).replace('"', '')
 
 def get_textfile(filepath):
     try:

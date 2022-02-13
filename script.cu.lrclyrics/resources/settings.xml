@@ -10,7 +10,12 @@
 				</setting>
 			</group>
 			<group id="2">
-				<setting help="" id="search_file" label="32153" type="boolean">
+				<setting help="" id="search_lrc_file" label="32153" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="search_txt_file" label="32147" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -78,6 +83,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="32168" id="hide_dialog" label="32148" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting help="" id="strip" label="32161" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -111,7 +121,12 @@
 				</setting>
 			</group>
 			<group id="3" label="32117">
-				<setting help="" id="save_lyrics1" label="32101" type="boolean">
+				<setting help="" id="save_lyrics1_lrc" label="32100" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="save_lyrics1_txt" label="32101" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -127,7 +142,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="is" setting="save_lyrics1">true</condition>
+							<or>
+								<condition operator="is" setting="save_lyrics1_lrc">true</condition>
+								<condition operator="is" setting="save_lyrics1_txt">true</condition>
+							</or>
 						</dependency>
 					</dependencies>
 					<control format="path" type="button">
@@ -139,7 +157,10 @@
 					<default>0</default>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="is" setting="save_lyrics1">true</condition>
+							<or>
+								<condition operator="is" setting="save_lyrics1_lrc">true</condition>
+								<condition operator="is" setting="save_lyrics1_txt">true</condition>
+							</or>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
@@ -150,7 +171,12 @@
 						</options>
 					</constraints>
 				</setting>
-				<setting help="" id="save_lyrics2" label="32113" type="boolean">
+				<setting help="" id="save_lyrics2_lrc" label="32113" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="save_lyrics2_txt" label="32119" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
@@ -160,7 +186,10 @@
 					<default>false</default>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="is" setting="save_lyrics2">true</condition>
+							<or>
+								<condition operator="is" setting="save_lyrics2_lrc">true</condition>
+								<condition operator="is" setting="save_lyrics2_txt">true</condition>
+							</or>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
@@ -196,11 +225,6 @@
 			</group>
 			<group id="2" label="32118">
 				<setting help="" id="log_enabled" label="32159" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="32168" id="hide_dialog" label="32148" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>

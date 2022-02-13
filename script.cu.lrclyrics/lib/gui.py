@@ -36,10 +36,13 @@ class MAIN():
     def get_settings(self):
         self.DEBUG = ADDON.getSettingBool('log_enabled')
         self.SETTING_OFFSET = ADDON.getSettingNumber('offset')
-        self.SETTING_SAVE_LYRICS1 = ADDON.getSettingBool('save_lyrics1')
-        self.SETTING_SAVE_LYRICS2 = ADDON.getSettingBool('save_lyrics2')
+        self.SETTING_SAVE_LYRICS1LRC = ADDON.getSettingBool('save_lyrics1_lrc')
+        self.SETTING_SAVE_LYRICS1TXT = ADDON.getSettingBool('save_lyrics1_txt')
+        self.SETTING_SAVE_LYRICS2LRC = ADDON.getSettingBool('save_lyrics2_lrc')
+        self.SETTING_SAVE_LYRICS2TXT = ADDON.getSettingBool('save_lyrics2_txt')
         self.SETTING_SEARCH_EMBEDDED = ADDON.getSettingBool('search_embedded')
-        self.SETTING_SEARCH_FILE = ADDON.getSettingBool('search_file')
+        self.SETTING_SEARCH_LRC_FILE = ADDON.getSettingBool('search_lrc_file')
+        self.SETTING_SEARCH_TXT_FILE = ADDON.getSettingBool('search_txt_file')
         self.SETTING_SERVICE = ADDON.getSettingBool('service')
         self.SETTING_SILENT = ADDON.getSettingBool('silent')
         self.SETTING_STRIP = ADDON.getSettingBool('strip')
@@ -126,7 +129,7 @@ class MAIN():
                 # replace CJK and fullwith colon (not present in many font files)
                 lyrics.lyrics = re.sub(r'[ᄀ-ᇿ⺀-⺙⺛-⻳⼀-⿕々〇〡-〩〸-〺〻㐀-䶵一-鿃豈-鶴侮-頻並-龎]+', '', lyrics.lyrics).replace('：',':') 
         # no song title, we can't search online. try matching local filename
-        elif self.SETTING_SAVE_LYRICS2 and self.proceed():
+        elif (self.SETTING_SAVE_LYRICS2LRC or self.SETTING_SAVE_LYRICS2TXT) and self.proceed():
             lyrics = self.get_lyrics_from_file(song, True)
             if not lyrics:
                 lyrics = self.get_lyrics_from_file(song, False)
@@ -151,7 +154,7 @@ class MAIN():
                 log('found embedded lrc lyrics', debug=self.DEBUG)
                 return lyrics
         # search lrc lyrics from file
-        if self.SETTING_SEARCH_FILE and self.proceed():
+        if self.SETTING_SEARCH_LRC_FILE and self.proceed():
             log('searching for local lrc files', debug=self.DEBUG)
             lyrics = self.get_lyrics_from_file(song, True)
             if (lyrics):
@@ -176,7 +179,7 @@ class MAIN():
                 log('found embedded txt lyrics', debug=self.DEBUG)
                 return lyrics
         # search txt lyrics from file
-        if self.SETTING_SEARCH_FILE and self.proceed():
+        if self.SETTING_SEARCH_TXT_FILE and self.proceed():
             log('searching for local txt files', debug=self.DEBUG)
             lyrics = self.get_lyrics_from_file(song, False)
             if (lyrics):
@@ -209,7 +212,7 @@ class MAIN():
         lyrics.song = song
         lyrics.source = LANGUAGE(32000)
         lyrics.lrc = getlrc
-        if self.SETTING_SAVE_LYRICS1:
+        if self.SETTING_SAVE_LYRICS1LRC or self.SETTING_SAVE_LYRICS1TXT:
             # Search save path by Cu LRC Lyrics
             lyricsfile = song.path1(getlrc)
             if xbmcvfs.exists(lyricsfile):
@@ -217,7 +220,7 @@ class MAIN():
                 if lyr != None:
                     lyrics.lyrics = lyr
                     return lyrics
-        if self.SETTING_SAVE_LYRICS2:
+        if self.SETTING_SAVE_LYRICS2LRC or self.SETTING_SAVE_LYRICS2TXT:
             # Search same path with song file
             lyricsfile = song.path2(getlrc)
             if xbmcvfs.exists(lyricsfile):
@@ -254,10 +257,10 @@ class MAIN():
                 lyr = lyr.replace(found.group(0) + '\n','')
             # write our new offset tag
             lyr = '[offset:%i]\n' % adjust + lyr
-        if self.SETTING_SAVE_LYRICS1:
+        if (self.SETTING_SAVE_LYRICS1LRC and lyrics.lrc) or (self.SETTING_SAVE_LYRICS1TXT and not lyrics.lrc):
             file_path = lyrics.song.path1(lyrics.lrc)
             success = self.write_lyrics_file(file_path, lyr)
-        if self.SETTING_SAVE_LYRICS2:
+        if (self.SETTING_SAVE_LYRICS2LRC and lyrics.lrc) or (self.SETTING_SAVE_LYRICS2TXT and not lyrics.lrc):
             file_path = lyrics.song.path2(lyrics.lrc)
             success = self.write_lyrics_file(file_path, lyr)
 
@@ -282,10 +285,10 @@ class MAIN():
         # delete lyrics from memory
         self.remove_lyrics_from_memory(lyrics)
         # delete saved lyrics
-        if self.SETTING_SAVE_LYRICS1:
+        if (self.SETTING_SAVE_LYRICS1LRC and lyrics.lrc) or (self.SETTING_SAVE_LYRICS1LRC and not lyrics.lrc):
             file_path = lyrics.song.path1(lyrics.lrc)
             success = self.delete_file(file_path)
-        if self.SETTING_SAVE_LYRICS2:
+        if (self.SETTING_SAVE_LYRICS2LRC and lyrics.lrc) or (self.SETTING_SAVE_LYRICS2LRC and not lyrics.lrc):
             file_path = lyrics.song.path2(lyrics.lrc)
             success = self.delete_file(file_path)
 

@@ -1,3 +1,18 @@
+v6.3.14
+- fix Genius scraper
+
+v6.3.13
+- add separate options for writing lrc and txt lyrics
+
+v6.3.12
+- add separate options for reading .lrc and .txt files
+
+v6.3.11
+- fix syair scraper
+
+v6.3.10
+- remove quotes from filename
+
 v6.3.9
 - fix embedded lyrics
 
