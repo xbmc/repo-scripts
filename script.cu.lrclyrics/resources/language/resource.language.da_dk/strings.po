@@ -1,0 +1,298 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-12-22 15:07+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/da_dk/>\n"
+"Language: da_dk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10\n"
+
+msgctxt "Addon Summary"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"
+
+msgctxt "Addon Description"
+msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
+msgstr "CU LRC Lyrics er et script til sangtekster til Kodi. Det understøtter almindelige såvel som LRC sangtekster. Script'et kan søge i synkroniserede/usynkroniserede sangtekster som er indlejrede i filer eller ved hjælp af scrapere. Det kan læse .lrc/.txt sangtekstfiler, som er gemt i den samme mappe og med samme filnavn som mp3-filen (eller andre typer af musikfiler)."
+
+# Script labels
+msgctxt "#32000"
+msgid "File"
+msgstr "Fil"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Ingen sangtekster fundet!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "indlejret"
+
+msgctxt "#32003"
+msgid "Lyrics offset"
+msgstr "Forskydning af sangtekster"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Søger efter sangtekster..."
+
+msgctxt "#32005"
+msgid "Select lyrics:"
+msgstr "Vælg sangtekster:"
+
+msgctxt "#32006"
+msgid "Select different lyrics"
+msgstr "Vælg en anden sangtekst"
+
+msgctxt "#32007"
+msgid "Manually sync lyrics"
+msgstr "Synkroniser sangtekster manuelt"
+
+msgctxt "#32008"
+msgid "Delayed by: %ss"
+msgstr "Forsinket med: %ss"
+
+msgctxt "#32009"
+msgid "Ahead by: %ss"
+msgstr "Foran med: %ss"
+
+# empty strings from id 32010 to 32100
+# Settings labels
+msgctxt "#32100"
+msgid "Search for and save lrc lyrics in separate lyrics folder"
+msgstr "Søg efter og gem lrc sangtekster i separat mappe til sangtekster"
+
+msgctxt "#32101"
+msgid "Search for and save txt lyrics in separate lyrics folder"
+msgstr "Søg efter og gem txt sangtekster i separat mappe til sangtekster"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "- Mappe til sangtekster"
+
+msgctxt "#32103"
+msgid "- Filename format"
+msgstr "- Filnavn-format"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Brug kun filnavn til søgning"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Filnavnets format"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N (-) %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "- Lyrics are in a subfolder"
+msgstr "- Sangtekster er i en undermappe"
+
+msgctxt "#32112"
+msgid "-- Subfolder name"
+msgstr "-- Navn på undermappe"
+
+msgctxt "#32113"
+msgid "Search for and save lrc lyrics in song folder"
+msgstr "Søg efter og gem lrc sangtekster i sangmappen"
+
+msgctxt "#32114"
+msgid "%N - %A - %T"
+msgstr "%N - %A - %T"
+
+msgctxt "#32115"
+msgid "Display options"
+msgstr "Indstillinger for visning"
+
+msgctxt "#32116"
+msgid "Search options"
+msgstr "Indstillinger for søgning"
+
+msgctxt "#32117"
+msgid "Lyrics files"
+msgstr "Sangtekst-filer"
+
+msgctxt "#32118"
+msgid "Debugging"
+msgstr "Fejlfinding"
+
+msgctxt "#32119"
+msgid "Search for and save txt lyrics in song folder"
+msgstr "Søg efter og gem txt sangtekster i sangmappen"
+
+# empty strings from id 32120 to 32146
+msgctxt "#32147"
+msgid "Search for local .txt lyrics files"
+msgstr "Søg efter lokale .txt sangtekstfiler"
+
+# empty strings from id 32120 to 32147
+msgctxt "#32148"
+msgid "Hide dialog background, show lyrics only"
+msgstr "Skjul dialogens baggrund, vis kun sangtekster"
+
+msgctxt "#32149"
+msgid "Expert"
+msgstr "Ekspert"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Scrapere"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Indstillinger"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Søg efter indlejrede sangtekster"
+
+msgctxt "#32153"
+msgid "Search for local .lrc lyrics files"
+msgstr "Søg efter lokale .lrc sangtekstfiler"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Scrapere til synkroniserede sangtekster"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Scrapere til almindelige sangtekster"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Vis automatisk sangtekster"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Rengør sangtitel (fjern del i parentes)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Scriptet kører allerede!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Aktiver fejlfindingslogføring"
+
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Skjul meddelelser"
+
+msgctxt "#32161"
+msgid "Remove Chinese/Korean text from lyrics"
+msgstr "Fjern kinesisk/koreansk tekst fra sangtekster"
+
+msgctxt "#32162"
+msgid "Scraper test"
+msgstr "Test af scraper"
+
+msgctxt "#32163"
+msgid "Testing: %s"
+msgstr "Tester: %s"
+
+msgctxt "#32164"
+msgid "All scrapers are working ok"
+msgstr "Alle scrapere virker korrekt"
+
+msgctxt "#32165"
+msgid "Failed scrapers: %s"
+msgstr "Mislykkede scrapere: %s"
+
+msgctxt "#32166"
+msgid "Time offset for synchronised lyrics"
+msgstr "Tidsforskydning for synkroniserede sangtekster"
+
+msgctxt "#32167"
+msgid "Delete lyrics"
+msgstr "Slet sangtekster"
+
+msgctxt "#32168"
+msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
+msgstr "Hvis du skjuler musik-OSD og informationen Afspiller nu, vil baggrunden for sangtekstdialogen også blive skjult."
+
+# Scrapers - do not translate!
+msgctxt "#32901"
+msgid "MiniLyrics"
+msgstr "MiniLyrics"
+
+msgctxt "#32903"
+msgid "GomAudio"
+msgstr "GomAudio"
+
+msgctxt "#32904"
+msgid "Music 163"
+msgstr "Music 163"
+
+msgctxt "#32905"
+msgid "Syair"
+msgstr "Syair"
+
+msgctxt "#32912"
+msgid "Genius"
+msgstr "Genius"
+
+msgctxt "#32913"
+msgid "Lyrics Mode"
+msgstr "Lyrics Mode"
+
+msgctxt "#32914"
+msgid "AZLyrics"
+msgstr "AZLyrics"
+
+msgctxt "#32915"
+msgid "Lyrics.com"
+msgstr "Lyrics.com"
+
+msgctxt "#32916"
+msgid "Dark Lyrics"
+msgstr "Dark Lyrics"
+
+# empty strings from id 32010 to 32100
+# Settings labels
+#~ msgctxt "#32101"
+#~ msgid "Search for and save lyrics in separate lyrics folder"
+#~ msgstr "Søg efter og gem sangtekster i separat mappe til sangtekster"
+
+#~ msgctxt "#32111"
+#~ msgid "Lyrics are in a subfolder"
+#~ msgstr "Sangtekster er i en undermappe"
+
+#~ msgctxt "#32112"
+#~ msgid "- Subfolder name"
+#~ msgstr "- Navn på undermappe"
+
+#~ msgctxt "#32113"
+#~ msgid "Search for and save lyrics in song folder"
+#~ msgstr "Søg efter og gem tekster i sangmappen"
+
+#~ msgctxt "#32153"
+#~ msgid "Search for local lyrics files"
+#~ msgstr "Søg efter lokale sangtekstfiler"
