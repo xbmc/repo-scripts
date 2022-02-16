@@ -34,7 +34,7 @@ def valid_video_id(video_id):
         video_id = 'v' + video_id[6:]
     if video_id.startswith(('a', 'c', 'v')):
         return video_id[1:]
-    return ''
+    return video_id
 
 
 @query

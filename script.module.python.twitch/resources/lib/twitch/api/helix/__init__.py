@@ -10,7 +10,7 @@
     See LICENSES/GPL-3.0-only for more information.
 """
 
-__all__ = ['analytics', 'bits', 'clips', 'entitlements', 'games', 'streams',
+__all__ = ['analytics', 'bits', 'clips', 'entitlements', 'games', 'search', 'streams',
            'subscriptions', 'tags', 'users', 'videos', 'webhooks']
 
 from . import analytics  # NOQA
@@ -18,6 +18,7 @@ from . import bits  # NOQA
 from . import clips  # NOQA
 from . import entitlements  # NOQA
 from . import games  # NOQA
+from . import search  # NOQA
 from . import streams  # NOQA
 from . import subscriptions  # NOQA
 from . import tags  # NOQA
