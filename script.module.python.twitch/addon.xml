@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.19+matrix.1" provider-name="anxdpanic, A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.20+matrix.1" provider-name="anxdpanic, A Talented Community">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.six" version="1.11.0"/>
@@ -9,8 +9,7 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <news>
-[fix] fix v5.users.follow_channel request - apo86
-[fix] fix v5.users.unfollow_channel request - apo86
+[upd] fixups and additions to Helix API
 [lang] updated translations from Weblate
         </news>
     <assets>
@@ -25,13 +24,21 @@
     <summary lang="de_DE">Modul für die Interaktion mit der Twitch.tv-API</summary>
     <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
     <summary lang="es_ES">Módulo para interactuar con la API de Twitch.tv</summary>
+    <summary lang="fi_FI">Moduuli vuorovaikutukseen Twitch.tv API:n kanssa</summary>
+    <summary lang="hu_HU">Modul a Twitch.tv API -val való interakcióhoz</summary>
+    <summary lang="ko_KR">Twitch.tv API와의 상호작용을 위한 모듈</summary>
     <summary lang="pl_PL">Moduł do interakcji z API Twitch.tv</summary>
     <summary lang="ru_RU">Модуль для взаимодействия с Twitch.tv API</summary>
+    <summary lang="zh_CN">与 Twitch.tv API 交互的模块</summary>
     <description lang="da_DK">python-twitch til Kodi er et modul til interaktion med Twitch.tv API baseret på python-twitch af ingwinlu.</description>
     <description lang="de_DE">python-twitch für Kodi ist ein Modul für die Interaktion mit der Twitch.tv-API, basierend auf python-twitch von ingwinlu.</description>
     <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
     <description lang="es_ES">python-twitch para Kodi es un módulo para interactuar con la API de Twitch.tv basado en python-twitch de ingwinlu.</description>
+    <description lang="fi_FI">python-twitch for Kodi on moduuli vuorovaikutukseen Twitch.tv API:n kanssa, joka perustuu ingwinlu:n kehittämään python-twitchiin.</description>
+    <description lang="hu_HU">A python-twitch a Kodi számára a Twitch.tv API-val való interakció modulja, amely az ingwinlu python-twitch-jén alapul.</description>
+    <description lang="ko_KR">Kodi용 python-twitch는 ingwinlu의 python-twitch를 기반으로 하는 Twitch.tv API와 상호 작용하기 위한 모듈입니다.</description>
     <description lang="pl_PL">python-twitch dla Kodi to moduł do interakcji z API Twitch.tv oparty na python-twitch autorstwa ingwinlu.</description>
     <description lang="ru_RU">python-twitch это модуль для взаимодействия с Twitch.tv API. Основан на модуле python-twitch от ingwinlu.</description>
+    <description lang="zh_CN">Kodi 的 python-twitch 是从 ingwinlu 开发版本移植的与 twitch.tv API 交互的模块。</description>
   </extension>
 </addon>
