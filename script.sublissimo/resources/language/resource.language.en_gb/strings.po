@@ -20,7 +20,7 @@ msgid "Edit and synchronize subtitles with your remote"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile."
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
 msgstr ""
 
 msgctxt "#31000"
@@ -743,3 +743,130 @@ msgctxt "#35018"
 msgid "The correct characterset of this file could not be detected. The file is now loading with the UTF-8 set and errors are replaced with questionmarks."
 msgstr ""
 
+msgctxt "#35019"
+msgid "Select textline"
+msgstr ""
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr ""
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr ""
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr ""
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr ""
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr ""
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr ""
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr ""
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr ""
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr ""
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr ""
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr ""
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr ""
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr ""
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr ""
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr ""
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr ""
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr ""
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr ""
+
+msgctxt "#35038"
+msgid "Results"
+msgstr ""
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr ""
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr ""
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr ""
+
+msgctxt "#35042"
+msgid "Jump to specific subtitle"
+msgstr ""
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr ""
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr ""
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr ""
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr ""
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr ""
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr ""
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr ""
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr ""
