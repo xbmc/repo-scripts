@@ -1,4 +1,5 @@
 import collections
+from collections import abc
 import json
 import xbmc
 import xbmcaddon
@@ -94,7 +95,7 @@ class LogJSONEncoder(json.JSONEncoder):
         super(LogJSONEncoder, self).__init__(*args, **kwargs)
 
     def default(self, obj):
-        if isinstance(obj, collections.Mapping):
+        if isinstance(obj, abc.Mapping):
             return dict((key, obj[key]) for key in obj.keys())
         if isinstance(obj, collections.Iterable):
             return list(obj)

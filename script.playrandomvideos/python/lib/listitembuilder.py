@@ -1,8 +1,16 @@
 import collections
+from collections import abc
 import xbmcgui
 
-# JSON keys that don't match info labels
+
 infokey_map = {
+    'title': 'title',
+    'season': 'season',
+    'episode': 'episode',
+    'playcount': 'playcount',
+    'rating': 'rating',
+    'userrating': 'userrating',
+    # JSON keys that don't match info labels
     'track': 'tracknumber',
     'runtime': 'duration',
     'showtitle': 'tvshowtitle',
@@ -20,7 +28,7 @@ def build_video_listitem(item):
 
     infolabels = {}
     for key, value in item.items():
-        if isinstance(value, collections.Mapping):
+        if isinstance(value, abc.Mapping):
             continue
         if key in infokey_map:
             infolabels[infokey_map[key]] = value

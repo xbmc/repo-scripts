@@ -48,6 +48,14 @@ msgctxt "#32905"
 msgid "Hide busy notification before first video"
 msgstr ""
 
+msgctxt "#32909"
+msgid "Ignore videos played in the last x months"
+msgstr ""
+
+msgctxt "#32910"
+msgid "Not played recently"
+msgstr ""
+
 #  heading
 msgctxt "#32900"
 msgid "Watched Filters"
