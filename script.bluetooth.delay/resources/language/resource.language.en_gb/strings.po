@@ -37,11 +37,7 @@ msgid "Delay"
 msgstr ""
 
 msgctxt "#30005"
-msgid "Please click here before setting a new delay value"
-msgstr ""
-
-msgctxt "#30006"
-msgid "Successful! Now set delay on Device 2"
+msgid "Click here to set your delay value"
 msgstr ""
 
 msgctxt "#30007"
@@ -53,6 +49,6 @@ msgid "This addon uses the ''Set as default for all media'' setting in the audio
 msgstr ""
 
 msgctxt "#30009"
-msgid "Play media to toggle for Bluetooth"
+msgid "(Play video to toggle)"
 msgstr ""
 

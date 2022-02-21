@@ -1,8 +1,13 @@
 import xbmcaddon
 import xbmcgui
+import time
+import sys
 
 Addon = xbmcaddon.Addon('script.bluetooth.delay')
 
+path = Addon.getAddonInfo('path')
+if sys.version < '3':
+    path = path + "/"
 line1 = Addon.getSetting('line1')
 line2 = Addon.getSetting('line2')
 d1 = Addon.getSetting('Device1')
@@ -20,6 +25,8 @@ try:
 except Exception:
    pass
 
+Addon.setSettingBool('reset', 0)
+
 def skin1():
     xbmc.executebuiltin('ActivateWindow(osdaudiosettings)')
     xbmc.executebuiltin('SetFocus(-73)')
@@ -36,53 +43,26 @@ def skin2():
     xbmc.executebuiltin("Action(select)", wait=True)
     xbmc.executebuiltin("Action(close)", wait=True)
 
-# reset for first run kodi
-def reset1():
-    xbmc.executebuiltin('ActivateWindow(osdaudiosettings)')
-    xbmc.executebuiltin('SetFocus(-77)')
-    xbmc.executebuiltin("Action(select)")
-    xbmc.executebuiltin('SetFocus(11)')
-    xbmc.executebuiltin("Action(select)", wait=True)
-    xbmc.executebuiltin("Action(close)", wait=True)
-
-def reset2():
-    xbmc.executebuiltin('ActivateWindow(osdaudiosettings)')
-    xbmc.executebuiltin('SetFocus(-78)')
-    xbmc.executebuiltin("Action(select)")
-    xbmc.executebuiltin('SetFocus(11)')
-    xbmc.executebuiltin("Action(select)", wait=True)
-    xbmc.executebuiltin("Action(close)", wait=True)
-
 if "ace2" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "aeon.nox.silvo" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "aeon.tajo" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "aeonmq8" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "ftv" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "madnox" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "pellucid" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "quartz" in xbmc.getSkinDir():
      skin1 = skin2
-     reset1 = reset2
 elif "xperience1080" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 elif "mimic.lr" in xbmc.getSkinDir():
     skin1 = skin2
-    reset1 = reset2
 
 def bluetooth():
     Addon.setSettingBool('state', 0)
@@ -99,11 +79,20 @@ def speakers():
 def main():
 
     if arg == "reset":
-        xbmc.executebuiltin('PlayerControl(stop)')
-        Addon.setSettingBool('state', 1)
-        reset1()
+        if (xbmc.getCondVisibility('Player.HasVideo') == False):
+            xbmc.executebuiltin("PlayMedia("+path+"reset.mp4,1)")
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        time.sleep(2)
+        for x in range (800):
+            xbmc.executebuiltin("Action(AudioDelayPlus)")
+        for x in range (400):
+            xbmc.executebuiltin("Action(AudioDelayMinus)")
+        time.sleep(1)
         skin1()
-        xbmcgui.Dialog().notification("",Addon.getLocalizedString(30006), "",t*2)
+        time.sleep(1)
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+        Addon.setSettingBool('state', 1)
+        Addon.setSettingBool('reset', 1)
 
     elif d2 == d1:
         if firstRun == "false":
@@ -111,12 +100,11 @@ def main():
             Addon.setSettingBool('firstRun', 1)
         xbmcaddon.Addon().openSettings()
 
-    elif (xbmc.getCondVisibility('Player.HasMedia') == False):
-        Addon.setSettingBool('state', 1)
-        reset1()
-        skin1()
-        xbmcgui.Dialog().notification("",line1, "",t)
-        xbmcgui.Dialog().notification("",Addon.getLocalizedString(30009), "",t)
+    elif (xbmc.getCondVisibility('Player.HasVideo') == False):
+        if state == "true":
+            xbmcgui.Dialog().notification("",line1 + " " + Addon.getLocalizedString(30009), "",t*3)       
+        else:
+            xbmcgui.Dialog().notification("",line2 + " " + Addon.getLocalizedString(30009), "",t*3)
 
     elif arg == None:
         if state == "true":

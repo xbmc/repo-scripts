@@ -1,1 +1,5 @@
+1.1.0
+- Now you can set a delay even when the video is playing
+- The audio delay setting does not reset the subtitle delay value
+
 1.0.0 Initial Release
