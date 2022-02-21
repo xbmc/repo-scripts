@@ -1,0 +1,54 @@
+# Kodi Media Center language file
+# Addon Name: Bluetooth Delay lite
+# Addon id: script.bluetooth.delay
+# Addon Provider: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Delay setting"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Device 1"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Device 2"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Notification text"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Delay"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Click here to set your delay value"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Attention"
+msgstr ""
+
+msgctxt "#30008"
+msgid "This addon uses the ''Set as default for all media'' setting in the audio settings. This includes: \n-Volume amplification \n-Center Mix Level"
+msgstr ""
+
+msgctxt "#30009"
+msgid "(Play video to toggle)"
+msgstr ""
+
