@@ -28,6 +28,7 @@ _clips_baseurl = 'https://gql.twitch.tv/gql'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
 _gql_baseurl = 'https://gql.twitch.tv/gql'
 _oauth_baseurl = 'https://api.twitch.tv/kraken/oauth2/'
+_oauthid_baseurl = 'https://id.twitch.tv/oauth2/'
 
 
 class _Query(object):
@@ -194,6 +195,17 @@ class OAuthQuery(JsonQuery):
         _headers = deepcopy(headers)
         super(JsonQuery, self).__init__(_oauth_baseurl, _headers, data, method)
         self.add_path(path)
+
+
+class OAuthValidationQuery(JsonQuery):
+    def __init__(self, token=None):
+        _headers = {}
+        if token:
+            _headers['Authorization'] = 'OAuth {access_token}'.format(access_token=token)
+        if 'Authorization' not in _headers:
+            _headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        super(JsonQuery, self).__init__(_oauthid_baseurl, _headers, {}, methods.GET)
+        self.add_path('validate')
 
 
 class ClipsQuery(JsonQuery):
