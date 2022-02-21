@@ -1,3 +1,8 @@
+2.0.21
+[upd] fixups and additions to Helix API
+[rem] remove v5 API
+[lang] updated translations from Weblate
+
 2.0.19
 [fix] fix v5.users.follow_channel request - apo86
 [fix] fix v5.users.unfollow_channel request - apo86

@@ -13,6 +13,7 @@
 from ... import keys
 from ...api.parameters import Cursor, Language, BroadcastTypeHelix, VideoSortHelix, PeriodHelix, IntRange, ItemCount
 from ...queries import HelixQuery as Qry
+from ...queries import HiddenApiQuery as HQry
 from ...queries import query
 
 
@@ -37,4 +38,13 @@ def get_videos(video_id=list(), game_id='', user_id='',
     else:
         q.add_param(keys.ID, ItemCount().validate(video_id), list())
 
+    return q
+
+
+# required scope: none
+# undocumented / unsupported
+@query
+def _by_id(video_id, headers={}):
+    q = HQry('videos/{video_id}', headers=headers, use_token=False)
+    q.add_urlkw(keys.VIDEO_ID, video_id)
     return q

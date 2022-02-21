@@ -12,6 +12,7 @@
 
 from ... import keys, methods
 from ...api.parameters import Cursor, IntRange, ItemCount
+from ...queries import GQLQuery as GQLQry
 from ...queries import HelixQuery as Qry
 from ...queries import query
 
@@ -72,4 +73,47 @@ def get_active_extensions(user_id=''):
 def update_extensions():
     q = Qry('users/extensions', method=methods.PUT)
 
+    return q
+
+
+# required scope: user_follows_edit
+@query
+def _follow_channel(channel_id, headers={}, notifications=False):
+    data = [{
+        "operationName": "FollowButton_FollowUser",
+        "variables": {
+            "input": {
+                "disableNotifications": notifications,
+                "targetID": str(channel_id)
+            }
+        },
+        "extensions": {
+            "persistedQuery": {
+                "version": 1,
+                "sha256Hash": "14319edb840c1dfce880dc64fa28a1f4eb69d821901e9e96eb9610d2e52b54f2"
+            }
+        }
+    }]
+    q = GQLQry('', headers=headers, data=data, use_token=False)
+    return q
+
+
+# required scope: user_follows_edit
+@query
+def _unfollow_channel(channel_id, headers={}):
+    data = [{
+        "operationName": "FollowButton_UnfollowUser",
+        "variables": {
+            "input": {
+                "targetID": str(channel_id)
+            }
+        },
+        "extensions": {
+            "persistedQuery": {
+                "version": 1,
+                "sha256Hash": "29783a1dac24124e02f7295526241a9f1476cd2f5ce1e394f93ea50c253d8628"
+            }
+        }
+    }]
+    q = GQLQry('', headers=headers, data=data, use_token=False)
     return q
