@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-14 12:37+0000\n"
+"PO-Revision-Date: 2022-02-21 14:46+0000\n"
 "Last-Translator: Marek Adamski <fevbew@wp.pl>\n"
 "Language-Team: Polish <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/pl_pl/>\n"
 "Language: pl_pl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7.1\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -103,7 +103,7 @@ msgstr "Burza z piorunami i deszcz"
 
 msgctxt "#32203"
 msgid "Thunderstorm with heavy rain"
-msgstr "Burza z ulewnym deszczem"
+msgstr "Burza z ulewą"
 
 msgctxt "#32204"
 msgid "Thunderstorm with light drizzle"
@@ -191,11 +191,11 @@ msgstr "Przelotne opady śniegu"
 
 msgctxt "#32225"
 msgid "Heavy snow shower"
-msgstr "Silne przelotne opady sniegu"
+msgstr "Silne przelotne opady śniegu"
 
 msgctxt "#32226"
 msgid "Flurries"
-msgstr "Śnieżyca"
+msgstr "Tumany"
 
 msgctxt "#32227"
 msgid "Mist"
@@ -207,7 +207,7 @@ msgstr "Dym"
 
 msgctxt "#32229"
 msgid "Haze"
-msgstr "Zmętnienie"
+msgstr "Mgiełka"
 
 msgctxt "#32230"
 msgid "Sand/dust"
@@ -244,6 +244,186 @@ msgstr "Zachmurzenie"
 msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Nieznane opady"
+
+msgctxt "#32251"
+msgid "Tornado"
+msgstr "Trąba powietrzna"
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr "Burza tropikalna"
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr "Huragan"
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr "Silne burze z piorunami"
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr "Burze z piorunami"
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr "Opady mieszane deszczu i śniegu"
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr "Opady mieszane deszczu i deszczu lodowego"
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr "Opady mieszane śniegu i deszczu lodowego"
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr "Marznąca mżawka"
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr "Mżawka"
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr "Marznący deszcz"
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr "Przelotne deszcze"
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr "Deszcz"
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr "Tumany śniegu"
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr "Lekkie opady śniegu"
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr "Śnieg podmuchowy"
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr "Śnieg"
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr "Grad"
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr "Deszcz lodowy"
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr "Pył"
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr "Mglisto"
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr "Mgiełka"
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr "Dymno"
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr "Porywiście"
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr "Wietrznie"
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr "Zimno"
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr "Pochmurno"
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr "Głównie pochmurno"
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr "Częściowo pochmurno"
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr "Bezchmurnie"
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr "Słonecznie"
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr "Umiarkowanie"
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr "Mieszane opady deszczu i gradu"
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr "Gorąco"
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr "Pojedyncze burze"
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr "Rozproszone burze z piorunami"
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr "Rozproszone przelotne deszcze"
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr "Ulewa"
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr "Rozproszone lekkie opady śniegu"
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr "Duże opady śniegu"
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr "Burza śnieżna"
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr "Niedostępne"
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr "Rozproszone przelotne deszcze"
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr "Rozproszone lekkie opady śniegu"
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr "Rozproszone burze z piorunami"
 
 msgctxt "#32300"
 msgid "New Moon"

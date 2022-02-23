@@ -245,6 +245,186 @@ msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Úrkoma óþekkt"
 
+msgctxt "#32251"
+msgid "Tornado"
+msgstr ""
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr ""
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr ""
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr ""
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr ""
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr ""
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr ""
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr ""
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr ""
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr ""
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr ""
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr ""
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr ""
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr ""
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr ""
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr ""
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr ""
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr ""
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr ""
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr ""
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr ""
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr ""
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr ""
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr ""
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr ""
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr ""
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr ""
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr ""
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr ""
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr ""
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr ""
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr ""
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr ""
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr ""
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr ""
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr ""
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr ""
+
 msgctxt "#32300"
 msgid "New Moon"
 msgstr "Nýtt tungl"

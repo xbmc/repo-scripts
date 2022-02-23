@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-01-19 10:13+0000\n"
+"PO-Revision-Date: 2022-02-21 14:46+0000\n"
 "Last-Translator: Alfonso Cachero <alfonso.cachero@gmail.com>\n"
 "Language-Team: Spanish (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/es_es/>\n"
 "Language: es_es\n"
@@ -244,6 +244,186 @@ msgstr "Nubes bajas"
 msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Precipitación desconocida"
+
+msgctxt "#32251"
+msgid "Tornado"
+msgstr "Tornado"
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr "Tormenta Tropical"
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr "Huracán"
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr "Tormenta Eléctrica Severa"
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr "Tormenta Eléctrica"
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr "Mezcla de Lluvia y Nieve"
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr "Mezcla de Lluvia y Aguanieve"
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr "Mezcla de Nieve y Aguanieve"
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr "Llovizna Helada"
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr "Llovizna"
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr "Lluvia Helada"
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr "Chaparrones"
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr "Lluvia"
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr "Copos de Nieve"
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr "Chaparrones de Nieve Ligera"
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr "Tormenta de Nieve"
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr "Nieve"
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr "Granizo"
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr "Aguanieve"
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr "Polvo"
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr "Neblina"
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr "Calina"
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr "Humoso"
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr "Tempestuoso"
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr "Ventoso"
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr "Frío"
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr "Nuboso"
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr "Mayormente Nuboso"
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr "Parcialmente Nublado"
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr "Despejado"
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr "Soleado"
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr "Claro"
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr "Mezcla de Lluvia y Granizo"
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr "Cálido"
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr "Tormentas Électricas Aisladas"
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr "Tormentas Eléctricas Dispersas"
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr "Chaparrones Dispersos"
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr "Lluvia Fuerte"
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr "Chubascos de Nieve Dispersos"
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr "Nevada Fuerte"
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr "Tormenta de Nieve"
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr "No Disponible"
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr "Chubascos Dispersos"
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr "Chubascos de Nieve Dispersos"
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr "Tormentas Dispersas"
 
 msgctxt "#32300"
 msgid "New Moon"
