@@ -21,12 +21,14 @@ from ...queries import query
 def get_clip(broadcaster_id='', game_id='', clip_id=list(),
              after='MA==', before='MA==', first=20, use_app_token=False):
     q = Qry('clips', use_app_token=use_app_token)
-    q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
-    q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
-    q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
-    q.add_param(keys.BROADCASTER_ID, broadcaster_id, '')
-    q.add_param(keys.GAME_ID, game_id, '')
     q.add_param(keys.ID, ItemCount().validate(clip_id), list())
+    if len(clip_id) != 1:
+        q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
+        q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
+        q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
+        q.add_param(keys.BROADCASTER_ID, broadcaster_id, '')
+        q.add_param(keys.GAME_ID, game_id, '')
+        q.add_param(keys.ID, ItemCount().validate(clip_id), list())
 
     return q
 
