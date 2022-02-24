@@ -102,7 +102,7 @@ class MAIN():
                         log('getting cookie failed')
                 ycookie = response.cookies['B']
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
-                ycrumb = match.group(1)
+                ycrumb = codecs.decode(match.group(1), 'unicode-escape')
                 ystamp = time.time()
                 ADDON.setSettingString('ycookie', ycookie)
                 ADDON.setSettingString('ycrumb', ycrumb)

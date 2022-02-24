@@ -6,6 +6,7 @@ import time
 import _strptime
 import math
 import re
+import codecs
 import xbmc
 import xbmcgui
 import xbmcaddon

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-14 12:16+0000\n"
+"PO-Revision-Date: 2022-02-21 14:46+0000\n"
 "Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
 "Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/de_de/>\n"
 "Language: de_de\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.1\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -244,6 +244,186 @@ msgstr "Bedeckter Himmel"
 msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Niederschlag"
+
+msgctxt "#32251"
+msgid "Tornado"
+msgstr "Tornado"
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr "Tropensturm"
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr "Hurrikan"
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr "Schwere Gewitter"
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr "Gewitter"
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr "Regen mit Schnee vermischt"
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr "Regen mit Schneeregen vermischt"
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr "Schnee mit Schneeregen vermischt"
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr "Gefrierender Nieselregen"
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr "Nieselregen"
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr "Gefrierender Regen"
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr "Schauer"
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr "Regen"
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr "Schneegestöber"
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr "Leichte Schneeschauer"
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr "Schneetreiben"
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr "Schneefall"
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr "Hagel"
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr "Schneeregen"
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr "Staub"
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr "Neblig"
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr "Dunst"
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr "Dunstig"
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr "Stürmisch"
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr "Windig"
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr "Kalt"
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr "Bewölkt"
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr "Meist bewölkt"
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr "Teilweise bewölkt"
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr "Klar"
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr "Sonnig"
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr "Schön"
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr "Regen und Hagel"
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr "Heiss"
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr "Vereinzelte Gewitter"
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr "Vereinzelte Gewitter"
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr "Vereinzelte Regenschauer"
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr "Starkregen"
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr "Vereinzelte Schneeschauer"
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr "Starker Schneefall"
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr "Schneesturm"
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr "Nicht verfügbar"
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr "Vereinzelte Regenschauer"
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr "Vereinzelte Schneeschauer"
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr "Vereinzelte Gewitter"
 
 msgctxt "#32300"
 msgid "New Moon"

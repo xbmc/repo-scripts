@@ -1,3 +1,13 @@
+v0.0.12
+- language update
+
+v0.0.11
+- fix yahoo crumb format
+
+v0.0.10
+- fix weatherbit.io outlook translation
+- add yahoo outlook translation
+
 v0.0.9
 - bump for repo release
 
