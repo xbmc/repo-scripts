@@ -29,12 +29,23 @@ ACCESS_TOKEN_EXCEPTION = {
 }
 
 
+def get_access_token(token):
+    stream_access_token = None
+    video_access_token = None
+    if isinstance(token, list):
+        if token:
+            data = token[0].get(keys.DATA, {})
+            stream_access_token = data.get(keys.STREAM_PLAYBACK_ACCESS_TOKEN)
+            video_access_token = data.get(keys.VIDEO_PLAYBACK_ACCESS_TOKEN)
+    return stream_access_token or video_access_token or token
+
+
 def valid_video_id(video_id):
     if video_id.startswith('videos'):
         video_id = 'v' + video_id[6:]
     if video_id.startswith(('a', 'c', 'v')):
         return video_id[1:]
-    return ''
+    return video_id
 
 
 @query
@@ -80,10 +91,12 @@ def _legacy_video(video_id):
 
 def live_request(channel, platform=keys.WEB, headers={}):
     token = channel_token(channel, platform=platform, headers=headers)
-    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+    token = get_access_token(token)
 
     if not token:
         return ACCESS_TOKEN_EXCEPTION
+    elif isinstance(token, dict) and 'error' in token:
+        return token
     else:
         signature = token[keys.SIGNATURE]
         access_token = token[keys.VALUE]
@@ -133,9 +146,11 @@ def _live(channel, token, headers={}):
 @m3u8
 def live(channel, platform=keys.WEB, headers={}):
     token = channel_token(channel, platform=platform, headers=headers)
-    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+    token = get_access_token(token)
     if not token:
         return ACCESS_TOKEN_EXCEPTION
+    elif isinstance(token, dict) and 'error' in token:
+        return token
     else:
         return _live(channel, token, headers=headers)
 
@@ -144,10 +159,12 @@ def video_request(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
-        token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+        token = get_access_token(token)
 
         if not token:
             return ACCESS_TOKEN_EXCEPTION
+        elif isinstance(token, dict) and 'error' in token:
+            return token
         else:
             signature = token[keys.SIGNATURE]
             access_token = token[keys.VALUE]
@@ -203,10 +220,12 @@ def video(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
-        token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+        token = get_access_token(token)
 
         if not token:
             return ACCESS_TOKEN_EXCEPTION
+        elif isinstance(token, dict) and 'error' in token:
+            return token
         else:
             return _vod(video_id, token, headers=headers)
     else:
