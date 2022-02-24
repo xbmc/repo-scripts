@@ -2,7 +2,7 @@
 <addon id="script.bluetooth.delay" name="Bluetooth Delay lite" version="1.1.0" provider-name="MHR">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
-	</requires>	
+	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
 		<provides>executable</provides>
 	</extension>
@@ -10,7 +10,7 @@
 		<platform>all</platform>
 		<summary lang="en">Toggle audio delay</summary>
 		<description lang="en">Lite version of Bluetooth Delay addon.[CR]This addon lets you set a delay for your bluetooth headset, and easily toggle between delay on/off.[CR][CR]For easy toggle, set a shortcut on your skin's home screen, or set a shortcut key in the keyboard.xml file:[CR]For toggle - RunScript(script.bluetooth.delay)[CR]For speakers - RunScript(script.bluetooth.delay,0)[CR]For bluetooth - RunScript(script.bluetooth.delay,1)</description>
-		<news>- Now you can set a delay even when the video is playing[CR]- The audio delay setting does not reset the subtitle delay value</news>
+		<news>The audio delay setting does not reset the subtitle delay value</news>
 		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=366574</forum>
 		<source>https://github.com/MHR-official</source>

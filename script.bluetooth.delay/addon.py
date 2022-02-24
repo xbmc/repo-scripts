@@ -5,9 +5,6 @@ import sys
 
 Addon = xbmcaddon.Addon('script.bluetooth.delay')
 
-path = Addon.getAddonInfo('path')
-if sys.version < '3':
-    path = path + "/"
 line1 = Addon.getSetting('line1')
 line2 = Addon.getSetting('line2')
 d1 = Addon.getSetting('Device1')
@@ -33,6 +30,7 @@ def skin1():
     xbmc.executebuiltin("Action(select)")
     xbmc.executebuiltin('SetFocus(11)')
     xbmc.executebuiltin("Action(select)", wait=True)
+    xbmc.sleep(1)
     xbmc.executebuiltin("Action(close)", wait=True)
 
 def skin2():
@@ -41,6 +39,7 @@ def skin2():
     xbmc.executebuiltin("Action(select)")
     xbmc.executebuiltin('SetFocus(11)')
     xbmc.executebuiltin("Action(select)", wait=True)
+    xbmc.sleep(1)
     xbmc.executebuiltin("Action(close)", wait=True)
 
 if "ace2" in xbmc.getSkinDir():
@@ -79,20 +78,17 @@ def speakers():
 def main():
 
     if arg == "reset":
-        if (xbmc.getCondVisibility('Player.HasVideo') == False):
-            xbmc.executebuiltin("PlayMedia("+path+"reset.mp4,1)")
-        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        time.sleep(2)
-        for x in range (800):
-            xbmc.executebuiltin("Action(AudioDelayPlus)")
-        for x in range (400):
-            xbmc.executebuiltin("Action(AudioDelayMinus)")
-        time.sleep(1)
-        skin1()
-        time.sleep(1)
-        xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-        Addon.setSettingBool('state', 1)
-        Addon.setSettingBool('reset', 1)
+        if not xbmc.getCondVisibility('Player.HasVideo'):
+            xbmcgui.Dialog().notification("",Addon.getLocalizedString(30006), "",t)
+        else:
+            for x in range (800):
+                xbmc.executebuiltin("Action(AudioDelayPlus)")
+            for x in range (400):
+                xbmc.executebuiltin("Action(AudioDelayMinus)")
+            xbmc.sleep(1)
+            skin1()
+            Addon.setSettingBool('state', 1)
+            Addon.setSettingBool('reset', 1)
 
     elif d2 == d1:
         if firstRun == "false":
@@ -100,11 +96,11 @@ def main():
             Addon.setSettingBool('firstRun', 1)
         xbmcaddon.Addon().openSettings()
 
-    elif (xbmc.getCondVisibility('Player.HasVideo') == False):
+    elif not xbmc.getCondVisibility('Player.HasVideo'):
         if state == "true":
-            xbmcgui.Dialog().notification("",line1 + " " + Addon.getLocalizedString(30009), "",t*3)       
+            xbmcgui.Dialog().notification("","{a} {b}".format(a = line1,b = Addon.getLocalizedString(30009)), "",t*3)       
         else:
-            xbmcgui.Dialog().notification("",line2 + " " + Addon.getLocalizedString(30009), "",t*3)
+            xbmcgui.Dialog().notification("","{a} {b}".format(a = line2,b = Addon.getLocalizedString(30009)), "",t*3) 
 
     elif arg == None:
         if state == "true":

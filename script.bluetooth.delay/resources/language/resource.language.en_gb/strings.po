@@ -40,6 +40,10 @@ msgctxt "#30005"
 msgid "Click here to set your delay value"
 msgstr ""
 
+msgctxt "#30006"
+msgid "You need to play video first"
+msgstr ""
+
 msgctxt "#30007"
 msgid "Attention"
 msgstr ""
