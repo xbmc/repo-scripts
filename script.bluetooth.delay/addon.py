@@ -81,6 +81,11 @@ def main():
         if not xbmc.getCondVisibility('Player.HasVideo'):
             xbmcgui.Dialog().notification("",Addon.getLocalizedString(30006), "",t)
         else:
+            if firstRun == "false":
+                if xbmcgui.Dialog().ok(Addon.getLocalizedString(30007), Addon.getLocalizedString(30008)) == True:
+                    Addon.setSettingBool('firstRun', 1)
+                else:
+                    return
             for x in range (800):
                 xbmc.executebuiltin("Action(AudioDelayPlus)")
             for x in range (400):
@@ -91,9 +96,6 @@ def main():
             Addon.setSettingBool('reset', 1)
 
     elif d2 == d1:
-        if firstRun == "false":
-            xbmcgui.Dialog().ok(Addon.getLocalizedString(30007), Addon.getLocalizedString(30008))
-            Addon.setSettingBool('firstRun', 1)
         xbmcaddon.Addon().openSettings()
 
     elif not xbmc.getCondVisibility('Player.HasVideo'):
