@@ -5,7 +5,7 @@ import xbmc
 import xbmcaddon
 from resources.lib.timer import util
 from resources.lib.timer.timer import (ACTION_START_STOP, END_TYPE_DURATION,
-                                           END_TYPE_NO, END_TYPE_TIME)
+                                       END_TYPE_NO, END_TYPE_TIME)
 
 DURATION_NO = util.DEFAULT_TIME
 
@@ -94,7 +94,7 @@ class AbstractSetTimer:
             return preselection["activation"]
 
         else:
-            return str(datetime.today().weekday())
+            return datetime.today().weekday() + 1
 
     def ask_starttime(self, listitem, preselection):
 
@@ -121,18 +121,24 @@ class AbstractSetTimer:
         timer = selection["timer"]
 
         util.deactivateOnSettingsChangedEvents(self.addon)
-        self.addon.setSetting("timer_%s" % timer, str(selection["activation"]))
-        self.addon.setSetting("timer_%s_label" % timer, selection["label"])
-        self.addon.setSetting("timer_%s_start" % timer, selection["starttime"])
-        self.addon.setSetting("timer_%s_end_type" % timer,
-                              END_TYPE_DURATION if selection["duration"] != DURATION_NO else END_TYPE_NO)
+        self.addon.setSettingInt("timer_%s" % timer, selection["activation"])
+        self.addon.setSettingString("timer_%s_label" %
+                                    timer, selection["label"])
+        self.addon.setSettingString("timer_%s_start" %
+                                    timer, selection["starttime"])
+        self.addon.setSettingInt("timer_%s_end_type" % timer,
+                                 END_TYPE_DURATION if selection["duration"] != DURATION_NO else END_TYPE_NO)
         self.addon.setSetting("timer_%s_duration" %
                               timer, selection["duration"])
-        self.addon.setSetting("timer_%s_end" % timer, selection["endtime"])
-        self.addon.setSetting("timer_%s_action" % timer, selection["action"])
-        self.addon.setSetting("timer_%s_filename" % timer, selection["path"])
+        self.addon.setSettingString("timer_%s_end" %
+                                    timer, selection["endtime"])
+        self.addon.setSettingInt("timer_%s_action" %
+                                 timer, selection["action"])
+        self.addon.setSettingString(
+            "timer_%s_filename" % timer, selection["path"])
         if selection["fade"] is not None:
-            self.addon.setSetting("timer_%s_fade" % timer, str(selection["fade"]))
+            self.addon.setSettingInt("timer_%s_fade" %
+                                     timer, selection["fade"])
 
         util.activateOnSettingsChangedEvents(self.addon)
 
@@ -146,7 +152,7 @@ class AbstractSetTimer:
         if util.get_current_epg_view():
             startDate = util.parse_xbmc_shortdate(
                 xbmc.getInfoLabel("ListItem.Date").split(" ")[0])
-            activation = startDate.weekday()
+            activation = startDate.weekday() + 1
             startTime = xbmc.getInfoLabel("ListItem.StartTime")
             duration = xbmc.getInfoLabel("ListItem.Duration")
             duration = "00:%s" % duration[:2] if len(
@@ -156,14 +162,15 @@ class AbstractSetTimer:
             is_epg = path != None
 
         if not is_epg:
-            activation = int(self.addon.getSetting("timer_%i" % timer))
+            activation = self.addon.getSettingInt("timer_%i" % timer)
             path = listitem.getPath()
             startTime = self.addon.getSetting("timer_%i_start" % timer)
-            if self.addon.getSetting("timer_%i_end_type" % timer) == END_TYPE_DURATION:
-                duration = self.addon.getSetting("timer_%i_duration" % timer)
+            if self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_DURATION:
+                duration = self.addon.getSettingString(
+                    "timer_%i_duration" % timer)
 
-            elif self.addon.getSetting("timer_%i_end_type" % timer) == END_TYPE_TIME:
-                duration = util.time_duration_str(self.addon.getSetting(
+            elif self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_TIME:
+                duration = util.time_duration_str(self.addon.getSettingString(
                     "timer_%i_start" % timer), self.addon.getSetting("timer_%i_end" % timer))
 
             else:
@@ -172,7 +179,7 @@ class AbstractSetTimer:
         endTime = util.format_from_seconds(
             (util.parse_time(startTime) + util.parse_time(duration)).seconds)
 
-        action = self.addon.getSetting("timer_%i_action" % timer)
+        action = self.addon.getSettingInt("timer_%i_action" % timer)
 
         return {
             "path": path,
@@ -184,5 +191,5 @@ class AbstractSetTimer:
             "endtime": endTime,
             "action": action,
             "epg": is_epg,
-            "fade" : None
+            "fade": None
         }

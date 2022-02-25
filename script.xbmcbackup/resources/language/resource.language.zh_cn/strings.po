@@ -11,31 +11,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"PO-Revision-Date: 2021-10-13 09:30+0000\n"
 "Last-Translator: taxigps <taxigps@sina.com>\n"
-"Language-Team: Chinese (http://www.transifex.com/teamxbmc/xbmc-addons/language/zh/)\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/zh_cn/>\n"
+"Language: zh_cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Backup and restore your Kodi database and configuration files in the event "
-"of a crash or file corruption."
+msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
 msgstr "备份和恢复 Kodi 数据库和配置文件，以防范系统崩溃或文件损坏问题。"
 
 msgctxt "Addon Description"
-msgid ""
-"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
-"can with one easy click. You can export your database, playlist, thumbnails,"
-" addons and other configuration details to any source writeable by Kodi or "
-"directly to Dropbox cloud storage. Backups can be run on demand or via a "
-"scheduler. "
-msgstr "你是否经常折腾你的 Kodi，因而希望能够有个备份？现在可以通过简单点击来实现。你可以把资料库、播放列表、缩略图、插件和其他配置细节导出到 Kodi 可以写入的任意位置或 Dropgox 云存储空间。备份可以按需运行或通过计划任务执行。"
+msgid "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
+msgstr "你是否经常折腾你的 Kodi，因而希望能够有个备份？现在可以通过简单点击来实现。你可以把资料库、播放列表、缩略图、插件和其他配置细节导出到 Kodi 可以写入的任意位置或 Dropgox 云存储空间。备份可以按需运行或通过计划任务执行。 "
 
 msgctxt "#30010"
 msgid "Backup"
@@ -52,6 +46,14 @@ msgstr "文件选择"
 msgctxt "#30013"
 msgid "Scheduling"
 msgstr "计划任务"
+
+msgctxt "#30014"
+msgid "Simple"
+msgstr "简单"
+
+msgctxt "#30015"
+msgid "Advanced"
+msgstr "高级"
 
 msgctxt "#30016"
 msgid "Backup"
@@ -134,12 +136,12 @@ msgid "Config Files"
 msgstr "配置文件"
 
 msgctxt "#30036"
-msgid "Custom Directory 1"
-msgstr "自定义目录1"
+msgid "Disclaimer"
+msgstr "免责声明"
 
 msgctxt "#30037"
-msgid "Custom Directory 2"
-msgstr "自定义目录2"
+msgid "Canceling this menu will close and save changes"
+msgstr "取消此菜单将关闭并保存更改"
 
 msgctxt "#30038"
 msgid "Advanced Settings Detected"
@@ -170,8 +172,8 @@ msgid "Would you like to continue?"
 msgstr "要继续吗？"
 
 msgctxt "#30045"
-msgid "Error: Remote path doesn't exist"
-msgstr "错误：远程目录不存在"
+msgid "Error: Remote or zip file path doesn't exist"
+msgstr "错误：远程或 zip 文件路径不存在"
 
 msgctxt "#30046"
 msgid "Starting"
@@ -210,16 +212,16 @@ msgid "Removing backup"
 msgstr "删除备份"
 
 msgctxt "#30056"
-msgid "Check log for Dropbox authorize URL"
-msgstr "检查 Dropbox 授权 URL 日志"
+msgid "Scan or click this URL to authorize, click OK AFTER completion"
+msgstr "扫描或点击此 URL 进行授权，完成后点击“确定”"
 
 msgctxt "#30057"
-msgid "Click OK when authorized"
-msgstr "授权后点“确定”"
+msgid "Click OK AFTER completion"
+msgstr "完成后点击“确定”"
 
 msgctxt "#30058"
-msgid "Dropbox Developer Code Needed"
-msgstr "需要 Dropbox 开发者 Code"
+msgid "Developer Code Needed"
+msgstr "需要开发人员代码"
 
 msgctxt "#30059"
 msgid "Visit https://www.dropbox.com/developers"
@@ -330,8 +332,7 @@ msgid "Version Warning"
 msgstr "版本警告"
 
 msgctxt "#30086"
-msgid ""
-"This version of Kodi is different than the one used to create the archive"
+msgid "This version of Kodi is different than the one used to create the archive"
 msgstr "当前 Kodi 版本与创建备份时的版本不同"
 
 msgctxt "#30087"
@@ -393,3 +394,259 @@ msgstr "正在解压包"
 msgctxt "#30101"
 msgid "Error extracting the zip archive"
 msgstr "解压 ZIP 压缩包出错"
+
+msgctxt "#30102"
+msgid "Click OK to enter code"
+msgstr "点击“确定”输入代码"
+
+msgctxt "#30103"
+msgid "Validation Code"
+msgstr "验证码"
+
+msgctxt "#30104"
+msgid "Authorize Now"
+msgstr "立即授权"
+
+msgctxt "#30105"
+msgid "Authorize this remote service in the settings first"
+msgstr "首先在设置中授权此远程服务"
+
+msgctxt "#30106"
+msgid "is authorized"
+msgstr "已授权"
+
+msgctxt "#30107"
+msgid "error authorizing"
+msgstr "错误授权"
+
+msgctxt "#30108"
+msgid "Visit https://console.developers.google.com/"
+msgstr "访问 https://console.developers.google.com/"
+
+msgctxt "#30109"
+msgid "Run on startup if missed"
+msgstr "如果丢失，则在启动时运行"
+
+msgctxt "#30110"
+msgid "Set Name"
+msgstr "设置名称"
+
+msgctxt "#30111"
+msgid "Root folder selection"
+msgstr "根文件夹选择"
+
+msgctxt "#30112"
+msgid "Browse Folder"
+msgstr "浏览文件夹"
+
+msgctxt "#30113"
+msgid "Enter Own"
+msgstr "输入自己的"
+
+msgctxt "#30114"
+msgid "starts in Kodi home"
+msgstr "从 Kodi 主界面开始"
+
+msgctxt "#30115"
+msgid "enter path to start there"
+msgstr "输入从那里开始的路径"
+
+msgctxt "#30116"
+msgid "Enter root path"
+msgstr "输入根路径"
+
+msgctxt "#30117"
+msgid "Path Error"
+msgstr "路径错误"
+
+msgctxt "#30118"
+msgid "Path does not exist"
+msgstr "路径不存在"
+
+msgctxt "#30119"
+msgid "Select root"
+msgstr "选择根"
+
+msgctxt "#30120"
+msgid "Add Exclude Folder"
+msgstr "添加排除文件夹"
+
+msgctxt "#30121"
+msgid "Root Folder"
+msgstr "根文件夹"
+
+msgctxt "#30122"
+msgid "Edit"
+msgstr "编辑"
+
+msgctxt "#30123"
+msgid "Delete"
+msgstr "删除"
+
+msgctxt "#30124"
+msgid "Choose Action"
+msgstr "选择动作"
+
+msgctxt "#30125"
+msgid "Advanced Editor"
+msgstr "高级编辑器"
+
+msgctxt "#30126"
+msgid "Add Set"
+msgstr "添加集"
+
+msgctxt "#30127"
+msgid "Delete Set"
+msgstr "删除集"
+
+msgctxt "#30128"
+msgid "Are you sure you want to delete?"
+msgstr "您确定要删除吗？"
+
+msgctxt "#30129"
+msgid "Exclude"
+msgstr "排除"
+
+msgctxt "#30130"
+msgid "The root folder cannot be changed"
+msgstr "无法更改根文件夹"
+
+msgctxt "#30131"
+msgid "Choose Sets to Restore"
+msgstr "选择要恢复的集"
+
+msgctxt "#30132"
+msgid "Version 1.5.0 requires you to setup your file selections again - this is a breaking change"
+msgstr "版本1.5.0要求您重新设置文件选择 - 这是一个重大变更"
+
+msgctxt "#30133"
+msgid "Game Saves"
+msgstr "游戏存档"
+
+msgctxt "#30134"
+msgid "Include"
+msgstr "包含"
+
+msgctxt "#30135"
+msgid "Add Include Folder"
+msgstr "添加包含文件夹"
+
+msgctxt "#30136"
+msgid "Path must be within root folder"
+msgstr "路径必须在根文件夹中"
+
+msgctxt "#30137"
+msgid "This path is part of a rule already"
+msgstr "此路径已经是规则的一部分"
+
+msgctxt "#30138"
+msgid "Set Name exists already"
+msgstr "集名称已存在"
+
+msgctxt "#30139"
+msgid "Copy Simple Config"
+msgstr "复制简单模式配置"
+
+msgctxt "#30140"
+msgid "This will copy the default Simple file selection to the Advanced Editor"
+msgstr "这将把默认的简单模式文件选择复制到高级编辑器"
+
+msgctxt "#30141"
+msgid "This will erase any current Advanced Editor settings"
+msgstr "这将删除所有当前的高级编辑器设置"
+
+msgctxt "#30142"
+msgid "Enable Verbose Logging"
+msgstr "启用详细日志记录"
+
+msgctxt "#30143"
+msgid "Exclude a specific folder from this backup set"
+msgstr "从此备份集中排除特定文件夹"
+
+msgctxt "#30144"
+msgid "Include a specific folder to this backup set"
+msgstr "将特定文件夹包括到此备份集"
+
+msgctxt "#30145"
+msgid "Type"
+msgstr "类型"
+
+msgctxt "#30146"
+msgid "Include Sub Folders"
+msgstr "包含子文件夹"
+
+msgctxt "#30147"
+msgid "Toggle Sub Folders"
+msgstr "切换子文件夹"
+
+msgctxt "#30148"
+msgid "Ask before restoring Kodi UI settings"
+msgstr "恢复 Kodi 用户界面设置前询问"
+
+msgctxt "#30149"
+msgid "Restore Kodi UI Settings"
+msgstr "恢复 Kodi 用户界面设置"
+
+msgctxt "#30150"
+msgid "Restore saved Kodi system settings from backup?"
+msgstr "是否从备份恢复保存的 Kodi 系统设置？"
+
+msgctxt "#30151"
+msgid "Enable Verbose Logging"
+msgstr "启用详细日志记录"
+
+msgctxt "#30152"
+msgid "Set Zip File Location"
+msgstr "设置 Zip 文件位置"
+
+msgctxt "#30153"
+msgid "Full path to where the zip file will be staged during backup or restore - must be local to this device"
+msgstr "备份或还原期间暂存 zip 文件的完整路径 - 必须是此设备的本地路径"
+
+msgctxt "#30154"
+msgid "Always prompt if Kodi settings should be restored - no by default"
+msgstr "始终提示是否应恢复 Kodi 设置 - 默认为否"
+
+msgctxt "#30155"
+msgid "Adds additional information to the log file"
+msgstr "将附加信息添加到日志文件中"
+
+msgctxt "#30156"
+msgid "Must save key/secret first, then return to settings to authorize"
+msgstr "必须先保存密钥/密文，然后返回设置进行授权"
+
+msgctxt "#30157"
+msgid "Simple uses pre-defined folder locations, use Advanced Editor to define custom paths"
+msgstr "简单模式使用预定义的文件夹位置，使用高级编辑器定义自定义路径"
+
+msgctxt "#30158"
+msgid "Run backup on daily, weekly, monthly, or custom schedule"
+msgstr "按每日、每周、每月或自定义计划运行备份"
+
+msgctxt "#30159"
+msgid "Backup started with unknown mode"
+msgstr "备份以未知模式启动"
+
+#~ msgctxt "#30036"
+#~ msgid "Custom Directory 1"
+#~ msgstr "自定义目录1"
+
+#~ msgctxt "#30037"
+#~ msgid "Custom Directory 2"
+#~ msgstr "自定义目录2"
+
+#~ msgctxt "#30045"
+#~ msgid "Error: Remote path doesn't exist"
+#~ msgstr "错误：远程目录不存在"
+
+#~ msgctxt "#30056"
+#~ msgid "Check log for Dropbox authorize URL"
+#~ msgstr "检查 Dropbox 授权 URL 日志"
+
+#~ msgctxt "#30057"
+#~ msgid "Click OK when authorized"
+#~ msgstr "授权后点“确定”"
+
+#~ msgctxt "#30058"
+#~ msgid "Dropbox Developer Code Needed"
+#~ msgstr "需要 Dropbox 开发者 Code"

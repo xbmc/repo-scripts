@@ -52,7 +52,7 @@ class LyricsFetcher:
         except:
             return None
         response = html.unescape(response)
-        matchcode = re.search('<div class="[lL]yrics.*?">(.*?)</div>', response, flags=re.DOTALL)
+        matchcode = re.search('class="Lyrics__Container.*?">(.*?)</div>', response, flags=re.DOTALL)
         try:
             lyricscode = (matchcode.group(1))
             lyr1 = re.sub('<br/>', '\n', lyricscode)

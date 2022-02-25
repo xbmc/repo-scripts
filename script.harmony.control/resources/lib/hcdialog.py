@@ -1,6 +1,7 @@
 
 import os
-from kodi_six import xbmc, xbmcgui
+import xbmc
+import xbmcgui
 from resources.lib.fileops import listDirectory
 
 KODIMONITOR = xbmc.Monitor()

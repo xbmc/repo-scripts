@@ -21,7 +21,7 @@ def get_random_episodes(tvshow_id=None, season=None, filters=None, limit=None):
         if season is not None:
             json_request['params']['season'] = season
     json_request['params']['sort'] = {'method': 'random'}
-    json_request['params']['properties'] = ['file']
+    json_request['params']['properties'] = ['file', 'title', 'season', 'episode', 'showtitle', 'playcount', 'rating', 'userrating']
     if limit:
         json_request['params']['limits'] = {'end': limit}
 

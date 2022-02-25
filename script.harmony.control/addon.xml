@@ -1,7 +1,6 @@
-<addon id="script.harmony.control" name="Harmony Hub Controller" provider-name="pkscout" version="0.2.3+matrix.1">
+<addon id="script.harmony.control" name="Harmony Hub Controller" provider-name="pkscout" version="0.2.4">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
-		<import addon="script.module.kodi-six" version="0.1.3.1" />
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
 		<import addon="script.module.websocket" version="0.5.7+matrix.1" />
 	</requires>
@@ -9,8 +8,9 @@
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>v.0.2.3
-- fix for crash when running activity
+		<news>v.0.2.4
+- activity selection is now a pick list instead of a text box
+- code clean up
 		</news>
 		<assets>
 			<icon>icon.png</icon>

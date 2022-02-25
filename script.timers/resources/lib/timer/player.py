@@ -7,11 +7,11 @@ class Player(xbmc.Player):
 
     def play(self, item):
 
-        super().play(item)
-        self.seektime = None
+        self.playWithSeekTime(item, seektime=None)
 
     def playWithSeekTime(self, item, seektime):
 
+        xbmc.executebuiltin("CECActivateSource")
         super().play(item)
         self.seektime = seektime
 

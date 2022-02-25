@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30101"
+msgid "Audio Format"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Auto Play"
+msgstr ""
+
+msgctxt "#30201"
+msgid "AAC"
+msgstr ""
+
+msgctxt "#30202"
+msgid "FLAC"
+msgstr ""
+
+msgctxt "#30203"
+msgid "Mother Earth Radio"
+msgstr ""
+
+msgctxt "#30204"
+msgid "Mother Earth Klassik"
+msgstr ""
+
+msgctxt "#30205"
+msgid "Mother Earth Instrumental"
+msgstr ""

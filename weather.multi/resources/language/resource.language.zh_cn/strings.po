@@ -1,0 +1,458 @@
+# Kodi Media Center language file
+# Addon Name: Multi Weather
+# Addon id: weather.multi
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-09-17 09:30+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/zh_cn/>\n"
+"Language: zh_cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Weather forecast from several providers"
+msgstr "来自多家服务商的天气预报"
+
+msgctxt "Addon Description"
+msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
+msgstr "雅虎、Weatherbit 和 Openweathermap 提供的天气预报"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "地点设置"
+
+msgctxt "#32102"
+msgid "Additional"
+msgstr "附加的"
+
+msgctxt "#32103"
+msgid "Maps"
+msgstr "气象图"
+
+msgctxt "#32104"
+msgid "Logging"
+msgstr "调试日志"
+
+msgctxt "#32110"
+msgid "API key"
+msgstr "API 密钥"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "地点1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "地点2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "地点3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "地点4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "地点5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "搜索位置时显示纬度/经度"
+
+msgctxt "#32125"
+msgid "Download additional weather data"
+msgstr "下载附加天气数据"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "地图缩放级别"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "启用调试日志"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "下载气象图"
+
+msgctxt "#32131"
+msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
+msgstr "要获取附加天气数据，请在以下位置获取 api 密钥：https://weatherbit.io/"
+
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
+msgstr "要使用气象图，请在以下位置获取 api 密钥：http://openweathermap.org/appid"
+
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "小雨雷雨"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "雷雨"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "雷暴伴大雨"
+
+msgctxt "#32204"
+msgid "Thunderstorm with light drizzle"
+msgstr "小毛毛雨雷雨"
+
+msgctxt "#32205"
+msgid "Thunderstorm with drizzle"
+msgstr "毛毛雨雷雨"
+
+msgctxt "#32206"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "大毛毛雨雷雨"
+
+msgctxt "#32207"
+msgid "Thunderstorm with Hail"
+msgstr "冰雹雷暴"
+
+msgctxt "#32208"
+msgid "Light Drizzle"
+msgstr "小毛毛雨"
+
+msgctxt "#32209"
+msgid "Drizzle"
+msgstr "毛毛雨"
+
+msgctxt "#32210"
+msgid "Heavy Drizzle"
+msgstr "大毛毛雨"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "小雨"
+
+msgctxt "#32212"
+msgid "Moderate Rain"
+msgstr "中雨"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "大雨"
+
+msgctxt "#32214"
+msgid "Freezing rain"
+msgstr "冻雨"
+
+msgctxt "#32215"
+msgid "Light shower rain"
+msgstr "小阵雨"
+
+msgctxt "#32216"
+msgid "Shower rain"
+msgstr "阵雨"
+
+msgctxt "#32217"
+msgid "Heavy shower rain"
+msgstr "大阵雨"
+
+msgctxt "#32218"
+msgid "Light snow"
+msgstr "小雪"
+
+msgctxt "#32219"
+msgid "Snow"
+msgstr "雪"
+
+msgctxt "#32220"
+msgid "Heavy snow"
+msgstr "大雪"
+
+msgctxt "#32221"
+msgid "Mix snow/rain"
+msgstr "雨夹雪"
+
+msgctxt "#32222"
+msgid "Sleet"
+msgstr "冰雹"
+
+msgctxt "#32223"
+msgid "Heavy sleet"
+msgstr "强冰雹"
+
+msgctxt "#32224"
+msgid "Snow shower"
+msgstr "阵雪"
+
+msgctxt "#32225"
+msgid "Heavy snow shower"
+msgstr "大阵雪"
+
+msgctxt "#32226"
+msgid "Flurries"
+msgstr "骤雨"
+
+msgctxt "#32227"
+msgid "Mist"
+msgstr "薄雾"
+
+msgctxt "#32228"
+msgid "Smoke"
+msgstr "烟"
+
+msgctxt "#32229"
+msgid "Haze"
+msgstr "霾"
+
+msgctxt "#32230"
+msgid "Sand/dust"
+msgstr "沙尘"
+
+msgctxt "#32231"
+msgid "Fog"
+msgstr "雾"
+
+msgctxt "#32232"
+msgid "Freezing fog"
+msgstr "冻雾"
+
+msgctxt "#32233"
+msgid "Clear sky"
+msgstr "晴朗"
+
+msgctxt "#32234"
+msgid "Few clouds"
+msgstr "少云"
+
+msgctxt "#32235"
+msgid "Scattered clouds"
+msgstr "疏云"
+
+msgctxt "#32236"
+msgid "Broken clouds"
+msgstr "碎云"
+
+msgctxt "#32237"
+msgid "Overcast clouds"
+msgstr "乌云"
+
+msgctxt "#32238"
+msgid "Unknown Precipitation"
+msgstr "不明降水"
+
+msgctxt "#32251"
+msgid "Tornado"
+msgstr ""
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr ""
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr ""
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr ""
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr ""
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr ""
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr ""
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr ""
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr ""
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr ""
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr ""
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr ""
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr ""
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr ""
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr ""
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr ""
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr ""
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr ""
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr ""
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr ""
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr ""
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr ""
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr ""
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr ""
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr ""
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr ""
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr ""
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr ""
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr ""
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr ""
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr ""
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr ""
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr ""
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr ""
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr ""
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr ""
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr ""
+
+msgctxt "#32300"
+msgid "New Moon"
+msgstr "新月"
+
+msgctxt "#32301"
+msgid "Waxing Crescent"
+msgstr "上蛾眉月"
+
+msgctxt "#32302"
+msgid "First Quarter"
+msgstr "上弦月"
+
+msgctxt "#32303"
+msgid "Waxing Gibbous"
+msgstr "盈凸月"
+
+msgctxt "#32304"
+msgid "Full Moon"
+msgstr "满月"
+
+msgctxt "#32305"
+msgid "Waning Gibbous"
+msgstr "亏凸月"
+
+msgctxt "#32306"
+msgid "Last Quarter"
+msgstr "下弦月"
+
+msgctxt "#32307"
+msgid "Waning Crescent"
+msgstr "下蛾眉月"

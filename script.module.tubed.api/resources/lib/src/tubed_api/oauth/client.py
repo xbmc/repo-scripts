@@ -10,6 +10,7 @@
 
 import requests
 
+from ..constants import MOBILE_HEADERS
 from ..exceptions import OAuthInvalidGrant
 from ..exceptions import OAuthRequestFailed
 from . import scopes
@@ -36,10 +37,9 @@ class Client:
     def request_codes(self, scope=None):
         headers = {
             'Host': 'accounts.google.com',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+        headers.update(MOBILE_HEADERS.copy())
 
         if self.http_referrer:
             headers['Referer'] = self.http_referrer
@@ -84,10 +84,9 @@ class Client:
     def request_access_token(self, code):
         headers = {
             'Host': 'www.googleapis.com',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+        headers.update(MOBILE_HEADERS.copy())
 
         if self.http_referrer:
             headers['Referer'] = self.http_referrer
@@ -133,10 +132,9 @@ class Client:
     def refresh_token(self, token):
         headers = {
             'Host': 'www.googleapis.com',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+        headers.update(MOBILE_HEADERS.copy())
 
         if self.http_referrer:
             headers['Referer'] = self.http_referrer
@@ -177,10 +175,9 @@ class Client:
     def revoke_token(self, token):
         headers = {
             'Host': 'accounts.google.com',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+        headers.update(MOBILE_HEADERS.copy())
 
         if self.http_referrer:
             headers['Referer'] = self.http_referrer

@@ -1,3 +1,7 @@
+v.0.2.4
+- activity selection is now a pick list instead of a text box
+- code clean up
+
 v.0.2.3
 - fix for crash when running activity
 

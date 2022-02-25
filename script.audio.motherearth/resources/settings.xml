@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+	<section id="script.audio.motherearth">
+		<category id="settings" label="5">
+			<group id="audio" label="292">
+				<setting id="audio_format" type="string" label="30101">
+					<level>0</level>
+					<default>aac</default>
+					<constraints>
+						<options>
+							<option label="30201">aac</option>
+							<option label="30202">flac</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="auto_play" type="integer" label="30102">
+					<level>0</level>
+					<default>-1</default>
+					<constraints>
+						<options>
+							<option label="1223">-1</option>
+							<option label="30203">0</option>
+							<option label="30204">1</option>
+							<option label="30205">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

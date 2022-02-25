@@ -1,3 +1,5 @@
+3.0.6
+  - Add compatibiliti for Python 3.10
 3.0.5
   - Fixed compatibility with Kodi Matrix.
 3.0.4

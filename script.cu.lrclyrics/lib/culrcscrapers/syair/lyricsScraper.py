@@ -69,7 +69,7 @@ class LyricsFetcher:
             response = search.text
         except:
             return None
-        matchcode = re.search('</p>(.*?)<div', response, flags=re.DOTALL)
+        matchcode = re.search('class="entry">(.*?)<div', response, flags=re.DOTALL)
         if matchcode:
             lyricscode = (matchcode.group(1))
             cleanlyrics = re.sub('<[^<]+?>', '', lyricscode)

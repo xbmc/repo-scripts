@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="2.0.4" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="Oz Weather" version="2.0.5" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
     	<import addon="script.module.requests" version="2.22.0+matrix.1"/>
@@ -22,11 +22,8 @@
        		<icon>icon.png</icon>
        		<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>v2.0.4
-			- Remove WeatherZone support due to upstream site being totally revised
-			v2.0.3
-			- Set some limits to prevent issues with the BOM suddenly supplying days, not hours, worth of images
-			- Fix missing weathercode
+		<news>v2.0.5
+			- Improve error handling if the BOM disappears for a bit...
     	</news>
 	</extension>
 </addon>

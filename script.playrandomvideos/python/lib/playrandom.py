@@ -9,6 +9,7 @@ SELECTWATCHMODE_HEADING = 32010
 WATCHMODE_ALLVIDEOS_TEXT = 16100
 WATCHMODE_UNWATCHED_TEXT = 16101
 WATCHMODE_WATCHED_TEXT = 16102
+WATCHMODE_WATCHEDBEFORE_TEXT = 32910
 WATCHMODE_ASKME_TEXT = 36521
 ADD_SOURCE_HEADER = 32011
 ADD_SOURCE_MESSAGE = 32012
@@ -16,14 +17,16 @@ ADD_SOURCE_MESSAGE = 32012
 WATCHMODE_ALLVIDEOS = 'all videos'
 WATCHMODE_UNWATCHED = 'unwatched'
 WATCHMODE_WATCHED = 'watched'
+WATCHMODE_WATCHEDBEFORE = 'watched before'
 WATCHMODE_ASKME = 'ask me'
 # Same order as settings
-WATCHMODES = (WATCHMODE_ALLVIDEOS, WATCHMODE_UNWATCHED, WATCHMODE_WATCHED, WATCHMODE_ASKME)
+WATCHMODES = (WATCHMODE_ALLVIDEOS, WATCHMODE_UNWATCHED, WATCHMODE_WATCHED, WATCHMODE_WATCHEDBEFORE, WATCHMODE_ASKME)
 WATCHMODE_NONE = 'none'
 
 unplayed_filter = {'field': 'playcount', 'operator': 'is', 'value': '0'}
 played_filter = {'field': 'playcount', 'operator': 'greaterthan', 'value': '0'}
 noextras_filter = {'field': 'season', 'operator': 'isnot', 'value': '0'}
+
 
 def play(pathinfo):
     content, info = _parse_path(pathinfo)
@@ -41,6 +44,16 @@ def play(pathinfo):
             xbmcgui.Dialog().ok(L(ADD_SOURCE_HEADER), L(ADD_SOURCE_MESSAGE).format(info['path']))
         else:
             raise
+
+def _build_watched_before_filter(content):
+    # Don't play video that has been watched in the past x months
+    if content == "tvshows":
+        months = int(get_main_addon().getSetting('tvplayedmonths'))
+    if content == "movies":
+        months = int(get_main_addon().getSetting('movieplayedmonths'))
+
+    lastwatched_filter = {'field': 'lastplayed', 'operator': 'notinthelast', 'value': months*30}
+    return lastwatched_fiter
 
 def _parse_path(pathinfo):
     content = None
@@ -134,6 +147,9 @@ def _parse_path(pathinfo):
         filters.append(unplayed_filter)
     elif watchmode == WATCHMODE_WATCHED:
         filters.append(played_filter)
+    elif watchmode == WATCHMODE_WATCHEDBEFORE:
+        lastwatched_filter = _build_watched_before_fiter(content)
+        filters.append(lastwatched_filter)
 
     if content == 'tvshows' and get_main_addon().getSetting('exclude_extras') == 'true':
         filters.append(noextras_filter)
@@ -164,12 +180,14 @@ def _get_watchmode(pathwatchmode, content):
     watchmode = None
     if pathwatchmode:
         # skip 'all videos' from path, prefer add-on settings
-        if pathwatchmode.lower() in (WATCHMODE_UNWATCHED, WATCHMODE_WATCHED, WATCHMODE_ASKME):
+        if pathwatchmode.lower() in (WATCHMODE_UNWATCHED, WATCHMODE_WATCHED, WATCHMODE_WATCHEDBEFORE, WATCHMODE_ASKME):
             watchmode = pathwatchmode.lower()
         elif pathwatchmode == L(WATCHMODE_UNWATCHED_TEXT):
             watchmode = WATCHMODE_UNWATCHED
         elif pathwatchmode == L(WATCHMODE_WATCHED_TEXT):
             watchmode = WATCHMODE_WATCHED
+        elif pathwatchmode == L(WATCHMODE_WATCHEDBEFORE_TEXT):
+            watchmode == WATCHMODE_WATCHEDBEFORE
         elif pathwatchmode == L(WATCHMODE_ASKME_TEXT):
             watchmode = WATCHMODE_ASKME
 

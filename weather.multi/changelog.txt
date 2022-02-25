@@ -1,3 +1,22 @@
+v0.0.12
+- language update
+
+v0.0.11
+- fix yahoo crumb format
+
+v0.0.10
+- fix weatherbit.io outlook translation
+- add yahoo outlook translation
+
+v0.0.9
+- bump for repo release
+
+v0.0.8
+- fix fetching weather for wrong location
+
+v0.0.7
+- fix yahoo weather again
+
 v0.0.6
 - fix yahoo weather
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audio.motherearth" name="Mother Earth Radio" version="2.0" provider-name="Florian Reiterer">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="script.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Mother Earth Radio addon for Kodi</summary>
+        <description lang="en_GB">Free High Resolution FLAC 96kHz/24bit Radio. 429hz music tuned to the Faslak's Frequency. Choose FLAC or AAC stream in addon-options</description>
+        <website>https://motherearthradio.de/</website>
+        <source>https://github.com/FlorianReiterer/repo-scripts/tree/script.audio.motherearth</source>
+        <license>GPL-3.0-or-later</license>
+        <platform>all</platform>
+        <news>
+- added Classical and Instrumental stream
+- Metadata for the streams
+        </news>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

@@ -1,0 +1,71 @@
+# Kodi Media Center language file
+# Addon Name: Reset Watchedstate
+# Addon id: script.reset_watchedstate
+# Addon Provider: Team Kodi
+
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "Script is not activated."
+msgstr "Script ist nicht aktiv."
+
+msgctxt "#32002"
+msgid "Script is in dry-run mode.\nMovies will be listed but watched-states or 'lastplayed' will not be resetted."
+msgstr "Script ist im 'Test'-Modus.\nFilme werden gelistet aber weder der 'Gesehen'-Status noch das Datum des letzten Abspielens werden zurückgesetzt."
+
+msgctxt "#32003"
+msgid "No movies have been resetted."
+msgstr "Es wurden keine Filme zurückgesetzt."
+
+msgctxt "#32004"
+msgid "Movies which will be resettet:\n"
+msgstr "Filme, die zurückgesetzt werden:\n"
+
+msgctxt "#32005"
+msgid "Attention"
+msgstr "Achtung"
+
+msgctxt "#32006"
+msgid "Dry-run mode is inactive. Watched-states and/or lastplayed-values might be resetted if you continue. Please run in dry-run mode first if you are unsure.\nAre you sure you want to continue?"
+msgstr "'Test'-Modus is inaktiv. 'Gesehen'-Status oder das Datum des letzten Abspielens werden zurückgesetzt. Bitte zuerst im 'dry-run'-Modus starten, wenn du unsicher bist.\n Möchtest du weiter machen?"
+
+#: Activate help text
+msgctxt "#32007"
+msgid "Activates or deactivates the execution of this script."
+msgstr "Aktiviert oder deaktiviert die Ausführung des Scripts."
+
+#: Activate help text
+msgctxt "#32008"
+msgid "In 'dry-run'-mode movies will only be listed. No watched-states or 'lastplayed'-values will be modifed or resetted."
+msgstr "Im 'Test'-Modus werden die Filme nur gelistet. Weder der 'Gesehen'-Staturs noch das Datum des letzten Abspielens werden modifiziert oder zurück gesetzt."
+
+#: Days help text
+msgctxt "#32009"
+msgid "Amount of days when movies will be resetted in relation to their lastplayed-date and the current date."
+msgstr "Anzahl der Tage wann die Filme zurück gesetzt werden im Bezug zu ihren 'lastplayed'-Datum und dem aktuellen Datum."
+
+#: Preventdialog help text
+msgctxt "#32010"
+msgid "Activating this setting will prevent showing all warning dialogs except the listing of resetted movies and if the script is activated or not."
+msgstr "Wenn dieses Setting aktiviert ist, werden keine Warn-Dialoge mehr angezeigt. Liste der zurück gesetzten Filme oder auch ob das Script aktiv ist oder nicht ist davon ausgeschlossen."
+
+msgctxt "#32501"
+msgid "Options"
+msgstr "Optionen"
+
+msgctxt "#32502"
+msgid "Number of days passed"
+msgstr "Anzahl der Tage"
+
+msgctxt "#32503"
+msgid "Activate"
+msgstr "Aktivieren"
+
+msgctxt "#32504"
+msgid "Dry run"
+msgstr "Test-Modus"
+
+msgctxt "#32505"
+msgid "Hide dialogs"
+msgstr "Verstecke Dialoge"

@@ -1,0 +1,458 @@
+# Kodi Media Center language file
+# Addon Name: Multi Weather
+# Addon id: weather.multi
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-07-28 05:29+0000\n"
+"Last-Translator: vdkbsd <valexgus@gmail.com>\n"
+"Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/ru_ru/>\n"
+"Language: ru_ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7.2\n"
+
+msgctxt "Addon Summary"
+msgid "Weather forecast from several providers"
+msgstr "Прогноз погоды от нескольких поставщиков"
+
+msgctxt "Addon Description"
+msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
+msgstr "Прогноз погоды предоставлен: Yahoo, Weatherbit и Openweathermap"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Выбор региона"
+
+msgctxt "#32102"
+msgid "Additional"
+msgstr "Дополнительно"
+
+msgctxt "#32103"
+msgid "Maps"
+msgstr "Карты"
+
+msgctxt "#32104"
+msgid "Logging"
+msgstr "Журнал"
+
+msgctxt "#32110"
+msgid "API key"
+msgstr "Ключ API"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Регион 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Регион 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Регион 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Регион 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Регион 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Показывать широту/долготу при поиске региона"
+
+msgctxt "#32125"
+msgid "Download additional weather data"
+msgstr "Загрузить дополнительные данные о погоде"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Уровень масштабирования карты"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Включить ведение журнала"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Загрузить карты погоды"
+
+msgctxt "#32131"
+msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
+msgstr "Для получения дополнительных данных о погоде, оформите ключ API на сайте: https://weatherbit.io/"
+
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
+msgstr "Для получения карт погоды, оформите ключ API по адресу: http://openweathermap.org/appid"
+
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "Небольшой дождь с грозой"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "Дождь с грозой"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "Сильный дождь с грозой"
+
+msgctxt "#32204"
+msgid "Thunderstorm with light drizzle"
+msgstr "Морось с грозой"
+
+msgctxt "#32205"
+msgid "Thunderstorm with drizzle"
+msgstr "Моросящий дождь с грозой"
+
+msgctxt "#32206"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "Сильный моросящий дождь с грозой"
+
+msgctxt "#32207"
+msgid "Thunderstorm with Hail"
+msgstr "Град с грозой"
+
+msgctxt "#32208"
+msgid "Light Drizzle"
+msgstr "Морось"
+
+msgctxt "#32209"
+msgid "Drizzle"
+msgstr "Моросящий дождь"
+
+msgctxt "#32210"
+msgid "Heavy Drizzle"
+msgstr "Сильный моросящий дождь"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Небольшой дождь"
+
+msgctxt "#32212"
+msgid "Moderate Rain"
+msgstr "Умеренный дождь"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Проливной дождь"
+
+msgctxt "#32214"
+msgid "Freezing rain"
+msgstr "Ледяной дождь"
+
+msgctxt "#32215"
+msgid "Light shower rain"
+msgstr "Слабый ливень"
+
+msgctxt "#32216"
+msgid "Shower rain"
+msgstr "Ливень"
+
+msgctxt "#32217"
+msgid "Heavy shower rain"
+msgstr "Сильный ливень"
+
+msgctxt "#32218"
+msgid "Light snow"
+msgstr "Небольшой снегопад"
+
+msgctxt "#32219"
+msgid "Snow"
+msgstr "Снегопад"
+
+msgctxt "#32220"
+msgid "Heavy snow"
+msgstr "Обильный снегопад"
+
+msgctxt "#32221"
+msgid "Mix snow/rain"
+msgstr "Снег с дождём"
+
+msgctxt "#32222"
+msgid "Sleet"
+msgstr "Дождь со снегом"
+
+msgctxt "#32223"
+msgid "Heavy sleet"
+msgstr "Сильный дождь со снегом"
+
+msgctxt "#32224"
+msgid "Snow shower"
+msgstr "Ливневый снег"
+
+msgctxt "#32225"
+msgid "Heavy snow shower"
+msgstr "Сильный ливневый снег"
+
+msgctxt "#32226"
+msgid "Flurries"
+msgstr "Штормы"
+
+msgctxt "#32227"
+msgid "Mist"
+msgstr "Дымка"
+
+msgctxt "#32228"
+msgid "Smoke"
+msgstr "Дым"
+
+msgctxt "#32229"
+msgid "Haze"
+msgstr "Мгла"
+
+msgctxt "#32230"
+msgid "Sand/dust"
+msgstr "Песчаная пыль"
+
+msgctxt "#32231"
+msgid "Fog"
+msgstr "Туман"
+
+msgctxt "#32232"
+msgid "Freezing fog"
+msgstr "Ледяной туман"
+
+msgctxt "#32233"
+msgid "Clear sky"
+msgstr "Ясно"
+
+msgctxt "#32234"
+msgid "Few clouds"
+msgstr "Малооблачно"
+
+msgctxt "#32235"
+msgid "Scattered clouds"
+msgstr "Переменная облачность"
+
+msgctxt "#32236"
+msgid "Broken clouds"
+msgstr "Облачно с прояснениями"
+
+msgctxt "#32237"
+msgid "Overcast clouds"
+msgstr "Пасмурно"
+
+msgctxt "#32238"
+msgid "Unknown Precipitation"
+msgstr "Без осадков"
+
+msgctxt "#32251"
+msgid "Tornado"
+msgstr ""
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr ""
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr ""
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr ""
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr ""
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr ""
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr ""
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr ""
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr ""
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr ""
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr ""
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr ""
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr ""
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr ""
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr ""
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr ""
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr ""
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr ""
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr ""
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr ""
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr ""
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr ""
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr ""
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr ""
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr ""
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr ""
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr ""
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr ""
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr ""
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr ""
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr ""
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr ""
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr ""
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr ""
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr ""
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr ""
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr ""
+
+msgctxt "#32300"
+msgid "New Moon"
+msgstr "Новолуние"
+
+msgctxt "#32301"
+msgid "Waxing Crescent"
+msgstr "Молодая луна"
+
+msgctxt "#32302"
+msgid "First Quarter"
+msgstr "Первая четверть"
+
+msgctxt "#32303"
+msgid "Waxing Gibbous"
+msgstr "Прибывающая луна"
+
+msgctxt "#32304"
+msgid "Full Moon"
+msgstr "Полнолуние"
+
+msgctxt "#32305"
+msgid "Waning Gibbous"
+msgstr "Убывающая луна"
+
+msgctxt "#32306"
+msgid "Last Quarter"
+msgstr "Последняя четверть"
+
+msgctxt "#32307"
+msgid "Waning Crescent"
+msgstr "Старая луна"

@@ -27,7 +27,7 @@ class Weather():
             set_property('Daily.%i.ShortDay'        % (count+1), convert_datetime(item['ts'], 'timestamp', 'weekday', 'short'))
             set_property('Daily.%i.LongDate'        % (count+1), convert_datetime(item['ts'], 'timestamp', 'monthday', 'long'))
             set_property('Daily.%i.ShortDate'       % (count+1), convert_datetime(item['ts'], 'timestamp', 'monthday', 'short'))
-            set_property('Daily.%i.Outlook'         % (count+1), FORECAST.get(item['weather']['code'], item['weather']['description']))
+            set_property('Daily.%i.Outlook'         % (count+1), FORECAST.get(str(item['weather']['code']), item['weather']['description']))
             set_property('Daily.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
             set_property('Daily.%i.FanartCode'      % (count+1), weathercode)
             set_property('Daily.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(int(round(WIND_DIR(item['wind_dir'])))))

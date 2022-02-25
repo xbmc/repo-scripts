@@ -159,7 +159,7 @@ class Cursor(_Parameter):
 
 
 class Language(_Parameter):
-    ALL = 'all'
+    ALL = ''
     EN = 'en'
     DA = 'da'
     DE = 'de'

@@ -1,0 +1,458 @@
+# Kodi Media Center language file
+# Addon Name: Multi Weather
+# Addon id: weather.multi
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-02-21 14:46+0000\n"
+"Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/de_de/>\n"
+"Language: de_de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
+
+msgctxt "Addon Summary"
+msgid "Weather forecast from several providers"
+msgstr "Wettervorhersage von verschiedenen Anbietern"
+
+msgctxt "Addon Description"
+msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
+msgstr "Wettervorhersage von Yahoo, Weatherbit und Openweathermap"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Orte"
+
+msgctxt "#32102"
+msgid "Additional"
+msgstr "Zusätzliche Daten"
+
+msgctxt "#32103"
+msgid "Maps"
+msgstr "Karten"
+
+msgctxt "#32104"
+msgid "Logging"
+msgstr "Protokollierung"
+
+msgctxt "#32110"
+msgid "API key"
+msgstr "API-Key"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Ort 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Ort 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Ort 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Ort 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Ort 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Beim Suchen von Orten Längen- / Breitengrad anzeigen"
+
+msgctxt "#32125"
+msgid "Download additional weather data"
+msgstr "Zusätzliche Wetterdaten herunterladen"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Zoomstufe für Karten"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Protokollierung aktivieren"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Wetterkarten herunterladen"
+
+msgctxt "#32131"
+msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
+msgstr "Für zusätzliche Wetterdaten wird ein API-Key benötigt: https://weatherbit.io/"
+
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
+msgstr "Für Karten wird ein API-Key benötigt: http://openweathermap.org/appid"
+
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "Gewitter mit leichtem Regen"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "Gewitter mit Regen"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "Gewitter mit starkem Regen"
+
+msgctxt "#32204"
+msgid "Thunderstorm with light drizzle"
+msgstr "Gewitter mit leichtem Nieselregen"
+
+msgctxt "#32205"
+msgid "Thunderstorm with drizzle"
+msgstr "Gewitter mit Nieselregen"
+
+msgctxt "#32206"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "Gewitter mit starkem Nieselregen"
+
+msgctxt "#32207"
+msgid "Thunderstorm with Hail"
+msgstr "Gewitter mit Hagel"
+
+msgctxt "#32208"
+msgid "Light Drizzle"
+msgstr "Leichter Nieselregen"
+
+msgctxt "#32209"
+msgid "Drizzle"
+msgstr "Nieselregen"
+
+msgctxt "#32210"
+msgid "Heavy Drizzle"
+msgstr "Starker Nieselregen"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Leichter Regen"
+
+msgctxt "#32212"
+msgid "Moderate Rain"
+msgstr "Mäßiger Regen"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Starker Regen"
+
+msgctxt "#32214"
+msgid "Freezing rain"
+msgstr "Gefrierender Regen"
+
+msgctxt "#32215"
+msgid "Light shower rain"
+msgstr "Leichte Schauer"
+
+msgctxt "#32216"
+msgid "Shower rain"
+msgstr "Schauer"
+
+msgctxt "#32217"
+msgid "Heavy shower rain"
+msgstr "Starke Schauer"
+
+msgctxt "#32218"
+msgid "Light snow"
+msgstr "Leichter Schneefall"
+
+msgctxt "#32219"
+msgid "Snow"
+msgstr "Schneefall"
+
+msgctxt "#32220"
+msgid "Heavy snow"
+msgstr "Starker Schneefall"
+
+msgctxt "#32221"
+msgid "Mix snow/rain"
+msgstr "Teils Schnee / Teils Regen"
+
+msgctxt "#32222"
+msgid "Sleet"
+msgstr "Schneeregen"
+
+msgctxt "#32223"
+msgid "Heavy sleet"
+msgstr "Starker Schneeregen"
+
+msgctxt "#32224"
+msgid "Snow shower"
+msgstr "Schneeschauer"
+
+msgctxt "#32225"
+msgid "Heavy snow shower"
+msgstr "Starke Schneeschauer"
+
+msgctxt "#32226"
+msgid "Flurries"
+msgstr "Schneegestöber"
+
+msgctxt "#32227"
+msgid "Mist"
+msgstr "Trüb"
+
+msgctxt "#32228"
+msgid "Smoke"
+msgstr "Rauch"
+
+msgctxt "#32229"
+msgid "Haze"
+msgstr "Dunst"
+
+msgctxt "#32230"
+msgid "Sand/dust"
+msgstr "Sand / Staub"
+
+msgctxt "#32231"
+msgid "Fog"
+msgstr "Nebel"
+
+msgctxt "#32232"
+msgid "Freezing fog"
+msgstr "Gefrierender Nebel"
+
+msgctxt "#32233"
+msgid "Clear sky"
+msgstr "Klarer Himmel"
+
+msgctxt "#32234"
+msgid "Few clouds"
+msgstr "Wenige Wolken"
+
+msgctxt "#32235"
+msgid "Scattered clouds"
+msgstr "Vereinzelte Wolken"
+
+msgctxt "#32236"
+msgid "Broken clouds"
+msgstr "Aufgelockerte Bewölkung"
+
+msgctxt "#32237"
+msgid "Overcast clouds"
+msgstr "Bedeckter Himmel"
+
+msgctxt "#32238"
+msgid "Unknown Precipitation"
+msgstr "Niederschlag"
+
+msgctxt "#32251"
+msgid "Tornado"
+msgstr "Tornado"
+
+msgctxt "#32252"
+msgid "Tropical Storm"
+msgstr "Tropensturm"
+
+msgctxt "#32253"
+msgid "Hurricane"
+msgstr "Hurrikan"
+
+msgctxt "#32254"
+msgid "Severe Thunderstorms"
+msgstr "Schwere Gewitter"
+
+msgctxt "#32255"
+msgid "Thunderstorms"
+msgstr "Gewitter"
+
+msgctxt "#32256"
+msgid "Mixed Rain and Snow"
+msgstr "Regen mit Schnee vermischt"
+
+msgctxt "#32257"
+msgid "Mixed Rain and Sleet"
+msgstr "Regen mit Schneeregen vermischt"
+
+msgctxt "#32258"
+msgid "Mixed Snow and Sleet"
+msgstr "Schnee mit Schneeregen vermischt"
+
+msgctxt "#32259"
+msgid "Freezing Drizzle"
+msgstr "Gefrierender Nieselregen"
+
+msgctxt "#32260"
+msgid "Drizzle"
+msgstr "Nieselregen"
+
+msgctxt "#32261"
+msgid "Freezing Rain"
+msgstr "Gefrierender Regen"
+
+msgctxt "#32262"
+msgid "Showers"
+msgstr "Schauer"
+
+msgctxt "#32263"
+msgid "Rain"
+msgstr "Regen"
+
+msgctxt "#32264"
+msgid "Snow Flurries"
+msgstr "Schneegestöber"
+
+msgctxt "#32265"
+msgid "Light Snow Showers"
+msgstr "Leichte Schneeschauer"
+
+msgctxt "#32266"
+msgid "Blowing Snow"
+msgstr "Schneetreiben"
+
+msgctxt "#32267"
+msgid "Snow"
+msgstr "Schneefall"
+
+msgctxt "#32268"
+msgid "Hail"
+msgstr "Hagel"
+
+msgctxt "#32269"
+msgid "Sleet"
+msgstr "Schneeregen"
+
+msgctxt "#32270"
+msgid "Dust"
+msgstr "Staub"
+
+msgctxt "#32271"
+msgid "Foggy"
+msgstr "Neblig"
+
+msgctxt "#32272"
+msgid "Haze"
+msgstr "Dunst"
+
+msgctxt "#32273"
+msgid "Smoky"
+msgstr "Dunstig"
+
+msgctxt "#32274"
+msgid "Blustery"
+msgstr "Stürmisch"
+
+msgctxt "#32275"
+msgid "Windy"
+msgstr "Windig"
+
+msgctxt "#32276"
+msgid "Cold"
+msgstr "Kalt"
+
+msgctxt "#32277"
+msgid "Cloudy"
+msgstr "Bewölkt"
+
+msgctxt "#32278"
+msgid "Mostly Cloudy"
+msgstr "Meist bewölkt"
+
+msgctxt "#32279"
+msgid "Partly Cloudy"
+msgstr "Teilweise bewölkt"
+
+msgctxt "#32280"
+msgid "Clear"
+msgstr "Klar"
+
+msgctxt "#32281"
+msgid "Sunny"
+msgstr "Sonnig"
+
+msgctxt "#32282"
+msgid "Fair"
+msgstr "Schön"
+
+msgctxt "#32283"
+msgid "Mixed Rain and Hail"
+msgstr "Regen und Hagel"
+
+msgctxt "#32284"
+msgid "Hot"
+msgstr "Heiss"
+
+msgctxt "#32285"
+msgid "Isolated Thunderstorms"
+msgstr "Vereinzelte Gewitter"
+
+msgctxt "#32286"
+msgid "Scattered Thunderstorms"
+msgstr "Vereinzelte Gewitter"
+
+msgctxt "#32287"
+msgid "Scattered Showers"
+msgstr "Vereinzelte Regenschauer"
+
+msgctxt "#32288"
+msgid "Heavy Rain"
+msgstr "Starkregen"
+
+msgctxt "#32289"
+msgid "Scattered Snow Showers"
+msgstr "Vereinzelte Schneeschauer"
+
+msgctxt "#32290"
+msgid "Heavy Snow"
+msgstr "Starker Schneefall"
+
+msgctxt "#32291"
+msgid "Blizzard"
+msgstr "Schneesturm"
+
+msgctxt "#32292"
+msgid "Not Available"
+msgstr "Nicht verfügbar"
+
+msgctxt "#32293"
+msgid "Scattered Showers"
+msgstr "Vereinzelte Regenschauer"
+
+msgctxt "#32294"
+msgid "Scattered Snow Showers"
+msgstr "Vereinzelte Schneeschauer"
+
+msgctxt "#32295"
+msgid "Scattered Thundershowers"
+msgstr "Vereinzelte Gewitter"
+
+msgctxt "#32300"
+msgid "New Moon"
+msgstr "Neumond"
+
+msgctxt "#32301"
+msgid "Waxing Crescent"
+msgstr "Zunehmende Mondsichel"
+
+msgctxt "#32302"
+msgid "First Quarter"
+msgstr "Viertelmond"
+
+msgctxt "#32303"
+msgid "Waxing Gibbous"
+msgstr "Zunehmender gewölbter Mond"
+
+msgctxt "#32304"
+msgid "Full Moon"
+msgstr "Vollmond"
+
+msgctxt "#32305"
+msgid "Waning Gibbous"
+msgstr "Abnehmender gewölbter Mond"
+
+msgctxt "#32306"
+msgid "Last Quarter"
+msgstr "Dreiviertel voller Mond"
+
+msgctxt "#32307"
+msgid "Waning Crescent"
+msgstr "Abnehmender Halbmond"
