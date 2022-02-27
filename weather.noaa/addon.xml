@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.noaa" name="NOAA (weather.gov)" version="2.0.7" provider-name="randall">
+<addon id="weather.noaa" name="NOAA (weather.gov)" version="2.0.8" provider-name="randall">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.dateutil" version="2.8.0"/>

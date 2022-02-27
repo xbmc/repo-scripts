@@ -1,3 +1,6 @@
+v2.0.8
+- send "shortForecast" as Outlook, and "detailedForecast" as DetailedOutlook because other always have short Outlooks
+
 v2.0.7
 - add in regional radar loop composits to map options
 

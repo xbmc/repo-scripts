@@ -19,6 +19,7 @@ DATEFORMAT	= xbmc.getRegion('dateshort')
 TIMEFORMAT	= xbmc.getRegion('meridiem')
 MAXDAYS		= 10
 TEMPUNIT	= xbmc.getRegion('tempunit')
+SOURCEPREF	= ADDON.getSetting("DataSourcePreference")
 
 def set_property(name, value):
 	WEATHER_WINDOW.setProperty(name, value)
@@ -65,7 +66,10 @@ def refresh_locations():
 	log('available locations: %s' % str(locations))
 
 def get_initial(loc):
-	url = 'https://api.weather.gov/points/%s' % loc
+	if "preview-api.weather.gov" == SOURCEPREF:
+		url = 'https://preview-api.weather.gov/points/%s' % loc
+	else:	
+		url = 'https://api.weather.gov/points/%s' % loc
 	log("url:"+url)
 	responsedata=get_url_JSON(url)	
 	return responsedata
@@ -209,7 +213,11 @@ def fetchLocation(num,LatLong):
 
 def fetchDaily(num):
 
-	url=ADDON.getSetting('Location'+str(num)+'forecast_url')		
+	log("SOURCEPREF: %s" % SOURCEPREF)
+	url=ADDON.getSetting('Location'+str(num)+'forecast_url')
+	if "preview-api.weather.gov" == SOURCEPREF:
+		url=url.replace("https://api.weather.gov","https://preview-api.weather.gov")
+			
 	if 'F' in TEMPUNIT:
 		url="%s?units=us" % url		
 	elif 'C' in TEMPUNIT:
@@ -261,8 +269,9 @@ def fetchDaily(num):
 
 		# NOTE: Day props are 0 based, but Daily/Hourly are 1 based
 		set_property('Daily.%i.isDaytime'	% (count+1),str(item['isDaytime']))
-		set_property('Daily.%i.Outlook'		% (count+1), item['detailedForecast'])
+		set_property('Daily.%i.Outlook'		% (count+1), item['shortForecast'])
 		set_property('Daily.%i.ShortOutlook'	% (count+1), item['shortForecast'])
+		set_property('Daily.%i.DetailedOutlook'	% (count+1), item['detailedForecast'])
 		
 		set_property('Daily.%i.RemoteIcon'	% (count+1), icon)
 		set_property('Daily.%i.OutlookIcon'	% (count+1), WEATHER_ICON % weathercode)
@@ -381,7 +390,8 @@ def fetchAltDaily(num):
 		set_property('Day%i.RemoteIcon'		% (count), icon)
 
 		# NOTE: Day props are 0 based, but Daily/Hourly are 1 based
-		set_property('Daily.%i.Outlook'		% (count+1), item['text'])
+		set_property('Daily.%i.DetailedOutlook'		% (count+1), item['text'])
+		set_property('Daily.%i.Outlook'		% (count+1), item['weather'])
 		set_property('Daily.%i.ShortOutlook'	% (count+1), item['weather'])
 		
 		set_property('Daily.%i.RemoteIcon'	% (count+1), icon)
@@ -486,7 +496,10 @@ def fetchAltDaily(num):
 
 def fetchCurrent(num):
 	station=ADDON.getSetting('Location'+str(num)+'Station')
-	url="https://api.weather.gov/stations/%s/observations/latest" %station	
+	if "preview-api.weather.gov" == SOURCEPREF:
+		url="https://preview-api.weather.gov/stations/%s/observations/latest" %station	
+	else:
+		url="https://api.weather.gov/stations/%s/observations/latest" %station	
 	current=get_url_JSON(url)
 	if current and 'properties' in current:
 		data=current['properties']
@@ -573,7 +586,10 @@ def fetchWeatherAlerts(num):
 	
 	# we are storing lat,long as comma separated already, so that is convienent for us and we can just drop it into the url
 	latlong=ADDON.getSetting('Location'+str(num)+'LatLong')
-	url="https://api.weather.gov/alerts/active?status=actual&point=%s" % (latlong)
+	if "preview-api.weather.gov" == SOURCEPREF:
+		url="https://preview-api.weather.gov/alerts/active?status=actual&point=%s" % (latlong)
+	else:
+		url="https://api.weather.gov/alerts/active?status=actual&point=%s" % (latlong)
 
 	alerts=get_url_JSON(url)
 	# if we have a valid response then clear our current alerts
@@ -616,7 +632,13 @@ def fetchWeatherAlerts(num):
 
 def fetchHourly(num):
 
-	url=ADDON.getSetting('Location'+str(num)+'forecastHourly_url')		
+	log("SOURCEPREF: %s" % SOURCEPREF)
+
+	url=ADDON.getSetting('Location'+str(num)+'forecastHourly_url')	
+	if "preview-api.weather.gov" == SOURCEPREF:
+		url=url.replace("https://api.weather.gov","https://preview-api.weather.gov")
+		log("url-x: %s" % url)
+	
 	if 'F' in TEMPUNIT:
 		url="%s?units=us" % url		
 	elif 'C' in TEMPUNIT:
@@ -659,10 +681,8 @@ def fetchHourly(num):
 		else:
 			set_property('Hourly.%i.LongDate'	% (count+1), get_month(startstamp, 'ml'))
 			set_property('Hourly.%i.ShortDate'	% (count+1), get_month(startstamp, 'ms'))
-		outlook=FORECAST.get(item['detailedForecast'],item['detailedForecast'])
-		if len(outlook) < 3 :
-			outlook=FORECAST.get(item['shortForecast'],item['shortForecast'])
-		set_property('Hourly.%i.Outlook'		% (count+1),	outlook)
+
+		set_property('Hourly.%i.Outlook'	% (count+1), FORECAST.get(item['shortForecast'], item['shortForecast']))
 		set_property('Hourly.%i.ShortOutlook'	% (count+1), FORECAST.get(item['shortForecast'], item['shortForecast']))
 		set_property('Hourly.%i.OutlookIcon'	% (count+1), WEATHER_ICON % weathercode)
 		set_property('Hourly.%i.FanartCode'	% (count+1), weathercode)
@@ -815,11 +835,10 @@ else:
 	refresh_locations()
 
 	LatLong = ADDON.getSetting('Location%s' % num)
-	sourcePref=ADDON.getSetting("DataSourcePreference")
 
 	if LatLong:
 		fetchWeatherAlerts(num)
-		if "forecast.weather.gov" == sourcePref:
+		if "forecast.weather.gov" == SOURCEPREF:
 			fetchAltDaily(num)
 		else:
 			fetchCurrent(num)
