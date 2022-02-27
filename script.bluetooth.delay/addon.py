@@ -63,7 +63,7 @@ elif "xperience1080" in xbmc.getSkinDir():
 elif "mimic.lr" in xbmc.getSkinDir():
     skin1 = skin2
 
-def bluetooth():
+def headphones():
     Addon.setSettingBool('state', 0)
     for x in range(y):
         xbmc.executebuiltin("Action(AudioDelayPlus)")
@@ -106,7 +106,7 @@ def main():
 
     elif arg == None:
         if state == "true":
-            bluetooth()
+            headphones()
             skin1()
         else:
             speakers()
@@ -121,7 +121,7 @@ def main():
 
     elif arg == "1":
         if state == "true":
-            bluetooth()
+            headphones()
             skin1()
         else:
             xbmcgui.Dialog().notification("",line2, "",t)

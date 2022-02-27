@@ -1,5 +1,5 @@
 # Kodi Media Center language file
-# Addon Name: Bluetooth Delay lite
+# Addon Name: BT Delay lite
 # Addon id: script.bluetooth.delay
 # Addon Provider: 
 msgid ""
