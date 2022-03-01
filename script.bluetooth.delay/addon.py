@@ -1,6 +1,5 @@
 import xbmcaddon
 import xbmcgui
-import time
 import sys
 
 Addon = xbmcaddon.Addon('script.bluetooth.delay')
