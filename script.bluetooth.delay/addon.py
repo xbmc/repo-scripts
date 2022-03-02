@@ -12,7 +12,7 @@ state = Addon.getSetting('state')
 firstRun = Addon.getSetting('firstRun')
 t = 1000
 
-y = ((float(d2) * 1000000) - (float(d1) * 1000000)) / 25000
+y = ((float(d2) * 1000) - (float(d1) * 1000)) / 25
 y = int(y)
 
 arg = None
