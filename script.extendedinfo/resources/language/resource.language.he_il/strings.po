@@ -1,0 +1,778 @@
+# XBMC Media Center language file
+# Addon Name: ExtendedInfo Script
+# Addon id: script.extendedinfo
+# Addon version: 1.0.0
+# Addon Provider: phil65
+msgid ""
+msgstr ""
+"Project-Id-Version: Script.ExtendedInfo\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2017-09-24 11:14+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgctxt "Addon Summary"
+msgid "ExtendedInfo Script"
+msgstr "סקריפט ExtendedInfo"
+
+msgctxt "Addon Description"
+msgid "This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, theaudiodb.org, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
+msgstr "הסקריפט הזה מציע אפשרויות שונות כדי להציג תוכן מקוון בתוך מעטפת. הסקריפט משתמש בשירותים כגון: themoviedb.org, theaudiodb.org, Trakt.TV וכדומה. הסקריפט יכול לשמש גם עבור ייבוא או ייצוא הגדרות המעטפת, הוספת דברים נוספים כגון פאנארט לספרייה והכנות שונות. הסריפט זקוק לתמיכת המעטפת עבור רוב הפונקציות."
+
+msgctxt "#32000"
+msgid "Million"
+msgstr "מיליון"
+
+msgctxt "#32001"
+msgid "Billion"
+msgstr "ביליון"
+
+msgctxt "#32002"
+msgid "Trillion"
+msgstr "טריליון"
+
+msgctxt "#32003"
+msgid "Autocompletion language"
+msgstr "שפת השלמה אוטומטית"
+
+msgctxt "#32004"
+msgid "Autocompletion provider"
+msgstr "ספק השלמה אוטומטית"
+
+msgctxt "#32005"
+msgid "Windowed mode (for low-power platforms)"
+msgstr "מצב חלונית (עבור פלטפורמות חלשות)"
+
+msgctxt "#32006"
+msgid "Use as thumbnail"
+msgstr "תשתמש כתמונות ממוזערות"
+
+msgctxt "#32007"
+msgid "Use as fanart"
+msgstr "תשתמש כפאנארט"
+
+msgctxt "#32008"
+msgid "Autocompletion"
+msgstr "השלמה אוטומטית"
+
+#: \resources\lib\DialogTVShowInfo.py:101
+msgctxt "#32009"
+msgid "Show person information"
+msgstr "הצג מידע אודות אדם"
+
+msgctxt "#32010"
+msgid "Filmography"
+msgstr "הסטורית סרטים"
+
+msgctxt "#32011"
+msgid "Known movies"
+msgstr "סרטים ידועים"
+
+msgctxt "#32012"
+msgid "Birthday"
+msgstr "יום הולדת"
+
+msgctxt "#32013"
+msgid "Day of death"
+msgstr "יום המוות"
+
+msgctxt "#32014"
+msgid "Place of birth"
+msgstr "מקום לידה"
+
+msgctxt "#32015"
+msgid "Adult actor"
+msgstr "שחקן מבוגר"
+
+msgctxt "#32016"
+msgid "Also known as"
+msgstr "ידוע גם בשם"
+
+msgctxt "#32017"
+msgid "Homepage"
+msgstr "דף הבית"
+
+msgctxt "#32018"
+msgid "Role"
+msgstr "תפקיד"
+
+msgctxt "#32019"
+msgid "Job"
+msgstr "משרה"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-DialogInfo.xml:118
+msgctxt "#32020"
+msgid "Age"
+msgstr "גיל"
+
+msgctxt "#32021"
+msgid "In database"
+msgstr "במסד נתונים"
+
+msgctxt "#32022"
+msgid "Clear filters"
+msgstr "ניקוי מסננים"
+
+msgctxt "#32023"
+msgid "Filters"
+msgstr "מסננים"
+
+msgctxt "#32024"
+msgid "My account"
+msgstr "החשבון שלי"
+
+msgctxt "#32025"
+msgid "Episode index"
+msgstr "אינדקס פרק"
+
+msgctxt "#32026"
+msgid "Related movie lists"
+msgstr "רשימות סרטים קשורות"
+
+msgctxt "#32027"
+msgid "Select person"
+msgstr "בחר אדם"
+
+#: /plugin.py:56
+msgctxt "#32028"
+msgid "Airing episodes"
+msgstr "פרקים משודרים"
+
+#: /plugin.py:57
+msgctxt "#32029"
+msgid "Season premiere episodes"
+msgstr "פרקי בכורת העונה"
+
+msgctxt "#32030"
+msgid "Movie appearances"
+msgstr "הופעת הסרט"
+
+msgctxt "#32031"
+msgid "TV show appearances"
+msgstr "הופעות הסדרה"
+
+#: /plugin.py:58
+msgctxt "#32032"
+msgid "Trending TV shows"
+msgstr "סדרות טרנדיות"
+
+msgctxt "#32033"
+msgid "Enter person name"
+msgstr "הזן את שם האדם"
+
+msgctxt "#32034"
+msgid "Person results for %s"
+msgstr "תוצאות החיפוש (אדם): %s"
+
+msgctxt "#32035"
+msgid "Remove from list"
+msgstr "הסר מהרשימה"
+
+msgctxt "#32036"
+msgid "Movie list"
+msgstr "רשימת סרטים"
+
+msgctxt "#32037"
+msgid "Overview"
+msgstr "סקירה כללית"
+
+#: /plugin.py:59
+msgctxt "#32038"
+msgid "TV shows airing today"
+msgstr "סדרות שמשודרות היום"
+
+#: /plugin.py:60
+msgctxt "#32039"
+msgid "On-the-air TV shows"
+msgstr "סדרות שמשודרות כעת"
+
+#: /plugin.py:61
+msgctxt "#32040"
+msgid "Top rated TV shows"
+msgstr "סדרות בדירוג גבוה"
+
+#: /plugin.py:62 /plugin.py:137
+msgctxt "#32041"
+msgid "Popular TV shows"
+msgstr "סדרות פופולריות"
+
+#: /plugin.py:36 /plugin.py:45
+msgctxt "#32042"
+msgid "In-cinema movies"
+msgstr "סרטים בקולנוע"
+
+#: /plugin.py:46 /plugin.py:39
+msgctxt "#32043"
+msgid "Upcoming movies"
+msgstr "סרטים שיגיעו בקרוב"
+
+#: /plugin.py:48 /plugin.py:128
+msgctxt "#32044"
+msgid "Popular movies"
+msgstr "‎סרטים פופולריים"
+
+#: /plugin.py:49
+msgctxt "#32045"
+msgid "User-created lists"
+msgstr "רשימות שנוצרו על ידי משתמש"
+
+#: /plugin.py:47
+msgctxt "#32046"
+msgid "Top rated movies"
+msgstr "‎סרטים בדירוג גבוה"
+
+#: /plugin.py:51
+msgctxt "#32047"
+msgid "Trending movies"
+msgstr "‎סרטים טרנדיים"
+
+#: /plugin.py:38
+msgctxt "#32048"
+msgid "Opening movies"
+msgstr "סרטים פותחים"
+
+#: /plugin.py:41
+msgctxt "#32049"
+msgid "Current DVD releases"
+msgstr "שיחרור DVD עכשווי"
+
+msgctxt "#32050"
+msgid "Online information"
+msgstr "מידע ברשת"
+
+msgctxt "#32051"
+msgid "Trailer"
+msgstr "קדימון"
+
+msgctxt "#32052"
+msgid "No trailers found"
+msgstr "לא נמצאו קדימונים"
+
+#: /plugin.py:42
+msgctxt "#32053"
+msgid "New DVD releases"
+msgstr "שחרוריי DVD חדשים"
+
+#: /plugin.py:43
+msgctxt "#32054"
+msgid "Upcoming DVDs"
+msgstr "DVD בקרוב"
+
+#: /plugin.py:37 /plugin.py:133
+msgctxt "#32055"
+msgid "Box office"
+msgstr "בקוּפָה"
+
+#: /plugin.py:40
+msgctxt "#32056"
+msgid "Top rentals"
+msgstr "הושכר הכי הרבה"
+
+#: /resources/lib/dialogs/DialogYoutubeList.py:128
+msgctxt "#32057"
+msgid "Dimensions"
+msgstr "מידות"
+
+#: C:/Kodi/portable_data/addons/script.extendedinfo/resources/lib/dialogs/DialogYoutubeList.py:40
+msgctxt "#32058"
+msgid "Related"
+msgstr "קשורים"
+
+#: \resources\lib\DialogVideoInfo.py:297
+msgctxt "#32059"
+msgid "Added movie to CouchPotato"
+msgstr "נוסף אל CouchPotato"
+
+#: \resources\lib\DialogYoutubeList.py:35
+#: \resources\lib\DialogYoutubeList.py:124
+msgctxt "#32060"
+msgid "Relevance"
+msgstr "רלוונטיות"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:113
+msgctxt "#32061"
+msgid "views"
+msgstr "צפיות"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32062"
+msgid "One day"
+msgstr "יום אחד"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32063"
+msgid "One week"
+msgstr "שבוע אחד"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32064"
+msgid "One month"
+msgstr "חודש אחד"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32065"
+msgid "One year"
+msgstr "שנה אחת"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:518
+msgctxt "#32066"
+msgid "2D / 3D"
+msgstr "2D / 3D"
+
+#: \resources\lib\DialogYoutubeList.py:59
+msgctxt "#32067"
+msgid "Amount of days"
+msgstr "כמות הימים"
+
+#: \resources\lib\DialogYoutubeList.py:24
+msgctxt "#32068"
+msgid "Amount of videos"
+msgstr "כמות קטעי וידאו"
+
+#: \resources\lib\DialogYoutubeList.py:191
+msgctxt "#32069"
+msgid "Show similar videos"
+msgstr "הצג קטעי וידאו דומים"
+
+#: /resources/lib/dialogs/DialogBaseInfo.py:149
+msgctxt "#32070"
+msgid "Show filmography"
+msgstr "הצג הסטוריית סרטים"
+
+#: \resources\lib\TheMovieDB.py:870
+msgctxt "#32071"
+msgid "Released"
+msgstr "שוחרר"
+
+#: \resources\lib\TheMovieDB.py:871
+msgctxt "#32072"
+msgid "Post production"
+msgstr "אחרי הפקה"
+
+#: \resources\lib\TheMovieDB.py:872
+msgctxt "#32073"
+msgid "In production"
+msgstr "בהפקה"
+
+#: \resources\lib\TheMovieDB.py:873
+msgctxt "#32074"
+msgid "Ended"
+msgstr "הסתיים"
+
+#: \resources\lib\TheMovieDB.py:874
+msgctxt "#32075"
+msgid "Returning series"
+msgstr "סדרות חוזרות"
+
+#: \resources\lib\TheMovieDB.py:875
+msgctxt "#32076"
+msgid "Planned"
+msgstr "תוכנן"
+
+#: \resources\lib\dialogs\DialogBaseList.py:73
+msgctxt "#32077"
+msgid "Remove filter"
+msgstr "הסר המסנן"
+
+#: \resources\lib\dialogs\DialogBaseList.py:74
+msgctxt "#32078"
+msgid "Remove all"
+msgstr "הסר הכל"
+
+#: \resources\settings.xml:11
+msgctxt "#32080"
+msgid "Force native appearance"
+msgstr "כפה מראה מקומי"
+
+#: \resources\lib\dialogs\DialogYoutubeList.py:211
+msgctxt "#32081"
+msgid "More videos from"
+msgstr "קטעי וידאו נוספים מ-"
+
+#: /resources/skins/Default/1080i/script-script.extendedinfo-DialogVideoInfo.xml:2925
+#: /resources/lib/dialogs/DialogVideoList.py
+msgctxt "#32082"
+msgid "votes"
+msgstr "הצבעות"
+
+#: /resources/lib/TheMovieDB.py:266
+msgctxt "#32083"
+msgid "Add movie to list"
+msgstr "הוסף לרשימת סרטים"
+
+#: /resources/settings.xml:7
+msgctxt "#32084"
+msgid "Use classic keyboard for search"
+msgstr "תשתמש במקלדת הקלאסית לביצוע חיפוש"
+
+#: /plugin.py:138
+msgctxt "#32085"
+msgid "Anticipated TV shows"
+msgstr "סדרות צפויות"
+
+#: /plugin.py:139
+msgctxt "#32086"
+msgid "Most played TV shows"
+msgstr "סדרות שנוגנו הכי הרבה"
+
+#: /plugin.py:140
+msgctxt "#32087"
+msgid "Most collected TV shows"
+msgstr "סדרות שנאספו הכי הרבה"
+
+#: /plugin.py:141
+msgctxt "#32088"
+msgid "Most watched TV shows"
+msgstr "סדרות שניצפו הכי הרבה"
+
+#: /plugin.py:129
+msgctxt "#32089"
+msgid "Most played movies"
+msgstr "סרטים שנוגנו הכי הרבה"
+
+#: /plugin.py:130
+msgctxt "#32090"
+msgid "Most watched movies"
+msgstr "סדרות שנצפו הכי הרבה"
+
+#: /plugin.py:131
+msgctxt "#32091"
+msgid "Most collected movies"
+msgstr "סדרות שנאספו הכי הרבה"
+
+#: /plugin.py:132
+msgctxt "#32092"
+msgid "Anticipated movies"
+msgstr "סרטים צפויים"
+
+#: /plugin.py:128
+msgctxt "#32093"
+msgid "Rated episodes"
+msgstr "פרקים מדורגים"
+
+#: /resources/lib/TheMovieDB.py:55
+msgctxt "#32094"
+msgid "Male"
+msgstr "זכר"
+
+#: /resources/lib/TheMovieDB.py:54
+msgctxt "#32095"
+msgid "Female"
+msgstr "נקבה"
+
+msgctxt "#32099"
+msgid "Include porn stars"
+msgstr "כלול כוכבי פורנו"
+
+msgctxt "#32100"
+msgid "Get extrafanart"
+msgstr "השג אקסטרה פאנארט"
+
+msgctxt "#32101"
+msgid "Get extrathumbs"
+msgstr "השג אקסטרה תמונות ממוזערות"
+
+msgctxt "#32102"
+msgid "Get tune"
+msgstr "השג מנגינה"
+
+msgctxt "#32103"
+msgid "Change info labels"
+msgstr "שנה תוויות מידע"
+
+msgctxt "#32104"
+msgid "Sort by"
+msgstr "מיון לפי"
+
+msgctxt "#32105"
+msgid "Filters"
+msgstr "מסננים"
+
+msgctxt "#32106"
+msgid "Choose filter behaviour"
+msgstr "בחר מסנן התנהגות"
+
+msgctxt "#32107"
+msgid "Add to list"
+msgstr "להוסיף לרשימה"
+
+msgctxt "#32108"
+msgid "Revenue"
+msgstr "הַכנָסָה"
+
+msgctxt "#32109"
+msgid "Budget"
+msgstr "תקציב"
+
+#: \resources\lib\DialogVideoList.py:155
+msgctxt "#32110"
+msgid "Popularity"
+msgstr "פופולריות"
+
+#: \resources\lib\DialogVideoList.py:288
+msgctxt "#32111"
+msgid "Vote count"
+msgstr "ספירת הצבעות"
+
+msgctxt "#32112"
+msgid "Vote average"
+msgstr "ממוצע הצבעות"
+
+#: /resources/lib/dialogs/DialogBaseInfo.py:120
+msgctxt "#32113"
+msgid "Rate movie"
+msgstr "דרג את הסרט"
+
+msgctxt "#32114"
+msgid "Keyword"
+msgstr "מקלדת"
+
+msgctxt "#32115"
+msgid "Crew"
+msgstr "צוות"
+
+msgctxt "#32116"
+msgid "Recommended By TMDB"
+msgstr "מומלץ על ידי TMDB"
+
+msgctxt "#32117"
+msgid "Official videos"
+msgstr "קטעי וידאו רשמי"
+
+#: \resources\lib\DialogYoutubeList.py:13
+msgctxt "#32118"
+msgid "YouTube videos"
+msgstr "סרטוני יו-טיוב"
+
+msgctxt "#32119"
+msgid "Artwork"
+msgstr "גרפיקה"
+
+msgctxt "#32120"
+msgid "Movie actor roles"
+msgstr "תפקידי שחקן בסרטים"
+
+msgctxt "#32121"
+msgid "TV show roles"
+msgstr "תפקידים בסדרות"
+
+msgctxt "#32122"
+msgid "Movie crew member"
+msgstr "חבר צוות שחקני הסרט"
+
+msgctxt "#32123"
+msgid "TV show crew member"
+msgstr "חבר צוות שחקני הסדרה"
+
+msgctxt "#32124"
+msgid "Items"
+msgstr "‎פריטים"
+
+msgctxt "#32125"
+msgid "Page"
+msgstr "דף"
+
+msgctxt "#32126"
+msgid "Actor / Crew member"
+msgstr "שחקן / חבר צוות"
+
+msgctxt "#32127"
+msgid "Certification"
+msgstr "אישורים"
+
+msgctxt "#32128"
+msgid "Order"
+msgstr "הזמנה"
+
+msgctxt "#32129"
+msgid "Your rating"
+msgstr "הדירוג שלך"
+
+msgctxt "#32130"
+msgid "Show lists"
+msgstr "רשימות סדרות"
+
+msgctxt "#32131"
+msgid "Already rated"
+msgstr "כבר מדורג"
+
+msgctxt "#32132"
+msgid "Extras"
+msgstr "‎תוספות"
+
+msgctxt "#32133"
+msgid "Manage"
+msgstr "נהל"
+
+msgctxt "#32134"
+msgid "Starred movies"
+msgstr "סרטים שזכו בכוכב"
+
+msgctxt "#32135"
+msgid "Rated movies"
+msgstr "‎סרטים מדורגים"
+
+msgctxt "#32136"
+msgid "Choose list"
+msgstr "בחר רשימה"
+
+msgctxt "#32137"
+msgid "Enter list name"
+msgstr "הזן שם רשימה"
+
+msgctxt "#32138"
+msgid "Delete movie list"
+msgstr "מחיקת רשימת סרטים"
+
+msgctxt "#32139"
+msgid "New movie list"
+msgstr "רשימת סרטים חדשה"
+
+msgctxt "#32140"
+msgid "For all features enter your TMDB credentials in addon settings. "
+msgstr "יש להזין את האישורים שלך ל-TMDB להגדרות ההרחבה, לקבלת כל התכונות."
+
+msgctxt "#32141"
+msgid "This product uses the TMDb API but is not endorsed or certified by TMDb."
+msgstr "המוצר הזה משתמש במפתח API של TMDb אך אינו מאושר או מוסמך על ידי TMDb."
+
+msgctxt "#32142"
+msgid "Studios"
+msgstr "אולפנים"
+
+msgctxt "#32143"
+msgid "Could not find item at MovieDB"
+msgstr "הפריט לא נמצא ב-MovieDB"
+
+msgctxt "#32144"
+msgid "Starred TV shows"
+msgstr "סדרות שזכו בכוכב"
+
+msgctxt "#32145"
+msgid "Rated TV shows"
+msgstr "סדרות מדורגות"
+
+msgctxt "#32146"
+msgid "Search for '%s'"
+msgstr "חפש '%s'"
+
+msgctxt "#32147"
+msgid "Show appearances"
+msgstr "הצג הופעה"
+
+msgctxt "#32148"
+msgid "Show information"
+msgstr "הצג מידע"
+
+msgctxt "#32149"
+msgid "Upper limit"
+msgstr "גבול עליון"
+
+msgctxt "#32150"
+msgid "Lower limit"
+msgstr "גבול תחתון"
+
+#: /resources/lib/Utils.py:224
+msgctxt "#32151"
+msgid "Choose option"
+msgstr "בחר אפשרות"
+
+msgctxt "#32152"
+msgid "Networks"
+msgstr "רשתות"
+
+msgctxt "#32153"
+msgid "Certification country"
+msgstr "מדינת אישור"
+
+msgctxt "#32154"
+msgid "Star"
+msgstr "תן כוכב"
+
+msgctxt "#32155"
+msgid "UnStar"
+msgstr "הסר כוכב"
+
+msgctxt "#32156"
+msgid "Person"
+msgstr "אדם"
+
+msgctxt "#32157"
+msgid "Created at"
+msgstr "נוצר ב-"
+
+msgctxt "#32158"
+msgid "Birthday today!"
+msgstr "חוגג היום יום הולדת!"
+
+msgctxt "#32159"
+msgid "Language for TheMovieDB requests"
+msgstr "שפה עבור בקשות מ-TheMovieDB"
+
+msgctxt "#32160"
+msgid "TheMovieDB username"
+msgstr "שם משתמש ב-TheMovieDB"
+
+msgctxt "#32161"
+msgid "TheMovieDB password"
+msgstr "סיסמה ב-TheMovieDB"
+
+msgctxt "#32162"
+msgid "Include adult actors / movies"
+msgstr "כלול שחקן מבוגרים / סרטים"
+
+msgctxt "#32163"
+msgid "Open InfoDialog by default"
+msgstr "פתח את תיבת דו-שיח למידע כברירת מחדל"
+
+msgctxt "#32164"
+msgid "Delete cache"
+msgstr "נקה מטמון"
+
+msgctxt "#32165"
+msgid "Add to CouchPotato"
+msgstr "הוסף אל CouchPotato"
+
+msgctxt "#32166"
+msgid "Add to SickBeard"
+msgstr "הוסף אל SickBeard"
+
+msgctxt "#32167"
+msgid "Reviews"
+msgstr "ביקורות"
+
+msgctxt "#32168"
+msgid "Releases"
+msgstr "שיחרורים"
+
+msgctxt "#32169"
+msgid "Rate TV show"
+msgstr "דרג סדרה"
+
+msgctxt "#32170"
+msgid "Add to Trakt Watchlist"
+msgstr "הוסף לרשימת הצפייה ב-Trakt"
+
+msgctxt "#32171"
+msgid "TheMovieDB"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Youtube API Key"
+msgstr ""
+
+msgctxt "#32173"
+msgid "TADB API Key"
+msgstr ""
+
+msgctxt "#32174"
+msgid "OMDb API Key"
+msgstr ""
+

@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<onload condition="String.IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,FFFFFFFF,home)</onload>
+	<onunload>ClearProperty(WindowColor,home)</onunload>
+	<defaultcontrol always="true">500</defaultcontrol>
+	<views>500</views>
+	<controls>
+		<control type="image">
+			<texture background="true" fallback="common/white.png" colordiffuse="FFAAAAAA">$INFO[ListItem.Thumb]</texture>
+			<width>1920</width>
+			<height>1080</height>
+			<fadetime>400</fadetime>
+			<animation effect="fade" end="100" time="560">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+			<visible>!String.IsEqual(Window.Property(type),channel)</visible>
+		</control>
+		<control type="image">
+			<texture background="true" fallback="common/white.png" colordiffuse="FFAAAAAA">$INFO[ListItem.Art(fanart)]</texture>
+			<width>1920</width>
+			<height>1080</height>
+			<fadetime>400</fadetime>
+			<animation effect="fade" end="100" time="560">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+			<visible>String.IsEqual(Window.Property(type),channel)</visible>
+		</control>
+		<control type="image">
+			<texture colordiffuse="FF12B2E7">diffuseoverlay.jpg</texture>
+			<animation effect="fade" start="100" end="85" time="0" condition="true">Conditional</animation>
+			<width>1920</width>
+			<height>1080</height>
+			<animation effect="fade" end="100" time="360">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
+		</control>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="zoom" start="80" end="100" center="960,540" delay="500" tween="back" time="240" />
+				<effect type="fade" delay="500" end="100" time="240" />
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+				<effect type="fade" start="100" end="0" time="240" />
+			</animation>
+			<control type="group">
+				<visible>Integer.IsGreater(Container(500).NumItems,0)</visible>
+				<animation effect="fade" time="320" delay="300">Visible</animation>
+				<control type="image">
+					<left>75</left>
+					<top>165</top>
+					<width>440</width>
+					<height>380</height>
+					<visible>Control.HasFocus(500)</visible>
+					<animation effect="fade" time="320" delay="200">Visible</animation>
+					<animation effect="fade" time="200">Hidden</animation>
+					<texture colordiffuse="FF12B2E7" border="40">buttons/button-fo.png</texture>
+					<animation effect="slide" end="0,410" time="300" tween="cubic" easing="inout" condition="Container(500).Row(1)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Integer.IsGreater(Container(500).Column,2)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Integer.IsGreater(Container(500).Column,1)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Integer.IsGreater(Container(500).Column,0)">Conditional</animation>
+				</control>
+			</control>
+			<control type="panel" id="500">
+				<left>0</left>
+				<top>0</top>
+				<animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9000).HasFocus | Control.HasFocus(6000) | Control.HasFocus(7000)">Conditional</animation>
+				<width>1920</width>
+				<height>1229</height>
+				<viewtype label="31234">icon</viewtype>
+				<pagecontrol>72</pagecontrol>
+				<preloaditems>2</preloaditems>
+				<scrolltime tween="cubic" easing="out">500</scrolltime>
+				<onleft>9000</onleft>
+				<onright>72</onright>
+				<onup>700</onup>
+				<ondown>600</ondown>
+				<orientation>vertical</orientation>
+				<itemlayout height="410" width="440">
+					<control type="group">
+						<left>75</left>
+						<top>190</top>
+						<control type="image">
+							<left>25</left>
+							<width>390</width>
+							<height>220</height>
+							<fadetime>200</fadetime>
+							<aspectratio aligny="center">scale</aspectratio>
+							<texture>$INFO[ListItem.Art(thumb)]</texture>
+							<bordertexture border="5">thumbs/bordershadow4.png</bordertexture>
+							<bordersize>5</bordersize>
+						</control>
+						<control type="image">
+							<left>25</left>
+							<width>390</width>
+							<height>220</height>
+							<texture colordiffuse="55FFFFFF">common/bgcolor.png</texture>
+						</control>
+						<control type="label">
+							<left>35</left>
+							<top>-25</top>
+							<width>380</width>
+							<height>5</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(duration)]$INFO[ListItem.Property(itemcount),, $LOCALIZE[36913]]</label>
+							<font>font10</font>
+							<textcolor>AAFFFFFF</textcolor>
+						</control>
+						<control type="image">
+							<left>280</left>
+							<top>218</top>
+							<width>130</width>
+							<height>30</height>
+							<texture colordiffuse="AAFFFFFF">$INFO[ListItem.Rating,flags/stars/,.png]</texture>
+							<animation effect="fade" delay="800" time="400">WindowOpen</animation>
+							<animation effect="fade" time="160">WindowClose</animation>
+							<animation effect="fade" time="240">VisibleChange</animation>
+						</control>
+						<control type="label">
+							<left>30</left>
+							<top>218</top>
+							<width>380</width>
+							<height>30</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(viewcount),, $ADDON[script.extendedinfo 32061]]</label>
+							<font>font10</font>
+							<textcolor>FFBBBBBB</textcolor>
+						</control>
+						<control type="textbox">
+							<left>30</left>
+							<top>250</top>
+							<height>66</height>
+							<width>380</width>
+							<label>$INFO[ListItem.Label]</label>
+							<align>center</align>
+							<font>font12</font>
+							<textcolor>FFFAFAFA</textcolor>
+						</control>
+						<control type="label">
+							<left>30</left>
+							<top>-25</top>
+							<width>380</width>
+							<height>5</height>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Premiered]</label>
+							<font>font10</font>
+							<textcolor>FFBBBBBB</textcolor>
+						</control>
+					</control>
+				</itemlayout>
+				<focusedlayout height="410" width="440">
+					<control type="group">
+						<left>75</left>
+						<top>190</top>
+						<animation type="Focus">
+							<effect type="zoom" time="150" start="95" end="100" center="245,260" />
+							<effect type="zoom" time="150" start="105" end="100" delay="150" center="245,260" />
+						</animation>
+						<control type="image">
+							<left>25</left>
+							<width>390</width>
+							<height>220</height>
+							<aspectratio aligny="center">scale</aspectratio>
+							<texture>$INFO[ListItem.Art(thumb)]</texture>
+							<bordertexture border="5">thumbs/bordershadow4.png</bordertexture>
+							<bordersize>5</bordersize>
+						</control>
+						<control type="image">
+							<animation effect="fade" time="300" start="100" end="0" delay="100">Focus</animation>
+							<animation effect="fade" time="300" start="0" end="100">UnFocus</animation>
+							<left>25</left>
+							<width>390</width>
+							<height>220</height>
+							<texture colordiffuse="55FFFFFF">common/bgcolor.png</texture>
+						</control>
+						<control type="label">
+							<left>35</left>
+							<top>-25</top>
+							<width>380</width>
+							<height>5</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(duration)]$INFO[ListItem.Property(itemcount),, $LOCALIZE[36913]]</label>
+							<font>font10</font>
+							<textcolor>AAFFFFFF</textcolor>
+						</control>
+						<control type="image">
+							<left>280</left>
+							<top>218</top>
+							<width>130</width>
+							<height>30</height>
+							<texture colordiffuse="AAFFFFFF">$INFO[ListItem.Rating,flags/stars/,.png]</texture>
+							<animation effect="fade" delay="800" time="400">WindowOpen</animation>
+							<animation effect="fade" time="160">WindowClose</animation>
+							<animation effect="fade" time="240">VisibleChange</animation>
+						</control>
+						<control type="label">
+							<left>30</left>
+							<top>218</top>
+							<width>380</width>
+							<height>30</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(viewcount),, $ADDON[script.extendedinfo 32061]]</label>
+							<font>font10</font>
+							<textcolor>FFBBBBBB</textcolor>
+						</control>
+						<control type="textbox">
+							<left>30</left>
+							<top>250</top>
+							<height>66</height>
+							<width>380</width>
+							<align>center</align>
+							<label>$INFO[ListItem.Label]</label>
+							<font>font12</font>
+							<textcolor>FFFAFAFA</textcolor>
+						</control>
+						<control type="label">
+							<left>30</left>
+							<top>-25</top>
+							<width>380</width>
+							<height>5</height>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Premiered]</label>
+							<font>font10</font>
+							<textcolor>FFBBBBBB</textcolor>
+						</control>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="button" id="600">
+				<onfocus>SetFocus(500)</onfocus>
+				<width>1</width>
+				<height>1</height>
+				<left>-1000</left>
+			</control>
+			<control type="button" id="700">
+				<onfocus>SetFocus(500)</onfocus>
+				<width>1</width>
+				<height>1</height>
+				<left>-1000</left>
+			</control>
+		</control>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="zoom" start="80" end="100" center="960,540" delay="500" tween="back" time="240" />
+				<effect type="fade" delay="500" end="100" time="240" />
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+				<effect type="fade" start="100" end="0" time="240" />
+			</animation>
+			<control type="group">
+				<control type="image">
+					<texture flipy="true">fade.png</texture>
+					<left>0</left>
+					<top>0</top>
+					<width>1920</width>
+					<height>100</height>
+				</control>
+				<control type="image">
+					<texture>fade.png</texture>
+					<left>0</left>
+					<top>980</top>
+					<width>1920</width>
+					<height>100</height>
+				</control>
+				<control type="image">
+					<texture>arrowdown.png</texture>
+					<left>900</left>
+					<animation effect="fade" time="250">VisibleChange</animation>
+					<top>1040</top>
+					<width>120</width>
+					<height>30</height>
+					<visible>!String.IsEmpty(Window.Property(ArrowDown)) | Container(500).HasNext</visible>
+				</control>
+				<control type="image">
+					<texture flipy="true">arrowdown.png</texture>
+					<left>900</left>
+					<animation effect="fade" time="250">VisibleChange</animation>
+					<top>10</top>
+					<width>120</width>
+					<height>30</height>
+					<visible>!String.IsEmpty(Window.Property(ArrowUp)) | Container(500).HasPrevious</visible>
+				</control>
+				<control type="image">
+					<texture flipx="true">arrowright.png</texture>
+					<left>10</left>
+					<top>1050</top>
+					<width>25</width>
+					<height>25</height>
+				</control>
+			</control>
+			<control type="label">
+				<left>50</left>
+				<top>1045</top>
+				<height>30</height>
+				<aligny>center</aligny>
+				<width>1920</width>
+				<align>left</align>
+				<font>font10</font>
+				<label>$ADDON[script.extendedinfo 32023]</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>0</top>
+				<height>40</height>
+				<aligny>center</aligny>
+				<width>1900</width>
+				<align>right</align>
+				<textcolor>FFFAFAFA</textcolor>
+				<label>$INFO[Window.Property(TotalItems),[COLOR FF999999]$ADDON[script.extendedinfo 32124]:[/COLOR] ]$INFO[Window.Property(CurrentPage),[COLOR FF999999] - $ADDON[script.extendedinfo 32125]: [/COLOR]]$INFO[Window.Property(TotalPages), / ]</label>
+			</control>
+			<control type="label">
+				<left>440</left>
+				<top>0</top>
+				<height>40</height>
+				<aligny>center</aligny>
+				<width>1200</width>
+				<align>left</align>
+				<textcolor>FFFAFAFA</textcolor>
+				<label>$INFO[Window.Property(Filter_Label)]</label>
+				<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000) + !Control.HasFocus(7000)">
+					<effect type="slide" end="-438" time="320" easing="in" tween="cubic" />
+				</animation>
+			</control>
+		</control>
+		<control type="group">
+			<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000) + !Control.HasFocus(7000)">
+				<effect type="slide" end="-438" time="320" easing="in" tween="cubic" />
+			</animation>
+			<animation effect="slide" start="0" end="-460" time="320" tween="cubic">WindowClose</animation>
+			<control type="image">
+				<left>-112</left>
+				<width>550</width>
+				<height>1080</height>
+				<texture colordiffuse="FF12B2E7">lists/panel.png</texture>
+			</control>
+			<control type="button" id="6000">
+				<label>$LOCALIZE[19140]</label>
+				<left>0</left>
+				<top>40</top>
+				<width>438</width>
+				<height>100</height>
+				<textoffsetx>30</textoffsetx>
+				<textoffsety>35</textoffsety>
+				<textwidth>315</textwidth>
+				<align>left</align>
+				<aligny>top</aligny>
+				<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+				<texturenofocus />
+				<font>font12</font>
+				<textcolor>FF999999</textcolor>
+				<ondown>SetFocus(7000)</ondown>
+				<onright>500</onright>
+				<onleft>500</onleft>
+				<focusedcolor>FFFAFAFA</focusedcolor>
+			</control>
+			<control type="image">
+				<left>305</left>
+				<top>70</top>
+				<width>45</width>
+				<height>45</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<aspectratio>keep</aspectratio>
+				<texture colordiffuse="AAFFFFFF">icons/magnifier.png</texture>
+			</control>
+			<control type="radiobutton" id="7000">
+				<left>0</left>
+				<top>135</top>
+				<width>438</width>
+				<height>100</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<ondown>9000</ondown>
+				<onup>6000</onup>
+				<onright>500</onright>
+				<onleft>500</onleft>
+				<textoffsetx>30</textoffsetx>
+				<textoffsety>25</textoffsety>
+				<font>font12</font>
+				<textwidth>315</textwidth>
+				<label>$ADDON[script.extendedinfo 32024]</label>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFAFAFA</focusedcolor>
+				<radiowidth>90</radiowidth>
+				<radioheight>60</radioheight>
+				<radioposx>288</radioposx>
+				<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+				<texturenofocus />
+				<textureradioonfocus>common/youtube.png</textureradioonfocus>
+				<textureradioofffocus>common/youtube.png</textureradioofffocus>
+				<textureradioonnofocus>common/youtube.png</textureradioonnofocus>
+				<textureradiooffnofocus>common/youtube.png</textureradiooffnofocus>
+			</control>
+			<control type="grouplist" id="9000">
+				<top>250</top>
+				<width>438</width>
+				<height>830</height>
+				<orientation>vertical</orientation>
+				<scroll>true</scroll>
+				<onup>7000</onup>
+				<ondown>9000</ondown>
+				<onright>500</onright>
+				<onleft>500</onleft>
+				<onback>500</onback>
+				<control type="button" id="5007">
+					<label>$LOCALIZE[467]:</label>
+					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Type)][/COLOR]</label2>
+					<width>438</width>
+					<height>70</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5001">
+					<onup>6000</onup>
+					<label>$ADDON[script.extendedinfo 32104]</label>
+					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Sort_Label)][/COLOR]</label2>
+					<width>438</width>
+					<height>70</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="label" id="5333">
+					<label>$ADDON[script.extendedinfo 32023]</label>
+					<width>438</width>
+					<height>120</height>
+					<textoffsetx>25</textoffsetx>
+					<textoffsety>55</textoffsety>
+					<align>left</align>
+					<aligny>top</aligny>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+				</control>
+				<control type="button" id="5002">
+					<label>$LOCALIZE[172]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5003">
+					<label>$LOCALIZE[248]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5006">
+					<label>$ADDON[script.extendedinfo 32066]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5008">
+					<label>$LOCALIZE[180]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5009">
+					<label>$LOCALIZE[287]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5012">
+					<label>$LOCALIZE[169]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5013">
+					<label>$LOCALIZE[564]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5005">
+					<label>$ADDON[script.extendedinfo 32022]</label>
+					<width>438</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
