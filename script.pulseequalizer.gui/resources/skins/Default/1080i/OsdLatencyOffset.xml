@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol always="true">1900</defaultcontrol>
+	<animation effect="fade" time="200">WindowOpen</animation>
+	<animation effect="fade" time="200">WindowClose</animation>
+	<coordinates>
+		<left>660</left>
+		<top>80</top>
+	</coordinates>
+	<controls>
+		<control type="label" id="100">
+			<textoffsetx>0</textoffsetx>
+			<left>0</left>
+			<top>0</top>
+			<width>400</width>
+			<label></label>
+			<height>25</height>
+			<font>font13</font>
+			<align>left</align>
+			<aligny>top</aligny>
+			<shadowcolor>black</shadowcolor>
+		</control>
+		<control type="group" id="1000">
+			<description>ControlGroup</description>
+			<height>63</height>
+			<control type="label" id="2000">
+				<description>ControlName</description>
+				<left>400</left>
+				<top>0</top>
+				<width>200</width>
+				<height>25</height>
+				<label>0 ms</label>
+				<font>font13</font>
+				<align>right</align>
+				<aligny>top</aligny>
+			</control>
+			<control type="slider" id="1900">
+				<description>Slider</description>
+				<left>0</left>
+				<top>50</top>
+				<width>600</width>
+				<height>40</height>
+				<orientation>horizontal</orientation>
+				<texturesliderbar>slider/bk-horizontal.png</texturesliderbar>
+				<textureslidernib colordiffuse="{col_textureslidernib}">slider/nofocus.png</textureslidernib>
+				<textureslidernibfocus colordiffuse="{col_textureslidernibfocus}">slider/focus.png</textureslidernibfocus>
+			</control>
+		</control>
+	</controls>
+</window>

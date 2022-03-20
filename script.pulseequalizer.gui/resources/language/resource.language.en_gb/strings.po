@@ -1,0 +1,314 @@
+
+msgid ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_gb\n"
+
+
+msgctxt "#32000"
+msgid "Equalizer"
+msgstr "Equalizer"
+
+msgctxt "#32001"
+msgid "No playback active"
+msgstr "No playback active"
+
+msgctxt "#32003"
+msgid "The equalizer is currently disabled for this device. Enable it?"
+msgstr "The equalizer is currently disabled for this device. Enable it?"
+
+msgctxt "#32004"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#32005"
+msgid "There is a problem to start the Equalizer. Please check Kodi log."
+msgstr "There is a problem to start the Equalizer. Please check Kodi log."
+
+msgctxt "#32006"
+msgid "Select Profile"
+msgstr "Select Profile"
+
+msgctxt "#32007"
+msgid "Equalizer"
+msgstr "Equalizer"
+
+msgctxt "#32008"
+msgid "Select Output Device"
+msgstr "Select Output Device"
+
+msgctxt "#32009"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#32010"
+msgid "Set Latency Offset"
+msgstr "Set Latency Offset"
+
+msgctxt "#32011"
+msgid "Disable Equalizer"
+msgstr "Disable Equalizer"
+
+msgctxt "#32012"
+msgid "Select Profile for %s"
+msgstr "Select Profile for %s"
+
+msgctxt "#32013"
+msgid "Select Audio Output Device"
+msgstr "Select Audio Output Device"
+
+msgctxt "#32014"
+msgid "Add new Profile"
+msgstr "Add new Profile"
+
+msgctxt "#32015"
+msgid "Delete Profile"
+msgstr "Delete Profile"
+
+msgctxt "#32016"
+msgid "Insert predefined Profiles"
+msgstr "Insert predefined Profiles"
+
+msgctxt "#32017"
+msgid "Enter Name for new Profile"
+msgstr "Enter Name for new Profile"
+
+msgctxt "#32018"
+msgid "Delete Profile %s"
+msgstr "Delete Profile %s"
+
+msgctxt "#32019"
+msgid "Are you sure that you want to delete profile %s ?"
+msgstr "Are you sure that you want to delete profile %s ?"
+
+msgctxt "#32020"
+msgid "Delete Profile"
+msgstr "Delete Profile"
+
+msgctxt "#32021"
+msgid "No profiles defined!"
+msgstr "No profiles defined!"
+
+msgctxt "#32022"
+msgid "Latency Offset"
+msgstr "Latency Offset"
+
+msgctxt "#32024"
+msgid "Kodi is playing"
+msgstr "Kodi is playing"
+
+msgctxt "#32025"
+msgid "The equalizer has not been loaded automatically. Please check log."
+msgstr "The equalizer has not been loaded automatically. Please check log."
+
+msgctxt "#32027"
+msgid "Room Correction"
+msgstr "Room Correction"
+
+msgctxt "#32028"
+msgid "Delete Correction"
+msgstr "Delete Correction"
+
+msgctxt "#32029"
+msgid "Edit Correction"
+msgstr "Edit Correction"
+
+msgctxt "#32030"
+msgid "Delete Room Correction %s"
+msgstr "Delete Room Correction %s"
+
+msgctxt "#32031"
+msgid "Are you sure that you want to delete the room correction %s ?"
+msgstr "Are you sure that you want to delete the room correction %s ?"
+
+msgctxt "#32032"
+msgid "Play Sweep"
+msgstr "Play Sweep"
+
+msgctxt "#32033"
+msgid "Import Correction"
+msgstr "Import Correction"
+
+msgctxt "#32034"
+msgid "Profiles"
+msgstr "Profiles"
+
+msgctxt "#32035"
+msgid "Cannot load pulseaudio equalizer. Is it installed on the system?     'sudo apt install pulseaudio-equalizer'"
+msgstr "Cannot load pulseaudio equalizer. Is it installed on the system?     'sudo apt install pulseaudio-equalizer'"
+
+msgctxt "#32200"
+msgid "Save"
+msgstr "Save"
+
+msgctxt "#32201"
+msgid "Sweep"
+msgstr "Sweep"
+
+msgctxt "#32202"
+msgid "Sinus"
+msgstr "Sinus"
+
+msgctxt "#32203"
+msgid "Import"
+msgstr "Import"
+
+msgctxt "#32204"
+msgid "Edit"
+msgstr "Edit"
+
+msgctxt "#32400"
+msgid "Profile"
+msgstr "Profile"
+
+msgctxt "#32401"
+msgid "Room Correction"
+msgstr "Room Correction"
+
+msgctxt "#32402"
+msgid "Channel"
+msgstr "Channel"
+
+msgctxt "#32403"
+msgid "Repeat"
+msgstr "Repeat"
+
+msgctxt "#32404"
+msgid "Play"
+msgstr "Play"
+
+msgctxt "#32410"
+msgid "Play Sweep"
+msgstr "Play Sweep"
+
+msgctxt "#32411"
+msgid "None"
+msgstr "None"
+
+msgctxt "#32412"
+msgid "All"
+msgstr "All"
+
+msgctxt "#32413"
+msgid "None"
+msgstr "None"
+
+msgctxt "#32414"
+msgid "Select Profile for Sweep"
+msgstr "Select Profile for Sweep"
+
+msgctxt "#32415"
+msgid "Select Room Correction for Sweep"
+msgstr "Select Room Correction for Sweep"
+
+msgctxt "#32416"
+msgid "Select Channel for Sweep"
+msgstr "Select Channel for Sweep"
+
+msgctxt "#32417"
+msgid "Number of Repeats of the Sweep"
+msgstr "Number of Repeats of the Sweep"
+
+msgctxt "#32500"
+msgid "front-left"
+msgstr "front-left"
+
+msgctxt "#32501"
+msgid "front-right"
+msgstr "front-right"
+
+msgctxt "#32502"
+msgid "rear-left"
+msgstr "rear-left"
+
+msgctxt "#32503"
+msgid "rear-right"
+msgstr "rear-right"
+
+msgctxt "#32504"
+msgid "front-centre"
+msgstr "front-centre"
+
+msgctxt "#32505"
+msgid "lfe"
+msgstr "lfe"
+
+msgctxt "#32506"
+msgid "side-left"
+msgstr "side-left"
+
+msgctxt "#32507"
+msgid "side-right"
+msgstr "side-right"
+
+msgctxt "#32508"
+msgid "aux"
+msgstr "aux"
+
+msgctxt "#32600"
+msgid "Load Measurements"
+msgstr "Load Measurements"
+
+msgctxt "#32601"
+msgid "Select Microphone"
+msgstr "Select Microphone"
+
+msgctxt "#32602"
+msgid "Save Correction"
+msgstr "Save Correction"
+
+msgctxt "#32603"
+msgid "Microphone"
+msgstr "Microphone"
+
+msgctxt "#32604"
+msgid "Smooth"
+msgstr "Smooth"
+
+msgctxt "#32605"
+msgid "Volume"
+msgstr "Volume"
+
+msgctxt "#32606"
+msgid "Amplify"
+msgstr "Amplify"
+
+msgctxt "#32607"
+msgid "Load Measurement"
+msgstr "Load Measurement"
+
+msgctxt "#32608"
+msgid "Save Room Correction as"
+msgstr "Save Room Correction as"
+
+msgctxt "#32609"
+msgid "%s already exists, overwrite?"
+msgstr "%s already exists, overwrite?"
+
+msgctxt "#32610"
+msgid "No Microphone"
+msgstr "No Microphone"
+
+msgctxt "#32611"
+msgid "Import Microphone"
+msgstr "Import Microphone"
+
+msgctxt "#32612"
+msgid "unknown"
+msgstr "unknown"
+
+msgctxt "#32620"
+msgid "Cancel Equalizer"
+msgstr "Cancel Equalizer"
+
+msgctxt "#32621"
+msgid "Edit Frequencies"
+msgstr "Edit Frequencies"
+
+msgctxt "#32622"
+msgid "Undo Changes - Exit"
+msgstr "Undo Changes - Exit"
+
+msgctxt "#32623"
+msgid "Save Changes - Exit"
+msgstr "Save Changes - Exit"
