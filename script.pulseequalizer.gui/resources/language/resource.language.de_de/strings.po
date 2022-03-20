@@ -1,0 +1,314 @@
+﻿
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_de\n"
+
+msgctxt "#32000"
+msgid "Equalizer"
+msgstr "Klangregelung"
+
+msgctxt "#32001"
+msgid "No playback active"
+msgstr "Keine Wiedergabe aktiv"
+
+msgctxt "#32003"
+msgid "The equalizer is currently disabled for this device. Enable it?"
+msgstr "Die Klangregelung für dieses Ausgabegerät ist momentan ausgeschaltet. Soll sie eingeschaltet werden?"
+
+msgctxt "#32004"
+msgid "Error"
+msgstr "Fehler"
+
+msgctxt "#32005"
+msgid "There is a problem to start the Equalizer. Please check Kodi log."
+msgstr "Es gibt ein Problem die Klangregelung zu starten. Bitte überprüfen Sie die Kodi Logdatei."
+
+msgctxt "#32006"
+msgid "Select Profile"
+msgstr "Profil auswählen"
+
+msgctxt "#32007"
+msgid "Equalizer"
+msgstr "Klangregelung"
+
+msgctxt "#32008"
+msgid "Select Output Device"
+msgstr "Wiedergabegerät wählen"
+
+msgctxt "#32009"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#32010"
+msgid "Set Latency Offset"
+msgstr "Verzögerung einstellen"
+
+msgctxt "#32011"
+msgid "Disable Equalizer"
+msgstr "Klangregelung ausschalten"
+
+msgctxt "#32012"
+msgid "Select Profile for %s"
+msgstr "Profil für %s auswählen"
+
+msgctxt "#32013"
+msgid "Select Audio Output Device"
+msgstr "Ausgabegerät auswählen"
+
+msgctxt "#32014"
+msgid "Add new Profile"
+msgstr "Neues Profil hinzufügen"
+
+msgctxt "#32015"
+msgid "Delete Profile"
+msgstr "Profil löschen"
+
+msgctxt "#32016"
+msgid "Insert predefined Profiles"
+msgstr "Standardprofile einfügen"
+
+msgctxt "#32017"
+msgid "Enter Name for new Profile"
+msgstr "Name für neues Profil eingeben"
+
+msgctxt "#32018"
+msgid "Delete Profile %s"
+msgstr "Profil %s löschen"
+
+msgctxt "#32019"
+msgid "Are you sure that you want to delete profile %s ?"
+msgstr "Sind Sie sicher, dass Sie das Profil %s löschen möchten?"
+
+msgctxt "#32020"
+msgid "Delete Profile"
+msgstr "Profil löschen"
+
+msgctxt "#32021"
+msgid "No profiles defined!"
+msgstr "Keine Profile definiert!"
+
+msgctxt "#32022"
+msgid "Latency Offset"
+msgstr "Zusätzliche Verzögerung"
+
+msgctxt "#32024"
+msgid "Kodi is playing"
+msgstr "Kodi spielt"
+
+msgctxt "#32025"
+msgid "The equalizer has not been loaded automatically. Please check log."
+msgstr "Die Klangregelung wurde nicht automatisch geladen. Bitte überprüfen Sie die Logdatei."
+
+msgctxt "#32027"
+msgid "Room Correction"
+msgstr "Raumkorrektur"
+
+msgctxt "#32028"
+msgid "Delete Correction"
+msgstr "Korrektur löschen"
+
+msgctxt "#32029"
+msgid "Edit Correction"
+msgstr "Korrektur bearbeiten"
+
+msgctxt "#32030"
+msgid "Delete Room Correction %s"
+msgstr "Raumkorrektur %s löschen"
+
+msgctxt "#32031"
+msgid "Are you sure that you want to delete the room correction %s ?"
+msgstr "Sind Sie sicher, dass Sie die Raumkorrektur %s löschen möchten?"
+
+msgctxt "#32032"
+msgid "Play Sweep"
+msgstr "Sweep abspielen"
+
+msgctxt "#32033"
+msgid "Import Correction"
+msgstr "Korrektur importieren"
+
+msgctxt "#32034"
+msgid "Profiles"
+msgstr "Profile"
+
+msgctxt "#32035"
+msgid "Cannot load pulseaudio equalizer. Is it installed on the system?     'sudo apt install pulseaudio-equalizer'"
+msgstr "Kann pulseaudio equalizer nicht laden. Ist dieser installiert?     'sudo apt install pulseaudio-equalizer'"
+
+msgctxt "#32200"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#32201"
+msgid "Sweep"
+msgstr "Sweep"
+
+msgctxt "#32202"
+msgid "Sinus"
+msgstr "Sinus"
+
+msgctxt "#32203"
+msgid "Import"
+msgstr "Importieren"
+
+msgctxt "#32204"
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgctxt "#32400"
+msgid "Profile"
+msgstr "Profil"
+
+msgctxt "#32401"
+msgid "Room Correction"
+msgstr "Raumkorrektur"
+
+msgctxt "#32402"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#32403"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+msgctxt "#32404"
+msgid "Play"
+msgstr "Abspielen"
+
+msgctxt "#32410"
+msgid "Play Sweep"
+msgstr "Sweep abspielen"
+
+msgctxt "#32411"
+msgid "None"
+msgstr "Keine"
+
+msgctxt "#32412"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32413"
+msgid "None"
+msgstr "Keins"
+
+msgctxt "#32414"
+msgid "Select Profile for Sweep"
+msgstr "Profil für Sweep auswählen"
+
+msgctxt "#32415"
+msgid "Select Room Correction for Sweep"
+msgstr "Raumkorrektur für Sweep auswählen"
+
+msgctxt "#32416"
+msgid "Select Channel for Sweep"
+msgstr "Kanal für Sweep auswählen"
+
+msgctxt "#32417"
+msgid "Number of Repeats of the Sweep"
+msgstr "Wiederholungen für Sweep auswählen"
+
+msgctxt "#32500"
+msgid "front-left"
+msgstr "Vorne Links"
+
+msgctxt "#32501"
+msgid "front-right"
+msgstr "Vorne Rechts"
+
+msgctxt "#32502"
+msgid "rear-left"
+msgstr "Hinten Links"
+
+msgctxt "#32503"
+msgid "rear-right"
+msgstr "Hinten Rechts"
+
+msgctxt "#32504"
+msgid "front-centre"
+msgstr "Vorne Mitte"
+
+msgctxt "#32505"
+msgid "lfe"
+msgstr "Bass"
+
+msgctxt "#32506"
+msgid "side-left"
+msgstr "linke Seite"
+
+msgctxt "#32507"
+msgid "side-right"
+msgstr "rechte Seite"
+
+msgctxt "#32508"
+msgid "aux"
+msgstr "Aux"
+
+msgctxt "#32600"
+msgid "Load Measurements"
+msgstr "Lade Messungen"
+
+msgctxt "#32601"
+msgid "Select Microphone"
+msgstr "Wähle Mikrofon"
+
+msgctxt "#32602"
+msgid "Save Correction"
+msgstr "Speichere Korrektur"
+
+msgctxt "#32603"
+msgid "Microphone"
+msgstr "Mikrofon"
+
+msgctxt "#32604"
+msgid "Smooth"
+msgstr "Glätten"
+
+msgctxt "#32605"
+msgid "Volume"
+msgstr "Lautstärke"
+
+msgctxt "#32606"
+msgid "Amplify"
+msgstr "Verstärkung"
+
+msgctxt "#32607"
+msgid "Load Measurement"
+msgstr "Messung laden"
+
+msgctxt "#32608"
+msgid "Save Room Correction as"
+msgstr "Speichere Raumkorrektur als"
+
+msgctxt "#32609"
+msgid "%s already exists, overwrite?"
+msgstr "%s existiert bereits, überschreiben?"
+
+msgctxt "#32610"
+msgid "No Microphone"
+msgstr "Kein Mikrofon"
+
+msgctxt "#32611"
+msgid "Import Microphone"
+msgstr "Mikrofon importieren"
+
+msgctxt "#32612"
+msgid "unknown"
+msgstr "unbekannt"
+
+msgctxt "#32620"
+msgid "Cancel Equalizer"
+msgstr "Klangfilter abbrechen"
+
+msgctxt "#32621"
+msgid "Edit Frequencies"
+msgstr "Frequenzen bearbeiten"
+
+msgctxt "#32622"
+msgid "Undo Changes - Exit"
+msgstr "Annullieren - Verlassen"
+
+msgctxt "#32623"
+msgid "Save Changes - Exit"
+msgstr "Speichern - Verlassen"

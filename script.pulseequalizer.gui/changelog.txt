@@ -1,0 +1,20 @@
+2.1.2 Show message if equalizer is not installed
+	- some clean up
+2.1.1 Fix Kodi 19.3 on raspberry with PulsEqualizer conflictiong Pulseaudio client. 
+
+2.1.0 Added Room Correction functionality
+	- Equalizer supports more filter frequencies
+2.0.0 New design to support autoloading and event handlig of pulse modules
+	- automatic module-pulse-equalizer loading
+	- automatic module-equalizer-sink loading
+	- disable / enable equalizer
+	- add menu to select Kodi audio output
+	- menu to configure port-latency 
+	- automatic per device profile loding
+	- automatic switch to new connected devices (e.g headset)
+	- automatic equalizer bypass if nothing is played
+1.0.4 Bugfix
+1.0.3 Find connected Bluetooth devices for output 
+1.0.2 Handle Filter Chains
+1.0.1 Bugfix
+1.0.0 Initial Release
