@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol always="true">1000</defaultcontrol>
+	<animation effect="fade" time="200">WindowOpen</animation>
+	<animation effect="fade" time="200">WindowClose</animation>
+	<coordinates>
+		<left>50</left>
+		<top>50</top>
+		<origin x="50" y="50">Window.IsActive(Home)</origin>
+
+	</coordinates>
+	<controls>
+		<control type="image">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<texture colordiffuse="{col_screen}">colors/black.png</texture>
+		</control>
+		<control type="button" id="100">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<texturefocus />
+			<texturenofocus />
+			<onclick>Action(close)</onclick>
+		</control>
+
+		<!-- left button pannel -->
+		<control type="group" id="1000">
+			<left>0</left>
+			<top>560</top>
+			<width>500</width>
+			<height>420</height>
+			<defaultcontrol>1100</defaultcontrol>
+
+
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>500</width>
+				<height>420</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+			<control type="grouplist" id="1100">
+				<description>grouplist for context buttons</description>
+				<left>50</left>
+				<top>50</top>
+				<width>400</width>
+
+				<itemgap>5</itemgap>
+				<height max="320">auto</height>
+				<usecontrolcoords>false</usecontrolcoords>
+					<control type="button" id="1001">
+						<left>0</left>
+						<top>0</top>
+						<width>400</width>
+						<height>65</height>
+						<label>Load Measurements</label>
+						<textcolor>{col_text}</textcolor>
+						<focusedcolor>{col_textfocus}</focusedcolor>
+						<font>{font}</font>
+						<texturefocus colordiffuse="{col_texturefocus}">colors/white.png</texturefocus>
+						<texturenofocus colordiffuse="{col_texturenofocus}">colors/white.png</texturenofocus>
+						<align>center</align>
+						<onleft>3000</onleft>
+						<onright>2000</onright>
+
+					</control>
+					<control type="button" id="1002">
+						<left>0</left>
+						<top>0</top>
+						<width>400</width>
+						<height>65</height>
+						<label>Select Microphone</label>
+						<textcolor>{col_text}</textcolor>
+						<focusedcolor>{col_textfocus}</focusedcolor>
+						<font>{font}</font>
+						<texturefocus colordiffuse="{col_texturefocus}">colors/white.png</texturefocus>
+						<texturenofocus colordiffuse="{col_texturenofocus}">colors/white.png</texturenofocus>
+						<align>center</align>
+						<ondown>1003</ondown>
+						<onleft>3000</onleft>
+						<onright>2000</onright>
+					</control>
+					<control type="button" id="1003">
+						<left>50</left>
+						<top>300</top>
+						<width>400</width>
+						<height>65</height>
+						<label>Save Room Correction</label>
+						<textcolor>{col_text}</textcolor>
+						<focusedcolor>{col_textfocus}</focusedcolor>
+						<font>{font}</font>
+						<texturefocus colordiffuse="{col_texturefocus}">colors/white.png</texturefocus>
+						<texturenofocus colordiffuse="{col_texturenofocus}">colors/white.png</texturenofocus>
+						<align>center</align>
+						<onup>1002</onup>
+						<onleft>3000</onleft>
+						<onright>2000</onright>
+					</control>
+
+			</control>
+
+		</control>
+
+		<!-- center select pannel -->
+
+		<control type="group" id="2000">
+			<left>520</left>
+			<top>560</top>
+			<width>640</width>
+			<height>300</height>
+			<defaultcontrol>2100</defaultcontrol>
+
+
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>640</width>
+				<height>300</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>320</top>
+				<width>640</width>
+				<height>100</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+						<!-- mic labels -->
+			<control type="label" id="2010">
+				<left>20</left>
+				<top>350</top>
+				<width>250</width>
+				<height>60</height>
+				<font>{font_small}</font>
+				<aligny>center</aligny>
+				<textcolor>{col_text}</textcolor>
+				<selectedcolor>green</selectedcolor>
+				<align>right</align>
+				<label>Microphone</label>
+			</control>
+			<control type="label" id="2020">
+				<left>320</left>
+				<top>350</top>
+				<width>300</width>
+				<height>60</height>
+				<font>{font_small}</font>
+				<aligny>center</aligny>
+				<textcolor>{col_text}</textcolor>
+				<selectedcolor>green</selectedcolor>
+				<align>left</align>
+				<label>None</label>
+			</control>
+
+			<!-- center selection list -->
+			<control type="list" id="2100">
+				<left>20</left>
+				<top>20</top>
+				<width>600</width>
+				<height>260</height>
+				<visible>true</visible>
+				<onleft>1000</onleft>
+				<onright>5000</onright>
+
+				<viewtype label="3D list">list</viewtype>
+				<orientation>vertical</orientation>
+				<pagecontrol>25</pagecontrol>
+				<autoscroll>false</autoscroll>
+				<scrolltime tween="sine" easing="out">200</scrolltime>
+				<itemlayout width="600" height="40">
+					<control type="label">
+						<left>0</left>
+						<top>3</top>
+						<width>250</width>
+						<height>30</height>
+						<font>{font_small}</font>
+						<aligny>center</aligny>
+						<textcolor>{col_text}</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>right</align>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<control type="label">
+						<left>300</left>
+						<top>3</top>
+						<width>300</width>
+						<height>30</height>
+						<font>{font_small}</font>
+						<textcolor>{col_text}</textcolor>
+						<aligny>center</aligny>
+						<align>left</align>
+						<label>$INFO[ListItem.Label2]</label>
+					</control>
+
+				</itemlayout>
+				<focusedlayout width="720" height="40" >
+					<control type="image">
+							<width>600</width>
+							<height>40</height>
+							<left>0</left>
+							<top>0</top>
+							<visible>Control.HasFocus(2100)</visible>
+							<texture colordiffuse="{col_texturefocus}">colors/white.png</texture>
+					</control>
+					<control type="label">
+						<left>0</left>
+						<top>3</top>
+						<width>250</width>
+						<height>30</height>
+						<font>{font_small}</font>
+						<aligny>center</aligny>
+						<textcolor>{col_select}</textcolor>
+						<align>right</align>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<control type="label">
+						<left>300</left>
+						<top>3</top>
+						<width>300</width>
+						<height>30</height>
+						<font>{font_small}</font>
+						<aligny>center</aligny>
+						<textcolor>{col_select}</textcolor>
+						<align>left</align>
+						<label>$INFO[ListItem.Label2]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+		
+
+		
+		<!-- right button pannel -->
+		<control type="group" id="3000">
+			<left>1300</left>
+			<top>560</top>
+			<width>500</width>
+			<height>300</height>
+			<defaultcontrol>3100</defaultcontrol>
+
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>500</width>
+				<height>300</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+			<!-- right button list -->
+			<control type="grouplist" id="3100">
+				<description>grouplist for context buttons</description>
+				<left>50</left>
+				<top>20</top>
+				<width>400</width>
+				<itemgap>5</itemgap>
+				<height max="300">auto</height>
+				<usecontrolcoords>false</usecontrolcoords>
+					<control type="radiobutton" id="3101">
+						<type>radiobutton</type>
+						<left>0</left>
+						<top>0</top>
+						<width>400</width>
+						<height>65</height>
+						<visible>true</visible>
+						<texturefocus colordiffuse="{col_texturefocus}">colors/white.png</texturefocus>
+						<texturenofocus colordiffuse="{col_texturenofocus}">colors/white.png</texturenofocus>
+						<textureradioonfocus colordiffuse="{col_textfocus}">radio/button-on.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="{col_text}">radio/button-on.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="{col_textfocus}">radio/button-off.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="{col_text}">radio/button-off.png</textureradiooffnofocus>
+						<label>Smooth</label>
+						<font>{font}</font>
+						<textcolor>{col_text}</textcolor>
+						<focusedcolor>{col_textfocus}</focusedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textoffsetx>4</textoffsetx>
+						<textoffsety>5</textoffsety>
+						<onleft>5000</onleft>
+						<onright>1000</onright>
+						<ondown>3102</ondown>
+
+					</control>
+					<control type="radiobutton" id="3102">
+						<type>radiobutton</type>
+						<left>0</left>
+						<top>0</top>
+						<width>400</width>
+						<height>65</height>
+						<visible>true</visible>
+						<texturefocus colordiffuse="{col_texturefocus}">colors/white.png</texturefocus>
+						<texturenofocus colordiffuse="{col_texturenofocus}">colors/white.png</texturenofocus>
+						<textureradioonfocus colordiffuse="{col_textfocus}">radio/button-on.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="{col_text}">radio/button-on.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="{col_textfocus}">radio/button-off.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="{col_text}">radio/button-off.png</textureradiooffnofocus>
+						<label>Fix Volume</label>
+						<font>{font}</font>
+						<textcolor>{col_text}</textcolor>
+						<focusedcolor>{col_textfocus}</focusedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textoffsetx>4</textoffsetx>
+						<textoffsety>5</textoffsety>
+						<onleft>5000</onleft>
+						<onright>1000</onright>
+						<onup>3101</onup>
+						<ondown>3103</ondown>
+					</control>
+					<control type="radiobutton" id="3103">
+						<type>radiobutton</type>
+						<left>0</left>
+						<top>0</top>
+						<width>400</width>
+						<height>65</height>
+						<visible>true</visible>
+						<texturefocus colordiffuse="{col_texturefocus}">colors/white.png</texturefocus>
+						<texturenofocus colordiffuse="{col_texturenofocus}">colors/white.png</texturenofocus>
+						<textureradioonfocus colordiffuse="{col_textfocus}">radio/button-on.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="{col_text}">radio/button-on.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="{col_textfocus}">radio/button-off.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="{col_text}">radio/button-off.png</textureradiooffnofocus>
+						<label>Allow Amplify</label>
+						<font>{font}</font>
+						<textcolor>{col_text}</textcolor>
+						<focusedcolor>{col_textfocus}</focusedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textoffsetx>4</textoffsetx>
+						<textoffsety>5</textoffsety>
+						<onleft>5000</onleft>
+						<onright>1000</onright>
+						<onup>3102</onup>
+					</control>
+
+
+			</control>
+		</control>
+
+
+		<!-- info label -->
+		<control type="group" id="4000">
+			<left>1300</left>
+			<top>880</top>
+			<width>500</width>
+			<height>100</height>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>500</width>
+				<height>100</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+			<control type="label" id="4010">
+				<left>20</left>
+				<top>20</top>
+				<width>300</width>
+				<height>60</height>
+				<font>{font_small}</font>
+				<aligny>center</aligny>
+				<textcolor>{col_text}</textcolor>
+				<selectedcolor>green</selectedcolor>
+				<align>left</align>
+				<label>Equalizer</label>
+			</control>
+		</control>
+		
+		<!-- slider pannel -->
+		<control type="group" id=5000>
+			<description>ControlGroup</description>
+			<left>1180</left>
+			<top>560</top>
+			<width>100</width>
+			<height>420</height>
+			<defaultcontrol>5001</defaultcontrol>
+
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>100</width>
+				<height>420</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+			<control type="slider" id="5001">
+				<description>Slider</description>
+				<left>30</left>
+				<top>10</top>
+				<width>40</width>
+				<height>400</height>
+				<orientation>vertical</orientation>
+				<texturesliderbar colordiffuse="{col_texturesliderbar}">slider/bk-vertical.png</texturesliderbar>
+				<textureslidernib colordiffuse="{col_textureslidernib}">slider/nofocus.png</textureslidernib>
+				<textureslidernibfocus colordiffuse="{col_textureslidernibfocus}">slider/focus.png</textureslidernibfocus>
+				<onleft>2000</onleft>
+				<onright>3000</onright>
+				
+			</control>
+		</control>
+
+		<!-- graph pannel -->
+		<control type="group">
+			<left>0</left>
+			<top>0</top>
+			<width>1800</width>
+			<height>540</height>
+
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>1800</width>
+				<height>540</height>
+				<texture colordiffuse="{col_background}">colors/white.png</texture>
+			</control>
+			<!-- graph grid pannel -->
+			<control type="image" id="1501">
+				<left>100</left>
+				<top>10</top>
+				<width>1690</width>
+				<height>480</height>
+				<texture colordiffuse="{col_text}">graph/grid_40.png</texture>
+			</control>
+			<!-- graph picture pannel -->
+			<control type="image" id="1500">
+				<left>100</left>
+				<top>10</top>
+				<width>1690</width>
+				<height>480</height>
+				<texture colordiffuse="{col_graph}"></texture>
+			</control>
+			
+			<!-- graph- labels y -->
+			<control type="label">
+				<left>0</left>
+				<top>38</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>0dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>86</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-4dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>134</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-8dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>182</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-12dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>230</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-16dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>278</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-20dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>326</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-24dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>374</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-28dB</label>
+			</control>
+			<control type="label">
+				<left>0</left>
+				<top>422</top>
+				<width>90</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>-32dB</label>
+			</control>
+					<!-- grpah grid labels x -->
+			<control type="label">
+				<left>110</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>50Hz</label>
+			</control>
+
+			<control type="label">
+				<left>291</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>100Hz</label>
+			</control>
+			<control type="label">
+				<left>713</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>500Hz</label>
+			</control>
+			<control type="label">
+				<left>895</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>1kHz</label>
+			</control>
+			<control type="label">
+				<left>1317</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>5kHz</label>
+			</control>
+			<control type="label">
+				<left>1499</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>10kHz</label>
+			</control>
+
+			<control type="label">
+				<left>1680</left>
+				<top>490</top>
+				<width>100</width>
+				<height>40</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>20kHz</label>
+			</control>
+			
+		</control>		
+
+	</controls>
+</window>

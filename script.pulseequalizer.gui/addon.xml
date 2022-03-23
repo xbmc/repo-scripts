@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.pulseequalizer.gui" name="PulseEqualizer GUI" version="2.1.2" provider-name="wastis">
+
+	<extension point="xbmc.python.script" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.service" library="service.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>linux</platform>
+		<summary lang="en">Graphical frontend for the Pulseaudio Equalizer.</summary>
+		<summary lang="de_DE">Graphische Oberfläche für den Pulseaudio Klangfilter.</summary>
+		<description lang="en">Provides functionality for audio adjustments, digital room correction and profile management. Requires pulseaudio-equalizer to be installed on the system.
+
+https://github.com/wastis/PulseEqualizerGui
+</description>
+		<description lang="de_DE">Enthält Funktionalität zur Klangeinstellung, der digitalen Raumkorrektur sowie ein Profilmanagement. Benötigt den pulseaudio-equalizer auf dem System.  
+
+https://github.com/wastis/PulseEqualizerGui
+</description>
+		<license>GPL-3.0-or-later</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=360514</forum>
+		<source>https://github.com/wastis/PulseEqualizerGui</source>
+		<disclaimer lang="en_GB">Documentation: https://github.com/wastis/PulseEqualizerGui/wiki</disclaimer>
+		<disclaimer lang="de_DE">Dokumentation: https://github.com/wastis/PulseEqualizerGui/wiki</disclaimer>
+		<news>
+			
+v2.1.2  (2022-03-22)
+- Improved error message, in case pulse-equalizer is not installed
+- Source code clean-ups
+- Change of file structure to match standad
+- Add System Volume into main menu
+- Dynamic sliders for slow remotes in Volume and Equalizer GUI
+- Possibilty to configure slider step-size in keymap
+
+v2.1.1  (2021-12-16)
+- fix some problems with Kodi 19.3 on raspberry (audio device conflicts, bt-device on/off issues)
+
+v2.1.0 (2021-12-06)
+- added Room Correction functionality
+- more flexibility in filter frequency selection
+- some user interface changes
+
+v2.0.0 (2021-11-13)
+- added latency-offset slider, save latency based on equalizer in playback chain
+- possibility to switch equalizer on/off
+- change output selection method
+- added system volume control
+- automatic module loading, simplified pulseaudio configuration
+- save settings per selected device (volume, profile and latency)
+- automatic bluetooth device switching
+- skip filter if no playback (no latency on GUI sounds)
+- architectual change
+	</news>
+	<assets>
+		<icon>resources/media/icon.png</icon>
+		<fanart>resources/media/fanart.jpg</fanart>
+		<screenshot>resources/media/scr0.png</screenshot>
+		<screenshot>resources/media/scr1.png</screenshot>
+	</assets>
+	</extension>
+</addon>
