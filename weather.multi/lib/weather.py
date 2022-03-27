@@ -3,6 +3,7 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 
+CURL = 'https://www.yahoo.com/'
 YURL = 'https://www.yahoo.com/news/weather/'
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
@@ -93,7 +94,7 @@ class MAIN():
             try:
                 retry = 0
                 while (retry < 6) and (not self.MONITOR.abortRequested()):
-                    response = requests.get(YURL, headers=HEADERS, timeout=10)
+                    response = requests.get(CURL, headers=HEADERS, timeout=10)
                     if response.status_code == 200:
                         break
                     else:
@@ -101,6 +102,7 @@ class MAIN():
                         retry += 1
                         log('getting cookie failed')
                 ycookie = response.cookies['B']
+                response = requests.get(YURL, headers=HEADERS, cookies=dict(B=ycookie), timeout=10)
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
                 ycrumb = codecs.decode(match.group(1), 'unicode-escape')
                 ystamp = time.time()
@@ -115,7 +117,7 @@ class MAIN():
                 return '', ''
         return ycookie, ycrumb
 
-    def get_data(self, url, cookie='', crumb=''):
+    def get_data(self, url, cookie=''):
         try:
             if cookie:
                 response = requests.get(url, headers=HEADERS, cookies=dict(B=cookie), timeout=10)
@@ -135,7 +137,7 @@ class MAIN():
         retry = 0
         url = FCURL.format(crumb=ycrumb, woeid=locid)
         while (retry < 6) and (not self.MONITOR.abortRequested()):
-            data = self.get_data(url, ycookie, ycrumb)
+            data = self.get_data(url, ycookie)
             if data:
                 break
             else:
