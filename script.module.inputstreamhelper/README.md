@@ -29,7 +29,7 @@ import xbmcplugin
 
 PROTOCOL = 'mpd'
 DRM = 'com.widevine.alpha'
-STREAM_URL = 'https://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel-dash-widevine.ism/.mpd'
+STREAM_URL = 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel-dash-widevine.ism/.mpd'
 MIME_TYPE = 'application/dash+xml'
 LICENSE_URL = 'https://widevine-proxy.appspot.com/proxy'
 KODI_VERSION_MAJOR = int(xbmc.getInfoLabel('System.BuildVersion').split('.')[0])
@@ -91,6 +91,12 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.5.9 (2022-03-22)
+- Update Croatian translation (@dsardelic, @muzena)
+- Replace deprecated LooseVersion (@mediaminister, @MarkusVolk)
+- Fix http_get decode error (@archtur)
+- Option to install Widevine from specified source (@horstle)
+
 ### v0.5.8 (2021-09-09)
 - Simplify Widevine CDM installation on ARM hardware (@horstle, @mediaminister)
 - Update Chrome OS ARM hardware id's (@mediaminister)

@@ -8,7 +8,7 @@ import json
 
 from .. import config
 from ..kodiutils import browsesingle, localize, log, ok_dialog, open_file, progress_dialog, yesno_dialog
-from ..utils import diskspace, http_download, http_get, sizeof_fmt, store, system_os, update_temp_path
+from ..utils import diskspace, http_download, http_get, parse_version, sizeof_fmt, store, system_os, update_temp_path
 from .arm_chromeos import ChromeOSImage
 
 
@@ -38,15 +38,14 @@ def select_best_chromeos_image(devices):
             continue
 
         # Select the newest version
-        from distutils.version import LooseVersion  # pylint: disable=import-error,no-name-in-module,useless-suppression
-        if LooseVersion(device['version']) > LooseVersion(best['version']):
+        if parse_version(device['version']) > parse_version(best['version']):
             log(0, '{device[hwid]} ({device[version]}) is newer than {best[hwid]} ({best[version]})',
                 device=device,
                 best=best)
             best = device
 
         # Select the smallest image (disk space requirement)
-        elif LooseVersion(device['version']) == LooseVersion(best['version']):
+        elif parse_version(device['version']) == parse_version(best['version']):
             if int(device['filesize']) + int(device['zipfilesize']) < int(best['filesize']) + int(best['zipfilesize']):
                 log(0, '{device[hwid]} ({device_size}) is smaller than {best[hwid]} ({best_size})',
                     device=device,
@@ -93,29 +92,58 @@ def install_widevine_arm(backup_path):
 
         log(2, 'Downloading ChromeOS image for Widevine: {hwid} ({version})'.format(**arm_device))
         url = arm_device['url']
-        downloaded = http_download(url, message=localize(30022), checksum=arm_device['sha1'], hash_alg='sha1',
-                                   dl_size=int(arm_device['zipfilesize']))  # Downloading the recovery image
-        if downloaded:
-            progress = progress_dialog()
-            progress.create(heading=localize(30043), message=localize(30044))  # Extracting Widevine CDM
 
-            extracted = ChromeOSImage(store('download_path')).extract_file(
-                filename=config.WIDEVINE_CDM_FILENAME[system_os()],
-                extract_path=os.path.join(backup_path, arm_device['version']),
-                progress=progress)
-
-            if not extracted:
-                log(4, 'Extracting widevine from the zip failed!')
-                progress.close()
-                return False
-
+        extracted = dl_extract_widevine(url, backup_path, arm_device)
+        if extracted:
             recovery_file = os.path.join(backup_path, arm_device['version'], os.path.basename(config.CHROMEOS_RECOVERY_URL))
-            config_file = os.path.join(backup_path, arm_device['version'], 'config.json')
             with open_file(recovery_file, 'w') as reco_file:  # pylint: disable=unspecified-encoding
                 reco_file.write(json.dumps(devices, indent=4))
+
+            return extracted
+
+    return False
+
+
+def dl_extract_widevine(url, backup_path, arm_device=None):
+    """Download the ChromeOS image and extract Widevine from it"""
+    if arm_device:
+        downloaded = http_download(url, message=localize(30022), checksum=arm_device['sha1'], hash_alg='sha1',
+                                   dl_size=int(arm_device['zipfilesize']))  # Downloading the recovery image
+        image_version = arm_device['version']
+    else:
+        downloaded = http_download(url, message=localize(30022))
+        image_version = os.path.basename(url).split('_')[1]
+
+    if downloaded:
+        image_path = store('download_path')
+
+        progress = extract_widevine(backup_path, image_path, image_version)
+        if not progress:
+            return False
+
+        if arm_device:
+            config_file = os.path.join(backup_path, image_version, 'config.json')
             with open_file(config_file, 'w') as conf_file:
                 conf_file.write(json.dumps(arm_device))
 
-            return (progress, arm_device['version'])
+        return (progress, image_version)
 
     return False
+
+
+def extract_widevine(backup_path, image_path, image_version):
+    """Extract Widevine from the given ChromeOS image"""
+    progress = progress_dialog()
+    progress.create(heading=localize(30043), message=localize(30044))  # Extracting Widevine CDM
+
+    extracted = ChromeOSImage(image_path).extract_file(
+        filename=config.WIDEVINE_CDM_FILENAME[system_os()],
+        extract_path=os.path.join(backup_path, image_version),
+        progress=progress)
+
+    if not extracted:
+        log(4, 'Extracting widevine from the zip failed!')
+        progress.close()
+        return False
+
+    return progress
