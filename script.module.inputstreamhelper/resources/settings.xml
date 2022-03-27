@@ -7,8 +7,6 @@
         <setting id="version" default="" visible="false"/>
         <setting label="30901" help="30902" type="action" action="RunScript(script.module.inputstreamhelper, info)"/>
         <setting type="sep"/>
-        <setting label="30903" help="30904" type="bool" id="disabled" default="false"/>
-        <setting label="30904" type="text" enable="false"/> <!-- disabled_warning -->
         <setting label="30905" help="30906" type="slider" id="update_frequency" default="31" range="1,3,90" option="int" enable="eq(-2,false)" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
         <setting label="30907" help="30908" type="folder" id="temp_path" source="" option="writeable" default="special://masterprofile/addon_data/script.module.inputstreamhelper" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
         <setting label="30913" help="30914" type="slider" id="backups" default="4" range="0,1,20" option="int" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
@@ -16,5 +14,11 @@
         <setting label="30909" help="30910" type="action" action="RunScript(script.module.inputstreamhelper, widevine_install)" enable="String.StartsWith(System.BuildVersion,18) + System.HasAddon(inputstream.adaptive) | System.AddonIsEnabled(inputstream.adaptive)" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
         <setting label="30911" help="30912" type="action" action="RunScript(script.module.inputstreamhelper, widevine_remove)" enable="String.StartsWith(System.BuildVersion,18) + System.HasAddon(inputstream.adaptive) | System.AddonIsEnabled(inputstream.adaptive)" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
         <setting label="30915" help="30916" type="action" action="RunScript(script.module.inputstreamhelper, rollback)" enable="String.StartsWith(System.BuildVersion,18) + System.HasAddon(inputstream.adaptive) | System.AddonIsEnabled(inputstream.adaptive)" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
+    </category>
+    <category label="30950">
+        <setting label="30903" help="30904" type="bool" id="disabled" default="false"/>
+        <setting label="30904" type="text" enable="false"/> <!-- disabled_warning -->
+        <setting label="30953" help="30954" type="text" id="image_url" option="urlencoded" default="https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_14092.77.0_veyron-fievel_recovery_stable-channel_fievel-mp.bin.zip"/>
+        <setting label="30955" help="30956" type="action" action="RunScript(script.module.inputstreamhelper, widevine_install_from)" enable="String.StartsWith(System.BuildVersion,18) + System.HasAddon(inputstream.adaptive) | System.AddonIsEnabled(inputstream.adaptive)" visible="![System.Platform.Android | String.StartsWith(System.BuildVersion, 17)]"/>
     </category>
 </settings>
