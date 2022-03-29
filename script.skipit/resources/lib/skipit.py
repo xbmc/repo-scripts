@@ -15,6 +15,7 @@ timeout = 5.0
 going_forward = False
 going_backward = False
 
+
 class SkipItWindow(xbmcgui.WindowXMLDialog):
 
     # until now we have a blank window, the onInit function will parse the xml file
@@ -67,9 +68,32 @@ class SkipItWindow(xbmcgui.WindowXMLDialog):
           reset()
           skip_backward()
 
+
+def do_skip(skip_secs):
+    # We need to track the actual skip, in case we run past the end
+    player = xbmc.Player()
+    totalTime = player.getTotalTime()
+    preSeekTime = player.getTime()
+
+    seek_to = preSeekTime + skip_secs;
+    if seek_to < 1:
+        seek_to = 1;
+    if seek_to > (totalTime - 1):
+        seek_to = totalTime - 1;
+    player.seekTime(seek_to)
+    # Now work out how far we went (might have run to the end or start
+    postSeekTime = player.getTime()
+    return round(postSeekTime - preSeekTime)
+
+
 def skip_forward():
+
+    if not(xbmc.Player().isPlaying()):
+        close_me()
+        return
     # 
     # Skip forward the required amount
+    global addonname
     global skip_secs
     global going_forward
     going_forward = True
@@ -77,24 +101,36 @@ def skip_forward():
     reset_timer()
     halve()
     set_label(skip_secs, True)
-    command = build_command(skip_secs - slippage, True)
-    xbmc.executebuiltin(command)
+    requested_skip = skip_secs - slippage
+    actual_skip = do_skip(requested_skip)
+    if actual_skip != requested_skip:
+        skip_secs = abs(actual_skip)
+        xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32135))
     return 
 
+
 def skip_backward():
+    if not(xbmc.Player().isPlaying()):
+        close_me()
+        return
     # 
     # Skip forward the required amount
+    global addonname
     global skip_secs
     global going_backward
     going_backward = True
-    
+
     reset_timer()
     halve()
     set_label(skip_secs, False)
     # Add a couple of extra seconds as the video is still playing forwards
-    command = build_command(skip_secs + slippage, False)
-    xbmc.executebuiltin(command)
+    requested_skip = -(skip_secs + slippage)
+    actual_skip = do_skip(requested_skip);
+    if actual_skip != requested_skip:
+        skip_secs = abs(actual_skip)
+        xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32130))
     return 
+
 
 def set_label(seconds, forward):
     global ui
@@ -109,6 +145,7 @@ def set_label(seconds, forward):
     label.setLabel(text)
     return 
 
+
 def reset():
     global skip_secs
     global going_forward
@@ -118,6 +155,7 @@ def reset():
     going_backward = False
     skip_secs = ADDON.getSettingInt('skipsecs')
     return
+
         
 def halve():
     global going_forward
@@ -129,6 +167,7 @@ def halve():
     if skip_secs < min_skip_secs:
         skip_secs = min_skip_secs
     return
+
         
 def build_command(seconds, forward):
     #
@@ -141,12 +180,16 @@ def build_command(seconds, forward):
     xbmc.log('SkipIt seeking command - {}'.format(command), xbmc.LOGDEBUG)
     return command
 
+
 def close_me():
     global my_timer
     global ui
     if my_timer:
         my_timer.cancel()
+    label = ui.getControl(1)
+    label.setLabel('')
     ui.close()
+
 
 def reset_timer():
     global my_timer
@@ -159,8 +202,8 @@ def reset_timer():
     
 my_timer = threading.Timer(timeout, close_me)
 
-addon       = xbmcaddon.Addon()
-addonname   = addon.getAddonInfo('name')
+addon = xbmcaddon.Addon()
+addonname = addon.getAddonInfo('name')
 
 ui = SkipItWindow('script-skipitwindow.xml', CWD, 'default', '1080i')
 # now open your window. the window will be shown until you close your addon

@@ -32,6 +32,14 @@ msgctxt "#32120"
 msgid "Skip It settings"
 msgstr ""
 
+msgctxt "#32130"
+msgid "Skipped to Start of Video"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Skipped to End of Video"
+msgstr ""
+
 msgctxt "#32200"
 msgid "General"
 msgstr ""
