@@ -4,6 +4,9 @@ import xbmcplugin
 import xbmcaddon
 from common import settings
 
+addon = xbmcaddon.Addon()
+addon_path = addon.getAddonInfo("path")
+addon_icon = addon_path + '/resources/icon.png'
 
 def sleepTimer():
 
@@ -21,7 +24,7 @@ def sleepTimer():
     xbmc.log(mgenlog, xbmc.LOGINFO)
 
     dialog = xbmcgui.Dialog()
-    dialog.notification('Autostop Sleep Timer', mgenlog, xbmcgui.NOTIFICATION_INFO, 3000)
+    dialog.notification('Autostop Sleep Timer', mgenlog, addon_icon, 3000)
 
 
 sleepTimer()
