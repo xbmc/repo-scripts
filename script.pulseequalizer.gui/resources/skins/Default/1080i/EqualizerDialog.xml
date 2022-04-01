@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol always="true">2000</defaultcontrol>
+	<animation effect="fade" time="200">WindowOpen</animation>
+	<animation effect="fade" time="200">WindowClose</animation>
+	<coordinates>
+		<left>{xpos}</left>
+		<top>190</top>
+		<origin x="{xpos}" y="190">Window.IsActive(Home)</origin>
+
+	</coordinates>
+	<controls>
+		<control type="image">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<texture colordiffuse="{col_screen}">colors/black.png</texture>
+		</control>
+		<control type="button" id="1800">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<texturefocus />
+			<texturenofocus />
+		</control>
+
+
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>80</width>
+			<height>700</height>
+			<texture colordiffuse="{col_background}">colors/white.png</texture>
+		</control>
+		<control type="image">
+			<left>100</left>
+			<top>0</top>
+			<width>{slider_width}</width>
+			<height>700</height>
+			<texture colordiffuse="{col_background}">colors/white.png</texture>
+		</control>
+		<control type="image">
+			<left>0</left>
+			<top>720</top>
+			<width>{total_width}</width>
+			<height>100</height>
+			<texture colordiffuse="{col_background}">colors/white.png</texture>
+		</control>
+		<!-- pannel -->
+		<control type="label" id="3500">
+			<left>40</left>
+			<top>720</top>
+			<width>{total_width}</width>
+			<height>100</height>
+			<font>{font}</font>
+			<textcolor>{col_text}</textcolor>
+			<shadowcolor>{col_shadow}</shadowcolor>
+			<label></label>
+			<align>left</align>
+			<aligny>center</aligny>
+		</control>
+		<control type="label" id="3501">
+			<left>0</left>
+			<top>720</top>
+			<width>{total_width}</width>
+			<height>100</height>
+			<font>{font}</font>
+			<textcolor>{col_text}</textcolor>
+			<shadowcolor>{col_shadow}</shadowcolor>
+			<label></label>
+			<align>center</align>
+			<aligny>center</aligny>
+		</control>
+		<control type="label" id="3502">
+			<left>0</left>
+			<top>720</top>
+			<width>{total_width}</width>
+			<height>100</height>
+			<font>{font}</font>
+			<textcolor>{col_text}</textcolor>
+			<shadowcolor>{col_shadow}</shadowcolor>
+			<label></label>
+			<align>right</align>
+			<aligny>center</aligny>
+		</control>
+
+		<control type="group" id="999">
+			<description>ControlGroup</description>
+			<top>0</top>
+			<width>80</width>
+
+			<control type="slider" id="1999">
+				<description>Slider</description>
+				<left>20</left>
+				<top>20</top>
+				<width>40</width>
+				<height>605</height>
+				<orientation>vertical</orientation>
+				<texturesliderbar colordiffuse="{col_texturesliderbar}">slider/bk-vertical.png</texturesliderbar>
+				<textureslidernib colordiffuse="{col_textureslidernib}">slider/nofocus.png</textureslidernib>
+				<textureslidernibfocus colordiffuse="{col_textureslidernibfocus}">slider/focus.png</textureslidernibfocus>
+					
+				<onright>2000</onright>
+				<onleft></onleft>
+			</control>
+			<control type="label" id="2999">
+				<left>0</left>
+				<top>635</top>
+				<width>80</width>
+				<height>25</height>
+				<font>{font_small}</font>
+				<textcolor>{col_text}</textcolor>
+				<shadowcolor>{col_shadow}</shadowcolor>
+				<label>pre</label>
+				<align>center</align>
+				<aligny>top</aligny>
+			</control>
+		</control>
+		<control type="grouplist" id="100">
+			<description>Grouplist</description>
+			<left>100</left>
+			<top>0</top>
+			<width>{slider_width}</width>
+			<height>700</height>
+			<pagecontrol>121</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<orientation>horizontal</orientation>
+			<usecontrolcoords>false</usecontrolcoords>
+			<!-- optional item gap if only few frequencies -->
+			<optitemgap>20</optitemgap>
+			
+			<!-- element begin -->
+			<control type="group" id="1000">
+				<top>0</top>
+				<left>0</left>
+				<width>80</width>
+				<control type="slider" id="{id}">
+					<description>Slider</description>
+					<left>20</left>
+					<top>20</top>
+					<width>40</width>
+					<height>605</height>
+					<orientation>vertical</orientation>
+					<texturesliderbar colordiffuse="{col_texturesliderbar}">slider/bk-vertical.png</texturesliderbar>
+					<textureslidernib colordiffuse="{col_textureslidernib}">slider/nofocus.png</textureslidernib>
+					<textureslidernibfocus colordiffuse="{col_textureslidernibfocus}">slider/focus.png</textureslidernibfocus>
+					<onright>{onright}</onright>
+					<onleft>{onleft}</onleft>
+				</control>
+				<control type="label" id="{lid}">
+					<left>0</left>
+					<top>635</top>
+					<width>80</width>
+					<height>25</height>
+					<font>{font_small}</font>
+					<textcolor>{col_text}</textcolor>
+					<shadowcolor>{col_shadow}</shadowcolor>
+					<label>#</label>
+					<align>center</align>
+					<aligny>top</aligny>
+				</control>
+			</control>
+			<!-- element end -->
+		</control>
+	</controls>
+</window>

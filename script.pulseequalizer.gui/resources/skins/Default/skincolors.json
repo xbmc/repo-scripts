@@ -1,0 +1,68 @@
+{
+	"default":{
+		"col_screen":"B0FFFFFF",
+		"col_background":"FF1A2123",
+
+		"col_text":"FFF0F0F0",
+		"col_select":"FF11D7A1",
+		"col_textfocus":"FF1A2123",
+		"col_shadow":"FF1A2123",
+
+		"col_texturefocus":"FFF0F0F0",
+		"col_texturenofocus":"FF1A2123",
+
+		"col_texturesliderbar":"FFF0F0F0",
+		"col_textureslidernib":"FFF0F0F0",
+		"col_textureslidernibfocus":"FF60C0FF",
+		"col_graph":"FF60C0FF",
+		
+		"font":"font14",
+		"font_small":"font13"
+		},
+	
+	"estuary":{
+		"col_screen":"B0FFFFFF",
+		"col_background":"dialog_tint",
+
+		"col_text":"white",
+		"col_select":"selected",
+		"col_textfocus":"white",
+		"col_shadow":"text_shadow",
+
+		"col_texturefocus":"button_focus",
+		"col_texturenofocus":"dialog_tint",
+
+		"col_texturesliderbar":"white",
+		"col_textureslidernib":"white",
+		"col_textureslidernibfocus":"button_focus",
+		"col_graph":"button_focus",
+		
+		"font":"font14",
+		"font_small":"font13"
+		},
+	"amber":{
+		"col_screen":"B0FFFFFF",
+		"col_background":"ShadowDark",
+
+		"col_text":"White2",
+		"col_select":"Selected",
+		"col_textfocus":"ShadowDark",
+		"col_shadow":"ShadowDark",
+
+		"col_texturefocus":"Highlight",
+		"col_texturenofocus":"ShadowDark",
+
+		"col_texturesliderbar":"White2",
+		"col_textureslidernib":"White2",
+		"col_textureslidernibfocus":"Highlight",
+		"col_graph":"Highlight",
+		
+		"font":"font14",
+		"font_small":"font13"
+		}
+		
+}
+
+
+
+
