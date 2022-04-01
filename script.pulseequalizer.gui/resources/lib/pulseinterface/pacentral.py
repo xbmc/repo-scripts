@@ -33,10 +33,20 @@
 # paModuleManager: reconfigures the playback stream dependend on current configuration and connected devices and playback status
 
 from .pulsecontrol import PulseControl
+
 from .pamodule import paModuleManager
+
 from .padb import paDatabase
+
 from .eqcontrol import EqControl
-from helper import SocketCom, Config, handle, opthandle, log
+
+from helper import SocketCom
+from helper import Config
+
+from basic import handle
+from basic import opthandle
+from basic import log
+
 from sound import SoundGen
 
 class MessageCentral():
@@ -60,6 +70,9 @@ class MessageCentral():
 		self.pc.start()
 		self.padb.on_pa_connect()
 		self.pamm.on_pa_connect()
+
+		SocketCom("kodi").call_func("up","service",[])
+		SocketCom("kodi").call_func("get","player",[])
 
 	#
 	# Dispatch messages
@@ -86,7 +99,6 @@ class MessageCentral():
 
 			for method in methods:
 				ret = method(*arg)
-				log("pact: return '%s'" % repr(ret))
 				SocketCom.respond(conn, ret)
 
 		except Exception as e: handle(e)
@@ -136,17 +148,17 @@ class MessageCentral():
 				self.config.set("latency", int(latency_info["latency"]),self.padb.output_sink.name)
 
 	# just save the current selected profile to config file
-	def on_eq_profile_load(self,index, profile):
+	def on_eq_profile_load(self,_index, profile):
 		if self.padb.output_sink:
 			self.config.set("eq_profile", profile,self.padb.output_sink.name)
 
 	# just save the current selected room correction to config file
-	def on_room_correction_set(self,index, name):
+	def on_room_correction_set(self,_index, name):
 		if self.padb.output_sink:
 			self.config.set("eq_correction", name,self.padb.output_sink.name)
 
 	# just remove the current selected room correction from config file
-	def on_room_correction_unset(self, index):
+	def on_room_correction_unset(self, _index):
 		if self.padb.output_sink:
 			self.config.set("eq_correction", None,self.padb.output_sink.name)
 
@@ -154,4 +166,3 @@ class MessageCentral():
 	def on_pa_module_log(self):
 		for key,val in vars(self.pamm).items():
 			log(key+"="+ str(val))
-

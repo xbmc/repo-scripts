@@ -13,19 +13,22 @@
 #  dbus wraper for Python 2.x
 #
 
-from helper import log, logerror
+import interface as IF
+import sys
+import os
+
+from basic import log
+from basic import logerror
+
+from pulseerror import PulseDBusError
+
 try:
 	import dbus
 except ImportError:
 	logerror("please install python-dbus")
 
-import interface as IF
-import sys
-import os
-from pulseerror import PulseDBusError
-
 class PulseDBus:
-	def __init__( self, *args, **kwargs ):
+	def __init__( self, *_args, **_kwargs ):
 		destination = 'org.PulseAudio1'
 		object_path = '/org/pulseaudio/server_lookup1'
 		interface_name = 'org.PulseAudio.ServerLookup1'
@@ -91,4 +94,3 @@ class PulseDBus:
 	@staticmethod
 	def handle_exception(e,python,func):
 		raise(PulseDBusError(e._dbus_error_name,e.message,python,func))
-

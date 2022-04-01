@@ -10,13 +10,13 @@
 #	or (at your option) any later version.
 #
 #
+
 import sys
 import time
 import subprocess
 import os
 
-from helper import log
-
+from basic import log
 
 class PulseService:
 	def start(self):

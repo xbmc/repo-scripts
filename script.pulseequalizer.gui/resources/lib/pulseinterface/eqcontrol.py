@@ -21,6 +21,7 @@ import sys
 
 from padbus import DBusInterface as IF
 from padbus import PulseDBus
+
 from sound import SpecManager
 
 class FilterParam(): pass
@@ -161,4 +162,3 @@ class EqControl():
 
 	def on_eq_defaults_set(self):
 		self.spec.set_defaults()
-

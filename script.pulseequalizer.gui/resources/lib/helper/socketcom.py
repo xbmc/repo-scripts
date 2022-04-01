@@ -15,17 +15,21 @@
 #
 
 import socket
-import pickle
 import os
 import sys
 
+from .fjson import json
+
 from threading import Thread
-from .log import log
-from .handle import handle, infhandle, opthandle
+
+from basic import log
+from basic import handle
+from basic import infhandle
+from basic import opthandle
 
 class SocketCom():
-	exit_str = b"slgeife3"
-	life_str = b"gklwers6"
+	exit_str = "slgeife3"
+	life_str = "gklwers6"
 	rec_class = None
 
 	def __init__(self, name, gid = 0):
@@ -49,10 +53,10 @@ class SocketCom():
 		conn, _ = sock.accept()
 
 		result = conn.recv(8192)
-		return result, conn
+		return result.decode("utf-8"), conn
 
 	def listen_loop(self, callback):
-		log("start socket loop")
+		log("socket: start socket loop")
 		sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 		sock.settimeout(None)
 
@@ -65,17 +69,19 @@ class SocketCom():
 			try:
 				result, conn = self.get_from_socket(sock)
 
+				#log("socket: {} receive '{}'".format(self.sock_name, result))
+
 				if result == self.exit_str:
 					conn.close()
 					break
 				if result == self.life_str:
-					conn.send(self.life_str)
+					self._send(conn,self.life_str)
 					continue
 
 				callback(conn, result)
 
 			except Exception as e: infhandle(e)
-		log("stop socket loop")
+		log("socket: stop socket loop")
 
 		try: os.remove(self.sock_name)
 		except OSError:	pass
@@ -97,27 +103,33 @@ class SocketCom():
 			s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 			s.settimeout(1.0)
 			s.connect(self.sock_name)
-			s.send(msg)
-			data = s.recv(2048)
-			s.close()
+			self._send(s, msg)
+			data = s.recv(8192)
+			self._close(s)
 			if data == b'': return None
-			return data
-		except Exception: return None
+			return data.decode("utf-8")
+		except Exception as e:
+			opthandle(e)
+			return None
 
 	def send(self, func, target, args=[]):
-		self.send_to_server(pickle.dumps([func,target,args], protocol=2))
+		self.send_to_server(json.dumps([func,target,args]))
 
 	def call_func(self, func, target, args=[]):
-		result = self.send_to_server(pickle.dumps([func,target,args], protocol=2))
+		send_string = json.dumps([func,target,args])
+		log("socket: call_func send '{}'".format(send_string))
+		result = self.send_to_server(send_string)
+		log("socket: call_func receive '{}'".format(result))
+
 		if result is not None:
-			try:	return pickle.loads(result)
+			try: return json.loads(result)
 			except Exception as e: infhandle(e)
 		return None
 
 	def dispatch(self, conn, msg):
 		try:
 			try:
-				func,target,args = pickle.loads(msg)
+				func,target,args = json.loads(msg)
 				cmd = "on_%s_%s" % (target,func)
 			except Exception:
 				#log(repr(msg))
@@ -137,17 +149,40 @@ class SocketCom():
 
 		except Exception as e: handle(e)
 
-	@staticmethod
-	def respond(conn, result):
-		if conn is not None:
-			if sys.version_info[0] > 2:
-				try:
-					conn.send(pickle.dumps(result, protocol=2))
-				except BrokenPipeError: pass   #requestor did not wait for response => broken pipe
-				except Exception as e: opthandle(e)
-			else:
-				try:
-					conn.send(pickle.dumps(result, protocol=2))
-				except IOError: pass   #requestor did not wait for response, broken pipe
-				except Exception as e: opthandle(e)
+	@classmethod
+	def respond(cls, conn, result):
+		if conn  is None:
+			#log("socket: no connection, nothing to respond")
+			return
 
+		ret = json.dumps(result)
+
+		if result is not None:
+			log("socket: respond {}".format(ret))
+
+		try:
+			cls._send(conn, ret)
+			cls._close(conn)
+		except Exception as e: opthandle(e)
+
+	@staticmethod
+	def _send(sock,text):
+		if sys.version_info[0] > 2:
+			try:
+				sock.send(bytes(text,"utf-8"))
+			except BrokenPipeError: pass
+		else:
+			try:
+				sock.send(text)
+			except socket.error: pass
+
+	@staticmethod
+	def _close(sock):
+		if sys.version_info[0] > 2:
+			try:
+				sock.close()
+			except BrokenPipeError: pass
+		else:
+			try:
+				sock.close()
+			except socket.error: pass

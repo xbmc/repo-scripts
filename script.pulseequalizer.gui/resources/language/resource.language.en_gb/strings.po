@@ -320,3 +320,124 @@ msgstr "Undo Changes - Exit"
 msgctxt "#32623"
 msgid "Save Changes - Exit"
 msgstr "Save Changes - Exit"
+
+msgctxt "#37000"
+msgid "PulseEqualizer"
+msgstr "PulseEqualizer"
+
+msgctxt "#37001"
+msgid "Profile"
+msgstr "Profile"
+
+msgctxt "#37002"
+msgid "Equalizer"
+msgstr "Equalizer"
+
+msgctxt "#37003"
+msgid "Device"
+msgstr "Device"
+
+msgctxt "#37004"
+msgid "Correction"
+msgstr "Correction"
+
+msgctxt "#37005"
+msgid "Latency"
+msgstr "Latency"
+
+msgctxt "#37006"
+msgid "Codec Info"
+msgstr "Codec Info"
+
+msgctxt "#37007"
+msgid "Play Pause"
+msgstr "Play Pause"
+
+msgctxt "#37008"
+msgid "Full Screen"
+msgstr "Full Screen"
+
+msgctxt "#37009"
+msgid "Context Menu"
+msgstr "Context Menu"
+
+msgctxt "#37010"
+msgid "Power Down"
+msgstr "Power Down"
+
+msgctxt "#37011"
+msgid "Reboot"
+msgstr "Reboot"
+
+msgctxt "#37012"
+msgid "Suspend"
+msgstr "Suspend"
+
+msgctxt "#37013"
+msgid "Quit"
+msgstr "Quit"
+
+msgctxt "#37014"
+msgid "Stop Timer"
+msgstr "Stop Timer"
+
+msgctxt "#37015"
+msgid "Screenshot"
+msgstr "Screenshot"
+
+msgctxt "#37016"
+msgid "Sys Volume Up"
+msgstr "Sys Volume Up"
+
+msgctxt "#37017"
+msgid "Sys Volume Down"
+msgstr "Sys Volume Down"
+
+msgctxt "#37018"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#37019"
+msgid "Show Subtitles"
+msgstr "Show Subtitles"
+
+msgctxt "#37020"
+msgid "Aspect Ratio"
+msgstr "Aspect Ratio"
+
+msgctxt "#37021"
+msgid "Next Audio Track"
+msgstr "Next Audio Track"
+
+msgctxt "#37022"
+msgid "Next"
+msgstr "Next"
+
+msgctxt "#37023"
+msgid "Previous"
+msgstr "Previous"
+
+msgctxt "#37500"
+msgid "Keymap"
+msgstr "Keymap"
+
+msgctxt "#37501"
+msgid "Save"
+msgstr "Save"
+
+msgctxt "#37502"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "#37503"
+msgid "Unknown Key"
+msgstr "Unknown Key"
+
+msgctxt "#37504"
+msgid "Input device not supported"
+msgstr "Input device not supported"
+
+msgctxt "#37505"
+msgid "Already Used"
+msgstr "Already Used"
+

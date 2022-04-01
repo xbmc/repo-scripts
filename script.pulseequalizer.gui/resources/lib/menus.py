@@ -12,13 +12,23 @@
 import xbmc
 import xbmcgui
 
-import json
-
 from xbmcaddon import Addon
-from helper import SocketCom, handle, log, logerror
-from time import sleep
-from volumegui import VolumeGui
 
+from helper import json
+from helper import SocketCom
+
+from basic import handle
+from basic import logerror
+
+from time import sleep
+
+from volumegui import VolumeGui
+from eqdialog import eqDialog
+from sweepgengui import SweepGenGui
+from rundialog import runDialog
+from importgui import ImportGui
+from latencygui import LatencyGui
+from keymapgui import KeyMapGui
 from contextmenu import contextMenu
 
 addon = Addon()
@@ -28,30 +38,35 @@ def tr(lid):
 class Menu():
 	skin = "Default"
 
-	def __init__(self, cwd, step):
+	def __init__(self, cwd):
 		self.cwd = cwd
-		self.step = step
+		self.step = 1
 
 	#
 	#	Menu selectors
 	#
 
-	def sel_main_menu(self, menu=False):
+	def sel_main_menu(self):
 		contextMenu(funcs = [(tr(32006),self.sel_profile),
 							(tr(32007),self.sel_equalizer),
 							(tr(32008),self.sel_device),
 							(tr(32027),self.sel_correction),
 							(tr(32010),self.sel_latency),
-							(tr(32036),self.sel_sysvol)])
+							(tr(32036),self.sel_sysvol),
+							(tr(37500),self.sel_keymap)])
 
-	def sel_menu(self, command, smenu = False):
-		func = 'sel_' + command
-		try: method = getattr(self, func)
-		except Exception:
-			method = None
-			logerror("unkonwn command: '%s'" %(func))
+	def sel_menu(self, command = "None", step = 1):
+		self.step = step
 
-		if method: method(smenu)
+		if command == "None": self.sel_main_menu()
+		else:
+			func = 'sel_' + command
+			try: method = getattr(self, func)
+			except Exception:
+				method = None
+				logerror("unkonwn command: '%s'" %(func))
+
+			if method: method()
 
 	#
 	#  helper
@@ -78,7 +93,7 @@ class Menu():
 					count = count - 1
 					self.current = SocketCom("server").call_func("get","eq_current")
 					eqid, desc, is_playing, eq_profile, is_dyn = ( self.current )
-					if eqid != None: return True , eqid, desc, is_playing, eq_profile, is_dyn
+					if eqid  is not None: return True , eqid, desc, is_playing, eq_profile, is_dyn
 					sleep(0.1)
 			# Dialog problem switch on
 			xbmcgui.Dialog().ok(tr(32004),tr(32005))
@@ -94,8 +109,8 @@ class Menu():
 	#	select profile
 	#
 
-	def sel_profile(self, smenu=False):
-		func_available, eqid, _, is_playing, eq_profile, is_dyn =  self.check_func_available()
+	def sel_profile(self):
+		func_available, eqid, _, is_playing, _, is_dyn =  self.check_func_available()
 		if not func_available: return
 
 		self.eqid = eqid
@@ -121,8 +136,8 @@ class Menu():
 	#	room correction
 	#
 
-	def sel_correction(self, smenu=False):
-		func_available, eqid, desc, is_playing, eq_profile, is_dyn =  self.check_func_available()
+	def sel_correction(self):
+		func_available, eqid, _, _, _, _ =  self.check_func_available()
 		if not func_available: return
 
 		corrections = SocketCom("server").call_func("get","room_corrections")
@@ -146,12 +161,11 @@ class Menu():
 	#	configure equalizer
 	#
 
-	def sel_equalizer(self, smenu=False):
+	def sel_equalizer(self):
 		try:
-			func_available, eqid, desc, is_playing, eq_profile, is_dyn =  self.check_func_available()
+			func_available, eqid, desc, is_playing, _, _ =  self.check_func_available()
 			if not func_available: return
 
-			from eqdialog import eqDialog
 			eqDialog(eqid = eqid, desc=desc, is_playing=is_playing, step = self.step)
 		except Exception as e: handle(e)
 
@@ -160,7 +174,7 @@ class Menu():
 	#
 
 	@staticmethod
-	def sel_device(smenu=False):
+	def sel_device():
 		response = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Settings.GetSettings", "params":{ "filter": {"section":"system", "category":"audio"}}, "id":1}')
 		r_dict = json.loads( response )
 
@@ -197,8 +211,8 @@ class Menu():
 	#	manage profiles
 	#
 
-	def sel_manager(self, smenu=False):
-		func_available, eqid, desc, is_playing, eq_profile, is_dyn =  self.check_func_available()
+	def sel_manager(self):
+		func_available, eqid, _, _, _, _ =  self.check_func_available()
 		if not func_available: return
 
 		self.eqid = eqid
@@ -222,7 +236,7 @@ class Menu():
 
 		# sure to delete
 		del_profile = profiles[nr]
-		if xbmcgui.Dialog().yesno(tr(32018) % del_profile,tr(32019) % del_profile) == True:
+		if xbmcgui.Dialog().yesno(tr(32018) % del_profile,tr(32019) % del_profile)  is True:
 				SocketCom("server").call_func("remove","eq_profile" , [del_profile])
 
 	@staticmethod
@@ -234,11 +248,11 @@ class Menu():
 	#	manage corrections
 	#
 
-	def sel_cor_manager(self, smenu=False):
+	def sel_cor_manager(self):
 		contextMenu(funcs = [(tr(32033),self.sel_import_correction),(tr(32028), self.sel_delete_correction),(tr(32032),self.sel_playsweep)])
 
 	@staticmethod
-	def sel_delete_correction(smenu=False):
+	def sel_delete_correction():
 		corrections = SocketCom("server").call_func("get","room_corrections")
 
 		if not corrections: return
@@ -248,52 +262,44 @@ class Menu():
 
 		del_correction = corrections[nr]
 		# sure to delete
-		if xbmcgui.Dialog().yesno(tr(32030) % del_correction,tr(32031) % del_correction) == True:
+		if xbmcgui.Dialog().yesno(tr(32030) % del_correction,tr(32031) % del_correction)  is True:
 			SocketCom("server").call_func("remove","room_correction" , [del_correction])
-	
+
 	@staticmethod
-	def sel_playsweep(smenu=False):
-		from sweepgengui import SweepGenGui
-		from rundialog import runDialog
+	def sel_playsweep():
 		runDialog(SweepGenGui,"SweepGen")
-		
-	@staticmethod
-	def sel_import_correction(smenu=False):
-		from importgui import ImportGui
-		from rundialog import runDialog
-		runDialog(ImportGui,"ImportDialog")
+
+	def sel_import_correction(self):
+		runDialog(ImportGui,"ImportDialog", step = self.step)
 
 	#
 	#	show latency slider
 	#
 
 	@staticmethod
-	def sel_latency(smenu=False):
-		from latencygui import LatencyGui
-		from rundialog import runDialog
+	def sel_latency():
 		runDialog(LatencyGui,"OsdLatencyOffset")
 
 	#
 	#	show volume progress bar
 	#
 
-	def sel_sysvol(self, smenu=False):
-		self.volgui = VolumeGui("OsdVolume.xml" , self.cwd , self.skin, updown = "none", step=self.step)
-		self.volgui.doModal()
+	def sel_volup(self):
+		volgui = VolumeGui("OsdVolume.xml" ,self.cwd, self.skin, updown = 'up', step=self.step)
+		volgui.doModal()
+
+	def sel_voldown(self):
+		volgui = VolumeGui("OsdVolume.xml" , self.cwd, self.skin, updown = 'down', step=self.step)
+		volgui.doModal()
+
+	def sel_sysvol(self):
+		volgui = VolumeGui("OsdVolume.xml" , self.cwd , self.skin, updown = "none", step=self.step)
+		volgui.doModal()
 
 	#
-	#	debug funcion
+	#	keymap
 	#
 
 	@staticmethod
-	def introspect():
-		response = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Textures.GetTextures", "id":1}')
-		d = json.loads(response)
-		with open("/run/shm/all.txt","w") as f: f.write(json.dumps(d,indent = 4))
-
-		response = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{ "setting":"lookandfeel.skin"}, "id":1}')
-		d = json.loads(response)
-		with open("/run/shm/result.txt","w") as f: f.write(json.dumps(d,indent = 4))
-
-		log("*** %s"% re.findall(".*?skin\.(.*?)\"",xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{ "setting":"lookandfeel.skin"}, "id":1}'))[0])
-
+	def sel_keymap():
+		runDialog(KeyMapGui,"KeyMapDialog")

@@ -11,12 +11,22 @@
 
 import xbmcaddon
 import xbmcgui
-
 import shutil
 import os
 
-from helper import SocketCom, opthandle, log, path_addon, path_tmp, path_filter
-from sound import SpecManager, Spectrum, SpecGroup,createGraph2
+from helper import SocketCom
+from helper import DynStep
+
+from basic import opthandle
+from basic import path_tmp
+from basic import path_filter
+from basic import path_masterprofile
+
+from sound import SpecManager
+from sound import Spectrum
+from sound import SpecGroup
+from sound import createGraph2
+
 from contextmenu import contextMenu
 
 from threading import Thread
@@ -28,24 +38,24 @@ def tr(lid):
 	return addon.getLocalizedString(lid)
 
 class ImportGui(  xbmcgui.WindowXMLDialog  ):
-	name = None
-	eqid = None
+	def __init__( self, *_args, **kwargs ):
+		self.name = None
+		self.eqid = None
 
-	channel_name=[]
-	load_channel_name = []
-	file_name=[]
+		self.channel_name=[]
+		self.load_channel_name = []
+		self.file_name=[]
 
-	mic_file=None
-	mic_name=tr(32413)
+		self.mic_file=None
+		self.mic_name=tr(32413)
 
-	spec_group = None
-	shift = {}
-	img = 0
+		self.spec_group = None
+		self.shift = {}
+		self.img = 0
 
-	block_image = False
-	image_change = False
+		self.block_image = False
+		self.image_change = False
 
-	def __init__( self, *args, **kwargs ):
 		self.sock = SocketCom("server")
 
 		result = self.sock.call_func("get","eq_channel")
@@ -73,6 +83,10 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 
 		self.channel_name = channel_name
 		self.file_name = file_name
+		try: step = kwargs["step"]
+		except Exception: step = float(1)
+
+		self.dyn_step = DynStep(step,5,1,3)
 
 	#
 	#	Spectrum Creation
@@ -155,6 +169,8 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 		file_name = xbmcgui.Dialog().browse(1, heading, "",defaultt=defaultt)
 		if file_name == defaultt: return
 
+		self.shift = {}
+
 		self.spec_group = SpecGroup().load(file_name).update_relvol()
 		self.ch_config = [None] * self.spec_group.count
 
@@ -172,6 +188,8 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 		ctl.reset()
 		ctl.addItems([xbmcgui.ListItem(self.load_channel_name[i],self.file_name[i]) for i in range(len(self.load_channel_name))])
 
+		self.getControl(5001).setInt(50,0,0,100)
+
 		self.update_image()
 
 	def save_room_correction(self):
@@ -179,9 +197,9 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 		name = xbmcgui.Dialog().input(tr(32608),self.spec_group.name)
 
 		if name is None: return
-		fn = path_addon + path_filter + name + "/"
+		fn = path_masterprofile + path_filter + name + "/"
 		if os.path.exists(fn):
-			if xbmcgui.Dialog().yesno(tr(32608),tr(32609) %(name)) == False: return
+			if xbmcgui.Dialog().yesno(tr(32608),tr(32609) %(name))  is False: return
 			shutil.rmtree(fn)
 		os.makedirs(fn)
 
@@ -241,7 +259,7 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 		try: shift = self.shift[pos]
 		except Exception: shift = 0
 
-		self.getControl(5001).setInt(50 + shift,0,1,100)
+		self.getControl(5001).setInt(50 + shift,0,0,100)
 
 	def update_shift(self):
 		pos = self.getControl(2100).getSelectedPosition()
@@ -266,7 +284,7 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 		self.getControl(3101).setSelected(True)
 		self.getControl(3102).setSelected(True)
 		self.getControl(3103).setSelected(False)
-		self.getControl(5001).setInt(50,0,1,100)
+		self.getControl(5001).setInt(50,0,0,100)
 
 	def end_gui(self):
 		fn = path_tmp + "%s.png" % self.img
@@ -285,6 +303,7 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 	def onAction( self, action ):
 		aid = action.getId()
 		fid = self.getFocusId()
+		buc = action.getButtonCode() & 255
 		#log("%s %s"%(aid,fid))
 
 		#OK pressed
@@ -295,13 +314,26 @@ class ImportGui(  xbmcgui.WindowXMLDialog  ):
 		if aid in [92,10]:
 			self.end_gui()
 
+		self.dyn_step.dynamic_step(buc)
+
 		if aid in [1,2,3,4,100]:
 			if fid == 2100:
 				self.update_slider()
 				self.update_image()
 
-		if aid in [3,4,106]:
-			if fid == 5001:
+		if fid == 5001:
+			if aid in [3,104]:
+				ctl = self.getControl(5001)
+				pos = ctl.getInt()+self.dyn_step.dynstep
+				if pos > 100: pos = 100
+				ctl.setInt(pos,0,0,100)
+				self.update_shift()
+
+			if aid in [4,105]:
+				ctl = self.getControl(5001)
+				pos = ctl.getInt()-self.dyn_step.dynstep
+				if pos < 0: pos = 0
+				ctl.setInt(pos,0,0,100)
 				self.update_shift()
 
 		#log("%s"%action.getId())

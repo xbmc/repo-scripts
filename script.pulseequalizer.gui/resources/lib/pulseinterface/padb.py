@@ -20,10 +20,15 @@
 #         it does not exsits anymore by the time the create message arrives here.
 #
 
-from .collector import MessageCollector
 import os
 
-from helper import SocketCom, handle, opthandle, log
+from .collector import MessageCollector
+
+from helper import SocketCom
+
+from basic import handle
+from basic import opthandle
+from basic import log
 
 class paDatabase():
 	target_list = ["card","module","sink","client","sink_input"]
@@ -125,7 +130,7 @@ class paDatabase():
 				self.info["kodi_client"] = cid
 
 		#no kodi client with pid matching myself, I might be the develop script, so pick first kodi
-		if self.info['kodi_client'] == None:
+		if self.info['kodi_client']  is None:
 			for cid,client in self.clients.items():
 				if client.name in ['Kodi','KodiSink']:
 					self.info['kodi_client'] = cid
@@ -353,7 +358,7 @@ class paDatabase():
 		msg_list = self.update_attr() + msg_list
 		msg_list = self.update_output_sink() + msg_list
 
-		log(str(self))
+		#log("padb: {}".format(str(self)))
 
 		return msg_list
 
@@ -362,7 +367,7 @@ class paDatabase():
 	#
 
 	def get_latency(self):
-		if self.output_sink == None: return {"latency":0,"port":"", "card":""}
+		if self.output_sink  is None: return {"latency":0,"port":"", "card":""}
 
 		port_name = self.output_sink.port_active.name
 		card = self.cards[self.output_sink.card]
@@ -399,4 +404,3 @@ class paDatabase():
 		sink = self.chaineq_sink if self.chaineq_sink is not None else self.autoeq_sink
 		if sink is None: return None
 		return [sink.index, sink.proplist["device.description"] , sink.channel_list]
-

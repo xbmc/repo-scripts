@@ -4,7 +4,8 @@
 # License MIT
 #
 
-from __future__ import print_function, unicode_literals
+from __future__ import print_function
+from __future__ import unicode_literals
 
 import itertools as it, operator as op, functools as ft
 import re

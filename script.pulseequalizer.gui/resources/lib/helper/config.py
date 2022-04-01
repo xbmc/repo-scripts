@@ -14,17 +14,20 @@
 #
 
 import os
-import json
 
-from .handle import handle, log
-from .path import path_addon, path_settings
+from .fjson import json
+
+from basic import handle
+from basic import log
+from basic import path_profile
+from basic import path_settings
 
 class Config():
-	config = {}
-	name = ""
-
 	def __init__(self):
-		path_name = path_addon + path_settings
+		self.config = {}
+		self.name = ""
+
+		path_name = path_profile + path_settings
 		if not os.path.exists(path_name): os. makedirs(path_name)
 		self.file_name = os.path.join(path_name,"config.json")
 
@@ -57,9 +60,9 @@ class Config():
 		if name is None: name = self.name
 		if name is None: return default
 
-		if self.config == {}: self.load_config()
-		if self.config == {}:
-			self.config[name] = {}
+		if not self.config: self.load_config()
+		if not self.config:
+			self.config = {name:{}}
 
 		#log(json.dumps(self.config))
 		try: sec = self.config[name]
@@ -74,7 +77,7 @@ class Config():
 
 	def set(self, key, val, name = None):
 		if name is None: name = self.name
-		if name == None: return
+		if name  is None: return
 
 		try: sec = self.config[name]
 		except Exception: sec = {}

@@ -10,12 +10,12 @@
 #
 
 import xbmcgui
-
 import os
 import time
 import threading
 
-from helper import SocketCom #,log
+from helper import SocketCom
+from helper import DynStep
 
 class VolumeGui(  xbmcgui.WindowXMLDialog  ):
 	def __init__( self, *args, **kwargs ):
@@ -26,17 +26,11 @@ class VolumeGui(  xbmcgui.WindowXMLDialog  ):
 		self.progress1 = None
 		self.updown = kwargs["updown"]
 
-		try: self.step = float(kwargs["step"]) / 100
-		except Exception: self.step = float(0.01)
-		if self.step <= 0: self.step = float(0.01) 
+		try: step = float(kwargs["step"]) / 100
+		except Exception: step = float(0.01)
+		if step <= 0: step = float(0.01)
 
-		# dynamic key step management
-		self.dynstep = self.step
-		self.same_key_count = 2
-		self.last_buc = 0
-		self.last_key = time.time()
-		self.min_dt = float(1)
-
+		self.dyn_step = DynStep(step,0.05,0.01,3)
 
 		self.key_up = None
 		self.key_down = None
@@ -79,13 +73,13 @@ class VolumeGui(  xbmcgui.WindowXMLDialog  ):
 
 	def vol_up(self):
 		if self.vol is None: return
-		self.vol = self.vol + self.dynstep
+		self.vol = self.vol + self.dyn_step.dynstep
 		if self.vol > float(1.5): self.vol = float(1.5)
 		self.update()
 
 	def vol_down(self):
 		if self.vol is None: return
-		self.vol = self.vol - self.dynstep
+		self.vol = self.vol - self.dyn_step.dynstep
 		if self.vol < 0: self.vol = float(0)
 		self.update()
 
@@ -101,38 +95,7 @@ class VolumeGui(  xbmcgui.WindowXMLDialog  ):
 		self.progress1.setPercent(v if v > 0 else 0.1)
 		self.label.setLabel("{:d} %".format(int(self.vol*100)))
 
-	def dynamic_step(self,buc,dt):
-		if buc == 0: return #mouse
-		if dt < float(0.1): return #fast remote
-		if self.step != float(0.01): return #manually configured step
-
-		if dt - self.min_dt > float(0.15):
-			self.dynstep = self.step
-			self.same_key_count = 2
-			self.min_dt = float(1)
-
-		elif dt >= float(1):
-			self.dynstep = self.step
-			self.same_key_count = 2
-			self.min_dt = float(1)
-
-		elif buc != self.last_buc:
-			self.dynstep = self.step
-			self.same_key_count = 2
-			self.min_dt = float(1)
-
-		else:
-			if self.same_key_count == 0:
-				self.dynstep = dt / 5
-
-			else: self.same_key_count -= 1
-
-		if self.min_dt > dt: self.min_dt = dt
-		self.last_buc = buc
-
-
 	def onAction( self, action ):
-		t = time.time()
 		aid = action.getId()
 		buc = action.getButtonCode() & 255
 		#log("volumegui: key: {}  button code: {}  time: {:.2f}".format(aid, buc, t - self.last_key))
@@ -145,7 +108,7 @@ class VolumeGui(  xbmcgui.WindowXMLDialog  ):
 		if aid in [92,10]:
 			self.close()
 
-		self.dynamic_step(buc,t - self.last_key)
+		self.dyn_step.dynamic_step(buc)
 
 		if buc == self.key_up or aid in [2,3,104]:
 			self.vol_up()
@@ -173,5 +136,4 @@ class VolumeGui(  xbmcgui.WindowXMLDialog  ):
 
 			self.set_vol_gui()
 
-		self.last_key = t
-
+		self.last = time.time()

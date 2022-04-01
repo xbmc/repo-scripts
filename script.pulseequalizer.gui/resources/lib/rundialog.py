@@ -10,8 +10,17 @@
 #
 
 import os
-from helper import handle, log, path_addon, path_tmp, path_skin
-from skin import get_current_skin, getSkinColors, create_temp_structure
+import time
+
+from basic import handle
+from basic import log
+from basic import path_addon
+from basic import path_tmp
+from basic import path_skin
+
+from skin import get_current_skin
+from skin import get_skin_colors
+from skin import create_temp_structure
 
 def runDialog(dialog, template ,**kwargs):
 	log("runDialog")
@@ -39,7 +48,7 @@ def runDialog(dialog, template ,**kwargs):
 	#	get skin color scheme
 	#
 
-	colors = getSkinColors(skincol)
+	colors = get_skin_colors(skincol)
 
 	#
 	#	prepare template
@@ -58,3 +67,5 @@ def runDialog(dialog, template ,**kwargs):
 	dialog(fn_dialog_name, path_tmp, "Default", "720p", **kwargs).doModal()
 	os.remove(fn_path_dialog + fn_dialog_name)
 
+	# wait for animation finished
+	time.sleep(0.2)

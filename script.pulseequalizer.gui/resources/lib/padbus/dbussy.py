@@ -521,7 +521,7 @@ class DBUSX:
 
 def _wderef(w_self, parent) :
     self = w_self()
-    assert self != None, "%s has gone away" % parent
+    assert self  is not None, "%s has gone away" % parent
     return \
         self
 #end _wderef
@@ -537,7 +537,7 @@ def call_async(func, funcargs = (), timeout = None, abort = None, loop = None) :
     " which will be invoked with whatever result is eventually returned from" \
     " func."
 
-    if loop == None :
+    if loop  is None :
         loop = asyncio.get_event_loop()
     #end if
 
@@ -545,14 +545,14 @@ def call_async(func, funcargs = (), timeout = None, abort = None, loop = None) :
 
     def func_done(ref_awaiting, result) :
         awaiting = ref_awaiting()
-        if awaiting != None :
+        if awaiting  is not None :
             if not awaiting.done() :
                 awaiting.set_result(result)
-                if timeout_task != None :
+                if timeout_task  is not None :
                     timeout_task.cancel()
                 #end if
             else :
-                if abort != None :
+                if abort  is not None :
                     abort(result)
                 #end if
             #end if
@@ -561,7 +561,7 @@ def call_async(func, funcargs = (), timeout = None, abort = None, loop = None) :
 
     def do_func_timedout(ref_awaiting) :
         awaiting = ref_awaiting()
-        if awaiting != None :
+        if awaiting  is not None :
             if not awaiting.done() :
                 awaiting.set_exception(TimeoutError())
                 # Python doesn’t give me any (easy) way to cancel the thread running the
@@ -586,7 +586,7 @@ def call_async(func, funcargs = (), timeout = None, abort = None, loop = None) :
       # weak ref to avoid circular refs with loop
     subthread = threading.Thread(target = do_func, args = (ref_awaiting,))
     subthread.start()
-    if timeout != None :
+    if timeout  is not None :
         timeout_task = loop.call_later(timeout, do_func_timedout, ref_awaiting)
     #end if
     return \
@@ -1452,7 +1452,7 @@ class TaskKeeper :
     #end _init
 
     def create_task(self, coro) :
-        assert self.loop != None, "no event loop to attach coroutine to"
+        assert self.loop  is not None, "no event loop to attach coroutine to"
         task = self.loop.create_task(coro)
         if len(self._cur_tasks) == 0 :
             self.loop.call_soon(self._reaper, weak_ref(self))
@@ -1485,7 +1485,7 @@ def get_local_machine_id() :
     " until the next reboot. Two processes seeing the same value for this can assume" \
     " they are on the same machine."
     c_result = dbus.dbus_get_local_machine_id()
-    if c_result == None :
+    if c_result  is None :
         raise CallFailed("dbus_get_local_machine_id")
     #end if
     result = ct.cast(c_result, ct.c_char_p).value.decode()
@@ -1506,7 +1506,7 @@ def get_version() :
 
 def setenv(key, value) :
     key = key.encode()
-    if value != None :
+    if value  is not None :
         value = value.encode()
     #end if
     if not dbus.dbus_setenv(key, value) :
@@ -1539,7 +1539,7 @@ class Watch :
 
     def __new__(celf, _dbobj) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             self._dbobj = _dbobj
             celf._instances[_dbobj] = self
@@ -1616,7 +1616,7 @@ class Timeout :
 
     def __new__(celf, _dbobj) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             self._dbobj = _dbobj
             celf._instances[_dbobj] = self
@@ -1676,10 +1676,10 @@ class ObjectPathVTable(TaskKeeper) :
         self.loop = loop
         self._wrap_unregister_func = None
         self._wrap_message_func = None
-        if unregister != None :
+        if unregister  is not None :
             self.set_unregister(unregister)
         #end if
-        if message != None :
+        if message  is not None :
             self.set_message(message)
         #end if
     #end __init__
@@ -1703,7 +1703,7 @@ class ObjectPathVTable(TaskKeeper) :
         #end wrap_unregister
 
     #begin set_unregister
-        if unregister != None :
+        if unregister  is not None :
             self._wrap_unregister_func = DBUS.ObjectPathUnregisterFunction(wrap_unregister)
         else :
             self._wrap_unregister_func = None
@@ -1731,7 +1731,7 @@ class ObjectPathVTable(TaskKeeper) :
         #end wrap_message
 
     #begin set_message
-        if message != None :
+        if message  is not None :
             self._wrap_message_func = DBUS.ObjectPathMessageFunction(wrap_message)
         else :
             self._wrap_message_func = None
@@ -1779,10 +1779,10 @@ def _get_error(error) :
     # result. This means the raise_if_set() call becomes a noop, and
     # it is up to the caller to check if their Error object was filled
     # in or not.
-    if error != None and not isinstance(error, Error) :
+    if error  is not None and not isinstance(error, Error) :
         raise TypeError("error must be an Error")
     #end if
-    if error != None :
+    if error  is not None :
         my_error = _DummyError()
     else :
         my_error = Error()
@@ -1808,7 +1808,7 @@ def _loop_attach(self, loop, dispatch) :
     # If loop is None, then the default asyncio loop is used. The actual loop
     # value is also stored as the loop attribute of the object.
 
-    if loop == None :
+    if loop  is None :
         loop = asyncio.get_event_loop()
     #end if
 
@@ -1835,7 +1835,7 @@ def _loop_attach(self, loop, dispatch) :
             if watch.enabled :
                 add_remove_watch(watch, True)
              #end if
-            if dispatch != None :
+            if dispatch  is not None :
                 call_dispatch()
             #end if
         #end handle_watch_event
@@ -1876,14 +1876,14 @@ def _loop_attach(self, loop, dispatch) :
         except ValueError :
             pos = None
         #end try
-        if pos != None :
+        if pos  is not None :
             watches[pos : pos + 1] = []
             add_remove_watch(watch, False)
         #end if
     #end handle_remove_watch
 
     def handle_timeout(timeout) :
-        if timeout["due"] != None and timeout["due"] <= loop.time() and timeout["timeout"].enabled :
+        if timeout["due"]  is not None and timeout["due"] <= loop.time() and timeout["timeout"].enabled :
             timeout["timeout"].handle()
         #end if
     #end handle_timeout
@@ -1911,7 +1911,7 @@ def _loop_attach(self, loop, dispatch) :
         search = iter(timeouts)
         while True :
             entry = next(search, None)
-            if entry == None :
+            if entry  is None :
                 break
             #end if
             if entry["timeout"] == timeout :
@@ -2043,7 +2043,7 @@ class Connection(TaskKeeper) :
 
     def __new__(celf, _dbobj) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             super()._init(self)
             self._dbobj = _dbobj
@@ -2064,8 +2064,8 @@ class Connection(TaskKeeper) :
     #end __new__
 
     def __del__(self) :
-        if self._dbobj != None :
-            if self.loop != None :
+        if self._dbobj  is not None :
+            if self.loop  is not None :
                 # remove via direct low-level libdbus calls
                 dbus.dbus_connection_set_watch_functions(self._dbobj, None, None, None, None, None)
                 dbus.dbus_connection_set_timeout_functions(self._dbobj, None, None, None, None, None)
@@ -2086,7 +2086,7 @@ class Connection(TaskKeeper) :
         error, my_error = _get_error(error)
         result = (dbus.dbus_connection_open, dbus.dbus_connection_open_private)[private](address.encode(), error._dbobj)
         my_error.raise_if_set()
-        if result != None :
+        if result  is not None :
             result = celf(result)
         #end if
         return \
@@ -2100,7 +2100,7 @@ class Connection(TaskKeeper) :
         # There is no nonblocking version of dbus_connection_open/dbus_connection_open_private,
         # so I invoke it in a separate thread.
 
-        if loop == None :
+        if loop  is None :
             loop = asyncio.get_event_loop()
         #end if
         error, my_error = _get_error(error)
@@ -2123,7 +2123,7 @@ class Connection(TaskKeeper) :
             error.set(DBUS.ERROR_TIMEOUT, "connection did not open in time")
         #end try
         my_error.raise_if_set()
-        if result != None :
+        if result  is not None :
             result = celf(result)
             result.attach_asyncio(loop)
         #end if
@@ -2132,7 +2132,7 @@ class Connection(TaskKeeper) :
     #end open_async
 
     def _flush_awaiting_receive(self) :
-        if self._receive_queue != None :
+        if self._receive_queue  is not None :
             while len(self._awaiting_receive) != 0 :
                 waiting = self._awaiting_receive.pop(0)
                 waiting.set_exception(BrokenPipeError("async receives have been disabled"))
@@ -2186,7 +2186,7 @@ class Connection(TaskKeeper) :
 
     def preallocate_send(self) :
         result = dbus.dbus_connection_preallocate_send(self._dbobj)
-        if result == None :
+        if result  is None :
             raise CallFailed("dbus_connection_preallocate_send")
         #end if
         return \
@@ -2228,7 +2228,7 @@ class Connection(TaskKeeper) :
         if not dbus.dbus_connection_send_with_reply(self._dbobj, message._dbobj, ct.byref(pending_call), _get_timeout(timeout)) :
             raise CallFailed("dbus_connection_send_with_reply")
         #end if
-        if pending_call.value != None :
+        if pending_call.value  is not None :
             result = PendingCall(pending_call.value, self)
         else :
             result = None
@@ -2245,7 +2245,7 @@ class Connection(TaskKeeper) :
         error, my_error = _get_error(error)
         reply = dbus.dbus_connection_send_with_reply_and_block(self._dbobj, message._dbobj, _get_timeout(timeout), error._dbobj)
         my_error.raise_if_set()
-        if reply != None :
+        if reply  is not None :
             result = Message(reply)
         else :
             result = None
@@ -2260,18 +2260,18 @@ class Connection(TaskKeeper) :
         if not isinstance(message, Message) :
             raise TypeError("message must be a Message")
         #end if
-        assert self.loop != None, "no event loop to attach coroutine to"
+        assert self.loop  is not None, "no event loop to attach coroutine to"
         pending_call = ct.c_void_p()
         if not dbus.dbus_connection_send_with_reply(self._dbobj, message._dbobj, ct.byref(pending_call), _get_timeout(timeout)) :
             raise CallFailed("dbus_connection_send_with_reply")
         #end if
-        if pending_call.value != None :
+        if pending_call.value  is not None :
             pending = PendingCall(pending_call.value, self)
         else :
             pending = None
         #end if
         reply = None # to begin with
-        if pending != None :
+        if pending  is not None :
             reply = await pending.await_reply()
         #end if
         return \
@@ -2306,7 +2306,7 @@ class Connection(TaskKeeper) :
         " to return it to the queue, or steal_borrowed() to confirm that you have" \
         " read the message."
         msg = dbus.dbus_connection_borrow_message(self._dbobj)
-        if msg != None :
+        if msg  is not None :
             msg = Message(msg)
             msg._conn = self
             msg._borrowed = True
@@ -2322,7 +2322,7 @@ class Connection(TaskKeeper) :
         "returns the next available incoming Message, if any, otherwise returns None." \
         " Note this bypasses all message filtering/dispatching on this Connection."
         message = dbus.dbus_connection_pop_message(self._dbobj)
-        if message != None :
+        if message  is not None :
             message = Message(message)
         #end if
         return \
@@ -2369,12 +2369,12 @@ class Connection(TaskKeeper) :
     #begin set_watch_functions
         self._add_watch_function = DBUS.AddWatchFunction(wrap_add_function)
         self._remove_watch_function = DBUS.RemoveWatchFunction(wrap_remove_function)
-        if toggled_function != None :
+        if toggled_function  is not None :
             self._toggled_watch_function = DBUS.WatchToggledFunction(wrap_toggled_function)
         else :
             self._toggled_watch_function = None
         #end if
-        if free_data != None :
+        if free_data  is not None :
             self._free_watch_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_watch_data = None
@@ -2410,12 +2410,12 @@ class Connection(TaskKeeper) :
     #begin set_timeout_functions
         self._add_timeout_function = DBUS.AddTimeoutFunction(wrap_add_function)
         self._remove_timeout_function = DBUS.RemoveTimeoutFunction(wrap_remove_function)
-        if toggled_function != None :
+        if toggled_function  is not None :
             self._toggled_timeout_function = DBUS.TimeoutToggledFunction(wrap_toggled_function)
         else :
             self._toggled_timeout_function = None
         #end if
-        if free_data != None :
+        if free_data  is not None :
             self._free_timeout_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_timeout_data = None
@@ -2438,12 +2438,12 @@ class Connection(TaskKeeper) :
         #end wrap_free_data
 
     #begin set_wakeup_main_function
-        if wakeup_main != None :
+        if wakeup_main  is not None :
             self._wakeup_main = DBUS.WakeupMainFunction(wrap_wakeup_main)
         else :
             self._wakeup_main = None
         #end if
-        if free_data != None :
+        if free_data  is not None :
             self._free_wakeup_main_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_wakeup_main_data = None
@@ -2467,7 +2467,7 @@ class Connection(TaskKeeper) :
 
     #begin set_dispatch_status_function
         self._dispatch_status = DBUS.DispatchStatusFunction(wrap_dispatch_status)
-        if free_data != None :
+        if free_data  is not None :
             self._free_wakeup_main_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_wakeup_main_data = None
@@ -2544,12 +2544,12 @@ class Connection(TaskKeeper) :
         #end wrap_free_data
 
     #begin set_unix_user_function
-        if allow_unix_user != None :
+        if allow_unix_user  is not None :
             self._allow_unix_user = DBUS.AllowUnixUserFunction(wrap_allow_unix_user)
         else :
             self._allow_unix_user = None
         #end if
-        if free_data != None :
+        if free_data  is not None :
             self._free_unix_user_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_unix_user_data = None
@@ -2593,7 +2593,7 @@ class Connection(TaskKeeper) :
         filter_value = \
             {
                 "function" : DBUS.HandleMessageFunction(wrap_function),
-                "free_data" : (lambda : None, lambda : DBUS.FreeFunction(wrap_free_data))[free_data != None](),
+                "free_data" : (lambda : None, lambda : DBUS.FreeFunction(wrap_free_data))[free_data  is not None](),
             }
         # pass user_data id because libdbus identifies filter entry by both function address and user data address
         if not dbus.dbus_connection_add_filter(self._dbobj, filter_value["function"], filter_key[1], filter_value["free_data"]) :
@@ -2624,7 +2624,7 @@ class Connection(TaskKeeper) :
         #end if
         self._object_paths[path] = {"vtable" : vtable, "user_data" : user_data} # ensure it doesn’t disappear prematurely
         error, my_error = _get_error(error)
-        if user_data != None :
+        if user_data  is not None :
             c_user_data = id(user_data)
             self._user_data[c_user_data] = user_data
         else :
@@ -2642,7 +2642,7 @@ class Connection(TaskKeeper) :
         #end if
         self._object_paths[path] = {"vtable" : vtable, "user_data" : user_data} # ensure it doesn’t disappear prematurely
         error, my_error = _get_error(error)
-        if user_data != None :
+        if user_data  is not None :
             c_user_data = id(user_data)
             self._user_data[c_user_data] = user_data
         else :
@@ -2696,7 +2696,7 @@ class Connection(TaskKeeper) :
         i = 0
         while True :
             entry = child_entries[i]
-            if entry == None :
+            if entry  is None :
                 break
             result.append(entry.decode())
             i += 1
@@ -2731,8 +2731,8 @@ class Connection(TaskKeeper) :
         " the types of messages to be put into the receive queue, or None to" \
         " disable all message types; this replaces queue_types passed to" \
         " any prior enable_receive_message_async call on this Connection."
-        assert self.loop != None, "no event loop to attach coroutines to"
-        enable = queue_types != None and len(queue_types) != 0
+        assert self.loop  is not None, "no event loop to attach coroutines to"
+        enable = queue_types  is not None and len(queue_types) != 0
         if (
                 enable
             and
@@ -2752,14 +2752,14 @@ class Connection(TaskKeeper) :
             raise TypeError("invalid message type in queue_types: %s" % repr(queue_types))
         #end if
         if enable :
-            if self._receive_queue == None :
+            if self._receive_queue  is None :
                 self.add_filter(self._queue_received_message, None)
                 self._receive_queue = []
             #end if
             self._receive_queue_enabled.clear()
             self._receive_queue_enabled.update(queue_types)
         else :
-            if self._receive_queue != None :
+            if self._receive_queue  is not None :
                 self._flush_awaiting_receive()
                 self.remove_filter(self._queue_received_message, None)
                 self._receive_queue = None
@@ -2777,7 +2777,7 @@ class Connection(TaskKeeper) :
         "\n" \
         "You must have previously made a call to enable_receive_message to enable" \
         " queueing of one or more message types on this Connection."
-        assert self._receive_queue != None, "receive_message_async not enabled"
+        assert self._receive_queue  is not None, "receive_message_async not enabled"
         # should I check if want_types contains anything not in self._receive_queue_enabled?
         if timeout == DBUS.TIMEOUT_USE_DEFAULT :
             timeout = DBUSX.DEFAULT_TIMEOUT
@@ -2797,7 +2797,7 @@ class Connection(TaskKeeper) :
                     if (
                             timeout == 0
                         or
-                                finish_time != None
+                                finish_time  is not None
                             and
                                 self.loop.time() > finish_time
                     ) :
@@ -2811,7 +2811,7 @@ class Connection(TaskKeeper) :
                     # wait and see if something turns up
                     awaiting = self.loop.create_future()
                     self._awaiting_receive.append(awaiting)
-                    if finish_time != None :
+                    if finish_time  is not None :
                         wait_timeout = finish_time - self.loop.time()
                     else :
                         wait_timeout = None
@@ -2835,7 +2835,7 @@ class Connection(TaskKeeper) :
                 #end if
                 # check next queue item
                 msg = self._receive_queue[index]
-                if want_types == None or msg.type in want_types :
+                if want_types  is None or msg.type in want_types :
                     # caller wants this one
                     result = msg
                     self._receive_queue.pop(index) # remove msg from queue
@@ -2862,7 +2862,7 @@ class Connection(TaskKeeper) :
         "to receive and process messages in a loop. stop_on is an optional set of" \
         " STOP_ON.xxx values indicating the conditions under which the iterator will" \
         " raise StopAsyncIteration to terminate the loop."
-        if stop_on == None :
+        if stop_on  is None :
             stop_on = frozenset()
         elif (
                 not isinstance(stop_on, (set, frozenset))
@@ -2871,7 +2871,7 @@ class Connection(TaskKeeper) :
         ) :
             raise TypeError("stop_on must be None or set of STOP_ON")
         #end if
-        assert self._receive_queue != None, "receive_message_async not enabled"
+        assert self._receive_queue  is not None, "receive_message_async not enabled"
         return \
             _MsgAiter(self, want_types, stop_on, timeout)
     #end iter_messages_async
@@ -2954,7 +2954,7 @@ class Connection(TaskKeeper) :
         error, my_error = _get_error(error)
         result = (dbus.dbus_bus_get, dbus.dbus_bus_get_private)[private](type, error._dbobj)
         my_error.raise_if_set()
-        if result != None :
+        if result  is not None :
             result = celf(result)
         #end if
         return \
@@ -2963,14 +2963,14 @@ class Connection(TaskKeeper) :
 
     @classmethod
     async def bus_get_async(celf, type, private, error = None, loop = None, timeout = DBUS.TIMEOUT_USE_DEFAULT) :
-        if loop == None :
+        if loop  is None :
             loop = asyncio.get_event_loop()
         #end if
         assert type in (DBUS.BUS_SESSION, DBUS.BUS_SYSTEM, DBUS.BUS_STARTER), \
             "bus type must be BUS_SESSION, BUS_SYSTEM or BUS_STARTER"
         if type == DBUS.BUS_STARTER :
             starter_type = os.environ.get(DBUSX.STARTER_BUS_ADDRESS_TYPE)
-            is_system_bus = starter_type != None and starter_type == DBUSX.BUS_TYPE_SYSTEM
+            is_system_bus = starter_type  is not None and starter_type == DBUSX.BUS_TYPE_SYSTEM
             addr = os.environ.get(DBUSX.STARTER_BUS_ADDRESS_VAR)
         else :
             is_system_bus = type == DBUS.BUS_SYSTEM
@@ -2979,19 +2979,19 @@ class Connection(TaskKeeper) :
                 (DBUSX.SESSION_BUS_ADDRESS_VAR, DBUSX.SYSTEM_BUS_ADDRESS_VAR)[is_system_bus]
               )
         #end if
-        if not private and celf._shared_connections[is_system_bus] != None :
+        if not private and celf._shared_connections[is_system_bus]  is not None :
             result = celf._shared_connections[is_system_bus]
         else :
-            if addr == None :
+            if addr  is None :
                 addr = (DBUSX.SESSION_BUS_ADDRESS, DBUSX.SYSTEM_BUS_ADDRESS)[is_system_bus]
             #end if
             try :
                 result = await celf.open_async(addr, private, error, loop, timeout)
-                if error != None and error.is_set :
+                if error  is not None and error.is_set :
                     raise _Abort
                 #end if
                 await result.bus_register_async(error = error, timeout = timeout)
-                if error != None and error.is_set :
+                if error  is not None and error.is_set :
                     raise _Abort
                 #end if
                 if not private :
@@ -3018,8 +3018,8 @@ class Connection(TaskKeeper) :
         "Only to be used if you created the Connection with open() instead of bus_get();" \
         " sends a “Hello” message to the D-Bus daemon to get a unique name assigned." \
         " Can only be called once."
-        assert self.loop != None, "no event loop to attach coroutine to"
-        assert self.bus_unique_name == None, "bus already registered"
+        assert self.loop  is not None, "no event loop to attach coroutine to"
+        assert self.bus_unique_name  is None, "bus already registered"
         message = Message.new_method_call \
           (
             destination = DBUS.SERVICE_DBUS,
@@ -3028,7 +3028,7 @@ class Connection(TaskKeeper) :
             method = "Hello"
           )
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
         else :
             self.bus_unique_name = reply.expect_return_objects("s")[0]
@@ -3040,7 +3040,7 @@ class Connection(TaskKeeper) :
         "returns None if the bus connection has not been registered. Note that the" \
         " unique_name can only be set once."
         result = dbus.dbus_bus_get_unique_name(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = result.decode()
         #end if
         return \
@@ -3101,7 +3101,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("s", name)
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
             result = None
         else :
@@ -3135,7 +3135,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("su", name, flags)
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
             result = None
         else :
@@ -3166,7 +3166,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("s", name)
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
             result = None
         else :
@@ -3197,7 +3197,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("s", name)
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
             result = None
         else :
@@ -3226,7 +3226,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("su", name, flags)
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
             result = None
         else :
@@ -3258,7 +3258,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("s", format_rule(rule))
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
         else :
             reply.expect_return_objects("")
@@ -3285,7 +3285,7 @@ class Connection(TaskKeeper) :
           )
         message.append_objects("s", format_rule(rule))
         reply = await self.send_await_reply(message, timeout = timeout)
-        if error != None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
+        if error  is not None and reply.type == DBUS.MESSAGE_TYPE_ERROR :
             reply.set_error(error)
         else :
             reply.expect_return_objects("")
@@ -3330,14 +3330,14 @@ class Connection(TaskKeeper) :
         rule = unformat_rule(rule)
         if rulekey not in self._match_actions :
             self.bus_add_match(rulekey, error) # could fail here with bad rule
-            if error == None or not error.is_set :
+            if error  is None or not error.is_set :
                 if len(self._match_actions) == 0 :
                     self.add_filter(self._rule_action_match, None)
                 #end if
                 self._match_actions[rulekey] = _MatchActionEntry(rule)
             #end if
         #end if
-        if error == None or not error.is_set :
+        if error  is None or not error.is_set :
             self._match_actions[rulekey].actions.add(_MatchActionEntry._Action(func, user_data))
         #end if
     #end bus_add_match_action
@@ -3370,14 +3370,14 @@ class Connection(TaskKeeper) :
         rule = unformat_rule(rule)
         if rulekey not in self._match_actions :
             await self.bus_add_match_async(rulekey, error, timeout) # could fail here with bad rule
-            if error == None or not error.is_set :
+            if error  is None or not error.is_set :
                 if len(self._match_actions) == 0 :
                     self.add_filter(self._rule_action_match, None)
                 #end if
                 self._match_actions[rulekey] = _MatchActionEntry(rule)
             #end if
         #end if
-        if error == None or not error.is_set :
+        if error  is None or not error.is_set :
             self._match_actions[rulekey].actions.add(_MatchActionEntry._Action(func, user_data))
         #end if
     #end bus_add_match_action_async
@@ -3427,7 +3427,7 @@ class Connection(TaskKeeper) :
         #end dispatch
 
     #begin attach_asyncio
-        assert self.loop == None, "already attached to an event loop"
+        assert self.loop  is None, "already attached to an event loop"
         _loop_attach(self, loop, dispatch)
     #end attach_asyncio
 
@@ -3453,7 +3453,7 @@ class _MsgAiter :
         stop_iter = False
         try :
             result = await self.conn.receive_message_async(self.want_types, self.timeout)
-            if result == None and STOP_ON.TIMEOUT in self.stop_on :
+            if result  is None and STOP_ON.TIMEOUT in self.stop_on :
                 stop_iter = True
             #end if
         except BrokenPipeError :
@@ -3509,7 +3509,7 @@ class Server(TaskKeeper) :
 
     def __new__(celf, _dbobj) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             super()._init(self)
             self._dbobj = _dbobj
@@ -3537,8 +3537,8 @@ class Server(TaskKeeper) :
     #end __new__
 
     def __del__(self) :
-        if self._dbobj != None :
-            if self.loop != None :
+        if self._dbobj  is not None :
+            if self.loop  is not None :
                 # remove via direct low-level libdbus calls
                 dbus.dbus_server_set_watch_functions(self._dbobj, None, None, None, None, None)
                 dbus.dbus_server_set_timeout_functions(self._dbobj, None, None, None, None, None)
@@ -3554,7 +3554,7 @@ class Server(TaskKeeper) :
         error, my_error = _get_error(error)
         result = dbus.dbus_server_listen(address.encode(), error._dbobj)
         my_error.raise_if_set()
-        if result != None :
+        if result  is not None :
             result = celf(result)
         #end if
         return \
@@ -3562,7 +3562,7 @@ class Server(TaskKeeper) :
     #end listen
 
     def _flush_awaiting_connect(self) :
-        if self._await_new_connections != None :
+        if self._await_new_connections  is not None :
             while len(self._await_new_connections) != 0 :
                 waiting = self._await_new_connections.pop(0)
                 waiting.set_exception(BrokenPipeError("async listens have been disabled"))
@@ -3584,7 +3584,7 @@ class Server(TaskKeeper) :
     @property
     def address(self) :
         c_result = dbus.dbus_server_get_address(self._dbobj)
-        if c_result == None :
+        if c_result  is None :
             raise CallFailed("dbus_server_get_address")
         #end if
         result = ct.cast(c_result, ct.c_char_p).value.decode()
@@ -3596,7 +3596,7 @@ class Server(TaskKeeper) :
     @property
     def id(self) :
         c_result = dbus.dbus_server_get_id(self._dbobj)
-        if c_result == None :
+        if c_result  is None :
             raise CallFailed("dbus_server_get_id")
         #end if
         result = ct.cast(c_result, ct.c_char_p).value.decode()
@@ -3622,9 +3622,9 @@ class Server(TaskKeeper) :
         #end wrap_free_data
 
     #begin set_new_connection_function
-        assert self.loop == None, "new connections are being managed by an event loop"
+        assert self.loop  is None, "new connections are being managed by an event loop"
         self._new_connection_function = DBUS.NewConnectionFunction(wrap_function)
-        if free_data != None :
+        if free_data  is not None :
             self._free_new_connection_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_new_connection_data = None
@@ -3658,12 +3658,12 @@ class Server(TaskKeeper) :
     #begin set_watch_functions
         self._add_watch_function = DBUS.AddWatchFunction(wrap_add_function)
         self._remove_watch_function = DBUS.RemoveWatchFunction(wrap_remove_function)
-        if toggled_function != None :
+        if toggled_function  is not None :
             self._toggled_watch_function = DBUS.WatchToggledFunction(wrap_toggled_function)
         else :
             self._toggled_watch_function = None
         #end if
-        if free_data != None :
+        if free_data  is not None :
             self._free_watch_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_watch_data = None
@@ -3699,12 +3699,12 @@ class Server(TaskKeeper) :
     #begin set_timeout_functions
         self._add_timeout_function = DBUS.AddTimeoutFunction(wrap_add_function)
         self._remove_timeout_function = DBUS.RemoveTimeoutFunction(wrap_remove_function)
-        if toggled_function != None :
+        if toggled_function  is not None :
             self._toggled_timeout_function = DBUS.TimeoutToggledFunction(wrap_toggled_function)
         else :
             self._toggled_timeout_function = None
         #end if
-        if free_data != None :
+        if free_data  is not None :
             self._free_timeout_data = DBUS.FreeFunction(wrap_free_data)
         else :
             self._free_timeout_data = None
@@ -3746,7 +3746,7 @@ class Server(TaskKeeper) :
             else :
                 # put it in _new_connections queue
                 if (
-                        self.max_new_connections != None
+                        self.max_new_connections  is not None
                     and
                         len(self._new_connections) >= self.max_new_connections
                 ) :
@@ -3759,8 +3759,8 @@ class Server(TaskKeeper) :
         #end new_connection
 
     #begin attach_asyncio
-        assert self.loop == None, "already attached to an event loop"
-        assert self._new_connection_function == None, "already set a new-connection function"
+        assert self.loop  is None, "already attached to an event loop"
+        assert self._new_connection_function  is None, "already set a new-connection function"
         self._new_connections = []
         self._await_new_connections = []
         self.set_new_connection_function(new_connection, None)
@@ -3772,7 +3772,7 @@ class Server(TaskKeeper) :
         " suspends the current coroutine for up to the specified timeout duration" \
         " while waiting for one to appear. Returns None if there is no new connection" \
         " within that time."
-        assert self.loop != None, "no event loop to attach coroutine to"
+        assert self.loop  is not None, "no event loop to attach coroutine to"
         if len(self._new_connections) != 0 :
             result = self._new_connections.pop(0)
         else :
@@ -3808,7 +3808,7 @@ class Server(TaskKeeper) :
                 #end if
             #end if
         #end if
-        if result != None and self.autoattach_new_connections :
+        if result  is not None and self.autoattach_new_connections :
             result.attach_asyncio(self.loop)
         #end if
         return \
@@ -3826,8 +3826,8 @@ class Server(TaskKeeper) :
         "to receive and process incoming connections in a loop. stop_on is an optional set of" \
         " STOP_ON.xxx values indicating the conditions under which the iterator will" \
         " raise StopAsyncIteration to terminate the loop."
-        assert self.loop != None, "no event loop to attach coroutine to"
-        if stop_on == None :
+        assert self.loop  is not None, "no event loop to attach coroutine to"
+        if stop_on  is None :
             stop_on = frozenset()
         elif (
                 not isinstance(stop_on, (set, frozenset))
@@ -3861,7 +3861,7 @@ class _SrvAiter :
         stop_iter = False
         try :
             result = await self.srv.await_new_connection(self.timeout)
-            if result == None and STOP_ON.TIMEOUT in self.stop_on :
+            if result  is None and STOP_ON.TIMEOUT in self.stop_on :
                 stop_iter = True
             #end if
         except BrokenPipeError :
@@ -3890,7 +3890,7 @@ class PreallocatedSend :
 
     def __new__(celf, _dbobj, _parent) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             self._dbobj = _dbobj
             self._w_parent = weak_ref(_parent)
@@ -3904,9 +3904,9 @@ class PreallocatedSend :
     #end __new__
 
     def __del__(self) :
-        if self._dbobj != None :
+        if self._dbobj  is not None :
             parent = self._w_parent()
-            if parent != None and not self._sent :
+            if parent  is not None and not self._sent :
                 dbus.dbus_connection_free_preallocated_send(parent._dbobj, self._dbobj)
             #end if
             self._dbobj = None
@@ -3920,7 +3920,7 @@ class PreallocatedSend :
         #end if
         assert not self._sent, "preallocated has already been sent"
         parent = self._w_parent()
-        assert parent != None, "parent Connection has gone away"
+        assert parent  is not None, "parent Connection has gone away"
         serial = ct.c_uint()
         dbus.dbus_connection_send_preallocated(parent._dbobj, self._dbobj, message._dbobj, ct.byref(serial))
         self._sent = True
@@ -3941,7 +3941,7 @@ class Message :
 
     def __new__(celf, _dbobj) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             self._dbobj = _dbobj
             self._conn = None
@@ -3956,7 +3956,7 @@ class Message :
     #end __new__
 
     def __del__(self) :
-        if self._dbobj != None :
+        if self._dbobj  is not None :
             assert not self._borrowed, "trying to dispose of borrowed message"
             dbus.dbus_message_unref(self._dbobj)
             self._dbobj = None
@@ -3969,7 +3969,7 @@ class Message :
         " calls--new_error, new_method_call, new_method_return, new_signal--is probably" \
         " more convenient."
         result = dbus.dbus_message_new(type)
-        if result == None :
+        if result  is None :
             raise CallFailed("dbus_message_new")
         #end if
         return \
@@ -3978,8 +3978,8 @@ class Message :
 
     def new_error(self, name, message) :
         "creates a new DBUS.MESSAGE_TYPE_ERROR message that is a reply to this Message."
-        result = dbus.dbus_message_new_error(self._dbobj, name.encode(), (lambda : None, lambda : message.encode())[message != None]())
-        if result == None :
+        result = dbus.dbus_message_new_error(self._dbobj, name.encode(), (lambda : None, lambda : message.encode())[message  is not None]())
+        if result  is None :
             raise CallFailed("dbus_message_new_error")
         #end if
         return \
@@ -3993,12 +3993,12 @@ class Message :
         "creates a new DBUS.MESSAGE_TYPE_METHOD_CALL message."
         result = dbus.dbus_message_new_method_call \
           (
-            (lambda : None, lambda : destination.encode())[destination != None](),
+            (lambda : None, lambda : destination.encode())[destination  is not None](),
             path.encode(),
-            (lambda : None, lambda : iface.encode())[iface != None](),
+            (lambda : None, lambda : iface.encode())[iface  is not None](),
             method.encode(),
           )
-        if result == None :
+        if result  is None :
             raise CallFailed("dbus_message_new_method_call")
         #end if
         return \
@@ -4008,7 +4008,7 @@ class Message :
     def new_method_return(self) :
         "creates a new DBUS.MESSAGE_TYPE_METHOD_RETURN that is a reply to this Message."
         result = dbus.dbus_message_new_method_return(self._dbobj)
-        if result == None :
+        if result  is None :
             raise CallFailed("dbus_message_new_method_return")
         #end if
         return \
@@ -4019,7 +4019,7 @@ class Message :
     def new_signal(celf, path, iface, name) :
         "creates a new DBUS.MESSAGE_TYPE_SIGNAL message."
         result = dbus.dbus_message_new_signal(path.encode(), iface.encode(), name.encode())
-        if result == None :
+        if result  is None :
             raise CallFailed("dbus_message_new_signal")
         #end if
         return \
@@ -4029,7 +4029,7 @@ class Message :
     def copy(self) :
         "creates a copy of this Message."
         result = dbus.dbus_message_copy(self._dbobj)
-        if result == None :
+        if result  is None :
             raise CallFailed("dbus_message_copy")
         #end if
         return \
@@ -4122,7 +4122,7 @@ class Message :
         @property
         def signature(self) :
             c_result = dbus.dbus_message_iter_get_signature(self._dbobj)
-            if c_result == None :
+            if c_result  is None :
                 raise CallFailed("dbus_message_iter_get_signature")
             #end if
             result = ct.cast(c_result, ct.c_char_p).value.decode()
@@ -4163,7 +4163,7 @@ class Message :
                     subiter = self.recurse()
                     while True :
                         entry = next(subiter, None)
-                        if entry == None or entry.arg_type == DBUS.TYPE_INVALID :
+                        if entry  is None or entry.arg_type == DBUS.TYPE_INVALID :
                           # TYPE_INVALID can be returned for an empty dict
                             break
                         if entry.arg_type != DBUS.TYPE_DICT_ENTRY :
@@ -4176,7 +4176,7 @@ class Message :
                     result = self.fixed_array
                 else :
                     result = list(x.object for x in self.recurse())
-                    if len(result) != 0 and result[-1] == None :
+                    if len(result) != 0 and result[-1]  is None :
                         # fudge for iterating into an empty array
                         result = result[:-1]
                     #end if
@@ -4290,7 +4290,7 @@ class Message :
             "starts appending an argument of a container type, returning a sub-iterator" \
             " for appending the contents of the argument. Can be called recursively for" \
             " containers of containers etc."
-            if contained_signature != None :
+            if contained_signature  is not None :
                 c_sig = contained_signature.encode()
             else :
                 c_sig = None
@@ -4306,7 +4306,7 @@ class Message :
         def close(self) :
             "closes a sub-iterator, indicating the completion of construction" \
             " of a container value."
-            assert self._parent != None, "cannot close top-level iterator"
+            assert self._parent  is not None, "cannot close top-level iterator"
             if not dbus.dbus_message_iter_close_container(self._parent._dbobj, self._dbobj) :
                 raise CallFailed("dbus_message_iter_close_container")
             #end if
@@ -4318,7 +4318,7 @@ class Message :
             "closes a sub-iterator, indicating the abandonment of construction" \
             " of a container value. The Message object is effectively unusable" \
             " after this point and should be discarded."
-            assert self._parent != None, "cannot abandon top-level iterator"
+            assert self._parent  is not None, "cannot abandon top-level iterator"
             dbus.dbus_message_iter_abandon_container(self._parent._dbobj, self._dbobj)
             return \
                 self._parent
@@ -4485,7 +4485,7 @@ class Message :
         "the object path for a DBUS.MESSAGE_TYPE_METHOD_CALL or DBUS.DBUS.MESSAGE_TYPE_SIGNAL" \
         " message."
         result = dbus.dbus_message_get_path(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = DBUS.ObjectPath(result.decode())
         #end if
         return \
@@ -4494,7 +4494,7 @@ class Message :
 
     @path.setter
     def path(self, object_path) :
-        if not dbus.dbus_message_set_path(self._dbobj, (lambda : None, lambda : object_path.encode())[object_path != None]()) :
+        if not dbus.dbus_message_set_path(self._dbobj, (lambda : None, lambda : object_path.encode())[object_path  is not None]()) :
             raise CallFailed("dbus_message_set_path")
         #end if
     #end path
@@ -4512,7 +4512,7 @@ class Message :
             i = 0
             while True :
                 entry = path[i]
-                if entry == None :
+                if entry  is None :
                     break
                 result.append(entry.decode())
                 i += 1
@@ -4530,7 +4530,7 @@ class Message :
         "the interface name for a DBUS.MESSAGE_TYPE_METHOD_CALL or DBUS.MESSAGE_TYPE_SIGNAL" \
         " message."
         result = dbus.dbus_message_get_interface(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = result.decode()
         #end if
         return \
@@ -4539,7 +4539,7 @@ class Message :
 
     @interface.setter
     def interface(self, iface) :
-        if not dbus.dbus_message_set_interface(self._dbobj, (lambda : None, lambda : iface.encode())[iface != None]()) :
+        if not dbus.dbus_message_set_interface(self._dbobj, (lambda : None, lambda : iface.encode())[iface  is not None]()) :
             raise CallFailed("dbus_message_set_interface")
         #end if
     #end interface
@@ -4554,7 +4554,7 @@ class Message :
         "the method name for a DBUS.MESSAGE_TYPE_METHOD_CALL message or the signal" \
         " name for DBUS.MESSAGE_TYPE_SIGNAL."
         result = dbus.dbus_message_get_member(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = result.decode()
         #end if
         return \
@@ -4563,7 +4563,7 @@ class Message :
 
     @member.setter
     def member(self, member) :
-        if not dbus.dbus_message_set_member(self._dbobj, (lambda : None, lambda : member.encode())[member != None]()) :
+        if not dbus.dbus_message_set_member(self._dbobj, (lambda : None, lambda : member.encode())[member  is not None]()) :
             raise CallFailed("dbus_message_set_member")
         #end if
     #end member
@@ -4577,7 +4577,7 @@ class Message :
     def error_name(self) :
         "the error name for a DBUS.MESSAGE_TYPE_ERROR message."
         result = dbus.dbus_message_get_error_name(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = result.decode()
         #end if
         return \
@@ -4586,7 +4586,7 @@ class Message :
 
     @error_name.setter
     def error_name(self, error_name) :
-        if not dbus.dbus_message_set_error_name(self._dbobj, (lambda : None, lambda : error_name.encode())[error_name != None]()) :
+        if not dbus.dbus_message_set_error_name(self._dbobj, (lambda : None, lambda : error_name.encode())[error_name  is not None]()) :
             raise CallFailed("dbus_message_set_error_name")
         #end if
     #end error_name
@@ -4595,7 +4595,7 @@ class Message :
     def destination(self) :
         "the bus name that the message is to be sent to."
         result = dbus.dbus_message_get_destination(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = result.decode()
         #end if
         return \
@@ -4604,7 +4604,7 @@ class Message :
 
     @destination.setter
     def destination(self, destination) :
-        if not dbus.dbus_message_set_destination(self._dbobj, (lambda : None, lambda : destination.encode())[destination != None]()) :
+        if not dbus.dbus_message_set_destination(self._dbobj, (lambda : None, lambda : destination.encode())[destination  is not None]()) :
             raise CallFailed("dbus_message_set_destination")
         #end if
     #end destination
@@ -4612,7 +4612,7 @@ class Message :
     @property
     def sender(self) :
         result = dbus.dbus_message_get_sender(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = result.decode()
         #end if
         return \
@@ -4621,7 +4621,7 @@ class Message :
 
     @sender.setter
     def sender(self, sender) :
-        if not dbus.dbus_message_set_sender(self._dbobj, (lambda : None, lambda : sender.encode())[sender != None]()) :
+        if not dbus.dbus_message_set_sender(self._dbobj, (lambda : None, lambda : sender.encode())[sender  is not None]()) :
             raise CallFailed("dbus_message_set_sender")
         #end if
     #end sender
@@ -4629,7 +4629,7 @@ class Message :
     @property
     def signature(self) :
         result = dbus.dbus_message_get_signature(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = DBUS.Signature(result.decode())
         #end if
         return \
@@ -4714,13 +4714,13 @@ class Message :
     #end lock
 
     def return_borrowed(self) :
-        assert self._borrowed and self._conn != None
+        assert self._borrowed and self._conn  is not None
         dbus.dbus_connection_return_message(self._conn._dbobj, self._dbobj)
         self._borrowed = False
     #end return_borrowed
 
     def steal_borrowed(self) :
-        assert self._borrowed and self._conn != None
+        assert self._borrowed and self._conn  is not None
         dbus.dbus_connection_steal_borrowed_message(self._conn._dbobj, self._dbobj)
         self._borrowed = False
         return \
@@ -4780,7 +4780,7 @@ class Message :
         #end if
         msg = dbus.dbus_message_demarshal(baseadr, len(buf), error._dbobj)
         my_error.raise_if_set()
-        if msg != None :
+        if msg  is not None :
             msg = celf(msg)
         #end if
         return \
@@ -4837,7 +4837,7 @@ class PendingCall :
 
     def __new__(celf, _dbobj, _conn) :
         self = celf._instances.get(_dbobj)
-        if self == None :
+        if self  is None :
             self = super().__new__(celf)
             self._dbobj = _dbobj
             self._w_conn = weak_ref(_conn)
@@ -4854,7 +4854,7 @@ class PendingCall :
     #end __new__
 
     def __del__(self) :
-        if self._dbobj != None :
+        if self._dbobj  is not None :
             dbus.dbus_pending_call_unref(self._dbobj)
             self._dbobj = None
         #end if
@@ -4876,12 +4876,12 @@ class PendingCall :
         #end _wrap_free
 
     #begin set_notify
-        if function != None :
+        if function  is not None :
             self._wrap_notify = DBUS.PendingCallNotifyFunction(wrap_notify)
         else :
             self._wrap_notify = None
         #end if
-        if free_user_data != None :
+        if free_user_data  is not None :
             self._wrap_free = DBUS.FreeFunction(wrap_free)
         else :
             self._wrap_free = None
@@ -4894,7 +4894,7 @@ class PendingCall :
     def cancel(self) :
         "tells libdbus you no longer care about the pending incoming message."
         dbus.dbus_pending_call_cancel(self._dbobj)
-        if self._awaiting != None :
+        if self._awaiting  is not None :
             # This probably shouldn’t occur. Looking at the source of libdbus,
             # it doesn’t keep track of any “cancelled” state for the PendingCall,
             # it just detaches it from any notifications about an incoming reply.
@@ -4913,7 +4913,7 @@ class PendingCall :
         "retrieves the Message, assuming it is actually available." \
         " You should check PendingCall.completed returns True first."
         result = dbus.dbus_pending_call_steal_reply(self._dbobj)
-        if result != None :
+        if result  is not None :
             result = Message(result)
         #end if
         return \
@@ -4926,9 +4926,9 @@ class PendingCall :
         " available. On a timeout, libdbus will construct and return an error" \
         " return message."
         conn = self._w_conn()
-        assert conn != None, "parent Connection has gone away"
-        assert conn.loop != None, "no event loop on parent Connection to attach coroutine to"
-        if self._wrap_notify != None or self._awaiting != None :
+        assert conn  is not None, "parent Connection has gone away"
+        assert conn.loop  is not None, "no event loop on parent Connection to attach coroutine to"
+        if self._wrap_notify  is not None or self._awaiting  is not None :
             raise asyncio.InvalidStateError("there is already a notify set on this PendingCall")
         #end if
         done = conn.loop.create_future()
@@ -4938,7 +4938,7 @@ class PendingCall :
             if not done.done() : # just in case of self.cancel() being called
                 self = wself()
                 # Note it seems to be possible for callback to be triggered spuriously
-                if self != None and self.completed :
+                if self  is not None and self.completed :
                     done.set_result(self.steal_reply())
                 #end if
             #end if
@@ -4973,7 +4973,7 @@ class Error :
     #end __init__
 
     def __del__(self) :
-        if self._dbobj != None :
+        if self._dbobj  is not None :
             dbus.dbus_error_free(self._dbobj)
             self._dbobj = None
         #end if
@@ -5008,14 +5008,14 @@ class Error :
     def name(self) :
         "the name of the Error, if it has been filled in."
         return \
-            (lambda : None, lambda : self._dbobj.name.decode())[self._dbobj.name != None]()
+            (lambda : None, lambda : self._dbobj.name.decode())[self._dbobj.name  is not None]()
     #end name
 
     @property
     def message(self) :
         "the message string for the Error, if it has been filled in."
         return \
-            (lambda : None, lambda : self._dbobj.message.decode())[self._dbobj.message != None]()
+            (lambda : None, lambda : self._dbobj.message.decode())[self._dbobj.message  is not None]()
     #end message
 
     def raise_if_set(self) :
@@ -5051,7 +5051,7 @@ class AddressEntries :
     #end __init__
 
     def __del__(self) :
-        if self._dbobj != None :
+        if self._dbobj  is not None :
             dbus.dbus_address_entries_free(self._dbobj)
             self._dbobj = None
         #end if
@@ -5073,9 +5073,9 @@ class AddressEntries :
 
         @property
         def method(self) :
-            assert self._parent() != None, "AddressEntries object has gone"
+            assert self._parent()  is not None, "AddressEntries object has gone"
             result = dbus.dbus_address_entry_get_method(self._dbobj[self._index])
-            if result != None :
+            if result  is not None :
                 result = result.decode()
             #end if
             return \
@@ -5083,9 +5083,9 @@ class AddressEntries :
         #end method
 
         def get_value(self, key) :
-            assert self._parent() != None, "AddressEntries object has gone"
+            assert self._parent()  is not None, "AddressEntries object has gone"
             c_result = dbus.dbus_address_entry_get_value(self._dbobj[self._index], key.encode())
-            if c_result != None :
+            if c_result  is not None :
                 result = c_result.decode()
             else :
                 result = None
@@ -5107,7 +5107,7 @@ class AddressEntries :
             nr_elts.value = 0
         #end if
         my_error.raise_if_set()
-        if c_result.contents != None :
+        if c_result.contents  is not None :
             result = celf(c_result, nr_elts.value)
         else :
             result = None
@@ -5133,7 +5133,7 @@ class AddressEntries :
 
 def address_escape_value(value) :
     c_result = dbus.dbus_address_escape_value(value.encode())
-    if c_result == None :
+    if c_result  is None :
         raise CallFailed("dbus_address_escape_value")
     #end if
     result = ct.cast(c_result, ct.c_char_p).value.decode()
@@ -5146,7 +5146,7 @@ def address_unescape_value(value, error = None) :
     error, my_error = _get_error(error)
     c_result = dbus.dbus_address_unescape_value(value.encode(), error._dbobj)
     my_error.raise_if_set()
-    if c_result != None :
+    if c_result  is not None :
         result = ct.cast(c_result, ct.c_char_p).value.decode()
         dbus.dbus_free(c_result)
     elif not error.is_set :
@@ -5240,14 +5240,14 @@ class _RuleParser :
             curval = None
             while True :
                 ch = next(chars, None)
-                if ch == None :
+                if ch  is None :
                     if state == PARSE.EXPECT_ESCAPED :
                         raise SyntaxError("missing character after backslash")
                     elif state == PARSE.EXPECT_QUOTED_VALUE :
                         raise SyntaxError("missing closing apostrophe")
                     else : # state in (PARSE.EXPECT_NAME, PARSE.EXPECT_UNQUOTED_VALUE)
-                        if curname != None :
-                            if curval != None :
+                        if curname  is not None :
+                            if curval  is not None :
                                 if curname in parsed :
                                     raise SyntaxError("duplicated attribute “%s”" % curname)
                                 #end if
@@ -5268,7 +5268,7 @@ class _RuleParser :
                         nextch = ch
                     #end if
                     ch = usech
-                    if curval == None :
+                    if curval  is None :
                         curval = ch
                     else :
                         curval += ch
@@ -5276,13 +5276,13 @@ class _RuleParser :
                     ch = nextch # None indicates already processed
                     state = PARSE.EXPECT_UNQUOTED_VALUE
                 #end if
-                if ch != None :
+                if ch  is not None :
                     if ch == "," and state != PARSE.EXPECT_QUOTED_VALUE :
                         if state == PARSE.EXPECT_UNQUOTED_VALUE :
                             if curname in parsed :
                                 raise SyntaxError("duplicated attribute “%s”" % curname)
                             #end if
-                            if curval == None :
+                            if curval  is None :
                                 curval = ""
                             #end if
                             parsed[curname] = curval
@@ -5299,7 +5299,7 @@ class _RuleParser :
                             raise SyntaxError("unexpected backslash")
                         #end if
                     elif ch == "=" and state != PARSE.EXPECT_QUOTED_VALUE :
-                        if curname == None :
+                        if curname  is None :
                             raise SyntaxError("empty attribute name")
                         #end if
                         if state == PARSE.EXPECT_NAME :
@@ -5317,13 +5317,13 @@ class _RuleParser :
                         #end if
                     else :
                         if state == PARSE.EXPECT_NAME :
-                            if curname == None :
+                            if curname  is None :
                                 curname = ch
                             else :
                                 curname += ch
                             #end if
                         elif state in (PARSE.EXPECT_QUOTED_VALUE, PARSE.EXPECT_UNQUOTED_VALUE) :
-                            if curval == None :
+                            if curval  is None :
                                 curval = ch
                             else :
                                 curval += ch
@@ -5363,7 +5363,7 @@ def matches_rule(message, rule, destinations = None) :
     def match_path_namespace(expect, actual) :
         return \
             (
-                actual != None
+                actual  is not None
             and
                 (
                     expect == actual
@@ -5376,7 +5376,7 @@ def matches_rule(message, rule, destinations = None) :
     def match_dotted_namespace(expect, actual) :
         return \
             (
-                actual != None
+                actual  is not None
             and
                 (
                     expect == actual
@@ -5416,7 +5416,7 @@ def matches_rule(message, rule, destinations = None) :
     def match_arg_paths(expect, actual) :
         return \
             (
-                actual != None
+                actual  is not None
             and
                 (
                     expect == actual
@@ -5448,9 +5448,9 @@ def matches_rule(message, rule, destinations = None) :
         (
             eavesdrop
         or
-            destinations == None
+            destinations  is None
         or
-            message.destination == None
+            message.destination  is None
         or
             message.destination in destinations
         )
@@ -5458,14 +5458,14 @@ def matches_rule(message, rule, destinations = None) :
         try_matching = iter(match_types)
         while True :
             try_rule = next(try_matching, None)
-            if try_rule == None :
+            if try_rule  is None :
                 break
             rulekey, attrname, action, accessor = try_rule
-            if attrname == None :
+            if attrname  is None :
                 attrname = rulekey
             #end if
             if rulekey in rule :
-                if accessor != None :
+                if accessor  is not None :
                     val = accessor(message)
                 else :
                     val = getattr(message, attrname)
@@ -5482,7 +5482,7 @@ def matches_rule(message, rule, destinations = None) :
         try_matching = iter(rule.keys())
         while True :
             try_key = next(try_matching, None)
-            if try_key == None :
+            if try_key  is None :
                 break
             if try_key.startswith("arg") and not try_key.endswith("namespace") :
                 argnr = try_key[3:]
@@ -5852,7 +5852,7 @@ class _TagCommon :
         annots = iter(self.annotations)
         while True :
             annot = next(annots, None)
-            if annot == None :
+            if annot  is None :
                 result = None
                 break
             #end if
@@ -6022,7 +6022,7 @@ class Introspection(_TagCommon) :
                 attr_convert = {} # {"direction" : Introspection.DIRECTION} assigned below
 
                 def __init__(self, *, name = None, type, direction = None, annotations = ()) :
-                    if direction != None and direction != Introspection.DIRECTION.OUT :
+                    if direction  is not None and direction != Introspection.DIRECTION.OUT :
                         raise ValueError("direction can only be Introspection.DIRECTION.OUT")
                     #end if
                     self.name = name
@@ -6113,7 +6113,7 @@ class Introspection(_TagCommon) :
 
     #end Interface
     Interface.Method.Arg.attr_convert["direction"] = DIRECTION
-    Interface.Signal.Arg.attr_convert["direction"] = lambda x : (lambda : None, lambda : Introspection.DIRECTION(x))[x != None]()
+    Interface.Signal.Arg.attr_convert["direction"] = lambda x : (lambda : None, lambda : Introspection.DIRECTION(x))[x  is not None]()
     Interface.Property.attr_convert["access"] = ACCESS
 
     class StubInterface(_TagCommon) :
@@ -6264,7 +6264,7 @@ class Introspection(_TagCommon) :
             attrs = []
             for attrname in obj.tag_attrs :
                 attr = getattr(obj, attrname)
-                if attr != None :
+                if attr  is not None :
                     if isinstance(attr, enum.Enum) :
                         attr = attr.value
                     elif isinstance(attr, Type) :
@@ -6291,7 +6291,7 @@ class Introspection(_TagCommon) :
               )
             out.write(" " * indent + "<" + tag_name)
             if (
-                    max_linelen != None
+                    max_linelen  is not None
                 and
                             indent
                         +
@@ -6335,7 +6335,7 @@ class Introspection(_TagCommon) :
     #begin unparse
         out.write(DBUS.INTROSPECT_1_0_XML_DOCTYPE_DECL_NODE)
         out.write("<node")
-        if self.name != None :
+        if self.name  is not None :
             out.write(" name=%s" % quote_xml_attr(self.name))
         #end if
         out.write(">\n")

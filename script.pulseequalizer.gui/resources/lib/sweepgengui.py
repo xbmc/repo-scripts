@@ -13,9 +13,14 @@ import xbmcaddon
 import xbmcgui
 
 from contextmenu import contextMenu
+
 from rundialog import runDialog
+
 from sweepgui import SweepGui
-from helper import SocketCom, opthandle
+
+from helper import SocketCom
+
+from basic import opthandle
 
 chan_num = ["front-left","front-right","rear-left","rear-right","front-center","lfe","side-left","side-right","aux1"]
 
@@ -41,7 +46,7 @@ class SweepGenGui(  xbmcgui.WindowXMLDialog  ):
 
 	repeats = 0
 
-	def __init__( self, *args, **kwargs ):
+	def __init__( self, *args, **_kwargs ):
 		self.cwd = args[1]
 		self.skin = args[2]
 

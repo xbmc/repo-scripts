@@ -12,58 +12,59 @@
 import os
 import sys
 
-lock = "/run/user/%d/pa/lock" % os.geteuid()
+import xbmcaddon
 
+cwd	= xbmcaddon.Addon().getAddonInfo('path')
+sys.path.append ( os.path.join( cwd, 'resources', 'lib' ))
+sys.path.append ( os.path.join( cwd, 'resources', 'language' ))
 
-def sel_vol(cwd, updown, step):
-	from volumegui import VolumeGui
-	volgui = VolumeGui("OsdVolume.xml" , cwd, "Default", updown = updown, step=step)
-	volgui.doModal()
+from basic import path_pipe
+
+lock = path_pipe + "lock"
+
+service_mode = True
+
+def get_args():
+	try: cmd = sys.argv[1]
+	except Exception:	cmd = "None"
+	try: step = int(sys.argv[2])
+	except Exception:	step = False
+
+	if not step:
+		try:
+			step = int(cmd)
+			if step > 0: cmd = "None"
+		except ValueError: step = 1
+
+	if step < 1: step = 1
+	return (cmd, step)
 
 def run_addon():
+	from basic import log
+	from basic import handle
+	from menus import Menu
+
 	try:
+		log("addon: start script.pulseequalizer.gui addon")
 
-		import xbmc
-		import xbmcaddon
+		m = Menu(cwd)
+		cmd,step = get_args()
+		m.sel_menu(cmd,step)
 
-		xbmc.log("eq: start script.pulseequalizer.gui addon" , xbmc.LOGDEBUG)
-
-		cwd		= xbmcaddon.Addon().getAddonInfo('path')
-		sys.path.append ( os.path.join( cwd, 'resources', 'lib' ))
-		sys.path.append ( os.path.join( cwd, 'resources', 'language' ))
-
-		try: cmd = sys.argv[1]
-		except Exception:	cmd = False
-		try: step = int(sys.argv[2])
-		except Exception:	step = False
-
-		# handle volup/voldown here to avoid unneccecary imports that slow down
-		if cmd == "volup": sel_vol(cwd,"up",step)
-		elif cmd == "voldown": sel_vol(cwd,"down",step)
-		else:
-
-			from helper import handle, log, logerror
-			from menus import Menu
-
-			if not step:
-				try: 
-					step = int(cmd)
-					if step > 0: cmd = False
-				except ValueError: step = 1
-
-			if step < 1: step = 1
-
-			m = Menu(cwd, step)
-			if cmd:
-				xbmc.log("eq: keypress %s startup, step: %d" % (cmd,step) , xbmc.LOGDEBUG)
-				m.sel_menu(cmd)
-			else:
-				xbmc.log("eq: start main menu, step: %d" % step , xbmc.LOGDEBUG)
-				m.sel_main_menu()
-
-		xbmc.log("eq: end script.pulseequalizer.gui addon" , xbmc.LOGDEBUG)
+		log("addon: end script.pulseequalizer.gui addon")
 
 	except Exception as e: handle(e)
+
+def run_on_service():
+	try:
+		pname = "{}menu.{}".format(path_pipe,os.getppid())
+		cmd, step = get_args()
+		cmd = "{},{}".format(cmd,step)
+		with open(pname, "w") as f: f.write(cmd)
+
+	except Exception as e:
+		from resources.lib.basic import handle
+		handle(e)
 
 if not os.path.exists( lock ):
 	# check if another instance of this script is already running
@@ -71,10 +72,12 @@ if not os.path.exists( lock ):
 
 	try:
 		open(lock,'w')
-		run_addon()
+		if service_mode:
+			run_on_service()
+		else:
+			run_addon()
+	except OSError: pass
 	finally:
-		from helper import opthandle
-		try:
-			os.remove(lock)
-		except Exception as e: opthandle(e)
-
+		if not service_mode:
+			try: os.remove(lock)
+			except OSError: pass

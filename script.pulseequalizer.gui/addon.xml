@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.pulseequalizer.gui" name="PulseEqualizer GUI" version="2.1.2" provider-name="wastis">
+<addon id="script.pulseequalizer.gui" name="PulseEqualizer GUI" version="2.1.3" provider-name="wastis">
 
 	<extension point="xbmc.python.script" library="addon.py">
 		<provides>executable</provides>
@@ -23,7 +23,13 @@ https://github.com/wastis/PulseEqualizerGui
 		<disclaimer lang="en_GB">Documentation: https://github.com/wastis/PulseEqualizerGui/wiki</disclaimer>
 		<disclaimer lang="de_DE">Dokumentation: https://github.com/wastis/PulseEqualizerGui/wiki</disclaimer>
 		<news>
-			
+
+v2.1.3  (2022-04-01)
+- mini key map editor to easy create keymap file for equalizer, 
+  including most important kodi commands
+- add kodi user profile support and moved settings save location
+- changes to improve menu pop up speed on slow devices
+
 v2.1.2  (2022-03-22)
 - Improved error message, in case pulse-equalizer is not installed
 - Source code clean-ups

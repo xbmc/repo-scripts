@@ -9,11 +9,12 @@
 #
 #
 
-
 import xbmcaddon
 import xbmcgui
 
-from helper import SocketCom, log
+from helper import SocketCom
+
+from basic import log
 
 addon = xbmcaddon.Addon()
 
@@ -21,7 +22,7 @@ def tr(lid):
 	return addon.getLocalizedString(lid)
 
 class SweepGui(  xbmcgui.WindowXMLDialog  ):
-	def __init__( self, *args, **kwargs ):
+	def __init__( self, *_args, **kwargs ):
 		self.sock = SocketCom("server")
 		self.rec = SocketCom("sweep")
 

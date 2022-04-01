@@ -19,7 +19,7 @@ def tr(lid):
 	return addon.getLocalizedString(lid)
 
 class LatencyGui(  xbmcgui.WindowXMLDialog  ):
-	def __init__( self, *args, **kwargs ):
+	def __init__( self, *_args, **_kwargs ):
 		self.sock = SocketCom("server")
 		self.latency_info = self.sock.call_func("get","latency")
 		self.save = self.latency_info.copy()
@@ -59,4 +59,3 @@ class LatencyGui(  xbmcgui.WindowXMLDialog  ):
 			if fid == 0:
 				self.setFocusId(1900)
 			self.setLatency()
-

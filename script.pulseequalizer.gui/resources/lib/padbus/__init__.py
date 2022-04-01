@@ -17,4 +17,3 @@ else:
 
 from .pulseerror import PulseDBusError
 from . import interface as DBusInterface
-

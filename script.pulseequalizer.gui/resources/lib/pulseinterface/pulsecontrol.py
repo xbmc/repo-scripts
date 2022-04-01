@@ -10,11 +10,14 @@
 #
 
 import threading
-
 import pulsectl
 
-from pulsectl import PulseIndexError, PulseVolumeInfo
-from helper import handle, opthandle, log
+from pulsectl import PulseVolumeInfo
+from pulsectl import PulseIndexError
+
+from basic import handle
+from basic import opthandle
+from basic import log
 
 class PulseControl():
 	def __init__( self, name = 'Pulse Control Script'):
@@ -55,7 +58,6 @@ class PulseControl():
 		finally:
 			self.lock.release()
 			for ele in result:
-
 				try:
 					sample_spec = {"format":self.sformats[ele.sample_spec.format],"rate":ele.sample_spec.rate,"channels":ele.sample_spec.channels}
 					ele.sample_spec = sample_spec
@@ -86,7 +88,7 @@ class PulseControl():
 				result.sample_spec = sample_spec
 			except AttributeError: pass
 			except Exception as e: opthandle(e)
-			return result
+		return result
 
 	def get_server_info(self):
 		self.lock.acquire()
@@ -135,11 +137,3 @@ class PulseControl():
 
 	def get_sink_channel(self, index):
 		return self.get_info("sink",index).channel_list
-
-	#
-	# play sound
-	#
-
-	def play_sample(self, name, sink=None, volume=1.0, proplist_str=None):
-		self.pulse.play_sample(name, sink)
-

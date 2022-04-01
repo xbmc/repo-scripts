@@ -10,9 +10,10 @@
 #	or (at your option) any later version.
 #
 #
+
 import re
 
-from helper import handle
+from basic import handle
 
 class Spectrum():
 	def __init__(self, freq_db = []):
@@ -310,4 +311,3 @@ class Spectrum():
 		self.minval = minval
 
 		return self
-

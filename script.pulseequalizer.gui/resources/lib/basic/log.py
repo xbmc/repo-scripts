@@ -11,11 +11,11 @@
 
 try: import xbmc
 except Exception:
-	# this is the python service, running independent of kodi
+	# this is the python service, started outside from kodi
 	# so to log into kodi-log, we need to send the log info to kodi-addon-service.py
+	import sys
 	import socket
-	import pickle
-	from helper.path import path_socket
+	from .path import path_pipe
 
 	# as we do not have access to xbmc import, we need to fake it.
 	class xbmc():
@@ -26,29 +26,53 @@ except Exception:
 		LOGNONE = 5
 		LOGWARNING = 2
 
-		sock_name = path_socket + "kodi.0"
+		sock_name = path_pipe + "kodi.0"
 
 		@staticmethod
 		def log(text, level):
-			msg = pickle.dumps(["write","log",[text,level]], protocol=2)
+			msg = str(["write","log",["s"+text[1:],level]])
+			if sys.version_info[0] > 2:
+				msg = bytes(msg,"utf-8")
 			try:
 				s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 				s.settimeout(1.0)
 				s.connect(xbmc.sock_name)
 				s.send(msg)
 				s.close()
-			except Exception:
-				# no place where we can log the error
-				# if we arrive here, there are lots of other problems, then
-				# so throw this away
-				pass
+			except OSError: pass
+			except Exception as e:
+				print("{} {}".format(type(e).__name__, ",".join([str(x) for x in e.args])))
+
+'''
+PRE="s_"
+
+class xbmc():
+	LOGDEBUG = "DEBUG"
+	LOGERROR = "ERROR"
+	LOGFATAL = "FATAL"
+	LOGINFO = "INFO"
+	LOGNONE = "NONE"
+	LOGWARNING = "WARNING"
+
+	try:
+		import xbmc
+		global PRE
+		PRE="c_"
+	except Exception:
+		pass
+
+	@staticmethod
+	def log(text, level):
+		if "padb: re:" in text: return
+		text = "{}: {}{}".format(level,PRE,text)
+		with open("/var/tmp/kodi.log","a") as f: f.write(text + "\n")
+'''
 
 def log(text):
-	xbmc.log("eq: " + text, xbmc.LOGDEBUG)
+	xbmc.log("c_eq: " + text, xbmc.LOGDEBUG)
 
 def loginfo(text):
-	xbmc.log("eq: " + text, xbmc.LOGINFO)
+	xbmc.log("c_eq: " + text, xbmc.LOGINFO)
 
 def logerror(text):
-	xbmc.log("eq: " + text, xbmc.LOGERROR)
-
+	xbmc.log("c_eq: " + text, xbmc.LOGERROR)

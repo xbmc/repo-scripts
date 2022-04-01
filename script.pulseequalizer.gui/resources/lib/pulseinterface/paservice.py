@@ -24,20 +24,25 @@
 
 import sys
 import time
-import pickle
-
 import pulsectl
+
+from helper import json
+from helper import SocketCom
 
 from threading import Thread
 
-if sys.version_info[0] < 3:
-	from Queue import Queue, Empty
-else:
-	from queue import Queue, Empty
-
-from helper import SocketCom, handle, log, logerror
+from basic import handle
+from basic import log
+from basic import logerror
 
 from .pacentral import MessageCentral
+
+if sys.version_info[0] < 3:
+	from Queue import Queue
+	from Queue import Empty
+else:
+	from queue import Queue
+	from queue import Empty
 
 class PulseInterfaceService():
 	def __init__(self, gid = 0):
@@ -100,7 +105,7 @@ class PulseInterfaceService():
 
 	def on_socket_message(self, conn, msg):
 		try:
-			func,target,args = pickle.loads(msg)
+			func,target,args = json.loads(msg)
 			log("receive from socket: %s" % repr([func,target,args]))
 
 			if target == "service" and func == "stop" and args[0]== self.gid:
@@ -188,4 +193,3 @@ class PulseInterfaceService():
 			except Exception as e: handle(e)
 
 		log("stop message_dispatch")
-

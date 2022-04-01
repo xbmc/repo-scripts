@@ -8,21 +8,38 @@
 #	or (at your option) any later version.
 #
 #
+
 import xbmcgui
 import xbmcaddon
-
 import os
 import re
 import math
-import json
 import time
 
 from threading import Thread
-from helper import SocketCom, handle, opthandle, logerror, path_addon, path_tmp, path_settings, path_skin
-#from helper import log
+
+from helper import json
+from helper import SocketCom
+from helper import DynStep
+
+from basic import handle
+from basic import opthandle
+from basic import logerror
+from basic import path_addon
+from basic import path_tmp
+from basic import path_settings
+from basic import path_skin
+from basic import path_profile
+
 from time import sleep
-from skin import get_current_skin, getSkinColors, create_temp_structure
+
+from skin import get_current_skin
+from skin import get_skin_colors
+from skin import create_temp_structure
+
 from contextmenu import contextMenu
+
+#from basic import log
 
 addon = xbmcaddon.Addon()
 def tr(lid):
@@ -47,14 +64,9 @@ class EqGui(  xbmcgui.WindowXMLDialog  ):
 		self.freqs = kwargs["freqs"]
 		self.eqid = kwargs["eqid"]
 		self.desc = kwargs["desc"]
-		self.step = kwargs["step"]
+		step = kwargs["step"]
 
-		# dynamic key step management
-		self.dynstep = self.step
-		self.same_key_count = 2
-		self.last_buc = 0
-		self.last_key = time.time()
-		self.min_dt = float(1)
+		self.dyn_step = DynStep(step,5,1,3)
 
 		self.sock.call_func("set","eq_frequencies",[self.freqs])
 		self.profile = self.sock.call_func("get","eq_base_profile")
@@ -166,7 +178,7 @@ class EqGui(  xbmcgui.WindowXMLDialog  ):
 				flist.append(cur)
 		except Exception as e: opthandle(e)
 
-		fn = path_addon + path_settings + "settings.json"
+		fn = path_profile + path_settings + "settings.json"
 		try:
 			with open(fn) as f: se = json.loads(f.read())
 		except Exception: se = {}
@@ -194,34 +206,6 @@ class EqGui(  xbmcgui.WindowXMLDialog  ):
 		self.save_profile()
 		self._close()
 
-	def dynamic_step(self,buc,dt):
-		if buc == 0: return #mouse
-		if dt < float(0.1): return #fast remote
-		if self.step != 1: return #manually configured step
-
-		if dt - self.min_dt > float(0.15):
-			self.dynstep = self.step
-			self.same_key_count = 2
-			self.min_dt = float(1)
-
-		elif dt >= float(1):
-			self.dynstep = self.step
-			self.same_key_count = 2
-			self.min_dt = float(1)
-
-		elif buc != self.last_buc:
-			self.dynstep = self.step
-			self.same_key_count = 2
-			self.min_dt = float(1)
-
-		else:
-			if self.same_key_count == 0:
-				self.dynstep = int(round(dt * 15))
-			else: self.same_key_count -= 1
-
-		if self.min_dt > dt: self.min_dt = dt
-		self.last_buc = buc
-
 	def onAction( self, action ):
 		t = time.time()
 		aid = action.getId()
@@ -244,20 +228,19 @@ class EqGui(  xbmcgui.WindowXMLDialog  ):
 		if aid in [92,10]:
 			contextMenu(funcs = [(tr(32622),self.sel_cancel),(tr(32623),self.sel_save),(tr(32621),self.sel_edit_freq)])
 
-		self.dynamic_step(buc,t - self.last_key)
+		self.dyn_step.dynamic_step(buc)
 
 		if aid in [3,104]:
 			ctl = self.getControl(self.controlId)
-			pos = ctl.getInt()+self.dynstep
+			pos = ctl.getInt()+self.dyn_step.dynstep
 			if pos > 100: pos = 100
 			ctl.setInt(pos,0,0,100)
 
 		if aid in [4,105]:
 			ctl = self.getControl(self.controlId)
-			pos = ctl.getInt()-self.dynstep
+			pos = ctl.getInt()-self.dyn_step.dynstep
 			if pos < 0: pos = 0
 			ctl.setInt(pos,0,0,100)
-
 
 		if aid in [3,4,104,105,106]:
 			self.setFocusId(self.controlId)
@@ -266,7 +249,7 @@ class EqGui(  xbmcgui.WindowXMLDialog  ):
 		self.last_key = t
 
 def eqBuild(**kwargs):
-	fn = path_addon + path_settings + "settings.json"
+	fn = path_profile + path_settings + "settings.json"
 	try:
 		with open(fn) as f: se = json.loads(f.read())
 		freqs = se["freqs"]
@@ -298,7 +281,7 @@ def eqBuild(**kwargs):
 	#	get skin color scheme
 	#
 
-	colors = getSkinColors(skincol)
+	colors = get_skin_colors(skincol)
 
 	#
 	#	prepare template
@@ -355,4 +338,3 @@ def eqDialog(**kwargs):
 		if not ui.reopen:
 			os.remove(fn_path_dialog + fn_dialog_name)
 			break
-

@@ -8,12 +8,23 @@
 #	or (at your option) any later version.
 #
 #
+
 import os
-import json
 import shutil
 
-from helper import handle, infhandle, opthandle, log, path_addon, path_filter
+from helper.fjson import json
+
+from basic import handle
+from basic import infhandle
+from basic import opthandle
+from basic import log
+from basic import path_filter
+from basic import path_masterprofile
+from basic import path_profile
+from basic import path_settings
+
 from .spectrum import Spectrum
+
 from .specgroup import SpecGroup
 
 ## first one must be flat as it is used as filter for room correction
@@ -43,8 +54,11 @@ class SpecManager():
 		self.profile = None
 		self.profiles = {}
 
-		self.spec_path = path_addon + path_filter
+		self.spec_path = path_masterprofile + path_filter
 		if not os.path.exists(self.spec_path): os.makedirs(self.spec_path)
+
+		self.prof_path = path_profile + path_settings
+		if not os.path.exists(self.prof_path): os.makedirs(self.prof_path)
 
 	def import_mic_file(self,fn):
 		name = os.path.split(fn)
@@ -70,6 +84,8 @@ class SpecManager():
 	def get_fil_specs(self):
 		log(self.spec_path)
 		result = []
+		if not os.path.exists(self.spec_path):
+			os.makedirs(self.spec_path)
 		files = os.listdir(self.spec_path)
 
 		for f in files:
@@ -146,13 +162,15 @@ class SpecManager():
 		for name,preamp,freq_db in presets[1:]:
 			self.profiles[name] = [preamp, freq_db]
 
-		fn = self.spec_path + "profiles.json"
+		fn = self.prof_path + "profiles.json"
 		with open(fn, "w") as f: f.write(json.dumps(self.profiles))
 
 	def profile_file_load(self):
-		fn = self.spec_path + "profiles.json"
+		fn = self.prof_path + "profiles.json"
 		try:
 			with open(fn) as f: self.profiles = json.loads(f.read())
+			if not isinstance(self.profiles,dict):
+				self.profiles={}
 		except IOError: self.profiles = {}
 		except Exception as e:
 			infhandle(e)
@@ -178,7 +196,7 @@ class SpecManager():
 		if self.profile is None: self.set_profile_default()
 		self.profiles[name] = [self.profile.preamp, self.profile.spec.freq_db]
 
-		fn = self.spec_path + "profiles.json"
+		fn = self.prof_path + "profiles.json"
 		with open(fn, "w") as f: f.write(json.dumps(self.profiles))
 
 	def profiles_get(self):
@@ -193,7 +211,7 @@ class SpecManager():
 			del self.profiles[name]
 		except Exception as e: opthandle(e)
 
-		fn = self.spec_path + "profiles.json"
+		fn = self.prof_path + "profiles.json"
 		with open(fn, "w") as f: f.write(json.dumps(self.profiles))
 
 	def calc_filter_freq(self, spec, filter_rate, sample_rate):
@@ -232,4 +250,3 @@ class SpecManager():
 		log("%s, number of channels: %s" % (info, len(coefs)))
 
 		return self.filter_freq, preamp, coefs
-
