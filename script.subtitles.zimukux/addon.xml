@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.1" provider-name="pizzamx">
+<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.5" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -20,6 +20,11 @@
             <fanart>resources/fanart.png</fanart>
         </assets>
         <news>
+v0.1.5(2022/4/22)
+- Adaption made for Zimuku's new anti-spoofing mechanism
+- Misc. bug fix and code tweaks
+- Is COVID-19 gonna last forever?
+
 v0.1.1(2021/6/21)
 - Rename addon to script.subtitles.zimukux
 
