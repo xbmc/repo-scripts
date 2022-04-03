@@ -2,7 +2,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-from common import settings, playCount, sleepNotify, stopPlayback, translate
+from common import settings, playCount, sleepNotify, stopPlayback, translate, checkNotify
 
 pos = 0
 count = 0 
@@ -17,6 +17,7 @@ settings('extime', '0')
 asevlog = settings('asevlog')
 settings('notifyset', 'no')
 settings('varextnotify', 'no')
+checkNotify()
 
 xbmc.log("Autostop addon service started." , xbmc.LOGINFO)
   

@@ -37,7 +37,7 @@ msgid "Sleep Timer Pause Adjustment"
 msgstr ""
 
 msgctxt "#30305"
-msgid "Sleep Timer Notification 0-180 (seconds)"
+msgid "Sleep Timer Notification 0-600 (seconds)"
 msgstr ""
 
 msgctxt "#30306"
@@ -98,6 +98,10 @@ msgstr ""
 
 msgctxt "#30320"
 msgid "Autostop stopped current playback: "
+msgstr ""
+
+msgctxt "#30321"
+msgid "Autostop sleep timer and notification timer cannot be equal.  Notification timer set to 300 seconds. "
 msgstr ""
 
 msgctxt "#30501"

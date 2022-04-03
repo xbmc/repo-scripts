@@ -54,6 +54,8 @@
 							<option>60</option>
 							<option>120</option>
 							<option>180</option>
+							<option>300</option>
+							<option>600</option>
 						</options>
 					</constraints>
 					<control type="spinner" format="string"/>

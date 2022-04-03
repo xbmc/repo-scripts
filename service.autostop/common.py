@@ -6,6 +6,8 @@ import time
 
 msgdialogprogress = xbmcgui.DialogProgress()
 addon = xbmcaddon.Addon()
+addon_path = addon.getAddonInfo("path")
+addon_icon = addon_path + '/resources/icon.png'
 notifycount = 0
 
 def translate(text):
@@ -92,8 +94,7 @@ def sleepNotify(plcount, plstoptime, plflag, plnotify, plextend, asevlog, paflag
                 dialog = xbmcgui.Dialog()
                 mgenlog = translate(30309) + extmins + translate(30313)
                 xbmc.log(mgenlog, xbmc.LOGINFO)
-                dialog.notification(translate(30310), mgenlog, \
-                xbmcgui.NOTIFICATION_INFO, 3000)
+                dialog.notification(translate(30310), mgenlog, addon_icon, 3000)
                 settings('notifyset', 'no')                     # Clear notification flag
     elif notifyset == 'yes' and plflag == 0 and paflag == 0:                    
         msgdialogprogress.close()   
@@ -152,7 +153,7 @@ def stopPlayback(notifymsg, logmsg):                            # Function to st
         time.gmtime(pos))
         xbmc.log(mgenlog, xbmc.LOGINFO)
         dialog = xbmcgui.Dialog()
-        dialog.notification(notifymsg, mgenlog, xbmcgui.NOTIFICATION_INFO, 5000)
+        dialog.notification(notifymsg, mgenlog, addon_icon, 5000)
         if settings('screensaver') == 'true':                   #  Active screensaver if option selected
             xbmc.executebuiltin('ActivateScreensaver')
         settings('notifyset', 'no')                             # Clear notification flag
@@ -182,5 +183,20 @@ def checkTime(plstoptime, plcount, asevlog):                    # Calculate rema
         return '-1'
 
     
+def checkNotify():                                              # Verify plstop and plnotify are both 10 minutes
+
+    try:
+        plnotify = int(settings('plnotify'))
+        plstoptime = int(settings('plstop')) 
+
+        if plnotify == plstoptime * 60:
+            settings('plnotify', '300')                         # Stop timer and notification timer cannot be the same
+            notifymsg = translate(30310)
+            mgenlog = translate(30321)
+            xbmc.log(mgenlog, xbmc.LOGINFO)
+            dialog = xbmcgui.Dialog()
+            dialog.notification(notifymsg, mgenlog, addon_icon, 5000)
+    except:
+        xbmc.log('Autostop error processing checkNotify comparison.', xbmc.LOGINFO)                            
 
 
