@@ -1,3 +1,7 @@
+v2.0.9
+- separate "day" and "night" weather codes when mapping to kodi built-in icons
+- return current barometer data
+
 v2.0.8
 - send "shortForecast" as Outlook, and "detailedForecast" as DetailedOutlook because other always have short Outlooks
 

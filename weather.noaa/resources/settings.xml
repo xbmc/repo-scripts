@@ -1019,7 +1019,7 @@
 						<options>
 							<option label="api.weather.gov">api.weather.gov</option>
 							<option label="forecast.weather.gov">forecast.weather.gov</option>
-<!-- 							<option label="preview-api.weather.gov (beta)">preview-api.weather.gov</option> -->
+							<option label="preview-api.weather.gov (beta)">preview-api.weather.gov</option>
 						</options>
 						<allowempty>true</allowempty>
 					</constraints>
