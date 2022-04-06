@@ -4,14 +4,15 @@ msgstr ""
 "Project-Id-Version: script.module.inputstreamhelper\n"
 "Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
 "POT-Creation-Date: 2013-11-18 16:15+0000\n"
-"PO-Revision-Date: 2019-11-27 15:50+0100\n"
+"PO-Revision-Date: 2022-02-09 00:40+0100\n"
 "Language-Team: Croatian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"Last-Translator: arvvoid\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
+"X-Generator: Poedit 2.3\n"
 
 msgctxt "#30001"
 msgid "Information"
@@ -19,7 +20,7 @@ msgstr "Informacije"
 
 msgctxt "#30002"
 msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
-msgstr "Ovaj dodatak, za reprodukciju, se oslanja na vlasnički modul za dešifriranje [B]Widevine CDM[/B]"
+msgstr "Ovaj dodatak koristi [B]Widevine CDM[/B] vlasnički zaštićeni modul dekôdiranja za reprodukciju."
 
 msgctxt "#30004"
 msgid "Error"
@@ -27,87 +28,87 @@ msgstr "Greška"
 
 msgctxt "#30005"
 msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
-msgstr "Došlo je do pogreške prilikom instaliranja [B]Widevine CDM[/B]. Omogućite evidentiranje pogrešaka (debug logging) i podnesite izvještaj o pogrešci na:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr "Došlo je do greške pri [B]Widevine CDM[/B] instalaciji. Omogućite zapisivanje grešaka i prijavite grešku na:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
 msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "Zbog prava distribucije, [B]Widevine CDM[/B] treba izvući iz preslike za oporavak Chrome OS-a. Za ovaj je postupak potrebno najmanje [B]{diskspace}[/B] slobodnog prostora na disku. Želite li nastaviti?"
+msgstr "Zbog distribucijskih prava, [B]Widevine CDM[/B] je potrebno izdvojiti iz slike oporavka Chrome OS-a. Ovaj postupak zahtijeva najmanje [B]{diskspace}[/B] slobodnog diskovnog prostora. Želite li nastaviti?"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
-msgstr "[B]Widevine CDM[/B] nažalost nije dostupan za ovu arhitekturu sustava ([B]{arch}[/B])."
+msgstr "[B]Widevine CDM[/B] nažalost nije dostupan na ([B]{arch}[/B]) arhitekturi sustava."
 
 msgctxt "#30008"
 msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
-msgstr "[B]{addon}[/B] nedostaje na vašoj Kodi instalaciji. Ovaj je dodatak potreban za reprodukciju ovog sadržaja."
+msgstr "[B]{addon}[/B] nedostaje u vašoj Kodi instalaciji. Ovaj dodatak je potreban za reprodukciju ovog sadržaja."
 
 msgctxt "#30009"
 msgid "[B]{addon}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{addon}[/B]?"
-msgstr "[B]{addon}[/B] nije omogućen. Ovaj dodatak potreban je za reprodukciju ovog sadržaja.[CR][CR]Želite li omogućiti [B]{addon}[/B]?"
+msgstr "[B]{addon}[/B] nije omogućen. Ovaj dodatak je potreban za reprodukciju ovog sadržaja.[CR][CR]Želite li ga omogućiti [B]{addon}[/B]?"
 
 msgctxt "#30010"
 msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] content playback."
-msgstr "Potreban je [B]Kodi {verzija}[/B] ili noviji za reprodukciju sadržaja preko [B]Widevine CDM[/B]."
+msgstr "[B]Kodi {version}[/B] ili noviji je potreban za reprodukciju [B]Widevine CDM[/B] sadržaja."
 
 msgctxt "#30011"
 msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
-msgstr "[B]Widevine CDM[/B] ne podržava ovaj operativni sustav ([B]{os}[/B]) ."
+msgstr "[B]Widevine CDM[/B] ne podržava trenutni ([B]{os}[/B]) operativni sustav."
 
 msgctxt "#30012"
 msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
-msgstr "Verzija Kodi-a za Windows Store ne podržava [B]Widevine CDM[/B].[CR][CR]Molimo koristite instalacijski program sa kodi.tv."
+msgstr "Windows Store inačica Kodija ne podržava [B]Widevine CDM[/B].[CR][CR]Stoga koristite instalacijski program s kodi.tv."
 
 msgctxt "#30013"
 msgid "Failed to retrieve [B]{filename}[/B]."
-msgstr "Nemoguće dohvatiti [B]{filename}[/B]."
+msgstr "Neuspjelo [B]{filename}[/B] preuzimanje."
 
 msgctxt "#30014"
 msgid "Download in progress..."
-msgstr "Preuzimanje u tijeku…"
+msgstr "Preuzimanje u tijeku..."
 
 msgctxt "#30015"
 msgid "Downloading [B]{filename}[/B]..."
-msgstr "Preuzimanje [B]{filename}[/B]…"
+msgstr "Preuzimam [B]{filename}[/B]..."
 
 msgctxt "#30016"
 msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
-msgstr "Nije uspjelo izdvajanje [B]Widevine CDM[/B]-a iz zip datoteke."
+msgstr "Neuspjelo [B]Widevine CDM[/B] raspakiravanje iz zip datoteke."
 
 msgctxt "#30017"
 msgid "[B]{addon}[/B] {version} or later is required to play this content."
-msgstr "[B]{addon}[/B] {verzija} ili novija verzija potrebna je za reprodukciju ovog sadržaja."
+msgstr "[B]{addon}[/B] {version} ili novija inačica je potrebna za reprodukciju ovog sadržaja."
 
 msgctxt "#30018"
 msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{diskspace}[/B] and try again."
-msgstr "Nemate dovoljno slobodnog prostora na disku da biste instalirali [B]Widevine CDM[/B]. Oslobodite najmanje [B]{diskspace}[/B] i pokušajte ponovo."
+msgstr "Nedovoljno slobodnog diskovnog prostora za [B]Widevine CDM[/B] instalaciju. Oslobodite najmanje [B]{diskspace}[/B] i pokušajte ponovno."
 
 msgctxt "#30019"
 msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B] for ARM devices."
-msgstr "[B]Widevine CDM[/B] za ARM uređaje ne podržava ovaj operativni sustav ([B]{os}[/B]) ."
+msgstr "[B]Widevine CDM[/B] ne podržava trenutni ([B]{os}[/B]) operativni sustav na ARM uređajima."
 
 msgctxt "#30020"
 msgid "[B]'{command1}'[/B] or [B]'{command2}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
-msgstr "Naredba [B]’{command1}’[/B] ili [B]’{command2}’[/B] treba postojati na sustavu za otpakiranje [B]Widevine CDM[/B]-a."
+msgstr "[B]’{command1}’[/B] ili [B]’{command2}’[/B] naredbe moraju postojati na vašem sustavu za [B]Widevine CDM[/B] raspakiravanje."
 
 msgctxt "#30021"
 msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
-msgstr "Naredba [B]’{command}’[/B] treba postojati na sustavu za otpakiranje [B]Widevine CDM[/B]-a."
+msgstr "[B]’{command}’[/B] naredba mora postojati na vašem sustavu za [B]Widevine CDM[/B] raspakiravanje."
 
 msgctxt "#30022"
 msgid "Downloading the Chrome OS recovery image..."
-msgstr "Preuzimanje Chrome OS preslike za oporavak …"
+msgstr "Preuzimanje Chrome OS slike oporavka..."
 
 msgctxt "#30023"
 msgid "Download completed!"
-msgstr "Preuzimanje je dovršeno!"
+msgstr "Preuzimanje završeno!"
 
 msgctxt "#30024"
 msgid "The installation now needs to unzip, mount and extract [B]Widevine CDM[/B] from the recovery image.[CR][CR]This process may take up to ten minutes to complete."
-msgstr "Instalacija sada treba raspakirati, montirati i izdvojiti [B]Widevine CDM[/B] iz preslike za oporavak.[CR][CR]Ovaj postupak može trajati do deset minuta."
+msgstr "Instalacija sada treba raspakirati, montirati i izdvojiti [B]Widevine CDM[/B] iz slike oporavaka.[CR][CR]Ovaj proces može potrajati do deset minuta."
 
 msgctxt "#30025"
 msgid "Acquiring EULA."
-msgstr "Preuzimam EULA."
+msgstr "EULA preuzimanje..."
 
 msgctxt "#30026"
 msgid "Widevine CDM EULA"
@@ -119,43 +120,35 @@ msgstr "Prihvaćam"
 
 msgctxt "#30028"
 msgid "Cancel"
-msgstr "Otkaži"
+msgstr "Odustani"
 
 msgctxt "#30029"
 msgid "OK"
-msgstr "OK"
+msgstr "U redu"
 
 msgctxt "#30030"
 msgid "The installation may need to run the following commands with root permissions: [B]{cmds}[/B]."
-msgstr "Instalacija će možda trebati pokrenuti sljedeće naredbe s ‘root’ dozvolama: [B]{cmds}[/B]."
+msgstr "Instalacija će možda trebati pokrenuti sljedeće naredbe s korijenskim ovlastima: [B]{cmds}[/B]."
 
 msgctxt "#30031"
 msgid "An update of [B]Widevine CDM[/B] is required to play this content."
-msgstr "Za reprodukciju ovog sadržaja potrebno je ažurirati [B]Widevine CDM[/B]."
+msgstr "Za reprodukciju ovog sadržaja potrebno je nadopuniti [B]Widevine CDM[/B]."
 
 msgctxt "#30032"
 msgid "Your system is missing the following libraries required by Widevine CDM: [B]{libs}[/B]. Install the libraries to play this content."
-msgstr "U vašem sustavu nedostaju sljedeće programske knjižnice koje traži Widevine CDM: [B]{libs}[/B]. Instalirajte programske knjižnice za reprodukciju ovog sadržaja."
+msgstr "U vašem sustavu nedostaju sljedeće biblioteke potrebne za Widevine CDM: [B]{libs}[/B]. Instalirajte biblioteke za reprodukciju ovog sadržaja."
 
 msgctxt "#30033"
 msgid "There is an update available for [B]Widevine CDM[/B]."
-msgstr "Dostupno je ažuriranje za [B]Widevine CDM[/B]."
+msgstr "Dostupna je nadopuna za [B]Widevine CDM[/B]."
 
 msgctxt "#30034"
 msgid "Update"
-msgstr "Ažuriraj"
-
-msgctxt "#30035"
-msgid "[B]loop[/B] is still loaded"
-msgstr "[B]petlja[/B] je još učitana"
-
-msgctxt "#30036"
-msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr "Oslobodite resurs pokretanjem [B]modprobe -r petlje[/B] u terminalu."
+msgstr "Nadopuni"
 
 msgctxt "#30037"
 msgid "Success!"
-msgstr "Uspjeh!"
+msgstr "Uspješno!"
 
 msgctxt "#30038"
 msgid "Install Widevine"
@@ -163,11 +156,11 @@ msgstr "Instaliraj Widevine"
 
 msgctxt "#30039"
 msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
-msgstr "[B]Widevine CDM[/B] trenutno nije dostupan izvorno na ARM64. Prebacite se na 32-bitni korisnički prostor za podršku [B]Widevine CDM[/B]-a."
+msgstr "[B]Widevine CDM[/B] trenutno nije izvorno dostupan na ARM64 arhitekturi. Prebacite se na 32-bitni korisnički prostor za [B]Widevine CDM[/B] podršku."
 
 msgctxt "#30040"
 msgid "Update available"
-msgstr "Dostupno ažuriranje"
+msgstr "Nadopuna dostupna"
 
 msgctxt "#30041"
 msgid "Widevine CDM is required"
@@ -175,47 +168,47 @@ msgstr "Potreban je Widevine CDM"
 
 msgctxt "#30042"
 msgid "Using a SOCKS proxy requires the PySocks library (script.module.pysocks) installed."
-msgstr "Korištenje SOCKS proxy zahtijeva instaliranje PySocks programske knjižnice (script.module.pysocks)."
+msgstr "Korištenje SOCKS proxyja zahtijeva instaliranu PySocks biblioteku (script.module.pysocks)."
 
 msgctxt "#30043"
 msgid "Extracting Widevine CDM"
-msgstr "Ekstrakcija Widevine CDM"
+msgstr "Widevine CDM raspakiravnje"
 
 msgctxt "#30044"
 msgid "Preparing downloaded image..."
-msgstr "Priprema preuzete preslike …"
+msgstr "Pripremanje preuzete slike..."
 
 msgctxt "#30045"
 msgid "Uncompressing image..."
-msgstr "Raspakiranje preslike u tijeku…"
+msgstr "Raspakiravanje slike..."
 
 msgctxt "#30046"
 msgid "This may take several minutes."
-msgstr "Ovo bi moglo potrajati nekoliko minuta."
+msgstr "Ovo može potrajati nekoliko minuta."
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
-msgstr "[I]Molim vas, ne prekidajte ovaj postupak.[/I]"
+msgstr "[I]Ne prekidajte ovaj proces.[/I]"
 
 msgctxt "#30048"
 msgid "Extracting Widevine CDM from image..."
-msgstr "Ekstrakcija Widevine CDM iz preslike…"
+msgstr "Widevine CDM raspakiravanje iz slike..."
 
 msgctxt "#30049"
 msgid "Installing Widevine CDM..."
-msgstr "Instaliram Widevine CDM…"
+msgstr "Widevine CDM instalacija..."
 
 msgctxt "#30050"
 msgid "Finishing..."
-msgstr "Završavanje …"
+msgstr "Završavanje..."
 
 msgctxt "#30051"
 msgid "[B]Widevine CDM[/B] successfully installed."
-msgstr "[B]Widevine CDM[/B] uspješno je instaliran."
+msgstr "[B]Widevine CDM[/B] je uspješno instaliran."
 
 msgctxt "#30052"
 msgid "[B]Widevine CDM[/B] successfully removed."
-msgstr "[B]Widevine CDM[/B] uspješno je uklonjen."
+msgstr "[B]Widevine CDM[/B] je uspješno uklonjen."
 
 msgctxt "#30053"
 msgid "[B]Widevine CDM[/B] not found."
@@ -227,91 +220,85 @@ msgstr "onemogućeno"
 
 msgctxt "#30055"
 msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
-msgstr "U trenutnoj privremenoj mapi nema dovoljno slobodnog prostora na disku. Želite li odrediti neku drugu mapu koja bi se privremeno koristila za presliku za oporavak Chrome OS-a (npr. Na USB-u)?"
+msgstr "Nedovoljno je slobodnog diskovnog prostora u trenutnom privremenom direktoriju. Želite li odrediti drugi direktorij za privremeno korištenje slike oporavka Chrome OS-a (npr. na USB-u)?"
 
 msgctxt "#30056"
 msgid "No backups found!"
-msgstr "Nisu pronađene sigurnosne kopije!"
+msgstr "Nema pronađenih sigurnosnih kopija!"
 
 msgctxt "#30057"
 msgid "Choose a backup to restore"
-msgstr "Odaberite sigurnosnu kopiju za vraćanje"
+msgstr "Odaberite sigurnosnu kopiju za obnovu"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
-
-msgctxt "#30059"
-msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
-msgstr ""
+msgstr "Preostalo vrijeme: {mins:d}:{secs:02d}"
 
 msgctxt "#30060"
 msgid "Identifying wanted partition..."
-msgstr ""
+msgstr "Identifikacija željene particije..."
 
 msgctxt "#30061"
 msgid "Scanning the filesystem for the Widevine CDM..."
-msgstr ""
+msgstr "Pretraživanje Widevine CDM-a na datotečnom sustavu..."
 
 msgctxt "#30062"
 msgid "Widevine CDM found, analyzing..."
-msgstr ""
+msgstr "Widevine CDM pronađen, analiziranje..."
 
 msgctxt "#30063"
 msgid "Could not make the request. Your internet may be down."
-msgstr ""
+msgstr "Nemoguće slanje zahtjeva. Vaš pristup internetu je možda nedostupan."
 
 msgctxt "#30064"
 msgid "Could not finish the download."
-msgstr ""
+msgstr "Nemoguć završetak preuzimanja."
 
 msgctxt "#30065"
 msgid "Shall we try again?"
-msgstr ""
+msgstr "Hoćemo li pokušati ponovno?"
 
-
-### INFORMATION DIALOG
+# ## INFORMATION DIALOG
 msgctxt "#30800"
 msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
-msgstr ""
+msgstr "[B]Kodi[/B] inačice [B]{version}[/B] je pokrenut unutar [B]{system}[/B] sustava na [B]{arch}[/B] arhitekturi."
 
 msgctxt "#30810"
 msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
-msgstr ""
+msgstr "[B]InputStream Helper[/B] je [B]{version}[/B] {state}inačice"
 
 msgctxt "#30811"
 msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
-msgstr ""
+msgstr "[B]InputStream Adaptive[/B] je [B]{version}[/B] {state} inačice"
 
 msgctxt "#30820"
 msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
-msgstr ""
+msgstr "[B]Widevine CDM[/B] je [B]ugrađen u Androidu[/B]"
 
 msgctxt "#30821"
 msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
-msgstr ""
+msgstr "[B]Widevine CDM[/B] je [B]{version}[/B] inačice a instaliran je [B]{date}[/B]"
 
 msgctxt "#30822"
 msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
-msgstr ""
+msgstr "Izdvojen je iz Chrome OS slike [B]{name}[/B] s [B]{version}[/B] inačice"
 
 msgctxt "#30823"
 msgid "It was last checked for updates on [B]{date}[/B]"
-msgstr ""
+msgstr "Posljednja provjera nadopune je [B]{date}[/B]"
 
 msgctxt "#30824"
 msgid "It is installed at [B]{path}[/B]"
-msgstr ""
+msgstr "Instaliran je u [B]{path}[/B]"
 
 msgctxt "#30830"
 msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
-msgstr "Molim prijavite probleme na: [COLOR yellow]{url}[/COLOR]"
+msgstr "Probleme prijavite na: [COLOR yellow]{url}[/COLOR]"
 
-
-### SETTINGS
+# ## SETTINGS
 msgctxt "#30900"
 msgid "Expert"
-msgstr "Stručnjak"
+msgstr "Stručno"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
@@ -323,11 +310,11 @@ msgstr "Onemogući InputStream Helper"
 
 msgctxt "#30904"
 msgid "[I]When disabled, DRM playback may fail![/I]"
-msgstr "[I]Kada je onemogućeno, reprodukcija DRM-a možda neće uspjeti![/I]"
+msgstr "[I]Kada je onemogućeno, moguć je neuspjeh reprodukcije DRM zaštićenog sadržaja![/I]"
 
 msgctxt "#30905"
 msgid "Update frequency in days"
-msgstr "Učestalost ažuriranja u danima"
+msgstr "Učestalost nadopuna u danima"
 
 msgctxt "#30907"
 msgid "Temporary download directory"
@@ -335,11 +322,11 @@ msgstr "Privremeni direktorij preuzimanja"
 
 msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
-msgstr "Ponovno instaliraj Widevine CDM…"
+msgstr "(Ponovno) instaliraj Widevine CDM biblioteku..."
 
 msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
-msgstr "Ukloni Widevine CDM…"
+msgstr "Ukloni Widevine CDM biblioteku..."
 
 msgctxt "#30913"
 msgid "Number of backups"
@@ -347,4 +334,4 @@ msgstr "Broj sigurnosnih kopija"
 
 msgctxt "#30915"
 msgid "Restore Widevine CDM library..."
-msgstr "Vrati sigurnosnu kopiju Widevine CDM-a..."
+msgstr "Obnovi Widevine CDM biblioteku..."

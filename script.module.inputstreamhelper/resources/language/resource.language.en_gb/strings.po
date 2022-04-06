@@ -257,6 +257,14 @@ msgctxt "#30065"
 msgid "Shall we try again?"
 msgstr ""
 
+msgctxt "#30066"
+msgid "Should the resource containing the Widevine library be downloaded from the URL specified in settings?\nNo means specifying the resource locally."
+msgstr ""
+
+msgctxt "#30067"
+msgid "Specify the resource Widevine should be extracted from."
+msgstr ""
+
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
@@ -335,4 +343,16 @@ msgstr ""
 
 msgctxt "#30915"
 msgid "Restore Widevine CDM library..."
+msgstr ""
+
+msgctxt "#30950"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#30953"
+msgid "Install Widevine from:"
+msgstr ""
+
+msgctxt "#30955"
+msgid "Install Widevine CDM library from specific source..."
 msgstr ""
