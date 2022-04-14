@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32100">
+        <setting label="32110" type="enum" id="sysvolstep" values="1|2|3|4|5|6|7|8|9|10"/>
+        <setting label="32111" type="enum" id="equalstep" values="1|2|3|4|5|6|7|8|9|10"/>
+        <setting label="32112" type="enum" id="importstep" values="1|2|3|4|5|6|7|8|9|10"/>
+        <setting label="32113" type="text" id="frequencies" default="64,125,250,500,1k,2k,4k,8k,16k" />
+    </category>
+    <category label="32101">
+        <setting label="32114" type="bool" id="crashlog" default="false"/>
+        <setting label="32115" type="bool" id="servermode" default="true"/>
+    </category>
+</settings>

@@ -1,0 +1,278 @@
+{
+    "menu": {
+        "cmd": "RunScript(script.pulseequalizer.gui,menu)",
+        "name": 32700,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "profile": {
+        "cmd": "RunScript(script.pulseequalizer.gui,profile)",
+        "name": 32701,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "equalizer": {
+        "cmd": "RunScript(script.pulseequalizer.gui,equalizer)",
+        "name": 32702,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "device": {
+        "cmd": "RunScript(script.pulseequalizer.gui,device)",
+        "name": 32703,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "correction": {
+        "cmd": "RunScript(script.pulseequalizer.gui,correction)",
+        "name": 32704,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "latency": {
+        "cmd": "RunScript(script.pulseequalizer.gui,latency)",
+        "name": 32705,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "CodecInfo": {
+        "cmd": "CodecInfo",
+        "name": 32706,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "PlayPause": {
+        "cmd": "PlayPause",
+        "name": 32707,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "FullScreen": {
+        "cmd": "FullScreen",
+        "name": 32708,
+        "in": [
+            "global"
+        ],
+        "key": 0
+    },
+    "ContextMenu": {
+        "cmd": "ContextMenu",
+        "name": 32709,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "Powerdown": {
+        "cmd": "Powerdown",
+        "name": 32710,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "Reboot": {
+        "cmd": "Reboot",
+        "name": 32711,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "Suspend": {
+        "cmd": "Suspend",
+        "name": 32712,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "Quit": {
+        "cmd": "Quit",
+        "name": 32713,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "TimerStop": {
+        "cmd": "AlarmClock('stop',Action(Stop))",
+        "name": 32714,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "Screenshot": {
+        "cmd": "Screenshot",
+        "name": 32715,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "volup": {
+        "cmd": "RunScript(script.pulseequalizer.gui,volup)",
+        "name": 32716,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "voldown": {
+        "cmd": "RunScript(script.pulseequalizer.gui,voldown)",
+        "name": 32717,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "Info": {
+        "cmd": "Info",
+        "name": 32718,
+        "in": [
+            "global",
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "ShowSubtitles": {
+        "cmd": "ShowSubtitles",
+        "name": 32719,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "AspectRatio": {
+        "cmd": "AspectRatio",
+        "name": 32720,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "AudioNextLanguage": {
+        "cmd": "AudioNextLanguage",
+        "name": 32721,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "SkipNext": {
+        "cmd": "SkipNext",
+        "name": 32722,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    },
+    "SkipPrevious": {
+        "cmd": "SkipPrevious",
+        "name": 32723,
+        "in": [
+            "fullscreenvideo",
+            "fullscreenradio",
+            "fullscreenlivetv",
+            "visualisation"
+        ],
+        "key": 0
+    }
+}

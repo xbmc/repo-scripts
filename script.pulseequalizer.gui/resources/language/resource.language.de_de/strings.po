@@ -1,0 +1,892 @@
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_de\n"
+
+msgctxt "#32000"
+msgid "Equalizer"
+msgstr "Klangregelung"
+
+msgctxt "#32001"
+msgid "No playback active"
+msgstr "Keine Wiedergabe aktiv"
+
+msgctxt "#32003"
+msgid "The equalizer is currently disabled for this device. Enable it?"
+msgstr "Die Klangregelung für dieses Ausgabegerät ist momentan ausgeschaltet. Soll sie eingeschaltet werden?"
+
+msgctxt "#32004"
+msgid "Error"
+msgstr "Fehler"
+
+msgctxt "#32005"
+msgid "There is a problem to start the Equalizer. Please check Kodi log."
+msgstr "Es gibt ein Problem die Klangregelung zu starten. Bitte überprüfen Sie die Kodi Logdatei."
+
+msgctxt "#32006"
+msgid "Select Profile"
+msgstr "Profil auswählen"
+
+msgctxt "#32007"
+msgid "Equalizer"
+msgstr "Klangregelung"
+
+msgctxt "#32008"
+msgid "Select Output Device"
+msgstr "Wiedergabegerät wählen"
+
+msgctxt "#32009"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#32010"
+msgid "Set Latency Offset"
+msgstr "Verzögerung einstellen"
+
+msgctxt "#32011"
+msgid "Disable Equalizer"
+msgstr "Klangregelung ausschalten"
+
+msgctxt "#32012"
+msgid "Select Profile for %s"
+msgstr "Profil für %s auswählen"
+
+msgctxt "#32013"
+msgid "Select Audio Output Device"
+msgstr "Ausgabegerät auswählen"
+
+msgctxt "#32014"
+msgid "Add new Profile"
+msgstr "Neues Profil hinzufügen"
+
+msgctxt "#32015"
+msgid "Delete Profile"
+msgstr "Profil löschen"
+
+msgctxt "#32016"
+msgid "Insert predefined Profiles"
+msgstr "Standardprofile einfügen"
+
+msgctxt "#32017"
+msgid "Enter Name for new Profile"
+msgstr "Name für neues Profil eingeben"
+
+msgctxt "#32018"
+msgid "Delete Profile %s"
+msgstr "Profil %s löschen"
+
+msgctxt "#32019"
+msgid "Are you sure that you want to delete profile %s ?"
+msgstr "Sind Sie sicher, dass Sie das Profil %s löschen möchten?"
+
+msgctxt "#32020"
+msgid "Delete Profile"
+msgstr "Profil löschen"
+
+msgctxt "#32021"
+msgid "No profiles defined!"
+msgstr "Keine Profile definiert!"
+
+msgctxt "#32022"
+msgid "Latency Offset"
+msgstr "Zusätzliche Verzögerung"
+
+msgctxt "#32024"
+msgid "Kodi is playing"
+msgstr "Kodi spielt"
+
+msgctxt "#32025"
+msgid "The equalizer has not been loaded automatically. Please check log."
+msgstr "Die Klangregelung wurde nicht automatisch geladen. Bitte überprüfen Sie die Logdatei."
+
+msgctxt "#32027"
+msgid "Room Correction"
+msgstr "Raumkorrektur"
+
+msgctxt "#32028"
+msgid "Delete Correction"
+msgstr "Korrektur löschen"
+
+msgctxt "#32029"
+msgid "Edit Correction"
+msgstr "Korrektur bearbeiten"
+
+msgctxt "#32030"
+msgid "Delete Room Correction %s"
+msgstr "Raumkorrektur %s löschen"
+
+msgctxt "#32031"
+msgid "Are you sure that you want to delete the room correction %s ?"
+msgstr "Sind Sie sicher, dass Sie die Raumkorrektur %s löschen möchten?"
+
+msgctxt "#32032"
+msgid "Play Sweep"
+msgstr "Sweep abspielen"
+
+msgctxt "#32033"
+msgid "Import Correction"
+msgstr "Korrektur importieren"
+
+msgctxt "#32034"
+msgid "Profiles"
+msgstr "Profile"
+
+msgctxt "#32035"
+msgid "Cannot load pulseaudio equalizer. Is it installed on the system?     'sudo apt install pulseaudio-equalizer'"
+msgstr "Kann pulseaudio equalizer nicht laden. Ist dieser installiert?     'sudo apt install pulseaudio-equalizer'"
+
+msgctxt "#32036"
+msgid "System Volume"
+msgstr "Systemlautstärke"
+
+msgctxt "#32037"
+msgid "pre"
+msgstr "Vor"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#32101"
+msgid "Debug"
+msgstr "Debug"
+
+msgctxt "#32110"
+msgid "Volume Step Size"
+msgstr "Lautstärke Schrittweite"
+
+msgctxt "#32111"
+msgid "Equalizer Step Size"
+msgstr "Klangfilter Schrittweite"
+
+msgctxt "#32112"
+msgid "Room Correction Menu Step Size"
+msgstr "Raumkorrektur Importregler Schrittweite"
+
+msgctxt "#32113"
+msgid "Equalizer Frequencies"
+msgstr "Klangfilter Frequenzen"
+
+msgctxt "#32114"
+msgid "Crash Log"
+msgstr "Crash Log"
+
+msgctxt "#32115"
+msgid "Server Mode"
+msgstr "Server Modus"
+
+
+msgctxt "#32200"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#32201"
+msgid "Sweep"
+msgstr "Sweep"
+
+msgctxt "#32202"
+msgid "Sinus"
+msgstr "Sinus"
+
+msgctxt "#32203"
+msgid "Import"
+msgstr "Importieren"
+
+msgctxt "#32204"
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgctxt "#32400"
+msgid "Profile"
+msgstr "Profil"
+
+msgctxt "#32401"
+msgid "Room Correction"
+msgstr "Raumkorrektur"
+
+msgctxt "#32402"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#32403"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+msgctxt "#32404"
+msgid "Play"
+msgstr "Abspielen"
+
+msgctxt "#32410"
+msgid "Play Sweep"
+msgstr "Sweep abspielen"
+
+msgctxt "#32411"
+msgid "None"
+msgstr "Keine"
+
+msgctxt "#32412"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32413"
+msgid "None"
+msgstr "Keins"
+
+msgctxt "#32414"
+msgid "Select Profile for Sweep"
+msgstr "Profil für Sweep auswählen"
+
+msgctxt "#32415"
+msgid "Select Room Correction for Sweep"
+msgstr "Raumkorrektur für Sweep auswählen"
+
+msgctxt "#32416"
+msgid "Select Channel for Sweep"
+msgstr "Kanal für Sweep auswählen"
+
+msgctxt "#32417"
+msgid "Number of Repeats of the Sweep"
+msgstr "Wiederholungen für Sweep auswählen"
+
+msgctxt "#32418"
+msgid "stop"
+msgstr "Stop"
+
+
+msgctxt "#32500"
+msgid "front-left"
+msgstr "Vorne Links"
+
+msgctxt "#32501"
+msgid "front-right"
+msgstr "Vorne Rechts"
+
+msgctxt "#32502"
+msgid "rear-left"
+msgstr "Hinten Links"
+
+msgctxt "#32503"
+msgid "rear-right"
+msgstr "Hinten Rechts"
+
+msgctxt "#32504"
+msgid "front-centre"
+msgstr "Vorne Mitte"
+
+msgctxt "#32505"
+msgid "lfe"
+msgstr "Bass"
+
+msgctxt "#32506"
+msgid "side-left"
+msgstr "linke Seite"
+
+msgctxt "#32507"
+msgid "side-right"
+msgstr "rechte Seite"
+
+msgctxt "#32508"
+msgid "aux"
+msgstr "Aux"
+
+msgctxt "#32600"
+msgid "Load Measurements"
+msgstr "Lade Messungen"
+
+msgctxt "#32601"
+msgid "Select Microphone"
+msgstr "Wähle Mikrofon"
+
+msgctxt "#32602"
+msgid "Save Correction"
+msgstr "Speichere Korrektur"
+
+msgctxt "#32603"
+msgid "Microphone"
+msgstr "Mikrofon"
+
+msgctxt "#32604"
+msgid "Smooth"
+msgstr "Glätten"
+
+msgctxt "#32605"
+msgid "Volume"
+msgstr "Lautstärke"
+
+msgctxt "#32606"
+msgid "Amplify"
+msgstr "Verstärkung"
+
+msgctxt "#32607"
+msgid "Load Measurement"
+msgstr "Messung laden"
+
+msgctxt "#32608"
+msgid "Save Room Correction as"
+msgstr "Speichere Raumkorrektur als"
+
+msgctxt "#32609"
+msgid "%s already exists, overwrite?"
+msgstr "%s existiert bereits, überschreiben?"
+
+msgctxt "#32610"
+msgid "No Microphone"
+msgstr "Kein Mikrofon"
+
+msgctxt "#32611"
+msgid "Import Microphone"
+msgstr "Mikrofon importieren"
+
+msgctxt "#32612"
+msgid "unknown"
+msgstr "unbekannt"
+
+msgctxt "#32620"
+msgid "Cancel Equalizer"
+msgstr "Klangfilter abbrechen"
+
+msgctxt "#32621"
+msgid "Edit Frequencies"
+msgstr "Frequenzen bearbeiten"
+
+msgctxt "#32622"
+msgid "Undo Changes"
+msgstr "Änderung verwerfen"
+
+msgctxt "#32623"
+msgid "Save Changes"
+msgstr "Änderung speichern"
+
+msgctxt "#32700"
+msgid "PulseEqualizer"
+msgstr "PulseEqualizer"
+
+msgctxt "#32701"
+msgid "Profile"
+msgstr "Profile"
+
+msgctxt "#32702"
+msgid "Equalizer"
+msgstr "Klangfilter"
+
+msgctxt "#32703"
+msgid "Device"
+msgstr "Tongerät"
+
+msgctxt "#32704"
+msgid "Correction"
+msgstr "Korrektur"
+
+msgctxt "#32705"
+msgid "Latency"
+msgstr "Verzögerung"
+
+msgctxt "#32706"
+msgid "Codec Info"
+msgstr "Codec Info"
+
+msgctxt "#32707"
+msgid "Play Pause"
+msgstr "Play Pause"
+
+msgctxt "#32708"
+msgid "Full Screen"
+msgstr "Vollbild"
+
+msgctxt "#32709"
+msgid "Context Menu"
+msgstr "Kontextmenü"
+
+msgctxt "#32710"
+msgid "Power Down"
+msgstr "Ausschalten"
+
+msgctxt "#32711"
+msgid "Reboot"
+msgstr "Neu starten"
+
+msgctxt "#32712"
+msgid "Suspend"
+msgstr "Anhalten"
+
+msgctxt "#32713"
+msgid "Quit"
+msgstr "Verlassen"
+
+msgctxt "#32714"
+msgid "Stop Timer"
+msgstr "Stop Timer"
+
+msgctxt "#32715"
+msgid "Screenshot"
+msgstr "Bildschirmfoto"
+
+msgctxt "#32716"
+msgid "System Vol Up"
+msgstr "System lauter"
+
+msgctxt "#32717"
+msgid "System Vol Down"
+msgstr "System leiser"
+
+msgctxt "#32718"
+msgid "Info"
+msgstr "Information"
+
+msgctxt "#32719"
+msgid "Show Subtitles"
+msgstr "Zeige Untertitel"
+
+msgctxt "#32720"
+msgid "Aspect Ratio"
+msgstr "Anzeigeverhältn."
+
+msgctxt "#32721"
+msgid "Next Audio Track"
+msgstr "Nächste Tonspur"
+
+msgctxt "#32722"
+msgid "Next"
+msgstr "Nächste"
+
+msgctxt "#32723"
+msgid "Previous"
+msgstr "Voherige"
+
+msgctxt "#32750"
+msgid "Keymap"
+msgstr "Tastaturbelegung"
+
+msgctxt "#32751"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#32752"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgctxt "#32753"
+msgid "Unknown Key"
+msgstr "Unbekannte Taste"
+
+msgctxt "#32754"
+msgid "Input device not supported"
+msgstr "Eingabegerät wird nicht unterstützt"
+
+msgctxt "#32755"
+msgid "Already Used"
+msgstr "Bereits genutzt"
+
+
+
+
+msgctxt "#32800"
+msgid "back"
+msgstr "zurück"
+
+msgctxt "#32801"
+msgid "backspace"
+msgstr "Rücktaste"
+
+msgctxt "#32802"
+msgid "blue"
+msgstr "Blau"
+
+msgctxt "#32803"
+msgid "browser_back"
+msgstr "browser zurück"
+
+msgctxt "#32804"
+msgid "browser_favorites"
+msgstr "browser_Favoriten"
+
+msgctxt "#32805"
+msgid "browser_forward"
+msgstr "browser_vor"
+
+msgctxt "#32806"
+msgid "browser_home"
+msgstr "browser_home"
+
+msgctxt "#32807"
+msgid "browser_refresh"
+msgstr "browser_refresh"
+
+msgctxt "#32808"
+msgid "browser_search"
+msgstr "browser_Suche"
+
+msgctxt "#32809"
+msgid "browser_stop"
+msgstr "browser_stop"
+
+msgctxt "#32810"
+msgid "capslock"
+msgstr "capslock"
+
+msgctxt "#32811"
+msgid "clear"
+msgstr "clear"
+
+msgctxt "#32812"
+msgid "config"
+msgstr "config"
+
+msgctxt "#32813"
+msgid "contentsmenu"
+msgstr "Kontextmenü"
+
+msgctxt "#32814"
+msgid "delete"
+msgstr "löschen"
+
+msgctxt "#32815"
+msgid "display"
+msgstr "Anzeige"
+
+msgctxt "#32816"
+msgid "down"
+msgstr "runter"
+
+msgctxt "#32817"
+msgid "dvdmenu"
+msgstr "dvdmenu"
+
+msgctxt "#32818"
+msgid "eject"
+msgstr "eject"
+
+msgctxt "#32819"
+msgid "end"
+msgstr "Ende"
+
+msgctxt "#32820"
+msgid "enter"
+msgstr "enter"
+
+msgctxt "#32821"
+msgid "epg"
+msgstr "epg"
+
+msgctxt "#32822"
+msgid "epgsearch"
+msgstr "epg Suche"
+
+msgctxt "#32823"
+msgid "escape"
+msgstr "escape"
+
+msgctxt "#32824"
+msgid "fastforward"
+msgstr "schell vor"
+
+msgctxt "#32825"
+msgid "favorites"
+msgstr "Favoriten"
+
+msgctxt "#32826"
+msgid "forward"
+msgstr "vor"
+
+msgctxt "#32827"
+msgid "green"
+msgstr "Grün"
+
+msgctxt "#32828"
+msgid "guide"
+msgstr "guide"
+
+msgctxt "#32829"
+msgid "home"
+msgstr "home"
+
+msgctxt "#32830"
+msgid "homepage"
+msgstr "homepage"
+
+msgctxt "#32831"
+msgid "info"
+msgstr "Info"
+
+msgctxt "#32832"
+msgid "insert"
+msgstr "einfügen"
+
+msgctxt "#32833"
+msgid "language"
+msgstr "Sprache"
+
+msgctxt "#32834"
+msgid "launch_app1_pc_icon"
+msgstr "launch_app1_pc_icon"
+
+msgctxt "#32835"
+msgid "launch_app2_pc_icon"
+msgstr "launch_app2_pc_icon"
+
+msgctxt "#32836"
+msgid "launch_file_browser"
+msgstr "launch_file_browser"
+
+msgctxt "#32837"
+msgid "launch_mail"
+msgstr "launch_mail"
+
+msgctxt "#32838"
+msgid "launch_media_center"
+msgstr "launch_media_center"
+
+msgctxt "#32839"
+msgid "launch_media_select"
+msgstr "launch_media_select"
+
+msgctxt "#32840"
+msgid "left"
+msgstr "links"
+
+msgctxt "#32841"
+msgid "leftalt"
+msgstr "alt links"
+
+msgctxt "#32842"
+msgid "leftctrl"
+msgstr "strg links"
+
+msgctxt "#32843"
+msgid "leftshift"
+msgstr "shift links"
+
+msgctxt "#32844"
+msgid "leftwindows"
+msgstr "windows links"
+
+msgctxt "#32845"
+msgid "liveradio"
+msgstr "liveradio"
+
+msgctxt "#32846"
+msgid "livetv"
+msgstr "livetv"
+
+msgctxt "#32847"
+msgid "menu"
+msgstr "Menü"
+
+msgctxt "#32848"
+msgid "mute"
+msgstr "Stumm"
+
+msgctxt "#32849"
+msgid "mymusic"
+msgstr "mymusic"
+
+msgctxt "#32850"
+msgid "mypictures"
+msgstr "mypictures"
+
+msgctxt "#32851"
+msgid "mytv"
+msgstr "mytv"
+
+msgctxt "#32852"
+msgid "myvideo"
+msgstr "myvideo"
+
+msgctxt "#32853"
+msgid "next_track"
+msgstr "nächste_Spur"
+
+msgctxt "#32854"
+msgid "numlock"
+msgstr "numlock"
+
+msgctxt "#32855"
+msgid "numpadperiod"
+msgstr "numpadperiod"
+
+msgctxt "#32856"
+msgid "pagedown"
+msgstr "Seite runter"
+
+msgctxt "#32857"
+msgid "pageminus"
+msgstr "Seite Minus"
+
+msgctxt "#32858"
+msgid "pageplus"
+msgstr "Seite Plus"
+
+msgctxt "#32859"
+msgid "pageup"
+msgstr "Seite hoch"
+
+msgctxt "#32860"
+msgid "pause"
+msgstr "Pause"
+
+msgctxt "#32861"
+msgid "play"
+msgstr "play"
+
+msgctxt "#32862"
+msgid "play_pause"
+msgstr "play_pause"
+
+msgctxt "#32863"
+msgid "playlist"
+msgstr "playlist"
+
+msgctxt "#32864"
+msgid "power"
+msgstr "power"
+
+msgctxt "#32865"
+msgid "prev_track"
+msgstr "voherige Spur"
+
+msgctxt "#32866"
+msgid "print"
+msgstr "drucken"
+
+msgctxt "#32867"
+msgid "printscreen"
+msgstr "printscreen"
+
+msgctxt "#32868"
+msgid "record"
+msgstr "Aufnahme"
+
+msgctxt "#32869"
+msgid "recordedtv"
+msgstr "recordedtv"
+
+msgctxt "#32870"
+msgid "red"
+msgstr "Rot"
+
+msgctxt "#32871"
+msgid "return"
+msgstr "return"
+
+msgctxt "#32872"
+msgid "reverse"
+msgstr "reverse"
+
+msgctxt "#32873"
+msgid "rewind"
+msgstr "rewind"
+
+msgctxt "#32874"
+msgid "right"
+msgstr "rechts"
+
+msgctxt "#32875"
+msgid "rightctrl"
+msgstr "strg rechts"
+
+msgctxt "#32876"
+msgid "rightshift"
+msgstr "shift rechts"
+
+msgctxt "#32877"
+msgid "rightwindows"
+msgstr "windows rechts"
+
+msgctxt "#32878"
+msgid "rootmenu"
+msgstr "rootmenu"
+
+msgctxt "#32879"
+msgid "scrolllock"
+msgstr "scrolllock"
+
+msgctxt "#32880"
+msgid "select"
+msgstr "select"
+
+msgctxt "#32881"
+msgid "settings"
+msgstr "Einstellungen"
+
+msgctxt "#32882"
+msgid "skipminus"
+msgstr "skipminus"
+
+msgctxt "#32883"
+msgid "skipplus"
+msgstr "skipplus"
+
+msgctxt "#32884"
+msgid "sleep"
+msgstr "sleep"
+
+msgctxt "#32885"
+msgid "space"
+msgstr "space"
+
+msgctxt "#32886"
+msgid "start"
+msgstr "start"
+
+msgctxt "#32887"
+msgid "stop"
+msgstr "stop"
+
+msgctxt "#32888"
+msgid "subtitle"
+msgstr "subtitle"
+
+msgctxt "#32889"
+msgid "tab"
+msgstr "tab"
+
+msgctxt "#32890"
+msgid "teletext"
+msgstr "teletext"
+
+msgctxt "#32891"
+msgid "text"
+msgstr "text"
+
+msgctxt "#32892"
+msgid "title"
+msgstr "title"
+
+msgctxt "#32893"
+msgid "topmenu"
+msgstr "topmenu"
+
+msgctxt "#32894"
+msgid "up"
+msgstr "hoch"
+
+msgctxt "#32895"
+msgid "volume_down"
+msgstr "leiser"
+
+msgctxt "#32896"
+msgid "volume_mute"
+msgstr "stumm"
+
+msgctxt "#32897"
+msgid "volume_up"
+msgstr "lauter"
+
+msgctxt "#32898"
+msgid "volumeminus"
+msgstr "leiser"
+
+msgctxt "#32899"
+msgid "volumeplus"
+msgstr "lauter"
+
+msgctxt "#32900"
+msgid "yellow"
+msgstr "Gelb"
+
+msgctxt "#32901"
+msgid "zoom"
+msgstr "zoom"
+

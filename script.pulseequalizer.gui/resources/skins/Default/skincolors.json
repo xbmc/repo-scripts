@@ -1,0 +1,310 @@
+{
+    "aeon.nox.silvo": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "button_textcolor": [],
+        "focused": "white",
+        "font_keymap": "<font>font14</font>",
+        "font_normal": "<font>font14</font>",
+        "font_small": "<font>font12</font>",
+        "graph": "$VAR[HighlightBarColor]",
+        "selected": "blue",
+        "shadow": "",
+        "text": "gray",
+        "texturefocus": "806DB9E5",
+        "textureslidernibfocus": "$VAR[HighlightBarColor]"
+    },
+    "aeon.tajo": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "button_textcolor": [],
+        "focused": "white",
+        "font_keymap": "<font>font14</font>",
+        "font_normal": "<font>font14</font>",
+        "font_small": "<font>font12</font>",
+        "graph": "themecolor",
+        "selected": "blue",
+        "shadow": "",
+        "text": "grey2",
+        "texturefocus": "themecolor_transparent",
+        "textureslidernibfocus": "themecolor"
+    },
+    "amber": {
+        "background": "Black",
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [
+            "<texturefocus border=\"4\" colordiffuse=\"{texturefocus}\">img/WhiteRoundedST2.png</texturefocus>",
+            "<texturenofocus border=\"4\">img/WhiteRoundedT.png</texturenofocus>",
+            "<bordersize>4</bordersize>"
+        ],
+        "button_textcolor": [],
+        "focused": "$VAR[FocusedTextColor]",
+        "font_keymap": "<font>Details</font>",
+        "font_normal": "<font>Details</font>",
+        "font_small": "<font>font22</font>",
+        "graph": "$VAR[HighlightColor]",
+        "selected": "$VAR[SelectedTextColor]",
+        "shadow": "ShadowDark",
+        "text": "$VAR[LabelTextColor]",
+        "texturefocus": "$VAR[HighlightColor]",
+        "textureslidernibfocus": "$VAR[HighlightColor]"
+    },
+    "apptv": {
+        "background_img": "<texture border=\"14\">background.png</texture>",
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "button_textcolor": [],
+        "focused": "button-text",
+        "font_keymap": "<font>apptv23</font>",
+        "font_normal": "<font>apptv23</font>",
+        "font_small": "<font>apptv18</font>",
+        "graph": "ProgressBarColor",
+        "progress_bar": [],
+        "selected": "listselected-text",
+        "shadow": "shadow-text",
+        "text": "button-text",
+        "texturefocus": "ProgressBarColor",
+        "textureslidernibfocus": "ProgressBarColor"
+    },
+    "bello.8": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "button_textcolor": [
+            "<textcolor>{text}</textcolor>",
+            "<focusedcolor>{focused}</focusedcolor>"
+        ],
+        "focused": "white",
+        "graph": "blue",
+        "progress_bar": [],
+        "selected": "blue",
+        "text": "white",
+        "texturefocus": "blue",
+        "textureslidernibfocus": "blue"
+    },
+    "confluence": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "font_small": "<font>font10</font>",
+        "graph": "blue",
+        "progress_bar": [],
+        "selected": "selected",
+        "text": "white",
+        "texturefocus": "blue",
+        "textureslidernibfocus": "blue"
+    },
+    "default": {
+        "background": "FF1A2123",
+        "background_img": "<texture colordiffuse=\"{background}\">colors/white.png</texture>",
+        "button_radio": [
+            "<radioposx>350</radioposx>",
+            "<textureradioonfocus colordiffuse=\"{focused}\">radio/button-on.png</textureradioonfocus>",
+            "<textureradioonnofocus colordiffuse=\"{text}\">radio/button-on.png</textureradioonnofocus>",
+            "<textureradioofffocus colordiffuse=\"{focused}\">radio/button-off.png</textureradioofffocus>",
+            "<textureradiooffnofocus colordiffuse=\"{text}\">radio/button-off.png</textureradiooffnofocus>"
+        ],
+        "button_tags": [
+            "<texturefocus colordiffuse=\"{texturefocus}\">colors/white.png</texturefocus>",
+            "<texturenofocus colordiffuse=\"{background}\">colors/white.png</texturenofocus>"
+        ],
+        "button_textcolor": [
+            "<textcolor>{text}</textcolor>",
+            "<focusedcolor>{focused}</focusedcolor>"
+        ],
+        "focused": "FF1A2123",
+        "font_keymap": "<font>font13</font>",
+        "font_normal": "<font>font13</font>",
+        "font_small": "<font>font10</font>",
+        "graph": "FF60C0FF",
+        "progress_bar": [
+            "<texturebg>progress/bk.png</texturebg>",
+            "<midtexture>progress/mid.png</midtexture>",
+            "<lefttexture/>",
+            "<righttexture/>"
+        ],
+        "screen": "B0FFFFFF",
+        "selected": "FF5050B0",
+        "shadow": "FF1A2123",
+        "text": "FFf0f0f0",
+        "texturefocus": "FF60C0FF",
+        "texturenofocus": "FF1A2123",
+        "texturesliderbar": "FFF0F0F0",
+        "textureslidernib": "FFF0F0F0",
+        "textureslidernibfocus": "FF60C0FF"
+    },
+    "embuary-matrix": {
+        "background": "background",
+        "button_radio": [],
+        "focused": "background",
+        "font_keymap": "<font>Med25</font>",
+        "font_normal": "<font>Med25</font>",
+        "font_small": "<font>Med20</font>",
+        "graph": "accent",
+        "selected": "selected_button",
+        "text": "text_white",
+        "texturefocus": "accent",
+        "textureslidernibfocus": "accent"
+    },
+    "eminence.2": {
+        "background": "Background",
+        "button_radio": [],
+        "font_keymap": "<font>Font-Button</font>",
+        "font_normal": "<font>Font-Button</font>",
+        "font_small": "<font>Font-ListInfo-Small</font>",
+        "graph": "Highlight",
+        "progress_bar": [],
+        "selected": "Highlight2",
+        "text": "ListLabel",
+        "texturefocus": "Highlight",
+        "textureslidernibfocus": "Highlight"
+    },
+    "estouchy": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "font_keymap": "<font>font25</font>",
+        "font_normal": "<font>font25</font>",
+        "graph": "blue",
+        "progress_bar": [],
+        "selected": "selected",
+        "text": "white",
+        "texturefocus": "blue",
+        "textureslidernibfocus": "blue"
+    },
+    "estuary": {
+        "button_radio": [
+            "<radioposx>350</radioposx>"
+        ],
+        "focused": "background",
+        "graph": "button_focus",
+        "progress_bar": [],
+        "selected": "selected",
+        "text": "white",
+        "texturefocus": "button_focus",
+        "textureslidernibfocus": "button_focus"
+    },
+    "ftv": {
+        "button_tags": [
+            "<texturefocus border=\"12\">dialogs/DialogButtonFO.png</texturefocus>",
+            "<texturenofocus border=\"12\">dialogs/DialogButtonNF.png</texturenofocus>"
+        ],
+        "focused": "ff000000",
+        "font_keymap": "<font>Med28</font>",
+        "font_normal": "<font>Med28</font>",
+        "font_small": "<font>Med22</font>",
+        "graph": "ffefb448",
+        "progress_bar": [],
+        "selected": "ffa67211",
+        "shadow": "",
+        "text": "ffd8d8d8",
+        "texturefocus": "ffefb448",
+        "textureslidernibfocus": "ffefb448"
+    },
+    "metropolis": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "focused": "TextNF",
+        "font_keymap": "<font>METF_TitleText</font>",
+        "font_normal": "<font>METF_TitleText</font>",
+        "font_small": "<font>METF_DialogSmallBold</font>",
+        "graph": "TextFO",
+        "progress_bar": [],
+        "selected": "DialogTextFO",
+        "text": "TextNF",
+        "texturefocus": "FocusBar",
+        "textureslidernibfocus": "BannerFrameNF"
+    },
+    "mimic.lr": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "focused": "NormalTextColor",
+        "graph": "FocusColor",
+        "progress_bar": [],
+        "selected": "SelectedColor",
+        "shadow": "shadow",
+        "text": "NormalTextColor",
+        "texturefocus": "FocusColor",
+        "textureslidernibfocus": "FocusColor"
+    },
+    "pellucid": {
+        "background": "background",
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "focused": "textActive",
+        "font_keymap": "<font>buttonTitle</font>",
+        "font_normal": "<font>buttonTitle</font>",
+        "font_small": "<font>buttonTitle2</font>",
+        "graph": "shighlight",
+        "selected": "shighlight",
+        "shadow": "",
+        "text": "textActive",
+        "texturefocus": "highlight",
+        "textureslidernibfocus": "highlight"
+    },
+    "quartz": {
+        "background": "Black",
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "focused": "HL",
+        "graph": "HL",
+        "progress_bar": [],
+        "selected": "Red",
+        "shadow": "",
+        "text": "White",
+        "texturefocus": "HL",
+        "textureslidernibfocus": "HL"
+    },
+    "rapier": {
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "button_textcolor": [],
+        "focused": "SelectedColor",
+        "font_keymap": "<font>DialogTitleFont</font>",
+        "font_normal": "<font>DialogTitleFont</font>",
+        "font_small": "<font>MenuItemFont</font>",
+        "graph": "DefaultColor",
+        "progress_bar": [],
+        "selected": "DefaultColor2",
+        "shadow": "ShadowColor",
+        "text": "ButtonColor",
+        "texturefocus": "DefaultColor",
+        "textureslidernibfocus": "DefaultColor"
+    },
+    "unity": {
+        "background": "white",
+        "button_radio": [
+            "<radioposx>370</radioposx>"
+        ],
+        "button_tags": [],
+        "button_textcolor": [],
+        "focused": "white",
+        "graph": "$INFO[Skin.String(color.500)]",
+        "progress_bar": [],
+        "screen": "00FFFFFF",
+        "selected": "orange",
+        "shadow": "",
+        "text": "$INFO[Skin.String(color.text)]",
+        "texturefocus": "$INFO[Skin.String(color.500)]",
+        "texturesliderbar": "$INFO[Skin.String(color.text)]",
+        "textureslidernibfocus": "$INFO[Skin.String(color.500)]"
+    }
+}

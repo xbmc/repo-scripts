@@ -1,0 +1,44 @@
+v2.1.4  (2022-04-14)
+- userinterface improvements
+- color support for many skins
+- introduced settings
+- drop Kodi 18 support
+
+v2.1.3  (2022-04-01)
+- mini key map editor to easy create keymap file for equalizer, 
+  including most important kodi commands
+- add kodi user profile support and moved settings save location
+- changes to improve menu pop up speed on slow devices
+
+v2.1.2  (2022-03-22)
+- Improved error message, in case pulse-equalizer is not installed
+- Source code clean-ups
+- Change of file structure to match standad
+- Add System Volume into main menu
+- Dynamic sliders for slow remotes in Volume and Equalizer GUI
+- Possibilty to configure slider step-size in keymap
+
+v2.1.1  (2021-12-16)
+- fix some problems with Kodi 19.3 on raspberry (audio device conflicts, bt-device on/off issues)
+
+v2.1.0 (2021-12-06)
+- added Room Correction functionality
+- more flexibility in filter frequency selection
+- some user interface changes
+
+v2.0.0 (2021-11-13)
+- added latency-offset slider, save latency based on equalizer in playback chain
+- possibility to switch equalizer on/off
+- change output selection method
+- added system volume control
+- automatic module loading, simplified pulseaudio configuration
+- save settings per selected device (volume, profile and latency)
+- automatic bluetooth device switching
+- skip filter if no playback (no latency on GUI sounds)
+- architectual change
+
+1.0.4 Bugfix
+1.0.3 Find connected Bluetooth devices for output 
+1.0.2 Handle Filter Chains
+1.0.1 Bugfix
+1.0.0 Initial Release

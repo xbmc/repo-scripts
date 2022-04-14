@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol always="true">901</defaultcontrol>
+	<animation effect="fade" time="100">WindowOpen</animation>
+	<animation effect="fade" time="100">WindowClose</animation>
+	<coordinates>
+		<left>1500</left>
+		<top>80</top>
+	</coordinates>
+	<controls>
+		<control type="progress" id="1900">
+			<description>Progress</description>
+			<left>0</left>
+			<top>50</top>
+			<width>310</width>
+			<height>40</height>
+			<reveal>true</reveal>
+			<texturebg>volume/level-background.png</texturebg>
+			<midtexture>volume/level.png</midtexture>
+			<lefttexture/>
+			<righttexture/>
+ 
+		</control>
+		<control type="label" id="1901">
+				<description>Percent</description>
+				<left>100</left>
+				<top>0</top>
+				<width>190</width>
+				<height>40</height>
+				<label>0 %</label>
+				{font_normal}
+				<align>right</align>
+				<aligny>top</aligny>
+		</control>
+	</controls>
+</window>
