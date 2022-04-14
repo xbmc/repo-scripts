@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="2.1.2" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.0.0" provider-name="Heckie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
@@ -13,11 +13,11 @@
 			</item>
 			<item library="context_setsnooze.py">
 				<label>32005</label>
-				<visible>Window.IsMedia+!ListItem.IsFolder</visible>
+				<visible>Window.IsMedia</visible>
 			</item>
 			<item library="context_settimer.py">
 				<label>32000</label>
-				<visible>Window.IsMedia+!ListItem.IsFolder</visible>
+				<visible>Window.IsMedia</visible>
 			</item>
 			<item library="context_setquickepgtimer.py">
 				<label>32117</label>
@@ -66,6 +66,13 @@
 		<website>https://github.com/Heckie75/kodi-addon-timers</website>
 		<source>https://github.com/Heckie75/kodi-addon-timers</source>
 		<news>
+v3.0.0 (2022-04-12)
+- Support folders and playlists for scheduling, (feature request https://github.com/Heckie75/kodi-addon-timers/issues/7)
+- Separated configuration of media and system actions, e.g. shutdown Kodi
+- Enable resuming media that has been stopped after timer has finished
+- Enable repeating media and playlists
+- Refactoring (rewrite of scheduler)
+
 v2.1.2 (2022-02-09)
 - Device wakeup (Issue #6): Explicitly activate CEC Source before player starts
 
@@ -84,12 +91,7 @@ v2.1.0 (2021-11-20):
 - Added feature in order to prevent that display is turned off if Kodi idles but is not in fullscreen mode
 - Migrated to new XML settings format
 - Major refactoring, better structured code
-
-v2.0.3 (2021-10-31)
-- Fixed issue related to reset to default settings after one-time timers has finished
-- Fixed issue that wrong pvr channel was taken from epg if some channels are deactivated in PVR
-- Fixed key error after deactivating timer 
-</news>
+		</news>
 		<assets>
 			<icon>resources/assets/icon.png</icon>
 			<fanart>resources/assets/fanart.png</fanart>

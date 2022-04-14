@@ -32,14 +32,14 @@
         </setting>
         <setting id="settingsVersion" type="integer" label="32000" help="">
           <level>0</level>
-          <default>1</default>
+          <default>3</default>
           <control type="edit" format="integer">
             <heading>32000</heading>
           </control>
           <visible>false</visible>
         </setting>
       </group>
-      <group id="g_resume" label="32082">
+      <group id="g_resume" label="32079">
         <setting id="resume" type="boolean" label="32113" help="">
           <level>1</level>
           <default>false</default>
@@ -193,9 +193,9 @@
         </setting>
       </group>
       <group id="g_timer_0_action" label="32070">
-        <setting id="timer_0_action" type="integer" label="32070" help="">
+        <setting id="timer_0_media_action" type="integer" label="32070" help="">
           <level>0</level>
-          <default>5</default>
+          <default>6</default>
           <constraints>
             <options>
               <option label="32071">0</option>
@@ -205,22 +205,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_0_filename" type="string" label="32082" help="">
+        <setting id="timer_0_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_0_media_action" operator="gt">0</condition>
+                <condition setting="timer_0_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_0_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_0_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_0_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -238,8 +255,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_0_filename" operator="is"></condition>
-                <condition setting="timer_0_action" operator="gt">0</condition>
-                <condition setting="timer_0_action" operator="lt">4</condition>
+                <condition setting="timer_0_media_action" operator="gt">0</condition>
+                <condition setting="timer_0_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -308,6 +325,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_0_system_action" label="32081">
+        <setting id="timer_0_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_0_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_0_notify" label="32097">
         <setting id="timer_0_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -415,7 +452,7 @@
         </setting>
       </group>
       <group id="g_timer_1_action" label="32070">
-        <setting id="timer_1_action" type="integer" label="32070" help="">
+        <setting id="timer_1_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>3</default>
           <constraints>
@@ -427,22 +464,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_1_filename" type="string" label="32082" help="">
+        <setting id="timer_1_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_1_media_action" operator="gt">0</condition>
+                <condition setting="timer_1_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_1_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_1_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_1_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -460,8 +514,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_1_filename" operator="is"></condition>
-                <condition setting="timer_1_action" operator="gt">0</condition>
-                <condition setting="timer_1_action" operator="lt">4</condition>
+                <condition setting="timer_1_media_action" operator="gt">0</condition>
+                <condition setting="timer_1_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -530,6 +584,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_1_system_action" label="32081">
+        <setting id="timer_1_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_1_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_1_notify" label="32097">
         <setting id="timer_1_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -637,7 +711,7 @@
         </setting>
       </group>
       <group id="g_timer_2_action" label="32070">
-        <setting id="timer_2_action" type="integer" label="32070" help="">
+        <setting id="timer_2_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -649,22 +723,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_2_filename" type="string" label="32082" help="">
+        <setting id="timer_2_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_2_media_action" operator="gt">0</condition>
+                <condition setting="timer_2_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_2_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_2_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_2_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -682,8 +773,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_2_filename" operator="is"></condition>
-                <condition setting="timer_2_action" operator="gt">0</condition>
-                <condition setting="timer_2_action" operator="lt">4</condition>
+                <condition setting="timer_2_media_action" operator="gt">0</condition>
+                <condition setting="timer_2_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -752,6 +843,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_2_system_action" label="32081">
+        <setting id="timer_2_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_2_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_2_notify" label="32097">
         <setting id="timer_2_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -859,7 +970,7 @@
         </setting>
       </group>
       <group id="g_timer_3_action" label="32070">
-        <setting id="timer_3_action" type="integer" label="32070" help="">
+        <setting id="timer_3_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -871,22 +982,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_3_filename" type="string" label="32082" help="">
+        <setting id="timer_3_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_3_media_action" operator="gt">0</condition>
+                <condition setting="timer_3_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_3_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_3_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_3_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -904,8 +1032,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_3_filename" operator="is"></condition>
-                <condition setting="timer_3_action" operator="gt">0</condition>
-                <condition setting="timer_3_action" operator="lt">4</condition>
+                <condition setting="timer_3_media_action" operator="gt">0</condition>
+                <condition setting="timer_3_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -974,6 +1102,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_3_system_action" label="32081">
+        <setting id="timer_3_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_3_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_3_notify" label="32097">
         <setting id="timer_3_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1081,7 +1229,7 @@
         </setting>
       </group>
       <group id="g_timer_4_action" label="32070">
-        <setting id="timer_4_action" type="integer" label="32070" help="">
+        <setting id="timer_4_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -1093,22 +1241,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_4_filename" type="string" label="32082" help="">
+        <setting id="timer_4_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_4_media_action" operator="gt">0</condition>
+                <condition setting="timer_4_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_4_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_4_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_4_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -1126,8 +1291,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_4_filename" operator="is"></condition>
-                <condition setting="timer_4_action" operator="gt">0</condition>
-                <condition setting="timer_4_action" operator="lt">4</condition>
+                <condition setting="timer_4_media_action" operator="gt">0</condition>
+                <condition setting="timer_4_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -1196,6 +1361,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_4_system_action" label="32081">
+        <setting id="timer_4_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_4_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_4_notify" label="32097">
         <setting id="timer_4_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1303,7 +1488,7 @@
         </setting>
       </group>
       <group id="g_timer_5_action" label="32070">
-        <setting id="timer_5_action" type="integer" label="32070" help="">
+        <setting id="timer_5_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -1315,22 +1500,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_5_filename" type="string" label="32082" help="">
+        <setting id="timer_5_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_5_media_action" operator="gt">0</condition>
+                <condition setting="timer_5_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_5_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_5_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_5_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -1348,8 +1550,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_5_filename" operator="is"></condition>
-                <condition setting="timer_5_action" operator="gt">0</condition>
-                <condition setting="timer_5_action" operator="lt">4</condition>
+                <condition setting="timer_5_media_action" operator="gt">0</condition>
+                <condition setting="timer_5_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -1418,6 +1620,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_5_system_action" label="32081">
+        <setting id="timer_5_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_5_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_5_notify" label="32097">
         <setting id="timer_5_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1525,7 +1747,7 @@
         </setting>
       </group>
       <group id="g_timer_6_action" label="32070">
-        <setting id="timer_6_action" type="integer" label="32070" help="">
+        <setting id="timer_6_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -1537,22 +1759,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_6_filename" type="string" label="32082" help="">
+        <setting id="timer_6_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_6_media_action" operator="gt">0</condition>
+                <condition setting="timer_6_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_6_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_6_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_6_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -1570,8 +1809,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_6_filename" operator="is"></condition>
-                <condition setting="timer_6_action" operator="gt">0</condition>
-                <condition setting="timer_6_action" operator="lt">4</condition>
+                <condition setting="timer_6_media_action" operator="gt">0</condition>
+                <condition setting="timer_6_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -1640,6 +1879,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_6_system_action" label="32081">
+        <setting id="timer_6_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_6_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_6_notify" label="32097">
         <setting id="timer_6_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1747,7 +2006,7 @@
         </setting>
       </group>
       <group id="g_timer_7_action" label="32070">
-        <setting id="timer_7_action" type="integer" label="32070" help="">
+        <setting id="timer_7_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -1759,22 +2018,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_7_filename" type="string" label="32082" help="">
+        <setting id="timer_7_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_7_media_action" operator="gt">0</condition>
+                <condition setting="timer_7_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_7_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_7_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_7_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -1792,8 +2068,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_7_filename" operator="is"></condition>
-                <condition setting="timer_7_action" operator="gt">0</condition>
-                <condition setting="timer_7_action" operator="lt">4</condition>
+                <condition setting="timer_7_media_action" operator="gt">0</condition>
+                <condition setting="timer_7_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -1862,6 +2138,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_7_system_action" label="32081">
+        <setting id="timer_7_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_7_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_7_notify" label="32097">
         <setting id="timer_7_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1969,7 +2265,7 @@
         </setting>
       </group>
       <group id="g_timer_8_action" label="32070">
-        <setting id="timer_8_action" type="integer" label="32070" help="">
+        <setting id="timer_8_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -1981,22 +2277,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_8_filename" type="string" label="32082" help="">
+        <setting id="timer_8_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_8_media_action" operator="gt">0</condition>
+                <condition setting="timer_8_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_8_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_8_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_8_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -2014,8 +2327,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_8_filename" operator="is"></condition>
-                <condition setting="timer_8_action" operator="gt">0</condition>
-                <condition setting="timer_8_action" operator="lt">4</condition>
+                <condition setting="timer_8_media_action" operator="gt">0</condition>
+                <condition setting="timer_8_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -2084,6 +2397,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_8_system_action" label="32081">
+        <setting id="timer_8_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_8_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_8_notify" label="32097">
         <setting id="timer_8_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2191,7 +2524,7 @@
         </setting>
       </group>
       <group id="g_timer_9_action" label="32070">
-        <setting id="timer_9_action" type="integer" label="32070" help="">
+        <setting id="timer_9_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -2203,22 +2536,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_9_filename" type="string" label="32082" help="">
+        <setting id="timer_9_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_9_media_action" operator="gt">0</condition>
+                <condition setting="timer_9_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_9_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_9_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_9_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -2236,8 +2586,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_9_filename" operator="is"></condition>
-                <condition setting="timer_9_action" operator="gt">0</condition>
-                <condition setting="timer_9_action" operator="lt">4</condition>
+                <condition setting="timer_9_media_action" operator="gt">0</condition>
+                <condition setting="timer_9_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -2306,6 +2656,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_9_system_action" label="32081">
+        <setting id="timer_9_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_9_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_9_notify" label="32097">
         <setting id="timer_9_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2413,7 +2783,7 @@
         </setting>
       </group>
       <group id="g_timer_10_action" label="32070">
-        <setting id="timer_10_action" type="integer" label="32070" help="">
+        <setting id="timer_10_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -2425,22 +2795,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_10_filename" type="string" label="32082" help="">
+        <setting id="timer_10_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_10_media_action" operator="gt">0</condition>
+                <condition setting="timer_10_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_10_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_10_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_10_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -2458,8 +2845,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_10_filename" operator="is"></condition>
-                <condition setting="timer_10_action" operator="gt">0</condition>
-                <condition setting="timer_10_action" operator="lt">4</condition>
+                <condition setting="timer_10_media_action" operator="gt">0</condition>
+                <condition setting="timer_10_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -2528,6 +2915,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_10_system_action" label="32081">
+        <setting id="timer_10_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_10_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_10_notify" label="32097">
         <setting id="timer_10_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2635,7 +3042,7 @@
         </setting>
       </group>
       <group id="g_timer_11_action" label="32070">
-        <setting id="timer_11_action" type="integer" label="32070" help="">
+        <setting id="timer_11_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -2647,22 +3054,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_11_filename" type="string" label="32082" help="">
+        <setting id="timer_11_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_11_media_action" operator="gt">0</condition>
+                <condition setting="timer_11_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_11_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_11_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_11_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -2680,8 +3104,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_11_filename" operator="is"></condition>
-                <condition setting="timer_11_action" operator="gt">0</condition>
-                <condition setting="timer_11_action" operator="lt">4</condition>
+                <condition setting="timer_11_media_action" operator="gt">0</condition>
+                <condition setting="timer_11_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -2750,6 +3174,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_11_system_action" label="32081">
+        <setting id="timer_11_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_11_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_11_notify" label="32097">
         <setting id="timer_11_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2857,7 +3301,7 @@
         </setting>
       </group>
       <group id="g_timer_12_action" label="32070">
-        <setting id="timer_12_action" type="integer" label="32070" help="">
+        <setting id="timer_12_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -2869,22 +3313,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_12_filename" type="string" label="32082" help="">
+        <setting id="timer_12_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_12_media_action" operator="gt">0</condition>
+                <condition setting="timer_12_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_12_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_12_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_12_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -2902,8 +3363,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_12_filename" operator="is"></condition>
-                <condition setting="timer_12_action" operator="gt">0</condition>
-                <condition setting="timer_12_action" operator="lt">4</condition>
+                <condition setting="timer_12_media_action" operator="gt">0</condition>
+                <condition setting="timer_12_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -2972,6 +3433,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_12_system_action" label="32081">
+        <setting id="timer_12_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_12_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_12_notify" label="32097">
         <setting id="timer_12_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3079,7 +3560,7 @@
         </setting>
       </group>
       <group id="g_timer_13_action" label="32070">
-        <setting id="timer_13_action" type="integer" label="32070" help="">
+        <setting id="timer_13_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -3091,22 +3572,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_13_filename" type="string" label="32082" help="">
+        <setting id="timer_13_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_13_media_action" operator="gt">0</condition>
+                <condition setting="timer_13_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_13_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_13_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_13_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -3124,8 +3622,8 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_13_filename" operator="is"></condition>
-                <condition setting="timer_13_action" operator="gt">0</condition>
-                <condition setting="timer_13_action" operator="lt">4</condition>
+                <condition setting="timer_13_media_action" operator="gt">0</condition>
+                <condition setting="timer_13_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
@@ -3194,6 +3692,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_13_system_action" label="32081">
+        <setting id="timer_13_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_13_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_13_notify" label="32097">
         <setting id="timer_13_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3301,7 +3819,7 @@
         </setting>
       </group>
       <group id="g_timer_14_action" label="32070">
-        <setting id="timer_14_action" type="integer" label="32070" help="">
+        <setting id="timer_14_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -3313,22 +3831,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_14_filename" type="string" label="32082" help="">
+        <setting id="timer_14_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_14_media_action" operator="gt">0</condition>
+                <condition setting="timer_14_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_14_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_14_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_14_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -3346,15 +3881,15 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_14_filename" operator="is"></condition>
-                <condition setting="timer_14_action" operator="gt">0</condition>
-                <condition setting="timer_14_action" operator="lt">4</condition>
+                <condition setting="timer_14_media_action" operator="gt">0</condition>
+                <condition setting="timer_14_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
         </setting>
         <setting id="timer_14_test" type="action" label="32108" help="">
           <level>0</level>
-          <data>RunScript($ID,play,13)</data>
+          <data>RunScript($ID,play,14)</data>
           <control type="button" format="action">
             <close>false</close>
           </control>
@@ -3416,6 +3951,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_14_system_action" label="32081">
+        <setting id="timer_14_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_14_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_14_notify" label="32097">
         <setting id="timer_14_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3523,7 +4078,7 @@
         </setting>
       </group>
       <group id="g_timer_15_action" label="32070">
-        <setting id="timer_15_action" type="integer" label="32070" help="">
+        <setting id="timer_15_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -3535,22 +4090,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_15_filename" type="string" label="32082" help="">
+        <setting id="timer_15_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_15_media_action" operator="gt">0</condition>
+                <condition setting="timer_15_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_15_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_15_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_15_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -3568,15 +4140,15 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_15_filename" operator="is"></condition>
-                <condition setting="timer_15_action" operator="gt">0</condition>
-                <condition setting="timer_15_action" operator="lt">4</condition>
+                <condition setting="timer_15_media_action" operator="gt">0</condition>
+                <condition setting="timer_15_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
         </setting>
         <setting id="timer_15_test" type="action" label="32108" help="">
           <level>0</level>
-          <data>RunScript($ID,play,13)</data>
+          <data>RunScript($ID,play,15)</data>
           <control type="button" format="action">
             <close>false</close>
           </control>
@@ -3638,6 +4210,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_15_system_action" label="32081">
+        <setting id="timer_15_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_15_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_15_notify" label="32097">
         <setting id="timer_15_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3745,7 +4337,7 @@
         </setting>
       </group>
       <group id="g_timer_16_action" label="32070">
-        <setting id="timer_16_action" type="integer" label="32070" help="">
+        <setting id="timer_16_media_action" type="integer" label="32070" help="">
           <level>0</level>
           <default>2</default>
           <constraints>
@@ -3757,22 +4349,39 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
-              <option label="32078">7</option>
-              <option label="32079">8</option>
-              <option label="32080">9</option>
-              <option label="32081">10</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
         </setting>
-        <setting id="timer_16_filename" type="string" label="32082" help="">
+        <setting id="timer_16_repeat" type="boolean" label="32078" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_16_media_action" operator="gt">0</condition>
+                <condition setting="timer_16_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_16_resume" type="boolean" label="32079" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable" setting="timer_16_media_action" operator="is">1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_16_filename" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
           </constraints>
           <control type="edit" format="string">
-            <heading>32082</heading>
+            <heading>32080</heading>
           </control>
           <visible>false</visible>
         </setting>
@@ -3790,15 +4399,15 @@
             <dependency type="visible">
               <and>
                 <condition setting="timer_16_filename" operator="is"></condition>
-                <condition setting="timer_16_action" operator="gt">0</condition>
-                <condition setting="timer_16_action" operator="lt">4</condition>
+                <condition setting="timer_16_media_action" operator="gt">0</condition>
+                <condition setting="timer_16_media_action" operator="lt">5</condition>
               </and>
             </dependency>
           </dependencies>
         </setting>
         <setting id="timer_16_test" type="action" label="32108" help="">
           <level>0</level>
-          <data>RunScript($ID,play,13)</data>
+          <data>RunScript($ID,play,16)</data>
           <control type="button" format="action">
             <close>false</close>
           </control>
@@ -3860,6 +4469,26 @@
           </dependencies>
         </setting>
       </group>
+      <group id="g_timer_16_system_action" label="32081">
+        <setting id="timer_16_system_action" type="integer" label="32087" help="">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32071">0</option>
+              <option label="32082">1</option>
+              <option label="32083">2</option>
+              <option label="32084">3</option>
+              <option label="32085">4</option>
+              <option label="32086">5</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="enable" setting="timer_16_end_type" operator="!is">0</dependency>
+          </dependencies>
+        </setting>
+      </group>      
       <group id="g_timer_16_notify" label="32097">
         <setting id="timer_16_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3867,6 +4496,6 @@
           <control type="toggle" />
         </setting>
       </group>
-    </category>            
+    </category>
   </section>
 </settings>

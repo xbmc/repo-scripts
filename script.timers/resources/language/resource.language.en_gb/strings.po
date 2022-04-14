@@ -137,6 +137,10 @@ msgctxt "#32033"
 msgid "Execution"
 msgstr ""
 
+msgctxt "#32034"
+msgid "Selected item is not supported."
+msgstr ""
+
 msgctxt "#32060"
 msgid "Schedule"
 msgstr ""
@@ -162,55 +166,75 @@ msgid "Time"
 msgstr ""
 
 msgctxt "#32070"
-msgid "Action"
+msgid "Media action"
 msgstr ""
 
 msgctxt "#32071"
-msgid "Do nothing with media"
+msgid "none"
 msgstr ""
 
 msgctxt "#32072"
-msgid "start media and stop at end"
+msgid "play at start and stop at end"
 msgstr ""
 
 msgctxt "#32073"
-msgid "just start media"
+msgid "play at start"
 msgstr ""
 
 msgctxt "#32074"
-msgid "start media at end"
+msgid "play at end"
 msgstr ""
 
 msgctxt "#32075"
-msgid "stop media immediately"
+msgid "stop at start and play at end"
 msgstr ""
 
 msgctxt "#32076"
-msgid "stop media at end"
+msgid "stop at start"
 msgstr ""
 
 msgctxt "#32077"
-msgid "shutdown Kodi"
+msgid "stop at end"
 msgstr ""
 
 msgctxt "#32078"
-msgid "quit Kodi"
+msgid "Repeat"
 msgstr ""
 
 msgctxt "#32079"
-msgid "suspend system"
+msgid "Resume"
 msgstr ""
 
 msgctxt "#32080"
-msgid "hibernate system"
+msgid "Media"
 msgstr ""
 
 msgctxt "#32081"
-msgid "powerdown system"
+msgid "System action"
 msgstr ""
 
 msgctxt "#32082"
-msgid "Media"
+msgid "shutdown Kodi"
+msgstr ""
+
+msgctxt "#32083"
+msgid "quit Kodi"
+msgstr ""
+
+msgctxt "#32084"
+msgid "suspend system"
+msgstr ""
+
+msgctxt "#32085"
+msgid "hibernate system"
+msgstr ""
+
+msgctxt "#32086"
+msgid "powerdown system"
+msgstr ""
+
+msgctxt "#32087"
+msgid "System action at end"
 msgstr ""
 
 msgctxt "#32090"

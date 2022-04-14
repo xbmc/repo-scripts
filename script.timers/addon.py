@@ -1,18 +1,16 @@
-import xbmcaddon
-
-from resources.lib.timer import migration, scheduler, util
+import migration
+from resources.lib.timer import scheduler
+from resources.lib.utils import system_utils
 
 if __name__ == "__main__":
 
-    util.prevent_strptime_error()
-
     migration.migrate()
 
-    scheduler = scheduler.Scheduler(xbmcaddon.Addon())
+    scheduler = scheduler.Scheduler()
 
     try:
         scheduler.start()
 
     finally:
         scheduler.reset_powermanagement_displaysoff()
-        util.set_windows_unlock(False)
+        system_utils.set_windows_unlock(False)
