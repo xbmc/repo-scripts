@@ -91,6 +91,13 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.5.10 (2022-04-18)
+- Fix automatic submission of release (@mediaminister)
+- Update German translation (@tweimer)
+- Fix update_frequency setting (@horstle)
+- Fix install_from (@horstle)
+- Improve/Fix Widevine extraction from Chrome OS images (@horstle)
+
 ### v0.5.9 (2022-03-22)
 - Update Croatian translation (@dsardelic, @muzena)
 - Replace deprecated LooseVersion (@mediaminister, @MarkusVolk)
