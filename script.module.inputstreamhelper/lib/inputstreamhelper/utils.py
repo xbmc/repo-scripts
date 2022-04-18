@@ -337,5 +337,5 @@ def parse_version(version):
         from packaging.version import parse
         return parse(version)
     except ImportError:
-        from distutils.version import LooseVersion
+        from distutils.version import LooseVersion  # pylint: disable=deprecated-module
         return LooseVersion(version)

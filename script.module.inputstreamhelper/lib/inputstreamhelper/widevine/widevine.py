@@ -192,7 +192,11 @@ def remove_old_backups(bpath):
     if len(versions) < 2:
         return
 
-    installed_version = load_widevine_config()['version']
+    try:
+        installed_version = load_widevine_config()['version']
+    except TypeError:
+        log(2, "could not determine installed version. Aborting cleanup of old versions.")
+        return
 
     while len(versions) > max_backups + 1:
         remove_version = str(versions[1] if versions[0] == parse_version(installed_version) else versions[0])

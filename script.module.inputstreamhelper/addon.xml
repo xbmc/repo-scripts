@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.5.9+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister, horstle">
+<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.5.10+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister, horstle">
   <requires>
     <!--py3 compliant-->
     <import addon="xbmc.python" version="3.0.0"/>
@@ -25,48 +25,18 @@
     <description lang="hr_HR">Jednostavan Kodi modul koji olakšava razvijanje dodataka koji se temelje na InputStream dodatku i reprodukciji DRM zaštićenog sadržaja.</description>
     <description lang="ru_RU">Простой модуль для Kodi, который облегчает жизнь разработчикам дополнений, с использованием InputStream дополнений и воспроизведения DRM контента.</description>
     <news>
+v0.5.10 (2022-04-18)
+- Fix automatic submission of release
+- Update German translation
+- Fix update_frequency setting
+- Fix install_from
+- Improve/Fix Widevine extraction from Chrome OS images
+
 v0.5.9 (2022-03-22)
 - Update Croatian translation
 - Replace deprecated LooseVersion
 - Fix http_get decode error
 - Option to install Widevine from specified source
-
-v0.5.8 (2021-09-09)
-- Simplify Widevine CDM installation on ARM hardware
-- Update Chrome OS ARM hardware id's
-- Update Japanese and Korean translations
-
-v0.5.7 (2021-07-02)
-- Further improve Widevine CDM installation on ARM hardware
-
-v0.5.6 (2021-06-24)
-- Improve Widevine CDM installation on ARM hardware
-- Postpone Widevine CDM updates when user rejects
-
-v0.5.5 (2021-06-02)
-- Improve Widevine CDM installation on ARM hardware
-
-v0.5.4 (2021-05-27)
-- Fix Widevine CDM installation on ARM hardware
-
-v0.5.3 (2021-05-10)
-- Temporary fix for Widevine CDM installation on ARM hardware
-- Fix Widevine CDM installation on 32-bit Linux
-
-v0.5.2 (2020-12-13)
-- Update Chrome OS ARM hardware id's
-
-v0.5.1 (2020-10-02)
-- Fix incorrect ARM HWIDs: PHASER and PHASER360
-- Added Hebrew translations
-- Updated Dutch, Japanese and Korean translations
-
-v0.5.0 (2020-06-25)
-- Extract Widevine CDM directly from Chrome OS, minimizing disk space usage and eliminating the need for root access
-- Improve progress dialog while extracting Widevine CDM on ARM devices
-- Support resuming interrupted downloads on unreliable internet connections
-- Reshape InputStream Helper information dialog
-- Updated Dutch, English, French, German, Greek, Hungarian, Romanian, Russian, Spanish and Swedish translations
     </news>
     <platform>all</platform>
     <license>MIT</license>
