@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.nhlscores" name="NHL Scores" version="2022.4.20+matrix.1" provider-name="eracknaphobia">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.pytz" />
+        <import addon="script.module.requests" />
+        <import addon="script.module.kodi-six" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+            <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en_GB">Get live NHL score notifications</summary>
+        <description lang="en_GB">Live scoring and game updates via kodi notifications
+        </description>
+        <news>
+            - Initial Release
+        </news>
+        <language>en</language>
+        <platform>all</platform>
+        <license>GPL-2.0-or-later</license>
+        <source>https://github.com/eracknaphobia/plugin.video.nhlscores</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <screenshot>resources/screenshot-1.png</screenshot>
+            <screenshot>resources/screenshot-2.png</screenshot>
+            <screenshot>resources/screenshot-3.png</screenshot>
+        </assets>
+    </extension>
+</addon>

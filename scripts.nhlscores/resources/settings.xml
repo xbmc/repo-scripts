@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="30300" visible="false">
+  	<setting id="score_updates" type="bool" label="30310" default="false" visible="false"/>
+    <setting label="30330" type="slider" id="display_seconds" default="5" range="1,30" option="int"/>
+    <setting label="30340" type="bool" id="goal_desc" default="true" />
+  </category>
+</settings>
