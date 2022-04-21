@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.nhlscores">
+		<category id="score notifications" label="30300" help="">
+			<group id="1">
+				<setting id="score_updates" type="boolean" label="30310" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="display_seconds" type="integer" label="30330" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<maximum>30</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="goal_desc" type="boolean" label="30340" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
