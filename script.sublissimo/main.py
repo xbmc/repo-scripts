@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from resources.lib import script
+from resources.lib import loading
 
 import logging
 import xbmcaddon
@@ -9,6 +9,4 @@ import sys
 
 ADDON = xbmcaddon.Addon()
 
-script.check_active_player()
-
-
+loading.check_active_player()

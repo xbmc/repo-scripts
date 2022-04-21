@@ -1,104 +1,151 @@
-# -*- coding: utf-8 -*-
-import script
+import re
+from contextlib import closing
+import xbmcvfs
 
-class Subtitle(object):
-    def __init__(self, subtitlefile, filename):
-        self.subtitlefile = subtitlefile
+class Subtitle:
+    def __init__(self, filename, subtitlelines, encodingfound):
+        self.subtitlefile = []
         self.filename = filename
-        self.timelines = []
+        self.subtitlelines = subtitlelines
+        self.changed = False
+        self.encodingfound = encodingfound
+        self.videodbfilename = None
+        self.skipped_lines = []
+        self.videofilename = None
+        self.set_times()
 
-    def make_timelines_decimal(self):
-        for index, lines in enumerate(self.subtitlefile):
-            if len(lines) == 31 or len(lines) == 30:
-                if lines[0] == "0" and lines[17] == "0":
-                    self.timelines.append(lines)
-        try:
-            starting_line = self.timelines[0]
-            ending_line = self.timelines[-1]
-            old_starting_time = (3600000 * int(starting_line[:2]) + 60000
-                        * int(starting_line[3:5]) + 1000 * int(starting_line[6:8]) + int(starting_line[9:12]))
-            old_ending_time = (3600000 * int(ending_line[:2]) + 60000
-                        * int(ending_line[3:5]) + 1000 * int(ending_line[6:8]) + int(ending_line[9:12]))
-            return old_starting_time, old_ending_time
-        except Exception as e:
-            script.error_handling(self.subtitlefile, self.filename, e)
+    def generate_problems_report(self):
+        problems = []
+        for index, problem in enumerate(self.skipped_lines):
+            if problem and len(self.subtitlefile[index].strip()) > 2:
+                problems.append(index)
+        return self.encodingfound, problems
 
-    def rehash_time_string(self, timestring):
-        hours = int(timestring[:2])
-        minutes = int(timestring[3:5])
-        seconds = int(timestring[6:8])
-        milliseconds = int(timestring[9:12])
-        return hours, minutes, seconds, milliseconds
+    def search_in_subtitle(self, search_string):
+        founded = []
+        for index, subtitleline in enumerate(self.subtitlelines):
+            for textline in subtitleline.textlines:
+                if search_string in textline:
+                    founded.append(self.subtitlelines[index])
+        return founded
 
-    def create_new_factor(self, timestring, old_starting_time="", old_ending_time=""):
-        if not old_starting_time:
-            old_starting_time, old_ending_time = self.make_timelines_decimal()
-        new_hours, new_minutes, new_seconds, new_milliseconds = self.rehash_time_string(timestring)
-        old_factor = float(old_ending_time - old_starting_time)
-        new_ending_value = new_hours * 3600000 + new_minutes * 60000 + new_seconds * 1000 + new_milliseconds
-        new_factor = float(new_ending_value - old_starting_time)
-        factor = new_factor / old_factor
-        correction = old_starting_time * factor - old_starting_time
-        newsubtitles = self.create_new_times(False, factor, correction)
-        return newsubtitles
+    def change_html_color(self, new_color_code):
+        for i, subtitleline in enumerate(self.subtitlelines):
+            for j, line in enumerate(subtitleline.textlines):
+                if "<font color" in line:
+                    starts = [m.start() + len('<font color="#') for m in re.finditer('<font color="#', line)]
+                    ends = [m.start() for m in re.finditer('">', line)]
+                    for start, end in zip(starts, ends):
+                        new_line = line[:start] + new_color_code + line[end:]
+                        self.subtitlelines[i].textlines[j] = new_line
 
-    def move_subtitles(self, timestring, old_starting_time="", old_ending_time=""):
-        if not old_starting_time:
-            old_starting_time, old_ending_time = self.make_timelines_decimal()
-        new_hours, new_minutes, new_seconds, new_milliseconds = self.rehash_time_string(timestring)
-        new_starting_time = new_hours * 3600000 + new_minutes * 60000 + new_seconds * 1000 + new_milliseconds
-        movement = new_starting_time - old_starting_time
-        newsubtitles = self.create_new_times(movement, False, False)
-        return newsubtitles
+    def sync_chosen_lines_to_chosen_times(self, new_start=None, new_end=None, start_index=0, end_index=-1):
+        currentfactor = self[end_index].startingtime - self[start_index].startingtime
+        goalfactor = new_end - new_start
+        factor = goalfactor / currentfactor
+        correction = factor * 1 - 1
+        self.stretch_subtitle(factor, correction)
+        shift = new_start - self[start_index].startingtime
+        self.shift_subtitle(shift)
 
-    def create_new_times(self, movement, factor, correction):
-        text_file = self.subtitlefile
-        text_file.append("\n")
-        text_file.append("\n")
-        self.new_text_file = []
-        for index, lines in enumerate(text_file):
-            if len(lines) == 31 or len(lines) == 30:
-                if lines[0] == "0" and lines[17] == "0":
-                    numbers = text_file[index -1]
-                    line_1 = text_file[index + 1]
-                    line_2 = ""
-                    if len(text_file[index + 2]) != 1:
-                        line_2 = text_file[index + 2]
-                    try:
-                        starting_time = (3600000 * int(lines[:2]) + 60000
-                            * int(lines[3:5]) + 1000 * int(lines[6:8]) + int(lines[9:12]))
-                        ending_time = (3600000 * int(lines[17:19]) + 60000
-                            * int(lines[20:22]) + 1000 * int(lines[23:25]) + int(lines[26:29]))
-                    except Exception as e:
-                        script.error_handling(self.subtitlefile, self.filename, e)
-                    if not factor:
-                        new_starting_time = starting_time + movement
-                        new_ending_time = ending_time + movement
-                    else:
-                        new_starting_time = starting_time * factor - correction
-                        new_ending_time = ending_time * factor - correction
-                    self.new_text_file = self.write_output_to_file(new_starting_time, new_ending_time,
-                        numbers, line_1, line_2)
-        return self.new_text_file
+    def sync_two_subtitles(self, other_sub, start_index=0, end_index=-1,
+                                      start_index_other=0, end_index_other=-1):
+        new_start = other_sub[start_index_other].startingtime
+        new_end = other_sub[end_index_other].startingtime
+        self.sync_chosen_lines_to_chosen_times(new_start, new_end, start_index, end_index)
 
-    def make_timelines_classical(self, decimal):
-        hours = int(decimal / 3600000)
-        restminutes = decimal % 3600000
-        minutes = int(restminutes / 60000)
-        restseconds = restminutes % 60000
-        seconds = int(restseconds / 1000)
-        milliseconds = int(restseconds % 1000)
-        output = (str(hours).zfill(2) + ":" + str(minutes).zfill(2) + ":" +
-                  str(seconds).zfill(2) + "," + str(milliseconds).zfill(3))
-        return output
+    def __delitem__(self, position):
+        self.changed = True
+        del self.subtitlelines[position]
+        self.set_times()
 
-    def write_output_to_file(self, new_starting_time, new_ending_time, numbers, line_1, line_2):
-        self.new_text_file.append(numbers)
-        output1 = self.make_timelines_classical(new_starting_time)
-        output2 = self.make_timelines_classical(new_ending_time)
-        self.new_text_file.append(output1 + " --> " + output2 + "\n")
-        self.new_text_file.append(line_1)
-        if line_2:
-            self.new_text_file.append(line_2)
-        self.new_text_file.append("\n")
-        return self.new_text_file
+    def __getitem__(self, position):
+        return self.subtitlelines[position]
+
+    def __len__(self):
+        return len(self.subtitlelines)
+
+    def __iter__(self):
+        self.index = -1
+        return self
+
+    def __str__(self):
+        return "".join([str(line) for line in self.subtitlelines])
+
+    def __next__(self):
+        if self.index == len(self.subtitlelines)-1:
+            raise StopIteration
+        self.index = self.index + 1
+        return str(self.subtitlelines[self.index])
+
+    def easy_list_selector(self):
+        subtitle_per_line = str(self).split("\n")
+        lines = []
+        for index, line in enumerate(self.subtitlelines):
+            lines += len(line) * [index]
+        return subtitle_per_line, lines
+
+    def create_decimal_times(self, line):
+        time = (3600000 * int(line[:2]) + 60000
+            * int(line[3:5]) + 1000 * int(line[6:8]) + int(line[9:12]))
+        return time
+
+    def write_file(self, filename):
+        result = "".join([str(line) for line in self.subtitlelines])
+        with closing(xbmcvfs.File(filename, 'w')) as writer:
+            writer.write(result)
+
+    def write_temp_file(self):
+        new_filename = self.filename[:-4] + "_temp.srt"
+        result = "".join([str(line) for line in self.subtitlelines])
+        with closing(xbmcvfs.File(new_filename, 'w')) as writer:
+            writer.write(result)
+        return new_filename
+
+    def delete_temp_file(self):
+        temp_file = self.filename[:-4] + "_temp.srt"
+        if xbmcvfs.exists(temp_file):
+            xbmcvfs.delete(temp_file)
+
+    def change_text(self, index, new_text):
+        self.changed = True
+        self.subtitlelines[index].textlines = new_text.split("\n")
+
+    def set_times(self):
+        for index, line in enumerate(self.subtitlelines):
+            self.subtitlelines[index].linenumber = index+1
+        self.start = self.subtitlelines[0].startingtime
+        self.end = self.subtitlelines[-1].startingtime
+        self.length = self.end - self.start
+
+    def shift_subtitle(self, milliseconds):
+        self.changed = True
+        for subtitleline in self.subtitlelines:
+            subtitleline.startingtime += milliseconds
+            subtitleline.endingtime += milliseconds
+        self.set_times()
+
+    def stretch_subtitle(self, factor, correction=0):
+        self.changed = True
+        for subtitleline in self.subtitlelines:
+            subtitleline.startingtime *= factor
+            subtitleline.startingtime -= correction
+            subtitleline.endingtime *= factor
+            subtitleline.endingtime -= correction
+        self.set_times()
+
+    def shift_to_new_start(self, new_starting_time_decimal):
+        shift = new_starting_time_decimal - self.start
+        self.shift_subtitle(shift)
+
+    def stretch_to_new_end(self, new_ending_time_decimal):
+        new_factor = float(new_ending_time_decimal - self.start)
+        factor = new_factor / self.length
+        correction = self.start * factor - self.start
+        self.stretch_subtitle(factor, correction)
+
+    def sync_to_times(self, new_starting_time, new_ending_time):
+        new_ending_time_decimal = self.create_decimal_times(new_ending_time)
+        new_starting_time_decimal = self.create_decimal_times(new_starting_time)
+        self.shift_to_new_start(new_starting_time_decimal)
+        self.stretch_to_new_end(new_ending_time_decimal)
