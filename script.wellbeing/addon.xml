@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.wellbeing" name="Wellbeing" version="1.0.0" provider-name="Heckie">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.service" library="addon.py" />
+  <extension point="xbmc.python.script" library="script.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Wellbeing</summary>
+    <summary lang="de_DE">Wellbeing</summary>
+    <description lang="en_GB">Addon in order to limit playback time per day, e.g. for parental control. After playback time has been reached playback will be stopped automatically.
+    </description>
+    <description lang="de_DE">Addon um Wiedergabezeit pro Tag zu begrenzen. Nachdem die Wiederabezeit erreicht ist, beendet das Addon die Wiedergabe automatisch.
+    </description>
+    <language>en</language>
+    <language>de</language>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://github.com/Heckie75/kodi-addon-wellbeing</website>
+    <source>https://github.com/Heckie75/kodi-addon-wellbeing</source>
+    <news>
+Version 1.0.0 (2022-04-20)
+- Initial version
+    </news>
+    <assets>
+      <icon>resources/assets/icon.png</icon>
+      <fanart>resources/assets/fanart.png</fanart>
+      <screenshot>resources/assets/screenshot_01.png</screenshot>
+      <screenshot>resources/assets/screenshot_02.png</screenshot>
+      <screenshot>resources/assets/screenshot_03.png</screenshot>
+      <screenshot>resources/assets/screenshot_04.png</screenshot>
+      <screenshot>resources/assets/screenshot_05.png</screenshot>
+    </assets>
+  </extension>
+</addon>
