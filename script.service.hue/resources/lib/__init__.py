@@ -1,49 +1,46 @@
+#      Copyright (C) 2019-2021 Kodi Hue Service (script.service.hue)
+#      This file is part of script.service.hue
+#      SPDX-License-Identifier: MIT
+#      See LICENSE.TXT for more information.
+
 import functools
 import time
 from collections import deque
-from logging import getLogger
 from threading import Event
 
+import simplecache
 import xbmc
 import xbmcaddon
-import simplecache
+import xbmcvfs
 
-NUM_GROUPS = 2  # group0= video, group1=audio
 STRDEBUG = False  # Show string ID in UI
-DEBUG = False  # Enable python remote debug
-REMOTE_DBG_SUSPEND = False  # Auto suspend thread when debugger attached
 QHUE_TIMEOUT = 1  # passed to requests, in seconds.
 MINIMUM_COLOR_DISTANCE = 0.005
 SETTINGS_CHANGED = Event()
+AMBI_RUNNING = Event()
+CONNECTED = Event()
 PROCESS_TIMES = deque(maxlen=100)
 ROLLBAR_API_KEY = "b871c6292a454fb490344f77da186e10"
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
-ADDONDIR = xbmc.translatePath(ADDON.getAddonInfo('profile'))  # .decode('utf-8'))
-ADDONPATH = xbmc.translatePath(ADDON.getAddonInfo("path"))
+# ADDONDIR = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+ADDONPATH = xbmcvfs.translatePath(ADDON.getAddonInfo("path"))
 ADDONVERSION = ADDON.getAddonInfo('version')
 KODIVERSION = xbmc.getInfoLabel('System.BuildVersion')
 
-
-from resources.lib import kodilogging
-logger = getLogger(ADDONID)
-kodilogging.config()
-
-cache = simplecache.SimpleCache()
+CACHE = simplecache.SimpleCache()
 
 
 def timer(func):
-    """Logs the runtime of the decorated function"""
+    # Logs the runtime of the decorated function
 
     @functools.wraps(func)
     def wrapper_timer(*args, **kwargs):
-        startTime = time.time()  # 1
+        start_time = time.time()  # 1
         value = func(*args, **kwargs)
-        endTime = time.time()  # 2
-        runTime = endTime - startTime  # 3
-        PROCESS_TIMES.append(runTime)
-
+        end_time = time.time()  # 2
+        run_time = end_time - start_time  # 3
+        PROCESS_TIMES.append(run_time)
         return value
-
     return wrapper_timer

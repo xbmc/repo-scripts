@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Library for RGB / CIE1931 "x, y" coversion.
 Based on Philips implementation guidance:
@@ -30,9 +29,9 @@ GamutB = (
 
 # Hue BR30, A19 (Gen 3), Hue Go, LightStrips plus
 GamutC = (
-    XYPoint(0.692, 0.308),
+    XYPoint(0.6915, 0.3083),
     XYPoint(0.17, 0.7),
-    XYPoint(0.153, 0.048),
+    XYPoint(0.1532, 0.0475),
 )
 
 

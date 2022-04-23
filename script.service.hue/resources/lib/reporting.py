@@ -1,43 +1,44 @@
-import json
+#      Copyright (C) 2019-2021 Kodi Hue Service (script.service.hue)
+#      This file is part of script.service.hue
+#      SPDX-License-Identifier: MIT
+#      See LICENSE.TXT for more information.
+
 import platform
 import sys
 
+import rollbar
 import xbmc
 import xbmcgui
 
-import rollbar
-from . import logger, ADDON, ADDONVERSION, ROLLBAR_API_KEY, ADDONID,KODIVERSION, ADDONPATH
-
-def _kodi_version():
-    query = dict(jsonrpc='2.0',
-                 method='Application.GetProperties',
-                 params=dict(properties=['version', 'name']),
-                 id=1)
-    response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
-    return response['result']['version']
+from resources.lib import ADDONVERSION, ROLLBAR_API_KEY, KODIVERSION, ADDONPATH, ADDON
+from resources.lib.language import get_string as _
 
 
-def error_report_requested(exc):
-    return xbmcgui.Dialog().yesno(
-        heading="{} {}".format(ADDONID, ADDON.getLocalizedString(30043)),
-        message=ADDON.getLocalizedString(30080) +
-        "\n[COLOR=red]{}[/COLOR]\n".format(exc) +
-        ADDON.getLocalizedString(30081)
-    )
+def process_exception(exc, level="critical"):
+    if ADDON.getSettingBool("error_reporting"):
+        if _error_report_dialog(exc):
+            _report_error(level)
 
 
-def report_error(url=None):
+def _error_report_dialog(exc):
+    response = xbmcgui.Dialog().yesnocustom(heading=_("Hue Service Error"), message=_("The following error occurred:") + f"\n[COLOR=red]{exc}[/COLOR]\n" + _("Automatically report this error?"), customlabel=_("Never report errors"))
+    if response == 2:
+        xbmc.log("[script.service.hue] Error Reporting disabled")
+        ADDON.setSettingBool("error_reporting", False)
+        return False
+    return response
+
+
+def _report_error(level="critical"):
+    if "dev" in ADDONVERSION:
+        env = "dev"
+    else:
+        env = "production"
+
     data = {
         'machine': platform.machine(),
         'platform': platform.system(),
         'kodi': KODIVERSION,
-        #'kodi': _kodi_version(),
-        'url': url,
     }
-    rollbar.init(ROLLBAR_API_KEY, capture_ip="anonymize", code_version=ADDONVERSION, root=ADDONPATH, scrub_fields='bridgeUser')
-    rollbar.report_exc_info(sys.exc_info(), extra_data=data)
-
-
-def process_exception(exc):
-    if error_report_requested(exc):
-        report_error()
+    rollbar.init(ROLLBAR_API_KEY, capture_ip=False, code_version=ADDONVERSION, root=ADDONPATH, scrub_fields='bridgeUser, bridgeIP', environment=env)
+    rollbar.report_exc_info(sys.exc_info(), extra_data=data, level=level)
