@@ -1,13 +1,14 @@
-# -*- coding: utf-8 -*-
+#      Copyright (C) 2019-2021 Kodi Hue Service (script.service.hue)
+#      This file is part of script.service.hue
+#      SPDX-License-Identifier: MIT
+#      See LICENSE.TXT for more information.
 
+import xbmc
 
-from resources.lib import menu, logger, ADDONVERSION, KODIVERSION,reporting
+from resources.lib import menu, reporting
 
-
-logger.debug("*** Starting plugin.py, version {}, Kodi: {}".format(ADDONVERSION, KODIVERSION))
 try:
-    menu.menu()  # Run menu
+    menu.menu()
 except Exception as exc:
-    logger.debug("Command exception")
+    xbmc.log(f"[script.service.hue][EXCEPTION] Plugin exception: {exc}")
     reporting.process_exception(exc)
-logger.debug("*** Shutting down plugin.py, version {}, Kodi: {}".format(ADDONVERSION, KODIVERSION))
