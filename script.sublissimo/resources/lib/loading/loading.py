@@ -27,7 +27,7 @@ def ask_to_load(playingfile, filename):
                     yeslabel=_(35000),
                     nolabel=_(35001))
     if not result:
-        # xbmc.Player().stop()
+        xbmc.Player().stop()
         subtitle = loadfile.loader(filename)
         subtitle.videofilename = playingfile
         script.show_dialog(subtitle)
@@ -46,7 +46,7 @@ def select_from_directory_of_playing_file(playingfile):
     # videofilename = playingfile
     subtitle = loadfile.loader(filename)
     subtitle.videofilename = playingfile
-    # xbmc.Player().stop()
+    xbmc.Player().stop()
     script.show_dialog(subtitle)
 
 def find_active_subtitle():
@@ -64,7 +64,8 @@ def find_active_subtitle():
             filename = os.path.splitext(playingfile)[0] + "." + lang + ".srt"
         if xbmcvfs.exists(filename):
             ask_to_load(playingfile, filename)
-    select_from_directory_of_playing_file(playingfile)
+    else:
+        select_from_directory_of_playing_file(playingfile)
 
 def check_active_player():
     if xbmc.Player().isPlayingVideo():
