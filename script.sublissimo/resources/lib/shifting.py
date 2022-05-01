@@ -41,7 +41,7 @@ def forwards_by_minutes(subtitle):
     if movement != "":
         minute_movement = int(movement) * 60000
         subtitle.shift_subtitle(int(minute_movement))
-        xbmcgui.Dialog().ok(_(32017), _(32071).format(create_classical_times(int(minute_movement))))
+        xbmcgui.Dialog().ok(_(32017), _(32070).format(create_classical_times(int(minute_movement))))
     script.show_dialog(subtitle)
 
 def backwards_by_minutes(subtitle):

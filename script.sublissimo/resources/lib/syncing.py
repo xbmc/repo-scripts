@@ -44,29 +44,22 @@ def check_player_instances(subtitle=None):
     if subtitle:
         subtitle.delete_temp_file()
 
-def experiment(typeofinstance, subtitle):
-    if xbmc.Player().isPlayingVideo():
-        if xbmc.Player().getPlayingFile() == subtitle.videofilename:
-            player = PlayerInstance().request(typeofinstance)
-            player.add(subtitle)
-            player.start()
-            xbmc.Monitor().waitForAbort()
-    else:
-        return False
-
 def create_player(typeofinstance, subtitle):
-    if not experiment(typeofinstance, subtitle):
-        player = PlayerInstance().request(typeofinstance)
-        location = retrieve_video(subtitle)
-        player.add(subtitle)
-        player.play(location)
-        player.start()
-        # -----Possibly needed if video is unavailable-----
-        # xbmc.sleep(1000)
-        # if player.isPlaying() == False:
-        #     show_dialog(subtitle)
-        # -------------------------------------------------
-        xbmc.Monitor().waitForAbort()
+    player = PlayerInstance().request(typeofinstance)
+    location = retrieve_video(subtitle)
+    player.add(subtitle)
+    player.play(location)
+    player.start()
+    # -----Possibly needed if video is unavailable-----
+    # xbmc.sleep(1000)
+    # if player.isPlaying() == False:
+    #     show_dialog(subtitle)
+    # -------------------------------------------------
+    monitor = xbmc.Monitor()
+    while not monitor.abortRequested():
+        if not PlayerInstance().in_use:
+            break
+        monitor.waitForAbort(1)
 
 def play_along_file(subtitle):
     create_player("playalongfile", subtitle)

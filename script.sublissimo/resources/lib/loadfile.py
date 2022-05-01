@@ -30,7 +30,7 @@ def check_file_size(filename):
         return False
     return True
 
-def loader(filename):
+def loader(filename, for_sync=False):
     if not check_file_size(filename):
         choice = xbmcgui.Dialog().yesno(_(35030), _(35031),
                                          yeslabel=_(35029),
@@ -54,6 +54,8 @@ def loader(filename):
             return without_warning()
     except TypeError:
         pass
+    if for_sync:
+        return None    
     return error_handling(controller)
 
 def error_handling(controller):

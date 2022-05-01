@@ -22,6 +22,7 @@ class SearchFrameRate(xbmc.Player):
 class PlayerInstance:
     def __init__(self):
         self.instances = []
+        self.in_use = True
 
     def __new__(cls):
         if not hasattr(cls, "instance"):
@@ -29,6 +30,7 @@ class PlayerInstance:
         return cls.instance
 
     def deactivate(self):
+        self.in_use = False
         for instance in self.instances:
             instance.proper_exit = True
 
@@ -38,4 +40,5 @@ class PlayerInstance:
                  "syncbyframerate": SyncWizardFrameRate}
         new_obj = types[value]()
         self.instances.append(new_obj)
+        self.in_use = True
         return new_obj
