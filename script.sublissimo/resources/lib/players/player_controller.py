@@ -29,6 +29,7 @@ class PlayerInstance:
         return cls.instance
 
     def deactivate(self):
+        self.in_use = False
         for instance in self.instances:
             instance.proper_exit = True
 
@@ -38,4 +39,5 @@ class PlayerInstance:
                  "syncbyframerate": SyncWizardFrameRate}
         new_obj = types[value]()
         self.instances.append(new_obj)
+        self.in_use = True
         return new_obj

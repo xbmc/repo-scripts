@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="2.0.0" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="2.0.1" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.chardet" version="4.0.0+matrix.1"/>
