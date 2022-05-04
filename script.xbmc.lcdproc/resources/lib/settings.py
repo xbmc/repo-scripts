@@ -129,9 +129,9 @@ class Settings():
             elif self._charset == "4":
                 ret = "iso-8859-5"
             elif self._charset == "5":
-                ret = "hd44780-a00"
+                ret = "hd44780_a00"
             elif self._charset == "6":
-                ret = "hd44780-a02"
+                ret = "hd44780_a02"
             else:
                 ret = "iso-8859-1"
 
