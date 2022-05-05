@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.nhlscores" name="NHL Scores" version="2022.4.20+matrix.1" provider-name="eracknaphobia">
+<addon id="script.nhlscores" name="NHL Scores" version="2022.4.30+matrix.1" provider-name="eracknaphobia">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.pytz" />
         <import addon="script.module.requests" />
-        <import addon="script.module.kodi-six" />
     </requires>
-    <extension point="xbmc.python.script" library="default.py">
-            <provides>executable</provides>
-    </extension>
+   	<extension point="xbmc.service" library="default.py"/>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="en_GB">Get live NHL score notifications</summary>
         <description lang="en_GB">Live scoring and game updates via kodi notifications
         </description>
         <news>
-            - Initial Release
+            - Run as service
         </news>
         <language>en</language>
         <platform>all</platform>
