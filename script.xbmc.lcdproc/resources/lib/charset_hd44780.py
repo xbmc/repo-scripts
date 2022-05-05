@@ -52,10 +52,10 @@ class HD44780_StreamWriter(HD44780_Codec,codecs.StreamWriter):
 class HD44780_StreamReader(HD44780_Codec,codecs.StreamReader):
   pass
 
-def charset_hd44780(name):
-  if name == "hd44780-a00":
+def charset_hd44780(mapname):
+  if mapname == "hd44780_a00":
     return codecs.CodecInfo(
-      name               = "hd44780-a00",
+      name               = mapname,
       encode             = HD44780_Codec().encode_a00,
       decode             = HD44780_Codec().decode,
       incrementalencoder = HD44780_IncrementalEncoder_a00,
@@ -63,9 +63,9 @@ def charset_hd44780(name):
       streamreader       = HD44780_StreamReader,
       streamwriter       = HD44780_StreamWriter,
     )
-  elif name == "hd44780-a02":
+  elif mapname == "hd44780_a02":
     return codecs.CodecInfo(
-      name               = "hd44780-a02",
+      name               = mapname,
       encode             = HD44780_Codec().encode_a02,
       decode             = HD44780_Codec().decode,
       incrementalencoder = HD44780_IncrementalEncoder_a02,

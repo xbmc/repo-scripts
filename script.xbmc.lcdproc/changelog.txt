@@ -1,3 +1,5 @@
+4.0.0
+- fix Python exception when using the HD44780 character encodings/translation maps
 3.90.2
 - fix compatibility with Python 3.9
 3.90.1
