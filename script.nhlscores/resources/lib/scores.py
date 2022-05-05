@@ -3,12 +3,21 @@ import os
 import pytz
 import requests
 import time
-from datetime import datetime
+import datetime
 
 import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
+
+
+def is_between(now, start, end):
+    is_between = False
+
+    is_between |= start <= now <= end
+    is_between |= end < start and (start <= now or now <= end)
+
+    return is_between
 
 
 class Scores:
@@ -30,30 +39,41 @@ class Scores:
         self.dialog = xbmcgui.Dialog()
         self.monitor = xbmc.Monitor()
         self.test = False
+        self.daily_check_timer = 1500 #25 minutes
 
-    def toggle_script(self):
-        # Toggle the setting
-        if not self.scoring_updates_on():
-            self.addon.setSetting(id='score_updates', value='true')
-            self.notify(self.local_string(30300), self.local_string(30350))
-            if not self.test: self.check_games_scheduled()
-            self.scoring_updates()
-            self.addon.setSetting(id='score_updates', value='false')
-        else:
-            self.addon.setSetting(id='score_updates', value='false')
-            self.notify(self.local_string(30300), self.local_string(30351))
+    def service(self):
+        first_run = True
+        self.addon.setSetting(id='score_updates', value='false')
+
+        while not self.monitor.abortRequested():
+            daily_check_time = is_between(datetime.datetime.now().time(), datetime.time(3), datetime.time(4))
+            running = self.addon.getSettingBool(id='score_updates')
+            xbmc.log(f"[script.nhlscores][{datetime.datetime.now()}] first_run: {first_run}, daily_check_time: {daily_check_time}, between: {daily_check_time}, running: {running}")
+
+            if first_run or (daily_check_time and not running):
+                xbmc.log(f"[script.nhlscores][{datetime.datetime.now()}] Toggle ON")
+                self.addon.setSetting(id='score_updates', value='true')
+                self.notify(self.local_string(30300), self.local_string(30350))
+                if not self.test: self.check_games_scheduled()
+                self.scoring_updates()
+                self.addon.setSetting(id='score_updates', value='false')
+
+                first_run = False
+
+            self.monitor.waitForAbort(self.daily_check_timer)
+
 
     def local_to_pacific(self):
         pacific = pytz.timezone('US/Pacific')
-        local_to_utc = datetime.now(pytz.timezone('UTC'))
+        local_to_utc = datetime.datetime.now(pytz.timezone('UTC'))
         local_to_pacific = local_to_utc.astimezone(pacific).strftime('%Y-%m-%d')
         return local_to_pacific
 
     def string_to_date(self, string, date_format):
         try:
-            date = datetime.strptime(str(string), date_format)
+            date = datetime.datetime.strptime(str(string), date_format)
         except TypeError:
-            date = datetime(*(time.strptime(str(string), date_format)[0:6]))
+            date = datetime.datetime(*(time.strptime(str(string), date_format)[0:6]))
 
         return date
 
@@ -73,7 +93,7 @@ class Scores:
 
             if live_games == 0:
                 first_game_start = self.string_to_date(json['dates'][0]['games'][0]['gameDate'], "%Y-%m-%dT%H:%M:%SZ")
-                sleep_seconds = int((first_game_start - datetime.utcnow()).total_seconds())
+                sleep_seconds = int((first_game_start - datetime.datetime.utcnow()).total_seconds())
                 if sleep_seconds >= 6600:
                     # hour and 50 minutes or more just display hours
                     delay_time = "%s hours" % round(sleep_seconds / 3600)
@@ -276,6 +296,7 @@ class Scores:
                 # if all games have finished for the night stop the script
                 if all_games_finished and self.scoring_updates_on():
                     self.addon.setSetting(id='score_updates', value='false')
+                    xbmc.log("[script.nhlscores] End of day")
                     # If the user is watching a game don't display the all games finished message
                     if 'nhl_game_video' not in self.get_video_playing():
                         self.notify(self.local_string(30300), self.local_string(30360), self.nhl_logo)
@@ -291,3 +312,4 @@ class Scores:
     def notify(self, title, msg, img=None):
         if img is None: img = self.nhl_logo
         self.dialog.notification(title, msg, img, self.display_milliseconds, False)
+
