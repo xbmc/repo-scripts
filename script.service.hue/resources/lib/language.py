@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#      Copyright (C) 2019-2021 Kodi Hue Service (script.service.hue)
+#      Copyright (C) 2019 Kodi Hue Service (script.service.hue)
 #      This file is part of script.service.hue
 #      SPDX-License-Identifier: MIT
 #      See LICENSE.TXT for more information.
@@ -123,7 +123,6 @@ _strings['[b][i]warning: not supported on all hardware[/b][/i]'] = 30521
 _strings['cpu & hue performance'] = 30522
 _strings['ambilight'] = 30523
 _strings['advanced'] = 32101
-_strings['separate debug log'] = 32105
 _strings['video activation'] = 32106
 _strings['select lights'] = 6101
 _strings['enabled'] = 30520

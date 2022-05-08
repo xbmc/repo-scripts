@@ -1,4 +1,4 @@
-#      Copyright (C) 2019-2022 Kodi Hue Service (script.service.hue)
+#      Copyright (C) 2019 Kodi Hue Service (script.service.hue)
 #      This file is part of script.service.hue
 #      SPDX-License-Identifier: MIT
 #      See LICENSE.TXT for more information.
@@ -56,17 +56,19 @@ class AmbiGroup(lightgroup.LightGroup):
         if self.update_interval == 0:
             self.update_interval = 0.1
 
-        self.ambi_lights = {}
-        light_ids = ADDON.getSetting(f"group{self.light_group_id}_Lights").split(",")
-        index = 0
+        if self.enabled:
+            self.ambi_lights = {}
+            light_ids = ADDON.getSetting(f"group{self.light_group_id}_Lights").split(",")
+            index = 0
 
-        for L in light_ids:
-            gamut = self._get_light_gamut(self.bridge, L)
-            light = {L: {'gamut': gamut, 'prev_xy': (0, 0), "index": index}}
-            self.ambi_lights.update(light)
-            index = index + 1
+            if len(light_ids) <= 0:
+                for L in light_ids:
+                    gamut = self._get_light_gamut(self.bridge, L)
+                    light = {L: {'gamut': gamut, 'prev_xy': (0, 0), "index": index}}
+                    self.ambi_lights.update(light)
+                    index = index + 1
 
-        super(xbmc.Player).__init__()
+                super(xbmc.Player).__init__()
 
     @staticmethod
     def _force_on(ambi_lights, bridge, saved_light_states):
@@ -231,8 +233,8 @@ class AmbiGroup(lightgroup.LightGroup):
     def _bridge_error500(self):
         self.bridge_error500 = self.bridge_error500 + 1  # increment counter
         if self.bridge_error500 > 50 and ADDON.getSettingBool("show500Error"):
-            stop_showing_error = xbmcgui.Dialog().yesno(_("Hue Bridge over capacity"), _("The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."), yeslabel=_("Do not show again"), nolabel=_("Ok"))
             AMBI_RUNNING.clear()  # shut it down
+            stop_showing_error = xbmcgui.Dialog().yesno(_("Hue Bridge over capacity"), _("The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."), yeslabel=_("Do not show again"), nolabel=_("Ok"))
             if stop_showing_error:
                 ADDON.setSettingBool("show500Error", False)
             self.bridge_error500 = 0

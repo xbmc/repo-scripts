@@ -1,4 +1,4 @@
-#      Copyright (C) 2019-2022 Kodi Hue Service (script.service.hue)
+#      Copyright (C) 2019 Kodi Hue Service (script.service.hue)
 #      This file is part of script.service.hue
 #      SPDX-License-Identifier: MIT
 #      See LICENSE.TXT for more information.
@@ -6,6 +6,7 @@
 import json
 import traceback
 from datetime import timedelta
+from json import JSONDecodeError
 from socket import getfqdn
 
 import requests
@@ -86,21 +87,19 @@ def _discover_nupnp():
     xbmc.log("[script.service.hue] In kodiHue discover_nupnp()")
     try:
         req = requests.get('https://discovery.meethue.com/')
-    except requests.RequestException as exc:
-        xbmc.log(f"[script.service.hue] Nupnp failed: {exc}")
+        result = req.json()
+    except requests.RequestException as error:
+        xbmc.log(f"[script.service.hue] Nupnp failed: {error}")
+        return None
+    except JSONDecodeError as error:
+        xbmc.log(f"[script.service.hue] Nupnp failed: {error}, req: {req}")
+        reporting.process_exception(req, "critical", req)
         return None
 
-    result = req.json()
     bridge_ip = None
     if result:
         bridge_ip = result[0]["internalipaddress"]
     return bridge_ip
-
-
-def _discover_mDNS():
-    xbmc.log("[script.service.hue] In kodiHue discover_mDNS()")
-
-    return
 
 
 def discover_bridge(monitor):
@@ -132,7 +131,7 @@ def discover_bridge(monitor):
 
                 ADDON.setSettingString("bridgeIP", bridge_ip)
                 ADDON.setSettingString("bridgeUser", bridge_user)
-                complete = True
+
                 CONNECTED.set()
                 progress_bar.update(percent=100, message=_("Complete!"))
                 monitor.waitForAbort(5)
@@ -156,7 +155,6 @@ def discover_bridge(monitor):
     if progress_bar.iscanceled():
         xbmc.log("[script.service.hue] Bridge discovery cancelled by user")
         progress_bar.update(100, _("Cancelled"))
-        complete = True
         progress_bar.close()
 
 
