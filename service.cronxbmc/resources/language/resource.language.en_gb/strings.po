@@ -1,0 +1,152 @@
+# Kodi Media Center language file
+# Addon Name: Toggle Local
+# Addon id: service.cronxbmc
+# Addon Provider: robweber
+msgid ""
+msgstr ""
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "A customizable Cron timer for Kodi. "
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Create cron timers for Kodi functions. This addon can schedule and run any built-in Kodi functions. No more reliance on add-on developers to allow for timer functionality, no more scripts running on other machines to send commands to your HTPC. All of your timers can now be handled directly within Kodi. It can also display notifications when your tasks run if configured to do so."
+msgstr ""
+
+msgctxt "#30000"
+msgid "Cron"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Add Job"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Job Name"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Command"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Cron Expression"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Show Notification"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Update"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Delete"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Details"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Delete job"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Show a notification when this task runs?"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Next Run"
+msgstr ""
+
+msgctxt "#30052"
+msgid "RunScript(script[,args])"
+msgstr ""
+
+msgctxt "#30053"
+msgid "RunAddon(id)"
+msgstr ""
+
+msgctxt "#30054"
+msgid "RestartApp"
+msgstr ""
+
+msgctxt "#30055"
+msgid "PlayMedia(media[,isdir])"
+msgstr ""
+
+msgctxt "#30056"
+msgid "RefreshRSS"
+msgstr ""
+
+msgctxt "#30057"
+msgid "PlayerControl([Play|Stop|Next|Previous])"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Notification(header,message,[,time,image])"
+msgstr ""
+
+msgctxt "#30059"
+msgid "SetVolume(percent)"
+msgstr ""
+
+msgctxt "#30060"
+msgid "UpdateLibrary([music|video][,path])"
+msgstr ""
+
+msgctxt "#30061"
+msgid "CleanLibrary([music|video])"
+msgstr ""
+
+msgctxt "#30062"
+msgid "WakeOnLan(mac)"
+msgstr ""
+
+msgctxt "#30063"
+msgid "UpdateLocalAddons"
+msgstr ""
+
+msgctxt "#30064"
+msgid "TakeScreenshot"
+msgstr ""
+
+msgctxt "#30065"
+msgid "System.Exec(shellCommand)"
+msgstr ""
+
+msgctxt "#30066"
+msgid "Run job on startup if skipped?"
+msgstr ""
+
+msgctxt "#30067"
+msgid "Command Type"
+msgstr ""
+
+msgctxt "#30068"
+msgid "General"
+msgstr ""
+
+msgctxt "#30069"
+msgid "Show All Jobs"
+msgstr ""
+
+msgctxt "#30070"
+msgid "Display all jobs in the GUI, including those made by other addons"
+msgstr ""
+
+msgctxt "#30071"
+msgid "Built-in Function"
+msgstr ""
+
+msgctxt "#30072"
+msgid "JSON Command"
+msgstr ""
+
+msgctxt "#30073"
+msgid "Job not added, cron expression error"
+msgstr ""
