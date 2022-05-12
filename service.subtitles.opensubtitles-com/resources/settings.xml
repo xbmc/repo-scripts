@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <section id="service.subtitles.opensubtitles">
+        <category id="user" label="32101">
+            <group id="1">
+                <setting id="OSuser" type="string" label="32201">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32201</heading>
+                    </control>
+                </setting>
+                <setting id="OSpass" type="string" label="32202">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32202</heading>
+                        <hidden>true</hidden>
+                    </control>
+                </setting>
+                <setting id="APIKey" type="string">
+                    <level>4</level>
+                    <default>qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6</default>
+                </setting>
+            </group>
+        </category>
+        <category id="filter" label="32102">
+            <group id="1">
+                <setting id="hearing_impaired" type="string" label="32211">
+                    <level>0</level>
+                    <default>exclude</default>
+                    <constraints>
+                        <options>
+                            <option label="include">include</option>
+                            <option label="exclude">exclude</option>
+                            <option label="only">only</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32211</heading>
+                    </control>
+                </setting>
+                <setting id="foreign_parts_only" type="string" label="32212">
+                    <level>0</level>
+                    <default>include</default>
+                    <constraints>
+                        <options>
+                            <option label="include">include</option>
+                            <option label="exclude">exclude</option>
+                            <option label="only">only</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32212</heading>
+                    </control>
+                </setting>
+                <setting id="machine_translated" type="string" label="32213">
+                    <level>0</level>
+                    <default>exclude</default>
+                    <constraints>
+                        <options>
+                            <option label="include">include</option>
+                            <option label="exclude">exclude</option>
+                            <option label="only">only</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32213</heading>
+                    </control>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>

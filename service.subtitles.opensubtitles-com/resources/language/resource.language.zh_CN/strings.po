@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr "字幕搜索出错"
+
+msgctxt "#32002"
+msgid "Your OpenSubtitles.com username, password or API key is empty or not valid"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Login Details"
+msgstr "登录详细信息"
+
+msgctxt "#32201"
+msgid "Username"
+msgstr "用户名"
+
+msgctxt "#32202"
+msgid "Password"
+msgstr "密码"
+
+msgctxt "#32203"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Subtitle Options"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Hearing Impaired"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Foreign Parts Only"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Machine Translated"
+msgstr ""
