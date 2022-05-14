@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 '''
-Scraper for https://syair.info/
+Scraper for https://www.lyricsify.com/
 '''
 
 import requests
@@ -9,7 +9,7 @@ import difflib
 from bs4 import BeautifulSoup
 from lib.utils import *
 
-__title__ = "Syair"
+__title__ = "Lyricsify"
 __priority__ = '130'
 __lrc__ = True
 
@@ -20,8 +20,8 @@ class LyricsFetcher:
     def __init__(self, *args, **kwargs):
         self.DEBUG = kwargs['debug']
         self.settings = kwargs['settings']
-        self.SEARCH_URL = 'https://www.syair.info/search?q=%s'
-        self.LYRIC_URL = 'https://www.syair.info%s'
+        self.SEARCH_URL = 'https://www.lyricsify.com/search?q=%s'
+        self.LYRIC_URL = 'https://www.lyricsify.com%s'
 
     def get_lyrics(self, song):
         log("%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title), debug=self.DEBUG)
@@ -69,7 +69,7 @@ class LyricsFetcher:
             response = search.text
         except:
             return None
-        matchcode = re.search('class="entry">(.*?)<div', response, flags=re.DOTALL)
+        matchcode = re.search('div id="entry">(.*?)<div', response, flags=re.DOTALL)
         if matchcode:
             lyricscode = (matchcode.group(1))
             cleanlyrics = re.sub('<[^<]+?>', '', lyricscode)

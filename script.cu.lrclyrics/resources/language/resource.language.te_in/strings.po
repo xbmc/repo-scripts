@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
-"Report-Msgid-Bugs-To: ronie@kodi.tv\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
@@ -251,7 +251,7 @@ msgid "Music 163"
 msgstr ""
 
 msgctxt "#32905"
-msgid "Syair"
+msgid "Lyricsify"
 msgstr ""
 
 msgctxt "#32912"

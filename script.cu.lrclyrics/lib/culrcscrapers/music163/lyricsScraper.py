@@ -6,7 +6,6 @@ osdlyrics
 '''
 
 import os
-import urllib
 import requests
 import re
 import random

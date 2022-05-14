@@ -252,8 +252,8 @@ msgid "Music 163"
 msgstr "Music 163"
 
 msgctxt "#32905"
-msgid "Syair"
-msgstr "Syair"
+msgid "Lyricsify"
+msgstr ""
 
 msgctxt "#32912"
 msgid "Genius"
@@ -274,3 +274,7 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Dark Lyrics"
+
+#~ msgctxt "#32905"
+#~ msgid "Syair"
+#~ msgstr "Syair"
