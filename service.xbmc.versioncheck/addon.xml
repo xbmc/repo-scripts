@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.22" provider-name="Team Kodi">
+<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.23" provider-name="Team Kodi">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
     </requires>
     <extension point="xbmc.service" library="resources/lib/runner.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-- add Kodi 19.4 release
-- fix potential UnicodeDecodeError in distro |contrib: mvn23|
+- add Kodi 20 Alpha1 release
 - Update translations from Weblate
         </news>
         <assets>
@@ -82,7 +81,7 @@
         <description lang="hu_HU">Az Kodi verzió-ellenőrző csak néhány platformot / disztribúciót támogat, mert a kiadások között különbségek lehetnek. További információkért keresse fel az kodi.tv oldalt.</description>
         <description lang="id_ID">Kodi Version Check hanya mendukung beberapa platform/distro karena rilisnya mungkin berbeda-beda. Untuk informasi lebih lanjut kunjungi situs kodi.tv.</description>
         <description lang="is_IS">Athugun á útgáfu Kodi styður fjölda stýrikerfa/dreifinga þar sem útgáfur geta verið mismunandi á milli þeirra. Farðu inn á Kodi.tv til að fá nánari upplýsingar.</description>
-        <description lang="it_IT">Kodi Version Check supporta un numero di piattaforme e distribuzioni diverse tra loro. Per più informazioni visita il sito kodi.tv</description>
+        <description lang="it_IT">Kodi Version Check supporta solo alcune piattaforme e distribuzioni perché le relase possono differire tra loro. Per più informazioni visita il sito kodi.tv.</description>
         <description lang="ko_KR">Kodi 버전 확인은 릴리스가 다를 수 있으므로 다수 플랫폼/배포판만 지원합니다. 자세한 내용은 kodi.tv 웹사이트를 방문하세요.</description>
         <description lang="lt_LT">Kodi Version Check palaiko tik kelias platformas/distribucijas, nes leidimai tarp jų gali skirtis. Norėdami gauti daugiau informacijos, apsilankykite Kodi.tv puslapyje.</description>
         <description lang="nb_NO">Kodi Versjonsettersyn støtter kun noen plattformer/distribusjoner fordi utgivelser kan være forskjellige mellom dem. Besøk kodi.tv for mer informasjon.</description>
