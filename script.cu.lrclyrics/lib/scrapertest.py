@@ -9,7 +9,7 @@ from lib.culrcscrapers.lyricscom import lyricsScraper as lyricsScraper_lyricscom
 from lib.culrcscrapers.lyricsmode import lyricsScraper as lyricsScraper_lyricsmode
 from lib.culrcscrapers.minilyrics import lyricsScraper as lyricsScraper_minilyrics
 from lib.culrcscrapers.music163 import lyricsScraper as lyricsScraper_music163
-from lib.culrcscrapers.syair import lyricsScraper as lyricsScraper_syair
+from lib.culrcscrapers.lyricsify import lyricsScraper as lyricsScraper_lyricsify
 
 FAILED = []
 
@@ -119,8 +119,27 @@ def test_scrapers():
     if dialog.iscanceled():
         return
 
+    # test lyricsify
+    dialog.update(55, LANGUAGE(32163) % 'lyricsify')
+    log('==================== lyricsify ====================', debug=True)
+    song = Song(opt=lyricssettings)
+    song.artist = 'Madonna'
+    song.title = 'Crazy For You'
+    st = time.time()
+    lyrics = lyricsScraper_lyricsify.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['lyricsify',tt])
+    if lyrics:
+        log(lyrics.lyrics, debug=True)
+    else:
+        FAILED.append('lyricsify')
+        log('FAILED: lyricsify', debug=True)
+    if dialog.iscanceled():
+        return
+
     # test lyricsmode
-    dialog.update(55, LANGUAGE(32163) % 'lyricsmode')
+    dialog.update(66, LANGUAGE(32163) % 'lyricsmode')
     log('==================== lyricsmode ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Maren Morris'
@@ -140,7 +159,7 @@ def test_scrapers():
 
 
     # test minilyrics
-    dialog.update(66, LANGUAGE(32163) % 'minilyrics')
+    dialog.update(77, LANGUAGE(32163) % 'minilyrics')
     log('==================== minilyrics ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Chicago'
@@ -159,7 +178,7 @@ def test_scrapers():
         return
 
     # test music163
-    dialog.update(77, LANGUAGE(32163) % 'music163')
+    dialog.update(88, LANGUAGE(32163) % 'music163')
     log('==================== music163 ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Chicago'
@@ -174,25 +193,6 @@ def test_scrapers():
     else:
         FAILED.append('music163')
         log('FAILED: music163', debug=True)
-    if dialog.iscanceled():
-        return
-
-    # test syair
-    dialog.update(88, LANGUAGE(32163) % 'syair')
-    log('==================== syair ====================', debug=True)
-    song = Song(opt=lyricssettings)
-    song.artist = 'Madonna'
-    song.title = 'Crazy For You'
-    st = time.time()
-    lyrics = lyricsScraper_syair.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
-    ft = time.time()
-    tt = ft - st
-    TIMINGS.append(['syair',tt])
-    if lyrics:
-        log(lyrics.lyrics, debug=True)
-    else:
-        FAILED.append('syair')
-        log('FAILED: syair', debug=True)
     if dialog.iscanceled():
         return
 

@@ -252,8 +252,8 @@ msgid "Music 163"
 msgstr "Music 163"
 
 msgctxt "#32905"
-msgid "Syair"
-msgstr "Syair"
+msgid "Lyricsify"
+msgstr ""
 
 msgctxt "#32912"
 msgid "Genius"
@@ -274,6 +274,10 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "어두운 가사"
+
+#~ msgctxt "#32905"
+#~ msgid "Syair"
+#~ msgstr "Syair"
 
 # empty strings from id 32010 to 32100
 # Settings labels
