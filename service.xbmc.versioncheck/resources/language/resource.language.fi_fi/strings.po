@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-01-19 02:13+0000\n"
+"PO-Revision-Date: 2022-03-09 16:11+0000\n"
 "Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/fi_fi/>\n"
 "Language: fi_fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
 msgid "Kodi Version Check checks if you are running latest released version."
@@ -40,7 +40,7 @@ msgstr "Lue lisää kodi.tv-sivustolta."
 # empty strings from id 32003 to 32008
 msgctxt "#32009"
 msgid "Would you like to remove this reminder?"
-msgstr "Haluatko poistaa tämän muistutuksen?"
+msgstr "Haluatko piilottaa tämän muistutuksen?"
 
 msgctxt "#32010"
 msgid "You can enable/disable it through add-on settings."
@@ -48,7 +48,7 @@ msgstr "Voit ottaa sen käyttöön/poistaa sen käytöstä lisäosan asetuksista
 
 msgctxt "#32011"
 msgid "Use your package manager(apt) to upgrade."
-msgstr "Käytä päivitykseenn järjestelmäsi APT-pakettienhallintaa."
+msgstr "Käytä päivitykseen järjestelmäsi APT-pakettienhallintaa."
 
 msgctxt "#32012"
 msgid "A new version is available, do you want to upgrade now?"
@@ -64,7 +64,7 @@ msgstr "Haluatko käynnistää Kodin uudelleen viimeistellääksesi päivityksen
 
 msgctxt "#32015"
 msgid "Do you want to check the repository for a new version?"
-msgstr "Haluatko tarkistaa onko uusi versio saatavilla?"
+msgstr "Haluatko tarkistaa onko saatavilla uutta versiota?"
 
 msgctxt "#32016"
 msgid "There is a newer stable Kodi version available."
