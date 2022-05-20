@@ -1,4 +1,4 @@
-#      Copyright (C) 2019-2021 Kodi Hue Service (script.service.hue)
+#      Copyright (C) 2019 Kodi Hue Service (script.service.hue)
 #      This file is part of script.service.hue
 #      SPDX-License-Identifier: MIT
 #      See LICENSE.TXT for more information.
@@ -45,7 +45,8 @@ class LightGroup(xbmc.Player):
         self.lights = self.bridge.lights
         self.group0 = self.bridge.groups[0]
 
-        super().__init__()
+        if self.enabled:
+            super().__init__()
 
     def __repr__(self):
         return f"light_group_id: {self.light_group_id}, enabled: {self.enabled}, state: {self.state}"
@@ -126,7 +127,7 @@ class LightGroup(xbmc.Player):
             self.group0.action(scene=scene)
         except QhueException as exc:
             xbmc.log(f"[script.service.hue] run_action: Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
-            if "7" in exc.type_id:
+            if "3" in exc.type_id or "7" in exc.type_id:
                 xbmc.log("[script.service.hue] Scene not found")
                 hue.notification(_("Hue Service"), _("ERROR: Scene not found"), icon=xbmcgui.NOTIFICATION_ERROR)
             else:
@@ -164,8 +165,8 @@ class LightGroup(xbmc.Player):
 
         if service_enabled:
             if ADDON.getSettingBool("enableSchedule"):
-                start = convert_time(ADDON.getSettingBool("startTime"))
-                end = convert_time(ADDON.getSettingBool("endTime"))
+                start = convert_time(ADDON.getSettingString("startTime"))
+                end = convert_time(ADDON.getSettingString("endTime"))
                 now = datetime.datetime.now().time()
                 if (now > start) and (now < end):
                     # xbmc.log("[script.service.hue] Enabled by schedule")
@@ -224,8 +225,12 @@ class LightGroup(xbmc.Player):
                         return True
                 # xbmc.log("[script.service.hue] Check if scene light already active: False")
             except QhueException as exc:
-                xbmc.log(f"[script.service.hue] checkAlreadyActive: Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
-                reporting.process_exception(exc)
+                if ["7", "3"] in exc.type_id:
+                    xbmc.log("[script.service.hue] Scene not found")
+                    hue.notification(_("Hue Service"), _("ERROR: Scene not found"), icon=xbmcgui.NOTIFICATION_ERROR)
+                else:
+                    xbmc.log(f"[script.service.hue] checkAlreadyActive: Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
+                    reporting.process_exception(exc)
             except requests.RequestException as exc:
                 xbmc.log(f"[script.service.hue] Requests exception: {exc}")
                 hue.notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
