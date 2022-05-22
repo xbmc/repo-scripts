@@ -348,10 +348,6 @@ msgctxt "#30058"
 msgid "Light Names:"
 msgstr "Licht-Namen:"
 
-msgctxt "#30059"
-msgid "Light Gamut:"
-msgstr "Licht-Farbumfang:"
-
 msgctxt "#30065"
 msgid "Update interval (ms)"
 msgstr "Update-Intervall (ms)"
@@ -551,6 +547,18 @@ msgstr "Verbindungsfehler"
 msgctxt "#30014"
 msgid "Error: Lights incompatible with Ambilight"
 msgstr "Fehler: Lichter mit Ambilight inkompatibel"
+
+msgctxt "#30007"
+msgid "Bridge not found automatically. Please make sure your bridge is up to date and has access to the internet. [CR]Would you like to enter your bridge IP manually?"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Connecting..."
+msgstr ""
+
+#~ msgctxt "#30059"
+#~ msgid "Light Gamut:"
+#~ msgstr "Licht-Farbumfang:"
 
 #~ msgctxt "#32105"
 #~ msgid "Separate debug log"
