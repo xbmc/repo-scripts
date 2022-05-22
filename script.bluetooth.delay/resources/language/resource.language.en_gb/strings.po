@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: Bluetooth Delay lite
 # Addon id: script.bluetooth.delay
-# Addon Provider: 
+# Addon Provider: MAR
 msgid ""
 msgstr ""
 "Project-Id-Version: Kodi Addons\n"
@@ -37,11 +37,11 @@ msgid "Delay"
 msgstr ""
 
 msgctxt "#30005"
-msgid "Please click here before setting a new delay value"
+msgid "Click here to set your delay value"
 msgstr ""
 
 msgctxt "#30006"
-msgid "Successful! Now set delay on Device 2"
+msgid "You need to play video first"
 msgstr ""
 
 msgctxt "#30007"
@@ -53,6 +53,6 @@ msgid "This addon uses the ''Set as default for all media'' setting in the audio
 msgstr ""
 
 msgctxt "#30009"
-msgid "Play media to toggle for Bluetooth"
+msgid "(Play video to toggle)"
 msgstr ""
 
