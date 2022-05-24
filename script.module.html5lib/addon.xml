@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.html5lib" name="html5lib-python" version="1.0.1+matrix.2" provider-name="html5lib">
+<addon id="script.module.html5lib" name="html5lib-python" version="1.1.0+matrix.1" provider-name="html5lib">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.six" version="1.14.0+matrix.1" optional="false"/>
