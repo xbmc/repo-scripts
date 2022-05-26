@@ -5,13 +5,10 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 from resources.lib.contextmenu import pvr_utils
-from resources.lib.contextmenu.selection import Selection
 from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_NO,
-                                       END_TYPE_TIME, MEDIA_ACTION_START_STOP,
-                                       SYSTEM_ACTION_NONE)
-from resources.lib.utils import datetime_utils, settings_utils, vfs_utils
-
-DURATION_NO = datetime_utils.DEFAULT_TIME
+                                       FADE_OFF, MEDIA_ACTION_START_STOP,
+                                       SYSTEM_ACTION_NONE, TIMER_WEEKLY, Timer)
+from resources.lib.utils import datetime_utils, vfs_utils
 
 CONFIRM_ESCAPE = -1
 CONFIRM_NO = 0
@@ -21,213 +18,196 @@ CONFIRM_EDIT = 2
 
 class AbstractSetTimer:
 
-    addon = None
-    listitem = None
+    _addon = None
 
-    def __init__(self, listitem: xbmcgui.ListItem) -> None:
+    def __init__(self, label: str, path: str, timerid=-1) -> None:
 
         self.addon = xbmcaddon.Addon()
-        self.listitem = listitem
 
-        if not self.is_listitem_valid(listitem):
+        if not self.is_supported(label, path):
             xbmcgui.Dialog().ok(self.addon.getLocalizedString(
-                32027), self.addon.getLocalizedString(32034))
+                32027), self.addon.getLocalizedString(32118))
             return
 
-        timer = self.ask_timer()
-        if timer == None:
+        timerid = self.ask_timer(timerid)
+        if timerid == None:
             return
 
-        preselection = self._get_timer_preselection(timer, listitem)
+        timer, is_epg = self._get_timer_preselection(timerid, label, path)
 
-        ok = self.perform_ahead(preselection)
+        ok = self.perform_ahead(timer)
         if not ok:
             return
 
-        label = self.ask_label(listitem, preselection)
+        label = self.ask_label(label, path, is_epg, timer)
         if label == None:
             return
         else:
-            preselection.label = label
+            timer.s_label = label
 
-        activation = self.ask_activation(listitem, preselection)
-        if activation == None:
+        days = self.ask_days(label, path, is_epg, timer)
+        if days == None:
             return
         else:
-            preselection.activation = activation
+            timer.days = days
 
-        starttime = self.ask_starttime(listitem, preselection)
+        starttime = self.ask_starttime(label, path, is_epg, timer)
         if starttime == None:
             return
         else:
-            preselection.startTime = starttime
+            timer.s_start = starttime
 
-        duration = self.ask_duration(listitem, preselection)
+        duration = self.ask_duration(label, path, is_epg, timer)
         if duration == None:
             return
         else:
-            preselection.duration = duration
-            preselection.endTime = datetime_utils.format_from_seconds(
+            timer.s_duration = duration
+            timer.s_end = datetime_utils.format_from_seconds(
                 (datetime_utils.parse_time(starttime) + datetime_utils.parse_time(duration)).seconds)
+            timer.i_end_type = END_TYPE_NO if timer.s_duration == datetime_utils.DEFAULT_TIME else END_TYPE_DURATION
 
         system_action, media_action = self.ask_action(
-            listitem, preselection)
+            label, path, is_epg, timer)
         if system_action == None or media_action == None:
             return
         else:
-            preselection.systemAction = system_action
-            preselection.mediaAction = media_action
+            timer.i_system_action = system_action
+            timer.i_media_action = media_action
 
-        repeat, resume = self.ask_repeat_resume(preselection)
+        repeat, resume = self.ask_repeat_resume(timer)
         if repeat == None or resume == None:
             return
         else:
-            preselection.repeat = repeat
-            preselection.resume = resume
+            timer.b_repeat = repeat
+            timer.b_resume = resume
 
-        confirm = self.confirm(preselection)
+        confirm = self.confirm(timer)
         if confirm in [CONFIRM_ESCAPE, CONFIRM_NO]:
             return
 
         else:
-            self._apply(preselection)
-            self.post_apply(preselection, confirm)
+            self._apply(timer)
+            self.post_apply(timer, confirm)
 
-    def is_listitem_valid(self, listitem: xbmcgui.ListItem) -> bool:
+    def is_supported(self, label: str, path: str) -> bool:
 
-        path = listitem.getPath()
-        if listitem.getLabel() == "..":
+        if vfs_utils.is_favourites(path):
+            path = vfs_utils.get_favourites_target(path)
+
+        if label == "..":
+            return False
+        elif not path:
             return False
         elif vfs_utils.is_pvr(path):
             return vfs_utils.is_pvr_channel(path) or vfs_utils.is_pvr_recording(path) or xbmc.getCondVisibility("Window.IsVisible(tvguide)|Window.IsVisible(radioguide)")
         else:
-            return vfs_utils.has_items_in_path(path) or not vfs_utils.is_folder(path)
+            return vfs_utils.is_script(path) or vfs_utils.is_external(path) or not vfs_utils.is_folder(path) or vfs_utils.has_items_in_path(path)
 
-    def perform_ahead(self, preselection: Selection) -> bool:
+    def perform_ahead(self, timer: Timer) -> bool:
 
         return True
 
-    def ask_label(self, listitem: xbmcgui.ListItem, preselection: Selection) -> str:
+    def ask_label(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
 
-        return listitem.getLabel()
+        return label
 
-    def ask_timer(self) -> int:
+    def ask_timer(self, timerid: int) -> int:
 
-        return None
+        return timerid
 
-    def ask_activation(self, listitem: xbmcgui.ListItem, preselection: Selection) -> int:
+    def ask_days(self, label: str, path: str, is_epg: bool, timer: Timer) -> 'list[int]':
 
-        if preselection.epg:
-            return preselection.activation
+        if is_epg:
+            return timer.days
 
         else:
-            return datetime.today().weekday() + 1
+            return [datetime.today().weekday()]
 
-    def ask_starttime(self, listitem: xbmcgui.ListItem, preselection: Selection) -> str:
+    def ask_starttime(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
 
-        if preselection.epg:
-            return preselection.startTime
+        if is_epg:
+            return timer.s_start
 
         else:
             return time.strftime("%H:%M", time.localtime())
 
-    def ask_duration(self, listitem: xbmcgui.ListItem, preselection: Selection) -> str:
+    def ask_duration(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
 
-        return DURATION_NO
+        return datetime_utils.DEFAULT_TIME
 
-    def ask_action(self, listitem: xbmcgui.ListItem, preselection: Selection) -> 'tuple[int, int]':
+    def ask_action(self, label: str, path: str, is_epg: bool, timer: Timer) -> 'tuple[int, int]':
 
         return SYSTEM_ACTION_NONE, MEDIA_ACTION_START_STOP
 
-    def ask_repeat_resume(self, preselection: Selection) -> 'tuple[bool, bool]':
+    def ask_repeat_resume(self, timer: Timer) -> 'tuple[bool, bool]':
 
         return False, False
 
-    def confirm(self, preselection: Selection) -> int:
+    def confirm(self, timer: Timer) -> int:
 
         return CONFIRM_YES
 
-    def _apply(self, selection: Selection):
-
-        settings_utils.deactivateOnSettingsChangedEvents()
-
-        timer = selection.timer
-        self.addon.setSettingInt("timer_%s" % timer, selection.activation)
-        self.addon.setSettingString("timer_%s_label" %
-                                    timer, selection.label)
-        self.addon.setSettingString("timer_%s_start" %
-                                    timer, selection.startTime)
-        self.addon.setSettingInt("timer_%s_end_type" % timer,
-                                 END_TYPE_DURATION if selection.duration != DURATION_NO else END_TYPE_NO)
-        self.addon.setSetting("timer_%s_duration" %
-                              timer, selection.duration)
-        self.addon.setSettingString("timer_%s_end" %
-                                    timer, selection.endTime)
-        self.addon.setSettingInt("timer_%s_system_action" %
-                                 timer, selection.systemAction)
-        self.addon.setSettingInt("timer_%s_media_action" %
-                                 timer, selection.mediaAction)
-        self.addon.setSettingString(
-            "timer_%s_filename" % timer, selection.path)
-        self.addon.setSettingBool(
-            "timer_%s_repeat" % timer, selection.repeat)
-        self.addon.setSettingBool(
-            "timer_%s_resume" % timer, selection.resume)
-
-        if selection.fade is not None:
-            self.addon.setSettingInt("timer_%s_fade" %
-                                     timer, selection.fade)
-
-        settings_utils.activateOnSettingsChangedEvents()
-
-    def post_apply(self, selection: Selection, confirm: int) -> None:
+    def post_apply(self, timer: Timer, confirm: int) -> None:
 
         pass
 
-    def _get_timer_preselection(self, timer: int, listitem: xbmcgui.ListItem):
+    def days_to_short(self, days: 'list[int]') -> str:
 
-        selection = Selection()
-        selection.timer = timer
-        selection.label = listitem.getLabel()
+        l = list()
+        for d in range(7):
+            if d in days:
+                l.append(self.addon.getLocalizedString(32210 + d))
 
+        if TIMER_WEEKLY in days:
+            l.append("...")
+
+        return ", ".join(l)
+
+    def _get_timer_preselection(self, timerid: int, label: str, path: str) -> 'tuple[Timer,bool]':
+
+        timer = Timer.init_from_settings(timerid)
+        timer.s_label = label
+        timer.i_fade = FADE_OFF
+
+        is_epg = False
         if pvr_utils.get_current_epg_view():
-            startDate = datetime_utils.parse_xbmc_shortdate(
-                xbmc.getInfoLabel("ListItem.Date").split(" ")[0])
-            selection.activation = startDate.weekday() + 1
-            selection.startTime = xbmc.getInfoLabel("ListItem.StartTime")
-            duration = xbmc.getInfoLabel("ListItem.Duration")
-            selection.duration = "00:%s" % duration[:2] if len(
-                duration) == 5 else duration[:5]
-            selection.path = pvr_utils.get_pvr_channel_path(
+            pvr_channel_path = pvr_utils.get_pvr_channel_path(
                 pvr_utils.get_current_epg_view(), xbmc.getInfoLabel("ListItem.ChannelNumberLabel"))
-            selection.epg = selection.path != None
 
-        if not selection.epg:
-            selection.activation = self.addon.getSettingInt("timer_%i" % timer)
-            selection.path = listitem.getPath()
-            selection.startTime = self.addon.getSetting(
-                "timer_%i_start" % timer)
-            if self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_DURATION:
-                selection.duration = self.addon.getSettingString(
-                    "timer_%i_duration" % timer)
+            if pvr_channel_path:
+                is_epg = True
+                timer.s_path = pvr_channel_path
+                startDate = datetime_utils.parse_xbmc_shortdate(
+                    xbmc.getInfoLabel("ListItem.Date").split(" ")[0])
+                timer.days = [startDate.weekday()]
+                timer.s_start = xbmc.getInfoLabel("ListItem.StartTime")
+                duration = xbmc.getInfoLabel("ListItem.Duration")
+                timer.s_duration = "00:%s" % duration[:2] if len(
+                    duration) == 5 else duration[:5]
 
-            elif self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_TIME:
-                selection.duration = datetime_utils.time_duration_str(self.addon.getSettingString(
-                    "timer_%i_start" % timer), self.addon.getSetting("timer_%i_end" % timer))
+        if not is_epg:
 
+            if TIMER_WEEKLY not in timer.days:
+                t_now, td_now = datetime_utils.get_now()
+                timer.days = [t_now.tm_wday]
+
+            if vfs_utils.is_favourites(path):
+                timer.s_path = vfs_utils.get_favourites_target(path)
             else:
-                selection.duration = DURATION_NO
+                timer.s_path = path
 
-        selection.endTime = datetime_utils.format_from_seconds(
-            (datetime_utils.parse_time(selection.startTime) + datetime_utils.parse_time(selection.duration)).seconds)
+            timer.s_duration = timer.get_duration()
 
-        selection.systemAction = self.addon.getSettingInt(
-            "timer_%i_system_action" % timer)
-        selection.mediaAction = self.addon.getSettingInt(
-            "timer_%i_media_action" % timer)
+        timer.s_end = datetime_utils.format_from_seconds(
+            (datetime_utils.parse_time(timer.s_start) + datetime_utils.parse_time(timer.s_duration)).seconds)
 
-        selection.repeat = self.addon.getSettingBool("timer_%i_repeat" % timer)
-        selection.resume = self.addon.getSettingBool("timer_%i_resume" % timer)
-        selection.fade = None
+        if vfs_utils.is_script(timer.s_path):
+            timer.s_mediatype = "script"
+        else:
+            timer.s_mediatype = vfs_utils.get_media_type(timer.s_path)
 
-        return selection
+        return timer, is_epg
+
+    def _apply(self, timer: Timer) -> None:
+
+        timer.save_to_settings()

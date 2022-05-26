@@ -138,8 +138,20 @@ msgid "Execution"
 msgstr "Ausführung"
 
 msgctxt "#32034"
-msgid "Selected item is not supported."
-msgstr "Das ausgewählte Element wird nicht unterstützt."
+msgid "off"
+msgstr "aus"
+
+msgctxt "#32035"
+msgid "once"
+msgstr "einmalig"
+
+msgctxt "#32036"
+msgid "weekly"
+msgstr "wöchentlich"
+
+msgctxt "#32037"
+msgid "Days"
+msgstr "Tage"
 
 msgctxt "#32060"
 msgid "Schedule"
@@ -237,6 +249,10 @@ msgctxt "#32087"
 msgid "System action at end"
 msgstr "System Aktion nach Ablauf"
 
+msgctxt "#32088"
+msgid "Shuffle"
+msgstr "Mischen"
+
 msgctxt "#32090"
 msgid "Volume"
 msgstr "Lautstärke"
@@ -278,8 +294,8 @@ msgid "Select timer"
 msgstr "Wähle Timer"
 
 msgctxt "#32104"
-msgid "Select execution"
-msgstr "Wähle Ausführung"
+msgid "Select days"
+msgstr "Wähle Tage"
 
 msgctxt "#32105"
 msgid "Enter start time"
@@ -332,6 +348,10 @@ msgstr "Quick %s"
 msgctxt "#32117"
 msgid "Quick Timer"
 msgstr "Quick Timer"
+
+msgctxt "#32118"
+msgid "Selected item is not supported."
+msgstr "Das ausgewählte Element wird nicht unterstützt."
 
 msgctxt "#32120"
 msgid "off"
@@ -454,109 +474,57 @@ msgid "120 min"
 msgstr "120 min"
 
 msgctxt "#32200"
-msgid "off"
-msgstr "aus"
-
-msgctxt "#32201"
 msgid "Monday"
 msgstr "Montag"
 
-msgctxt "#32202"
+msgctxt "#32201"
 msgid "Tuesday"
 msgstr "Dienstag"
 
-msgctxt "#32203"
+msgctxt "#32202"
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-msgctxt "#32204"
+msgctxt "#32203"
 msgid "Thursday"
 msgstr "Donnerstag"
 
-msgctxt "#32205"
+msgctxt "#32204"
 msgid "Friday"
 msgstr "Freitag"
 
-msgctxt "#32206"
+msgctxt "#32205"
 msgid "Saturday"
 msgstr "Samstag"
 
-msgctxt "#32207"
+msgctxt "#32206"
 msgid "Sunday"
 msgstr "Sonntag"
 
-msgctxt "#32208"
-msgid "Mondays"
-msgstr "Montags"
-
-msgctxt "#32209"
-msgid "Tuedays"
-msgstr "Dienstags"
-
 msgctxt "#32210"
-msgid "Wednesdays"
-msgstr "Mittwochs"
+msgid "Mon"
+msgstr "Mo"
 
 msgctxt "#32211"
-msgid "Thursdays"
-msgstr "Donnerstags"
+msgid "Tue"
+msgstr "Di"
 
 msgctxt "#32212"
-msgid "Fridays"
-msgstr "Freitags"
+msgid "Wed"
+msgstr "Mi"
 
 msgctxt "#32213"
-msgid "Saturdays"
-msgstr "Samstags"
+msgid "Thu"
+msgstr "Do"
 
 msgctxt "#32214"
-msgid "Sundays"
-msgstr "Sonntags"
+msgid "Fri"
+msgstr "Fr"
 
 msgctxt "#32215"
-msgid "Mondays to Thursdays"
-msgstr "Montags bis Donnerstags"
+msgid "Sat"
+msgstr "Sa"
 
 msgctxt "#32216"
-msgid "Mondays to Fridays"
-msgstr "Montags bis Freitags"
-
-msgctxt "#32217"
-msgid "Mondays to Saturdays"
-msgstr "Montags bis Samstags"
-
-msgctxt "#32218"
-msgid "Tuesdays to Fridays"
-msgstr "Dienstags bis Freitags"
-
-msgctxt "#32219"
-msgid "Thursdays to Saturdays"
-msgstr "Donnerstags bis Samstags"
-
-msgctxt "#32220"
-msgid "Fridays to Saturdays"
-msgstr "Freitags bis Samstags"
-
-msgctxt "#32221"
-msgid "Fridays to Sundays"
-msgstr "Freitags bis Sonntags"
-
-msgctxt "#32222"
-msgid "Saturdays to Sundays"
-msgstr "Samstags bis Sonntags"
-
-msgctxt "#32223"
-msgid "Saturdays to Mondays"
-msgstr "Samstags bis Montags"
-
-msgctxt "#32224"
-msgid "Sundays to Wednesdays"
-msgstr "Sonntags bis Mittwochs"
-
-msgctxt "#32225"
-msgid "Sundays to Thursdays"
-msgstr "Sonntags bis Donnerstags"
-
-msgctxt "#32226"
-msgid "Everyday"
-msgstr "täglich"
+msgid "Sun"
+msgstr "So"

@@ -53,7 +53,7 @@ def format_from_seconds(secs: int) -> str:
     return "%02i:%02i" % (secs // 3600, (secs % 3600) // 60)
 
 
-def get_now() -> 'tuple[datetime.time, datetime.timedelta]':
+def get_now() -> 'tuple[time.struct_time, datetime.timedelta]':
     t_now = time.localtime()
     td_now = datetime.timedelta(hours=t_now.tm_hour,
                                 minutes=t_now.tm_min,

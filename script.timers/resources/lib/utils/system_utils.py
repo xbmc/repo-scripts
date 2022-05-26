@@ -1,5 +1,5 @@
 import xbmc
-from resources.lib.utils import jsonrpc_utils
+from resources.lib.utils.jsonrpc_utils import json_rpc
 
 
 def is_fullscreen() -> bool:
@@ -9,7 +9,7 @@ def is_fullscreen() -> bool:
 
 def set_powermanagement_displaysoff(value: int) -> None:
 
-    jsonrpc_utils.json_rpc("Settings.SetSettingValue", {
+    json_rpc("Settings.SetSettingValue", {
         "setting": "powermanagement.displaysoff", "value": value})
 
 
