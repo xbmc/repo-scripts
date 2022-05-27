@@ -23,71 +23,71 @@ msgstr ""
 
 msgctxt "#32004"
 msgid "Sleep timer"
-msgstr "Einschlafen"
+msgstr ""
 
 msgctxt "#32005"
 msgid "Snooze timer"
-msgstr "Schlummern"
+msgstr ""
 
 msgctxt "#32006"
 msgid "Timer 1"
-msgstr "Timer 1"
+msgstr ""
 
 msgctxt "#32007"
 msgid "Timer 2"
-msgstr "Timer 2"
+msgstr ""
 
 msgctxt "#32008"
 msgid "Timer 3"
-msgstr "Timer 3"
+msgstr ""
 
 msgctxt "#32009"
 msgid "Timer 4"
-msgstr "Timer 4"
+msgstr ""
 
 msgctxt "#32010"
 msgid "Timer 5"
-msgstr "Timer 5"
+msgstr ""
 
 msgctxt "#32011"
 msgid "Timer 6"
-msgstr "Timer 6"
+msgstr ""
 
 msgctxt "#32012"
 msgid "Timer 7"
-msgstr "Timer 7"
+msgstr ""
 
 msgctxt "#32013"
 msgid "Timer 8"
-msgstr "Timer 8"
+msgstr ""
 
 msgctxt "#32014"
 msgid "Timer 9"
-msgstr "Timer 9"
+msgstr ""
 
 msgctxt "#32015"
 msgid "Timer 10"
-msgstr "Timer 10"
+msgstr ""
 
 msgctxt "#32016"
 msgid "Timer 11"
-msgstr "Timer 11"
+msgstr ""
 
 msgctxt "#32017"
 msgid "Timer 12"
-msgstr "Timer 12"
+msgstr ""
 
 msgctxt "#32018"
 msgid "Timer 13"
-msgstr "Timer 13"
+msgstr ""
 
 msgctxt "#32019"
 msgid "Timer 14"
-msgstr "Timer 14"
+msgstr ""
 
 msgctxt "#32020"
 msgid "Timer 15"
-msgstr "Timer 15"
+msgstr ""
 
 msgctxt "#32021"
 msgid "Edit"
@@ -138,7 +138,19 @@ msgid "Execution"
 msgstr ""
 
 msgctxt "#32034"
-msgid "Selected item is not supported."
+msgid "off"
+msgstr ""
+
+msgctxt "#32035"
+msgid "once"
+msgstr ""
+
+msgctxt "#32036"
+msgid "weekly"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Days"
 msgstr ""
 
 msgctxt "#32060"
@@ -237,16 +249,16 @@ msgctxt "#32087"
 msgid "System action at end"
 msgstr ""
 
+msgctxt "#32088"
+msgid "Shuffle"
+msgstr ""
+
 msgctxt "#32090"
 msgid "Volume"
 msgstr ""
 
 msgctxt "#32091"
 msgid "Fading"
-msgstr ""
-
-msgctxt "#32094"
-msgid "fade out from current"
 msgstr ""
 
 msgctxt "#32095"
@@ -282,7 +294,7 @@ msgid "Select timer"
 msgstr ""
 
 msgctxt "#32104"
-msgid "Select execution"
+msgid "Select days"
 msgstr ""
 
 msgctxt "#32105"
@@ -335,6 +347,10 @@ msgstr ""
 
 msgctxt "#32117"
 msgid "Quick Timer"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Selected item is not supported."
 msgstr ""
 
 msgctxt "#32120"
@@ -458,109 +474,57 @@ msgid "120 min"
 msgstr ""
 
 msgctxt "#32200"
-msgid "off"
-msgstr ""
-
-msgctxt "#32201"
 msgid "Monday"
 msgstr ""
 
-msgctxt "#32202"
+msgctxt "#32201"
 msgid "Tuesday"
 msgstr ""
 
-msgctxt "#32203"
+msgctxt "#32202"
 msgid "Wednesday"
 msgstr ""
 
-msgctxt "#32204"
+msgctxt "#32203"
 msgid "Thursday"
 msgstr ""
 
-msgctxt "#32205"
+msgctxt "#32204"
 msgid "Friday"
 msgstr ""
 
-msgctxt "#32206"
+msgctxt "#32205"
 msgid "Saturday"
 msgstr ""
 
-msgctxt "#32207"
+msgctxt "#32206"
 msgid "Sunday"
 msgstr ""
 
-msgctxt "#32208"
-msgid "Mondays"
-msgstr ""
-
-msgctxt "#32209"
-msgid "Tuedays"
-msgstr ""
-
 msgctxt "#32210"
-msgid "Wednesdays"
+msgid "Mon"
 msgstr ""
 
 msgctxt "#32211"
-msgid "Thursdays"
+msgid "Tue"
 msgstr ""
 
 msgctxt "#32212"
-msgid "Fridays"
+msgid "Wed"
 msgstr ""
 
 msgctxt "#32213"
-msgid "Saturdays"
+msgid "Thu"
 msgstr ""
 
 msgctxt "#32214"
-msgid "Sundays"
+msgid "Fri"
 msgstr ""
 
 msgctxt "#32215"
-msgid "Mondays to Thursdays"
+msgid "Sat"
 msgstr ""
 
 msgctxt "#32216"
-msgid "Mondays to Fridays"
-msgstr ""
-
-msgctxt "#32217"
-msgid "Mondays to Saturdays"
-msgstr ""
-
-msgctxt "#32218"
-msgid "Tuesdays to Fridays"
-msgstr ""
-
-msgctxt "#32219"
-msgid "Thursdays to Saturdays"
-msgstr ""
-
-msgctxt "#32220"
-msgid "Fridays to Saturdays"
-msgstr ""
-
-msgctxt "#32221"
-msgid "Fridays to Sundays"
-msgstr ""
-
-msgctxt "#32222"
-msgid "Saturdays to Sundays"
-msgstr ""
-
-msgctxt "#32223"
-msgid "Saturdays to Mondays"
-msgstr ""
-
-msgctxt "#32224"
-msgid "Sundays to Wednesdays"
-msgstr ""
-
-msgctxt "#32225"
-msgid "Sundays to Thursdays"
-msgstr ""
-
-msgctxt "#32226"
-msgid "Everyday"
+msgid "Sun"
 msgstr ""

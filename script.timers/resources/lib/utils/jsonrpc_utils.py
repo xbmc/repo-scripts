@@ -3,7 +3,7 @@ import json
 import xbmc
 
 
-def json_rpc(jsonmethod: str, params=None):
+def json_rpc(jsonmethod: str, params=None) -> dict:
 
     kodi_json = {}
 

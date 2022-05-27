@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.0.0" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.1.0" provider-name="Heckie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
@@ -17,7 +17,7 @@
 			</item>
 			<item library="context_settimer.py">
 				<label>32000</label>
-				<visible>Window.IsMedia</visible>
+				<visible>true</visible>
 			</item>
 			<item library="context_setquickepgtimer.py">
 				<label>32117</label>
@@ -31,12 +31,11 @@
 		<description lang="en_GB">A powerful timer addon with the following features
 * 15 timer slots. All of them can be quickly set up by using context menu
 * 2 additional slots for sleep and doze timers with single-click-setup 
-* Timers can play any ressource that it available in Kodi, e.g. music, video files, TV/radio programs, ressources from 3rd party plugins, e.g. Zattoo channels. 
-* Timers can be set from TV / Radio EPG
-* One-click-setup from epg (Quick Timer)
+* Timers can play any ressource that it available in Kodi, e.g. music folders, video files, TV/radio programs, slideshows, ressources from 3rd party plugins, e.g. Zattoo channels. 
+* Timers can be set from TV / Radio EPG, One-click-setup from epg (Quick Timer)
 * Different schedule modes: once, everyday, Mon-Fri, Fri-Sat, Sat-Sun, Sun-Thu, Mon-Thu, specific weekday and many more
 * Date change is supported, e.g. from 23:30 (p.m.) until 1:30 (a.m.) 
-* Two end modes, i.e. duration or specific time
+* Shuffle, repeat, 2 end modes, i.e. duration or specific time
 * Actions related to media: start media and stop at end, just start media, start media at end, stop media immediately, stop media at end, powerdown system
 * Linear fading in timer period: fade-in, fade-out, no fading. Min and max volume can be set for each timer
 * Custom label for timer
@@ -47,7 +46,7 @@
 		<description lang="de_DE">Timer Addon mit folgenden Funktionen
 * 15 Timer, die eingestellt werden können. Alle Timer können über das Kontextmenü geöffnet werden
 * 2 zusätzliche Timer für "Einschlaf"- und "Schlummer"-Timer mit nur einem Klick 
-* Timer können alle Medien starten, die in Kodi sind wie Musik, Video, TV/Radio programme, andere Addons, z.B. Zattoo. 
+* Timer können alle Medien starten, die in Kodi sind wie Musik, Video, TV/Radio programme, Diashows, andere Addons, z.B. Zattoo. 
 * Einstellung mit nur einem Klick aus EPG (Quick Timer)
 * Verschiedene Zeitplanungen möglich: einmalig, pro Wochentag, Mo-Fr, Fr-Sa, Sa-So, So-Do, Mo-Do u.v.m.
 * Tageswechsel wird unterstützt, z.B. Timer von 23:30 bis 1:30 am nächsten Tag
@@ -66,6 +65,14 @@
 		<website>https://github.com/Heckie75/kodi-addon-timers</website>
 		<source>https://github.com/Heckie75/kodi-addon-timers</source>
 		<news>
+v3.1.0 (2022-05-26)
+- Added feature in order to schedule slideshows, program/script addons and favourites
+- Free selection of weekdays
+- Added feature for shuffling playlists
+- Improved resuming, e.g. in case of media that is shorter than timer
+- optimization and bugfixes, e.g. preview of playlists / folders
+- covered and proved many timer scenarios and functionality with unit tests
+
 v3.0.0 (2022-04-12)
 - Support folders and playlists for scheduling, (feature request https://github.com/Heckie75/kodi-addon-timers/issues/7)
 - Separated configuration of media and system actions, e.g. shutdown Kodi
@@ -81,16 +88,7 @@ v2.1.1 (2022-01-29)
 - Improved prevention lock screen, no restart of Kodi required anymore after setting has changed
 - Refactoring: Usage of modern Kodi API (read and write settings)
 - Added timer actions, i.e. quit Kodi, suspend system, hibernate system, shutdown system
-- Minor bugfixes, e.g. displayed wrong timer no. in some dialogs 
-
-v2.1.0 (2021-11-20):
-- Improved start and stop action in case that multiple timers are running in parallel, see also https://github.com/Heckie75/kodi-addon-timers/issues/5 
-- One-click-setup from epg (Quick Timer)
-- Improved procedure of update state after one-time-timers have run out or settings have been changed
-- Added 5 more timer slots
-- Added feature in order to prevent that display is turned off if Kodi idles but is not in fullscreen mode
-- Migrated to new XML settings format
-- Major refactoring, better structured code
+- Minor bugfixes, e.g. displayed wrong timer no. in some dialogs
 		</news>
 		<assets>
 			<icon>resources/assets/icon.png</icon>
@@ -104,7 +102,6 @@ v2.1.0 (2021-11-20):
 			<screenshot>resources/assets/screenshot_07.png</screenshot>
 			<screenshot>resources/assets/screenshot_08.png</screenshot>
 			<screenshot>resources/assets/screenshot_09.png</screenshot>
-			<screenshot>resources/assets/screenshot_10.png</screenshot>
 		</assets>
 	</extension>
 </addon>
