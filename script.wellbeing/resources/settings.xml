@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1">
+  <section id="script.wellbeing">
+    <category id="c_limit" label="32020" help="">
+      <group id="g_limit" label="32011">
+        <setting id="limitation" type="integer" label="32011" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+      </group>
+      <group id="g_limit2" label="32020">
+        <setting id="limit_0" type="time" label="32021" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32021</heading>
+          </control>
+        </setting>
+        <setting id="limit_1" type="time" label="32022" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32022</heading>
+          </control>
+        </setting>
+        <setting id="limit_2" type="time" label="32023" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32023</heading>
+          </control>
+        </setting>
+        <setting id="limit_3" type="time" label="32024" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32024</heading>
+          </control>
+        </setting>
+        <setting id="limit_4" type="time" label="32025" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32025</heading>
+          </control>
+        </setting>
+        <setting id="limit_5" type="time" label="32026" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32026</heading>
+          </control>
+        </setting>
+        <setting id="limit_6" type="time" label="32027" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32027</heading>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="c_restperiods" label="32050" help="">
+      <group id="g_mondaynight" label="32065">
+        <setting id="restperiod_0" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_0" type="time" label="32051" help="">
+          <level>0</level>
+          <default>23:00</default>
+          <control type="button" format="time">
+            <heading>32051</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_0">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_1" type="time" label="32052" help="">
+          <level>0</level>
+          <default>07:00</default>
+          <control type="button" format="time">
+            <heading>32052</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_0">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+      <group id="g_tuesnight" label="32066">
+        <setting id="restperiod_1" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_1" type="time" label="32053" help="">
+          <level>0</level>
+          <default>23:00</default>
+          <control type="button" format="time">
+            <heading>32053</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_1">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_2" type="time" label="32054" help="">
+          <level>0</level>
+          <default>07:00</default>
+          <control type="button" format="time">
+            <heading>32054</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_1">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+      <group id="g_wednesdaynight" label="32067">
+        <setting id="restperiod_2" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_2" type="time" label="32055" help="">
+          <level>0</level>
+          <default>23:00</default>
+          <control type="button" format="time">
+            <heading>32055</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_2">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_3" type="time" label="32056" help="">
+          <level>0</level>
+          <default>07:00</default>
+          <control type="button" format="time">
+            <heading>32056</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_2">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+      <group id="g_thursdaynight" label="32068">
+        <setting id="restperiod_3" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_3" type="time" label="32057" help="">
+          <level>0</level>
+          <default>23:00</default>
+          <control type="button" format="time">
+            <heading>32057</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_3">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_4" type="time" label="32058" help="">
+          <level>0</level>
+          <default>07:00</default>
+          <control type="button" format="time">
+            <heading>32058</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_3">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+      <group id="g_fridaynight" label="32069">
+        <setting id="restperiod_4" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_4" type="time" label="32059" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32059</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_4">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_5" type="time" label="32060" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32060</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_4">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+      <group id="g_saturdaynight" label="32070">
+        <setting id="restperiod_5" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_5" type="time" label="32061" help="">
+          <level>0</level>
+          <default>24:00</default>
+          <control type="button" format="time">
+            <heading>32061</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_5">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_6" type="time" label="32062" help="">
+          <level>0</level>
+          <default>00:00</default>
+          <control type="button" format="time">
+            <heading>32062</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_5">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+      <group id="g_sundaynight" label="32071">
+        <setting id="restperiod_6" type="integer" label="32050" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32012">1</option>
+              <option label="32013">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="restfrom_6" type="time" label="32063" help="">
+          <level>0</level>
+          <default>23:00</default>
+          <control type="button" format="time">
+            <heading>32063</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_6">0</dependency>
+          </dependencies>
+        </setting>
+        <setting id="restto_0" type="time" label="32064" help="">
+          <level>0</level>
+          <default>07:00</default>
+          <control type="button" format="time">
+            <heading>32064</heading>
+          </control>
+          <dependencies>
+            <dependency type="enable" operator="gt" setting="restperiod_6">0</dependency>
+          </dependencies>
+        </setting>
+      </group>
+    </category>
+    <category id="c_general" label="32010" help="">
+      <group id="g_general" label="32010">
+        <setting id="password" type="string" label="32017" help="">
+          <level>0</level>
+          <default>0000</default>
+          <control type="edit" format="string">
+            <heading>32017</heading>
+            <hidden>true</hidden>
+          </control>
+        </setting>
+        <setting id="hint1" type="string" label="32001" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32001</heading>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="password" operator="is">0000</dependency>
+          </dependencies>          
+          <enable>false</enable>
+        </setting>
+        <setting id="date" type="string" label="32018" help="">
+          <level>3</level>
+          <default>1970-01-01</default>
+          <control type="edit" format="string">
+            <heading>32018</heading>
+          </control>
+          <enable>false</enable>
+          <visible>false</visible>
+        </setting>
+        <setting id="sum" type="integer" label="32020" help="">
+          <level>3</level>
+          <default>0</default>
+          <control type="edit" format="integer">
+            <heading>32020</heading>
+          </control>
+          <enable>false</enable>
+          <visible>false</visible>
+        </setting>
+      </group>
+      <group id="g_hint2" label="32002">
+        <setting id="hint2" type="string" label="32003" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32003</heading>
+          </control>
+          <enable>false</enable>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
