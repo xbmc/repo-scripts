@@ -19,17 +19,17 @@
 # along with script.module.srgssr.
 # If not, see <http://www.gnu.org/licenses/>.
 
+from urllib.parse import quote_plus, parse_qsl, ParseResult
+from urllib.parse import urlparse as urlps
+
 import os
 import sys
 import re
 import traceback
-
 import datetime
 import json
 import requests
-
-from urllib.parse import quote_plus, parse_qsl, ParseResult
-from urllib.parse import urlparse as urlps
+import utils
 
 import xbmc
 import xbmcgui
@@ -38,7 +38,6 @@ import xbmcaddon
 import xbmcvfs
 
 import simplecache
-import utils
 import youtube_channels
 
 
@@ -65,7 +64,7 @@ def get_params():
     return dict(parse_qsl(sys.argv[2][1:]))
 
 
-class SRGSSR(object):
+class SRGSSR:
     """
     Base class for all SRG SSR related plugins.
     Everything that can be done independently from the business unit
@@ -82,7 +81,12 @@ class SRGSSR(object):
         self.language = LANGUAGE
         self.plugin_language = self.real_settings.getLocalizedString
         self.host_url = f'https://www.{bu}.ch'
+        if bu == 'swi':
+            self.host_url = 'https://play.swissinfo.ch'
+        self.playtv_url = f'{self.host_url}/play/tv'
         self.apiv3_url = f'{self.host_url}/play/v3/api/{bu}/production/'
+        self.data_regex = \
+            r'<script>window.__SSR_VIDEO_DATA__\s*=\s*(.+?)</script>'
         self.data_uri = f'special://home/addons/{self.addon_id}/resources/data'
         self.media_uri = \
             f'special://home/addons/{self.addon_id}/resources/media'
@@ -141,10 +145,14 @@ class SRGSSR(object):
         page      -- an integer used to indicate the current page in
                      the list of items
         """
-        if mode:
+        try:
             mode = str(mode)
-        if page:
+        except Exception:
+            pass
+        try:
             page = str(page)
+        except Exception:
+            pass
         added = False
         queries = (url, mode, name, page_hash, page)
         query_names = ('url', 'mode', 'name', 'page_hash', 'page')
@@ -152,7 +160,8 @@ class SRGSSR(object):
         for query, qname in zip(queries, query_names):
             if query:
                 add = '?' if not added else '&'
-                purl += '%s%s=%s' % (add, qname, quote_plus(query))
+                qplus = quote_plus(query)
+                purl += f'{add}{qname}={qplus}'
                 added = True
         return purl
 
@@ -168,7 +177,7 @@ class SRGSSR(object):
         cache_response = None
         if use_cache:
             cache_response = self.cache.get(
-                ADDON_NAME + '.open_url, url = %s' % url)
+                f'{ADDON_NAME}.open_url, url = {url}')
         if not cache_response:
             headers = {
                 'User-Agent': ('Mozilla/5.0 (X11; Linux x86_64; rv:59.0)'
@@ -176,16 +185,16 @@ class SRGSSR(object):
             }
             response = requests.get(url, headers=headers)
             if not response.ok:
-                self.log('open_url: Failed to open url %s' % url)
+                self.log(f'open_url: Failed to open url {url}')
                 xbmcgui.Dialog().notification(
                     ADDON_NAME, LANGUAGE(30100), ICON, 4000)
                 return ''
             self.cache.set(
-                ADDON_NAME + '.open_url, url = %s' % url,
+                f'{ADDON_NAME}.open_url, url = {url}',
                 response.text,
                 expiration=datetime.timedelta(hours=2))
             return response.text
-        return self.cache.get(ADDON_NAME + '.open_url, url = %s' % url)
+        return self.cache.get(f'{ADDON_NAME}.open_url, url = {url}')
 
     def build_main_menu(self, identifiers=[]):
         """
@@ -196,57 +205,52 @@ class SRGSSR(object):
                         of the menus to display.
         """
         self.log('build_main_menu')
+
+        def display_item(item):
+            return item in identifiers and self.get_boolean_setting(item)
+
         main_menu_list = [
             {
                 # All shows
                 'identifier': 'All_Shows',
                 'name': self.plugin_language(30050),
                 'mode': 10,
-                'displayItem': self.get_boolean_setting('All_Shows'),
+                'displayItem': display_item('All_Shows'),
                 'icon': self.icon,
             }, {
                 # Favourite shows
                 'identifier': 'Favourite_Shows',
                 'name': self.plugin_language(30051),
                 'mode': 11,
-                'displayItem': self.get_boolean_setting('Favourite_Shows'),
+                'displayItem': display_item('Favourite_Shows'),
                 'icon': self.icon,
             }, {
                 # Newest favourite shows
                 'identifier': 'Newest_Favourite_Shows',
                 'name': self.plugin_language(30052),
                 'mode': 12,
-                'displayItem': self.get_boolean_setting(
-                    'Newest_Favourite_Shows'),
-                'icon': self.icon,
-            }, {
-                # Recommendations
-                'identifier': 'Recommendations',
-                'name': self.plugin_language(30053),
-                'mode': 16,
-                'displayItem': self.get_boolean_setting('Recommendations'),
+                'displayItem': display_item('Newest_Favourite_Shows'),
                 'icon': self.icon,
             }, {
                 # Topics
                 'identifier': 'Topics',
                 'name': self.plugin_language(30058),
                 'mode': 13,
-                'displayItem': False,  # not (yet) supported
+                'displayItem': display_item('Topics'),
                 'icon': self.icon,
             }, {
                 # Most searched TV shows
                 'identifier': 'Most_Searched_TV_Shows',
                 'name': self.plugin_language(30059),
                 'mode': 14,
-                'displayItem': self.get_boolean_setting(
-                    'Most_Searched_TV_Shows'),
+                'displayItem': display_item('Most_Searched_TV_Shows'),
                 'icon': self.icon,
             }, {
                 # Shows by date
                 'identifier': 'Shows_By_Date',
                 'name': self.plugin_language(30057),
                 'mode': 17,
-                'displayItem': self.get_boolean_setting('Shows_By_Date'),
+                'displayItem': display_item('Shows_By_Date'),
                 'icon': self.icon,
             }, {
                 # Live TV
@@ -267,15 +271,21 @@ class SRGSSR(object):
                 'identifier': 'Search',
                 'name': self.plugin_language(30085),
                 'mode': 27,
-                'displayItem': self.get_boolean_setting('Search'),
+                'displayItem': display_item('Search'),
+                'icon': self.icon,
+            }, {
+                # Homepage
+                'identifier': 'Homepage',
+                'name': self.plugin_language(30060),
+                'mode': 200,
+                'displayItem': display_item('Homepage'),
                 'icon': self.icon,
             }, {
                 # YouTube
-                'identifier': '%s_YouTube' % self.bu.upper(),
+                'identifier': f'{self.bu.upper()}_YouTube',
                 'name': self.plugin_language(30074),
                 'mode': 30,
-                'displayItem': self.get_boolean_setting(
-                    '%s_YouTube' % self.bu.upper()),
+                'displayItem': display_item(f'{self.bu.upper()}_YouTube'),
                 'icon': self.get_youtube_icon(),
             }
         ]
@@ -317,7 +327,8 @@ class SRGSSR(object):
         Keyword arguments:
         queries       -- the query string or a list of several queries
         mode          -- mode for the URL of the next folder
-        page          -- current page
+        page          -- current page; if page is set to 0, do not build
+                         a next page button
         page_hash     -- cursor for fetching the next items
         is_show       -- indicates if the menu contains only shows
         whitelist_ids -- list of ids that should be displayed, if it is set
@@ -330,6 +341,7 @@ class SRGSSR(object):
                 data = json.loads(self.open_url(self.apiv3_url + query))
                 if data:
                     data = utils.try_get(data, ['data', 'data'], list, []) or \
+                        utils.try_get(data, ['data', 'medias'], list, []) or \
                         utils.try_get(data, ['data', 'results'], list, []) or \
                         utils.try_get(data, 'data', list, [])
                     for item in data:
@@ -347,8 +359,9 @@ class SRGSSR(object):
             cursor = None
 
         if cursor:
-            data = json.loads(self.open_url(self.apiv3_url + queries + (
-                '&' if '?' in queries else '?') + 'next=' + cursor))
+            symb = '&' if '?' in queries else '?'
+            url = f'{self.apiv3_url}{queries}{symb}next={cursor}'
+            data = json.loads(self.open_url(url))
         else:
             data = json.loads(self.open_url(self.apiv3_url + queries))
         cursor = utils.try_get(data, 'next') or utils.try_get(
@@ -361,6 +374,7 @@ class SRGSSR(object):
             return
 
         items = utils.try_get(data, 'data', list, []) or \
+            utils.try_get(data, 'medias', list, []) or \
             utils.try_get(data, 'results', list, []) or data
 
         for item in items:
@@ -368,6 +382,16 @@ class SRGSSR(object):
                 item, is_show=is_show, whitelist_ids=whitelist_ids)
 
         if cursor:
+            if page == 0 or page == '0':
+                return
+
+            # Next page urls containing the string 'urns=' do not work
+            # properly. So in this case prevent the next page button from
+            # being created. Note that might lead to not having a next
+            # page butten where there should be one.
+            if 'urns=' in cursor:
+                return
+
             if page:
                 url = self.build_url(
                     mode=mode, name=queries, page=int(page)+1,
@@ -441,39 +465,69 @@ class SRGSSR(object):
             queries.append('videos-by-show-id?showId=' + sid)
         return self.build_menu_apiv3(queries)
 
-    def extract_id_list(self, url, editor_picks=False):
+    def build_homepage_menu(self):
         """
-        Opens a webpage and extracts video ids (of the form "id": "<vid>")
-        from JavaScript snippets.
-
-        Keyword argmuents:
-        url           -- the URL of the webpage
-        editor_picks  -- if set, only extracts ids of editor picks
-                         (default: False)
+        Builds the homepage menu.
         """
-        self.log('extract_id_list, url = %s' % url)
-        response = self.open_url(url)
-        string_response = utils.str_or_none(response, default='')
-        if not string_response:
-            self.log('No video ids found on %s' % url)
-            return []
-        readable_string_response = string_response.replace('&quot;', '"')
-        id_regex = r'''(?x)
-                        \"id\"
-                        \s*:\s*
-                        \"
-                        (?P<id>
-                            %s
-                        )
-                        \"
-                    ''' % IDREGEX
-        if editor_picks:
-            id_regex += r'.+\"isEditorPick\"\s*:\s*true'
-        id_list = [m.group('id') for m in re.finditer(
-            id_regex, readable_string_response)]
-        return id_list
+        self.build_menu_from_page(self.playtv_url, (
+            'initialData', 'pacPageConfigs', 'videoHomeSections'))
 
-    def build_episode_menu(self, video_id, include_segments=True,
+    def build_menu_from_page(self, url, path):
+        """
+        Builds a menu by extracting some content directly from a website.
+
+        Keyword arguments:
+        url     -- the url of the website
+        path    -- the path to the relevant data in the json (as tuple
+                   or list of strings)
+        """
+        html = self.open_url(url)
+        m = re.search(self.data_regex, html)
+        if not m:
+            self.log('build_menu_from_page: No data found in html')
+            return
+        content = m.groups()[0]
+        try:
+            js = json.loads(content)
+        except Exception:
+            self.log('build_menu_from_page: Invalid json')
+            return
+        data = utils.try_get(js, path, list, [])
+        if not data:
+            self.log('build_menu_from_page: Could not find any data in json')
+            return
+        for elem in data:
+            try:
+                id = elem['id']
+                section_type = elem['sectionType']
+                title = utils.try_get(elem, ('representation', 'title'))
+                if section_type in ('MediaSection', 'ShowSection',
+                                    'MediaSectionWithShow'):
+                    if section_type == 'MediaSection' and not title and \
+                            utils.try_get(
+                                elem, ('representation', 'name')
+                            ) == 'HeroStage':
+                        title = self.language(30053)
+                    if not title:
+                        continue
+                    list_item = xbmcgui.ListItem(label=title)
+                    list_item.setArt({
+                        'thumb': self.icon,
+                        'fanart': self.fanart,
+                    })
+                    if section_type == 'MediaSection':
+                        name = f'media-section?sectionId={id}'
+                    elif section_type == 'ShowSection':
+                        name = f'show-section?sectionId={id}'
+                    elif section_type == 'MediaSectionWithShow':
+                        name = f'media-section-with-show?sectionId={id}'
+                    url = self.build_url(mode=1000, name=name, page=1)
+                    xbmcplugin.addDirectoryItem(
+                        self.handle, url, list_item, isFolder=True)
+            except Exception:
+                pass
+
+    def build_episode_menu(self, video_id_or_urn, include_segments=True,
                            segment_option=False, audio=False):
         """
         Builds a list entry for a episode by a given video id.
@@ -482,7 +536,7 @@ class SRGSSR(object):
         entry for the segment will be created.
 
         Keyword arguments:
-        video_id         -- the id of the video
+        video_id_or_urn  -- the video id or the urn
         include_segments -- indicates if the segments (if available) of the
                             video should be included in the list
                             (default: True)
@@ -491,32 +545,34 @@ class SRGSSR(object):
         audio            -- boolean value to indicate if the episode is a
                             radio show (default: False)
         """
-        self.log('build_episode_menu, video_id = %s, include_segments = %s' %
-                 (video_id, include_segments))
+        self.log(f'build_episode_menu, video_id_or_urn = {video_id_or_urn}')
         content_type = 'audio' if audio else 'video'
-        json_url = ('https://il.srgssr.ch/integrationlayer/2.0/%s/'
-                    'mediaComposition/%s/%s.json') % (self.bu, content_type,
-                                                      video_id)
-        self.log('build_episode_menu. Open URL %s' % json_url)
+        if ':' in video_id_or_urn:
+            json_url = 'https://il.srgssr.ch/integrationlayer/2.0/' \
+                       f'mediaComposition/byUrn/{video_id_or_urn}.json'
+            video_id = video_id_or_urn.split(':')[-1]
+        else:
+            json_url = f'https://il.srgssr.ch/integrationlayer/2.0/{self.bu}' \
+                       f'/mediaComposition/{content_type}/{video_id_or_urn}' \
+                        '.json'
+            video_id = video_id_or_urn
+        self.log(f'build_episode_menu. Open URL {json_url}')
         try:
             json_response = json.loads(self.open_url(json_url))
         except Exception:
-            self.log('build_episode_menu: Cannot open media json for %s.'
-                     % video_id)
+            self.log(
+                f'build_episode_menu: Cannot open json for {video_id_or_urn}.')
             return
 
         chapter_urn = utils.try_get(json_response, 'chapterUrn')
         segment_urn = utils.try_get(json_response, 'segmentUrn')
 
-        id_regex = r'[a-z]+:[a-z]+:[a-z]+:(?P<id>.+)'
-        match_chapter_id = re.match(id_regex, chapter_urn)
-        match_segment_id = re.match(id_regex, segment_urn)
-        chapter_id = match_chapter_id.group('id') if match_chapter_id else None
-        segment_id = match_segment_id.group('id') if match_segment_id else None
+        chapter_id = chapter_urn.split(':')[-1] if chapter_urn else None
+        segment_id = segment_urn.split(':')[-1] if segment_urn else None
 
         if not chapter_id:
-            self.log('build_episode_menu: No valid chapter URN \
-                available for video_id %s' % video_id)
+            self.log(f'build_episode_menu: No valid chapter URN \
+                available for video_id {video_id}')
             return
 
         show_image_url = utils.try_get(json_response, ['show', 'imageUrl'])
@@ -533,10 +589,11 @@ class SRGSSR(object):
                 chapter_index = ind
                 break
         if not json_chapter:
-            self.log('build_episode_menu: No chapter ID found \
-                for video_id %s' % video_id)
+            self.log(f'build_episode_menu: No chapter ID found \
+                for video_id {video_id}')
             return
 
+        # TODO: Simplify
         json_segment_list = utils.try_get(
             json_chapter, 'segmentList', data_type=list, default=[])
         if video_id == chapter_id:
@@ -576,8 +633,8 @@ class SRGSSR(object):
                     json_segment = segment
                     break
             if not json_segment:
-                self.log('build_episode_menu: No segment ID found \
-                    for video_id %s' % video_id)
+                self.log(f'build_episode_menu: No segment ID found \
+                    for video_id {video_id}')
                 return
             # Generate a simple playable item for the video
             self.build_entry(
@@ -593,8 +650,8 @@ class SRGSSR(object):
         whitelist_ids   -- If not `None` only items with an id that is in that
                            list will be generated (default: None)
         """
-        self.log('build_entry_apiv3: urn = %s' % utils.try_get(data, 'urn'))
         urn = data['urn']
+        self.log(f'build_entry_apiv3: urn = {urn}')
         title = utils.try_get(data, 'title')
         media_id = utils.try_get(data, 'id')
         if whitelist_ids is not None and media_id not in whitelist_ids:
@@ -637,8 +694,10 @@ class SRGSSR(object):
             'banner': show_image_url or image_url,
         })
         url = self.build_url(mode=100, name=urn)
+        is_folder = True
+
         xbmcplugin.addDirectoryItem(
-            self.handle, url, list_item, isFolder=True)
+            self.handle, url, list_item, isFolder=is_folder)
 
     def build_menu_by_urn(self, urn):
         """
@@ -650,9 +709,15 @@ class SRGSSR(object):
         id = urn.split(':')[-1]
         if 'show' in urn:
             self.build_menu_apiv3(f'videos-by-show-id?showId={id}')
+        elif 'swisstxt' in urn:
+            # Do not include segments for livestreams,
+            # they fail to play.
+            self.build_episode_menu(urn, include_segments=False)
         elif 'video' in urn:
             self.build_episode_menu(id)
-        # TODO: Add 'topic'
+        elif 'topic' in urn:
+            self.build_menu_from_page(self.playtv_url, (
+                'initialData', 'pacPageConfigs', 'topicSections', urn))
 
     def build_entry(self, json_entry, is_folder=False, audio=False,
                     fanart=None, urn=None, show_image_url=None,
@@ -732,8 +797,7 @@ class SRGSSR(object):
                 if subtitle_list:
                     list_item.setSubtitles(subtitle_list)
                 else:
-                    self.log(
-                        'No WEBVTT subtitles found for video id %s.' % vid)
+                    self.log(f'No WEBVTT subtitles found for video id {vid}.')
 
         # TODO:
         # Prefer urn over vid as it contains already all data
@@ -746,7 +810,11 @@ class SRGSSR(object):
             url = self.build_url(mode=21, name=name)
         else:
             list_item.setProperty('IsPlayable', 'true')
-            url = self.build_url(mode=50, name=name)
+            # TODO: Simplify this, use URN instead of video id everywhere
+            if 'swisstxt' in urn:
+                url = self.build_url(mode=50, name=urn)
+            else:
+                url = self.build_url(mode=50, name=name)
         xbmcplugin.addDirectoryItem(
             self.handle, url, list_item, isFolder=is_folder)
 
@@ -835,11 +903,11 @@ class SRGSSR(object):
         date_string -- a string representing date in the form %d-%m-%Y,
                        e.g. 12-03-2017
         """
-        self.log('build_date_menu, date_string = %s' % date_string)
+        self.log(f'build_date_menu, date_string = {date_string}')
 
         # API v3 use the date in sortable format, i.e. year first
         elems = date_string.split('-')
-        query = 'videos-by-date/%s-%s-%s' % (elems[2], elems[1], elems[0])
+        query = f'videos-by-date/{elems[2]}-{elems[1]}-{elems[0]}'
         return self.build_menu_apiv3(query)
 
     def build_search_menu(self):
@@ -898,8 +966,8 @@ class SRGSSR(object):
         page_hash  -- the page hash when coming from a previous page
                       (default: '')
         """
-        self.log(('build_search_media_menu, mode = %s, name = %s, page = %s'
-                  ', page_hash = %s') % (mode, name, page, page_hash))
+        self.log(f'build_search_media_menu, mode = {mode}, name = {name}, \
+            page = {page}, page_hash = {page_hash}')
         media_type = 'video'
         if name:
             # `name` is provided by `next_page` folder or
@@ -909,7 +977,7 @@ class SRGSSR(object):
                 # `name` is provided by previously performed search, so it
                 # needs to be processed first
                 query_string = quote_plus(query_string)
-                query = 'search/media?searchTerm=' + query_string
+                query = f'search/media?searchTerm={query_string}'
         else:
             dialog = xbmcgui.Dialog()
             query_string = dialog.input(LANGUAGE(30115))
@@ -918,7 +986,7 @@ class SRGSSR(object):
                 return
             self.write_search(RECENT_MEDIA_SEARCHES_FILENAME, query_string)
             query_string = quote_plus(query_string)
-            query = 'search/media?searchTerm=' + query_string
+            query = f'search/media?searchTerm={query_string}'
 
         query = f'{query}&mediaType={media_type}&includeAggregations=false'
         cursor = page_hash if page_hash else ''
@@ -931,12 +999,12 @@ class SRGSSR(object):
         Keyword arguments:
         url -- a given stream URL
         """
-        self.log('get_auth_url, url = %s' % url)
+        self.log(f'get_auth_url, url = {url}')
         spl = urlps(url).path.split('/')
         token = json.loads(
             self.open_url(
-                'http://tp.srgssr.ch/akahd/token?acl=/%s/%s/*' %
-                (spl[1], spl[2]), use_cache=False)) or {}
+                f'http://tp.srgssr.ch/akahd/token?acl=/{spl[1]}/{spl[2]}/*',
+                use_cache=False)) or {}
         auth_params = token.get('token', {}).get('authparams')
         if auth_params:
             url += ('?' if '?' not in url else '&') + auth_params
@@ -1013,7 +1081,7 @@ class SRGSSR(object):
         stream_url = stream_urls['HD'] if (
             stream_urls['HD'] and self.prefer_hd)\
             or not stream_urls['SD'] else stream_urls['SD']
-        self.log('play_video, stream_url = %s' % stream_url)
+        self.log(f'play_video, stream_url = {stream_url}')
 
         auth_url = self.get_auth_url(stream_url)
 
@@ -1052,7 +1120,7 @@ class SRGSSR(object):
                     parsed_url.path, parsed_url.params,
                     new_query, parsed_url.fragment)
                 auth_url = surl_result.geturl()
-        self.log('play_video, auth_url = %s' % auth_url)
+        self.log(f'play_video, auth_url = {auth_url}')
         title = utils.try_get(json_response, ['episode', 'title'], str, urn)
         play_item = xbmcgui.ListItem(title, path=auth_url)
         if self.subtitles:
@@ -1181,8 +1249,8 @@ class SRGSSR(object):
                 try:
                     return [entry['id'] for entry in json_file]
                 except KeyError:
-                    self.log('Unexpected file structure for %s.' %
-                             FAVOURITE_SHOWS_FILENAME)
+                    self.log('Unexpected file structure '
+                             f'for {FAVOURITE_SHOWS_FILENAME}.')
                     return []
         except (IOError, TypeError):
             return []
@@ -1213,8 +1281,7 @@ class SRGSSR(object):
             try:
                 return[entry['search'] for entry in json_file]
             except KeyError:
-                self.log('Unexpected file structure for %s.' %
-                         filename)
+                self.log(f'Unexpected file structure for {filename}.')
                 return []
         except (IOError, TypeError):
             return []
@@ -1264,75 +1331,6 @@ class SRGSSR(object):
     #                      'for element %s' % urn)
     #             continue
     #         self.build_entry(json_entry)
-
-    def build_live_menu(self, extract_srf3=False):
-        """
-        Builds the menu listing the currently available livestreams.
-        """
-        def get_live_ids():
-            """
-            Downloads the main webpage and scrapes it for
-            possible livestreams. If some live events were found, a list
-            of live ids will be returned, otherwise an empty list.
-            """
-            live_ids = []
-            webpage = self.open_url(self.host_url, use_cache=False)
-            event_id_regex = r'(?:data-sport-id=\"|eventId=)(?P<live_id>\d+)'
-            try:
-                for match in re.finditer(event_id_regex, webpage):
-                    live_ids.append(match.group('live_id'))
-            except StopIteration:
-                pass
-            return live_ids
-
-        def get_srf3_live_ids():
-            """
-            Returns a list of Radio SRF 3 video streams.
-            """
-            url = 'https://www.srf.ch/radio-srf-3'
-            webpage = self.open_url(url, use_cache=False)
-            video_id_regex = r'''(?x)
-                                   popupvideoplayer\?id=
-                                   (?P<video_id>
-                                       [a-f0-9]{8}-
-                                       [a-f0-9]{4}-
-                                       [a-f0-9]{4}-
-                                       [a-f0-9]{4}-
-                                       [a-f0-9]{12}
-                                    )
-                                '''
-            live_ids = []
-            try:
-                for match in re.finditer(video_id_regex, webpage):
-                    live_ids.append(match.group('video_id'))
-            except StopIteration:
-                pass
-            return live_ids
-        live_ids = get_live_ids()
-        for lid in live_ids:
-            api_url = ('https://event.api.swisstxt.ch/v1/events/'
-                       '%s/byEventItemId/?eids=%s') % (self.bu, lid)
-            live_json = json.loads(self.open_url(api_url))
-            entry = utils.try_get(live_json, 0, data_type=dict, default={})
-            if not entry:
-                self.log('build_live_menu: No entry found '
-                         'for live id %s.' % lid)
-                continue
-            if utils.try_get(entry, 'streamType') == 'noStream':
-                continue
-            title = utils.try_get(entry, 'title')
-            stream_url = utils.try_get(entry, 'hls')
-            image = utils.try_get(entry, 'imageUrl')
-            item = xbmcgui.ListItem(label=title)
-            item.setProperty('IsPlayable', 'true')
-            item.setArt({'thumb': image})
-            purl = self.build_url(mode=51, name=stream_url)
-            xbmcplugin.addDirectoryItem(
-                self.handle, purl, item, isFolder=False)
-        if extract_srf3:
-            srf3_ids = get_srf3_live_ids()
-            for vid in srf3_ids:
-                self.build_episode_menu(vid, include_segments=False)
 
     def _read_youtube_channels(self, fname):
         """

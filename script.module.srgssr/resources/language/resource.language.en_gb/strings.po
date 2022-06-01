@@ -15,6 +15,10 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#30053"
+msgid "Recommendations"
+msgstr ""
+
 msgctxt "#30058"
 msgid "Today"
 msgstr ""
