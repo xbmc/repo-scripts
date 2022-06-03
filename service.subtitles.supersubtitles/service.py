@@ -32,7 +32,7 @@ __profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
 __temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp', ''))
 
 
-BASE_URL = 'http://www.feliratok.info/index.php'
+BASE_URL = 'https://feliratok.eu/index.php'
 
 TAGS = [
     'WEB-DL',

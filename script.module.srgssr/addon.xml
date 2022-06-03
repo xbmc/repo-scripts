@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.srgssr" name="SRG SSR" version="2.0.0" provider-name="Alexander Seiler">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.simplecache" version="2.0.2"/>
+    <import addon="script.module.requests" version="2.22.0"/>
+    <import addon="script.module.youtube_channels" version="0.2.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Access the SRG SSR media libraries.</summary>
+    <summary lang="de_DE">Zugriff auf die Mediatheken von SRG SSR.</summary>
+    <description lang="en_GB">This addon allows a plugin to use the media libraries of SRG SSR.</description>
+    <description lang="de_DE">Dieses Addon erlaubt Plugins den Zugriff auf die Mediatheken von SRG SSR.</description>
+    <platform>all</platform>
+    <license>GPL-3.0-or-later</license>
+    <source>https://github.com/goggle/script.module.srgssr</source>
+    <assets>
+        <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>

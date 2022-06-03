@@ -1,23 +1,34 @@
 from resources.lib.player import player_utils
+from resources.lib.timer.timer import Timer
 
 
 class PlayerStatus():
 
-    _i_timer = -1
+    _timer = None
     _state = None
+    _resuming = False
 
-    def __init__(self, i_timer: int, state: player_utils.State):
-        self._i_timer = i_timer
+    def __init__(self, timer: Timer, state: player_utils.State):
+        self._timer = timer
         self._state = state
+        self._resuming = False
 
-    def getTimerId(self) -> int:
+    def setTimer(self, timer: Timer) -> None:
 
-        return self._i_timer
+        self._timer = timer
 
-    def setTimerId(self, i_timer: int) -> None:
+    def getTimer(self) -> Timer:
 
-        self._i_timer = i_timer
+        return self._timer
 
     def getState(self) -> player_utils.State:
 
         return self._state
+
+    def isResuming(self) -> bool:
+
+        return self._resuming
+
+    def setResuming(self, resuming: bool) -> None:
+
+        self._resuming = resuming

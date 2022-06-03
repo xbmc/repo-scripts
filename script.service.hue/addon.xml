@@ -1,41 +1,50 @@
-<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="1.0.0">
+<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="1.2.1">
 	<requires>
-		<import addon="xbmc.python" version="3.0.0" />
-		<import addon="script.module.requests" version="2.22.0" />
-		<import addon="script.module.pil" />
-		<import addon="script.module.simplecache" version="2.0.2" />
-		<import addon="script.module.pyrollbar" version="0.15.2" />
-        <!-- <import addon="script.module.pydevd"/> -->
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.requests" version="2.25.1"/>
+		<import addon="script.module.pil"/>
+		<import addon="script.module.simplecache" version="2.0.2"/>
+		<import addon="script.module.pyrollbar" version="0.15.2"/>
+		<import addon="script.module.qhue" version="2.0.1"/>
 	</requires>
-	<extension point="xbmc.service" name="service.hue" library="service.py" />
+	<extension point="xbmc.service" name="service.hue" library="service.py"/>
 	<extension point="xbmc.python.pluginsource" library="plugin.py">
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
+		<reuselanguageinvoker>true</reuselanguageinvoker>
 		<platform>all</platform>
-		<license>MIT License</license>
+		<license>MIT</license>
 		<assets>
 			<icon>resources/icons/icon.png</icon>
 			<fanart>resources/icons/fanart.jpg</fanart>
-			<screenshot>resources/icons/fanart.jpg</screenshot>
 		</assets>
 		<source>https://github.com/zim514/script.service.hue</source>
 		<forum>https://forum.kodi.tv/showthread.php?tid=344886</forum>
+		<news>v1.2
+Don't crash on bad/empty result from Hue discovery endpoint - fixes rb#410, fixes rb#411, fixes #172
+Allow manual IP entry - fixes #172, fixes #173
+Disable ambilight when no ambilights selected
+v1.1.9
+Fix Ambilight attempting to initialize when disabled.
+Crash fixes
+Error reporting improvements
+v1.1.4
+Fix error reporting
+</news>
+		<summary lang="cs_CZ">Automatizace Hue světel s přehráváním Kodi</summary>
+		<summary lang="da_DK">Automatiser Hue-lys sammen med afspilning i Kodi</summary>
+		<summary lang="de_DE">Automatisiere Hue-Lichter mit der Kodi-Wiedergabe</summary>
 		<summary lang="en_GB">Automate Hue lights with Kodi playback</summary>
-		<description lang="en_GB">Automate your Philips Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support.</description>
-		<disclaimer lang="en_GB">Automate Hue lights with Kodi playback</disclaimer>
-		<news>v1.0.0
-Final version with requested edits.
-v0.14.0
-Python 3/Matrix support
-v0.13.2
-Fix wrong scene being activated when paused at sunset
-Fix exception adding bridge with old firmware
-v0.13.0
-Add option to disable scenes if lights are off (thanks @cyberden!)
-Add option to always enable scenes if any lights are on (thanks @cyberden!)
-Add video activation toggle for PVR
-		</news>
+		<summary lang="ko_KR">Kodi 재생으로 Hue 조명 자동화</summary>
+		<description lang="cs_CZ">Ovládejte Hue světla automaticky pomocí Kodi. Vytvořte scény pro začátek, přestávku i ukončení přehrávání a nechte Kodi reagovat automaticky na Vaše akce. Je možné využít východ i západ slunce. Obsahuje podporu pro Ambilight.</description>
+		<description lang="de_DE">Hue-Lichter mit Kodi automatisieren. Mehrraum-Szenen erstellen, die während der Wiedergabe, des Pausierens oder des Stoppens der Medienwiedergabe aktiv sind. Mehrraum-Szenen aus den Addon-Einstellungen heraus erstellen und löschen, dann auswählen, welche für verschiedene Wiedergabe-Ereignisse genutzt werden sollen. Kann Hues Sonnenaufgangs- und -untergangszeiten zum autmatischen Deaktivieren des Dienstes während der Tageszeit nutzen und die Lichter während der Wiedergabe bei Sonnenuntergang einschalten. Beinhaltet Ambilight-Unterstützung.</description>
+		<description lang="en_GB">Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue&apos;s sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support.</description>
+		<description lang="ko_KR">Kodi로 Hue 조명을 자동화하세요. 미디어 재생을 재생, 일시 중지 또는 중지할 때 실행되는 멀티룸 장면을 만듭니다. 애드온 설정에서 멀티룸 장면을 만들거나 삭제하고 다른 재생 이벤트에 적용할 장면을 선택합니다. Hue의 일출 및 일몰 시간을 사용하여 주간에는 서비스를 자동으로 비활성화하고 재생 중에 일몰 시 조명을 켤 수 있습니다. Ambilight 지원이 포함됩니다.</description>
+		<disclaimer lang="cs_CZ">Vyžaduje Hue Bridge V2 (čtvercový). Ambilight není podporován na všech zařízeních.</disclaimer>
+		<disclaimer lang="da_DK">Kræver en Hue Bridge V2 (firkant). Ambilight er ikke tilgængelig på al hardware.</disclaimer>
+		<disclaimer lang="de_DE">Erfordert eine Hue Bridge V2 (quadratisch). Ambilight-Unterstützung nicht mit jeder Hardware verfügbar.</disclaimer>
+		<disclaimer lang="en_GB">Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware.</disclaimer>
+		<disclaimer lang="ko_KR">Hue Bridge V2(정사각형)가 필요합니다. 모든 하드웨어에서 Ambilight를 사용할 수 있는 것은 아닙니다.</disclaimer>
 	</extension>
 </addon>
-

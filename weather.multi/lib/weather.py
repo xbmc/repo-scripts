@@ -9,7 +9,7 @@ LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
 AURL = 'https://api.weatherbit.io/v2.0/%s'
 
-HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36'}
+HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml'}
 
 WADD = ADDON.getSettingBool('WAdd')
 APPID = ADDON.getSettingString('API')
@@ -100,9 +100,16 @@ class MAIN():
                     else:
                         self.MONITOR.waitForAbort(10)
                         retry += 1
-                        log('getting cookie failed')
-                ycookie = response.cookies['B']
-                response = requests.get(YURL, headers=HEADERS, cookies=dict(B=ycookie), timeout=10)
+                        log('getting yahoo website failed')
+                if 'consent' in response.url: # EU users need to accept cookies
+                    token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                    sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                    redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                    DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'agree': 'agree'}
+                    posturl = 'https://consent.yahoo.com/v2/collectConsent?sessionId=%s' % sessionid
+                    response = requests.post(posturl, headers=HEADERS, data=DATA)
+                ycookie = response.cookies['A1']
+                response = requests.get(YURL, headers=HEADERS, cookies=dict(A1=ycookie), timeout=10)
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
                 ycrumb = codecs.decode(match.group(1), 'unicode-escape')
                 ystamp = time.time()
@@ -120,7 +127,7 @@ class MAIN():
     def get_data(self, url, cookie=''):
         try:
             if cookie:
-                response = requests.get(url, headers=HEADERS, cookies=dict(B=cookie), timeout=10)
+                response = requests.get(url, headers=HEADERS, cookies=dict(A1=cookie), timeout=10)
             else:
                 response = requests.get(url, headers=HEADERS, timeout=10)
             return response.json()

@@ -3,43 +3,16 @@ from datetime import timedelta
 import xbmc
 import xbmcaddon
 from resources.lib.timer.period import Period
-from resources.lib.utils import datetime_utils, settings_utils
+from resources.lib.utils.datetime_utils import (DEFAULT_TIME, parse_time,
+                                                time_duration_str)
+from resources.lib.utils.settings_utils import (
+    activateOnSettingsChangedEvents, deactivateOnSettingsChangedEvents)
+from resources.lib.utils.vfs_utils import is_script
 
 SLEEP_TIMER = 0
 SNOOZE_TIMER = 1
 
-TIMER_OFF = 0
-TIMER_ONCE = [i + 1 for i in range(7)]
-
-TIMER_DAYS_PRESETS = [
-    [],                      # off
-    [0],                     # mon
-    [1],                     # tue
-    [2],                     # wed
-    [3],                     # thu
-    [4],                     # fri
-    [5],                     # sat
-    [6],                     # sun
-    [0],                     # mons
-    [1],                     # tues
-    [2],                     # weds
-    [3],                    # thus
-    [4],                    # fris
-    [5],                    # sats
-    [6],                    # suns
-    [0, 1, 2, 3],           # mon-thu
-    [0, 1, 2, 3, 4],        # mon-fri
-    [0, 1, 2, 3, 4, 5],     # mon-sat
-    [1, 2, 3, 4],           # tue-fri
-    [3, 4, 5],              # thu-sat
-    [4, 5],                 # fri-sat
-    [4, 5, 6],              # fri-sun
-    [5, 6],                 # sat-sun
-    [5, 6, 0],              # sat-mon
-    [6, 0, 1, 2],           # sun-wed
-    [6, 0, 1, 2, 3],        # sun-thu
-    [0, 1, 2, 3, 4, 5, 6]   # everyday
-]
+TIMER_WEEKLY = 7
 
 END_TYPE_NO = 0
 END_TYPE_DURATION = 1
@@ -73,22 +46,23 @@ class Timer():
     i_timer = None
 
     s_label = ""
-    i_schedule = TIMER_OFF
-    s_start = datetime_utils.DEFAULT_TIME
+    s_start = DEFAULT_TIME
     i_end_type = END_TYPE_NO
-    s_duration = datetime_utils.DEFAULT_TIME
-    s_end = datetime_utils.DEFAULT_TIME
+    s_duration = DEFAULT_TIME
+    s_end = DEFAULT_TIME
     i_system_action = SYSTEM_ACTION_NONE
     i_media_action = MEDIA_ACTION_START
-    s_filename = ""
+    s_path = ""
+    s_mediatype = ""
     b_repeat = False
+    b_shuffle = False
     b_resume = False
     i_fade = FADE_OFF
     i_vol_min = 75
     i_vol_max = 100
     b_notify = True
 
-    i_return_vol = 100
+    i_return_vol = None
     b_active = False
     periods = list()
     days = list()
@@ -107,15 +81,31 @@ class Timer():
         self.days = list()
 
     @staticmethod
+    def get_quick_info(i: int) -> 'tuple[str,str,str,list[int]]':
+
+        addon = xbmcaddon.Addon()
+
+        label = addon.getSettingString("timer_%i_label" % i)
+        path = addon.getSettingString("timer_%i_path" % i)
+        start = addon.getSetting("timer_%i_start" % i)
+        days = addon.getSetting("timer_%i_days" % i)
+        if days:
+            days = [int(d) for d in days.split("|")]
+        else:
+            days = list()
+
+        return label, path, start, days
+
+    @staticmethod
     def init_from_settings(i: int) -> 'Timer':
 
-        def _build_end_time(td_start: timedelta, i_end_type: int, td_duration: timedelta, s_end: str):
+        def _build_end_time(td_start: timedelta, i_end_type: int, td_duration: timedelta, s_end: str) -> 'tuple[timedelta, timedelta]':
 
             if i_end_type == END_TYPE_DURATION:
                 td_end = td_start + td_duration
 
             elif i_end_type == END_TYPE_TIME:
-                td_end = datetime_utils.parse_time(s_end, td_start.days)
+                td_end = parse_time(s_end, td_start.days)
 
                 if td_end < td_start:
                     td_end += timedelta(days=1)
@@ -135,24 +125,30 @@ class Timer():
         timer.i_fade = addon.getSettingInt("timer_%i_fade" % i)
         timer.i_vol_min = addon.getSettingInt("timer_%i_vol_min" % i)
         timer.i_vol_max = addon.getSettingInt("timer_%i_vol_max" % i)
-        timer.s_filename = addon.getSettingString("timer_%i_filename" % i)
+        timer.s_path = addon.getSettingString("timer_%i_path" % i)
+        timer.s_mediatype = addon.getSettingString("timer_%i_mediatype" % i)
         timer.b_repeat = addon.getSettingBool("timer_%i_repeat" % i)
+        timer.b_shuffle = addon.getSettingBool("timer_%i_shuffle" % i)
         timer.b_resume = addon.getSettingBool("timer_%i_resume" % i)
-        timer.i_schedule = addon.getSettingInt("timer_%i" % i)
-        timer.days = TIMER_DAYS_PRESETS[timer.i_schedule]
+        days = addon.getSetting("timer_%i_days" % i)
+        if days:
+            timer.days = [int(d) for d in days.split("|")]
+        else:
+            days = list()
+
         timer.s_start = addon.getSetting("timer_%i_start" % i)
         timer.i_end_type = addon.getSettingInt("timer_%i_end_type" % i)
         timer.s_end = addon.getSetting("timer_%i_end" % i)
         timer.s_duration = addon.getSetting("timer_%i_duration" % i)
-        timer.td_duration = datetime_utils.parse_time(timer.s_duration)
+        timer.td_duration = parse_time(timer.s_duration)
         timer.b_notify = addon.getSettingBool("timer_%i_notify" % i)
 
         timer.i_return_vol = None
         timer.b_active = False
 
         timer.periods = list()
-        for i_day in TIMER_DAYS_PRESETS[timer.i_schedule]:
-            td_start = datetime_utils.parse_time(timer.s_start, i_day)
+        for i_day in timer.days:
+            td_start = parse_time(timer.s_start, i_day)
             td_end, timer.td_duration = _build_end_time(td_start,
                                                         timer.i_end_type,
                                                         timer.td_duration,
@@ -166,7 +162,7 @@ class Timer():
 
         timer_from_settings = Timer.init_from_settings(self.i_timer)
 
-        changed = (timer_from_settings.i_schedule != self.i_schedule)
+        changed = (timer_from_settings.days != self.days)
         changed |= (timer_from_settings.s_start != self.s_start)
         changed |= (timer_from_settings.i_end_type != self.i_end_type)
         if self.i_end_type == END_TYPE_DURATION:
@@ -179,8 +175,10 @@ class Timer():
 
         changed |= (timer_from_settings.i_media_action != self.i_media_action)
         if self._is_playing_media_timer():
-            changed |= (timer_from_settings.s_filename != self.s_filename)
+            changed |= (timer_from_settings.s_path != self.s_path)
+            changed |= (timer_from_settings.s_mediatype != self.s_mediatype)
             changed |= (timer_from_settings.b_repeat != self.b_repeat)
+            changed |= (timer_from_settings.b_shuffle != self.b_shuffle)
             changed |= (timer_from_settings.b_resume != self.b_resume)
 
         changed |= (timer_from_settings.i_fade != self.i_fade)
@@ -197,10 +195,12 @@ class Timer():
 
     def save_to_settings(self) -> None:
 
-        settings_utils.deactivateOnSettingsChangedEvents()
+        deactivateOnSettingsChangedEvents()
         self._addon.setSettingString("timer_%i_label" %
                                      self.i_timer, self.s_label)
-        self._addon.setSettingInt("timer_%i" % self.i_timer, self.i_schedule)
+        self._addon.setSetting(
+            "timer_%i_days" % self.i_timer, "|".join([str(d) for d in self.days]))
+
         self._addon.setSetting("timer_%i_start" %
                                self.i_timer, self.s_start)
         self._addon.setSettingInt("timer_%i_end_type" %
@@ -212,10 +212,14 @@ class Timer():
                                   self.i_timer, self.i_system_action)
         self._addon.setSettingInt("timer_%i_media_action" %
                                   self.i_timer, self.i_media_action)
-        self._addon.setSettingString("timer_%i_filename" %
-                                     self.i_timer, self.s_filename)
+        self._addon.setSettingString("timer_%i_path" %
+                                     self.i_timer, self.s_path)
+        self._addon.setSettingString("timer_%i_mediatype" %
+                                     self.i_timer, self.s_mediatype)
         self._addon.setSettingBool("timer_%i_repeat" %
                                    self.i_timer, self.b_repeat)
+        self._addon.setSettingBool("timer_%i_shuffle" %
+                                   self.i_timer, self.b_shuffle)
         self._addon.setSettingBool("timer_%i_resume" %
                                    self.i_timer, self.b_resume)
         self._addon.setSettingInt("timer_%i_fade" % self.i_timer, self.i_fade)
@@ -225,15 +229,15 @@ class Timer():
                                   self.i_timer, self.i_vol_max)
         self._addon.setSettingBool("timer_%i_notify" %
                                    self.i_timer, self.b_notify)
-        settings_utils.activateOnSettingsChangedEvents()
+        activateOnSettingsChangedEvents()
 
-    def _get_periods(self) -> 'list[Period]':
+    def get_periods(self) -> 'list[Period]':
 
         return self.periods
 
     def get_matching_period(self, time_: timedelta) -> Period:
 
-        for period in self._get_periods():
+        for period in self.get_periods():
 
             in_period = period.getStart() <= time_ < period.getEnd()
             if in_period:
@@ -241,17 +245,28 @@ class Timer():
 
         return None
 
+    def get_duration(self) -> str:
+
+        if self.i_end_type == END_TYPE_DURATION:
+            return self.s_duration
+
+        elif self.i_end_type == END_TYPE_TIME:
+            return time_duration_str(self.s_start, self.s_end)
+
+        else:
+            return DEFAULT_TIME
+
     def is_fading_timer(self) -> bool:
 
         return self.i_fade != FADE_OFF and self.i_end_type != END_TYPE_NO
 
     def _is_playing_media_timer(self) -> bool:
 
-        return self.i_media_action in [MEDIA_ACTION_START, MEDIA_ACTION_START_AT_END, MEDIA_ACTION_START_STOP, MEDIA_ACTION_STOP_START]
+        return self.i_media_action in [MEDIA_ACTION_START, MEDIA_ACTION_START_AT_END, MEDIA_ACTION_START_STOP, MEDIA_ACTION_STOP_START] and self.s_path
 
     def is_play_at_start_timer(self) -> bool:
 
-        return self.i_media_action in [MEDIA_ACTION_START, MEDIA_ACTION_START_STOP] and self.s_filename
+        return self.i_media_action in [MEDIA_ACTION_START, MEDIA_ACTION_START_STOP] and self.s_path
 
     def is_stop_at_start_timer(self) -> bool:
 
@@ -263,7 +278,15 @@ class Timer():
 
     def is_play_at_end_timer(self) -> bool:
 
-        return self.i_media_action in [MEDIA_ACTION_STOP_START, MEDIA_ACTION_START_AT_END] and self.s_filename
+        return self.i_media_action in [MEDIA_ACTION_STOP_START, MEDIA_ACTION_START_AT_END] and self.s_path
+
+    def is_resuming_timer(self) -> bool:
+
+        return self.i_media_action == MEDIA_ACTION_START_STOP and self.b_resume
+
+    def is_script_timer(self) -> bool:
+
+        return is_script(self.s_path)
 
     def is_system_execution_timer(self) -> bool:
 

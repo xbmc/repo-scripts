@@ -1,0 +1,226 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Wellbeing"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Default password is 0000"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Note: Also set 'master lock' for add-on manager ..."
+msgstr ""
+
+msgctxt "#32003"
+msgid "... in order to prevent access to these settings."
+msgstr ""
+
+msgctxt "#32010"
+msgid "Access"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Limit"
+msgstr ""
+
+msgctxt "#32012"
+msgid "audio and video"
+msgstr ""
+
+msgctxt "#32013"
+msgid "video"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Action"
+msgstr ""
+
+msgctxt "#32015"
+msgid "notification"
+msgstr ""
+
+msgctxt "#32016"
+msgid "stop"
+msgstr ""
+
+msgctxt "#32017"
+msgid "password"
+msgstr ""
+
+msgctxt "#32018"
+msgid "date"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Playback time"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#32030"
+msgid "off"
+msgstr ""
+
+msgctxt "#32031"
+msgid "15 minutes left"
+msgstr ""
+
+msgctxt "#32032"
+msgid "5 minutes left"
+msgstr ""
+
+msgctxt "#32033"
+msgid "1 minute left"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Playback time is over for today"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Enter password to continue"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Password is invalid"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Reactivation for today successful"
+msgstr ""
+
+msgctxt "#32040"
+msgid "%s left today for playing %s"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Rest period"
+msgstr ""
+
+msgctxt "#32051"
+msgid "from Monday"
+msgstr ""
+
+msgctxt "#32052"
+msgid "to Tuesday"
+msgstr ""
+
+msgctxt "#32053"
+msgid "from Tuesday"
+msgstr ""
+
+msgctxt "#32054"
+msgid "to Wednesday"
+msgstr ""
+
+msgctxt "#32055"
+msgid "from Wednesday"
+msgstr ""
+
+msgctxt "#32056"
+msgid "to Thursday"
+msgstr ""
+
+msgctxt "#32057"
+msgid "from Thursday"
+msgstr ""
+
+msgctxt "#32058"
+msgid "to Friday"
+msgstr ""
+
+msgctxt "#32059"
+msgid "from Friday"
+msgstr ""
+
+msgctxt "#32060"
+msgid "to Saturday"
+msgstr ""
+
+msgctxt "#32061"
+msgid "from Saturday"
+msgstr ""
+
+msgctxt "#32062"
+msgid "to Sunday"
+msgstr ""
+
+msgctxt "#32063"
+msgid "from Sunday"
+msgstr ""
+
+msgctxt "#32064"
+msgid "to Monday"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Monday night"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Tuesday night"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Wednesday night"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Thursday night"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Friday night"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Saturday night"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Sunday night"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Playback has been stopped in rest period"
+msgstr ""

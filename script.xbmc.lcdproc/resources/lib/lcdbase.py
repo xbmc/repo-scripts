@@ -220,7 +220,7 @@ class LcdBase():
   def UpdateGUISettings(self):
     str_charset = self.m_Settings.getCharset()
     if str_charset != self.m_strLCDEncoding:
-      if (str_charset == "hd44780-a00" or str_charset == "hd44780-a02") and not self.m_bHaveHD44780Charmap:
+      if (str_charset == "hd44780_a00" or str_charset == "hd44780_a02") and not self.m_bHaveHD44780Charmap:
         str_charset = "iso8859-1"
 
       self.m_strLCDEncoding = str_charset

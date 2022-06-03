@@ -73,6 +73,11 @@ class Zimuku_Agent:
             url += '&' if '?' in url else '?'
             url += 'security_verify_data=313932302c31303830'
 
+            # https://github.com/pizzamx/zimuku_for_kodi/pull/5/commits/5d4ed2fbd87dc08682884c874018ac0f9f35b25c
+            url1 = url + '&security_verify_data=313932302c31303830'
+            url2 = url + '?security_verify_data=313932302c31303830'
+            s.get(url, headers=request_headers)
+            s.get(url1, headers=request_headers)
             http_response = s.get(url, headers=request_headers)
             if http_response.status_code != 200:
                 s.get(url, headers=request_headers)

@@ -1,46 +1,36 @@
 import xbmc
 import xbmcgui
 from resources.lib.contextmenu.abstract_set_timer import AbstractSetTimer
-from resources.lib.contextmenu.selection import Selection
-from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_TIME,
-                                       MEDIA_ACTION_STOP_AT_END, SLEEP_TIMER,
-                                       SYSTEM_ACTION_NONE)
-from resources.lib.utils import datetime_utils
+from resources.lib.timer.timer import (MEDIA_ACTION_STOP_AT_END, SLEEP_TIMER,
+                                       SYSTEM_ACTION_NONE, Timer)
+from resources.lib.utils.datetime_utils import DEFAULT_TIME
 
 
 class SetSleep(AbstractSetTimer):
 
-    def is_listitem_valid(self, listitem: xbmcgui.ListItem) -> bool:
+    def is_supported(self, label: str, path: str) -> bool:
 
         return True
 
-    def ask_timer(self) -> int:
+    def ask_timer(self, timerid: int) -> int:
 
         return SLEEP_TIMER
 
-    def ask_label(self, listitem: xbmcgui.ListItem, preselection: Selection) -> str:
+    def ask_label(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
 
         return self.addon.getLocalizedString(32004)
 
-    def ask_duration(self, listitem: xbmcgui.ListItem, preselection: Selection) -> str:
+    def ask_duration(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
 
-        if preselection.epg:
-            return preselection.duration
-
-        timer = preselection.timer
+        if is_epg:
+            return timer.s_duration
 
         if xbmc.getInfoLabel("PVR.EpgEventSeekTime(hh:mm:ss)") != "00:00:00":
             _current = xbmc.getInfoLabel("PVR.EpgEventRemainingTime(hh:mm)")
 
-        elif self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_DURATION:
-            _current = self.addon.getSetting("timer_%i_duration" % timer)
-
-        elif self.addon.getSettingInt("timer_%i_end_type" % timer) == END_TYPE_TIME:
-            _current = datetime_utils.time_duration_str(self.addon.getSettingString(
-                "timer_%i_start" % timer), self.addon.getSetting("timer_%i_end" % timer))
-
         else:
-            _current = "01:00"
+            _current = timer.get_duration()
+            _current = "01:00" if DEFAULT_TIME else _current
 
         duration = xbmcgui.Dialog().numeric(
             2, self.addon.getLocalizedString(32106), _current)
@@ -49,6 +39,6 @@ class SetSleep(AbstractSetTimer):
         else:
             return ("0%s" % duration.strip())[-5:]
 
-    def ask_action(self, listitem: xbmcgui.ListItem, preselection: Selection) -> 'tuple[int, int]':
+    def ask_action(self, label: str, path: str, is_epg: bool, timer: Timer) -> 'tuple[int, int]':
 
         return SYSTEM_ACTION_NONE, MEDIA_ACTION_STOP_AT_END

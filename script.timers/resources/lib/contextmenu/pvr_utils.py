@@ -1,7 +1,7 @@
 from urllib import parse
 
 import xbmc
-from resources.lib.utils import jsonrpc_utils
+from resources.lib.utils.jsonrpc_utils import json_rpc
 
 PVR_TV = "tv"
 PVR_RADIO = "radio"
@@ -28,14 +28,14 @@ def get_pvr_channel_path(type: str, channelno: str) -> str:
 
     try:
         channelno = int(channelno)
-        _result = jsonrpc_utils.json_rpc("PVR.GetChannelGroups", {
+        _result = json_rpc("PVR.GetChannelGroups", {
             "channeltype": type})
         channelGroupAll = _result["channelgroups"][0]["label"]
 
-        _result = jsonrpc_utils.json_rpc("PVR.GetClients")
+        _result = json_rpc("PVR.GetClients")
         pvrClients = _result["clients"]
 
-        _result = jsonrpc_utils.json_rpc("PVR.GetChannels", {
+        _result = json_rpc("PVR.GetChannels", {
             "channelgroupid": "all%s" % type, "properties": ["uniqueid", "clientid", "channelnumber"]})
         channel = next(
             filter(lambda c: c["channelnumber"] == channelno, _result["channels"]), None)

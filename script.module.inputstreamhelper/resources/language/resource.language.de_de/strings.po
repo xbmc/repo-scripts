@@ -145,14 +145,6 @@ msgctxt "#30034"
 msgid "Update"
 msgstr "Update"
 
-msgctxt "#30035"
-msgid "[B]loop[/B] is still loaded"
-msgstr "[B]loop[/B] ist noch geladen"
-
-msgctxt "#30036"
-msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr "Führe zum Auswerfen [B]modprobe -r loop[/B] im Terminal aus."
-
 msgctxt "#30037"
 msgid "Success!"
 msgstr "Erfolg!"
@@ -241,10 +233,6 @@ msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
 msgstr "Verbleibende Zeit: {mins:d}:{secs:02d}"
 
-msgctxt "#30059"
-msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
-msgstr "Sollen wir währenddessen versuchen, Widevine CDM über die Legacy-Methode zu extrahieren?"
-
 msgctxt "#30060"
 msgid "Identifying wanted partition..."
 msgstr "Identifiziere gewünschte Partition..."
@@ -268,6 +256,14 @@ msgstr "Konnte das Herunterladen nicht beenden."
 msgctxt "#30065"
 msgid "Shall we try again?"
 msgstr "Sollen wir es nochmal versuchen?"
+
+msgctxt "#30066"
+msgid "Should the resource containing the Widevine library be downloaded from the URL specified in settings?\nNo means specifying the resource locally."
+msgstr "Soll die Quelle mit der Widevine-Bibliothek aus der in den Einstellungen angegebenen Einstellungen heruntergeladen werden?\nNein bedeutet, dass die Quelle manuell angegeben werden muss."
+
+msgctxt "#30067"
+msgid "Specify the resource Widevine should be extracted from."
+msgstr "Geben Sie die Quelle an, aus welcher Widevine extrahiert werden soll."
 
 
 ### INFORMATION DIALOG
@@ -348,3 +344,15 @@ msgstr "Anzahl Backups"
 msgctxt "#30915"
 msgid "Restore Widevine CDM library..."
 msgstr "Widevine CDM Bibliothek wiederherstellen..."
+
+msgctxt "#30950"
+msgid "Debug"
+msgstr "Debug"
+
+msgctxt "#30953"
+msgid "Install Widevine from:"
+msgstr "Widevine installieren aus:"
+
+msgctxt "#30955"
+msgid "Install Widevine CDM library from specific source..."
+msgstr "Widevine CDM-Bibliothek aus der angegebenen Quelle installieren..."

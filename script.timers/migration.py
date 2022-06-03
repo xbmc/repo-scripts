@@ -2,7 +2,8 @@ import xbmc
 import xbmcaddon
 
 from resources.lib.timer.scheduler import TIMERS
-from resources.lib.utils import settings_utils
+from resources.lib.utils.settings_utils import (
+    activateOnSettingsChangedEvents, deactivateOnSettingsChangedEvents)
 
 
 def migrate_from_1_to_2(addon: xbmcaddon.Addon) -> int:
@@ -34,6 +35,8 @@ def migrate_from_2_to_3(addon: xbmcaddon.Addon) -> int:
         addon.setSetting("timer_%i_media_action" % timer, str(media_action))
 
     for i in range(TIMERS):
+
+        # splitting media and system actions
         action = int("0%s" % addon.getSetting("timer_%i_action" % i))
         if action == 0:
             _migrate_action(i, 0, 0)
@@ -76,11 +79,68 @@ def migrate_from_2_to_3(addon: xbmcaddon.Addon) -> int:
     return 3
 
 
+def migrate_from_3_to_4(addon: xbmcaddon.Addon) -> int:
+
+    RANGE_ONCE_TIMERS = 7
+
+    TIMER_DAYS_PRESETS = [
+        [],                      # off
+        [0],                     # mon
+        [1],                     # tue
+        [2],                     # wed
+        [3],                     # thu
+        [4],                     # fri
+        [5],                     # sat
+        [6],                     # sun
+        [0],                     # mons
+        [1],                     # tues
+        [2],                     # weds
+        [3],                    # thus
+        [4],                    # fris
+        [5],                    # sats
+        [6],                    # suns
+        [0, 1, 2, 3],           # mon-thu
+        [0, 1, 2, 3, 4],        # mon-fri
+        [0, 1, 2, 3, 4, 5],     # mon-sat
+        [1, 2, 3, 4],           # tue-fri
+        [3, 4, 5],              # thu-sat
+        [4, 5],                 # fri-sat
+        [4, 5, 6],              # fri-sun
+        [5, 6],                 # sat-sun
+        [5, 6, 0],              # sat-mon
+        [6, 0, 1, 2],           # sun-wed
+        [6, 0, 1, 2, 3],        # sun-thu
+        [0, 1, 2, 3, 4, 5, 6]   # everyday
+    ]
+
+    xbmc.log("[script.timers] migrate settings to version 4", xbmc.LOGINFO)
+
+    for i in range(TIMERS):
+
+        # rename filename -> path
+        path = addon.getSetting("timer_%i_filename" % i)
+        addon.setSetting("timer_%i_path" % i, path)
+
+        # days: enum -> multiselect
+        schedule = int("0%s" % addon.getSetting("timer_%i" % i))
+        if schedule > 0:
+            days = "|".join([str(d) for d in TIMER_DAYS_PRESETS[schedule]])
+            if days and schedule > RANGE_ONCE_TIMERS:
+                days += "|7"
+
+            addon.setSetting("timer_%i_days" % i, days)
+
+        else:
+            addon.setSetting("timer_%i_days" % i, "")
+
+    return 4
+
+
 def migrate() -> None:
 
     addon = xbmcaddon.Addon()
 
-    settings_utils.deactivateOnSettingsChangedEvents()
+    deactivateOnSettingsChangedEvents()
 
     settingsVersion = addon.getSettingInt("settingsVersion")
 
@@ -90,5 +150,8 @@ def migrate() -> None:
     if settingsVersion == 2:
         settingsVersion = migrate_from_2_to_3(addon)
 
+    if settingsVersion == 3:
+        settingsVersion = migrate_from_3_to_4(addon)
+
     addon.setSettingInt("settingsVersion", settingsVersion)
-    settings_utils.activateOnSettingsChangedEvents()
+    activateOnSettingsChangedEvents()

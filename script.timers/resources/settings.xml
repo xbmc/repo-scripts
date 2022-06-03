@@ -32,7 +32,7 @@
         </setting>
         <setting id="settingsVersion" type="integer" label="32000" help="">
           <level>0</level>
-          <default>3</default>
+          <default>4</default>
           <control type="edit" format="integer">
             <heading>32000</heading>
           </control>
@@ -108,9 +108,9 @@
         </setting>
       </group>
       <group id="g_timer_0_schedule" label="32060">
-        <setting id="timer_0" type="integer" label="32033" help="">
+        <setting id="timer_0_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -120,29 +120,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_0_start" type="time" label="32061" help="">
           <level>0</level>
@@ -151,7 +136,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_0" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_0_end_type" type="integer" label="32062" help="">
@@ -166,7 +152,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_0" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_0_duration" type="time" label="32064" help="">
@@ -176,7 +163,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_0" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_0_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -187,7 +175,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_0" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_0_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_0_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -222,6 +211,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_0_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_0_media_action" operator="gt">0</condition>
+                <condition setting="timer_0_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_0_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -230,7 +232,18 @@
             <dependency type="enable" setting="timer_0_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_0_filename" type="string" label="32080" help="">
+        <setting id="timer_0_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_0_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -254,7 +267,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_0_filename" operator="is"></condition>
+                <condition setting="timer_0_path" operator="is"></condition>
                 <condition setting="timer_0_media_action" operator="gt">0</condition>
                 <condition setting="timer_0_media_action" operator="lt">5</condition>
               </and>
@@ -268,7 +281,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_0_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_0_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -344,7 +357,7 @@
             <dependency type="enable" setting="timer_0_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_0_notify" label="32097">
         <setting id="timer_0_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -367,9 +380,9 @@
         </setting>
       </group>
       <group id="g_timer_1_schedule" label="32060">
-        <setting id="timer_1" type="integer" label="32033" help="">
+        <setting id="timer_1_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -379,29 +392,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_1_start" type="time" label="32061" help="">
           <level>0</level>
@@ -410,7 +408,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_1" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_1_end_type" type="integer" label="32062" help="">
@@ -425,7 +424,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_1" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_1_duration" type="time" label="32064" help="">
@@ -435,7 +435,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_1" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_1_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -446,7 +447,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_1" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_1_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_1_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -481,6 +483,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_1_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_1_media_action" operator="gt">0</condition>
+                <condition setting="timer_1_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_1_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -489,7 +504,18 @@
             <dependency type="enable" setting="timer_1_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_1_filename" type="string" label="32080" help="">
+        <setting id="timer_1_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_1_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -513,7 +539,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_1_filename" operator="is"></condition>
+                <condition setting="timer_1_path" operator="is"></condition>
                 <condition setting="timer_1_media_action" operator="gt">0</condition>
                 <condition setting="timer_1_media_action" operator="lt">5</condition>
               </and>
@@ -527,7 +553,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_1_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_1_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -603,7 +629,7 @@
             <dependency type="enable" setting="timer_1_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_1_notify" label="32097">
         <setting id="timer_1_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -626,9 +652,9 @@
         </setting>
       </group>
       <group id="g_timer_2_schedule" label="32060">
-        <setting id="timer_2" type="integer" label="32033" help="">
+        <setting id="timer_2_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -638,29 +664,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_2_start" type="time" label="32061" help="">
           <level>0</level>
@@ -669,7 +680,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_2" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_2_end_type" type="integer" label="32062" help="">
@@ -684,7 +696,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_2" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_2_duration" type="time" label="32064" help="">
@@ -694,7 +707,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_2" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_2_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -705,7 +719,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_2" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_2_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_2_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -740,6 +755,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_2_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_2_media_action" operator="gt">0</condition>
+                <condition setting="timer_2_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_2_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -748,7 +776,18 @@
             <dependency type="enable" setting="timer_2_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_2_filename" type="string" label="32080" help="">
+        <setting id="timer_2_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_2_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -772,7 +811,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_2_filename" operator="is"></condition>
+                <condition setting="timer_2_path" operator="is"></condition>
                 <condition setting="timer_2_media_action" operator="gt">0</condition>
                 <condition setting="timer_2_media_action" operator="lt">5</condition>
               </and>
@@ -786,7 +825,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_2_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_2_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -862,7 +901,7 @@
             <dependency type="enable" setting="timer_2_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_2_notify" label="32097">
         <setting id="timer_2_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -885,9 +924,9 @@
         </setting>
       </group>
       <group id="g_timer_3_schedule" label="32060">
-        <setting id="timer_3" type="integer" label="32033" help="">
+        <setting id="timer_3_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -897,29 +936,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_3_start" type="time" label="32061" help="">
           <level>0</level>
@@ -928,7 +952,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_3" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_3_end_type" type="integer" label="32062" help="">
@@ -943,7 +968,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_3" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_3_duration" type="time" label="32064" help="">
@@ -953,7 +979,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_3" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_3_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -964,7 +991,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_3" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_3_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_3_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -999,6 +1027,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_3_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_3_media_action" operator="gt">0</condition>
+                <condition setting="timer_3_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_3_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -1007,7 +1048,18 @@
             <dependency type="enable" setting="timer_3_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_3_filename" type="string" label="32080" help="">
+        <setting id="timer_3_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_3_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -1031,7 +1083,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_3_filename" operator="is"></condition>
+                <condition setting="timer_3_path" operator="is"></condition>
                 <condition setting="timer_3_media_action" operator="gt">0</condition>
                 <condition setting="timer_3_media_action" operator="lt">5</condition>
               </and>
@@ -1045,7 +1097,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_3_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_3_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -1121,7 +1173,7 @@
             <dependency type="enable" setting="timer_3_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_3_notify" label="32097">
         <setting id="timer_3_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1144,9 +1196,9 @@
         </setting>
       </group>
       <group id="g_timer_4_schedule" label="32060">
-        <setting id="timer_4" type="integer" label="32033" help="">
+        <setting id="timer_4_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -1156,29 +1208,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_4_start" type="time" label="32061" help="">
           <level>0</level>
@@ -1187,7 +1224,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_4" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_4_end_type" type="integer" label="32062" help="">
@@ -1202,7 +1240,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_4" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_4_duration" type="time" label="32064" help="">
@@ -1212,7 +1251,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_4" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_4_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -1223,7 +1263,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_4" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_4_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_4_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -1258,6 +1299,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_4_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_4_media_action" operator="gt">0</condition>
+                <condition setting="timer_4_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_4_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -1266,7 +1320,18 @@
             <dependency type="enable" setting="timer_4_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_4_filename" type="string" label="32080" help="">
+        <setting id="timer_4_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_4_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -1290,7 +1355,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_4_filename" operator="is"></condition>
+                <condition setting="timer_4_path" operator="is"></condition>
                 <condition setting="timer_4_media_action" operator="gt">0</condition>
                 <condition setting="timer_4_media_action" operator="lt">5</condition>
               </and>
@@ -1304,7 +1369,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_4_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_4_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -1380,7 +1445,7 @@
             <dependency type="enable" setting="timer_4_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_4_notify" label="32097">
         <setting id="timer_4_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1403,9 +1468,9 @@
         </setting>
       </group>
       <group id="g_timer_5_schedule" label="32060">
-        <setting id="timer_5" type="integer" label="32033" help="">
+        <setting id="timer_5_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -1415,29 +1480,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_5_start" type="time" label="32061" help="">
           <level>0</level>
@@ -1446,7 +1496,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_5" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_5_end_type" type="integer" label="32062" help="">
@@ -1461,7 +1512,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_5" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_5_duration" type="time" label="32064" help="">
@@ -1471,7 +1523,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_5" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_5_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -1482,7 +1535,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_5" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_5_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_5_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -1517,6 +1571,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_5_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_5_media_action" operator="gt">0</condition>
+                <condition setting="timer_5_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_5_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -1525,7 +1592,18 @@
             <dependency type="enable" setting="timer_5_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_5_filename" type="string" label="32080" help="">
+        <setting id="timer_5_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_5_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -1549,7 +1627,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_5_filename" operator="is"></condition>
+                <condition setting="timer_5_path" operator="is"></condition>
                 <condition setting="timer_5_media_action" operator="gt">0</condition>
                 <condition setting="timer_5_media_action" operator="lt">5</condition>
               </and>
@@ -1563,7 +1641,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_5_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_5_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -1639,7 +1717,7 @@
             <dependency type="enable" setting="timer_5_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_5_notify" label="32097">
         <setting id="timer_5_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1662,9 +1740,9 @@
         </setting>
       </group>
       <group id="g_timer_6_schedule" label="32060">
-        <setting id="timer_6" type="integer" label="32033" help="">
+        <setting id="timer_6_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -1674,29 +1752,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_6_start" type="time" label="32061" help="">
           <level>0</level>
@@ -1705,7 +1768,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_6" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_6_end_type" type="integer" label="32062" help="">
@@ -1720,7 +1784,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_6" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_6_duration" type="time" label="32064" help="">
@@ -1730,7 +1795,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_6" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_6_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -1741,7 +1807,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_6" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_6_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_6_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -1776,6 +1843,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_6_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_6_media_action" operator="gt">0</condition>
+                <condition setting="timer_6_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_6_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -1784,7 +1864,18 @@
             <dependency type="enable" setting="timer_6_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_6_filename" type="string" label="32080" help="">
+        <setting id="timer_6_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_6_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -1808,7 +1899,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_6_filename" operator="is"></condition>
+                <condition setting="timer_6_path" operator="is"></condition>
                 <condition setting="timer_6_media_action" operator="gt">0</condition>
                 <condition setting="timer_6_media_action" operator="lt">5</condition>
               </and>
@@ -1822,7 +1913,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_6_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_6_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -1898,7 +1989,7 @@
             <dependency type="enable" setting="timer_6_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_6_notify" label="32097">
         <setting id="timer_6_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -1921,9 +2012,9 @@
         </setting>
       </group>
       <group id="g_timer_7_schedule" label="32060">
-        <setting id="timer_7" type="integer" label="32033" help="">
+        <setting id="timer_7_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -1933,29 +2024,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_7_start" type="time" label="32061" help="">
           <level>0</level>
@@ -1964,7 +2040,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_7" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_7_end_type" type="integer" label="32062" help="">
@@ -1979,7 +2056,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_7" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_7_duration" type="time" label="32064" help="">
@@ -1989,7 +2067,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_7" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_7_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -2000,7 +2079,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_7" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_7_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_7_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -2035,6 +2115,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_7_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_7_media_action" operator="gt">0</condition>
+                <condition setting="timer_7_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_7_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -2043,7 +2136,18 @@
             <dependency type="enable" setting="timer_7_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_7_filename" type="string" label="32080" help="">
+        <setting id="timer_7_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_7_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -2067,7 +2171,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_7_filename" operator="is"></condition>
+                <condition setting="timer_7_path" operator="is"></condition>
                 <condition setting="timer_7_media_action" operator="gt">0</condition>
                 <condition setting="timer_7_media_action" operator="lt">5</condition>
               </and>
@@ -2081,7 +2185,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_7_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_7_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -2157,7 +2261,7 @@
             <dependency type="enable" setting="timer_7_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_7_notify" label="32097">
         <setting id="timer_7_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2180,9 +2284,9 @@
         </setting>
       </group>
       <group id="g_timer_8_schedule" label="32060">
-        <setting id="timer_8" type="integer" label="32033" help="">
+        <setting id="timer_8_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -2192,29 +2296,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_8_start" type="time" label="32061" help="">
           <level>0</level>
@@ -2223,7 +2312,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_8" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_8_end_type" type="integer" label="32062" help="">
@@ -2238,7 +2328,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_8" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_8_duration" type="time" label="32064" help="">
@@ -2248,7 +2339,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_8" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_8_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -2259,7 +2351,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_8" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_8_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_8_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -2294,6 +2387,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_8_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_8_media_action" operator="gt">0</condition>
+                <condition setting="timer_8_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_8_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -2302,7 +2408,18 @@
             <dependency type="enable" setting="timer_8_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_8_filename" type="string" label="32080" help="">
+        <setting id="timer_8_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_8_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -2326,7 +2443,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_8_filename" operator="is"></condition>
+                <condition setting="timer_8_path" operator="is"></condition>
                 <condition setting="timer_8_media_action" operator="gt">0</condition>
                 <condition setting="timer_8_media_action" operator="lt">5</condition>
               </and>
@@ -2340,7 +2457,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_8_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_8_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -2416,7 +2533,7 @@
             <dependency type="enable" setting="timer_8_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_8_notify" label="32097">
         <setting id="timer_8_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2439,9 +2556,9 @@
         </setting>
       </group>
       <group id="g_timer_9_schedule" label="32060">
-        <setting id="timer_9" type="integer" label="32033" help="">
+        <setting id="timer_9_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -2451,29 +2568,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_9_start" type="time" label="32061" help="">
           <level>0</level>
@@ -2482,7 +2584,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_9" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_9_end_type" type="integer" label="32062" help="">
@@ -2497,7 +2600,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_9" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_9_duration" type="time" label="32064" help="">
@@ -2507,7 +2611,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_9" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_9_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -2518,7 +2623,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_9" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_9_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_9_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -2553,6 +2659,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_9_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_9_media_action" operator="gt">0</condition>
+                <condition setting="timer_9_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_9_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -2561,7 +2680,18 @@
             <dependency type="enable" setting="timer_9_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_9_filename" type="string" label="32080" help="">
+        <setting id="timer_9_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_9_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -2585,7 +2715,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_9_filename" operator="is"></condition>
+                <condition setting="timer_9_path" operator="is"></condition>
                 <condition setting="timer_9_media_action" operator="gt">0</condition>
                 <condition setting="timer_9_media_action" operator="lt">5</condition>
               </and>
@@ -2599,7 +2729,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_9_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_9_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -2675,7 +2805,7 @@
             <dependency type="enable" setting="timer_9_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_9_notify" label="32097">
         <setting id="timer_9_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2698,9 +2828,9 @@
         </setting>
       </group>
       <group id="g_timer_10_schedule" label="32060">
-        <setting id="timer_10" type="integer" label="32033" help="">
+        <setting id="timer_10_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -2710,29 +2840,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_10_start" type="time" label="32061" help="">
           <level>0</level>
@@ -2741,7 +2856,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_10" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_10_end_type" type="integer" label="32062" help="">
@@ -2756,7 +2872,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_10" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_10_duration" type="time" label="32064" help="">
@@ -2766,7 +2883,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_10" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_10_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -2777,7 +2895,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_10" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_10_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_10_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -2812,6 +2931,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_10_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_10_media_action" operator="gt">0</condition>
+                <condition setting="timer_10_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_10_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -2820,7 +2952,18 @@
             <dependency type="enable" setting="timer_10_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_10_filename" type="string" label="32080" help="">
+        <setting id="timer_10_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_10_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -2844,7 +2987,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_10_filename" operator="is"></condition>
+                <condition setting="timer_10_path" operator="is"></condition>
                 <condition setting="timer_10_media_action" operator="gt">0</condition>
                 <condition setting="timer_10_media_action" operator="lt">5</condition>
               </and>
@@ -2858,7 +3001,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_10_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_10_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -2934,7 +3077,7 @@
             <dependency type="enable" setting="timer_10_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_10_notify" label="32097">
         <setting id="timer_10_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -2957,9 +3100,9 @@
         </setting>
       </group>
       <group id="g_timer_11_schedule" label="32060">
-        <setting id="timer_11" type="integer" label="32033" help="">
+        <setting id="timer_11_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -2969,29 +3112,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_11_start" type="time" label="32061" help="">
           <level>0</level>
@@ -3000,7 +3128,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_11" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_11_end_type" type="integer" label="32062" help="">
@@ -3015,7 +3144,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_11" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_11_duration" type="time" label="32064" help="">
@@ -3025,7 +3155,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_11" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_11_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -3036,7 +3167,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_11" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_11_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_11_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -3071,6 +3203,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_11_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_11_media_action" operator="gt">0</condition>
+                <condition setting="timer_11_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_11_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -3079,7 +3224,18 @@
             <dependency type="enable" setting="timer_11_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_11_filename" type="string" label="32080" help="">
+        <setting id="timer_11_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_11_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -3103,7 +3259,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_11_filename" operator="is"></condition>
+                <condition setting="timer_11_path" operator="is"></condition>
                 <condition setting="timer_11_media_action" operator="gt">0</condition>
                 <condition setting="timer_11_media_action" operator="lt">5</condition>
               </and>
@@ -3117,7 +3273,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_11_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_11_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -3193,7 +3349,7 @@
             <dependency type="enable" setting="timer_11_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_11_notify" label="32097">
         <setting id="timer_11_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3216,9 +3372,9 @@
         </setting>
       </group>
       <group id="g_timer_12_schedule" label="32060">
-        <setting id="timer_12" type="integer" label="32033" help="">
+        <setting id="timer_12_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -3228,29 +3384,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_12_start" type="time" label="32061" help="">
           <level>0</level>
@@ -3259,7 +3400,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_12" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_12_end_type" type="integer" label="32062" help="">
@@ -3274,7 +3416,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_12" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_12_duration" type="time" label="32064" help="">
@@ -3284,7 +3427,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_12" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_12_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -3295,7 +3439,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_12" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_12_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_12_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -3330,6 +3475,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_12_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_12_media_action" operator="gt">0</condition>
+                <condition setting="timer_12_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_12_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -3338,7 +3496,18 @@
             <dependency type="enable" setting="timer_12_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_12_filename" type="string" label="32080" help="">
+        <setting id="timer_12_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_12_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -3362,7 +3531,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_12_filename" operator="is"></condition>
+                <condition setting="timer_12_path" operator="is"></condition>
                 <condition setting="timer_12_media_action" operator="gt">0</condition>
                 <condition setting="timer_12_media_action" operator="lt">5</condition>
               </and>
@@ -3376,7 +3545,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_12_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_12_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -3452,7 +3621,7 @@
             <dependency type="enable" setting="timer_12_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_12_notify" label="32097">
         <setting id="timer_12_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3475,9 +3644,9 @@
         </setting>
       </group>
       <group id="g_timer_13_schedule" label="32060">
-        <setting id="timer_13" type="integer" label="32033" help="">
+        <setting id="timer_13_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -3487,29 +3656,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_13_start" type="time" label="32061" help="">
           <level>0</level>
@@ -3518,7 +3672,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_13" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_13_end_type" type="integer" label="32062" help="">
@@ -3533,7 +3688,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_13" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_13_duration" type="time" label="32064" help="">
@@ -3543,7 +3699,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_13" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_13_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -3554,7 +3711,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_13" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_13_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_13_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -3589,6 +3747,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_13_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_13_media_action" operator="gt">0</condition>
+                <condition setting="timer_13_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_13_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -3597,7 +3768,18 @@
             <dependency type="enable" setting="timer_13_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_13_filename" type="string" label="32080" help="">
+        <setting id="timer_13_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_13_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -3621,7 +3803,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_13_filename" operator="is"></condition>
+                <condition setting="timer_13_path" operator="is"></condition>
                 <condition setting="timer_13_media_action" operator="gt">0</condition>
                 <condition setting="timer_13_media_action" operator="lt">5</condition>
               </and>
@@ -3635,7 +3817,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_13_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_13_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -3711,7 +3893,7 @@
             <dependency type="enable" setting="timer_13_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_13_notify" label="32097">
         <setting id="timer_13_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3734,9 +3916,9 @@
         </setting>
       </group>
       <group id="g_timer_14_schedule" label="32060">
-        <setting id="timer_14" type="integer" label="32033" help="">
+        <setting id="timer_14_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -3746,29 +3928,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_14_start" type="time" label="32061" help="">
           <level>0</level>
@@ -3777,7 +3944,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_14" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_14_end_type" type="integer" label="32062" help="">
@@ -3792,7 +3960,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_14" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_14_duration" type="time" label="32064" help="">
@@ -3802,7 +3971,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_14" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_14_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -3813,7 +3983,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_14" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_14_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_14_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -3848,6 +4019,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_14_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_14_media_action" operator="gt">0</condition>
+                <condition setting="timer_14_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_14_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -3856,7 +4040,18 @@
             <dependency type="enable" setting="timer_14_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_14_filename" type="string" label="32080" help="">
+        <setting id="timer_14_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_14_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -3880,7 +4075,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_14_filename" operator="is"></condition>
+                <condition setting="timer_14_path" operator="is"></condition>
                 <condition setting="timer_14_media_action" operator="gt">0</condition>
                 <condition setting="timer_14_media_action" operator="lt">5</condition>
               </and>
@@ -3894,7 +4089,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_14_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_14_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -3970,7 +4165,7 @@
             <dependency type="enable" setting="timer_14_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_14_notify" label="32097">
         <setting id="timer_14_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -3993,9 +4188,9 @@
         </setting>
       </group>
       <group id="g_timer_15_schedule" label="32060">
-        <setting id="timer_15" type="integer" label="32033" help="">
+        <setting id="timer_15_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -4005,29 +4200,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_15_start" type="time" label="32061" help="">
           <level>0</level>
@@ -4036,7 +4216,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_15" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_15_end_type" type="integer" label="32062" help="">
@@ -4051,7 +4232,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_15" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_15_duration" type="time" label="32064" help="">
@@ -4061,7 +4243,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_15" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_15_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -4072,7 +4255,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_15" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_15_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_15_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -4107,6 +4291,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_15_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_15_media_action" operator="gt">0</condition>
+                <condition setting="timer_15_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_15_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -4115,7 +4312,18 @@
             <dependency type="enable" setting="timer_15_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_15_filename" type="string" label="32080" help="">
+        <setting id="timer_15_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_15_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -4139,7 +4347,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_15_filename" operator="is"></condition>
+                <condition setting="timer_15_path" operator="is"></condition>
                 <condition setting="timer_15_media_action" operator="gt">0</condition>
                 <condition setting="timer_15_media_action" operator="lt">5</condition>
               </and>
@@ -4153,7 +4361,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_15_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_15_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -4229,7 +4437,7 @@
             <dependency type="enable" setting="timer_15_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_15_notify" label="32097">
         <setting id="timer_15_notify" type="boolean" label="32098" help="">
           <level>1</level>
@@ -4252,9 +4460,9 @@
         </setting>
       </group>
       <group id="g_timer_16_schedule" label="32060">
-        <setting id="timer_16" type="integer" label="32033" help="">
+        <setting id="timer_16_days" type="list[integer]" label="32037">
           <level>0</level>
-          <default>0</default>
+          <default></default>
           <constraints>
             <options>
               <option label="32200">0</option>
@@ -4264,29 +4472,14 @@
               <option label="32204">4</option>
               <option label="32205">5</option>
               <option label="32206">6</option>
-              <option label="32207">7</option>
-              <option label="32208">8</option>
-              <option label="32209">9</option>
-              <option label="32210">10</option>
-              <option label="32211">11</option>
-              <option label="32212">12</option>
-              <option label="32213">13</option>
-              <option label="32214">14</option>
-              <option label="32215">15</option>
-              <option label="32216">16</option>
-              <option label="32217">17</option>
-              <option label="32218">18</option>
-              <option label="32219">19</option>
-              <option label="32220">20</option>
-              <option label="32221">21</option>
-              <option label="32222">22</option>
-              <option label="32223">23</option>
-              <option label="32224">24</option>
-              <option label="32225">25</option>
-              <option label="32226">26</option>
+              <option label="32036">7</option>
             </options>
+            <delimiter>|</delimiter>
           </constraints>
-          <control type="spinner" format="string" />
+          <control type="list" format="string">
+            <multiselect>true</multiselect>
+            <hidevalue>false</hidevalue>
+          </control>
         </setting>
         <setting id="timer_16_start" type="time" label="32061" help="">
           <level>0</level>
@@ -4295,7 +4488,8 @@
             <heading>32061</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_16" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_16_end_type" type="integer" label="32062" help="">
@@ -4310,7 +4504,8 @@
           </constraints>
           <control type="spinner" format="string" />
           <dependencies>
-            <dependency type="enable" setting="timer_16" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
         <setting id="timer_16_duration" type="time" label="32064" help="">
@@ -4320,7 +4515,8 @@
             <heading>32064</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_16" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_16_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
@@ -4331,7 +4527,8 @@
             <heading>32065</heading>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_16" operator="!is">0</dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_16_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_16_end_type" operator="is">2</dependency>
           </dependencies>
         </setting>
@@ -4366,6 +4563,19 @@
             </dependency>
           </dependencies>
         </setting>
+        <setting id="timer_16_shuffle" type="boolean" label="32088" help="">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="enable">
+              <and>
+                <condition setting="timer_16_media_action" operator="gt">0</condition>
+                <condition setting="timer_16_media_action" operator="lt">5</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_16_resume" type="boolean" label="32079" help="">
           <level>2</level>
           <default>false</default>
@@ -4374,7 +4584,18 @@
             <dependency type="enable" setting="timer_16_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_16_filename" type="string" label="32080" help="">
+        <setting id="timer_16_path" type="string" label="32080" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32080</heading>
+          </control>
+          <visible>false</visible>
+        </setting>
+        <setting id="timer_16_mediatype" type="string" label="32080" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -4398,7 +4619,7 @@
           <dependencies>
             <dependency type="visible">
               <and>
-                <condition setting="timer_16_filename" operator="is"></condition>
+                <condition setting="timer_16_path" operator="is"></condition>
                 <condition setting="timer_16_media_action" operator="gt">0</condition>
                 <condition setting="timer_16_media_action" operator="lt">5</condition>
               </and>
@@ -4412,7 +4633,7 @@
             <close>false</close>
           </control>
           <dependencies>
-            <dependency type="enable" setting="timer_16_filename" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_16_path" operator="!is"></dependency>
           </dependencies>
         </setting>
       </group>
@@ -4488,7 +4709,7 @@
             <dependency type="enable" setting="timer_16_end_type" operator="!is">0</dependency>
           </dependencies>
         </setting>
-      </group>      
+      </group>
       <group id="g_timer_16_notify" label="32097">
         <setting id="timer_16_notify" type="boolean" label="32098" help="">
           <level>1</level>

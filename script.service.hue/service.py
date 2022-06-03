@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
+#      Copyright (C) 2019 Kodi Hue Service (script.service.hue)
+#      This file is part of script.service.hue
+#      SPDX-License-Identifier: MIT
+#      See LICENSE.TXT for more information.
 
+import xbmc
 
-from resources.lib import core, logger, ADDONVERSION, KODIVERSION
-from resources.lib import reporting
+from resources.lib import core, reporting
 
-logger.debug("Starting service.py, version {}, Kodi: {}".format(ADDONVERSION, KODIVERSION))
 try:
-    core.core() #Run Hue service
+    core.core()
 except Exception as exc:
-    logger.debug("Core service exception")
+    xbmc.log(f"[script.service.hue][EXCEPTION] Service exception: {exc}")
     reporting.process_exception(exc)
-
-logger.debug("Shutting down service.py, version {}, Kodi: {}".format(ADDONVERSION, KODIVERSION))
