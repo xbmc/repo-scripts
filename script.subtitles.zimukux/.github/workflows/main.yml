@@ -1,0 +1,49 @@
+name: Zip and Release
+
+on: 
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: get addon version
+        run: |
+          ver=`cat addon.xml |grep -oP 'name="ZiMuKuX" version="\K[^"]*'`
+          echo ZIMUKUX_VER=$ver >> $GITHUB_ENV
+
+      - uses: mukunku/tag-exists-action@v1.0.0
+        id: checkTag
+        with: 
+          tag: v${{ env.ZIMUKUX_VER }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_FOR_ACTIONS }}
+
+      - name: zip it
+        if: ${{ steps.checkTag.outputs.exists == 'false' }}
+        run: |
+          for file in .[^.]*; do rm -rf "$file"; done
+          cd ..
+          mv zimuku_for_kodi/ script.subtitles.zimukux/
+          zip -r -qq script.subtitles.zimukux-${{ env.ZIMUKUX_VER }}.zip script.subtitles.zimukux/
+          mv script.subtitles.zimukux-${{ env.ZIMUKUX_VER }}.zip script.subtitles.zimukux/
+          mv script.subtitles.zimukux/ zimuku_for_kodi/ 
+          cd zimuku_for_kodi
+          sed -e '/^$/,$d' CHANGES > changelog.txt
+
+      - name: release
+        if: ${{ steps.checkTag.outputs.exists == 'false' }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ env.ZIMUKUX_VER }}
+          commit: main
+          bodyFile: changelog.txt
+          artifacts: script.subtitles.zimukux-${{ env.ZIMUKUX_VER }}.zip
+          token: ${{ secrets.PAT_FOR_ACTIONS }}
