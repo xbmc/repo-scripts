@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.pyamf"
        name="PyAMF"
-       version="0.8.10+matrix.3"
+       version="0.8.10+matrix.4"
        provider-name="The Py3AMF Project">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>

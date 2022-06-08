@@ -201,7 +201,7 @@ def get_module(mod_name):
     if isinstance(mod_name, bytes):
         mod_name = mod_name.decode()
 
-    if mod_name is '':
+    if mod_name == '':
         raise ImportError('Unable to import empty module')
 
     mod = __import__(mod_name)
