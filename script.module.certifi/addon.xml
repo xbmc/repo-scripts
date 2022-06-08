@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.certifi" name="certifi" version="2020.12.05+matrix.1" provider-name="Certifi">
+<addon id="script.module.certifi" name="certifi" version="2022.5.18+matrix.1" provider-name="Certifi">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -8,7 +8,7 @@
     <summary lang="en_GB">Python package for providing Mozilla's CA Bundle.</summary>
     <description lang="en_GB">Certifi is a carefully curated collection of Root Certificates for validating the trustworthiness of SSL certificates while verifying the identity of TLS hosts. It has been extracted from the Requests project.</description>
     <license>MPL-2.0</license>
-    <website>https://certifi.io</website>
+    <website>https://github.com/certifi/python-certifi</website>
     <source>https://github.com/certifi/python-certifi</source>
     <assets>
       <icon>resources/icon.png</icon>
