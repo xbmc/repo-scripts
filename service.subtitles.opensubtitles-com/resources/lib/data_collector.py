@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from urllib.parse import unquote
 from difflib import SequenceMatcher
@@ -16,12 +15,24 @@ def get_file_path():
 
 
 def get_media_data():
+
+    # confusiong results with imdb_id, removed
+  #  item = {"year": xbmc.getInfoLabel("VideoPlayer.Year"),
+  #          "season_number": str(xbmc.getInfoLabel("VideoPlayer.Season")),
+  #          "episode_number": str(xbmc.getInfoLabel("VideoPlayer.Episode")),
+  #          "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
+  #          "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
+  #          "imdb_id": xbmc.getInfoLabel("VideoPlayer.IMDBNumber")}
+
     item = {"year": xbmc.getInfoLabel("VideoPlayer.Year"),
             "season_number": str(xbmc.getInfoLabel("VideoPlayer.Season")),
             "episode_number": str(xbmc.getInfoLabel("VideoPlayer.Episode")),
             "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
-            "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
-            "imdb_id": xbmc.getInfoLabel("VideoPlayer.IMDBNumber")}
+            "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))}
+
+
+
+
 
     if item["tv_show_title"]:
         item["query"] = item["tv_show_title"]

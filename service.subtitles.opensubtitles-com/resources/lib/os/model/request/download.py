@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from resources.lib.os.model.request.abstract import OpenSubtitlesRequest
 

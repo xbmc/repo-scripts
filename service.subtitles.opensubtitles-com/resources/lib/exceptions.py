@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 class ProviderError(Exception):
     """Exception raised by providers."""
