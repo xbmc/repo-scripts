@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.preventsleepandlock" name="Prevent display sleep and lockscreen" version="1.0.0" provider-name="Heckie">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.service" library="addon.py" />
+  <extension point="xbmc.python.script" library="program.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Prevent puttting display to sleep in window mode and prevent lock screen in MS Windows</summary>
+    <summary lang="de_DE">Vermeidet den Bildschirm im Fenstermodus in den Ruhezustand zu versetzen und verhindert unter MS Windows die Bildschirmsperre</summary>
+    <description lang="en_GB">
+      A Kodi addon that prevents that display is put to sleep if Kodi isn't in fullscreen mode and prevents lock screen on MS Windows
+    </description>
+    <description lang="de_DE">
+      Ein Kodi Addon welches vermeidet, dass der Bildschirm in den Ruhezustand versetzt wird, wenn Kodi nicht im Vollbildmodus ist, und bei MS Windows verhindert, dass der Sperrbildschirm erscheint. 
+    </description>
+    <language>en</language>
+    <language>de</language>
+    <platform>windows linux</platform>
+    <license>MIT</license>
+    <website>https://github.com/Heckie75/kodi-addon-prevent-sleep-and-lock</website>
+    <source>https://github.com/Heckie75/kodi-addon-prevent-sleep-and-lock</source>
+    <news>
+v1.0.0 (2022-06-10)
+- Initial version
+    </news>
+    <assets>
+      <icon>resources/assets/icon.png</icon>
+      <screenshot>resources/assets/screenshot_01.png</screenshot>
+      <screenshot>resources/assets/screenshot_02.png</screenshot>
+    </assets>
+  </extension>
+</addon>
