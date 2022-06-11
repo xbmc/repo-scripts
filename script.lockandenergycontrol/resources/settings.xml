@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1">
+  <section id="script.screentool">
+    <category id="general" label="32030" help="">
+      <group id="g_extras" label="32030">
+        <setting id="powermanagement_displaysoff" type="integer" label="32130" help="">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32131">0</option>
+              <option label="32132">5</option>
+              <option label="32133">10</option>
+              <option label="32134">15</option>
+              <option label="32135">20</option>
+              <option label="32136">25</option>
+              <option label="32137">30</option>
+              <option label="32138">35</option>
+              <option label="32139">40</option>
+              <option label="32140">45</option>
+              <option label="32141">50</option>
+              <option label="32142">55</option>
+              <option label="32143">60</option>
+              <option label="32144">65</option>
+              <option label="32145">70</option>
+              <option label="32146">75</option>
+              <option label="32147">80</option>
+              <option label="32148">85</option>
+              <option label="32149">90</option>
+              <option label="32150">95</option>
+              <option label="32151">100</option>
+              <option label="32152">105</option>
+              <option label="32153">110</option>
+              <option label="32154">115</option>
+              <option label="32155">120</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
+          <dependencies>
+            <dependency type="visible" on="property" operator="!is" name="infobool">system.isstandalone</dependency>
+          </dependencies>
+        </setting>
+        <setting id="hint1" type="string" label="32160" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32160</heading>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="powermanagement_displaysoff" operator="!is">0</dependency>
+          </dependencies>          
+          <enable>false</enable>
+        </setting>
+        <setting id="hint2" type="string" label="32161" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32161</heading>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="powermanagement_displaysoff" operator="is">0</dependency>
+          </dependencies>          
+          <enable>false</enable>
+        </setting>
+        <setting id="windows_unlock" type="boolean" label="32032" help="">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+          <dependencies>
+            <dependency type="visible" on="property" operator="is" name="infobool">system.platform.windows</dependency>
+          </dependencies>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
