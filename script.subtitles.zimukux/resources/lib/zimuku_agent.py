@@ -17,6 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
+from ast import expr_context
 import os
 import sys
 import time
@@ -30,13 +31,15 @@ class Zimuku_Agent:
     def __init__(self, base_url, dl_location, logger, unpacker, settings):
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
-        self.ZIMUKU_API = '%s/search?q=%%s' % base_url
+        self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
         self.DOWNLOAD_LOCATION = dl_location
         self.FILE_MIN_SIZE = 1024
 
         self.logger = logger
         self.unpacker = unpacker
         self.plugin_settings = settings
+        self.session = requests.Session()
+        self.vertoken = ''
 
     def set_setting(self, settings):
         # for unittestting purpose
@@ -44,7 +47,7 @@ class Zimuku_Agent:
 
     def get_page(self, url, **kwargs):
         """
-        Get page with requests.
+        Get page with requests session.
 
         Parameters:
             url     Target URL.
@@ -56,16 +59,19 @@ class Zimuku_Agent:
         """
         headers = None
         http_body = None
+        s = self.session
         try:
             request_headers = {'User-Agent': self.ua}
             if kwargs:
                 for key, value in list(kwargs.items()):
                     request_headers[key.replace('_', '-')] = value
 
-            s = requests.Session()
             a = requests.adapters.HTTPAdapter(max_retries=3)
             s.mount('http://', a)
-            # self.logger.log(sys._getframe().f_code.co_name, 'requests GET [%s]' % (url))
+            self.logger.log(sys._getframe().f_code.co_name, 'requests GET [%s]' % (url))
+
+            url += '&' if '?' in url else '?'
+            url += 'security_verify_data=313932302c31303830'
 
             # https://github.com/pizzamx/zimuku_for_kodi/pull/5/commits/5d4ed2fbd87dc08682884c874018ac0f9f35b25c
             url1 = url + '&security_verify_data=313932302c31303830'
@@ -74,8 +80,8 @@ class Zimuku_Agent:
             s.get(url1, headers=request_headers)
             http_response = s.get(url, headers=request_headers)
             if http_response.status_code != 200:
-                s.get(url2, headers=request_headers)
-                http_response = s.get(url2, headers=request_headers)
+                s.get(url, headers=request_headers)
+                http_response = s.get(url, headers=request_headers)
 
             headers = http_response.headers
             http_body = http_response.content
@@ -175,6 +181,23 @@ class Zimuku_Agent:
             "lang": langs
         }
 
+    def get_vertoken(self):
+        # get vertoken from home page and cache it for the session
+        if self.vertoken:
+            return self.vertoken
+        else:
+            self.logger.log(sys._getframe().f_code.co_name, "Fetching new vertoken form home page")
+            try:
+                headers, data = self.get_page(self.ZIMUKU_BASE+'/')
+                hsoup = BeautifulSoup(data, 'html.parser')
+                vertoken = hsoup.find('input', attrs={'name': 'vertoken'}).attrs.get('value', '')
+                self.vertoken = vertoken
+                return vertoken
+            except Exception as e:
+                self.logger.log(sys._getframe().f_code.co_name, 'ERROR GETTING vertoken, E=(%s: %s)' %
+                                (Exception, e), level=3)
+                return ''
+
     def search(self, title, item):
         """
         搜索字幕
@@ -195,7 +218,9 @@ class Zimuku_Agent:
         """
         subtitle_list = []
 
-        url = self.ZIMUKU_API % (urllib.parse.quote(title))
+        vertoken = self.get_vertoken()
+
+        url = self.ZIMUKU_API % (urllib.parse.quote(title), vertoken)
         self.logger.log(sys._getframe().f_code.co_name,
                         "Search API url: %s" % (url))
         try:
@@ -538,3 +563,6 @@ class Zimuku_Agent:
                 (referer),
                 level=2)
             return '', ''
+
+    def close(self):
+        self.session.close()
