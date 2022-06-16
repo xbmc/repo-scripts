@@ -1,8 +1,0 @@
-*.pyc
-*.pyo
-*.swp
-.DS_Store
-lib/setup.*
-lib/MANIFEST.in
-lib/tests
-lib/tools
