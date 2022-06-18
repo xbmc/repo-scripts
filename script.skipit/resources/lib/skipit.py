@@ -8,12 +8,13 @@ ADDON = xbmcaddon.Addon()
 # get the full path to your addon, decode it to unicode to handle special (non-ascii) characters in the path
 CWD = ADDON.getAddonInfo('path')
  
-skip_secs = 180 
-min_skip_secs = 3 
-slippage = 1
-timeout = 5.0
 going_forward = False
 going_backward = False
+lock = threading.Lock()
+min_skip_secs = 3 
+skip_secs = 180 
+slippage = 1
+timeout = 5.0
 
 
 class SkipItWindow(xbmcgui.WindowXMLDialog):
@@ -82,53 +83,59 @@ def do_skip(skip_secs):
         seek_to = totalTime - 1;
     player.seekTime(seek_to)
     # Now work out how far we went (might have run to the end or start
-    postSeekTime = player.getTime()
-    return round(postSeekTime - preSeekTime)
+    xbmc.log('Skipping : Req {0}, pre {1}, post {2}, tot {3}'.format(skip_secs, preSeekTime, seek_to, totalTime), xbmc.LOGDEBUG)
+    
+    return round(seek_to - preSeekTime)
 
 
 def skip_forward():
 
-    if not(xbmc.Player().isPlaying()):
-        close_me()
-        return
-    # 
-    # Skip forward the required amount
-    global addonname
-    global skip_secs
-    global going_forward
-    going_forward = True
-
-    reset_timer()
-    halve()
-    set_label(skip_secs, True)
-    requested_skip = skip_secs - slippage
-    actual_skip = do_skip(requested_skip)
-    if actual_skip != requested_skip:
-        skip_secs = abs(actual_skip)
-        xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32135))
+    with lock:
+        if not(xbmc.Player().isPlaying()):
+            close_me()
+            return
+        # 
+        # Skip forward the required amount
+        global addonname
+        global skip_secs
+        global going_forward
+        going_forward = True
+    
+        reset_timer()
+        calc_next_skip_size()
+        set_label(skip_secs, True)
+        requested_skip = skip_secs - slippage
+        actual_skip = do_skip(requested_skip)
+        if actual_skip != requested_skip:
+            skip_secs = abs(actual_skip)
+            xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32135))
     return 
 
 
 def skip_backward():
-    if not(xbmc.Player().isPlaying()):
-        close_me()
-        return
-    # 
-    # Skip forward the required amount
-    global addonname
-    global skip_secs
-    global going_backward
-    going_backward = True
-
-    reset_timer()
-    halve()
-    set_label(skip_secs, False)
-    # Add a couple of extra seconds as the video is still playing forwards
-    requested_skip = -(skip_secs + slippage)
-    actual_skip = do_skip(requested_skip);
-    if actual_skip != requested_skip:
-        skip_secs = abs(actual_skip)
-        xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32130))
+    
+    with lock:
+    
+        if not(xbmc.Player().isPlaying()):
+            close_me()
+            return
+        # 
+        # Skip forward the required amount
+        global addonname
+        global skip_secs
+        global going_backward
+        going_backward = True
+    
+        reset_timer()
+        calc_next_skip_size()
+        set_label(skip_secs, False)
+        # Add a couple of extra seconds as the video is still playing forwards
+        requested_skip = -(skip_secs + slippage)
+        actual_skip = do_skip(requested_skip);
+        if actual_skip != requested_skip:
+            skip_secs = abs(actual_skip)
+            xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32130))
+            
     return 
 
 
@@ -151,13 +158,14 @@ def reset():
     global going_forward
     global going_backward
     
-    going_forward = False
-    going_backward = False
-    skip_secs = ADDON.getSettingInt('skipsecs')
+    with lock:
+        going_forward = False
+        going_backward = False
+        skip_secs = ADDON.getSettingInt('skipsecs')
     return
 
         
-def halve():
+def calc_next_skip_size():
     global going_forward
     global going_backward
     global skip_secs
@@ -169,18 +177,6 @@ def halve():
     return
 
         
-def build_command(seconds, forward):
-    #
-    # Build the skip command
-    if not(forward):
-        seconds = -seconds
-    
-    command = 'Seek({})'
-    command = command.format(seconds) 
-    xbmc.log('SkipIt seeking command - {}'.format(command), xbmc.LOGDEBUG)
-    return command
-
-
 def close_me():
     global my_timer
     global ui
