@@ -61,7 +61,7 @@ class AmbiGroup(lightgroup.LightGroup):
             light_ids = ADDON.getSetting(f"group{self.light_group_id}_Lights").split(",")
             index = 0
 
-            if len(light_ids) <= 0:
+            if len(light_ids) > 0:
                 for L in light_ids:
                     gamut = self._get_light_gamut(self.bridge, L)
                     light = {L: {'gamut': gamut, 'prev_xy': (0, 0), "index": index}}
@@ -165,7 +165,7 @@ class AmbiGroup(lightgroup.LightGroup):
                 cap_image = cap.getImage()  # timeout to wait for OS in ms, default 1000
 
                 if cap_image is None or len(cap_image) < expected_capture_size:
-                    # xbmc.log("[script.service.hue] capImage is none or < expected. captured: {}, expected: {}".format(len(capImage), expected_capture_size))
+                    xbmc.log("[script.service.hue] capImage is none or < expected. captured: {}, expected: {}".format(len(capImage), expected_capture_size))
                     xbmc.sleep(250)  # pause before trying again
                     continue  # no image captured, try again next iteration
                 image = Image.frombytes("RGBA", (self.capture_size_x, self.capture_size_y), bytes(cap_image), "raw", "BGRA", 0, 1)  # Kodi always returns a BGRA image.
