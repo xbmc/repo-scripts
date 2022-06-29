@@ -1,1 +1,8 @@
+
+1.0.2 Fixed a race condition when skip is incomplete before querying current position.
+      Fixed a race condition when skip button is pressed multip[le times in quick succession.
+
+1.0.1 Improved handling of skipping when at beginning or end of the stream, patricularly
+      when playing a recording that is still currently being made.
+
 1.0.0 Initial Release
