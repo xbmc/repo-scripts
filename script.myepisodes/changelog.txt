@@ -1,3 +1,5 @@
+3.0.1
++ Use "is_Alive" instead of deprecated isAlive
 3.0.0
 + Switch to Python3 + Adopt changes for Matrix
 2.0.1
