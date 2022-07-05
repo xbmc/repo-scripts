@@ -103,7 +103,7 @@ class MyePlayer(xbmc.Player):
             return
         if self._tracker is None:
             return
-        if self._tracker.isAlive():
+        if self._tracker.is_Alive():
             self._tracker.join()
         self._tracker = None
 
