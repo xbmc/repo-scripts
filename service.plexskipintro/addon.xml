@@ -9,10 +9,11 @@
         <description lang="en">Prompt a Skip Intro dialog Netflix style using plex metadata. Skips intro for your favourite shows</description>
 		<summary lang="en">Skip TV Shows Intro</summary>
 		<platform>all</platform>
-		<forum>-</forum>
-		<website>-</website>
-		<source>-</source>
-		<news>-</news>
+                <forum>-https://forum.kodi.tv/showthread.php?tid=368916</forum>
+                <website>https://github.com/Darkmadda/PlexSkipIntro</website>
+                <source>https://github.com/Darkmadda/PlexSkipIntro</source>
+                <news>https://github.com/Darkmadda/PlexSkipIntro/releases</news>
+                <license>GPL-3.0-ONLY</license>
 		<assets>
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
