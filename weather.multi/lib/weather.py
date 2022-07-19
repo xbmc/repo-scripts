@@ -108,7 +108,10 @@ class MAIN():
                     DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'agree': 'agree'}
                     posturl = 'https://consent.yahoo.com/v2/collectConsent?sessionId=%s' % sessionid
                     response = requests.post(posturl, headers=HEADERS, data=DATA)
-                ycookie = response.cookies['A1']
+                try:
+                    ycookie = response.cookies['A1']
+                except:
+                    ycookie = response.cookies['A1S'].replace('&j=GDPR', '')
                 response = requests.get(YURL, headers=HEADERS, cookies=dict(A1=ycookie), timeout=10)
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
                 ycrumb = codecs.decode(match.group(1), 'unicode-escape')
