@@ -1,3 +1,7 @@
+v6.4.1
+- fix genius scraper
+- fix darklyrics scraper
+
 v6.4.0
 - replace syair by lyricsify
 
