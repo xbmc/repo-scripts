@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
-"Language: fr\n"
+"PO-Revision-Date: 2022-05-27 09:15+0000\n"
+"Last-Translator: Christophe JOLY <skypichat@hotmail.fr>\n"
+"Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fr_fr/>\n"
+"Language: fr_fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.12.2\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -69,11 +70,11 @@ msgstr "Avancées de %ss"
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Rechercher et enregistrer les paroles de lrc dans un dossier de paroles séparé"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Rechercher et enregistrer les paroles txt dans un dossier de paroles séparé"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
@@ -113,15 +114,15 @@ msgstr "Artiste\\Album\\Piste Chanson.ext"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- Les paroles sont dans un sous-dossier"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Nom du sous-dossier"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Rechercher et enregistrer les paroles de lrc dans le dossier de la chanson"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
@@ -145,21 +146,21 @@ msgstr "Débogage"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
-msgstr ""
+msgstr "Rechercher et enregistrer les paroles txt dans le dossier de la chanson"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Rechercher des fichiers de paroles .txt locaux"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Masquer l'arrière-plan de la boîte de dialogue, afficher uniquement les paroles"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr ""
+msgstr "Expert"
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -175,7 +176,7 @@ msgstr "Chercher des paroles intégrées"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
-msgstr ""
+msgstr "Rechercher des fichiers de paroles .lrc locaux"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
@@ -235,44 +236,44 @@ msgstr "Supprimer les paroles"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
-msgstr ""
+msgstr "Si vous masquez l'OSD Musique et les informations de lecture en cours, l'arrière-plan de la boîte de dialogue des paroles sera également masqué."
 
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "MiniLyrics"
-msgstr ""
+msgstr "MiniLyrics"
 
 msgctxt "#32903"
 msgid "GomAudio"
-msgstr ""
+msgstr "GomAudio"
 
 msgctxt "#32904"
 msgid "Music 163"
-msgstr ""
+msgstr "Music 163"
 
 msgctxt "#32905"
 msgid "Lyricsify"
-msgstr ""
+msgstr "Lyricsify"
 
 msgctxt "#32912"
 msgid "Genius"
-msgstr ""
+msgstr "Genius"
 
 msgctxt "#32913"
 msgid "Lyrics Mode"
-msgstr ""
+msgstr "Mode Paroles"
 
 msgctxt "#32914"
 msgid "AZLyrics"
-msgstr ""
+msgstr "AZLyrics"
 
 msgctxt "#32915"
 msgid "Lyrics.com"
-msgstr ""
+msgstr "Lyrics.com"
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
-msgstr ""
+msgstr "Dark Lyrics"
 
 # empty strings from id 32010 to 32100
 # Settings labels

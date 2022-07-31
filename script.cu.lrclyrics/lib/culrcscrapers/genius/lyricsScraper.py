@@ -52,9 +52,11 @@ class LyricsFetcher:
         except:
             return None
         response = html.unescape(response)
-        matchcode = re.search('class="Lyrics__Container.*?">(.*?)</div>', response, flags=re.DOTALL)
+        matchcode = re.findall('class="Lyrics__Container.*?">(.*?)</div><div', response, flags=re.DOTALL)
         try:
-            lyricscode = (matchcode.group(1))
+            lyricscode = ""
+            for matchCodeItem in matchcode:
+                lyricscode = lyricscode + matchCodeItem
             lyr1 = re.sub('<br/>', '\n', lyricscode)
             lyr2 = re.sub('<[^<]+?>', '', lyr1)
             lyr3 = lyr2.replace('\\n','\n').strip()

@@ -12,6 +12,7 @@ import time
 import urllib.parse
 import re
 from lib.utils import *
+from ctypes import c_int32
 
 __title__ = 'darklyrics'
 __priority__ = '250'
@@ -28,11 +29,13 @@ class LyricsFetcher:
 
     def getCookie(self):
          # http://www.darklyrics.com/tban.js
-         lastvisitts = str(math.ceil(time.time() * 1000 / (60 * 60 * 6 * 1000)))
+         lastvisitts = 'Nergal' + str(math.ceil(time.time() * 1000 / (60 * 60 * 6 * 1000)))
          lastvisittscookie = 0
-         for i in range(len(lastvisitts)):
-             lastvisittscookie = ((lastvisittscookie << 5) - lastvisittscookie) + ord(lastvisitts[i])
-             lastvisittscookie = lastvisittscookie & lastvisittscookie
+         i = 0
+         while i < len(lastvisitts):
+             lastvisittscookie = c_int32((c_int32(lastvisittscookie<<5).value - c_int32(lastvisittscookie).value) + ord(lastvisitts[i])).value
+             i += 1
+         lastvisittscookie = lastvisittscookie & lastvisittscookie
          return str(lastvisittscookie)
 
     def search(self, artist, title):

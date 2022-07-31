@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-02-18 21:13+0000\n"
+"PO-Revision-Date: 2022-06-07 20:14+0000\n"
 "Last-Translator: Nao3Line Prez <n.yazawa6932@gmail.com>\n"
 "Language-Team: Indonesian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/id_id/>\n"
 "Language: id_id\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.12.2\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -56,7 +56,7 @@ msgstr "Pilih lirik yang lain"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr "Sinkronkan lirik secara manual"
+msgstr "Sinkronkan lirik manual"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
@@ -64,17 +64,17 @@ msgstr "Tunda sampai: %ss"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr "Maju sampai: %ss"
+msgstr "Majukan sampai: %ss"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr "Cari dan simpan lirik lrc di folder lirik terpisah"
+msgstr "Cari dan simpan lirik lrc di folder terpisah"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr "Cari dan simpan lirik txt di folder lirik terpisah"
+msgstr "Cari dan simpan lirik txt di folder terpisah"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
@@ -86,15 +86,15 @@ msgstr "- Format penamaan"
 
 msgctxt "#32104"
 msgid "%N %A - %T"
-msgstr "%N %A - %T"
+msgstr "%N %A - %J"
 
 msgctxt "#32105"
 msgid "%A\\%T"
-msgstr "%A\\%T"
+msgstr "%A\\%J"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr "Hanya gunakan nama berkas untuk pencarian"
+msgstr "Gunakan hanya nama berkas untuk pencarian"
 
 msgctxt "#32107"
 msgid "Filename format"
@@ -102,15 +102,15 @@ msgstr "Format nama berkas"
 
 msgctxt "#32108"
 msgid "%A - %T"
-msgstr "%A - %T"
+msgstr "%A - %J"
 
 msgctxt "#32109"
 msgid "%A\\%B\\%T"
-msgstr "%A\\%B\\%T"
+msgstr "%A\\%B\\%J"
 
 msgctxt "#32110"
 msgid "%A\\%B\\%N (-) %T"
-msgstr "%A\\%B\\%N (-) %T"
+msgstr "%A\\%B\\%N (-) %J"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
@@ -126,7 +126,7 @@ msgstr "Cari dan simpan lirik lrc di folder lagu"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
-msgstr "%N - %A - %T"
+msgstr "%N - %A - %J"
 
 msgctxt "#32115"
 msgid "Display options"
@@ -151,7 +151,7 @@ msgstr "Cari dan simpan lirik txt di folder lagu"
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr "Cari file lirik .txt lokal"
+msgstr "Cari berkas lirik .txt lokal"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
@@ -160,7 +160,7 @@ msgstr "Sembunyikan latar belakang dialog, tampilkan lirik saja"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr "Mahir"
+msgstr "Lanjutan"
 
 msgctxt "#32150"
 msgid "Scrapers"
