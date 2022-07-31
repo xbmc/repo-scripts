@@ -1,0 +1,147 @@
+0.4.0
+- First version to be submitted to Kodi v19 (Matrix) addons repository. Only
+  compatible with Python 3. Thanks pedrochiuaua for the initiative and help
+
+0.3.9
+- Adapt to new method for sending search query data (POST). Thanks
+  TheArgentinian for the report and pedrochiuaua for the fix
+
+0.3.8
+- Fix search after changes in subdivx.com. Thanks alvarezj81 for the report
+  and pedrochiuaua for the fix
+
+0.3.7
+- Fix search result entry regexp
+
+0.3.6
+- Use direct download strategy discovred by user @tuxitos. Thanks!
+- Adapt to: subdivx.com now being served via HTTPS; changes in subtitles
+  submissions list page HTML
+- Improve readability of descriptions with non-ASCII chars
+
+0.3.5
+- Adapt to handle subdivx.com pagination changes
+- Add caching of web search results with new configurable TTL setting
+- Limit search results to 40. Avoid duplicate results if pagination stops
+  working
+
+0.3.3
+- Implement caching of web search results. Use a cache validity of one hour.
+
+0.3.2
+- Be less verbose when removing old temporary dirs.
+
+0.3.1
+- Attempt at fixing a timing bug that can happen when removing the temporary
+  directory used for decompression of the downloaded file. Happens usually
+  on Android.
+
+0.3.0
+- Release changes since 0.2.5
+
+0.2.13
+- Add 'news' section to addon.xml. Translate it and description to Spanish
+
+0.2.12
+- Comply with new Kodi policies: Less verbose logging by default. Achieved
+  by moving most of it to LOGDEBUG level
+
+0.2.11
+- Remove disposable temporary directory after using it.
+
+0.2.10
+- Attempt 1 at fixing decompression of RAR files on Kodi 18. This introduces
+  a dependency on the vfs.libarchive binary addon for Kodi>=18.
+- Users need to activate and/or install 'Archive support' add-on manually.
+
+0.2.5
+- Use html2text lib to scrape comments. Thanks Iván Ridao Freitas for help.
+- Fix handling of movie path on filesystem. Thanks Santiago Ibarra for report.
+- Enhance movie search performance and accuracy. Thanks Iván Ridao Freitas
+  for report.
+- Fix unzip performance using Kodi API facilities. Thanks Iván Ridao Freitas.
+- More robust search for TV show episodes subtitles in the face of uneven
+  metadata quality.
+- Better handling of .ssa and .sub+.idx files. Stop recognizing .txt files as
+  subtitles files.
+
+0.2.4
+- Logging: Fix misleading phrasing.
+- Internals: Factor out detection of compressed files. Initial maintainer
+  docs. Better docstrings.
+
+0.2.3
+- Logging: Use our prefix in paths debug log for searchability.
+- Internals: Remove unused import.
+
+0.2.2
+- Logging: Log our version, do it using LOGNOTICE level.
+- (Version 0.2.1 skipped to avoid clashing with unofficial fork.)
+
+0.2.0
+- Make intermediate page optional. Thanks Juan Redondo and Adrián Suárez.
+
+0.1.0
+- Start using minor version component so we can use micro component for
+  pre-releases.
+- Make sure the userdata/addon_data/s.s.s/ dir exists when handling tempdirs
+  even when the user hasn't touched our setting. Thanks Adrián Suárez
+  (upadrian)
+- More robust final download link RE-based extraction.
+- Handle .srt filenames with unicode chars more robustly.
+- Make rating actually helpful by reflecting relative download count.
+- Cleanup uploader comment for the subtitle.
+
+0.0.8
+- Handle new page added by subdivx.com. Thanks github users @upadrian,
+  @gboado and @felexx90
+- Simplify handling of temporary directory used to download & uncompress
+  subtitle files by skipping the 'remove it recursively and re-create' stage
+  which caused problems with mixed/unknown encodings, Unicode text passed in
+  by Kodi or read from the FS when calling shutil.rmtree().
+  Instead, use Python's tempfile.mkdtemp() and don't remove tempdirs.
+- Toggle default value of setting 'Show uploader name in place of language'
+  added in v0.0.5 to be ON.
+
+0.0.7
+- Remove code added for 0.0.5 which isn't needed, had been added to workarond
+  a Kodi Helix bug with handling of temp dir.
+- Implement manual search. Issue #2. Thanks Diego Garber.
+- Minor cleanups
+
+0.0.6
+- When the new option to show nicks was set, the subtitle file written ended
+  in '..srt' instead of '.es.srt'. Workaround this with a hack.
+- Remove flag column from search results table.
+- More code readability/maintainability work.
+- Copied workaround for xbmcvfs.exists() problem in Kodi 14 (Helix) from
+  opensubtitles add-on, thanks to its authors.
+
+0.0.5
+- Add first setting: Show uploader name in place of language
+  Being a spanish subtitles site, there is no point in showing the spanish
+  flag and literal in the first column so we put that spot of the screen to
+  better use: There are some renowned uploaders in the Subdivx.community and,
+  for lack of more structured information in Subdivx, it can be a very
+  important piece of information when it comes to choosing from several
+  subtitles. Show his/her nick there.
+  Initially the value of the setting is False. We'll see if it's worth
+  changing it to True in some future release.
+- Bullet-proof .rar uncompression as it's a popular file format on subdivx.com
+
+0.0.4
+- More robust parsing of description, better logging.
+- Also match variation in CSS class name just in case.
+- Fix stripping of trailing '/' from param value.
+
+0.0.3
+- Handle arbitrary casing in subs file extension, e.g. .SRT, .sRt, etc.
+- More code cleanup (PEP8, comment/docstring typos, logic of a helper function).
+
+0.0.2
+- Fixed accented characters mojibake.
+- Removed or replaced code of dubious utility/robustness.
+- More idiomatic Python code.
+
+0.0.1
+- Initial port to new Gotham structure.
