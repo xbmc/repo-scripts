@@ -30,10 +30,11 @@ class PlayAlongFile(xbmc.Player):
     def jump_to_subtitle(self):
         subtitle_in_strings, indexes = self.subtitle.easy_list_selector()
         line = xbmcgui.Dialog().select(_(32010), subtitle_in_strings)
-        target = int(self.subtitle[indexes[line]].startingtime/1000)
-        if target > self.getTotalTime():
-            target = self.getTotalTime() - 120
-        self.seekTime(int(target))
+        if line != -1:
+            target = int(self.subtitle[indexes[line]].startingtime/1000)
+            if target > self.getTotalTime():
+                target = self.getTotalTime() - 120
+            self.seekTime(int(target))
         self.pause()
 
     def start(self):

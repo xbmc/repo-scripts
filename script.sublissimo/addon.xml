@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="0.2.1" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="0.2.2" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
         <import addon="script.module.chardet" version="3.0.4"/>
-  </requires>
-  <extension point="xbmc.python.script" library="main.py">
-<provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-      <summary lang="en_GB">Edit and synchronize subtitles with your remote</summary>
-      <summary lang="ko_KR">"리모컨으로 자막 편집 및 동기화"</summary>
-      <description lang="en_GB">With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing.</description>
-      <description lang="ko_KR">이 스크립트를 사용하면 특정 줄을 편집하고, 자막을 이동하거나 늘리고, 다른 자막과 동기화할 수 있습니다. 비디오 파일과 동기화할 수도 있습니다.</description>
-      <platform>all</platform>
-      <license>MIT</license>
-      <email>drinkblacklabel@gmail.com</email>
-      <news>Version 2.0.0
-- New: Charset detection
-- New: Korean Translation
-- Added some fine tuning options.
-- Minor bugfixes
-      </news>
-      <source>https://github.com/Allertj/script.sublissimo</source>
-      <assets>
-          <icon>resources/icon.png</icon>
-          <fanart>resources/fanart.jpg</fanart>
-      </assets>
-  </extension>
+    </requires>
+    <extension point="xbmc.python.script" library="main.py">
+	<provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>MIT</license>
+        <email>ajvmdev@gmail.com</email>
+        <news>Version 0.2.2
+ - New: Chinese, Finnish and Italian translations
+ - Minor bugfixes
+        </news>
+        <source>https://github.com/Allertj/script.sublissimo</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+        <summary lang="en_GB">Edit and synchronize subtitles with your remote</summary>
+        <summary lang="fi_FI">Muokkaa ja ajoita tekstitykset kauko-ohjaimellasi</summary>
+        <summary lang="it_IT">Modifica e sincronizza i sottotitoli con il telecomando</summary>
+        <summary lang="ko_KR">리모컨으로 자막 편집 및 동기화</summary>
+        <summary lang="zh_CN">使用遥控器编辑和同步字幕</summary>
+        <description lang="en_GB">With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing.</description>
+        <description lang="fi_FI">Tällä lisäosalla voidaan muokata yksittäisiä tekstitysrivejä, siirtää ja venyttää tekstityksiä sekä tahdistaa niitä muiden tekstitysten ja videotiedostojen kanssa.[CR][CR]Editorin käynnistys onnistuu helposti suoraan toistettaessa muokkausta vaativaa videota ja tekstitystä.</description>
+        <description lang="it_IT">Con questo script puoi modificare righe specifiche, spostare o allungare i sottotitoli e sincronizzare con altri sottotitoli. Puoi anche sincronizzare con un file video.[CR][CR]Per utilizzare facilmente questo editor, avvialo quando il video e i sottotitoli che desideri modificare sono in riproduzione.</description>
+        <description lang="ko_KR">이 스크립트를 사용하면 특정 줄을 편집하고, 자막을 이동하거나 늘리고, 다른 자막과 동기화할 수 있습니다. 비디오 파일과 동기화할 수도 있습니다.</description>
+        <description lang="zh_CN">您可以使用此脚本编辑特定行、移动或拉伸字幕，以及与其他字幕同步。您还可以与视频文件同步。[CR][CR]要轻松使用此编辑器，请在要编辑的字幕与视频播放时启动它。</description>
+
+    </extension>
 </addon>
