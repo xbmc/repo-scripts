@@ -215,6 +215,7 @@ class MAIN():
         if self.SETTING_SAVE_LYRICS1LRC or self.SETTING_SAVE_LYRICS1TXT:
             # Search save path by Cu LRC Lyrics
             lyricsfile = song.path1(getlrc)
+            log('path1: %s' % lyricsfile, debug=self.DEBUG)
             if xbmcvfs.exists(lyricsfile):
                 lyr = get_textfile(lyricsfile)
                 if lyr != None:
@@ -223,6 +224,7 @@ class MAIN():
         if self.SETTING_SAVE_LYRICS2LRC or self.SETTING_SAVE_LYRICS2TXT:
             # Search same path with song file
             lyricsfile = song.path2(getlrc)
+            log('path2: %s' % lyricsfile, debug=self.DEBUG)
             if xbmcvfs.exists(lyricsfile):
                 lyr = get_textfile(lyricsfile)
                 if lyr != None:

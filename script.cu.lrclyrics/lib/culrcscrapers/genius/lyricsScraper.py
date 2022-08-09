@@ -11,7 +11,7 @@ import difflib
 from lib.utils import *
 
 __title__ = 'genius'
-__priority__ = '210'
+__priority__ = '200'
 __lrc__ = False
 
 

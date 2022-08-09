@@ -12,7 +12,10 @@ import time
 import urllib.parse
 import re
 from lib.utils import *
-from ctypes import c_int32
+try:
+    from ctypes import c_int32 # ctypes not supported on xbox
+except:
+    pass
 
 __title__ = 'darklyrics'
 __priority__ = '250'
@@ -33,7 +36,10 @@ class LyricsFetcher:
          lastvisittscookie = 0
          i = 0
          while i < len(lastvisitts):
-             lastvisittscookie = c_int32((c_int32(lastvisittscookie<<5).value - c_int32(lastvisittscookie).value) + ord(lastvisitts[i])).value
+             try:
+                 lastvisittscookie = c_int32((c_int32(lastvisittscookie<<5).value - c_int32(lastvisittscookie).value) + ord(lastvisitts[i])).value
+             except:
+                 return
              i += 1
          lastvisittscookie = lastvisittscookie & lastvisittscookie
          return str(lastvisittscookie)
