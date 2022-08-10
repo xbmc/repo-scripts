@@ -243,6 +243,10 @@ msgctxt "#32901"
 msgid "MiniLyrics"
 msgstr ""
 
+msgctxt "#32902"
+msgid "MusixMatch"
+msgstr ""
+
 msgctxt "#32903"
 msgid "GomAudio"
 msgstr ""

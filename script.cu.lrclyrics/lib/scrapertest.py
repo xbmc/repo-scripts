@@ -6,10 +6,11 @@ from lib.culrcscrapers.darklyrics import lyricsScraper as lyricsScraper_darklyri
 from lib.culrcscrapers.genius import lyricsScraper as lyricsScraper_genius
 from lib.culrcscrapers.gomaudio import lyricsScraper as lyricsScraper_gomaudio
 from lib.culrcscrapers.lyricscom import lyricsScraper as lyricsScraper_lyricscom
+from lib.culrcscrapers.lyricsify import lyricsScraper as lyricsScraper_lyricsify
 from lib.culrcscrapers.lyricsmode import lyricsScraper as lyricsScraper_lyricsmode
 from lib.culrcscrapers.minilyrics import lyricsScraper as lyricsScraper_minilyrics
 from lib.culrcscrapers.music163 import lyricsScraper as lyricsScraper_music163
-from lib.culrcscrapers.lyricsify import lyricsScraper as lyricsScraper_lyricsify
+from lib.culrcscrapers.musixmatch import lyricsScraper as lyricsScraper_musixmatch
 
 FAILED = []
 
@@ -193,6 +194,25 @@ def test_scrapers():
     else:
         FAILED.append('music163')
         log('FAILED: music163', debug=True)
+    if dialog.iscanceled():
+        return
+
+    # test musixmatch
+    dialog.update(88, LANGUAGE(32163) % 'musixmatch')
+    log('==================== musixmatch ====================', debug=True)
+    song = Song(opt=lyricssettings)
+    song.artist = 'Kate Bush'
+    song.title = 'Wuthering Heights'
+    st = time.time()
+    lyrics = lyricsScraper_musixmatch.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['musixmatch',tt])
+    if lyrics:
+        log(lyrics.lyrics, debug=True)
+    else:
+        FAILED.append('musixmatch')
+        log('FAILED: musixmatch', debug=True)
     if dialog.iscanceled():
         return
 
