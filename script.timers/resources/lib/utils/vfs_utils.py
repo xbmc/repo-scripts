@@ -2,6 +2,8 @@ import os
 import re
 
 import xbmc
+import xbmcaddon
+import xbmcgui
 import xbmcvfs
 from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
 
@@ -159,6 +161,19 @@ def get_media_type(path: str) -> str:
         return type
 
 
+def get_file_name(path: str) -> str:
+
+    if path.endswith("/"):
+        return None
+
+    m = re.match("^.*/([^/.]+)(\.[^\.]+)?$", "/%s" % path)
+    if not m:
+        return None
+
+    else:
+        return m.groups()[0]
+
+
 def get_file_extension(path: str) -> str:
 
     m = re.match("^.+(\.[^\.]+)$", path.lower())
@@ -186,25 +201,27 @@ def has_items_in_path(path: str) -> bool:
     return len(scan_item_paths(path, limit=1)) > 0
 
 
-def build_playlist(path: str) -> 'xbmc.PlayList':
+def build_playlist(path: str, label: str) -> 'xbmc.PlayList':
 
     if has_items_in_path(path):
         paths, type = get_files_and_type(path)
-        return convert_to_playlist(paths, type=type)
+        return convert_to_playlist(paths, type=type, label=label)
 
     else:
         type = get_media_type(path)
-        return convert_to_playlist([path], type=type)
+        return convert_to_playlist([path], type=type, label=label)
 
 
-def convert_to_playlist(paths: 'list[str]', type=VIDEO) -> 'xbmc.PlayList':
+def convert_to_playlist(paths: 'list[str]', type=VIDEO, label="") -> 'xbmc.PlayList':
 
-    _type_id = TYPES.index(type)
+    _type_id = TYPES.index(type or VIDEO)
     playlist = xbmc.PlayList(_type_id)
     playlist.clear()
 
     for path in paths:
-        playlist.add(path)
+        label = label if label and len(paths) == 1 else get_file_name(path)
+        li = xbmcgui.ListItem(label=label, path=path)
+        playlist.add(url=path, listitem=li)
 
     return playlist
 
@@ -346,3 +363,11 @@ def get_longest_common_path(files: 'list[str]') -> str:
                 return None
 
     return sep.join(longest_common_path) + sep if longest_common_path else None
+
+
+def get_asset_path(asset: str) -> str:
+
+    addon = xbmcaddon.Addon()
+    return os.path.join(xbmcvfs.translatePath(addon.getAddonInfo('path')),
+                        "resources",
+                        "assets", asset)

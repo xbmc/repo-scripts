@@ -31,11 +31,11 @@ class Player(xbmc.Player):
 
         def _save_resume(_timer: Timer) -> None:
 
-            for _type in player_utils.get_types_replaced_by_type(timer.s_mediatype):
+            for _type in player_utils.get_types_replaced_by_type(_timer.media_type):
 
                 _resume_status = self._getResumeStatus(_type)
                 if _timer.is_resuming_timer():
-                    _active_players = self.getActivePlayersWithPlaylist()
+                    _active_players = self.getActivePlayersWithPlaylist(type=_type)
                     if not _resume_status or _resume_status.isResuming():
                         self._resume_status[_type] = PlayerStatus(
                             _timer, state=_active_players[_type] if _type in _active_players else None)
@@ -61,30 +61,37 @@ class Player(xbmc.Player):
 
         _save_resume(timer)
 
-        files, type = self._getFilesAndType(
-            timer.s_path, type=timer.s_mediatype)
+        path, state_from_path = player_utils.parse_player_state_from_path(timer.path)
 
-        if self._isPlaying(files, type, repeat=player_utils.REPEAT_ALL if timer.b_repeat else player_utils.REPEAT_OFF):
+        files, type = self._getFilesAndType(
+            path, type=timer.media_type)
+
+        if self._isPlaying(files, type, repeat=player_utils.REPEAT_ALL if timer.repeat else player_utils.REPEAT_OFF):
             return
 
-        seektime = _get_delay_for_seektime(timer)
+        if state_from_path:
+            seektime = state_from_path.time
+        else:
+            seektime = _get_delay_for_seektime(timer)
 
         if type == PICTURE:
             beginSlide = files[(seektime // self._getSlideshowStaytime()) %
                                len(files)] if seektime else None
-            self._playSlideShow(path=timer.s_path,
-                                shuffle=timer.b_shuffle, beginSlide=beginSlide)
+            self._playSlideShow(path=path,
+                                shuffle=timer.shuffle, beginSlide=beginSlide)
 
         else:
-            playlist = self._buildPlaylist(files, type=type)
+            playlist = self._buildPlaylist(
+                paths=files, type=type, label=timer.label)
 
-            if timer.b_shuffle:
+            if timer.shuffle:
                 playlist.shuffle()
 
             self._playAV(playlist=playlist,
-                         seektime=seektime,
-                         repeat=player_utils.REPEAT_ALL if timer.b_repeat else player_utils.REPEAT_OFF,
-                         shuffled=timer.b_shuffle)
+                        startpos=state_from_path.position if state_from_path and state_from_path.position > 0 else 0,
+                        seektime=seektime,
+                        repeat=player_utils.REPEAT_ALL if timer.repeat else player_utils.REPEAT_OFF,
+                        shuffled=timer.shuffle)
 
     def _playAV(self, playlist: xbmc.PlayList, startpos=0, seektime=None, repeat=player_utils.REPEAT_OFF, shuffled=False, speed=1.0) -> None:
 
@@ -109,15 +116,15 @@ class Player(xbmc.Player):
     def _isPlaying(self, files, type, repeat=player_utils.REPEAT_OFF) -> bool:
 
         ap = self.getActivePlayersWithPlaylist(type)
-        return type in ap and files == list(map(lambda e: e["file"], ap[type].playlist)) and ap[type].repeat == repeat
+        return type in ap and files == [e["file"] for e in ap[type].playlist] and ap[type].repeat == repeat
 
     def _getFilesAndType(self, path: str, type=None) -> 'tuple[list[str],str]':
 
         return get_files_and_type(path)
 
-    def _buildPlaylist(self, paths: 'list[str]', type: str) -> 'xbmc.PlayList':
+    def _buildPlaylist(self, paths: 'list[str]', type: str, label: str) -> 'xbmc.PlayList':
 
-        return convert_to_playlist(paths, type)
+        return convert_to_playlist(paths=paths, type=type, label=label)
 
     def stopPlayer(self, type: str) -> 'player_utils.State':
 
@@ -152,13 +159,13 @@ class Player(xbmc.Player):
 
     def resumeFormerOrStop(self, timer: Timer) -> None:
 
-        if not timer.is_resuming_timer() or not self._resumeFormer(type=timer.s_mediatype, keep=False):
-            if timer.s_mediatype == PICTURE:
+        if not timer.is_resuming_timer() or not self._resumeFormer(type=timer.media_type, keep=False):
+            if timer.media_type == PICTURE:
                 self.stopPlayer(PICTURE)
             else:
                 self.stop()
 
-            self._reset(type=timer.s_mediatype)
+            self._reset(type=timer.media_type)
             xbmc.sleep(self._RESPITE)
 
         self.resetResumeOfTimer(timer)
@@ -177,13 +184,14 @@ class Player(xbmc.Player):
 
                 if not resumeState.isResuming():
                     xbmc.sleep(self._RESPITE)
-                    paths = list(
-                        map(lambda item: item["file"], state.playlist))
+                    paths = [item["file"] for item in state.playlist]
                     if self._isPlaying(files=paths, type=_type, repeat=state.repeat):
                         pass
 
                     elif _type in [VIDEO, AUDIO]:
-                        playlist = self._buildPlaylist(paths, type=state.type)
+                        label = state.playlist[state.position]["label"] if state.position < len(state.playlist) else ""
+                        playlist = self._buildPlaylist(
+                            paths=paths, type=state.type, label=label)
                         self._playAV(
                             playlist,
                             startpos=state.position,
@@ -224,7 +232,7 @@ class Player(xbmc.Player):
         typesToRemove = list()
         for type in self._resume_status:
             resumeState = self._getResumeStatus(type)
-            if resumeState and resumeState.getTimer().i_timer == timer.i_timer:
+            if resumeState and resumeState.getTimer().id == timer.id:
                 typesToRemove.append(type)
 
         for type in typesToRemove:
@@ -348,5 +356,5 @@ class Player(xbmc.Player):
 
     def _getNow(self) -> timedelta:
 
-        t_now, td_now = datetime_utils.get_now()
+        dt_now, td_now = datetime_utils.get_now()
         return td_now

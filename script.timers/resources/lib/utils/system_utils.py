@@ -18,6 +18,7 @@ def set_windows_unlock(value: bool) -> bool:
     if xbmc.getCondVisibility("system.platform.windows"):
         import ctypes
         ctypes.windll.kernel32.SetThreadExecutionState(
-            0x80000002 if value else 0x80000000)
+            0x80000002 if value else 0x80000000
+        )
 
     return value

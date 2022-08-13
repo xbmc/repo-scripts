@@ -1,4 +1,5 @@
 import json
+import time
 
 import xbmc
 
@@ -14,7 +15,7 @@ def json_rpc(jsonmethod: str, params=None) -> dict:
         params = {}
 
     kodi_json["params"] = params
-    kodi_json["id"] = 1
+    kodi_json["id"] = int(time.time() * 1000)
 
     json_response = xbmc.executeJSONRPC(json.dumps(kodi_json))
     json_object = json.loads(json_response)
