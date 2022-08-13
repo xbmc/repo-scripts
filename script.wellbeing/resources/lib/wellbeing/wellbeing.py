@@ -7,11 +7,25 @@ import xbmcaddon
 import xbmcgui
 import xbmcvfs
 
+from resources.lib.wellbeing.player import Player
+
 CHECK_INTERVAL = 10
 
 OFF = 0
 AUDIO_VIDEO = 1
 VIDEO = 2
+
+NOTIFY_OFF = 0
+NOTIFY_1M = 1
+NOTIFY_5M = 2
+NOTIFY_15M = 3
+NOTIFY_HOURLY = 4
+
+TIME_1M = 60
+TIME_5M = 300
+TIME_15M = 900
+TIME_1H = 3600
+TIME_2H = 7200
 
 
 class Wellbeing(xbmc.Monitor):
@@ -32,12 +46,14 @@ class Wellbeing(xbmc.Monitor):
     _restfrom = list()
     _restto = list()
 
+    _notification = NOTIFY_HOURLY
+
     _password = ""
 
     def __init__(self) -> None:
 
         self._addon = xbmcaddon.Addon()
-        self._player = xbmc.Player()
+        self._player = Player()
 
         self._icon = os.path.join(xbmcvfs.translatePath(self._addon.getAddonInfo('path')),
                                   "resources",
@@ -68,6 +84,8 @@ class Wellbeing(xbmc.Monitor):
         self._restfrom = restfrom
         self._restto = restto
 
+        self._notification = self._addon.getSettingInt("notification")
+
         self._wday = time.localtime().tm_wday
         self._ignoreLimit = False
         self._ignoreRestPeriod = -1
@@ -77,10 +95,12 @@ class Wellbeing(xbmc.Monitor):
         self._limitation = self._addon.getSettingInt("limitation")
         if self._limitation != OFF:
             left = self._get_time_left(time.localtime())
+            s1 = self._addon.getLocalizedString(32040) % (self._format_seconds(self._sum + 59),
+                                                          self._addon.getLocalizedString(32013 if self._limitation == VIDEO else 32012))
+            s2 = self._addon.getLocalizedString(
+                32041) % self._format_seconds(left)
             xbmcgui.Dialog().notification(self._addon.getLocalizedString(
-                32000), self._addon.getLocalizedString(32040) % (self._format_seconds(left),
-                                                                 self._addon.getLocalizedString(32013 if self._limitation == VIDEO else 32012)),
-                icon=self._icon)
+                32000), "%s. %s" % (s1, s2), icon=self._icon)
 
     def _notify(self, msgId):
 
@@ -96,11 +116,11 @@ class Wellbeing(xbmc.Monitor):
     def _timeformat_to_seconds(self, stime: str) -> int:
 
         hh_mm = stime.split(":")
-        return int(hh_mm[0]) * 3600 + int(hh_mm[1]) * 60
+        return int(hh_mm[0]) * TIME_1H + int(hh_mm[1]) * TIME_1M
 
     def _format_seconds(self, secs: int) -> str:
 
-        return "%02i:%02i" % (secs // 3600, (secs % 3600) // 60)
+        return "%02i:%02i" % (secs // TIME_1H, (secs % TIME_1H) // TIME_1M)
 
     def _stopAndAskForReactivation(self) -> bool:
 
@@ -125,23 +145,30 @@ class Wellbeing(xbmc.Monitor):
 
         self._sum += _interval
 
-        if self._ignoreLimit:
-            return
-
         left = self._get_time_left(t_now)
-        if left > 900 - _interval and left <= 900:
-            self._notify(32031)
-
-        elif left > 300 - _interval and left <= 300:
-            self._notify(32032)
-
-        elif left > 60 - _interval and left <= 60:
-            self._notify(32033)
-
-        elif left <= 0:
+        if not self._ignoreLimit and left <= 0:
             self._notify(32034)
             if self._stopAndAskForReactivation():
                 self._ignoreLimit = True
+
+        elif self._notification >= NOTIFY_1M and left > TIME_1M - _interval and left <= TIME_1M:
+            self._notify(32033)
+
+        elif self._notification >= NOTIFY_5M and left > TIME_5M - _interval and left <= TIME_5M:
+            self._notify(32032)
+
+        elif self._notification >= NOTIFY_15M and left > TIME_15M - _interval and left <= TIME_15M:
+            self._notify(32031)
+
+        elif self._notification == NOTIFY_HOURLY and self._sum % TIME_1H < _interval:
+            s1 = self._addon.getLocalizedString(32040) % (self._format_seconds(self._sum + 59 - _interval),
+                                                          self._addon.getLocalizedString(32013 if self._limitation == VIDEO else 32012))
+
+            s2 = self._addon.getLocalizedString(32041) % self._format_seconds(
+                left) if left <= TIME_2H and not self._ignoreLimit else ""
+
+            xbmcgui.Dialog().notification(self._addon.getLocalizedString(
+                32000), "%s. %s" % (s1, s2), icon=self._icon)
 
     def _handleRestPeriod(self, t_now: time.struct_time) -> None:
 
@@ -150,7 +177,7 @@ class Wellbeing(xbmc.Monitor):
             self._notify(32080)
             return self._stopAndAskForReactivation()
 
-        min_in_day = t_now.tm_min * 60 + t_now.tm_hour * 3600
+        min_in_day = t_now.tm_min * TIME_1M + t_now.tm_hour * TIME_1H
         if (self._restperiods[t_now.tm_wday] and min_in_day >= self._restfrom[self._wday] and self._ignoreRestPeriod != t_now.tm_wday * 2 + 1):
 
             if (self._restperiods[t_now.tm_wday] == AUDIO_VIDEO
@@ -180,7 +207,8 @@ class Wellbeing(xbmc.Monitor):
 
             _interval = CHECK_INTERVAL - t_now.tm_sec % CHECK_INTERVAL
 
-            if self._getPlayer().isPlaying():
+            _player = self._getPlayer()
+            if _player.isPlaying() and not _player.isPaused():
                 self._handleRestPeriod(t_now)
                 self._handleLimit(t_now, _interval)
 
@@ -189,7 +217,7 @@ class Wellbeing(xbmc.Monitor):
 
         self.saveUsageToSettings()
 
-    def _getPlayer(self) -> xbmc.Player:
+    def _getPlayer(self) -> Player:
 
         return self._player
 
