@@ -1,3 +1,5 @@
+3.0.2
++ Use "is_alive" instead of "is_Alive" that doesn't exists
 3.0.1
 + Use "is_Alive" instead of deprecated isAlive
 3.0.0
