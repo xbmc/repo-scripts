@@ -232,10 +232,6 @@ msgctxt "#30026"
 msgid "Scene Created"
 msgstr "Szene erstellt"
 
-msgctxt "#30027"
-msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"
-msgstr "Soll diese Szene sicher gelöscht werden:[CR][B]{scene[1]}[/B]"
-
 msgctxt "#30028"
 msgid "Delete Hue Scene"
 msgstr "Hue-Szene löschen"
@@ -247,10 +243,6 @@ msgstr "Szenen-Namen eingeben"
 msgctxt "#30031"
 msgid "Transition Time:"
 msgstr "Überblendzeit:"
-
-msgctxt "#30033"
-msgid "{} secs."
-msgstr "{} sek."
 
 msgctxt "#30034"
 msgid "Cancel"
@@ -520,13 +512,9 @@ msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
 msgstr "Hue Bridge V1 (rund) wird nicht unterstützt. Hue Bridge V2 (quadratisch) wird benötigt."
 
-msgctxt "#30003"
-msgid "Bridge API: {api_version}, update your bridge"
-msgstr "Bridge-API: {api_version}, Bridge aktualisieren"
-
 msgctxt "#30012"
-msgid "Unknown colour gamut for light {light}"
-msgstr "Unbekannter Farbumfang für Licht {light}"
+msgid "Unknown colour gamut for light:"
+msgstr ""
 
 msgctxt "#30016"
 msgid "Report errors"
@@ -555,6 +543,30 @@ msgstr ""
 msgctxt "#30009"
 msgid "Connecting..."
 msgstr ""
+
+msgctxt "#30027"
+msgid "Are you sure you want to delete this scene:"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Bridge outdated. Please update your bridge."
+msgstr ""
+
+#~ msgctxt "#30027"
+#~ msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"
+#~ msgstr "Soll diese Szene sicher gelöscht werden:[CR][B]{scene[1]}[/B]"
+
+#~ msgctxt "#30033"
+#~ msgid "{} secs."
+#~ msgstr "{} sek."
+
+#~ msgctxt "#30003"
+#~ msgid "Bridge API: {api_version}, update your bridge"
+#~ msgstr "Bridge-API: {api_version}, Bridge aktualisieren"
+
+#~ msgctxt "#30012"
+#~ msgid "Unknown colour gamut for light {light}"
+#~ msgstr "Unbekannter Farbumfang für Licht {light}"
 
 #~ msgctxt "#30059"
 #~ msgid "Light Gamut:"

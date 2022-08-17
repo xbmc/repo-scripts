@@ -8,7 +8,7 @@ import datetime
 import xbmc
 import xbmcgui
 
-from resources.lib import ADDON, hue
+from resources.lib import ADDON
 from resources.lib.language import get_string as _
 
 
@@ -24,8 +24,7 @@ def _validate_ambilight():
         if light_ids == "-1":
             ADDON.setSettingBool("group3_enabled", False)
             xbmc.log("[script.service.hue] No ambilights selected")
-            hue.notification(_("Hue Service"), _("No lights selected for Ambilight."), icon=xbmcgui.NOTIFICATION_ERROR)
-
+            notification(_("Hue Service"), _("No lights selected for Ambilight."), icon=xbmcgui.NOTIFICATION_ERROR)
 
 
 def _validate_schedule():
@@ -38,10 +37,14 @@ def _validate_schedule():
         except ValueError as e:
             ADDON.setSettingBool("EnableSchedule", False)
             xbmc.log(f"[script.service.hue] Invalid time settings: {e}")
-            hue.notification(_("Hue Service"), _("Invalid start or end time, schedule disabled"), icon=xbmcgui.NOTIFICATION_ERROR)
+            notification(_("Hue Service"), _("Invalid start or end time, schedule disabled"), icon=xbmcgui.NOTIFICATION_ERROR)
 
 
 def convert_time(time):
     hour = int(time.split(":")[0])
     minute = int(time.split(":")[1])
     return datetime.time(hour, minute)
+
+
+def notification(header, message, time=5000, icon=ADDON.getAddonInfo('icon'), sound=False):
+    xbmcgui.Dialog().notification(header, message, icon, time, sound)

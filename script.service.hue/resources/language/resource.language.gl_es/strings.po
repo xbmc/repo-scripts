@@ -232,10 +232,6 @@ msgctxt "#30026"
 msgid "Scene Created"
 msgstr ""
 
-msgctxt "#30027"
-msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"
-msgstr ""
-
 msgctxt "#30028"
 msgid "Delete Hue Scene"
 msgstr ""
@@ -246,10 +242,6 @@ msgstr ""
 
 msgctxt "#30031"
 msgid "Transition Time:"
-msgstr ""
-
-msgctxt "#30033"
-msgid "{} secs."
 msgstr ""
 
 msgctxt "#30034"
@@ -520,12 +512,8 @@ msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
 msgstr ""
 
-msgctxt "#30003"
-msgid "Bridge API: {api_version}, update your bridge"
-msgstr ""
-
 msgctxt "#30012"
-msgid "Unknown colour gamut for light {light}"
+msgid "Unknown colour gamut for light:"
 msgstr ""
 
 msgctxt "#30016"
@@ -554,4 +542,12 @@ msgstr ""
 
 msgctxt "#30009"
 msgid "Connecting..."
+msgstr ""
+
+msgctxt "#30027"
+msgid "Are you sure you want to delete this scene:"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Bridge outdated. Please update your bridge."
 msgstr ""
