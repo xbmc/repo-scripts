@@ -10,7 +10,7 @@
         <description lang="en">Module providing some AutoCompletion functions</description>
         <platform>all</platform>
         <license>GPL-2.0-or-later</license>
-        <source>https://github.com/sualfred/script.module.autocompletion</source>
+        <source>https://github.com/finkleandeinhorn/script.module.autocompletion</source>
         <assets>
             <icon>icon.png</icon>
         </assets>
