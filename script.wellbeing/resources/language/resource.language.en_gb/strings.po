@@ -130,7 +130,27 @@ msgid "Reactivation for today successful"
 msgstr ""
 
 msgctxt "#32040"
-msgid "%s left today for playing %s"
+msgid "%s %s played today"
+msgstr ""
+
+msgctxt "#32041"
+msgid "%s left"
+msgstr ""
+
+msgctxt "#32042"
+msgid "hourly"
+msgstr ""
+
+msgctxt "#32043"
+msgid "15 minutes before limit will be reached"
+msgstr ""
+
+msgctxt "#32044"
+msgid "5 minutes before limit will be reached"
+msgstr ""
+
+msgctxt "#32045"
+msgid "1 minute before limit will be reached"
 msgstr ""
 
 msgctxt "#32050"

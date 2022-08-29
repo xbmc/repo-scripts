@@ -67,6 +67,22 @@
           </control>
         </setting>
       </group>
+      <group id="g_notification" label="32015">
+        <setting id="notification" type="integer" label="32015" help="">
+          <level>0</level>
+          <default>4</default>
+          <constraints>
+            <options>
+              <option label="32030">0</option>
+              <option label="32045">1</option>
+              <option label="32044">2</option>
+              <option label="32043">3</option>
+              <option label="32042">4</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+      </group>
     </category>
     <category id="c_restperiods" label="32050" help="">
       <group id="g_mondaynight" label="32065">

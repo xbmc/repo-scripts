@@ -31,7 +31,7 @@ msgstr "... um Zugriff auf diese Einstellungen zu verhindern."
 
 msgctxt "#32010"
 msgid "Access"
-msgstr "Zugang"
+msgstr "Freigabe"
 
 msgctxt "#32011"
 msgid "Limit"
@@ -130,8 +130,28 @@ msgid "Reactivation for today successful"
 msgstr "Freischaltung für heute erfolgt"
 
 msgctxt "#32040"
-msgid "%s left today for playing %s"
-msgstr "Heute verbleiben %s zur Wiedergabe von %s"
+msgid "%s %s played today"
+msgstr "Heute %s %s gespielt"
+
+msgctxt "#32041"
+msgid "%s left"
+msgstr "Es verbleiben %s"
+
+msgctxt "#32042"
+msgid "hourly"
+msgstr "stündlich"
+
+msgctxt "#32043"
+msgid "15 minutes before limit will be reached"
+msgstr "15 Minuten bevor Limit erreicht ist"
+
+msgctxt "#32044"
+msgid "5 minutes before limit will be reached"
+msgstr "5 Minuten bevor Limit erreicht ist"
+
+msgctxt "#32045"
+msgid "1 minute before limit will be reached"
+msgstr "1 Minute bevor Limit erreicht ist"
 
 msgctxt "#32050"
 msgid "Rest period"
