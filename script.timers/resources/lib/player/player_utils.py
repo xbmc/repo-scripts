@@ -1,13 +1,12 @@
-import os
-
 import xbmc
 import xbmcaddon
 import xbmcgui
-import xbmcvfs
-from resources.lib.player.mediatype import AUDIO, PICTURE, VIDEO
-from resources.lib.timer.timer import Timer
+from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
+from resources.lib.timer import storage
 from resources.lib.utils.jsonrpc_utils import json_rpc
-from resources.lib.utils.vfs_utils import build_playlist, is_script
+from resources.lib.utils.vfs_utils import (build_playlist, convert_to_playlist,
+                                           get_asset_path, get_files_and_type,
+                                           get_longest_common_path, is_script)
 
 REPEAT_OFF = "off"
 REPEAT_ONE = "one"
@@ -29,26 +28,21 @@ class State():
 
 def preview(addon: xbmcaddon.Addon, timerid: int, player: 'xbmc.Player') -> None:
 
-    addon_dir = xbmcvfs.translatePath(addon.getAddonInfo('path'))
-
-    timer = Timer.init_from_settings(timerid)
+    timer = storage.load_timer_from_storage(timerid)
 
     if timer._is_playing_media_timer():
-        icon_file = os.path.join(
-            addon_dir, "resources", "assets", "icon.png")
 
-        xbmcgui.Dialog().notification(addon.getLocalizedString(
-            32027), addon.getLocalizedString(32110) % addon.getLocalizedString(32004 + timerid),
-            icon=icon_file)
+        xbmcgui.Dialog().notification(addon.getLocalizedString(32027), timer.label,
+                                      icon=get_asset_path("icon.png"))
 
-        if is_script(timer.s_path):
-            run_addon(timer.s_path)
+        if is_script(timer.path):
+            run_addon(timer.path)
 
-        elif timer.s_mediatype == PICTURE:
-            play_slideshow(timer.s_path, shuffle=timer.b_shuffle)
+        elif timer.media_type == PICTURE:
+            play_slideshow(timer.path, shuffle=timer.shuffle)
 
         else:
-            playlist = build_playlist(timer.s_path)
+            playlist = build_playlist(path=timer.path, label=timer.label)
             player.play(playlist)
 
     else:
@@ -131,13 +125,21 @@ def get_active_players_with_playlist(type=None) -> 'dict[str, State]':
         }
         return json_rpc("Playlist.GetItems", _params)
 
+    def _get_player_item(playListID: int) -> dict:
+
+        _params = [playListID, ["file"]]
+        return json_rpc("Player.GetItem", _params)
+
     result = dict()
 
     _activePlayers = get_active_players()
-    if type and type in _activePlayers:
-        _activePlayers = {
-            type: _activePlayers[type]
-        }
+    if type:
+        if type in _activePlayers:
+            _activePlayers = {
+                type: _activePlayers[type]
+            }
+        else:
+            return result
 
     for _type in _activePlayers:
         _playerId = _activePlayers[_type]
@@ -148,11 +150,13 @@ def get_active_players_with_playlist(type=None) -> 'dict[str, State]':
             _playList = {
                 "items": []
             }
-            if xbmc.Player().isPlaying():
+            _player = xbmc.Player()
+            if _player.isPlaying():
+                _item = _get_player_item(_playerId)
                 _playList["items"].append(
                     {
-                        "label": None,
-                        "file": xbmc.Player().getPlayingFile()
+                        "label": _item["item"]["label"],
+                        "file": _player.getPlayingFile()
                     })
 
         state = State()
@@ -237,3 +241,42 @@ def get_types_replaced_by_type(type: str) -> 'list[str]':
 
     else:
         return []
+
+
+def add_player_state_to_path(state: State) -> str:
+
+    paths = [item["file"] for item in state.playlist]
+    longest_common_path = get_longest_common_path(paths)
+    playing_file = xbmc.Player().getPlayingFile()
+    if len(paths) > 1 and playing_file:
+        files, type = get_files_and_type(longest_common_path)
+        state.position = files.index(playing_file)
+
+    return "%s#%i|%i" % (longest_common_path, state.position, state.time)
+
+
+def parse_player_state_from_path(path: str, label="") -> 'tuple[str,State]':
+
+    if "#" not in path:
+        return path, None
+
+    try:
+        i = path.rindex("#")
+        real_path = path[:i]
+        paths, type = get_files_and_type(real_path)
+        params = path[i+1:].split("|")
+
+        state = State()
+        state.playerId = TYPES.index(type)
+        state.type = type
+        state.playlistId = TYPES.index(type)
+        state.playlist = convert_to_playlist(
+            paths=paths, type=type, label=label)
+
+        state.position = int(params[0])
+        state.time = int(params[1])
+
+        return real_path, state
+
+    except:
+        return path, None

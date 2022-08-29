@@ -17,8 +17,16 @@ msgctxt "#32000"
 msgid "Timers"
 msgstr ""
 
+msgctxt "#32001"
+msgid "Pause"
+msgstr ""
+
 msgctxt "#32002"
 msgid "Extras"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Misc"
 msgstr ""
 
 msgctxt "#32004"
@@ -27,70 +35,6 @@ msgstr ""
 
 msgctxt "#32005"
 msgid "Snooze timer"
-msgstr ""
-
-msgctxt "#32006"
-msgid "Timer 1"
-msgstr ""
-
-msgctxt "#32007"
-msgid "Timer 2"
-msgstr ""
-
-msgctxt "#32008"
-msgid "Timer 3"
-msgstr ""
-
-msgctxt "#32009"
-msgid "Timer 4"
-msgstr ""
-
-msgctxt "#32010"
-msgid "Timer 5"
-msgstr ""
-
-msgctxt "#32011"
-msgid "Timer 6"
-msgstr ""
-
-msgctxt "#32012"
-msgid "Timer 7"
-msgstr ""
-
-msgctxt "#32013"
-msgid "Timer 8"
-msgstr ""
-
-msgctxt "#32014"
-msgid "Timer 9"
-msgstr ""
-
-msgctxt "#32015"
-msgid "Timer 10"
-msgstr ""
-
-msgctxt "#32016"
-msgid "Timer 11"
-msgstr ""
-
-msgctxt "#32017"
-msgid "Timer 12"
-msgstr ""
-
-msgctxt "#32018"
-msgid "Timer 13"
-msgstr ""
-
-msgctxt "#32019"
-msgid "Timer 14"
-msgstr ""
-
-msgctxt "#32020"
-msgid "Timer 15"
-msgstr ""
-
-msgctxt "#32021"
-msgid "Edit"
 msgstr ""
 
 msgctxt "#32022"
@@ -102,7 +46,7 @@ msgid "Apply"
 msgstr ""
 
 msgctxt "#32024"
-msgid "%s at %s until %s"
+msgid "until"
 msgstr ""
 
 msgctxt "#32025"
@@ -117,16 +61,8 @@ msgctxt "#32027"
 msgid "Timers"
 msgstr ""
 
-msgctxt "#32028"
-msgid "Update succeeded"
-msgstr ""
-
-msgctxt "#32030"
-msgid "General"
-msgstr ""
-
-msgctxt "#32031"
-msgid "Preset volume"
+msgctxt "#32029"
+msgid "Timer deleted"
 msgstr ""
 
 msgctxt "#32032"
@@ -134,7 +70,7 @@ msgid "Prevent lock screen"
 msgstr ""
 
 msgctxt "#32033"
-msgid "Execution"
+msgid "Presets for sleep timer"
 msgstr ""
 
 msgctxt "#32034"
@@ -142,7 +78,7 @@ msgid "off"
 msgstr ""
 
 msgctxt "#32035"
-msgid "once"
+msgid "every day"
 msgstr ""
 
 msgctxt "#32036"
@@ -151,6 +87,22 @@ msgstr ""
 
 msgctxt "#32037"
 msgid "Days"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Presets for snooze timer"
+msgstr ""
+
+msgctxt "#32040"
+msgid "and"
+msgstr ""
+
+msgctxt "#32041"
+msgid "at"
+msgstr ""
+
+msgctxt "#32042"
+msgid "from"
 msgstr ""
 
 msgctxt "#32060"
@@ -257,6 +209,10 @@ msgctxt "#32090"
 msgid "Volume"
 msgstr ""
 
+msgctxt "#32092"
+msgid "Default volume"
+msgstr ""
+
 msgctxt "#32091"
 msgid "Fading"
 msgstr ""
@@ -286,7 +242,7 @@ msgid "Timer ended"
 msgstr ""
 
 msgctxt "#32102"
-msgid "Open settings ..."
+msgid "Open settings"
 msgstr ""
 
 msgctxt "#32103"
@@ -306,19 +262,15 @@ msgid "Enter duration"
 msgstr ""
 
 msgctxt "#32107"
-msgid "Confirm %s"
+msgid "Confirm timer"
 msgstr ""
 
 msgctxt "#32108"
-msgid "play now"
+msgid "Play now"
 msgstr ""
 
 msgctxt "#32109"
 msgid "Media not set. Nothing to play."
-msgstr ""
-
-msgctxt "#32110"
-msgid "Play %s"
 msgstr ""
 
 msgctxt "#32111"
@@ -337,20 +289,12 @@ msgctxt "#32114"
 msgid "Select media and set timer via context menu first."
 msgstr ""
 
-msgctxt "#32115"
-msgid "No free timer slots."
-msgstr ""
-
-msgctxt "#32116"
-msgid "Quick %s"
-msgstr ""
-
 msgctxt "#32117"
 msgid "Quick Timer"
 msgstr ""
 
 msgctxt "#32118"
-msgid "Selected item is not supported."
+msgid "Selected item is not supported. Would you like to open settings?"
 msgstr ""
 
 msgctxt "#32120"
@@ -473,6 +417,50 @@ msgctxt "#32155"
 msgid "120 min"
 msgstr ""
 
+msgctxt "#32160"
+msgid "Pause timers"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Date"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Time"
+msgstr ""
+
+msgctxt "#32163"
+msgid "Set pause for ..."
+msgstr ""
+
+msgctxt "#32164"
+msgid "Reset Pause"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Pause until %s"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Pause ended"
+msgstr ""
+
+msgctxt "#32167"
+msgid "Pause until"
+msgstr ""
+
+msgctxt "#32168"
+msgid "Pause from"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Offset"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Offset for timers in seconds"
+msgstr ""
+
 msgctxt "#32200"
 msgid "Monday"
 msgstr ""
@@ -502,29 +490,197 @@ msgid "Sunday"
 msgstr ""
 
 msgctxt "#32210"
-msgid "Mon"
+msgid "Mondays"
 msgstr ""
 
 msgctxt "#32211"
-msgid "Tue"
+msgid "Tuedays"
 msgstr ""
 
 msgctxt "#32212"
-msgid "Wed"
+msgid "Wednesdays"
 msgstr ""
 
 msgctxt "#32213"
-msgid "Thu"
+msgid "Thursdays"
 msgstr ""
 
 msgctxt "#32214"
-msgid "Fri"
+msgid "Fridays"
 msgstr ""
 
 msgctxt "#32215"
-msgid "Sat"
+msgid "Saturdays"
 msgstr ""
 
 msgctxt "#32216"
-msgid "Sun"
+msgid "Sundays"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Add timer"
+msgstr ""
+
+msgctxt "#32251"
+msgid "View / Edit timer ..."
+msgstr ""
+
+msgctxt "#32252"
+msgid "Remove timer ..."
+msgstr ""
+
+msgctxt "#32253"
+msgid "Save changes"
+msgstr ""
+
+msgctxt "#32254"
+msgid "Back"
+msgstr ""
+
+msgctxt "#32255"
+msgid "Edit timer"
+msgstr ""
+
+msgctxt "#32256"
+msgid "Timer"
+msgstr ""
+
+msgctxt "#32257"
+msgid "New timer"
+msgstr ""
+
+msgctxt "#32258"
+msgid "No timers to select."
+msgstr ""
+
+msgctxt "#32270"
+msgid "Timer is ending with system action:"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Do you want to skip system action?"
+msgstr ""
+
+msgctxt "#32272"
+msgid "Continue"
+msgstr ""
+
+msgctxt "#32273"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Opens a dialog where you can enter a duration for pause from now."
+msgstr ""
+
+msgctxt "#32301"
+msgid "Ends the pause period by setting date and time in the past."
+msgstr ""
+
+msgctxt "#32302"
+msgid "Date until the timer is paused."
+msgstr ""
+
+msgctxt "#32303"
+msgid "Time until the timer is paused."
+msgstr ""
+
+msgctxt "#32310"
+msgid "Default volume that is set after fading timer has endet or by pressing 'reset volume'."
+msgstr ""
+
+msgctxt "#32311"
+msgid "Set default volume now."
+msgstr ""
+
+msgctxt "#32320"
+msgid "If a media playing timer starts late since Kodi was not running or timers were paused, the scheduler seeks to position of playlist that would have been already played if timer has started in time."
+msgstr ""
+
+msgctxt "#32325"
+msgid "Set an offset in order to perform timers ahead of time (< 0) or later in time (> 0)."
+msgstr ""
+
+msgctxt "#32330"
+msgid "Display name of the timer that is displayed in notifications and context menu."
+msgstr ""
+
+msgctxt "#32331"
+msgid "Select one or more days in order to scheduler the timer. If you select 'weekly' the timer is repeated every week."
+msgstr ""
+
+msgctxt "#32332"
+msgid "Enter the starting time of the timer."
+msgstr ""
+
+msgctxt "#32333"
+msgid "Select if the timer stops after a specific time, after a given duration or has no end."
+msgstr ""
+
+msgctxt "#32334"
+msgid "Enter the ending time of the timer."
+msgstr ""
+
+msgctxt "#32335"
+msgid "Enter the duration after the timer ends."
+msgstr ""
+
+msgctxt "#32340"
+msgid "Select the media action of the timer. Note that you must add a media to the timer by utilizing the context menu first."
+msgstr ""
+
+msgctxt "#32341"
+msgid "If activated the media item or playlist is repeated by setting the 'repeat all' option of the player."
+msgstr ""
+
+msgctxt "#32342"
+msgid "If activated the playlist is shuffeled by setting the 'shuffle' option of the player."
+msgstr ""
+
+msgctxt "#32343"
+msgid "If activated the timer resumes the media that was interupted when the timer has started."
+msgstr ""
+
+msgctxt "#32344"
+msgid "Play media of the timer now in order to test it."
+msgstr ""
+
+msgctxt "#32350"
+msgid "Fade in or fade out volume in period of timer."
+msgstr ""
+
+msgctxt "#32351"
+msgid "Low volume of fading timer."
+msgstr ""
+
+msgctxt "#32352"
+msgid "High volume of fading timer."
+msgstr ""
+
+msgctxt "#32360"
+msgid "System action that is performed after timer has finished."
+msgstr ""
+
+msgctxt "#32370"
+msgid "Display notifications when timer starts and ends."
+msgstr ""
+
+msgctxt "#32380"
+msgid "Click here in order to add a new timer. Note that media timer must be configured via context menu."
+msgstr ""
+
+msgctxt "#32381"
+msgid "Click here in order to display and edit an existing timer."
+msgstr ""
+
+msgctxt "#32382"
+msgid "Click here in order to delete an existing timer."
+msgstr ""
+
+msgctxt "#32383"
+msgid "Deactivate sleep display in window mode"
+msgstr ""
+
+msgctxt "#32384"
+msgid "Prevent lookscreen in MS Windows while Kodi is running"
 msgstr ""

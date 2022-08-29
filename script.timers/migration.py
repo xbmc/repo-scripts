@@ -1,9 +1,9 @@
 import xbmc
 import xbmcaddon
 
-from resources.lib.timer.scheduler import TIMERS
+from resources.lib.timer import storage
 from resources.lib.utils.settings_utils import (
-    activateOnSettingsChangedEvents, deactivateOnSettingsChangedEvents)
+    activate_on_settings_changed_events, deactivate_on_settings_changed_events)
 
 
 def migrate_from_1_to_2(addon: xbmcaddon.Addon) -> int:
@@ -11,16 +11,20 @@ def migrate_from_1_to_2(addon: xbmcaddon.Addon) -> int:
     xbmc.log(
         "[script.timers] migrate settings from early version to version 2", xbmc.LOGINFO)
 
-    for i in range(TIMERS):
-        i_schedule = addon.getSettingInt("timer_%i" % i)
-        if i_schedule == 25:
-            addon.setSettingInt("timer_%i" % i, 0)
-        elif i_schedule == 26:
-            addon.setSettingInt("timer_%i" % i, 17)
-        elif i_schedule >= 1 and i_schedule <= 15:
-            addon.setSettingInt("timer_%i" % i, i_schedule + 1)
-        elif i_schedule >= 16 and i_schedule <= 24:
-            addon.setSettingInt("timer_%i" % i, i_schedule + 2)
+    for i in range(17):
+        try:
+            i_schedule = int("0%s" % addon.getSetting("timer_%i" % i))
+            if i_schedule == 25:
+                addon.setSetting("timer_%i" % i, "0")
+            elif i_schedule == 26:
+                addon.setSetting("timer_%i" % i, "17")
+            elif i_schedule >= 1 and i_schedule <= 15:
+                addon.setSetting("timer_%i" % i, str(i_schedule + 1))
+            elif i_schedule >= 16 and i_schedule <= 24:
+                addon.setSetting("timer_%i" % i, str(i_schedule + 2))
+
+        except:
+            pass
 
     return 2
 
@@ -34,47 +38,50 @@ def migrate_from_2_to_3(addon: xbmcaddon.Addon) -> int:
         addon.setSetting("timer_%i_system_action" % timer, str(system_action))
         addon.setSetting("timer_%i_media_action" % timer, str(media_action))
 
-    for i in range(TIMERS):
+    for i in range(17):
+        try:
+            # splitting media and system actions
+            action = int("0%s" % addon.getSetting("timer_%i_action" % i))
+            if action == 0:
+                _migrate_action(i, 0, 0)
 
-        # splitting media and system actions
-        action = int("0%s" % addon.getSetting("timer_%i_action" % i))
-        if action == 0:
-            _migrate_action(i, 0, 0)
+            elif action == 1:
+                _migrate_action(i, 0, 1)
 
-        elif action == 1:
-            _migrate_action(i, 0, 1)
+            elif action == 2:
+                _migrate_action(i, 0, 2)
 
-        elif action == 2:
-            _migrate_action(i, 0, 2)
+            elif action == 3:
+                _migrate_action(i, 0, 3)
 
-        elif action == 3:
-            _migrate_action(i, 0, 3)
+            elif action == 4:
+                _migrate_action(i, 0, 5)
 
-        elif action == 4:
-            _migrate_action(i, 0, 5)
+            elif action == 5:
+                _migrate_action(i, 0, 6)
 
-        elif action == 5:
-            _migrate_action(i, 0, 6)
+            elif action == 6:
+                _migrate_action(i, 1, 0)
 
-        elif action == 6:
-            _migrate_action(i, 1, 0)
+            elif action == 7:
+                _migrate_action(i, 2, 0)
 
-        elif action == 7:
-            _migrate_action(i, 2, 0)
+            elif action == 8:
+                _migrate_action(i, 3, 0)
 
-        elif action == 8:
-            _migrate_action(i, 3, 0)
+            elif action == 9:
+                _migrate_action(i, 4, 0)
 
-        elif action == 9:
-            _migrate_action(i, 4, 0)
+            elif action == 10:
+                _migrate_action(i, 5, 0)
 
-        elif action == 10:
-            _migrate_action(i, 5, 0)
+            else:
+                xbmc.log(
+                    "[script.timers] Unknown action %s in former settings. Set no action at all." % str(action), xbmc.LOGWARNING)
+                _migrate_action(i, 0, 0)
 
-        else:
-            xbmc.log(
-                "[script.timers] Unknown action %s in former settings. Set no action at all." % str(action), xbmc.LOGWARNING)
-            _migrate_action(i, 0, 0)
+        except:
+            pass
 
     return 3
 
@@ -115,32 +122,83 @@ def migrate_from_3_to_4(addon: xbmcaddon.Addon) -> int:
 
     xbmc.log("[script.timers] migrate settings to version 4", xbmc.LOGINFO)
 
-    for i in range(TIMERS):
+    for i in range(17):
 
-        # rename filename -> path
-        path = addon.getSetting("timer_%i_filename" % i)
-        addon.setSetting("timer_%i_path" % i, path)
+        try:
+            # rename filename -> path
+            path = addon.getSetting("timer_%i_filename" % i)
+            addon.setSetting("timer_%i_path" % i, path)
 
-        # days: enum -> multiselect
-        schedule = int("0%s" % addon.getSetting("timer_%i" % i))
-        if schedule > 0:
-            days = "|".join([str(d) for d in TIMER_DAYS_PRESETS[schedule]])
-            if days and schedule > RANGE_ONCE_TIMERS:
-                days += "|7"
+            # days: enum -> multiselect
+            schedule = int("0%s" % addon.getSetting("timer_%i" % i))
+            if schedule > 0:
+                days = "|".join([str(d) for d in TIMER_DAYS_PRESETS[schedule]])
+                if days and schedule > RANGE_ONCE_TIMERS:
+                    days += "|7"
 
-            addon.setSetting("timer_%i_days" % i, days)
+                addon.setSetting("timer_%i_days" % i, days)
 
-        else:
-            addon.setSetting("timer_%i_days" % i, "")
+            else:
+                addon.setSetting("timer_%i_days" % i, "")
+
+        except:
+            pass
 
     return 4
+
+
+def migrate_from_4_to_5(addon: xbmcaddon.Addon) -> int:
+
+    def get_item_from_setting(timer_id: int) -> dict:
+
+        days = addon.getSetting("timer_%i_days" % timer_id)
+        if days:
+            days = [int(d) for d in days.split("|")]
+        else:
+            days = list()
+
+        return {
+            "days": days,
+            "duration": addon.getSetting("timer_%i_duration" % timer_id),
+            "end": addon.getSetting("timer_%i_end" % timer_id),
+            "end_type": int("0%s" % addon.getSetting("timer_%i_end_type" % timer_id)),
+            "fade": int("0%s" % addon.getSetting("timer_%i_fade" % timer_id)),
+            "id": timer_id,
+            "label": addon.getSetting("timer_%i_label" % timer_id),
+            "media_action": int("0%s" % addon.getSetting("timer_%i_media_action" % timer_id)),
+            "media_type": addon.getSetting("timer_%i_mediatype" % timer_id),
+            "notify": "true" == addon.getSetting("timer_%i_notify" % timer_id),
+            "path": addon.getSetting("timer_%i_path" % timer_id),
+            "repeat": "true" == addon.getSetting("timer_%i_repeat" % timer_id),
+            "resume": "true" == addon.getSetting("timer_%i_resume" % timer_id),
+            "shuffle": "true" == addon.getSetting("timer_%i_shuffle" % timer_id),
+            "start": addon.getSetting("timer_%i_start" % timer_id),
+            "system_action": int("0%s" % addon.getSetting("timer_%i_system_action" % timer_id)),
+            "vol_min": int("0%s" % addon.getSetting("timer_%i_vol_min" % timer_id)),
+            "vol_max": int("0%s" % addon.getSetting("timer_%i_vol_max" % timer_id))
+        }
+
+    xbmc.log("[script.timers] migrate settings to version 5", xbmc.LOGINFO)
+
+    _storage = list()
+    for i in range(17):
+        try:
+            item_from_setting = get_item_from_setting(i)
+            if item_from_setting["days"]:
+                _storage.append(item_from_setting)
+        except:
+            pass
+
+    storage._save_to_storage(storage=_storage)
+
+    return 5
 
 
 def migrate() -> None:
 
     addon = xbmcaddon.Addon()
 
-    deactivateOnSettingsChangedEvents()
+    deactivate_on_settings_changed_events()
 
     settingsVersion = addon.getSettingInt("settingsVersion")
 
@@ -153,5 +211,9 @@ def migrate() -> None:
     if settingsVersion == 3:
         settingsVersion = migrate_from_3_to_4(addon)
 
+    if settingsVersion == 4:
+        settingsVersion = migrate_from_4_to_5(addon)
+
     addon.setSettingInt("settingsVersion", settingsVersion)
-    activateOnSettingsChangedEvents()
+
+    activate_on_settings_changed_events()

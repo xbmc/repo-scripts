@@ -37,17 +37,17 @@ def get_pvr_channel_path(type: str, channelno: str) -> str:
 
         _result = json_rpc("PVR.GetChannels", {
             "channelgroupid": "all%s" % type, "properties": ["uniqueid", "clientid", "channelnumber"]})
-        channel = next(
-            filter(lambda c: c["channelnumber"] == channelno, _result["channels"]), None)
+        channels = [c for c in _result["channels"]
+                    if c["channelnumber"] == channelno]
 
-        if not channel:
+        if not channels:
             return None
 
-        pvrClient = list(filter(
-            lambda _c: _c["supportsepg"] == True and _c["clientid"] == channel["clientid"], pvrClients))[0]
+        pvrClient = [_c for _c in pvrClients if _c["supportsepg"]
+                     == True and _c["clientid"] == channels[0]["clientid"]][0]
 
-        if channelGroupAll and pvrClient and channel:
-            return _PLAY_PVR_URL_PATTERN % (type, parse.quote(channelGroupAll), pvrClient["addonid"], channel["uniqueid"])
+        if channelGroupAll and pvrClient and channels[0]:
+            return _PLAY_PVR_URL_PATTERN % (type, parse.quote(channelGroupAll), pvrClient["addonid"], channels[0]["uniqueid"])
 
     except:
         pass

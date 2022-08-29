@@ -1,16 +1,7 @@
 import migration
-from resources.lib.timer.scheduler import Scheduler
-from resources.lib.utils.system_utils import set_windows_unlock
+import service
 
 if __name__ == "__main__":
 
     migration.migrate()
-
-    scheduler = Scheduler()
-
-    try:
-        scheduler.start()
-
-    finally:
-        scheduler.resetPowermanagementDisplaysoff()
-        set_windows_unlock(False)
+    service.run()
