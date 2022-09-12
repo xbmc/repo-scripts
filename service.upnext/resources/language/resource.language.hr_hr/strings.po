@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: service.upnext\n"
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-01-14 01:30+0100\n"
-"Last-Translator: arvvoid\n"
+"PO-Revision-Date: 2021-10-16 15:00+0200\n"
+"Last-Translator: dsardelic\n"
 "Language-Team: Croatian\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 msgctxt "#30006"
 msgid "Watch Now"
-msgstr "Gledaj sada"
+msgstr "Gledaj sad"
 
 msgctxt "#30008"
 msgid "Up Next"
@@ -32,19 +32,19 @@ msgstr "Završava u: $INFO[Window.Property(endtime)]"
 
 msgctxt "#30010"
 msgid "Continue watching"
-msgstr "Nastavite gledati"
+msgstr "Nastavi gledati"
 
 msgctxt "#30024"
 msgid "Still there?"
-msgstr "Još uvijek si tu?"
+msgstr "Još uvijek ste tu?"
 
 msgctxt "#30032"
 msgid "Enable on playlists"
-msgstr "Omogući na popisima za reprodukciju"
+msgstr "Omogući na listama za reprodukciju"
 
 msgctxt "#30033"
 msgid "Stop"
-msgstr "Stop"
+msgstr "Zaustavi"
 
 msgctxt "#30034"
 msgid "Close"
@@ -52,15 +52,15 @@ msgstr "Zatvori"
 
 msgctxt "#30035"
 msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Nastavite gledati u [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunde"
+msgstr "Nastavite gledati za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekundi"
 
 msgctxt "#30036"
 msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Sljedeće u [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunde"
+msgstr "Sljedeće za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekundi"
 
 msgctxt "#30037"
 msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Sljedeća epizoda u [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunde"
+msgstr "Sljedeća epizoda za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekundi"
 
 msgctxt "#30038"
 msgid "Simple"
@@ -68,27 +68,27 @@ msgstr "Jednostavno"
 
 msgctxt "#30039"
 msgid "Fancy"
-msgstr "Složeno"
+msgstr "Otmjeno"
 
 msgctxt "#30040"
 msgid "Play next"
-msgstr "Reproduciraj"
+msgstr "Reproduciraj iduće"
 
 msgctxt "#30041"
 msgid "Stop playing"
-msgstr "Ne reproduciraj"
+msgstr "Zaustavi reprodukciju"
 
 msgctxt "#30042"
 msgid "None"
-msgstr "Nijedan"
+msgstr "Bez"
 
 msgctxt "#30043"
 msgid "Info"
-msgstr "Info"
+msgstr "Informativna"
 
 msgctxt "#30044"
 msgid "Debug"
-msgstr "Debug"
+msgstr "Debugiranje"
 
 msgctxt "#30049"
 msgid "Next Episode"
@@ -96,11 +96,11 @@ msgstr "Sljedeća epizoda"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]UKLJUČEN 'UP NEXT' DEMONSTRACIJSKI NAČIN RADA[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Epizode automatski preskaču na kraj.[/I]"
 
 
 # ## SETTINGS
@@ -114,11 +114,11 @@ msgstr "Značajke"
 
 msgctxt "#30503"
 msgid "Set the display mode for the notifications"
-msgstr "Postavite način prikaza za obavijesti"
+msgstr "Postavite način prikaza obavijesti"
 
 msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
-msgstr "Prikaži \"Zaustavi\" dugme umjesto \"Zatvori\" dugme"
+msgstr "Prikaži \"Zaustavi\" gumb umjesto \"Zatvori\" gumba"
 
 msgctxt "#30600"
 msgid "Behaviour"
@@ -134,19 +134,19 @@ msgstr "Zadana akcija kada ništa nije odabrano"
 
 msgctxt "#30605"
 msgid "Include already watched episodes"
-msgstr "Uključi gledane epizode"
+msgstr "Uključi već odgledane epizode"
 
 msgctxt "#30607"
 msgid "Number of episodes before \"Still there?\" query"
-msgstr "Broj epizoda prije upita dali još gledate"
+msgstr "Broj epizoda prije \"Jeste li još tu?\" upita"
 
 msgctxt "#30609"
 msgid "Duration in seconds for notification to be shown"
-msgstr "Broj sekundi prije kraja za prikaz obavijesti"
+msgstr "Trajanje u sekundama za prikaz obavijesti"
 
 msgctxt "#30611"
 msgid "Customize autoplay duration by episode length"
-msgstr "Prilagodba trajanja automatske reprodukcije po dužini epizode"
+msgstr "Prilagodi trajanje automatske reprodukcije duljini epizode"
 
 msgctxt "#30613"
 msgid "All episodes  [COLOR gray]any length[/COLOR]"
@@ -174,19 +174,19 @@ msgstr "Vrlo duge epizode  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30700"
 msgid "Expert"
-msgstr "Stručnjak"
+msgstr "Stručne"
 
 msgctxt "#30703"
 msgid "Disable Up Next"
-msgstr "Onemogući Up Next"
+msgstr "Onemogući 'Up Next'"
 
 msgctxt "#30705"
 msgid "Log level"
-msgstr "Razina zapisnika"
+msgstr "Razina logiranja"
 
 msgctxt "#30800"
 msgid "Developer"
-msgstr "Developer"
+msgstr "Razvojne"
 
 msgctxt "#30801"
 msgid "Test how the user interface looks"
@@ -194,7 +194,7 @@ msgstr "Testirajte kako izgleda korisničko sučelje"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Omogući demonstracijski način rada"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"

@@ -153,7 +153,7 @@ class PlaybackManager:
         self.log('played in a row %s' % self.state.played_in_a_row, 2)
         showing_next_up_page = False
         showing_still_watching_page = False
-        if int(self.state.played_in_a_row) <= int(played_in_a_row_number):
+        if not played_in_a_row_number or int(self.state.played_in_a_row) < int(played_in_a_row_number):
             self.log('showing next up page as played in a row is %s' % self.state.played_in_a_row, 2)
             next_up_page.show()
             set_property('service.upnext.dialog', 'true')

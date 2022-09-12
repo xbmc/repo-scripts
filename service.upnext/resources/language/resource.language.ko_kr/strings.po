@@ -96,11 +96,11 @@ msgstr "다음 에피소드"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]UP NEXT 데모모드 사용가능[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]자동으로 마지막으로 갑니다.[/I]"
 
 
 ### SETTINGS
@@ -194,7 +194,7 @@ msgstr "어떤 알림창을 테스트하시렵니까?"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "데모모드 사용"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
