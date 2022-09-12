@@ -8,8 +8,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2018-02-26 13:31+0000\n"
-"Last-Translator: im85288\n"
-"Language-Team: English\n"
+"Last-Translator: Sopor\n"
+"Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +24,7 @@ msgstr "Titta nu"
 
 msgctxt "#30008"
 msgid "Up Next"
-msgstr "Kommer strax"
+msgstr "Strax"
 
 msgctxt "#30009"
 msgid "Ends at: $INFO[Window.Property(endtime)]"
@@ -40,7 +40,7 @@ msgstr "Tittar du fortfarande?"
 
 msgctxt "#30032"
 msgid "Enable on playlists"
-msgstr "Aktiverad på spellistor"
+msgstr "Aktivera på spellistor"
 
 msgctxt "#30033"
 msgid "Stop"
@@ -52,11 +52,11 @@ msgstr "Stäng"
 
 msgctxt "#30035"
 msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Fortsätt titta om [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunder"
+msgstr "Fortsätt titta i [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunder"
 
 msgctxt "#30036"
 msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Kommer strax om [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunder"
+msgstr "Strax om [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekunder"
 
 msgctxt "#30037"
 msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
@@ -96,11 +96,11 @@ msgstr "Nästa avsnitt"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]UP NEXT DEMOLÄGE AKTIVERAT[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Avsnitten hoppar automatiskt till slutet.[/I]"
 
 
 ### SETTINGS
@@ -178,7 +178,7 @@ msgstr "Expert"
 
 msgctxt "#30703"
 msgid "Disable Up Next"
-msgstr "Inaktivera kommer strax"
+msgstr "Inaktivera Up Next"
 
 msgctxt "#30705"
 msgid "Log level"
@@ -194,20 +194,20 @@ msgstr "Testa hur användargränssnittet ser ut"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Aktivera DEMO-läge"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
-msgstr "Visa en popup för \"kommer strax\""
+msgstr "Visa en popup för UpNext…"
 
 msgctxt "#30807"
 msgid "Show an UpNextSimple pop-up…"
-msgstr "Visa en enkel popup för \"kommer strax\""
+msgstr "Visa en enkel popup för UpNext…"
 
 msgctxt "#30809"
 msgid "Show a StillWatching pop-up…"
-msgstr "Visa en popup för \"fortfarande tittar\""
+msgstr "Visa en popup för \"tittar du fortfarande\"…"
 
 msgctxt "#30811"
 msgid "Show a StillWatchingSimple pop-up…"
-msgstr "Visa en enkel popup för \"fortfarande tittar\""
+msgstr "Visa en enkel popup för \"tittar du fortfarande\"…"

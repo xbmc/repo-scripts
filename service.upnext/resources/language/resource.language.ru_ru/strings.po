@@ -24,7 +24,7 @@ msgstr "Смотреть сейчас"
 
 msgctxt "#30008"
 msgid "Up Next"
-msgstr "Up Next"
+msgstr "Далее"
 
 msgctxt "#30009"
 msgid "Ends at: $INFO[Window.Property(endtime)]"

@@ -213,7 +213,7 @@
                             <font>font_clock</font>
                             <shadowcolor>text_shadow</shadowcolor>
                             <top>0</top>
-                            <right>20</right>
+                            <right>24</right>
                             <height>200</height>
                             <width>600</width>
                             <align>right</align>
