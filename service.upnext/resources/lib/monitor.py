@@ -24,7 +24,7 @@ class UpNextMonitor(Monitor):
         """Log wrapper"""
         ulog(msg, name=self.__class__.__name__, level=level)
 
-    def run(self):
+    def run(self):  # pylint: disable=too-many-branches
         """Main service loop"""
         self.log('Service started', 0)
 
@@ -60,6 +60,15 @@ class UpNextMonitor(Monitor):
                 current_file = self.player.getPlayingFile()
             except RuntimeError:
                 self.log('Up Next tracking stopped, failed player.getPlayingFile()', 2)
+                self.player.disable_tracking()
+                self.playback_manager.demo.hide()
+                continue
+
+            if (current_file.startswith((
+                    'bluray://', 'dvd://', 'udf://', 'iso9660://', 'cdda://'))
+                    or current_file.endswith((
+                        '.bdmv', '.iso', '.ifo'))):
+                self.log('Up Next tracking stopped, Blu-ray/DVD/CD playing', 2)
                 self.player.disable_tracking()
                 self.playback_manager.demo.hide()
                 continue
@@ -116,3 +125,5 @@ class UpNextMonitor(Monitor):
         self.playback_manager.handle_demo()
         decoded_data.update(id='%s_play_action' % sender.replace('.SIGNAL', ''))
         self.api.addon_data_received(decoded_data, encoding=encoding)
+        self.player.enable_tracking()
+        self.player.reset_queue()

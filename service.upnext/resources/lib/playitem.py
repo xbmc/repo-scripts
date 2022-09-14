@@ -2,7 +2,7 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from __future__ import absolute_import, division, unicode_literals
-from xbmc import PlayList, PLAYLIST_VIDEO
+from xbmc import PlayList
 from api import Api
 from player import Player
 from state import State
@@ -21,11 +21,10 @@ class PlayItem:
     def log(self, msg, level=2):
         ulog(msg, name=self.__class__.__name__, level=level)
 
-    @staticmethod
-    def get_playlist_position():
+    def get_playlist_position(self):
         """Function to get current playlist playback position"""
 
-        playlist = PlayList(PLAYLIST_VIDEO)
+        playlist = PlayList(self.api.get_playlistid(playlistid_cache=[None]))
         position = playlist.getposition()
         # A playlist with only one element has no next item and PlayList().getposition() starts counting from zero
         if playlist.size() > 1 and position < (playlist.size() - 1):
