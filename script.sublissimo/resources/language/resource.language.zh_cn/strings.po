@@ -1,0 +1,938 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-08-02 10:09+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/zh_cn/>\n"
+"Language: zh_cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "使用遥控器编辑和同步字幕"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
+msgstr "您可以使用此脚本编辑特定行、移动或拉伸字幕，以及与其他字幕同步。您还可以与视频文件同步。[CR][CR]要轻松使用此编辑器，请在要编辑的字幕与视频播放时启动它。"
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "滚动字幕"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "编辑或删除行"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "移动字幕"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "拉伸/收缩字幕"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "与其他字幕同步"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "与视频文件同步"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "在字幕中搜索"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "检查完整性"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "保存字幕"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "退出"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "按帧速同步"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "播放带有已编辑字幕的视频"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "高级选项"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid ""
+"Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the "
+"beginning to a line as reference[CR]- Select the roughly the same line in "
+"your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "选择要同步的字幕。然后：[CR]- 选择一行开头的时间码作为参考[CR]- 在字幕中选择大致相同的行[CR]- 然后对两个文件末尾附近的两行执行相同的操作。"
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "编辑行"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "删除第一条字幕"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "删除最后一条字幕"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "手动滚动和删除"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "返回"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "删除此字幕？"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "选择要编辑的字幕"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "返回"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "删除"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "所有字幕"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "找到："
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "确定"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "更多信息"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "错误"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "选择要同步的字幕"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr "请选择一个 .srt 或 .sub 文件"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "成功"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "当前第一条字幕"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "第一条字幕现在是："
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "请选择一个视频文件。"
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "当前最后一条字幕"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "最后一条字幕现在是："
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "输入搜索字符串"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "是"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "否"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "此编辑器仅适用于 .srt 或 .sub 文件"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "未找到文件： "
+
+msgctxt "#32028"
+msgid ""
+"Write the new timestamp for the end position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "为结束位置写入新的时间戳，用“:”分隔。例如：01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "例如：01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "报告"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "未检测到任何问题"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "行："
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "行 "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "可能的问题： "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "选择字幕以继续..."
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "选择要编辑的字幕"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "您的字幕开始于 "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "您的字幕结束于 "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "保存并添加 _edited.srt"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "使用当前文件名保存"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "使用自定义文件名保存"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "退出而不保存"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "提供新文件名： "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "写入到： "
+
+msgctxt "#32044"
+msgid ""
+"To use the file, select it in the Kodi player subtitle menu when playing the "
+"file"
+msgstr "使用时，请在播放文件时在 Kodi 播放器的“字幕”菜单中选择该文件"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "文件未写入"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "警告"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "您的文件中可能有未保存的工作"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "不管并退出"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "保存"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "字幕成功同步"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "向前移动"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "向后移动"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "给第一条字幕新的时间"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "向前移动：HH:MM:SS:MSE"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "向前移动：HH:MM:SS:MSE"
+
+msgctxt "#32056"
+msgid ""
+"Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, "
+"milliseconds. For instance: 01:23:45:000"
+msgstr "请输入有效的时间代码：HH:MM:SS:MSE。小时、分钟、秒、毫秒。例如：01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "如何同步两个字幕"
+
+msgctxt "#32058"
+msgid ""
+"In order to synchronize, you will need a subtitle which matches the video "
+"perfectly, but has different subtitles, usually from a different language. "
+"In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked "
+"to select a timecode in this file, which will be used as reference. Ideally, "
+"it is the first spoken line from the video. In the next screen, select the "
+"line from your original subtitle which matches the first.[CR]"
+"[CR]Subsequently, you'll be asked again to select a line from your reference "
+"subtitle and to match this with the same line in your original subtitle. "
+"Usually the best choice is the last spoken line from the video. After this "
+"your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them "
+"and 'Save subtitles' to write them to a file."
+msgstr "为了同步，您需要有与视频完全匹配的另一个字幕，通常来自不同的语言。在下一屏中，首先选择此字幕。[CR][CR]然后，您将被要求在该文件中选择一个时间码，作为参考。理想情况下，这是视频中的第一行对白。在下一屏，从原始字幕中选择与第一条字幕匹配的行。[CR][CR]随后，您将再次被要求从参考字幕中选择一行，并将其与原始字幕中的同一行匹配。通常，最好的选择是视频中最后一句对白。在此之后，你的两个字幕将同步！[CR][CR]选中“滚动字幕”可查看字幕，选中“保存字幕”可将字幕写入文件。"
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "未找到文件"
+
+msgctxt "#32060"
+msgid ""
+"In the next screen, select the video to synchronize with. Go to the point in "
+"the video where the first subtitle starts. When you pause the video, choose "
+"'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "在下一屏，选择要同步的视频。转到视频中第一条字幕开始的位置。暂停视频时，请在菜单中选择“选择作为开始”，然后对最后一条字幕执行相同操作。"
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "如何与视频文件同步"
+
+msgctxt "#32062"
+msgid ""
+"In the next screen, open the videofile from the library which belongs to the "
+"subtitle you have opened. Skip or fast forward to the point where the "
+"subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, "
+"a menu will pop up with several options. Select 'View or edit first "
+"subtitle'. When your first subtitle is not the first line from the video, "
+"select 'Delete' until the first subtitle is also the first line from the "
+"video.[CR][CR]Then finetune the position of the video, possibly by using the "
+"'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position "
+"is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the "
+"video, and repeat the same process.[CR][CR]After this, your file will be "
+"synced to the video."
+msgstr "在下一屏，从资料库中打开字幕对应的视频文件。跳过或快进到大致字幕开始的位置。暂停。[CR][CR]暂停视频时，会弹出一个菜单，其中包含多个选项。选择“查看或编辑第一条字幕”。当您的第一条字幕不是视频中的第一行时，请选择“删除”，直到第一条字幕也是视频中的第一行。[CR][CR]然后微调视频的位置，可能使用“向前跳1秒”或“向后跳1秒”按钮。如果位置完美，请选择“选择作为开始”。[CR]现在快进到视频的末尾，重复相同的过程。[CR][CR]在此之后，您的文件与视频同步。"
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "选择要同步的第一条字幕的时间码"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "选择的时间"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "选择的时间"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "选择大致相同的字幕时间码"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "选择最后一条字幕的时间以同步"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "选择最后一条字幕的时间"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "新时间码"
+
+msgctxt "#32069"
+msgid ""
+"Write the new timestamp for the start position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "为开始位置写入新的时间戳，用“:”分隔。例如：01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "字幕向前移动：{}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "字幕向后移动：{}"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "第一条字幕现在开始于 {}"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "最后一条字幕现在开始于 {}"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " 暂停于： "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "继续播放"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "选择作为第一条字幕的开始"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "向后跳1秒"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "向前跳1秒"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "退出到主菜单"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "查看或删除第一条字幕"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "查看或删除最后一条字幕"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "选择作为最后一条字幕的开始"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "设置为第一条字幕？"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "您是否想让字幕开始于： "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "重置开始时间"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "已选择开始： "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "已选择时间："
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "您的第一条字幕开始于： "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "您的最后一条字幕开始于： "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "选择"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "重置时间"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "选择的时间"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "选择带有时间码的行"
+
+msgctxt "#32092"
+msgid ""
+"Please select a line with a timecode, like:[CR]'01:23:45,679 --> "
+"01:23:45,679'"
+msgstr "请选择带有时间码的行，如：[CR]'01:23:45,679 --> 01:23:45,679'"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "选择电影"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "选择剧集"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "查看整个资料库"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "退出到主菜单并进行更改"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "保存显示的字幕"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "退出到主菜单，无更改"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "完全退出"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "重置为其他帧速"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "保存并继续播放"
+
+msgctxt "#32102"
+msgid ""
+"The subtitle is loaded with the new framerate. Pause to reset to another "
+"frame rate or to save."
+msgstr "字幕加载了新的帧速。暂停以重置为另一帧速或保存。"
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "请输入有效数字"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "从视频中获取帧速"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "按帧速同步选项"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "帧速"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "新结束时间"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "旧开始时间： "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "开始时间： "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "旧结束时间： "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "新开始时间： "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "新结束时间： "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "保存并退出"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "手动计算"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "提供数或系数"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "计算系数或提供系数"
+
+msgctxt "#32115"
+msgid ""
+"In the next screen, write a sum with the current framerate divided by the "
+"real frame rate. If the current frame rate is 25 and it should be 24, type "
+"'25/24'. Or type your own factor, like '1.2'"
+msgstr "在下一屏，用当前帧速除以实际帧速写一个数。如果当前帧速为25且应为24，请键入“25/24”。或者键入您自己的因子，如“1.2”"
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "播放之前打开的文件"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "提供系数"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "按提供的系数拉伸"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "按提供的新结束时间拉伸"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "此视频的帧速为 "
+
+msgctxt "#32121"
+msgid ""
+"The video is playing with the modified subtitle. Pause to save or to return "
+"to the menu."
+msgstr "视频正在使用修改后的字幕播放。暂停以保存或返回菜单。"
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "字幕已加载"
+
+msgctxt "#32123"
+msgid ""
+"The video is playing with the saved subtitle. The filename of the subtitle "
+"is: "
+msgstr "视频正使用已保存的字幕播放。字幕的文件名为： "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "跳转到当前第一条字幕的时间"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "跳转到最后一条字幕的时间"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "选择另一个"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "输入帧速"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "打开其他字幕"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "为什么我会看到这个屏幕？"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr "您选择了一个 .sub 文件"
+
+msgctxt "#32131"
+msgid ""
+"You have selected a .sub file, which uses frame rates to indicate when "
+"subtitles should be shown. To edit these subtitles, you have to select a "
+"frame rate. You can start a video to see what frame rate it has or just pick "
+"a random one if you want to use a sync option."
+msgstr "您选择了一个 .sub 文件，该文件使用帧速来指示何时应显示字幕。要编辑这些字幕，必须选择帧速。你可以启动一个视频来查看它的帧速，或者如果你想使用同步选项，只需随机选取一个。"
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "此文件可能不是有效的字幕"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "仍然加载"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "选择其他"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr "不是有效的 .sub 文件"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "此文件似乎不是有效的 .sub 文件。"
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "所有找到的 HTML 颜色代码都重置为白色。"
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "将颜色代码重置为白色"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "将颜色重置为自定义颜色"
+
+msgctxt "#32140"
+msgid ""
+"Not a valid code for a color. Use 8 digits in a hexadecimal notation: "
+"'FF00FF00'"
+msgstr "不是颜色的有效代码。使用8位十六进制表示法：“FF00FF00”"
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "提供颜色编码。使用8位数字。留空以取消"
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "所有找到的 HTML 颜色代码重置为 "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "加载字幕"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "手动"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "是否要编辑此字幕？"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "播放将停止，但可以从菜单中恢复。"
+
+msgctxt "#35005"
+msgid ""
+"A subtitlefile could not be found. Do you want to select one manually and "
+"continue with current video?"
+msgstr "找不到字幕文件。是否要手动选择一个并继续当前视频？"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "视频："
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "字幕："
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "播放使用 "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "使用遥控器编辑和同步字幕"
+
+msgctxt "#35010"
+msgid ""
+"With this script you can edit specific lines, move or stretch subtitles, and "
+"synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "使用此脚本，您可以编辑特定行、移动或拉伸字幕，以及与其他字幕同步。您还可以与视频文件同步。"
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "返回到菜单"
+
+msgctxt "#35016"
+msgid ""
+"Somewhere in the process of syncing an error occurred. Most of the time this "
+"is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A ."
+"srt file which has a digit missing in one of its timestamps.[CR] - A file "
+"which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> "
+"Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "在同步过程中的某个地方发生了错误。大多数情况下，这是由于：[CR]- 一个使用非标准时间戳的 .srt 文件引起的。[CR]- srt 文件中一个时间戳缺少一个数字。[CR]- 实际内容不是一个 .srt 文件[CR][CR]使用“主菜单->高级选项->检查完整性”以扫描错误的时间戳或使用另外的 .srt 文件。"
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "出现以下错误："
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "错误详细信息"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "未检测到字符集"
+
+msgctxt "#35018"
+msgid ""
+"The correct characterset of this file could not be detected. The file is now "
+"loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "无法检测到此文件的正确字符集。该文件正以 UTF-8 字符集加载，错误字符将替换为问号。"
+
+msgctxt "#35019"
+msgid "Select textline"
+msgstr "选择文本行"
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr "选择要同步到的时间"
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr "按微秒向前移动"
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr "按微秒向后移动"
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr "按分钟向前移动"
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr "按分钟向后移动"
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr "选择要删除的字幕"
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr "分钟"
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr "微秒"
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr "见内容"
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr "仍然打开"
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr "不像是字幕"
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr "此文件相当大，不像是字幕"
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr "无法加载字幕"
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr "在文件中找不到任何字幕。这是一个有效的字幕吗？"
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr "正在扫描..."
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr "正在检查此文件使用的编码。"
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr "这似乎不是有效的 .sub 文件。"
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr "这似乎不是有效的 .srt 文件。"
+
+msgctxt "#35038"
+msgid "Results"
+msgstr "结果"
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr "编码为： "
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr "跳过了以下行："
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr "手动修复"
+
+msgctxt "#35042"
+msgid "Jump to Specific subtitle"
+msgstr "跳转到特定字幕"
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr "查看或删除标记为第一条的字幕"
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr "查看或删除标记为最后一条的字幕"
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr "将其他字幕标记为最后一条要同步的字幕"
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr "将其他字幕标记为第一条要同步的字幕"
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr "更改开始时间"
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr "更改结束时间"
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr "向后跳100毫秒"
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr "是否希望：[CR]{}[CR]出现在{}？"

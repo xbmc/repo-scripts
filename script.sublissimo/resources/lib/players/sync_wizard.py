@@ -42,13 +42,18 @@ class SyncWizard(xbmc.Player):
 
     def delete_subtitle(self, index):
         answer = xbmcgui.Dialog().yesno(_(32018), str(self.subtitle[index]),
-                            yeslabel=_(32012), nolabel= _(32009))
-        if not answer:
+                            nolabel=_(32012), yeslabel= _(32009))
+        if answer:
             del self.subtitle[index]
+            if index == self.end_index:
+                self.end_index = -1
 
-    def select_subtitle_to_sync_with(self):
+
+    def select_subtitle_to_sync_with(self, old_index):
         subtitle_in_strings, indexes = self.subtitle.easy_list_selector()
         line = xbmcgui.Dialog().select(_(32010), subtitle_in_strings)
+        if line == -1:
+            return old_index
         return indexes[line]
 
     def ask_and_sync_to_times(self):
@@ -109,7 +114,7 @@ class SyncWizard(xbmc.Player):
             self.delete_subtitle(self.start_index)
             self.pause()
         if res == 6:
-            self.start_index = self.select_subtitle_to_sync_with()
+            self.start_index = self.select_subtitle_to_sync_with(self.start_index)
             self.pause()
         if res == 7:
             self.proper_exit = True
@@ -148,7 +153,7 @@ class SyncWizard(xbmc.Player):
             self.delete_subtitle(self.end_index)
             self.pause()
         if res == 7:
-            self.end_index = self.select_subtitle_to_sync_with()
+            self.end_index = self.select_subtitle_to_sync_with(self.end_index)
             self.pause()
         if res == 8:
             self.stop()
@@ -164,13 +169,14 @@ class SyncWizard(xbmc.Player):
                        _(32096), _(32098), _(35047), _(35048)]
             choice = xbmcgui.Dialog().contextmenu(options)
             if choice in (0, -1):
-                self.pause()
+                pass
             if choice == 1:
                 xbmcgui.Dialog().multiselect(_(32010), str(self.subtitle).split("\n"))
                 self.pause()
             if choice == 2:
-                index = self.select_subtitle_to_sync_with()
-                self.seekTime(self.subtitle[index].startingtime/1000)
+                index = self.select_subtitle_to_sync_with(-1)
+                if index != -1:
+                    self.seekTime(self.subtitle[index].startingtime/1000)
                 self.pause()
             if choice == 3:
                 self.proper_exit = True
