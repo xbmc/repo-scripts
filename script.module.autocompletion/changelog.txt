@@ -1,0 +1,18 @@
+1.1.2
+
+- move some stuff out of this lib (to the places they belong to)
+
+1.1.1
+
+- fix wrong reference to extendedinfo script
+
+1.1.0
+
+- No results when keyboard with hidden input is active
+- big code rework
+- added bing as provider
+- fixed localdict provider
+
+1.0.0
+
+- Initial release
