@@ -1,0 +1,938 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-08-19 22:19+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/fi_fi/>\n"
+"Language: fi_fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Muokkaa ja ajoita tekstityksiä kauko-ohjaimellasi"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
+msgstr "Tällä lisäosalla voidaan muokata yksittäisiä tekstitysrivejä, siirtää ja venyttää tekstityksiä sekä tahdistaa niitä muiden tekstitysten ja videotiedostojen kanssa.[CR][CR]Editorin käynnistys onnistuu helposti suoraan toistettaessa muokkausta vaativaa videota ja tekstitystä."
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "Vieritä tekstityksiä"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "Muokkaa tai poista rivejä"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "Siirrä tekstityksiä"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "Venytä/tiivistä tekstityksiä"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "Ajoita eri tekstityksen kanssa"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "Tahdista videotiedoston kanssa"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "Etsi tekstityksestä"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "Tarkista eheys"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "Tallenna tekstitykset"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "Sulje"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "Tahdista kuvanopeuden perusteella"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "Toista video muokatulla tekstityksellä"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "Lisäasetukset"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid ""
+"Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the "
+"beginning to a line as reference[CR]- Select the roughly the same line in "
+"your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "Valitaan tekstitys, jonka kanssa tahdistetaan, jonka jälkeen:[CR]- Valitaan viitearvoksi rivin alussa oleva aikakoodi[CR]- Valitaan tekstityksestä jotakuinkin sama rivi[CR]- Toimenpiteet toistetaan kahdelle riville, jotka ovat lähellä tiedostojen loppua."
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "Muokkaa riviä"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "Poista ensimmäinen tekstitys"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "Poista viimeinen tekstitys"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "Vieritä manuaalisesti ja poista"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "Takaisin"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "Poistetaanko tekstitys?"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "Valitse muokattava tekstitys"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "Palaa"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "Poista"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "Kaikki tekstitykset"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "Löytyi:"
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "Lisätietoja"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "Virhe"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "Valitse tekstitys, jonka kanssa tahdistetaan"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr "Valitse .srt- tai .sub-tiedosto"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "Onnistui"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "Nykyinen ensimmäinen tekstitys"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "Ensimmäinen tekstitys on nyt:"
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "Valitse videotiedosto."
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "Nykyinen viimeinen tekstitys"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "Viimeinen tekstitys on nyt:"
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "Syötä hakulauseke"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "Kyllä"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "Ei"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "Editori tukee vain .srt- ja .sub-tiedostoja"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "Tiedostoa ei löydy: "
+
+msgctxt "#32028"
+msgid ""
+"Write the new timestamp for the end position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Syötä päättymiskohdan uusi aikakoodi kaksoispisteellä eroteltuna. Esimerkiksi: 01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "Esimerkiksi: 01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "Raportti"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "Ongelmia ei havaittu"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "Rivi:"
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "Rivi "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "Mahdolliset ongelmat: "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "Jatka valitsemalla tekstitys..."
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "Valitse muokattava tekstitys"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "Tekstitys alkaa kohdasta "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "Tekstitys päättyy kohtaan "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "Tallenna \"_edited.srt\"-päätteellä"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "Tallenna nykyisellä tiedostonimellä"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "Tallenna omalla tiedostonimellä"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "Poistu tallentamatta"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "Syötä uusi tiedostonimi: "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "Tallennettiin kohteeseen: "
+
+msgctxt "#32044"
+msgid ""
+"To use the file, select it in the Kodi player subtitle menu when playing the "
+"file"
+msgstr "Käytä tiedostoa valitsemalla se Kodin soittimen tekstitysvalikosta tiedostoa toistettaessa"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "Tiedostoa ei tallennettu"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "Varoitus"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "Olet saattunut tehdä tiedostoon tallentamattomia muutoksia"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "Poistu silti"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "Tallenna"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "Tekstitysten tahdistus onnistui"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "Siirrä eteenpäin"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "Siirrä takaisinpäin"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "Ilmoita ensimmäiselle tekstitykselle uusi kohta"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Siirrä eteenpäin: HH:MM:SS:MSE"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Siirrä eteenpäin: HH:MM:SS:MSE"
+
+msgctxt "#32056"
+msgid ""
+"Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, "
+"milliseconds. For instance: 01:23:45:000"
+msgstr "Syötä kelvollinen aikakoodi: HH:MM:SS:MSE (tunnit, minuutit, sekunnit, millisekunnit). Esimerkiksi: 01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "Miten kaksi tekstitystä tahdistetaan"
+
+msgctxt "#32058"
+msgid ""
+"In order to synchronize, you will need a subtitle which matches the video "
+"perfectly, but has different subtitles, usually from a different language. "
+"In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked "
+"to select a timecode in this file, which will be used as reference. Ideally, "
+"it is the first spoken line from the video. In the next screen, select the "
+"line from your original subtitle which matches the first.[CR]"
+"[CR]Subsequently, you'll be asked again to select a line from your reference "
+"subtitle and to match this with the same line in your original subtitle. "
+"Usually the best choice is the last spoken line from the video. After this "
+"your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them "
+"and 'Save subtitles' to write them to a file."
+msgstr "Tahdistus edellyttää videoon täydellisesti sopivaa tekstitystiedostoa, joka sisältää erilaiset, useimmiten eri kieliset tekstitykset. Tämä tekstitys valitaan seuraavassa vaiheessa.[CR][CR]Tiedostosta valitaan viitearvona käytettävä aikakoodi, joka on ihannetapauksessa videon ensimmäinen puhetta sisältävä rivi. Seuraavaksi valitaan viitearvoa vastaava rivi alkuperäisestä tekstityksestä.[CR][CR]Seuraavaksi valitaan viitetekstityksestä uusi alkuperäisen tekstityksen kanssa tahdistettava rivi ja yleensä paras valinta on videon viimeinen puhetta sisältävä rivi. Tämän jälkeen tekstitykset tahdistetaan![CR][CR]Tarkastele muutoksia valitsemalla \"Vieritä tekstityksiä\" ja tallenna muutokset tiedostoon valitsemalla \"Tallenna tekstitykset\"."
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "Tiedostoa ei löydy"
+
+msgctxt "#32060"
+msgid ""
+"In the next screen, select the video to synchronize with. Go to the point in "
+"the video where the first subtitle starts. When you pause the video, choose "
+"'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "Seuraavaksi valitaan tahdistettava video ja siirrytään videon ensimmäisen tekstityksen aloituskohtaan. Kun video tauotetaan, valitaan valikosta \"Valitse aluksi\" ja toistetaan viimeiselle tekstitykselle vastaavat toimenpiteet."
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "Miten tekstitys tahdistetaan videotiedoston kanssa"
+
+msgctxt "#32062"
+msgid ""
+"In the next screen, open the videofile from the library which belongs to the "
+"subtitle you have opened. Skip or fast forward to the point where the "
+"subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, "
+"a menu will pop up with several options. Select 'View or edit first "
+"subtitle'. When your first subtitle is not the first line from the video, "
+"select 'Delete' until the first subtitle is also the first line from the "
+"video.[CR][CR]Then finetune the position of the video, possibly by using the "
+"'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position "
+"is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the "
+"video, and repeat the same process.[CR][CR]After this, your file will be "
+"synced to the video."
+msgstr "Seuraavaksi kirjastosta valitaan avattua tekstitystä vastaava videotiedosto. Videon toisto tauotetaan jotakuikin tekstityksen kohdistuskohtaan.[CR][CR]Toiston tauotessa näytetään useita valintoja sisältävä valikko, josta valitaan \"Näytä tai poista ensimmänen tekstitys\". Jos ensimmäinen tekstitys ei vastaa videon ensimmäistä riviä, valitse \"Poista\", kunnes se on.[CR][CR]Tämän jälkeen voit tarvittaessa hienosäätää videon sijaintia \"Siirry 1 sekunti eteenpäin\" tai \"Siirry 1 sekunti taaksepäin\" -painikkeiden avulla. Jos kohdistus on täydellinen, valitse \"Valitse aloituskohdaksi\".[CR]Siirry sitten videon loppuun ja toista vastaavat toimenpiteet.[CR][CR]Tämän jälkeen tekstitys tahdistetaan videoon."
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "Valitse ensimmäisen tahdistettavan tekstityksen kohta"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "Kohta valittu"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "Kohta valittu"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "Valitse tekstityksestä jotakuinkin vastaava aikakoodi"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "Valitse viimeisen tahdistettavan tekstityksen kohta"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "Valitse viimeisen tekstityksen kohta"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "Uusi aikakoodi"
+
+msgctxt "#32069"
+msgid ""
+"Write the new timestamp for the start position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Kirjoita aloituskohdan uusi aikakoodi kaksoispisteellä eroteltuna. Esimerkiksi: 01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "Tekstityksiä siirrettiin eteenpäin: {}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "Tekstityksiä siirrettiin taaksepäin: {}"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "Ensimmäisen tekstityksen aloituskohta on nyt {}"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "Viimeisen tekstityksen aloituskohta on nyt {}"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " Tauotettu kohtaan: "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "Jatka toistoa"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "Valitse ensimmäisen tekstityksen aloituskohdaksi"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "Siirry 1 sekunti taaksepäin"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "Siirry 1 sekunti eteenpäin"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "Poistu päävalikkoon"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "Näytä tai poista ensimmäinen tekstitys"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "Näytä tai poista viimeinen tekstitys"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "Valitse viimeisen tekstityksen aloituskohdaksi"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "Määritetäänkö ensimmäiseksi tekstitykseksi?"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "Haluatko tekstityksen alkavan kohdasta: "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "Palauta aloituskohta"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "Valittu aloituskohta: "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "Valitut kohdat:"
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "Ensimmäinen tekstitys alkaa kohdasta: "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "Viimeinen tekstitys alkaa kohdasta: "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "Valitse"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "Palauta kohdat"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "Kohta valittu"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "Valitse rivi aikakoodilla"
+
+msgctxt "#32092"
+msgid ""
+"Please select a line with a timecode, like:[CR]'01:23:45,679 --> "
+"01:23:45,679'"
+msgstr "Valitse rivi aikakoodin perusteella, esimerkiksi:[CR]'01:23:45,679 --> 01:23:45,679'"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "Valitse elokuva"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "Valitse sarja"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "Näytä koko kirjasto"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "Poistu päävalikkoon muutoksilla"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "Tallenna näytettävä tekstitys"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "Poistu päävalikkoon ilman muutoksia"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "Poistu täysin"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "Palauta toiseen kuvanopeuteen"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "Tallenna ja jatka toistoa"
+
+msgctxt "#32102"
+msgid ""
+"The subtitle is loaded with the new framerate. Pause to reset to another "
+"frame rate or to save."
+msgstr "Tekstitys on ladattu uudella kuvanopeudella. Tauota toisto vaihtaaksesi kuvanopeutta tai tallentaaksesi muutokset."
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "Syötä kelvollinen numero"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "Tunnista kuvanopeus videosta"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "Valinnat kuvanopeudella tahdistettaessa"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "Kuvanopeus"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "Uusi päättymiskohta"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "Vanha aloituskohta: "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "Aloituskohta: "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "Vanha päättymiskohta: "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "Uusi aloituskohta: "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "Uusi päättymiskohta: "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "Tallenna ja poistu"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "Laske manuaalisesti"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "Ilmoita summa tai kerroin"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "Laske tai ilmoita kerroin"
+
+msgctxt "#32115"
+msgid ""
+"In the next screen, write a sum with the current framerate divided by the "
+"real frame rate. If the current frame rate is 25 and it should be 24, type "
+"'25/24'. Or type your own factor, like '1.2'"
+msgstr "Seuraavassa vaiheessa syötetään nykyinen kuvanopeus jaettuna todellisella kuvanopeudella, eli kun nykyinen kuvanopeus on 25 kun sen pitäisi olla 24, syötetään arvoksi \"25/24\". Vaihtoehtoisesti kerroin voidaan syöttää manuaalisesti, esim. \"1,2\"."
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "Toista aiemmin avaamasi tiedoston kanssa"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "Ilmoita kerroin"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "Venytä ilmoittamalla kerroin"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "Venytä ilmoittamalla uusi päättymiskohta"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "Videon kuvanopeus on "
+
+msgctxt "#32121"
+msgid ""
+"The video is playing with the modified subtitle. Pause to save or to return "
+"to the menu."
+msgstr "Videota toistetaan muokatulla tekstityksellä. Tauota toisto tallentaaksesi tai palataksesi valikkoon."
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "Tekstitykset ladattiin"
+
+msgctxt "#32123"
+msgid ""
+"The video is playing with the saved subtitle. The filename of the subtitle "
+"is: "
+msgstr "Videota toistetaan tallennetulla tekstityksellä. Tekstitystiedoston nimi on: "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "Siirry nykyisen ensimmäisen tekstityksen kohdalle"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "Siirry viimeisen tekstityksen kohdalle"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "Valitse toinen"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "Syötä kuvanopeus"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "Avaa toinen tekstitys"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "Miksi näen tämän ruudun?"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr "Olet valinnut .sub-tiedoston"
+
+msgctxt "#32131"
+msgid ""
+"You have selected a .sub file, which uses frame rates to indicate when "
+"subtitles should be shown. To edit these subtitles, you have to select a "
+"frame rate. You can start a video to see what frame rate it has or just pick "
+"a random one if you want to use a sync option."
+msgstr "Valittu tiedosto on .sub-muodossa, jolloin tekstitykset ajoitetaan kuvanopeuden perusteella. Näitä tekstityksiä muokattaessa on ilmoitettava kuvanopeus. Videon kuvanopeus voidaan selvittää toistamalla se tai vaihtoehtoisesti voidaan valita myös satunnainen kuvanopeus, jos halutaan käyttää tahdistusvaihtoehtoa."
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "Tiedosto ei ehkä ole kelvollinen tekstitystiedosto"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "Lataa silti"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "Valitse toinen"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr ".sub-tiedosto ei kelpaa"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "Tiedosto ei näytä olevan kelvollinen .sub-tiedosto."
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "Kaikki havaitut HTML-värikoodit muutettiin valkoiseksi."
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "Muuta kaikki värikoodit valkoiseksi"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "Muuta väri omavalintaiseen väriin"
+
+msgctxt "#32140"
+msgid ""
+"Not a valid code for a color. Use 8 digits in a hexadecimal notation: "
+"'FF00FF00'"
+msgstr "Värikoodi ei kelpaa. Käytä 8 merkkisiä heksadesimaalikoodeja, kuten \"FF00FF00\"."
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "Ilmoita 8 merkkinen värikoodi. Peru muutos jättämällä tyhjäksi."
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "Kaikki havaitut HTML-värikoodit muutettiin arvoon "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "Lataa tekstitys"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "Manuaalisesti"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "Haluatko varmasti muokata tekstitystä?"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "Toisto pysähtyy, mutta sitä voidaan jatkaa valikosta."
+
+msgctxt "#35005"
+msgid ""
+"A subtitlefile could not be found. Do you want to select one manually and "
+"continue with current video?"
+msgstr "Tekstitystiedostoa ei löytynyt. Haluatko valita sellaisen manuaalisesti ja jatkaa nykyisellä videolla?"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "Video:"
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "Tekstitys:"
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "Toista videolla "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Muokkaa ja ajoita tekstityksiä kauko-ohjaimellasi"
+
+msgctxt "#35010"
+msgid ""
+"With this script you can edit specific lines, move or stretch subtitles, and "
+"synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "Tällä lisäosalla voidaan muokata yksittäisiä tekstitysrivejä, siirtää ja venyttää tekstityksiä sekä tahdistaa niitä muiden tekstitysten ja videotiedostojen kanssa."
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "Palaa valikkoon"
+
+msgctxt "#35016"
+msgid ""
+"Somewhere in the process of syncing an error occurred. Most of the time this "
+"is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A ."
+"srt file which has a digit missing in one of its timestamps.[CR] - A file "
+"which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> "
+"Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "Jossakin tahdistusvaiheessa tapahtui virhe. Yleisiä syitä:[CR] - .srt-tiedosto sisältää poikkeavia aikakoodeja.[CR] - .srt-tiedoston aikaleimoista puuttuu numero.[CR] - .srt-tiedostoksi virheellisesti ilmoitettu tiedosto[CR][CR]Tarkista virheelliset aikakoodit kohdasta \"Päävalikko > Lisäasetukset > Tarkista eheys\" tai vaihda toiseen .srt-tiedostoon."
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "Tapahtui virhe:"
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "Virheen tiedot"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "Merkistöä ei tunnistettu"
+
+msgctxt "#35018"
+msgid ""
+"The correct characterset of this file could not be detected. The file is now "
+"loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "Tiedoston todellista merkistöä ei tunistettu. Tiedosto on nyt avattu käyttäen UTF-8-merkistöä ja virheet on korvattu kysymysmerkeillä."
+
+msgctxt "#35019"
+msgid "Select textline"
+msgstr "Valitse tekstirivi"
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr "Valitse tahdistuskohta"
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr "Siirrä eteenpäin mikrosekunneissa"
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr "Siirrä taaksepäin mikrosekunneissa"
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr "Siirrä eteenpäin minuuteissa"
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr "Siirrä taaksenpäin minuuteissa"
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr "Valitse poistettava tekstitys"
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr "Minuuttia"
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr "Mikrosekuntia"
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr "Näytä sisältö"
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr "Avaa silti"
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr "Ei todennäköisesti ole tekstitys"
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr "Tiedosto on niin suuri, ettei se todennäköisesti ole tekstitystiedosto"
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr "Tekstitystä ei voitu ladata"
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr "Tiedostosta ei löytynyt tekstityksiä. Onko se kelvollinen tekstitystiedosto?"
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr "Tutkitaan..."
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr "Tarkistetaan tiedostossa käytettävää koodausta."
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr "Tiedosto ei näytä olevan kelvollinen .sub-tiedosto."
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr "Tiedosto ei näytä olevan kelvollinen .srt-tiedosto."
+
+msgctxt "#35038"
+msgid "Results"
+msgstr "Tulokset"
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr "Koodaus on: "
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr "Seuraavat rivit ohitettiin:"
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr "Korjaa manuaalisesti"
+
+msgctxt "#35042"
+msgid "Jump to Specific subtitle"
+msgstr "Hyppää tiettyyn tekstitykseen"
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr "Näytä tai poista ensimmäiseksi merkitty tekstitys"
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr "Näytä tai poista viimeiseksi merkitty tekstitys"
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr "Vaihda viimeinen tahdistettava tekstitys"
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr "Vaihda ensimmäinen tahdistettava tekstitys"
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr "Muuta aloituskohtaa"
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr "Muuta päättymiskohtaa"
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr "Siirry 100 millisekuntia taaksepäin"
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr "Haluatko: [CR]{}[CR]Näkyvän kohdassa {}?"
