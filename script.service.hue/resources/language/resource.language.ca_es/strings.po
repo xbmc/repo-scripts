@@ -6,23 +6,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-01 17:13+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2022-08-15 22:34+0000\n"
+"Last-Translator: Xean <xeanhort007@gmail.com>\n"
 "Language-Team: Catalan (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/ca_es/>\n"
 "Language: ca_es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.13\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
-msgstr ""
+msgstr "Automatitza les llums Hue amb la reproducció de Kodi"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "Automatitza les teves llums Hue amb Kodi. Creeu escenes en diverses habitacions que s'executen al reproduir, posar en pausa o aturar la reproducció multimèdia. Crea i suprimeix escenes de diverses habitacions des de la configuració del complement i, a continuació, selecciona quina vols aplicar als diferents esdeveniments de reproducció. Pots utilitzar les hores de sortida i posta del sol de Hue per desactivar automàticament el servei durant el dia i encendre els llums al capvespre durant la reproducció. Inclou suport d'Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
@@ -94,7 +94,7 @@ msgstr ""
 
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
-msgstr ""
+msgstr "Activa durant la reproducció al capvespre"
 
 msgctxt "#30510"
 msgid "General"
@@ -232,10 +232,6 @@ msgctxt "#30026"
 msgid "Scene Created"
 msgstr ""
 
-msgctxt "#30027"
-msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"
-msgstr ""
-
 msgctxt "#30028"
 msgid "Delete Hue Scene"
 msgstr ""
@@ -246,10 +242,6 @@ msgstr ""
 
 msgctxt "#30031"
 msgid "Transition Time:"
-msgstr ""
-
-msgctxt "#30033"
-msgid "{} secs."
 msgstr ""
 
 msgctxt "#30034"
@@ -274,7 +266,7 @@ msgstr ""
 
 msgctxt "#30002"
 msgid "ERROR: Scene not created"
-msgstr "ERROR: Scene not created"
+msgstr "ERROR: L'escena no s'ha creat"
 
 msgctxt "#30039"
 msgid "Set a fade time in seconds, or 0 for an instant transition."
@@ -410,7 +402,7 @@ msgstr ""
 
 msgctxt "#30814"
 msgid "On playback stop"
-msgstr ""
+msgstr "En parar la reproducció"
 
 msgctxt "#30815"
 msgid "Resume light state"
@@ -514,18 +506,14 @@ msgstr ""
 
 msgctxt "#30074"
 msgid "Disable Hue Labs during playback"
-msgstr ""
+msgstr "Desactiva Hue Labs durant la reproducció"
 
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
 msgstr ""
 
-msgctxt "#30003"
-msgid "Bridge API: {api_version}, update your bridge"
-msgstr ""
-
 msgctxt "#30012"
-msgid "Unknown colour gamut for light {light}"
+msgid "Unknown colour gamut for light:"
 msgstr ""
 
 msgctxt "#30016"
@@ -554,4 +542,12 @@ msgstr ""
 
 msgctxt "#30009"
 msgid "Connecting..."
+msgstr ""
+
+msgctxt "#30027"
+msgid "Are you sure you want to delete this scene:"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Bridge outdated. Please update your bridge."
 msgstr ""

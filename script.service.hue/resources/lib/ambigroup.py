@@ -10,21 +10,23 @@ import requests
 import xbmc
 import xbmcgui
 from PIL import Image
+from qhue import QhueException
 
 from resources.lib import ADDON, MINIMUM_COLOR_DISTANCE, imageprocess, lightgroup
-from resources.lib import PROCESS_TIMES, reporting, hue, AMBI_RUNNING
+from resources.lib import PROCESS_TIMES, reporting, AMBI_RUNNING
 from resources.lib.language import get_string as _
+from .kodiutils import notification
 from .lightgroup import STATE_STOPPED, STATE_PAUSED, STATE_PLAYING
-from qhue import QhueException
 from .rgbxy import Converter, ColorHelper  # https://github.com/benknight/hue-python-rgb-converter
 from .rgbxy import XYPoint, GamutA, GamutB, GamutC
 
 
 class AmbiGroup(lightgroup.LightGroup):
-    def __init__(self, light_group_id, bridge, monitor, initial_state=STATE_STOPPED, video_info_tag=xbmc.InfoTagVideo):
+    def __init__(self, light_group_id, hue_connection, initial_state=STATE_STOPPED, video_info_tag=xbmc.InfoTagVideo):
+        self.hue_connection = hue_connection
         self.light_group_id = light_group_id
-        self.bridge = bridge
-        self.monitor = monitor
+        self.bridge = hue_connection.bridge
+        self.monitor = hue_connection.monitor
         self.group0 = self.bridge.groups[0]
         self.bridge_error500 = 0
         self.state = initial_state
@@ -79,7 +81,7 @@ class AmbiGroup(lightgroup.LightGroup):
                     bridge.lights[L].state(on=True, bri=1)
             except requests.RequestException as exc:
                 xbmc.log(f"[script.service.hue] Requests exception: {exc}")
-                hue.notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+                notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
 
     def onAVStarted(self):
         xbmc.log(f"Ambilight AV Started. Group enabled: {self.enabled} , isPlayingVideo: {self.isPlayingVideo()}, isPlayingAudio: {self.isPlayingAudio()}, self.playbackType(): {self.playback_type()}")
@@ -159,14 +161,14 @@ class AmbiGroup(lightgroup.LightGroup):
         for L in list(self.ambi_lights):
             self.ambi_lights[L].update(prev_xy=(0.0001, 0.0001))
 
-        while not self.monitor.abortRequested() and AMBI_RUNNING.is_set():  # loop until kodi tells add-on to stop or video playing flag is unset.
+        while not self.monitor.abortRequested() and AMBI_RUNNING.is_set() and self.hue_connection.connected:  # loop until kodi tells add-on to stop or video playing flag is unset.
             try:
 
                 cap_image = cap.getImage()  # timeout to wait for OS in ms, default 1000
 
                 if cap_image is None or len(cap_image) < expected_capture_size:
-                    xbmc.log("[script.service.hue] capImage is none or < expected. captured: {}, expected: {}".format(len(capImage), expected_capture_size))
-                    xbmc.sleep(250)  # pause before trying again
+                    xbmc.log("[script.service.hue] capImage is none or < expected. captured: {}, expected: {}".format(len(cap_image), expected_capture_size))
+                    self.monitor.waitForAbort(0.25)  # pause before trying again
                     continue  # no image captured, try again next iteration
                 image = Image.frombytes("RGBA", (self.capture_size_x, self.capture_size_y), bytes(cap_image), "raw", "BGRA", 0, 1)  # Kodi always returns a BGRA image.
 
@@ -218,14 +220,14 @@ class AmbiGroup(lightgroup.LightGroup):
                 elif "6" in exc.type_id:
                     xbmc.log(f"[script.service.hue] Parameter unavailable error: {exc.type_id}: {exc.message} {traceback.format_exc()}")
                     AMBI_RUNNING.clear()
-                    hue.notification(header=_("Hue Service"), message=_(f"Error: Lights incompatible with Ambilight"), icon=xbmcgui.NOTIFICATION_ERROR)
+                    notification(header=_("Hue Service"), message=_(f"Error: Lights incompatible with Ambilight"), icon=xbmcgui.NOTIFICATION_ERROR)
                 else:
                     xbmc.log(f"[script.service.hue] Ambi: QhueException Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
                     AMBI_RUNNING.clear()  # shut it down
                     reporting.process_exception(exc)
             except requests.RequestException as exc:
                 xbmc.log(f"[script.service.hue] Requests exception: {exc}")
-                hue.notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+                notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
                 AMBI_RUNNING.clear()
             except KeyError:
                 xbmc.log("[script.service.hue] Ambi: KeyError, light not found")
@@ -327,10 +329,10 @@ class AmbiGroup(lightgroup.LightGroup):
             xbmc.log(f"[script.service.hue] Can't get gamut for light, defaulting to Gamut C: {light}, error: {exc}")
         except KeyError:
             xbmc.log(f"[script.service.hue] Unknown gamut type, unsupported light: {light}")
-            hue.notification(_("Hue Service"), _(f"Unknown colour gamut for light {light}"))
+            notification(_("Hue Service"), _("Unknown colour gamut for light:") + f" {light}")
         except requests.RequestException as exc:
             xbmc.log(f"[script.service.hue] Get Light Gamut RequestsException: {exc}")
-            hue.notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+            notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
 
         if gamut == "A" or gamut == "B" or gamut == "C":
             return gamut
@@ -358,5 +360,5 @@ class AmbiGroup(lightgroup.LightGroup):
                 xbmc.log(f"[script.service.hue] Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
             except requests.RequestException as exc:
                 xbmc.log(f"[script.service.hue] Requests exception: {exc}")
-                hue.notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+                notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
         return states

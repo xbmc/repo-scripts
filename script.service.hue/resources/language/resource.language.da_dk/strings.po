@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-01 17:13+0000\n"
+"PO-Revision-Date: 2022-08-15 22:34+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/da_dk/>\n"
 "Language: da_dk\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.13\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
@@ -22,7 +22,7 @@ msgstr "Automatiser Hue-lys sammen med afspilning i Kodi"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "Automatiser dine Hue-lys med Kodi. Opret scener i flere rum, der kører, når du afspiller, sætter på pause eller stopper medieafspilning. Opret og slet multirumsscener fra indstillinger og vælg derefter, hvilke der skal anvendes til forskellige afspilningstyper. Kan bruge Hues tider for solopgang og solnedgang til automatisk at deaktivere tjenesten i dagtimerne og tænde lysene ved solnedgang under afspilning. Inkluderer understøttelse af Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
@@ -74,7 +74,7 @@ msgstr "Bridge IP"
 
 msgctxt "#30503"
 msgid "Bridge User"
-msgstr "Brudge bruger"
+msgstr "Bridge bruger"
 
 msgctxt "#30505"
 msgid "Enable Schedule (24h format)"
@@ -122,23 +122,23 @@ msgstr "Stop med aktiveret scene"
 
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
-msgstr ""
+msgstr "Deaktiver tidskontrol hvis der allerede er lys"
 
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
-msgstr ""
+msgstr "Aktiver ikke scene hvis noget lys er slukket"
 
 msgctxt "#30521"
 msgid "[B][I]Warning: Not supported on all hardware[/B][/I]"
-msgstr ""
+msgstr "[B][I]Advarsel: Ikke understøttet af al hardware[/B][/I]"
 
 msgctxt "#30522"
 msgid "CPU & Hue performance"
-msgstr ""
+msgstr "CPU- og Hue-ydeevne"
 
 msgctxt "#30523"
 msgid "Ambilight"
-msgstr ""
+msgstr "Ambilight"
 
 msgctxt "#32101"
 msgid "Advanced"
@@ -146,123 +146,115 @@ msgstr "Avanceret"
 
 msgctxt "#32106"
 msgid "Video Activation"
-msgstr ""
+msgstr "Videoaktivering"
 
 msgctxt "#6101"
 msgid "Select Lights"
-msgstr ""
+msgstr "Vælg lys"
 
 msgctxt "#30520"
 msgid "Enabled"
-msgstr ""
+msgstr "Aktiveret"
 
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
-msgstr ""
+msgstr "Tryk på forbindelsesknappen på din Hue Bridge"
 
 msgctxt "#9007"
 msgid "Create Scene"
-msgstr ""
+msgstr "Opret scene"
 
 msgctxt "#9008"
 msgid "Delete Scene"
-msgstr ""
+msgstr "Slet scene"
 
 msgctxt "#30000"
 msgid "Hue Service"
-msgstr ""
+msgstr "Hue-tjeneste"
 
 msgctxt "#30004"
 msgid "Check your bridge and network"
-msgstr ""
+msgstr "Tjek din Hue bridge og netværk"
 
 msgctxt "#30006"
 msgid "Hue connected"
-msgstr ""
+msgstr "Hue er forbundet"
 
 msgctxt "#30008"
 msgid "Bridge not found"
-msgstr ""
+msgstr "Bridge er ikke fundet"
 
 msgctxt "#30010"
 msgid "User not found"
-msgstr ""
+msgstr "Bruger ikke fundet"
 
 msgctxt "#30011"
 msgid "Complete!"
-msgstr ""
+msgstr "Komplet!"
 
 msgctxt "#30013"
 msgid "Cancelled"
-msgstr ""
+msgstr "Annulleret"
 
 msgctxt "#30015"
 msgid "Select Hue Lights..."
-msgstr ""
+msgstr "Vælg hue-lys..."
 
 msgctxt "#30017"
 msgid "Found bridge: "
-msgstr ""
+msgstr "Bridge fundet: "
 
 msgctxt "#30018"
 msgid "Discover bridge..."
-msgstr ""
+msgstr "Find bridge..."
 
 msgctxt "#30021"
 msgid "Bridge connection failed"
-msgstr ""
+msgstr "Forbindelse til bridge mislykkedes"
 
 msgctxt "#30022"
 msgid "Discovery started"
-msgstr ""
+msgstr "Discovery er startet"
 
 msgctxt "#30023"
 msgid "Bridge not configured"
-msgstr ""
+msgstr "Bridge er ikke konfigureret"
 
 msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
-msgstr ""
+msgstr "Tjek konfigurationen af Hue Bridge"
 
 msgctxt "#30025"
 msgid "ERROR: Scene not deleted"
-msgstr ""
+msgstr "FEJL: Scenen blev ikke slettet"
 
 msgctxt "#30026"
 msgid "Scene Created"
-msgstr ""
-
-msgctxt "#30027"
-msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"
-msgstr ""
+msgstr "Scene oprettet"
 
 msgctxt "#30028"
 msgid "Delete Hue Scene"
-msgstr ""
+msgstr "Slet Hue scene"
 
 msgctxt "#30030"
 msgid "Enter Scene Name"
-msgstr ""
+msgstr "Indtast navn på scene"
 
 msgctxt "#30031"
 msgid "Transition Time:"
-msgstr ""
-
-msgctxt "#30033"
-msgid "{} secs."
-msgstr ""
+msgstr "Overgangstid:"
 
 msgctxt "#30034"
 msgid "Cancel"
-msgstr ""
+msgstr "Annuller"
 
 msgctxt "#30035"
 msgid "Lights:"
-msgstr ""
+msgstr "Lys:"
 
 msgctxt "#30036"
 msgid "Scene Name:"
-msgstr ""
+msgstr "Scenens navn:"
 
 msgctxt "#30037"
 msgid "Save"
@@ -270,7 +262,7 @@ msgstr "Gem"
 
 msgctxt "#30038"
 msgid "Create Hue Scene"
-msgstr ""
+msgstr "Opret Hue scene"
 
 msgctxt "#30002"
 msgid "ERROR: Scene not created"
@@ -278,19 +270,19 @@ msgstr "FEJL: scene ikke oprettet"
 
 msgctxt "#30039"
 msgid "Set a fade time in seconds, or 0 for an instant transition."
-msgstr ""
+msgstr "Indstil en overgangstid i sekunder eller 0 for en øjeblikkelig overgang."
 
 msgctxt "#30040"
 msgid "Scene deleted"
-msgstr ""
+msgstr "Scene slettet"
 
 msgctxt "#30041"
 msgid "You may now assign your Scene to player actions."
-msgstr ""
+msgstr "Du kan nu tildele din scene afspillerens handlinger."
 
 msgctxt "#30042"
 msgid "Fade Time (Seconds)"
-msgstr ""
+msgstr "Overgangstid (sekunder)"
 
 msgctxt "#30043"
 msgid "Error"
@@ -298,139 +290,139 @@ msgstr "Fejl"
 
 msgctxt "#30044"
 msgid "Create New Scene"
-msgstr ""
+msgstr "Opret ny scene"
 
 msgctxt "#30045"
 msgid "Scene successfully created!"
-msgstr ""
+msgstr "Scenen blev oprettet!"
 
 msgctxt "#30046"
 msgid "Adjust lights to desired state in the Hue App to save as new scene."
-msgstr ""
+msgstr "Juster lyset til den ønskede tilstand i Hue-appen for at gemme som ny scene."
 
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
-msgstr ""
+msgstr "Forbindelse mistet. Tjek indstillinger. Lukker ned"
 
 msgctxt "#30048"
 msgid "Connection lost. Trying again in 2 minutes"
-msgstr ""
+msgstr "Forbindelse mistet. Prøver igen om 2 minutter"
 
 msgctxt "#30049"
 msgid "Scene Name"
-msgstr ""
+msgstr "Scenens navn"
 
 msgctxt "#30050"
 msgid "N-UPnP discovery..."
-msgstr ""
+msgstr "Søg efter N-UPnP..."
 
 msgctxt "#30051"
 msgid "UPnP discovery..."
-msgstr ""
+msgstr "Søg efter UPnP..."
 
 msgctxt "#30005"
 msgid "Searching for bridge..."
-msgstr ""
+msgstr "Søger efter bridge..."
 
 msgctxt "#30052"
 msgid "Invalid start or end time, schedule disabled"
-msgstr ""
+msgstr "Ugyldigt start- eller sluttidspunkt, tidsplan deaktiveret"
 
 msgctxt "#30056"
 msgid "Set brightness on start"
-msgstr ""
+msgstr "Indstil lysstyrken ved start"
 
 msgctxt "#30057"
 msgid "Force on"
-msgstr ""
+msgstr "Gennemtving til"
 
 msgctxt "#30058"
 msgid "Light Names:"
-msgstr ""
+msgstr "Navn på lys:"
 
 msgctxt "#30065"
 msgid "Update interval (ms)"
-msgstr ""
+msgstr "Opdateringsinterval (ms)"
 
 msgctxt "#30066"
 msgid "Hue transition time (ms)"
-msgstr ""
+msgstr "Hue overgangstid (ms)"
 
 msgctxt "#30067"
 msgid "Frame capture size"
-msgstr ""
+msgstr "Optagelsesstørrelse på frame"
 
 msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
-msgstr ""
+msgstr "Vis kapacitetsfejl i Hue bridge"
 
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
-msgstr ""
+msgstr "Minimum varighed (minutter)"
 
 msgctxt "#30801"
 msgid "Enable for Movies"
-msgstr ""
+msgstr "Aktiver for film"
 
 msgctxt "#30802"
 msgid "Enable for TV episodes"
-msgstr ""
+msgstr "Aktiver for tv-afsnit"
 
 msgctxt "#30803"
 msgid "Enable for music videos"
-msgstr ""
+msgstr "Aktiver for musikvideoer"
 
 msgctxt "#30804"
 msgid "Enable for other videos (Discs)"
-msgstr ""
+msgstr "Aktiver for andre videoer (diske)"
 
 msgctxt "#30805"
 msgid "Enable for live TV"
-msgstr ""
+msgstr "Aktiver for direkte tv"
 
 msgctxt "#30809"
 msgid "Saturation"
-msgstr ""
+msgstr "Farvemætning"
 
 msgctxt "#30810"
 msgid "Minimum Brightness"
-msgstr ""
+msgstr "Minimum lysstyrke"
 
 msgctxt "#30811"
 msgid "Maximum Brightness"
-msgstr ""
+msgstr "Maksimal lysstyrke"
 
 msgctxt "#30812"
 msgid "Disable connection message"
-msgstr ""
+msgstr "Deaktiver forbindelsesmeddelelse"
 
 msgctxt "#30813"
 msgid "Average image processing time:"
-msgstr ""
+msgstr "Gennemsnitlig behandlingstid for billed:"
 
 msgctxt "#30814"
 msgid "On playback stop"
-msgstr ""
+msgstr "Stop ved afspilning"
 
 msgctxt "#30815"
 msgid "Resume light state"
-msgstr ""
+msgstr "Genoptag lystilstand"
 
 msgctxt "#30816"
 msgid "Resume transition time (secs.)"
-msgstr ""
+msgstr "Genoptag overgangstid (sekunder)"
 
 msgctxt "#30071"
 msgid "Only colour lights are supported"
-msgstr ""
+msgstr "Kun farvet lys understøttes"
 
 msgctxt "#30072"
 msgid "Unsupported Hue Bridge"
-msgstr ""
+msgstr "Hu Bridge er ikke understøttet"
 
 msgctxt "#30055"
 msgid "Disabled"
-msgstr ""
+msgstr "Deaktiveret"
 
 msgctxt "#30060"
 msgid "Play"
@@ -438,7 +430,7 @@ msgstr "Afspil"
 
 msgctxt "#30061"
 msgid "Hue Status: "
-msgstr ""
+msgstr "Hue status: "
 
 msgctxt "#30062"
 msgid "Settings"
@@ -446,115 +438,119 @@ msgstr "Indstillinger"
 
 msgctxt "#30063"
 msgid "Disabled by daylight"
-msgstr ""
+msgstr "Deaktiveret ved dagslys"
 
 msgctxt "#30064"
 msgid "ERROR: Scene not found"
-msgstr ""
+msgstr "FEJL: Scenen blev ikke fundet"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
-msgstr ""
+msgstr "Følgende fejl opstod:"
 
 msgctxt "#30081"
 msgid "Automatically report this error?"
-msgstr ""
+msgstr "Rapporter automatisk denne fejl?"
 
 msgctxt "#30069"
 msgid "No lights selected for Ambilight."
-msgstr ""
+msgstr "Ingen lys valgt til Ambilight."
 
 msgctxt "#30070"
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 msgctxt "#30075"
 msgid "Hue Bridge over capacity"
-msgstr ""
+msgstr "Hue Bridge over kapaciteten"
 
 msgctxt "#30076"
 msgid "Network not ready"
-msgstr ""
+msgstr "Netværket er ikke klar"
 
 msgctxt "#30077"
 msgid "The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."
-msgstr ""
+msgstr "Hue Bridge er over kapaciteten. Øg opdateringshastigheden eller reducer antallet af Ambilights."
 
 msgctxt "#30078"
 msgid "Bridge not found[CR]Check your bridge and network."
-msgstr ""
+msgstr "Bridge blev ikke fundet[CR]Tjek din bridge og dit netværk."
 
 msgctxt "#30082"
 msgid "Press link button on bridge. Waiting for 90 seconds..."
-msgstr ""
+msgstr "Tryk på link-knappen på bridge. Venter i 90 sekunder..."
 
 msgctxt "#30083"
 msgid "Unknown"
-msgstr ""
+msgstr "Ukendt"
 
 msgctxt "#30084"
 msgid "User Found![CR]Saving settings..."
-msgstr ""
+msgstr "Bruger fundet![CR]Gemmer indstillinger..."
 
 msgctxt "#30085"
 msgid "Adjust lights to desired state in the Hue App to save as new scene.[CR]Set a fade time in seconds, or 0 for an instant transition."
-msgstr ""
+msgstr "Juster lysene til den ønskede tilstand i Hue-appen for at gemme som ny scene.[CR]Indstil en overgangstid i sekunder eller 0 for en øjeblikkelig overgang."
 
 msgctxt "#30086"
 msgid "User not found[CR]Check your bridge and network."
-msgstr ""
+msgstr "Bruger blev ikke fundet[CR]Tjek din bridge og dit netværk."
 
 msgctxt "#30087"
 msgid "Scene successfully created![CR]You may now assign your scene to player actions."
-msgstr ""
+msgstr "Scene oprettet med succes![CR]Du kan nu tildele din scene til afspillerens handlinger."
 
 msgctxt "#30073"
 msgid "Do not show again"
-msgstr ""
+msgstr "Vis ikke igen"
 
 msgctxt "#30074"
 msgid "Disable Hue Labs during playback"
-msgstr ""
+msgstr "Deaktiver Hue Labs under afspilning"
 
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
-msgstr ""
-
-msgctxt "#30003"
-msgid "Bridge API: {api_version}, update your bridge"
-msgstr ""
+msgstr "Hue Bridge V1 (rund) understøttes ikke. Hue Bridge V2 (kvadrat) er påkrævet."
 
 msgctxt "#30012"
-msgid "Unknown colour gamut for light {light}"
-msgstr ""
+msgid "Unknown colour gamut for light:"
+msgstr "Ukendt farveskala for lys:"
 
 msgctxt "#30016"
 msgid "Report errors"
-msgstr ""
+msgstr "Rapporter fejl"
 
 msgctxt "#30020"
 msgid "Never report errors"
-msgstr ""
+msgstr "Rapporter aldrig fejl"
 
 msgctxt "#30032"
 msgid "Hue Service Error"
-msgstr ""
+msgstr "Fejl i Hue-tjeneste"
 
 msgctxt "#30029"
 msgid "Connection Error"
-msgstr ""
+msgstr "Forbindelsesfejl"
 
 msgctxt "#30014"
 msgid "Error: Lights incompatible with Ambilight"
-msgstr ""
+msgstr "Fejl: Lyser inkompatibelt med Ambilight"
 
 msgctxt "#30007"
 msgid "Bridge not found automatically. Please make sure your bridge is up to date and has access to the internet. [CR]Would you like to enter your bridge IP manually?"
-msgstr ""
+msgstr "Bridge blev ikke fundet automatisk. Sørg for, at din bridge er opdateret og har adgang til internettet.[CR]Vil du manuelt indtaste IP-adressen på din bridge?"
 
 msgctxt "#30009"
 msgid "Connecting..."
-msgstr ""
+msgstr "Forbinder…"
+
+msgctxt "#30027"
+msgid "Are you sure you want to delete this scene:"
+msgstr "Er du sikker på at du vil slette denne scene:"
+
+msgctxt "#30019"
+msgid "Bridge outdated. Please update your bridge."
+msgstr "Bridge forældet. Opdater venligst din bridge."
 
 #~ msgctxt "#30504"
 #~ msgid "Bridge Serial"
