@@ -4,16 +4,16 @@ import time
 import requests
 
 
+NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list?chan={}'
+COVER_URL = 'https://img.radioparadise.com/{}'
+SLIDESHOW_URL = 'https://img.radioparadise.com/slideshow/720/{}.jpg'
+
 BREAK_COVER_URL = 'https://img.radioparadise.com/covers/l/101.jpg'
 BREAK_KEY = ('Commercial-free', 'Listener-supported')
 
-COVER_URL = 'https://img.radioparadise.com/{}'
-
 KEY_FILTER_RE = re.compile(r'[^\w\']+')
 
-NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list?chan={}'
-
-SLIDESHOW_URL = 'https://img.radioparadise.com/slideshow/720/{}.jpg'
+UPDATE_TIMEOUT = 2.0
 
 STREAMS = [
     {
@@ -52,21 +52,12 @@ class NowPlaying():
         """Constructor"""
         self.set_channel(None)
 
-    @property
-    def current(self):
-        """Return a dict for the current "nowplaying" song, or None.
-
-        The "cover" value will be an absolute URL.
-        """
-        return self._current
-
     def get_song_data(self, song_key):
-        """Return a dict for the (artist, title) key, or None.
+        """Return a dict for the build_key()-created key, or None.
 
         The "cover" value will be an absolute URL.
         """
-        key = build_key(song_key)
-        return self.songs.get(key)
+        return self.songs.get(song_key)
 
     def set_channel(self, channel):
         """Set the RP channel number, or None."""
@@ -74,7 +65,7 @@ class NowPlaying():
             self.url = NOWPLAYING_URL.format(channel)
         else:
             self.url = None
-        self._current = None
+        self.current = None
         self.next_update = 0
         self.songs = {}
 
@@ -90,25 +81,28 @@ class NowPlaying():
         now = time.time()
         if now < self.next_update:
             return
-        res = requests.get(self.url, timeout=2)
+        res = requests.get(self.url, timeout=UPDATE_TIMEOUT)
         res.raise_for_status()
         data = res.json()
-        current = None
         songs = {}
         for index, song in data['song'].items():
+            if song['artist'] is None:
+                song['artist'] = 'Unknown Artist'
+            if song['title'] is None:
+                song['title'] = 'Unknown Title'
             song['cover'] = COVER_URL.format(song['cover'])
             key = build_key((song['artist'], song['title']))
             songs[key] = song
             if index == '0':
-                current = song
+                self.current = song
         if BREAK_KEY not in songs:
             key = build_key(BREAK_KEY)
             songs[key] = {
                 'artist': BREAK_KEY[0],
-                'cover': BREAK_COVER_URL,
                 'title': BREAK_KEY[1],
+                'cover': BREAK_COVER_URL,
+                'duration': '30000',
             }
-        self._current = current
         self.songs = songs
         self.next_update = now + data['refresh']
 

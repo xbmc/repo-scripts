@@ -1,3 +1,8 @@
+## v1.0.4
+
+- Update logos
+- Improve metadata error handling
+
 ## v1.0.3
 
 - Add mix selection by script parameter
