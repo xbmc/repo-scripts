@@ -74,8 +74,8 @@ def log_location(old=False):
 
 
 log_entry_regex = re.compile(r"(?:\d{4}-\d{2}-\d{2} )?\d{2}:\d{2}:\d{2}")
-log_error_regex = re.compile(r" ERROR(?: <[^>]*>)?: ")
-log_warning_regex = re.compile(r" WARNING(?: <[^>]*>)?: ")
+log_error_regex = re.compile(r" (ERROR|error)(?: <[^>]*>)?: ")
+log_warning_regex = re.compile(r" (WARNING|warning)(?: <[^>]*>)?: ")
 log_exception_regex = re.compile(log_error_regex.pattern + "EXCEPTION ")
 
 
