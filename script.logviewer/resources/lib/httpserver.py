@@ -85,7 +85,7 @@ class ServerHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
     def log_message(self, fmt, *args):
-        logging.info(fmt % args)
+        logging.debug(fmt % args)
 
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
