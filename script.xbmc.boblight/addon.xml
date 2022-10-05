@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.boblight" name="Kodi Boblight" version="2.0.19" provider-name="bobo1on1, Memphiz, wrtlprnft">
+<addon id="script.xbmc.boblight" name="Kodi Boblight" version="2.0.20" provider-name="bobo1on1, Memphiz, wrtlprnft">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -54,6 +54,9 @@
       <icon>icon.png</icon>
     </assets>
     <news>
+2.0.20
+- fixed error when trying to display message about missing library
+
 2.0.19
 - added support for Kodi 19 (Matrix)
 
@@ -69,9 +72,6 @@
 2.0.15
 - rebrand from XBMC Boblight to Kodi Boblight
 - added tvos support
-
-2.0.14
-- [fix] - support new RenderCapture API introduced in Kodi 17
     </news>
   </extension>
 </addon>
