@@ -4,6 +4,7 @@ import xbmc
 from resources.lib.player import player_utils
 from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
 from resources.lib.player.playerstatus import PlayerStatus
+from resources.lib.player.playlist import PlayList
 from resources.lib.timer.timer import Timer
 from resources.lib.utils import datetime_utils
 from resources.lib.utils.vfs_utils import (convert_to_playlist,
@@ -35,7 +36,8 @@ class Player(xbmc.Player):
 
                 _resume_status = self._getResumeStatus(_type)
                 if _timer.is_resuming_timer():
-                    _active_players = self.getActivePlayersWithPlaylist(type=_type)
+                    _active_players = self.getActivePlayersWithPlaylist(
+                        type=_type)
                     if not _resume_status or _resume_status.isResuming():
                         self._resume_status[_type] = PlayerStatus(
                             _timer, state=_active_players[_type] if _type in _active_players else None)
@@ -51,7 +53,7 @@ class Player(xbmc.Player):
             seektime = None
             if self._seek_delayed_timer and _timer.is_play_at_start_timer():
                 td_now = self._getNow()
-                period = timer.get_matching_period(td_now)
+                period, scheduled = timer.get_matching_period(td_now)
                 if period:
                     seektime = datetime_utils.abs_time_diff(
                         td_now, period.getStart())
@@ -61,7 +63,8 @@ class Player(xbmc.Player):
 
         _save_resume(timer)
 
-        path, state_from_path = player_utils.parse_player_state_from_path(timer.path)
+        path, state_from_path = player_utils.parse_player_state_from_path(
+            timer.path)
 
         files, type = self._getFilesAndType(
             path, type=timer.media_type)
@@ -88,12 +91,12 @@ class Player(xbmc.Player):
                 playlist.shuffle()
 
             self._playAV(playlist=playlist,
-                        startpos=state_from_path.position if state_from_path and state_from_path.position > 0 else 0,
-                        seektime=seektime,
-                        repeat=player_utils.REPEAT_ALL if timer.repeat else player_utils.REPEAT_OFF,
-                        shuffled=timer.shuffle)
+                         startpos=state_from_path.position if state_from_path and state_from_path.position > 0 else 0,
+                         seektime=seektime,
+                         repeat=player_utils.REPEAT_ALL if timer.repeat else player_utils.REPEAT_OFF,
+                         shuffled=timer.shuffle)
 
-    def _playAV(self, playlist: xbmc.PlayList, startpos=0, seektime=None, repeat=player_utils.REPEAT_OFF, shuffled=False, speed=1.0) -> None:
+    def _playAV(self, playlist: PlayList, startpos=0, seektime=None, repeat=player_utils.REPEAT_OFF, shuffled=False, speed=1.0) -> None:
 
         self._playlist = playlist
         self._seektime = seektime
@@ -106,7 +109,7 @@ class Player(xbmc.Player):
         self.setShuffled(shuffled)
         self.setSpeed(speed)
         xbmc.executebuiltin("CECActivateSource")
-        self.play(playlist, startpos=startpos)
+        self.play(playlist.directUrl or playlist, startpos=startpos)
 
     def _playSlideShow(self, path: str, beginSlide=None, shuffle=False) -> None:
 
@@ -189,7 +192,8 @@ class Player(xbmc.Player):
                         pass
 
                     elif _type in [VIDEO, AUDIO]:
-                        label = state.playlist[state.position]["label"] if state.position < len(state.playlist) else ""
+                        label = state.playlist[state.position]["label"] if state.position < len(
+                            state.playlist) else ""
                         playlist = self._buildPlaylist(
                             paths=paths, type=state.type, label=label)
                         self._playAV(

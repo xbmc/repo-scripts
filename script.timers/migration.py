@@ -194,6 +194,19 @@ def migrate_from_4_to_5(addon: xbmcaddon.Addon) -> int:
     return 5
 
 
+def migrate_from_5_to_6(addon: xbmcaddon.Addon) -> int:
+
+    items = storage._load_from_storage()
+    for item in items:
+        item["start_offset"] = 0
+        item["end_offset"] = 0
+        item["duration_offset"] = 0
+
+    storage._save_to_storage(items)
+
+    return 6
+
+
 def migrate() -> None:
 
     addon = xbmcaddon.Addon()
@@ -213,6 +226,9 @@ def migrate() -> None:
 
     if settingsVersion == 4:
         settingsVersion = migrate_from_4_to_5(addon)
+
+    if settingsVersion == 5:
+        settingsVersion = migrate_from_5_to_6(addon)
 
     addon.setSettingInt("settingsVersion", settingsVersion)
 
