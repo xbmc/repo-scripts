@@ -151,7 +151,7 @@ class YoutubeCastV1(object):
     def _setup_routes(self, dial):
         dial.route('/apps/YouTube', 'GET', self._state_listener)
         dial.route('/apps/YouTube', 'POST', self._register_listener)
-        dial.route('/apps/YouTube/web-1', 'DELETE', self._remove_listener)
+        dial.route('/apps/YouTube/run', 'DELETE', self._remove_listener)
 
     def _state_listener(self):
         response.set_header('Content-Type', 'application/xml')

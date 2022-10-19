@@ -4,7 +4,6 @@
 ![Kodi Addon-Check (Matrix)](https://github.com/enen92/script.tubecast/workflows/Kodi%20Addon-Check%20(Matrix)/badge.svg)
 ![Python tests](https://github.com/enen92/script.tubecast/workflows/Python%20tests/badge.svg)
 ![License](http://img.shields.io/:license-mit-blue.svg?style=flat)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/767abb2a497c4f608c36e3db0ec6e39e)](https://www.codacy.com/app/92enen/script.tubecast?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=enen92/script.tubecast&amp;utm_campaign=Badge_Grade)
 
 ![fanart](https://github.com/enen92/script.tubecast/blob/matrix/resources/img/fanart.jpg?raw=true)
 
@@ -32,7 +31,7 @@ Support will only be provided via the forum thread in [Kodi's Forums](https://fo
 
 ### Known issues
 
-None, for now at least :)
+See [Issues](https://github.com/enen92/script.tubecast/issues)
 
 ### Translations
 
@@ -41,10 +40,6 @@ You can help translating this addon at [Kodi's weblate](https://kodi.weblate.clo
 ### Notes
 
 - Tubecast uses the `System.FriendlyName` infolabel to get the name to be advertised to the youtube application. In some systems this value is not available and the value defined for the setting `Kodi advertisement name (fallback)` will be used instead
-
-### Disclaimer
-
-*This is not a full chromecast implementation nor will never be. Please refrain from suggesting it as a feature request.*
 
 ### License
 

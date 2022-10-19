@@ -28,7 +28,6 @@ msgctxt "Addon Disclaimer"
 msgid "This is not a full chromecast implementation nor will it ever be. It will only work as long as Google keep backwards compatibility with the cast v1 protocol in the Youtube application. Deeply inspired by Leapcast and gotubecast projects"
 msgstr ""
 
-
 msgctxt "#32000"
 msgid "TubeCast"
 msgstr ""
