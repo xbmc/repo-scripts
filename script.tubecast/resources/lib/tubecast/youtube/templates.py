@@ -24,7 +24,7 @@ class YoutubeTemplates:
                     <activity-status xmlns="urn:chrome.google.com:cast">
                         <description>YouTube Receiver</description>
                     </activity-status>
-                    <link rel="run" href="web-1"/>
+                    <link rel="run" href="run"/>
                 </service>'''
 
     @staticmethod
