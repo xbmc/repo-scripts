@@ -123,17 +123,17 @@ class Main():
   
     if loaded == 1:                                #libboblight not found                                               
       if platform == 'linux':
-        xbmcgui.Dialog().ok(__scriptname__, localize(32504) + " " + localize(32505) + " " + localize(32506))
+        xbmcgui.Dialog().ok(__scriptname__, localize(32504) + " ".encode('utf-8') + localize(32505) + " ".encode('utf-8') + localize(32506))
       
       else:
         # ask user if we should fetch the lib for osx, ios, android and windows
-        if xbmcgui.Dialog().yesno(__scriptname__, localize(32504) + " " + localize(32509)):
+        if xbmcgui.Dialog().yesno(__scriptname__, localize(32504) + " ".encode('utf-8') + localize(32509)):
           tools_downloadLibBoblight(platform,settings.other_misc_notifications)
           loaded = bob.bob_loadLibBoblight(libpath,platform)
       
         
     elif loaded == 2:         #no ctypes available
-      xbmcgui.Dialog().ok(__scriptname__, localize(32507) + " " + localize(32508))
+      xbmcgui.Dialog().ok(__scriptname__, localize(32507) + " ".encode('utf-8') + localize(32508))
   
     return loaded  
 
