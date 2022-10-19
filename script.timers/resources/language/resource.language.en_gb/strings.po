@@ -37,6 +37,10 @@ msgctxt "#32005"
 msgid "Snooze timer"
 msgstr ""
 
+msgctxt "#32021"
+msgid "to"
+msgstr ""
+
 msgctxt "#32022"
 msgid "Cancel"
 msgstr ""
@@ -127,6 +131,10 @@ msgstr ""
 
 msgctxt "#32065"
 msgid "Time"
+msgstr ""
+
+msgctxt "#32066"
+msgid "+/- seconds"
 msgstr ""
 
 msgctxt "#32070"
@@ -683,4 +691,8 @@ msgstr ""
 
 msgctxt "#32384"
 msgid "Prevent lookscreen in MS Windows while Kodi is running"
+msgstr ""
+
+msgctxt "#32385"
+msgid "Optionally you can set an offset in seconds."
 msgstr ""

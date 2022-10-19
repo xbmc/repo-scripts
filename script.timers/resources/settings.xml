@@ -117,6 +117,23 @@
             <dependency type="enable" setting="timer_days" operator="!is">7</dependency>
           </dependencies>
         </setting>
+        <setting id="timer_start_offset" type="integer" label="32066" help="32385">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <minimum>-59</minimum>
+            <step>1</step>
+            <maximum>59</maximum>
+          </constraints>
+          <control type="slider" format="integer">
+            <popup>false</popup>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="enable" setting="timer_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_days" operator="!is">7</dependency>
+          </dependencies>
+        </setting>
         <setting id="timer_end_type" type="integer" label="32062" help="32333">
           <level>0</level>
           <default>0</default>
@@ -147,11 +164,47 @@
             <dependency type="visible" setting="timer_end_type" operator="is">1</dependency>
           </dependencies>
         </setting>
+        <setting id="timer_duration_offset" type="integer" label="32066" help="32385">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <minimum>-59</minimum>
+            <step>1</step>
+            <maximum>59</maximum>
+          </constraints>
+          <control type="slider" format="integer">
+            <popup>false</popup>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="enable" setting="timer_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_days" operator="!is">7</dependency>
+            <dependency type="visible" setting="timer_end_type" operator="is">1</dependency>
+          </dependencies>
+        </setting>        
         <setting id="timer_end" type="time" label="32065" help="32334">
           <level>0</level>
           <default>00:00</default>
           <control type="button" format="time">
             <heading>32065</heading>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="enable" setting="timer_days" operator="!is"></dependency>
+            <dependency type="enable" setting="timer_days" operator="!is">7</dependency>
+            <dependency type="visible" setting="timer_end_type" operator="is">2</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_end_offset" type="integer" label="32066" help="32385">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <minimum>-59</minimum>
+            <step>1</step>
+            <maximum>59</maximum>
+          </constraints>
+          <control type="slider" format="integer">
+            <popup>false</popup>
           </control>
           <dependencies>
             <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
@@ -533,7 +586,7 @@
         </setting>
         <setting id="settingsVersion" type="integer" label="32256" help="">
           <level>0</level>
-          <default>4</default>
+          <default>6</default>
           <control type="edit" format="integer">
             <heading>32256</heading>
           </control>

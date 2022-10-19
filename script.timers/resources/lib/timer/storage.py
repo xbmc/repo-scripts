@@ -129,9 +129,12 @@ def _init_timer_from_item(item: dict) -> Timer:
     timer.days = item["days"]
 
     timer.start = item["start"]
+    timer.start_offset = item["start_offset"]
     timer.end_type = item["end_type"]
     timer.end = item["end"]
+    timer.end_offset = item["end_offset"]
     timer.duration = item["duration"]
+    timer.duration_offset = item["duration_offset"]
 
     timer.notify = item["notify"]
 
@@ -159,7 +162,9 @@ def save_timer(timer: Timer) -> None:
     item = {
         "days": timer.days,
         "duration": timer.duration,
+        "duration_offset": timer.duration_offset,
         "end": timer.end,
+        "end_offset" : timer.end_offset,
         "end_type": timer.end_type,
         "fade": timer.fade,
         "id": timer.id,
@@ -172,6 +177,7 @@ def save_timer(timer: Timer) -> None:
         "resume": timer.resume,
         "shuffle": timer.shuffle,
         "start": timer.start,
+        "start_offset" : timer.start_offset,
         "system_action": timer.system_action,
         "vol_min": timer.vol_min,
         "vol_max": timer.vol_max

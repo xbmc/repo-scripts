@@ -6,6 +6,7 @@ import xbmcaddon
 import xbmcgui
 import xbmcvfs
 from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
+from resources.lib.player.playlist import PlayList
 
 _PVR_CHANNELS_MATCHER = "^pvr://channels/.*\.pvr$"
 _PVR_TV_CHANNELS_MATCHER = "^pvr://channels/tv/.*\.pvr$"
@@ -201,7 +202,7 @@ def has_items_in_path(path: str) -> bool:
     return len(scan_item_paths(path, limit=1)) > 0
 
 
-def build_playlist(path: str, label: str) -> 'xbmc.PlayList':
+def build_playlist(path: str, label: str) -> 'PlayList':
 
     if has_items_in_path(path):
         paths, type = get_files_and_type(path)
@@ -212,16 +213,20 @@ def build_playlist(path: str, label: str) -> 'xbmc.PlayList':
         return convert_to_playlist([path], type=type, label=label)
 
 
-def convert_to_playlist(paths: 'list[str]', type=VIDEO, label="") -> 'xbmc.PlayList':
+def convert_to_playlist(paths: 'list[str]', type=VIDEO, label="") -> 'PlayList':
 
     _type_id = TYPES.index(type or VIDEO)
-    playlist = xbmc.PlayList(_type_id)
+    playlist = PlayList(_type_id)
     playlist.clear()
 
     for path in paths:
         label = label if label and len(paths) == 1 else get_file_name(path)
         li = xbmcgui.ListItem(label=label, path=path)
         playlist.add(url=path, listitem=li)
+        if is_pvr(path) or is_audio_plugin(path) or is_video_plugin(path):
+            playlist.clear()
+            playlist.directUrl = path
+            break
 
     return playlist
 
@@ -246,7 +251,7 @@ def scan_item_paths(path: str, limit=None) -> 'list[str]':
 
         return _result
 
-    if not path:
+    if not path or is_pvr(path) or is_audio_plugin(path) or is_video_plugin(path):
         files = list()
 
     elif is_playlist(path):

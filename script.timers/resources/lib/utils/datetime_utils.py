@@ -89,7 +89,7 @@ def periods_to_human_readable(days: 'list[int]', start: str, end="") -> str:
 
     if end:
         human += " %s %s %s %s" % (addon.getLocalizedString(32042),
-                                   start, addon.getLocalizedString(32024), end)
+                                   start, addon.getLocalizedString(32021), end)
     else:
         human += " %s %s" % (addon.getLocalizedString(32041), start)
 

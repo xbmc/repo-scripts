@@ -43,7 +43,7 @@ def preview(addon: xbmcaddon.Addon, timerid: int, player: 'xbmc.Player') -> None
 
         else:
             playlist = build_playlist(path=timer.path, label=timer.label)
-            player.play(playlist)
+            player.play(playlist.directUrl or playlist)
 
     else:
         xbmcgui.Dialog().notification(addon.getLocalizedString(

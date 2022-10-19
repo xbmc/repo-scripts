@@ -33,10 +33,10 @@ class SchedulerAction:
     _forceResumeResetTypes = None
 
     _fader = None
-    _volume = None
 
+    _next_event = None
     _hasStartOrEndTimer = False
-    _hasFader = False
+    hasFader = False
 
     __is_unit_test__ = False
 
@@ -45,7 +45,7 @@ class SchedulerAction:
         self._player = player
         self.reset()
 
-    def initFromTimers(self, timers: 'list[Timer]', now: timedelta) -> None:
+    def calculate(self, timers: 'list[Timer]', now: timedelta) -> 'timedelta':
 
         def _collectBeginningTimer(timer: Timer, period: Period) -> None:
 
@@ -74,9 +74,6 @@ class SchedulerAction:
             elif timer.is_play_at_end_timer():
                 self._setTimerToPlayAny(timerWithPeriod)
 
-            if timer.is_fading_timer():
-                self._volume = self._volume if self._volume and self._volume > timer.return_vol else timer.return_vol
-
         def _collectFadingTimer(timer: Timer, period: Period) -> None:
 
             if (self._fader == None
@@ -85,18 +82,21 @@ class SchedulerAction:
 
         def _collectTimers(timers: 'list[Timer]', now: timedelta) -> None:
 
+            self._next_event = None
             self._hasStartOrEndTimer = False
-            self._hasFader = False
+            self.hasFader = False
             for timer in timers:
-                period = timer.get_matching_period(now)
+                period, scheduled = timer.get_matching_period(now)
 
                 if period is not None and not timer.active:
                     _collectBeginningTimer(timer, period)
+                    self._next_event = now
                     self._hasStartOrEndTimer = True
 
                 elif period is None and timer.active:
                     _collectEndingTimer(timer, Period(
                         now - timer.duration_timedelta, now))
+                    self._next_event = now
                     self._hasStartOrEndTimer = True
 
                 elif period is not None and timer.is_play_at_start_timer() and timer.is_stop_at_end_timer():
@@ -104,7 +104,10 @@ class SchedulerAction:
 
                 if period is not None and timer.is_fading_timer():
                     _collectFadingTimer(timer, period)
-                    self._hasFader = True
+                    self.hasFader = True
+
+                if scheduled is not None:
+                    self._next_event = scheduled if self._next_event is None or self._next_event > scheduled else self._next_event
 
         def _handleNestedStoppingTimer(timerToStop: TimerWithPeriod) -> None:
 
@@ -210,33 +213,6 @@ class SchedulerAction:
             if fader and (self._timerToStopAV == fader or self._timerToStopSlideshow == fader):
                 self._fader = None
 
-        def _determineVolume(now: timedelta) -> None:
-
-            if self._getTimerWithSystemAction():
-                self._volume = self._player.getDefaultVolume()
-                return
-
-            fader = self._getFader()
-            if not fader:
-                return
-
-            timer = fader.getTimer()
-
-            delta_now_start = abs_time_diff(
-                now, fader.getPeriod().getStart())
-            delta_end_start = abs_time_diff(
-                fader.getPeriod().getEnd(), fader.getPeriod().getStart())
-            delta_percent = delta_now_start / delta_end_start
-
-            vol_min = timer.vol_min
-            vol_max = timer.return_vol if timer.fade == FADE_OUT_FROM_CURRENT else timer.vol_max
-            vol_diff = vol_max - vol_min
-
-            if timer.fade == FADE_IN_FROM_MIN:
-                self._volume = int(vol_min + vol_diff * delta_percent)
-            else:
-                self._volume = int(vol_max - vol_diff * delta_percent)
-
         _collectTimers(timers, now)
         if self._hasStartOrEndTimer:
             _handleNestedStoppingTimer(self._getTimerToStopAV())
@@ -245,8 +221,7 @@ class SchedulerAction:
             _handleSystemAction()
             _sumupEffectivePlayerAction()
 
-        if self._hasStartOrEndTimer or self._hasFader:
-            _determineVolume(now)
+        return self._next_event
 
     def _getBeginningTimers(self) -> 'list[TimerWithPeriod]':
 
@@ -280,6 +255,23 @@ class SchedulerAction:
 
         return self._fader
 
+    def getFaderInterval(self) -> float:
+
+        if not self.hasFader:
+            return None
+
+        fader = self._getFader()
+        timer = fader.getTimer()
+
+        delta_end_start = abs_time_diff(
+            fader.getPeriod().getEnd(), fader.getPeriod().getStart())
+
+        vol_min = timer.vol_min
+        vol_max = timer.return_vol if timer.fade == FADE_OUT_FROM_CURRENT else timer.vol_max
+        vol_diff = vol_max - vol_min
+
+        return delta_end_start/vol_diff
+
     def _setTimerToPlayAny(self, twp: TimerWithPeriod) -> None:
 
         if twp.getTimer().is_script_timer():
@@ -307,7 +299,32 @@ class SchedulerAction:
 
         return self._timerWithSystemAction
 
-    def perform(self) -> None:
+    def fade(self, now: timedelta) -> None:
+
+        fader = self._getFader()
+        if not fader:
+            return
+
+        timer = fader.getTimer()
+
+        delta_now_start = abs_time_diff(
+            now, fader.getPeriod().getStart())
+        delta_end_start = abs_time_diff(
+            fader.getPeriod().getEnd(), fader.getPeriod().getStart())
+        delta_percent = delta_now_start / delta_end_start
+
+        vol_min = timer.vol_min
+        vol_max = timer.return_vol if timer.fade == FADE_OUT_FROM_CURRENT else timer.vol_max
+        vol_diff = vol_max - vol_min
+
+        if timer.fade == FADE_IN_FROM_MIN:
+            _volume = int(round(vol_min + vol_diff * delta_percent, 0))
+        else:
+            _volume = int(round(vol_max - vol_diff * delta_percent, 0))
+
+        self._player.setVolume(_volume)
+
+    def perform(self, now: timedelta) -> None:
 
         def _performPlayerAction() -> None:
 
@@ -334,10 +351,19 @@ class SchedulerAction:
                     self._player.resumeFormerOrStop(
                         timerToStopSlideshow.getTimer())
 
-        def _setVolume() -> None:
+        def _setVolume(now: timedelta) -> None:
 
-            if self._volume != None:
-                self._player.setVolume(self._volume)
+            if self._getTimerWithSystemAction():
+                self._player.setVolume(self._player.getDefaultVolume())
+                return
+
+            else:
+                self.fade(now)
+
+            return_vols = [twp.getTimer().return_vol for twp in self._getEndingTimers(
+            ) if twp.getTimer().is_fading_timer()]
+            if return_vols:
+                self._player.setVolume(max(return_vols))
 
         def _showNotifications() -> None:
 
@@ -392,7 +418,7 @@ class SchedulerAction:
         if self._hasStartOrEndTimer:
             _performPlayerAction()
 
-        _setVolume()
+        _setVolume(now)
 
         if self._hasStartOrEndTimer:
             _runScripts()
@@ -407,8 +433,9 @@ class SchedulerAction:
         self._endingTimers = list()
         self._forceResumeResetTypes = list()
 
+        self._next_event = None
         self._hasStartOrEndTimer = False
-        self._hasFader = False
+        self.hasFader = False
 
         self._fader = None
         self._timerToPlayAV = None
@@ -417,4 +444,3 @@ class SchedulerAction:
         self._timerToStopSlideshow = None
         self._timersToRunScript = list()
         self._timerWithSystemAction = None
-        self._volume = None

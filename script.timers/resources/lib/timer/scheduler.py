@@ -1,3 +1,4 @@
+from datetime import timedelta
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -12,7 +13,7 @@ from resources.lib.utils.system_utils import (is_fullscreen,
                                               set_powermanagement_displaysoff,
                                               set_windows_unlock)
 
-CHECK_INTERVAL = 10
+CHECK_INTERVAL = 20
 
 
 class Scheduler(xbmc.Monitor):
@@ -22,6 +23,8 @@ class Scheduler(xbmc.Monitor):
     _pause_from = None
     _pause_until = None
     _offset = 0
+
+    _next_event = None
 
     _powermanagement_displaysoff = 0
     _disabled_powermanagement_displaysoff = False
@@ -53,6 +56,12 @@ class Scheduler(xbmc.Monitor):
             restart = False
             changed = (former_timer.days != timer_from_storage.days)
             changed |= (former_timer.start != timer_from_storage.start)
+            changed |= (former_timer.start_offset !=
+                        timer_from_storage.start_offset)
+            changed |= (former_timer.end_offset !=
+                        timer_from_storage.end_offset)
+            changed |= (former_timer.duration_offset !=
+                        timer_from_storage.duration_offset)
             changed |= (former_timer.end_type != timer_from_storage.end_type)
             if former_timer.end_type == END_TYPE_DURATION:
                 changed |= (former_timer.duration !=
@@ -113,6 +122,7 @@ class Scheduler(xbmc.Monitor):
                 self._player.resetResumeOfTimer(timer=removed_timer)
 
         self._timers = scheduled_timers
+        self._next_event = None
 
         addon = xbmcaddon.Addon()
         self._player.setSeekDelayedTimer(addon.getSettingBool("resume"))
@@ -143,15 +153,17 @@ class Scheduler(xbmc.Monitor):
         prev_windows_unlock = False
 
         action = SchedulerAction(self._player)
+
+        interval = CHECK_INTERVAL
         while not self.abortRequested():
 
             dt_now, td_now = get_now(offset=self._offset)
 
             if self._pause_from and self._pause_until and dt_now >= self._pause_from and dt_now < self._pause_until:
 
-                pass
+                interval = CHECK_INTERVAL - td_now.seconds % CHECK_INTERVAL
 
-            else:
+            elif self._timers:
 
                 if self._pause_until and dt_now >= self._pause_until:
                     self._pause_from = None
@@ -160,9 +172,18 @@ class Scheduler(xbmc.Monitor):
                     xbmcgui.Dialog().notification(addon.getLocalizedString(
                         32027), addon.getLocalizedString(32166))
 
-                action.initFromTimers(timers=self._timers, now=td_now)
-                action.perform()
-                action.reset()
+                if self._next_event is None or self._next_event <= td_now:
+                    self._next_event = action.calculate(
+                        timers=self._timers, now=td_now)
+
+                if self._next_event and self._next_event <= td_now:
+                    action.perform(now=td_now)
+                    interval = action.getFaderInterval() or CHECK_INTERVAL
+                    action.reset()
+                    self._next_event = None
+
+                elif action.hasFader:
+                    action.fade(td_now)
 
             if self._windows_unlock != prev_windows_unlock:
                 prev_windows_unlock = set_windows_unlock(self._windows_unlock)
@@ -170,8 +191,9 @@ class Scheduler(xbmc.Monitor):
             if self._powermanagement_displaysoff:
                 self._prevent_powermanagement_displaysoff()
 
-            if self.waitForAbort(
-                    CHECK_INTERVAL - td_now.seconds % CHECK_INTERVAL):
+            wait = min(
+                interval, (self._next_event - td_now).total_seconds() if self._next_event else 3)
+            if self.waitForAbort(wait):
                 break
 
     def _prevent_powermanagement_displaysoff(self) -> None:
