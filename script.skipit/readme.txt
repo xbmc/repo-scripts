@@ -14,18 +14,11 @@ Installation
 
 1/ Launch Kodi >> Add-ons >> Get More >> .. >> Install from repository
 
-2/ This addon needs to be bound to a key to launch its functionality while watching a video. Typically this is the "Right Arrow" key 
-   on your keyboard or remote control.
-   * Use the Keymap Editor plugin to bind the "Right Arrow" key to this addon in Fullscreen Video and Fullscreen Live TV Windows
-   --->  Addon 
-      ---> Keymap Editor
-         ---> Edit
-            ---> Window - Fullscreen Video   (repeat for Fullscreen Live TV)
-               ---> Category - Add-ons
-                  ---> Action - Launch SkipIt
-                     ---> Edit 
-                        ---> Press the 'Right Arrow' key when prompted or the right arrow on the remote control
-    --- Cancel your way back through the screens, remembering to save as the final step.
+2/ When installed, this addon binds the 'Right Arrow' key to load the addon when watching a video.
+   If you wish to use a different key you can either modify the file .kodi/userdata/keymaps/skipit.xml 
+   or
+   Remove the content from .kodi/userdata/keymaps/skipit.xml (do not delete the file) 
+   and use the keymap editor plugin to define the new key to use. 
     
 =============
 Configuration

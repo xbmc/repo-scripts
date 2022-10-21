@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skipit" name="SkipIt" version="1.0.2" provider-name="shartrec">
+<addon id="script.skipit" name="SkipIt" version="1.0.3" provider-name="shartrec">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
 		<provides>executable</provides>
 	</extension>
+	<extension point="xbmc.service" library="autoexec.py"/>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en_GB">Skip It</summary>
