@@ -21,7 +21,7 @@
 				<control type="label">
 					<left>10</left>
 					<label>$INFO[ListItem.Label]</label>
-					<textcolor>ffeeeeee</textcolor>
+					<textcolor>ffffffff</textcolor>
 				</control>
 			</itemlayout>
 			<focusedlayout height="30">
@@ -32,7 +32,7 @@
 				<control type="label">
 					<left>10</left>
 					<label>$INFO[ListItem.Label]</label>
-					<textcolor>ffeeeeee</textcolor>
+					<textcolor>ff000000</textcolor>
 				</control>
 			</focusedlayout>
 		</control>
