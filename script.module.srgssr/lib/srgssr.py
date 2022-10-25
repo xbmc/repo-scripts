@@ -906,10 +906,68 @@ class SRGSSR:
         """
         self.log(f'build_date_menu, date_string = {date_string}')
 
-        # API v3 use the date in sortable format, i.e. year first
+        # Note: We do not use `build_menu_apiv3` here because the structure
+        # of the response is quite different from other typical responses.
+        # If it is possible to integrate this into `build_menu_apiv3` without
+        # too many changes, it might be a good idea.
+        mode = 60
         elems = date_string.split('-')
-        query = f'videos-by-date/{elems[2]}-{elems[1]}-{elems[0]}'
-        return self.build_menu_apiv3(query)
+        query = (f'tv-program-guide?date={elems[2]}-{elems[1]}-{elems[0]}'
+                 f'&businessUnits={self.bu}')
+        js = json.loads(self.open_url(self.apiv3_url + query))
+        data = utils.try_get(js, 'data', list, [])
+        for item in data:
+            if not isinstance(item, dict):
+                continue
+            channel = utils.try_get(
+                item, 'channel', data_type=dict, default={})
+            name = utils.try_get(channel, 'title')
+            if not name:
+                continue
+            image = utils.try_get(channel, 'imageUrl')
+            list_item = xbmcgui.ListItem(label=name)
+            list_item.setProperty('IsPlayable', 'false')
+            list_item.setArt({'thumb': image, 'fanart': image})
+            channel_date_id = name.replace(' ', '-') + '_' + date_string
+            cache_id = self.addon_id + '.' + channel_date_id
+            programs = utils.try_get(
+                item, 'programList', data_type=list, default=[])
+            self.cache.set(cache_id, programs)
+            self.log(f'build_date_menu: Cache set with id = {cache_id}')
+            url = self.build_url(mode=mode, name=cache_id)
+            xbmcplugin.addDirectoryItem(
+                handle=self.handle, url=url, listitem=list_item, isFolder=True)
+
+    def build_specific_date_menu(self, cache_id):
+        """
+        Builds a list of available videos from a specific channel
+        and specific date given by cache_id from `build_date_menu`.
+
+        Keyword arguments:
+        cache_id -- cache id set by `build_date_menu`
+        """
+        self.log(f'build_specific_date_menu, cache_id = {cache_id}')
+        program_list = self.cache.get(cache_id)
+
+        # videos might be listed multiple times, but we only
+        # want them a single time:
+        already_seen = set()
+        for pitem in program_list:
+            media_urn = utils.try_get(pitem, 'mediaUrn')
+            if not media_urn or 'video' not in media_urn:
+                continue
+            if media_urn in already_seen:
+                continue
+            already_seen.add(media_urn)
+            name = utils.try_get(pitem, 'title')
+            image = utils.try_get(pitem, 'imageUrl')
+            subtitle = utils.try_get(pitem, 'subtitle')
+            list_item = xbmcgui.ListItem(label=name)
+            list_item.setInfo('video', {'plotoutline': subtitle})
+            list_item.setArt({'thumb': image, 'fanart': image})
+            url = self.build_url(mode=100, name=media_urn)
+            xbmcplugin.addDirectoryItem(
+                handle=self.handle, url=url, listitem=list_item, isFolder=True)
 
     def build_search_menu(self):
         """
@@ -1321,7 +1379,7 @@ class SRGSSR:
             with open(file_path, 'r') as f:
                 json_file = json.load(f)
             try:
-                return[entry['search'] for entry in json_file]
+                return [entry['search'] for entry in json_file]
             except KeyError:
                 self.log(f'Unexpected file structure for {filename}.')
                 return []
