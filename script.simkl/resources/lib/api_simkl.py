@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import sys
 import json
@@ -16,10 +16,9 @@ from resources.lib.utils import set_setting
 from resources.lib.utils import log
 from resources.lib.utils import __addon__
 
-REDIRECT_URI = "http://simkl.com"
+REDIRECT_URI = "https://simkl.com"
 APIKEY = '62a587ec2a82dbed02c6ab48b923d72e775cb1096d2de60d04502413e36ef100'
 SECRET = '3e9d1563659a94a930c282d3d38cc01ece2ab5d769ae449cff1ff6f13d9b732e'
-
 
 class Simkl:
     def __init__(self):
@@ -131,6 +130,43 @@ class Simkl:
         log("Send: {0}".format(json.dumps(s_data)))
         while True and s_data:
             r = self._http("/sync/history/", body=json.dumps(s_data), headers=self.headers)
+            if r is None: return False
+            break
+        return True
+
+    def mark_as_unwatched(self, item):
+        if not item: return False
+
+        log("UNMARK: {0}".format(item))
+
+        s_data = {}
+        if item["type"] == "shows":
+            # TESTED
+            s_data[item["type"]] = [{
+                "title": item["title"],
+                "ids": item['ids'],
+                "seasons": [{
+                    "number": item['season'],
+                    "episodes": [{
+                        "number": item['episode']
+                    }]
+                }]
+            }]
+        elif item["type"] == "movies":
+            _prep = {
+                "title": item["title"],
+                "year": item["year"],
+            }
+            if "simkl" in item:
+                _prep["ids"] = {"simkl": item["simkl"]}
+            elif "ids" in item:
+                _prep["ids"] = item['ids']
+
+            s_data[item["type"]] = [_prep]
+
+        log("Send: {0}".format(json.dumps(s_data)))
+        while True and s_data:
+            r = self._http("/sync/history/remove", body=json.dumps(s_data), headers=self.headers)
             if r is None: return False
             break
         return True
