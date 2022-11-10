@@ -7,3 +7,4 @@ Currently, these Kodi plugins use `script.module.srgssr`:
 * [plugin.video.srfplaytv](https://github.com/goggle/plugin.video.srfplaytv)
 * [plugin.video.rtsplaytv](https://github.com/goggle/plugin.video.rtsplaytv)
 * [plugin.video.rsiplaytv](https://github.com/goggle/plugin.video.rsiplaytv)
+* [plugin.video.swiplaytv](https://github.com/goggle/plugin.video.swiplaytv)
