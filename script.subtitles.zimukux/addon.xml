@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.6" provider-name="pizzamx">
+<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.8" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -20,6 +20,12 @@
             <fanart>resources/fanart.png</fanart>
         </assets>
         <news>
+v0.1.8(2022/10/10)
+- zimuku.org captcha design changed again and this plugin works again
+
+v0.1.7(2022/6/18)
+- zimuku.org code changed again, made adaptions
+
 v0.1.6(2022/5/25)
 - Adaption made for Zimuku's latest "anti-spoofing" mechanism (contribute by @SaneBow)
 - Optimization to reduce the number of requests (contribute by @SaneBow)
