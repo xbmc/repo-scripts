@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <addon id="script.video.nfl.gamepass"
     name="NFL Game Pass"
-    version="2022.05.14"
+    version="2022.11.14"
     provider-name="Alexqw,divingmule,BaumSchorle,eriksoderblom,kaileu,emilsvennesson,baardisk,Duke">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -20,12 +20,12 @@
     <license>GPL-2.0-only</license>
     <source>https://github.com/pigskin/kodi-gamepass</source>
     <disclaimer lang="en_GB">This addon requires you to have a subscription to NFL Game Pass.[CR]Please note that these subscriptions are region restricted by the NFL.[CR]This addon is completely unofficial and is /not/ endorsed by the NFL in any way.</disclaimer>
-    <news>2022.05.14
-    + Adapt to API changes implemented by Diva (jm-duke)
-    + Fix issue with LV Raiders logo (jm-duke)
-    + Fix display of 'None' for focused games in game week view (jm-duke)
-    + Implemented some improvements highlighted by Bas Rieter (jm-duke)
-    + Minor refactorings (jm-duke)
+    <news>2022.11.14
+    + Fix open settings from app bug (ohhmyy)
+    + Use updated team logos (ohhmyy)
+    + Remove code for fixed bitrates - adaptive is default (jm-duke)
+    + Add busy dialog to NFL Network (ohhmyy)
+    + Fix issue with recent NFL API change (jm-duke)
     </news>
     <assets>
       <icon>resources/art/icon.png</icon>

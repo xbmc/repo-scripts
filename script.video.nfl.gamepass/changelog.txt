@@ -1,3 +1,10 @@
+2022.11.14 -- Aaron Rodgers Edition
++ Fix open settings from app bug (ohhmyy)
++ Use updated team logos (ohhmyy)
++ Remove code for fixed bitrates - adaptive is default (jm-duke)
++ Add busy dialog to NFL Network (ohhmyy)
++ Fix issue with recent NFL API change (jm-duke)
+
 2022.05.14 -- Drew Brees Edition
 + Adapt to API changes implemented by Diva (jm-duke)
 + Fix issue with LV Raiders logo (jm-duke)

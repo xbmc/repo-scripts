@@ -495,6 +495,7 @@ class GamepassGUI(xbmcgui.WindowXML):
                         logger.debug('Error while reading seasons weeks and games')
                         logger.debug('Trace Message:\n{}'.format(format_exc()))
                 elif controlId == 130:
+                    xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
                     self.main_selection = 'NFL Network'
                     self.window.setProperty('NW_clicked', 'true')
                     self.window.setProperty('GP_clicked', 'false')
@@ -509,7 +510,7 @@ class GamepassGUI(xbmcgui.WindowXML):
 
                     self.live_list.addItems(self.live_items)
                     self.display_nfln_seasons()
-
+                    xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
                 return
 
             if self.main_selection == 'GamePass':

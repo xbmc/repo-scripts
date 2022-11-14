@@ -933,7 +933,10 @@ class pigskin(object):
             except Exception as e:
                 raise e
 
-            streams[vs_format] = data['ContentUrl'] + '|' + urlencode(m3u8_header)
+            if isinstance(data, dict) and 'ContentUrl' in data:
+                streams[vs_format] = data['ContentUrl'] + '|' + urlencode(m3u8_header)
+            else:
+                continue
 
         return streams
 
