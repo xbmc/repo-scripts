@@ -96,17 +96,17 @@ class Scores:
                 sleep_seconds = int((first_game_start - datetime.datetime.utcnow()).total_seconds())
                 if sleep_seconds >= 6600:
                     # hour and 50 minutes or more just display hours
-                    delay_time = "%s hours" % round(sleep_seconds / 3600)
+                    delay_time = f" {round(sleep_seconds / 3600)} hours"
                 elif sleep_seconds >= 4200:
                     # hour and 10 minutes
-                    delay_time = "an hour and %s minutes" % round((sleep_seconds / 60) - 60)
+                    delay_time = f"an hour and {round((sleep_seconds / 60) - 60)} minutes"
                 elif sleep_seconds >= 3000:
                     # 50 minutes
                     delay_time = "an hour"
                 else:
-                    delay_time = "%s minutes" % round((sleep_seconds / 60))
+                    delay_time = f"{round((sleep_seconds / 60))} minutes"
 
-                message = "First game starts in about %s" % delay_time
+                message = f"First game starts in about {delay_time}"
                 self.notify(self.local_string(30300), message)
                 self.monitor.waitForAbort(sleep_seconds)
 
@@ -149,7 +149,7 @@ class Scores:
 
         game_clock = game['status']['detailedState']
         if 'in progress' in game_clock.lower():
-            game_clock = '%s %s' % (game['linescore']['currentPeriodTimeRemaining'], game['linescore']['currentPeriodOrdinal'])
+            game_clock = f"{game['linescore']['currentPeriodTimeRemaining']} {game['linescore']['currentPeriodOrdinal']}"
 
         # Disable spoiler by not showing score notifications for the game the user is currently watching
         if ateam.lower() not in video_playing and hteam.lower() not in video_playing:
@@ -175,45 +175,46 @@ class Scores:
         # Highlight score of the winning team
         title = self.local_string(30355)
         if new_item['away_score'] > new_item['home_score']:
-            away_score = '[COLOR=%s]%s %s[/COLOR]' % (self.score_color, new_item['away_name'], new_item['away_score'])
-            home_score = '%s %s' % (new_item['home_name'], new_item['home_score'])
+            away_score = f"[COLOR={self.score_color}]{new_item['away_name']} {new_item['away_score']}[/COLOR]"
+            home_score = f"{new_item['home_name']} {new_item['home_score']}"
         else:
-            away_score = '%s %s' % (new_item['away_name'], new_item['away_score'])
-            home_score = '[COLOR=%s]%s %s[/COLOR]' % (self.score_color, new_item['home_name'], new_item['home_score'])
+            away_score = f"{new_item['away_name']} {new_item['away_score']}"
+            home_score = f"[COLOR={self.score_color}]{new_item['home_name']} {new_item['home_score']}[/COLOR]"
 
-        game_clock = '[COLOR=%s]%s[/COLOR]' % (self.gametime_color, new_item['game_clock'])
-        message = '%s    %s    %s' % (away_score, home_score, game_clock)
+        game_clock = f"[COLOR={self.gametime_color}]{new_item['game_clock']}[/COLOR]"
+        message = f"{away_score}    {home_score}    {game_clock}"
         return title, message
 
     def game_started_message(self, new_item):
         title = self.local_string(30358)
-        message = '%s vs %s' % (new_item['away_name'], new_item['home_name'])
+        message = f"{new_item['away_name']} vs {new_item['home_name']}"
         return title, message
 
     def period_change_message(self, new_item):
         # Notify user that the game has started / period has changed
         title = self.local_string(30370)
-        message = '%s %s    %s %s   [COLOR=%s]%s has started[/COLOR]' % \
-                  (new_item['away_name'], new_item['away_score'], new_item['home_name'], new_item['home_score'],
-                   self.gametime_color, new_item['period'])
+        message = f"{new_item['away_name']} {new_item['away_score']}    " \
+                  f"{new_item['home_name']} {new_item['home_score']}   " \
+                  f"[COLOR={self.gametime_color}]{new_item['period']} has started[/COLOR]"
+
         return title, message
 
     def goal_scored_message(self, new_item, old_item):
         # Highlight score for the team that just scored a goal
-        away_score = '%s %s' % (new_item['away_name'], new_item['away_score'])
-        home_score = '%s %s' % (new_item['home_name'], new_item['home_score'])
-        game_clock = '[COLOR=%s]%s[/COLOR]' % (self.gametime_color, new_item['game_clock'])
+        away_score = f"{new_item['away_name']} {new_item['away_score']}"
+        home_score = f"{new_item['home_name']} {new_item['home_score']}"
+        game_clock = f"[COLOR={self.gametime_color}]{new_item['game_clock']}[/COLOR]"
 
         if new_item['away_score'] != old_item['away_score']:
-            away_score = '[COLOR=%s]%s[/COLOR]' % (self.score_color, away_score)
+            away_score = f"[COLOR={self.score_color}]{away_score}[/COLOR]"
         if new_item['home_score'] != old_item['home_score']:
-            home_score = '[COLOR=%s]%s[/COLOR]' % (self.score_color, home_score)
+            home_score = f"[COLOR={self.score_color}]{home_score}[/COLOR]"
 
         if self.addon.getSetting(id="goal_desc") == 'false':
             title = self.local_string(30365)
-            message = '%s    %s    %s' % (away_score, home_score, game_clock)
+            message = f"{away_score}    {home_score}    {game_clock}"
         else:
-            title = '%s    %s    %s' % (away_score, home_score, game_clock)
+            title = f"{away_score}    {home_score}    {game_clock}"
             message = new_item['goal_desc']
 
         return title, message
