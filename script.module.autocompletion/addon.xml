@@ -9,8 +9,8 @@
         <summary lang="en">Module providing some AutoCompletion functions</summary>
         <description lang="en">Module providing some AutoCompletion functions</description>
         <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
-        <source>https://github.com/phil65/script.module.autocompletion</source>
+        <license>GPL-2.0-or-later</license>
+        <source>https://github.com/finkleandeinhorn/script.module.autocompletion</source>
         <assets>
             <icon>icon.png</icon>
         </assets>
