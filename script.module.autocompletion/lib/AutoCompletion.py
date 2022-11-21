@@ -180,9 +180,9 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
     now = time.time()
     hashed_url = hashlib.md5(url.encode('utf-8')).hexdigest()
     if folder:
-        cache_path = xbmc.translatePath(os.path.join(ADDON_DATA_PATH, folder))
+        cache_path = xbmcvfs.translatePath(os.path.join(ADDON_DATA_PATH, folder))
     else:
-        cache_path = xbmc.translatePath(os.path.join(ADDON_DATA_PATH))
+        cache_path = xbmcvfs.translatePath(os.path.join(ADDON_DATA_PATH))
     path = os.path.join(cache_path, hashed_url + ".txt")
     cache_seconds = int(cache_days * 86400.0)
     if xbmcvfs.exists(path) and ((now - os.path.getmtime(path)) < cache_seconds):
