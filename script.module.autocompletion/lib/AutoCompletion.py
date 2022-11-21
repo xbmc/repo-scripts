@@ -31,13 +31,16 @@ def get_autocomplete_items(search_str, limit=10, provider=None):
     """
     if xbmc.getCondVisibility("System.HasHiddenInput"):
         return []
-    if SETTING("autocomplete_provider") == "youtube":
+
+    setting = SETTING("autocomplete_provider").lower()
+
+    if setting == "youtube":
         provider = GoogleProvider(youtube=True, limit=limit)
-    elif SETTING("autocomplete_provider") == "google":
+    elif setting == "google":
         provider = GoogleProvider(limit=limit)
-    elif SETTING("autocomplete_provider") == "bing":
+    elif setting == "bing":
         provider = BingProvider(limit=limit)
-    elif SETTING("autocomplete_provider") == "tmdb":
+    elif setting == "tmdb":
         provider = TmdbProvider(limit=limit)
     else:
         provider = LocalDictProvider(limit=limit)
