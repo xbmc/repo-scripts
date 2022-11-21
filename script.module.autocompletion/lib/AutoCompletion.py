@@ -16,11 +16,13 @@ import xbmcaddon
 import xbmcvfs
 
 SCRIPT_ID = "script.module.autocompletion"
-ADDON = xbmcaddon.Addon(SCRIPT_ID)
-SETTING = ADDON.getSetting
-ADDON_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo("path"))
-ADDON_ID = ADDON.getAddonInfo("id")
-ADDON_DATA_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo("profile"))
+SCRIPT_ADDON = xbmcaddon.Addon(SCRIPT_ID)
+PLUGIN_ID = "plugin.program.autocompletion"
+PLUGIN_ADDON = xbmcaddon.Addon(PLUGIN_ID)
+SETTING = PLUGIN_ADDON.getSetting
+ADDON_PATH = xbmcvfs.translatePath(SCRIPT_ADDON.getAddonInfo("path"))
+ADDON_ID = SCRIPT_ADDON.getAddonInfo("id")
+ADDON_DATA_PATH = xbmcvfs.translatePath(SCRIPT_ADDON.getAddonInfo("profile"))
 
 
 def get_autocomplete_items(search_str, limit=10, provider=None):
