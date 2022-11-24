@@ -1,3 +1,8 @@
+v2.0.10
+- radar images url path changed
+- cleanup on alerts
+- cleanup on chance of rain logic
+
 v2.0.9
 - separate "day" and "night" weather codes when mapping to kodi built-in icons
 - return current barometer data

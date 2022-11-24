@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 
-from future import standard_library
-standard_library.install_aliases()
+#from future import standard_library
+#standard_library.install_aliases()
 
 import os, glob, sys, time
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
@@ -66,10 +66,7 @@ def refresh_locations():
 	log('available locations: %s' % str(locations))
 
 def get_initial(loc):
-	if "preview-api.weather.gov" == SOURCEPREF:
-		url = 'https://preview-api.weather.gov/points/%s' % loc
-	else:	
-		url = 'https://api.weather.gov/points/%s' % loc
+	url = 'https://api.weather.gov/points/%s' % loc
 	log("url:"+url)
 	responsedata=get_url_JSON(url)	
 	return responsedata
@@ -86,19 +83,19 @@ def code_from_icon(icon):
 		if "/night/" in icon:
 			sun="night"
 
-		if '/' in icon:	
-			code=icon.rsplit('/',1)[1]
-		else:
-			code=icon
+		rain = None
+		code = None
+		# loop though our "split" icon paths, and get max rain percent
+		# take last icon code in the process
+		for checkcode in icon.rsplit('/'):
+			thing=checkcode.split(",")
+			code="%s/%s" % (sun,thing[0])
+			if len(thing) > 1:
+				train=thing[1]
+				if rain is None or train > rain:
+					rain=train
 
-		thing=code.split(",")
-		if len(thing) > 1:
-			rain=thing[1]
-			code="%s/%s" % (sun,thing[0])
-			return code, rain
-		else:
-			code="%s/%s" % (sun,thing[0])
-			return code, ''
+		return code, rain
 		
 
 ########################################################################################
@@ -244,7 +241,7 @@ def fetchDaily(num):
 		xbmc.log('%s' % daily_weather,level=xbmc.LOGERROR)
 		return fetchAltDaily(num)
 
-	for count, item in enumerate(data['periods']):
+	for count, item in enumerate(data['periods'], start=0):
 		icon = item['icon']
 		#https://api.weather.gov/icons/land/night/ovc?size=small
 		if icon and '?' in icon:
@@ -383,11 +380,11 @@ def fetchAltDaily(num):
 		xbmc.log('%s' % daily_weather,level=xbmc.LOGERROR)
 		return None
 
-	for count, item in enumerate(dailydata):
+	for count, item in enumerate(dailydata, start=0):
 		icon = item['iconLink']
 
 		#https://api.weather.gov/icons/land/night/ovc?size=small
-		code, rain=code_from_icon(icon)
+		code, ignoreme = code_from_icon(icon)
 		weathercode = WEATHER_CODES.get(code)
 
 		starttime=item['startValidTime']
@@ -445,7 +442,7 @@ def fetchAltDaily(num):
 			set_property('Daily.%i.LongDate'	% (count+1), get_month(startstamp, 'ml'))
 			set_property('Daily.%i.ShortDate'	% (count+1), get_month(startstamp, 'ms'))
 
-		rain=str(item['pop'])
+		rain = item['pop']
 		if rain:
 			set_property('Daily.%i.ChancePrecipitation'	% (count+1), str(rain) + '%')
 		else:
@@ -457,7 +454,7 @@ def fetchAltDaily(num):
 	if daily_weather and 'currentobservation' in daily_weather:
 		data=daily_weather['currentobservation']
 		icon = "http://forecast.weather.gov/newimages/large/%s" % data.get('Weatherimage')
-		code, rain=code_from_icon(icon)
+		code, rain = code_from_icon(icon)
 		weathercode = WEATHER_CODES.get(code)
 		set_property('Current.Location', data.get('name'))
 		set_property('Current.RemoteIcon',icon) 
@@ -508,10 +505,7 @@ def fetchAltDaily(num):
 
 def fetchCurrent(num):
 	station=ADDON.getSetting('Location'+str(num)+'Station')
-	if "preview-api.weather.gov" == SOURCEPREF:
-		url="https://preview-api.weather.gov/stations/%s/observations/latest" %station	
-	else:
-		url="https://api.weather.gov/stations/%s/observations/latest" %station	
+	url="https://api.weather.gov/stations/%s/observations/latest" %station	
 	current=get_url_JSON(url)
 	if current and 'properties' in current:
 		data=current['properties']
@@ -522,16 +516,17 @@ def fetchCurrent(num):
 	
 	icon = data['icon']
 	#https://api.weather.gov/icons/land/night/ovc?size=small
-	code=''
-	rain=''
+	code = None
+	rain = None
 	if icon:
 		if '?' in icon:
 			icon=icon.rsplit('?', 1)[0]
-		code, rain=code_from_icon(icon)
+		code, rain = code_from_icon(icon)
 		weathercode = WEATHER_CODES.get(code)
 		set_property('Current.RemoteIcon',icon) 
 		set_property('Current.OutlookIcon', '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
 		set_property('Current.FanartCode', weathercode)
+
 	set_property('Current.Condition', FORECAST.get(data.get('textDescription'), data.get('textDescription')))
 	try:
 		set_property('Current.Humidity'	, str(round(data.get('relativeHumidity').get('value'))))
@@ -556,7 +551,7 @@ def fetchCurrent(num):
 	if rain:
 		set_property('Current.ChancePrecipitation', str(rain)+'%');
 	else :
-		set_property('Current.ChancePrecipitation'		, '');
+		set_property('Current.ChancePrecipitation', '');
 
 	try:
 		set_property('Current.FeelsLike', FEELS_LIKE(data.get('temperature').get('value'), float(data.get('windSpeed').get('value'))/3.6, data.get('relativeHumidity').get('value'), False))
@@ -611,10 +606,7 @@ def fetchWeatherAlerts(num):
 	
 	# we are storing lat,long as comma separated already, so that is convienent for us and we can just drop it into the url
 	latlong=ADDON.getSetting('Location'+str(num)+'LatLong')
-	if "preview-api.weather.gov" == SOURCEPREF:
-		url="https://preview-api.weather.gov/alerts/active?status=actual&point=%s" % (latlong)
-	else:
-		url="https://api.weather.gov/alerts/active?status=actual&point=%s" % (latlong)
+	url="https://api.weather.gov/alerts/active?status=actual&point=%s" % (latlong)
 
 	alerts=get_url_JSON(url)
 	# if we have a valid response then clear our current alerts
@@ -634,20 +626,20 @@ def fetchWeatherAlerts(num):
 		xbmc.log('No current weather alerts from  %s' % url,level=xbmc.LOGDEBUG)
 		return
 	
-	for count, item in enumerate(data):
+	for count, item in enumerate(data, start=1):
 		
 		thisdata=item['properties']
-		set_property('Alerts.%i.status'		% (count+1), str(thisdata['status']))	
-		set_property('Alerts.%i.messageType'	% (count+1), str(thisdata['messageType']))	
-		set_property('Alerts.%i.category'	% (count+1), str(thisdata['category']))	
-		set_property('Alerts.%i.severity'	% (count+1), str(thisdata['severity']))	
-		set_property('Alerts.%i.certainty'	% (count+1), str(thisdata['certainty']))	
-		set_property('Alerts.%i.urgency'	% (count+1), str(thisdata['urgency']))	
-		set_property('Alerts.%i.event'		% (count+1), str(thisdata['event']))	
-		set_property('Alerts.%i.headline'	% (count+1), str(thisdata['headline']))	
-		set_property('Alerts.%i.description'	% (count+1), str(thisdata['description']))	
-		set_property('Alerts.%i.instruction'	% (count+1), str(thisdata['instruction']))	
-		set_property('Alerts.%i.response'	% (count+1), str(thisdata['response']))	
+		set_property('Alerts.%i.status'		% (count), str(thisdata['status']))	
+		set_property('Alerts.%i.messageType'	% (count), str(thisdata['messageType']))	
+		set_property('Alerts.%i.category'	% (count), str(thisdata['category']))	
+		set_property('Alerts.%i.severity'	% (count), str(thisdata['severity']))	
+		set_property('Alerts.%i.certainty'	% (count), str(thisdata['certainty']))	
+		set_property('Alerts.%i.urgency'	% (count), str(thisdata['urgency']))	
+		set_property('Alerts.%i.event'		% (count), str(thisdata['event']))	
+		set_property('Alerts.%i.headline'	% (count), str(thisdata['headline']))	
+		set_property('Alerts.%i.description'	% (count), str(thisdata['description']))	
+		set_property('Alerts.%i.instruction'	% (count), str(thisdata['instruction']))	
+		set_property('Alerts.%i.response'	% (count), str(thisdata['response']))	
 
 
 
@@ -679,7 +671,7 @@ def fetchHourly(num):
 		return
 
 # extended properties
-	for count, item in enumerate(data['periods']):
+	for count, item in enumerate(data['periods'], start = 0):
 		
 		icon=item['icon']
 		#https://api.weather.gov/icons/land/night/ovc?size=small
@@ -884,14 +876,15 @@ else:
 			#kodi will not loop gifs from a url, we have to actually 
 			#download to a local file to get it to loop
 			
+			#xbmc.log('Option To Loop Radar Selected',level=xbmc.LOGDEBUG)
 			xbmc.log('Option To Loop Radar Selected',level=xbmc.LOGDEBUG)
-			url="https://radar.weather.gov/ridge/lite/%s_loop.gif" % (Station)
+			url="https://radar.weather.gov/ridge/standard/%s_loop.gif" % (Station)
 			radarfilename="radar_%s_%s.gif" % (Station,nowtime)
 			dest=imagepath+radarfilename
 			loop_image=get_url_image(url, dest)
 			set_property('Map.%i.Area' % 1, loop_image)
 		else:
-			url="https://radar.weather.gov/ridge/lite/%s_0.gif?%s" % (Station,nowtime)
+			url="https://radar.weather.gov/ridge/standard/%s_0.gif?%s" % (Station,nowtime)
 			set_property('Map.%i.Area' % 1, url)
 			#clear_property('Map.%i.Area' % 1)
 			#set_property('Map.%i.Layer' % 1, url)

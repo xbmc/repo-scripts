@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 
-from future import standard_library
+#from future import standard_library
 import math
 import time
 
@@ -11,7 +11,7 @@ from dateutil.parser import parse
 import socket, urllib.request
 import json
 
-standard_library.install_aliases()
+#standard_library.install_aliases()
 
 
 ADDON		= xbmcaddon.Addon()
@@ -89,40 +89,6 @@ def get_url_image(url,destination):
 
 
 WEATHER_CODES = {
-#		'skc':		'34', #'Fair/clear'
-#		'few':		'30', #'A few clouds'
-#		'sct':		'30', #'Partly cloudy'
-#		'bkn':		'28', #'Mostly cloudy'
-#		'ovc':		'26', #'Overcast'
-#		'wind_skc':	'24', #'Fair/clear and windy'
-#		'wind_few':	'26', #'A few clouds and windy'
-#		'wind_sct':	'26', #'Partly cloudy and windy'
-#		'wind_bkn':	'28', #'Mostly cloudy and windy'
-#		'wind_ovc':	'26', #'Overcast and windy'
-#		'snow':		'16', #'Snow'
-#		'rain_snow':	'5', #'Rain/snow'
-#		'rain_sleet':	'6', #'Rain/sleet'
-#		'snow_sleet':	'7', #'Rain/sleet'
-#		'fzra':		'10', #'Freezing rain'
-#		'rain_fzra':	'10', #'Rain/freezing rain'
-#		'snow_fzra':	'10', #'Freezing rain/snow'
-#		'sleet':	'18', #'Sleet'
-#		'rain':		'40', #'Rain'
-#		'rain_showers':	'11', #'Rain showers (high cloud cover)'
-#		'rain_showers_hi':	'12', #'Rain showers (low cloud cover)'
-#		'tsra':		'38', #'Thunderstorm (high cloud cover)'
-#		'tsra_sct':	'39', #'Thunderstorm (medium cloud cover)'
-#		'tsra_hi':	'38', #'Thunderstorm (low cloud cover)'
-#		'tornado':	'0', #'Tornado'
-#		'hurricane':	'2', #'Hurricane conditions'
-#		'tropical_storm':	'1', #'Tropical storm conditions'
-#		'dust':		'19', #'Dust'
-#		'smoke':	'22', #'Smoke'
-#		'haze':		'21', #'Haze'
-#		'hot':		'36', #'Hot'
-#		'cold':		'25', #'Cold'
-#		'blizzard':	'15', #'Blizzard'
-#		'fog':		'20', #'Fog/mist'
 
 		'day/skc':		'32', #'Fair/clear'
 		'day/few':		'30', #'A few clouds'
@@ -656,21 +622,21 @@ MAPTYPES = {
 	}
 
 LOOPSECTORS = {
-	##ridge/lite/CONUS_loop.gif
-	"us":	{"name":LANGUAGE(32396),"path":"ridge/lite/CONUS-LARGE_loop.gif"},
-	"pnw":	{"name":LANGUAGE(32369),"path":"ridge/lite/PACNORTHWEST_loop.gif"},
-	"psw":	{"name":LANGUAGE(32371),"path":"ridge/lite/PACSOUTHWEST_loop.gif"},
-	"nr":	{"name":LANGUAGE(32373),"path":"ridge/lite/NORTHROCKIES_loop.gif"},
-	"sr":	{"name":LANGUAGE(32374),"path":"ridge/lite/SOUTHROCKIES_loop.gif"},
-	"sp":	{"name":LANGUAGE(32375),"path":"ridge/lite/SOUTHPLAINS_loop.gif"},
-	"umv":	{"name":LANGUAGE(32376),"path":"ridge/lite/UPPERMISSVLY_loop.gif"},
-	"smv":	{"name":LANGUAGE(32377),"path":"ridge/lite/SOUTHMISSVLY_loop.gif"},
-	"cgl":	{"name":LANGUAGE(32379),"path":"ridge/lite/CENTGRLAKES_loop.gif"},
-	"ne":	{"name":LANGUAGE(32381),"path":"ridge/lite/NORTHEAST_loop.gif"},
-	"se":	{"name":LANGUAGE(32383),"path":"ridge/lite/SOUTHEAST_loop.gif"},
-	"car":	{"name":LANGUAGE(32384),"path":"ridge/lite/CARIB_loop.gif"},
-	"ak":	{"name":LANGUAGE(32364),"path":"ridge/lite/ALASKA_loop.gif"},
-	"hi":	{"name":LANGUAGE(32389),"path":"ridge/lite/HAWAII_loop.gif"},
-	"guam":	{"name":LANGUAGE(32397),"path":"ridge/lite/GUAM_loop.gif"}
+	##ridge/standard/CONUS_loop.gif
+	"us":	{"name":LANGUAGE(32396),"path":"ridge/standard/CONUS-LARGE_loop.gif"},
+	"pnw":	{"name":LANGUAGE(32369),"path":"ridge/standard/PACNORTHWEST_loop.gif"},
+	"psw":	{"name":LANGUAGE(32371),"path":"ridge/standard/PACSOUTHWEST_loop.gif"},
+	"nr":	{"name":LANGUAGE(32373),"path":"ridge/standard/NORTHROCKIES_loop.gif"},
+	"sr":	{"name":LANGUAGE(32374),"path":"ridge/standard/SOUTHROCKIES_loop.gif"},
+	"sp":	{"name":LANGUAGE(32375),"path":"ridge/standard/SOUTHPLAINS_loop.gif"},
+	"umv":	{"name":LANGUAGE(32376),"path":"ridge/standard/UPPERMISSVLY_loop.gif"},
+	"smv":	{"name":LANGUAGE(32377),"path":"ridge/standard/SOUTHMISSVLY_loop.gif"},
+	"cgl":	{"name":LANGUAGE(32379),"path":"ridge/standard/CENTGRLAKES_loop.gif"},
+	"ne":	{"name":LANGUAGE(32381),"path":"ridge/standard/NORTHEAST_loop.gif"},
+	"se":	{"name":LANGUAGE(32383),"path":"ridge/standard/SOUTHEAST_loop.gif"},
+	"car":	{"name":LANGUAGE(32384),"path":"ridge/standard/CARIB_loop.gif"},
+	"ak":	{"name":LANGUAGE(32364),"path":"ridge/standard/ALASKA_loop.gif"},
+	"hi":	{"name":LANGUAGE(32389),"path":"ridge/standard/HAWAII_loop.gif"},
+	"guam":	{"name":LANGUAGE(32397),"path":"ridge/standard/GUAM_loop.gif"}
 	}
 
