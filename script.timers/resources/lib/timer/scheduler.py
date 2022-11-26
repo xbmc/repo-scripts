@@ -1,4 +1,5 @@
-from datetime import timedelta
+from datetime import datetime
+
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -14,30 +15,30 @@ from resources.lib.utils.system_utils import (is_fullscreen,
                                               set_windows_unlock)
 
 CHECK_INTERVAL = 20
+MIN_INTERVAL = 1
 
 
 class Scheduler(xbmc.Monitor):
-
-    _timers = None
-    _player = None
-    _pause_from = None
-    _pause_until = None
-    _offset = 0
-
-    _next_event = None
-
-    _powermanagement_displaysoff = 0
-    _disabled_powermanagement_displaysoff = False
-    _windows_unlock = False
 
     def __init__(self) -> None:
 
         super().__init__()
 
+        self._timers: 'list[Timer]' = None
+        self._pause_from: datetime = None
+        self._pause_until: datetime = None
+        self._offset = 0
+
+        self._powermanagement_displaysoff = 0
+        self._disabled_powermanagement_displaysoff = False
+        self._windows_unlock = False
+
         self._player = Player()
         _default_volume = xbmcaddon.Addon().getSettingInt("vol_default")
         self._player.setDefaultVolume(_default_volume)
         self._player.setVolume(_default_volume)
+
+        self.action = SchedulerAction(self._player)
 
         storage.release_lock()
 
@@ -95,7 +96,7 @@ class Scheduler(xbmc.Monitor):
             for timer in scheduled_timers:
 
                 former_timer = [
-                    t for t in self._getTimers() if t.id == timer.id]
+                    t for t in self._timers if t.id == timer.id]
                 if not former_timer:
                     continue
 
@@ -122,7 +123,7 @@ class Scheduler(xbmc.Monitor):
                 self._player.resetResumeOfTimer(timer=removed_timer)
 
         self._timers = scheduled_timers
-        self._next_event = None
+        self.action.reset()
 
         addon = xbmcaddon.Addon()
         self._player.setSeekDelayedTimer(addon.getSettingBool("resume"))
@@ -144,15 +145,9 @@ class Scheduler(xbmc.Monitor):
             "powermanagement_displaysoff")
         self.reset_powermanagement_displaysoff()
 
-    def _getTimers(self) -> 'list[Timer]':
-
-        return self._timers
-
     def start(self) -> None:
 
         prev_windows_unlock = False
-
-        action = SchedulerAction(self._player)
 
         interval = CHECK_INTERVAL
         while not self.abortRequested():
@@ -172,18 +167,11 @@ class Scheduler(xbmc.Monitor):
                     xbmcgui.Dialog().notification(addon.getLocalizedString(
                         32027), addon.getLocalizedString(32166))
 
-                if self._next_event is None or self._next_event <= td_now:
-                    self._next_event = action.calculate(
-                        timers=self._timers, now=td_now)
+                if self.action.upcoming_event is None or self.action.upcoming_event < dt_now:
+                    self.action.calculate(self._timers, dt_now, td_now)
+                    interval = self.action.getFaderInterval() or CHECK_INTERVAL
 
-                if self._next_event and self._next_event <= td_now:
-                    action.perform(now=td_now)
-                    interval = action.getFaderInterval() or CHECK_INTERVAL
-                    action.reset()
-                    self._next_event = None
-
-                elif action.hasFader:
-                    action.fade(td_now)
+                self.action.perform(td_now)
 
             if self._windows_unlock != prev_windows_unlock:
                 prev_windows_unlock = set_windows_unlock(self._windows_unlock)
@@ -191,8 +179,9 @@ class Scheduler(xbmc.Monitor):
             if self._powermanagement_displaysoff:
                 self._prevent_powermanagement_displaysoff()
 
-            wait = min(
-                interval, (self._next_event - td_now).total_seconds() if self._next_event else 3)
+            wait = min(CHECK_INTERVAL, interval if interval >= MIN_INTERVAL else MIN_INTERVAL, (
+                self.action.upcoming_event - dt_now).total_seconds() if self.action.upcoming_event else MIN_INTERVAL)
+
             if self.waitForAbort(wait):
                 break
 

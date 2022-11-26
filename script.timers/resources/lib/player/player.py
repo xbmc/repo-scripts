@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import xbmc
 from resources.lib.player import player_utils
@@ -17,16 +17,19 @@ class Player(xbmc.Player):
     _MAX_TRIES = 10
     _RESPITE = 3000
 
-    _seek_delayed_timer = False
-    _default_volume = 100
-    _recent_volume = None
+    def __init__(self) -> None:
+        super().__init__()
 
-    _seektime = None
-    _playlist_timeline = list()
-    _playlist = None
-    _skip_next_stop_event_until_started = False
+        self._seek_delayed_timer = False
+        self._default_volume: int = 100
+        self._recent_volume: int = None
 
-    _resume_status = dict()
+        self._seektime: float = None
+        self._playlist_timeline: 'list[float]' = list()
+        self._playlist: PlayList = None
+        self._skip_next_stop_event_until_started = False
+
+        self._resume_status: 'dict[PlayerStatus]' = dict()
 
     def playTimer(self, timer: Timer) -> None:
 
@@ -38,12 +41,12 @@ class Player(xbmc.Player):
                 if _timer.is_resuming_timer():
                     _active_players = self.getActivePlayersWithPlaylist(
                         type=_type)
-                    if not _resume_status or _resume_status.isResuming():
+                    if not _resume_status or _resume_status.resuming:
                         self._resume_status[_type] = PlayerStatus(
                             _timer, state=_active_players[_type] if _type in _active_players else None)
 
                     else:
-                        _resume_status.setTimer(_timer)
+                        _resume_status.timer = _timer
 
                 elif _resume_status:
                     self.resetResumeStatus(_type)
@@ -52,11 +55,11 @@ class Player(xbmc.Player):
 
             seektime = None
             if self._seek_delayed_timer and _timer.is_play_at_start_timer():
-                td_now = self._getNow()
-                period, scheduled = timer.get_matching_period(td_now)
-                if period:
+                dt_now, td_now = self._getNow()
+                matching_period, upcoming_period = timer.get_matching_period_and_upcoming_event(dt_now, td_now)
+                if matching_period:
                     seektime = datetime_utils.abs_time_diff(
-                        td_now, period.getStart())
+                        td_now, matching_period.start)
                     seektime = None if seektime * 1000 <= self._RESPITE else seektime
 
             return seektime
@@ -180,12 +183,12 @@ class Player(xbmc.Player):
         for _type in player_utils.get_types_replaced_by_type(type):
 
             resumeState = self._getResumeStatus(_type)
-            if resumeState and resumeState.getState():
-                state = resumeState.getState()
+            if resumeState and resumeState.state:
+                state = resumeState.state
                 if not keep:
                     self.resetResumeStatus(_type)
 
-                if not resumeState.isResuming():
+                if not resumeState.resuming:
                     xbmc.sleep(self._RESPITE)
                     paths = [item["file"] for item in state.playlist]
                     if self._isPlaying(files=paths, type=_type, repeat=state.repeat):
@@ -213,7 +216,7 @@ class Player(xbmc.Player):
                                 path=path, shuffle=state.shuffled, beginSlide=beginSlide)
 
                     if keep:
-                        resumeState.setResuming(True)
+                        resumeState.resuming = True
 
                 resuming = True
 
@@ -236,7 +239,7 @@ class Player(xbmc.Player):
         typesToRemove = list()
         for type in self._resume_status:
             resumeState = self._getResumeStatus(type)
-            if resumeState and resumeState.getTimer().id == timer.id:
+            if resumeState and resumeState.timer.id == timer.id:
                 typesToRemove.append(type)
 
         for type in typesToRemove:
@@ -358,7 +361,6 @@ class Player(xbmc.Player):
 
         return player_utils.get_slideshow_staytime()
 
-    def _getNow(self) -> timedelta:
+    def _getNow(self) -> 'tuple[datetime, timedelta]':
 
-        dt_now, td_now = datetime_utils.get_now()
-        return td_now
+        return datetime_utils.get_now()

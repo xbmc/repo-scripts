@@ -148,3 +148,12 @@ def get_now(offset=0) -> 'tuple[datetime.datetime, datetime.timedelta]':
             td_now -= datetime.timedelta(seconds=abs(offset))
 
     return dt_now, td_now
+
+def apply_for_now(dt_now: datetime.datetime, timestamp: datetime.timedelta) -> datetime.datetime:
+
+    dt_last_monday_same_time = dt_now - datetime.timedelta(days=dt_now.weekday())
+    dt_last_monday_midnight = datetime.datetime(year=dt_last_monday_same_time.year,
+                                        month=dt_last_monday_same_time.month,
+                                        day=dt_last_monday_same_time.day)
+
+    return dt_last_monday_midnight + timestamp

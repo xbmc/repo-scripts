@@ -21,8 +21,6 @@ CONFIRM_EDIT = 2
 
 class AbstractSetTimer:
 
-    addon = None
-
     def __init__(self, label: str, path: str, timerid=-1) -> None:
 
         self.addon = xbmcaddon.Addon()

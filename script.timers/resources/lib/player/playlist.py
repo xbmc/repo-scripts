@@ -3,4 +3,6 @@ import xbmc
 
 class PlayList(xbmc.PlayList):
 
-    directUrl = None
+    def __init__(self, playList: int) -> None:
+        super().__init__(playList)
+        self.directUrl: str = None
