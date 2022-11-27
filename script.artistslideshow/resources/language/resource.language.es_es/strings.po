@@ -7,22 +7,23 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: roliverosc\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
-"Language: es\n"
+"PO-Revision-Date: 2022-03-01 17:13+0000\n"
+"Last-Translator: Alfonso Cachero <alfonso.cachero@gmail.com>\n"
+"Language-Team: Spanish (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/es_es/>\n"
+"Language: es_es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
-msgstr "Descarga imágenes e información adicional del artista que esté sonando"
+msgstr "Descarga imágenes e información adicional del intérprete que esté sonando"
 
 msgctxt "Addon Description"
 msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
-msgstr "Addon para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del artista que se está reproduciendo. Las imágenes, junto con imágenes de artistas locales, y la información puede ser utilizada por la piel para crear una presentación de diapositivas para el artista que se está escuchando."
+msgstr "Addon para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del intérprete que se está reproduciendo. Las imágenes, junto con imágenes de intérpretes locales, y la información puede ser utilizada por la piel para crear una presentación de diapositivas para el intérprete que se está escuchando."
 
 # Section Headings
 msgctxt "#32000"
@@ -43,11 +44,11 @@ msgstr "Información Álbum"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr "Biografía Artista"
+msgstr "Biografía de Intérprete"
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr "Artistas similares"
+msgstr "Intérpretes similares"
 
 msgctxt "#32006"
 msgid "Advanced"
@@ -73,27 +74,27 @@ msgstr "Descargar información de álbum desde last.fm"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr "Descargar biografía del artista desde theaudiodb.com"
+msgstr "Descargar biografía del intérprete desde theaudiodb.com"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr "Descargar biografía del artista desde last.fm"
+msgstr "Descargar biografía del intérprete desde last.fm"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr "Descargar información sobre artistas similares desde last.fm"
+msgstr "Descargar información sobre intérpretes similares desde last.fm"
 
 msgctxt "#32108"
-msgid "- Download all images regardless of resolution"
-msgstr "- Descargar todas las imágenes independientemente de la resolución"
+msgid "Download all images regardless of resolution"
+msgstr "Descargar todas las imágenes independientemente de la resolución"
 
 msgctxt "#32109"
-msgid "- Client API key"
-msgstr "- Clave API"
+msgid "Client API key"
+msgstr "Clave API"
 
 msgctxt "#32110"
-msgid "- I donate to this service"
-msgstr "- He donado para este servicio"
+msgid "I donate to this service"
+msgstr "He donado para este servicio"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
@@ -104,28 +105,28 @@ msgid "Use override slideshow"
 msgstr "Usar invalidar presentación de diapositivas"
 
 msgctxt "#32113"
-msgid "- Custom location"
-msgstr "- Ruta"
+msgid "Custom location"
+msgstr "Ruta"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr "Incluir fanart de Kodi para artista"
+msgstr "Incluir fanart de Kodi para intérprete"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
 msgstr "Incluir fanart de Kodi para álbum"
 
 msgctxt "#32116"
-msgid "- Limit size of download cache"
-msgstr "- Limitar tamaño de la caché de descarga"
+msgid "Limit size of download cache"
+msgstr "Limitar tamaño de la caché de descarga"
 
 msgctxt "#32117"
-msgid "-- Maximum cache size (in megabytes)"
-msgstr "-- Tamaño máximo caché (en megabytes)"
+msgid "Maximum cache size (in megabytes)"
+msgstr "Tamaño máximo caché (en megabytes)"
 
 msgctxt "#32118"
-msgid "-- Alternate name for local fanart folder"
-msgstr "-- Nombre alternativo para la carpeta fanart local"
+msgid "Alternate name for local fanart folder"
+msgstr "Nombre alternativo para la carpeta fanart local"
 
 msgctxt "#32119"
 msgid "Enable debug logging"
@@ -133,11 +134,11 @@ msgstr "Habilitar modo depuración"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr "Deshabilitar imágenes de artistas secundarios y destacados"
+msgstr "Deshabilitar imágenes de intérpretes secundarios y destacados"
 
 msgctxt "#32121"
 msgid "Store artist images in"
-msgstr "Almacenar imágenes de artista en"
+msgstr "Almacenar imágenes de intérprete en"
 
 msgctxt "#32122"
 msgid "addon_data folder"
@@ -145,23 +146,23 @@ msgstr "addon_data folder"
 
 msgctxt "#32123"
 msgid "Kodi artist information folder"
-msgstr "Carpeta del artista"
+msgstr "Carpeta de información del intérprete"
 
 msgctxt "#32124"
-msgid "- Priority"
-msgstr "- Prioridad"
+msgid "Priority"
+msgstr "Prioridad"
 
 msgctxt "#32125"
 msgid "Store artist information in"
-msgstr "Almacenar información de artista en"
+msgstr "Almacenar información del intérprete en"
 
 msgctxt "#32126"
 msgid "Preferred language for artist bio"
-msgstr "Idioma para biografía del artista"
+msgstr "Idioma para biografía del intérprete"
 
 msgctxt "#32127"
-msgid "- Use extrafanart folder"
-msgstr "- Usar carpeta extrafanart"
+msgid "Use extrafanart folder"
+msgstr "Usar carpeta extrafanart"
 
 msgctxt "#32128"
 msgid "Platform for image storage"
@@ -169,11 +170,11 @@ msgstr "Plataforma para almacenamiento de imágenes"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr "Reemplazar caracteres ilegales de la ruta en el nombre del artista con"
+msgstr "Reemplazar caracteres ilegales de la ruta en el nombre del intérprete con"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
-msgstr "Reemplazar parte final en el nombre del artista por"
+msgstr "Reemplazar parte final en el nombre del intérprete por"
 
 msgctxt "#32131"
 msgid "Windows"
@@ -189,11 +190,11 @@ msgstr "MacOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr "Mover imágenes a carpeta de música del artista"
+msgstr "Mover imágenes a carpeta de música del intérprete"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
-msgstr "Obtener biografía del artista desde Kodi"
+msgstr "Obtener biografía del intérprete desde Kodi"
 
 msgctxt "#32136"
 msgid "Custom location"
@@ -205,7 +206,7 @@ msgstr "Tiempo entre cambio de diapositivas (en segundos)"
 
 msgctxt "#32138"
 msgid "Fade to black during change in artists"
-msgstr "Fundido a negro entre cambio de artistas"
+msgstr "Fundido a negro entre cambio de intérpretes"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
@@ -224,12 +225,12 @@ msgid "Show notification during image downloads"
 msgstr "Mostrar notificación durante la descarga de imágenes"
 
 msgctxt "#32143"
-msgid "- Only show notification if there are images to download"
-msgstr "- Solo mostrar notificación si hay imágenes para descargar"
+msgid "Only show notification if there are images to download"
+msgstr "Solo mostrar notificación si hay imágenes para descargar"
 
 msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
-msgstr "Usar una búsqueda de artistas más agresiva para streams"
+msgstr "Usar una búsqueda de intérpretes más agresiva para streams"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
@@ -269,11 +270,11 @@ msgstr "Esto moverá y cambiará el nombre de sus archivos de imagen y no se pue
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr "No se puede recuperar la ruta al almacenamiento de imágenes del artista musical Kodi. Verifique Ajustes > Medios > Música y asegúrese de que la Carpeta de información del artista esté configurada."
+msgstr "No se puede recuperar la ruta al almacenamiento de imágenes del intérprete musical Kodi. Verifique Ajustes > Medios > Música y asegúrese de que la Carpeta de información del intérprete esté configurada."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr "Artist Slideshow ya está configurado para usar la carpeta de información del artista Kodi. Configure para usar la carpeta addon_data o una ubicación personalizada e intente nuevamente."
+msgstr "Artist Slideshow ya está configurado para usar la carpeta de información del intérprete Kodi. Configure para usar la carpeta addon_data o una ubicación personalizada e intente nuevamente."
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
@@ -285,23 +286,23 @@ msgstr "Moviendo y renombrando imágenes desde carpeta addon_data..."
 
 msgctxt "#32305"
 msgid "No artist directories found."
-msgstr "No se encontraron directorios de artistas."
+msgstr "No se encontraron directorios de intérpretes."
 
 msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
-msgstr "Movimiento de imagen completado. Ahora puede cambiar la ubicación de almacenamiento de Artist Slideshow a la carpeta de información del artista Kodi."
+msgstr "Movimiento de imagen completado. Ahora puede cambiar la ubicación de almacenamiento de Artist Slideshow a la carpeta de información del intérprete de Kodi."
 
 msgctxt "#32307"
 msgid "Downloading new artist images"
-msgstr "Descargando nuevas imágenes de artista"
+msgstr "Descargando nuevas imágenes de intérprete"
 
 msgctxt "#32308"
 msgid "artist images downloaded"
-msgstr "imágenes de artista descargadas"
+msgstr "imágenes de intérprete descargadas"
 
 msgctxt "#32309"
 msgid "artist image downloaded"
-msgstr "imagen de artista descargada"
+msgstr "imagen de intérprete descargada"
 
 # empty strings from id 32310 to 32900
 # Languages

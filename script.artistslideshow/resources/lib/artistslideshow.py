@@ -1179,20 +1179,22 @@ class Main(xbmc.Player):
                             cache_root, py2_encode(folder)))
                     LW.log(['looking at folder %s cache size is now %s' %
                            (folder, cache_size)])
-                    if(cache_size > self.MAXCACHESIZE and not first_folder):
-                        self._clean_dir(os.path.join(
-                            cache_root, py2_encode(folder)))
-                        LW.log(['deleted files in folder %s' % folder])
-                        self._delete_folder(os.path.join(
+                    if (cache_size > self.MAXCACHESIZE and not first_folder):
+                        self._trim_one_folder(os.path.join(
                             cache_root, py2_encode(folder)))
                         if self.LOCALINFOSTORAGE and self.LOCALINFOPATH:
-                            deleteFile(os.path.join(self.LOCALINFOPATH, py2_decode(
-                                folder), 'information', self.IMGDB))
+                            self._trim_one_folder(os.path.join(self.LOCALINFOPATH, py2_decode(
+                                folder)))
                         else:
-                            deleteFile(os.path.join(
-                                ADDONDATAPATH, 'ArtistInformation', py2_decode(folder), self.IMGDB))
+                            self._trim_one_folder(os.path.join(
+                                ADDONDATAPATH, 'ArtistInformation', py2_decode(folder)))
                     first_folder = False
                 self.LASTCACHETRIM = now
+
+    def _trim_one_folder(self, folder_path):
+        self._clean_dir(folder_path)
+        LW.log(['deleted files in folder %s' % folder_path])
+        self._delete_folder(folder_path)
 
     def _slideshow_thread_start(self):
         self.SLIDESHOW = Slideshow(self.WINDOW, self.SLIDEDELAY)
@@ -1231,7 +1233,7 @@ class Main(xbmc.Player):
             self.MBID = mbid
             self._set_infodir(py2_decode(self.NAME))
             self._set_cachedir(py2_decode(self.NAME))
-            if(self.ARTISTNUM == 1):
+            if (self.ARTISTNUM == 1):
                 self._get_artistinfo()
             images = self._get_file_list(self.CACHEDIR, do_filter=True)
             if images:

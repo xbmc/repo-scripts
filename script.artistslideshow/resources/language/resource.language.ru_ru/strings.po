@@ -7,18 +7,19 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-11-09 20:21+0000\n"
+"Last-Translator: vgbsd <vg72i@protonmail.com>\n"
+"Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/ru_ru/>\n"
 "Language: ru_ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.14.2\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
-msgstr "Загрузить фото и дополнительную информацию об воспроизводимом исполнителе"
+msgstr "Загружает изображения и дополнительную информацию об исполнителе, который воспроизводится в данный момент"
 
 msgctxt "Addon Description"
 msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
@@ -27,149 +28,149 @@ msgstr "Дополнение для загрузки изображений и �
 # Section Headings
 msgctxt "#32000"
 msgid "Slideshow"
-msgstr ""
+msgstr "Слайд-шоу"
 
 msgctxt "#32001"
 msgid "Storage"
-msgstr ""
+msgstr "Хранилище"
 
 msgctxt "#32002"
 msgid "Images"
-msgstr ""
+msgstr "Изображения"
 
 msgctxt "#32003"
 msgid "Album Info"
-msgstr ""
+msgstr "Информация об альбоме"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr ""
+msgstr "Биография исполнителя"
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr ""
+msgstr "Подобные исполнители"
 
 msgctxt "#32006"
 msgid "Advanced"
-msgstr ""
+msgstr "Расширенный"
 
 # empty strings from id 32007 to 32099
 # Settings
 msgctxt "#32101"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "Загружать изображения с fanart.tv"
 
 msgctxt "#32102"
 msgid "Download images from theaudiodb.com"
-msgstr ""
+msgstr "Загружать изображения с theaudiodb.com"
 
 msgctxt "#32103"
 msgid "Download album info from the audiodb.com"
-msgstr ""
+msgstr "Загружать информацию об альбоме с audiodb.com"
 
 msgctxt "#32104"
 msgid "Download album info from the last.fm"
-msgstr ""
+msgstr "Загружать информацию об альбоме с last.fm"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr ""
+msgstr "Загружать биографию исполнителя с theaudiodb.com"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr ""
+msgstr "Загружать биографию исполнителя с last.fm"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr ""
+msgstr "Загружать сведения о похожих исполнителях с last.fm"
 
 msgctxt "#32108"
-msgid "- Download all images regardless of resolution"
-msgstr ""
+msgid "Download all images regardless of resolution"
+msgstr "Загружать все изображения в любом разрешении"
 
 msgctxt "#32109"
-msgid "- Client API key"
-msgstr ""
+msgid "Client API key"
+msgstr "API-ключ клиента"
 
 msgctxt "#32110"
-msgid "- I donate to this service"
-msgstr ""
+msgid "I donate to this service"
+msgstr "Я делаю пожертвования этому сервису"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "Использовать резервное слайд-шоу"
 
 msgctxt "#32112"
 msgid "Use override slideshow"
 msgstr ""
 
 msgctxt "#32113"
-msgid "- Custom location"
-msgstr ""
+msgid "Custom location"
+msgstr "Собственное расположение"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr ""
+msgstr "Включить иллюстрации художников Kodi"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
-msgstr ""
+msgstr "Включить обложки альбомов Kodi"
 
 msgctxt "#32116"
-msgid "- Limit size of download cache"
-msgstr ""
+msgid "Limit size of download cache"
+msgstr "Ограничить размер кэша загрузки"
 
 msgctxt "#32117"
-msgid "-- Maximum cache size (in megabytes)"
-msgstr ""
+msgid "Maximum cache size (in megabytes)"
+msgstr "Максимальный размер кэша (в мегабайтах)"
 
 msgctxt "#32118"
-msgid "-- Alternate name for local fanart folder"
-msgstr ""
+msgid "Alternate name for local fanart folder"
+msgstr "Альтернативное имя для локальной папки фанартов"
 
 msgctxt "#32119"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Включить журнал отладки"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr ""
+msgstr "Отключить второстепенные и рекомендуемые изображения исполнителей"
 
 msgctxt "#32121"
 msgid "Store artist images in"
-msgstr ""
+msgstr "Хранить изображения исполнителей в"
 
 msgctxt "#32122"
 msgid "addon_data folder"
-msgstr ""
+msgstr "папка addon_data"
 
 msgctxt "#32123"
 msgid "Kodi artist information folder"
-msgstr ""
+msgstr "Папка Kodi со сведениями об исполнителях"
 
 msgctxt "#32124"
-msgid "- Priority"
-msgstr ""
+msgid "Priority"
+msgstr "Приоритет"
 
 msgctxt "#32125"
 msgid "Store artist information in"
-msgstr ""
+msgstr "Хранить сведения об исполнителях в"
 
 msgctxt "#32126"
 msgid "Preferred language for artist bio"
-msgstr ""
+msgstr "Предпочитаемый язык биографии исполнителя"
 
 msgctxt "#32127"
-msgid "- Use extrafanart folder"
-msgstr ""
+msgid "Use extrafanart folder"
+msgstr "Использовать папку дополнительных фанатских иллюстраций"
 
 msgctxt "#32128"
 msgid "Platform for image storage"
-msgstr ""
+msgstr "Платформа хранения изображений"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr ""
+msgstr "Замените недопустимые символы пути в имени исполнителя"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
@@ -177,43 +178,43 @@ msgstr ""
 
 msgctxt "#32131"
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 msgctxt "#32132"
 msgid "Other"
-msgstr ""
+msgstr "Другое"
 
 msgctxt "#32133"
 msgid "MacOS"
-msgstr ""
+msgstr "MacOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr ""
+msgstr "Переместить изображения в папку музыкальных исполнителей Kodi"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
-msgstr ""
+msgstr "Получить биографию исполнителя от Kodi"
 
 msgctxt "#32136"
 msgid "Custom location"
-msgstr ""
+msgstr "Собственное расположение"
 
 msgctxt "#32137"
 msgid "Delay between slide transitions (in seconds)"
-msgstr ""
+msgstr "Задержка перехода между слайдами (в секундах)"
 
 msgctxt "#32138"
 msgid "Fade to black during change in artists"
-msgstr ""
+msgstr "Переход к черному цвету при смене исполнителей"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
-msgstr ""
+msgstr "Время ожидания основного потока (в секундах)"
 
 msgctxt "#32140"
 msgid "Main thread idle sleep time (in seconds)"
-msgstr ""
+msgstr "Время ожидания бездействия основного потока (в секундах)"
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
@@ -221,15 +222,15 @@ msgstr ""
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
-msgstr ""
+msgstr "Показывать уведомление во время загрузки изображений"
 
 msgctxt "#32143"
-msgid "- Only show notification if there are images to download"
-msgstr ""
+msgid "Only show notification if there are images to download"
+msgstr "Показывать уведомление, только если есть изображения для загрузки"
 
 msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
-msgstr ""
+msgstr "Использовать более интенсивный поиск исполнителей для потоков"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
@@ -239,7 +240,7 @@ msgstr ""
 # Dialog headings
 msgctxt "#32200"
 msgid "Artist Slideshow"
-msgstr ""
+msgstr "Слайд-шоу исполнителей"
 
 msgctxt "#32201"
 msgid "Warning"
@@ -247,7 +248,7 @@ msgstr ""
 
 msgctxt "#32202"
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 msgctxt "#32203"
 msgid "Progress"
@@ -255,21 +256,21 @@ msgstr ""
 
 msgctxt "#32204"
 msgid "Downloading"
-msgstr ""
+msgstr "Загрузка"
 
 msgctxt "#32205"
 msgid "Download Complete"
-msgstr ""
+msgstr "Загрузить полностью"
 
 # empty strings from id 32206 to 32299
 # Dialog texts
 msgctxt "#32300"
 msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
-msgstr ""
+msgstr "Это приведет к перемещению и переименованию файлов изображений и не может быть отменено. Вы уверены, что хотите это сделать?"
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr ""
+msgstr "Не удаётся установить путь к каталогу с изображениями музыкальных исполнителей. Проверьте Настройки > Мультимедиа > Музыка и убедитесь, что задана папка информации об исполнителях."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
@@ -277,7 +278,7 @@ msgstr ""
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
-msgstr ""
+msgstr "Перемещение и переименование изображений из пользовательского расположения..."
 
 msgctxt "#32304"
 msgid "Moving and renaming images from addon_data folder..."
@@ -285,201 +286,201 @@ msgstr ""
 
 msgctxt "#32305"
 msgid "No artist directories found."
-msgstr ""
+msgstr "Каталоги исполнителей не найдены."
 
 msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
-msgstr ""
+msgstr "Перемещение изображения завершено. Теперь вы можете изменить место хранения Artist Slideshow на папку информации об исполнителе Kodi."
 
 msgctxt "#32307"
 msgid "Downloading new artist images"
-msgstr ""
+msgstr "Загрузка новых изображений исполнителей"
 
 msgctxt "#32308"
 msgid "artist images downloaded"
-msgstr ""
+msgstr "изображения исполнителя загружены"
 
 msgctxt "#32309"
 msgid "artist image downloaded"
-msgstr ""
+msgstr "изображение исполнителя загружено"
 
 # empty strings from id 32310 to 32900
 # Languages
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "Албанский"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "Арабский"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "Белорусский"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "Боснийский (латинский)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Болгарский"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "Каталонский"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "Китайский"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "Хорватский"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "Чешский"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "Датский"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "Голландский"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "Английский"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "Эстонский"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "Финский"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "Французский"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "Немецкий"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "Греческий"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "Иврит"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "Хинди"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "Венгерский"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "Исландский"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
+msgstr "Индонезийский"
 
 # empty string with id 32923
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "Итальянский"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "Японский"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "Корейский"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "Латвийский"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Литовский"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "Македонский"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
+msgstr "Норвежский"
 
 # empty string with id 32931
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "Польский"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "Португальский"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Португальский (Бразилия)"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "Румынский"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "Сербский (латинский)"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "Словацкий"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "Словенский"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
+msgstr "Испанский"
 
 # empty string with id 32941
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "Шведский"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "Тайский"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "Турецкий"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Украинский"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Вьетнамский"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "Фарси"

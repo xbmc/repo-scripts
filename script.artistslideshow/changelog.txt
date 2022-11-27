@@ -1,3 +1,7 @@
+v.3.3.3
+- trim_cache now deletes information as well as images
+- update to new settings format
+
 v.3.3.2
 - fix for future Python 3.9 compatibility
 

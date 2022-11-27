@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-03-01 17:13+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/hr_hr/>\n"
 "Language: hr_hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.11\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -27,11 +28,11 @@ msgstr "Dodatak za preuzimanje slika i dodatnih informacije trenutno reproducira
 # Section Headings
 msgctxt "#32000"
 msgid "Slideshow"
-msgstr ""
+msgstr "Slikovna prezentacija"
 
 msgctxt "#32001"
 msgid "Storage"
-msgstr ""
+msgstr "Pohrana"
 
 msgctxt "#32002"
 msgid "Images"
@@ -47,11 +48,11 @@ msgstr ""
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr ""
+msgstr "Srodni izvođači"
 
 msgctxt "#32006"
 msgid "Advanced"
-msgstr ""
+msgstr "Napredno"
 
 # empty strings from id 32007 to 32099
 # Settings
@@ -84,15 +85,15 @@ msgid "Download similar artists from last.fm"
 msgstr ""
 
 msgctxt "#32108"
-msgid "- Download all images regardless of resolution"
+msgid "Download all images regardless of resolution"
 msgstr ""
 
 msgctxt "#32109"
-msgid "- Client API key"
+msgid "Client API key"
 msgstr ""
 
 msgctxt "#32110"
-msgid "- I donate to this service"
+msgid "I donate to this service"
 msgstr ""
 
 msgctxt "#32111"
@@ -104,8 +105,8 @@ msgid "Use override slideshow"
 msgstr ""
 
 msgctxt "#32113"
-msgid "- Custom location"
-msgstr ""
+msgid "Custom location"
+msgstr "Prilagođena lokacija"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
@@ -116,20 +117,20 @@ msgid "Include Kodi album fanart"
 msgstr ""
 
 msgctxt "#32116"
-msgid "- Limit size of download cache"
+msgid "Limit size of download cache"
 msgstr ""
 
 msgctxt "#32117"
-msgid "-- Maximum cache size (in megabytes)"
+msgid "Maximum cache size (in megabytes)"
 msgstr ""
 
 msgctxt "#32118"
-msgid "-- Alternate name for local fanart folder"
+msgid "Alternate name for local fanart folder"
 msgstr ""
 
 msgctxt "#32119"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Omogući zapisivanje otklanjanja grešaka"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
@@ -148,8 +149,8 @@ msgid "Kodi artist information folder"
 msgstr ""
 
 msgctxt "#32124"
-msgid "- Priority"
-msgstr ""
+msgid "Priority"
+msgstr "Prioritet"
 
 msgctxt "#32125"
 msgid "Store artist information in"
@@ -160,7 +161,7 @@ msgid "Preferred language for artist bio"
 msgstr ""
 
 msgctxt "#32127"
-msgid "- Use extrafanart folder"
+msgid "Use extrafanart folder"
 msgstr ""
 
 msgctxt "#32128"
@@ -224,7 +225,7 @@ msgid "Show notification during image downloads"
 msgstr ""
 
 msgctxt "#32143"
-msgid "- Only show notification if there are images to download"
+msgid "Only show notification if there are images to download"
 msgstr ""
 
 msgctxt "#32144"
@@ -247,7 +248,7 @@ msgstr ""
 
 msgctxt "#32202"
 msgid "Error"
-msgstr ""
+msgstr "Greška"
 
 msgctxt "#32203"
 msgid "Progress"
