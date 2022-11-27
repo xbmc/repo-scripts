@@ -577,7 +577,7 @@
           </control>
         </setting>
         <setting id="onSettingChangeEvents" type="integer" label="32256" help="">
-          <level>0</level>
+          <level>3</level>
           <default>0</default>
           <control type="edit" format="integer">
             <heading>32256</heading>
@@ -585,7 +585,7 @@
           <visible>false</visible>
         </setting>
         <setting id="settingsVersion" type="integer" label="32256" help="">
-          <level>0</level>
+          <level>3</level>
           <default>6</default>
           <control type="edit" format="integer">
             <heading>32256</heading>

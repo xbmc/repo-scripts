@@ -1,4 +1,3 @@
-import xbmcgui
 from resources.lib.contextmenu.abstract_set_timer import (CONFIRM_YES,
                                                           AbstractSetTimer)
 from resources.lib.timer import storage

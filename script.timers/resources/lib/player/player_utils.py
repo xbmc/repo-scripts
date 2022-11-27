@@ -15,15 +15,16 @@ REPEAT_ALL = "all"
 
 class State():
 
-    playerId = None
-    type = None
-    position = -1
-    time = 0
-    playlistId = None
-    playlist = None
-    repeat = REPEAT_OFF
-    shuffled = False
-    speed = 1
+    def __init__(self) -> None:
+        self.playerId: int = None
+        self.type: str = None
+        self.position: int = -1
+        self.time: int = 0
+        self.playlistId: int = None
+        self.playlist = None
+        self.repeat: str = REPEAT_OFF
+        self.shuffled: bool = False
+        self.speed: float = 1
 
 
 def preview(addon: xbmcaddon.Addon, timerid: int, player: 'xbmc.Player') -> None:

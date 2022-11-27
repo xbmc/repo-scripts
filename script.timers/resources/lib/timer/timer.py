@@ -1,9 +1,10 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 import xbmc
 import xbmcaddon
 from resources.lib.timer.period import Period
 from resources.lib.utils.datetime_utils import (DEFAULT_TIME,
+                                                apply_for_now,
                                                 format_from_seconds,
                                                 parse_time,
                                                 periods_to_human_readable,
@@ -39,45 +40,40 @@ FADE_OUT_FROM_CURRENT = 3
 
 class Timer():
 
-    _addon = None
-
-    # master data
-    id = None
-    label = ""
-    start = DEFAULT_TIME
-    start_offset = 0
-    end_type = END_TYPE_NO
-    duration = DEFAULT_TIME
-    duration_offset = 0
-    end = DEFAULT_TIME
-    end_offset = 0
-    system_action = SYSTEM_ACTION_NONE
-    media_action = MEDIA_ACTION_START
-    path = ""
-    media_type = ""
-    repeat = False
-    shuffle = False
-    resume = False
-    fade = FADE_OFF
-    vol_min = 75
-    vol_max = 100
-    notify = True
-
-    # state
-    active = False
-    return_vol = None
-    periods = list()
-    days = list()
-    duration_timedelta = timedelta()
-
-    def __init__(self, i):
+    def __init__(self, i: int) -> None:
 
         self._addon = xbmcaddon.Addon()
-        self.id = i
-        self.periods = list()
-        self.days = list()
 
-    def compute(self):
+        # master data
+        self.id: int = i
+        self.label: str = ""
+        self.start: str = DEFAULT_TIME
+        self.start_offset: int = 0
+        self.end_type: int = END_TYPE_NO
+        self.duration: str = DEFAULT_TIME
+        self.duration_offset: int = 0
+        self.end: str = DEFAULT_TIME
+        self.end_offset: int = 0
+        self.system_action: int = SYSTEM_ACTION_NONE
+        self.media_action: int = MEDIA_ACTION_START
+        self.path: str = ""
+        self.media_type: str = ""
+        self.repeat: bool = False
+        self.shuffle: bool = False
+        self.resume: bool = False
+        self.fade: int = FADE_OFF
+        self.vol_min: int = 75
+        self.vol_max: int = 100
+        self.notify: bool = True
+
+        # state
+        self.active: bool = False
+        self.return_vol: int = None
+        self.periods: 'list[Period]' = list()
+        self.days: 'list[int]' = list()
+        self.duration_timedelta: timedelta = timedelta()
+
+    def compute(self) -> None:
 
         def _build_end_time(td_start: timedelta, end_type: int, duration_timedelta: timedelta, end: str, end_offset=0, duration_offset=0) -> 'tuple[timedelta, timedelta]':
 
@@ -116,6 +112,9 @@ class Timer():
 
         periods = list()
         for i_day in self.days:
+            if i_day == TIMER_WEEKLY:
+                continue
+
             td_start = parse_time(self.start, i_day) + \
                 timedelta(seconds=self.start_offset)
             td_end, self.duration_timedelta = _build_end_time(td_start,
@@ -127,25 +126,22 @@ class Timer():
 
         self.periods = periods
 
-    def get_periods(self) -> 'list[Period]':
+    def get_matching_period_and_upcoming_event(self, dt_now: datetime, td_time: timedelta) -> 'tuple[Period, datetime]':
 
-        return self.periods
+        upcoming_event: timedelta = None
 
-    def get_matching_period(self, time_: timedelta) -> 'tuple[Period, timedelta]':
+        for period in self.periods:
 
-        scheduled = None
+            if period.start > td_time:
+                upcoming_event = period.start if upcoming_event is None or upcoming_event > period.start else upcoming_event
 
-        for period in self.get_periods():
+            elif td_time < period.end:
+                return period, apply_for_now(dt_now, period.end) if dt_now else None
 
-            td_start = period.getStart()
-            td_end = period.getEnd()
-            if td_start > time_:
-                scheduled = td_start if scheduled is None or scheduled > td_start else scheduled
+        if not upcoming_event and self.periods:
+            upcoming_event = self.periods[0].start + timedelta(days=7)
 
-            elif time_ < td_end:
-                return period, td_end
-
-        return None, scheduled
+        return None, apply_for_now(dt_now, upcoming_event) if dt_now else None
 
     def get_duration(self) -> str:
 
