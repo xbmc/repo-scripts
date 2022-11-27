@@ -1,0 +1,134 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32030"
+msgid "General"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Prevent lock screen"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Put display only in fullscreen mode to sleep"
+msgstr ""
+
+msgctxt "#32131"
+msgid "acc. system setting"
+msgstr ""
+
+msgctxt "#32132"
+msgid "5 min"
+msgstr ""
+
+msgctxt "#32133"
+msgid "10 min"
+msgstr ""
+
+msgctxt "#32134"
+msgid "15 min"
+msgstr ""
+
+msgctxt "#32135"
+msgid "20 min"
+msgstr ""
+
+msgctxt "#32136"
+msgid "25 min"
+msgstr ""
+
+msgctxt "#32137"
+msgid "30 min"
+msgstr ""
+
+msgctxt "#32138"
+msgid "35 min"
+msgstr ""
+
+msgctxt "#32139"
+msgid "40 min"
+msgstr ""
+
+msgctxt "#32140"
+msgid "45 min"
+msgstr ""
+
+msgctxt "#32141"
+msgid "50 min"
+msgstr ""
+
+msgctxt "#32142"
+msgid "55 min"
+msgstr ""
+
+msgctxt "#32143"
+msgid "60 min"
+msgstr ""
+
+msgctxt "#32144"
+msgid "65 min"
+msgstr ""
+
+msgctxt "#32145"
+msgid "70 min"
+msgstr ""
+
+msgctxt "#32146"
+msgid "75 min"
+msgstr ""
+
+msgctxt "#32147"
+msgid "80 min"
+msgstr ""
+
+msgctxt "#32148"
+msgid "85 min"
+msgstr ""
+
+msgctxt "#32149"
+msgid "90 min"
+msgstr ""
+
+msgctxt "#32150"
+msgid "95 min"
+msgstr ""
+
+msgctxt "#32151"
+msgid "100 min"
+msgstr ""
+
+msgctxt "#32152"
+msgid "105 min"
+msgstr ""
+
+msgctxt "#32153"
+msgid "110 min"
+msgstr ""
+
+msgctxt "#32154"
+msgid "115 min"
+msgstr ""
+
+msgctxt "#32155"
+msgid "120 min"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Sleep display in window mode is off"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Sleep display in fullscreen and window mode"
+msgstr ""
