@@ -1,0 +1,774 @@
+# XBMC Media Center language file
+# Addon Name: ExtendedInfo Script
+# Addon id: script.extendedinfo
+# Addon version: 1.0.0
+# Addon Provider: phil65
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "ExtendedInfo Script"
+msgstr "ExtendedInfo Script"
+
+msgctxt "Addon Description"
+msgid "This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, theaudiodb.org, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
+msgstr "Questo script offre diverse possibilità di visualizzare i contenuti online all'interno della skin. Sono utilizzati servizi di themoviedb.org, theaudiodb.org, Trakt.TV e molto altro ancora. Può essere utilizzato anche per l'importazione / esportazione delle impostazioni della skin, aggiungendo fanart aggiuntivi per la libreria biblioteca e font. Ha bisogno della skin per la maggior parte delle funzioni."
+
+msgctxt "#32000"
+msgid "Million"
+msgstr "Milioni"
+
+msgctxt "#32001"
+msgid "Billion"
+msgstr "Bilioni"
+
+msgctxt "#32002"
+msgid "Trillion"
+msgstr "Trilioni"
+
+msgctxt "#32003"
+msgid "Autocompletion language"
+msgstr "Linguaggio di autocompletamento"
+
+msgctxt "#32004"
+msgid "Autocompletion provider"
+msgstr "Provider di autocompletamento"
+
+msgctxt "#32005"
+msgid "Windowed mode (for low-power platforms)"
+msgstr "Modo a finestre (per piattaforme di bassa potenza)"
+
+msgctxt "#32006"
+msgid "Use as thumbnail"
+msgstr "Usa come miniature"
+
+msgctxt "#32007"
+msgid "Use as fanart"
+msgstr "Usa come fanart"
+
+msgctxt "#32008"
+msgid "Autocompletion"
+msgstr "Autocompletamento"
+
+#: \resources\lib\DialogTVShowInfo.py:101
+msgctxt "#32009"
+msgid "Show person information"
+msgstr "Mostra informazioni persona"
+
+msgctxt "#32010"
+msgid "Filmography"
+msgstr "Filmografia"
+
+msgctxt "#32011"
+msgid "Known movies"
+msgstr "Film conosciuti"
+
+msgctxt "#32012"
+msgid "Birthday"
+msgstr "Data di nascita"
+
+msgctxt "#32013"
+msgid "Day of death"
+msgstr "Data di morte"
+
+msgctxt "#32014"
+msgid "Place of birth"
+msgstr "Luogo di nascita"
+
+msgctxt "#32015"
+msgid "Adult actor"
+msgstr "Attore film per adulti"
+
+msgctxt "#32016"
+msgid "Also known as"
+msgstr "Anche conosciuto come"
+
+msgctxt "#32017"
+msgid "Homepage"
+msgstr "Homepage"
+
+msgctxt "#32018"
+msgid "Role"
+msgstr "Ruolo"
+
+msgctxt "#32019"
+msgid "Job"
+msgstr "Lavoro"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-DialogInfo.xml:118
+msgctxt "#32020"
+msgid "Age"
+msgstr "Età"
+
+msgctxt "#32021"
+msgid "In database"
+msgstr "Nel database"
+
+msgctxt "#32022"
+msgid "Clear filters"
+msgstr "Pulisci filtri"
+
+msgctxt "#32023"
+msgid "Filters"
+msgstr "Filtri"
+
+msgctxt "#32024"
+msgid "My account"
+msgstr "Mio account"
+
+msgctxt "#32025"
+msgid "Episode index"
+msgstr "Indice episodio"
+
+msgctxt "#32026"
+msgid "Related movie lists"
+msgstr "Lista film correlati"
+
+msgctxt "#32027"
+msgid "Select person"
+msgstr "Seleziona persona"
+
+#: /plugin.py:56
+msgctxt "#32028"
+msgid "Airing episodes"
+msgstr "Episodi in onda"
+
+#: /plugin.py:57
+msgctxt "#32029"
+msgid "Season premiere episodes"
+msgstr "Episodi premiere di stagione"
+
+msgctxt "#32030"
+msgid "Movie appearances"
+msgstr "Apparenze film"
+
+msgctxt "#32031"
+msgid "TV show appearances"
+msgstr "Apparenze Serie TV"
+
+#: /plugin.py:58
+msgctxt "#32032"
+msgid "Trending TV shows"
+msgstr "Andamento Serie TV"
+
+msgctxt "#32033"
+msgid "Enter person name"
+msgstr "Inserisci nome persona"
+
+msgctxt "#32034"
+msgid "Person results for %s"
+msgstr "Persona risulta per %s"
+
+msgctxt "#32035"
+msgid "Remove from list"
+msgstr "Rimuovi dalla lista"
+
+msgctxt "#32036"
+msgid "Movie list"
+msgstr "Lista Film"
+
+msgctxt "#32037"
+msgid "Overview"
+msgstr "Trama"
+
+#: /plugin.py:59
+msgctxt "#32038"
+msgid "TV shows airing today"
+msgstr "Serie TV oggi in onda"
+
+#: /plugin.py:60
+msgctxt "#32039"
+msgid "On-the-air TV shows"
+msgstr "Serie TV in onda"
+
+#: /plugin.py:61
+msgctxt "#32040"
+msgid "Top rated TV shows"
+msgstr "Serie TV più valutate"
+
+#: /plugin.py:62 /plugin.py:137
+msgctxt "#32041"
+msgid "Popular TV shows"
+msgstr "Serie TV popolari"
+
+#: /plugin.py:36 /plugin.py:45
+msgctxt "#32042"
+msgid "In-cinema movies"
+msgstr "Film al cinema"
+
+#: /plugin.py:46 /plugin.py:39
+msgctxt "#32043"
+msgid "Upcoming movies"
+msgstr "Film in arrivo"
+
+#: /plugin.py:48 /plugin.py:128
+msgctxt "#32044"
+msgid "Popular movies"
+msgstr "Film popolari"
+
+#: /plugin.py:49
+msgctxt "#32045"
+msgid "User-created lists"
+msgstr "Liste create da utente"
+
+#: /plugin.py:47
+msgctxt "#32046"
+msgid "Top rated movies"
+msgstr "Film più valutati"
+
+#: /plugin.py:51
+msgctxt "#32047"
+msgid "Trending movies"
+msgstr "Andamento film"
+
+#: /plugin.py:38
+msgctxt "#32048"
+msgid "Opening movies"
+msgstr "Film di apertura"
+
+#: /plugin.py:41
+msgctxt "#32049"
+msgid "Current DVD releases"
+msgstr "Uscite DVD attuali"
+
+msgctxt "#32050"
+msgid "Online information"
+msgstr "Informazioni Online"
+
+msgctxt "#32051"
+msgid "Trailer"
+msgstr "Trailer"
+
+msgctxt "#32052"
+msgid "No trailers found"
+msgstr "Nessun trailer trovato"
+
+#: /plugin.py:42
+msgctxt "#32053"
+msgid "New DVD releases"
+msgstr "Nuove uscite DVD"
+
+#: /plugin.py:43
+msgctxt "#32054"
+msgid "Upcoming DVDs"
+msgstr "DVD in arrivo"
+
+#: /plugin.py:37 /plugin.py:133
+msgctxt "#32055"
+msgid "Box office"
+msgstr "Box office"
+
+#: /plugin.py:40
+msgctxt "#32056"
+msgid "Top rentals"
+msgstr "Più noleggiati"
+
+#: /resources/lib/dialogs/DialogYoutubeList.py:128
+msgctxt "#32057"
+msgid "Dimensions"
+msgstr "Dimensioni"
+
+#: C:/Kodi/portable_data/addons/script.extendedinfo/resources/lib/dialogs/DialogYoutubeList.py:40
+msgctxt "#32058"
+msgid "Related"
+msgstr "Correlati"
+
+#: \resources\lib\DialogVideoInfo.py:297
+msgctxt "#32059"
+msgid "Added movie to CouchPotato"
+msgstr "Aggiungi il film a CouchPotato"
+
+#: \resources\lib\DialogYoutubeList.py:35 \resources\lib\DialogYoutubeList.py:124
+msgctxt "#32060"
+msgid "Relevance"
+msgstr "Rilevanza"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:113
+msgctxt "#32061"
+msgid "views"
+msgstr "viste"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32062"
+msgid "One day"
+msgstr "Un giorno"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32063"
+msgid "One week"
+msgstr "Una settimana"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32064"
+msgid "One month"
+msgstr "Un mese"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32065"
+msgid "One year"
+msgstr "Un anno"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:518
+msgctxt "#32066"
+msgid "2D / 3D"
+msgstr "2D / 3D"
+
+#: \resources\lib\DialogYoutubeList.py:59
+msgctxt "#32067"
+msgid "Amount of days"
+msgstr "Quantità di giorni"
+
+#: \resources\lib\DialogYoutubeList.py:24
+msgctxt "#32068"
+msgid "Amount of videos"
+msgstr "Quantità di video"
+
+#: \resources\lib\DialogYoutubeList.py:191
+msgctxt "#32069"
+msgid "Show similar videos"
+msgstr "Mostra video similari"
+
+#: /resources/lib/dialogs/DialogBaseInfo.py:149
+msgctxt "#32070"
+msgid "Show filmography"
+msgstr "Mostra filmografia"
+
+#: \resources\lib\TheMovieDB.py:870
+msgctxt "#32071"
+msgid "Released"
+msgstr "Data di uscita"
+
+#: \resources\lib\TheMovieDB.py:871
+msgctxt "#32072"
+msgid "Post production"
+msgstr "Post produzione"
+
+#: \resources\lib\TheMovieDB.py:872
+msgctxt "#32073"
+msgid "In production"
+msgstr "In produzione"
+
+#: \resources\lib\TheMovieDB.py:873
+msgctxt "#32074"
+msgid "Ended"
+msgstr "Finito"
+
+#: \resources\lib\TheMovieDB.py:874
+msgctxt "#32075"
+msgid "Returning series"
+msgstr "Serie riproposte"
+
+#: \resources\lib\TheMovieDB.py:875
+msgctxt "#32076"
+msgid "Planned"
+msgstr "Pianificato"
+
+#: \resources\lib\dialogs\DialogBaseList.py:73
+msgctxt "#32077"
+msgid "Remove filter"
+msgstr "Rimuovi filtro"
+
+#: \resources\lib\dialogs\DialogBaseList.py:74
+msgctxt "#32078"
+msgid "Remove all"
+msgstr "Rimuovi tutto"
+
+#: \resources\settings.xml:11
+msgctxt "#32080"
+msgid "Force native appearance"
+msgstr "Forza aspetto nativo"
+
+#: \resources\lib\dialogs\DialogYoutubeList.py:211
+msgctxt "#32081"
+msgid "More videos from"
+msgstr "Più video da"
+
+#: /resources/skins/Default/1080i/script-script.extendedinfo-DialogVideoInfo.xml:2925 /resources/lib/dialogs/DialogVideoList.py
+msgctxt "#32082"
+msgid "votes"
+msgstr "voti"
+
+#: /resources/lib/TheMovieDB.py:266
+msgctxt "#32083"
+msgid "Add movie to list"
+msgstr "Aggiungi il film alla lista"
+
+#: /resources/settings.xml:7
+msgctxt "#32084"
+msgid "Use classic keyboard for search"
+msgstr "Usa la tastiera classica per la ricerca"
+
+#: /plugin.py:138
+msgctxt "#32085"
+msgid "Anticipated TV shows"
+msgstr "Serie TV previste"
+
+#: /plugin.py:139
+msgctxt "#32086"
+msgid "Most played TV shows"
+msgstr "Serie TV più riprodotte"
+
+#: /plugin.py:140
+msgctxt "#32087"
+msgid "Most collected TV shows"
+msgstr "Serie TV più collezionate"
+
+#: /plugin.py:141
+msgctxt "#32088"
+msgid "Most watched TV shows"
+msgstr "Serie TV più viste"
+
+#: /plugin.py:129
+msgctxt "#32089"
+msgid "Most played movies"
+msgstr "Film più riprodotti"
+
+#: /plugin.py:130
+msgctxt "#32090"
+msgid "Most watched movies"
+msgstr "Film più visti"
+
+#: /plugin.py:131
+msgctxt "#32091"
+msgid "Most collected movies"
+msgstr "Film più collezionati"
+
+#: /plugin.py:132
+msgctxt "#32092"
+msgid "Anticipated movies"
+msgstr "Film previsti"
+
+#: /plugin.py:128
+msgctxt "#32093"
+msgid "Rated episodes"
+msgstr "Episodi valutati"
+
+#: /resources/lib/TheMovieDB.py:55
+msgctxt "#32094"
+msgid "Male"
+msgstr "Maschio"
+
+#: /resources/lib/TheMovieDB.py:54
+msgctxt "#32095"
+msgid "Female"
+msgstr "Femmina"
+
+msgctxt "#32099"
+msgid "Include porn stars"
+msgstr "Includi porno star"
+
+msgctxt "#32100"
+msgid "Get extrafanart"
+msgstr "Ottieni extrafanart"
+
+msgctxt "#32101"
+msgid "Get extrathumbs"
+msgstr "Ottieni vignette extra"
+
+msgctxt "#32102"
+msgid "Get tune"
+msgstr "Rimani sintonizzato"
+
+msgctxt "#32103"
+msgid "Change info labels"
+msgstr "Cambia le etichette di info"
+
+msgctxt "#32104"
+msgid "Sort by"
+msgstr "Ordina per"
+
+msgctxt "#32105"
+msgid "Filters"
+msgstr "Filtri"
+
+msgctxt "#32106"
+msgid "Choose filter behaviour"
+msgstr "Scegli il comportamento del filtro"
+
+msgctxt "#32107"
+msgid "Add to list"
+msgstr "Aggiungi alla lista"
+
+msgctxt "#32108"
+msgid "Revenue"
+msgstr "Rendita"
+
+msgctxt "#32109"
+msgid "Budget"
+msgstr "Budget"
+
+#: \resources\lib\DialogVideoList.py:155
+msgctxt "#32110"
+msgid "Popularity"
+msgstr "Popolarità"
+
+#: \resources\lib\DialogVideoList.py:288
+msgctxt "#32111"
+msgid "Vote count"
+msgstr "Contatore voto"
+
+msgctxt "#32112"
+msgid "Vote average"
+msgstr "Media voto"
+
+#: /resources/lib/dialogs/DialogBaseInfo.py:120
+msgctxt "#32113"
+msgid "Rate movie"
+msgstr "Valuta film"
+
+msgctxt "#32114"
+msgid "Keyword"
+msgstr "Parola chiave"
+
+msgctxt "#32115"
+msgid "Crew"
+msgstr "Crew"
+
+msgctxt "#32116"
+msgid "Recommended By TMDB"
+msgstr "Raccomandato da TMDB"
+
+msgctxt "#32117"
+msgid "Official videos"
+msgstr "Video ufficiali"
+
+#: \resources\lib\DialogYoutubeList.py:13
+msgctxt "#32118"
+msgid "YouTube videos"
+msgstr "Video YouTube"
+
+msgctxt "#32119"
+msgid "Artwork"
+msgstr "Artwork"
+
+msgctxt "#32120"
+msgid "Movie actor roles"
+msgstr "Ruoli attore in film"
+
+msgctxt "#32121"
+msgid "TV show roles"
+msgstr "Ruoli in Serie TV"
+
+msgctxt "#32122"
+msgid "Movie crew member"
+msgstr "Membro della Crew del film"
+
+msgctxt "#32123"
+msgid "TV show crew member"
+msgstr "Membro della Crew della Serie TV"
+
+msgctxt "#32124"
+msgid "Items"
+msgstr "Elementi"
+
+msgctxt "#32125"
+msgid "Page"
+msgstr "Pagina"
+
+msgctxt "#32126"
+msgid "Actor / Crew member"
+msgstr "Attore / Membro della Crew"
+
+msgctxt "#32127"
+msgid "Certification"
+msgstr "Certificazione"
+
+msgctxt "#32128"
+msgid "Order"
+msgstr "Ordine"
+
+msgctxt "#32129"
+msgid "Your rating"
+msgstr "Tuo voto"
+
+msgctxt "#32130"
+msgid "Show lists"
+msgstr "Mostra liste"
+
+msgctxt "#32131"
+msgid "Already rated"
+msgstr "Già volutato"
+
+msgctxt "#32132"
+msgid "Extras"
+msgstr "Extra"
+
+msgctxt "#32133"
+msgid "Manage"
+msgstr "Gestisci"
+
+msgctxt "#32134"
+msgid "Starred movies"
+msgstr "Film preferiti"
+
+msgctxt "#32135"
+msgid "Rated movies"
+msgstr "Film valutati"
+
+msgctxt "#32136"
+msgid "Choose list"
+msgstr "Scegli lista"
+
+msgctxt "#32137"
+msgid "Enter list name"
+msgstr "Inserisci nome lista"
+
+msgctxt "#32138"
+msgid "Delete movie list"
+msgstr "Cancella lista film"
+
+msgctxt "#32139"
+msgid "New movie list"
+msgstr "Nuova lista film"
+
+msgctxt "#32140"
+msgid "For all features enter your TMDB credentials in addon settings. "
+msgstr "Per tutte le funzionalità imetti le tue credenziali di TMDB nelle impostazione dell'addon."
+
+msgctxt "#32141"
+msgid "This product uses the TMDb API but is not endorsed or certified by TMDb."
+msgstr "Questo prodotto utilizza l'API di TMDb ma non è stato convalidato o certificata da TMDb."
+
+msgctxt "#32142"
+msgid "Studios"
+msgstr "Studio"
+
+msgctxt "#32143"
+msgid "Could not find item at MovieDB"
+msgstr "Non trovo l'elemento in MovieDB"
+
+msgctxt "#32144"
+msgid "Starred TV shows"
+msgstr "Serie TV preferite"
+
+msgctxt "#32145"
+msgid "Rated TV shows"
+msgstr "Serie TV valutate"
+
+msgctxt "#32146"
+msgid "Search for '%s'"
+msgstr "Cerca per '%s'"
+
+msgctxt "#32147"
+msgid "Show appearances"
+msgstr "Mostra le apparenze"
+
+msgctxt "#32148"
+msgid "Show information"
+msgstr "Mostra informazioni"
+
+msgctxt "#32149"
+msgid "Upper limit"
+msgstr "Limite superiore"
+
+msgctxt "#32150"
+msgid "Lower limit"
+msgstr "Limite inferiore"
+
+#: /resources/lib/Utils.py:224
+msgctxt "#32151"
+msgid "Choose option"
+msgstr "Scegli opzione"
+
+msgctxt "#32152"
+msgid "Networks"
+msgstr "Reti"
+
+msgctxt "#32153"
+msgid "Certification country"
+msgstr "Paese di certificazione"
+
+msgctxt "#32154"
+msgid "Star"
+msgstr "Star"
+
+msgctxt "#32155"
+msgid "UnStar"
+msgstr "Togli Star"
+
+msgctxt "#32156"
+msgid "Person"
+msgstr "Persona"
+
+msgctxt "#32157"
+msgid "Created at"
+msgstr "Creato a"
+
+msgctxt "#32158"
+msgid "Birthday today!"
+msgstr "Compleanno oggi!"
+
+msgctxt "#32159"
+msgid "Language for TheMovieDB requests"
+msgstr "Linguaggio per le richieste TheMovieDB"
+
+msgctxt "#32160"
+msgid "TheMovieDB username"
+msgstr "TheMovieDB username"
+
+msgctxt "#32161"
+msgid "TheMovieDB password"
+msgstr "TheMovieDB password"
+
+msgctxt "#32162"
+msgid "Include adult actors / movies"
+msgstr "Includi attori / film per adulti"
+
+msgctxt "#32163"
+msgid "Open InfoDialog by default"
+msgstr "Apri InfoDialog in modo predefinito"
+
+msgctxt "#32164"
+msgid "Delete cache"
+msgstr "Cancella cache"
+
+msgctxt "#32165"
+msgid "Add to CouchPotato"
+msgstr "Aggiungi a CouchPotato"
+
+msgctxt "#32166"
+msgid "Add to SickBeard"
+msgstr "Aggiungi a SickBeard"
+
+msgctxt "#32167"
+msgid "Reviews"
+msgstr "Recensioni"
+
+msgctxt "#32168"
+msgid "Releases"
+msgstr "Uscite"
+
+msgctxt "#32169"
+msgid "Rate TV show"
+msgstr "Valuta Serie TV"
+
+msgctxt "#32170"
+msgid "Add to Trakt Watchlist"
+msgstr "Aggiungi alla Trakt Watchlist"
+
+msgctxt "#32171"
+msgid "TheMovieDB"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Youtube API Key"
+msgstr ""
+
+msgctxt "#32173"
+msgid "TADB API Key"
+msgstr ""
+
+msgctxt "#32174"
+msgid "OMDb API Key"
+msgstr ""

@@ -1,0 +1,777 @@
+# XBMC Media Center language file
+# Addon Name: ExtendedInfo Script
+# Addon id: script.extendedinfo
+# Addon version: 1.0.0
+# Addon Provider: phil65
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2017-05-01 10:02+0200\n"
+"Language-Team: Czech\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs_CZ\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.0.1\n"
+
+msgctxt "Addon Summary"
+msgid "ExtendedInfo Script"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, theaudiodb.org, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
+msgstr "Tento skript nabízí různé možnosti pro zobrazení online obsahu uvnitř vzhledů. Použité služby jsou themoviedb.org, theaudiodb.org, Trakt.TV a mnoho dalších. Lze ho také použít k importu nebo exportu nastavení vzhledu, přidávání dalších věcí pro fanart do knihovny a vaření vajec. Pro většinu funkcí vyžaduje podporu vzhledu."
+
+msgctxt "#32000"
+msgid "Million"
+msgstr "Milion"
+
+msgctxt "#32001"
+msgid "Billion"
+msgstr "Bilion"
+
+msgctxt "#32002"
+msgid "Trillion"
+msgstr "Trilion"
+
+msgctxt "#32003"
+msgid "Autocompletion language"
+msgstr "Jazyk automatického dokončování"
+
+msgctxt "#32004"
+msgid "Autocompletion provider"
+msgstr "Poskytovatel automatického dokončování"
+
+msgctxt "#32005"
+msgid "Windowed mode (for low-power platforms)"
+msgstr "Režim v okně (pro platformy s nízkým výkonem)"
+
+msgctxt "#32006"
+msgid "Use as thumbnail"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Use as fanart"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Autocompletion"
+msgstr "Automatické dokončování"
+
+#: \resources\lib\DialogTVShowInfo.py:101
+msgctxt "#32009"
+msgid "Show person information"
+msgstr "Zobrazit informace o osobě"
+
+msgctxt "#32010"
+msgid "Filmography"
+msgstr "Filmografie"
+
+msgctxt "#32011"
+msgid "Known movies"
+msgstr "Známé filmy"
+
+msgctxt "#32012"
+msgid "Birthday"
+msgstr "Datum narození"
+
+msgctxt "#32013"
+msgid "Day of death"
+msgstr "Datum úmrtí"
+
+msgctxt "#32014"
+msgid "Place of birth"
+msgstr "Místo narození"
+
+msgctxt "#32015"
+msgid "Adult actor"
+msgstr "Pornoherec"
+
+msgctxt "#32016"
+msgid "Also known as"
+msgstr "Také známý jako"
+
+msgctxt "#32017"
+msgid "Homepage"
+msgstr "Domovská stránka"
+
+msgctxt "#32018"
+msgid "Role"
+msgstr "Role"
+
+msgctxt "#32019"
+msgid "Job"
+msgstr "Úloha"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-DialogInfo.xml:118
+msgctxt "#32020"
+msgid "Age"
+msgstr "Věk"
+
+msgctxt "#32021"
+msgid "In database"
+msgstr "V databázi"
+
+msgctxt "#32022"
+msgid "Clear filters"
+msgstr "Vymazat filtry"
+
+msgctxt "#32023"
+msgid "Filters"
+msgstr "Filtry"
+
+msgctxt "#32024"
+msgid "My account"
+msgstr "Můj účet"
+
+msgctxt "#32025"
+msgid "Episode index"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Related movie lists"
+msgstr "Seznamy souvisejících filmů"
+
+msgctxt "#32027"
+msgid "Select person"
+msgstr "Vyberte osobu"
+
+#: /plugin.py:56
+msgctxt "#32028"
+msgid "Airing episodes"
+msgstr ""
+
+#: /plugin.py:57
+msgctxt "#32029"
+msgid "Season premiere episodes"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Movie appearances"
+msgstr "Hostující herec ve filmech"
+
+msgctxt "#32031"
+msgid "TV show appearances"
+msgstr "Hostující herec v seriálu"
+
+#: /plugin.py:58
+msgctxt "#32032"
+msgid "Trending TV shows"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Enter person name"
+msgstr "Zadejte jméno osoby"
+
+msgctxt "#32034"
+msgid "Person results for %s"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Remove from list"
+msgstr "Odebrat ze seznamu"
+
+msgctxt "#32036"
+msgid "Movie list"
+msgstr "Seznam filmů"
+
+msgctxt "#32037"
+msgid "Overview"
+msgstr "Přehled"
+
+#: /plugin.py:59
+msgctxt "#32038"
+msgid "TV shows airing today"
+msgstr ""
+
+#: /plugin.py:60
+msgctxt "#32039"
+msgid "On-the-air TV shows"
+msgstr ""
+
+#: /plugin.py:61
+msgctxt "#32040"
+msgid "Top rated TV shows"
+msgstr "Nejlépe hodnocené seriály"
+
+#: /plugin.py:62 /plugin.py:137
+msgctxt "#32041"
+msgid "Popular TV shows"
+msgstr ""
+
+#: /plugin.py:36 /plugin.py:45
+msgctxt "#32042"
+msgid "In-cinema movies"
+msgstr ""
+
+#: /plugin.py:46 /plugin.py:39
+msgctxt "#32043"
+msgid "Upcoming movies"
+msgstr ""
+
+#: /plugin.py:48 /plugin.py:128
+msgctxt "#32044"
+msgid "Popular movies"
+msgstr ""
+
+#: /plugin.py:49
+msgctxt "#32045"
+msgid "User-created lists"
+msgstr ""
+
+#: /plugin.py:47
+msgctxt "#32046"
+msgid "Top rated movies"
+msgstr "Nejlépe hodnocené filmy"
+
+#: /plugin.py:51
+msgctxt "#32047"
+msgid "Trending movies"
+msgstr ""
+
+#: /plugin.py:38
+msgctxt "#32048"
+msgid "Opening movies"
+msgstr ""
+
+#: /plugin.py:41
+msgctxt "#32049"
+msgid "Current DVD releases"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Online information"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Trailer"
+msgstr "Upoutávka"
+
+msgctxt "#32052"
+msgid "No trailers found"
+msgstr "Nenalezeny žádné upoutávky"
+
+#: /plugin.py:42
+msgctxt "#32053"
+msgid "New DVD releases"
+msgstr ""
+
+#: /plugin.py:43
+msgctxt "#32054"
+msgid "Upcoming DVDs"
+msgstr ""
+
+#: /plugin.py:37 /plugin.py:133
+msgctxt "#32055"
+msgid "Box office"
+msgstr ""
+
+#: /plugin.py:40
+msgctxt "#32056"
+msgid "Top rentals"
+msgstr ""
+
+#: /resources/lib/dialogs/DialogYoutubeList.py:128
+msgctxt "#32057"
+msgid "Dimensions"
+msgstr "Rozměry"
+
+#: C:/Kodi/portable_data/addons/script.extendedinfo/resources/lib/dialogs/DialogYoutubeList.py:40
+msgctxt "#32058"
+msgid "Related"
+msgstr "Související"
+
+#: \resources\lib\DialogVideoInfo.py:297
+msgctxt "#32059"
+msgid "Added movie to CouchPotato"
+msgstr "Film přidán do CouchPotato"
+
+#: \resources\lib\DialogYoutubeList.py:35
+#: \resources\lib\DialogYoutubeList.py:124
+msgctxt "#32060"
+msgid "Relevance"
+msgstr ""
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:113
+msgctxt "#32061"
+msgid "views"
+msgstr "zobrazení"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32062"
+msgid "One day"
+msgstr "Jeden den"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32063"
+msgid "One week"
+msgstr "Jeden týden"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32064"
+msgid "One month"
+msgstr "Jeden měsíc"
+
+#: \resources\lib\DialogYoutubeList.py:131
+msgctxt "#32065"
+msgid "One year"
+msgstr "Jeden rok"
+
+#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:518
+msgctxt "#32066"
+msgid "2D / 3D"
+msgstr "2D / 3D"
+
+#: \resources\lib\DialogYoutubeList.py:59
+msgctxt "#32067"
+msgid "Amount of days"
+msgstr ""
+
+#: \resources\lib\DialogYoutubeList.py:24
+msgctxt "#32068"
+msgid "Amount of videos"
+msgstr ""
+
+#: \resources\lib\DialogYoutubeList.py:191
+msgctxt "#32069"
+msgid "Show similar videos"
+msgstr "Zobrazit podobná videa"
+
+#: /resources/lib/dialogs/DialogBaseInfo.py:149
+msgctxt "#32070"
+msgid "Show filmography"
+msgstr "Zobrazit filmografii"
+
+#: \resources\lib\TheMovieDB.py:870
+msgctxt "#32071"
+msgid "Released"
+msgstr "Vydáno"
+
+#: \resources\lib\TheMovieDB.py:871
+msgctxt "#32072"
+msgid "Post production"
+msgstr ""
+
+#: \resources\lib\TheMovieDB.py:872
+msgctxt "#32073"
+msgid "In production"
+msgstr ""
+
+#: \resources\lib\TheMovieDB.py:873
+msgctxt "#32074"
+msgid "Ended"
+msgstr ""
+
+#: \resources\lib\TheMovieDB.py:874
+msgctxt "#32075"
+msgid "Returning series"
+msgstr ""
+
+#: \resources\lib\TheMovieDB.py:875
+msgctxt "#32076"
+msgid "Planned"
+msgstr ""
+
+#: \resources\lib\dialogs\DialogBaseList.py:73
+msgctxt "#32077"
+msgid "Remove filter"
+msgstr "Odebrat filtr"
+
+#: \resources\lib\dialogs\DialogBaseList.py:74
+msgctxt "#32078"
+msgid "Remove all"
+msgstr "Odebrat vše"
+
+#: \resources\settings.xml:11
+msgctxt "#32080"
+msgid "Force native appearance"
+msgstr "Vynutit nativní vzhled"
+
+#: \resources\lib\dialogs\DialogYoutubeList.py:211
+msgctxt "#32081"
+msgid "More videos from"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-script.extendedinfo-DialogVideoInfo.xml:2925
+#: /resources/lib/dialogs/DialogVideoList.py
+msgctxt "#32082"
+msgid "votes"
+msgstr "hlasů"
+
+#: /resources/lib/TheMovieDB.py:266
+msgctxt "#32083"
+msgid "Add movie to list"
+msgstr "Přidat film na seznam"
+
+#: /resources/settings.xml:7
+msgctxt "#32084"
+msgid "Use classic keyboard for search"
+msgstr "Pro hledání používat klasickou klávesnici"
+
+#: /plugin.py:138
+msgctxt "#32085"
+msgid "Anticipated TV shows"
+msgstr ""
+
+#: /plugin.py:139
+msgctxt "#32086"
+msgid "Most played TV shows"
+msgstr ""
+
+#: /plugin.py:140
+msgctxt "#32087"
+msgid "Most collected TV shows"
+msgstr ""
+
+#: /plugin.py:141
+msgctxt "#32088"
+msgid "Most watched TV shows"
+msgstr ""
+
+#: /plugin.py:129
+msgctxt "#32089"
+msgid "Most played movies"
+msgstr ""
+
+#: /plugin.py:130
+msgctxt "#32090"
+msgid "Most watched movies"
+msgstr ""
+
+#: /plugin.py:131
+msgctxt "#32091"
+msgid "Most collected movies"
+msgstr ""
+
+#: /plugin.py:132
+msgctxt "#32092"
+msgid "Anticipated movies"
+msgstr ""
+
+#: /plugin.py:128
+msgctxt "#32093"
+msgid "Rated episodes"
+msgstr "Hodnocené epizody"
+
+#: /resources/lib/TheMovieDB.py:55
+msgctxt "#32094"
+msgid "Male"
+msgstr "Muž"
+
+#: /resources/lib/TheMovieDB.py:54
+msgctxt "#32095"
+msgid "Female"
+msgstr "Žena"
+
+msgctxt "#32099"
+msgid "Include porn stars"
+msgstr "Zahrnout pornohvězdy"
+
+msgctxt "#32100"
+msgid "Get extrafanart"
+msgstr "Získat další fanarty"
+
+msgctxt "#32101"
+msgid "Get extrathumbs"
+msgstr "Získat další náhledy"
+
+msgctxt "#32102"
+msgid "Get tune"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Change info labels"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Sort by"
+msgstr "Seřadit podle"
+
+msgctxt "#32105"
+msgid "Filters"
+msgstr "Filtry"
+
+msgctxt "#32106"
+msgid "Choose filter behaviour"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Add to list"
+msgstr "Přidat na seznam"
+
+msgctxt "#32108"
+msgid "Revenue"
+msgstr "Výnos"
+
+msgctxt "#32109"
+msgid "Budget"
+msgstr "Rozpočet"
+
+#: \resources\lib\DialogVideoList.py:155
+msgctxt "#32110"
+msgid "Popularity"
+msgstr ""
+
+#: \resources\lib\DialogVideoList.py:288
+msgctxt "#32111"
+msgid "Vote count"
+msgstr "Počet hlasů"
+
+msgctxt "#32112"
+msgid "Vote average"
+msgstr "Průměrné hodnocení"
+
+#: /resources/lib/dialogs/DialogBaseInfo.py:120
+msgctxt "#32113"
+msgid "Rate movie"
+msgstr "Hodnotit film"
+
+msgctxt "#32114"
+msgid "Keyword"
+msgstr "Klíčové slovo"
+
+msgctxt "#32115"
+msgid "Crew"
+msgstr "Štáb"
+
+msgctxt "#32116"
+msgid "Recommended By TMDB"
+msgstr "TMDB doporučuje"
+
+msgctxt "#32117"
+msgid "Official videos"
+msgstr "Oficiální videa"
+
+#: \resources\lib\DialogYoutubeList.py:13
+msgctxt "#32118"
+msgid "YouTube videos"
+msgstr "Videa YouTube"
+
+msgctxt "#32119"
+msgid "Artwork"
+msgstr "Obrázky"
+
+msgctxt "#32120"
+msgid "Movie actor roles"
+msgstr "Role ve filmech"
+
+msgctxt "#32121"
+msgid "TV show roles"
+msgstr "Role v seriálech"
+
+msgctxt "#32122"
+msgid "Movie crew member"
+msgstr "Člen štábu ve filmu"
+
+msgctxt "#32123"
+msgid "TV show crew member"
+msgstr "Člen štábu v seriálu"
+
+msgctxt "#32124"
+msgid "Items"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Page"
+msgstr "Stránka"
+
+msgctxt "#32126"
+msgid "Actor / Crew member"
+msgstr "Herec / Člen štábu"
+
+msgctxt "#32127"
+msgid "Certification"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Order"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Your rating"
+msgstr "Vaše hodnocení"
+
+msgctxt "#32130"
+msgid "Show lists"
+msgstr "Zobrazit seznamy"
+
+msgctxt "#32131"
+msgid "Already rated"
+msgstr "Již hodnoceno"
+
+msgctxt "#32132"
+msgid "Extras"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Manage"
+msgstr "Spravovat"
+
+msgctxt "#32134"
+msgid "Starred movies"
+msgstr "Sdílené filmy"
+
+msgctxt "#32135"
+msgid "Rated movies"
+msgstr "Hodnocené filmy"
+
+msgctxt "#32136"
+msgid "Choose list"
+msgstr "Zvolte seznam"
+
+msgctxt "#32137"
+msgid "Enter list name"
+msgstr "Zadejte název seznamu"
+
+msgctxt "#32138"
+msgid "Delete movie list"
+msgstr "Odstranit seznam filmů"
+
+msgctxt "#32139"
+msgid "New movie list"
+msgstr "Nový seznam filmů"
+
+msgctxt "#32140"
+msgid "For all features enter your TMDB credentials in addon settings. "
+msgstr ""
+
+msgctxt "#32141"
+msgid "This product uses the TMDb API but is not endorsed or certified by TMDb."
+msgstr ""
+
+msgctxt "#32142"
+msgid "Studios"
+msgstr "Studia"
+
+msgctxt "#32143"
+msgid "Could not find item at MovieDB"
+msgstr "Nelze najít položku na MovieDB"
+
+msgctxt "#32144"
+msgid "Starred TV shows"
+msgstr "Sdílené seriály"
+
+msgctxt "#32145"
+msgid "Rated TV shows"
+msgstr "Hodnocené seriály"
+
+msgctxt "#32146"
+msgid "Search for '%s'"
+msgstr "Hledat ‚%s‘"
+
+msgctxt "#32147"
+msgid "Show appearances"
+msgstr "Zobrazit hostující herce"
+
+msgctxt "#32148"
+msgid "Show information"
+msgstr "Zobrazit informace"
+
+msgctxt "#32149"
+msgid "Upper limit"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Lower limit"
+msgstr ""
+
+#: /resources/lib/Utils.py:224
+msgctxt "#32151"
+msgid "Choose option"
+msgstr "Zvolte možnost"
+
+msgctxt "#32152"
+msgid "Networks"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Certification country"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Star"
+msgstr "Hvězdy"
+
+msgctxt "#32155"
+msgid "UnStar"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Person"
+msgstr "Osoba"
+
+msgctxt "#32157"
+msgid "Created at"
+msgstr "Vytvořeno"
+
+msgctxt "#32158"
+msgid "Birthday today!"
+msgstr "Dnes má narozeniny!"
+
+msgctxt "#32159"
+msgid "Language for TheMovieDB requests"
+msgstr "Jazyk pro požadavky TheMovieDB"
+
+msgctxt "#32160"
+msgid "TheMovieDB username"
+msgstr "Uživatelské jméno TheMovieDB"
+
+msgctxt "#32161"
+msgid "TheMovieDB password"
+msgstr "Heslo TheMovieDB"
+
+msgctxt "#32162"
+msgid "Include adult actors / movies"
+msgstr "Zahrnout herce a filmy pro dospělé"
+
+msgctxt "#32163"
+msgid "Open InfoDialog by default"
+msgstr "Ve výchozím nastavení otvírat InfoDialog"
+
+msgctxt "#32164"
+msgid "Delete cache"
+msgstr "Odstranit mezipaměť"
+
+msgctxt "#32165"
+msgid "Add to CouchPotato"
+msgstr "Přidat do CouchPotato"
+
+msgctxt "#32166"
+msgid "Add to SickBeard"
+msgstr "Přidat do SickBeard"
+
+msgctxt "#32167"
+msgid "Reviews"
+msgstr ""
+
+msgctxt "#32168"
+msgid "Releases"
+msgstr "Vydání"
+
+msgctxt "#32169"
+msgid "Rate TV show"
+msgstr "Hodnotit seriál"
+
+msgctxt "#32170"
+msgid "Add to Trakt Watchlist"
+msgstr "Přidat do seznamu sledování Trakt"
+
+msgctxt "#32171"
+msgid "TheMovieDB"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Youtube API Key"
+msgstr ""
+
+msgctxt "#32173"
+msgid "TADB API Key"
+msgstr ""
+
+msgctxt "#32174"
+msgid "OMDb API Key"
+msgstr ""
