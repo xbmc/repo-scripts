@@ -21,7 +21,7 @@ import tempfile
 from unicodedata import normalize
 from urllib import unquote, quote_plus, urlencode, quote
 import urllib2
-from urlparse import parse_qs, urlsplit, urlunsplit
+from urlparse import parse_qs
 
 try:
     import xbmc
@@ -49,7 +49,7 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = '0.3.8'
+__version__    = '0.3.9'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
@@ -151,8 +151,15 @@ def log(msg, level=LOGDEBUG):
     xbmc.log(s.encode('utf-8'), level=level)
 
 
-def get_url(url):
-    req = urllib2.Request(url)
+def get_url(url, query_data=None):
+    if query_data is None:
+        req = urllib2.Request(url)
+    else:
+        # TODO: query_data might have non-ASCII data. We might want to make sure to
+        # encode it to utf-8 before urlencoding it. We can solve this as part of
+        # wider effort with the python 3 compatibility work
+        urlencoded_query_data = urlencode(query_data)
+        req = urllib2.Request(url, data=urlencoded_query_data)
     req.add_header("User-Agent", HTTP_USER_AGENT)
     log(u"Fetching %s" % url)
     try:
@@ -183,26 +190,13 @@ def cleanup_subdivx_comment(comment):
     return clean_text.rstrip(' \t')
 
 
-def build_subdivx_url(qs_dict):
-    parts = urlsplit(SEARCH_PAGE_URL)
-    mod_parts = (
-        parts.scheme,
-        parts.netloc,
-        parts.path,
-        urlencode(qs_dict),
-        parts.fragment
-    )
-    return urlunsplit(mod_parts)
-
-
-def process_page(page_nr, srch_param_name, srch_str, file_orig_path):
+def process_page(page_nr, srch_str, file_orig_path):
     log(u"Trying page %d" % page_nr)
     qs_dict = QS_DICT.copy()
-    qs_dict[srch_param_name] = srch_str
+    qs_dict[QS_KEY_QUERY] = srch_str
     if page_nr > 1:
         qs_dict[QS_KEY_PAGE] = str(page_nr)
-    url = build_subdivx_url(qs_dict)
-    content = get_url(url)
+    content = get_url(SEARCH_PAGE_URL, qs_dict)
     if content is None:
         return [], set()
     if not SUBTITLE_RE.search(content):
@@ -255,7 +249,7 @@ def get_all_subs(searchstring, languageshort, file_orig_path):
     page_nr = 1
     last_page = set()
     while True:
-        page_results, current_page = process_page(page_nr, QS_KEY_QUERY, searchstring, file_orig_path)
+        page_results, current_page = process_page(page_nr, searchstring, file_orig_path)
         if not page_results:
             break
         if current_page == last_page:

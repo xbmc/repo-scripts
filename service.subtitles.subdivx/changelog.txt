@@ -1,3 +1,7 @@
+0.3.9
+- Adapt to new method for sending search query data (POST). Thanks
+  TheArgentinian for the report and pedrochiuaua for the fix
+
 0.3.8
 - Fix search after changes in subdivx.com. Thanks alvarezj81 for the report
   and pedrochiuaua for the fix
