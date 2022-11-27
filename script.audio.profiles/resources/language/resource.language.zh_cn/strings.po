@@ -1,334 +1,340 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2021-10-26 08:30+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/zh_cn/>\n"
 "Language: zh_cn\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them."
-msgstr ""
+msgstr "保存音频配置文件并在它们之间轻松切换。"
 
 msgctxt "Addon Description"
 msgid "Save audio profile and easily switch between them."
-msgstr ""
+msgstr "保存音频配置文件并在它们之间轻松切换。"
 
 msgctxt "#32000"
 msgid "Profiles 1-5"
-msgstr ""
+msgstr "配置文件1-5"
 
 msgctxt "#32001"
 msgid " Name of profile 1"
-msgstr ""
+msgstr " 配置文件1名称"
 
 msgctxt "#32002"
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 msgctxt "#32003"
 msgid " Name of profile 2"
-msgstr ""
+msgstr " 配置文件2名称"
 
 msgctxt "#32004"
 msgid "Include volume level"
-msgstr ""
+msgstr "包括音量级"
 
 msgctxt "#32005"
 msgid " Name of profile 3"
-msgstr ""
+msgstr " 配置文件3名称"
 
 msgctxt "#32006"
 msgid " Name of profile 4"
-msgstr ""
+msgstr " 配置文件4名称"
 
 msgctxt "#32007"
 msgid "Profile 1"
-msgstr ""
+msgstr "配置文件1"
 
 msgctxt "#32008"
 msgid "Profile 2"
-msgstr ""
+msgstr "配置文件2"
 
 msgctxt "#32009"
 msgid "Profile 3"
-msgstr ""
+msgstr "配置文件3"
 
 msgctxt "#32010"
 msgid "Profile 4"
-msgstr ""
+msgstr "配置文件4"
 
 msgctxt "#32011"
 msgid "Include video player settings"
-msgstr ""
+msgstr "包括视频播放器设置"
 
 msgctxt "#32012"
 msgid "Include display settings"
-msgstr ""
+msgstr "包括显示设置"
 
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr ""
+msgstr "包括设置"
 
 msgctxt "#32014"
 msgid "Auto Switch"
-msgstr ""
+msgstr "自动切换"
 
 msgctxt "#32015"
 msgid "Show audio profile select menu on media playback"
-msgstr ""
+msgstr "媒体播放时显示音频配置文件选择菜单"
 
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr ""
+msgstr "自动关闭选择菜单"
 
 msgctxt "#32018"
 msgid "Notifications"
-msgstr ""
+msgstr "通知"
 
 msgctxt "#32019"
 msgid "Notifications"
-msgstr ""
+msgstr "通知"
 
 msgctxt "#32021"
 msgid "Profile for GUI"
-msgstr ""
+msgstr "GUI 配置文件"
 
 msgctxt "#32022"
 msgid "Profile for movies"
-msgstr ""
+msgstr "电影配置文件"
 
 msgctxt "#32023"
 msgid "Profile for TV shows"
-msgstr ""
+msgstr "剧集配置文件"
 
 msgctxt "#32024"
 msgid "Profile for PVR TV"
-msgstr ""
+msgstr "PVR 电视配置文件"
 
 msgctxt "#32025"
 msgid "Profile for music"
-msgstr ""
+msgstr "音乐配置文件"
 
 msgctxt "#32026"
 msgid "None"
-msgstr ""
+msgstr "无"
 
 msgctxt "#32027"
 msgid "HDMI-CEC"
-msgstr ""
+msgstr "HDMI-CEC"
 
 msgctxt "#32028"
 msgid "Wake Up"
-msgstr ""
+msgstr "唤醒"
 
 msgctxt "#32029"
 msgid "StandBy"
-msgstr ""
+msgstr "待机"
 
 msgctxt "#32030"
 msgid "Toggle state"
-msgstr ""
+msgstr "切换状态"
 
 msgctxt "#32031"
 msgid "Profile for videos (not in library)"
-msgstr ""
+msgstr "视频（不在资料库中）配置文件"
 
 msgctxt "#32032"
 msgid "Profile for music videos"
-msgstr ""
+msgstr "音乐电视配置文件"
 
 msgctxt "#32033"
 msgid "Profile for unknown content type"
-msgstr ""
+msgstr "未知内容类型配置文件"
 
 msgctxt "#32034"
 msgid "Profile for PVR radio"
-msgstr ""
+msgstr "PVR 电台配置文件"
 
 msgctxt "#32035"
 msgid "Video"
-msgstr ""
+msgstr "视频"
 
 msgctxt "#32036"
 msgid "Audio"
-msgstr ""
+msgstr "音频"
 
 msgctxt "#32037"
 msgid "Other"
-msgstr ""
+msgstr "其他"
 
 msgctxt "#32038"
 msgid "Profile for KODI Start/Wakeup (Default)"
-msgstr ""
+msgstr "KODI 启动/唤醒配置文件（默认）"
 
 msgctxt "#32039"
 msgid " Delay before close"
-msgstr ""
+msgstr " 关闭前延迟"
 
 msgctxt "#32040"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "启用调试日志"
 
 msgctxt "#32041"
 msgid " Force load profile at startup"
-msgstr ""
+msgstr " 启动时强制加载配置文件"
 
 msgctxt "#32042"
 msgid " Auto switch notifications"
-msgstr ""
+msgstr " 自动切换通知"
 
 msgctxt "#32043"
 msgid " Manual switch notifications"
-msgstr ""
+msgstr " 手动切换通知"
 
 msgctxt "#32044"
 msgid " Maintenance notifications"
-msgstr ""
+msgstr " 维护通知"
 
 msgctxt "#32045"
 msgid "Select menu"
-msgstr ""
+msgstr "选择菜单"
 
 msgctxt "#32046"
 msgid "Use custom select menu"
-msgstr ""
+msgstr "使用自定义选择菜单"
 
 msgctxt "#32047"
 msgid "Include skin mods"
-msgstr ""
+msgstr "包括皮肤 mods"
 
 msgctxt "#32048"
 msgid "Extras"
-msgstr ""
+msgstr "附加"
 
 msgctxt "#32049"
 msgid "By number of channels"
-msgstr ""
+msgstr "按频道数目"
 
 msgctxt "#32050"
 msgid "Menu Options"
-msgstr ""
+msgstr "菜单选项"
 
 msgctxt "#32051"
 msgid "Profile 5"
-msgstr ""
+msgstr "配置文件5"
 
 msgctxt "#32052"
 msgid "Name of profile 5"
-msgstr ""
+msgstr "配置文件5名称"
 
 msgctxt "#32053"
 msgid "Profile 6"
-msgstr ""
+msgstr "配置文件6"
 
 msgctxt "#32054"
 msgid "Name of profile 6"
-msgstr ""
+msgstr "配置文件6名称"
 
 msgctxt "#32055"
 msgid "Profile 7"
-msgstr ""
+msgstr "配置文件7"
 
 msgctxt "#32056"
 msgid "Name of profile 7"
-msgstr ""
+msgstr "配置文件7名称"
 
 msgctxt "#32057"
 msgid "Profile 8"
-msgstr ""
+msgstr "配置文件8"
 
 msgctxt "#32058"
 msgid "Name of profile 8"
-msgstr ""
+msgstr "配置文件8名称"
 
 msgctxt "#32059"
 msgid "Profile 9"
-msgstr ""
+msgstr "配置文件9"
 
 msgctxt "#32060"
 msgid "Name of profile 9"
-msgstr ""
+msgstr "配置文件9名称"
 
 msgctxt "#32061"
 msgid "Profile 10"
-msgstr ""
+msgstr "配置文件10"
 
 msgctxt "#32062"
 msgid "Name of profile 10"
-msgstr ""
+msgstr "配置文件10名称"
 
 msgctxt "#32063"
 msgid "Codec Detection"
-msgstr ""
+msgstr "编解码器检测"
 
 msgctxt "#32064"
 msgid "Profile for AC3"
-msgstr ""
+msgstr "AC3 配置文件"
 
 msgctxt "#32065"
 msgid "Profile for E-AC3"
-msgstr ""
+msgstr "E-AC3 配置文件"
 
 msgctxt "#32066"
 msgid "Profile for DTS"
-msgstr ""
+msgstr "DTS 配置文件"
 
 msgctxt "#32067"
 msgid "Profile for DTS HD"
-msgstr ""
+msgstr "DTS HD 配置文件"
 
 msgctxt "#32068"
 msgid "Profile for True HD"
-msgstr ""
+msgstr "True HD 配置文件"
 
 msgctxt "#32069"
 msgid "Profile for any other audio codec"
-msgstr ""
+msgstr "任何其他音频编解码器的配置文件"
 
 msgctxt "#32070"
 msgid "Profiles 6-10"
-msgstr ""
+msgstr "配置文件6-10"
 
 msgctxt "#32071"
 msgid "Stereo audio"
-msgstr ""
+msgstr "立体声音频"
 
 msgctxt "#32072"
 msgid "Multi channel audio"
-msgstr ""
+msgstr "多声道音频"
 
 msgctxt "#32073"
 msgid "delay before reading codec info"
-msgstr ""
+msgstr "读取编解码器信息前的延迟"
 
 msgctxt "#32074"
 msgid "match streams with no codec details as music"
-msgstr ""
+msgstr "将没有编解码器详细信息的流匹配为音乐"
 
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr ""
+msgstr "选择配置文件以保存设置"
 
 msgctxt "#32101"
 msgid "Configure profile"
-msgstr ""
+msgstr "设置配置文件"
 
 msgctxt "#32102"
 msgid "Saved as profile"
-msgstr ""
+msgstr "保存配置文件"
 
 msgctxt "#32103"
 msgid "This profile is disabled"
-msgstr ""
+msgstr "此配置文件已禁用"
 
 msgctxt "#32104"
 msgid "Invalid file for profile"
-msgstr ""
+msgstr "配置文件的文件无效"
 
 msgctxt "#32105"
 msgid "Enable profiles"
-msgstr ""
+msgstr "启用配置文件"
 
 msgctxt "#32106"
 msgid "Select audio profile"
-msgstr ""
+msgstr "选择音频配置文件"

@@ -147,8 +147,11 @@ class apMonitor(xbmc.Monitor):
                     (str(codec), str(channels))])
         if codec:
             codec_set = 'auto_othercodec'
-            for check_codec in ['ac3', 'eac3', 'dts', 'dtshd', 'truehd']:
-                if codec in check_codec:
+            for check_codec in ['dtshd', 'truehd', 'ac3', 'eac3', 'dts', 'dca']:
+                self.LW.log(['checking %s against %s' % (codec, check_codec)])
+                if codec.startswith(check_codec):
+                    if check_codec == 'dca':
+                        check_codec = 'dts'
                     codec_set = 'auto_%s' % check_codec
                     break
         else:

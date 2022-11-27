@@ -1,9 +1,15 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2022-04-08 00:13+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Turkish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/tr_tr/>\n"
 "Language: tr_tr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them."
@@ -111,7 +117,7 @@ msgstr ""
 
 msgctxt "#32026"
 msgid "None"
-msgstr ""
+msgstr "Yok"
 
 msgctxt "#32027"
 msgid "HDMI-CEC"
@@ -167,7 +173,7 @@ msgstr ""
 
 msgctxt "#32040"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Hata ayıklama günlüğünü etkinleştir"
 
 msgctxt "#32041"
 msgid " Force load profile at startup"

@@ -1,9 +1,15 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2022-03-27 01:17+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Maltese <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/mt_mt/>\n"
 "Language: mt_mt\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==0 || ( n%100>1 && n%100<11) ? 1 : (n%100>10 && n%100<20 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them."
@@ -111,7 +117,7 @@ msgstr ""
 
 msgctxt "#32026"
 msgid "None"
-msgstr ""
+msgstr "Xejn"
 
 msgctxt "#32027"
 msgid "HDMI-CEC"
@@ -167,7 +173,7 @@ msgstr ""
 
 msgctxt "#32040"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Attiva d-debug logging"
 
 msgctxt "#32041"
 msgid " Force load profile at startup"
