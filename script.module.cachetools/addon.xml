@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.cachetools"
+       name="cachetools"
+       version="5.2.0+matrix.1"
+       provider-name="Thomas Kemmer">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>   
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">This module provides various memoizing collections and decorators, including variants of the Python Standard Library's @lru_cache function decorator.</summary>
+    <description lang="en_GB">Packed for KODI from https://github.com/tkem/cachetools</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://github.com/tkem/cachetools</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
