@@ -1,20 +1,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SubsMangler\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-01-15 03:13+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-subsmangler/sv_se/>\n"
 "Language: sv_se\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgctxt "Addon Summary"
 msgid "A comprehensive subtitle companion"
-msgstr ""
+msgstr "En omfattande undertextkompanjon"
 
 msgctxt "Addon Description"
 msgid "Automatically invokes subtitle search dialog if local subtitles matching user's preferences are not detected. Removes subtitle files if original video was deleted. Also, allows to remove advertisement texts and texts for the Hearing Impaired. Supports: microDVD, SubRip, MPL2 and TMP formats."
@@ -22,15 +23,15 @@ msgstr ""
 
 msgctxt "Addon Disclaimer"
 msgid "A comprehensive subtitle companion"
-msgstr ""
+msgstr "En omfattande undertextkompanjon"
 
 msgctxt "#32001"
 msgid "Main"
-msgstr ""
+msgstr "Huvud"
 
 msgctxt "#32002"
 msgid "Convert subtitles"
-msgstr ""
+msgstr "Konvertera undertexter"
 
 msgctxt "#32004"
 msgid "Remove Closed Captioning"
@@ -38,19 +39,19 @@ msgstr ""
 
 msgctxt "#32005"
 msgid "Remove advertisements"
-msgstr ""
+msgstr "Ta bort reklam"
 
 msgctxt "#32006"
 msgid "Auto-update filtering definitions"
-msgstr ""
+msgstr "Uppdatera filtreringsdefinitioner automatiskt"
 
 msgctxt "#32007"
 msgid "Background transparency"
-msgstr ""
+msgstr "Bakgrundstransparens"
 
 msgctxt "#32009"
 msgid "Invoke also when playing internet stream"
-msgstr ""
+msgstr "Anropa även när du spelar internetström"
 
 msgctxt "#32010"
 msgid "Invoke subtitles search dialog on playback start"
@@ -58,11 +59,11 @@ msgstr ""
 
 msgctxt "#32011"
 msgid "Pause Playback during conversion"
-msgstr ""
+msgstr "Pausa uppspelning under konvertering"
 
 msgctxt "#32012"
 msgid "Include subtitles already found on disk"
-msgstr ""
+msgstr "Inkludera undertexter som redan finns på disk"
 
 msgctxt "#32013"
 msgid "Don't invoke search dialog if local unprocessed subs are found"
@@ -74,43 +75,43 @@ msgstr ""
 
 msgctxt "#32015"
 msgid "Subtitle output format"
-msgstr ""
+msgstr "Utdataformat för undertexter"
 
 msgctxt "#32016"
 msgid "Substation Alpha"
-msgstr ""
+msgstr "Substation Alpha"
 
 msgctxt "#32017"
 msgid "SubRip"
-msgstr ""
+msgstr "SubRip"
 
 msgctxt "#32020"
 msgid "Logging level"
-msgstr ""
+msgstr "Loggningsnivå"
 
 msgctxt "#32022"
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
 msgctxt "#32023"
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 msgctxt "#32025"
 msgid "Warning"
-msgstr ""
+msgstr "Warning"
 
 msgctxt "#32026"
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 msgctxt "#32028"
 msgid "Fatal"
-msgstr ""
+msgstr "Fatal"
 
 msgctxt "#32029"
 msgid "None"
-msgstr ""
+msgstr "None"
 
 msgctxt "#32030"
 msgid "Logging destination"
@@ -118,11 +119,11 @@ msgstr ""
 
 msgctxt "#32031"
 msgid "Kodi's kodi.log"
-msgstr ""
+msgstr "Kodi's kodi.log"
 
 msgctxt "#32032"
 msgid "Separate log file (smangler.log)"
-msgstr ""
+msgstr "Separat loggfil (smangler.log)"
 
 msgctxt "#32033"
 msgid "Show 'noautosubs' context menu item"
@@ -130,7 +131,7 @@ msgstr ""
 
 msgctxt "#32040"
 msgid "No new subtitles file has been detected."
-msgstr ""
+msgstr "Ingen ny undertextfil har upptäckts."
 
 msgctxt "#32041"
 msgid "Do you want to PREVENT subtitles search dialog from opening automatically next time this file is played?"
@@ -138,87 +139,87 @@ msgstr ""
 
 msgctxt "#32042"
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 msgctxt "#32043"
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgctxt "#32048"
 msgid "Housekeeping"
-msgstr ""
+msgstr "Hushållning"
 
 msgctxt "#32049"
 msgid "Foreground color"
-msgstr ""
+msgstr "Förgrundsfärg"
 
 msgctxt "#32050"
 msgid "Background color"
-msgstr ""
+msgstr "Bakgrundsfärg"
 
 msgctxt "#32051"
 msgid "Black"
-msgstr ""
+msgstr "Svart"
 
 msgctxt "#32052"
 msgid "Grey"
-msgstr ""
+msgstr "Grå"
 
 msgctxt "#32053"
 msgid "Dark grey"
-msgstr ""
+msgstr "Mörk grå"
 
 msgctxt "#32054"
 msgid "Blue"
-msgstr ""
+msgstr "Blå"
 
 msgctxt "#32055"
 msgid "Green"
-msgstr ""
+msgstr "Grön"
 
 msgctxt "#32056"
 msgid "Red"
-msgstr ""
+msgstr "Röd"
 
 msgctxt "#32057"
 msgid "Light blue"
-msgstr ""
+msgstr "Ljusblå"
 
 msgctxt "#32058"
 msgid "Yellow"
-msgstr ""
+msgstr "Gul"
 
 msgctxt "#32059"
 msgid "White"
-msgstr ""
+msgstr "Vit"
 
 msgctxt "#32060"
 msgid "Light grey"
-msgstr ""
+msgstr "Ljus grå"
 
 msgctxt "#32061"
 msgid "Bright green"
-msgstr ""
+msgstr "Ljus grön"
 
 msgctxt "#32062"
 msgid "Yellow green"
-msgstr ""
+msgstr "Gulgrön"
 
 msgctxt "#32063"
 msgid "Cyan"
-msgstr ""
+msgstr "Cyan"
 
 msgctxt "#32070"
 msgid "Automatically remove orphaned subtitle files"
-msgstr ""
+msgstr "Ta automatiskt bort föräldralösa undertextfiler"
 
 msgctxt "#32071"
 msgid "Make a backup of processed subtitle file"
-msgstr ""
+msgstr "Gör en säkerhetskopia av bearbetad undertextfil"
 
 msgctxt "#32072"
 msgid "Remove backed-up copy of orphaned subtitle file"
-msgstr ""
+msgstr "Ta bort säkerhetskopierad kopia av föräldralös undertextfil"
 
 msgctxt "#32073"
 msgid "Simulate file removal only"
@@ -226,15 +227,15 @@ msgstr ""
 
 msgctxt "#32074"
 msgid "Remove orphaned unprocessed subtitle files"
-msgstr ""
+msgstr "Ta bort föräldralösa obearbetade undertextfiler"
 
 msgctxt "#32075"
 msgid "Try to maintain bigger line spacing"
-msgstr ""
+msgstr "Försök att behålla större radavstånd"
 
 msgctxt "#32080"
 msgid "Conversion"
-msgstr ""
+msgstr "Konvertering"
 
 msgctxt "#32081"
 msgid "Adjust subtitle display time"
@@ -242,7 +243,7 @@ msgstr ""
 
 msgctxt "#32082"
 msgid "Shrink overlapping subtitle time"
-msgstr ""
+msgstr "Krymp överlappande undertexttid"
 
 msgctxt "#32090"
 msgid "Scanning for subtitle files"
@@ -298,15 +299,15 @@ msgstr ""
 
 msgctxt "#32112"
 msgid "Search dialog will not be opened if local unprocessed subtitles are available"
-msgstr ""
+msgstr "Sökdialogen kommer inte att öppnas om lokala obearbetade undertexter är tillgängliga"
 
 msgctxt "#32113"
 msgid "If subtitles were not downloaded after closing search dialog, the confirmation dialog asking if search dialog should be opened the next time this file is played back, will not be displayed"
-msgstr ""
+msgstr "Om undertexter inte laddades ner efter att sökdialogrutan stängdes, visas inte bekräftelsedialogrutan som frågar om sökdialogrutan ska öppnas nästa gång den här filen spelas upp."
 
 msgctxt "#32114"
 msgid "What level of logs should be written to the log file"
-msgstr ""
+msgstr "Vilken nivå av loggar ska skrivas till loggfilen"
 
 msgctxt "#32115"
 msgid "Place where addon's logs should be stored"
@@ -330,27 +331,27 @@ msgstr ""
 
 msgctxt "#32120"
 msgid "Advertisement texts matching loaded RegEx filters will be removed from subtitles file"
-msgstr ""
+msgstr "Annonstexter som matchar inlästa RegEx-filter kommer att tas bort från undertextfilen"
 
 msgctxt "#32121"
 msgid "Time for displaying subtitle entry will be increased if it is below calculated minimum value"
-msgstr ""
+msgstr "Tiden för visning av undertextpost kommer att öka om den är under det beräknade minimivärdet"
 
 msgctxt "#32122"
 msgid "Time for displaying subtitle entry will be shrunk if it overlaps the next subtitle line"
-msgstr ""
+msgstr "Tiden för visning av undertextpost kommer att krympas om den överlappar nästa undertextrad"
 
 msgctxt "#32123"
 msgid "Pause playback during subtitle conversion"
-msgstr ""
+msgstr "Pausa uppspelningen under undertextkonvertering"
 
 msgctxt "#32124"
 msgid "Leave a backup copy of original subtitle file before processing it instead of removing it"
-msgstr ""
+msgstr "Lämna en säkerhetskopia av den ursprungliga undertextfilen innan du bearbetar den istället för att ta bort den"
 
 msgctxt "#32125"
 msgid "Automatically update filtering definitions from the Internet"
-msgstr ""
+msgstr "Uppdatera automatiskt filtreringsdefinitioner från Internet"
 
 msgctxt "#32126"
 msgid "Remove subtitle file backups if associated video is deleted"
@@ -362,23 +363,23 @@ msgstr ""
 
 msgctxt "#32128"
 msgid "If enabled, no files will be removed but only a log entry will be created"
-msgstr ""
+msgstr "Om det är aktiverat kommer inga filer att tas bort utan endast en loggpost kommer att skapas"
 
 msgctxt "#32129"
 msgid "Periodically remove subtitle files if matching video files are not present any more"
-msgstr ""
+msgstr "Ta bort undertextfiler med jämna mellanrum om matchande videofiler inte finns längre"
 
 msgctxt "#32130"
 msgid "Behaviour when video is started"
-msgstr ""
+msgstr "Beteende när videon startas"
 
 msgctxt "#32131"
 msgid "Options for customizing conversion behaviour"
-msgstr ""
+msgstr "Alternativ för att anpassa konverteringsbeteende"
 
 msgctxt "#32132"
 msgid "Behaviour when video file is no longer available"
-msgstr ""
+msgstr "Beteende när videofilen inte längre är tillgänglig"
 
 msgctxt "#32140"
 msgid "Subtitle appearance"
@@ -424,7 +425,7 @@ msgstr ""
 
 msgctxt "#32150"
 msgid "Font size"
-msgstr ""
+msgstr "Textstorlek"
 
 msgctxt "#32151"
 msgid ""
@@ -434,7 +435,7 @@ msgstr ""
 
 msgctxt "#32152"
 msgid "Font style"
-msgstr ""
+msgstr "Textstil"
 
 msgctxt "#32153"
 msgid ""
@@ -444,16 +445,16 @@ msgstr ""
 
 msgctxt "#32154"
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 msgctxt "#32155"
 msgid "Bold"
-msgstr ""
+msgstr "Fet"
 
 msgctxt "#32156"
 msgid "Italics"
-msgstr ""
+msgstr "Kursiv"
 
 msgctxt "#32157"
 msgid "Bold italics"
-msgstr ""
+msgstr "Fet kursiv"
