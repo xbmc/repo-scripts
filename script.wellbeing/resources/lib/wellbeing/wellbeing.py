@@ -9,7 +9,7 @@ import xbmcvfs
 
 from resources.lib.wellbeing.player import Player
 
-CHECK_INTERVAL = 10
+CHECK_INTERVAL = 15
 
 OFF = 0
 AUDIO_VIDEO = 1
@@ -24,43 +24,46 @@ NOTIFY_HOURLY = 4
 TIME_1M = 60
 TIME_5M = 300
 TIME_15M = 900
+TIME_20M = 1200
+TIME_30M = 1800
 TIME_1H = 3600
 TIME_2H = 7200
 
+SECONDS_PER_DAY = 86400
+
+AUTO_STOP_INTERVAL = [None, TIME_15M, TIME_20M, TIME_30M, TIME_1H]
+
 
 class Wellbeing(xbmc.Monitor):
-
-    _player = None
-    _addon = None
-    _icon = None
-
-    _sum = 0
-    _wday = -1
-    _ignoreLimit = False
-    _ignoreRestPeriod = -1
-
-    _limitation = OFF
-    _limits = list()
-
-    _restperiods = list()
-    _restfrom = list()
-    _restto = list()
-
-    _notification = NOTIFY_HOURLY
-
-    _password = ""
 
     def __init__(self) -> None:
 
         self._addon = xbmcaddon.Addon()
         self._player = Player()
 
-        self._icon = os.path.join(xbmcvfs.translatePath(self._addon.getAddonInfo('path')),
-                                  "resources",
-                                  "assets", "icon.png")
+        self._wday: int = -1
+        self._ignoreLimit: bool = False
+        self._ignoreRestPeriod: int = -1
 
-        if self._addon.getSetting("date") == datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d"):
-            self._sum = self._addon.getSettingInt("sum")
+        self._limitation: int = OFF
+        self._limits: list = list()
+
+        self._restperiods: list = list()
+        self._restfrom: list = list()
+        self._restto: list = list()
+
+        self._autostopInterval: int = 0
+
+        self._notification: int = NOTIFY_HOURLY
+
+        self._password: str = ""
+
+        self._icon: str = os.path.join(xbmcvfs.translatePath(self._addon.getAddonInfo('path')),
+                                       "resources",
+                                       "assets", "icon.png")
+
+        self._sum: int = self._addon.getSettingInt("sum") if self._addon.getSetting(
+            "date") == datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d") else 0
 
         self.onSettingsChanged()
 
@@ -91,6 +94,9 @@ class Wellbeing(xbmc.Monitor):
         self._ignoreRestPeriod = -1
 
         self._password = self._addon.getSettingString("password")
+
+        self._autostopInterval = AUTO_STOP_INTERVAL[self._addon.getSettingInt(
+            "autostop")]
 
         self._limitation = self._addon.getSettingInt("limitation")
         if self._limitation != OFF:
@@ -124,29 +130,31 @@ class Wellbeing(xbmc.Monitor):
 
     def _stopAndAskForReactivation(self) -> bool:
 
-        self._getPlayer().pause()
+        self._player.pause()
 
         password = xbmcgui.Dialog().input(heading=self._addon.getLocalizedString(
             32035), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT, autoclose=60000)
         if password != self._password:
             self._notify(32036)
-            self._getPlayer().stop()
+            self._player.stop()
             return False
 
         else:
             self._notify(32037)
-            self._getPlayer().pause()
+            self._player.pause()
             return True
 
-    def _handleLimit(self, t_now: time.struct_time, _interval: int) -> None:
+    def _handleLimit(self, t_now: time.struct_time, _interval: int) -> bool:
 
-        if self._limitation == VIDEO and not self._getPlayer().isPlayingVideo():
-            return
+        if self._limitation == VIDEO and not self._player.isPlayingVideo():
+            return False
 
+        reached = False
         self._sum += _interval
 
         left = self._get_time_left(t_now)
         if not self._ignoreLimit and left <= 0:
+            reached = True
             self._notify(32034)
             if self._stopAndAskForReactivation():
                 self._ignoreLimit = True
@@ -170,29 +178,49 @@ class Wellbeing(xbmc.Monitor):
             xbmcgui.Dialog().notification(self._addon.getLocalizedString(
                 32000), "%s. %s" % (s1, s2), icon=self._icon)
 
-    def _handleRestPeriod(self, t_now: time.struct_time) -> None:
+        return reached
 
-        def _handle():
+    def _handleRestPeriod(self, t_now: time.struct_time) -> bool:
+
+        def _handleEnteringRestPeriod():
 
             self._notify(32080)
             return self._stopAndAskForReactivation()
 
-        min_in_day = t_now.tm_min * TIME_1M + t_now.tm_hour * TIME_1H
-        if (self._restperiods[t_now.tm_wday] and min_in_day >= self._restfrom[self._wday] and self._ignoreRestPeriod != t_now.tm_wday * 2 + 1):
+        def _handleAutostop() -> None:
 
-            if (self._restperiods[t_now.tm_wday] == AUDIO_VIDEO
-                    or self._restperiods[t_now.tm_wday] == VIDEO and self._getPlayer().isPlayingVideo()):
+            if not xbmcgui.Dialog().yesno(heading="%s - %s" % (self._addon.getLocalizedString(32000), self._addon.getLocalizedString(32004)), message=self._addon.getLocalizedString(32008), autoclose=60000):
+                self._player.stop()
 
-                if _handle():
+        entered = False
+        secs_in_day = t_now.tm_sec + t_now.tm_min * TIME_1M + t_now.tm_hour * TIME_1H
+        if self._restperiods[t_now.tm_wday] \
+            and secs_in_day >= self._restfrom[self._wday] \
+            and (self._restperiods[t_now.tm_wday] == AUDIO_VIDEO
+                 or self._restperiods[t_now.tm_wday] == VIDEO and self._player.isPlayingVideo()):
+
+            entered = True
+            if self._ignoreRestPeriod != t_now.tm_wday * 2 + 1:
+                if _handleEnteringRestPeriod():
                     self._ignoreRestPeriod = t_now.tm_wday * 2 + 1
 
-        elif (self._restperiods[(t_now.tm_wday - 1) % 7] and min_in_day < self._restto[self._wday] and self._ignoreRestPeriod != t_now.tm_wday * 2):
+            elif self._autostopInterval and (secs_in_day - self._restfrom[self._wday]) % self._autostopInterval < CHECK_INTERVAL:
+                _handleAutostop()
 
-            if (self._restperiods[(t_now.tm_wday - 1) % 7] == AUDIO_VIDEO
-                    or self._restperiods[(t_now.tm_wday - 1) % 7] == VIDEO and self._getPlayer().isPlayingVideo()):
+        elif self._restperiods[(t_now.tm_wday - 1) % 7] \
+            and secs_in_day < self._restto[self._wday] \
+            and (self._restperiods[(t_now.tm_wday - 1) % 7] == AUDIO_VIDEO
+                 or self._restperiods[(t_now.tm_wday - 1) % 7] == VIDEO and self._player.isPlayingVideo()):
 
-                if _handle():
+            entered = True
+            if self._ignoreRestPeriod != t_now.tm_wday * 2:
+                if _handleEnteringRestPeriod():
                     self._ignoreRestPeriod = t_now.tm_wday * 2
+
+            elif self._autostopInterval and (secs_in_day + SECONDS_PER_DAY - self._restfrom[(t_now.tm_wday - 1) % 7]) % self._autostopInterval < CHECK_INTERVAL:
+                _handleAutostop()
+
+        return entered
 
     def start(self) -> None:
 
@@ -207,19 +235,14 @@ class Wellbeing(xbmc.Monitor):
 
             _interval = CHECK_INTERVAL - t_now.tm_sec % CHECK_INTERVAL
 
-            _player = self._getPlayer()
-            if _player.isPlaying() and not _player.isPaused():
-                self._handleRestPeriod(t_now)
-                self._handleLimit(t_now, _interval)
+            self._player.isPlaying() and not self._player.isPaused() \
+                and not self._handleLimit(t_now, _interval) \
+                and not self._handleRestPeriod(t_now)
 
             if self.waitForAbort(_interval):
                 break
 
         self.saveUsageToSettings()
-
-    def _getPlayer(self) -> Player:
-
-        return self._player
 
     def saveUsageToSettings(self) -> None:
 

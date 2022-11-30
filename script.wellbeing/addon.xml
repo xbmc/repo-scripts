@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.wellbeing" name="Wellbeing" version="1.1.0" provider-name="Heckie">
+<addon id="script.wellbeing" name="Wellbeing" version="1.2.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -19,6 +19,11 @@
     <website>https://github.com/Heckie75/kodi-addon-wellbeing</website>
     <source>https://github.com/Heckie75/kodi-addon-wellbeing</source>
     <news>
+Version 1.2.0 (2022-11-30)
+- Added new feature: auto-stop in rest period
+- Added help texts
+- Refactoring
+
 Version 1.1.0 (2022-08-27)
 - Added hourly notifications incl. new setting
 - Correct handling of paused media so that it doesn't consume time budget anymore
