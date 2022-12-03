@@ -26,4 +26,4 @@ Note:
 
 Known issues:
 - so far the plugin does not work well with streaming services
-- Kodi's subtitle settings (Font size, Font style, Font color, Font opacity, Background color, Background opacity) are synchronized from Kodi UI to the plugin only at Kodi start
+- Kodi's subtitle settings (Font size, Font style, Font color, Font opacity, Background color, Background opacity) are synchronized from Kodi UI to the plugin only at Kodi start. These settings were removed in 2.1.0 due to broken compatibility with Kodi 20 Nexus

@@ -153,9 +153,6 @@ def PreparePlugin():
     # prepare timer to launch
     globals.rt = RepeatedTimer(2.0, DetectNewSubs)
 
-    # get Kodi's subtitle settings
-    GetKodiSubtitleSettings()
-
     # load addon settings
     GetSettings()
 
@@ -169,6 +166,9 @@ def PreparePlugin():
 
     # initiate monitoring of xbmc events
     globals.monitor = XBMCMonitor()
+
+    # update regexdef file
+    UpdateDefFile()
 
 
 # function checks if stream is a local file and tries to find matching subtitles
@@ -455,20 +455,6 @@ def RemoveStrings(line, deflist):
             Log("    Regex error: '" + str(e) + "' in Regex: " + pattern, xbmc.LOGERROR)
 
     return line
-
-
-# get Kodi subtitle settings
-def GetKodiSubtitleSettings():
-    """
-    load Kodi's subtitle settings and save them to local addon settings
-    """
-    Log("Reading Kodi's subtitle settings and writing the local copy", xbmc.LOGDEBUG)
-    globals.__addon__.setSetting("FontSize", str(GetKodiSetting('subtitles.height')))
-    globals.__addon__.setSetting("FontStyle", str(GetKodiSetting('subtitles.style')))
-    globals.__addon__.setSetting("FontColor", str(GetKodiSetting('subtitles.color')))
-    globals.__addon__.setSetting("FontOpacity", str(GetKodiSetting('subtitles.opacity')))
-    globals.__addon__.setSetting("BackgroundColor", str(GetKodiSetting('subtitles.bgcolor')))
-    globals.__addon__.setSetting("BackgroundOpacity", str(GetKodiSetting('subtitles.bgopacity')))
 
 
 # get Kodi system setting

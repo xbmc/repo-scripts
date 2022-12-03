@@ -35,6 +35,7 @@
 # domains
 .*facebook.com.*
 .*fb.com.*
+.*flixify.app.*
 .*gmail.com.*
 .*hotmail.com.*
 .*twitter.com.*
@@ -67,7 +68,7 @@
 # Only one section is loaded based on subtitles language designation in subtitles file name
 # Language codes must confirm to ISO 639-2
 [Ads_eng]   # English
-.*sync.*corrections.*by.*
+.*sync.*correct(ed|ions).*by.*
 
 [Ads_pol]   # Polish
 .*chomikuj.pl.*
