@@ -3,7 +3,9 @@ import xbmc
 
 class Player(xbmc.Player):
 
-    _paused = False
+    def __init__(self) -> None:
+        super().__init__()
+        self._paused: bool = False
 
     def onPlayBackStarted(self) -> None:
 

@@ -29,6 +29,30 @@ msgctxt "#32003"
 msgid "... in order to prevent access to these settings."
 msgstr "... um Zugriff auf diese Einstellungen zu verhindern."
 
+msgctxt "#32004"
+msgid "Auto-stop"
+msgstr "Autostop"
+
+msgctxt "#32005"
+msgid "every 15 minutes"
+msgstr "alle 15 Minuten"
+
+msgctxt "#32006"
+msgid "every 20 minutes"
+msgstr "alle 20 Minuten"
+
+msgctxt "#32007"
+msgid "every 30 minutes"
+msgstr "alle 30 Minuten"
+
+msgctxt "#32008"
+msgid "Do you want to continue playback despite the rest period?"
+msgstr "Möchtest Du die Wiedergabe trotz Ruhezeit fortzusetzen?"
+
+msgctxt "#32009"
+msgid "Ask to stop playback in rest period"
+msgstr "Frage Wiedergabe in Ruhezeit zu beenden"
+
 msgctxt "#32010"
 msgid "Access"
 msgstr "Freigabe"
@@ -242,5 +266,37 @@ msgid "Sunday night"
 msgstr "Sonntagnacht"
 
 msgctxt "#32080"
-msgid "Playback has been stopped in rest period"
-msgstr "Wiedergabe wurde aufgrund der Ruhezeit beendet"
+msgid "Playback has been interrupted in rest period"
+msgstr "Wiedergabe wurde aufgrund der Ruhezeit unterbrochen"
+
+msgctxt "#32100"
+msgid "Limit the playback time for all media or just for video."
+msgstr "Begrenze die Wiedergabezeit für alle Medien oder nur Video."
+
+msgctxt "#32101"
+msgid "Limit the playback time for this day."
+msgstr "Begrenze die Wiedergabezeit für diesen Tag."
+
+msgctxt "#32102"
+msgid "Receive notifications about current playback time and playback time left."
+msgstr "Erhalte Benachrichtigungen über die aktuelle und verbleibende Wiedergabezeit."
+
+msgctxt "#32103"
+msgid "Define which media is banned during rest period that day. All media or just video."
+msgstr "Bestimme welche Medien an diesem Tag während der Ruhezeit untersagt sind. Alle Medien oder nur Video."
+
+msgctxt "#32104"
+msgid "Time when rest period begins."
+msgstr "Uhrzeit zu der die Ruhezeit beginnt."
+
+msgctxt "#32105"
+msgid "Time when rest period ends."
+msgstr "Uhrzeit zu der die Ruhezeit endet."
+
+msgctxt "#32106"
+msgid "Ask regularly during rest period if playback should be continued."
+msgstr "Frage regelmäßig während der Ruhezeit ob die Wiedergabe fortzusetzen ist."
+
+msgctxt "#32107"
+msgid "Password to unlock after limit has been reached or rest period has been entered."
+msgstr "Passwort zur Freischaltung nachdem Limit erreicht ist oder Ruhezeit betreten wurde."
