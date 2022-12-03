@@ -871,7 +871,7 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
         self.play(plist, startpos=startpos)
 
     def createTrackListItem(self, track, fanart=None, index=0):
-        data = base64.urlsafe_b64encode(track.serialize())
+        data = base64.urlsafe_b64encode(track.serialize().encode("utf8")).decode("utf8")
         url = 'plugin://script.plex/play?{0}'.format(data)
         li = xbmcgui.ListItem(track.title, path=url)
         li.setInfo('music', {
@@ -998,7 +998,7 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
             util.DEBUG_LOG('Player: Stopping and waiting...Done')
 
     def monitor(self):
-        if not self.thread or not self.thread.isAlive():
+        if not self.thread or not self.thread.is_alive():
             self.thread = threading.Thread(target=self._monitor, name='PLAYER:MONITOR')
             self.thread.start()
 
