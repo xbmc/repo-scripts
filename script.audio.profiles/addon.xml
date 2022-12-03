@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audio.profiles" name="Audio Profiles" version="2.1.1" provider-name="pkscout, notoco, Regss">
+<addon id="script.audio.profiles" name="Audio Profiles" version="2.1.2" provider-name="pkscout, notoco, Regss">
 	<requires>
         <import addon="xbmc.python" version="3.0.0" />
 	</requires>
@@ -7,9 +7,8 @@
 	<extension point="xbmc.service" library="service.py" />
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.2.1.1
-- fix for depreciated call that was removed from Nexus
-- updated language files
+v.2.1.2
+- fix for DTS and DTSHD not being properly detected
 		</news>
 		<assets>
 			<icon>icon.png</icon>
@@ -25,21 +24,27 @@ v.2.1.1
 		<summary lang="es_AR">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
 		<summary lang="es_ES">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
 		<summary lang="es_MX">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
+		<summary lang="fi_FI">Tallenna ääniasetusprofiileita ja vaihda niiden välillä helposti.</summary>
+		<summary lang="fr_FR">Enregistrer le profil audio et basculer facilement entre eux.</summary>
 		<summary lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</summary>
-		<summary lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</summary>
+		<summary lang="it_IT">Salva il profilo audio e passa facilmente da uno all&apos;altro.</summary>
 		<summary lang="ko_KR">오디오 프로필을 저장하고 쉽게 전환합니다.</summary>
 		<summary lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</summary>
 		<summary lang="ru_RU">Сохраняйте аудиопрофили и легко переключайтесь между ними.</summary>
+		<summary lang="zh_CN">保存音频配置文件并在它们之间轻松切换。</summary>
 		<description lang="da_DK">Gem lydprofiler og skift let mellem dem.</description>
 		<description lang="de_DE">Audioprofile speichern und einfach zwischen diesen wechseln.</description>
 		<description lang="en_GB">Save audio profile and easily switch between them.</description>
 		<description lang="es_AR">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
 		<description lang="es_ES">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
 		<description lang="es_MX">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
+		<description lang="fi_FI">Tallenna ääniasetusprofiileita ja vaihda niiden välillä helposti.</description>
+		<description lang="fr_FR">Enregistrer le profil audio et basculer facilement entre eux.</description>
 		<description lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</description>
-		<description lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</description>
+		<description lang="it_IT">Salva il profilo audio e passa facilmente da uno all&apos;altro.</description>
 		<description lang="ko_KR">오디오 프로필을 저장하고 쉽게 전환합니다.</description>
 		<description lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</description>
 		<description lang="ru_RU">Позволяет сохранять звуковые профили и с лёгкостью переключаться между ними.</description>
+		<description lang="zh_CN">保存音频配置文件并在它们之间轻松切换。</description>
 	</extension>
 </addon>

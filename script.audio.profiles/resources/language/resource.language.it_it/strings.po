@@ -2,24 +2,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: it_IT\n"
+"PO-Revision-Date: 2022-08-15 22:34+0000\n"
+"Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
+"Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/it_it/>\n"
+"Language: it_it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
 
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them."
-msgstr "Salva il profilo audio e cambia facilmente da uno all'altro."
+msgstr "Salva il profilo audio e passa facilmente da uno all'altro."
 
 msgctxt "Addon Description"
 msgid "Save audio profile and easily switch between them."
-msgstr "Salva il profilo audio e cambia facilmente da uno all'altro."
+msgstr "Salva il profilo audio e passa facilmente da uno all'altro."
 
 msgctxt "#32000"
 msgid "Profiles 1-5"
@@ -27,7 +28,7 @@ msgstr "Profili 1-5"
 
 msgctxt "#32001"
 msgid " Name of profile 1"
-msgstr " Nome del Profilo 1"
+msgstr " Nome del profilo 1"
 
 msgctxt "#32002"
 msgid "Settings"
@@ -35,7 +36,7 @@ msgstr "Impostazioni"
 
 msgctxt "#32003"
 msgid " Name of profile 2"
-msgstr " Nome del Profilo 2"
+msgstr " Nome del profilo 2"
 
 msgctxt "#32004"
 msgid "Include volume level"
@@ -43,11 +44,11 @@ msgstr "Includi livello volume"
 
 msgctxt "#32005"
 msgid " Name of profile 3"
-msgstr " Nome del Profilo 3"
+msgstr " Nome del profilo 3"
 
 msgctxt "#32006"
 msgid " Name of profile 4"
-msgstr " Nome del Profilo 4"
+msgstr " Nome del profilo 4"
 
 msgctxt "#32007"
 msgid "Profile 1"
@@ -67,15 +68,15 @@ msgstr "Profilo 4"
 
 msgctxt "#32011"
 msgid "Include video player settings"
-msgstr "Includi le impostazioni del lettore video"
+msgstr "Includi impostazioni lettore video"
 
 msgctxt "#32012"
 msgid "Include display settings"
-msgstr "Includi le impostazioni display"
+msgstr "Includi impostazioni display"
 
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr "Includi Impostazioni"
+msgstr "Includi impostazioni"
 
 msgctxt "#32014"
 msgid "Auto Switch"
@@ -83,11 +84,11 @@ msgstr "Commutazione automatica"
 
 msgctxt "#32015"
 msgid "Show audio profile select menu on media playback"
-msgstr "Mostra menu di selezione stream all'avvio della riproduzione"
+msgstr "Mostra menu selezione profilo audio durante la riproduzione"
 
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr "Chiudi automaticamente il menu di selezione"
+msgstr "Chiudi automaticamente menu di selezione"
 
 msgctxt "#32018"
 msgid "Notifications"
@@ -103,11 +104,11 @@ msgstr "Profilo per GUI"
 
 msgctxt "#32022"
 msgid "Profile for movies"
-msgstr "Profilo per Films"
+msgstr "Profilo per film"
 
 msgctxt "#32023"
 msgid "Profile for TV shows"
-msgstr "Profilo per Serie TV"
+msgstr "Profilo per programmi TV"
 
 msgctxt "#32024"
 msgid "Profile for PVR TV"
@@ -115,7 +116,7 @@ msgstr "Profilo per TV PVR"
 
 msgctxt "#32025"
 msgid "Profile for music"
-msgstr "Profilo per Musica"
+msgstr "Profilo per musica"
 
 msgctxt "#32026"
 msgid "None"
@@ -127,7 +128,7 @@ msgstr "HDMI-CEC"
 
 msgctxt "#32028"
 msgid "Wake Up"
-msgstr "Wake Up"
+msgstr "Risveglio"
 
 msgctxt "#32029"
 msgid "StandBy"
@@ -139,7 +140,7 @@ msgstr "Cambia stato"
 
 msgctxt "#32031"
 msgid "Profile for videos (not in library)"
-msgstr "Profilo per Video (non in libreria)"
+msgstr "Profilo per video (non in libreria)"
 
 msgctxt "#32032"
 msgid "Profile for music videos"
@@ -147,7 +148,7 @@ msgstr "Profilo per video musicali"
 
 msgctxt "#32033"
 msgid "Profile for unknown content type"
-msgstr "Profilo per contenuti sconosciuti"
+msgstr "Profilo per tipo contenuto sconosciuto"
 
 msgctxt "#32034"
 msgid "Profile for PVR radio"
@@ -167,7 +168,7 @@ msgstr "Altro"
 
 msgctxt "#32038"
 msgid "Profile for KODI Start/Wakeup (Default)"
-msgstr "Profilo per Avvio/Wake up di Kodi (Predefinito)"
+msgstr "Profilo per Avvio/Risveglio di Kodi (predefinito)"
 
 msgctxt "#32039"
 msgid " Delay before close"
@@ -175,35 +176,35 @@ msgstr " Ritardo prima della chiusura"
 
 msgctxt "#32040"
 msgid "Enable debug logging"
-msgstr "Abilita registrazione debug"
+msgstr "Registra eventi di debug"
 
 msgctxt "#32041"
 msgid " Force load profile at startup"
-msgstr " Forza il caricamento del profilo all'avvio"
+msgstr " Forza caricamento profilo all'avvio"
 
 msgctxt "#32042"
 msgid " Auto switch notifications"
-msgstr " Notifiche di commutazione automatica"
+msgstr " Notifiche commutazione automatica"
 
 msgctxt "#32043"
 msgid " Manual switch notifications"
-msgstr " Notifiche di commutazione manuale"
+msgstr " Notifiche commutazione manuale"
 
 msgctxt "#32044"
 msgid " Maintenance notifications"
-msgstr " Notifiche di manutenzione"
+msgstr " Notifiche manutenzione"
 
 msgctxt "#32045"
 msgid "Select menu"
-msgstr "Menu selezione"
+msgstr "Seleziona menu"
 
 msgctxt "#32046"
 msgid "Use custom select menu"
-msgstr "Usa menu selezione custom"
+msgstr "Usa menu selezione personalizzato"
 
 msgctxt "#32047"
 msgid "Include skin mods"
-msgstr "Includi modifiche della skin"
+msgstr "Includi mod skin"
 
 msgctxt "#32048"
 msgid "Extras"
@@ -215,7 +216,7 @@ msgstr "Per numero di canali"
 
 msgctxt "#32050"
 msgid "Menu Options"
-msgstr "Opzioni Menu"
+msgstr "Opzioni menu"
 
 msgctxt "#32051"
 msgid "Profile 5"
@@ -223,7 +224,7 @@ msgstr "Profilo 5"
 
 msgctxt "#32052"
 msgid "Name of profile 5"
-msgstr "Nome del Profilo 5"
+msgstr "Nome del profilo 5"
 
 msgctxt "#32053"
 msgid "Profile 6"
@@ -231,7 +232,7 @@ msgstr "Profilo 6"
 
 msgctxt "#32054"
 msgid "Name of profile 6"
-msgstr "Nome del Profilo 6"
+msgstr "Nome del profilo 6"
 
 msgctxt "#32055"
 msgid "Profile 7"
@@ -239,7 +240,7 @@ msgstr "Profilo 7"
 
 msgctxt "#32056"
 msgid "Name of profile 7"
-msgstr "Nome del Profilo 7"
+msgstr "Nome del profilo 7"
 
 msgctxt "#32057"
 msgid "Profile 8"
@@ -247,7 +248,7 @@ msgstr "Profilo 8"
 
 msgctxt "#32058"
 msgid "Name of profile 8"
-msgstr "Nome del Profilo 8"
+msgstr "Nome del profilo 8"
 
 msgctxt "#32059"
 msgid "Profile 9"
@@ -255,7 +256,7 @@ msgstr "Profilo 9"
 
 msgctxt "#32060"
 msgid "Name of profile 9"
-msgstr "Nome del Profilo 9"
+msgstr "Nome del profilo 9"
 
 msgctxt "#32061"
 msgid "Profile 10"
@@ -263,11 +264,11 @@ msgstr "Profilo 10"
 
 msgctxt "#32062"
 msgid "Name of profile 10"
-msgstr "Nome del Profilo 10"
+msgstr "Nome del profilo 10"
 
 msgctxt "#32063"
 msgid "Codec Detection"
-msgstr "Rilevamento del codec"
+msgstr "Rilevamento codec"
 
 msgctxt "#32064"
 msgid "Profile for AC3"
@@ -299,7 +300,7 @@ msgstr "Profili 6-10"
 
 msgctxt "#32071"
 msgid "Stereo audio"
-msgstr "Audio Stereo"
+msgstr "Audio stereo"
 
 msgctxt "#32072"
 msgid "Multi channel audio"
@@ -307,15 +308,15 @@ msgstr "Audio multicanale"
 
 msgctxt "#32073"
 msgid "delay before reading codec info"
-msgstr "ritardo prima di leggere le informazioni sul codec"
+msgstr "ritardo prima di leggere informazioni codec"
 
 msgctxt "#32074"
 msgid "match streams with no codec details as music"
-msgstr ""
+msgstr "abbina flussi senza dettagli codec come musica"
 
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr "Seleziona profilo per salvare le impostazioni"
+msgstr "Seleziona profilo dove salvare impostazioni"
 
 msgctxt "#32101"
 msgid "Configure profile"
@@ -323,7 +324,7 @@ msgstr "Configura profilo"
 
 msgctxt "#32102"
 msgid "Saved as profile"
-msgstr "Salvato come profilo"
+msgstr "Salva come profilo"
 
 msgctxt "#32103"
 msgid "This profile is disabled"
@@ -331,7 +332,7 @@ msgstr "Questo profilo è disabilitato"
 
 msgctxt "#32104"
 msgid "Invalid file for profile"
-msgstr "File invalido per il profilo"
+msgstr "File non valido per il profilo"
 
 msgctxt "#32105"
 msgid "Enable profiles"
@@ -339,4 +340,4 @@ msgstr "Abilita profili"
 
 msgctxt "#32106"
 msgid "Select audio profile"
-msgstr "Seleziona il profilo audio"
+msgstr "Seleziona profilo audio"

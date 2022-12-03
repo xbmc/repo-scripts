@@ -1,334 +1,340 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2022-07-12 17:14+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/fi_fi/>\n"
 "Language: fi_fi\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
 
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them."
-msgstr ""
+msgstr "Tallenna ääniasetusprofiileita ja vaihda niiden välillä helposti."
 
 msgctxt "Addon Description"
 msgid "Save audio profile and easily switch between them."
-msgstr ""
+msgstr "Tallenna ääniasetusprofiileita ja vaihda niiden välillä helposti."
 
 msgctxt "#32000"
 msgid "Profiles 1-5"
-msgstr ""
+msgstr "Profiilit 1-5"
 
 msgctxt "#32001"
 msgid " Name of profile 1"
-msgstr ""
+msgstr " Profiilin 1 nimi"
 
 msgctxt "#32002"
 msgid "Settings"
-msgstr ""
+msgstr "Asetukset"
 
 msgctxt "#32003"
 msgid " Name of profile 2"
-msgstr ""
+msgstr " Profiilin 2 nimi"
 
 msgctxt "#32004"
 msgid "Include volume level"
-msgstr ""
+msgstr "Sisällytä äänenvoimakkuus"
 
 msgctxt "#32005"
 msgid " Name of profile 3"
-msgstr ""
+msgstr " Profiilin 3 nimi"
 
 msgctxt "#32006"
 msgid " Name of profile 4"
-msgstr ""
+msgstr " Profiilin 4 nimi"
 
 msgctxt "#32007"
 msgid "Profile 1"
-msgstr ""
+msgstr "Profiili 1"
 
 msgctxt "#32008"
 msgid "Profile 2"
-msgstr ""
+msgstr "Profiili 2"
 
 msgctxt "#32009"
 msgid "Profile 3"
-msgstr ""
+msgstr "Profiili 3"
 
 msgctxt "#32010"
 msgid "Profile 4"
-msgstr ""
+msgstr "Profiili 4"
 
 msgctxt "#32011"
 msgid "Include video player settings"
-msgstr ""
+msgstr "Sisällytä videotoiston asetukset"
 
 msgctxt "#32012"
 msgid "Include display settings"
-msgstr ""
+msgstr "Sisällytä näyttöasetukset"
 
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr ""
+msgstr "Sisältää asetuksia"
 
 msgctxt "#32014"
 msgid "Auto Switch"
-msgstr ""
+msgstr "Automaattivaihto"
 
 msgctxt "#32015"
 msgid "Show audio profile select menu on media playback"
-msgstr ""
+msgstr "Näytä ääniprofiilin valinta toiston alkaessa"
 
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr ""
+msgstr "Sulje profiilivalinta automaattisesti"
 
 msgctxt "#32018"
 msgid "Notifications"
-msgstr ""
+msgstr "Ilmoitukset"
 
 msgctxt "#32019"
 msgid "Notifications"
-msgstr ""
+msgstr "Ilmoitukset"
 
 msgctxt "#32021"
 msgid "Profile for GUI"
-msgstr ""
+msgstr "Käyttöliittymän profiili"
 
 msgctxt "#32022"
 msgid "Profile for movies"
-msgstr ""
+msgstr "Elokuvien profiili"
 
 msgctxt "#32023"
 msgid "Profile for TV shows"
-msgstr ""
+msgstr "Sarjojen profiili"
 
 msgctxt "#32024"
 msgid "Profile for PVR TV"
-msgstr ""
+msgstr "Televisiolähetysten profiili"
 
 msgctxt "#32025"
 msgid "Profile for music"
-msgstr ""
+msgstr "Musiikin profiili"
 
 msgctxt "#32026"
 msgid "None"
-msgstr ""
+msgstr "Ei mitään"
 
 msgctxt "#32027"
 msgid "HDMI-CEC"
-msgstr ""
+msgstr "HDMI-CEC"
 
 msgctxt "#32028"
 msgid "Wake Up"
-msgstr ""
+msgstr "Herätys"
 
 msgctxt "#32029"
 msgid "StandBy"
-msgstr ""
+msgstr "Valmiustila"
 
 msgctxt "#32030"
 msgid "Toggle state"
-msgstr ""
+msgstr "Kytke tila"
 
 msgctxt "#32031"
 msgid "Profile for videos (not in library)"
-msgstr ""
+msgstr "Videoiden profiili (kirjaston ulkopuoliset)"
 
 msgctxt "#32032"
 msgid "Profile for music videos"
-msgstr ""
+msgstr "Musiikkivideoiden profiili"
 
 msgctxt "#32033"
 msgid "Profile for unknown content type"
-msgstr ""
+msgstr "Tuntemattoman sisällön profiili"
 
 msgctxt "#32034"
 msgid "Profile for PVR radio"
-msgstr ""
+msgstr "Radiolähetysten profiili"
 
 msgctxt "#32035"
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 msgctxt "#32036"
 msgid "Audio"
-msgstr ""
+msgstr "Ääni"
 
 msgctxt "#32037"
 msgid "Other"
-msgstr ""
+msgstr "Muu"
 
 msgctxt "#32038"
 msgid "Profile for KODI Start/Wakeup (Default)"
-msgstr ""
+msgstr "Oletusprofiili Kodin käynnistyessä/herätessä"
 
 msgctxt "#32039"
 msgid " Delay before close"
-msgstr ""
+msgstr " Profiilivalinnan sulun viive"
 
 msgctxt "#32040"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Käytä vianselvityslokia"
 
 msgctxt "#32041"
 msgid " Force load profile at startup"
-msgstr ""
+msgstr " Pakota profiilin lataus käynnistettäessä"
 
 msgctxt "#32042"
 msgid " Auto switch notifications"
-msgstr ""
+msgstr " Ilmoita automaattisesta vaihdosta"
 
 msgctxt "#32043"
 msgid " Manual switch notifications"
-msgstr ""
+msgstr " Ilmoita manuaalisesta vaihdosta"
 
 msgctxt "#32044"
 msgid " Maintenance notifications"
-msgstr ""
+msgstr " Ilmoita huollosta"
 
 msgctxt "#32045"
 msgid "Select menu"
-msgstr ""
+msgstr "Profiilivalinta"
 
 msgctxt "#32046"
 msgid "Use custom select menu"
-msgstr ""
+msgstr "Käytä muokautettua profiilivalintaa"
 
 msgctxt "#32047"
 msgid "Include skin mods"
-msgstr ""
+msgstr "Huomioi ulkoasukohtaiset muokkaukset"
 
 msgctxt "#32048"
 msgid "Extras"
-msgstr ""
+msgstr "Lisäasetukset"
 
 msgctxt "#32049"
 msgid "By number of channels"
-msgstr ""
+msgstr "Äänikanavien määrän perusteella"
 
 msgctxt "#32050"
 msgid "Menu Options"
-msgstr ""
+msgstr "Valikon asetukset"
 
 msgctxt "#32051"
 msgid "Profile 5"
-msgstr ""
+msgstr "Profiili 5"
 
 msgctxt "#32052"
 msgid "Name of profile 5"
-msgstr ""
+msgstr "Profiilin 5 nimi"
 
 msgctxt "#32053"
 msgid "Profile 6"
-msgstr ""
+msgstr "Profiili 6"
 
 msgctxt "#32054"
 msgid "Name of profile 6"
-msgstr ""
+msgstr "Profiilin 6 nimi"
 
 msgctxt "#32055"
 msgid "Profile 7"
-msgstr ""
+msgstr "Profiili 7"
 
 msgctxt "#32056"
 msgid "Name of profile 7"
-msgstr ""
+msgstr "Profiilin 7 nimi"
 
 msgctxt "#32057"
 msgid "Profile 8"
-msgstr ""
+msgstr "Profiili 8"
 
 msgctxt "#32058"
 msgid "Name of profile 8"
-msgstr ""
+msgstr "Profiilin 8 nimi"
 
 msgctxt "#32059"
 msgid "Profile 9"
-msgstr ""
+msgstr "Profiili 9"
 
 msgctxt "#32060"
 msgid "Name of profile 9"
-msgstr ""
+msgstr "Profiilin 9 nimi"
 
 msgctxt "#32061"
 msgid "Profile 10"
-msgstr ""
+msgstr "Profiili 10"
 
 msgctxt "#32062"
 msgid "Name of profile 10"
-msgstr ""
+msgstr "Profiilin 10 nimi"
 
 msgctxt "#32063"
 msgid "Codec Detection"
-msgstr ""
+msgstr "Koodekin tunnistus"
 
 msgctxt "#32064"
 msgid "Profile for AC3"
-msgstr ""
+msgstr "AC3-profiili"
 
 msgctxt "#32065"
 msgid "Profile for E-AC3"
-msgstr ""
+msgstr "E-AC3-profiili"
 
 msgctxt "#32066"
 msgid "Profile for DTS"
-msgstr ""
+msgstr "DTS-profiili"
 
 msgctxt "#32067"
 msgid "Profile for DTS HD"
-msgstr ""
+msgstr "DTS HD -profiili"
 
 msgctxt "#32068"
 msgid "Profile for True HD"
-msgstr ""
+msgstr "True HD -profiili"
 
 msgctxt "#32069"
 msgid "Profile for any other audio codec"
-msgstr ""
+msgstr "Profiili muille äänikoodekeille"
 
 msgctxt "#32070"
 msgid "Profiles 6-10"
-msgstr ""
+msgstr "Profiilit 6-10"
 
 msgctxt "#32071"
 msgid "Stereo audio"
-msgstr ""
+msgstr "Stereoääni"
 
 msgctxt "#32072"
 msgid "Multi channel audio"
-msgstr ""
+msgstr "Monikanavaääni"
 
 msgctxt "#32073"
 msgid "delay before reading codec info"
-msgstr ""
+msgstr "Viive ennen koodekin tunnistusta"
 
 msgctxt "#32074"
 msgid "match streams with no codec details as music"
-msgstr ""
+msgstr "Käsittele mediavirrat, jotka eivät sisällä koodekkitietoja, musiikkina"
 
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr ""
+msgstr "Valitse asetusten tallennusprofiili"
 
 msgctxt "#32101"
 msgid "Configure profile"
-msgstr ""
+msgstr "Määritä profiili"
 
 msgctxt "#32102"
 msgid "Saved as profile"
-msgstr ""
+msgstr "Tallennettu profiiliin"
 
 msgctxt "#32103"
 msgid "This profile is disabled"
-msgstr ""
+msgstr "Profiili ei ole käytössä"
 
 msgctxt "#32104"
 msgid "Invalid file for profile"
-msgstr ""
+msgstr "Virheellinen profiilitiedosto"
 
 msgctxt "#32105"
 msgid "Enable profiles"
-msgstr ""
+msgstr "Ota profiilit käyttöön"
 
 msgctxt "#32106"
 msgid "Select audio profile"
-msgstr ""
+msgstr "Valitse ääniprofiili"

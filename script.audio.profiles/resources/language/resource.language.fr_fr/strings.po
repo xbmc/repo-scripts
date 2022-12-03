@@ -1,22 +1,23 @@
 # script.audio.profiles language file
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-07-08 10:29+0000\n"
-"Last-Translator: Nanomani <nicolas.pouliquen@gmail.com>\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2022-07-12 17:14+0000\n"
+"Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/fr_fr/>\n"
 "Language: fr_fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7.1\n"
+"X-Generator: Weblate 4.13\n"
 
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them."
-msgstr ""
+msgstr "Enregistrer le profil audio et basculer facilement entre eux."
 
 msgctxt "Addon Description"
 msgid "Save audio profile and easily switch between them."
-msgstr ""
+msgstr "Enregistrer le profil audio et basculer facilement entre eux."
 
 msgctxt "#32000"
 msgid "Profiles 1-5"
