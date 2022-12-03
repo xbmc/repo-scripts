@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pyasn1"
+       name="pyasn1"
+       version="0.4.8+matrix.1"
+       provider-name="Ilya Etingof">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">This is a free and open source implementation of ASN.1 types and codecs as a Python package. It has been first written to support particular protocol (SNMP) but then generalized to be suitable for a wide range of protocols based on ASN.1 specification</summary>
+    <description lang="en_GB">Packed for KODI from https://github.com/etingof/pyasn1</description>
+    <platform>all</platform>
+    <license>BSD2</license>
+    <website>https://github.com/etingof/pyasn1</website>
+  </extension>
+</addon>
