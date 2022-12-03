@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-10-26 08:30+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/zh_cn/>\n"
 "Language: zh_cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -27,459 +28,459 @@ msgstr "从fanart.tv和theaudiodb.com下载当前播放艺人的图片和附加�
 # Section Headings
 msgctxt "#32000"
 msgid "Slideshow"
-msgstr ""
+msgstr "幻灯片"
 
 msgctxt "#32001"
 msgid "Storage"
-msgstr ""
+msgstr "存储"
 
 msgctxt "#32002"
 msgid "Images"
-msgstr ""
+msgstr "图片"
 
 msgctxt "#32003"
 msgid "Album Info"
-msgstr ""
+msgstr "专辑信息"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr ""
+msgstr "艺人传记"
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr ""
+msgstr "相似艺人"
 
 msgctxt "#32006"
 msgid "Advanced"
-msgstr ""
+msgstr "高级"
 
 # empty strings from id 32007 to 32099
 # Settings
 msgctxt "#32101"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "从 fanart.tv 下载图片"
 
 msgctxt "#32102"
 msgid "Download images from theaudiodb.com"
-msgstr ""
+msgstr "从 theaudiodb.com 下载图片"
 
 msgctxt "#32103"
 msgid "Download album info from the audiodb.com"
-msgstr ""
+msgstr "从 audiodb.com 下载专辑信息"
 
 msgctxt "#32104"
 msgid "Download album info from the last.fm"
-msgstr ""
+msgstr "从 last.fm 下载专辑信息"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr ""
+msgstr "从 theaudiodb.com 下载艺人传记"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr ""
+msgstr "从 last.fm 下载艺人传记"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr ""
+msgstr "从 last.fm 下载相似艺人"
 
 msgctxt "#32108"
-msgid "- Download all images regardless of resolution"
-msgstr ""
+msgid "Download all images regardless of resolution"
+msgstr "-下载所有尺寸的图片"
 
 msgctxt "#32109"
-msgid "- Client API key"
-msgstr ""
+msgid "Client API key"
+msgstr "客户端 API 密钥"
 
 msgctxt "#32110"
-msgid "- I donate to this service"
-msgstr ""
+msgid "I donate to this service"
+msgstr "我为这项服务捐款"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "使用后备幻灯片"
 
 msgctxt "#32112"
 msgid "Use override slideshow"
-msgstr ""
+msgstr "使用覆盖幻灯片"
 
 msgctxt "#32113"
-msgid "- Custom location"
-msgstr ""
+msgid "Custom location"
+msgstr "自定义位置"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr ""
+msgstr "包含 Kodi 艺人同人画"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
-msgstr ""
+msgstr "包含 Kodi 专辑同人画"
 
 msgctxt "#32116"
-msgid "- Limit size of download cache"
-msgstr ""
+msgid "Limit size of download cache"
+msgstr "限制下载缓存的大小"
 
 msgctxt "#32117"
-msgid "-- Maximum cache size (in megabytes)"
-msgstr ""
+msgid "Maximum cache size (in megabytes)"
+msgstr "最大缓存大小（MB）"
 
 msgctxt "#32118"
-msgid "-- Alternate name for local fanart folder"
-msgstr ""
+msgid "Alternate name for local fanart folder"
+msgstr "本地同人画文件夹的备用名称"
 
 msgctxt "#32119"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "启用调试日志"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr ""
+msgstr "禁用次要艺人图片"
 
 msgctxt "#32121"
 msgid "Store artist images in"
-msgstr ""
+msgstr "艺人图片存储到"
 
 msgctxt "#32122"
 msgid "addon_data folder"
-msgstr ""
+msgstr "addon_data 文件夹"
 
 msgctxt "#32123"
 msgid "Kodi artist information folder"
-msgstr ""
+msgstr "Kodi 艺人信息文件夹"
 
 msgctxt "#32124"
-msgid "- Priority"
-msgstr ""
+msgid "Priority"
+msgstr "优先级"
 
 msgctxt "#32125"
 msgid "Store artist information in"
-msgstr ""
+msgstr "艺人信息存储到"
 
 msgctxt "#32126"
 msgid "Preferred language for artist bio"
-msgstr ""
+msgstr "艺人传记首选语言"
 
 msgctxt "#32127"
-msgid "- Use extrafanart folder"
-msgstr ""
+msgid "Use extrafanart folder"
+msgstr "使用 extrafanart 文件夹"
 
 msgctxt "#32128"
 msgid "Platform for image storage"
-msgstr ""
+msgstr "图片存储平台"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr ""
+msgstr "将艺人名称中的非法路径字符替换为"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
-msgstr ""
+msgstr "将艺人名称中的尾随句点替换为"
 
 msgctxt "#32131"
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 msgctxt "#32132"
 msgid "Other"
-msgstr ""
+msgstr "其他"
 
 msgctxt "#32133"
 msgid "MacOS"
-msgstr ""
+msgstr "MacOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr ""
+msgstr "将图片移到 Kodi 音乐艺人文件夹"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
-msgstr ""
+msgstr "从 Kodi 获得艺人传记"
 
 msgctxt "#32136"
 msgid "Custom location"
-msgstr ""
+msgstr "自定义位置"
 
 msgctxt "#32137"
 msgid "Delay between slide transitions (in seconds)"
-msgstr ""
+msgstr "幻灯片转换之间的延迟（秒）"
 
 msgctxt "#32138"
 msgid "Fade to black during change in artists"
-msgstr ""
+msgstr "在艺人变换时淡出为黑色"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
-msgstr ""
+msgstr "主线程睡眠时间（秒）"
 
 msgctxt "#32140"
 msgid "Main thread idle sleep time (in seconds)"
-msgstr ""
+msgstr "主线程空闲睡眠时间（秒）"
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
-msgstr ""
+msgstr "幻灯片放映线程睡眠时间（秒）"
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
-msgstr ""
+msgstr "在图片下载期间显示通知"
 
 msgctxt "#32143"
-msgid "- Only show notification if there are images to download"
-msgstr ""
+msgid "Only show notification if there are images to download"
+msgstr "仅在有图片要下载时显示通知"
 
 msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
-msgstr ""
+msgstr "针对流使用更激进的艺人搜索"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
-msgstr ""
+msgstr "播放暂停时幻灯片放映暂停"
 
 # empty strings from id 32145 to 32199
 # Dialog headings
 msgctxt "#32200"
 msgid "Artist Slideshow"
-msgstr ""
+msgstr "艺人幻灯片"
 
 msgctxt "#32201"
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 msgctxt "#32202"
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 msgctxt "#32203"
 msgid "Progress"
-msgstr ""
+msgstr "进度"
 
 msgctxt "#32204"
 msgid "Downloading"
-msgstr ""
+msgstr "下载中"
 
 msgctxt "#32205"
 msgid "Download Complete"
-msgstr ""
+msgstr "下载完成"
 
 # empty strings from id 32206 to 32299
 # Dialog texts
 msgctxt "#32300"
 msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
-msgstr ""
+msgstr "这将移动和重命名图片文件，并且无法撤消。你确定要这样做吗？"
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr ""
+msgstr "无法检索到 Kodi 音乐艺人图片存储的路径。请检查 设置 > 媒体 > 音乐，并确保已设置艺人信息文件夹。"
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr ""
+msgstr "艺人幻灯片已设置为使用 Kodi 艺人信息文件夹。请设置使用 addon_data 文件夹或自定义位置，然后重试。"
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
-msgstr ""
+msgstr "正在从自定义位置移动和重命名图片..."
 
 msgctxt "#32304"
 msgid "Moving and renaming images from addon_data folder..."
-msgstr ""
+msgstr "正在从 addon_data 文件夹移动和重命名图片..."
 
 msgctxt "#32305"
 msgid "No artist directories found."
-msgstr ""
+msgstr "找不到艺人目录。"
 
 msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
-msgstr ""
+msgstr "图片移动完成。您现在可以将艺人幻灯片的存储位置更改为 Kodi 艺人信息文件夹。"
 
 msgctxt "#32307"
 msgid "Downloading new artist images"
-msgstr ""
+msgstr "正下载新的艺人图片"
 
 msgctxt "#32308"
 msgid "artist images downloaded"
-msgstr ""
+msgstr "艺人图片已下载"
 
 msgctxt "#32309"
 msgid "artist image downloaded"
-msgstr ""
+msgstr "艺人图片已下载"
 
 # empty strings from id 32310 to 32900
 # Languages
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "阿尔巴尼亚语"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "阿拉伯语"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "白俄罗斯语"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "波斯尼亚语（拉丁语）"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "保加利亚语"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "加泰罗尼亚语"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "汉语"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "克罗西亚语"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "捷克语"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "丹麦语"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "荷兰语"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "英语"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "爱沙尼亚语"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "芬兰语"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "法语"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "德语"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "希腊语"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "希伯来语"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "印地语"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "匈牙利语"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "冰岛语"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
+msgstr "印度尼西亚语"
 
 # empty string with id 32923
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "意大利语"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "日语"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "朝鲜语"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "拉托维亚语"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "立陶宛语"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "马其顿语"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
+msgstr "挪威语"
 
 # empty string with id 32931
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "波兰语"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "葡萄牙语"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "葡萄牙语（巴西）"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "罗马尼亚语"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "俄语"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "塞尔维亚拉丁语"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "斯洛伐克语"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "斯洛文尼亚语"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
+msgstr "西班牙语"
 
 # empty string with id 32941
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "瑞典语"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "泰语"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "土耳其语"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "乌克兰语"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "越南语"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "波斯语"

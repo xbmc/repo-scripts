@@ -87,15 +87,15 @@ msgid "Download similar artists from last.fm"
 msgstr ""
 
 msgctxt "#32108"
-msgid "- Download all images regardless of resolution"
+msgid "Download all images regardless of resolution"
 msgstr ""
 
 msgctxt "#32109"
-msgid "- Client API key"
+msgid "Client API key"
 msgstr ""
 
 msgctxt "#32110"
-msgid "- I donate to this service"
+msgid "I donate to this service"
 msgstr ""
 
 msgctxt "#32111"
@@ -107,7 +107,7 @@ msgid "Use override slideshow"
 msgstr ""
 
 msgctxt "#32113"
-msgid "- Custom location"
+msgid "Custom location"
 msgstr ""
 
 msgctxt "#32114"
@@ -119,15 +119,15 @@ msgid "Include Kodi album fanart"
 msgstr ""
 
 msgctxt "#32116"
-msgid "- Limit size of download cache"
+msgid "Limit size of download cache"
 msgstr ""
 
 msgctxt "#32117"
-msgid "-- Maximum cache size (in megabytes)"
+msgid "Maximum cache size (in megabytes)"
 msgstr ""
 
 msgctxt "#32118"
-msgid "-- Alternate name for local fanart folder"
+msgid "Alternate name for local fanart folder"
 msgstr ""
 
 msgctxt "#32119"
@@ -151,7 +151,7 @@ msgid "Kodi artist information folder"
 msgstr ""
 
 msgctxt "#32124"
-msgid "- Priority"
+msgid "Priority"
 msgstr ""
 
 msgctxt "#32125"
@@ -163,7 +163,7 @@ msgid "Preferred language for artist bio"
 msgstr ""
 
 msgctxt "#32127"
-msgid "- Use extrafanart folder"
+msgid "Use extrafanart folder"
 msgstr ""
 
 msgctxt "#32128"
@@ -227,7 +227,7 @@ msgid "Show notification during image downloads"
 msgstr ""
 
 msgctxt "#32143"
-msgid "- Only show notification if there are images to download"
+msgid "Only show notification if there are images to download"
 msgstr ""
 
 msgctxt "#32144"
