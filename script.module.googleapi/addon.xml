@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.googleapi"
        name="googleapi"
-       version="1.6.7+matrix.1"
+       version="2.67.0+matrix.1"
        provider-name="Google">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-	<import addon="script.module.httplib2" version="0.17.0+matrix.1" />
-	<import addon="script.module.oauth2client" version="4.1.3+matrix.1" />
-	<import addon="script.module.six" version="1.14.0+matrix.1" />
-	<import addon="script.module.uritemplate" version="3.0.1+matrix.1" />
+    <import addon="script.module.oauth2client" version="4.1.3"/>
+    <import addon="script.module.six" version="1.14.0+matrix.1"/>
+    <import addon="script.module.google-api-core" version="1.3.22"/>
+    <import addon="script.module.uritemplate" version="3.0.1"/>
+    <import addon="script.module.google-auth-httplib2" version="0.1.0"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
@@ -20,6 +21,9 @@
     <disclaimer lang="en_GB">Source code for the Google API from https://developers.google.com/api-client-library/python/start/installation</disclaimer>
     <license>Apache 2.0</license>
     <website>https://developers.google.com/api-client-library/python/start/installation</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
     <source>https://github.com/google/google-api-python-client</source>
   </extension>
 </addon>

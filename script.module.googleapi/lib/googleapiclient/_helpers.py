@@ -17,34 +17,31 @@
 import functools
 import inspect
 import logging
-import warnings
-
-import six
-from six.moves import urllib
-
+import urllib
 
 logger = logging.getLogger(__name__)
 
-POSITIONAL_WARNING = 'WARNING'
-POSITIONAL_EXCEPTION = 'EXCEPTION'
-POSITIONAL_IGNORE = 'IGNORE'
-POSITIONAL_SET = frozenset([POSITIONAL_WARNING, POSITIONAL_EXCEPTION,
-                            POSITIONAL_IGNORE])
+POSITIONAL_WARNING = "WARNING"
+POSITIONAL_EXCEPTION = "EXCEPTION"
+POSITIONAL_IGNORE = "IGNORE"
+POSITIONAL_SET = frozenset(
+    [POSITIONAL_WARNING, POSITIONAL_EXCEPTION, POSITIONAL_IGNORE]
+)
 
 positional_parameters_enforcement = POSITIONAL_WARNING
 
-_SYM_LINK_MESSAGE = 'File: {0}: Is a symbolic link.'
-_IS_DIR_MESSAGE = '{0}: Is a directory'
-_MISSING_FILE_MESSAGE = 'Cannot access {0}: No such file or directory'
+_SYM_LINK_MESSAGE = "File: {0}: Is a symbolic link."
+_IS_DIR_MESSAGE = "{0}: Is a directory"
+_MISSING_FILE_MESSAGE = "Cannot access {0}: No such file or directory"
 
 
 def positional(max_positional_args):
-    """A decorator to declare that only the first N arguments my be positional.
+    """A decorator to declare that only the first N arguments may be positional.
 
     This decorator makes it easy to support Python 3 style keyword-only
     parameters. For example, in Python 3 it is possible to write::
 
-        def fn(pos1, *, kwonly1=None, kwonly1=None):
+        def fn(pos1, *, kwonly1=None, kwonly2=None):
             ...
 
     All named parameters after ``*`` must be a keyword::
@@ -96,7 +93,7 @@ def positional(max_positional_args):
 
     Args:
         max_positional_arguments: Maximum number of positional arguments. All
-                                  parameters after the this index must be
+                                  parameters after this index must be
                                   keyword only.
 
     Returns:
@@ -104,7 +101,7 @@ def positional(max_positional_args):
         from being used as positional parameters.
 
     Raises:
-        TypeError: if a key-word only argument is provided as a positional
+        TypeError: if a keyword-only argument is provided as a positional
                    parameter, but only if
                    _helpers.positional_parameters_enforcement is set to
                    POSITIONAL_EXCEPTION.
@@ -114,23 +111,27 @@ def positional(max_positional_args):
         @functools.wraps(wrapped)
         def positional_wrapper(*args, **kwargs):
             if len(args) > max_positional_args:
-                plural_s = ''
+                plural_s = ""
                 if max_positional_args != 1:
-                    plural_s = 's'
-                message = ('{function}() takes at most {args_max} positional '
-                           'argument{plural} ({args_given} given)'.format(
-                               function=wrapped.__name__,
-                               args_max=max_positional_args,
-                               args_given=len(args),
-                               plural=plural_s))
+                    plural_s = "s"
+                message = (
+                    "{function}() takes at most {args_max} positional "
+                    "argument{plural} ({args_given} given)".format(
+                        function=wrapped.__name__,
+                        args_max=max_positional_args,
+                        args_given=len(args),
+                        plural=plural_s,
+                    )
+                )
                 if positional_parameters_enforcement == POSITIONAL_EXCEPTION:
                     raise TypeError(message)
                 elif positional_parameters_enforcement == POSITIONAL_WARNING:
                     logger.warning(message)
             return wrapped(*args, **kwargs)
+
         return positional_wrapper
 
-    if isinstance(max_positional_args, six.integer_types):
+    if isinstance(max_positional_args, int):
         return positional_decorator
     else:
         args, _, _, defaults = inspect.getargspec(max_positional_args)
@@ -151,10 +152,12 @@ def parse_unique_urlencoded(content):
     """
     urlencoded_params = urllib.parse.parse_qs(content)
     params = {}
-    for key, value in six.iteritems(urlencoded_params):
+    for key, value in urlencoded_params.items():
         if len(value) != 1:
-            msg = ('URL-encoded content contains a repeated value:'
-                   '%s -> %s' % (key, ', '.join(value)))
+            msg = "URL-encoded content contains a repeated value:" "%s -> %s" % (
+                key,
+                ", ".join(value),
+            )
             raise ValueError(msg)
         params[key] = value[0]
     return params
