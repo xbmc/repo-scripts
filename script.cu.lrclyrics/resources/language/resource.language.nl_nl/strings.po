@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
-"Language: nl\n"
+"PO-Revision-Date: 2022-09-07 08:14+0000\n"
+"Last-Translator: Marc Botermans <marcbotermans@gmail.com>\n"
+"Language-Team: Dutch <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/nl_nl/>\n"
+"Language: nl_nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -31,7 +32,7 @@ msgstr "Bestand"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr "Geen lyrics gevonden!"
+msgstr "Geen songteksten gevonden!"
 
 msgctxt "#32002"
 msgid "Embedded"
@@ -43,41 +44,41 @@ msgstr ""
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr "Zoeken naar lyrics..."
+msgstr "Zoeken naar songteksten..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
-msgstr ""
+msgstr "Selecteer songteksten:"
 
 msgctxt "#32006"
 msgid "Select different lyrics"
-msgstr ""
+msgstr "Selecteer verschillende songteksten"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr ""
+msgstr "Handmatig songteksten synchroniseren"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
-msgstr ""
+msgstr "Vertraagd met: %ss"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr ""
+msgstr "Vooruit met: %ss"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Zoek naar en bewaar lrc-teksten in een aparte songtekstmap"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Zoek naar en bewaar txt-teksten in een aparte songtekstmap"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr "Opslaan in"
+msgstr "- Map met songteksten"
 
 msgctxt "#32103"
 msgid "- Filename format"
@@ -93,7 +94,7 @@ msgstr "%A\\%T"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr "Gebruik bestandsnaam voor zoeken"
+msgstr "Gebruik alleen bestandsnaam voor zoeken"
 
 msgctxt "#32107"
 msgid "Filename format"
@@ -113,57 +114,57 @@ msgstr "%A\\%B\\%N %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- Teksten staan in een submap"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Submapnaam"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Zoek naar en bewaar lrc-teksten in de songmap"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
-msgstr ""
+msgstr "%N - %A - %T"
 
 msgctxt "#32115"
 msgid "Display options"
-msgstr ""
+msgstr "Weergaveopties"
 
 msgctxt "#32116"
 msgid "Search options"
-msgstr ""
+msgstr "Zoekopties"
 
 msgctxt "#32117"
 msgid "Lyrics files"
-msgstr ""
+msgstr "Songtekst bestanden"
 
 msgctxt "#32118"
 msgid "Debugging"
-msgstr ""
+msgstr "Debuggen"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
-msgstr ""
+msgstr "Zoek naar en bewaar txt-teksten in de songmap"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Zoeken naar lokale .txt songtekstbestanden"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Dialoogachtergrond verbergen, alleen songteksten weergeven"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr ""
+msgstr "Expert"
 
 msgctxt "#32150"
 msgid "Scrapers"
-msgstr "Scrapers"
+msgstr "Schrapers"
 
 msgctxt "#32151"
 msgid "Options"
