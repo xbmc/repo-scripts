@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: pkscout@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-08-22 04:43+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2022-11-09 15:15+0000\n"
+"Last-Translator: vgbsd <vg72i@protonmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/ru_ru/>\n"
 "Language: ru_ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.8\n"
+"X-Generator: Weblate 4.14.2\n"
 
 msgctxt "Addon Summary"
 msgid "An editor for keymap files"
@@ -350,7 +350,7 @@ msgstr "Повтор: все треки"
 
 msgctxt "#30324"
 msgid "Repeat Off"
-msgstr "Повтор: выкл."
+msgstr "Повтор выключен"
 
 msgctxt "#30325"
 msgid "Toggle Random"
@@ -443,6 +443,14 @@ msgstr "Предыдущий 3D-режим"
 msgctxt "#30347"
 msgid "3D Mono"
 msgstr "3D Моно"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr ""
+
+msgctxt "#30349"
+msgid "Tempo Down"
+msgstr ""
 
 # empty strings from id 30348 to 30399
 # Audio
@@ -634,7 +642,7 @@ msgstr "Запись"
 
 msgctxt "#30708"
 msgid "Toggle Commskip"
-msgstr ""
+msgstr "Переключить Commskip"
 
 msgctxt "#30709"
 msgid "PVR Show Timer Rule"
@@ -642,7 +650,7 @@ msgstr "Правило таймера просмотра PVR"
 
 msgctxt "#30710"
 msgid "Channel Number Separator"
-msgstr ""
+msgstr "Разделитель номеров каналов"
 
 # empty strings from id 30711 to 30799
 # Item Actions
@@ -1133,7 +1141,7 @@ msgstr "Настройки субтитров"
 
 msgctxt "#31259"
 msgid "Video Time Seek"
-msgstr ""
+msgstr "Поиск по таймеру видео"
 
 msgctxt "#31260"
 msgid "Video Bookmarks"

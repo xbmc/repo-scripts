@@ -7,95 +7,98 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: pkscout@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-09-11 10:14+0000\n"
+"Last-Translator: Marc Botermans <marcbotermans@gmail.com>\n"
+"Language-Team: Dutch <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/nl_nl/>\n"
 "Language: nl_nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14\n"
 
 msgctxt "Addon Summary"
 msgid "An editor for keymap files"
-msgstr ""
+msgstr "Een editor voor keymap-bestanden"
 
 msgctxt "Addon Description"
 msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
-msgstr ""
+msgstr "Keymap Editor is een GUI voor het configureren van toewijzingen voor afstandsbedieningen, toetsenbord en andere invoer die door Kodi wordt ondersteund. Opmerking: bestaande door de gebruiker gedefinieerde toetstoewijzingen worden hernoemd naar .bak."
 
 # Text Messages
 msgctxt "#30000"
 msgid "Keymap Editor"
-msgstr ""
+msgstr "Keymap Editor"
 
 msgctxt "#30001"
 msgid "Failed to remove old keymap file"
-msgstr ""
+msgstr "Kan oud keymap-bestand niet verwijderen"
 
 msgctxt "#30002"
 msgid "Press the key you want to assign now"
-msgstr ""
+msgstr "Druk op de toets die u nu wilt toewijzen"
 
 msgctxt "#30003"
 msgid "Edit"
-msgstr ""
+msgstr "Bewerk"
 
 msgctxt "#30004"
 msgid "Reset to default"
-msgstr ""
+msgstr "Reset naar standaard"
 
 msgctxt "#30005"
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 msgctxt "#30006"
 msgid "Discard changes?"
-msgstr ""
+msgstr "Veranderingen ongedaan maken?"
 
 msgctxt "#30007"
 msgid "Select Window to manage shortcuts"
-msgstr ""
+msgstr "Selecteer Venster om snelkoppelingen te beheren"
 
 msgctxt "#30008"
 msgid "Select action category"
-msgstr ""
+msgstr "Selecteer actie categorie"
 
 msgctxt "#30009"
 msgid "Select the action to assign a key"
-msgstr ""
+msgstr "Selecteer de actie om een sleutel toe te wijzen"
 
 msgctxt "#30010"
 msgid "Timeout in %.0f seconds..."
-msgstr ""
+msgstr "Time-out in %.0f seconden..."
 
 msgctxt "#30011"
 msgid "Edit key"
-msgstr ""
+msgstr "Bewerk sleutel"
 
 msgctxt "#30012"
 msgid "Remove"
-msgstr ""
+msgstr "Verwijder"
 
 # empty strings from id 30013 to 30099
 # Window names
 msgctxt "#30100"
 msgid "Global"
-msgstr ""
+msgstr "Globaal"
 
 msgctxt "#30101"
 msgid "Fullscreen Video"
-msgstr ""
+msgstr "Video op volledig scherm"
 
 msgctxt "#30102"
 msgid "Fullscreen Live TV"
-msgstr ""
+msgstr "Live-tv op volledig scherm"
 
 msgctxt "#30103"
 msgid "Fullscreen Radio"
-msgstr ""
+msgstr "Radio op volledig scherm"
 
 msgctxt "#30104"
 msgid "Fullscreen Game"
-msgstr ""
+msgstr "Spel op volledig scherm"
 
 msgctxt "#30105"
 msgid "Home"
@@ -103,279 +106,279 @@ msgstr ""
 
 msgctxt "#30106"
 msgid "Programs"
-msgstr ""
+msgstr "Programma's"
 
 msgctxt "#30107"
 msgid "Videos"
-msgstr ""
+msgstr "Videos"
 
 msgctxt "#30108"
 msgid "Music"
-msgstr ""
+msgstr "Muziek"
 
 msgctxt "#30109"
 msgid "Pictures"
-msgstr ""
+msgstr "Afbeeldingen"
 
 msgctxt "#30110"
 msgid "PVR"
-msgstr ""
+msgstr "PVR"
 
 msgctxt "#30111"
 msgid "Filemanager"
-msgstr ""
+msgstr "Bestandsbeheer"
 
 msgctxt "#30112"
 msgid "Virtual Keyboard"
-msgstr ""
+msgstr "Virtueel toetsenbord"
 
 msgctxt "#30113"
 msgid "Player Controls"
-msgstr ""
+msgstr "Spelerbediening"
 
 msgctxt "#30114"
 msgid "Seek bar"
-msgstr ""
+msgstr "Zoekbalk"
 
 msgctxt "#30115"
 msgid "Music OSD"
-msgstr ""
+msgstr "Muziek OSD"
 
 msgctxt "#30116"
 msgid "Video OSD Settings"
-msgstr ""
+msgstr "Video OSD-instellingen"
 
 msgctxt "#30117"
 msgid "Audio OSD Settings"
-msgstr ""
+msgstr "Audio OSD-instellingen"
 
 msgctxt "#30118"
 msgid "Visualisation"
-msgstr ""
+msgstr "Visualisatie"
 
 msgctxt "#30119"
 msgid "Slideshow"
-msgstr ""
+msgstr "Diavoorstelling"
 
 # empty strings from id 30120 to 30199
 # Navigation
 msgctxt "#30200"
 msgid "Move Left"
-msgstr ""
+msgstr "Ga naar links"
 
 msgctxt "#30201"
 msgid "Move Right"
-msgstr ""
+msgstr "Ga naar rechts"
 
 msgctxt "#30202"
 msgid "Move Up"
-msgstr ""
+msgstr "Ga naar boven"
 
 msgctxt "#30203"
 msgid "Move Down"
-msgstr ""
+msgstr "Ga naar beneden"
 
 msgctxt "#30204"
 msgid "Page Up"
-msgstr ""
+msgstr "Pagina omhoog"
 
 msgctxt "#30205"
 msgid "Page Down"
-msgstr ""
+msgstr "Pagina omlaag"
 
 msgctxt "#30206"
 msgid "Select Item"
-msgstr ""
+msgstr "Selecteer item"
 
 msgctxt "#30207"
 msgid "Highlight Item"
-msgstr ""
+msgstr "Markeer item"
 
 msgctxt "#30208"
 msgid "Parent Directory"
-msgstr ""
+msgstr "Bovenliggende map"
 
 msgctxt "#30209"
 msgid "Back"
-msgstr ""
+msgstr "Terug"
 
 msgctxt "#30210"
 msgid "Previous Menu"
-msgstr ""
+msgstr "Vorig Menu"
 
 msgctxt "#30211"
 msgid "Show Info"
-msgstr ""
+msgstr "Toon Informatie"
 
 msgctxt "#30212"
 msgid "Context Menu"
-msgstr ""
+msgstr "Contextmenu"
 
 msgctxt "#30213"
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 msgctxt "#30214"
 msgid "First Page"
-msgstr ""
+msgstr "Eerste Pagina"
 
 msgctxt "#30215"
 msgid "Last Page"
-msgstr ""
+msgstr "Laatste Pagina"
 
 msgctxt "#30216"
 msgid "Next Letter"
-msgstr ""
+msgstr "Volgende Letter"
 
 msgctxt "#30217"
 msgid "Previous Letter"
-msgstr ""
+msgstr "Vorige Letter"
 
 msgctxt "#30218"
 msgid "Scroll Up"
-msgstr ""
+msgstr "Omhoog scrollen"
 
 msgctxt "#30219"
 msgid "Scroll Down"
-msgstr ""
+msgstr "Omlaag scrollen"
 
 msgctxt "#30220"
 msgid "Cursor Left"
-msgstr ""
+msgstr "Cursor Links"
 
 msgctxt "#30221"
 msgid "Cursor Right"
-msgstr ""
+msgstr "Cursor Rechts"
 
 # empty strings from id 30222 to 30299
 # Playback
 msgctxt "#30300"
 msgid "Play"
-msgstr ""
+msgstr "Afspelen"
 
 msgctxt "#30301"
 msgid "Pause"
-msgstr ""
+msgstr "Pauze"
 
 msgctxt "#30302"
 msgid "Play/Pause"
-msgstr ""
+msgstr "Afspelen/Pauzeren"
 
 msgctxt "#30303"
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 msgctxt "#30304"
 msgid "Next"
-msgstr ""
+msgstr "Volgende"
 
 msgctxt "#30305"
 msgid "Previous"
-msgstr ""
+msgstr "Vorige"
 
 msgctxt "#30306"
 msgid "Fast Forward"
-msgstr ""
+msgstr "Snel vooruit"
 
 msgctxt "#30307"
 msgid "Rewind"
-msgstr ""
+msgstr "Terugspoelen"
 
 msgctxt "#30308"
 msgid "Small Step Back"
-msgstr ""
+msgstr "Kleine stap terug"
 
 msgctxt "#30309"
 msgid "Step Forward"
-msgstr ""
+msgstr "Stap Vooruit"
 
 msgctxt "#30310"
 msgid "Step Back"
-msgstr ""
+msgstr "Stap Terug"
 
 msgctxt "#30311"
 msgid "Big Step Forward"
-msgstr ""
+msgstr "Grote stap vooruit"
 
 msgctxt "#30312"
 msgid "Big Step Back"
-msgstr ""
+msgstr "Grote stap achteruit"
 
 msgctxt "#30313"
 msgid "Next Chapter or Big Step Forward"
-msgstr ""
+msgstr "Volgende Hoofdstuk of Grote stap vooruit"
 
 msgctxt "#30314"
 msgid "Previous Chapter or Big Step Back"
-msgstr ""
+msgstr "Vorige Hoofdstuk of Grote Stap terug"
 
 msgctxt "#30315"
 msgid "Show OSD"
-msgstr ""
+msgstr "Toon OSD"
 
 msgctxt "#30316"
 msgid "Show current play time"
-msgstr ""
+msgstr "Toon huidige speeltijd"
 
 msgctxt "#30317"
 msgid "Show Playlist"
-msgstr ""
+msgstr "Afspeellijst weergeven"
 
 msgctxt "#30318"
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Volledig scherm activeren"
 
 msgctxt "#30319"
 msgid "Change Aspect Ratio"
-msgstr ""
+msgstr "Beeldverhouding wijzigen"
 
 msgctxt "#30320"
 msgid "Go to DVD Video Menu"
-msgstr ""
+msgstr "Ga naar het dvd-videomenu"
 
 msgctxt "#30321"
 msgid "Toggle Repeat"
-msgstr ""
+msgstr "Schakel Herhalen in"
 
 msgctxt "#30322"
 msgid "Repeat One"
-msgstr ""
+msgstr "Herhaal Een"
 
 msgctxt "#30323"
 msgid "Repeat All"
-msgstr ""
+msgstr "Herhaal Alles"
 
 msgctxt "#30324"
 msgid "Repeat Off"
-msgstr ""
+msgstr "Herhalen Uit"
 
 msgctxt "#30325"
 msgid "Toggle Random"
-msgstr ""
+msgstr "Willekeurig schakelen"
 
 msgctxt "#30326"
 msgid "Random On"
-msgstr ""
+msgstr "Willekeurig Aan"
 
 msgctxt "#30327"
 msgid "Random Off"
-msgstr ""
+msgstr "Willekeurig Uit"
 
 msgctxt "#30328"
 msgid "Playback Speed Faster"
-msgstr ""
+msgstr "Afspeelsnelheid Sneller"
 
 msgctxt "#30329"
 msgid "Playback Speed Slower"
-msgstr ""
+msgstr "Afspeelsnelheid Langzamer"
 
 msgctxt "#30330"
 msgid "Create Bookmark"
-msgstr ""
+msgstr "Bladwijzer Maken"
 
 msgctxt "#30331"
 msgid "Create Episode Bookmark"
-msgstr ""
+msgstr "Afleveringsbladwijzer maken"
 
 msgctxt "#30332"
 msgid "Toggle 3D/Stereoscopic mode"
@@ -383,27 +386,27 @@ msgstr ""
 
 msgctxt "#30333"
 msgid "Switch Player"
-msgstr ""
+msgstr "Speler wisselen"
 
 msgctxt "#30334"
 msgid "Play Next"
-msgstr ""
+msgstr "Volgende Afspelen"
 
 msgctxt "#30335"
 msgid "Select Program"
-msgstr ""
+msgstr "Selecteer Programma"
 
 msgctxt "#30336"
 msgid "Select Resolution"
-msgstr ""
+msgstr "Selecteer Resolutie"
 
 msgctxt "#30337"
 msgid "Shift Video Up"
-msgstr ""
+msgstr "Video Omhoog Verschuiven"
 
 msgctxt "#30338"
 msgid "Shift Video Down"
-msgstr ""
+msgstr "Video Omlaag Verschuiven"
 
 msgctxt "#30339"
 msgid "Show Time"
@@ -411,19 +414,19 @@ msgstr ""
 
 msgctxt "#30340"
 msgid "Next Scene"
-msgstr ""
+msgstr "Volgende Scene"
 
 msgctxt "#30341"
 msgid "Previous Scene"
-msgstr ""
+msgstr "Vorige Scene"
 
 msgctxt "#30342"
 msgid "Next Video Stream"
-msgstr ""
+msgstr "Volgende Video Stream"
 
 msgctxt "#30343"
 msgid "Toggle HDHR"
-msgstr ""
+msgstr "Wissel HDHR"
 
 msgctxt "#30344"
 msgid "Cycle 3D Mode"
@@ -431,141 +434,149 @@ msgstr ""
 
 msgctxt "#30345"
 msgid "Next 3D Mode"
-msgstr ""
+msgstr "Volgende 3D Mode"
 
 msgctxt "#30346"
 msgid "Previous 3D Mode"
-msgstr ""
+msgstr "Vorige 3D Mode"
 
 msgctxt "#30347"
 msgid "3D Mono"
+msgstr "3D Mono"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr ""
+
+msgctxt "#30349"
+msgid "Tempo Down"
 msgstr ""
 
 # empty strings from id 30348 to 30399
 # Audio
 msgctxt "#30400"
 msgid "Mute"
-msgstr ""
+msgstr "Dempen"
 
 msgctxt "#30401"
 msgid "Volume Up"
-msgstr ""
+msgstr "Volume Omhoog"
 
 msgctxt "#30402"
 msgid "Volume Down"
-msgstr ""
+msgstr "Volume Omlaag"
 
 msgctxt "#30403"
 msgid "Next Language"
-msgstr ""
+msgstr "Volgende Taal"
 
 msgctxt "#30404"
 msgid "Delay"
-msgstr ""
+msgstr "Vertraging"
 
 msgctxt "#30405"
 msgid "Delay Minus"
-msgstr ""
+msgstr "Vertraging Min"
 
 msgctxt "#30406"
 msgid "Delay Plus"
-msgstr ""
+msgstr "Vertraging Plus"
 
 msgctxt "#30407"
 msgid "Toggle Digital/Analog"
-msgstr ""
+msgstr "Wissel Digitaal/Analoog"
 
 msgctxt "#30408"
 msgid "Volume Amp Up"
-msgstr ""
+msgstr "Volume Amp Omhoog"
 
 msgctxt "#30409"
 msgid "Volume Amp Down"
-msgstr ""
+msgstr "Volume Amp Omlaag"
 
 msgctxt "#30410"
 msgid "Volume Amplification"
-msgstr ""
+msgstr "Volumeversterking"
 
 # empty strings from id 30411 to 30499
 # Pictures
 msgctxt "#30500"
 msgid "Next Picture"
-msgstr ""
+msgstr "Volgende Afbeelding"
 
 msgctxt "#30501"
 msgid "Previous Picture"
-msgstr ""
+msgstr "Vorige Afbeelding"
 
 msgctxt "#30502"
 msgid "Rotate Picture"
-msgstr ""
+msgstr "Roteer Afbeelding"
 
 msgctxt "#30503"
 msgid "Rotate Picture CCW"
-msgstr ""
+msgstr "Draai de afbeelding tegen de klok in"
 
 msgctxt "#30504"
 msgid "Zoom Out"
-msgstr ""
+msgstr "Uitzoomen"
 
 msgctxt "#30505"
 msgid "Zoom In "
-msgstr ""
+msgstr "Inzoomen "
 
 msgctxt "#30506"
 msgid "Zoom level Normal"
-msgstr ""
+msgstr "Zoomniveau Normaal"
 
 msgctxt "#30507"
 msgid "Zoom level 1"
-msgstr ""
+msgstr "Zoomniveau 1"
 
 msgctxt "#30508"
 msgid "Zoom level 2"
-msgstr ""
+msgstr "Zoomniveau 2"
 
 msgctxt "#30509"
 msgid "Zoom level 3"
-msgstr ""
+msgstr "Zoomniveau 3"
 
 msgctxt "#30510"
 msgid "Zoom level 4"
-msgstr ""
+msgstr "Zoomniveau 4"
 
 msgctxt "#30511"
 msgid "Zoom level 5"
-msgstr ""
+msgstr "Zoomniveau 5"
 
 msgctxt "#30512"
 msgid "Zoom level 6"
-msgstr ""
+msgstr "Zoomniveau 6"
 
 msgctxt "#30513"
 msgid "Zoom level 7"
-msgstr ""
+msgstr "Zoomniveau 7"
 
 msgctxt "#30514"
 msgid "Zoom level 8"
-msgstr ""
+msgstr "Zoomniveau 8"
 
 msgctxt "#30515"
 msgid "Zoom level 9"
-msgstr ""
+msgstr "Zoomniveau 9"
 
 # empty strings from id 30516 to 30599
 # Subtitle
 msgctxt "#30600"
 msgid "Show Subtitles"
-msgstr ""
+msgstr "Toon ondertitels"
 
 msgctxt "#30601"
 msgid "Next Subtitle"
-msgstr ""
+msgstr "Volgende Ondertitel"
 
 msgctxt "#30602"
 msgid "Browse Subtitle"
-msgstr ""
+msgstr "Bladeren Ondertitel"
 
 msgctxt "#30603"
 msgid "Cycle Subtitle"
@@ -573,7 +584,7 @@ msgstr ""
 
 msgctxt "#30604"
 msgid "Delay"
-msgstr ""
+msgstr "Vertraging"
 
 msgctxt "#30605"
 msgid "Delay Minus"
@@ -585,49 +596,49 @@ msgstr ""
 
 msgctxt "#30607"
 msgid "Align"
-msgstr ""
+msgstr "Uitlijnen"
 
 msgctxt "#30608"
 msgid "Shift Subtitle Up"
-msgstr ""
+msgstr "Ondertitel omhoog verschuiven"
 
 msgctxt "#30609"
 msgid "Shift Subtitle Down"
-msgstr ""
+msgstr "Ondertitel omlaag verschuiven"
 
 # empty strings from id 30610 to 30699
 # PVR
 msgctxt "#30700"
 msgid "Channel Up"
-msgstr ""
+msgstr "Kanaal Omhoog"
 
 msgctxt "#30701"
 msgid "Channel Down"
-msgstr ""
+msgstr "Kanaal Omlaag"
 
 msgctxt "#30702"
 msgid "Previous channel group"
-msgstr ""
+msgstr "Vorige kanaalgroep"
 
 msgctxt "#30703"
 msgid "Next channel group"
-msgstr ""
+msgstr "Volgende kanaalgroep"
 
 msgctxt "#30704"
 msgid "PVR Play"
-msgstr ""
+msgstr "PVR Afspelen"
 
 msgctxt "#30705"
 msgid "PVR Play TV"
-msgstr ""
+msgstr "PVR TV afspelen"
 
 msgctxt "#30706"
 msgid "PVR Play Radio"
-msgstr ""
+msgstr "PVR Radio afspelen"
 
 msgctxt "#30707"
 msgid "Record"
-msgstr ""
+msgstr "Opnemen"
 
 msgctxt "#30708"
 msgid "Toggle Commskip"
@@ -635,11 +646,11 @@ msgstr ""
 
 msgctxt "#30709"
 msgid "PVR Show Timer Rule"
-msgstr ""
+msgstr "PVR Show Timer Regel"
 
 msgctxt "#30710"
 msgid "Channel Number Separator"
-msgstr ""
+msgstr "Kanaalnummer scheidingsteken"
 
 # empty strings from id 30711 to 30799
 # Item Actions
@@ -649,97 +660,97 @@ msgstr ""
 
 msgctxt "#30801"
 msgid "Delete item"
-msgstr ""
+msgstr "Verwijder item"
 
 msgctxt "#30802"
 msgid "Copy item"
-msgstr ""
+msgstr "Kopieer item"
 
 msgctxt "#30803"
 msgid "Move item"
-msgstr ""
+msgstr "Verplaats item"
 
 msgctxt "#30804"
 msgid "Move item up"
-msgstr ""
+msgstr "Verplaats item omhoog"
 
 msgctxt "#30805"
 msgid "Move item down"
-msgstr ""
+msgstr "Verplaats item omlaag"
 
 msgctxt "#30806"
 msgid "Rename item"
-msgstr ""
+msgstr "Hernoem item"
 
 msgctxt "#30807"
 msgid "Scan item"
-msgstr ""
+msgstr "Scan item"
 
 msgctxt "#30808"
 msgid "Toggle Watched"
-msgstr ""
+msgstr "Toggle Bekeken"
 
 msgctxt "#30809"
 msgid "Increase Rating"
-msgstr ""
+msgstr "Verhoog Beoordeling"
 
 msgctxt "#30810"
 msgid "Decrease Rating"
-msgstr ""
+msgstr "Verlaag Beoordeling"
 
 msgctxt "#30811"
 msgid "Set Rating"
-msgstr ""
+msgstr "Beoordeling instellen"
 
 # empty strings from id 30812 to 30899
 # System
 msgctxt "#30900"
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Volledig scherm activeren"
 
 msgctxt "#30901"
 msgid "Minimise"
-msgstr ""
+msgstr "Minimaliseer"
 
 msgctxt "#30902"
 msgid "Shutdown"
-msgstr ""
+msgstr "Afsluiten"
 
 msgctxt "#30903"
 msgid "Reboot"
-msgstr ""
+msgstr "Opnieuw opstarten"
 
 msgctxt "#30904"
 msgid "Hibernate"
-msgstr ""
+msgstr "Slaapstand"
 
 msgctxt "#30905"
 msgid "Suspend"
-msgstr ""
+msgstr "Opschorten"
 
 msgctxt "#30906"
 msgid "Restart Kodi"
-msgstr ""
+msgstr "Start Kodi opnieuw"
 
 msgctxt "#30907"
 msgid "Log off"
-msgstr ""
+msgstr "Afmelden"
 
 msgctxt "#30908"
 msgid "Quit Kodi"
-msgstr ""
+msgstr "Kodi afsluiten"
 
 msgctxt "#30909"
 msgid "Reset Settings"
-msgstr ""
+msgstr "Reset instellingen"
 
 msgctxt "#30910"
 msgid "Change Settings Level"
-msgstr ""
+msgstr "Instellingenniveau wijzigen"
 
 msgctxt "#30911"
 msgid "Toggle Font"
-msgstr ""
+msgstr "Lettertype wisselen"
 
 # empty strings from id 30912 to 30999
 # Virtual Keyboard
@@ -753,7 +764,7 @@ msgstr ""
 
 msgctxt "#31002"
 msgid "Symbols"
-msgstr ""
+msgstr "Symbolen"
 
 msgctxt "#31003"
 msgid "Backspace"
@@ -761,89 +772,89 @@ msgstr ""
 
 msgctxt "#31004"
 msgid "0"
-msgstr ""
+msgstr "0"
 
 msgctxt "#31005"
 msgid "1"
-msgstr ""
+msgstr "1"
 
 msgctxt "#31006"
 msgid "2"
-msgstr ""
+msgstr "2"
 
 msgctxt "#31007"
 msgid "3"
-msgstr ""
+msgstr "3"
 
 msgctxt "#31008"
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgctxt "#31009"
 msgid "5"
-msgstr ""
+msgstr "5"
 
 msgctxt "#31010"
 msgid "6"
-msgstr ""
+msgstr "6"
 
 msgctxt "#31011"
 msgid "7"
-msgstr ""
+msgstr "7"
 
 msgctxt "#31012"
 msgid "8"
-msgstr ""
+msgstr "8"
 
 msgctxt "#31013"
 msgid "9"
-msgstr ""
+msgstr "9"
 
 msgctxt "#31014"
 msgid "Teletext Red"
-msgstr ""
+msgstr "Teletekst Rood"
 
 msgctxt "#31015"
 msgid "Teletext Green"
-msgstr ""
+msgstr "Teletekst Groen"
 
 msgctxt "#31016"
 msgid "Teletext Yellow"
-msgstr ""
+msgstr "Teletekst Geel"
 
 msgctxt "#31017"
 msgid "Teletext Blue"
-msgstr ""
+msgstr "Teletekst Blauw"
 
 # empty strings from id 31018 to 31099
 # Other
 msgctxt "#31100"
 msgid "Update Video Library"
-msgstr ""
+msgstr "Videobibliotheek bijwerken"
 
 msgctxt "#31101"
 msgid "Update Music Library"
-msgstr ""
+msgstr "Muziekbibliotheek bijwerken"
 
 msgctxt "#31102"
 msgid "Clean Video Library"
-msgstr ""
+msgstr "Videobibliotheek opschonen"
 
 msgctxt "#31103"
 msgid "Clean Music Library"
-msgstr ""
+msgstr "Muziekbibliotheek opschonen"
 
 msgctxt "#31104"
 msgid "Player Process Info"
-msgstr ""
+msgstr "Informatie over spelerproces"
 
 msgctxt "#31105"
 msgid "Player debug"
-msgstr ""
+msgstr "Speler debuggen"
 
 msgctxt "#31106"
 msgid "Take screenshot"
-msgstr ""
+msgstr "Screenshot maken"
 
 msgctxt "#31107"
 msgid "Reload Keymaps"
@@ -851,73 +862,73 @@ msgstr ""
 
 msgctxt "#31108"
 msgid "Increase PAR"
-msgstr ""
+msgstr "Verhoog PAR"
 
 msgctxt "#31109"
 msgid "Decrease PAR"
-msgstr ""
+msgstr "Verlaag PAR"
 
 msgctxt "#31110"
 msgid "Change resolution"
-msgstr ""
+msgstr "Wijzig resolutie"
 
 msgctxt "#31111"
 msgid "Next calibration"
-msgstr ""
+msgstr "Volgende kalibratie"
 
 msgctxt "#31112"
 msgid "Reset calibration"
-msgstr ""
+msgstr "Reset Kalibratie"
 
 msgctxt "#31113"
 msgid "Show current visualisation preset"
-msgstr ""
+msgstr "Huidige voorinstelling voor visualisatie weergeven"
 
 msgctxt "#31114"
 msgid "Show visualisation preset list"
-msgstr ""
+msgstr "Lijst met visualisatievoorinstellingen weergeven"
 
 msgctxt "#31115"
 msgid "Next visualisation preset"
-msgstr ""
+msgstr "Volgende visualisatievoorinstelling"
 
 msgctxt "#31116"
 msgid "Previous visualisation preset"
-msgstr ""
+msgstr "Vorige visualisatievoorinstelling"
 
 msgctxt "#31117"
 msgid "Lock current visualisation preset"
-msgstr ""
+msgstr "Huidige voorinstelling voor visualisatie vergrendelen"
 
 msgctxt "#31118"
 msgid "Switch to a new random preset"
-msgstr ""
+msgstr "Overschakelen naar een nieuwe willekeurige voorinstelling"
 
 # empty strings from id 31119 to 31199
 # Activate Window
 msgctxt "#31200"
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 msgctxt "#31201"
 msgid "Player Settings"
-msgstr ""
+msgstr "Spelerinstellingen"
 
 msgctxt "#31202"
 msgid "Programs Settings"
-msgstr ""
+msgstr "Programma-instellingen"
 
 msgctxt "#31203"
 msgid "Information Provider Settings"
-msgstr ""
+msgstr "Instellingen informatieprovider"
 
 msgctxt "#31204"
 msgid "Interface Settings"
-msgstr ""
+msgstr "Interface-instellingen"
 
 msgctxt "#31205"
 msgid "System Settings"
-msgstr ""
+msgstr "Systeem instellingen"
 
 msgctxt "#31206"
 msgid "Media Settings"

@@ -448,7 +448,15 @@ msgctxt "#30347"
 msgid "3D Mono"
 msgstr ""
 
-# empty strings from id 30348 to 30399
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr ""
+
+msgctxt "#30349"
+msgid "Tempo Down"
+msgstr ""
+
+# empty strings from id 30350 to 30399
 
 # Audio
 
