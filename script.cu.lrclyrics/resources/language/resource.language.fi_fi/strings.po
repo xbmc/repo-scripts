@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-07-25 09:14+0000\n"
+"PO-Revision-Date: 2022-09-10 20:14+0000\n"
 "Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fi_fi/>\n"
 "Language: fi_fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -23,7 +23,7 @@ msgstr "CU LRC Lyrics"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr "CU LRC Lyrics on sanoituslisäosa Kodille. Se tukee sekä tavallisia että LRC-sanoituksia ja voi etisiä synkronoituja/synkronoimattomia tiedostoihin upotettuja sanoituksia tai noutaa niitä verkosta. Lisäksi tuetaan .lrc- ja .txt-sanoitustiedostoja, joilla on sama nimi ja tallennussijainti kuin kappaletiedostolla."
+msgstr "CU LRC Lyrics on sanoituslisäosa Kodille. Se tukee tavallisia ja LRC-sanoituksia ja voi etsiä tahdistettuja/tahdistamattomia sanoituksia musiikkitiedostoista ja niiden nimisistä .lrc- ja .txt-sanoitustiedostoista sekä Internetistä."
 
 # Script labels
 msgctxt "#32000"
@@ -56,7 +56,7 @@ msgstr "Valitse eri sanoitukset"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr "Ajoita sanoitukset manuaalisesti"
+msgstr "Tahdista sanoitukset manuaalisesti"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
@@ -70,11 +70,11 @@ msgstr "Edellä: %ss"
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr "Käytä lrc-sanoitusten tallennukseen ja etsintään erillistä sanoituskansiota"
+msgstr "Käytä lrc-sanoitusten hakuun ja tallennukseen erillistä kansiota"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr "Käytä txt-sanoitusten tallennukseen ja etsintään erillistä sanoituskansiota"
+msgstr "Käytä txt-sanoitusten hakuun ja tallennukseen erillistä kansiota"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
@@ -180,7 +180,7 @@ msgstr "Etsi paikallisia .lrc-sanoitustiedostoja"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Synkronoitujen sanoitusten lähteet"
+msgstr "Tahdistettujen sanoitusten lähteet"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
@@ -228,7 +228,7 @@ msgstr "Epäonnistuneet tietolähteet: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr "Synkronoitujen sanoitusten ajoitus"
+msgstr "Tahdistettujen sanoitusten ajoitus"
 
 msgctxt "#32167"
 msgid "Delete lyrics"

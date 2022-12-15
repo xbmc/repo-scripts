@@ -7,22 +7,23 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
-"Language: it\n"
+"PO-Revision-Date: 2022-08-15 22:34+0000\n"
+"Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
+"Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/it_it/>\n"
+"Language: it_it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
-msgstr "CU LRC Lyrics"
+msgstr "Testi CU LRC"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr "CU LRC Lyrics è uno script per i testi per Kodi. Supporta testi come LRC. Lo script può cercare testi incorporati sincronizzati e non, da file o tramite scapers. Legge file .lrc/.txt salvati nello stesso percorso e con lo stesso nome dell'.mp3 (o altri tipi di musica)"
+msgstr "CU LRC Lyrics è uno script di testi per Kodi. Supporta testi regolari e LRC. Lo script può cercare testi sincronizzati o non sincronizzati incorporati, da file o da scraper. Può leggere file di testi .lrc/.txt salvati nello stesso percorso con lo stesso nome di file con .mp3 (o altro tipo di musica)."
 
 # Script labels
 msgctxt "#32000"
@@ -39,11 +40,11 @@ msgstr "Incorporato"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr ""
+msgstr "Compensazione testo"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr "Ricerca testi in corso..."
+msgstr "Ricerca testi..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
@@ -51,33 +52,33 @@ msgstr "Seleziona testi:"
 
 msgctxt "#32006"
 msgid "Select different lyrics"
-msgstr ""
+msgstr "Seleziona testi diversi"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr ""
+msgstr "Sincronizza manualmente i testi"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
-msgstr ""
+msgstr "Indietro di: %ss"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr ""
+msgstr "Avanti di: %ss"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Cerca e salva i testi lrc in una cartella separata per i testi"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Cerca e salva i testi txt in una cartella separata per i testi"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr "- Cartella Testi"
+msgstr "- Cartella testi"
 
 msgctxt "#32103"
 msgid "- Filename format"
@@ -93,7 +94,7 @@ msgstr "%A\\%T"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr "Usa solo il nome del file per le ricerche"
+msgstr "Usa solo nome del file per la ricerca"
 
 msgctxt "#32107"
 msgid "Filename format"
@@ -113,15 +114,15 @@ msgstr "%A\\%B\\%N (-) %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- I testi sono in una sottocartella"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Nome della sottocartella"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Cerca e salva i testi lrc nella cartella dei brani"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
@@ -129,7 +130,7 @@ msgstr "%N - %A - %T"
 
 msgctxt "#32115"
 msgid "Display options"
-msgstr "Opzioni di visualizzazione"
+msgstr "Opzioni visualizzazione"
 
 msgctxt "#32116"
 msgid "Search options"
@@ -137,25 +138,25 @@ msgstr "Opzioni di ricerca"
 
 msgctxt "#32117"
 msgid "Lyrics files"
-msgstr "File Testi"
+msgstr "File testi"
 
 msgctxt "#32118"
 msgid "Debugging"
-msgstr "Debugging"
+msgstr "Debug"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
-msgstr ""
+msgstr "Cerca e salva i testi txt nella cartella dei brani"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Cerca file di testo .txt locali"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Nascondi lo sfondo della finestra di dialogo, mostra solo i testi"
 
 msgctxt "#32149"
 msgid "Expert"
@@ -175,19 +176,19 @@ msgstr "Cerca testi incorporati"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
-msgstr ""
+msgstr "Cerca file di testo .lrc locali"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Testi scapers sincronizzati"
+msgstr "Scraper testi sincronizzato"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "Testi scapers regolari"
+msgstr "Scraper testi regolare"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
-msgstr "Mostra testi automaticamente"
+msgstr "Visualizza testi automaticamente"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
@@ -199,7 +200,7 @@ msgstr "Lo script è già in esecuzione!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"
-msgstr "Attiva il debug logging"
+msgstr "Registra eventi di debug"
 
 msgctxt "#32160"
 msgid "Hide notifications"
@@ -219,7 +220,7 @@ msgstr "Testando: %s"
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr "Tutti gli scraper stanno funzionando bene"
+msgstr "Tutti gli scraper stanno funzionando"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
@@ -227,56 +228,56 @@ msgstr "Scraper falliti: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr "Tempo di sfasamento per la sincronizzazione dei testi"
+msgstr "Tempo di sfasamento sincronizzazione testi"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
-msgstr ""
+msgstr "Elimina i testi"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
-msgstr ""
+msgstr "Se nascondi l'OSD della musica e le informazioni in riproduzione, anche lo sfondo della finestra di dialogo dei testi verrà nascosto."
 
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "MiniLyrics"
-msgstr ""
+msgstr "MiniLyrics"
 
 msgctxt "#32902"
 msgid "MusixMatch"
-msgstr ""
+msgstr "MusixMatch"
 
 msgctxt "#32903"
 msgid "GomAudio"
-msgstr ""
+msgstr "GomAudio"
 
 msgctxt "#32904"
 msgid "Music 163"
-msgstr ""
+msgstr "Music 163"
 
 msgctxt "#32905"
 msgid "Lyricsify"
-msgstr ""
+msgstr "Lyricsify"
 
 msgctxt "#32912"
 msgid "Genius"
-msgstr ""
+msgstr "Genius"
 
 msgctxt "#32913"
 msgid "Lyrics Mode"
-msgstr ""
+msgstr "Modalità testi"
 
 msgctxt "#32914"
 msgid "AZLyrics"
-msgstr ""
+msgstr "AZLyrics"
 
 msgctxt "#32915"
 msgid "Lyrics.com"
-msgstr ""
+msgstr "Lyrics.com"
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
-msgstr ""
+msgstr "Dark Lyrics"
 
 # empty strings from id 32010 to 32100
 # Settings labels

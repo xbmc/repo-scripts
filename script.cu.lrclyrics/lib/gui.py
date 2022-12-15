@@ -207,7 +207,6 @@ class MAIN():
         return None
 
     def get_lyrics_from_file(self, song, getlrc):
-        log('searching files for lyrics', debug=self.DEBUG)
         lyrics = Lyrics(settings=self.lyricssettings)
         lyrics.song = song
         lyrics.source = LANGUAGE(32000)

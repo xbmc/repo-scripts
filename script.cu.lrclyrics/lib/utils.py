@@ -114,10 +114,13 @@ class Song:
             ext = '.lrc'
         else:
             ext = '.txt'
+        # remove invalid filename characters
+        artist = "".join(i for i in self.artist if i not in "\/:*?<>|")
+        title = "".join(i for i in self.title if i not in "\/:*?<>|")
         if self.SETTING_SAVE_FILENAME_FORMAT == 0:
-            return os.path.join(self.SETTING_SAVE_LYRICS_PATH, self.artist, self.title + ext)
+            return os.path.join(self.SETTING_SAVE_LYRICS_PATH, artist, title + ext)
         else:
-            return os.path.join(self.SETTING_SAVE_LYRICS_PATH, self.artist + ' - ' + self.title + ext)
+            return os.path.join(self.SETTING_SAVE_LYRICS_PATH, artist + ' - ' + title + ext)
 
     def path2(self, lrc):
         if lrc:
