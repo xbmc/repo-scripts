@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: pkscout@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2021-11-09 09:30+0000\n"
 "Last-Translator: taxigps <taxigps@sina.com>\n"
@@ -443,6 +443,14 @@ msgstr "上一3D模式"
 msgctxt "#30347"
 msgid "3D Mono"
 msgstr "3D单声道"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr ""
+
+msgctxt "#30349"
+msgid "Tempo Down"
+msgstr ""
 
 # empty strings from id 30348 to 30399
 # Audio

@@ -78,6 +78,8 @@ _actions = [
         "verticalshiftup", tr(30337),
         "verticalshiftdown", tr(30338),
         "showtime", tr(30339),
+        "playercontrol(tempoup)", tr(30348),
+        "playercontrol(tempodown)", tr(30349),
         "nextscene", tr(30340),
         "previousscene", tr(30341),
         "videonextstream", tr(30342),

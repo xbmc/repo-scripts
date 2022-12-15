@@ -1,3 +1,6 @@
+v1.1.5
+- added ability to map TempoUp and TempoDown
+
 v.1.1.4
 - fixed depreciacted translatepath call
 - removed dependancy on kodi-six

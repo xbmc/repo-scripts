@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: pkscout@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-11-15 10:13+0000\n"
+"PO-Revision-Date: 2022-05-03 15:14+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/da_dk/>\n"
 "Language: da_dk\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9\n"
+"X-Generator: Weblate 4.12.1\n"
 
 msgctxt "Addon Summary"
 msgid "An editor for keymap files"
-msgstr ""
+msgstr "Et redigeringsværktøj for keymap-filer"
 
 msgctxt "Addon Description"
 msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
-msgstr ""
+msgstr "Keymap Editor er en GUI til konfiguration af mappinger for fjernbetjeninger, tastatur og andre input, der understøttes af Kodi. Bemærk: eksisterende brugerdefinerede nøglemappinger vil blive omdøbt til .bak."
 
 # Text Messages
 msgctxt "#30000"
@@ -32,11 +32,11 @@ msgstr "Redigering af keymaps"
 
 msgctxt "#30001"
 msgid "Failed to remove old keymap file"
-msgstr ""
+msgstr "Kunne ikke fjerne den gamle keymap-fil"
 
 msgctxt "#30002"
 msgid "Press the key you want to assign now"
-msgstr ""
+msgstr "Tryk på den tast, du vil tildele nu"
 
 msgctxt "#30003"
 msgid "Edit"
@@ -56,11 +56,11 @@ msgstr "Kasser ændringer?"
 
 msgctxt "#30007"
 msgid "Select Window to manage shortcuts"
-msgstr ""
+msgstr "Vælg vindue til håndtering af genveje"
 
 msgctxt "#30008"
 msgid "Select action category"
-msgstr ""
+msgstr "Vælg kategori til handling"
 
 msgctxt "#30009"
 msgid "Select the action to assign a key"
@@ -196,7 +196,7 @@ msgstr "Fremhæv emne"
 
 msgctxt "#30208"
 msgid "Parent Directory"
-msgstr ""
+msgstr "Overordnede mappe"
 
 msgctxt "#30209"
 msgid "Back"
@@ -236,11 +236,11 @@ msgstr "Forrige bogstav"
 
 msgctxt "#30218"
 msgid "Scroll Up"
-msgstr "Scroll op"
+msgstr "Rul op"
 
 msgctxt "#30219"
 msgid "Scroll Down"
-msgstr "Scroll ned"
+msgstr "Rul ned"
 
 msgctxt "#30220"
 msgid "Cursor Left"
@@ -286,31 +286,31 @@ msgstr "Spol tilbage"
 
 msgctxt "#30308"
 msgid "Small Step Back"
-msgstr ""
+msgstr "Lille skridt tilbage"
 
 msgctxt "#30309"
 msgid "Step Forward"
-msgstr ""
+msgstr "Gå fremad"
 
 msgctxt "#30310"
 msgid "Step Back"
-msgstr ""
+msgstr "Gå tilbage"
 
 msgctxt "#30311"
 msgid "Big Step Forward"
-msgstr ""
+msgstr "Lille skridt frem"
 
 msgctxt "#30312"
 msgid "Big Step Back"
-msgstr ""
+msgstr "Stort skridt tilbage"
 
 msgctxt "#30313"
 msgid "Next Chapter or Big Step Forward"
-msgstr ""
+msgstr "Næste kapitel eller stort skridt frem"
 
 msgctxt "#30314"
 msgid "Previous Chapter or Big Step Back"
-msgstr ""
+msgstr "Forrige kapitel eller stort skridt tilbage"
 
 msgctxt "#30315"
 msgid "Show OSD"
@@ -338,7 +338,7 @@ msgstr "Gå til DVD videomenu"
 
 msgctxt "#30321"
 msgid "Toggle Repeat"
-msgstr ""
+msgstr "Slå gentag til/fra"
 
 msgctxt "#30322"
 msgid "Repeat One"
@@ -354,7 +354,7 @@ msgstr "Gentag fra"
 
 msgctxt "#30325"
 msgid "Toggle Random"
-msgstr ""
+msgstr "Slå tilfældig til/fra"
 
 msgctxt "#30326"
 msgid "Random On"
@@ -378,11 +378,11 @@ msgstr "Opret bogmærke"
 
 msgctxt "#30331"
 msgid "Create Episode Bookmark"
-msgstr "Opret bogmærke for episode"
+msgstr "Opret bogmærke for afsnit"
 
 msgctxt "#30332"
 msgid "Toggle 3D/Stereoscopic mode"
-msgstr ""
+msgstr "Slå 3D/stereoskopisk tilstand til/fra"
 
 msgctxt "#30333"
 msgid "Switch Player"
@@ -402,11 +402,11 @@ msgstr "Vælg opløsning"
 
 msgctxt "#30337"
 msgid "Shift Video Up"
-msgstr ""
+msgstr "Flyt video op"
 
 msgctxt "#30338"
 msgid "Shift Video Down"
-msgstr ""
+msgstr "Flyt video ned"
 
 msgctxt "#30339"
 msgid "Show Time"
@@ -422,26 +422,34 @@ msgstr "Forrige scene"
 
 msgctxt "#30342"
 msgid "Next Video Stream"
-msgstr ""
+msgstr "Næste videostream"
 
 msgctxt "#30343"
 msgid "Toggle HDHR"
-msgstr ""
+msgstr "Slå HDHR til/fra"
 
 msgctxt "#30344"
 msgid "Cycle 3D Mode"
-msgstr ""
+msgstr "Skift mellem 3D tilstand"
 
 msgctxt "#30345"
 msgid "Next 3D Mode"
-msgstr ""
+msgstr "Næste 3D-tilstand"
 
 msgctxt "#30346"
 msgid "Previous 3D Mode"
-msgstr ""
+msgstr "Forrige 3D-tilstand"
 
 msgctxt "#30347"
 msgid "3D Mono"
+msgstr "3D mono"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr ""
+
+msgctxt "#30349"
+msgid "Tempo Down"
 msgstr ""
 
 # empty strings from id 30348 to 30399
@@ -452,15 +460,15 @@ msgstr "Lydløs"
 
 msgctxt "#30401"
 msgid "Volume Up"
-msgstr ""
+msgstr "Lydstyrke op"
 
 msgctxt "#30402"
 msgid "Volume Down"
-msgstr ""
+msgstr "Lydstyrke ned"
 
 msgctxt "#30403"
 msgid "Next Language"
-msgstr ""
+msgstr "Næste sprog"
 
 msgctxt "#30404"
 msgid "Delay"
@@ -468,23 +476,23 @@ msgstr "Forsinkelse"
 
 msgctxt "#30405"
 msgid "Delay Minus"
-msgstr ""
+msgstr "Forsinkelse minus"
 
 msgctxt "#30406"
 msgid "Delay Plus"
-msgstr ""
+msgstr "Forsinkelse plus"
 
 msgctxt "#30407"
 msgid "Toggle Digital/Analog"
-msgstr ""
+msgstr "Skift mellem digital og analog"
 
 msgctxt "#30408"
 msgid "Volume Amp Up"
-msgstr ""
+msgstr "Forstærkning af lydstyrke op"
 
 msgctxt "#30409"
 msgid "Volume Amp Down"
-msgstr ""
+msgstr "Forstærkning af lydstyrke ned"
 
 msgctxt "#30410"
 msgid "Volume Amplification"
@@ -518,7 +526,7 @@ msgstr "Zoom ind "
 
 msgctxt "#30506"
 msgid "Zoom level Normal"
-msgstr "Zoom-niveau Normal"
+msgstr "Normal zoom-niveau"
 
 msgctxt "#30507"
 msgid "Zoom level 1"
@@ -568,7 +576,7 @@ msgstr "Næste undertekst"
 
 msgctxt "#30602"
 msgid "Browse Subtitle"
-msgstr ""
+msgstr "Gennemse undertekster"
 
 msgctxt "#30603"
 msgid "Cycle Subtitle"
@@ -580,23 +588,23 @@ msgstr "Forsinkelse"
 
 msgctxt "#30605"
 msgid "Delay Minus"
-msgstr ""
+msgstr "Forsinkelse minus"
 
 msgctxt "#30606"
 msgid "Delay Plus"
-msgstr ""
+msgstr "Forsinkelse plus"
 
 msgctxt "#30607"
 msgid "Align"
-msgstr ""
+msgstr "Tilpas"
 
 msgctxt "#30608"
 msgid "Shift Subtitle Up"
-msgstr ""
+msgstr "Flyt undertekst op"
 
 msgctxt "#30609"
 msgid "Shift Subtitle Down"
-msgstr ""
+msgstr "Flyt undertekst ned"
 
 # empty strings from id 30610 to 30699
 # PVR
@@ -622,11 +630,11 @@ msgstr "PVR afspil"
 
 msgctxt "#30705"
 msgid "PVR Play TV"
-msgstr ""
+msgstr "PVR afspil tv"
 
 msgctxt "#30706"
 msgid "PVR Play Radio"
-msgstr ""
+msgstr "PVR afspil radio"
 
 msgctxt "#30707"
 msgid "Record"
@@ -634,15 +642,15 @@ msgstr "Optag"
 
 msgctxt "#30708"
 msgid "Toggle Commskip"
-msgstr ""
+msgstr "Slå commskip til/fra"
 
 msgctxt "#30709"
 msgid "PVR Show Timer Rule"
-msgstr ""
+msgstr "PVR vis timerregel"
 
 msgctxt "#30710"
 msgid "Channel Number Separator"
-msgstr ""
+msgstr "Separator for kanalnummer"
 
 # empty strings from id 30711 to 30799
 # Item Actions
@@ -680,19 +688,19 @@ msgstr "Skan emne"
 
 msgctxt "#30808"
 msgid "Toggle Watched"
-msgstr ""
+msgstr "Skift tilstand for set"
 
 msgctxt "#30809"
 msgid "Increase Rating"
-msgstr ""
+msgstr "Forøg bedømmelse"
 
 msgctxt "#30810"
 msgid "Decrease Rating"
-msgstr ""
+msgstr "Reducer bedømmelse"
 
 msgctxt "#30811"
 msgid "Set Rating"
-msgstr ""
+msgstr "Vælg bedømmelse"
 
 # empty strings from id 30812 to 30899
 # System
@@ -730,25 +738,25 @@ msgstr "Log af"
 
 msgctxt "#30908"
 msgid "Quit Kodi"
-msgstr ""
+msgstr "Afslut Kodi"
 
 msgctxt "#30909"
 msgid "Reset Settings"
-msgstr ""
+msgstr "Nulstil indstillinger"
 
 msgctxt "#30910"
 msgid "Change Settings Level"
-msgstr ""
+msgstr "Skift indstillingsniveau"
 
 msgctxt "#30911"
 msgid "Toggle Font"
-msgstr ""
+msgstr "Skift skifttype"
 
 # empty strings from id 30912 to 30999
 # Virtual Keyboard
 msgctxt "#31000"
 msgid "Enter"
-msgstr ""
+msgstr "Enter"
 
 msgctxt "#31001"
 msgid "Shift"
@@ -804,77 +812,77 @@ msgstr "9"
 
 msgctxt "#31014"
 msgid "Teletext Red"
-msgstr ""
+msgstr "Tekst-tv rød"
 
 msgctxt "#31015"
 msgid "Teletext Green"
-msgstr ""
+msgstr "Tekst-tv grøn"
 
 msgctxt "#31016"
 msgid "Teletext Yellow"
-msgstr ""
+msgstr "Tekst-tv gul"
 
 msgctxt "#31017"
 msgid "Teletext Blue"
-msgstr ""
+msgstr "Tekst-tv blå"
 
 # empty strings from id 31018 to 31099
 # Other
 msgctxt "#31100"
 msgid "Update Video Library"
-msgstr ""
+msgstr "Opdater videobibliotek"
 
 msgctxt "#31101"
 msgid "Update Music Library"
-msgstr ""
+msgstr "Opdater musikbibliotek"
 
 msgctxt "#31102"
 msgid "Clean Video Library"
-msgstr ""
+msgstr "Ryd op i videobiblioteket"
 
 msgctxt "#31103"
 msgid "Clean Music Library"
-msgstr ""
+msgstr "Ryd op i musikbiblioteket"
 
 msgctxt "#31104"
 msgid "Player Process Info"
-msgstr "Procesinformation for afspilning"
+msgstr "Information om afspilningsproces"
 
 msgctxt "#31105"
 msgid "Player debug"
-msgstr ""
+msgstr "Fejlfinding af afspiller"
 
 msgctxt "#31106"
 msgid "Take screenshot"
-msgstr ""
+msgstr "Tag et skærmbillede"
 
 msgctxt "#31107"
 msgid "Reload Keymaps"
-msgstr ""
+msgstr "Genindlæs keymaps"
 
 msgctxt "#31108"
 msgid "Increase PAR"
-msgstr ""
+msgstr "Forøg PAR"
 
 msgctxt "#31109"
 msgid "Decrease PAR"
-msgstr ""
+msgstr "Reducer PAR"
 
 msgctxt "#31110"
 msgid "Change resolution"
-msgstr ""
+msgstr "Skift opløsning"
 
 msgctxt "#31111"
 msgid "Next calibration"
-msgstr ""
+msgstr "Næste kalibrering"
 
 msgctxt "#31112"
 msgid "Reset calibration"
-msgstr ""
+msgstr "Nulstil kalibrering"
 
 msgctxt "#31113"
 msgid "Show current visualisation preset"
-msgstr ""
+msgstr "Vis nuværende forudindstilling for visualisering"
 
 msgctxt "#31114"
 msgid "Show visualisation preset list"
@@ -882,19 +890,19 @@ msgstr "Liste med forudindstillinger til visualisering"
 
 msgctxt "#31115"
 msgid "Next visualisation preset"
-msgstr ""
+msgstr "Næste forudindstilling for visualisering"
 
 msgctxt "#31116"
 msgid "Previous visualisation preset"
-msgstr ""
+msgstr "Forrige forudindstilling for visualisering"
 
 msgctxt "#31117"
 msgid "Lock current visualisation preset"
-msgstr ""
+msgstr "Lås nuværende forudindstilling for visualisering"
 
 msgctxt "#31118"
 msgid "Switch to a new random preset"
-msgstr ""
+msgstr "Skift til en ny vilkårlig forudindstilling"
 
 # empty strings from id 31119 to 31199
 # Activate Window
@@ -908,7 +916,7 @@ msgstr "Indstillinger for afspiller"
 
 msgctxt "#31202"
 msgid "Programs Settings"
-msgstr ""
+msgstr "Programindstillinger"
 
 msgctxt "#31203"
 msgid "Information Provider Settings"
@@ -916,7 +924,7 @@ msgstr "Indstillinger for informationsleverandør"
 
 msgctxt "#31204"
 msgid "Interface Settings"
-msgstr "Grænsefladens indstillinger"
+msgstr "Brugerfladens indstillinger"
 
 msgctxt "#31205"
 msgid "System Settings"
@@ -932,7 +940,7 @@ msgstr "Indstillinger for tjenester"
 
 msgctxt "#31208"
 msgid "Appearance Settings"
-msgstr ""
+msgstr "Indstillinger for udseende"
 
 msgctxt "#31209"
 msgid "Peripherals Settings"
@@ -940,11 +948,11 @@ msgstr "Indstillinger for eksterne enheder"
 
 msgctxt "#31210"
 msgid "Library Export Settings"
-msgstr ""
+msgstr "Indstillinger for eksportering af bibliotek"
 
 msgctxt "#31211"
 msgid "PVR Settings"
-msgstr ""
+msgstr "Indstillinger for PVR"
 
 msgctxt "#31212"
 msgid "PVR Recording Settings"
@@ -968,11 +976,11 @@ msgstr "Videofilter for spil"
 
 msgctxt "#31217"
 msgid "Game Video Rotation"
-msgstr ""
+msgstr "Videorotation for spil"
 
 msgctxt "#31218"
 msgid "Game View Mode"
-msgstr ""
+msgstr "Visningstilstand for spil"
 
 msgctxt "#31219"
 msgid "Skin Settings"
@@ -992,7 +1000,7 @@ msgstr "Profilindstillinger"
 
 msgctxt "#31223"
 msgid "Lock Settings"
-msgstr ""
+msgstr "Lås indstillinger"
 
 msgctxt "#31224"
 msgid "Content Settings"
@@ -1012,7 +1020,7 @@ msgstr "Testmønster"
 
 msgctxt "#31228"
 msgid "Screen Calibration"
-msgstr ""
+msgstr "Skærmkalibrering"
 
 msgctxt "#31229"
 msgid "Login Screen"
@@ -1032,7 +1040,7 @@ msgstr "Adgangspunkter"
 
 msgctxt "#31233"
 msgid "Mediasource Dialog"
-msgstr ""
+msgstr "Dialog for mediekilde"
 
 msgctxt "#31234"
 msgid "Start"
@@ -1109,11 +1117,11 @@ msgstr "Sanginformation"
 
 msgctxt "#31253"
 msgid "Movie Info"
-msgstr ""
+msgstr "Filminformation"
 
 msgctxt "#31254"
 msgid "Player Process Info"
-msgstr "Procesinformation for afspilning"
+msgstr "Information om afspilningsproces"
 
 msgctxt "#31255"
 msgid "Video Menu"
@@ -1125,7 +1133,7 @@ msgstr "Video OSD"
 
 msgctxt "#31257"
 msgid "Colour Management Settings"
-msgstr ""
+msgstr "Indstillinger for håndtering af farve"
 
 msgctxt "#31258"
 msgid "Subtitle Settings"
@@ -1133,11 +1141,11 @@ msgstr "Undertekstindstillinger"
 
 msgctxt "#31259"
 msgid "Video Time Seek"
-msgstr ""
+msgstr "Tidssøgning for video"
 
 msgctxt "#31260"
 msgid "Video Bookmarks"
-msgstr "Video-bogmærker"
+msgstr "Videobogmærker"
 
 msgctxt "#31261"
 msgid "Video Playlist"
@@ -1169,7 +1177,7 @@ msgstr "PVR guidesøgning"
 
 msgctxt "#31268"
 msgid "PVR Channel Scan"
-msgstr ""
+msgstr "PVR kanalsøgning"
 
 msgctxt "#31269"
 msgid "PVR Update Progress"
@@ -1185,23 +1193,23 @@ msgstr "PVR OSD-guide"
 
 msgctxt "#31272"
 msgid "TV Channels"
-msgstr "TV-kanaler"
+msgstr "Tv-kanaler"
 
 msgctxt "#31273"
 msgid "TV Recordings"
-msgstr "TV-optagelser"
+msgstr "Tv-optagelser"
 
 msgctxt "#31274"
 msgid "TV Guide"
-msgstr "TV-guide"
+msgstr "Tv-guide"
 
 msgctxt "#31275"
 msgid "TV Timers"
-msgstr "TV-timere"
+msgstr "Tv-timere"
 
 msgctxt "#31276"
 msgid "TV Search"
-msgstr "TV-søgning"
+msgstr "Tv-søgning"
 
 msgctxt "#31277"
 msgid "Radio Channels"
@@ -1241,11 +1249,11 @@ msgstr "Filmtitler"
 
 msgctxt "#31286"
 msgid "TV Shows"
-msgstr "TV-serier"
+msgstr "Tv-serier"
 
 msgctxt "#31287"
 msgid "TV Show Titles"
-msgstr "TV-serietitler"
+msgstr "Tv-serietitler"
 
 msgctxt "#31288"
 msgid "Music Videos"
@@ -1277,4 +1285,4 @@ msgstr "Gamepad input"
 
 msgctxt "#31295"
 msgid "Game Volume"
-msgstr ""
+msgstr "Lydstyrke for spil"
