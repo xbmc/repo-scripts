@@ -38,7 +38,7 @@ msgid "RP Rock Mix"
 msgstr ""
 
 msgctxt "#30206"
-msgid "RP World/Etc Mix"
+msgid "RP Global Mix"
 msgstr ""
 
 msgctxt "#30207"
