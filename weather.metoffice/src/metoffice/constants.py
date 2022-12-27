@@ -1,8 +1,11 @@
-import xbmc  # @UnresolvedImport
-import xbmcgui  # @UnresolvedImport
-import xbmcaddon  # @UnresolvedImport
+import xbmc
+import xbmcgui
+import xbmcaddon
+import xbmcvfs
 import urllib.parse
 import pytz
+
+# Magic numbers. See https://kodi.wiki/view/Window_IDs
 WEATHER_WINDOW_ID = 12600
 ADDON_BROWSER_WINDOW_ID = 10040
 
@@ -17,9 +20,10 @@ CURRENT_VIEW = WINDOW.getProperty('Weather.CurrentView')
 
 ADDON = xbmcaddon.Addon(id="weather.metoffice")
 DIALOG = xbmcgui.Dialog()
+
 KEYBOARD = xbmc.Keyboard()
-ADDON_BANNER_PATH = xbmc.translatePath('special://home/addons/%s/resources/banner.png' % ADDON.getAddonInfo('id'))
-ADDON_DATA_PATH = xbmc.translatePath('special://profile/addon_data/%s/' % ADDON.getAddonInfo('id'))
+ADDON_BANNER_PATH = xbmcvfs.translatePath('special://home/addons/%s/resources/banner.png' % ADDON.getAddonInfo('id'))
+ADDON_DATA_PATH = xbmcvfs.translatePath('special://profile/addon_data/%s/' % ADDON.getAddonInfo('id'))
 
 TEMPERATUREUNITS = xbmc.getRegion('tempunit')
 
@@ -101,7 +105,7 @@ GEOIP_PROVIDERS = [
      'latitude': 'latitude',
      'longitude': 'longitude'}
 ]
-GEOIP_PROVIDER = GEOIP_PROVIDERS[int(GEOIP)]
+GEOIP_PROVIDER = GEOIP_PROVIDERS[int(GEOIP) if GEOIP else 0]
 
 URL_TEMPLATE = "http://datapoint.metoffice.gov.uk/public/data/{format}/{resource}/{group}/{datatype}/{object}?{get}"
 

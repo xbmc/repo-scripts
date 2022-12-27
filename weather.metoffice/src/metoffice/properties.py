@@ -21,7 +21,6 @@ from .constants import ISSUEDAT_FORMAT, DATAPOINT_DATETIME_FORMAT,\
     TEMPERATUREUNITS, LATITUDE, LONGITUDE
 
 
-@utilities.panelbusy('LeftPane')
 def observation():
     utilities.log("Fetching Hourly Observation for '%s (%s)' from the Met Office..." % (
         OBSERVATION_LOCATION, OBSERVATION_LOCATION_ID))
@@ -78,7 +77,6 @@ def observation():
         raise
 
 
-@utilities.panelbusy('RightPane')
 def daily():
     utilities.log("Fetching Daily Forecast for '%s (%s)' from the Met Office..." % (
         FORECAST_LOCATION, FORECAST_LOCATION_ID))
@@ -150,7 +148,6 @@ def daily():
     WINDOW.setProperty('Daily.IsFetched', 'true')
 
 
-@utilities.panelbusy('RightPane')
 def threehourly():
     utilities.log("Fetching 3 Hourly Forecast for '%s (%s)' from the Met Office..." % (
         FORECAST_LOCATION, FORECAST_LOCATION_ID))
@@ -210,7 +207,6 @@ def sunrisesunset():
     WINDOW.setProperty('Today.Sunset', sun.sunset().strftime(TIME_FORMAT))
 
 
-@utilities.panelbusy('RightPane')
 def text():
     utilities.log("Fetching Text Forecast for '%s (%s)' from the Met Office..." % (
         REGIONAL_LOCATION, REGIONAL_LOCATION_ID))
@@ -248,7 +244,6 @@ def text():
     WINDOW.setProperty('TextForecast.IsFetched', 'true')
 
 
-@utilities.panelbusy('RightPane')
 def forecastlayer():
     utilities.log("Fetching '{0}' Forecast Map with index '{1}'...".format(
         FORECASTMAP_LAYER_SELECTION, FORECASTMAP_SLIDER))
@@ -326,7 +321,6 @@ def forecastlayer():
                            'true')
 
 
-@utilities.panelbusy('RightPane')
 def observationlayer():
     utilities.log("Fetching '{0}' Observation Map with index '{1}'...".format(
         OBSERVATIONMAP_LAYER_SELECTION, OBSERVATIONMAP_SLIDER))
@@ -450,4 +444,4 @@ def image_resize(filename):
         (width, height) = img.size
         if width == RAW_DATAPOINT_IMG_WIDTH:
             img.crop((CROP_WIDTH, CROP_HEIGHT, width-CROP_WIDTH,
-                    height-CROP_HEIGHT)).save(filename, img.format)
+                      height-CROP_HEIGHT)).save(filename, img.format)
