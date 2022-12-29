@@ -17,18 +17,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-from ast import expr_context
+
 import os
 import sys
 import time
+import json
+import base64
 import urllib
-
 import requests
 from bs4 import BeautifulSoup
 
 
 class Zimuku_Agent:
-    def __init__(self, base_url, dl_location, logger, unpacker, settings):
+    def __init__(self, base_url, dl_location, logger, unpacker, settings, ocrUrl='https://ddddocr.lm317379829.repl.co/'):
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
         self.INIT_PAGE = base_url + '/?security_verify_data=313932302c31303830'
@@ -43,6 +44,7 @@ class Zimuku_Agent:
         self.plugin_settings = settings
         self.session = requests.Session()
         self.vertoken = ''
+        self.ocrUrl = ocrUrl
 
         # 一次性调用，获取那个vertoken。目测这东西会过期，不过不管那么多了，感觉过两天验证机制又要变
         # self.init_site()
@@ -56,7 +58,6 @@ class Zimuku_Agent:
             'srcurl', '68747470733a2f2f7a696d756b752e6f72672f')
         self.get_page(self.ZIMUKU_BASE)
 
-        self.get_page(self.INIT_PAGE)
         _, resp = self.get_page(self.ZIMUKU_BASE)
         self.get_vertoken(resp)
 
@@ -104,6 +105,58 @@ class Zimuku_Agent:
                             "ERROR READING %s: %s" % (url, e), level=3)
 
         return headers, http_body
+
+    def verify(self, url, append):
+        headers = None
+        http_body = None
+        s = self.session
+        try:
+            request_headers = {'User-Agent': self.ua}
+
+            a = requests.adapters.HTTPAdapter(max_retries=3)
+            s.mount('https://', a)
+
+            self.logger.log(sys._getframe().f_code.co_name,
+                            '[CHALLENGE VERI-CODE] requests GET [%s]' % (url), level=3)
+
+            http_response = s.get(url, headers=request_headers)
+
+            if http_response.status_code != 200:
+                soup = BeautifulSoup(http_response.content, 'html.parser')
+                content = soup.find_all(attrs={'class': 'verifyimg'})[
+                    0].get('src')
+                if content is not None:
+                    # 处理编码
+                    ocrurl = self.ocrUrl
+                    payload = {'imgdata': content}
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36'
+                    }
+                    response = requests.request(
+                        "POST", ocrurl, headers=headers, json=payload)
+                    result_json = json.loads(response.text)
+                    text = ''
+                    if result_json['code'] == 1:
+                        text = result_json['result']
+                    str1 = ''
+                    i = 0
+                    for ch in text:
+                        if str1 == '':
+                            str1 = hex(ord(text[i]))
+                        else:
+                            str1 += hex(ord(text[i]))
+                        i = i + 1
+
+                    # 使用带验证码的访问
+                    get_cookie_url = '%s%s&%s' % (
+                        url, append, 'security_verify_img=' + str1.replace('0x', ''))
+                    http_response = s.get(
+                        get_cookie_url, headers=request_headers)
+                    a = 1
+
+        except Exception as e:
+            self.logger.log(sys._getframe().f_code.co_name,
+                            "ERROR CHALLENGING VERI-CODE(target URL: %s): %s" % (url, e), level=3)
 
     def extract_sub_info(self, sub, lang_info_mode):
         """
@@ -169,7 +222,7 @@ class Zimuku_Agent:
             if rating not in ["0", "1", "2", "3", "4", "5"]:
                 self.logger.log(
                     sys._getframe().f_code.co_name, "NO RATING AVAILABLE IN (%s), URL: %s" %
-                    (rating_div_str, link),
+                                                    (rating_div_str, link),
                     2)
                 rating = "0"
         except:
@@ -200,7 +253,7 @@ class Zimuku_Agent:
         self.logger.log(sys._getframe().f_code.co_name,
                         "Fetching new vertoken form home page")
         try:
-            headers, data = self.get_page(self.ZIMUKU_BASE+'/')
+            headers, data = self.get_page(self.ZIMUKU_BASE + '/')
             hsoup = BeautifulSoup(resp, 'html.parser')
             vertoken = hsoup.find(
                 'input', attrs={'name': 'vertoken'}).attrs.get('value', '')
@@ -233,17 +286,20 @@ class Zimuku_Agent:
 
         # vertoken = self.get_vertoken()
 
-        get_cookie_url = '%s&%s' % (self.ZIMUKU_API %
-                                    (urllib.parse.quote(title)), self.TOKEN_PARAM)
         url = self.ZIMUKU_API % urllib.parse.quote(title)
         try:
             # 10/10/22: 变成搜索要先拿 cookie
-            self.get_page(url)
-            self.get_page(get_cookie_url)
+            # self.get_page(url)
+            # self.get_page(get_cookie_url)
+
+            # 处理验证码逻辑
+            self.verify(url, '&chost=zimuku.org')
 
             # 真正的搜索
             self.logger.log(sys._getframe().f_code.co_name,
                             "Search API url: %s" % (url))
+
+            url += '&chost=zimuku.org'
             _, data = self.get_page(url)
             soup = BeautifulSoup(data, 'html.parser')
         except Exception as e:
@@ -451,6 +507,9 @@ class Zimuku_Agent:
         supported_archive_exts = (".zip", ".7z", ".tar", ".bz2", ".rar",
                                   ".gz", ".xz", ".iso", ".tgz", ".tbz2", ".cbr")
         try:
+            # 处理验证码逻辑
+            self.verify(url, '?')
+
             # Subtitle detail page.
             headers, data = self.get_page(url)
             soup = BeautifulSoup(data, 'html.parser')
@@ -458,8 +517,9 @@ class Zimuku_Agent:
 
             if not (url.startswith(('http://', 'https://'))):
                 url = urllib.parse.urljoin(self.ZIMUKU_BASE, url)
-            self.logger.log(sys._getframe().f_code.co_name,
-                            "GET SUB DETAIL PAGE: %s" % (url))
+
+            # 处理验证码逻辑
+            self.verify(url, '?')
 
             # Subtitle download-list page.
             headers, data = self.get_page(url)
@@ -576,6 +636,10 @@ class Zimuku_Agent:
             try:
                 self.logger.log(sys._getframe().f_code.co_name,
                                 "DOWNLOAD SUBTITLE: %s" % (url))
+
+                # 处理验证码逻辑
+                self.verify(url, '?')
+
                 # Download subtitle one by one until success.
                 headers, data = self.get_page(url, Referer=referer)
 
@@ -606,13 +670,13 @@ class Zimuku_Agent:
             else:
                 self.logger.log(
                     sys._getframe().f_code.co_name, 'File received but too small: %s %d bytes' %
-                    (filename, len(data)),
+                                                    (filename, len(data)),
                     level=2)
                 return '', ''
         else:
             self.logger.log(
                 sys._getframe().f_code.co_name, 'Failed to download subtitle from all links: %s' %
-                (referer),
+                                                (referer),
                 level=2)
             return '', ''
 
