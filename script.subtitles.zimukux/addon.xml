@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.8" provider-name="pizzamx">
+<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.9" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -20,6 +20,12 @@
             <fanart>resources/fanart.png</fanart>
         </assets>
         <news>
+v0.1.9(2022/12/23)
+- Merged https://github.com/pizzamx/zimuku_for_kodi/pull/14
+- New setting allow showing only language suffix of sub file name to prevent the UI from scrolling (slowly!)
+- New setting to allow search with year info. to make result more accurate (default to False, attributed to @fsi044689)
+- Minor tweaks, please refer to PR comment
+
 v0.1.8(2022/10/10)
 - zimuku.org captcha design changed again and this plugin works again
 
