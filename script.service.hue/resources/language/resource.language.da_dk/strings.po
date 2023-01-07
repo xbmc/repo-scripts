@@ -65,8 +65,8 @@ msgid "Bridge"
 msgstr "Bridge"
 
 msgctxt "#30501"
-msgid "Discover Hue Bridge"
-msgstr "Find Hue Bridge"
+msgid "Discover Hue Bridge / Enter IP"
+msgstr "Discover Hue Bridge / Enter IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -551,6 +551,10 @@ msgstr "Er du sikker på at du vil slette denne scene:"
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
 msgstr "Bridge forældet. Opdater venligst din bridge."
+
+#~ msgctxt "#30501"
+#~ msgid "Discover Hue Bridge"
+#~ msgstr "Find Hue Bridge"
 
 #~ msgctxt "#30504"
 #~ msgid "Bridge Serial"

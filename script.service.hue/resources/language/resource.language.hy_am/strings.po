@@ -65,8 +65,8 @@ msgid "Bridge"
 msgstr ""
 
 msgctxt "#30501"
-msgid "Discover Hue Bridge"
-msgstr ""
+msgid "Discover Hue Bridge / Enter IP"
+msgstr "Discover Hue Bridge / Enter IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"

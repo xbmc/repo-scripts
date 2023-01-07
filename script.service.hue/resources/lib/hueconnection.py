@@ -183,6 +183,8 @@ class HueConnection(object):
 
     def _check_bridge_model(self):
         bridge = qhue.Bridge(self.bridge_ip, None, timeout=QHUE_TIMEOUT)
+        model = ""
+
         try:
             bridge_config = bridge.config()
             model = bridge_config["modelid"]
@@ -193,6 +195,8 @@ class HueConnection(object):
         except requests.RequestException as exc:
             xbmc.log(f"[script.service.hue] Requests exception: {exc}")
             notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+            return None
+
         if model == "BSB002":
             xbmc.log(f"[script.service.hue] Bridge model OK: {model}")
             return True
@@ -355,10 +359,13 @@ class HueConnection(object):
                 except QhueException as exc:
                     xbmc.log(f"[script.service.hue]: Delete Hue Scene QhueException: {exc.type_id}: {exc.message} {traceback.format_exc()}")
                     notification(_("Hue Service"), _("ERROR: Scene not deleted") + f"[CR]{exc.message}")
-                # xbmc.log(f"[script.service.hue] In kodiHue createHueGroup. Res: {result}")
+                    # xbmc.log(f"[script.service.hue] In kodiHue createHueGroup. Res: {result}")
+                    return
                 except requests.RequestException as exc:
                     xbmc.log(f"[script.service.hue]: Delete Hue Scene requestsException: {result} {exc}")
                     notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+                    return
+
                 if result[0]["success"]:
                     notification(_("Hue Service"), _("Scene deleted"))
                 else:

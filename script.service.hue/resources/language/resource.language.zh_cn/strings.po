@@ -65,8 +65,8 @@ msgid "Bridge"
 msgstr "桥接器"
 
 msgctxt "#30501"
-msgid "Discover Hue Bridge"
-msgstr "发现 Hue 桥接器"
+msgid "Discover Hue Bridge / Enter IP"
+msgstr "Discover Hue Bridge / Enter IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -551,3 +551,7 @@ msgstr "是否确实要删除此场景："
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
 msgstr "桥接器已过时。请更新您的桥接器。"
+
+#~ msgctxt "#30501"
+#~ msgid "Discover Hue Bridge"
+#~ msgstr "发现 Hue 桥接器"

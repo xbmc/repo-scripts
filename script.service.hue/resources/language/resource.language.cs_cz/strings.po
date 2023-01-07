@@ -65,8 +65,8 @@ msgid "Bridge"
 msgstr "Bridge (most)"
 
 msgctxt "#30501"
-msgid "Discover Hue Bridge"
-msgstr "Vyhledat Hue Bridge"
+msgid "Discover Hue Bridge / Enter IP"
+msgstr "Discover Hue Bridge / Enter IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -551,6 +551,10 @@ msgstr ""
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
 msgstr ""
+
+#~ msgctxt "#30501"
+#~ msgid "Discover Hue Bridge"
+#~ msgstr "Vyhledat Hue Bridge"
 
 #~ msgctxt "#30033"
 #~ msgid "{} secs."

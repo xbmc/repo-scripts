@@ -65,8 +65,8 @@ msgid "Bridge"
 msgstr "Bridge"
 
 msgctxt "#30501"
-msgid "Discover Hue Bridge"
-msgstr "Hue Bridge finden"
+msgid "Discover Hue Bridge / Enter IP"
+msgstr "Discover Hue Bridge / Enter IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -551,6 +551,10 @@ msgstr ""
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
 msgstr ""
+
+#~ msgctxt "#30501"
+#~ msgid "Discover Hue Bridge"
+#~ msgstr "Hue Bridge finden"
 
 #~ msgctxt "#30027"
 #~ msgid "Are you sure you want to delete this scene:[CR][B]{scene[1]}[/B]"

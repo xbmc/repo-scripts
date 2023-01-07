@@ -65,8 +65,8 @@ msgid "Bridge"
 msgstr "Silta"
 
 msgctxt "#30501"
-msgid "Discover Hue Bridge"
-msgstr "Etsi Hue Silta"
+msgid "Discover Hue Bridge / Enter IP"
+msgstr "Discover Hue Bridge / Enter IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -551,3 +551,7 @@ msgstr "Haluatko varmasti poistaa seuraavan valaistusasetuksen:"
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
 msgstr "Silta ei ole ajan tasalla. Päivitä sen laiteohjelmisto."
+
+#~ msgctxt "#30501"
+#~ msgid "Discover Hue Bridge"
+#~ msgstr "Etsi Hue Silta"
