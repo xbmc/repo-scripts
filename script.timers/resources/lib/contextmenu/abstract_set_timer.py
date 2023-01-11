@@ -216,9 +216,9 @@ class AbstractSetTimer:
         if not is_epg:
 
             if not timer.days or timer.days == [datetime_utils.WEEKLY]:
-                t_now, td_now = datetime_utils.get_now()
-                timer.days.append(t_now.weekday() if not td_start.seconds or td_start.seconds >
-                                  td_now.seconds else (t_now.weekday() + 1) % 7)
+                now = datetime_utils.DateTimeDelta.now()
+                timer.days.append(now.dt.weekday() if not td_start.seconds or td_start.seconds >
+                                  now.td.seconds else (now.dt.weekday() + 1) % 7)
 
             if vfs_utils.is_favourites(path):
                 timer.path = vfs_utils.get_favourites_target(path)

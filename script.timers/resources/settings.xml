@@ -4,7 +4,7 @@
     <category id="c_timer" label="32256" help="">
       <group id="g_edit_timer" label="32255">
         <setting id="edit_timer" type="action" label="32251" help="32381">
-          <level>1</level>
+          <level>0</level>
           <data>RunScript($ID,edit)</data>
           <control type="button" format="action">
             <close>false</close>
@@ -14,7 +14,7 @@
           </dependencies>
         </setting>
         <setting id="add_new_timer" type="action" label="32250" help="32380">
-          <level>1</level>
+          <level>0</level>
           <data>RunScript($ID,add)</data>
           <control type="button" format="action">
             <close>false</close>
@@ -24,7 +24,7 @@
           </dependencies>
         </setting>
         <setting id="delete_timer" type="action" label="32252" help="32382">
-          <level>1</level>
+          <level>0</level>
           <data>RunScript($ID,delete)</data>
           <control type="button" format="action">
             <close>true</close>
@@ -34,7 +34,7 @@
           </dependencies>
         </setting>
         <setting id="save_timer" type="action" label="32253" help="32301">
-          <level>1</level>
+          <level>0</level>
           <data>RunScript($ID,save)</data>
           <control type="button" format="action">
             <close>true</close>
@@ -44,7 +44,7 @@
           </dependencies>
         </setting>
         <setting id="go_back" type="action" label="32254" help="32301">
-          <level>1</level>
+          <level>0</level>
           <data>RunScript($ID,back)</data>
           <control type="button" format="action">
             <close>false</close>
@@ -181,7 +181,7 @@
             <dependency type="enable" setting="timer_days" operator="!is">7</dependency>
             <dependency type="visible" setting="timer_end_type" operator="is">1</dependency>
           </dependencies>
-        </setting>        
+        </setting>
         <setting id="timer_end" type="time" label="32065" help="32334">
           <level>0</level>
           <default>00:00</default>
@@ -227,6 +227,7 @@
               <option label="32075">4</option>
               <option label="32076">5</option>
               <option label="32077">6</option>
+              <option label="32089">7</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
@@ -263,7 +264,7 @@
           </dependencies>
         </setting>
         <setting id="timer_resume" type="boolean" label="32079" help="32343">
-          <level>2</level>
+          <level>3</level>
           <default>false</default>
           <control type="toggle" />
           <dependencies>
@@ -315,7 +316,7 @@
           </dependencies>
         </setting>
         <setting id="timer_test" type="action" label="32108" help="32344">
-          <level>0</level>
+          <level>2</level>
           <data>RunScript($ID,play)</data>
           <control type="button" format="action">
             <close>true</close>
@@ -334,7 +335,7 @@
       </group>
       <group id="g_timer_fade" label="32090">
         <setting id="timer_fade" type="integer" label="32091" help="32350">
-          <level>0</level>
+          <level>1</level>
           <default>0</default>
           <constraints>
             <options>
@@ -351,7 +352,7 @@
           <control type="spinner" format="string" />
         </setting>
         <setting id="timer_vol_min" type="integer" label="32095" help="32351">
-          <level>0</level>
+          <level>1</level>
           <default>75</default>
           <constraints>
             <minimum>0</minimum>
@@ -367,7 +368,7 @@
           </dependencies>
         </setting>
         <setting id="timer_vol_max" type="integer" label="32096" help="32352">
-          <level>0</level>
+          <level>1</level>
           <default>100</default>
           <constraints>
             <minimum>0</minimum>
@@ -390,7 +391,7 @@
       </group>
       <group id="g_timer_system_action" label="32081">
         <setting id="timer_system_action" type="integer" label="32087" help="32360">
-          <level>3</level>
+          <level>2</level>
           <default>0</default>
           <constraints>
             <options>
@@ -411,7 +412,7 @@
       </group>
       <group id="g_timer_notify" label="32097">
         <setting id="timer_notify" type="boolean" label="32098" help="32370">
-          <level>1</level>
+          <level>2</level>
           <default>true</default>
           <control type="toggle" />
           <dependencies>
@@ -423,14 +424,14 @@
     <category id="c_pause" label="32001" help="">
       <group id="g_pause" label="32160">
         <setting id="setpause" type="action" label="32163" help="32300">
-          <level>1</level>
+          <level>2</level>
           <data>RunScript($ID,set_pause)</data>
           <control type="button" format="action">
             <close>false</close>
           </control>
         </setting>
         <setting id="resetpause" type="action" label="32164" help="32301">
-          <level>1</level>
+          <level>2</level>
           <data>RunScript($ID,reset_pause)</data>
           <control type="button" format="action">
             <close>false</close>
@@ -439,14 +440,14 @@
       </group>
       <group id="g_pause2" label="32168">
         <setting id="pause_date_from" type="date" label="32161" help="32302">
-          <level>1</level>
+          <level>2</level>
           <default>2001-01-01</default>
           <control type="button" format="date">
             <heading>32161</heading>
           </control>
         </setting>
         <setting id="pause_time_from" type="time" label="32162" help="32303">
-          <level>1</level>
+          <level>2</level>
           <default>00:01</default>
           <control type="button" format="time">
             <heading>32162</heading>
@@ -455,14 +456,14 @@
       </group>
       <group id="g_pause3" label="32167">
         <setting id="pause_date_until" type="date" label="32161" help="32302">
-          <level>1</level>
+          <level>2</level>
           <default>2001-01-01</default>
           <control type="button" format="date">
             <heading>32161</heading>
           </control>
         </setting>
         <setting id="pause_time_until" type="time" label="32162" help="32303">
-          <level>1</level>
+          <level>2</level>
           <default>00:01</default>
           <control type="button" format="time">
             <heading>32162</heading>
@@ -473,14 +474,14 @@
     <category id="c_sleep_timer" label="32004" help="">
       <group id="g_sleep_presets" label="32033">
         <setting id="sleep_default_duration" type="time" label="32064" help="32335">
-          <level>3</level>
+          <level>1</level>
           <default>01:00</default>
           <control type="button" format="time">
             <heading>32064</heading>
           </control>
         </setting>
         <setting id="sleep_fade" type="integer" label="32091" help="32350">
-          <level>0</level>
+          <level>1</level>
           <default>0</default>
           <constraints>
             <options>
@@ -492,7 +493,7 @@
           <control type="spinner" format="string" />
         </setting>
         <setting id="vol_min_default" type="integer" label="32095" help="32351">
-          <level>0</level>
+          <level>1</level>
           <default>75</default>
           <constraints>
             <minimum>0</minimum>
@@ -507,7 +508,7 @@
           </dependencies>
         </setting>
         <setting id="sleep_system_action" type="integer" label="32087" help="32360">
-          <level>3</level>
+          <level>2</level>
           <default>0</default>
           <constraints>
             <options>
@@ -526,7 +527,7 @@
     <category id="c_snooze_timer" label="32005" help="">
       <group id="g_snooze_presets" label="32038">
         <setting id="snooze_default_duration" type="time" label="32064" help="32335">
-          <level>3</level>
+          <level>1</level>
           <default>00:10</default>
           <control type="button" format="time">
             <heading>32064</heading>
@@ -537,7 +538,7 @@
     <category id="c_volume" label="32003" help="">
       <group id="g_vol_default" label="32092">
         <setting id="vol_default" type="integer" label="32092" help="32310">
-          <level>0</level>
+          <level>1</level>
           <default>100</default>
           <constraints>
             <minimum>0</minimum>
@@ -549,7 +550,7 @@
           </control>
         </setting>
         <setting id="resetvol" type="action" label="32111" help="32311">
-          <level>0</level>
+          <level>1</level>
           <data>RunScript($ID,reset_volume)</data>
           <control type="button" format="action">
             <close>false</close>
@@ -558,7 +559,7 @@
       </group>
       <group id="g_resume" label="32079">
         <setting id="resume" type="boolean" label="32113" help="32320">
-          <level>2</level>
+          <level>3</level>
           <default>false</default>
           <control type="toggle" />
         </setting>
@@ -568,9 +569,9 @@
           <level>3</level>
           <default>0</default>
           <constraints>
-            <minimum>-30</minimum>
+            <minimum>-59</minimum>
             <step>1</step>
-            <maximum>30</maximum>
+            <maximum>59</maximum>
           </constraints>
           <control type="slider" format="integer">
             <popup>false</popup>

@@ -1,5 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
+import xbmc
 import xbmcaddon
 import xbmcgui
 from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
@@ -7,12 +8,14 @@ from resources.lib.player.player import Player
 from resources.lib.player.player_utils import (get_types_replaced_by_type,
                                                run_addon)
 from resources.lib.timer import storage
-from resources.lib.timer.period import Period
 from resources.lib.timer.timer import (END_TYPE_NO, FADE_IN_FROM_MIN,
-                                       FADE_OUT_FROM_CURRENT, TIMER_WEEKLY,
-                                       Timer)
-from resources.lib.timer.timerwithperiod import TimerWithPeriod
-from resources.lib.utils.datetime_utils import abs_time_diff
+                                       FADE_OUT_FROM_CURRENT, STATE_ENDING,
+                                       STATE_RUNNING, STATE_STARTING,
+                                       STATE_WAITING, SYSTEM_ACTION_HIBERNATE,
+                                       SYSTEM_ACTION_POWEROFF, SYSTEM_ACTION_QUIT_KODI,
+                                       SYSTEM_ACTION_SHUTDOWN_KODI, SYSTEM_ACTION_STANDBY,
+                                       TIMER_WEEKLY, Timer)
+from resources.lib.utils.datetime_utils import DateTimeDelta, abs_time_diff
 from resources.lib.utils.vfs_utils import get_asset_path
 
 
@@ -22,140 +25,134 @@ class SchedulerAction:
 
         self._player: Player = player
 
-        self._beginningTimers: 'list[TimerWithPeriod]' = None
-        self._runningTimers: 'list[TimerWithPeriod]' = None
-        self._endingTimers: 'list[TimerWithPeriod]' = None
-
-        self._timerToPlayAV: TimerWithPeriod = None
-        self._timerToStopAV: TimerWithPeriod = None
-        self._timerToPlaySlideshow: TimerWithPeriod = None
-        self._timerToStopSlideshow: TimerWithPeriod = None
-        self._timersToRunScript: 'list[TimerWithPeriod]' = None
-        self._timerWithSystemAction: TimerWithPeriod = None
-        self._forceResumeResetTypes: 'list[str]' = None
-
-        self._fader: TimerWithPeriod = None
-
-        self.hasEventToPerform: bool = False
         self.upcoming_event: datetime = None
+        self.upcoming_timer: Timer = None
+        self.hasEventToPerform: bool = False
+
+        self.timerToPlayAV: Timer = None
+        self.timerToPauseAV: Timer = None
+        self.timerToUnpauseAV: Timer = None
+        self.timerToStopAV: Timer = None
+        self.timerToPlaySlideshow: Timer = None
+        self.timerToStopSlideshow: Timer = None
+        self.timersToRunScript: 'list[Timer]' = None
+        self.timerWithSystemAction: Timer = None
+        self.fader: Timer = None
+
+        self._beginningTimers: 'list[Timer]' = None
+        self._runningTimers: 'list[Timer]' = None
+        self._endingTimers: 'list[Timer]' = None
+        self._forceResumeResetTypes: 'list[str]' = None
 
         self.__is_unit_test__: bool = False
 
         self.reset()
 
-    def calculate(self, timers: 'list[Timer]', dt_now: datetime, td_now: timedelta) -> None:
+    def calculate(self, timers: 'list[Timer]', now: DateTimeDelta) -> None:
 
-        def _collectBeginningTimer(timer: Timer, period: Period) -> None:
+        def _collectEndingTimer(timer: Timer) -> None:
 
-            self._beginningTimers.append(TimerWithPeriod(timer, period))
-            timer.active = True
+            self._endingTimers.append(timer)
 
-        def _collectRunningTimer(timer: Timer, period: Period) -> None:
-
-            self._runningTimers.append(TimerWithPeriod(timer, period))
-
-        def _collectEndingTimer(timer: Timer, period: Period) -> None:
-
-            timerWithPeriod = TimerWithPeriod(timer, period)
-            self._endingTimers.append(timerWithPeriod)
-            timer.active = False
             if timer.is_system_execution_timer():
-                self._timerWithSystemAction = timerWithPeriod
+                self.timerWithSystemAction = timer
 
             if timer.is_stop_at_end_timer():
-                _tts = self._timerToStopSlideshow if timer.media_type == PICTURE else self._timerToStopAV
+                _tts = self.timerToStopSlideshow if timer.media_type == PICTURE else self.timerToStopAV
                 if (not _tts
-                        or _tts.timer.is_resuming_timer() and timerWithPeriod.period.start >= _tts.period.start):
-                    self._setTimerToStopAny(timerWithPeriod)
+                        or _tts.is_resuming_timer() and timer.current_period.start >= _tts.current_period.start):
+                    self._setTimerToStopAny(timer)
 
             elif timer.is_play_at_end_timer():
-                self._setTimerToPlayAny(timerWithPeriod)
+                self._setTimerToPlayAny(timer)
 
-        def _collectFadingTimer(timer: Timer, period: Period) -> None:
+            elif timer.is_pause_timer():
+                self.timerToUnpauseAV = timer
 
-            if (self._fader == None
-                    or self._fader.period.start > period.start):
-                self._fader = TimerWithPeriod(timer, period)
-
-        def _collectTimers(timers: 'list[Timer]', dt_now: datetime, td_now: timedelta) -> None:
+        def _collectTimers(timers: 'list[Timer]', now: DateTimeDelta) -> None:
 
             for timer in timers:
-                matching_period, upcoming_event = timer.get_matching_period_and_upcoming_event(dt_now, td_now)
+                timer.apply(now)
 
-                if matching_period is not None and not timer.active:
-                    _collectBeginningTimer(timer, matching_period)
+                if timer.state == STATE_STARTING:
+                    self._beginningTimers.append(timer)
                     self.hasEventToPerform = True
 
-                elif matching_period is None and timer.active:
-                    _collectEndingTimer(timer, Period(
-                        td_now - timer.duration_timedelta, td_now))
+                elif timer.state == STATE_ENDING:
+                    _collectEndingTimer(timer)
                     self.hasEventToPerform = True
 
-                elif matching_period is not None and timer.is_play_at_start_timer() and timer.is_stop_at_end_timer():
-                    _collectRunningTimer(timer, matching_period)
+                elif timer.state == STATE_RUNNING:
+                    self._runningTimers.append(timer)
 
-                if matching_period is not None and timer.is_fading_timer():
-                    _collectFadingTimer(timer, matching_period)
+                if timer.state in [STATE_STARTING, STATE_RUNNING] and timer.is_fading_timer() \
+                        and (self.fader == None or self.fader.current_period.start > timer.current_period.start):
+                    self.fader = timer
 
-                if upcoming_event is not None:
-                    self.upcoming_event = upcoming_event if self.upcoming_event is None or self.upcoming_event > upcoming_event else self.upcoming_event
+                if timer.upcoming_event is not None:
+                    if self.upcoming_event is None or self.upcoming_event > timer.upcoming_event:
+                        self.upcoming_event = timer.upcoming_event
+                        self.upcoming_timer = timer
 
-        def _handleNestedStoppingTimer(timerToStop: TimerWithPeriod) -> None:
+        def _handleNestedStoppingTimer(timerToStop: Timer) -> None:
 
             if timerToStop:
-                _stopMediatype = timerToStop.timer.media_type
+                _stopMediatype = timerToStop.media_type
                 _types_replaced_by_type = get_types_replaced_by_type(
                     _stopMediatype)
                 for overlappingTimer in self._runningTimers:
-                    if (overlappingTimer.timer.media_type in _types_replaced_by_type
-                            and timerToStop.period.start < overlappingTimer.period.start
-                            and timerToStop.period.end < overlappingTimer.period.end):
+                    if (overlappingTimer.media_type in _types_replaced_by_type
+                            and overlappingTimer.is_play_at_start_timer() and overlappingTimer.is_stop_at_end_timer()
+                            and timerToStop.current_period.start < overlappingTimer.current_period.start
+                            and timerToStop.current_period.end < overlappingTimer.current_period.end):
 
                         self._forceResumeResetTypes.extend(
-                            _types_replaced_by_type if not timerToStop.timer.is_resuming_timer() else list())
+                            _types_replaced_by_type if not timerToStop.is_resuming_timer() else list())
 
                         if _stopMediatype in [AUDIO, VIDEO]:
-                            self._timerToStopAV = None
+                            self.timerToStopAV = None
 
                         elif _stopMediatype == PICTURE:
-                            self._timerToStopSlideshow = None
+                            self.timerToStopSlideshow = None
 
                         return
 
-                if timerToStop.timer.is_resuming_timer():
-                    enclosingTimers = [twp for twp in self._runningTimers if (twp.period.start < timerToStop.period.start
-                                                                              and twp.period.end > timerToStop.period.end)]
+                if timerToStop.is_resuming_timer():
+                    enclosingTimers = [t for t in self._runningTimers if (t.current_period.start < timerToStop.current_period.start
+                                                                          and t.current_period.end > timerToStop.current_period.end)]
                     self._beginningTimers.extend(enclosingTimers)
 
         def _handleStartingTimers() -> None:
 
-            self._beginningTimers.sort(key=lambda twp: twp.period.start)
-            for twp in self._beginningTimers:
-                timer = twp.timer
+            self._beginningTimers.sort(key=lambda t: t.current_period.start)
+            for timer in self._beginningTimers:
                 if timer.is_fading_timer():
-                    if self._fader and timer is not self._fader.timer:
-                        timer.return_vol = self._fader.timer.return_vol
+                    if self.fader and timer is not self.fader:
+                        timer.return_vol = self.fader.return_vol
                     elif timer.return_vol == None:
                         timer.return_vol = self._player.getVolume()
 
                 if timer.is_play_at_start_timer():
-                    self._setTimerToPlayAny(twp)
+                    self._setTimerToPlayAny(timer)
 
                 elif timer.is_stop_at_start_timer():
-                    self._setTimerToStopAny(twp)
+                    self._setTimerToStopAny(timer)
+
+                elif timer.is_pause_timer():
+                    self.timerToPauseAV = timer
 
         def _handleSystemAction() -> None:
 
-            if not self._timerWithSystemAction:
+            if not self.timerWithSystemAction:
                 return
 
             addon = xbmcaddon.Addon()
             lines = list()
             lines.append(addon.getLocalizedString(32270))
             lines.append(addon.getLocalizedString(
-                32081 + self._timerWithSystemAction.timer.system_action))
+                32081 + self.timerWithSystemAction.system_action))
             lines.append(addon.getLocalizedString(32271))
-            abort = xbmcgui.Dialog().yesno(heading="%s: %s" % (addon.getLocalizedString(32256), self._timerWithSystemAction.timer.label),
+            abort = xbmcgui.Dialog().yesno(heading="%s: %s" % (addon.getLocalizedString(32256), self.timerWithSystemAction.label),
                                            message="\n".join(lines),
                                            yeslabel=addon.getLocalizedString(
                                                32273),
@@ -164,137 +161,149 @@ class SchedulerAction:
                                            autoclose=10000)
 
             if not abort or self.__is_unit_test__:
-                self._timerToPlayAV = None
-                self._timerToStopAV = self._timerWithSystemAction
-                self._timerToPlaySlideshow = None
-                self._timerToStopSlideshow = self._timerWithSystemAction
-                self._fader = None
+                self.timerToPlayAV = None
+                self.timerToPauseAV = None
+                self.timerToUnpauseAV = None
+                self.timerToStopAV = self.timerWithSystemAction
+                self.timerToPlaySlideshow = None
+                self.timerToStopSlideshow = self.timerWithSystemAction
+                self.fader = None
                 self._forceResumeResetTypes.extend(TYPES)
 
             else:
-                self._timerWithSystemAction = None
+                self.timerWithSystemAction = None
 
         def _sumupEffectivePlayerAction() -> None:
 
-            def _sumUp(timerToPlay: TimerWithPeriod, timerToStop: TimerWithPeriod) -> TimerWithPeriod:
+            def _sumUp(timerToPlay: Timer, timerToStop: Timer) -> Timer:
 
                 if timerToPlay:
-                    if timerToStop and timerToStop.period.end == timerToPlay.period.start:
+                    if timerToStop and timerToStop.current_period.end == timerToPlay.current_period.start:
                         self._forceResumeResetTypes.extend(get_types_replaced_by_type(
-                            timerToStop.timer.media_type) if not timerToStop.timer.is_resuming_timer() else list())
+                            timerToStop.media_type) if not timerToStop.is_resuming_timer() else list())
 
                     timerToStop = None
 
                 return timerToStop
 
-            if self._timerToPlayAV and PICTURE in get_types_replaced_by_type(self._timerToPlayAV.timer.media_type):
-                self._timerToPlaySlideshow = None
+            if self.timerToPlayAV and PICTURE in get_types_replaced_by_type(self.timerToPlayAV.media_type):
+                self.timerToPlaySlideshow = None
 
-            self._timerToStopAV = _sumUp(
-                self._timerToPlayAV, self._timerToStopAV)
-            self._timerToStopSlideshow = _sumUp(
-                self._timerToPlaySlideshow, self._timerToStopSlideshow)
+            self.timerToStopAV = _sumUp(
+                self.timerToPlayAV, self.timerToStopAV)
+            self.timerToStopSlideshow = _sumUp(
+                self.timerToPlaySlideshow, self.timerToStopSlideshow)
 
-            if self._fader and (self._timerToStopAV == self._fader or self._timerToStopSlideshow == self._fader):
-                self._fader = None
+            if self.timerToPlayAV or self.timerToStopAV:
+                self.timerToPauseAV = None
+                self.timerToUnpauseAV = None
+
+            if self.fader and (self.timerToStopAV == self.fader or self.timerToStopSlideshow == self.fader):
+                self.fader = None
 
         self.reset()
 
-        _collectTimers(timers, dt_now, td_now)
+        _collectTimers(timers, now)
 
         if self.hasEventToPerform:
-            _handleNestedStoppingTimer(self._timerToStopAV)
-            _handleNestedStoppingTimer(self._timerToStopSlideshow)
+            _handleNestedStoppingTimer(self.timerToStopAV)
+            _handleNestedStoppingTimer(self.timerToStopSlideshow)
             _handleStartingTimers()
             _handleSystemAction()
             _sumupEffectivePlayerAction()
 
-    def _setTimerToStopAny(self, twp: TimerWithPeriod) -> None:
+    def _setTimerToStopAny(self, timer: Timer) -> None:
 
-        if twp.timer.media_type == PICTURE:
-            self._timerToStopSlideshow = twp
+        if timer.media_type == PICTURE:
+            self.timerToStopSlideshow = timer
 
         else:
-            self._timerToStopAV = twp
+            self.timerToStopAV = timer
 
     def getFaderInterval(self) -> float:
 
-        if not self._fader:
+        if not self.fader:
             return None
 
         delta_end_start = abs_time_diff(
-            self._fader.period.end, self._fader.period.start)
+            self.fader.current_period.end, self.fader.current_period.start)
 
-        vol_max = self._fader.timer.return_vol if self._fader.timer.fade == FADE_OUT_FROM_CURRENT else self._fader.timer.vol_max
-        vol_diff = vol_max - self._fader.timer.vol_min
+        vol_max = self.fader.return_vol if self.fader.fade == FADE_OUT_FROM_CURRENT else self.fader.vol_max
+        vol_diff = vol_max - self.fader.vol_min
 
         return delta_end_start/vol_diff
 
-    def _setTimerToPlayAny(self, twp: TimerWithPeriod) -> None:
+    def _setTimerToPlayAny(self, timer: Timer) -> None:
 
-        if twp.timer.is_script_timer():
-            self._timersToRunScript.append(twp)
+        if timer.is_script_timer():
+            self.timersToRunScript.append(timer)
 
-        elif twp.timer.media_type == PICTURE:
-            self._timerToPlaySlideshow = twp
+        elif timer.media_type == PICTURE:
+            self.timerToPlaySlideshow = timer
 
         else:
-            self._timerToPlayAV = twp
+            self.timerToPlayAV = timer
 
-    def fade(self, td_now: timedelta) -> None:
+    def fade(self, dtd: DateTimeDelta) -> None:
 
-        if not self._fader:
+        if not self.fader:
             return
 
         delta_now_start = abs_time_diff(
-            td_now, self._fader.period.start)
+            dtd.td, self.fader.current_period.start)
         delta_end_start = abs_time_diff(
-            self._fader.period.end, self._fader.period.start)
+            self.fader.current_period.end, self.fader.current_period.start)
         delta_percent = delta_now_start / delta_end_start
 
-        vol_max = self._fader.timer.return_vol if self._fader.timer.fade == FADE_OUT_FROM_CURRENT else self._fader.timer.vol_max
-        vol_diff = vol_max - self._fader.timer.vol_min
+        vol_max = self.fader.return_vol if self.fader.fade == FADE_OUT_FROM_CURRENT else self.fader.vol_max
+        vol_diff = vol_max - self.fader.vol_min
 
-        if self._fader.timer.fade == FADE_IN_FROM_MIN:
-            _volume = int(round(self._fader.timer.vol_min +
+        if self.fader.fade == FADE_IN_FROM_MIN:
+            _volume = int(round(self.fader.vol_min +
                           vol_diff * delta_percent, 0))
         else:
             _volume = int(round(vol_max - vol_diff * delta_percent, 0))
 
         self._player.setVolume(_volume)
 
-    def perform(self, td_now: timedelta) -> None:
+    def perform(self, now: DateTimeDelta) -> None:
 
-        def _performPlayerAction() -> None:
+        def _performPlayerAction(_now: DateTimeDelta) -> None:
 
-            if self._timerToPlayAV:
-                self._player.playTimer(self._timerToPlayAV.timer)
+            if self.timerToPlayAV:
+                self._player.playTimer(self.timerToPlayAV, _now)
 
-            elif self._timerToStopAV:
-                self._player.resumeFormerOrStop(self._timerToStopAV.timer)
+            elif self.timerToStopAV:
+                self._player.resumeFormerOrStop(self.timerToStopAV)
+
+            elif self.timerToPauseAV and not self._player.isPaused():
+                self._player.pause()
+
+            elif self.timerToUnpauseAV and self._player.isPaused():
+                self._player.pause()
 
             for type in self._forceResumeResetTypes:
                 self._player.resetResumeStatus(type)
 
-            if not self._timerToPlayAV or self._timerToPlayAV.timer.media_type != VIDEO:
-                if self._timerToPlaySlideshow:
-                    self._player.playTimer(self._timerToPlaySlideshow.timer)
+            if not self.timerToPlayAV or self.timerToPlayAV.media_type != VIDEO:
+                if self.timerToPlaySlideshow:
+                    self._player.playTimer(self.timerToPlaySlideshow, _now)
 
-                elif self._timerToStopSlideshow:
+                elif self.timerToStopSlideshow:
                     self._player.resumeFormerOrStop(
-                        self._timerToStopSlideshow.timer)
+                        self.timerToStopSlideshow)
 
-        def _setVolume(td_now: timedelta) -> None:
+        def _setVolume(dtd: DateTimeDelta) -> None:
 
-            if self._timerWithSystemAction:
+            if self.timerWithSystemAction:
                 self._player.setVolume(self._player.getDefaultVolume())
                 return
 
             else:
-                self.fade(td_now)
+                self.fade(dtd)
 
             return_vols = [
-                twp.timer.return_vol for twp in self._endingTimers if twp.timer.is_fading_timer()]
+                t.return_vol for t in self._endingTimers if t.is_fading_timer()]
             if return_vols:
                 self._player.setVolume(max(return_vols))
 
@@ -302,16 +311,14 @@ class SchedulerAction:
 
             addon = xbmcaddon.Addon()
 
-            for twp in self._endingTimers:
-                timer = twp.timer
+            for timer in self._endingTimers:
 
                 if timer.notify and timer.end_type != END_TYPE_NO:
                     icon = get_asset_path("icon_sleep.png")
                     xbmcgui.Dialog().notification(addon.getLocalizedString(
                         32101), timer.label, icon)
 
-            for twp in self._beginningTimers:
-                timer = twp.timer
+            for timer in self._beginningTimers:
                 if timer.notify:
                     icon = get_asset_path(
                         "icon_alarm.png" if timer.end_type == END_TYPE_NO else "icon_sleep.png")
@@ -320,13 +327,12 @@ class SchedulerAction:
 
         def _consumeSingleRunTimers() -> None:
 
-            def _reset(ltwp: 'list[TimerWithPeriod]') -> None:
+            def _reset(timers: 'list[Timer]') -> None:
 
-                for twp in ltwp:
-                    timer = twp.timer
+                for timer in timers:
                     if TIMER_WEEKLY not in timer.days:
-                        if twp.period.start.days in timer.days:
-                            timer.days.remove(twp.period.start.days)
+                        if timer.current_period.start.days in timer.days:
+                            timer.days.remove(timer.current_period.start.days)
 
                         if not timer.days:
                             storage.delete_timer(timer.id)
@@ -334,29 +340,53 @@ class SchedulerAction:
                             storage.save_timer(timer=timer)
 
             _reset(self._endingTimers)
-            if self._timerWithSystemAction:
+            if self.timerWithSystemAction:
                 _reset(self._runningTimers)
 
         def _runScripts() -> None:
 
-            for twp in self._timersToRunScript:
-                run_addon(twp.timer.path)
+            for timer in self.timersToRunScript:
+                run_addon(timer.path)
 
         def _performSystemAction() -> None:
 
-            if self._timerWithSystemAction:
-                self._timerWithSystemAction.timer.execute_system_action()
+            if not self.timerWithSystemAction:
+                pass
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_SHUTDOWN_KODI:
+                xbmc.shutdown()
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_QUIT_KODI:
+                xbmc.executebuiltin("Quit()")
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_STANDBY:
+                xbmc.executebuiltin("Suspend()")
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_HIBERNATE:
+                xbmc.executebuiltin("Hibernate()")
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_POWEROFF:
+                xbmc.executebuiltin("Powerdown()")
+
+        def _adjustState() -> None:
+
+            for t in self._beginningTimers:
+                t.state = STATE_RUNNING
+
+            for t in self._endingTimers:
+                t.state = STATE_WAITING
 
         if self.hasEventToPerform:
-            _performPlayerAction()
+            _performPlayerAction(now)
 
-        _setVolume(td_now)
+        _setVolume(now)
 
         if self.hasEventToPerform:
             _runScripts()
             _showNotifications()
             _consumeSingleRunTimers()
             _performSystemAction()
+            _adjustState()
 
         self.hasEventToPerform = False
 
@@ -369,11 +399,30 @@ class SchedulerAction:
 
         self.hasEventToPerform = False
         self.upcoming_event = None
+        self.upcoming_timer = None
 
-        self._fader = None
-        self._timerToPlayAV = None
-        self._timerToStopAV = None
-        self._timerToPlaySlideshow = None
-        self._timerToStopSlideshow = None
-        self._timersToRunScript = list()
-        self._timerWithSystemAction = None
+        self.fader = None
+        self.timerToPlayAV = None
+        self.timerToPauseAV = None
+        self.timerToUnpauseAV = None
+        self.timerToStopAV = None
+        self.timerToPlaySlideshow = None
+        self.timerToStopSlideshow = None
+        self.timersToRunScript = list()
+        self.timerWithSystemAction = None
+
+    def __str__(self) -> str:
+        return "SchedulerAction[hasevent=%s, playAV=%s, stopAV=%s, pauseAV=%s, unpauseAV=%s, playSlideshow=%s, stopSlideshow=%s, script=%s, systemaction=%s, fader=%s, next event%s=%s]" % (self.hasEventToPerform,
+                                                                                                                                                                                            self.timerToPlayAV,
+                                                                                                                                                                                            self.timerToStopAV,
+                                                                                                                                                                                            self.timerToPauseAV,
+                                                                                                                                                                                            self.timerToUnpauseAV,
+                                                                                                                                                                                            self.timerToPlaySlideshow,
+                                                                                                                                                                                            self.timerToStopSlideshow,
+                                                                                                                                                                                            [str(
+                                                                                                                                                                                                s) for s in self.timersToRunScript],
+                                                                                                                                                                                            self.timerWithSystemAction,
+                                                                                                                                                                                            self.fader,
+                                                                                                                                                                                            self.upcoming_event.strftime(
+                                                                                                                                                                                                " at %Y-%m-%d %H:%M:%S") if self.upcoming_event else "",
+                                                                                                                                                                                            self.upcoming_timer)

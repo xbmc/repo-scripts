@@ -7,3 +7,6 @@ class Period:
 
         self.start: timedelta = start
         self.end: timedelta = end
+
+    def __str__(self) -> str:
+        return "Period[start=%s, end=%s]" % (self.start, self.end)

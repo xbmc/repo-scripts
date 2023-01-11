@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.3.1" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.4.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -65,6 +65,12 @@
     <website>https://github.com/Heckie75/kodi-addon-timers</website>
     <source>https://github.com/Heckie75/kodi-addon-timers</source>
     <news>
+v3.4.0 (2023-01-10)
+- New feature: Media action in order to pause audio or video, feature request #21
+- Refactoring: moved state to timer object
+- Reorganized setting levels (simple, standard, advanced, expert)
+- Introduced logging (see kodi.log)
+
 v3.3.1 (2022-11-26)
 - Bugfix: scheduled timers stop working that are scheduled after Sunday (week change Sun -> Mon)
 - Refactoring
@@ -84,14 +90,6 @@ v3.2.0 (2022-08-27)
 - Changed resume behaviour if there are two parallel ending timers so that non-resuming timer wins and stops media
 - Added dialog in order to abort system action
 - Added help texts for all settings
-
-v3.1.0 (2022-05-26)
-- Added feature in order to schedule slideshows, program/script addons and favourites
-- Free selection of weekdays
-- Added feature for shuffling playlists
-- Improved resuming, e.g. in case of media that is shorter than timer
-- optimization and bugfixes, e.g. preview of playlists / folders
-- covered and proved many timer scenarios and functionality with unit tests
     </news>
     <assets>
       <icon>resources/assets/icon.png</icon>

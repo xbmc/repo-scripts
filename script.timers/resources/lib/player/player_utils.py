@@ -26,6 +26,17 @@ class State():
         self.shuffled: bool = False
         self.speed: float = 1
 
+    def __str__(self) -> str:
+
+        return "State[playerId=%i, type=%s, position=%i, time=%i, playlistId=%i, repeat=%s, shuffled=%s, speed=%f]" % (self.playerId or -1,
+                                                                                                                       self.type or "",
+                                                                                                                       self.position,
+                                                                                                                       self.time,
+                                                                                                                       self.playlistId or -1,
+                                                                                                                       self.repeat,
+                                                                                                                       self.shuffled,
+                                                                                                                       self.speed)
+    
 
 def preview(addon: xbmcaddon.Addon, timerid: int, player: 'xbmc.Player') -> None:
 

@@ -8,3 +8,7 @@ class PlayerStatus():
         self.timer: Timer = timer
         self.state: player_utils.State = state
         self.resuming: bool = False
+
+    def __str__(self) -> str:
+
+        return "PlayerStatus[timer=%s, state=%s, resuming=%s]" % (self.timer, self.state, self.resuming)

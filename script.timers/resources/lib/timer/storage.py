@@ -6,7 +6,7 @@ import time
 import xbmc
 import xbmcaddon
 import xbmcvfs
-from resources.lib.timer.timer import Timer
+from resources.lib.timer.timer import STATE_WAITING, Timer
 
 
 def _get_storage_path() -> str:
@@ -139,9 +139,9 @@ def _init_timer_from_item(item: dict) -> Timer:
     timer.notify = item["notify"]
 
     timer.return_vol = None
-    timer.active = False
+    timer.state = STATE_WAITING
 
-    timer.compute()
+    timer.init()
 
     return timer
 
@@ -157,14 +157,14 @@ def _find_item_index(storage: 'list[dict]', id: int) -> int:
 
 def save_timer(timer: Timer) -> None:
 
-    timer.compute()
+    timer.init()
 
     item = {
         "days": timer.days,
         "duration": timer.duration,
         "duration_offset": timer.duration_offset,
         "end": timer.end,
-        "end_offset" : timer.end_offset,
+        "end_offset": timer.end_offset,
         "end_type": timer.end_type,
         "fade": timer.fade,
         "id": timer.id,
@@ -177,7 +177,7 @@ def save_timer(timer: Timer) -> None:
         "resume": timer.resume,
         "shuffle": timer.shuffle,
         "start": timer.start,
-        "start_offset" : timer.start_offset,
+        "start_offset": timer.start_offset,
         "system_action": timer.system_action,
         "vol_min": timer.vol_min,
         "vol_max": timer.vol_max
