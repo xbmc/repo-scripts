@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.3.9+matrix.2" provider-name="Carlos Guzman (cguZZman)">
+<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.3.10" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.dateutil"/>
@@ -20,8 +20,8 @@
 			<icon>icon.png</icon>
 		</assets>
 		<news>
-v1.3.9 released Nov 12, 2020:
-- Export improvements
+v1.3.10 released Jan 19, 2023:
+- Support for Python 3.11 (Kodi 20) PR #20
 		</news>
 		<disclaimer lang="en_GB">
 This cloud drive addon uses a third-party authentication mechanism commonly known as OAuth 2.0.

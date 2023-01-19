@@ -699,7 +699,7 @@ class CloudDriveAddon:
                 self._rename_action()
                 method = getattr(self, self._action)
                 arguments = {}
-                for name in inspect.getargspec(method)[0]:
+                for name in inspect.getfullargspec(method)[0]:
                     if name in self._addon_params:
                         arguments[name] = self._addon_params[name]
                 method(**arguments)
