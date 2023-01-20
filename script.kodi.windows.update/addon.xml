@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kodi.windows.update" name="Kodi Windows Installer" version="1.3.4" provider-name="Team Kodi">
+<addon id="script.kodi.windows.update" name="Kodi Windows Installer" version="1.3.5" provider-name="Team Kodi">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.six" version="1.0.0"/>
@@ -23,14 +23,44 @@
             <screenshot>resources/images/screenshot03.png</screenshot>
             <screenshot>resources/images/screenshot04.png</screenshot>
         </assets>
+        <summary lang="cs_CZ">Stáhnout a nainstalovat Kodi balíčky.</summary>
+        <summary lang="da_DK">Hent og installer Kodi-installationspakker.</summary>
+        <summary lang="de_DE">Kodi-Pakete herunterladen und installieren.</summary>
         <summary lang="en_GB">Download and Install Kodi packages.</summary>
+        <summary lang="es_MX">Descarga e instala paquetes de Kodi.</summary>
+        <summary lang="et_EE">Laadi alla ja paigalda Kodi pakette.</summary>
+        <summary lang="fi_FI">Lataa ja asenna Kodi-paketteja.</summary>
+        <summary lang="fr_FR">Télécharger et installer les packages Kodi.</summary>
+        <summary lang="hr_HR">Preuzmi i instaliraj Kodi pakete.</summary>
+        <summary lang="it_IT">Scarica e installa i pacchetti Kodi.</summary>
         <summary lang="ko_KR">Kodi 패키지를 다운로드하고 설치합니다.</summary>
+        <summary lang="pl_PL">Pobieraj i instaluj pakiety Kodi.</summary>
         <summary lang="ru_RU">Скачиваете и устанавливайте пакеты Kodi.</summary>
+        <summary lang="zh_CN">下载并安装 Kodi 软件包。</summary>
+        <description lang="da_DK">Download og installer Windows eksekverbare filer til Kodi; vælg fra Nightlies, Udgivelser, Snapshots og Test-builds.</description>
+        <description lang="de_DE">Kodi für Windows herunterladen und installieren. Auswählen zwischen Nightlies, Releases, Snapshopts und Test-Builds.</description>
         <description lang="en_GB">Download and Install Kodi window executables; select from  Nightlies, Releases, Snapshots and Test-builds.</description>
+        <description lang="es_MX">Descarga e instala ejecutables de Kodi para Windows; selecciona entre  Nightlies, Releases, Snapshots y Test-builds.</description>
+        <description lang="fi_FI">Lataa ja asenna Kodin Windows-asennuksia kehityshaaroista Release, Nightly, Snapshot ja Test.</description>
+        <description lang="fr_FR">Télécharger et installer les exécutables dans la fenêtre Kodi ; sélectionner parmi Nightlies, Releases, Snapshots et Test-builds.</description>
+        <description lang="hr_HR">Preuzmi i instaliraj Kodi window izvršne datoteke; odaberi iz  Nightlies, Releases, Snapshots i Testnih-izgradnja.</description>
+        <description lang="it_IT">Scarica e installa gli eseguibili Windows di Kodi; seleziona da Nightlies, Release, Snapshot e Test build.</description>
         <description lang="ko_KR">Kodi 윈도 실행 파일을 다운로드하고 설치하십시오. 매일판, 릴리스, 스냅샷 및 테스트 빌드에서 선택합니다.</description>
+        <description lang="pl_PL">Pobieraj i instaluj pliki wykonywalne Kodi: kompilacje nocne, testowe, wydania finalne, migawki.</description>
         <description lang="ru_RU">Загрузка и установка исполняемых файлов Kodi: ночные и тестовые сборки, релизы, снапшоты.</description>
+        <description lang="zh_CN">下载并安装 Kodi windows 可执行文件。从 Nightlies、Releases、Snapshots 和 Test-builds 中选择。</description>
+        <disclaimer lang="cs_CZ">UWP není podporováno! Není určeno pro instalaci Kodi přes Microsoft Store.</disclaimer>
+        <disclaimer lang="da_DK">UWP understøttes ikke! Ikke beregnet til Kodi-installation gennem Windows Store.</disclaimer>
+        <disclaimer lang="de_DE">UWP wird nicht unterstützt! Nicht vorgesehen für Kodi-Installation über den Windows Store.</disclaimer>
         <disclaimer lang="en_GB">UWP not supported! Not intended for Kodi installation through the Windows Store.</disclaimer>
+        <disclaimer lang="es_MX">¡No se soporta UWP! No se pretende utilizara para la instalación de Kodi desde la tienda de Windows.</disclaimer>
+        <disclaimer lang="fi_FI">UWP-versiota ei tueta! Lisäosaa ei ole tarkoitettu Microsoft Storesta asennetuille Kodi-asennuksille.</disclaimer>
+        <disclaimer lang="fr_FR">UWP non pris en charge ! Non destiné à l&apos;installation de Kodi via le Windows Store.</disclaimer>
+        <disclaimer lang="hr_HR">UWP nije podržan! Nije namijenjeno za Kodi instalaciju putem Windows trgovine.</disclaimer>
+        <disclaimer lang="it_IT">UWP non supportato! Non destinato all&apos;installazione di Kodi tramite Windows Store.</disclaimer>
         <disclaimer lang="ko_KR">UWP가 지원되지 않습니다! 윈도 스토어를 통한 Kodi 설치용이 아닙니다.</disclaimer>
+        <disclaimer lang="pl_PL">Platforma UWP nie jest obsługiwana! Nie jest przeznaczony do instalacji Kodi za pośrednictwem Windows Store.</disclaimer>
         <disclaimer lang="ru_RU">Не поддерживается UWP! Не предназначен для установки Kodi через Магазин Windows.</disclaimer>
+        <disclaimer lang="zh_CN">不支持 UWP！不适用于通过 Windows 应用商店安装 Kodi。</disclaimer>
     </extension>
 </addon>
