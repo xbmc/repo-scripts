@@ -1,4 +1,4 @@
-#  Copyright (C) 2020 Team-Kodi
+#  Copyright (C) 2023 Team-Kodi
 #
 #  This file is part of script.kodi.android.update
 #
@@ -21,22 +21,28 @@ LANGUAGE      = REAL_SETTINGS.getLocalizedString
 ## GLOBALS ##
 DEBUG         = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CUSTOM        = REAL_SETTINGS.getSetting('Custom_Manager')
+APP_ICON      = 'androidapp://sources/apps/%s.png'
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
 
-def selectDialog(label, items, pselect=-1, uDetails=False):
+def selectDialog(label, items, pselect=-1, uDetails=True):
     select = xbmcgui.Dialog().select(label, items, preselect=pselect, useDetails=uDetails)
     if select: return select
     return None
     
 class Select(object):
     def __init__(self):
-        items  = xbmcvfs.listdir('androidapp://sources/apps/')[1]
+        apps  = xbmcvfs.listdir('androidapp://sources/apps/')[1]
+        items = []
+        for app in apps:
+            liz = xbmcgui.ListItem(app)
+            liz.setArt({'icon':APP_ICON%(app),'thumb':APP_ICON%(app)})
+            items.append(liz)
         select = selectDialog(LANGUAGE(30020),items)
         if select is None: return #return on cancel.
-        REAL_SETTINGS.setSetting("Custom_Manager","%s"%(items[select]))
+        REAL_SETTINGS.setSetting("Custom_Manager","%s"%(items[select].getLabel()))
 
 if __name__ == '__main__': Select()
