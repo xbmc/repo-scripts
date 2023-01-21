@@ -55,7 +55,7 @@ def prepare_empty_timer_in_setting(timer_id=None) -> None:
     addon.setSettingInt("timer_start_offset", 0)
     addon.setSettingInt("timer_end_type", END_TYPE_NO)
     addon.setSetting("timer_duration", DEFAULT_TIME)
-    addon.setSettingInt("timer_duration_offset", 0)    
+    addon.setSettingInt("timer_duration_offset", 0)
     addon.setSetting("timer_end", DEFAULT_TIME)
     addon.setSettingInt("timer_end_offset", 0)
     addon.setSettingInt("timer_system_action", SYSTEM_ACTION_NONE)

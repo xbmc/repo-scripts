@@ -213,6 +213,10 @@ msgctxt "#32088"
 msgid "Shuffle"
 msgstr "Mischen"
 
+msgctxt "#32089"
+msgid "pause at start and resume at end"
+msgstr "pausiere zu Beginn und fahre nach Ablauf fort"
+
 msgctxt "#32090"
 msgid "Volume"
 msgstr "Lautstärke"

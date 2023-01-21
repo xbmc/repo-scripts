@@ -9,6 +9,28 @@ DEFAULT_TIME = "00:00"
 WEEKLY = 7
 
 
+class DateTimeDelta():
+
+    def __init__(self, dt: datetime.datetime) -> None:
+
+        self.dt = dt
+        self.td = datetime.timedelta(hours=dt.hour, minutes=dt.minute,
+                                     seconds=dt.second, days=dt.weekday())
+
+    @staticmethod
+    def now(offset=0) -> 'DateTimeDelta':
+
+        dt_now = datetime.datetime.today()
+
+        if offset:
+            if offset > 0:
+                dt_now += datetime.timedelta(seconds=offset)
+            else:
+                dt_now -= datetime.timedelta(seconds=abs(offset))
+
+        return DateTimeDelta(dt_now)
+
+
 def _parse_datetime_from_str(s: str, format: str) -> datetime:
 
     return datetime.datetime.fromtimestamp(time.mktime(time.strptime(s, format)))
@@ -137,23 +159,12 @@ def format_from_seconds(secs: int) -> str:
     return "%02i:%02i" % (secs // 3600, (secs % 3600) // 60)
 
 
-def get_now(offset=0) -> 'tuple[datetime.datetime, datetime.timedelta]':
-    dt_now = datetime.datetime.today()
-    td_now = datetime.timedelta(hours=dt_now.hour, minutes=dt_now.minute,
-                                seconds=dt_now.second, days=dt_now.weekday())
-    if offset:
-        if offset > 0:
-            td_now += datetime.timedelta(seconds=offset)
-        else:
-            td_now -= datetime.timedelta(seconds=abs(offset))
-
-    return dt_now, td_now
-
 def apply_for_now(dt_now: datetime.datetime, timestamp: datetime.timedelta) -> datetime.datetime:
 
-    dt_last_monday_same_time = dt_now - datetime.timedelta(days=dt_now.weekday())
+    dt_last_monday_same_time = dt_now - \
+        datetime.timedelta(days=dt_now.weekday())
     dt_last_monday_midnight = datetime.datetime(year=dt_last_monday_same_time.year,
-                                        month=dt_last_monday_same_time.month,
-                                        day=dt_last_monday_same_time.day)
+                                                month=dt_last_monday_same_time.month,
+                                                day=dt_last_monday_same_time.day)
 
     return dt_last_monday_midnight + timestamp

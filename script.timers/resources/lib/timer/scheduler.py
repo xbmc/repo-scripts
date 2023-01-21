@@ -6,8 +6,9 @@ import xbmcgui
 from resources.lib.player.player import Player
 from resources.lib.timer import storage
 from resources.lib.timer.scheduleraction import SchedulerAction
-from resources.lib.timer.timer import END_TYPE_DURATION, END_TYPE_TIME, Timer
-from resources.lib.utils.datetime_utils import get_now, parse_datetime_str
+from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_TIME,
+                                       STATE_WAITING, Timer)
+from resources.lib.utils.datetime_utils import DateTimeDelta, parse_datetime_str
 from resources.lib.utils.settings_utils import (is_settings_changed_events,
                                                 save_timer_from_settings)
 from resources.lib.utils.system_utils import (is_fullscreen,
@@ -100,14 +101,14 @@ class Scheduler(xbmc.Monitor):
                 if not former_timer:
                     continue
 
-                timer.active = former_timer[0].active
+                timer.state = former_timer[0].state
                 timer.return_vol = former_timer[0].return_vol
 
                 changed, restart = _has_changed(
                     former_timer=former_timer[0], timer_from_storage=timer)
 
-                if timer.active and restart:
-                    timer.active = False
+                if timer.state is not STATE_WAITING and restart:
+                    timer.state = STATE_WAITING
 
                 if changed:
                     self._player.resetResumeOfTimer(timer=former_timer[0])
@@ -131,14 +132,14 @@ class Scheduler(xbmc.Monitor):
 
         self._offset = -addon.getSettingInt("offset")
 
-        _now = get_now()[0]
+        _now = DateTimeDelta.now()
         _pause_from = parse_datetime_str("%s %s" % (addon.getSetting(
             "pause_date_from"), addon.getSetting("pause_time_from")))
         _pause_until = parse_datetime_str("%s %s" % (addon.getSetting(
             "pause_date_until"), addon.getSetting("pause_time_until")))
 
-        self._pause_from = _pause_from if _now < _pause_until else None
-        self._pause_until = _pause_until if _now < _pause_until else None
+        self._pause_from = _pause_from if _now.dt < _pause_until else None
+        self._pause_until = _pause_until if _now.dt < _pause_until else None
 
         self._windows_unlock = addon.getSettingBool("windows_unlock")
         self._powermanagement_displaysoff = addon.getSettingInt(
@@ -152,26 +153,29 @@ class Scheduler(xbmc.Monitor):
         interval = CHECK_INTERVAL
         while not self.abortRequested():
 
-            dt_now, td_now = get_now(offset=self._offset)
+            now = DateTimeDelta.now(offset=self._offset)
 
-            if self._pause_from and self._pause_until and dt_now >= self._pause_from and dt_now < self._pause_until:
+            if self._pause_from and self._pause_until and now.dt >= self._pause_from and now.dt < self._pause_until:
 
-                interval = CHECK_INTERVAL - td_now.seconds % CHECK_INTERVAL
+                interval = CHECK_INTERVAL - now.td.seconds % CHECK_INTERVAL
 
             elif self._timers:
 
-                if self._pause_until and dt_now >= self._pause_until:
+                if self._pause_until and now.dt >= self._pause_until:
                     self._pause_from = None
                     self._pause_until = None
                     addon = xbmcaddon.Addon()
                     xbmcgui.Dialog().notification(addon.getLocalizedString(
                         32027), addon.getLocalizedString(32166))
 
-                if self.action.upcoming_event is None or self.action.upcoming_event < dt_now:
-                    self.action.calculate(self._timers, dt_now, td_now)
+                if self.action.upcoming_event is None or self.action.upcoming_event < now.dt:
+                    self.action.calculate(self._timers, now)
+                    xbmc.log("[script.timers] calculated action: %s" %
+                             self.action, xbmc.LOGINFO)
+
                     interval = self.action.getFaderInterval() or CHECK_INTERVAL
 
-                self.action.perform(td_now)
+                self.action.perform(now)
 
             if self._windows_unlock != prev_windows_unlock:
                 prev_windows_unlock = set_windows_unlock(self._windows_unlock)
@@ -180,7 +184,7 @@ class Scheduler(xbmc.Monitor):
                 self._prevent_powermanagement_displaysoff()
 
             wait = min(CHECK_INTERVAL, interval if interval >= MIN_INTERVAL else MIN_INTERVAL, (
-                self.action.upcoming_event - dt_now).total_seconds() if self.action.upcoming_event else MIN_INTERVAL)
+                self.action.upcoming_event - now.dt).total_seconds() if self.action.upcoming_event else MIN_INTERVAL)
 
             if self.waitForAbort(wait):
                 break

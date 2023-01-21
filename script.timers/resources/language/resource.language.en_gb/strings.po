@@ -213,6 +213,10 @@ msgctxt "#32088"
 msgid "Shuffle"
 msgstr ""
 
+msgctxt "#32089"
+msgid "pause at start and resume at end"
+msgstr ""
+
 msgctxt "#32090"
 msgid "Volume"
 msgstr ""
