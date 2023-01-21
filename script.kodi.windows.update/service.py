@@ -1,4 +1,4 @@
-#  Copyright (C) 2020 Team-Kodi
+#  Copyright (C) 2023 Team-Kodi
 #
 #  This file is part of script.kodi.windows.update
 #
