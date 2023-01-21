@@ -1,4 +1,4 @@
-#  Copyright (C) 2020 Team-Kodi
+#  Copyright (C) 2023 Team-Kodi
 #
 #  This file is part of script.kodi.android.update
 #
@@ -34,7 +34,7 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 VERSION   = REAL_SETTINGS.getSetting("Version") #VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
 BASE_URL  = 'http://mirrors.kodi.tv/'
-BRANCHS   =  {20:'nexus',19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
+BRANCHS   =  {21:'omega',20:'nexus',19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
 BUILD_OPT = {'nightlies':LANGUAGE(30017),'releases':LANGUAGE(30016),'snapshots':LANGUAGE(30015),'test-builds':LANGUAGE(30018)}
 
 try:    
