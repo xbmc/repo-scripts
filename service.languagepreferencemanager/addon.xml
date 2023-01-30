@@ -8,7 +8,7 @@
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
-	<extension point="xbmc.service" library="default.py" start="login"/>
+	<extension point="xbmc.service" library="default.py"/>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
 	</extension>
