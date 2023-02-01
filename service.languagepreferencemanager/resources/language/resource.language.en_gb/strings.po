@@ -1,0 +1,314 @@
+# Kodi Media Center language file
+# Addon Name: Language Preference Manager
+# Addon id: service.languagepreferencemanager
+# Addon Provider: ace20022
+# Addon Updater: PP to fix languages codes not correct in string.po and langcodes.py, and not aligned
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Team-Kodi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Third Language"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Audio Preferences"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Subtitle Preferences"
+msgstr ""
+
+msgctxt "#30106"
+msgid "Conditional Subtitle Preferences"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Enable Preference"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Enable Language Preference Manager"
+msgstr ""
+
+msgctxt "#30109"
+msgid "Pause while evaluating preferences"
+msgstr ""
+
+msgctxt "#30110"
+msgid "If audio language is "
+msgstr ""
+
+msgctxt "#30111"
+msgid "then display subtitles with language"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Delay the evaluation by the following value [ms]"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Turn on subtitles if a subtitle prefrence matched"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Turn off subtitles if no subtitle prefrence matched"
+msgstr ""
+
+msgctxt "#30115"
+msgid "Advanced/Custom settings"
+msgstr ""
+
+msgctxt "#30116"
+msgid "Try to set the audio and/or subtitle track from the filename first"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Regular expression for filename based preferences"
+msgstr ""
+
+msgctxt "#30118"
+msgid "Use custom pref, e.g. eng>ger>fin :"
+msgstr ""
+
+msgctxt "#30119"
+msgid "Use custom pref, e.g. eng>ger>fin :"
+msgstr ""
+
+msgctxt "#30120"
+msgid "Forced"
+msgstr ""
+
+msgctxt "#30121"
+msgid "Use custom pref, e.g. jpn:eng>eng:ger :"
+msgstr ""
+
+msgctxt "#30122"
+msgid "General"
+msgstr ""
+
+msgctxt "#30123"
+msgid "Ignore all Signs and Songs subtitles tracks"
+msgstr ""
+
+msgctxt "#30125"
+msgid "Enable Keyword Blacklist"
+msgstr "
+
+msgctxt "#30126"
+msgid "Enter a comma-separated list of keywords to blacklist in subtitle names"
+msgstr "
+
+msgctxt "#30127"
+msgid "Keyword List:"
+msgstr "
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr ""
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr ""
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr ""
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr ""
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr ""
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr ""
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr ""
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr ""
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr ""
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr ""
+
+msgctxt "#30212"
+msgid "English"
+msgstr ""
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr ""
+
+msgctxt "#30214"
+msgid "Farsi"
+msgstr ""
+
+msgctxt "#30215"
+msgid "Finnish"
+msgstr ""
+
+msgctxt "#30216"
+msgid "French"
+msgstr ""
+
+msgctxt "#30217"
+msgid "German"
+msgstr ""
+
+msgctxt "#30218"
+msgid "Greek"
+msgstr ""
+
+msgctxt "#30219"
+msgid "Hebrew"
+msgstr ""
+
+msgctxt "#30220"
+msgid "Hindi"
+msgstr ""
+
+msgctxt "#30221"
+msgid "Hungarian"
+msgstr ""
+
+msgctxt "#30222"
+msgid "Icelandic"
+msgstr ""
+
+msgctxt "#30223"
+msgid "Indonesian"
+msgstr ""
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr ""
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr ""
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr ""
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr ""
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr ""
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr ""
+
+msgctxt "#30231"
+msgid "Persian"
+msgstr ""
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr ""
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr ""
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr ""
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#30237"
+msgid "Serbian"
+msgstr ""
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr ""
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr ""
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr ""
+
+msgctxt "#30241"
+msgid "Swedish"
+msgstr ""
+
+msgctxt "#30242"
+msgid "Thai"
+msgstr ""
+
+msgctxt "#30243"
+msgid "Turkish"
+msgstr ""
+
+msgctxt "#30244"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#30245"
+msgid "Vietnamese"
+msgstr ""
+
+msgctxt "#30200"
+msgid "None"
+msgstr ""
+
+msgctxt "#30300"
+msgid "Any"
+msgstr ""

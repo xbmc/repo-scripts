@@ -1,0 +1,92 @@
+--- Version 1.0.1
+
+- Initial version for main Kodi.tv addons repository
+
+--- Version 1.0.0
+
+- Mandatory clean-up to propose as candidate version for Kodi.tv addons repository.
+
+--- Version 0.1.7BETA
+
+- New Keywords Blacklist to ignore chosen subtitles tracks based on name content.
+
+--- Version 0.1.6
+
+- Fix custom conditional preferences rules not working. (note : if ...>lan:non>... is used then forced tag is assumed on. See v0.1.3)
+- Add a switch to completely ignore 'Signs and Songs' types of subtitle tracks. Default is off.
+- Add special 'Any' audio language code to allow easy / simplified Conditional Subtitles rules like 'pol:non>any:pol'.
+- Plus some small typo fixed.
+
+--- Version 0.1.5
+
+- Fix preferences rules numbering in log messages.
+- Skip extra genre/tag JSON video query when no custom prefs used at all.
+
+--- Version 0.1.4BETA
+
+- Conditional subtitle logic improvement. Rules are re-evaluated and applied on-the-fly if audio track is changed during the playback.
+
+--- Version 0.1.3
+
+- Conditional subtitle logic adjustement : if "Lang1:None and forced tag set" then disable subtitles
+              but only if no Lang1 forced subtitle is found. Otherwise we activate this one.
+	      
+--- Version 0.1.2
+
+- Adding an icon.png
+- Fixing settings.xml CustomAudio, Sub and CondSub : allowempty=true to avoid multiple errors in the kodi log when not used.
+
+--- Version 0.1.0
+
+- Fixing conditional subtitles like "French:None" not working. Not detected and then subtitles were not disabled.
+  (if sub_code is none) is the test to return -1 in default.py... But column 3 of None in langcodes.py is "non" as a string.
+  So I just changed the test in line 268 accordingly, and all is fine now.
+
+--- Version 0.0.7 + Matrix + Python3 + Languages fixed + more Languages fixed
+
+- Fix compatibility with matrix and Python3
+- Fix languages codes in string.po not aligned with KODI language codes (ex. French etc...)
+
+--- Version 0.0.6
+
+- Fix compatibility with jarvis and krypton
+
+--- Version 0.0.5
+
+- Added support for multiple 3 digit codes per language (thanks to waven!)
+
+--- Version 0.0.4
+
+- Added a language called "None". If set as a conditinal subtitle language
+	subtitles get disabled if the audio language matches.
+
+- Added support for per genre/tag custom preferences. Syntax is 
+	tag/genre1,tag/genre2...#(custom pref; see below)|tag/genre3,tag/genre4...#(custom pref; see below)
+	If no genre/tag# part is provided the pref gets evaluated for any genre/tag
+
+--- Version 0.0.3
+
+- Custom preferences. Syntax is lang1>lang2>lang3>... for audio and sub 
+							and lang1:lang2>lang3:lang4>... for cond. subs
+- Wanilton's Portuguese (Brazil) translation, thanks!
+- schumi2004's Dutch translation, thanks!
+
+[fixes]
+subtitle preferences
+use file name tracks regardless of other settings, if enabled
+
+--- Version 0.0.2
+
+- A switch to enable subtitles if a preference matched.
+- A switch to disable subtitles if no subtitle preference matched.
+- The possibility to set the audio and/or subtitle track from the filename.
+	For example: matrix.audiostream_1.subtitle_2.avi
+
+[fixes]
+conditional preferences
+typos
+
+--- Version 0.0.1
+
+First version of Language Preference Manager.
+
