@@ -471,7 +471,7 @@ class SRGSSR:
         Builds the homepage menu.
         """
         self.build_menu_from_page(self.playtv_url, (
-            'initialData', 'pacPageConfigs', 'videoHomeSections'))
+            'initialData', 'pacPageConfigs', 'landingPage', 'sections'))
 
     def build_menu_from_page(self, url, path):
         """
@@ -718,7 +718,8 @@ class SRGSSR:
             self.build_episode_menu(id)
         elif 'topic' in urn:
             self.build_menu_from_page(self.playtv_url, (
-                'initialData', 'pacPageConfigs', 'topicSections', urn))
+                'initialData', 'pacPageConfigs', 'topicPages',
+                urn, 'sections'))
 
     def build_entry(self, json_entry, is_folder=False, audio=False,
                     fanart=None, urn=None, show_image_url=None,
