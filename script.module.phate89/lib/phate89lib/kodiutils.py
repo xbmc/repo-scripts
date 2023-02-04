@@ -94,13 +94,13 @@ def showOkDialog(heading, line):
     xbmcgui.Dialog().ok(heading, line)
 
 
-def addListItem(label="", params=None, label2=None, thumb=None, fanart=None, poster=None, arts=None,
-                videoInfo=None, properties=None, isFolder=True):
+def createListItem(label="", params=None, label2=None, thumb=None, fanart=None, poster=None, arts=None,
+                videoInfo=None, properties=None, isFolder=True, path=None, subs=None):
     if arts is None:
         arts = {}
     if properties is None:
         properties = {}
-    item = xbmcgui.ListItem(label, label2)
+    item = xbmcgui.ListItem(label, label2, path)
     if thumb:
         arts['thumb'] = thumb
     if fanart:
@@ -109,22 +109,33 @@ def addListItem(label="", params=None, label2=None, thumb=None, fanart=None, pos
         arts['poster'] = poster
     item.setArt(arts)
     item.setInfo('video', videoInfo)
+    if subs is not None:
+        item.setSubtitles(subs)
     if not isFolder:
         properties['IsPlayable'] = 'true'
+    for key, value in list(properties.items()):
+        item.setProperty(key, value)
+    return item
+
+
+def addListItem(label="", params=None, label2=None, thumb=None, fanart=None, poster=None, arts=None,
+                videoInfo=None, properties=None, isFolder=True, path=None, subs=None):
     if isinstance(params, dict):
         url = staticutils.parameters(params)
     else:
         url = params
-    for key, value in list(properties.items()):
-        item.setProperty(key, value)
+    item = createListItem(label=label, params=params, label2=label2,
+                          thumb=thumb, fanart=fanart, poster=poster,
+                          arts=arts, videoInfo=videoInfo, properties=properties,
+                          subs=subs, isFolder=isFolder)
     return xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=item, isFolder=isFolder)
 
 
-def setResolvedUrl(url="", solved=True, subs=None, headers=None, ins=None, insdata=None):
+def setResolvedUrl(url="", solved=True, subs=None, headers=None, ins=None, insdata=None, item=None, exit=True):
     headerUrl = ""
     if headers:
         headerUrl = urlencode(headers)
-    item = xbmcgui.ListItem(path=url + "|" + headerUrl)
+    item = xbmcgui.ListItem(path=url + "|" + headerUrl) if item is None else item
     if subs is not None:
         item.setSubtitles(subs)
     if ins:
@@ -134,7 +145,8 @@ def setResolvedUrl(url="", solved=True, subs=None, headers=None, ins=None, insda
             for key, value in list(insdata.items()):
                 item.setProperty(ins + '.' + key, value)
     xbmcplugin.setResolvedUrl(HANDLE, solved, item)
-    sys.exit()
+    if exit:
+        sys.exit()
 
 
 def append_subtitle(sUrl, subtitlename, sync=False, provider=None):

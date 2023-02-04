@@ -1,3 +1,6 @@
+1.2.2
+- fixed crashes after nexus changes (thx to nixxo and ChristianSumma)
+
 1.2.1
 - added function to get formatted date
 - code cleanup and improvements
