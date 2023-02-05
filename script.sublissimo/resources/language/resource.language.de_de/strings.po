@@ -1,0 +1,938 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-02-05 11:15+0000\n"
+"Last-Translator: Demian <Demian@gmx.co.uk>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/de_de/>\n"
+"Language: de_de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Mit der Fernbedienung Untertitel bearbeiten und synchronisieren"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
+msgstr "Mit diesem Skript lassen sich bestimmte Zeilen bearbeiten, Untertitel verschieben oder strecken und mit anderen Untertiteln synchronisieren. Sie können auch mit einer Videodatei synchronisiert werden.[CR][CR]Um diesen Editor einfach zu verwenden, ihn während der Wiedergabe des Videos und des Untertitels, den bearbeiten werden soll, starten."
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "Untertitel scrollen"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "Zeilen bearbeiten oder löschen"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "Untertitel verschieben"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "Untertitel strecken/stauchen"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "Mit anderen Untertiteln synchronisieren"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "Mit Videodatei synchronisieren"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "In Untertitel suchen"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "Integrität prüfen"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "Untertitel speichern"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "Beenden"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "Nach Bildrate synchronisieren"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "Video mit geänderten Untertiteln wiedergeben"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "Erweiterte Optionen"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid ""
+"Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the "
+"beginning to a line as reference[CR]- Select the roughly the same line in "
+"your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "Untertitel auswählen, mit dem synchronisiert werden soll. Dann:[CR]- Einen Timecode am Anfang einer Zeile als Referenz auswählen[CR]- Ungefähr die gleiche Zeile im anderen Untertitel auswählen[CR]- Dann dasselbe mit zwei Zeilen nahe dem Ende beider Dateien tun."
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "Zeile bearbeiten"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "Ersten Untertitel löschen"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "Letzten Untertitel löschen"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "Manuell scrollen und löschen"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "Zurück"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "Diesen Untertitel löschen?"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "Untertitel zum Bearbeiten auswählen"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "Zurück"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "Löschen"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "Alle Untertitel"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "Gefunden:"
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "Mehr Informationen"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "Fehler"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "Untertitel auswählen, mit dem zu synchronisieren ist"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr "Bitte eine .srt- oder .sub-Datei auswählen"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "Erfolgreich"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "Aktuell erster Untertitel"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "Erster Untertitel ist jetzt:"
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "Bitte eine Videodatei auswählen."
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "Aktuell letzter Untertitel"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "Letzter Untertitel ist jetzt:"
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "Suchbegriff eingeben"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "Nein"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "Diese Editor arbeitet nur mit .srt- oder .sub-Dateien"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "Datei nicht gefunden: "
+
+msgctxt "#32028"
+msgid ""
+"Write the new timestamp for the end position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Den neuen Zeitstempel für die Endposition schreiben, getrennt durch ein „:“. Zum Beispiel: 01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "Zum Beispiel: 01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "Bericht"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "Keine Probleme erkannt"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "Zeile:"
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "Zeile "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "Mögliche Probleme: "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "Untertitel auswählen, um fortzufahren …"
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "Zu bearbeitenden Untertitel auswählen"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "Der Untertitel startet bei "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "Der Untertitel endet bei "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "Mit Zusatz _edited.srt speichern"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "Mit aktuellem Dateinamen speichern"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "Mit benutzerdefiniertem Dateinamen speichern"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "Beenden ohne zu speichern"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "Neuen Dateiname eingeben "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "Schreiben in: "
+
+msgctxt "#32044"
+msgid ""
+"To use the file, select it in the Kodi player subtitle menu when playing the "
+"file"
+msgstr "Um die Datei zu verwenden, ist sie bei der Wiedergabe im Untertitelmenü des Kodi-Players auszuwählen"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "Datei nicht geschrieben"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "Warnung"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "Die Datei enthält möglicherweise nicht gespeicherte Änderungen"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "Trotzdem beenden"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "Untertitel erfolgreich synchronisiert"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "Vorwärts bewegen"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "Rückwärts bewegen"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "Neue Zeit für ersten Untertitel angeben"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Vorwärts verschieben um: HH:MM:SS:MSE"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Vorwärts verschieben um: HH:MM:SS:MSE"
+
+msgctxt "#32056"
+msgid ""
+"Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, "
+"milliseconds. For instance: 01:23:45:000"
+msgstr "Bitte einen gültigen Zeitcode eingeben: HH:MM:SS:MSE. Stunden, Minuten, Sekunden, Millisekunden. Zum Beispiel: 01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "Wie man zwei Untertitel synchronisiert"
+
+msgctxt "#32058"
+msgid ""
+"In order to synchronize, you will need a subtitle which matches the video "
+"perfectly, but has different subtitles, usually from a different language. "
+"In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked "
+"to select a timecode in this file, which will be used as reference. Ideally, "
+"it is the first spoken line from the video. In the next screen, select the "
+"line from your original subtitle which matches the first.[CR]"
+"[CR]Subsequently, you'll be asked again to select a line from your reference "
+"subtitle and to match this with the same line in your original subtitle. "
+"Usually the best choice is the last spoken line from the video. After this "
+"your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them "
+"and 'Save subtitles' to write them to a file."
+msgstr "Zum Synchronisieren wird ein Untertitel benötigt, der perfekt zum Video passt, aber andere Untertitel hat, meist in einer anderen Sprache. Auf der nächsten Seite zunächst diesen Untertitel auswählen.[CR][CR]Dann muss ein Zeitcode aus dieser Datei gewählt werden, der als Referenz dienen soll. Im Idealfall ist dies die erste gesprochene Zeile des Videos. Im nächsten Schritt wird die Zeile aus dem Originaluntertitel gewählt, die mit der ersten übereinstimmt.[CR][CR]Anschließend erfolgt erneut die Aufforderung, eine Zeile aus Ihrem Referenzuntertitel auszuwählen und diese mit der gleichen Zeile in dem Originaluntertitel abzugleichen. Normalerweise ist die beste Wahl die letzte gesprochene Zeile des Videos. Danach werden die beiden Untertitel synchronisiert![CR][CR]„Untertitel scrollen“ markieren, um sie anzuzeigen und „Untertitel speichern“, um sie in eine Datei zu schreiben."
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "Datei nicht gefunden"
+
+msgctxt "#32060"
+msgid ""
+"In the next screen, select the video to synchronize with. Go to the point in "
+"the video where the first subtitle starts. When you pause the video, choose "
+"'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "Auf der nächsten Seite das Video auswählen, mit dem synchronisiert werden soll. Zu der Stelle im Video gehen, an dem der erste Untertitel startet. Wenn das Video angehalten wurde, im Menü „Als Start auswählen“ wählen, dann genauso mit dem letzten Untertitel verfahren."
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "Wie man mit einer Videodatei synchronisiert"
+
+msgctxt "#32062"
+msgid ""
+"In the next screen, open the videofile from the library which belongs to the "
+"subtitle you have opened. Skip or fast forward to the point where the "
+"subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, "
+"a menu will pop up with several options. Select 'View or edit first "
+"subtitle'. When your first subtitle is not the first line from the video, "
+"select 'Delete' until the first subtitle is also the first line from the "
+"video.[CR][CR]Then finetune the position of the video, possibly by using the "
+"'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position "
+"is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the "
+"video, and repeat the same process.[CR][CR]After this, your file will be "
+"synced to the video."
+msgstr "Auf der nächsten Seite die Videodatei aus der Bibliothek öffnen, die zum geöffneten Untertitel gehört. An Punkt springen oder vorspulen, an dem der Untertitel ungefähr platziert werden soll. Pause drücken.[CR][CR]Wenn das Video angehalten wurde, wird ein Menü mit verschiedenen Optionen angezeigt. „Ersten Untertitel anzeigen oder bearbeiten“ auswählen. Sollte der erste Untertitel nicht die erste Zeile des Videos sein, „Löschen“ wählen, bis der erste Untertitel auch die erste Zeile des Videos ist.[CR][CR]Danach die Position des Videos feinabstimmen, ggf. mittels „1 Sekunde vorwärts springen“ oder „1 Sekunde rückwärts springen“. Wenn die Position perfekt ist, „Als Start auswählen“ anklicken.[CR]Nun zum Ende des Videos vorspulen und den gleichen Vorgang wiederholen.[CR][CR]Daraufhin wird die Datei mit dem Video synchronisiert."
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "Zeitcode des ersten Untertitels für den Sync auswählen"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "Gewählte Zeit"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "Gewählte Zeit"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "Zeitcode des Untertitels wählen, der ungefähr gleich ist"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "Zeit des letzten zu synchronisierenden Untertitels wählen"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "Zeit des letzten Untertitels wählen"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "Neuer Zeitcode"
+
+msgctxt "#32069"
+msgid ""
+"Write the new timestamp for the start position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Den neuen Zeitstempel für die Startposition schreiben, getrennt durch ein „:“. Zum Beispiel: 01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "Untertitel vorwärts bewegt um: {}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "Untertitel rückwärts bewegt um: {}"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "Erster Untertitel startet jetzt bei {}"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "Letzter Untertitel startet jetzt bei {}"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " Pausiert bei: "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "Wiedergabe fortsetzen"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "Als Start für ersten Untertitel auswählen"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "1 Sekunde rückwärts springen"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "1 Sekunde vorwärts springen"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "Zurück zum Hauptmenü"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "Ersten Untertitel anzeigen oder löschen"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "Letzten Untertitel anzeigen oder löschen"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "Als Start für letzten Untertitel auswählen"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "Als ersten Untertitel festlegen?"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "Soll der Untertitel starten bei: "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "Startzeit zurücksetzen"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "Gewählter Start: "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "Gewählte Zeiten:"
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "Der erste Untertitel startet bei: "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "Der letzte Untertitel startet bei: "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "Auswählen"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "Zeiten zurücksetzen"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "Gewählte Zeit"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "Eine Zeile mit Zeitcode auswählen"
+
+msgctxt "#32092"
+msgid ""
+"Please select a line with a timecode, like:[CR]'01:23:45,679 --> "
+"01:23:45,679'"
+msgstr "Bitte eine Zeile mit Zeitcode auswählen, wie[CR]„01:23:45,679 --> 01:23:45,679“"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "Film auswählen"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "Serie auswählen"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "Gesamte Bibliothek anzeigen"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "Zurück zum Hauptmenü mit Änderungen"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "Angezeigten Untertitel speichern"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "Zurück zum Hauptmenü ohne Änderungen"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "Vollständig beenden"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "Auf eine andere Framerate zurücksetzen"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "Speichern und Wiedergabe fortsetzen"
+
+msgctxt "#32102"
+msgid ""
+"The subtitle is loaded with the new framerate. Pause to reset to another "
+"frame rate or to save."
+msgstr "Der Untertitel wurde mit der neuen Framerate geladen. Pausieren, um eine andere Framerate einzustellen oder zu speichern."
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "Bitte eine gültige Zahl eingeben"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "Bildrate aus Video ermitteln"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "Sync-Optionen nach Framerate"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "Bildrate"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "Neue Endzeit"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "Alte Startzeit: "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "Startzeit: "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "Alte Endzeit: "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "Neue Startzeit: "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "Neue Endzeit: "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "Speichern und beenden"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "Manuell berechnen"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "Summe oder Faktor vorgeben"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "Faktor berechnen oder Faktor vorgeben"
+
+msgctxt "#32115"
+msgid ""
+"In the next screen, write a sum with the current framerate divided by the "
+"real frame rate. If the current frame rate is 25 and it should be 24, type "
+"'25/24'. Or type your own factor, like '1.2'"
+msgstr "Auf der nächsten Seite ist die Summe der aktuellen Framerate geteilt durch die tatsächliche Framerate einzugeben. Wenn die aktuelle Framerate 25 ist und sie eigentlich 24 sein sollte, „25/24“ eingeben. Oder einen eigenen Faktor eintippen, z. B. „1,2“"
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "Mit der zuvor geöffneten Datei wiedergeben"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "Faktor vorgeben"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "Strecken um den angegebenen Faktor"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "Strecken durch Eingabe einer neuen Endzeit"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "Die Bildrate dieses Videos ist "
+
+msgctxt "#32121"
+msgid ""
+"The video is playing with the modified subtitle. Pause to save or to return "
+"to the menu."
+msgstr "Das Video wird mit den geänderten Untertiteln wiedergegeben. Pausieren, um zu speichern oder um zum Menü zurückzukehren."
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "Untertitel geladen"
+
+msgctxt "#32123"
+msgid ""
+"The video is playing with the saved subtitle. The filename of the subtitle "
+"is: "
+msgstr "Das Video wird mit dem gespeicherten Untertitel abgespielt. Der Dateiname des Untertitels ist: "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "Sprung zur Zeit des aktuell ersten Untertitels"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "Sprung zur Zeit des letzten Untertitels"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "Andere wählen"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "Bildrate eingeben"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "Anderen Untertitel öffnen"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "Warum erscheint dieser Bildschirm?"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr "Es wurde eine .sub-Datei ausgewählt"
+
+msgctxt "#32131"
+msgid ""
+"You have selected a .sub file, which uses frame rates to indicate when "
+"subtitles should be shown. To edit these subtitles, you have to select a "
+"frame rate. You can start a video to see what frame rate it has or just pick "
+"a random one if you want to use a sync option."
+msgstr "Es wurde eine .sub-Datei ausgewählt, die anhand der Framerate angibt, wann die Untertitel erscheinen sollen. Um diese Untertitel zu bearbeiten, muss eine Framerate festgelegt werden. Um die Framerate zu ermitteln, kann das Video gestartet oder eine zufällige Framerate ausgewählt werden, falls eine Sync-Option genutzt werden soll."
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "Diese Datei ist möglicherweise kein gültiger Untertitel"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "Trotzdem laden"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "Andere wählen"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr "Keine gültige .sub-Datei"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "iese Datei scheint keine gültige .sub-Datei zu sein."
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "Alle gefundenen HTML-Farbcodes werden auf weiß zurückgesetzt."
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "Farbcodes auf weiß zurücksetzen"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "Farbcodes auf bestimmte Farbe zurücksetzen"
+
+msgctxt "#32140"
+msgid ""
+"Not a valid code for a color. Use 8 digits in a hexadecimal notation: "
+"'FF00FF00'"
+msgstr "Kein gültiger Code für eine Farbe. 8 Zeichen in hexadezimaler Schreibweise verwenden: „FF00FF00“"
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "Farbcodierung angeben. 8 Zeichen verwenden. Leer lassen um abzubrechen"
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "Alle gefundenen HTML-Farbcodes zurücksetzen auf "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "Untertitel laden"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "Manuell"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "Soll dieser Untertitel bearbeitet werden?"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "Die Wiedergabe wird gestoppt, kann aber über das Menü fortgesetzt werden."
+
+msgctxt "#35005"
+msgid ""
+"A subtitlefile could not be found. Do you want to select one manually and "
+"continue with current video?"
+msgstr "Eine Untertiteldatei wurde nicht gefunden. Soll ein Untertitel manuell ausgewählt und mit dem aktuellen Video fortgefahren werden?"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "Video:"
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "Untertitel:"
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "Wiedergeben mit "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Mit der Fernbedienung Untertitel bearbeiten und synchronisieren"
+
+msgctxt "#35010"
+msgid ""
+"With this script you can edit specific lines, move or stretch subtitles, and "
+"synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "Mit diesem Skript lassen sich bestimmte Zeilen bearbeiten, Untertitel verschieben oder strecken und mit anderen Untertiteln synchronisieren. Sie können auch mit einer Videodatei synchronisiert werden."
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "Zurück zum Menü"
+
+msgctxt "#35016"
+msgid ""
+"Somewhere in the process of syncing an error occurred. Most of the time this "
+"is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A ."
+"srt file which has a digit missing in one of its timestamps.[CR] - A file "
+"which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> "
+"Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "Im Synchronisierungsprozesses ist irgendwo ein Fehler aufgetreten. In den meisten Fällen wird dies verursacht durch:[CR] - Eine .srt-Datei, die nicht standardisierte Zeitstempel verwendet.[CR] - Eine .srt-Datei, bei der eine Ziffer in einem der Zeitstempel fehlt.[CR] - Eine Datei, die keine echte .srt-Datei ist[CR][CR]Über „Hauptmenü -> Erweiterte Optionen -> Integrität prüfen“ kann nach fehlerhaften Zeitstempeln gesucht werden oder man nimmt eine andere .srt-Datei."
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "Folgender Fehler ist aufgetreten:"
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "Details zum Fehler"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "Zeichensatz nicht erkannt"
+
+msgctxt "#35018"
+msgid ""
+"The correct characterset of this file could not be detected. The file is now "
+"loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "Der richtige Zeichensatz dieser Datei konnte nicht erkannt werden. Die Datei wird jetzt mit als UTF-8 geladen und Fehler werden durch Fragezeichen ersetzt."
+
+msgctxt "#35019"
+msgid "Select textline"
+msgstr "Textzeile auswählen"
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr "Zeit für Sync auswählen"
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr "Vorwärtsschieben um Mikrosekunden"
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr "Rückwärtsschieben um Mikrosekunden"
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr "Vorwärtsschieben um Minuten"
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr "Rückwärtsschieben um Minuten"
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr "Zu löschenden Untertitel auswählen"
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr "Minuten"
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr "Mikrosekunden"
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr "Siehe Inhalt"
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr "Trotzdem öffnen"
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr "Unwahrscheinlich, dass es ein Untertitel ist"
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr "Diese Datei ist ziemlich groß und wird wahrscheinlich kein Untertitel sein"
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr "Untertitel konnte nicht geladen werden"
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr "Es konnten keine Untertitel in der Datei gefunden werden. Ist es ein gültiger Untertitel?"
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr "Wird durchsucht …"
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr "Überprüfung, welcher Zeichensatz für diese Datei zu verwenden ist."
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr "Dies scheint keine gültige .sub-Datei zu sein."
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr "Dies scheint keine gültige .srt-Datei zu sein."
+
+msgctxt "#35038"
+msgid "Results"
+msgstr "Ergebnis"
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr "Der Zeichensatz ist: "
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr "Folgende Zeilen wurden übersprungen:"
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr "Manuell reparieren"
+
+msgctxt "#35042"
+msgid "Jump to Specific subtitle"
+msgstr "Zu bestimmtem Untertitel springen"
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr "Untertitel anzeigen oder löschen, der als Erster markiert ist"
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr "Untertitel anzeigen oder löschen, der als Letzter markiert ist"
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr "Anderen Untertitel als den Letzten für den Sync markieren"
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr "Anderen Untertitel als den Ersten für den Sync markieren"
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr "Startzeit ändern"
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr "Endzeit ändern"
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr "100 Millisekunden rückwärts springen"
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr "Soll[CR]{}[CR]bei {} erscheinen?"
