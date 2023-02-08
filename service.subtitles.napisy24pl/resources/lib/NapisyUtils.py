@@ -351,7 +351,7 @@ class URLHandler:
                 if 'application/json' in response.headers.get('content-type', ''):
                     content = json.loads(content, encoding="utf-8")
                 elif 'text/html' in response.headers.get('content-type', ''):
-                    content = content.decode('utf-8')
+                    content = content.decode('utf-8', 'replace')
 
             response.close()
         except Exception as e:
