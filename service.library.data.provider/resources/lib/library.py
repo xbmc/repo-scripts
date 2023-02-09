@@ -48,7 +48,7 @@ class LibraryFunctions():
 
         if useCache:
             # Check whether there is saved data
-            if self.WINDOW.getProperty(query_type + "-data") is not "":
+            if self.WINDOW.getProperty(query_type + "-data") != "":
                 return self.WINDOW.getProperty(query_type + "-data")
 
         # We haven't got any data, so don't send back anything
