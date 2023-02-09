@@ -40,7 +40,7 @@ def get_playlist_stats(path):
     if ("activatewindow" in path.lower()) and ("://" in path) and ("," in path):
         if ("\"" in path):
             # remove &quot; from path (gets added by favorites)
-            path = path.translate(str.maketrans('','', '\"'))
+            path = path.translate(None, '\"')
         playlistpath = path.split(",")[1]
         json_query = xbmc.executeJSONRPC('''{"jsonrpc": "2.0", "method": "Files.GetDirectory",
                                              "params": {"directory": "%s", "media": "video",
