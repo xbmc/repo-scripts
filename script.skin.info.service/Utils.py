@@ -175,7 +175,7 @@ def set_movie_properties(json_response):
     title_header = "[B]" + str(json_response['result']['setdetails']['limits']['total']) + " " + xbmc.getLocalizedString(20342) + "[/B][CR]"
     for item in json_response['result']['setdetails']['movies']:
         art = item['art']
-        streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(), item['streamdetails'])
+        streaminfo = media_streamdetails(item['file'].lower(), item['streamdetails'])
         HOME.setProperty('SkinInfo.Set.Movie.%d.DBID' % count, str(item.get('movieid')))
         HOME.setProperty('SkinInfo.Set.Movie.%d.Title' % count, item['label'])
         HOME.setProperty('SkinInfo.Set.Movie.%d.Plot' % count, item['plot'])
