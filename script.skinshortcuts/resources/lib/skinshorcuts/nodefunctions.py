@@ -63,8 +63,10 @@ class NodeFunctions:
 
         try:
             # Load the xml file
-            tree = ETree.parse(file)
-            root = tree.getroot()
+            with open(file.encode('utf-8'), "rb") as infile:
+                filedata = infile.read().decode('utf-8')
+
+            root = ETree.fromstring(filedata)
 
             # Get the item index
             if "order" in root.attrib:

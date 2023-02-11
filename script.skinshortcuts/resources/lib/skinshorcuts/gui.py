@@ -484,7 +484,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         other_properties, requires, _ = self.data_func.get_property_requires()
 
         # Remove any properties whose requirements haven't been met
-        # pylint: disable=unsubscriptable-object
+        # pylint: disable=unsubscriptable-object,unsupported-membership-test
         for key in other_properties:
             if key in all_props and key in requires and requires[key] not in all_props:
                 # This properties requirements aren't met
