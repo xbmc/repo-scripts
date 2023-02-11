@@ -1,5 +1,4 @@
 import xbmcaddon
-
 from resources.lib.contextmenu.set_timer import SetTimer
 from resources.lib.player.player import Player
 from resources.lib.player.player_utils import preview, reset_volume

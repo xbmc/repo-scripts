@@ -2,7 +2,7 @@ import time
 
 import xbmcaddon
 import xbmcgui
-from resources.lib.timer import storage
+from resources.lib.timer.storage import Storage
 from resources.lib.timer.timer import (DEFAULT_TIME, END_TYPE_NO, FADE_OFF,
                                        MEDIA_ACTION_NONE, SYSTEM_ACTION_NONE,
                                        Timer)
@@ -11,6 +11,11 @@ from resources.lib.utils.datetime_utils import WEEKLY
 _ON_SETTING_CHANGE_EVENTS = "onSettingChangeEvents"
 _SETTING_CHANGE_EVENTS_MAX_SECS = 5
 _SETTING_CHANGE_EVENTS_ACTIVE = 0
+
+CONFIRM_ESCAPE = -1
+CONFIRM_NO = 0
+CONFIRM_YES = 1
+CONFIRM_CUSTOM = 2
 
 
 def deactivate_on_settings_changed_events() -> None:
@@ -44,12 +49,13 @@ def trigger_settings_changed_event() -> None:
 def prepare_empty_timer_in_setting(timer_id=None) -> None:
 
     if timer_id == None:
-        timer_id = storage.get_next_id()
+        timer_id = Storage().get_next_id()
 
     deactivate_on_settings_changed_events()
     addon = xbmcaddon.Addon()
     addon.setSettingInt("timer_id", timer_id)
     addon.setSettingString("timer_label", addon.getLocalizedString(32257))
+    addon.setSettingInt("timer_priority", 0)
     addon.setSetting("timer_days", "")
     addon.setSetting("timer_start", DEFAULT_TIME)
     addon.setSettingInt("timer_start_offset", 0)
@@ -106,6 +112,7 @@ def save_timer_from_settings() -> None:
     timer.media_type = addon.getSettingString("timer_mediatype")
     timer.notify = addon.getSettingBool("timer_notify")
     timer.path = addon.getSettingString("timer_path")
+    timer.priority = addon.getSettingInt("timer_priority")
     timer.repeat = addon.getSettingBool("timer_repeat")
     timer.resume = addon.getSettingBool("timer_resume")
     timer.shuffle = addon.getSettingBool("timer_shuffle")
@@ -115,14 +122,14 @@ def save_timer_from_settings() -> None:
     timer.vol_min = addon.getSettingInt("timer_vol_min")
     timer.vol_max = addon.getSettingInt("timer_vol_max")
 
-    storage.save_timer(timer=timer)
+    Storage().save_timer(timer=timer)
 
 
 def select_timer(multi=False, extra=None) -> 'tuple[list[Timer], list[int]]':
 
     addon = xbmcaddon.Addon()
 
-    timers = storage.load_timers_from_storage()
+    timers = Storage().load_timers_from_storage()
     if not timers and not extra:
         xbmcgui.Dialog().notification(addon.getLocalizedString(
             32000), addon.getLocalizedString(32258))
@@ -159,7 +166,7 @@ def delete_timer() -> None:
         return
 
     for i in idx:
-        storage.delete_timer(timers[i].id)
+        Storage().delete_timer(timers[i].id)
 
     trigger_settings_changed_event()
 
@@ -184,6 +191,7 @@ def load_timer_into_settings(timer: Timer) -> None:
     deactivate_on_settings_changed_events()
     addon.setSettingInt("timer_id", timer.id)
     addon.setSettingString("timer_label", timer.label)
+    addon.setSettingInt("timer_priority", timer.priority)
     addon.setSetting("timer_days", "|".join([str(d) for d in timer.days]))
     addon.setSetting("timer_start", timer.start)
     addon.setSettingInt("timer_start_offset", timer.start_offset)

@@ -65,8 +65,16 @@ msgctxt "#32027"
 msgid "Timers"
 msgstr ""
 
+msgctxt "#32028"
+msgid "Priority"
+msgstr ""
+
 msgctxt "#32029"
 msgid "Timer deleted"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Presets"
 msgstr ""
 
 msgctxt "#32032"
@@ -107,6 +115,18 @@ msgstr ""
 
 msgctxt "#32042"
 msgid "from"
+msgstr ""
+
+msgctxt "#32050"
+msgid "This timer interrupts other timers"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Other timers interrupt this timer"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Is %s more important?"
 msgstr ""
 
 msgctxt "#32060"
@@ -221,12 +241,16 @@ msgctxt "#32090"
 msgid "Volume"
 msgstr ""
 
+msgctxt "#32091"
+msgid "Fading"
+msgstr ""
+
 msgctxt "#32092"
 msgid "Default volume"
 msgstr ""
 
-msgctxt "#32091"
-msgid "Fading"
+msgctxt "#32093"
+msgid "Standby TV via CEC"
 msgstr ""
 
 msgctxt "#32095"
@@ -473,6 +497,22 @@ msgctxt "#32171"
 msgid "Offset for timers in seconds"
 msgstr ""
 
+msgctxt "#32180"
+msgid "Presets for epg quick timer"
+msgstr ""
+
+msgctxt "#32181"
+msgid "don't interrupt existing timers"
+msgstr ""
+
+msgctxt "#32182"
+msgid "latest added timer"
+msgstr ""
+
+msgctxt "#32183"
+msgid "always ask"
+msgstr ""
+
 msgctxt "#32200"
 msgid "Monday"
 msgstr ""
@@ -637,6 +677,14 @@ msgctxt "#32335"
 msgid "Enter the duration after the timer ends."
 msgstr ""
 
+msgctxt "#32336"
+msgid "Set value if this timer is more important than other. Higher value means more important. Values starting from 10 always win against new timers."
+msgstr ""
+
+msgctxt "#32337"
+msgid "This is a high priority timer which overrule new timers."
+msgstr ""
+
 msgctxt "#32340"
 msgid "Select the media action of the timer. Note that you must add a media to the timer by utilizing the context menu first."
 msgstr ""
@@ -699,4 +747,8 @@ msgstr ""
 
 msgctxt "#32385"
 msgid "Optionally you can set an offset in seconds."
+msgstr ""
+
+msgctxt "#32386"
+msgid "Determine the strategy for priority of new quicktimers."
 msgstr ""

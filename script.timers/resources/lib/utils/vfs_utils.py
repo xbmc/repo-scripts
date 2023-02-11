@@ -18,7 +18,7 @@ _VIDEO_DB_PREFIX = "videodb://"
 _AUDIO_PLUGIN_PREFIX = "plugin://plugin.audio."
 _VIDEO_PLUGIN_PREFIX = "plugin://plugin.video."
 _URI_MATCHER = "^[a-z]+://.+$"
-_FAVOURITES_MATCHER = "^favourites://(PlayMedia|RunScript)\(%22(.+)%22\)/$"
+_FAVOURITES_MATCHER = "^favourites://(PlayMedia|RunScript)\(%22(.+)%22\)/?$"
 _SCRIPT_MATCHER = "^((script|plugin)://)?script\..+$"
 
 _PLAYLIST_TYPES = [".m3u", ".m3u8", ".pls"]

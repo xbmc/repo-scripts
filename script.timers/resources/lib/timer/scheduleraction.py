@@ -7,23 +7,28 @@ from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
 from resources.lib.player.player import Player
 from resources.lib.player.player_utils import (get_types_replaced_by_type,
                                                run_addon)
-from resources.lib.timer import storage
+from resources.lib.timer.storage import Storage
 from resources.lib.timer.timer import (END_TYPE_NO, FADE_IN_FROM_MIN,
                                        FADE_OUT_FROM_CURRENT, STATE_ENDING,
                                        STATE_RUNNING, STATE_STARTING,
-                                       STATE_WAITING, SYSTEM_ACTION_HIBERNATE,
-                                       SYSTEM_ACTION_POWEROFF, SYSTEM_ACTION_QUIT_KODI,
-                                       SYSTEM_ACTION_SHUTDOWN_KODI, SYSTEM_ACTION_STANDBY,
-                                       TIMER_WEEKLY, Timer)
+                                       STATE_WAITING,
+                                       SYSTEM_ACTION_CEC_STANDBY,
+                                       SYSTEM_ACTION_HIBERNATE,
+                                       SYSTEM_ACTION_POWEROFF,
+                                       SYSTEM_ACTION_QUIT_KODI,
+                                       SYSTEM_ACTION_SHUTDOWN_KODI,
+                                       SYSTEM_ACTION_STANDBY, TIMER_WEEKLY,
+                                       Timer)
 from resources.lib.utils.datetime_utils import DateTimeDelta, abs_time_diff
 from resources.lib.utils.vfs_utils import get_asset_path
 
 
 class SchedulerAction:
 
-    def __init__(self, player: Player) -> None:
+    def __init__(self, player: Player, storage: Storage) -> None:
 
         self._player: Player = player
+        self.storage = storage
 
         self.upcoming_event: datetime = None
         self.upcoming_timer: Timer = None
@@ -60,6 +65,7 @@ class SchedulerAction:
             if timer.is_stop_at_end_timer():
                 _tts = self.timerToStopSlideshow if timer.media_type == PICTURE else self.timerToStopAV
                 if (not _tts
+                        or _tts.priority < timer.priority
                         or _tts.is_resuming_timer() and timer.current_period.start >= _tts.current_period.start):
                     self._setTimerToStopAny(timer)
 
@@ -96,6 +102,13 @@ class SchedulerAction:
 
         def _handleNestedStoppingTimer(timerToStop: Timer) -> None:
 
+            def _reset_stop():
+                if _stopMediatype in [AUDIO, VIDEO]:
+                    self.timerToStopAV = None
+
+                elif _stopMediatype == PICTURE:
+                    self.timerToStopSlideshow = None
+
             if timerToStop:
                 _stopMediatype = timerToStop.media_type
                 _types_replaced_by_type = get_types_replaced_by_type(
@@ -103,23 +116,25 @@ class SchedulerAction:
                 for overlappingTimer in self._runningTimers:
                     if (overlappingTimer.media_type in _types_replaced_by_type
                             and overlappingTimer.is_play_at_start_timer() and overlappingTimer.is_stop_at_end_timer()
-                            and timerToStop.current_period.start < overlappingTimer.current_period.start
+                            and timerToStop.current_period.start <= overlappingTimer.current_period.start
                             and timerToStop.current_period.end < overlappingTimer.current_period.end):
 
                         self._forceResumeResetTypes.extend(
                             _types_replaced_by_type if not timerToStop.is_resuming_timer() else list())
 
-                        if _stopMediatype in [AUDIO, VIDEO]:
-                            self.timerToStopAV = None
+                        if overlappingTimer.priority < timerToStop.priority and timerToStop.is_playing_media_timer() and overlappingTimer.media_type in _types_replaced_by_type:
+                            self._beginningTimers.append(overlappingTimer)
 
-                        elif _stopMediatype == PICTURE:
-                            self.timerToStopSlideshow = None
+                        _reset_stop()
 
-                        return
+                enclosingTimers = [t for t in self._runningTimers if (t.current_period.start < timerToStop.current_period.start
+                                                                      and t.current_period.end > timerToStop.current_period.end)
+                                   and t.media_type in _stopMediatype]
 
-                if timerToStop.is_resuming_timer():
-                    enclosingTimers = [t for t in self._runningTimers if (t.current_period.start < timerToStop.current_period.start
-                                                                          and t.current_period.end > timerToStop.current_period.end)]
+                if enclosingTimers and not [t for t in enclosingTimers if timerToStop.priority >= t.priority]:
+                    _reset_stop()
+
+                elif timerToStop.is_resuming_timer():
                     self._beginningTimers.extend(enclosingTimers)
 
         def _handleStartingTimers() -> None:
@@ -132,7 +147,10 @@ class SchedulerAction:
                     elif timer.return_vol == None:
                         timer.return_vol = self._player.getVolume()
 
-                if timer.is_play_at_start_timer():
+                higher_prio_runnings = [running for running in self._runningTimers if running.priority > timer.priority
+                                        and running.media_type in get_types_replaced_by_type(timer.media_type)]
+
+                if not higher_prio_runnings and timer.is_play_at_start_timer():
                     self._setTimerToPlayAny(timer)
 
                 elif timer.is_stop_at_start_timer():
@@ -143,7 +161,7 @@ class SchedulerAction:
 
         def _handleSystemAction() -> None:
 
-            if not self.timerWithSystemAction:
+            if not self.timerWithSystemAction or self.timerWithSystemAction.system_action == SYSTEM_ACTION_CEC_STANDBY:
                 return
 
             addon = xbmcaddon.Addon()
@@ -239,10 +257,10 @@ class SchedulerAction:
             self.timersToRunScript.append(timer)
 
         elif timer.media_type == PICTURE:
-            self.timerToPlaySlideshow = timer
+            self.timerToPlaySlideshow = timer if self.timerToPlaySlideshow is None or self.timerToPlaySlideshow.priority < timer.priority else self.timerToPlaySlideshow
 
         else:
-            self.timerToPlayAV = timer
+            self.timerToPlayAV = timer if self.timerToPlayAV is None or self.timerToPlayAV.priority < timer.priority else self.timerToPlayAV
 
     def fade(self, dtd: DateTimeDelta) -> None:
 
@@ -282,7 +300,7 @@ class SchedulerAction:
             elif self.timerToUnpauseAV and self._player.isPaused():
                 self._player.pause()
 
-            for type in self._forceResumeResetTypes:
+            for type in set(self._forceResumeResetTypes):
                 self._player.resetResumeStatus(type)
 
             if not self.timerToPlayAV or self.timerToPlayAV.media_type != VIDEO:
@@ -335,9 +353,9 @@ class SchedulerAction:
                             timer.days.remove(timer.current_period.start.days)
 
                         if not timer.days:
-                            storage.delete_timer(timer.id)
+                            self.storage.delete_timer(timer.id)
                         else:
-                            storage.save_timer(timer=timer)
+                            self.storage.save_timer(timer=timer)
 
             _reset(self._endingTimers)
             if self.timerWithSystemAction:
@@ -367,6 +385,9 @@ class SchedulerAction:
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_POWEROFF:
                 xbmc.executebuiltin("Powerdown()")
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_CEC_STANDBY:
+                xbmc.executebuiltin("CECStandby()")
 
         def _adjustState() -> None:
 
