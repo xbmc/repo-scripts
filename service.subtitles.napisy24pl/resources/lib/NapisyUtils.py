@@ -180,9 +180,7 @@ class NapisyHelper:
         if search_result is None:
             return results  # return empty set
 
-        search_result = json.loads(search_result, encoding="utf-8")
-
-        results = []
+        search_result = json.loads(search_result)
 
         for result in search_result:
             html = bs4.BeautifulSoup(result["table"], "html.parser")
@@ -349,7 +347,7 @@ class URLHandler:
                         pass
 
                 if 'application/json' in response.headers.get('content-type', ''):
-                    content = json.loads(content, encoding="utf-8")
+                    content = json.loads(content)
                 elif 'text/html' in response.headers.get('content-type', ''):
                     content = content.decode('utf-8', 'replace')
 
