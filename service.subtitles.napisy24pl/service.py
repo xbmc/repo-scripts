@@ -3,14 +3,11 @@ import os
 import sys
 from urllib.parse import unquote
 
-try:
-    import xbmc
-    import xbmcvfs
-    import xbmcaddon
-    import xbmcplugin
-    import xbmcgui
-except ImportError:
-    from tests.stubs import xbmc, xbmcgui, xbmcaddon, xbmcplugin, xbmcvfs
+import xbmc
+import xbmcvfs
+import xbmcaddon
+import xbmcplugin
+import xbmcgui
 
 __addon__ = xbmcaddon.Addon()
 __scriptid__ = __addon__.getAddonInfo('id')
@@ -22,7 +19,6 @@ __cwd__ = xbmcvfs.translatePath(__addon__.getAddonInfo('path'))
 __profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
 __resource__ = xbmcvfs.translatePath(os.path.join(__cwd__, 'resources', 'lib'))
 __temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp', ''))
-
 
 from resources.lib.NapisyUtils import NapisyHelper, log, normalizeString, clean_title, parse_rls_title
 
@@ -51,13 +47,14 @@ def search(item):
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
     return
 
+
 def get_params():
     param = []
     paramstring = sys.argv[2]
     if len(paramstring) >= 2:
         params = paramstring
         cleanedparams = params.replace('?', '')
-        if (params[len(params) - 1] == '/'):
+        if params[len(params) - 1] == '/':
             params = params[0:len(params) - 2]
         pairsofparams = cleanedparams.split('&')
         param = {}
@@ -73,6 +70,8 @@ def get_params():
 params = get_params()
 
 if params['action'] in ['search', 'manualsearch']:
+    log("Version: '%s'" % (__version__,))
+
     item = {}
     item['temp'] = False
     item['rar'] = False
@@ -100,9 +99,6 @@ if params['action'] in ['search', 'manualsearch']:
         else:
             item['title'] = unquote(params['searchstring'])
 
-    for lang in unquote(params['languages']).split(","):
-        item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
-
     log("Item before cleaning: \n    %s" % item)
 
     # clean title + tvshow params
@@ -113,14 +109,14 @@ if params['action'] in ['search', 'manualsearch']:
         item['season'] = "0"
         item['episode'] = item['episode'][-1:]
 
-    if (item['file_original_path'].find("http") > -1):
+    if item['file_original_path'].find("http") > -1:
         item['temp'] = True
 
-    elif (item['file_original_path'].find("rar://") > -1):
+    elif item['file_original_path'].find("rar://") > -1:
         item['rar'] = True
         item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
 
-    elif (item['file_original_path'].find("stack://") > -1):
+    elif item['file_original_path'].find("stack://") > -1:
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
 
@@ -134,7 +130,8 @@ elif params['action'] == 'download':
     helper = NapisyHelper()
     subs = helper.download(params["id"])
 
-    ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
+    # # we can return more than one subtitle for multi CD versions, for now we are still working out how to handle
+    # that in XBMC core
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
