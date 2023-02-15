@@ -18,6 +18,10 @@ from metoffice.utilities import gettext as _
 from metoffice.constants import WINDOW, ADDON, API_KEY, ADDON_DATA_PATH, ADDON_BANNER_PATH
 from metoffice import urlcache, properties, utilities
 import socket
+import sys
+
+import setlocation
+
 socket.setdefaulttimeout(20)
 
 
@@ -27,31 +31,34 @@ def main():
         try:
             urlcache.URLCache(ADDON_DATA_PATH).erase()
         finally:
-            ADDON.setSetting('EraseCache', 'false')  # @UndefinedVariable
+            ADDON.setSetting('EraseCache', 'false')
 
     if not API_KEY:
         raise Exception(_("No API Key."), _("Enter your Met Office API Key under settings."))
+
+    if sys.argv[1] in ['ObservationLocation', 'ForecastLocation', 'RegionalLocation']:
+        setlocation.main(sys.argv[1])
 
     properties.observation()
     properties.daily()
     properties.threehourly()
     properties.sunrisesunset()
 
-    WINDOW.setProperty('WeatherProvider', ADDON.getAddonInfo('name'))  # @UndefinedVariable
-    WINDOW.setProperty('WeatherProviderLogo', ADDON_BANNER_PATH)  # @UndefinedVariable
-    WINDOW.setProperty('ObservationLocation', ADDON.getSetting('ObservationLocation'))  # @UndefinedVariable
-    WINDOW.setProperty('Current.Location', ADDON.getSetting('ForecastLocation'))  # @UndefinedVariable
-    WINDOW.setProperty('ForecastLocation', ADDON.getSetting('ForecastLocation'))  # @UndefinedVariable
-    WINDOW.setProperty('RegionalLocation', ADDON.getSetting('RegionalLocation'))  # @UndefinedVariable
-    WINDOW.setProperty('Location1', ADDON.getSetting('ForecastLocation'))  # @UndefinedVariable
-    WINDOW.setProperty('Locations', '1')  # @UndefinedVariable
+    WINDOW.setProperty('WeatherProvider', ADDON.getAddonInfo('name'))
+    WINDOW.setProperty('WeatherProviderLogo', ADDON_BANNER_PATH)
+    WINDOW.setProperty('ObservationLocation', ADDON.getSetting('ObservationLocation'))
+    WINDOW.setProperty('Current.Location', ADDON.getSetting('ForecastLocation'))
+    WINDOW.setProperty('ForecastLocation', ADDON.getSetting('ForecastLocation'))
+    WINDOW.setProperty('RegionalLocation', ADDON.getSetting('RegionalLocation'))
+    WINDOW.setProperty('Location1', ADDON.getSetting('ForecastLocation'))
+    WINDOW.setProperty('Locations', '1')
 
     # Explicitly set unused flags to false, so there are no unusual side
     # effects/residual data when moving from another weather provider.
-    WINDOW.setProperty('36Hour.IsFetched', '')  # @UndefinedVariable
-    WINDOW.setProperty('Weekend.IsFetched', '')  # @UndefinedVariable
-    WINDOW.setProperty('Map.IsFetched', '')  # @UndefinedVariable
-    WINDOW.setProperty('Weather.CurrentView', '')  # @UndefinedVariable
+    WINDOW.setProperty('36Hour.IsFetched', '')
+    WINDOW.setProperty('Weekend.IsFetched', '')
+    WINDOW.setProperty('Map.IsFetched', '')
+    WINDOW.setProperty('Weather.CurrentView', '')
 
 
 if __name__ == '__main__':

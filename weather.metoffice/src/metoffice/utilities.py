@@ -3,10 +3,10 @@ from datetime import datetime
 import time
 import traceback
 import math
-import xbmc  # @UnresolvedImport
-import xbmcgui  # @UnresolvedImport
+import xbmc
+import xbmcgui
 
-from .constants import WEATHER_WINDOW_ID, ADDON_BROWSER_WINDOW_ID, DIALOG, WINDOW, TEMPERATUREUNITS, ADDON
+from .constants import WEATHER_WINDOW_ID, ADDON_BROWSER_WINDOW_ID, DIALOG, TEMPERATUREUNITS, ADDON
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -20,6 +20,12 @@ def strptime(dt, fmt):
 
 
 def failgracefully(f):
+    """
+    Function decorator. When a script fails (raises an exception) we
+    don't want it to make an awful 'parp' noise. Instead catch the
+    generic exception, log it and if the user is on a weather page,
+    show something to the user in a dialog box.
+    """
     @wraps(f)
     def wrapper(*args, **kwds):
         try:
@@ -42,25 +48,12 @@ def xbmcbusy(f):
     @wraps(f)
     def wrapper(*args, **kwds):
         if xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID or xbmcgui.getCurrentWindowId() == ADDON_BROWSER_WINDOW_ID:
-            xbmc.executebuiltin("ActivateWindow(busydialog)")
+            xbmc.executebuiltin("ActivateWindow(busydialognocancel)")
         try:
             return f(*args, **kwds)
         finally:
-            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            xbmc.executebuiltin("Dialog.Close(busydialognocancel)")
     return wrapper
-
-
-def panelbusy(pane):
-    def decorate(f):
-        @wraps(f)
-        def wrapper(*args, **kwargs):
-            WINDOW.setProperty('{0}.IsBusy'.format(pane), 'true')  # @UndefinedVariable
-            try:
-                return f(*args, **kwargs)
-            finally:
-                WINDOW.clearProperty('{0}.IsBusy'.format(pane))  # @UndefinedVariable
-        return wrapper
-    return decorate
 
 
 def f_or_nla(f):
@@ -158,7 +151,7 @@ def gettext(s):
                     "No locations found containing": 32010,
                     "Matching Sites": 32011}
     try:
-        translation = ADDON.getLocalizedString(translatable[s])  # @UndefinedVariable
+        translation = ADDON.getLocalizedString(translatable[s])
         if not translation:
             raise TranslationError
         else:
