@@ -143,7 +143,6 @@ class AmbiGroup(lightgroup.LightGroup):
                 if "201" in exc.type_id:  # 201 Param not modifiable because light is off error. 901: internal hue bridge error.
                     pass
                 else:
-                    xbmc.log(f"[script.service.hue] resumeLightState: Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
                     reporting.process_exception(exc)
 
     def _ambi_loop(self):
@@ -356,9 +355,9 @@ class AmbiGroup(lightgroup.LightGroup):
         for L in lights:
             try:
                 states[L] = (bridge.lights[L]())
-            except QhueException as exc:
-                xbmc.log(f"[script.service.hue] Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
             except requests.RequestException as exc:
                 xbmc.log(f"[script.service.hue] Requests exception: {exc}")
                 notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+            except Exception as exc:
+                reporting.process_exception(exc)
         return states

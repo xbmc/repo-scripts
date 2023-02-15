@@ -35,7 +35,7 @@ _strings['scene name:'] = 32510
 _strings['scene id'] = 32511
 _strings['select...'] = 32512
 _strings['bridge'] = 30500
-_strings['discover hue bridge'] = 30501
+_strings['discover hue bridge / enter ip'] = 30501
 _strings['bridge ip'] = 30502
 _strings['bridge user'] = 30503
 _strings['enable schedule (24h format)'] = 30505
@@ -157,3 +157,5 @@ _strings['bridge not found automatically. please make sure your bridge is up to 
 _strings['connecting...'] = 30009
 _strings['are you sure you want to delete this scene:'] = 30027
 _strings['bridge outdated. please update your bridge.'] = 30019
+_strings['error: scene or light not found, it may have changed or been deleted. check your configuration.'] = 30003
+_strings['reconnected'] = 30033

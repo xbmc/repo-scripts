@@ -8,7 +8,8 @@ import time
 from collections import deque
 from threading import Event
 
-import simplecache
+
+
 import xbmc
 import xbmcaddon
 import xbmcvfs
@@ -27,8 +28,6 @@ ADDONID = ADDON.getAddonInfo('id')
 ADDONPATH = xbmcvfs.translatePath(ADDON.getAddonInfo("path"))
 ADDONVERSION = ADDON.getAddonInfo('version')
 KODIVERSION = xbmc.getInfoLabel('System.BuildVersion')
-
-CACHE = simplecache.SimpleCache()
 
 
 def timer(func):
