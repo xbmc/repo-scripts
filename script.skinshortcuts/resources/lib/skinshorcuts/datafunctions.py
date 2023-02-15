@@ -274,7 +274,7 @@ class DataFunctions:
             # If icon and thumbnail are in the additional properties,
             # overwrite anything in the .DATA.xml file
             # and remove them from the additional properties
-            for additional_property in additional_properties:
+            for additional_property in additional_properties.copy():
                 if additional_property[0] == "icon":
                     node.find("icon").text = additional_property[1]
                     additional_properties.remove(additional_property)
@@ -283,7 +283,7 @@ class DataFunctions:
             if node.find("thumb") is None:
                 ETree.SubElement(node, "thumb").text = ""
 
-            for additional_property in additional_properties:
+            for additional_property in additional_properties.copy():
                 if additional_property[0] == "thumb":
                     node.find("thumb").text = additional_property[1]
                     additional_properties.remove(additional_property)
