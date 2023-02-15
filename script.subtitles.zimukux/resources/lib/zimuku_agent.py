@@ -32,7 +32,7 @@ class Zimuku_Agent:
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
         self.INIT_PAGE = base_url + '/?security_verify_data=313932302c31303830'
-        #self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
+        # self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
         self.TOKEN_PARAM = 'security_verify_data=313932302c31303830'
         self.ZIMUKU_API = '%s/search?q=%%s' % base_url
         self.DOWNLOAD_LOCATION = dl_location
@@ -84,8 +84,8 @@ class Zimuku_Agent:
             a = requests.adapters.HTTPAdapter(max_retries=3)
             s.mount('http://', a)
 
-            #url += '&' if '?' in url else '?'
-            #url += 'security_verify_data=313932302c31303830'
+            # url += '&' if '?' in url else '?'
+            # url += 'security_verify_data=313932302c31303830'
 
             self.logger.log(sys._getframe().f_code.co_name,
                             'requests GET [%s]' % (url), level=3)
@@ -211,7 +211,7 @@ class Zimuku_Agent:
                             (Exception, e), level=3)
             return ''
 
-    def search(self, title, item):
+    def search(self, title, items):
         """
         搜索字幕
 
@@ -231,7 +231,7 @@ class Zimuku_Agent:
         """
         subtitle_list = []
 
-        #vertoken = self.get_vertoken()
+        # vertoken = self.get_vertoken()
 
         get_cookie_url = '%s&%s' % (self.ZIMUKU_API %
                                     (urllib.parse.quote(title)), self.TOKEN_PARAM)
@@ -244,15 +244,15 @@ class Zimuku_Agent:
             # 真正的搜索
             self.logger.log(sys._getframe().f_code.co_name,
                             "Search API url: %s" % (url))
-            headers, data = self.get_page(url)
+            _, data = self.get_page(url)
             soup = BeautifulSoup(data, 'html.parser')
         except Exception as e:
             self.logger.log(sys._getframe().f_code.co_name, 'ERROR SEARCHING, E=(%s: %s)' %
                             (Exception, e), level=3)
             return []
 
-        s_e = 'S%02dE%02d' % (int(item['season']), int(item['episode'])
-                              ) if item['season'] != '' and item['episode'] != '' else 'N/A'
+        s_e = 'S%02dE%02d' % (int(items['season']), int(items['episode'])
+                              ) if items['season'] != '' and items['episode'] != '' else 'N/A'
         if s_e != 'N/A':
             # 1. 从搜索结果中看看是否能直接找到
             sub_list = soup.find_all('tr')
@@ -265,11 +265,11 @@ class Zimuku_Agent:
                     # break  还是全列出来吧
 
         if len(subtitle_list) != 0:
-            return subtitle_list
+            return self.double_filter(subtitle_list, items)
 
         # 2. 直接找不到，看是否存在同一季的链接，进去找
         season_name_chn = ('一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四', '十五')[
-            int(item['season']) - 1] if s_e != 'N/A' else 'N/A'
+            int(items['season']) - 1] if s_e != 'N/A' else 'N/A'
         season_list = soup.find_all("div", class_="item prel clearfix")
 
         page_list = soup.find('div', class_='pagination')
@@ -309,7 +309,8 @@ class Zimuku_Agent:
                     sub_name = sub.a.text
                     if s_e in sub_name.upper():
                         subtitle_list.append(self.extract_sub_info(sub, 2))
-                return subtitle_list    # 如果匹配到了季，那就得返回了，没有就是没有
+                # 如果匹配到了季，那就得返回了，没有就是没有
+                return self.double_filter(subtitle_list, items)
 
         # 精确查找没找到，那就返回所有
         subtitle_list = []
@@ -330,7 +331,18 @@ class Zimuku_Agent:
             for sub in reversed(subs):
                 subtitle_list.append(self.extract_sub_info(sub, 2))
 
-        return subtitle_list
+        return self.double_filter(subtitle_list, items)
+
+    def double_filter(self, subtitle_list, items):
+        # 适用当前集数再次过滤字幕
+        try:
+            episode = int(items['episode'])
+            es = 'E%02d' % episode
+            filtered = [
+                s for s in subtitle_list if es in s['filename'].upper()]
+            return filtered if len(filtered) > 0 else subtitle_list
+        except:
+            return subtitle_list
 
     def find_in_list(self, lst, include, *kws):
         """
@@ -362,19 +374,20 @@ class Zimuku_Agent:
                 new_lst.append(e)
         return new_lst
 
-    def get_preferred_subs(self, sub_name_list, sub_file_list):
+    def get_preferred_subs(self, sub_name_list, short_sub_name_list, sub_file_list):
         """
         根据插件的参数找出偏好的字幕
 
         Params:
-            sub_name_list    文件名
-            sub_file_list    对应的文件绝对路径
+            sub_name_list       文件名
+            short_sub_name_list 短文件名
+            sub_file_list       对应的文件绝对路径
 
         Return:
-            [], []  返回筛选列表。如果筛选结果是空，意味着没有匹配上任意一条，那就返回传进来的列表；也可能不止一条，比如只指定了 srt 然后有不止一条
+            [], [], []  返回筛选列表。如果筛选结果是空，意味着没有匹配上任意一条，那就返回传进来的列表；也可能不止一条，比如只指定了 srt 然后有不止一条
         """
         if len(sub_name_list) <= 1:
-            return sub_name_list, sub_file_list
+            return sub_name_list, short_sub_name_list, sub_file_list
         else:
             tpe = self.plugin_settings['subtype']
             lang = self.plugin_settings['sublang']
@@ -384,7 +397,7 @@ class Zimuku_Agent:
                             level=1)
 
             if tpe == 'none ' and lang == 'none':
-                return sub_name_list, sub_file_list
+                return sub_name_list, short_sub_name_list, sub_file_list
             filtered_name_list = sub_name_list
             if tpe != 'none':
                 filtered_name_list = self.find_in_list(
@@ -414,11 +427,11 @@ class Zimuku_Agent:
                 self.logger.log(sys._getframe().f_code.co_name, "筛完语言：%s" %
                                 filtered_name_list, level=1)
             if len(filtered_name_list) == 0:
-                return sub_name_list, sub_file_list
+                return sub_name_list, short_sub_name_list, sub_file_list
 
             # 把原先的路径找回来
             indices = [sub_name_list.index(x) for x in filtered_name_list]
-            return filtered_name_list, [sub_file_list[x] for x in indices]
+            return filtered_name_list, [short_sub_name_list[x] for x in indices], [sub_file_list[x] for x in indices]
 
     def download(self, url):
         """
@@ -428,7 +441,11 @@ class Zimuku_Agent:
             url    字幕详情页面，如 http://zimuku.org/detail/155262.html
 
         Return:
-            [], []  返回两个列表，第一个为文件名（用于不止一个时在 Kodi 界面上让用户选择），第二个为完整路径（用户送给播放器使用）
+            [], [], []  返回 3 个列表
+            第一个为文件名（用于不止一个时在 Kodi 界面上让用户选择）
+            第二个是极短文件名（通过参数 cutsubfn 控制，避免文件名过长滚动）
+                短文件名本来在 sub_provider_service 做更合适（PR 也是这么提的），但问题是那样不好写 testcase，所以先放这里
+            第三个为完整路径（用户送给播放器使用）
         """
         exts = (".srt", ".sub", ".smi", ".ssa", ".ass", ".sup")
         supported_archive_exts = (".zip", ".7z", ".tar", ".bz2", ".rar",
@@ -451,22 +468,25 @@ class Zimuku_Agent:
         except:
             self.logger.log(sys._getframe().f_code.co_name, "Error (%d) [%s]" % (
                 sys.exc_info()[2].tb_lineno, sys.exc_info()[1]), level=3)
-            return [], []
+            return [], [], []
 
         filename, data = self.download_links(links, url)
         if filename == '':
             # No file received.
-            return [], []
+            return [], [], []
+
+        # 小写扩展名
+        dot = filename.rfind(".")
+        if dot != -1:
+            filename = filename[:dot] + filename[dot:].lower()
 
         rtn_list = []
         if filename.endswith(exts):
             full_path = self.store_file(filename, data)
             fn = self.fix_garbled_filename(os.path.basename(full_path))
-            return [fn], [full_path]
+            return [fn], [fn], [full_path]
         elif filename.endswith(supported_archive_exts):
             full_path = self.store_file(filename, data)
-            # libarchive requires the access to the file, so sleep a while to ensure the file.
-            time.sleep(0.5)
             archive_path, sub_name_list = self.unpacker.unpack(full_path)
 
             # 返回的文件名不能做乱码修正，不然找不到……
@@ -475,12 +495,25 @@ class Zimuku_Agent:
             sub_name_list = [self.fix_garbled_filename(
                 x) for x in sub_name_list]
 
-            return sub_name_list, sub_file_list
+            if len(sub_name_list) > 1:
+                # 不显示相同的前缀，防止文件名过长滚动
+                shortest_fn = min(sub_name_list, key=len)
+                diff_index = next(filter(
+                    lambda i: any(s[i] != shortest_fn[i]
+                                  for s in sub_name_list),
+                    range(len(shortest_fn))
+                ))
+                dot = shortest_fn[:diff_index].rfind('.') + 1
+                short_sub_name_list = [s[dot:] for s in sub_name_list]
+
+                return sub_name_list, short_sub_name_list, sub_file_list
+            else:
+                return sub_name_list, sub_name_list, sub_file_list
         else:
             self.logger.log(sys._getframe().f_code.co_name, "UNSUPPORTED FILE: % s" %
                             (filename), level=2)
             # xbmc.executebuiltin(('XBMC.Notification("zimuku","不支持的压缩格式，请选择其他字幕文件。")'), True)
-            return [], []
+            return [], [], []
 
     def fix_garbled_filename(self, fn):
         # hack to fix encoding problem of zip file
@@ -512,8 +545,8 @@ class Zimuku_Agent:
             ts, os.path.splitext(filename)[1])).replace('\\', '/')
         with open(tempfile, "wb") as sub_file:
             sub_file.write(data)
-            # May require close file explicitly to ensure the file.
-            sub_file.close()
+            sub_file.flush()
+            os.fsync(sub_file.fileno())
         return tempfile.replace('\\', '/')
 
     def download_links(self, links, referer):

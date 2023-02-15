@@ -48,7 +48,8 @@ sys.path.append(__resource__)
 
 class Logger:
     def log(self, module, msg, level=xbmc.LOGDEBUG):
-        xbmc.log("{0}::{1} - {2}".format(__scriptname__, module, msg), level=level)
+        xbmc.log("{0}::{1} - {2}".format(__scriptname__,
+                 module, msg), level=level)
 
 
 class Unpacker:
@@ -56,21 +57,24 @@ class Unpacker:
         return zimuku_archive.unpack(path)
 
 
-def Search(item):
-    if item['mansearch']:
-        search_str = item['mansearchstr']
-    elif item['tvshow'] != '':
-        search_str = item['tvshow']
+def Search(items):
+    user_year = __addon__.getSetting("useyear")
+    search_suffix = ' '+items['year'] if user_year == 'true' else ''
+    if items['mansearch']:
+        search_str = items['mansearchstr']
+    elif items['tvshow'] != '':
+        search_str = items['tvshow']+search_suffix
     else:
-        search_str = item['title']
+        search_str = items['title']+search_suffix
     logger.log(sys._getframe().f_code.co_name, "Search for [%s], item: %s" %
-               (os.path.basename(item['file_original_path']), item), level=xbmc.LOGINFO)
+               (os.path.basename(items['file_original_path']), items), level=xbmc.LOGINFO)
 
-    subtitle_list = agent.search(search_str, item)
+    subtitle_list = agent.search(search_str, items)
 
     if len(subtitle_list) != 0:
         for s in subtitle_list:
-            listitem = xbmcgui.ListItem(label=s["language_name"], label2=s["filename"])
+            listitem = xbmcgui.ListItem(
+                label=s["language_name"], label2=s["filename"])
             listitem.setArt({
                 'icon': s["rating"],
                 'thumb': s["language_flag"]
@@ -78,15 +82,20 @@ def Search(item):
             listitem.setProperty("sync", "false")
             listitem.setProperty("hearing_imp", "false")
 
-            url = "plugin://%s/?action=download&link=%s" % (__scriptid__, s["link"])
+            url = "plugin://%s/?action=download&link=%s" % (
+                __scriptid__, s["link"])
             xbmcplugin.addDirectoryItem(
                 handle=int(sys.argv[1]),
                 url=url, listitem=listitem, isFolder=False)
     else:
-        logger.log(sys._getframe().f_code.co_name, "字幕未找到，参数：%s" % item, level=xbmc.LOGINFO)
+        logger.log(sys._getframe().f_code.co_name, "字幕未找到，参数：%s" %
+                   items, level=xbmc.LOGINFO)
 
 
 def Download(url):
+    """
+    调用 agent 的下载功能，用户在 UI 选定之后传回给 Kodi
+    """
     if not xbmcvfs.exists(__temp__.replace('\\', '/')):
         xbmcvfs.mkdirs(__temp__)
     dirs, files = xbmcvfs.listdir(__temp__)
@@ -95,22 +104,26 @@ def Download(url):
 
     logger.log(sys._getframe().f_code.co_name, "Download page: %s" % (url))
 
-    l1, l2 = agent.download(url)
-    logger.log(sys._getframe().f_code.co_name, "%s; %s" % (l1, l2))
-    sub_name_list, sub_file_list = agent.get_preferred_subs(l1, l2)
+    l1, l2, l3 = agent.download(url)
+    logger.log(sys._getframe().f_code.co_name, "%s; %s; %s" % (l1, l2, l3))
+    sub_name_list, short_sub_name_list, sub_file_list = agent.get_preferred_subs(
+        l1, l2, l3)
 
     if len(sub_name_list) == 0:
-        #FIXME: 不应该有这问题
+        # FIXME: 不应该有这问题
         return []
     if len(sub_name_list) == 1:
         selected_sub = sub_file_list[0]
     else:
-        sel = xbmcgui.Dialog().select('请选择压缩包中的字幕', sub_name_list)
+        cut_fn = __addon__.getSetting("cutsubfn")
+        sel = xbmcgui.Dialog().select('请选择压缩包中的字幕', short_sub_name_list if cut_fn ==
+                                      'true' else sub_name_list)
         if sel == -1:
             sel = 0
         selected_sub = sub_file_list[sel]
 
-    logger.log(sys._getframe().f_code.co_name, "SUB FILE TO USE: %s" % selected_sub)
+    logger.log(sys._getframe().f_code.co_name,
+               "SUB FILE TO USE: %s" % selected_sub)
     return [selected_sub]
 
 
@@ -134,6 +147,10 @@ def get_params():
 
 
 def handle_params(params):
+    """
+    对应界面上的按钮/功能，一个是搜索，一个是下载
+    """
+
     if params['action'] == 'search' or params['action'] == 'manualsearch':
         item = {'temp': False, 'rar': False, 'mansearch': False}
         item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
@@ -152,7 +169,8 @@ def handle_params(params):
             item['mansearchstr'] = params['searchstring']
 
         for lang in urllib.parse.unquote(params['languages']).split(","):
-            item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
+            item['3let_language'].append(
+                xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
         if item['title'] == "":
             # no original title, get just Title
@@ -174,7 +192,8 @@ def handle_params(params):
 
         elif (item['file_original_path'].find("rar://") > -1):
             item['rar'] = True
-            item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
+            item['file_original_path'] = os.path.dirname(
+                item['file_original_path'][6:])
 
         elif (item['file_original_path'].find("stack://") > -1):
             stackPath = item['file_original_path'].split(" , ")
@@ -202,6 +221,11 @@ def run():
     zimuku_base_url = __addon__.getSetting("ZiMuKuUrl")
     tpe = __addon__.getSetting("subtype")
     lang = __addon__.getSetting("sublang")
+
+    if __addon__.getSetting("proxy_follow_kodi") != "true":
+        proxy = ("" if __addon__.getSetting("proxy_use") != "true"
+                 else __addon__.getSetting("proxy_server"))
+        os.environ["HTTP_PROXY"] = os.environ["HTTPS_PROXY"] = proxy
 
     agent = zmkagnt.Zimuku_Agent(zimuku_base_url, __temp__, logger, Unpacker(),
                                  {'subtype': tpe, 'sublang': lang})
