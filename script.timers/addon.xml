@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.4.0" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.5.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -31,24 +31,24 @@
     <description lang="en_GB">A powerful timer addon with the following features
 * Unlimited timer slots. All of them can be quickly set up by using context menu
 * single-click-setup for sleep and doze timers
-* Timers can play any resource that it available in Kodi, e.g. music folders, video files, TV/radio programs, slideshows, ressources from 3rd party plugins, e.g. Zattoo channels.
+* Timers can play any resource that it available in KODI, e.g. music folders, video files, TV/radio programs, slideshows, resources from 3rd party plugins, e.g. Zattoo channels.
 * Timers can be set from TV / Radio EPG, One-click-setup from epg (Quick Timer)
 * Different schedule modes: once, everyday, Mon-Fri, Fri-Sat, Sat-Sun, Sun-Thu, Mon-Thu, specific weekday and many more
 * Date change is supported, e.g. from 23:30 (p.m.) until 1:30 (a.m.)
 * Shuffle, repeat, 2 end modes, i.e. duration or specific time
-* Actions related to media: start media and stop at end, just start media, start media at end, stop media immediately, stop media at end, powerdown system
+* Actions related to media: start media and stop at end, just start media, start media at end, stop media immediately, stop media at end, power down system
 * Linear fading in timer period: fade-in, fade-out, no fading. Min and max volume can be set for each timer
 * Custom label for timer
-* After KODI startup timers, that are in period, start retroactivly although KODI was not running at start time. Fading volume is calculated correctly.
-* Feature in order to prevent that display is turned off if Kodi idles but is not in fullscreen mode
-* MS Windows only: Feature in order to prevent that Windows displays lock screen if Kodi idles
+* After KODI startup timers, that are in period, start retroactively although KODI was not running at start time. Fading volume is calculated correctly.
+* Feature in order to prevent that display is turned off if KODI idles but is not in full screen mode
+* MS Windows only: Feature in order to prevent that Windows displays lock screen if KODI idles
     </description>
     <description lang="de_DE">Timer Addon mit folgenden Funktionen
-* 15 Timer, die eingestellt werden können. Alle Timer können über das Kontextmenü geöffnet werden
-* 2 zusätzliche Timer für "Einschlaf"- und "Schlummer"-Timer mit nur einem Klick 
+* Unbegrenzte Anzahl an Timer, die eingestellt werden können. Alle Timer können über das Kontextmenü geöffnet werden
+* Timer für "Einschlaf"- und "Schlummer"-Timer mit nur einem Klick 
 * Timer können alle Medien starten, die in Kodi sind wie Musik, Video, TV/Radio programme, Diashows, andere Addons, z.B. Zattoo. 
 * Einstellung mit nur einem Klick aus EPG (Quick Timer)
-* Verschiedene Zeitplanungen möglich: einmalig, pro Wochentag, Mo-Fr, Fr-Sa, Sa-So, So-Do, Mo-Do u.v.m.
+* Beliebige Zeitplanungen möglich: einmalig, pro Wochentag, Mo-Fr, Fr-Sa, Sa-So, So-Do, Mo-Do, ...
 * Tageswechsel wird unterstützt, z.B. Timer von 23:30 bis 1:30 am nächsten Tag
 * Dauer kann über Zeitraum oder Zeitpunkt eingestellt werden
 * Aktionen mit Medien: starte Wiedergabe und beende diese nach Ablauf, starte Wiedergabe, starte Wiedergabe bei Ablauf, stoppe Wiedergabe sofort, stoppe Wiedergabe nach Ablauf, fahre System herunter
@@ -65,6 +65,11 @@
     <website>https://github.com/Heckie75/kodi-addon-timers</website>
     <source>https://github.com/Heckie75/kodi-addon-timers</source>
     <news>
+v3.5.0 (2023-02-07)
+- New feature: priority of timers and competitive behavior
+- New feature: System action to put playing device on standby via a CEC peripheral
+- Fixed issue so that favourites can be scheduled again
+
 v3.4.0 (2023-01-10)
 - New feature: Media action in order to pause audio or video, feature request #21
 - Refactoring: moved state to timer object

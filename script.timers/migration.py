@@ -1,7 +1,7 @@
 import xbmc
 import xbmcaddon
-
-from resources.lib.timer import storage
+from resources.lib.timer.concurrency import DEFAULT_PRIO
+from resources.lib.timer.storage import Storage
 from resources.lib.utils.settings_utils import (
     activate_on_settings_changed_events, deactivate_on_settings_changed_events)
 
@@ -189,13 +189,14 @@ def migrate_from_4_to_5(addon: xbmcaddon.Addon) -> int:
         except:
             pass
 
-    storage._save_to_storage(storage=_storage)
+    Storage()._save_to_storage(storage=_storage)
 
     return 5
 
 
 def migrate_from_5_to_6(addon: xbmcaddon.Addon) -> int:
 
+    storage = Storage()
     items = storage._load_from_storage()
     for item in items:
         item["start_offset"] = 0
@@ -205,6 +206,18 @@ def migrate_from_5_to_6(addon: xbmcaddon.Addon) -> int:
     storage._save_to_storage(items)
 
     return 6
+
+
+def migrate_from_6_to_7(addon: xbmcaddon.Addon) -> int:
+
+    storage = Storage()
+    items = storage._load_from_storage()
+    for item in items:
+        item["priority"] = DEFAULT_PRIO
+
+    storage._save_to_storage(items)
+
+    return 7
 
 
 def migrate() -> None:
@@ -229,6 +242,9 @@ def migrate() -> None:
 
     if settingsVersion == 5:
         settingsVersion = migrate_from_5_to_6(addon)
+
+    if settingsVersion == 6:
+        settingsVersion = migrate_from_6_to_7(addon)
 
     addon.setSettingInt("settingsVersion", settingsVersion)
 

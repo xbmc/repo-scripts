@@ -1,6 +1,7 @@
 import xbmcgui
-from resources.lib.contextmenu.abstract_set_timer import (CONFIRM_EDIT,
+from resources.lib.contextmenu.abstract_set_timer import (CONFIRM_CUSTOM,
                                                           AbstractSetTimer)
+from resources.lib.timer.concurrency import ask_overlapping_timers
 from resources.lib.timer.timer import (MEDIA_ACTION_START,
                                        MEDIA_ACTION_START_STOP, Timer)
 from resources.lib.utils.datetime_utils import DEFAULT_TIME
@@ -71,20 +72,16 @@ class SetTimer(AbstractSetTimer):
 
         return timer.system_action, MEDIA_ACTION_START_STOP if timer.duration != DEFAULT_TIME else MEDIA_ACTION_START
 
+    def handle_overlapping_timers(self, timer: Timer, overlapping_timers: 'list[Timer]') -> int:
+
+        return ask_overlapping_timers(timer, overlapping_timers)
+
     def confirm(self, timer: Timer) -> int:
 
-        line1 = timer.label
-        line2 = timer.periods_to_human_readable()
-        line3 = "%s: %s" % (self.addon.getLocalizedString(32070),
-                            self.addon.getLocalizedString(
-                                32072) if timer.duration != DEFAULT_TIME else self.addon.getLocalizedString(32073)
-                            )
-        line4 = "%s: %s" % (self.addon.getLocalizedString(32091),
-                            self.addon.getLocalizedString(32120 + timer.fade))
-
+        msg = "$L\n$H\n%s: $M\n%s: $F\n$O" % (self.addon.getLocalizedString(
+            32070), self.addon.getLocalizedString(32091))
         return xbmcgui.Dialog().yesnocustom(heading=self.addon.getLocalizedString(32107),
-                                            message="\n".join(
-                                                [line1, line2, line3, line4]),
+                                            message=timer.format(msg).strip(),
                                             customlabel=self.addon.getLocalizedString(
                                                 32102),
                                             nolabel=self.addon.getLocalizedString(
@@ -93,7 +90,7 @@ class SetTimer(AbstractSetTimer):
 
     def post_apply(self, timer: Timer, confirm: int) -> None:
 
-        if confirm == CONFIRM_EDIT:
+        if confirm == CONFIRM_CUSTOM:
             load_timer_into_settings(timer)
             self.addon.openSettings()
         else:

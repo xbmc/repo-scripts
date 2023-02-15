@@ -76,6 +76,40 @@
             <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
           </dependencies>
         </setting>
+        <setting id="timer_priority" type="integer" label="32028" help="32336">
+          <level>3</level>
+          <default>0</default>
+          <constraints>
+            <minimum>-10</minimum>
+            <step>1</step>
+            <maximum>12</maximum>
+          </constraints>
+          <control type="slider" format="integer">
+            <popup>false</popup>
+          </control>
+          <dependencies>
+            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_priority_hint" type="string" label="32337" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32337</heading>
+          </control>
+          <enable>false</enable>
+          <dependencies>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_priority" operator="gt">9</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
         <dependencies>
           <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
         </dependencies>
@@ -401,6 +435,7 @@
               <option label="32084">3</option>
               <option label="32085">4</option>
               <option label="32086">5</option>
+              <option label="32093">6</option>
             </options>
           </constraints>
           <control type="spinner" format="string" />
@@ -471,7 +506,7 @@
         </setting>
       </group>
     </category>
-    <category id="c_sleep_timer" label="32004" help="">
+    <category id="c_presets" label="32030" help="">
       <group id="g_sleep_presets" label="32033">
         <setting id="sleep_default_duration" type="time" label="32064" help="32335">
           <level>1</level>
@@ -523,8 +558,6 @@
           <control type="spinner" format="string" />
         </setting>
       </group>
-    </category>
-    <category id="c_snooze_timer" label="32005" help="">
       <group id="g_snooze_presets" label="32038">
         <setting id="snooze_default_duration" type="time" label="32064" help="32335">
           <level>1</level>
@@ -532,6 +565,20 @@
           <control type="button" format="time">
             <heading>32064</heading>
           </control>
+        </setting>
+      </group>
+      <group id="g_quicktimer_presets" label="32180">
+        <setting id="quicktimer_priority" type="integer" label="32028" help="32386">
+          <level>3</level>
+          <default>2</default>
+          <constraints>
+            <options>
+              <option label="32181">0</option>
+              <option label="32182">1</option>
+              <option label="32183">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string" />
         </setting>
       </group>
     </category>

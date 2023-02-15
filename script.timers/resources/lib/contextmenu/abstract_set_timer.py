@@ -6,17 +6,15 @@ import xbmcaddon
 import xbmcgui
 from resources.lib.contextmenu import pvr_utils
 from resources.lib.player.mediatype import VIDEO
-from resources.lib.timer import storage
+from resources.lib.timer.concurrency import determine_overlappings
+from resources.lib.timer.storage import Storage
 from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_NO,
                                        FADE_OFF, MEDIA_ACTION_START_STOP,
                                        SYSTEM_ACTION_NONE, Timer)
 from resources.lib.utils import datetime_utils, vfs_utils
-from resources.lib.utils.settings_utils import trigger_settings_changed_event
-
-CONFIRM_ESCAPE = -1
-CONFIRM_NO = 0
-CONFIRM_YES = 1
-CONFIRM_EDIT = 2
+from resources.lib.utils.settings_utils import (CONFIRM_CUSTOM, CONFIRM_ESCAPE,
+                                                CONFIRM_NO, CONFIRM_YES,
+                                                trigger_settings_changed_event)
 
 
 class AbstractSetTimer:
@@ -24,6 +22,7 @@ class AbstractSetTimer:
     def __init__(self, label: str, path: str, timerid=-1) -> None:
 
         self.addon = xbmcaddon.Addon()
+        self.storage = Storage()
 
         if not self.is_supported(label, path):
             yes = xbmcgui.Dialog().yesno(heading=self.addon.getLocalizedString(
@@ -96,6 +95,15 @@ class AbstractSetTimer:
             timer.vol_min = vol_min
             timer.vol_max = vol_max
 
+        timer.init()
+        overlappings = determine_overlappings(
+            timer, self.storage.load_timers_from_storage(), ignore_high_prio=True)
+        if overlappings:
+            answer = self.handle_overlapping_timers(
+                timer, overlapping_timers=overlappings)
+            if answer in [CONFIRM_ESCAPE, CONFIRM_CUSTOM]:
+                return
+
         confirm = self.confirm(timer)
         if confirm in [CONFIRM_ESCAPE, CONFIRM_NO]:
             return
@@ -128,7 +136,7 @@ class AbstractSetTimer:
 
     def ask_timer(self, timerid: int) -> int:
 
-        return storage.get_next_id()
+        return self.storage.get_next_id()
 
     def ask_days(self, label: str, path: str, is_epg: bool, timer: Timer) -> 'list[int]':
 
@@ -162,6 +170,13 @@ class AbstractSetTimer:
 
         return FADE_OFF, timer.vol_min, timer.vol_max
 
+    def handle_overlapping_timers(self, timer: Timer, overlapping_timers: 'list[Timer]') -> int:
+
+        timer.priority = max(overlapping_timers,
+                             key=lambda t: t.priority).priority + 1
+
+        return CONFIRM_YES
+
     def confirm(self, timer: Timer) -> int:
 
         return CONFIRM_YES
@@ -169,18 +184,14 @@ class AbstractSetTimer:
     def post_apply(self, timer: Timer, confirm: int) -> None:
 
         if confirm == CONFIRM_YES:
-            lines = list()
-            lines.append(timer.periods_to_human_readable())
-            if timer.system_action:
-                lines.append("%s: %s" % (self.addon.getLocalizedString(32081),
-                                         self.addon.getLocalizedString(32081 + timer.system_action)))
-
+            msg = ("$H\n%s: $P" % self.addon.getLocalizedString(
+                32081)) if timer.system_action else "$H"
             xbmcgui.Dialog().notification(heading=timer.label,
-                                          message="\n".join(lines), icon=vfs_utils.get_asset_path("icon.png"))
+                                          message=timer.format(msg), icon=vfs_utils.get_asset_path("icon.png"))
 
     def _get_timer_preselection(self, timerid: int, label: str, path: str) -> 'tuple[Timer,bool]':
 
-        timer = storage.load_timer_from_storage(timerid)
+        timer = self.storage.load_timer_from_storage(timerid)
         if not timer:
             timer = Timer(timerid)
             timer.vol_min = self.addon.getSettingInt("vol_min_default")
@@ -239,5 +250,5 @@ class AbstractSetTimer:
 
     def apply(self, timer: Timer) -> None:
 
-        storage.save_timer(timer=timer)
+        self.storage.save_timer(timer=timer)
         trigger_settings_changed_event()
