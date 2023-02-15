@@ -1,3 +1,7 @@
+## v1.0.5
+
+- Rename World/Etc mix to Global
+
 ## v1.0.4
 
 - Update logos

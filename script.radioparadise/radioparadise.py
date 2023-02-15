@@ -36,9 +36,9 @@ STREAMS = [
     },
     {
         'channel': 3,
-        'title': 'RP World/Etc Mix',
-        'url_aac': 'http://stream.radioparadise.com/world-etc-128',
-        'url_flac': 'http://stream.radioparadise.com/world-etc-flacm',
+        'title': 'RP Global Mix',
+        'url_aac': 'http://stream.radioparadise.com/global-128',
+        'url_flac': 'http://stream.radioparadise.com/global-flacm',
     },
 ]
 STREAM_INFO = {s['url_aac']: s for s in STREAMS}
