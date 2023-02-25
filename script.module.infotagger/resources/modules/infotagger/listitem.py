@@ -157,6 +157,17 @@ class ListItemInfoTag():
             except TypeError:
                 func(_tag_attr['convert'](v))  # Attempt to force conversion to correct type
 
+    def set_resume_point(self, infoproperties: dict, resume_key='ResumeTime', total_key='TotalTime', pop_keys=True):
+        """ Wrapper to get/pop resumetime and totaltime properties for InfoTagVideo.setResumePoint() """
+        getter_func = infoproperties.pop if pop_keys else infoproperties.get
+        resume_time = getter_func(resume_key, None)
+        total_time = getter_func(total_key, None)
+        if resume_time and total_time:
+            self._info_tag.setResumePoint(resume_time, total_time)
+        elif resume_time:
+            self._info_tag.setResumePoint(resume_time)
+        return infoproperties
+
     def set_info_music_dbid(self, dbid: int, infolabels: dict, *args, **kwargs):
         """ Wrapper for InfoTagMusic.setDbId to retrieve mediatype """
         try:
