@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.tubed.api\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: 2016-09-18 00:54+0000\n"
+"PO-Revision-Date: 2023-02-06 23:15+0000\n"
+"Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-module-tubed-api/de_de/>\n"
+"Language: de_de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "A module to access YouTube's Data API"
+msgstr "Ein Modul für den Zugriff auf die YouTube-Daten-API"
+
+msgctxt "Addon Description"
+msgid "The Tubed API module provides a convenient way to access YouTube's Data API in Kodi 19+"
+msgstr "Das Tubed-API-Modul stellt eine komfortable Möglichkeit zum Zugriff auf die YouTube-Daten-API in Kodi 19+ zur Verfügung"
+
+msgctxt "#30000"
+msgid "MPEG-DASH HTTPD"
+msgstr "MPEG-DASH HTTPD"
+
+msgctxt "#30001"
+msgid "Configure the HTTP server that MPEG-DASH manifests are hosted from"
+msgstr "HTTP-Server konfigurieren, über den MPEG-DASH-Manifeste bereitgestellt werden"
+
+msgctxt "#30002"
+msgid "Port"
+msgstr "Port"
+
+msgctxt "#30003"
+msgid "Configure the HTTP server port that MPEG-DASH manifests are hosted from"
+msgstr "Port des HTTP-Servers konfigurieren, über den MPEG-DASH-Manifeste bereitgestellt werden"
+
+msgctxt "#30004"
+msgid "Debug"
+msgstr "Fehlersuche"
+
+msgctxt "#30005"
+msgid "Component Logging"
+msgstr "Komponentenprotokollierung"
+
+msgctxt "#30006"
+msgid "Manifest generator"
+msgstr "Manifest-Generator"
+
+msgctxt "#30007"
+msgid "Enable logging of more detailed information from the manifest generator"
+msgstr "Protokollieren detaillierterer Informationen für den Manifest-Generator aktivieren"
