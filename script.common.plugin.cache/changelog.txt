@@ -1,0 +1,75 @@
+Version 2.6.2
+[fix] use xbmcvfs.translatePath when available, xbmc.translatePath deprecated(Matrix) and removed(Nexus) |contrib: Gujal00|
+
+[B]Version 2.6.1[/B]
+[fix] shutdown taking longer than 5 seconds
+[fix] ignore encoding issues for socket data
+
+[B]Version 2.6.0[/B]
+- Kodi 19 / Python 3 ready
+- convert strings.xml to strings.po
+- use new language paths ie. ../resource.language.en_gb
+- refactor
+- housekeeping
+- replace icon to resolve transparency issue
+
+[B]Version 2.5.10[/B]
+- Fix self usage in non instance methods
+
+[B]Version 2.5.9[/B]
+- Fix plugin loading on windows uwp
+- Replace print with xbmc.log
+- Replace except Exception , e with except Exception as e (python3)
+- Replace iterkeys with keys (python3)
+
+[B]Version 2.5.8[/B]
+- Fix plugin loading on windows
+
+[B]Version 2.5.7[/B]
+- fixed platform check
+
+[B]Version 2.5.6[/B]
+- fixed common cache not starting on ios/tvos when socket path is to long by using AF_INET instead of AF_POSIX
+
+[B]Version 2.5.5[/B]
+- Fix ascii error with non UTF-8 characters on print statement
+
+[B]Version 1.5.2[/B]
+- Fixed: Dharma error with sqlite. [mswiege]
+- User selectable port on windows
+- Notification of port/socket collision.
+
+[B]Version 1.5.1[/B]
+- Fixed: Move position of socket and database file back
+
+[B]Version 1.5.0[/B]
+- Changed: Move position of socket and database file
+
+[B]Version 1.4.0[/B]
+- Fixed: edge case where unicode input values would cause cache to crash
+- Fixed: Only bind to 127.0.0.1 on windows
+
+[B]Version 1.3.0[/B]
+- Minor fixes
+
+[B]Version 1.2.0[/B]
+- Minor fixes
+
+[B]Version 1.1.0[/B]
+- Minor fixes
+
+[B]Version 1.0.0[/B]
+- Minor fixes
+
+[B]Version 0.9.2[/B]
+- Don't autodetect instancemode
+- Set timeout of instancemode in settings
+
+[B]Version 0.9.1[/B]
+- Update interface
+
+[B]Version 0.9.0[/B]
+- Better stability
+
+[B]Version 0.8.0[/B]
+- Initial public test run.
