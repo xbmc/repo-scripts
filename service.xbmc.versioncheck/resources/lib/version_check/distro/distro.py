@@ -1011,7 +1011,7 @@ class LinuxDistribution(object):
             try:
                 cmd = ('lsb_release', '-a')
                 stdout = subprocess.check_output(cmd, stderr=devnull)
-            except OSError:  # Command not found
+            except (OSError, subprocess.CalledProcessError):  # Command not found
                 return {}
         content = stdout.decode(sys.getfilesystemencoding()).splitlines()
         return self._parse_lsb_release_content(content)
