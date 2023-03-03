@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.26+matrix.1" provider-name="Team Kodi">
+<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.27+matrix.1" provider-name="Team Kodi">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
   <extension point="xbmc.service" library="resources/lib/runner.py"/>
   <extension point="xbmc.addon.metadata">
     <news>
-- add Kodi 20 release
-- Update translations from Weblate
+- Fix crash when lsb_release cannot be executed on linux
         </news>
     <assets>
       <icon>icon.png</icon>
@@ -44,6 +43,7 @@
     <summary lang="it_IT">Kodi Version Check controlla se stai utilizzando l'ultima versione disponibile.</summary>
     <summary lang="ko_KR">Kodi Version Checks는 최신 정식 릴리즈 버전을 사용중인지 검사해줍니다.</summary>
     <summary lang="lt_LT">Kodi Version Check patikrina ar naudojate naujausią versiją.</summary>
+    <summary lang="lv_LV">Kodi versijas pārbaude pārbauda, vai izmantojat jaunāko versiju.</summary>
     <summary lang="nb_NO">Kodi Versjonsettersyn sjekker om du kjører den sist utgitte versjonen.</summary>
     <summary lang="nl_NL">Kodi versie-check controleert of je de laatst beschikbare versie hebt.</summary>
     <summary lang="oc_FR">Kodi Version Check verifica s’executatz la darrièra version sortida.</summary>
@@ -65,7 +65,7 @@
     <description lang="ca_ES">Kodi Version Check només és compatible amb una sèrie de plataformes / distribucions ja que les ultimes versions poden ser diferents entre elles. Per obtenir més informació, visiteu el lloc web kodi.tv.</description>
     <description lang="cs_CZ">Kontrola verze Kodi podporuje pouze několik platforem/distribucí a verze mezi nimi se můžou lišit. Pro více informací navštivte webové stránky kodi.tv.</description>
     <description lang="da_DK">Kodi Version Check kan kun undersøge for opdateringer for visse platforme/udgaver, da udgivelserne kan variere mellem dem. For mere information, besøg kodi.tv.</description>
-    <description lang="de_DE">Kodi Version Check unterstützt nur ausgewählte Plattformen / Distributionen, da sich die jeweiligen Veröffentlichungen unterscheiden können. Mehr Informationen dazu gibt es auf der kodi.tv-Website.</description>
+    <description lang="de_DE">Kodi Version Check unterstützt nur ausgewählte Plattformen/Distributionen, da sich die jeweiligen Veröffentlichungen unterscheiden können. Mehr Informationen dazu gibt es auf der kodi.tv-Website.</description>
     <description lang="el_GR">Ο Έλεγχος Έκδοσης Kodi υποστηρίζει μόνο ορισμένα λειτουργικά συστήματα/διανομές, καθώς οι εκδόσεις διαφέρουν για το καθένα. Για περισσότερες πληροφορίες επισκεφθείτε το kodi.tv</description>
     <description lang="en_GB">Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website.</description>
     <description lang="en_NZ">Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website.</description>
@@ -86,6 +86,7 @@
     <description lang="it_IT">Kodi Version Check supporta solo un certo numero di piattaforme/distribuzioni poiché le versioni potrebbero differire tra loro. Per ulteriori informazioni, visita il sito Web kodi.tv.</description>
     <description lang="ko_KR">Kodi 버전 확인은 릴리스가 다를 수 있으므로 다수 플랫폼/배포판만 지원합니다. 자세한 내용은 kodi.tv 웹사이트를 방문하세요.</description>
     <description lang="lt_LT">Kodi Version Check palaiko tik kelias platformas/distribucijas, nes leidimai tarp jų gali skirtis. Norėdami gauti daugiau informacijos, apsilankykite Kodi.tv puslapyje.</description>
+    <description lang="lv_LV">Kodi versijas pārbaude tiek atbalstīta tikai dažās platformās/distributīvos, un tās var atšķirties viena no otras. Lai iegūtu vairāk informācijas, apmeklējiet kodi.tv vietni.</description>
     <description lang="nb_NO">Kodi Versjonsettersyn støtter kun noen plattformer/distribusjoner fordi utgivelser kan være forskjellige mellom dem. Besøk kodi.tv for mer informasjon.</description>
     <description lang="nl_NL">Kodi versie check ondersteunt alleen een aantal platforms/distro`s omdat uitgaven verschillen tussen hen. Voor meer informatie bezoek de kodi.tv website.</description>
     <description lang="pl_PL">Dodatek Version Check wspiera tylko część platform i dystrybucji. Więcej informacji na stronie kodi.tv.</description>
@@ -127,6 +128,7 @@
     <disclaimer lang="ja_JP">このスクリプトをお使いください。詳しくは kodi.tv を参照してください</disclaimer>
     <disclaimer lang="ko_KR">이 스크립트를 자유롭게 사용하세요. 관련 정보는 kodi.tv를 방문하세요</disclaimer>
     <disclaimer lang="lt_LT">Galite laisvai naudoti šį scenarijų. Apsilankykite kodi.tv, norėdami gauti daugiau informacijos.</disclaimer>
+    <disclaimer lang="lv_LV">Brīvi izmantojiet šo skriptu pēc saviem ieskatiem. Lai iegūtu vairāk informācijas, apmeklējiet kodi.tv vietni</disclaimer>
     <disclaimer lang="nb_NO">Du har fri tillatelse til å benytte dette skriptet. Besøk kodi.tv for informasjon</disclaimer>
     <disclaimer lang="nl_NL">Gebruik dit script vrijblijvend. Voor meer informatie bezoek kodi.tv</disclaimer>
     <disclaimer lang="oc_FR">Siatz liure d’utilizar aqueste script. Per d’informacions consultatz kodi.tv</disclaimer>
