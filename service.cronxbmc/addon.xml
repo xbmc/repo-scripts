@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.cronxbmc"
-    name="Cron For Kodi" version="0.1.6" provider-name="robweber">
+    name="Cron For Kodi" version="0.1.7" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.dateutil" version="2.8.1+matrix.1" />
@@ -20,6 +20,9 @@
     <assets>
     	<icon>resources/images/icon.png</icon>
     </assets>
+    <news>Version 0.1.7
+- fixed bug of deprecated API in Nexus
+    </news>
     <news>Version 0.1.6
 - fixed so it addon imports work properly
 - updated settings to new Kodi format

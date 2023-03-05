@@ -137,8 +137,7 @@ class CronManager:
 
     def _readCronFile(self):
         if(not xbmcvfs.exists(xbmcvfs.translatePath('special://profile/addon_data/service.cronxbmc/'))):
-            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/service.cronxbmc/'))
-
+            xbmcvfs.mkdir(xbmcvfs.translatePath('special://profile/addon_data/service.cronxbmc/'))
         adv_jobs = {}
         try:
             doc = xml.dom.minidom.parse(xbmcvfs.translatePath(self.CRONFILE))
