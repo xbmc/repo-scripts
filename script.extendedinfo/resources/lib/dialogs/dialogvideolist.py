@@ -1,16 +1,16 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
+from __future__ import annotations
+
 import xbmc
 import xbmcgui
 
-from kutils import (ActionHandler, DialogBaseList, addon, busy, confirmdialog,
-                    selectdialog, utils)
-from resources.lib import TheMovieDB as tmdb
-from resources.lib.WindowManager import wm
+from resources.kutil131 import (ActionHandler, DialogBaseList, addon, busy,
+                                confirmdialog, selectdialog, utils)
+from resources.lib import themoviedb as tmdb
+from resources.lib.windowmanager import wm
 
 ID_BUTTON_SORT = 5001
 ID_BUTTON_GENREFILTER = 5002
@@ -22,7 +22,14 @@ ID_BUTTON_KEYWORDFILTER = 5009
 ID_BUTTON_COMPANYFILTER = 5010
 ID_BUTTON_RUNTIMEFILTER = 5011
 ID_BUTTON_VOTECOUNTFILTER = 5012
+ID_BUTTON_LANGUAGEFILTER = 5013
 ID_BUTTON_ACCOUNT = 7000
+
+LANGUAGES = ['en', 'ja', 'ko', 'de', 'es',
+             'ar', 'bn', 'bg', 'zh', 'da', 
+             'nl', 'fr', 'el', 'he', 'hu',
+             'it', 'kn', 'no', 'pl', 'pt',
+             'ru', 'sv', 'tr', 'uk']
 
 ch = ActionHandler()
 
@@ -30,10 +37,10 @@ include_adult: bool = addon.setting("include_adults").lower()
 
 
 def get_window(window_type):
-    """[summary]
+    """Wrapper gets new DialogVideoList instance
 
     Args:
-        window_type (class instance): xbmc XML dialog window or 
+        window_type (class instance): xbmc XML dialog window or
             xbmc XML window objects
 
     Returns:
@@ -41,6 +48,13 @@ def get_window(window_type):
     """
 
     class DialogVideoList(DialogBaseList, window_type):
+        """Dialog Video List class
+
+        Args:
+            DialogBaseList: Super class for dialog windows
+            window_type (kutils.windows class): Super class for Kodi xbmc.WindowXML
+
+        """
 
         TYPES = ["movie", "tv"]
 
@@ -55,7 +69,8 @@ def get_window(window_type):
                    "first_air_date": addon.LANG(20416),
                    "with_runtime": xbmc.getLocalizedString(2050),
                    "primary_release_date": addon.LANG(345),
-                   "vote_count": addon.LANG(32111)}
+                   "vote_count": addon.LANG(32111),
+                   "with_original_language": xbmc.getLocalizedString(308)}
 
         TRANSLATIONS = {"movie": addon.LANG(20338),
                         "tv": addon.LANG(20364),
@@ -89,18 +104,18 @@ def get_window(window_type):
             self.type = kwargs.get('type', "movie")
             self.list_id = kwargs.get("list_id", False)
             self.logged_in = tmdb.Login.check_login()
-            super(DialogVideoList, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         def onClick(self, control_id):
-            super(DialogVideoList, self).onClick(control_id)
+            super().onClick(control_id)
             ch.serve(control_id, self)
 
         def onAction(self, action):
-            super(DialogVideoList, self).onAction(action)
+            super().onAction(action)
             ch.serve_action(action, self.getFocusId(), self)
 
         def update_ui(self):
-            super(DialogVideoList, self).update_ui()
+            super().update_ui()
             self.getControl(ID_BUTTON_CERTFILTER).setVisible(self.type != "tv")
             self.getControl(ID_BUTTON_ACTORFILTER).setVisible(
                 self.type != "tv")
@@ -202,7 +217,7 @@ def get_window(window_type):
                 kwargs["label"] = "< %s" % kwargs["label"]
             if kwargs["key"].endswith(".gte"):
                 kwargs["label"] = "> %s" % kwargs["label"]
-            super(DialogVideoList, self).add_filter(force_overwrite=kwargs["key"].endswith((".gte", ".lte")),
+            super().add_filter(force_overwrite=kwargs["key"].endswith((".gte", ".lte")),
                                                     **kwargs)
 
         @ch.click(ID_BUTTON_ORDER)
@@ -240,11 +255,10 @@ def get_window(window_type):
                 self.reset("favorites")
             else:
                 self.close()
-                dialog = wm.open_video_list(filters=[],
+                wm.open_video_list(filters=[],
                                             mode="list",
                                             list_id=account_lists[index - 2]["id"],
                                             filter_label=account_lists[index - 2]["name"])
-                dialog.doModal()
 
         @ch.click(ID_BUTTON_GENREFILTER)
         def set_genre_filter(self, control_id):
@@ -279,7 +293,8 @@ def get_window(window_type):
                 ret = confirmdialog.open(header=addon.LANG(32151),
                                          text=addon.LANG(32106),
                                          nolabel=addon.LANG(32150),
-                                         yeslabel=addon.LANG(32149))
+                                         yeslabel=addon.LANG(32149),
+                                         path=addon.PATH)
             if ret == -1:
                 return None
             result = xbmcgui.Dialog().input(heading=addon.LANG(32111),
@@ -294,7 +309,8 @@ def get_window(window_type):
             ret = confirmdialog.open(header=addon.LANG(32151),
                                      text=addon.LANG(32106),
                                      nolabel=addon.LANG(32150),
-                                     yeslabel=addon.LANG(32149))
+                                     yeslabel=addon.LANG(32149),
+                                     path=addon.PATH)
             if ret == -1:
                 return None
             result = xbmcgui.Dialog().input(heading=addon.LANG(345),
@@ -312,7 +328,8 @@ def get_window(window_type):
             ret = confirmdialog.open(header=addon.LANG(32151),
                                      text=addon.LANG(32106),
                                      nolabel=addon.LANG(32150),
-                                     yeslabel=addon.LANG(32149))
+                                     yeslabel=addon.LANG(32149),
+                                     path=addon.PATH)
             if ret == -1:
                 return None
             result = xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(2050),
@@ -419,20 +436,30 @@ def get_window(window_type):
                             value=cert,
                             label=cert)
 
+        @ch.click(ID_BUTTON_LANGUAGEFILTER)
+        def set_language_filter(self, control_id):
+            index = xbmcgui.Dialog().select(heading=f'ISO-639-1 {xbmc.getLocalizedString(304)}',
+                                            list=LANGUAGES)
+            if index == -1:
+                return None
+            language = LANGUAGES[index]
+            self.add_filter(key="with_original_language",
+                            value=language,
+                            label=language)
+
         def fetch_data(self, force=False):  # TODO: rewrite
             sort_by = self.sort + "." + self.order
             temp = "tv" if self.type == "tv" else "movies"
-            #utils.log('DialogVideoList fetch_data args: sort_by {} temp {} mode {}'.format(sort_by, temp, self.mode))  #debug
             if self.mode == "search":
                 self.filter_label = addon.LANG(
                     32146) % self.search_str if self.search_str else ""
                 return tmdb.multi_search(search_str=self.search_str,
                                          page=self.page,
                                          cache_days=0 if force else 2)
-            elif self.mode == "list":
+            if self.mode == "list":
                 return tmdb.get_list_movies(list_id=self.list_id,
                                             force=force)
-            elif self.mode == "favorites":
+            if self.mode == "favorites":
                 self.filter_label = addon.LANG(
                     32144) if self.type == "tv" else addon.LANG(32134)
                 return tmdb.get_fav_items(media_type=temp,
@@ -445,14 +472,14 @@ def get_window(window_type):
                                                   sort_by=sort_by,
                                                   page=self.page,
                                                   cache_days=0)
-            else:
+            else:  #self.mode == "filter"
                 self.set_filter_label()
                 params = {"sort_by": sort_by,
                           "language": addon.setting("LanguageID"),
                           "page": self.page,
                           "include_adult": include_adult}
                 filters = {item["type"]: item["id"] for item in self.filters}
-                response = tmdb.get_data(url="discover/%s" % (self.type),
+                response = tmdb.get_data(url=f"discover/{self.type}",
                                          params=utils.merge_dicts(
                                              params, filters),
                                          cache_days=0 if force else 2)

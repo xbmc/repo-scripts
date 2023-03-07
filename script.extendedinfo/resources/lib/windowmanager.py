@@ -1,29 +1,33 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
+# pylint: disable=line-too-long,import-outside-toplevel
+
+"""Module handles all actions to display dialogs
+"""
+
+from __future__ import annotations
+
 import os
 import re
-from typing import Optional
 
 import xbmc
 import xbmcgui
 import xbmcvfs
+from resources.kutil131 import addon, busy, player, windows
 
-from kutils import addon, busy, local_db, player, utils, windows
+from resources.kutil131 import local_db, utils
+from resources.lib import themoviedb as tmdb
 
-from . import TheMovieDB as tmdb
-
-INFO_XML_CLASSIC = 'script-%s-DialogVideoInfo.xml' % (addon.ID)
-LIST_XML_CLASSIC = 'script-%s-VideoList.xml' % (addon.ID)
-ACTOR_XML_CLASSIC = 'script-%s-DialogInfo.xml' % (addon.ID)
+INFO_XML_CLASSIC = f'script-{addon.ID}-DialogVideoInfo.xml'
+LIST_XML_CLASSIC = f'script-{addon.ID}-VideoList.xml'
+ACTOR_XML_CLASSIC = f'script-{addon.ID}-DialogInfo.xml'
 if addon.bool_setting("force_native_layout") and addon.setting("xml_version") != addon.VERSION:
     addon.set_setting("xml_version", addon.VERSION)
-    INFO_XML = 'script-%s-DialogVideoInfo-classic.xml' % (addon.ID)
-    LIST_XML = 'script-%s-VideoList-classic.xml' % (addon.ID)
-    ACTOR_XML = 'script-%s-DialogInfo-classic.xml' % (addon.ID)
+    INFO_XML = f'script-{addon.ID}-DialogVideoInfo-classic.xml'
+    LIST_XML = f'script-{addon.ID}-VideoList-classic.xml'
+    ACTOR_XML = f'script-{addon.ID}-DialogInfo-classic.xml'
     path = os.path.join(addon.PATH, "resources", "skins", "Default", "1080i")
     xbmcvfs.copy(strSource=os.path.join(path, INFO_XML_CLASSIC),
                  strDestination=os.path.join(path, INFO_XML))
@@ -38,6 +42,10 @@ else:
 
 
 class WindowManager:
+    """Class provides all operations to create/manage a Kodi dialog
+    window
+
+    """
     window_stack = []
 
     def __init__(self):
@@ -49,12 +57,12 @@ class WindowManager:
         # self.monitor = SettingsMonitor()
         self.monitor = xbmc.Monitor()
 
-    def open_movie_info(self, movie_id=None, dbid=None, name=None, imdb_id=None):
+    def open_movie_info(self, movie_id:str=None, dbid:str=None, name:str=None, imdb_id:str=None):
         """
-        opens movie info dialog, deal with window stack
+        opens movie video info dialog, deal with window stack
         """
         busy.show_busy()
-        from .dialogs.DialogMovieInfo import DialogMovieInfo
+        from .dialogs.dialogmovieinfo import DialogMovieInfo
         dbid = int(dbid) if dbid and int(dbid) > 0 else None
         if not movie_id:
             movie_id = tmdb.get_movie_tmdb_id(imdb_id=imdb_id,
@@ -73,7 +81,7 @@ class WindowManager:
         """
         busy.show_busy()
         dbid = int(dbid) if dbid and int(dbid) > 0 else None
-        from .dialogs.DialogTVShowInfo import DialogTVShowInfo
+        from .dialogs.dialogtvshowinfo import DialogTVShowInfo
         if tmdb_id:
             pass
         elif tvdb_id:
@@ -97,13 +105,13 @@ class WindowManager:
         busy.hide_busy()
         self.open_infodialog(dialog)
 
-    def open_season_info(self, tvshow_id=None, season: Optional[int] = None, tvshow=None, dbid=None):
+    def open_season_info(self, tvshow_id=None, season: int = None, tvshow=None, dbid=None):
         """
         open season info, deal with window stack
         needs *season AND (*tvshow_id OR *tvshow)
         """
         busy.show_busy()
-        from .dialogs.DialogSeasonInfo import DialogSeasonInfo
+        from .dialogs.dialogseasoninfo import DialogSeasonInfo
         if not tvshow_id:
             params = {"query": tvshow,
                       "language": addon.setting("language")}
@@ -134,7 +142,7 @@ class WindowManager:
         open season info, deal with window stack
         needs (*tvshow_id OR *tvshow) AND *season AND *episode
         """
-        from .dialogs.DialogEpisodeInfo import DialogEpisodeInfo
+        from .dialogs.dialogepisodeinfo import DialogEpisodeInfo
         if not tvshow_id and tvshow:
             tvshow_id = tmdb.search_media(media_name=tvshow,
                                           media_type="tv",
@@ -147,14 +155,14 @@ class WindowManager:
                                    dbid=int(dbid) if dbid and int(dbid) > 0 else None)
         self.open_infodialog(dialog)
 
-    def open_actor_info(self, actor_id: str=None, name: str=None):
+    def open_actor_info(self, actor_id: int=None, name: str=None):
         """opens info dialog window for an actor, deals with window stack
-        A new dialog instance of DialogActorInfo is created and the xml window
-        (DialogInfo.xml) is opened
+        If a tmdb actor_id is passed, it is passed to a new dialog instance of
+        DialogActorInfo class.  If actor name is passed, attempts to get the actor_id.
 
         Args:
             actor_id (str, optional): tmdb actor id. Defaults to None.
-            name (str, optional): a string of name or name[ separator name]. 
+            name (str, optional): a string of name or name [separator name]*.
             if name is a multiple a select dialog is presented to user to
             get a single actor.  If name is provided, attempts to get a tmdb
             for it.  Defaults to None.
@@ -162,21 +170,23 @@ class WindowManager:
         Returns:
             None: if no tmdb actor id could be found
         """
-        from .dialogs.DialogActorInfo import DialogActorInfo
-        if not actor_id:
-            name = name.split(" %s " % addon.LANG(20347))
+        from resources.lib.dialogs.dialogactorinfo import DialogActorInfo
+        if name and not actor_id:  #use name to get person from tmdb for actor_id
+            name = name.split(f" {addon.LANG(20347)} ")
             names = name[0].strip().split(" / ")
             if len(names) > 1:
                 ret = xbmcgui.Dialog().select(heading=addon.LANG(32027),
-                                              list=names)
+                                              list=names) #"Select person"
                 if ret == -1:
                     return None
                 name = names[ret]
             else:
                 name = names[0]
             busy.show_busy()
-            actor_info = tmdb.get_person_info(name)
+            actor_info = tmdb.get_person_info(name) # a dict of info or False
+            # no TMDB info
             if not actor_info:
+                busy.hide_busy()
                 return None
             actor_id = actor_info["id"]
         else:
@@ -193,7 +203,7 @@ class WindowManager:
 
         Args:
             listitems (dict, optional): [description]. Defaults to None.
-            filters ([type], optional): [description]. Defaults to None.
+            filters (list, optional): [description]. Defaults to None.
             mode (str, optional): [description]. Defaults to "filter".
             list_id (bool, optional): [description]. Defaults to False.
             filter_label (str, optional): [description]. Defaults to "".
@@ -201,9 +211,8 @@ class WindowManager:
             media_type (str, optional): [description]. Defaults to "movie".
             search_str (str, optional): [description]. Defaults to "".
         """
-        # utils.log('wm open_video_list listitems: {}'.format(listitems))  #debug
-        from .dialogs import DialogVideoList
-        Browser = DialogVideoList.get_window(windows.DialogXML)
+        from .dialogs import dialogvideolist
+        Browser = dialogvideolist.get_window(windows.DialogXML)
         dialog = Browser(LIST_XML,
                          addon.PATH,
                          listitems=listitems,
@@ -220,22 +229,34 @@ class WindowManager:
         """
         open video list, deal with window stack
         """
-        from .dialogs import DialogYoutubeList
-        YouTube = DialogYoutubeList.get_window(windows.DialogXML)
-        dialog = YouTube('script-%s-YoutubeList.xml' % addon.ID, addon.PATH,
+        from .dialogs import dialogyoutubelist
+        YouTube = dialogyoutubelist.get_window(windows.DialogXML)
+        dialog = YouTube(f'script-{addon.ID}-YoutubeList.xml',
+                         addon.PATH,
                          search_str=search_str,
                          filters=[] if not filters else filters,
                          type=media_type)
         self.open_dialog(dialog)
 
     def open_infodialog(self, dialog):
+        """opens the info dialog
+
+        Args:
+            dialog (DialogActorInfo): a DialogActorinfo instance of a Kodi dialog
+            self.info is a kutils.VideoItem or AudioItem to display in dialog
+        """
         if dialog.info:
             self.open_dialog(dialog)
         else:
             self.active_dialog = None
-            utils.notify(addon.LANG(32143))
+            utils.notify(addon.LANG(32143)) #Could not find item at MovieDB
 
     def open_dialog(self, dialog):
+        """Opens a Kodi dialog managing a stack of dialogs
+
+        Args:
+            dialog (DialogActorInfo): a Kodi xml dialog window
+        """
         if self.active_dialog:
             self.window_stack.append(self.active_dialog)
             self.active_dialog.close()
@@ -273,8 +294,10 @@ class WindowManager:
         xbmc.executebuiltin("RunPlugin(plugin://plugin.video.youtube/play/?video_id=" +
                             youtube_id + "&screensaver=true&incognito=true)")
         if self.active_dialog and self.active_dialog.window_type == "dialog":
-            player.wait_for_video_end()
-            self.active_dialog.doModal()
+            player.wait_for_video_start() #30 sec timeout
+            player.wait_for_video_end() #method returns when video ends
+            if not self.monitor.abortRequested():
+                self.active_dialog.doModal()
 
 
 wm = WindowManager()

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.extendedinfo" name="ExtendedInfo Script" version="6.0.1" provider-name="scott967">
+<addon id="script.extendedinfo" name="ExtendedInfo Script" version="6.0.5" provider-name="scott967">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="resource.images.studios.white" version="0.0.25"/>
-		<import addon="script.module.kutils" version="1.3.0"/>
 		<import addon="script.module.routing" version="0.2.3+matrix.1"/>
+        <import addon="script.module.pil" version="5.1.0"/>
+		<import addon="plugin.program.autocompletion" version="2.1.2"/>
+        <import addon="script.module.autocompletion" version="2.0.3"/>
+        <import addon="script.module.requests" version="2.25.1+matrix.1"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
