@@ -654,6 +654,16 @@ class SRGSSR:
         urn = data['urn']
         self.log(f'build_entry_apiv3: urn = {urn}')
         title = utils.try_get(data, 'title')
+
+        # Add the date & time to the title for upcoming livestreams:
+        if utils.try_get(data, 'type') == 'SCHEDULED_LIVESTREAM':
+            dt = utils.try_get(data, 'date')
+            if dt:
+                dt = utils.parse_datetime(dt)
+            if dt:
+                dts = dt.strftime('(%d.%m.%Y, %H:%M)')
+                title = dts + ' ' + title
+
         media_id = utils.try_get(data, 'id')
         if whitelist_ids is not None and media_id not in whitelist_ids:
             return
