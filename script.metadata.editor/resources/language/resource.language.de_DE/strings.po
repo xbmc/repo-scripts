@@ -125,7 +125,7 @@ msgstr "Als Standard setzen?"
 #: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable .nfo updating for movies, TV shows and music videos"
-msgstr "Aktiviere .nfo Updating für Filme, Serien und Musikvideos"
+msgstr "Aktiviere .nfo Aktualisierung für Filme, Serien und Musikvideos"
 
 #: /resources/lib/editor.py
 msgctxt "#32022"
@@ -155,7 +155,7 @@ msgstr "Hohe Serverlast. Bitte warten."
 #: /resources/settings.xml
 msgctxt "#32027"
 msgid "TV show library is based on informations of"
-msgstr "Serien-Datenbank ist basierend auf Informationen von"
+msgstr "Serien-Datenbank basiert auf Informationen von"
 
 #: /resources/settings.xml
 msgctxt "#32029"
@@ -170,7 +170,7 @@ msgstr "Bewertungs-Updater"
 #: /resources/settings.xml
 msgctxt "#32028"
 msgid "Run updating process in the background"
-msgstr "Führe das Updaten im Hintergrund aus"
+msgstr "Führe die Aktualisierung im Hintergrund aus"
 
 #: /resources/settings.xml
 msgctxt "#32031"
@@ -204,7 +204,7 @@ msgstr ""
 #: /default.py
 msgctxt "#32036"
 msgid "Update TV show ratings"
-msgstr "Aktutalisiere Serienbewertungen"
+msgstr "Aktualisiere Serienbewertungen"
 
 #: /resources/lib/rating_updater.py
 msgctxt "#32033"
@@ -223,7 +223,7 @@ msgstr "Erstelle .nfo Datei, falls diese fehlt"
 #: /default.py
 msgctxt "#32037"
 msgid "Update movie ratings"
-msgstr "Aktutalisiere Filmbewertungen"
+msgstr "Aktualisiere Filmbewertungen"
 
 #: /default.py
 msgctxt "#32038"
@@ -300,7 +300,7 @@ msgctxt "#32052"
 msgid "Fallback to US MPAA if configured country has no certification stored"
 msgstr ""
 "Nutze US MPAA als Fallback, falls keine Zertifizierung der konfigurierten "
-"Region gefunden wurde"
+"Region gefunden wird"
 
 #: /resources/settings.xml
 msgctxt "#32053"
