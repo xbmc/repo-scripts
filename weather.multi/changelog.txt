@@ -1,3 +1,6 @@
+v0.0.18
+- fix yahoo weather again
+
 v0.0.17
 - fix yahoo weather again
 

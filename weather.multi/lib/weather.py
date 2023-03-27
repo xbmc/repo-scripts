@@ -28,6 +28,8 @@ class MAIN():
             self.search_location(mode)
         else:
             location, locationid, locationlat, locationlon = self.get_location(mode)
+            log('location: %s' % (location))
+            log('location id: %s' % (locationid))
             if locationid > 0:
                 ycookie, ycrumb = self.get_ycreds()
                 if not ycookie:
@@ -116,7 +118,8 @@ class MAIN():
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
                 if not match:
                     match = re.search("win.YAHOO.context.crumb = '(.*?)'", response.text, re.IGNORECASE)
-#                    match = re.search('type="hidden" name="crumb" value="(.*?)"', response.text, re.IGNORECASE)
+                if not match:
+                    match = re.search('window.YAHOO.context.*?"crumb": "(.*?)"', response.text, flags=re.DOTALL)
                 ycrumb = codecs.decode(match.group(1), 'unicode-escape')
                 ystamp = time.time()
                 ADDON.setSettingString('ycookie', ycookie)
