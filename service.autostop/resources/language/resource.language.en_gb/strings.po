@@ -104,6 +104,10 @@ msgctxt "#30321"
 msgid "Autostop sleep timer and notification timer cannot be equal.  Notification timer set to 300 seconds. "
 msgstr ""
 
+msgctxt "#30322"
+msgid "Sleep Timer Reset"
+msgstr ""
+
 msgctxt "#30501"
 msgid "Automatically stop paused video or music in minutes.  0 = never automatically stop paused playback."
 msgstr ""
@@ -134,4 +138,8 @@ msgstr ""
 
 msgctxt "#30508"
 msgid "Adds option to stop playback when the sleep timer extension option is set to variable.  Default is disabled."
+msgstr ""
+
+msgctxt "#30509"
+msgid "Enabling resets sleep timer back to 0 after playback stopped by sleep timer.  Default is disabled."
 msgstr ""
