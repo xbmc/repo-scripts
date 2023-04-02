@@ -192,7 +192,7 @@ class UsherQuery(DownloadQuery):
 class OAuthQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
         _headers = deepcopy(headers)
-        super(JsonQuery, self).__init__(_oauth_baseurl, _headers, data, method)
+        super(JsonQuery, self).__init__(_oauthid_baseurl, _headers, data, method)
         self.add_path(path)
 
 
