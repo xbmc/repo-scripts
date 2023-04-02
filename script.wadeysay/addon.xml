@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.wadeysay" name="wadeysay" version="0.0.11" provider-name="iCR8IONS LLC www.icr8ions.com">
+   <requires>
+      <import addon="xbmc.python" version="3.0.0"/>
+      <!--import addon="script.module.web-pdb"/-->
+   </requires>
+   <extension point="xbmc.python.script" library="addon.py">
+      <provides>video executable</provides>
+   </extension>
+   <extension point="xbmc.addon.metadata">
+      <summary lang="en_GB">wadeysay</summary>
+      <description lang="en_GB">What Did They Say?
+This addon will rewind the video and play it with subtitles.  Use it when you could not hear or understand what was just said. How much to rewind and which subtitle is selected is configurable.
+NOTE: use Keymap Editor to map desired input or edit keymap file (fullscreenvideo -> runaddon)</description>
+      <license>GPL-3.0-or-later</license>
+      <platform>all</platform>
+      <forum>https://forum.kodi.tv/showthread.php?tid=372702</forum>
+      <website>https://www.icr8ions.com/creations/wadeysay</website>
+      <email>support@icr8ions.com</email>
+      <!--source>https://github.com/icr8ions/script.wadeysay</source-->
+      <assets>
+         <icon>resources/icon-512x512.png</icon>
+      </assets>
+   </extension>
+</addon>

@@ -1,0 +1,82 @@
+# Kodi Media Center language file
+# Addon Name: wadeysay
+# Addon id: script.wadeysay
+# Addon Provider:
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (https://kodi.weblate.cloud/languages/en_gb/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Configuration"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Time in seconds:"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Rewind time:"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Keep subtitle on longer than rewind time:"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Subtitle selection preferences:"
+msgstr ""
+
+msgctxt "#32006"
+msgid "SDH"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Subtitle forced:"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Subtitle disabled:"
+msgstr ""
+
+msgctxt "#32009"
+msgid "audio language"
+msgstr ""
+
+msgctxt "#32010"
+msgid "forced language"
+msgstr ""
+
+msgctxt "#32011"
+msgid "selected subtitle"
+msgstr ""
+
+msgctxt "#32103"
+msgid "range 0 to 60 seconds - how much to rewind in seconds"
+msgstr ""
+
+msgctxt "#32104"
+msgid "range 0 to 60 seconds - subtitles will stay on for all of rewind time plus this amount in seconds"
+msgstr ""
+
+msgctxt "#32106"
+msgid "on/off - prefer subtitle for deaf and hard of hearing"
+msgstr ""
+
+msgctxt "#32107"
+msgid "options - if forced subtitle is encountered then find subtitle with selected language preference"
+msgstr ""
+
+msgctxt "#32108"
+msgid "options - if subtitle is off then turn on either selected subtitle as long as it is not forced or find subtitle with selected language preference"
+msgstr ""
+
