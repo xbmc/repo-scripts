@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.dropbox"
        name="Dropbox API"
-       version="9.4.0+matrix.1"
+       version="10.3.1"
        provider-name="Dropbox">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.requests" version="2.18.4+matrix.1"/>
-    <import addon="script.module.six" version="1.14.0+matrix.1" />
+    <import addon="script.module.requests" version="2.18.4"/>
+    <import addon="script.module.six" version="1.14.0" />
   </requires>
   <extension point="xbmc.python.module" library="lib" /> <!-- entry to import this in other addons -->
   <extension point="xbmc.addon.metadata">
@@ -18,16 +18,25 @@
     <website>https://www.dropbox.com/developers/documentation/python</website>
     <source>https://github.com/dropbox/dropbox-sdk-python</source>
     <news>
-v9.4.0 (2019-11-26)
-- support for Python 3
-v8.4.2 (2019-08-23)
-- Fix Windows import errors (github.com/robweber)
-- Make qrcode module an optional dependency (github.com/robweber)
-v8.4.1 (2017-11-28)
-- Update to API version 8.4.0
-- Switch strings to po format
-- Add Hebrew (github.com/Eng2Heb)
-- Fix for UI lib issues (github.com/SchapplM)
+v10.3.1 (2020-08-10)
+- remove beta feature comments
+v10.3.0 (2020-07-15)
+- Update Readme
+- Fix error message for non-UTF8 strings
+- Make with_path_root() update existing headers rather than overwrite them
+- Add Close() method to _DropboxTransport to cleanup any network resources
+- Add default timeout to oauth flow finish calls
+v10.2.0 (2020-05-27)
+- support additional properties for Dropbox Teams
+v10.1.0 (2020-04-16)
+- support additional properties for Dropbox Teams
+v10.0.0 (2020-04-16)
+- support for PKCE
+- Added support for short lived access tokens
+- added support for scopes
+- requirements update
+v9.5.0 (2020-04-02)
+- support additional properties for Dropbox Teams
     </news>
   </extension>
 </addon>
