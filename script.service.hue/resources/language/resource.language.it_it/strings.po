@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-05 08:15+0000\n"
+"PO-Revision-Date: 2023-04-01 16:21+0000\n"
 "Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/it_it/>\n"
 "Language: it_it\n"
@@ -22,7 +22,7 @@ msgstr "Automatizza le luci Hue con la riproduzione di Kodi"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr "Automatizza le tue luci Hue con Kodi. Crea scene multi-stanza che vengono eseguite quando riproduci, metti in pausa o interrompi la riproduzione multimediale. Crea ed elimina scene multi-room dalle impostazioni del componente aggiuntivo, quindi seleziona quali applicare per diversi eventi di riproduzione. Può utilizzare gli orari di alba e tramonto di Hue per disabilitare automaticamente il servizio durante il giorno e accendere le luci al tramonto durante la riproduzione. Include il supporto Ambilight."
+msgstr "Automatizza le tue luci Hue con Kodi. Crea scene multi-room che vengono eseguite quando riproduci, metti in pausa o interrompi la riproduzione multimediale. Crea ed elimina scene multi-room dalle impostazioni dell'add-on, quindi seleziona quale applicare per diversi eventi di riproduzione. Può utilizzare gli orari di alba e tramonto di Hue per disattivare automaticamente il servizio durante il giorno e accendere le luci al tramonto durante la riproduzione. Include il supporto Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
@@ -66,7 +66,7 @@ msgstr "Bridge"
 
 msgctxt "#30501"
 msgid "Discover Hue Bridge / Enter IP"
-msgstr "Scopri Hue Bridge / Inserisci IP"
+msgstr "Rileva Bridge Hue / Inserisci IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -90,7 +90,7 @@ msgstr "Ora di fine:"
 
 msgctxt "#30508"
 msgid "Disable during daylight"
-msgstr "Disattiva durante il giorno"
+msgstr "Disabilita durante il giorno"
 
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
@@ -102,7 +102,7 @@ msgstr "Generale"
 
 msgctxt "#30511"
 msgid "Schedule"
-msgstr "Programmazione"
+msgstr "Pianificazione"
 
 msgctxt "#30512"
 msgid "Scenes"
@@ -118,15 +118,15 @@ msgstr "Pausa scena abilitata"
 
 msgctxt "#30515"
 msgid "Stop Scene Enabled"
-msgstr "Interrompi scena abilitato"
+msgstr "Interrompi scena abilitata"
 
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
-msgstr "Disattiva controllo tempo se qualche luce è già accesa"
+msgstr "Disabilita controllo tempo se qualche luce è già accesa"
 
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
-msgstr "Non abilitare scena se una luce è spenta"
+msgstr "Non abilitare scena se qualche luce è spenta"
 
 msgctxt "#30521"
 msgid "[B][I]Warning: Not supported on all hardware[/B][/I]"
@@ -158,7 +158,7 @@ msgstr "Abilitato"
 
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
-msgstr "Premi il pulsante di connessione sul bridge Hue"
+msgstr "Premi il pulsante di connessione sul Bridge Hue"
 
 msgctxt "#9007"
 msgid "Create Scene"
@@ -222,7 +222,7 @@ msgstr "Bridge non configurato"
 
 msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
-msgstr "Controlla la configurazione di Hue Bridge"
+msgstr "Controlla la configurazione del Bridge Hue"
 
 msgctxt "#30025"
 msgid "ERROR: Scene not deleted"
@@ -234,7 +234,7 @@ msgstr "Scena creata"
 
 msgctxt "#30028"
 msgid "Delete Hue Scene"
-msgstr "Elimina Hue Scene"
+msgstr "Elimina scena Hue"
 
 msgctxt "#30030"
 msgid "Enter Scene Name"
@@ -278,7 +278,7 @@ msgstr "Scena eliminata"
 
 msgctxt "#30041"
 msgid "You may now assign your Scene to player actions."
-msgstr "Assegnare scena alle azioni del riproduttore."
+msgstr "Ora puoi assegnare la tua scena alle azioni del lettore."
 
 msgctxt "#30042"
 msgid "Fade Time (Seconds)"
@@ -302,11 +302,11 @@ msgstr "Regola le luci allo stato desiderato nell'app Hue per salvarle come nuov
 
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
-msgstr "Collegamento perso. Controlla le impostazioni. Spegnere"
+msgstr "Collegamento perso. Controlla le impostazioni. Spegnimento in corso"
 
 msgctxt "#30048"
 msgid "Connection lost. Trying again in 2 minutes"
-msgstr "Collegamento perso. Riprova tra 2 minuti"
+msgstr "Connessione persa. Riprova tra 2 minuti"
 
 msgctxt "#30049"
 msgid "Scene Name"
@@ -350,11 +350,11 @@ msgstr "Tempo di transizione Hue (ms)"
 
 msgctxt "#30067"
 msgid "Frame capture size"
-msgstr "Dimensioni acquisizione frame"
+msgstr "Dimensione cattura fotogramma"
 
 msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
-msgstr "Mostra errori di capacità del bridge Hue"
+msgstr "Mostra errori di capienza del Bridge Hue"
 
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
@@ -378,7 +378,7 @@ msgstr "Abilita per altri video (dischi)"
 
 msgctxt "#30805"
 msgid "Enable for live TV"
-msgstr "Abilita per la TV in diretta"
+msgstr "Abilita per la Live TV"
 
 msgctxt "#30809"
 msgid "Saturation"
@@ -394,7 +394,7 @@ msgstr "Luminosità massima"
 
 msgctxt "#30812"
 msgid "Disable connection message"
-msgstr "Disattiva messaggio di connessione"
+msgstr "Disabilita messaggio di connessione"
 
 msgctxt "#30813"
 msgid "Average image processing time:"
@@ -406,7 +406,7 @@ msgstr "All'arresto della riproduzione"
 
 msgctxt "#30815"
 msgid "Resume light state"
-msgstr "Ripristina lo stato luminoso"
+msgstr "Ripristina lo stato della luce"
 
 msgctxt "#30816"
 msgid "Resume transition time (secs.)"
@@ -462,7 +462,7 @@ msgstr "Ok"
 
 msgctxt "#30075"
 msgid "Hue Bridge over capacity"
-msgstr "Hue Bridge oltre la capacità"
+msgstr "Bridge Hue oltre la capienza"
 
 msgctxt "#30076"
 msgid "Network not ready"
@@ -470,7 +470,7 @@ msgstr "Rete non pronta"
 
 msgctxt "#30077"
 msgid "The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."
-msgstr "L'Hue Bridge è al di sopra della capacità. Aumenta la frequenza di aggiornamento o riduci il numero di Ambilight."
+msgstr "Il Bridge Hue è al di sopra della capienza. Aumenta la frequenza di aggiornamento o riduci il numero di Ambilight."
 
 msgctxt "#30078"
 msgid "Bridge not found[CR]Check your bridge and network."
@@ -478,7 +478,7 @@ msgstr "Bridge non trovato[CR]Controlla il tuo bridge e la tua rete."
 
 msgctxt "#30082"
 msgid "Press link button on bridge. Waiting for 90 seconds..."
-msgstr "Premi il pulsante di collegamento sul Bridge. Aspetta 90 secondi..."
+msgstr "Premi il pulsante di collegamento sul bridge. Aspetta 90 secondi..."
 
 msgctxt "#30083"
 msgid "Unknown"
@@ -510,7 +510,7 @@ msgstr "Disattiva Hue Labs durante la riproduzione"
 
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
-msgstr "Hue Bridge V1 (Round) non è supportato. È richiesto Hue Bridge V2 (quadrato)."
+msgstr "Il Bridge Hue V1 (rotondo) non è supportato. È richiesto il Bridge l'Hue V2 (quadrato)."
 
 msgctxt "#30012"
 msgid "Unknown colour gamut for light:"
@@ -542,7 +542,7 @@ msgstr "Bridge non trovato automaticamente. Assicurati che il tuo bridge sia agg
 
 msgctxt "#30009"
 msgid "Connecting..."
-msgstr "Collegamento..."
+msgstr "Connessione in corso..."
 
 msgctxt "#30027"
 msgid "Are you sure you want to delete this scene:"

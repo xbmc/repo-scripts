@@ -14,8 +14,8 @@ import xbmc
 import xbmcgui
 from qhue import QhueException
 
-from resources.lib import ADDON, QHUE_TIMEOUT, reporting
-from resources.lib.kodiutils import notification
+from . import ADDON, QHUE_TIMEOUT, reporting
+from .kodiutils import notification
 from .language import get_string as _
 
 
@@ -147,7 +147,6 @@ class HueConnection(object):
 
                     elif progress_bar.iscanceled():
                         xbmc.log("[script.service.hue] Cancelled 2")
-                        complete = True
                         progress_bar.update(percent=100, message=_("Cancelled"))
                         progress_bar.close()
 
@@ -155,19 +154,17 @@ class HueConnection(object):
                         xbmc.log(f"[script.service.hue] User not created, received: {self.bridge_user}")
                         progress_bar.update(percent=100, message=_("User not found[CR]Check your bridge and network."))
                         self.monitor.waitForAbort(5)
-                        complete = True
                         progress_bar.close()
                         return
                 elif progress_bar.iscanceled():
                     xbmc.log("[script.service.hue] Cancelled 3")
-                    complete = True
+
                     progress_bar.update(percent=100, message=_("Cancelled"))
                     progress_bar.close()
                 else:
                     progress_bar.update(percent=100, message=_("Bridge not found[CR]Check your bridge and network."))
                     xbmc.log("[script.service.hue] Bridge not found, check your bridge and network")
                     self.monitor.waitForAbort(5)
-                    complete = True
                     progress_bar.close()
 
             xbmc.log("[script.service.hue] Cancelled 4")
@@ -193,6 +190,7 @@ class HueConnection(object):
 
     def _discover_nupnp(self):
         xbmc.log("[script.service.hue] In kodiHue discover_nupnp()")
+        req = ""
         try:
             req = requests.get('https://discovery.meethue.com/')
             result = req.json()
@@ -215,7 +213,7 @@ class HueConnection(object):
 
     def _check_bridge_model(self):
         bridge = qhue.Bridge(self.bridge_ip, None, timeout=QHUE_TIMEOUT)
-        model = ""
+        model = ""  # variable is used
 
         try:
             bridge_config = bridge.config()
@@ -236,6 +234,7 @@ class HueConnection(object):
         return None
 
     def _check_version(self):
+        api_version = ""
         b = qhue.Bridge(self.bridge_ip, None, timeout=QHUE_TIMEOUT)
         try:
             api_version = b.config()['apiversion']
@@ -352,6 +351,7 @@ class HueConnection(object):
         scene_name = xbmcgui.Dialog().input(_("Scene Name"))
 
         if scene_name:
+            result = ""
             try:
                 transition_time = int(xbmcgui.Dialog().numeric(0, _("Fade Time (Seconds)"), defaultt="10")) * 10  # yes, default with two ts. *10 to convert secs to msecs
             except ValueError:
@@ -381,6 +381,7 @@ class HueConnection(object):
             xbmcgui.Dialog().ok(_("Error"), _("ERROR: Scene not created"))
 
     def delete_hue_scene(self):
+        result = ""
         xbmc.log("[script.service.hue] In kodiHue deleteHueScene")
         scene = self.select_hue_scene()
         if scene is not None:
@@ -442,6 +443,8 @@ class HueConnection(object):
         return None
 
     def select_hue_scene(self):
+        hue_scenes = ""
+        h_scene_name = ""
         xbmc.log("[script.service.hue] In selectHueScene{}")
 
         try:
