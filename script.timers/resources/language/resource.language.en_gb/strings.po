@@ -129,6 +129,26 @@ msgctxt "#32052"
 msgid "Is %s more important?"
 msgstr ""
 
+msgctxt "#32055"
+msgid "Mediatype"
+msgstr ""
+
+msgctxt "#32056"
+msgid "audio"
+msgstr ""
+
+msgctxt "#32057"
+msgid "video"
+msgstr ""
+
+msgctxt "#32058"
+msgid "picture"
+msgstr ""
+
+msgctxt "#32059"
+msgid "script"
+msgstr ""
+
 msgctxt "#32060"
 msgid "Schedule"
 msgstr ""
@@ -621,6 +641,42 @@ msgctxt "#32273"
 msgid "Skip"
 msgstr ""
 
+msgctxt "#32280"
+msgid "start playback"
+msgstr ""
+
+msgctxt "#32281"
+msgid "stop playback"
+msgstr ""
+
+msgctxt "#32282"
+msgid "pause playback"
+msgstr ""
+
+msgctxt "#32283"
+msgid "continue playback"
+msgstr ""
+
+msgctxt "#32284"
+msgid "start fader"
+msgstr ""
+
+msgctxt "#32285"
+msgid "end fader"
+msgstr ""
+
+msgctxt "#32286"
+msgid "start slideshow"
+msgstr ""
+
+msgctxt "#32287"
+msgid "end slideshow"
+msgstr ""
+
+msgctxt "#32288"
+msgid "run addon"
+msgstr ""
+
 msgctxt "#32300"
 msgid "Opens a dialog where you can enter a duration for pause from now."
 msgstr ""
@@ -682,7 +738,11 @@ msgid "Set value if this timer is more important than other. Higher value means 
 msgstr ""
 
 msgctxt "#32337"
-msgid "This is a high priority timer which overrule new timers."
+msgid "This is a overruling timer with high priority."
+msgstr ""
+
+msgctxt "#32338"
+msgid "This is a obsequiously timer with low priority."
 msgstr ""
 
 msgctxt "#32340"
@@ -751,4 +811,8 @@ msgstr ""
 
 msgctxt "#32386"
 msgid "Determine the strategy for priority of new quicktimers."
+msgstr ""
+
+msgctxt "#32387"
+msgid "Mediatype is normally determined automatically. Set type manually e.g. if resuming doesn't work as expected."
 msgstr ""

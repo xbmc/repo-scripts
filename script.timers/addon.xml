@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.5.0" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.6.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -36,6 +36,7 @@
 * Different schedule modes: once, everyday, Mon-Fri, Fri-Sat, Sat-Sun, Sun-Thu, Mon-Thu, specific weekday and many more
 * Date change is supported, e.g. from 23:30 (p.m.) until 1:30 (a.m.)
 * Shuffle, repeat, 2 end modes, i.e. duration or specific time
+* Smart shuffle mode for slideshows that tries to find folder that fits into timeframe randomly
 * Actions related to media: start media and stop at end, just start media, start media at end, stop media immediately, stop media at end, power down system
 * Linear fading in timer period: fade-in, fade-out, no fading. Min and max volume can be set for each timer
 * Custom label for timer
@@ -65,6 +66,12 @@
     <website>https://github.com/Heckie75/kodi-addon-timers</website>
     <source>https://github.com/Heckie75/kodi-addon-timers</source>
     <news>
+v3.6.0 (2023-04-16)
+- Smart shuffle mode for slideshows (try randomly to find folder that fits into timeframe)
+- Fixed resuming slideshow at right position
+- Fixed resuming of enclosing timers especially combination of concurrent media types like video, audio or slideshow
+- Improved notifications and competitive behavior (introduced extra low priority)
+
 v3.5.0 (2023-02-07)
 - New feature: priority of timers and competitive behavior
 - New feature: System action to put playing device on standby via a CEC peripheral
@@ -84,17 +91,6 @@ v3.3.0 (2022-10-08)
 - Improved scheduler that enables scheduling to the second, reduces CPU load on idle and enables smoother fading
 - Added fields for start and end time in order to schedule to the second (expert only)
 - Fixed Zattoo PVR support and other audio/video addons
-
-v3.2.0 (2022-08-27)
-- Unlimited amount of timers
-- Added feature in order to pause timers for a certain period
-- Set adequate label for playing items instead of internal path
-- Added global configurable offset in order to perform timers ahead of time or later in time
-- Changed context menu 'timers' for EPG
-- Snooze timer can resume playing media and be started from any context menu
-- Changed resume behaviour if there are two parallel ending timers so that non-resuming timer wins and stops media
-- Added dialog in order to abort system action
-- Added help texts for all settings
     </news>
     <assets>
       <icon>resources/assets/icon.png</icon>
