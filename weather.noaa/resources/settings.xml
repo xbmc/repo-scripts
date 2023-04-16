@@ -204,6 +204,21 @@
 						<heading />
 					</control>
 				</setting>
+				<setting id="Location1lastPointsCheck" type="string" help="">
+					<level>3</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
 			</group>
 			<group id="2" label="32112">
 				<setting id="Location2LatLong" type="string" label="32332" help="" parent="">
@@ -391,6 +406,21 @@
 					</control>
 				</setting>
 				<setting id="Location2forecast_url" type="string" help="">
+					<level>3</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location2lastPointsCheck" type="string" help="">
 					<level>3</level>
 					<default />
 					<constraints>
@@ -606,6 +636,21 @@
 						<heading />
 					</control>
 				</setting>
+				<setting id="Location3lastPointsCheck" type="string" help="">
+					<level>3</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
 			</group>
 			<group id="4" label="32114">
 				<setting id="Location4LatLong" type="string" label="32332" help="" parent="">
@@ -807,6 +852,21 @@
 						<heading />
 					</control>
 				</setting>
+				<setting id="Location4lastPointsCheck" type="string" help="">
+					<level>3</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
 			</group>
 			<group id="5" label="32115">
 				<setting id="Location5LatLong" type="string" label="32332" help="" parent="">
@@ -994,6 +1054,21 @@
 					</control>
 				</setting>
 				<setting id="Location5forecast_url" type="string" help="">
+					<level>3</level>
+					<default />
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading />
+					</control>
+				</setting>
+				<setting id="Location5lastPointsCheck" type="string" help="">
 					<level>3</level>
 					<default />
 					<constraints>
