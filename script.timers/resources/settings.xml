@@ -80,7 +80,7 @@
           <level>3</level>
           <default>0</default>
           <constraints>
-            <minimum>-10</minimum>
+            <minimum>-12</minimum>
             <step>1</step>
             <maximum>12</maximum>
           </constraints>
@@ -91,7 +91,7 @@
             <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_priority_hint" type="string" label="32337" help="">
+        <setting id="timer_priority_hint_high" type="string" label="32337" help="">
           <level>0</level>
           <default />
           <constraints>
@@ -106,6 +106,25 @@
               <and>
                 <condition setting="timer_id" operator="!is">-1</condition>
                 <condition setting="timer_priority" operator="gt">9</condition>
+              </and>
+            </dependency>
+          </dependencies>
+        </setting>
+        <setting id="timer_priority_hint_low" type="string" label="32338" help="">
+          <level>0</level>
+          <default />
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32338</heading>
+          </control>
+          <enable>false</enable>
+          <dependencies>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_priority" operator="lt">-9</condition>
               </and>
             </dependency>
           </dependencies>
@@ -274,7 +293,12 @@
           <default>false</default>
           <control type="toggle" />
           <dependencies>
-            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_path" operator="!is"></condition>
+              </and>
+            </dependency>
             <dependency type="enable">
               <and>
                 <condition setting="timer_media_action" operator="gt">0</condition>
@@ -288,7 +312,12 @@
           <default>false</default>
           <control type="toggle" />
           <dependencies>
-            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_path" operator="!is"></condition>
+              </and>
+            </dependency>
             <dependency type="enable">
               <and>
                 <condition setting="timer_media_action" operator="gt">0</condition>
@@ -302,23 +331,39 @@
           <default>false</default>
           <control type="toggle" />
           <dependencies>
-            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_path" operator="!is"></condition>
+              </and>
+            </dependency>
             <dependency type="enable" setting="timer_media_action" operator="is">1</dependency>
           </dependencies>
         </setting>
-        <setting id="timer_path" type="string" label="32080" help="">
-          <level>0</level>
-          <default />
+        <setting id="timer_mediatype" type="string" label="32055" help="32387">
+          <level>3</level>
+          <default>video</default>
           <constraints>
-            <allowempty>true</allowempty>
+            <options>
+              <option label="32056">audio</option>
+              <option label="32057">video</option>
+              <option label="32058">picture</option>
+              <option label="32059">script</option>
+            </options>
           </constraints>
-          <control type="edit" format="string">
-            <heading>32080</heading>
-          </control>
-          <visible>false</visible>
+          <control type="spinner" format="string" />
+          <dependencies>r
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_path" operator="!is"></condition>
+              </and>
+            </dependency>
+            <dependency type="enable" setting="timer_path" operator="!is"></dependency>
+          </dependencies>
         </setting>
-        <setting id="timer_mediatype" type="string" label="32080" help="">
-          <level>0</level>
+        <setting id="timer_path" type="string" label="32080" help="">
+          <level>3</level>
           <default />
           <constraints>
             <allowempty>true</allowempty>
@@ -326,7 +371,15 @@
           <control type="edit" format="string">
             <heading>32080</heading>
           </control>
-          <visible>false</visible>
+          <enable>false</enable>
+          <dependencies>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_path" operator="!is"></condition>
+              </and>
+            </dependency>
+          </dependencies>
         </setting>
         <setting id="timer_hint" type="string" label="32114" help="">
           <level>0</level>
@@ -356,7 +409,12 @@
             <close>true</close>
           </control>
           <dependencies>
-            <dependency type="visible" setting="timer_id" operator="!is">-1</dependency>
+            <dependency type="visible">
+              <and>
+                <condition setting="timer_id" operator="!is">-1</condition>
+                <condition setting="timer_path" operator="!is"></condition>
+              </and>
+            </dependency>
             <dependency type="enable">
               <and>
                 <condition setting="timer_path" operator="!is"></condition>
@@ -634,7 +692,7 @@
         </setting>
         <setting id="settingsVersion" type="integer" label="32256" help="">
           <level>3</level>
-          <default>6</default>
+          <default>7</default>
           <control type="edit" format="integer">
             <heading>32256</heading>
           </control>

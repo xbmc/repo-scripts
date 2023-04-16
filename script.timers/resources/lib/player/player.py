@@ -81,10 +81,18 @@ class Player(xbmc.Player):
             seektime = _get_delay_for_seektime(timer, dtd)
 
         if type == PICTURE:
-            beginSlide = files[(seektime // self._getSlideshowStaytime()) %
+            stayTime = self._getSlideshowStaytime()
+            beginSlide = files[(seektime // stayTime) %
                                len(files)] if seektime else None
+
+            if timer.is_stop_at_end_timer():
+                amountOfSlides = datetime_utils.abs_time_diff(
+                    timer.current_period.end, dtd.td) // stayTime + 1
+            else:
+                amountOfSlides = 0
+
             self._playSlideShow(path=path,
-                                shuffle=timer.shuffle, beginSlide=beginSlide)
+                                shuffle=timer.shuffle, beginSlide=beginSlide, amount=amountOfSlides)
 
         else:
             playlist = self._buildPlaylist(
@@ -114,10 +122,10 @@ class Player(xbmc.Player):
         xbmc.executebuiltin("CECActivateSource")
         self.play(playlist.directUrl or playlist, startpos=startpos)
 
-    def _playSlideShow(self, path: str, beginSlide=None, shuffle=False) -> None:
+    def _playSlideShow(self, path: str, beginSlide=None, shuffle=False, amount=0) -> None:
 
         player_utils.play_slideshow(
-            path=path, beginSlide=beginSlide, shuffle=shuffle)
+            path=path, beginSlide=beginSlide, shuffle=shuffle, amount=amount)
 
     def _isPlaying(self, files, type, repeat=player_utils.REPEAT_OFF) -> bool:
 
@@ -198,7 +206,6 @@ class Player(xbmc.Player):
     def _resumeFormer(self, type: str, keep=False) -> bool:
 
         resuming = False
-
         for _type in player_utils.get_types_replaced_by_type(type):
 
             resumeState = self._getResumeStatus(_type)

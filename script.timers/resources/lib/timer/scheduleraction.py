@@ -129,7 +129,7 @@ class SchedulerAction:
 
                 enclosingTimers = [t for t in self._runningTimers if (t.current_period.start < timerToStop.current_period.start
                                                                       and t.current_period.end > timerToStop.current_period.end)
-                                   and t.media_type in _stopMediatype]
+                                   and t.media_type in _types_replaced_by_type]
 
                 if enclosingTimers and not [t for t in enclosingTimers if timerToStop.priority >= t.priority]:
                     _reset_stop()
@@ -289,27 +289,35 @@ class SchedulerAction:
         def _performPlayerAction(_now: DateTimeDelta) -> None:
 
             if self.timerToPlayAV:
+                _showNotification(self.timerToPlayAV, msg_id=32280)
                 self._player.playTimer(self.timerToPlayAV, _now)
 
             elif self.timerToStopAV:
+                _showNotification(self.timerToStopAV, msg_id=32281)
                 self._player.resumeFormerOrStop(self.timerToStopAV)
 
             elif self.timerToPauseAV and not self._player.isPaused():
+                _showNotification(self.timerToPauseAV, msg_id=32282)
                 self._player.pause()
 
             elif self.timerToUnpauseAV and self._player.isPaused():
+                _showNotification(self.timerToUnpauseAV, msg_id=32283)
                 self._player.pause()
+
+            elif self.fader:
+                _showNotification(self.fader, msg_id=32284)
 
             for type in set(self._forceResumeResetTypes):
                 self._player.resetResumeStatus(type)
 
             if not self.timerToPlayAV or self.timerToPlayAV.media_type != VIDEO:
                 if self.timerToPlaySlideshow:
+                    _showNotification(self.timerToPlaySlideshow, msg_id=32286)
                     self._player.playTimer(self.timerToPlaySlideshow, _now)
 
                 elif self.timerToStopSlideshow:
-                    self._player.resumeFormerOrStop(
-                        self.timerToStopSlideshow)
+                    _showNotification(self.timerToStopSlideshow, msg_id=32287)
+                    self._player.resumeFormerOrStop(self.timerToStopSlideshow)
 
         def _setVolume(dtd: DateTimeDelta) -> None:
 
@@ -320,28 +328,19 @@ class SchedulerAction:
             else:
                 self.fade(dtd)
 
-            return_vols = [
-                t.return_vol for t in self._endingTimers if t.is_fading_timer()]
-            if return_vols:
-                self._player.setVolume(max(return_vols))
+            ending_faders = [
+                t for t in self._endingTimers if t.is_fading_timer()]
+            if ending_faders:
+                self._player.setVolume(
+                    max(ending_faders, key=lambda t: t.return_vol).return_vol)
 
-        def _showNotifications() -> None:
+        def _showNotification(timer: Timer, msg_id: int, icon="icon_timers.png") -> None:
 
-            addon = xbmcaddon.Addon()
-
-            for timer in self._endingTimers:
-
-                if timer.notify and timer.end_type != END_TYPE_NO:
-                    icon = get_asset_path("icon_sleep.png")
-                    xbmcgui.Dialog().notification(addon.getLocalizedString(
-                        32101), timer.label, icon)
-
-            for timer in self._beginningTimers:
-                if timer.notify:
-                    icon = get_asset_path(
-                        "icon_alarm.png" if timer.end_type == END_TYPE_NO else "icon_sleep.png")
-                    xbmcgui.Dialog().notification(addon.getLocalizedString(
-                        32100), timer.label, icon=icon)
+            if timer.notify:
+                addon = xbmcaddon.Addon()
+                icon_path = get_asset_path(icon)
+                xbmcgui.Dialog().notification(
+                    timer.label, addon.getLocalizedString(msg_id), icon_path)
 
         def _consumeSingleRunTimers() -> None:
 
@@ -364,6 +363,7 @@ class SchedulerAction:
         def _runScripts() -> None:
 
             for timer in self.timersToRunScript:
+                _showNotification(timer, msg_id=32288)
                 run_addon(timer.path)
 
         def _performSystemAction() -> None:
@@ -372,21 +372,27 @@ class SchedulerAction:
                 pass
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_SHUTDOWN_KODI:
+                _showNotification(self.timerWithSystemAction, msg_id=32082)
                 xbmc.shutdown()
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_QUIT_KODI:
+                _showNotification(self.timerWithSystemAction, msg_id=32083)
                 xbmc.executebuiltin("Quit()")
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_STANDBY:
+                _showNotification(self.timerWithSystemAction, msg_id=32084)
                 xbmc.executebuiltin("Suspend()")
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_HIBERNATE:
+                _showNotification(self.timerWithSystemAction, msg_id=32085)
                 xbmc.executebuiltin("Hibernate()")
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_POWEROFF:
+                _showNotification(self.timerWithSystemAction, msg_id=32086)
                 xbmc.executebuiltin("Powerdown()")
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_CEC_STANDBY:
+                _showNotification(self.timerWithSystemAction, msg_id=32093)
                 xbmc.executebuiltin("CECStandby()")
 
         def _adjustState() -> None:
@@ -404,7 +410,6 @@ class SchedulerAction:
 
         if self.hasEventToPerform:
             _runScripts()
-            _showNotifications()
             _consumeSingleRunTimers()
             _performSystemAction()
             _adjustState()
