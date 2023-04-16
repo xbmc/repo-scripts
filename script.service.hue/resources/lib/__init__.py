@@ -8,8 +8,6 @@ import time
 from collections import deque
 from threading import Event
 
-
-
 import xbmc
 import xbmcaddon
 import xbmcvfs
@@ -41,4 +39,5 @@ def timer(func):
         run_time = end_time - start_time  # 3
         PROCESS_TIMES.append(run_time)
         return value
+
     return wrapper_timer

@@ -10,8 +10,8 @@ from json import JSONDecodeError
 import xbmc
 import xbmcgui
 
-from resources.lib import ADDON, ADDONID
-from resources.lib.language import get_string as _
+from . import ADDON, ADDONID
+from .language import get_string as _
 
 cache_window = xbmcgui.Window(10000)
 
@@ -63,7 +63,7 @@ def cache_get(key: str):
         return data
     except JSONDecodeError:
         # Occurs when Cache is empty or unreadable (Eg. Old SimpleCache data still in memory because Kodi hasn't restarted)
-        #xbmc.log(f"[script.service.hue] cache_get JSONDecodeError: {key}: {data_str}")
+        # xbmc.log(f"[script.service.hue] cache_get JSONDecodeError: {key}: {data_str}")
         return None
 
 

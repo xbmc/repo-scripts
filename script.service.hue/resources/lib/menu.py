@@ -4,7 +4,6 @@
 #      See LICENSE.TXT for more information.
 
 import sys
-from datetime import timedelta
 from urllib.parse import parse_qs
 
 import xbmc
@@ -12,9 +11,8 @@ import xbmcplugin
 import xbmcvfs
 from xbmcgui import ListItem
 
-import resources.lib.kodiutils
-from resources.lib import ADDON, ADDONID, ADDONPATH
-from resources.lib.kodiutils import cache_set, cache_get
+from . import ADDON, ADDONID, ADDONPATH
+from .kodiutils import cache_set, cache_get
 from .language import get_string as _
 
 
