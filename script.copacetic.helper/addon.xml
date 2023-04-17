@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="script.copacetic.helper" name="Copacetic Helper" version="1.0.0" provider-name="realcopacetic">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.pil" version="5.1.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="plugin.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.python.script" library="script.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Extend the power of Copacetic</summary>
+    <description lang="en">Helper script for the skin Copacetic.</description>
+    <language>en</language>
+    <platform>all</platform>
+    <license>Creative Commons Attribution Non-Commercial Share-Alike 4.0</license>
+    <email></email>
+    <forum></forum>
+    <source></source>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
