@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: utf-8
 # author: realcopacetic, sualfred
 
 import sys
@@ -25,7 +23,7 @@ class PluginListing(object):
         self.list_widgets()
 
     def list_widgets(self):
-        for category, widgets in LISTING.items():
+        for category, widgets in list(LISTING.items()):
             for item in widgets:
                 url = self._encode_url(info=item.get('info'), type=category)
                 self.plugin_category = item['name']

@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: utf-8
 # author: realcopacetic
 
 import hashlib
@@ -43,7 +41,7 @@ class ImageEditor():
         # lookup urls in table or run _crop_image() and write values to table
         lookup_tree = ET.parse(self.lookup)
         root = lookup_tree.getroot()
-        for key, value in clearlogos.items():
+        for key, value in list(clearlogos.items()):
             self.destination, self.height, self.color, self.luminosity = False, False, False, False
             name = reporting_key or key
             if value:

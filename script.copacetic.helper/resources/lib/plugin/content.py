@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: utf-8
 # author: realcopacetic, sualfred
 
 from resources.lib.plugin.json_map import JSON_MAP

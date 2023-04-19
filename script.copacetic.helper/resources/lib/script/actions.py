@@ -1,21 +1,22 @@
-#!/usr/bin/python
-# coding: utf-8
 # author: realcopacetic
 
 import urllib.parse as urllib
 
 from resources.lib.service.art import ImageEditor
-from resources.lib.utilities import (DIALOG, clear_playlists, json_call,
-                                     log_and_execute, window_property, xbmc)
+from resources.lib.utilities import (DIALOG, clear_playlists, infolabel,
+                                     json_call, log_and_execute,
+                                     window_property, xbmc)
 
 
-def clean_filename(label, **kwargs):
+def clean_filename(label=False, **kwargs):
     json_response = json_call('Settings.GetSettingValue',
                               params={'setting': 'filelists.showextensions'},
                               parent='clean_filename'
                               )
 
     subtraction = 1 if json_response['result']['value'] is True else 0
+    if not label:
+        label = infolabel('$INFO[ListItem.Label]')
     count = label.count('.') - subtraction
     label = label.replace('.', ' ', count).replace('_', ' ').strip()
 

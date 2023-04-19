@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: utf-8
 # author: realcopacetic
 
 from resources.lib.utilities import (ADDON, ADDON_ID, DIALOG, condition,
@@ -36,7 +34,7 @@ class SettingsMonitor:
             'pictures': False,
             'musicplayer': False
         }
-        for item in self.settings.items():
+        for item in list(self.settings.items()):
             window_property(key=item[0])
             category = item[0].split('.')[0]
             json_response = json_call('Settings.GetSettingValue',
@@ -65,13 +63,13 @@ class SettingsMonitor:
                     window_property(key=item[0], set=', '.join(value))
                 else:
                     window_property(key=item[0], set=value)
-        cat_count = sum(value for value in cats.values())
+        cat_count = sum(value for value in list(cats.values()))
         item_count = cat_count + len(self.settings_to_change)
         window_property('Settings_To_Change', set=item_count)
 
     def set_default(self, **kwargs):
         count = 0
-        for item in self.settings_to_change.items():
+        for item in list(self.settings_to_change.items()):
             if condition(f'Skin.HasSetting({item[0]})'):
                 json_call('Settings.SetSettingValue',
                                         params={'setting': item[0], 'value': item[1]},
