@@ -12,7 +12,6 @@
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <assets>
         <icon>icon.png</icon>
-        <clearlogo>logo.png</clearlogo>
     </assets>
   <news>v4.0.0 - by CaTz [18.04.2023]
 - Add support for Kodi Nexus (v20) version</news></extension>
