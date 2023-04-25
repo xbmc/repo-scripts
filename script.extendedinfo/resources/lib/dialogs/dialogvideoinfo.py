@@ -1,16 +1,15 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
 import xbmc
 import xbmcgui
+from resources.kutil131 import ActionHandler, addon
 
-from kutils import ActionHandler, addon, utils
-from resources.lib import TheMovieDB as tmdb
+from resources.kutil131 import utils
+from resources.lib import themoviedb as tmdb
 
-from .DialogBaseInfo import DialogBaseInfo
+from .dialogbaseinfo import DialogBaseInfo
 
 BUTTONS = {8, 9, 10, 6001, 6002, 6003, 6005, 6006}
 
@@ -23,12 +22,17 @@ ch = ActionHandler()
 
 
 class DialogVideoInfo(DialogBaseInfo):
+    """
+
+    Args:
+        DialogBaseInfo (_type_): _description_
+    """
 
     def __init__(self, *args, **kwargs):
-        super(DialogVideoInfo, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def onClick(self, control_id):
-        super(DialogVideoInfo, self).onClick(control_id)
+        super().onClick(control_id)
         ch.serve(control_id, self)
 
     def set_buttons(self):

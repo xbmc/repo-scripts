@@ -1,28 +1,36 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
-"""Uses LastFM API  to query data from LastFM. 
+"""Uses LastFM API  to query data from LastFM.
 
 The get_* functions are called to query LastFM API.
 
 """
 
 import re
-from typing import Optional
 import urllib.error
 import urllib.parse
 import urllib.request
+from typing import Optional
 
-from kutils import ItemList, utils
+from resources.kutil131 import ItemList
+
+from resources.kutil131 import utils
 
 LAST_FM_API_KEY = 'd942dd5ca4c9ee5bd821df58cf8130d4'
 GOOGLE_MAPS_KEY = 'AIzaSyBESfDvQgWtWLkNiOYXdrA9aU-2hv_eprY'
 BASE_URL = 'http://ws.audioscrobbler.com/2.0/?'
 
 
-def _handle_albums(results) -> ItemList:
+def _handle_albums(results: dict) -> ItemList:
+    """Converts TADB query results to kutils131 ItemList
+
+    Args:
+        results (dict): TADB albums for an artist
+
+    Returns:
+        ItemList: a kutils131 ItemList od dicts
+    """
     albums = ItemList(content_type="albums")
     if not results:
         return albums
@@ -39,6 +47,14 @@ def _handle_albums(results) -> ItemList:
 
 
 def _handle_artists(results) -> ItemList:
+    """Converts TADB artist query to kutils ItemList
+
+    Args:
+        results (_type_): _description_
+
+    Returns:
+        ItemList: a kutils131 ItemList of artist info as dicts
+    """
     artists = ItemList(content_type="artists")
     if not results:
         return artists
@@ -59,7 +75,7 @@ def get_top_artists() -> ItemList:
     """Queries LastFM api chart.getTopArtists method for top 100 artists
 
     Returns:
-        ItemList: a kutils object that wraps a list of artist 
+        ItemList: a kutils131 object that wraps a list of artist
         info dicts
     """
     results: Optional[dict] = get_data(method="chart.getTopArtists",
@@ -76,7 +92,7 @@ def get_artist_albums(artist_mbid: str) -> ItemList:
         artist_mbid (str): The musicbrainz id for the artist
 
     Returns:
-        ItemList: a kutils object that wraps a list of albums 
+        ItemList: a kutils131object that wraps a list of albums
         info dicts
     """
     if not artist_mbid:
@@ -108,7 +124,7 @@ def get_similar_artists(artist_mbid: str) -> ItemList:
 
 
 def get_track_info(artist_name="", track="") -> dict:
-    """ Queries LastFM api 
+    """ Queries LastFM api
 
     Args:
         artist_name (str, optional): The artist name. Defaults to "".

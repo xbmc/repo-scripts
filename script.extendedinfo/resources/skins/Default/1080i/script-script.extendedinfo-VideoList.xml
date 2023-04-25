@@ -6,6 +6,7 @@
 	     <onload condition="String.IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,$VAR[AreaColorVar],home)</onload> -->
 	<onunload>ClearProperty(WindowColor,home)</onunload>
 	<defaultcontrol always="true">500</defaultcontrol>
+	<menucontrol>9000</menucontrol>
 	<controls>
 		<control type="image">
 			<texture>common/white.png</texture>
@@ -92,13 +93,13 @@
 				<top>30</top>
 				<width>396</width>
 				<fadetime>200</fadetime>
-				<bordertexture border="3">common/black.png</bordertexture>
-				<bordersize>3</bordersize>
+				<bordertexture border="4">common/black.png</bordertexture>
+				<bordersize>4</bordersize>
 				<height>222</height>
-				<aspectratio>scale</aspectratio>
+				<aspectratio>keep</aspectratio>
 			</control>
 				<control type="textbox">
-					<top>270</top>
+					<top>275</top>
 					<left>40</left>
 					<width>395</width>
 					<height>300</height>
@@ -108,7 +109,7 @@
 				</control>
 				<control type="image">
 					<left>40</left>
-					<top>320</top>
+					<top>255</top>
 					<width>135</width>
 					<height>26</height>
 					<animation effect="fade" start="100" end="60" time="0" condition="String.IsEmpty(ListItem.Rating)">Conditional</animation>
@@ -120,7 +121,7 @@
 					<width>395</width>
 					<height>500</height>
 					<align>justify</align>
-					<label fallback="416">$INFO[ListItem.Plot,,[CR][CR]  ]</label>
+					<label fallback="19055">$INFO[ListItem.Plot,,[CR][CR]  ]</label>
 					<autoscroll delay="10000" time="1600" repeat="10000">true</autoscroll>
 					<font>font12</font>
 					<textcolor>FFDDDDDD</textcolor>
@@ -589,7 +590,7 @@
 				<textoffsety>25</textoffsety>
 				<font>font13</font>
 				<textwidth>315</textwidth>
-				<label>-</label>
+				<label></label>
 				<textcolor>FFBBBBBB</textcolor>
 				<focusedcolor>FFFAFAFA</focusedcolor>
 				<radiowidth>200</radiowidth>
@@ -619,7 +620,7 @@
 					<!-- 564 -->
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Type)][/COLOR]</label2>
 					<width>438</width>
-					<height>70</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -635,7 +636,7 @@
 					<label>$ADDON[script.extendedinfo 32104]</label>
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Sort_Label)][/COLOR]</label2>
 					<width>438</width>
-					<height>70</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textoffsety>30</textoffsety>
 					<textwidth>315</textwidth>
@@ -651,7 +652,7 @@
 					<label>$ADDON[script.extendedinfo 32128]</label>
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Order_Label)][/COLOR]</label2>
 					<width>438</width>
-					<height>70</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textoffsety>30</textoffsety>
 					<textwidth>315</textwidth>
@@ -774,6 +775,20 @@
 				</control>
 				<control type="button" id="5012">
 					<label>$ADDON[script.extendedinfo 32111]</label>
+					<width>438</width>
+					<height>55</height>
+					<textoffsetx>40</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FFBBBBBB</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5013">
+					<label>$LOCALIZE[308]</label>
 					<width>438</width>
 					<height>55</height>
 					<textoffsetx>40</textoffsetx>

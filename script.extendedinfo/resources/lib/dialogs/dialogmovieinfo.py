@@ -1,21 +1,21 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
+from __future__ import annotations
+
 import threading
-from typing import Optional, Union
 
 import xbmc
 import xbmcgui
+from resources.kutil131 import ActionHandler, addon, busy, kodijson
 
-from kutils import ActionHandler, addon, busy, imagetools, kodijson, utils
-from resources.lib import TheMovieDB as tmdb
+from resources.kutil131 import imagetools, utils
+from resources.lib import themoviedb as tmdb
 from resources.lib import omdb
-from resources.lib.WindowManager import wm
+from resources.lib.windowmanager import wm
 
-from .DialogVideoInfo import DialogVideoInfo
+from .dialogvideoinfo import DialogVideoInfo
 
 ID_LIST_SIMILAR = 150
 ID_LIST_SETS = 250
@@ -44,6 +44,14 @@ ch = ActionHandler()
 
 
 class DialogMovieInfo(DialogVideoInfo):
+    """ Class that creates a new movie info dialog
+
+    Args:
+        DialogVideoInfo: The super class
+
+    Returns:
+        DialogMmovieInfo: an instance
+    """
     TYPE = "Movie"
     TYPE_ALT = "movie"
     LISTS = [(ID_LIST_ACTORS, "actors"),
@@ -63,9 +71,17 @@ class DialogMovieInfo(DialogVideoInfo):
     # BUTTONS = [ID_BUTTON_OPENLIST,
     #            ID_BUTTON_ADDTOLIST]
 
-    def __init__(self, *args, **kwargs):
-        super(DialogMovieInfo, self).__init__(*args, **kwargs)
-        data: Optional[dict] = tmdb.extended_movie_info(movie_id=kwargs.get('id'),
+    def __init__(self, *args, **kwargs) -> DialogMovieInfo:
+        """Creates a new instance of DialogMovieInfo
+
+        kwargs:
+            id(int): the tmdb movie id
+            dbid(int): the local Kodi dbid
+
+        Returns:  dialogmovieinfo
+        """
+        super().__init__(*args, **kwargs)
+        data: tuple | None = tmdb.extended_movie_info(movie_id=kwargs.get('id'),
                                                         dbid=kwargs.get('dbid'))
         if not data:
             return None
@@ -82,25 +98,26 @@ class DialogMovieInfo(DialogVideoInfo):
                 self.info.get_art("poster")))
         sets_thread.join()
         self.info.update_properties(
-            {"set.%s" % k: v for k, v in list(sets_thread.setinfo.items())})
+                {f"set.{k}": v for k, v in list(sets_thread.setinfo.items())})
         set_ids = [item.get_property("id") for item in sets_thread.listitems]
-        self.lists["similar"] = [i for i in self.lists["similar"]
-                                 if i.get_property("id") not in set_ids]
+        if self.lists and self.lists.get('similar'):
+            self.lists["similar"] = [i for i in self.lists["similar"]
+                                     if i.get_property("id") not in set_ids]
         self.lists["sets"] = sets_thread.listitems
 
     def onInit(self):
-        super(DialogMovieInfo, self).onInit()
-        super(DialogMovieInfo, self).update_states()
+        super().onInit()
+        super().update_states()
         self.get_youtube_vids("%s %s, movie" % (self.info.label,
                                                 self.info.get_info("year")))
         self.set_omdb_infos_async()
 
     def onClick(self, control_id):
-        super(DialogMovieInfo, self).onClick(control_id)
+        super().onClick(control_id)
         ch.serve(control_id, self)
 
     def set_buttons(self):
-        super(DialogMovieInfo, self).set_buttons()
+        super().set_buttons()
         condition = self.info.get_info("dbid") and int(
             self.info.get_property("percentplayed")) > 0
         self.set_visible(ID_BUTTON_PLAY_RESUME, condition)
@@ -230,15 +247,8 @@ class DialogMovieInfo(DialogVideoInfo):
         options = []
         movie_id = self.info.get_info("dbid")
         imdb_id = self.info.get_property("imdb_id")
-        # if movie_id:
-        #   call = "RunScript(script.artwork.downloader,mediatype=movie,dbid={}%s)".format(movie_id)
-        #   options += [(addon.LANG(413), call % ",mode=gui"),
-        #            (addon.LANG(14061), call % ""),
-        #            (addon.LANG(32101), call % ",mode=custom,extrathumbs"),
-        #            (addon.LANG(32100), call % ",mode=custom")]
-        # else:
-        options += [(addon.LANG(32165), "RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=%s)" % imdb_id),
-                    (addon.LANG(32170), "RunPlugin(plugin://plugin.video.trakt_list_manager/watchlist/movies/add?imdb_id=%s)" % imdb_id)]
+        #options += [(addon.LANG(32165), "RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=%s)" % imdb_id),
+        #            (addon.LANG(32170), "RunPlugin(plugin://plugin.video.trakt_list_manager/watchlist/movies/add?imdb_id=%s)" % imdb_id)]
         options.append(
             (addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
@@ -248,7 +258,7 @@ class DialogMovieInfo(DialogVideoInfo):
         info = tmdb.get_movie(movie_id=self.info.get_property("id"),
                               cache_days=0)
         self.states = info.get("account_states")
-        super(DialogMovieInfo, self).update_states()
+        super().update_states()
 
     @utils.run_async
     def set_omdb_infos_async(self) -> None:
@@ -261,14 +271,21 @@ class DialogMovieInfo(DialogVideoInfo):
 
 
 class SetItemsThread(threading.Thread):
+    """Thread fetches movies in set from tmdb
 
-    def __init__(self, set_id=""):
+    Args:
+        threading.Thead (super class): python thread class
+    """
+
+    def __init__(self, set_id="") -> SetItemsThread:
+        """Creates a new SetItemsThread instance to run async
+            returns: SetItemsThread instance
+        """
         threading.Thread.__init__(self)
         self.set_id = set_id
+        self.listitems = []
+        self.setinfo = {}
 
     def run(self):
-        if self.set_id:
+        if self.set_id and self.set_id != 0:
             self.listitems, self.setinfo = tmdb.get_set_movies(self.set_id)
-        else:
-            self.listitems = []
-            self.setinfo = {}

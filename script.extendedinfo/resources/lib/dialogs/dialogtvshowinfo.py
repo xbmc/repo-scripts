@@ -1,17 +1,16 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
 import xbmc
 import xbmcgui
+from resources.kutil131 import ActionHandler, addon
 
-from kutils import ActionHandler, addon, imagetools, utils
-from resources.lib import TheMovieDB as tmdb
-from resources.lib.WindowManager import wm
+from resources.kutil131 import imagetools, utils
+from resources.lib import themoviedb as tmdb
+from resources.lib.windowmanager import wm
 
-from .DialogVideoInfo import DialogVideoInfo
+from .dialogvideoinfo import DialogVideoInfo
 
 ID_LIST_SIMILAR = 150
 ID_LIST_SEASONS = 250
@@ -50,7 +49,7 @@ class DialogTVShowInfo(DialogVideoInfo):
              (ID_LIST_BACKDROPS, "backdrops")]
 
     def __init__(self, *args, **kwargs):
-        super(DialogTVShowInfo, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         data = tmdb.extended_tvshow_info(tvshow_id=kwargs.get('tmdb_id'),
                                          dbid=kwargs.get('dbid'))
         if not data:
@@ -64,11 +63,11 @@ class DialogTVShowInfo(DialogVideoInfo):
 
     def onInit(self):
         self.get_youtube_vids("%s tv" % (self.info.get_info("title")))
-        super(DialogTVShowInfo, self).onInit()
-        super(DialogTVShowInfo, self).update_states()
+        super().onInit()
+        super().update_states()
 
     def onClick(self, control_id):
-        super(DialogTVShowInfo, self).onClick(control_id)
+        super().onClick(control_id)
         ch.serve(control_id, self)
 
     def set_buttons(self):
@@ -124,17 +123,9 @@ class DialogTVShowInfo(DialogVideoInfo):
         options = []
         title = self.info.get_info("tvshowtitle")
         dbid = self.info.get_info("dbid")
-        if dbid:
-            call = "RunScript(script.artwork.downloader,mediatype=tv,dbid={}%s)".format(
-                dbid)
-            options += [(addon.LANG(413), call % (",mode=gui")),
-                        (addon.LANG(14061), call % ("")),
-                        (addon.LANG(32101), call %
-                         (",mode=custom,extrathumbs")),
-                        (addon.LANG(32100), call % (",mode=custom"))]
-        else:
-            options += [(addon.LANG(32166),
-                         "RunPlugin(plugin://plugin.video.sickrage?action=addshow&show_name=%s)" % title)]
+        #if not dbid:
+        #    options += [(addon.LANG(32166),
+        #                 "RunPlugin(plugin://plugin.video.sickrage?action=addshow&show_name=%s)" % title)]
         options.append(
             (addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
@@ -160,4 +151,4 @@ class DialogTVShowInfo(DialogVideoInfo):
         info = tmdb.get_tvshow(tvshow_id=self.info.get_property("id"),
                                cache_days=0)
         self.states = info.get("account_states")
-        super(DialogTVShowInfo, self).update_states()
+        super().update_states()

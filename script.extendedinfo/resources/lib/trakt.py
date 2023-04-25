@@ -1,42 +1,74 @@
-# -*- coding: utf8 -*-
-
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # Modifications copyright (C) 2022 - Scott Smart <scott967@kodi.tv>
 # This program is Free Software see LICENSE file for details
+"""Trakt module obtains data on TV Shows and Movies from Trakt.tv using
+apiV2  If Trakt provides a TMDB id, additional data is retrieved from
+TMDB
+
+Public functions:
+    get_episodes(content) gets upcoming episodes content shows or
+                          premiering shows content premieres
+                          returns a kutils ItemList
+    get_shows(show_type)  gets tvshows for showtype trending/popular/anticipated
+                          returns a kutils ItemList
+    get_shows_from_time(show_type, period) gets tvshos for showtype collected/played/
+                                           watched for previous month
+                                           returns a kutils ItemList
+    get_movies(movie_type) gets movies for movietype trending/popular/anticipated
+                           returns a kutils ItemList
+    get_movies_from_time(movie_type, period) gets movies forf movietype collected/
+                                             played/watched for previous month
+    get_similar(media_type, imdb_id) gets related mediatype show(s)/movie(s) from
+                                     an imdb id.
+"""
 
 import datetime
 import urllib.error
 import urllib.parse
 import urllib.request
 
-from kutils import ItemList, VideoItem, addon, local_db, utils
-from resources.lib import TheMovieDB as tmdb
+from resources.kutil131 import ItemList, addon
+
+from resources.kutil131 import VideoItem, local_db, utils
+from resources.lib import themoviedb as tmdb
 
 TRAKT_KEY = 'e9a7fba3fa1b527c08c073770869c258804124c5d7c984ce77206e695fbaddd5'
-BASE_URL = "https://api-v2launch.trakt.tv/"
+BASE_URL = "https://api.trakt.tv/"
 HEADERS = {
     'Content-Type': 'application/json',
     'trakt-api-key': TRAKT_KEY,
-    'trakt-api-version': 2
+    'trakt-api-version': '2'
 }
 PLUGIN_BASE = "plugin://script.extendedinfo/?info="
 
 
 def get_episodes(content):
+    """gets upcoming/premiering episodes from today
+
+    Args:
+        content (str): enum shows (upcoming) or premieres (new shows)
+
+    Returns:
+        ItemList: a kutils ItemList instance of VideoItems
+    """
     shows = ItemList(content_type="episodes")
     url = ""
     if content == "shows":
-        url = 'calendars/shows/%s/14' % datetime.date.today()
+        url = f'calendars/shows/{datetime.date.today()}/14'
     elif content == "premieres":
-        url = 'calendars/shows/premieres/%s/14' % datetime.date.today()
+        url = f'calendars/shows/premieres/{datetime.date.today()}/14'
     results = get_data(url=url,
                        params={"extended": "full"},
                        cache_days=0.3)
     count = 1
     if not results:
         return None
+    #results is a dict.  Each key is an ISO date string (day) with value as a
+    #list of episodes for that date (episode), episode is a dict with keys airs-at,
+    #episode (ep), and show (tv)  Get the first 20 episodes and create an ItemList
+    #for each episode as VideoItem
     for day in results.items():
-        for episode in day[1]:
+        for episode in day[1]: #dict of episode
             ep = episode["episode"]
             tv = episode["show"]
             title = ep["title"] if ep["title"] else ""
@@ -69,16 +101,27 @@ def get_episodes(content):
                                  'homepage': tv["homepage"]})
             if tv["ids"].get("tmdb"):
                 art_info = tmdb.get_tvshow(tv["ids"]["tmdb"], light=True)
-                show.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
-                                                     fanart=art_info.get("backdrop_path")))
+                if art_info:
+                    show.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path", ""),
+                                                     fanart=art_info.get("backdrop_path", "")))
             shows.append(show)
             count += 1
             if count > 20:
                 break
+        if count > 20:
+            break
     return shows
 
 
 def handle_movies(results):
+    """helper function creates kutils VideoItems and adds to an ItemList
+
+    Args:
+        results (list): a list of dicts, each dict is Trakt data for movie
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     movies = ItemList(content_type="movies")
     path = 'extendedinfo&&id=%s' if addon.bool_setting(
         "infodialog_onclick") else "playtrailer&&id=%s"
@@ -108,7 +151,8 @@ def handle_movies(results):
                               'language': item.get("language"),
                               'homepage': item.get("homepage")})
         art_info = tmdb.get_movie(item["ids"]["tmdb"], light=True)
-        movie.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
+        if art_info:
+            movie.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
                                               fanart=art_info.get("backdrop_path")))
         movies.append(movie)
     movies = local_db.merge_with_local(media_type="movie",
@@ -119,6 +163,14 @@ def handle_movies(results):
 
 
 def handle_tvshows(results):
+    """helper function creates kutils VideoItems and adds to an ItemList
+
+    Args:
+        results (list): a list of dicts, each dict is Trakt data for show
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     shows = ItemList(content_type="tvshows")
     for i in results:
         item = i["show"] if "show" in i else i
@@ -151,7 +203,8 @@ def handle_tvshows(results):
                              'airshorttime': airs.get("time"),
                              'watchers': item.get("watchers")})
         art_info = tmdb.get_tvshow(item["ids"]["tmdb"], light=True)
-        show.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
+        if art_info:
+            show.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
                                              fanart=art_info.get("backdrop_path")))
         shows.append(show)
     shows = local_db.merge_with_local(media_type="tvshow",
@@ -162,30 +215,73 @@ def handle_tvshows(results):
 
 
 def get_shows(show_type):
+    """gets Trakt full data for shows of enumerated type
+
+    Args:
+        show_type (str): enum trending/popular/anticipated
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     results = get_data(url='shows/%s' % show_type,
                        params={"extended": "full"})
     return handle_tvshows(results) if results else []
 
 
 def get_shows_from_time(show_type, period="monthly"):
+    """gets Trakt full data for shows of enumerated type for enumerated period
+
+    Args:
+        show_type (str): enum collected/played/watched
+        period (str, optional): enum daily/weekly/monthly/yearly/all Defaults to "monthly"
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     results = get_data(url='shows/%s/%s' % (show_type, period),
                        params={"extended": "full"})
     return handle_tvshows(results) if results else []
 
 
 def get_movies(movie_type):
+    """gets Trakt full data for movies of enumerated type
+
+    Args:
+        movie_type (str): enum trending/popular/anticipated
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     results = get_data(url='movies/%s' % movie_type,
                        params={"extended": "full"})
     return handle_movies(results) if results else []
 
 
 def get_movies_from_time(movie_type, period="monthly"):
+    """gets Trakt full data for movies of enumerated type for enumerated period
+
+    Args:
+        movie_type (str): enum collected/played/watched
+        period (str, optional): enum daily/weekly/monthly/yearly/all Defaults to "monthly"
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     results = get_data(url='movies/%s/%s' % (movie_type, period),
                        params={"extended": "full"})
     return handle_movies(results) if results else []
 
 
 def get_similar(media_type, imdb_id):
+    """gets related movies or shows from imbd id
+
+    Args:
+        media_type (str): enum show/movie
+        imdb_id (str): the imbd id for show or movie
+
+    Returns:
+        ItemList: a kutils ItemList of VideoItems
+    """
     if not imdb_id or not media_type:
         return None
     results = get_data(url='%ss/%s/related' % (media_type, imdb_id),
@@ -199,6 +295,20 @@ def get_similar(media_type, imdb_id):
 
 
 def get_data(url, params=None, cache_days=10):
+    """helper function builds query and formats result.  First attempts to
+    retrieve data from local cache and then issues a ResT GET to the api if cache
+    data not available 
+
+    Args:
+        url (str): the url for GET operation on api
+        params (dict, optional): GET query (?) Defaults to None.
+        cache_days (int, optional): Max age of cached data before requesting new.
+        Defaults to 10.
+
+    Returns:
+        dict: a dict from the deserialized JSON response from api or None
+        Note: kutils does not return the GET failure code (ie if not 200)
+    """
     params = params if params else {}
     params["limit"] = 10
     url = "%s%s?%s" % (BASE_URL, url, urllib.parse.urlencode(params))
