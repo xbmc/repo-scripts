@@ -337,7 +337,7 @@ class AutoUpdater:
 
     def _networkUp(self):
         try:
-            urlopen('http://www.google.com', timeout=1)
+            urlopen('http://connectivitycheck.gstatic.com/generate_204', timeout=1)
             return True
         except Exception:
             pass

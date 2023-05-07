@@ -23,14 +23,14 @@ import xbmcaddon
 
 
 class KodiLogHandler(logging.StreamHandler):
-    def __init__(self):
+    def __init__(self) -> None:
         logging.StreamHandler.__init__(self)
         addon_id = xbmcaddon.Addon().getAddonInfo("id")
-        format = f"### [addon_id] - [%(filename)s:%(lineno)s - %(funcName)20s() ] %(name)s: %(message)s"
+        format = f"### [{addon_id}] - [%(filename)s:%(lineno)s - %(funcName)20s() ] %(name)s: %(message)s"
         formatter = logging.Formatter(format)
         self.setFormatter(formatter)
 
-    def emit(self, record):
+    def emit(self, record: logging.LogRecord) -> None:
         levels = {
             logging.CRITICAL: xbmc.LOGFATAL,
             logging.ERROR: xbmc.LOGERROR,
@@ -42,11 +42,11 @@ class KodiLogHandler(logging.StreamHandler):
 
         xbmc.log(self.format(record), levels[record.levelno])
 
-    def flush(self):
+    def flush(self) -> None:
         pass
 
 
-def config():
+def config() -> None:
     logger = logging.getLogger()
     logger.addHandler(KodiLogHandler())
     logger.setLevel(logging.DEBUG)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.5.10+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister, horstle">
+<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.6.0+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister, horstle">
   <requires>
     <!--py3 compliant-->
     <import addon="xbmc.python" version="3.0.0"/>
@@ -25,6 +25,11 @@
     <description lang="hr_HR">Jednostavan Kodi modul koji olakšava razvijanje dodataka koji se temelje na InputStream dodatku i reprodukciji DRM zaštićenog sadržaja.</description>
     <description lang="ru_RU">Простой модуль для Kodi, который облегчает жизнь разработчикам дополнений, с использованием InputStream дополнений и воспроизведения DRM контента.</description>
     <news>
+v0.6.0 (2023-05-03)
+- Initial support for AARCH64 Linux (@horstle)
+- Initial support for AARCH64 Macs (@mediaminister)
+- New option to install a specific version on most platforms (@horstle)
+
 v0.5.10 (2022-04-18)
 - Fix automatic submission of release
 - Update German translation

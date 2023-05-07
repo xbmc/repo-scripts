@@ -1,7 +1,7 @@
 import xbmcaddon
 import xbmcgui
 from resources.lib.player.player_utils import get_types_replaced_by_type
-from resources.lib.timer.period import Period, timedelta
+from resources.lib.timer.period import Period
 from resources.lib.timer.timer import (MEDIA_ACTION_START,
                                        MEDIA_ACTION_START_AT_END,
                                        MEDIA_ACTION_START_STOP,
@@ -12,16 +12,18 @@ from resources.lib.utils import datetime_utils
 from resources.lib.utils.settings_utils import (CONFIRM_CUSTOM, CONFIRM_NO,
                                                 CONFIRM_YES)
 
-MIN_PRIO = -10
+MIN_PRIO = -12
 MAX_PRIO = 12
+LOW_PRIO_MARK = -10
 HIGH_PRIO_MARK = 10
 DEFAULT_PRIO = 0
 
 
 def get_next_lower_prio(timers: 'list[Timer]') -> int:
 
-    _min = min(timers, key=lambda t: t.priority).priority - 1
-    return max(_min, MIN_PRIO)
+    _min = min(timers, key=lambda t: t.priority if t.priority >
+               LOW_PRIO_MARK else DEFAULT_PRIO).priority
+    return _min - 1 if _min > LOW_PRIO_MARK + 1 else _min
 
 
 def get_next_higher_prio(timers: 'list[Timer]') -> int:
@@ -31,7 +33,7 @@ def get_next_higher_prio(timers: 'list[Timer]') -> int:
     return _max + 1 if _max < HIGH_PRIO_MARK - 1 else _max
 
 
-def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_high_prio=False) -> 'list[Timer]':
+def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_extra_prio=False) -> 'list[Timer]':
 
     def _disturbs(types: 'list[str]', type2: str, media_action1: int, media_action2: int, period1: Period, period2: Period) -> bool:
 
@@ -101,7 +103,7 @@ def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_high_prio
     overlapping_timers: 'list[Timer]' = list()
     for t in timers:
 
-        if t.id == timer.id or (ignore_high_prio and t.priority >= HIGH_PRIO_MARK):
+        if t.id == timer.id or (ignore_extra_prio and (t.priority <= LOW_PRIO_MARK or t.priority >= HIGH_PRIO_MARK)):
             continue
 
         t_replace_types = get_types_replaced_by_type(t.media_type)

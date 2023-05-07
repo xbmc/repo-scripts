@@ -129,6 +129,26 @@ msgctxt "#32052"
 msgid "Is %s more important?"
 msgstr "Ist %s wichtiger?"
 
+msgctxt "#32055"
+msgid "Mediatype"
+msgstr "Medienart"
+
+msgctxt "#32056"
+msgid "audio"
+msgstr "Audio"
+
+msgctxt "#32057"
+msgid "video"
+msgstr "Video"
+
+msgctxt "#32058"
+msgid "picture"
+msgstr "Bilder"
+
+msgctxt "#32059"
+msgid "script"
+msgstr "Skript"
+
 msgctxt "#32060"
 msgid "Schedule"
 msgstr "Zeitplanung"
@@ -621,6 +641,42 @@ msgctxt "#32273"
 msgid "Skip"
 msgstr "Abbrechen"
 
+msgctxt "#32280"
+msgid "start playback"
+msgstr "starte Wiedergabe"
+
+msgctxt "#32281"
+msgid "stop playback"
+msgstr "beende Wiedergabe"
+
+msgctxt "#32282"
+msgid "pause playback"
+msgstr "pausiere Wiedergabe"
+
+msgctxt "#32283"
+msgid "continue playback"
+msgstr "setze Wiedergabe fort"
+
+msgctxt "#32284"
+msgid "start fader"
+msgstr "starte Fader"
+
+msgctxt "#32285"
+msgid "end fader"
+msgstr "beende Fader"
+
+msgctxt "#32286"
+msgid "start slideshow"
+msgstr "starte Diashow"
+
+msgctxt "#32287"
+msgid "end slideshow"
+msgstr "beende Diashow"
+
+msgctxt "#32288"
+msgid "run addon"
+msgstr "führe Addon aus"
+
 msgctxt "#32300"
 msgid "Opens a dialog where you can enter a duration for pause from now."
 msgstr "Öffnet einen Dialog zur Eingabe der Dauer von jetzt an."
@@ -682,8 +738,12 @@ msgid "Set value if this timer is more important than other. Higher value means 
 msgstr "Setze einen Wert wenn dieser Timer wichtiger ist als andere. Je höher der Wert desto wichtiger. Werte ab 10 gewinnen immer gegen neue Timer."
 
 msgctxt "#32337"
-msgid "This is a high priority timer which overrule new timers."
-msgstr "Dies ist ein Timer mit hoher Priorität, der neue Timer übersteuern kann."
+msgid "This is a overruling timer with high priority."
+msgstr "Dies ist ein dominierender Timer mit hoher Priorität."
+
+msgctxt "#32338"
+msgid "This is a obsequiously timer with low priority."
+msgstr "Dies ist ein unterwürfiger Timer mit niedriger Priorität."
 
 msgctxt "#32340"
 msgid "Select the media action of the timer. Note that you must add a media to the timer by utilizing the context menu first."
@@ -752,3 +812,7 @@ msgstr "Optional kann ein Versatz in Sekunden angegeben werden."
 msgctxt "#32386"
 msgid "Determine the strategy for priority of new quicktimers."
 msgstr "Bestimme die Strategie für die Priorität neuer Quicktimer."
+
+msgctxt "#32387"
+msgid "Mediatype is normally determined automatically. Set type manually e.g. if resuming doesn't work as expected."
+msgstr "Die Medienart wird automatisch ermittelt. Setze die Art manuell, z.B. wenn die Fortsetzung nicht richtig funktioniert."

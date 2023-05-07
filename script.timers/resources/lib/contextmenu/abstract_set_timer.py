@@ -5,11 +5,12 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 from resources.lib.contextmenu import pvr_utils
-from resources.lib.player.mediatype import VIDEO
+from resources.lib.player.mediatype import VIDEO, SCRIPT
 from resources.lib.timer.concurrency import determine_overlappings
 from resources.lib.timer.storage import Storage
 from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_NO,
-                                       FADE_OFF, MEDIA_ACTION_START_STOP,
+                                       END_TYPE_TIME, FADE_OFF,
+                                       MEDIA_ACTION_START_STOP,
                                        SYSTEM_ACTION_NONE, Timer)
 from resources.lib.utils import datetime_utils, vfs_utils
 from resources.lib.utils.settings_utils import (CONFIRM_CUSTOM, CONFIRM_ESCAPE,
@@ -70,7 +71,13 @@ class AbstractSetTimer:
             timer.duration = duration
             timer.end = datetime_utils.format_from_seconds(
                 (datetime_utils.parse_time(starttime) + datetime_utils.parse_time(duration)).seconds)
-            timer.end_type = END_TYPE_NO if timer.duration == datetime_utils.DEFAULT_TIME else END_TYPE_DURATION
+
+            if is_epg:
+                timer.end_type = END_TYPE_TIME
+            elif timer.duration == datetime_utils.DEFAULT_TIME:
+                timer.end_type = END_TYPE_NO
+            else:
+                timer.end_type = END_TYPE_DURATION
 
         system_action, media_action = self.ask_action(
             timer.label, path, is_epg, timer)
@@ -97,7 +104,7 @@ class AbstractSetTimer:
 
         timer.init()
         overlappings = determine_overlappings(
-            timer, self.storage.load_timers_from_storage(), ignore_high_prio=True)
+            timer, self.storage.load_timers_from_storage(), ignore_extra_prio=True)
         if overlappings:
             answer = self.handle_overlapping_timers(
                 timer, overlapping_timers=overlappings)
@@ -187,7 +194,7 @@ class AbstractSetTimer:
             msg = ("$H\n%s: $P" % self.addon.getLocalizedString(
                 32081)) if timer.system_action else "$H"
             xbmcgui.Dialog().notification(heading=timer.label,
-                                          message=timer.format(msg), icon=vfs_utils.get_asset_path("icon.png"))
+                                          message=timer.format(msg), icon=vfs_utils.get_asset_path("icon_timers.png"))
 
     def _get_timer_preselection(self, timerid: int, label: str, path: str) -> 'tuple[Timer,bool]':
 
@@ -242,7 +249,7 @@ class AbstractSetTimer:
             (td_start + datetime_utils.parse_time(timer.duration)).seconds)
 
         if vfs_utils.is_script(timer.path):
-            timer.media_type = "script"
+            timer.media_type = SCRIPT
         else:
             timer.media_type = vfs_utils.get_media_type(timer.path) or VIDEO
 

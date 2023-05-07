@@ -9,7 +9,7 @@
 
 from PIL import ImageEnhance
 
-from resources.lib import timer
+from . import timer
 
 
 class ImageProcess(object):

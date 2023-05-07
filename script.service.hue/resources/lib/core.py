@@ -5,16 +5,15 @@
 
 import json
 import sys
-from datetime import timedelta
 
 import requests
 import xbmc
 
-from resources.lib import ADDON, SETTINGS_CHANGED, ADDONID, AMBI_RUNNING
-from resources.lib import ambigroup, lightgroup, kodiutils, hueconnection
-from resources.lib.hueconnection import HueConnection
-from resources.lib.language import get_string as _
-from resources.lib.kodiutils import validate_settings, notification, cache_set, cache_get
+from . import ADDON, SETTINGS_CHANGED, ADDONID, AMBI_RUNNING
+from . import ambigroup, lightgroup, kodiutils, hueconnection
+from .hueconnection import HueConnection
+from .kodiutils import validate_settings, notification, cache_set, cache_get
+from .language import get_string as _
 
 
 def core():
@@ -93,8 +92,7 @@ def _service(monitor):
                         ambigroup.AmbiGroup(3, hue_connection)]
 
         timer = 60
-        daylight = hue_connection.get_daylight()
-        new_daylight = daylight
+        daylight = new_daylight = hue_connection.get_daylight()
 
         cache_set("daylight", daylight)
         cache_set("service_enabled", True)
@@ -131,7 +129,7 @@ def _service(monitor):
                 # fetch daylight status, reconnect to Hue if it fails
                 try:
                     new_daylight = hue_connection.get_daylight()
-                except requests.exceptions.RequestException as error:
+                except requests.exceptions.RequestException:
                     if hue_connection.reconnect(monitor):
                         new_daylight = hue_connection.get_daylight()
                     else:
@@ -192,7 +190,7 @@ class HueMonitor(xbmc.Monitor):
                 light_group_id = json_loads['group']
                 action = json_loads['command']
                 xbmc.log(f"[script.service.hue] Action Notification: group: {light_group_id}, command: {action}")
-                cache_set("script.service.hue.action", (action, light_group_id), expiration=(timedelta(seconds=5)))
+                cache_set("script.service.hue.action", (action, light_group_id))
 
 
 def activate(light_groups):

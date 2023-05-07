@@ -101,6 +101,11 @@
 					</constraints>
 					<control type="spinner" format="string"/>
 				</setting>
+				<setting id="asreset" type="boolean" label="30322" help="30509">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="screensaver" type="boolean" label="30302" help="30502">
 					<level>0</level>
 					<default>false</default>
