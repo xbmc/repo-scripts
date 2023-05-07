@@ -22,19 +22,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip3 install --user kodi-addon-checker
-        
-    - name: List all changed files
-      run: |
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-          echo "$file was changed"
-        done
-
     - name: Extract job variables
       shell: bash
 
       run: |
-        git --no-pager diff --name-only HEAD^
-        echo "addon=$(git --no-pager diff --name-only ..origin/${{ github.event.pull_request.base.ref }} | grep / | cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
+        echo "addon=$(git diff --diff-filter=d --name-only HEAD~ | grep / | cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
       id: extract_vars
 
     - name: Addon-Check
