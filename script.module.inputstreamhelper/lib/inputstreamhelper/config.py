@@ -42,9 +42,10 @@ WIDEVINE_SUPPORTED_ARCHS = [
     'arm64'
 ]
 
-WIDEVINE_ARCH_MAP_X86 = {
+WIDEVINE_ARCH_MAP_REPO = {
     'x86_64': 'x64',
-    'x86': 'ia32'
+    'x86': 'ia32',
+    'arm64': 'arm64'
 }
 
 WIDEVINE_OS_MAP = {
@@ -79,16 +80,17 @@ WIDEVINE_CONFIG_NAME = 'manifest.json'
 
 CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.json'
 
-# To keep the Chrome OS ARM hardware ID list up to date, the following resources can be used:
+# To keep the Chrome OS ARM(64) hardware ID list up to date, the following resources can be used:
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://chromiumdash.appspot.com/serving-builds?deviceCategory=Chrome%20OS
-# Last updated: 2022-02-24
+# Last updated: 2023-03-24
 CHROMEOS_RECOVERY_ARM_HWIDS = [
     'BOB',
     'BURNET',
     'COACHZ',
     'COZMO',
     'DAMU',
+    'DOJO-EJPG',
     'DRUWL',
     'DUMO',
     'ELM',
@@ -107,17 +109,33 @@ CHROMEOS_RECOVERY_ARM_HWIDS = [
     'KEVIN',
     'KODAMA',
     'KRANE-ZDKS',
-    'LAZOR',
-    'LIMOZEEN',
     'MAKOMO-UTTX',
-    'PAZQUEL-HGNV',
     'PICO-EXEM',
-    'POMPOM-MZVS',
+    'QUACKINGSTICK',
     'SCARLET',
     'SPHERION',
+    'TOMATO-LYVN',
     'WILLOW-TFIY',
     'WORMDINGLER-JQAO',
 ]
+
+CHROMEOS_RECOVERY_ARM64_HWIDS = [
+    'KINGOFTOWN-KDDA',
+    'LAZOR',
+    'LIMOZEEN',
+    'MAGNETON-LCKC',
+    'PAZQUEL-HGNV',
+    'PAZQUEL-OPNA',
+    'POMPOM-MZVS',
+    'RUSTY-ZNCE',
+    'STEELIX-VZSZ',
+    'TENTACOOL-ZLJE',
+    'TENTACRUEL-VAFH',
+]
+
+MINIMUM_INPUTSTREAM_VERSION_ARM64 = {
+    'inputstream.adaptive': '20.3.5',
+}
 
 CHROMEOS_BLOCK_SIZE = 512
 
