@@ -27,8 +27,8 @@ jobs:
       shell: bash
 
       run: |
-        echo "addon=$(git --no-pager diff --name-only ..origin/master${{ github.event.pull_request.base.ref }}"
-        echo "addon=$(git --no-pager diff --name-only ..origin/master${{ github.event.pull_request.base.ref }} | grep / | cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
+        echo "addon=$(git --no-pager diff --name-only ..origin/${{ github.event.pull_request.base.ref }})"
+        echo "addon=$(git --no-pager diff --name-only ..origin/${{ github.event.pull_request.base.ref }} | grep / | cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
       id: extract_vars
 
     - name: Addon-Check
