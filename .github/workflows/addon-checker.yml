@@ -27,7 +27,7 @@ jobs:
       shell: bash
 
       run: |
-        gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files.[].path'
+        git --no-pager diff --name-only HEAD^
         echo "addon=$(git --no-pager diff --name-only ..origin/${{ github.event.pull_request.base.ref }} | grep / | cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
       id: extract_vars
 
