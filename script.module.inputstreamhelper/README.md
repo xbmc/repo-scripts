@@ -91,6 +91,11 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.6.0 (2023-05-03)
+- Initial support for AARCH64 Linux (@horstle)
+- Initial support for AARCH64 Macs (@mediaminister)
+- New option to install a specific version on most platforms (@horstle)
+
 ### v0.5.10 (2022-04-18)
 - Fix automatic submission of release (@mediaminister)
 - Update German translation (@tweimer)
