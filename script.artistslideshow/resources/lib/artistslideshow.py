@@ -25,8 +25,9 @@ import sys
 import threading
 import time
 import json as _json
-from kodi_six import xbmc, xbmcgui, xbmcvfs
-from kodi_six.utils import py2_encode, py2_decode
+import xbmc
+import xbmcgui
+import xbmcvfs
 from resources.plugins import *
 from resources.lib.fileops import *
 from resources.lib.url import URL
@@ -115,7 +116,7 @@ class Slideshow(threading.Thread):
         if not path:
             LW.log(['Image path was empty, nothing added'])
             return False
-        if path.endswith(self.VALIDIMAGETYPES):
+        if path.lower().endswith(self.VALIDIMAGETYPES):
             self.IMAGES.append(path)
             LW.log(['Added to image display group: ' + path])
             self.IMAGEADDED = True
@@ -293,8 +294,7 @@ class Main(xbmc.Player):
             LW.log(['unexpected error while getting directory list', e])
             return
         for old_file in old_files:
-            success, loglines = deleteFile(
-                os.path.join(dir_path, py2_encode(old_file)))
+            success, loglines = deleteFile(os.path.join(dir_path, old_file))
             LW.log(loglines)
 
     def _clean_text(self, text):
@@ -438,7 +438,7 @@ class Main(xbmc.Player):
         bio_params['mbid'] = self.MBID
         bio_params['infodir'] = self.INFODIR
         bio_params['localartistdir'] = os.path.join(
-            self.LOCALARTISTPATH, py2_decode(self.NAME))
+            self.LOCALARTISTPATH, self.NAME)
         bio_params['lang'] = self.LANGUAGE
         bio_params['artist'] = self.NAME
         bio = ''
@@ -464,7 +464,7 @@ class Main(xbmc.Player):
         album_params = {}
         album_params['infodir'] = self.INFODIR
         album_params['localartistdir'] = os.path.join(
-            self.LOCALARTISTPATH, py2_decode(self.NAME))
+            self.LOCALARTISTPATH, self.NAME)
         album_params['lang'] = self.LANGUAGE
         album_params['artist'] = self.NAME
         albums = []
@@ -491,7 +491,7 @@ class Main(xbmc.Player):
         similar_params = {}
         similar_params['infodir'] = self.INFODIR
         similar_params['localartistdir'] = os.path.join(
-            self.LOCALARTISTPATH, py2_decode(self.NAME))
+            self.LOCALARTISTPATH, self.NAME)
         similar_params['lang'] = self.LANGUAGE
         similar_params['artist'] = self.NAME
         similar_artists = []
@@ -562,8 +562,8 @@ class Main(xbmc.Player):
         LW.log(['left with', artist_names])
         for artist_name, mbid in _zip_longest(artist_names, mbids, fillvalue=''):
             if artist_name:
-                artists_info.append((py2_encode(artist_name), self._get_musicbrainz_id(
-                    py2_encode(artist_name), mbid)))
+                artists_info.append(
+                    (artist_name, self._get_musicbrainz_id(artist_name, mbid)))
         return artists_info
 
     def _get_current_artists_info(self):
@@ -961,11 +961,10 @@ class Main(xbmc.Player):
         for thedir in dirs:
             if (src == self.LOCALARTISTPATH) and self.USEFANARTFOLDER:
                 image_src = os.path.join(
-                    self.LOCALARTISTPATH, py2_decode(thedir), self.FANARTFOLDER)
+                    self.LOCALARTISTPATH, thedir, self.FANARTFOLDER)
             else:
-                image_src = os.path.join(src, py2_decode(thedir))
-            image_dest = os.path.join(
-                kodi_music_artist_path, py2_decode(thedir))
+                image_src = os.path.join(src, thedir)
+            image_dest = os.path.join(kodi_music_artist_path, thedir)
             LW.log(['moving images from %s to %s' % (image_src, image_dest)])
             files = self._get_file_list(image_src)
             self.FANARTNUMBER = False
@@ -1050,7 +1049,7 @@ class Main(xbmc.Player):
 
     def _set_artwork_from_dir(self, thedir, files):
         for thefile in files:
-            self.SLIDESHOW.AddImage(os.path.join(thedir, py2_decode(thefile)))
+            self.SLIDESHOW.AddImage(os.path.join(thedir, thefile))
 
     def _set_cachedir(self, theartist):
         self.CACHEDIR = self._set_thedir(theartist, 'ArtistSlideshow')
@@ -1122,10 +1121,6 @@ class Main(xbmc.Player):
                 s_name = s_name + self.ILLEGALREPLACE
             else:
                 s_name = s_name + c
-        try:
-            s_name = py2_decode(s_name)
-        except UnicodeDecodeError:
-            s_name = ''
         return s_name
 
     def _set_thedir(self, theartist, dirtype):
@@ -1158,14 +1153,13 @@ class Main(xbmc.Player):
             if (now - self.LASTCACHETRIM > cache_trim_delay):
                 LW.log(['trimming the cache down to %s bytes' %
                        self.MAXCACHESIZE])
-                cache_root = py2_encode(os.path.join(
-                    ADDONDATAPATH, 'ArtistSlideshow', ''))
+                cache_root = os.path.join(ADDONDATAPATH, 'ArtistSlideshow', '')
                 folders, fls = xbmcvfs.listdir(cache_root)
                 LW.log(['cache folders returned:'])
                 LW.log(folders)
                 try:
                     folders.sort(key=lambda x: os.path.getmtime(
-                        os.path.join(cache_root, py2_encode(x))), reverse=True)
+                        os.path.join(cache_root, x)), reverse=True)
                 except Exception as e:
                     LW.log(['unexpected error sorting cache directory', e])
                     return
@@ -1175,19 +1169,17 @@ class Main(xbmc.Player):
                     if self._playback_stopped_or_changed(wait_time=0.1):
                         break
                     cache_size = cache_size + \
-                        self._get_folder_size(os.path.join(
-                            cache_root, py2_encode(folder)))
+                        self._get_folder_size(os.path.join(cache_root, folder))
                     LW.log(['looking at folder %s cache size is now %s' %
                            (folder, cache_size)])
                     if (cache_size > self.MAXCACHESIZE and not first_folder):
-                        self._trim_one_folder(os.path.join(
-                            cache_root, py2_encode(folder)))
+                        self._trim_one_folder(os.path.join(cache_root, folder))
                         if self.LOCALINFOSTORAGE and self.LOCALINFOPATH:
-                            self._trim_one_folder(os.path.join(self.LOCALINFOPATH, py2_decode(
-                                folder)))
+                            self._trim_one_folder(
+                                os.path.join(self.LOCALINFOPATH, folder))
                         else:
                             self._trim_one_folder(os.path.join(
-                                ADDONDATAPATH, 'ArtistInformation', py2_decode(folder)))
+                                ADDONDATAPATH, 'ArtistInformation', folder))
                     first_folder = False
                 self.LASTCACHETRIM = now
 
@@ -1231,8 +1223,8 @@ class Main(xbmc.Player):
             self.ARTISTNUM += 1
             self.NAME = artist
             self.MBID = mbid
-            self._set_infodir(py2_decode(self.NAME))
-            self._set_cachedir(py2_decode(self.NAME))
+            self._set_infodir(self.NAME)
+            self._set_cachedir(self.NAME)
             if (self.ARTISTNUM == 1):
                 self._get_artistinfo()
             images = self._get_file_list(self.CACHEDIR, do_filter=True)
@@ -1300,10 +1292,8 @@ class Main(xbmc.Player):
                     dirs = []
                 if dirs:
                     for thedir in dirs:
-                        src = os.path.join(
-                            src_root, py2_decode(thedir), self.IMGDB)
-                        dst = os.path.join(
-                            dst_root, py2_decode(thedir), self.IMGDB)
+                        src = os.path.join(src_root, thedir, self.IMGDB)
+                        dst = os.path.join(dst_root, thedir, self.IMGDB)
                         success, loglines = moveFile(src, dst)
                         LW.log(loglines)
             src_root = getSettingString('local_artist_path')
@@ -1319,10 +1309,10 @@ class Main(xbmc.Player):
                     dirs = []
                 if dirs:
                     for thedir in dirs:
-                        src = os.path.join(src_root, py2_decode(
-                            thedir), self.FANARTFOLDER, self.IMGDB)
-                        dst = os.path.join(dst_root, py2_decode(
-                            thedir), 'information', self.IMGDB)
+                        src = os.path.join(
+                            src_root, thedir, self.FANARTFOLDER, self.IMGDB)
+                        dst = os.path.join(
+                            dst_root, thedir, 'information', self.IMGDB)
                         success, loglines = moveFile(src, dst)
                         LW.log(loglines)
             self._update_check_file(
