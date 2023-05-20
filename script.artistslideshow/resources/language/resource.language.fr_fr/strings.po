@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-10-26 17:15+0000\n"
+"PO-Revision-Date: 2023-01-01 16:15+0000\n"
 "Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/fr_fr/>\n"
 "Language: fr_fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -52,7 +52,7 @@ msgstr "Artistes similaires"
 
 msgctxt "#32006"
 msgid "Advanced"
-msgstr "Avancés"
+msgstr "Avancé"
 
 # empty strings from id 32007 to 32099
 # Settings
@@ -110,11 +110,11 @@ msgstr "Emplacement personnalisé"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr "Utiliser le diaporama prioritaire"
+msgstr "Inclure le fanart de l'artiste de Kodi"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
-msgstr "Inclure le fanart de l'album depuis Kodi"
+msgstr "Inclure le fanart de l'album de Kodi"
 
 msgctxt "#32116"
 msgid "Limit size of download cache"
@@ -130,7 +130,7 @@ msgstr "Nom alternatif pour le dossier local des fanart"
 
 msgctxt "#32119"
 msgid "Enable debug logging"
-msgstr "Activer la journalisation de débogage"
+msgstr "Activer la journalisation du débogage"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
@@ -270,7 +270,7 @@ msgstr "Cette opération déplacera et renommera vos fichiers d'images et ne pou
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr "Impossible de récupérer le chemin d'accès au stockage des images des artistes musicaux de Kodi. Veuillez vérifier Paramètres > Médiathèque > Musique et assurez-vous que le Dossier d'informations de l'artiste est défini."
+msgstr "Impossible de récupérer le chemin d'accès au stockage des images des artistes musicaux de Kodi. Veuillez vérifier : Paramètres > Médiathèque > Musique et assurez-vous que le Dossier d'informations de l'artiste est défini."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
@@ -417,7 +417,7 @@ msgstr "Lituanien"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr "Macédoine"
+msgstr "Macédonien"
 
 msgctxt "#32930"
 msgid "Norwegian"

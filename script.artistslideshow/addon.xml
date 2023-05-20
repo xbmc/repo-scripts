@@ -1,9 +1,8 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.3">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.5">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
 		<import addon="script.module.defusedxml" version="0.6.0+matrix.1" />
-		<import addon="script.module.kodi-six" version="0.1.3.1" />
 		<import addon="script.module.future" version="0.17.1+matrix.2" />
 	</requires>
 	<extension library="default.py" point="xbmc.python.script">
@@ -11,9 +10,10 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.3.3.3
-- trim_cache now deletes information as well as images
-- update to new settings format
+v.3.3.5
+- fix for AS not accepting images with uppercase extensions
+- removed Leia to Matrix transition code
+- updated translation files
 		</news>
 		<assets>
         	<icon>icon.png</icon>
@@ -36,6 +36,7 @@ v.3.3.3
 		<summary lang="es_AR">Bajá imágenes e información adicional sobre el artista</summary>
 		<summary lang="es_ES">Descarga imágenes e información adicional del intérprete que esté sonando</summary>
 		<summary lang="es_MX">Descargar imágenes e información adicional del artista actualmente en reproducción</summary>
+		<summary lang="et_EE">Lae alla pilte ja lisateavet hetkel mängiva esitaja kohta</summary>
 		<summary lang="fi_FI">Noutaa kuvia ja lisätietoja parhaillaan toistettavasta esittäjästä</summary>
 		<summary lang="fr_CA">Télécharger des images et des infos additionnelles sur l&apos;artiste écouté</summary>
 		<summary lang="fr_FR">Télécharger les images et les informations additionnelles de l&apos;artiste en cours de lecture</summary>
@@ -67,6 +68,7 @@ v.3.3.3
 		<description lang="en_US">Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists&apos; images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
 		<description lang="es_ES">Addon para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del intérprete que se está reproduciendo. Las imágenes, junto con imágenes de intérpretes locales, y la información puede ser utilizada por la piel para crear una presentación de diapositivas para el intérprete que se está escuchando.</description>
 		<description lang="es_MX">Complemento para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del artista actualmente en reproducción. Las imágenes, junto con las imágenes e información locales de los artistas pueden ser utilizados por la máscara para crear una presentación del artista que estés escuchando.</description>
+		<description lang="et_EE">Lisamoodul, millega saab alla laadida pilte ja lisateavet fanart.tv ja theaudiodb.com saitidelt hetkel mängiva esitaja kohta. Koos meediakogus leiduvate esitajate piltide ja teabega saab rüü neid kasutada kuulatava esitaja slaidiseansi loomiseks.</description>
 		<description lang="fi_FI">Lisäosa parhaillaan kuunneltavan esittäjän kuvien ja tietojen noutoon mm. Fanart.tv- ja TheAudioDB.com-palveluista. Ulkoasut voivat luoda kuvaesityksiä kuunneltavasta esittäjästä käyttäen näitä tietoja ja esittäjien paikallisia kuvia.</description>
 		<description lang="fr_CA">Addiciel pour télécharger des images et des informations additionnelles sur fanart.tv et theaudiodb.com de l&apos;artiste en cours d&apos;écoute. Les images, ainsi que les images locales de l&apos;artiste, et les infos peuvent être utilisées par l&apos;habillage pour créer un diaporama pour l&apos;artiste en cours d&apos;écoute.</description>
 		<description lang="fr_FR">Extension permettant de télécharger des images et des informations supplémentaires depuis fanart.tv et depuis theaudiodb.com de l&apos;artiste en cours d&apos;écoute. Les images téléchargées, les images locales des artistes et les informations peuvent être utilisées par le skin pour créer un diaporama pour l&apos;artiste écouté.</description>

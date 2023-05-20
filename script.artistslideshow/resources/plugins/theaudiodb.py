@@ -4,10 +4,9 @@ import base64
 import os
 import time
 import random
-from kodi_six import xbmcvfs
+import xbmcvfs
 from resources.lib.url import URL
 from resources.lib.fileops import readFile, writeFile, deleteFile, checkPath
-from kodi_six.utils import py2_encode
 import json as _json
 try:
     from . import theaudiodb_info as settings
@@ -225,7 +224,7 @@ class objectConfig(object):
             self.LOGLINES.extend(uloglines)
             if success:
                 success, wloglines = writeFile(
-                    py2_encode(_json.dumps(json_data)), filepath)
+                    _json.dumps(json_data), filepath)
                 self.LOGLINES.extend(wloglines)
         exists, cloglines = checkPath(filepath, False)
         self.LOGLINES.extend(cloglines)
