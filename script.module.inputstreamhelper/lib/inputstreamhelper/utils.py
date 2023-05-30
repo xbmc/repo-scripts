@@ -164,21 +164,26 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
 
             progress.update(percent, prog_message)
 
-    if checksum and calc_checksum.hexdigest() != checksum:
-        progress.close()
-        req.close()
-        log(4, 'Download failed, checksums do not match!')
-        return False
-
-    if dl_size and stat_file(dl_path).st_size() != dl_size:
-        progress.close()
-        req.close()
-        free_space = sizeof_fmt(diskspace())
-        log(4, 'Download failed, filesize does not match! Filesystem full? Remaining diskspace in temp: {}.'.format(free_space))
-        return False
-
     progress.close()
     req.close()
+
+    checksum_ok = (not checksum or calc_checksum.hexdigest() == checksum)
+    size_ok = (not dl_size or stat_file(dl_path).st_size() == dl_size)
+
+    if not all((checksum_ok, size_ok)):
+        free_space = sizeof_fmt(diskspace())
+        log(4, 'Something may be wrong with the downloaded file.')
+        if not checksum_ok:
+            log(4, 'Provided checksum: {}\nCalculated checksum: {}'.format(checksum, calc_checksum.hexdigest()))
+        if not size_ok:
+            free_space = sizeof_fmt(diskspace())
+            log(4, 'Expected filesize: {}\nReal filesize: {}\nRemaining diskspace: {}'.format(dl_size, stat_file(dl_path).st_size(), free_space))
+
+        if yesno_dialog(localize(30003), localize(30070, filename=filename)):  # file maybe broken. Continue anyway?
+            log(4, 'Continuing despite possibly corrupt file!')
+        else:
+            return False
+
     store('download_path', dl_path)
     return True
 
