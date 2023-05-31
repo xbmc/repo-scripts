@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.protobuf"
+    name="protobuf"
+    version="4.23.2"
+    provider-name="Andrea Ghensi">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+  </requires>
+  <extension point="xbmc.python.module" library="resources/lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Protocol Buffers (a.k.a., protobuf) are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.</summary>
+    <description lang="en">Packed for KODI/XBMC from https://github.com/google/protobuf</description>
+    <license>https://github.com/google/protobuf/blob/master/LICENSE</license>
+    <platform>all</platform>
+    <website>https://protobuf.dev</website>
+    <source>https://github.com/sanzoghenzo/kodi-protobuf</source>
+    <email>andrea.ghensi@gmail.com</email>
+  <assets>
+    <icon>resources/icon.png</icon>
+  </assets>
+  </extension>
+</addon>
