@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+    <defaultcontrol always="true">9902</defaultcontrol>
+    <controls>
+        <control type="group">
+            <centertop>50%</centertop>
+            <centerleft>50%</centerleft>
+            <height>1000</height>
+            <width>1840</width>
+            <include content="DialogBackgroundCommons">
+                <param name="width" value="1840" />
+                <param name="height" value="1000" />
+                <param name="header_label" value="" />
+                <param name="header_id" value="9901" />
+            </include>
+
+            <control type="group">
+                <bottom>100</bottom>
+
+                <!-- Table of Contents -->
+                <control type="image">
+                    <left>0</left>
+                    <top>80</top>
+                    <width>520</width>
+                    <bottom>2</bottom>
+                    <texture border="40">buttons/dialogbutton-nofo.png</texture>
+                </control>
+                <control type="list" id="9902">
+                    <left>20</left>
+                    <top>100</top>
+                    <width>480</width>
+                    <bottom>20</bottom>
+                    <onup>9902</onup>
+                    <ondown>9902</ondown>
+                    <onleft>9001</onleft>
+                    <onright>61</onright>
+                    <scrolltime>200</scrolltime>
+                    <include content="DefaultSimpleListLayout">
+                        <param name="width" value="480" />
+                        <param name="list_id" value="9902" />
+                    </include>
+                </control>
+
+                <!-- Article Textbox and Scrollbar -->
+                <control type="image">
+                    <left>500</left>
+                    <top>80</top>
+                    <right>345</right>
+                    <bottom>2</bottom>
+                    <texture border="40">buttons/dialogbutton-nofo.png</texture>
+                </control>
+                <control type="textbox" id="9903">
+                    <left>550</left>
+                    <top>110</top>
+                    <right>395</right>
+                    <bottom>32</bottom>
+                    <shadowcolor>black</shadowcolor>
+                    <font>font14</font>
+                    <monofont>Mono26</monofont>
+                    <pagecontrol>61</pagecontrol>
+                </control>
+                <control type="scrollbar" id="61">
+                    <right>340</right>
+                    <top>100</top>
+                    <width>12</width>
+                    <bottom>20</bottom>
+                    <onleft>9902</onleft>
+                    <onright>9001</onright>
+                    <orientation>vertical</orientation>
+                </control>
+
+                <!-- Creative Commons Attribution Image -->
+                <control type="image" id="9905">
+                    <right>20</right>
+                    <bottom>20</bottom>
+                    <width>175</width>
+                    <height>175</height>
+                    <aspectratio align="right" aligny="bottom">keep</aspectratio>
+                </control>
+
+                <!-- Close Button -->
+                <control type="grouplist" id="9000">
+                    <right>20</right>
+                    <top>80</top>
+                    <width>300</width>
+                    <onleft>61</onleft>
+                    <itemgap>dialogbuttons_itemgap</itemgap>
+                    <onright>3</onright>
+                    <include content="DefaultDialogButton">
+                        <param name="id" value="9001" />
+                        <param name="label" value="$LOCALIZE[222]" />
+                        <param name="onclick" value="Close" />
+                    </include>
+                </control>
+
+                <!-- Article Image and Description Text -->
+                <control type="group">
+                    <right>20</right>
+                    <top>180</top>
+                    <width>285</width>
+                    <bottom>180</bottom>
+                    <visible>!String.IsEmpty(Window.Property(Image))</visible>
+                    <control type="image">
+                        <aspectratio align="center" aligny="top">keep</aspectratio>
+                        <texture background="true">$INFO[Window.Property(Image)]</texture>
+                        <bottom>160</bottom>
+                    </control>
+                    <control type="textbox">
+                        <aligny>center</aligny>
+                        <align>center</align>
+                        <height>110</height>
+                        <bottom>0</bottom>
+                        <font>font12</font>
+                        <align>bottom</align>
+                        <textcolor>grey</textcolor>
+                        <label>$INFO[Window.Property(ImageText)]</label>
+                    </control>
+                </control>
+            </control>
+
+
+            <!-- Creative Commons Attribution Text -->
+            <control type="textbox" id="9904">
+                <bottom>20</bottom>
+                <height>80</height>
+                <font>font12</font>
+                <align>center</align>
+                <textcolor>grey</textcolor>
+            </control>
+        </control>
+    </controls>
+</window>
