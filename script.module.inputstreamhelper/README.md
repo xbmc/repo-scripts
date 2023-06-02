@@ -91,6 +91,10 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.6.1 (2023-05-30)
+- Performance improvements on Linux ARM (@horstle)
+- This will be the last release for Python 2 i.e. Kodi 18 (Leia) and below. The next release will require Python 3 and Kodi 19 (Matrix) or higher.
+
 ### v0.6.0 (2023-05-03)
 - Initial support for AARCH64 Linux (@horstle)
 - Initial support for AARCH64 Macs (@mediaminister)
