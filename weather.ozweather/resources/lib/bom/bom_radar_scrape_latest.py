@@ -2,6 +2,7 @@
 
 import re
 import requests
+# noinspection PyUnresolvedReferences
 from pprint import pprint
 from bs4 import BeautifulSoup
 

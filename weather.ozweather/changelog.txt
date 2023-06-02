@@ -1,3 +1,6 @@
+2.0.8
+- Fix for moved ABC weather videos, update list of radars
+
 2.0.6
 - Update list of radars
 
