@@ -84,53 +84,22 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://chromiumdash.appspot.com/serving-builds?deviceCategory=Chrome%20OS
 # Last updated: 2023-03-24
-CHROMEOS_RECOVERY_ARM_HWIDS = [
-    'BOB',
-    'BURNET',
-    'COACHZ',
-    'COZMO',
-    'DAMU',
-    'DOJO-EJPG',
-    'DRUWL',
-    'DUMO',
-    'ELM',
-    'ESCHE',
-    'FENNEL',
-    'FENNEL14',
-    'HANA',
-    'HAYATO-YLRO',
-    'HOMESTAR-MBLE',
-    'JUNIPER-HVPU',
-    'KAKADU-WFIQ',
-    'KAPPA',
-    'KAPPA-EWFK',
-    'KATSU',
-    'KENZO-IGRW',
-    'KEVIN',
-    'KODAMA',
-    'KRANE-ZDKS',
-    'MAKOMO-UTTX',
-    'PICO-EXEM',
-    'QUACKINGSTICK',
-    'SCARLET',
-    'SPHERION',
-    'TOMATO-LYVN',
-    'WILLOW-TFIY',
-    'WORMDINGLER-JQAO',
+CHROMEOS_RECOVERY_ARM_BNAMES = [
+    'asurada',
+    'bob',
+    'cherry',
+    'elm',
+    'hana',
+    'jacuzzi',
+    'kevin',
+    'kukui',
+    'scarlet',
+    'strongbad',
 ]
 
-CHROMEOS_RECOVERY_ARM64_HWIDS = [
-    'KINGOFTOWN-KDDA',
-    'LAZOR',
-    'LIMOZEEN',
-    'MAGNETON-LCKC',
-    'PAZQUEL-HGNV',
-    'PAZQUEL-OPNA',
-    'POMPOM-MZVS',
-    'RUSTY-ZNCE',
-    'STEELIX-VZSZ',
-    'TENTACOOL-ZLJE',
-    'TENTACRUEL-VAFH',
+CHROMEOS_RECOVERY_ARM64_BNAMES = [
+    'corsola',
+    'trogdor',
 ]
 
 MINIMUM_INPUTSTREAM_VERSION_ARM64 = {
