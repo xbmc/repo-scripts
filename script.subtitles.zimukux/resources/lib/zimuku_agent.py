@@ -32,9 +32,7 @@ class Zimuku_Agent:
     def __init__(self, base_url, dl_location, logger, unpacker, settings, ocrUrl='https://ddddocr.lm317379829.repl.co/'):
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
-        self.INIT_PAGE = base_url + '/?security_verify_data=313932302c31303830'
         # self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
-        self.TOKEN_PARAM = 'security_verify_data=313932302c31303830'
         self.ZIMUKU_API = '%s/search?q=%%s' % base_url
         self.DOWNLOAD_LOCATION = dl_location
         self.FILE_MIN_SIZE = 1024
@@ -324,8 +322,9 @@ class Zimuku_Agent:
             return self.double_filter(subtitle_list, items)
 
         # 2. 直接找不到，看是否存在同一季的链接，进去找
-        season_name_chn = ('一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四', '十五')[
-            int(items['season']) - 1] if s_e != 'N/A' else 'N/A'
+        season_name_chn = \
+            ('一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四', '十五')[
+                int(items['season']) - 1] if s_e != 'N/A' else 'N/A'
         season_list = soup.find_all("div", class_="item prel clearfix")
 
         page_list = soup.find('div', class_='pagination')
