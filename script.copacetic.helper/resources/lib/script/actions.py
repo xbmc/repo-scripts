@@ -3,8 +3,8 @@
 import urllib.parse as urllib
 
 from resources.lib.service.art import ImageEditor
-from resources.lib.utilities import (DIALOG, clear_playlists, infolabel,
-                                     json_call, log_and_execute,
+from resources.lib.utilities import (DIALOG, clear_playlists, condition, infolabel,
+                                     json_call, log, log_and_execute, skin_string,
                                      window_property, xbmc)
 
 
@@ -266,3 +266,119 @@ def split_random_return(string, **kwargs):
 
     window_property(name, set=random)
     return random
+
+def widget_move(posa, posb, **kwargs):
+    tempa_name = ''
+    tempa_target = ''
+    tempa_sortmethod = ''
+    tempa_sortorder = ''
+    tempa_path = ''
+    tempa_limit = ''
+    tempa_thumb = False,
+    tempb_name = ''
+    tempb_target = ''
+    tempb_sortmethod = ''
+    tempb_sortorder = ''
+    tempb_path = ''
+    tempb_limit = ''
+    tempb_thumb = False
+
+    tempa_view = infolabel(f'Skin.String(Widget{posa}_View)')
+    tempa_display = infolabel(f'Skin.String(Widget{posa}_Display)')
+    tempb_view = infolabel(f'Skin.String(Widget{posb}_View)')
+    tempb_display = infolabel(f'Skin.String(Widget{posb}_Display)')
+
+    if condition(f'Skin.HasSetting(Widget{posa}_Content_Disabled)'):
+        tempa_content = 'Disabled'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_InProgress)'):
+        tempa_content = 'InProgress'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_NextUp)'):
+        tempa_content = 'NextUp'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LatestMovies)'):
+        tempa_content = 'LatestMovies'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LatestTVShows)'):
+        tempa_content = 'LatestTVShows'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RandomMovies)'):
+        tempa_content = 'RandomMovies'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RandomTVShows)'):
+        tempa_content = 'RandomTVShows'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LatestAlbums)'):
+        tempa_content = 'LatestAlbums'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RecentAlbums)'):
+        tempa_content = 'RecentAlbums'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RandomAlbums)'):
+        tempa_content = 'RandomAlbums'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LikedSongs)'):
+        tempa_content = 'LikedSongs'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_Favourites)'):
+        tempa_content = 'Favourites'
+    elif condition(f'Skin.HasSetting(Widget{posa}_Content_Custom)'):
+        tempa_content = 'Custom'
+        tempa_name = infolabel(f'Skin.String(Widget{posa}_Custom_Name)')
+        tempa_target = infolabel(f'Skin.String(Widget{posa}_Custom_Target)')
+        tempa_sortmethod = infolabel(f'Skin.String(Widget{posa}_Custom_SortMethod)')
+        tempa_sortorder = infolabel(f'Skin.String(Widget{posa}_Custom_SortOrder)')
+        tempa_path = infolabel(f'Skin.String(Widget{posa}_Custom_Path)')
+        tempa_limit = infolabel(f'Skin.String(Widget{posa}_Custom_Limit)')
+        tempa_thumb = True if condition(f'Skin.HasSetting(Widget{posa}_Episode_Thumbs)') else False
+
+    if condition(f'Skin.HasSetting(Widget{posb}_Content_Disabled)'):
+        tempb_content = 'Disabled'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_InProgress)'):
+        tempb_content = 'InProgress'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_NextUp)'):
+        tempb_content = 'NextUp'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LatestMovies)'):
+        tempb_content = 'LatestMovies'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LatestTVShows)'):
+        tempb_content = 'LatestTVShows'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RandomMovies)'):
+        tempb_content = 'RandomMovies'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RandomTVShows)'):
+        tempb_content = 'RandomTVShows'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LatestAlbums)'):
+        tempb_content = 'LatestAlbums'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RecentAlbums)'):
+        tempb_content = 'RecentAlbums'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RandomAlbums)'):
+        tempb_content = 'RandomAlbums'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LikedSongs)'):
+        tempb_content = 'LikedSongs'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_Favourites)'):
+        tempb_content = 'Favourites'
+    elif condition(f'Skin.HasSetting(Widget{posb}_Content_Custom)'):
+        tempb_content = 'Custom'
+        tempb_name = infolabel(f'Skin.String(Widget{posb}_Custom_Name)')
+        tempb_target = infolabel(f'Skin.String(Widget{posb}_Custom_Target)')
+        tempb_sortmethod = infolabel(f'Skin.String(Widget{posb}_Custom_SortMethod)')
+        tempb_sortorder = infolabel(f'Skin.String(Widget{posb}_Custom_SortOrder)')
+        tempb_path = infolabel(f'Skin.String(Widget{posb}_Custom_Path)')
+        tempb_limit = infolabel(f'Skin.String(Widget{posb}_Custom_Limit)')
+        tempb_thumb = True if condition(f'Skin.HasSetting(Widget{posb}_Episode_Thumbs)') else False
+    
+    xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posa}_Content_{tempa_content})')
+    xbmc.executebuiltin(f'Skin.SetBool(Widget{posa}_Content_{tempb_content})')
+    xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posb}_Content_{tempb_content})')
+    xbmc.executebuiltin(f'Skin.SetBool(Widget{posb}_Content_{tempa_content})')
+    skin_string(f'Widget{posb}_View', set=tempa_view)
+    skin_string(f'Widget{posa}_View', set=tempb_view)
+    skin_string(f'Widget{posb}_Display', set=tempa_display)
+    skin_string(f'Widget{posa}_Display', set=tempb_display)
+    skin_string(f'Widget{posb}_Custom_Name', set=tempa_name)
+    skin_string(f'Widget{posa}_Custom_Name', set=tempb_name)
+    skin_string(f'Widget{posb}_Custom_Target', set=tempa_target)
+    skin_string(f'Widget{posa}_Custom_Target', set=tempb_target)
+    skin_string(f'Widget{posb}_Custom_SortMethod', set=tempa_sortmethod)
+    skin_string(f'Widget{posa}_Custom_SortMethod', set=tempb_sortmethod)
+    skin_string(f'Widget{posb}_Custom_SortOrder', set=tempa_sortorder)
+    skin_string(f'Widget{posa}_Custom_SortOrder', set=tempb_sortorder)
+    skin_string(f'Widget{posb}_Custom_Path', set=tempa_path)
+    skin_string(f'Widget{posa}_Custom_Path', set=tempb_path)
+    skin_string(f'Widget{posb}_Custom_Limit', set=tempa_limit)
+    skin_string(f'Widget{posa}_Custom_Limit', set=tempb_limit)
+    if tempa_thumb and not tempb_thumb:
+        xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posa}_Episode_Thumbs)')
+        xbmc.executebuiltin(f'Skin.SetBool(Widget{posb}_Episode_Thumbs)')
+    elif tempb_thumb and not tempa_thumb:
+        xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posb}_Episode_Thumbs)')
+        xbmc.executebuiltin(f'Skin.SetBool(Widget{posa}_Episode_Thumbs)')
