@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.requests" name="requests" version="2.27.1+matrix.1" provider-name="Python Software Foundation">
+<addon id="script.module.requests" name="requests" version="2.31.0" provider-name="Python Software Foundation">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.certifi" version="2022.5.18+matrix.1"/>
-    <import addon="script.module.chardet" version="4.0.0+matrix.1"/>
-    <import addon="script.module.idna" version="3.3.0+matrix.1"/>
-    <import addon="script.module.urllib3" version="1.26.9+matrix.1"/>
+    <import addon="script.module.certifi" version="2023.5.7"/>
+    <import addon="script.module.chardet" version="5.1.0"/>
+    <import addon="script.module.idna" version="3.4.0"/>
+    <import addon="script.module.urllib3" version="1.26.16+matrix.1"/>
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
