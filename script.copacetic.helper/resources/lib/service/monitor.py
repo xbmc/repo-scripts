@@ -117,7 +117,7 @@ class Monitor(xbmc.Monitor):
             'Control.HasFocus(3209)]'
         ):
             widget = infolabel('System.CurrentControlID')
-            self._on_scroll(key=widget, return_color=False)
+            self._on_scroll(key=widget)
             self.waitForAbort(0.2)
 
         # slideshow window is visible run SlideshowMonitor()

@@ -280,7 +280,10 @@ class SlideshowMonitor:
 
     def _set_art(self, key, items):
         art = random.choice(items)
-        fanart = self._url_decode_path(art.get('fanart', ''))
+        # fanart = self._url_decode_path(art.get('fanart'))
+        fanarts = {key: value for (key, value) in art.items() if 'fanart' in key}
+        fanart = random.choice(list(fanarts.values()))
+        fanart = self._url_decode_path(fanart)
         window_property(f'{key}_Fanart', set=fanart)
         # clearlogo if present otherwise clear
         clearlogo = art.get('clearlogo', False)

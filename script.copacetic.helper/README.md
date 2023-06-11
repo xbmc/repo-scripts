@@ -14,14 +14,21 @@ All code contained in this project is licensed under GPL 3.0.
 
 ### Changelog
 
+**1.0.5**
+- Added script for easily re-ordering widgets in Copacetic settings screen
+
+**1.0.4**
+- Return dominant colour for home widgets when clearlogo cropper is active
+- Added fanart multiart to backgtround slideshows
+
 **1.0.3**
- - Updated fanart.
+- Updated fanart.
 
 **1.0.2**
- - Fixes for errors flagged by Kodi Addon Checker workflow during submission process.
+- Fixes for errors flagged by Kodi Addon Checker workflow during submission process.
 
 **1.0.1**
- - Fix for an error when the label passessd to the function clean_filename() was not escaped properly. Now to avoid the issue, by default, if no label is provided, the function will pull the listitem label directly using xbmc.getInfoLabel('ListItem.Label')
+- Fix for an error when the label passessd to the function clean_filename() was not escaped properly. Now to avoid the issue, by default, if no label is provided, the function will pull the listitem label directly using xbmc.getInfoLabel('ListItem.Label')
 
 **1.0.0** 
- - Initial release.
+- Initial release.
