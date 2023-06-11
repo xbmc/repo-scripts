@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="2.0.8" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="Oz Weather" version="2.0.9" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
     	<import addon="script.module.requests" version="2.22.0+matrix.1"/>
@@ -22,8 +22,8 @@
        		<icon>icon.png</icon>
        		<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>v2.0.8
-			- Fix for moved ABC weather videos, update list of radars
+		<news>2.0.9
+			- Better fix for ABC weather video
     	</news>
 	</extension>
 </addon>
