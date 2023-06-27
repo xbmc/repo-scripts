@@ -85,6 +85,10 @@ msgctxt "#30030"
 msgid "Display/Video"
 msgstr ""
 
+msgctxt "#30031"
+msgid "Load and display games of current week"
+msgstr ""
+
 msgctxt "#30032"
 msgid "Coaches Film"
 msgstr ""
@@ -151,4 +155,8 @@ msgstr ""
 
 msgctxt "#30051"
 msgid "Inputstream Adaptive is not installed or is disabled."
+msgstr ""
+
+msgctxt "#30052"
+msgid "Display date and time of kickoff"
 msgstr ""
