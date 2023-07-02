@@ -83,23 +83,25 @@ class AmbiGroup(lightgroup.LightGroup):
     def onAVStarted(self):
         xbmc.log(f"Ambilight AV Started. Group enabled: {self.enabled} , isPlayingVideo: {self.isPlayingVideo()}, isPlayingAudio: {self.isPlayingAudio()}, self.playbackType(): {self.playback_type()}")
         # xbmc.log(f"Ambilight Settings: Interval: {self.update_interval}, transitionTime: {self.transition_time}")
-        self.state = STATE_PLAYING
-        if self.enabled:
-            # save light state
-            self.saved_light_states = self._get_light_states(self.ambi_lights, self.bridge)
 
-            self.video_info_tag = self.getVideoInfoTag()
-            if self.isPlayingVideo():
-                if self.enabled and self.check_active_time() and self.check_video_activation(self.video_info_tag):
+        if self.isPlayingVideo():
+            self.state = STATE_PLAYING
+            if self.enabled:
+                # save light state
+                self.saved_light_states = self._get_light_states(self.ambi_lights, self.bridge)
 
-                    if self.disable_labs:
-                        self._stop_effects()
+                self.video_info_tag = self.getVideoInfoTag()
+                if self.isPlayingVideo():
+                    if self.enabled and self.check_active_time() and self.check_video_activation(self.video_info_tag):
 
-                    if self.force_on:
-                        self._force_on(self.ambi_lights, self.bridge, self.saved_light_states)
+                        if self.disable_labs:
+                            self._stop_effects()
 
-                    ambi_loop_thread = Thread(target=self._ambi_loop, name="_ambi_loop", daemon=True)
-                    ambi_loop_thread.start()
+                        if self.force_on:
+                            self._force_on(self.ambi_lights, self.bridge, self.saved_light_states)
+
+                        ambi_loop_thread = Thread(target=self._ambi_loop, name="_ambi_loop", daemon=True)
+                        ambi_loop_thread.start()
 
     def onPlayBackStopped(self):
         # always stop ambilight even if group is disabled or it'll run forever
