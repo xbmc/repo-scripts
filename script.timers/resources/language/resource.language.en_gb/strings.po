@@ -677,6 +677,10 @@ msgctxt "#32288"
 msgid "run addon"
 msgstr ""
 
+msgctxt "#32289"
+msgid "interrupt running timers"
+msgstr ""
+
 msgctxt "#32300"
 msgid "Opens a dialog where you can enter a duration for pause from now."
 msgstr ""
