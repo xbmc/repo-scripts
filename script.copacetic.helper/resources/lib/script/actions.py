@@ -1,11 +1,9 @@
 # author: realcopacetic
 
-import urllib.parse as urllib
-
 from resources.lib.service.art import ImageEditor
-from resources.lib.utilities import (DIALOG, clear_playlists, condition, infolabel,
-                                     json_call, log, log_and_execute, skin_string,
-                                     window_property, xbmc)
+from resources.lib.utilities import (DIALOG, clear_playlists, condition,
+                                     infolabel, json_call, log_and_execute,
+                                     skin_string, window_property, xbmc)
 
 
 def clean_filename(label=False, **kwargs):
@@ -219,22 +217,6 @@ def rate_song(**kwargs):
         '''
 
 
-def return_label(property=True, **kwargs):
-
-    label = kwargs.get('label', xbmc.getInfoLabel('ListItem.Label'))
-    find = kwargs.get('find', '.')
-    replace = kwargs.get('replace', ' ')
-
-    count = label.count(find)
-    label = label.replace(urllib.unquote(find),
-                          urllib.unquote(replace),
-                          count)
-    if property:
-        window_property('Return_Label', set=label)
-    else:
-        return label
-
-
 def shuffle_artist(**kwargs):
     clear_playlists()
 
@@ -243,29 +225,7 @@ def shuffle_artist(**kwargs):
               item={'artistid': dbid},
               options={'shuffled': True},
               parent='shuffle_artist')
-
-
-def split(string, **kwargs):
-    separator = kwargs.get('separator', ' / ')
-    name = kwargs.get('name', 'Split')
-
-    for count, value in enumerate(string.split(separator)):
-        window_property(f'{name}.{count}', set=value)
-
-
-def split_random_return(string, **kwargs):
-    import random
-
-    separator = kwargs.get('separator', ' / ')
-    name = kwargs.get('name', 'SplitRandomReturn')
-    string = random.choice(string.split(separator))
-    random = random.choice(string.split(' & '))
-    random = return_label(label=random, find='-', replace=' ',
-                          property=False) if random != 'Sci-Fi' else random
-    random = random.strip()
-
-    window_property(name, set=random)
-    return random
+    
 
 def widget_move(posa, posb, **kwargs):
     tempa_name = ''

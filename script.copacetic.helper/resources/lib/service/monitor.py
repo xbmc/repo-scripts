@@ -10,9 +10,9 @@ from resources.lib.service.settings import SettingsMonitor
 from resources.lib.utilities import (CROPPED_FOLDERPATH, LOOKUP_XML,
                                      TEMP_FOLDERPATH, condition, create_dir,
                                      get_cache_size, infolabel, log,
-                                     log_and_execute, validate_path,
+                                     log_and_execute, split,
+                                     split_random_return, validate_path,
                                      window_property)
-
 
 XMLSTR = '''<?xml version="1.0" encoding="utf-8"?>
 <data>
@@ -73,8 +73,16 @@ class Monitor(xbmc.Monitor):
 
     def _get_skindir(self):
         skindir = xbmc.getSkinDir()
-        if skindir == 'skin.copacetic':
+        if 'skin.copacetic' in skindir:
             return True
+
+    def _get_info(self):
+        split_random_return(
+            infolabel('ListItem.Director'), name='RandomDirector')
+        split_random_return(
+            infolabel('ListItem.Genre'), name='RandomGenre')
+        split(infolabel('ListItem.Writer'), name='WriterSplit')
+        split(infolabel('ListItem.Studio'), name='StudioSplit')
 
     def poller(self):
         # video playing fullscreen
@@ -82,6 +90,24 @@ class Monitor(xbmc.Monitor):
             'VideoPlayer.IsFullscreen'
         ):
             self.waitForAbort(1)
+
+        # info screen visible and main menu selected
+        elif condition(
+            '[Window.Is(movieinformation) | '
+            'Window.Is(musicinformation) | '
+            'Window.Is(songinformation)] + !['
+            'Control.HasFocus(3201) | '
+            'Control.HasFocus(3202) | '
+            'Control.HasFocus(3203) | '
+            'Control.HasFocus(3204) | '
+            'Control.HasFocus(3205) | '
+            'Control.HasFocus(3206) | '
+            'Control.HasFocus(3207) | '
+            'Control.HasFocus(3208) | '
+            'Control.HasFocus(3209)]'
+        ):
+            self._on_scroll(crop=False, return_color=False, get_info=True)
+            self.waitForAbort(0.2)
 
         # secondary list has focus and clearlogo view visible
         elif condition(
@@ -164,15 +190,19 @@ class Monitor(xbmc.Monitor):
             self.check_settings = True
             self.waitForAbort(1)
 
-    def _on_scroll(self, key='ListItem', return_color=True):
-        current_item, current_dbid, current_dbtype = self._current_item(key)
+    def _on_scroll(self, key='ListItem', crop=True, return_color=True, get_info=False):
+        path, current_item, current_dbid, current_dbtype = self._current_item(
+            key)
         if (
             current_item != self.position or
             current_dbid != self.dbid or
             current_dbtype != self.dbtype
         ) and not self._container_scrolling(key):
-            self._clearlogo_cropper(
-                source=key, return_color=return_color, reporting=window_property)
+            if crop:
+                self._clearlogo_cropper(
+                    source=key, return_color=return_color, reporting=window_property)
+            if get_info:
+                self._get_info()
             self.position = current_item
             self.dbid = current_dbid
             self.dbtype = current_dbtype
@@ -212,7 +242,7 @@ class Monitor(xbmc.Monitor):
         item = infolabel(f'{container}.CurrentItem')
         dbid = infolabel(f'{container}.ListItem.DBID')
         dbtype = infolabel(f'{container}.ListItem.DBType')
-        return (item, dbid, dbtype)
+        return (container, item, dbid, dbtype)
 
     def _container_scrolling(self, key='ListItem'):
         container = 'Container' if key == 'ListItem' else f'Container({key})'
