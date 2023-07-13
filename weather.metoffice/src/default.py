@@ -14,52 +14,76 @@
 # *  along with XBMC; see the file COPYING. If not, write to
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
-from metoffice.utilities import gettext as _
-from metoffice.constants import WINDOW, ADDON, API_KEY, ADDON_DATA_PATH, ADDON_BANNER_PATH
-from metoffice import urlcache, properties, utilities
 import socket
 import sys
+from urllib.error import HTTPError
+
+import xbmc
 
 import setlocation
+from metoffice import properties, urlcache, utilities
+from metoffice.constants import (
+    ADDON_BANNER_PATH,
+    ADDON_DATA_PATH,
+    API_KEY,
+    addon,
+    window,
+)
+from metoffice.utilities import gettext as _
 
 socket.setdefaulttimeout(20)
 
 
-@utilities.failgracefully
 def main():
-    if ADDON.getSetting('EraseCache') == 'true':
+    if addon().getSetting("EraseCache") == "true":
         try:
             urlcache.URLCache(ADDON_DATA_PATH).erase()
         finally:
-            ADDON.setSetting('EraseCache', 'false')
+            addon().setSetting("EraseCache", "false")
 
     if not API_KEY:
-        raise Exception(_("No API Key."), _("Enter your Met Office API Key under settings."))
+        raise Exception(
+            _("No API Key."), _("Enter your Met Office API Key under settings.")
+        )
 
-    if sys.argv[1] in ['ObservationLocation', 'ForecastLocation', 'RegionalLocation']:
+    if sys.argv[1] in ["ObservationLocation", "ForecastLocation", "RegionalLocation"]:
         setlocation.main(sys.argv[1])
 
-    properties.observation()
-    properties.daily()
-    properties.threehourly()
-    properties.sunrisesunset()
+    try:
+        properties.observation()
+        properties.daily()
+        properties.threehourly()
+        properties.sunrisesunset()
+    except HTTPError:
+        utilities.log(
+            (
+                "Error fetching data.\n"
+                "Ensure the API key in addon configuration is correct and try again.\n"
+                "You can get an API key by creating an account at\n"
+                "https://register.metoffice.gov.uk/WaveRegistrationClient/public/register.do?service=datapoint"
+            ),
+            xbmc.LOGERROR,
+        )
+        raise
 
-    WINDOW.setProperty('WeatherProvider', ADDON.getAddonInfo('name'))
-    WINDOW.setProperty('WeatherProviderLogo', ADDON_BANNER_PATH)
-    WINDOW.setProperty('ObservationLocation', ADDON.getSetting('ObservationLocation'))
-    WINDOW.setProperty('Current.Location', ADDON.getSetting('ForecastLocation'))
-    WINDOW.setProperty('ForecastLocation', ADDON.getSetting('ForecastLocation'))
-    WINDOW.setProperty('RegionalLocation', ADDON.getSetting('RegionalLocation'))
-    WINDOW.setProperty('Location1', ADDON.getSetting('ForecastLocation'))
-    WINDOW.setProperty('Locations', '1')
+    window().setProperty("WeatherProvider", addon().getAddonInfo("name"))
+    window().setProperty("WeatherProviderLogo", ADDON_BANNER_PATH)
+    window().setProperty(
+        "ObservationLocation", addon().getSetting("ObservationLocation")
+    )
+    window().setProperty("Current.Location", addon().getSetting("ForecastLocation"))
+    window().setProperty("ForecastLocation", addon().getSetting("ForecastLocation"))
+    window().setProperty("RegionalLocation", addon().getSetting("RegionalLocation"))
+    window().setProperty("Location1", addon().getSetting("ForecastLocation"))
+    window().setProperty("Locations", "1")
 
     # Explicitly set unused flags to false, so there are no unusual side
     # effects/residual data when moving from another weather provider.
-    WINDOW.setProperty('36Hour.IsFetched', '')
-    WINDOW.setProperty('Weekend.IsFetched', '')
-    WINDOW.setProperty('Map.IsFetched', '')
-    WINDOW.setProperty('Weather.CurrentView', '')
+    window().setProperty("36Hour.IsFetched", "")
+    window().setProperty("Weekend.IsFetched", "")
+    window().setProperty("Map.IsFetched", "")
+    window().setProperty("Weather.CurrentView", "")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

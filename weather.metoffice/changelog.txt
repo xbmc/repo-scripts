@@ -21,3 +21,8 @@ v2.0.1
 
 v3.0.0
 - updated for Matrix
+
+v4.0.0
+- Cleaned up memory leaks
+- Removed unused imaging code.
+- Removed default API key and nudged user to get their own.
