@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.m3u8" name="m3u8" version="0.5.4+matrix.2" provider-name="Globo.com">
-	<requires>
-        <import addon="xbmc.python" version="3.0.0"/>
-        <import addon="script.module.iso8601" version="0.1.12+matrix.1"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib"/>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en_GB">Python m3u8 parser</summary>
-		<description lang="en_GB">Packed for XBMC from https://github.com/globocom/m3u8</description>
-		<license>MIT</license>
-		<website>https://pypi.org/project/m3u8/</website>
-		<source>https://github.com/globocom/m3u8</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-	</extension>
+<addon id="script.module.m3u8" name="m3u8" version="3.5.0" provider-name="Globo.com">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.iso8601" version="2.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Python m3u8 parser</summary>
+    <description lang="en_GB">Python m3u8 parser</description>
+    <license>MIT</license>
+    <platform>all</platform>
+    <website>https://github.com/globocom/m3u8</website>
+    <source>https://github.com/globocom/m3u8</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
 </addon>
