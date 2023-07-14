@@ -14,6 +14,9 @@ All code contained in this project is licensed under GPL 3.0.
 
 ### Changelog
 
+**1.0.6**
+- Moved director/writer/studio/genre splitting to monitoring service
+
 **1.0.5**
 - Added script for easily re-ordering widgets in Copacetic settings screen
 

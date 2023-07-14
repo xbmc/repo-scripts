@@ -1,8 +1,10 @@
 # author: realcopacetic
 
+
 import json
 import os
 import sys
+import urllib.parse as urllib
 
 import xbmc
 import xbmcvfs
@@ -114,6 +116,7 @@ def clear_cache(**kwargs):
     ET.SubElement(root, 'clearlogos')
     lookup_tree.write(LOOKUP_XML, encoding="utf-8")
 
+
 def get_joined_items(item):
     if len(item) > 0 and item is not None:
         item = ' / '.join(item)
@@ -173,6 +176,22 @@ def log_and_execute(action):
     xbmc.executebuiltin(action)
 
 
+def return_label(property=True, **kwargs):
+
+    label = kwargs.get('label', xbmc.getInfoLabel('ListItem.Label'))
+    find = kwargs.get('find', '.')
+    replace = kwargs.get('replace', ' ')
+
+    count = label.count(find)
+    label = label.replace(urllib.unquote(find),
+                          urllib.unquote(replace),
+                          count)
+    if property:
+        window_property('Return_Label', set=label)
+    else:
+        return label
+
+
 def set_plugincontent(content=None, category=None):
     if category:
         setPluginCategory(int(sys.argv[1]), category)
@@ -189,6 +208,29 @@ def skin_string(key, set=False, clear=False, debug=False):
     else:
         xbmc.executebuiltin(f"Skin.SetString({key},)")
         log(f'Skin string: Clear, {key}', force=debug)
+
+
+def split(string, **kwargs):
+    separator = kwargs.get('separator', ' / ')
+    name = kwargs.get('name', 'Split')
+
+    for count, value in enumerate(string.split(separator)):
+        window_property(f'{name}.{count}', set=value)
+
+
+def split_random_return(string, **kwargs):
+    import random
+
+    separator = kwargs.get('separator', ' / ')
+    name = kwargs.get('name', 'SplitRandomReturn')
+    string = random.choice(string.split(separator))
+    random = random.choice(string.split(' & '))
+    random = return_label(label=random, find='-', replace=' ',
+                          property=False) if random != 'Sci-Fi' else random
+    random = random.strip()
+
+    window_property(name, set=random)
+    return random
 
 
 def window_property(key, set=False, clear=False, window_id=10000, debug=False):
