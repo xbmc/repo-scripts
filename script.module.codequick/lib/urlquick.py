@@ -60,7 +60,6 @@ except ImportError:
 # Third Party
 from htmlement import HTMLement
 from requests.structures import CaseInsensitiveDict
-from requests.adapters import HTTPResponse
 from requests import adapters
 from requests import *
 import requests
