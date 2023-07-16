@@ -1,18 +1,5 @@
-
-import os
-from m3u8.parser import is_url
-
-try:
-    import urlparse as url_parser
-except ImportError:
-    import urllib.parse as url_parser
-
-
-def _urijoin(base_uri, path):
-    if is_url(base_uri):
-        return url_parser.urljoin(base_uri, path)
-    else:
-        return os.path.normpath(os.path.join(base_uri, path.strip('/')))
+from os.path import dirname
+from urllib.parse import urljoin, urlsplit
 
 
 class BasePathMixin(object):
@@ -21,18 +8,25 @@ class BasePathMixin(object):
     def absolute_uri(self):
         if self.uri is None:
             return None
-        if is_url(self.uri):
-            return self.uri
-        else:
-            if self.base_uri is None:
-                raise ValueError('There can not be `absolute_uri` with no `base_uri` set')
-            return _urijoin(self.base_uri, self.uri)
+
+        ret = urljoin(self.base_uri, self.uri)
+        if self.base_uri and (not urlsplit(self.base_uri).scheme):
+            return ret
+
+        if not urlsplit(ret).scheme:
+            raise ValueError('There can not be `absolute_uri` with no `base_uri` set')
+        
+        return ret
 
     @property
     def base_path(self):
         if self.uri is None:
             return None
-        return os.path.dirname(self.uri)
+        return dirname(self.get_path_from_uri())
+
+    def get_path_from_uri(self):
+        """Some URIs have a slash in the query string."""
+        return self.uri.split("?")[0]
 
     @base_path.setter
     def base_path(self, newbase_path):
