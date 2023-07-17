@@ -1,4 +1,4 @@
-# Copyright (c) 2014, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2014, 2022, Oracle and/or its affiliates.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -26,97 +26,94 @@
 # along with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA
 
-"""Implements parser to parse MySQL option files.
-"""
+# mypy: disable-error-code="attr-defined"
+
+"""Implements parser to parse MySQL option files."""
 
 import codecs
 import io
 import os
 import re
 
-from .catch23 import PY2
-from .constants import DEFAULT_CONFIGURATION, CNX_POOL_ARGS
+from configparser import ConfigParser as SafeConfigParser, MissingSectionHeaderError
+from typing import Any, Dict, List, Optional, Tuple, Union
 
-# pylint: disable=F0401
-if PY2:
-    from ConfigParser import SafeConfigParser, MissingSectionHeaderError
-else:
-    from configparser import (ConfigParser as SafeConfigParser,
-                              MissingSectionHeaderError)
-# pylint: enable=F0401
+from .constants import CNX_POOL_ARGS, DEFAULT_CONFIGURATION
 
-DEFAULT_EXTENSIONS = {
-    'nt': ('ini', 'cnf'),
-    'posix': ('cnf',)
+DEFAULT_EXTENSIONS: Dict[str, Tuple[str, ...]] = {
+    "nt": ("ini", "cnf"),
+    "posix": ("cnf",),
 }
 
 
-def read_option_files(**config):
+def read_option_files(**config: Union[str, List[str]]) -> Dict[str, Any]:
     """
     Read option files for connection parameters.
 
     Checks if connection arguments contain option file arguments, and then
     reads option files accordingly.
     """
-    if 'option_files' in config:
+    if "option_files" in config:
         try:
-            if isinstance(config['option_groups'], str):
-                config['option_groups'] = [config['option_groups']]
-            groups = config['option_groups']
-            del config['option_groups']
+            if isinstance(config["option_groups"], str):
+                config["option_groups"] = [config["option_groups"]]
+            groups = config["option_groups"]
+            del config["option_groups"]
         except KeyError:
-            groups = ['client', 'connector_python']
+            groups = ["client", "connector_python"]
 
-        if isinstance(config['option_files'], str):
-            config['option_files'] = [config['option_files']]
-        option_parser = MySQLOptionsParser(list(config['option_files']),
-                                           keep_dashes=False)
-        del config['option_files']
+        if isinstance(config["option_files"], str):
+            config["option_files"] = [config["option_files"]]
+        option_parser = MySQLOptionsParser(
+            list(config["option_files"]), keep_dashes=False
+        )
+        del config["option_files"]
 
-        config_from_file = option_parser.get_groups_as_dict_with_priority(
-            *groups)
-        config_options = {}
+        config_from_file = option_parser.get_groups_as_dict_with_priority(*groups)
+        config_options: Dict[str, Tuple[str, int]] = {}
         for group in groups:
             try:
                 for option, value in config_from_file[group].items():
                     try:
-                        if option == 'socket':
-                            option = 'unix_socket'
+                        if option == "socket":
+                            option = "unix_socket"
 
-                        if (option not in CNX_POOL_ARGS and
-                                option != 'failover'):
-                            # pylint: disable=W0104
-                            DEFAULT_CONFIGURATION[option]
-                            # pylint: enable=W0104
+                        if option not in CNX_POOL_ARGS and option != "failover":
+                            _ = DEFAULT_CONFIGURATION[option]
 
-                        if (option not in config_options or
-                                config_options[option][1] <= value[1]):
+                        if (
+                            option not in config_options
+                            or config_options[option][1] <= value[1]
+                        ):
                             config_options[option] = value
                     except KeyError:
-                        if group == 'connector_python':
-                            raise AttributeError("Unsupported argument "
-                                                 "'{0}'".format(option))
+                        if group == "connector_python":
+                            raise AttributeError(
+                                f"Unsupported argument '{option}'"
+                            ) from None
             except KeyError:
                 continue
 
-        not_evaluate = ('password', 'passwd')
+        not_evaluate = ("password", "passwd")
         for option, value in config_options.items():
             if option not in config:
                 try:
                     if option in not_evaluate:
                         config[option] = value[0]
                     else:
-                        config[option] = eval(value[0])  # pylint: disable=W0123
+                        config[option] = eval(value[0])  # pylint: disable=eval-used
                 except (NameError, SyntaxError):
                     config[option] = value[0]
 
     return config
 
 
-class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
+class MySQLOptionsParser(SafeConfigParser):
     """This class implements methods to parse MySQL option files"""
 
-    def __init__(self, files=None, keep_dashes=True):  # pylint: disable=W0231
+    def __init__(
+        self, files: Optional[Union[List[str], str]] = None, keep_dashes: bool = True
+    ) -> None:
         """Initialize
 
         If defaults is True, default option files are read first
@@ -126,44 +123,38 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
         """
 
         # Regular expression to allow options with no value(For Python v2.6)
-        self.OPTCRE = re.compile(           # pylint: disable=C0103
-            r'(?P<option>[^:=\s][^:=]*)'
-            r'\s*(?:'
-            r'(?P<vi>[:=])\s*'
-            r'(?P<value>.*))?$'
+        self.optcre: re.Pattern = re.compile(
+            r"(?P<option>[^:=\s][^:=]*)"
+            r"\s*(?:"
+            r"(?P<vi>[:=])\s*"
+            r"(?P<value>.*))?$"
         )
 
-        self._options_dict = {}
+        self._options_dict: Dict[str, Dict[str, Tuple[str, int]]] = {}
 
-        if PY2:
-            SafeConfigParser.__init__(self)
-        else:
-            SafeConfigParser.__init__(self, strict=False)
+        SafeConfigParser.__init__(self, strict=False)
 
-        self.default_extension = DEFAULT_EXTENSIONS[os.name]
-        self.keep_dashes = keep_dashes
+        self.default_extension: Tuple[str, ...] = DEFAULT_EXTENSIONS[os.name]
+        self.keep_dashes: bool = keep_dashes
 
         if not files:
-            raise ValueError('files argument should be given')
-        if isinstance(files, str):
-            self.files = [files]
-        else:
-            self.files = files
+            raise ValueError("files argument should be given")
+        self.files: List[str] = [files] if isinstance(files, str) else files
 
         self._parse_options(list(self.files))
-        self._sections = self.get_groups_as_dict()
+        self._sections: Dict[str, Dict[str, str]] = self.get_groups_as_dict()
 
-    def optionxform(self, optionstr):
+    def optionxform(self, optionstr: str) -> str:
         """Converts option strings
 
         Converts option strings to lower case and replaces dashes(-) with
         underscores(_) if keep_dashes variable is set.
         """
         if not self.keep_dashes:
-            optionstr = optionstr.replace('-', '_')
+            optionstr = optionstr.replace("-", "_")
         return optionstr.lower()
 
-    def _parse_options(self, files):
+    def _parse_options(self, files: List[str]) -> None:
         """Parse options from files given as arguments.
          This method checks for !include or !inculdedir directives and if there
          is any, those files included by these directives are also parsed
@@ -172,49 +163,52 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
         Raises ValueError if any of the included or file given in arguments
         is not readable.
         """
+        initial_files = files[:]
+        files = []
         index = 0
         err_msg = "Option file '{0}' being included again in file '{1}'"
 
-        for file_ in files:
+        for file_ in initial_files:
             try:
-                if file_ in files[index+1:]:
-                    raise ValueError("Same option file '{0}' occurring more "
-                                     "than once in the list".format(file_))
-                with open(file_, 'r') as op_file:
+                if file_ in initial_files[index + 1 :]:
+                    raise ValueError(
+                        f"Same option file '{file_}' occurring more "
+                        "than once in the list"
+                    )
+                with open(file_, "r", encoding="utf-8") as op_file:
                     for line in op_file.readlines():
-                        if line.startswith('!includedir'):
+                        if line.startswith("!includedir"):
                             _, dir_path = line.split(None, 1)
                             dir_path = dir_path.strip()
                             for entry in os.listdir(dir_path):
                                 entry = os.path.join(dir_path, entry)
                                 if entry in files:
-                                    raise ValueError(err_msg.format(
-                                        entry, file_))
-                                if (os.path.isfile(entry) and
-                                        entry.endswith(self.default_extension)):
-                                    files.insert(index+1, entry)
+                                    raise ValueError(err_msg.format(entry, file_))
+                                if os.path.isfile(entry) and entry.endswith(
+                                    self.default_extension
+                                ):
+                                    files.append(entry)
 
-                        elif line.startswith('!include'):
+                        elif line.startswith("!include"):
                             _, filename = line.split(None, 1)
                             filename = filename.strip()
                             if filename in files:
-                                raise ValueError(err_msg.format(
-                                    filename, file_))
-                            files.insert(index+1, filename)
+                                raise ValueError(err_msg.format(filename, file_))
+                            files.append(filename)
 
                     index += 1
-
-            except (IOError, OSError) as exc:
-                raise ValueError("Failed reading file '{0}': {1}".format(
-                    file_, str(exc)))
+                    files.append(file_)
+            except IOError as err:
+                raise ValueError(f"Failed reading file '{file_}': {err}") from err
 
         read_files = self.read(files)
         not_read_files = set(files) - set(read_files)
         if not_read_files:
-            raise ValueError("File(s) {0} could not be read.".format(
-                ', '.join(not_read_files)))
+            raise ValueError(f"File(s) {', '.join(not_read_files)} could not be read.")
 
-    def read(self, filenames):  # pylint: disable=W0221
+    def read(  # type: ignore[override]
+        self, filenames: Union[str, List[str]], encoding: Optional[str] = None
+    ) -> List[str]:
         """Read and parse a filename or a list of filenames.
 
         Overridden from ConfigParser and modified so as to allow options
@@ -228,19 +222,24 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
         for priority, filename in enumerate(filenames):
             try:
                 out_file = io.StringIO()
-                for line in codecs.open(filename, encoding='utf-8'):
-                    line = line.strip()
-                    match_obj = self.OPTCRE.match(line)
-                    if not self.SECTCRE.match(line) and match_obj:
-                        optname, delimiter, optval = match_obj.group('option',
-                                                                     'vi',
-                                                                     'value')
-                        if optname and not optval and not delimiter:
-                            out_file.write(line + "=\n")
+                with codecs.open(filename, encoding="utf-8") as in_file:
+                    for line in in_file:
+                        line = line.strip()
+                        # Skip lines that begin with "!includedir" or "!include"
+                        if line.startswith("!include"):
+                            continue
+
+                        match_obj = self.optcre.match(line)
+                        if not self.SECTCRE.match(line) and match_obj:
+                            optname, delimiter, optval = match_obj.group(
+                                "option", "vi", "value"
+                            )
+                            if optname and not optval and not delimiter:
+                                out_file.write(f"{line}=\n")
+                            else:
+                                out_file.write(f"{line}\n")
                         else:
-                            out_file.write(line + '\n')
-                    else:
-                        out_file.write(line + '\n')
+                            out_file.write(f"{line}\n")
                 out_file.seek(0)
             except IOError:
                 continue
@@ -262,7 +261,7 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
             read_ok.append(filename)
         return read_ok
 
-    def get_groups(self, *args):
+    def get_groups(self, *args: str) -> Dict[str, str]:
         """Returns options as a dictionary.
 
         Returns options from all the groups specified as arguments, returns
@@ -272,16 +271,20 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
         Returns a dictionary
         """
         if not args:
-            args = self._options_dict.keys()
+            args = tuple(self._options_dict.keys())
 
         options = {}
-        priority = {}
+        priority: Dict[str, int] = {}
         for group in args:
             try:
-                for option, value in [(key, value,) for key, value in
-                                      self._options_dict[group].items() if
-                                      key != "__name__" and
-                                      not key.startswith("!")]:
+                for option, value in [
+                    (
+                        key,
+                        value,
+                    )
+                    for key, value in self._options_dict[group].items()
+                    if key != "__name__" and not key.startswith("!")
+                ]:
                     if option not in options or priority[option] <= value[1]:
                         priority[option] = value[1]
                         options[option] = value[0]
@@ -290,7 +293,9 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
 
         return options
 
-    def get_groups_as_dict_with_priority(self, *args): # pylint: disable=C0103
+    def get_groups_as_dict_with_priority(
+        self, *args: str
+    ) -> Dict[str, Dict[str, Tuple[str, int]]]:
         """Returns options as dictionary of dictionaries.
 
         Returns options from all the groups specified as arguments. For each
@@ -305,21 +310,24 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
         Returns an dictionary of dictionaries
         """
         if not args:
-            args = self._options_dict.keys()
+            args = tuple(self._options_dict.keys())
 
-        options = dict()
+        options = {}
         for group in args:
             try:
-                options[group] = dict((key, value,) for key, value in
-                                      self._options_dict[group].items() if
-                                      key != "__name__" and
-                                      not key.startswith("!"))
+                options[group] = dict(
+                    (
+                        key,
+                        value,
+                    )
+                    for key, value in self._options_dict[group].items()
+                    if key != "__name__" and not key.startswith("!")
+                )
             except KeyError:
                 pass
-
         return options
 
-    def get_groups_as_dict(self, *args):
+    def get_groups_as_dict(self, *args: str) -> Dict[str, Dict[str, str]]:
         """Returns options as dictionary of dictionaries.
 
         Returns options from all the groups specified as arguments. For each
@@ -330,15 +338,19 @@ class MySQLOptionsParser(SafeConfigParser):  # pylint: disable=R0901
         Returns an dictionary of dictionaries
         """
         if not args:
-            args = self._options_dict.keys()
+            args = tuple(self._options_dict.keys())
 
-        options = dict()
+        options = {}
         for group in args:
             try:
-                options[group] = dict((key, value[0],) for key, value in
-                                      self._options_dict[group].items() if
-                                      key != "__name__" and
-                                      not key.startswith("!"))
+                options[group] = dict(
+                    (
+                        key,
+                        value[0],
+                    )
+                    for key, value in self._options_dict[group].items()
+                    if key != "__name__" and not key.startswith("!")
+                )
             except KeyError:
                 pass
 

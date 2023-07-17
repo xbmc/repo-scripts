@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, Oracle and/or its affiliates.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -26,20 +26,15 @@
 # along with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA
 
-"""SQL Compiler classes."""
+"""Clear Password Authentication Plugin."""
 
-from django.db.backends.mysql.compiler import (
-    SQLAggregateCompiler,
-    SQLCompiler,
-    SQLDeleteCompiler,
-    SQLInsertCompiler,
-    SQLUpdateCompiler,
-)
+from . import BaseAuthPlugin
 
-__all__ = [
-    "SQLAggregateCompiler",
-    "SQLCompiler",
-    "SQLDeleteCompiler",
-    "SQLInsertCompiler",
-    "SQLUpdateCompiler",
-]
+AUTHENTICATION_PLUGIN_CLASS = "MySQLClearPasswordAuthPlugin"
+
+
+class MySQLClearPasswordAuthPlugin(BaseAuthPlugin):
+    """Class implementing the MySQL Clear Password authentication plugin"""
+
+    requires_ssl: bool = True
+    plugin_name: str = "mysql_clear_password"

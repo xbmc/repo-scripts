@@ -1,4 +1,4 @@
-# Copyright (c) 2009, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2009, 2022, Oracle and/or its affiliates. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -32,44 +32,49 @@ DB API v2.0 (PEP-249).
 """
 
 # Python Db API v2
-apilevel = '2.0'
-threadsafety = 1
-paramstyle = 'pyformat'
+# pylint: disable=invalid-name
+apilevel: str = "2.0"
+threadsafety: int = 1
+paramstyle: str = "pyformat"
 
-import time
 import datetime
+import time
+
+from typing import Tuple
 
 from . import constants
 
-class _DBAPITypeObject(object):
 
-    def __init__(self, *values):
-        self.values = values
+class _DBAPITypeObject:
+    def __init__(self, *values: int) -> None:
+        self.values: Tuple[int, ...] = values
 
-    def __eq__(self, other):
-        if other in self.values:
-            return True
-        else:
-            return False
+    def __eq__(self, other: object) -> bool:
+        return other in self.values
 
-    def __ne__(self, other):
-        if other in self.values:
-            return False
-        else:
-            return True
+    def __ne__(self, other: object) -> bool:
+        return other not in self.values
+
 
 Date = datetime.date
 Time = datetime.time
 Timestamp = datetime.datetime
 
-def DateFromTicks(ticks):
+
+def DateFromTicks(ticks: int) -> datetime.date:
+    """Construct an object holding a date value from the given ticks value."""
     return Date(*time.localtime(ticks)[:3])
 
-def TimeFromTicks(ticks):
+
+def TimeFromTicks(ticks: int) -> datetime.time:
+    """Construct an object holding a time value from the given ticks value."""
     return Time(*time.localtime(ticks)[3:6])
 
-def TimestampFromTicks(ticks):
+
+def TimestampFromTicks(ticks: int) -> datetime.datetime:
+    """Construct an object holding a time stamp from the given ticks value."""
     return Timestamp(*time.localtime(ticks)[:6])
+
 
 Binary = bytes
 
