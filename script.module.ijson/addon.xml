@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon	id="script.module.ijson"
-		name="ijson"
-		version="2.5"
-		provider-name="Rodrigo Tobar, Ivan Sagalaev">
-	<requires>
-		<import addon="xbmc.python" version="2.25.0"/>
-	</requires>
-	<extension
-		point="xbmc.python.module"
-		library="lib" />
-	<extension
-		point="xbmc.addon.metadata">
-		<summary lang="en_GB">Iterative JSON parser with a standard Python iterator interface</summary>
-		<description lang="en_GB">Packed for KODI from https://github.com/isagalaev/ijson</description>
-		<license>BSD-3-Clause</license>
-		<website>https://pypi.org/project/ijson/</website>
-		<source>https://github.com/ICRAR/ijson</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-	</extension>
+<addon id="script.module.ijson" name="ijson" version="3.2.2" provider-name="Rodrigo Tobar, Ivan Sagalaev">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Iterative JSON parser with standard Python iterator interfaces</summary>
+    <description lang="en_GB">Iterative JSON parser with standard Python iterator interfaces</description>
+    <license>BSD-3-Clause</license>
+    <platform>all</platform>
+    <website>https://pypi.org/project/ijson/</website>
+    <source>https://github.com/ICRAR/ijson</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
 </addon>

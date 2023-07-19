@@ -1,17 +1,16 @@
 '''
 Pure-python parsing backend.
 '''
-from __future__ import unicode_literals
-import re
-from codecs import getreader
 from json.decoder import scanstring
+import re
 
-from ijson import common
-from ijson.compat import bytetype
+from ijson import common, utils
+import codecs
 
 
-BUFSIZE = 16 * 1024
 LEXEME_RE = re.compile(r'[a-z0-9eE\.\+-]+|\S')
+UNARY_LEXEMES = set('[]{},')
+EOF = -1, None
 
 
 class UnexpectedSymbol(common.JSONError):
@@ -21,12 +20,48 @@ class UnexpectedSymbol(common.JSONError):
         )
 
 
-def Lexer(f, buf_size=BUFSIZE):
-    if type(f.read(0)) == bytetype:
-        f = getreader('utf-8')(f)
-    buf = f.read(buf_size)
+@utils.coroutine
+def utf8_encoder(target):
+    decoder = codecs.getincrementaldecoder('utf-8')()
+    decode = decoder.decode
+    send = target.send
+    while True:
+        try:
+            final = False
+            bdata = (yield)
+        except GeneratorExit:
+            final = True
+            bdata = b''
+        try:
+            sdata = decode(bdata, final)
+        except UnicodeDecodeError as e:
+            try:
+                target.close()
+            except:
+                pass
+            raise common.IncompleteJSONError(e)
+        if sdata:
+            send(sdata)
+        elif not bdata:
+            target.close()
+            break
+
+@utils.coroutine
+def Lexer(target):
+    """
+    Parses lexemes out of the incoming content, and sends them to parse_value.
+    A special EOF result is sent when the data source has been exhausted to
+    give parse_value the possibility of raising custom exceptions due to missing
+    content.
+    """
+    try:
+        data = (yield)
+    except GeneratorExit:
+        data = ''
+    buf = data
     pos = 0
     discarded = 0
+    send = target.send
     while True:
         match = LEXEME_RE.search(buf, pos)
         if match:
@@ -45,107 +80,199 @@ def Lexer(f, buf_size=BUFSIZE):
                         else:
                             break
                     except ValueError:
-                        data = f.read(buf_size)
+                        try:
+                            data = (yield)
+                        except GeneratorExit:
+                            data = ''
                         if not data:
                             raise common.IncompleteJSONError('Incomplete string lexeme')
                         buf += data
-                yield discarded + pos, buf[pos:end + 1]
+                send((discarded + pos, buf[pos:end + 1]))
                 pos = end + 1
             else:
-                while match.end() == len(buf):
-                    data = f.read(buf_size)
+                while lexeme not in UNARY_LEXEMES and match.end() == len(buf):
+                    try:
+                        data = (yield)
+                    except GeneratorExit:
+                        data = ''
                     if not data:
                         break
                     buf += data
                     match = LEXEME_RE.search(buf, pos)
                     lexeme = match.group()
-                yield discarded + match.start(), lexeme
+                send((discarded + match.start(), lexeme))
                 pos = match.end()
         else:
-            data = f.read(buf_size)
+            # Don't ask data from an already exhausted source
+            if data:
+                try:
+                    data = (yield)
+                except GeneratorExit:
+                    data = ''
             if not data:
+                # Normally should raise StopIteration, but can raise
+                # IncompleteJSONError too, which is the point of sending EOF
+                try:
+                    target.send(EOF)
+                except StopIteration:
+                    pass
                 break
             discarded += len(buf)
             buf = data
             pos = 0
 
 
-def parse_value(lexer, symbol=None, pos=0):
-    try:
-        if symbol is None:
-            pos, symbol = next(lexer)
-        if symbol == 'null':
-            yield ('null', None)
-        elif symbol == 'true':
-            yield ('boolean', True)
-        elif symbol == 'false':
-            yield ('boolean', False)
-        elif symbol == '[':
-            for event in parse_array(lexer):
-                yield event
-        elif symbol == '{':
-            for event in parse_object(lexer):
-                yield event
-        elif symbol[0] == '"':
-            yield ('string', parse_string(symbol))
+# Parsing states
+_PARSE_VALUE = 0
+_PARSE_ARRAY_ELEMENT_END = 1
+_PARSE_OBJECT_KEY = 2
+_PARSE_OBJECT_END = 3
+
+# infinity singleton for overflow checks
+inf = float("inf")
+
+@utils.coroutine
+def parse_value(target, multivalue, use_float):
+    """
+    Parses results coming out of the Lexer into ijson events, which are sent to
+    `target`. A stack keeps track of the type of object being parsed at the time
+    (a value, and object or array -- the last two being values themselves).
+
+    A special EOF result coming from the Lexer indicates that no more content is
+    expected. This is used to check for incomplete content and raise the
+    appropriate exception, which wouldn't be possible if the Lexer simply closed
+    this co-routine (either explicitly via .close(), or implicitly by itself
+    finishing and decreasing the only reference to the co-routine) since that
+    causes a GeneratorExit exception that cannot be replaced with a custom one.
+    """
+
+    state_stack = [_PARSE_VALUE]
+    pop = state_stack.pop
+    push = state_stack.append
+    send = target.send
+    prev_pos, prev_symbol = None, None
+    to_number = common.integer_or_float if use_float else common.integer_or_decimal
+    while True:
+
+        if prev_pos is None:
+            pos, symbol = (yield)
+            if (pos, symbol) == EOF:
+                if state_stack:
+                    raise common.IncompleteJSONError('Incomplete JSON content')
+                break
         else:
-            try:
-                yield ('number', common.number(symbol))
-            except:
+            pos, symbol = prev_pos, prev_symbol
+            prev_pos, prev_symbol = None, None
+        try:
+            state = state_stack[-1]
+        except IndexError:
+            if multivalue:
+                state = _PARSE_VALUE
+                push(state)
+            else:
+                raise common.JSONError('Additional data found')
+        assert state_stack
+
+        if state == _PARSE_VALUE:
+            # Simple, common cases
+            if symbol == 'null':
+                send(('null', None))
+                pop()
+            elif symbol == 'true':
+                send(('boolean', True))
+                pop()
+            elif symbol == 'false':
+                send(('boolean', False))
+                pop()
+            elif symbol[0] == '"':
+                send(('string', parse_string(symbol)))
+                pop()
+            # Array start
+            elif symbol == '[':
+                send(('start_array', None))
+                pos, symbol = (yield)
+                if (pos, symbol) == EOF:
+                    raise common.IncompleteJSONError('Incomplete JSON content')
+                if symbol == ']':
+                    send(('end_array', None))
+                    pop()
+                else:
+                    prev_pos, prev_symbol = pos, symbol
+                    push(_PARSE_ARRAY_ELEMENT_END)
+                    push(_PARSE_VALUE)
+            # Object start
+            elif symbol == '{':
+                send(('start_map', None))
+                pos, symbol = (yield)
+                if (pos, symbol) == EOF:
+                    raise common.IncompleteJSONError('Incomplete JSON content')
+                if symbol == '}':
+                    send(('end_map', None))
+                    pop()
+                else:
+                    prev_pos, prev_symbol = pos, symbol
+                    push(_PARSE_OBJECT_KEY)
+            # A number
+            else:
+                # JSON numbers can't contain leading zeros
+                if ((len(symbol) > 1 and symbol[0] == '0' and symbol[1] not in ('e', 'E', '.')) or
+                    (len(symbol) > 2 and symbol[0:2] == '-0' and symbol[2] not in ('e', 'E', '.'))):
+                    raise common.JSONError('Invalid JSON number: %s' % (symbol,))
+                # Fractions need a leading digit and must be followed by a digit
+                if symbol[0] == '.' or symbol[-1] == '.':
+                    raise common.JSONError('Invalid JSON number: %s' % (symbol,))
+                try:
+                    number = to_number(symbol)
+                    if number == inf:
+                        raise common.JSONError("float overflow: %s" % (symbol,))
+                except:
+                    if 'true'.startswith(symbol) or 'false'.startswith(symbol) or 'null'.startswith(symbol):
+                        raise common.IncompleteJSONError('Incomplete JSON content')
+                    raise UnexpectedSymbol(symbol, pos)
+                else:
+                    send(('number', number))
+                    pop()
+
+        elif state == _PARSE_OBJECT_KEY:
+            if symbol[0] != '"':
                 raise UnexpectedSymbol(symbol, pos)
-    except StopIteration:
-        raise common.IncompleteJSONError('Incomplete JSON data')
+            send(('map_key', parse_string(symbol)))
+            pos, symbol = (yield)
+            if (pos, symbol) == EOF:
+                raise common.IncompleteJSONError('Incomplete JSON content')
+            if symbol != ':':
+                raise UnexpectedSymbol(symbol, pos)
+            state_stack[-1] = _PARSE_OBJECT_END
+            push(_PARSE_VALUE)
+
+        elif state == _PARSE_OBJECT_END:
+            if symbol == ',':
+                state_stack[-1] = _PARSE_OBJECT_KEY
+            elif symbol != '}':
+                raise UnexpectedSymbol(symbol, pos)
+            else:
+                send(('end_map', None))
+                pop()
+                pop()
+
+        elif state == _PARSE_ARRAY_ELEMENT_END:
+            if symbol == ',':
+                state_stack[-1] = _PARSE_ARRAY_ELEMENT_END
+                push(_PARSE_VALUE)
+            elif symbol != ']':
+                raise UnexpectedSymbol(symbol, pos)
+            else:
+                send(('end_array', None))
+                pop()
+                pop()
 
 
 def parse_string(symbol):
     return scanstring(symbol, 1)[0]
 
 
-def parse_array(lexer):
-    yield ('start_array', None)
-    try:
-        pos, symbol = next(lexer)
-        if symbol != ']':
-            while True:
-                for event in parse_value(lexer, symbol, pos):
-                    yield event
-                pos, symbol = next(lexer)
-                if symbol == ']':
-                    break
-                if symbol != ',':
-                    raise UnexpectedSymbol(symbol, pos)
-                pos, symbol = next(lexer)
-        yield ('end_array', None)
-    except StopIteration:
-        raise common.IncompleteJSONError('Incomplete JSON data')
-
-
-def parse_object(lexer):
-    yield ('start_map', None)
-    try:
-        pos, symbol = next(lexer)
-        if symbol != '}':
-            while True:
-                if symbol[0] != '"':
-                    raise UnexpectedSymbol(symbol, pos)
-                yield ('map_key', parse_string(symbol))
-                pos, symbol = next(lexer)
-                if symbol != ':':
-                    raise UnexpectedSymbol(symbol, pos)
-                for event in parse_value(lexer, None, pos):
-                    yield event
-                pos, symbol = next(lexer)
-                if symbol == '}':
-                    break
-                if symbol != ',':
-                    raise UnexpectedSymbol(symbol, pos)
-                pos, symbol = next(lexer)
-        yield ('end_map', None)
-    except StopIteration:
-        raise common.IncompleteJSONError('Incomplete JSON data')
-
-
-def basic_parse(file, buf_size=BUFSIZE, multiple_values=False):
+def basic_parse_basecoro(target, multiple_values=False, allow_comments=False,
+                         use_float=False):
     '''
     Iterator yielding unprefixed events.
 
@@ -153,30 +280,9 @@ def basic_parse(file, buf_size=BUFSIZE, multiple_values=False):
 
     - file: a readable file-like object with JSON input
     '''
-    lexer = iter(Lexer(file, buf_size))
-    symbol = None
-    pos = 0
-    while True:
-        for value in parse_value(lexer, symbol, pos):
-            yield value
-        try:
-            pos, symbol = next(lexer)
-        except StopIteration:
-            break
-        else:
-            if not multiple_values:
-                raise common.JSONError('Additional data')
+    if allow_comments:
+        raise ValueError("Comments are not supported by the python backend")
+    return utf8_encoder(Lexer(parse_value(target, multiple_values, use_float)))
 
 
-def parse(file, **kwargs):
-    '''
-    Backend-specific wrapper for ijson.common.parse.
-    '''
-    return common.parse(basic_parse(file, **kwargs))
-
-
-def items(file, prefix, map_type=None, **kwargs):
-    '''
-    Backend-specific wrapper for ijson.common.items.
-    '''
-    return common.items(parse(file, **kwargs), prefix, map_type=map_type)
+common.enrich_backend(globals())

@@ -1,3 +1,4 @@
+import os
 import warnings
 
 class YAJLImportError(ImportError):
@@ -31,7 +32,7 @@ def find_yajl_ctypes(required):
     # Example of such environment is Google App Engine (GAE).
     from ctypes import util, cdll
 
-    so_name = util.find_library('yajl')
+    so_name = os.getenv('YAJL_DLL') or util.find_library('yajl')
     if so_name is None:
         raise YAJLImportError('YAJL shared object not found.')
     try:
@@ -47,7 +48,7 @@ def find_yajl_cffi(ffi, required):
     version (1, 2, ...) using cffi.
     '''
     try:
-        yajl = ffi.dlopen('yajl')
+        yajl = ffi.dlopen(os.getenv('YAJL_DLL') or 'yajl')
     except OSError:
         raise YAJLImportError('Unable to load YAJL.')
     require_version(get_yajl_version(yajl), required)
