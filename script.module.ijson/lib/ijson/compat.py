@@ -7,16 +7,19 @@ import warnings
 
 
 IS_PY2 = sys.version_info[0] < 3
+IS_PY35 = sys.version_info[0:2] >= (3, 5)
 
 
 if IS_PY2:
     b2s = lambda s: s
     bytetype = str
+    texttype = unicode
     from StringIO import StringIO
     BytesIO = StringIO
 else:
     b2s = lambda b: b.decode('utf-8')
     bytetype = bytes
+    texttype = str
     from io import BytesIO, StringIO
 
 class utf8reader(object):
@@ -41,9 +44,12 @@ problem make sure file-like objects are opened in binary mode instead of text
 mode.
 '''
 
+def _warn_and_return(o):
+    warnings.warn(_str_vs_bytes_warning, DeprecationWarning)
+    return o
+
 def bytes_reader(f):
     """Returns a file-like object that reads bytes"""
     if type(f.read(0)) == bytetype:
         return f
-    warnings.warn(_str_vs_bytes_warning, DeprecationWarning)
-    return utf8reader(f)
+    return _warn_and_return(utf8reader(f))
