@@ -16,6 +16,7 @@
 # *  http://www.gnu.org/copyleft/gpl.html
 import socket
 import sys
+import traceback
 from urllib.error import HTTPError
 
 import xbmc
@@ -54,7 +55,13 @@ def main():
         properties.daily()
         properties.threehourly()
         properties.sunrisesunset()
+    except KeyError:
+        # Expect KeyErrors to come from parsing JSON responses.
+        # This is considered an intermittent error, so exception is eaten.
+        utilities.log(traceback.format_exc(), xbmc.LOGERROR)
     except HTTPError:
+        # HTTPErrors are most likely to occur when the user hasn't set their API
+        # key, so allow the script to raise to produce a parp.
         utilities.log(
             (
                 "Error fetching data.\n"

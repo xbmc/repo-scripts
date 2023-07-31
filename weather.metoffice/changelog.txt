@@ -26,3 +26,7 @@ v4.0.0
 - Cleaned up memory leaks
 - Removed unused imaging code.
 - Removed default API key and nudged user to get their own.
+
+v4.1.0
+- Added feels like calculation.
+- Updated geoip providers.
