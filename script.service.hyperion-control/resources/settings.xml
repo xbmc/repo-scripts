@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting id="ip" type="ipaddress" label="32001" default="127.0.0.1" />
+        <setting id="port" type="number" label="32002" default="8090" />
+        <setting id="authToken" type="text" label="32008" default="" visible="true" />
+        <setting id="videoModeEnabled" type="bool" label="32003" default="false" />
+        <setting id="enableHyperion" type="bool" label="32004" default="false" />
+        <setting id="disableHyperion" type="bool" label="32005" default="false" />
+        <setting id="showChangelogOnUpdate" type="bool" label="32007" default="true" visible="true" />
+        <setting id="debug" type="bool" label="32006" default="false" />
+        <setting id="firstRun" type="bool" label="32000" default="true" visible="false" />
+        <setting id="currAddonVersion" type="text" default="" visible="false" />
+    </category>
+    <category label="32025">
+        <setting type="lsep" label="32026"/>
+        <setting id="targetComponent" type="select" label="32027" default="0" lvalues="32040|32041|32048|32042|32043|32044|32045|32046|32047" />
+        <setting id="videoEnabled" type="bool" label="32028" default="true" />
+        <setting id="audioEnabled" type="bool" label="32029" default="true" />
+        <setting id="pauseEnabled" type="bool" label="32030" default="false" />
+        <setting id="menuEnabled" type="bool" label="32031" default="false" />
+        <setting id="screensaverEnabled" type="bool" label="32032" default="false" />
+    </category>
+    <category label="32150">
+        <setting type="lsep" label="32151"/>
+        <setting id="BlaaaahHolder" type="bool" label="" default="false" visible="false" />
+        <setting type="lsep" label="32152"/>
+        <setting id="tasks" type="select" label="32153" default="0" lvalues="32154|32155" />
+    </category>
+</settings>
