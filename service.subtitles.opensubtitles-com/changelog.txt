@@ -1,3 +1,7 @@
+v1.0.1 (2023-07-28)
+- Remove limit of 10 subtitles for the returned values
+- Fix Portuguese and Brazilian flags
+
 1.0.0
  Initial version, forked from https://github.com/juokelis/service.subtitles.opensubtitles
  Search fixed and improved
