@@ -1,0 +1,200 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Hyperion Control\n"
+"Language: fr\n"
+
+#:
+msgctxt "#32000"
+msgid "General"
+msgstr "Général"
+
+#:
+msgctxt "#32001"
+msgid "Hyperion IP"
+msgstr "Adresse IP Hyperion"
+
+#:
+msgctxt "#32002"
+msgid "Hyperion Webserver Port"
+msgstr "Port Webserver Hyperion"
+
+#:
+msgctxt "#32003"
+msgid "Switch automatically between 2D/3D"
+msgstr "Basculer automatiquement entre 2D/3D"
+
+#:
+msgctxt "#32004"
+msgid "Enable Hyperion on startup"
+msgstr "Activer Hyperion au démarrage"
+
+#:
+msgctxt "#32005"
+msgid "Disable Hyperion on shutdown"
+msgstr "Désactiver Hyperion à l'extinction"
+
+#:
+msgctxt "#32006"
+msgid "Enable Debug"
+msgstr "Activer le débogage"
+
+#:
+msgctxt "#32007"
+msgid "Show changelog after update"
+msgstr "Afficher le changelog après la mise à jour"
+
+#:
+msgctxt "#32008"
+msgid "Authorization Token"
+msgstr "Token d'autorisation"
+
+#:
+msgctxt "#32025"
+msgid "Component"
+msgstr "Composant"
+
+#:
+msgctxt "#32026"
+msgid "Enable the chosen component in these situations else disable it."
+msgstr "Activer le composant pour ces situations sinon le désactiver."
+
+#:
+msgctxt "#32027"
+msgid "Hyperion component"
+msgstr "Composant Hyperion"
+
+#:
+msgctxt "#32028"
+msgid "Enable during video playback"
+msgstr "Activer durant la lecture vidéo"
+
+#:
+msgctxt "#32029"
+msgid "Enable during music playback"
+msgstr "Activer durant la lecture audio"
+
+#:
+msgctxt "#32030"
+msgid "Enable during player pause"
+msgstr "Activer pendant la pause du lecteur"
+
+#:
+msgctxt "#32031"
+msgid "Enable in Kodi menu"
+msgstr "Activer dans le menu de Kodi"
+
+#:
+msgctxt "#32032"
+msgid "Enable during active screensaver"
+msgstr "Activer quand l'économiseur d'écran est actif"
+
+#:
+msgctxt "#32041"
+msgid "USB Capture"
+msgstr "Capture USB"
+
+#:
+msgctxt "#32042"
+msgid "LED Hardware"
+msgstr "LEDs"
+
+#:
+msgctxt "#32043"
+msgid "Smoothing"
+msgstr "Lissage"
+
+#:
+msgctxt "#32045"
+msgid "Forwarder"
+msgstr "Forwarder"
+
+#:
+msgctxt "#32046"
+msgid "Boblight Server"
+msgstr "Serveur Boblight"
+
+#:
+msgctxt "#32047"
+msgid "Hyperion"
+msgstr "Hyperion"
+
+#:
+msgctxt "#32048"
+msgid "Audio Capture"
+msgstr "Capture Audio"
+
+#:
+msgctxt "#32101"
+msgid "Would you like to search for a Hyperion Server and adjust settings?"
+msgstr "Voulez vous chercher un serveur Hyperion et mettre à jour les paramètres ?"
+
+#:
+msgctxt "#32102"
+msgid "Select a Hyperion Server, we found more than one"
+msgstr "Plusieurs serveurs Hyperion ont été trouvés, veuillez en sélectionner un"
+
+#:
+msgctxt "#32104"
+msgid "We are sorry, no Hyperion Server has been found. You need to configure IP address and port by hand"
+msgstr "Désolé, aucun serveur Hyperion trouvé. Configurez l'adresse IP et le port manuellement."
+
+#:
+msgctxt "#32105"
+msgid "The Authorization Token isn't valid"
+msgstr "Le token d'autorisation n'est pas valide"
+
+#:
+msgctxt "#32150"
+msgid "Execute"
+msgstr "Exécuter"
+
+#:
+msgctxt "#32151"
+msgid "Execute a specific task you might need again.[CR]Select a task from the tasklist and press OK to close the settings dialog."
+msgstr "Exécuter une tâche spécifique dont vous pourriez avoir besoin à nouveau.\n"
+"Choisir une tâche dans la liste et appuyer sur OK pour fermer la boite de dialogue."
+
+#:
+msgctxt "#32152"
+msgid "The addon will handle your request immediately.[CR]Be aware that the addon should be already enabled"
+msgstr "L'addon va exécuter votre requête immédiatement.\n"
+"Attention : l'addon doit déjà être actif"
+
+#:
+msgctxt "#32153"
+msgid "Tasklist"
+msgstr "Liste de tâches"
+
+#:
+msgctxt "#32154"
+msgid "No Task"
+msgstr "Pas de tâche"
+
+#:
+msgctxt "#32155"
+msgid "Search: Hyperion Server"
+msgstr "Recherche : serveur Hyperion"
+
+#:
+msgctxt "#32044"
+msgid "Blackbar detector"
+msgstr "Détecteur de bandes noires"
+
+#:
+msgctxt "#32040"
+msgid "Screen Capture"
+msgstr "Capture interne"
+
+#:
+msgctxt "#32100"
+msgid "Welcome to Hyperion Control!"
+msgstr "Bienvenue dans l'addon Hyperion!"
+
+#:
+msgctxt "#32103"
+msgid "We found the following Hyperion Server for usage:"
+msgstr "Le serveur Hyperion suivant a été trouvé pour utilisation:"
