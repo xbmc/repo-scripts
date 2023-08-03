@@ -11,7 +11,6 @@
     <summary lang="de_DE">Hyperion Ambilight Steuerung</summary>
     <description lang="en_GB">Enable and disable components (like capture) of Hyperion automatically based on playing/screensaver state of Kodi[CR]-Supports auto detection of Hyperion Servers[CR]-Token authentication</description>
     <description lang="de_DE">Aktiviere und deaktiviere automatisch Hyperion Komponenten basierend auf dem aktuellen Kodi Status[CR]-Unterstützt Hyperion Server suche[CR]-Token Autorisierung</description>
-    <language>en de es fr hu pl</language>
     <platform>all</platform>
     <license>MIT</license>
     <forum>https://hyperion-project.org/forum</forum>
@@ -20,7 +19,8 @@
     <news>
       20.0.0
       - Kodi 20 (Nexus) support
-      - major refactor to adhere to SOLID principles
+      - Multi instance handling
+      - New language: Hungarian
 
       19.0.2
       - New languages: Español, Français, Polski
