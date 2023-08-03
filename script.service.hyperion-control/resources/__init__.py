@@ -1,1 +1,0 @@
-"""Hyperion control addon resources."""
