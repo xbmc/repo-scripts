@@ -5,7 +5,7 @@ import re
 from operator import itemgetter
 # Do not import Decimal directly to avoid reload issues
 import decimal
-from .compat import unichr, binary_type, text_type, string_types, integer_types, PY3
+from .compat import binary_type, text_type, string_types, integer_types, PY3
 def _import_speedups():
     try:
         from . import _speedups
@@ -32,6 +32,7 @@ ESCAPE_DCT = {
 for i in range(0x20):
     #ESCAPE_DCT.setdefault(chr(i), '\\u{0:04x}'.format(i))
     ESCAPE_DCT.setdefault(chr(i), '\\u%04x' % (i,))
+del i
 
 FLOAT_REPR = repr
 
@@ -139,7 +140,7 @@ class JSONEncoder(object):
     key_separator = ': '
 
     def __init__(self, skipkeys=False, ensure_ascii=True,
-                 check_circular=True, allow_nan=True, sort_keys=False,
+                 check_circular=True, allow_nan=False, sort_keys=False,
                  indent=None, separators=None, encoding='utf-8', default=None,
                  use_decimal=True, namedtuple_as_object=True,
                  tuple_as_array=True, bigint_as_string=False,
@@ -160,10 +161,11 @@ class JSONEncoder(object):
         prevent an infinite recursion (which would cause an OverflowError).
         Otherwise, no such check takes place.
 
-        If allow_nan is true, then NaN, Infinity, and -Infinity will be
-        encoded as such.  This behavior is not JSON specification compliant,
-        but is consistent with most JavaScript based encoders and decoders.
-        Otherwise, it will be a ValueError to encode such floats.
+        If allow_nan is true (default: False), then out of range float
+        values (nan, inf, -inf) will be serialized to
+        their JavaScript equivalents (NaN, Infinity, -Infinity)
+        instead of raising a ValueError. See
+        ignore_nan for ECMA-262 compliant behavior.
 
         If sort_keys is true, then the output of dictionaries will be
         sorted by key; this is useful for regression tests to ensure
@@ -293,7 +295,7 @@ class JSONEncoder(object):
         # This doesn't pass the iterator directly to ''.join() because the
         # exceptions aren't as detailed.  The list call should be roughly
         # equivalent to the PySequence_Fast that ''.join() would do.
-        chunks = self.iterencode(o, _one_shot=True)
+        chunks = self.iterencode(o)
         if not isinstance(chunks, (list, tuple)):
             chunks = list(chunks)
         if self.ensure_ascii:
@@ -301,7 +303,7 @@ class JSONEncoder(object):
         else:
             return u''.join(chunks)
 
-    def iterencode(self, o, _one_shot=False):
+    def iterencode(self, o):
         """Encode the given object and yield each string
         representation as available.
 
@@ -355,8 +357,7 @@ class JSONEncoder(object):
         key_memo = {}
         int_as_string_bitcount = (
             53 if self.bigint_as_string else self.int_as_string_bitcount)
-        if (_one_shot and c_make_encoder is not None
-                and self.indent is None):
+        if (c_make_encoder is not None and self.indent is None):
             _iterencode = c_make_encoder(
                 markers, self.default, _encoder, self.indent,
                 self.key_separator, self.item_separator, self.sort_keys,
@@ -369,7 +370,7 @@ class JSONEncoder(object):
             _iterencode = _make_iterencode(
                 markers, self.default, _encoder, self.indent, floatstr,
                 self.key_separator, self.item_separator, self.sort_keys,
-                self.skipkeys, _one_shot, self.use_decimal,
+                self.skipkeys, self.use_decimal,
                 self.namedtuple_as_object, self.tuple_as_array,
                 int_as_string_bitcount,
                 self.item_sort_key, self.encoding, self.for_json,
@@ -397,14 +398,14 @@ class JSONEncoderForHTML(JSONEncoder):
     def encode(self, o):
         # Override JSONEncoder.encode because it has hacks for
         # performance that make things more complicated.
-        chunks = self.iterencode(o, True)
+        chunks = self.iterencode(o)
         if self.ensure_ascii:
             return ''.join(chunks)
         else:
             return u''.join(chunks)
 
-    def iterencode(self, o, _one_shot=False):
-        chunks = super(JSONEncoderForHTML, self).iterencode(o, _one_shot)
+    def iterencode(self, o):
+        chunks = super(JSONEncoderForHTML, self).iterencode(o)
         for chunk in chunks:
             chunk = chunk.replace('&', '\\u0026')
             chunk = chunk.replace('<', '\\u003c')
@@ -418,7 +419,7 @@ class JSONEncoderForHTML(JSONEncoder):
 
 
 def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
-        _key_separator, _item_separator, _sort_keys, _skipkeys, _one_shot,
+        _key_separator, _item_separator, _sort_keys, _skipkeys,
         _use_decimal, _namedtuple_as_object, _tuple_as_array,
         _int_as_string_bitcount, _item_sort_key,
         _encoding,_for_json,
@@ -449,6 +450,15 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         (_int_as_string_bitcount <= 0 or
          not isinstance(_int_as_string_bitcount, integer_types))):
         raise TypeError("int_as_string_bitcount must be a positive integer")
+
+    def call_method(obj, method_name):
+        method = getattr(obj, method_name, None)
+        if callable(method):
+            try:
+                return (method(),)
+            except TypeError:
+                pass
+        return None
 
     def _encode_int(value):
         skip_quoting = (
@@ -512,15 +522,18 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
                 yield buf + str(value)
             else:
                 yield buf
-                for_json = _for_json and getattr(value, 'for_json', None)
-                if for_json and callable(for_json):
-                    chunks = _iterencode(for_json(), _current_indent_level)
+                for_json = _for_json and call_method(value, 'for_json')
+                if for_json:
+                    chunks = _iterencode(for_json[0], _current_indent_level)
                 elif isinstance(value, list):
                     chunks = _iterencode_list(value, _current_indent_level)
                 else:
-                    _asdict = _namedtuple_as_object and getattr(value, '_asdict', None)
-                    if _asdict and callable(_asdict):
-                        chunks = _iterencode_dict(_asdict(),
+                    _asdict = _namedtuple_as_object and call_method(value, '_asdict')
+                    if _asdict:
+                        dct = _asdict[0]
+                        if not isinstance(dct, dict):
+                            raise TypeError("_asdict() must return a dict, not %s" % (type(dct).__name__,))
+                        chunks = _iterencode_dict(dct,
                                                   _current_indent_level)
                     elif _tuple_as_array and isinstance(value, tuple):
                         chunks = _iterencode_list(value, _current_indent_level)
@@ -633,15 +646,18 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
             elif _use_decimal and isinstance(value, Decimal):
                 yield str(value)
             else:
-                for_json = _for_json and getattr(value, 'for_json', None)
-                if for_json and callable(for_json):
-                    chunks = _iterencode(for_json(), _current_indent_level)
+                for_json = _for_json and call_method(value, 'for_json')
+                if for_json:
+                    chunks = _iterencode(for_json[0], _current_indent_level)
                 elif isinstance(value, list):
                     chunks = _iterencode_list(value, _current_indent_level)
                 else:
-                    _asdict = _namedtuple_as_object and getattr(value, '_asdict', None)
-                    if _asdict and callable(_asdict):
-                        chunks = _iterencode_dict(_asdict(),
+                    _asdict = _namedtuple_as_object and call_method(value, '_asdict')
+                    if _asdict:
+                        dct = _asdict[0]
+                        if not isinstance(dct, dict):
+                            raise TypeError("_asdict() must return a dict, not %s" % (type(dct).__name__,))
+                        chunks = _iterencode_dict(dct,
                                                   _current_indent_level)
                     elif _tuple_as_array and isinstance(value, tuple):
                         chunks = _iterencode_list(value, _current_indent_level)
@@ -676,18 +692,20 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         elif isinstance(o, float):
             yield _floatstr(o)
         else:
-            for_json = _for_json and getattr(o, 'for_json', None)
-            if for_json and callable(for_json):
-                for chunk in _iterencode(for_json(), _current_indent_level):
+            for_json = _for_json and call_method(o, 'for_json')
+            if for_json:
+                for chunk in _iterencode(for_json[0], _current_indent_level):
                     yield chunk
             elif isinstance(o, list):
                 for chunk in _iterencode_list(o, _current_indent_level):
                     yield chunk
             else:
-                _asdict = _namedtuple_as_object and getattr(o, '_asdict', None)
-                if _asdict and callable(_asdict):
-                    for chunk in _iterencode_dict(_asdict(),
-                            _current_indent_level):
+                _asdict = _namedtuple_as_object and call_method(o, '_asdict')
+                if _asdict:
+                    dct = _asdict[0]
+                    if not isinstance(dct, dict):
+                        raise TypeError("_asdict() must return a dict, not %s" % (type(dct).__name__,))
+                    for chunk in _iterencode_dict(dct, _current_indent_level):
                         yield chunk
                 elif (_tuple_as_array and isinstance(o, tuple)):
                     for chunk in _iterencode_list(o, _current_indent_level):
