@@ -3,16 +3,17 @@ __license__ = "MIT"
 
 __all__ = [
     'HTML5TreeBuilder',
-]
+    ]
 
 import warnings
 import re
 from bs4.builder import (
+    DetectsXMLParsedAsHTML,
     PERMISSIVE,
     HTML,
     HTML_5,
     HTMLTreeBuilder,
-)
+    )
 from bs4.element import (
     NamespacedAttribute,
     nonwhitespace_re,
@@ -21,23 +22,22 @@ import html5lib
 from html5lib.constants import (
     namespaces,
     prefixes,
-)
+    )
 from bs4.element import (
     Comment,
     Doctype,
     NavigableString,
     Tag,
-)
+    )
 
 try:
     # Pre-0.99999999
     from html5lib.treebuilders import _base as treebuilder_base
     new_html5lib = False
-except:
+except ImportError as e:
     # 0.99999999 and up
     from html5lib.treebuilders import base as treebuilder_base
     new_html5lib = True
-
 
 class HTML5TreeBuilder(HTMLTreeBuilder):
     """Use html5lib to build a tree.
@@ -60,7 +60,7 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
     # html5lib can tell us which line number and position in the
     # original file is the source of an element.
     TRACKS_LINE_NUMBERS = True
-
+    
     def prepare_markup(self, markup, user_specified_encoding,
                        document_declared_encoding=None, exclude_encodings=None):
         # Store the user-specified encoding for use later on.
@@ -70,13 +70,24 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
         # ATM because the html5lib TreeBuilder doesn't use
         # UnicodeDammit.
         if exclude_encodings:
-            warnings.warn("You provided a value for exclude_encoding, but the html5lib tree builder doesn't support exclude_encoding.")
+            warnings.warn(
+                "You provided a value for exclude_encoding, but the html5lib tree builder doesn't support exclude_encoding.",
+                stacklevel=3
+            )
+
+        # html5lib only parses HTML, so if it's given XML that's worth
+        # noting.
+        DetectsXMLParsedAsHTML.warn_if_markup_looks_like_xml(markup)
+
         yield (markup, None, None, False)
 
     # These methods are defined by Beautiful Soup.
     def feed(self, markup):
         if self.soup.parse_only is not None:
-            warnings.warn("You provided a value for parse_only, but the html5lib tree builder doesn't support parse_only. The entire document will be parsed.")
+            warnings.warn(
+                "You provided a value for parse_only, but the html5lib tree builder doesn't support parse_only. The entire document will be parsed.",
+                stacklevel=4
+            )
         parser = html5lib.HTMLParser(tree=self.create_treebuilder)
         self.underlying_builder.parser = parser
         extra_kwargs = dict()
@@ -86,7 +97,7 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
             else:
                 extra_kwargs['encoding'] = self.user_specified_encoding
         doc = parser.parse(markup, **extra_kwargs)
-
+        
         # Set the character encoding detected by the tokenizer.
         if isinstance(markup, str):
             # We need to special-case this because html5lib sets
@@ -101,7 +112,7 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
                 original_encoding = original_encoding.name
             doc.original_encoding = original_encoding
         self.underlying_builder.parser = None
-
+            
     def create_treebuilder(self, namespaceHTMLElements):
         self.underlying_builder = TreeBuilderForHtml5lib(
             namespaceHTMLElements, self.soup,
@@ -115,7 +126,7 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
 
 
 class TreeBuilderForHtml5lib(treebuilder_base.TreeBuilder):
-
+    
     def __init__(self, namespaceHTMLElements, soup=None,
                  store_line_numbers=True, **kwargs):
         if soup:
@@ -137,7 +148,7 @@ class TreeBuilderForHtml5lib(treebuilder_base.TreeBuilder):
         # object, which we can use to track the current line number.
         self.parser = None
         self.store_line_numbers = store_line_numbers
-
+        
     def documentClass(self):
         self.soup.reset()
         return Element(self.soup, self.soup, None)
@@ -158,7 +169,7 @@ class TreeBuilderForHtml5lib(treebuilder_base.TreeBuilder):
             # where it ended -- the character just before this one.
             sourceline, sourcepos = self.parser.tokenizer.stream.position()
             kwargs['sourceline'] = sourceline
-            kwargs['sourcepos'] = sourcepos - 1
+            kwargs['sourcepos'] = sourcepos-1
         tag = self.soup.new_tag(name, namespace, **kwargs)
 
         return Element(tag, self.soup, namespace)
@@ -234,40 +245,32 @@ class TreeBuilderForHtml5lib(treebuilder_base.TreeBuilder):
 
         return "\n".join(rv)
 
-
 class AttrList(object):
     def __init__(self, element):
         self.element = element
         self.attrs = dict(self.element.attrs)
-
     def __iter__(self):
         return list(self.attrs.items()).__iter__()
-
     def __setitem__(self, name, value):
         # If this attribute is a multi-valued attribute for this element,
         # turn its value into a list.
-        list_attr = self.element.cdata_list_attributes
-        if (name in list_attr['*']
+        list_attr = self.element.cdata_list_attributes or {}
+        if (name in list_attr.get('*', [])
             or (self.element.name in list_attr
-                and name in list_attr[self.element.name])):
+                and name in list_attr.get(self.element.name, []))):
             # A node that is being cloned may have already undergone
             # this procedure.
             if not isinstance(value, list):
                 value = nonwhitespace_re.findall(value)
         self.element[name] = value
-
     def items(self):
         return list(self.attrs.items())
-
     def keys(self):
         return list(self.attrs.keys())
-
     def __len__(self):
         return len(self.attrs)
-
     def __getitem__(self, name):
         return self.attrs[name]
-
     def __contains__(self, name):
         return name in list(self.attrs.keys())
 
@@ -302,7 +305,7 @@ class Element(treebuilder_base.Node):
             node.element.extract()
 
         if (string_child is not None and self.element.contents
-                and self.element.contents[-1].__class__ == NavigableString):
+            and self.element.contents[-1].__class__ == NavigableString):
             # We are appending a string onto another string.
             # TODO This has O(n^2) performance, for input like
             # "a</a>a</a>a</a>..."
@@ -340,7 +343,7 @@ class Element(treebuilder_base.Node):
 
     def setAttributes(self, attributes):
         if attributes is not None and len(attributes) > 0:
-            converted_attributes = []  # noQA
+            converted_attributes = []
             for name, value in list(attributes.items()):
                 if isinstance(name, tuple):
                     new_name = NamespacedAttribute(*name)
@@ -370,9 +373,9 @@ class Element(treebuilder_base.Node):
     def insertBefore(self, node, refNode):
         index = self.element.index(refNode.element)
         if (node.element.__class__ == NavigableString and self.element.contents
-                and self.element.contents[index - 1].__class__ == NavigableString):
+            and self.element.contents[index-1].__class__ == NavigableString):
             # (See comments in appendChild)
-            old_node = self.element.contents[index - 1]
+            old_node = self.element.contents[index-1]
             new_str = self.soup.new_string(old_node + node.element)
             old_node.replace_with(new_str)
         else:
@@ -451,7 +454,7 @@ class Element(treebuilder_base.Node):
     def cloneNode(self):
         tag = self.soup.new_tag(self.element.name, self.namespace)
         node = Element(tag, self.soup, self.namespace)
-        for key, value in self.attributes:
+        for key,value in self.attributes:
             node.attributes[key] = value
         return node
 
@@ -459,13 +462,12 @@ class Element(treebuilder_base.Node):
         return self.element.contents
 
     def getNameTuple(self):
-        if self.namespace is None:
+        if self.namespace == None:
             return namespaces["html"], self.name
         else:
             return self.namespace, self.name
 
     nameTuple = property(getNameTuple)
-
 
 class TextNode(Element):
     def __init__(self, element, soup):
