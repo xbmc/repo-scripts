@@ -625,6 +625,22 @@ msgctxt "#32258"
 msgid "No timers to select."
 msgstr ""
 
+msgctxt "#32260"
+msgid "This item is already scheduled"
+msgstr ""
+
+msgctxt "#32261"
+msgid "What do you want to do with existing timer?"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Delete"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Replace"
+msgstr ""
+
 msgctxt "#32270"
 msgid "Timer is ending with system action:"
 msgstr ""
