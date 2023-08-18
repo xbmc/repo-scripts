@@ -69,7 +69,13 @@ def observation():
         )
         window().setProperty("Current.FeelsLike", "n/a")
         # if we get Wind, then convert it to kmph.
-        window().setProperty("Current.Wind", utilities.mph_to_kmph(latest_obs, "S"))
+        wind_speed = latest_obs.get("S")
+        if wind_speed:
+            window().setProperty(
+                "Current.Wind", str(round(utilities.mph_to_kph(float(wind_speed)), 0))
+            )
+        else:
+            window().setProperty("Current.Wind", "n/a")
         window().setProperty("Current.WindDirection", latest_obs.get("D", "n/a"))
         window().setProperty("Current.WindGust", latest_obs.get("G", "n/a"))
         window().setProperty(
@@ -83,6 +89,20 @@ def observation():
             "Current.DewPoint",
             str(round(float(latest_obs.get("Dp", "n/a")))).split(".")[0],
         )
+        humidity = latest_obs.get("H")
+        temperature = latest_obs.get("T")
+        if humidity and temperature and wind_speed:
+            ws_mps = utilities.mph_to_mps(float(wind_speed))
+            feels_like = utilities.feels_like(
+                float(temperature), float(humidity) / 100, ws_mps
+            )
+            window().setProperty(
+                "Current.FeelsLike",
+                str(round(feels_like)),
+            )
+        else:
+            window().setProperty("Current.FeelsLike", "n/a")
+
         window().setProperty(
             "Current.Humidity",
             str(round(float(latest_obs.get("H", "n/a")))).split(".")[0],

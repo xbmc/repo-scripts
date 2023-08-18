@@ -7,13 +7,8 @@ from functools import wraps
 import xbmc
 import xbmcgui
 
-from .constants import (
-    ADDON_BROWSER_WINDOW_ID,
-    TEMPERATUREUNITS,
-    WEATHER_WINDOW_ID,
-    addon,
-    dialog,
-)
+from .constants import (ADDON_BROWSER_WINDOW_ID, TEMPERATUREUNITS,
+                        WEATHER_WINDOW_ID, addon, dialog)
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -119,6 +114,86 @@ def haversine_distance(lat1, lon1, lat2, lon2):
     return EARTH_RADIUS * c
 
 
+def feels_like(temp, humidity, windspeed):
+    # https://blog.metoffice.gov.uk/2012/02/15/what-is-feels-like-temperature/
+    # Using these facts we use a formula to adjust the air temperature based
+    # on our understanding of wind chill at lower temperatures, heat index at
+    # higher temperatures and a combination of the two in between.
+
+    # Inspect temperature and humidity to determine which functions below
+    # should be applied.
+
+    # But for now just use the 'simplified' apparent temperature.
+    return apparent_temperature_simplified(temp, humidity, windspeed)
+
+
+def water_vapour_pressure(t, rh):
+    # Temperature (t) is a float from 0 to 100 representing a temperature in degrees C.
+    # Relative humidity (rh) is a float from 0.00 to 1.00 representing a percentage.
+    return rh * 6.105 * math.e ** (17.27 * t / (237.7 + t))
+
+
+def apparent_temperature_simplified(t, rh, ws):
+    # A version of apparent temperature that doesn't need Q factor.
+    # From the Land of Oz.
+    # https://www.vcalc.com/wiki/rklarsen/Australian+Apparent+Temperature+%28AT%29
+    hPa = water_vapour_pressure(t, rh)
+    return t + (0.33 * hPa) - (0.70 * ws) - 4.00
+
+
+def apparent_temperature(t, rh, ws, Q=0):
+    # https://calculator.academy/apparent-temperature-calculator/
+    # temp in degrees C
+    # humidity ...
+    # windspeed in metres per second
+    # TODO: Q is a fudge factor based on absorbed solar radiation.
+    hPa = water_vapour_pressure(t, rh)
+    return t + 0.38 * hPa - 0.70 * ws + 0.70 * (Q / (ws + 10)) - 4.25
+
+
+def wind_chill(temp, windspeed):
+    # Use wind chill at lower winter temperatures.
+    return (
+        13.12
+        + 0.6215 * temp
+        - 11.37 * windspeed**0.16
+        + 0.3965 * temp * windspeed**0.16
+    )
+
+
+def heat_index(t, r):
+    # Use heat index for high summer temperatures.
+    """
+    See: https://en.wikipedia.org/wiki/Heat_index
+    The formula below approximates the heat index in degrees Fahrenheit,
+    to within ±1.3 °F (0.7 °C). It is the result of a multivariate fit
+    (temperature equal to or greater than 80 °F (27 °C)
+    """
+
+    # NB!!! rh here is a percentage expressed as 0 - 100!
+
+    c1 = -8.78469475556
+    c2 = 1.61139411
+    c3 = 2.33854883889
+    c4 = -0.14611605
+    c5 = -0.012308094
+    c6 = -0.0164248277778
+    c7 = 0.002211732
+    c8 = 0.00072546
+    c9 = -0.000003582
+    return (
+        c1
+        + c2 * t
+        + c3 * r
+        + c4 * t * r
+        + c5 * (t**2)
+        + c6 * (r**2)
+        + c7 * (t**2) * r
+        + c8 * t * (r**2)
+        + c9 * (t**2) * (r**2)
+    )
+
+
 def rownd(x):
     try:
         return str(round(float(x), 0)).split(".")[0]
@@ -142,13 +217,17 @@ def localised_temperature(t):
 
 
 @f_or_nla
-def mph_to_kmph(obj, key):
+def mph_to_kph(x):
     """
     Convert miles per hour to kilomenters per hour
     Required because Kodi assumes that wind speed is provided in
     kilometers per hour.
     """
-    return str(round(float(obj[key]) * 1.609344, 0))
+    return x * 1.609344
+
+
+def mph_to_mps(x):
+    return x / 2.237
 
 
 def gettext(s):
