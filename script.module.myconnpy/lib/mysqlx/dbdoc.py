@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2022, Oracle and/or its affiliates. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -28,23 +28,27 @@
 
 """Implementation of the DbDoc."""
 
+from __future__ import annotations
+
 import json
 
-from .compat import STRING_TYPES
+from typing import Any, Dict, KeysView, Optional, Union
+
 from .errors import ProgrammingError
 
 
 class ExprJSONEncoder(json.JSONEncoder):
     """A :class:`json.JSONEncoder` subclass, which enables encoding of
     :class:`mysqlx.ExprParser` objects."""
-    def default(self, o):  # pylint: disable=E0202
+
+    def default(self, o: object) -> str:
         if hasattr(o, "expr"):
-            return "{0}".format(o)
+            return f"{o}"
         # Let the base class default method raise the TypeError
         return json.JSONEncoder.default(self, o)
 
 
-class DbDoc(object):
+class DbDoc:
     """Represents a generic document in JSON format.
 
     Args:
@@ -53,29 +57,33 @@ class DbDoc(object):
     Raises:
         ValueError: If ``value`` type is not a basestring or dict.
     """
-    def __init__(self, value):
+
+    def __init__(self, value: Union[str, Dict[str, Any]]) -> None:
         if isinstance(value, dict):
             self.__dict__ = value
-        elif isinstance(value, STRING_TYPES):
+        elif isinstance(value, str):
             self.__dict__ = json.loads(value)
         else:
-            raise ValueError("Unable to handle type: {0}".format(type(value)))
+            raise ValueError(f"Unable to handle type: {type(value)}")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.as_str()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(self.__dict__)
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index: str, value: Any) -> None:
         if index == "_id":
             raise ProgrammingError("Cannot modify _id")
         self.__dict__[index] = value
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: str) -> Any:
         return self.__dict__[index]
 
-    def copy(self, doc_id=None):
+    def __contains__(self, item: str) -> bool:
+        return item in self.__dict__
+
+    def copy(self, doc_id: Optional[str] = None) -> DbDoc:
         """Returns a new copy of a :class:`mysqlx.DbDoc` object containing the
         `doc_id` provided. If `doc_id` is not provided, it will be removed from
         new :class:`mysqlx.DbDoc` object.
@@ -93,7 +101,7 @@ class DbDoc(object):
             del new_dict["_id"]
         return DbDoc(new_dict)
 
-    def keys(self):
+    def keys(self) -> KeysView[str]:
         """Returns the keys.
 
         Returns:
@@ -101,7 +109,7 @@ class DbDoc(object):
         """
         return self.__dict__.keys()
 
-    def as_str(self):
+    def as_str(self) -> str:
         """Serialize :class:`mysqlx.DbDoc` to a JSON formatted ``str``.
 
         Returns:
