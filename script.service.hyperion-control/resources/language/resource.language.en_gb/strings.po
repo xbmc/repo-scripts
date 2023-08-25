@@ -38,11 +38,6 @@ msgid "Disable Hyperion on shutdown"
 msgstr "Disable Hyperion on shutdown"
 
 #:
-msgctxt "#32006"
-msgid "Enable Debug"
-msgstr "Enable Debug"
-
-#:
 msgctxt "#32007"
 msgid "Show changelog after update"
 msgstr "Show changelog after update"

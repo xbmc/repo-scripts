@@ -44,7 +44,6 @@ class SettingsManager(Protocol):
     menu_enabled: bool
     show_changelog_on_update: bool
     tasks: int
-    debug: bool
     first_run: bool
 
     @property

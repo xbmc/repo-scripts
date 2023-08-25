@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.hyperion-control" name="Hyperion Control" version="20.0.0" provider-name="hyperion-project">
   <requires>
-	<import addon="xbmc.addon"  version="20.0.0"/>
+	<import addon="xbmc.addon"  version="20.0.1"/>
     <import addon="xbmc.python" version="3.0.1"/>
     <import addon="script.module.requests" version="2.3.0"/>
   </requires>
@@ -17,6 +17,9 @@
     <website>https://hyperion-project.org/forum</website>
     <source>https://github.com/hyperion-project/hyperion.control</source>
     <news>
+      20.0.1
+      - Removed redundant debug setting
+
       20.0.0
       - Kodi 20 (Nexus) support
       - Multi instance handling

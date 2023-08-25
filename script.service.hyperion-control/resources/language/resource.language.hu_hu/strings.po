@@ -38,11 +38,6 @@ msgid "Disable Hyperion on shutdown"
 msgstr "Hyperion kikapcsolása leállításkor"
 
 #:
-msgctxt "#32006"
-msgid "Enable Debug"
-msgstr "Hibakeresés engedélyezése"
-
-#:
 msgctxt "#32007"
 msgid "Show changelog after update"
 msgstr "Változásnapló megjelenítése frissítés után"

@@ -49,7 +49,6 @@ class SettingsManager:
         self.menu_enabled: bool
         self.show_changelog_on_update: bool
         self.tasks: int
-        self.debug: bool
         self.first_run: bool
         self.read_settings()
 
@@ -108,7 +107,7 @@ class SettingsManager:
     def _log_set_outcome(self, name: str, value: Any, outcome: bool) -> None:
         if not outcome:
             self._logger.error(f"Error setting {name} to {value} (outcome={outcome})")
-        elif self.debug:
+        else:
             self._logger.log(f"Set {name} to {value}")
 
     def set_tasks(self, value: int) -> None:
@@ -140,7 +139,6 @@ class SettingsManager:
         self.enable_hyperion = get_bool("enableHyperion")
         self.disable_hyperion = get_bool("disableHyperion")
         self.show_changelog_on_update = get_bool("showChangelogOnUpdate")
-        self.debug = get_bool("debug")
         self.first_run = get_bool("firstRun")
         self.current_version = get_string("currAddonVersion")
 
@@ -155,8 +153,7 @@ class SettingsManager:
         self.tasks = get_int("tasks")
         self.rev += 1
 
-        if self.debug:
-            self._log_settings()
+        self._log_settings()
 
     def _log_settings(self) -> None:
         log = self._logger.log
@@ -172,7 +169,6 @@ class SettingsManager:
         log(f"Audio enabled:         {self.audio_enabled}")
         log(f"Pause enabled:         {self.pause_enabled}")
         log(f"Menu enabled:          {self.menu_enabled}")
-        log(f"Debug enabled:         {self.debug}")
         log(f"ChangelogOnUpdate:     {self.show_changelog_on_update}")
         log(f"tasks:                 {self.tasks}")
         log(f"first run:             {self.first_run}")
