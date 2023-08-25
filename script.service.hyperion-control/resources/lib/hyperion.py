@@ -52,8 +52,7 @@ class Hyperion:
 
     def notify(self, command: str) -> None:
         """Process the commands sent by the observables."""
-        if self._settings.debug:
-            self._logger.log(f"received command: {command}")
+        self._logger.log(f"received command: {command}")
         if command == "updateSettings":
             self.update_settings()
         else:
