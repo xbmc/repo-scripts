@@ -17,6 +17,7 @@ API_LOGIN = "login"
 API_SUBTITLES = "subtitles"
 API_DOWNLOAD = "download"
 
+
 CONTENT_TYPE = "application/json"
 REQUEST_TIMEOUT = 30
 
@@ -68,7 +69,7 @@ class OpenSubtitlesProvider:
         self.username = username
         self.password = password
 
-        self.request_headers = {"Api-Key": self.api_key, "Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.2" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
 
         self.session = Session()
         self.session.headers = self.request_headers
@@ -216,3 +217,4 @@ class OpenSubtitlesProvider:
                 logging(f"Could not download subtitle from {subtitle.download_link}")
 
         return subtitle
+
