@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.tzlocal"
-       name="tzlocal"
-       version="3.0.0+matrix.2"
-       provider-name="Lennart Regebro">
+<addon id="script.module.tzlocal" name="tzlocal" version="5.0.1" provider-name="Lennart Regebro">
   <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.pytz" version="2019.3.0+matrix.1"/>
-    <import addon="script.module.backports.zoneinfo" version="0.2.1"/>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.tzdata" version="2023.3.0+matrix.1" />
+    <import addon="script.module.backports.zoneinfo" version="0.2.1" />
   </requires>
-  <extension point="xbmc.python.module"
-             library="lib"/>
+  <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Python Module to find out the current time zone</summary>
-    <description lang="en_GB">Packed for Kodi from https://github.com/regebro/tzlocal, forked from https://github.com/jdollarKodi/script.module.tzlocal</description>
+    <summary lang="en_GB">tzinfo object for the local timezone</summary>
+    <description lang="en_GB">tzinfo object for the local timezone</description>
     <platform>all</platform>
     <license>MIT</license>
     <website>https://github.com/regebro/tzlocal</website>
