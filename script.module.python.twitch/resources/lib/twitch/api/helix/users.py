@@ -31,12 +31,10 @@ def get_users(user_id=list(), user_login=list(), use_app_token=False):
 
 # required scope: none
 @query
-def get_follows(from_id='', to_id='', after='MA==', before='MA==', first=20, use_app_token=False):
-    q = Qry('users/follows', use_app_token=use_app_token)
-    q.add_param(keys.FROM_ID, from_id, '')
-    q.add_param(keys.TO_ID, to_id, '')
+def get_follows(user_id='', after='MA==', first=20, use_app_token=False):
+    q = Qry('channels/followed', use_app_token=use_app_token)
+    q.add_param(keys.USER_ID, user_id, '')
     q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
-    q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
     q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
 
     return q
