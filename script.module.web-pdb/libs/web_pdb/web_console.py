@@ -1,6 +1,5 @@
-# coding: utf-8
 # Author: Roman Miroshnychenko aka Roman V.M.
-# E-mail: romanvm@yandex.ua
+# E-mail: roman1972@gmail.com
 #
 # Copyright (c) 2016 Roman Miroshnychenko
 #
@@ -25,19 +24,17 @@
 File-like web-based input/output console
 """
 
-from __future__ import absolute_import, unicode_literals
+import queue
 import weakref
 from threading import Thread, Event, RLock
-try:
-    import queue
-except ImportError:
-    import Queue as queue
-from .asyncore_wsgi import make_server, AsyncWebSocketHandler
+
 import xbmc
 from xbmcaddon import Addon
 from xbmcgui import DialogProgressBG
-from .wsgi_app import app
+
+from .asyncore_wsgi import make_server, AsyncWebSocketHandler
 from .logging import getLogger
+from .wsgi_app import app
 
 __all__ = ['WebConsole']
 
@@ -131,9 +128,7 @@ class WebConsole(object):
     def _run_server(self, host, port):
         app.frame_data = self._frame_data
         httpd = make_server(host, port, app, ws_handler_class=WebConsoleSocket)
-        logger.info('Web-PDB: starting web-server on {0}:{1}...'.format(
-                httpd.server_name, port)
-        )
+        logger.info(f'Web-PDB: starting web-server on {httpd.server_name}:{port}...')
         dialog = DialogProgressBG()
         started = False
         while not (self._stop_all.is_set() or kodi_monitor.abortRequested()):
@@ -170,8 +165,6 @@ class WebConsole(object):
     read = readline
 
     def writeline(self, data):
-        if isinstance(data, bytes):
-            data = data.decode('utf-8')
         self._console_history.contents += data
         try:
             frame_data = self._debugger.get_current_frame_data()
