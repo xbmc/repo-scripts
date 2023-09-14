@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2005  Michael Urman
 #               2013  Christoph Reiter
 #               2014  Ben Ockmore
@@ -8,7 +7,8 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
-from mutagen._compat import long_, integer_types, PY3
+from typing import Union
+
 from mutagen._util import MutagenError
 
 
@@ -46,7 +46,7 @@ class ID3JunkFrameError(error):
 
 class unsynch(object):
     @staticmethod
-    def decode(value):
+    def decode(value: bytes) -> bytes:
         fragments = bytearray(value).split(b'\xff')
         if len(fragments) > 1 and not fragments[-1]:
             raise ValueError('string ended unsafe')
@@ -61,7 +61,7 @@ class unsynch(object):
         return bytes(bytearray(b'\xff').join(fragments))
 
     @staticmethod
-    def encode(value):
+    def encode(value: bytes) -> bytes:
         fragments = bytearray(value).split(b'\xff')
         for f in fragments[1:]:
             if (not f) or (f[0] >= 0xE0) or (f[0] == 0x00):
@@ -75,7 +75,8 @@ class _BitPaddedMixin(object):
         return self.to_str(self, self.bits, self.bigendian, width, minwidth)
 
     @staticmethod
-    def to_str(value, bits=7, bigendian=True, width=4, minwidth=4):
+    def to_str(value: int, bits: int = 7, bigendian: bool = True,
+               width: int = 4, minwidth: int = 4) -> bytes:
         mask = (1 << bits) - 1
 
         if width != -1:
@@ -103,14 +104,14 @@ class _BitPaddedMixin(object):
         return bytes(bytes_)
 
     @staticmethod
-    def has_valid_padding(value, bits=7):
+    def has_valid_padding(value: Union[int, bytes], bits: int = 7) -> bool:
         """Whether the padding bits are all zero"""
 
         assert bits <= 8
 
         mask = (((1 << (8 - bits)) - 1) << bits)
 
-        if isinstance(value, integer_types):
+        if isinstance(value, int):
             while value:
                 if value & mask:
                     return False
@@ -133,7 +134,7 @@ class BitPaddedInt(int, _BitPaddedMixin):
         numeric_value = 0
         shift = 0
 
-        if isinstance(value, integer_types):
+        if isinstance(value, int):
             if value < 0:
                 raise ValueError
             while value:
@@ -149,20 +150,11 @@ class BitPaddedInt(int, _BitPaddedMixin):
         else:
             raise TypeError
 
-        if isinstance(numeric_value, int):
-            self = int.__new__(BitPaddedInt, numeric_value)
-        else:
-            self = long_.__new__(BitPaddedLong, numeric_value)
+        self = int.__new__(BitPaddedInt, numeric_value)
 
         self.bits = bits
         self.bigendian = bigendian
         return self
-
-if PY3:
-    BitPaddedLong = BitPaddedInt
-else:
-    class BitPaddedLong(long_, _BitPaddedMixin):
-        pass
 
 
 class ID3BadUnsynchData(error, ValueError):
