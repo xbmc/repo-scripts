@@ -1,3 +1,6 @@
+## 2.1
+- updated to https streaming
+
 ## v2.0
 
 - metadata for the streams

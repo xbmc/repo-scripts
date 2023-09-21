@@ -84,8 +84,6 @@ class Player(xbmc.Player):
                 rating = float(song.data['rating'])
                 info['rating'] = rating
                 info['userrating'] = int(round(rating))
-            if 'year' in song.data:
-                info['year'] = int(song.data['year'])
             item = xbmcgui.ListItem()
             item.setPath(self.getPlayingFile())
             item.setArt({'thumb': song.cover})
