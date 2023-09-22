@@ -1,5 +1,6 @@
 ## 2.1
-- updated to https streaming
+- updated to https 
+- added artist fanart background when available
 
 ## v2.0
 

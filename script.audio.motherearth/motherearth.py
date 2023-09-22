@@ -5,6 +5,7 @@ import requests
 KEY_FILTER_RE = re.compile(r'[^\w\']+')
 
 NOWPLAYING_URL = 'https://motherearth.streamserver24.com/api/nowplaying/{}'
+FANART_URL = 'https://motherearthradio.de/artist/{}/fanart.jpg'
 
 STREAMS = [
     {
