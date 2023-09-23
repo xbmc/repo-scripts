@@ -5,7 +5,6 @@ import requests
 KEY_FILTER_RE = re.compile(r'[^\w\']+')
 
 NOWPLAYING_URL = 'https://motherearth.streamserver24.com/api/nowplaying/{}'
-FANART_URL = 'https://motherearthradio.de/artist/{}/fanart.jpg'
 
 STREAMS = [
     {
@@ -80,7 +79,7 @@ class NowPlaying():
         data = response.json()
         current = None
         songs = {}
-        key = build_key((data['now_playing']['song']['artist'], data['now_playing']['song']['title']))            
+        key = build_key((data['now_playing']['song']['artist'], data['now_playing']['song']['title']))
         songs[key] = {
             'artist': data['now_playing']['song']['artist'],
             'cover': data['now_playing']['song']['art'],
@@ -89,6 +88,7 @@ class NowPlaying():
             'album': data['now_playing']['song']['album'],
             }
         current = songs[key]
+        
         self._current = current
         self.songs = songs
         self.next_update = now + data['now_playing']['remaining']

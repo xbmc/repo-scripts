@@ -3,13 +3,14 @@ import requests
 import xbmc
 import xbmcaddon
 import xbmcgui
+import urllib
 from collections import namedtuple
-from motherearth import STREAM_INFO, NowPlaying, FANART_URL
-
+from motherearth import STREAM_INFO, NowPlaying
 
 RESTART_INTERVAL = 1.0
 RESTART_TIMEOUT = 1.0
 
+FANART_URL = "https://motherearthradio.de/artist/{}/fanart.jpg"
 
 Song = namedtuple('Song', 'data cover')
 
@@ -86,8 +87,9 @@ class Player(xbmc.Player):
             item = xbmcgui.ListItem()
             item.setPath(self.getPlayingFile())
             item.setArt({'thumb': song.cover})
- #           item.setArt({'fanart': song.cover})
-            item.setArt({'fanart' : FANART_URL.format((song.data['artist']))})
+            fanart = urllib.parse.quote(song.data['artist'])
+            fanart = FANART_URL.format(fanart)
+            item.setArt({'fanart' : fanart})
             item.setInfo('music', info)
             self.updateInfoTag(item)
 
