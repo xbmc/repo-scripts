@@ -1,6 +1,6 @@
 # script.audio.motherearth
-Kodi addon for Mother Earth Radio, a free FLAC/AAC 96k/24bits webradio
+Mother Earth Radio - Hi Res Audio and Vinyl 192kHz/24bit FLAC streaming
 
-Version 2.0
+Version 2.1
 
-Choose FLAC or AAC-stream (AAC is the default) in addon options.
+Choose FLAC or AAC-stream in addon options.

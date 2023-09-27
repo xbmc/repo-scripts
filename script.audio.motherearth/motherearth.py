@@ -4,26 +4,26 @@ import requests
 
 KEY_FILTER_RE = re.compile(r'[^\w\']+')
 
-NOWPLAYING_URL = 'http://server9.streamserver24.com:9090/api/nowplaying/{}'
+NOWPLAYING_URL = 'https://motherearth.streamserver24.com/api/nowplaying/{}'
 
 STREAMS = [
     {
         'channel': 0,
         'title': 'Mother Earth Radio',
-        'url_aac': 'http://server9.streamserver24.com:18900/motherearth.aac',
-        'url_flac': 'http://server9.streamserver24.com:18900/motherearth',
+        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth/motherearth.aac',
+        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth/motherearth',
     },
     {
         'channel': 1,
         'title': 'Mother Earth Klassik',
-        'url_aac': 'http://server9.streamserver24.com:18910/motherearth.klassik.aac',
-        'url_flac': 'http://server9.streamserver24.com:18910/motherearth.klassik',
+        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_klassik/motherearth.klassik.aac',
+        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_klassik/motherearth.klassik',
     },
     {
         'channel': 2,
         'title': 'Mother Earth Instrumental',
-        'url_aac': 'http://server9.streamserver24.com:18920/motherearth.instrumental.aac',
-        'url_flac': 'http://server9.streamserver24.com:18920/motherearth.instrumental',
+        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental.aac',
+        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental',
     },
 ]
 STREAM_INFO = {s['url_aac']: s for s in STREAMS}
@@ -74,12 +74,12 @@ class NowPlaying():
         now = time.time()
         if now < self.next_update:
             return
-        res = requests.get(self.url, timeout=2)
-        res.raise_for_status()
-        data = res.json()
+        response = requests.get(self.url, timeout=2)
+        response.raise_for_status()
+        data = response.json()
         current = None
         songs = {}
-        key = build_key((data['now_playing']['song']['artist'], data['now_playing']['song']['title']))            
+        key = build_key((data['now_playing']['song']['artist'], data['now_playing']['song']['title']))
         songs[key] = {
             'artist': data['now_playing']['song']['artist'],
             'cover': data['now_playing']['song']['art'],
@@ -88,6 +88,7 @@ class NowPlaying():
             'album': data['now_playing']['song']['album'],
             }
         current = songs[key]
+        
         self._current = current
         self.songs = songs
         self.next_update = now + data['now_playing']['remaining']
