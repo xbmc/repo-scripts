@@ -9,32 +9,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"PO-Revision-Date: 2021-09-18 12:36+0000\n"
 "Last-Translator: taxigps <taxigps@sina.com>\n"
-"Language-Team: Chinese (http://www.transifex.com/teamxbmc/xbmc-addons/language/zh/)\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/zh_cn/>\n"
+"Language: zh_cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
 msgstr "定时更新你的 Kodi 视频和音乐资料库。定时器以 Kodi 服务的方式运行以保证不会错过更新。"
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr "这是一个定时更新你的音乐和视频资料库的 Kodi 服务程序。你可以设置不同的时间间隔来扫描媒体库（音频、视频或二者），或者设置一个 cron 类型的定时器来获得更好的控制。如果定时动作开始时你正在播放一个音频或视频文件，它会跳过此次更新直到播放完毕以避免影响你欣赏媒体。现在已支持更新指定的视频路径以及清理音视频资料库。"
 
 msgctxt "#30000"
@@ -70,16 +62,16 @@ msgid "Run during playback"
 msgstr "播放时更新"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "延迟启动（分）"
+msgid "Startup Delay"
+msgstr "启动延迟"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "使用过的高级定时器"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "更新间隔（小时）"
+msgid "Amount of time between updates"
+msgstr "更新之间的时间间隔"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -101,33 +93,41 @@ msgctxt "#30015"
 msgid "Disable manual run prompt"
 msgstr "禁用手动运行提示"
 
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "Cron 语法 %s 不正确，默认为2小时"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "扫描前检查源是否存在"
+
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "更新指定路径 1"
+msgid "Edit Custom Paths"
+msgstr "编辑自定义路径"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "更新指定路径 2"
+msgid "Choose Action"
+msgstr "选择动作"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "更新指定路径 3"
+msgid "Delete this item?"
+msgstr "删除此项目吗？"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "视频路径"
+msgid "Browse for path"
+msgstr "浏览路径"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "阅读免责声明"
+msgid "This update broke custom paths, you must remake them"
+msgstr "此更新破坏了自定义路径，您必须重新创建它们"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "视频路径免责声明"
+msgid "Custom Paths Disclaimer"
+msgstr "自定义路径免责声明"
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "路径必须是一个有内容的视频源"
+msgid "Path must already be a valid source with content"
+msgstr "路径必须已经是包含内容的有效源"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -212,3 +212,131 @@ msgstr "更新将再次运行"
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "你要手动运行更新吗？"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "无延迟"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1分钟"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2分钟"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3分钟"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4分钟"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5分钟"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1小时"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2小时"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4小时"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6小时"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12小时"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24小时"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "系统启动后延迟错过的扫描多长时间"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "播放媒体时允许资料库扫描"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "仅允许在系统空闲时启动扫描（屏幕保护程序处于活动状态）"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "启动手动运行时禁用该对话框"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "切换使用 cron 计时器而不是简单计时器"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "选择启动资料库扫描的频率"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "使用 cron 语法设置一个自定义间隔 - 例如“15*/5***”，表示每天每5小时一刻的时间间隔"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "启动自定义路径编辑器以选择特定的扫描目录，而不是整个资料库"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "运行 Kodi 资料库清理进程以清除已删除的媒体"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "在清理进程运行之前添加额外的确认提示"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "设置运行清理进程的频率。每次更新后，每天一次、每周一次、每月一次或自定义"
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "延迟启动（分）"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "更新间隔（小时）"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "更新指定路径 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "更新指定路径 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "更新指定路径 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "视频路径"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "阅读免责声明"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "视频路径免责声明"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "路径必须是一个有内容的视频源"
