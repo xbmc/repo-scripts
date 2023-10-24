@@ -879,7 +879,10 @@ class PythonPrimitiveToStoneDecoder(object):
         """
         if isinstance(data_type, bv.Timestamp):
             try:
-                ret = datetime.datetime.strptime(val, data_type.format)
+                try:
+                    ret = datetime.datetime.strptime(val, data_type.format)
+                except TypeError:
+                    ret = datetime.datetime(*(time.strptime(val, data_type.format)[0:6]))
             except (TypeError, ValueError) as e:
                 raise bv.ValidationError(e.args[0])
         elif isinstance(data_type, bv.Bytes):
