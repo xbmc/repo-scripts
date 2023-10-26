@@ -52,10 +52,10 @@ msgctxt "#30407"
 msgid "Favorites"
 msgstr "Favorites"
 
+msgctxt "#30408"
+msgid "Ignore Certificate"
+msgstr "Negeer certificaat"
+
 msgctxt "#30498"
 msgid "Domoticz in Kodi"
 msgstr "Domoticz in Kodi"
-
-msgctxt "#30499"
-msgid "------End of list------"
-msgstr "------End of list------"

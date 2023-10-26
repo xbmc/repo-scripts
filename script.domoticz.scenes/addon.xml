@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.10" provider-name="Paul VW">
+<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.20" provider-name="Paul VW">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
      <import addon="script.module.requests"   version="1.0.0"/>
@@ -18,15 +18,23 @@
     <website>https://github.com/Paul-VW/script.domoticz.scenes</website> <!-- the url of the website that contains the videos (or the official website of your plugin). May be omitted.  -->
     <email>paulvw@live.com</email> <!-- may be omitted  -->
     <source>https://github.com/Paul-VW/script.domoticz.scenes</source>
-    <news>v0.0.1 (22/03/2021)
-[new] beta Release
+    <news>
+        v0.0.20 (26/10/2023)
+        [new] Domoticz 2023.2 support
+        [new] Ignore SSL Certificate error
+        [fix] HTTPS connection to domoticz
+        [fix] Toggle groups and start scenes
+        [fix] End of list implementation resolved
 
-v0.0.8 (24/03/2021)
-[new] Support for scenes, switches and favorites
+        v0.0.10 (01/04/2021)
+        [fix] code cleanup
+        [fix] Domoticz authentication
 
-v0.0.10 (01/04/2021)
-[fix] code cleanup
-[fix] Domoticz authentication
+        v0.0.8 (24/03/2021)
+        [new] Support for scenes, switches and favorites
+
+        v0.0.1 (22/03/2021)
+        [new] beta Release
     </news>
     <assets>
         <icon>resources/icon.png</icon>
