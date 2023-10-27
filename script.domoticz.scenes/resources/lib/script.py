@@ -70,7 +70,7 @@ def domoticz_get_version():
 
 def domoticz_scenes_and_groups():
     domoticz_version = domoticz_get_version()
-    if domoticz_version['Revision'] > 15453:
+    if domoticz_version['Revision'] > 15453 or domoticz_version['version'] == "2023.2 (build 15457)":
         query = "type=command&param=getscenes"
     else:
         query = 'type=scenes'
@@ -94,7 +94,7 @@ def domoticz_scenes_and_groups():
 
 def domoticz_favorites():
     domoticz_version = domoticz_get_version()
-    if domoticz_version['Revision'] > 15453:
+    if domoticz_version['Revision'] > 15453 or domoticz_version['version'] == "2023.2 (build 15457)":
         query = "type=command&param=getdevices&used=true&filter=all&favorite=1"
     else:
         query = 'type=devices&used=true&filter=all&favorite=1'
@@ -104,7 +104,7 @@ def domoticz_favorites():
 
 def domoticz_light_switches():
     domoticz_version = domoticz_get_version()
-    if domoticz_version['Revision'] > 15453:
+    if domoticz_version['Revision'] > 15453 or domoticz_version['version'] == "2023.2 (build 15457)":
         query = "type=command&param=getdevices&filter=light&used=true&order=Name"
     else:
         query = 'type=devices&filter=light&used=true&order=Name'
