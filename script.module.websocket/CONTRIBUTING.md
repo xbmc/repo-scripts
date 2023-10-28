@@ -24,6 +24,8 @@ If you did not get your question answered from these 5 steps, then please open a
 new issue and ask your question! When you explain your problem, please:
 - [ ] [Enable the tracing feature](https://websocket-client.readthedocs.io/en/latest/examples.html#debug-and-logging-options)
 and include the entire debug trace of your connection process in the issue
+- [ ] Provide a [minimum reproducible example](https://stackoverflow.com/help/minimal-reproducible-example)
+program to allow other users to recreate and demonstrate the error
 - [ ] Add an explanation for what you are trying to accomplish. If you can
 provide your code (or example code) in the issue, this helps a lot!
 
@@ -46,9 +48,9 @@ problem with the current code and test your solution (if possible to recreate).
 Great! To edit the [project documentation](https://websocket-client.readthedocs.io),
 it is recommended that you install Sphinx and build the updated documentation
 locally before submitting your edits. The Sphinx dependencies can be
-installed by navigating to the `docs/source` directory and running `pip install
--r requirements.txt`. To build a new version of the documentation, change
-directories (or `cd`) to the `docs/` directory and run `make clean html`.
+installed by navigating to the `docs/source` directory and running
+`pip3 install -r requirements.txt`. To build a new version of the documentation,
+change directories (or `cd`) to the `docs/` directory and run `make clean html`.
 Any build warnings or errors will be displayed in your terminal, and the new
 documentation will then be available in the `docs/build/html/` directory.
 You may also find the
