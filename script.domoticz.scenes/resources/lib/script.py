@@ -4,12 +4,13 @@ import xbmc
 import xbmcaddon
 import sys
 import requests
+from requests.auth import HTTPBasicAuth
 import json
 
 addon_handle = int(sys.argv[1])
 xbmcplugin.setContent(addon_handle, 'videos')
 addonID = 'script.domoticz.scenes'
-addonVersion = '0.0.20'
+addonVersion = '0.0.21'
 addonDate = "26/10/2023"
 
 __addon__ = xbmcaddon.Addon()
@@ -39,22 +40,27 @@ def domoticz_submit(query):
     usr = domoticz_user
     pwd = domoticz_pass
     ssl = domoticz_ssl
-
     server = server.replace("http://", "")
     server = server.replace("https://", "")
 
-    if ssl == 1:
+    if ssl == "true":
         protocol = "https://"
     else:
         protocol = "http://"
 
-    url = protocol + usr + ":" + pwd + "@" + server + ":" + str(port) + "/json.htm?" + query
+    url = protocol + server + ":" + str(port) + "/json.htm?" + query
 
-    ignore_cert = domoticz_ignore_ssl
-    if ignore_cert == 1:
-        r = requests.get(url=url, verify=False)
+    if domoticz_ignore_ssl == "true":
+        requests.packages.urllib3.disable_warnings()
+        if not usr and not pwd:
+            r = requests.get(url=url, verify=False)
+        else:
+            r = requests.get(url=url, auth=(usr, pwd), verify=False)
     else:
-        r = requests.get(url=url, verify=True)
+        if not usr and not pwd:
+            r = requests.get(url=url, verify=True)
+        else:
+            r = requests.get(url=url, auth=(usr, pwd), verify=False)
 
     if r.status_code == 200:
         result = r.text
