@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.21" provider-name="Paul VW">
+<addon id="script.domoticz.scenes" name="Domoticz Scenes" version="0.0.22" provider-name="Paul VW">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
      <import addon="script.module.requests"   version="1.0.0"/>
@@ -19,6 +19,9 @@
     <email>paulvw@live.com</email> <!-- may be omitted  -->
     <source>https://github.com/Paul-VW/script.domoticz.scenes</source>
     <news>
+		v0.0.22 (02/11/2023)
+		[fix] End of list selected when cancel resolved
+	
         v0.0.21 (31/10/2023)
         [fix] Authentication issues
 

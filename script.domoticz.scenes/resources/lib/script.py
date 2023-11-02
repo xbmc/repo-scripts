@@ -194,11 +194,14 @@ domoticz_version = domoticz_get_version()
 optionsDict, optionsList = create_optionsDict()
 
 answer = xbmcgui.Dialog().select(heading=title, list=optionsList)
-action = optionsList[answer]
+if answer == -1:
+    action = None
+else:
+    action = optionsList[answer]
 
 
 def run():
-    if action in optionsList:
+    if action and action in optionsList:
         if str(domoticz_group) == '0':
             idx, groupType = get_group_scene_idx_type(optionsDict=optionsDict, action=action)
             if groupType == "Scene":
