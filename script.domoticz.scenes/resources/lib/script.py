@@ -55,12 +55,12 @@ def domoticz_submit(query):
         if not usr and not pwd:
             r = requests.get(url=url, verify=False)
         else:
-            r = requests.get(url=url, auth=(usr, pwd), verify=False)
+            r = requests.get(url=url, auth=HTTPBasicAuth(usr, pwd), verify=False)
     else:
         if not usr and not pwd:
             r = requests.get(url=url, verify=True)
         else:
-            r = requests.get(url=url, auth=(usr, pwd), verify=False)
+            r = requests.get(url=url, auth=HTTPBasicAuth(usr, pwd), verify=False)
 
     if r.status_code == 200:
         result = r.text
