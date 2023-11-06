@@ -168,6 +168,7 @@ class Monitor(xbmc.Monitor):
             'Window.IsVisible(smartplaylisteditor) | '
             'Window.IsVisible(musicplaylisteditor) | '
             'Window.IsVisible(mediasource) | '
+            'Window.IsVisible(tvguide) | '
             'Container.Content(genres) | '
             'Container.Content(years) | '
             'Container.Content(playlists) | '
