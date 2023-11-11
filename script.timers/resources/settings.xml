@@ -490,9 +490,11 @@
               <option label="32071">0</option>
               <option label="32082">1</option>
               <option label="32083">2</option>
+              <option label="32094">7</option>
               <option label="32084">3</option>
               <option label="32085">4</option>
               <option label="32086">5</option>
+              <option label="32099">8</option>
               <option label="32093">6</option>
             </options>
           </constraints>
@@ -738,6 +740,11 @@
           <dependencies>
             <dependency type="visible" on="property" operator="!is" name="infobool">system.isstandalone</dependency>
           </dependencies>
+        </setting>
+        <setting id="audio_displaysoff" type="boolean" label="32031" help="32039">
+          <level>3</level>
+          <default>false</default>
+          <control type="toggle" />
         </setting>
         <setting id="windows_unlock" type="boolean" label="32032" help="32384">
           <level>3</level>
