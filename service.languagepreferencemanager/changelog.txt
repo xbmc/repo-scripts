@@ -1,3 +1,8 @@
+--- Version 1.0.2
+
+- Fix 10sec latency on subs display and possible few lines lost - at video start or when switching audio.
+- Forced sub tracks : check also subtitle field "isforced" in case field "name" is empty or misspelled.
+
 --- Version 1.0.1
 
 - Initial version for main Kodi.tv addons repository
