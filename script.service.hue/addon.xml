@@ -1,4 +1,4 @@
-<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="1.4.17">
+<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="1.4.18">
     
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
