@@ -179,11 +179,11 @@ class KodiPlayer(xbmc.Player):
                 id_name: Store.library_id,
                 "resume": {
                     "position": seconds,
-                    # "total": 0 # Not needed: https://forum.kodi.tv/showthread.php?tid=161912&pid=1596436#pid1596436
+                    "total": Store.length_of_currently_playing_file
                 }
             }
         })
-        send_kodi_json(f'Set resume point to {seconds}', query)
+        send_kodi_json(f'Set resume point to {seconds}, total to {Store.length_of_currently_playing_file}', query)
 
         # For debugging - let's retrieve and log the current resume point...
         query = json.dumps({
@@ -195,7 +195,7 @@ class KodiPlayer(xbmc.Player):
                 "properties": ["resume"],
             }
         })
-        send_kodi_json(f'Get resume point for id {Store.library_id}', query)
+        send_kodi_json(f'Check new resume point & total for id {Store.library_id}', query)
 
     def resume_if_was_playing(self):
         """
