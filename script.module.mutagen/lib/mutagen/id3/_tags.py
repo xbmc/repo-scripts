@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2005  Michael Urman
 # Copyright 2016  Christoph Reiter
 #
@@ -9,10 +8,10 @@
 
 import re
 import struct
+from itertools import zip_longest
 
 from mutagen._tags import Tags
 from mutagen._util import DictProxy, convert_error, read_full
-from mutagen._compat import PY3, itervalues, izip_longest
 
 from ._util import BitPaddedInt, unsynch, ID3JunkFrameError, \
     ID3EncryptionUnsupportedError, is_valid_frame_id, error, \
@@ -83,10 +82,7 @@ class ID3Header(object):
         if self.f_extended:
             extsize_data = read_full(fileobj, 4)
 
-            if PY3:
-                frame_id = extsize_data.decode("ascii", "replace")
-            else:
-                frame_id = extsize_data
+            frame_id = extsize_data.decode("ascii", "replace")
 
             if frame_id in Frames:
                 # Some tagger sets the extended header flag but
@@ -112,6 +108,9 @@ class ID3Header(object):
                 # excludes itself."
                 extsize = struct.unpack('>L', extsize_data)[0]
 
+            if extsize < 0:
+                raise error("invalid extended header size")
+
             self._extdata = read_full(fileobj, extsize)
 
 
@@ -132,11 +131,10 @@ def determine_bpi(data, frames, EMPTY=b"\x00" * 10):
         name, size, flags = struct.unpack('>4sLH', part)
         size = BitPaddedInt(size)
         o += 10 + size
-        if PY3:
-            try:
-                name = name.decode("ascii")
-            except UnicodeDecodeError:
-                continue
+        try:
+            name = name.decode("ascii")
+        except UnicodeDecodeError:
+            continue
         if name in frames:
             asbpi += 1
     else:
@@ -152,11 +150,10 @@ def determine_bpi(data, frames, EMPTY=b"\x00" * 10):
             break
         name, size, flags = struct.unpack('>4sLH', part)
         o += 10 + size
-        if PY3:
-            try:
-                name = name.decode("ascii")
-            except UnicodeDecodeError:
-                continue
+        try:
+            name = name.decode("ascii")
+        except UnicodeDecodeError:
+            continue
         if name in frames:
             asint += 1
     else:
@@ -192,7 +189,7 @@ class ID3Tags(DictProxy, Tags):
         order = ["TIT2", "TPE1", "TRCK", "TALB", "TPOS", "TDRC", "TCON"]
 
         framedata = [
-            (f, save_frame(f, config=config)) for f in itervalues(self)]
+            (f, save_frame(f, config=config)) for f in self.values()]
 
         def get_prio(frame):
             try:
@@ -259,12 +256,12 @@ class ID3Tags(DictProxy, Tags):
         """
 
         if key in self:
-            del(self[key])
+            del self[key]
         else:
             key = key + ":"
             for k in list(self.keys()):
                 if k.startswith(key):
-                    del(self[k])
+                    del self[k]
 
     def pprint(self):
         """
@@ -372,17 +369,20 @@ class ID3Tags(DictProxy, Tags):
         # TDAT, TYER, and TIME have been turned into TDRC.
         timestamps = []
         old_frames = [self.pop(n, []) for n in ["TYER", "TDAT", "TIME"]]
-        for y, d, t in izip_longest(*old_frames, fillvalue=u""):
-            ym = re.match(r"([0-9]+)\Z", y)
-            dm = re.match(r"([0-9]{2})([0-9]{2})\Z", d)
-            tm = re.match(r"([0-9]{2})([0-9]{2})\Z", t)
+        for tyer, tdat, time in zip_longest(*old_frames, fillvalue=""):
+            ym = re.match(r"([0-9]{4})(-[0-9]{2}-[0-9]{2})?\Z", tyer)
+            dm = re.match(r"([0-9]{2})([0-9]{2})\Z", tdat)
+            tm = re.match(r"([0-9]{2})([0-9]{2})\Z", time)
             timestamp = ""
             if ym:
-                timestamp += u"%s" % ym.groups()
+                (year, month_day) = ym.groups()
+                timestamp += "%s" % year
                 if dm:
-                    timestamp += u"-%s-%s" % dm.groups()[::-1]
+                    month_day = "-%s-%s" % dm.groups()[::-1]
+                if month_day:
+                    timestamp += month_day
                     if tm:
-                        timestamp += u"T%s:%s:00" % tm.groups()
+                        timestamp += "T%s:%s:00" % tm.groups()
             if timestamp:
                 timestamps.append(timestamp)
         if timestamps and "TDRC" not in self:
@@ -407,7 +407,7 @@ class ID3Tags(DictProxy, Tags):
         # should have been removed already.
         for key in ["RVAD", "EQUA", "TRDA", "TSIZ", "TDAT", "TIME"]:
             if key in self:
-                del(self[key])
+                del self[key]
 
         # Recurse into chapters
         for f in self.getall("CHAP"):
@@ -471,7 +471,7 @@ class ID3Tags(DictProxy, Tags):
 
         for key in v24_frames:
             if key in self:
-                del(self[key])
+                del self[key]
 
         # Recurse into chapters
         for f in self.getall("CHAP"):
@@ -533,8 +533,7 @@ def save_frame(frame, name=None, config=None):
         frame_name = name
     else:
         frame_name = type(frame).__name__
-        if PY3:
-            frame_name = frame_name.encode("ascii")
+        frame_name = frame_name.encode("ascii")
 
     header = struct.pack('>4s4sH', frame_name, datasize, flags)
     return header + framedata
@@ -575,11 +574,10 @@ def read_frames(id3, data, frames):
             if size == 0:
                 continue  # drop empty frames
 
-            if PY3:
-                try:
-                    name = name.decode('ascii')
-                except UnicodeDecodeError:
-                    continue
+            try:
+                name = name.decode('ascii')
+            except UnicodeDecodeError:
+                continue
 
             try:
                 # someone writes 2.3 frames with 2.2 names
@@ -614,11 +612,10 @@ def read_frames(id3, data, frames):
             if size == 0:
                 continue  # drop empty frames
 
-            if PY3:
-                try:
-                    name = name.decode('ascii')
-                except UnicodeDecodeError:
-                    continue
+            try:
+                name = name.decode('ascii')
+            except UnicodeDecodeError:
+                continue
 
             try:
                 tag = frames[name]

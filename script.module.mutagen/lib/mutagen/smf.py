@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Christoph Reiter
 #
 # This program is free software; you can redistribute it and/or modify
@@ -9,18 +8,18 @@
 """Standard MIDI File (SMF)"""
 
 import struct
+from typing import Tuple
 
 from mutagen import StreamInfo, MutagenError
 from mutagen._file import FileType
-from mutagen._util import loadfile
-from mutagen._compat import xrange, endswith
+from mutagen._util import loadfile, endswith
 
 
 class SMFError(MutagenError):
     pass
 
 
-def _var_int(data, offset=0):
+def _var_int(data: bytearray, offset: int = 0) -> Tuple[int, int]:
     val = 0
     while 1:
         try:
@@ -34,12 +33,12 @@ def _var_int(data, offset=0):
 
 
 def _read_track(chunk):
-    """Retuns a list of midi events and tempo change events"""
+    """Returns a list of midi events and tempo change events"""
 
     TEMPO, MIDI = range(2)
 
     # Deviations: The running status should be reset on non midi events, but
-    # some files contain meta events inbetween.
+    # some files contain meta events in between.
     # TODO: Offset and time signature are not considered.
 
     tempos = []
@@ -123,7 +122,7 @@ def _read_midi_length(fileobj):
     # get a list of events and tempo changes for each track
     tracks = []
     first_tempos = None
-    for tracknum in xrange(ntracks):
+    for tracknum in range(ntracks):
         identifier, chunk = read_chunk(fileobj)
         if identifier != b"MTrk":
             continue

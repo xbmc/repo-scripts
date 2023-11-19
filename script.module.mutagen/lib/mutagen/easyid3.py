@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2006  Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
@@ -12,9 +11,10 @@ EasyID3 is a wrapper around mutagen.id3.ID3 to make ID3 tags appear
 more like Vorbis or APEv2 tags.
 """
 
+from typing import Callable, Dict
+
 import mutagen.id3
 
-from ._compat import iteritems, text_type, PY2
 from mutagen import Metadata
 from mutagen._util import DictMixin, dict_match, loadfile
 from mutagen.id3 import ID3, error, delete, ID3FileType
@@ -65,10 +65,10 @@ class EasyID3(DictMixin, Metadata):
 
     """
 
-    Set = {}
-    Get = {}
-    Delete = {}
-    List = {}
+    Set: Dict[str, Callable] = {}
+    Get: Dict[str, Callable] = {}
+    Delete: Dict[str, Callable] = {}
+    List: Dict[str, Callable] = {}
 
     # For compatibility.
     valid_keys = Get
@@ -130,7 +130,7 @@ class EasyID3(DictMixin, Metadata):
                 frame.text = value
 
         def deleter(id3, key):
-            del(id3[frameid])
+            del id3[frameid]
 
         cls.RegisterKey(key, getter, setter, deleter)
 
@@ -160,7 +160,7 @@ class EasyID3(DictMixin, Metadata):
             id3.add(mutagen.id3.TXXX(encoding=enc, text=value, desc=desc))
 
         def deleter(id3, key):
-            del(id3[frameid])
+            del id3[frameid]
 
         cls.RegisterKey(key, getter, setter, deleter)
 
@@ -216,12 +216,8 @@ class EasyID3(DictMixin, Metadata):
             raise EasyID3KeyError("%r is not a valid key" % key)
 
     def __setitem__(self, key, value):
-        if PY2:
-            if isinstance(value, basestring):
-                value = [value]
-        else:
-            if isinstance(value, text_type):
-                value = [value]
+        if isinstance(value, str):
+            value = [value]
         func = dict_match(self.Set, key.lower(), self.SetFallback)
         if func is not None:
             return func(self.__id3, key, value)
@@ -274,7 +270,7 @@ def genre_set(id3, key, value):
 
 
 def genre_delete(id3, key):
-    del(id3["TCON"])
+    del id3["TCON"]
 
 
 def date_get(id3, key):
@@ -286,7 +282,7 @@ def date_set(id3, key, value):
 
 
 def date_delete(id3, key):
-    del(id3["TDRC"])
+    del id3["TDRC"]
 
 
 def original_date_get(id3, key):
@@ -298,7 +294,7 @@ def original_date_set(id3, key, value):
 
 
 def original_date_delete(id3, key):
-    del(id3["TDOR"])
+    del id3["TDOR"]
 
 
 def performer_get(id3, key):
@@ -343,7 +339,7 @@ def performer_delete(id3, key):
     elif people:
         mcl.people = people
     else:
-        del(id3["TMCL"])
+        del id3["TMCL"]
 
 
 def performer_list(id3, key):
@@ -373,7 +369,7 @@ def musicbrainz_trackid_set(id3, key, value):
 
 
 def musicbrainz_trackid_delete(id3, key):
-    del(id3["UFID:http://musicbrainz.org"])
+    del id3["UFID:http://musicbrainz.org"]
 
 
 def website_get(id3, key):
@@ -425,7 +421,7 @@ def gain_delete(id3, key):
         if frame.peak:
             frame.gain = 0.0
         else:
-            del(id3["RVA2:" + key[11:-5]])
+            del id3["RVA2:" + key[11:-5]]
 
 
 def peak_get(id3, key):
@@ -461,7 +457,7 @@ def peak_delete(id3, key):
         if frame.gain:
             frame.peak = 0.0
         else:
-            del(id3["RVA2:" + key[11:-5]])
+            del id3["RVA2:" + key[11:-5]]
 
 
 def peakgain_list(id3, key):
@@ -471,7 +467,7 @@ def peakgain_list(id3, key):
         keys.append("replaygain_%s_peak" % frame.desc)
     return keys
 
-for frameid, key in iteritems({
+for frameid, key in {
     "TALB": "album",
     "TBPM": "bpm",
     "TCMP": "compilation",  # iTunes extension
@@ -482,6 +478,7 @@ for frameid, key in iteritems({
     "TLEN": "length",
     "TMED": "media",
     "TMOO": "mood",
+    "TIT1": "grouping",
     "TIT2": "title",
     "TIT3": "version",
     "TPE1": "artist",
@@ -500,7 +497,7 @@ for frameid, key in iteritems({
     "TSRC": "isrc",
     "TSST": "discsubtitle",
     "TLAN": "language",
-}):
+}.items():
     EasyID3.RegisterTextKey(key, frameid)
 
 EasyID3.RegisterKey("genre", genre_get, genre_set, genre_delete)
@@ -521,7 +518,7 @@ EasyID3.RegisterKey("replaygain_*_peak", peak_get, peak_set, peak_delete)
 # http://musicbrainz.org/docs/specs/metadata_tags.html
 # http://bugs.musicbrainz.org/ticket/1383
 # http://musicbrainz.org/doc/MusicBrainzTag
-for desc, key in iteritems({
+for desc, key in {
     u"MusicBrainz Artist Id": "musicbrainz_artistid",
     u"MusicBrainz Album Id": "musicbrainz_albumid",
     u"MusicBrainz Album Artist Id": "musicbrainz_albumartistid",
@@ -542,7 +539,7 @@ for desc, key in iteritems({
     u"MusicBrainz Work Id": "musicbrainz_workid",
     u"Acoustid Fingerprint": "acoustid_fingerprint",
     u"Acoustid Id": "acoustid_id",
-}):
+}.items():
     EasyID3.RegisterTXXXKey(key, desc)
 
 
@@ -558,4 +555,4 @@ class EasyID3FileType(ID3FileType):
         tags (`EasyID3`)
     """
 
-    ID3 = EasyID3
+    ID3 = EasyID3  # type: ignore
