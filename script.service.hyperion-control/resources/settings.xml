@@ -8,7 +8,6 @@
         <setting id="enableHyperion" type="bool" label="32004" default="false" />
         <setting id="disableHyperion" type="bool" label="32005" default="false" />
         <setting id="showChangelogOnUpdate" type="bool" label="32007" default="true" visible="true" />
-        <setting id="debug" type="bool" label="32006" default="false" />
         <setting id="firstRun" type="bool" label="32000" default="true" visible="false" />
         <setting id="currAddonVersion" type="text" default="" visible="false" />
     </category>

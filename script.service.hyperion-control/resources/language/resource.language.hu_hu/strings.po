@@ -7,192 +7,188 @@ msgstr ""
 "Project-Id-Version: Hyperion Control\n"
 "Language: hu\n"
 
-#:
+#: 
 msgctxt "#32000"
 msgid "General"
 msgstr "Általános"
 
-#:
+#: 
 msgctxt "#32001"
 msgid "Hyperion IP"
 msgstr "Hyperion IP"
 
-#:
+#: 
 msgctxt "#32002"
 msgid "Hyperion Webserver Port"
 msgstr "Hyperion Webserver Port"
 
-#:
+#: 
 msgctxt "#32003"
 msgid "Switch automatically between 2D/3D"
 msgstr "Automatikus átkapcsolás 2D/3D"
 
-#:
+#: 
 msgctxt "#32004"
 msgid "Enable Hyperion on startup"
 msgstr "Hyperion automatikus indítás"
 
-#:
+#: 
 msgctxt "#32005"
 msgid "Disable Hyperion on shutdown"
 msgstr "Hyperion kikapcsolása leállításkor"
 
-#:
-msgctxt "#32006"
-msgid "Enable Debug"
-msgstr "Hibakeresés engedélyezése"
-
-#:
+#: 
 msgctxt "#32007"
 msgid "Show changelog after update"
 msgstr "Változásnapló megjelenítése frissítés után"
 
-#:
+#: 
 msgctxt "#32008"
 msgid "Authorization Token"
 msgstr "Hozzáférési Token"
 
-#:
+#: 
 msgctxt "#32025"
 msgid "Component"
 msgstr "Komponens"
 
-#:
+#: 
 msgctxt "#32026"
 msgid "Enable the chosen component in these situations else disable it."
 msgstr "Engedélyezze a kiválasztott összetevőt, ellenkező esetben tiltsa le."
 
-#:
+#: 
 msgctxt "#32027"
 msgid "Hyperion component"
 msgstr "Hyperion komponens"
 
-#:
+#: 
 msgctxt "#32028"
 msgid "Enable during video playback"
 msgstr "Engedélyezés videólejátszás közben"
 
-#:
+#: 
 msgctxt "#32029"
 msgid "Enable during music playback"
 msgstr "Engedélyezés zenelejátszás közben"
 
-#:
+#: 
 msgctxt "#32030"
 msgid "Enable during player pause"
 msgstr "Engedélyezés lejátszási szünetben"
 
-#:
+#: 
 msgctxt "#32031"
 msgid "Enable in Kodi menu"
 msgstr "Engedélyezés a Kodi menüben"
 
-#:
+#: 
 msgctxt "#32032"
 msgid "Enable during active screensaver"
 msgstr "Engedélyezés aktív képernyővédő alatt"
 
-#:
+#: 
 msgctxt "#32041"
 msgid "USB Capture"
 msgstr "USB Capture"
 
-#:
+#: 
 msgctxt "#32042"
 msgid "LED Hardware"
 msgstr "LED Hardver"
 
-#:
+#: 
 msgctxt "#32043"
 msgid "Smoothing"
 msgstr "Símítás"
 
-#:
+#: 
 msgctxt "#32045"
 msgid "Forwarder"
 msgstr "Továbbító"
 
-#:
-msgctxt "#32046"
-msgid "Boblight Server"
-msgstr "Boblight Server"
-
-#:
-msgctxt "#32047"
-msgid "Hyperion"
-msgstr "Hyperion"
-
-#:
-msgctxt "#32048"
-msgid "Audio Capture"
-msgstr "Hangrögzítés"
-
-#:
+#: 
 msgctxt "#32101"
 msgid "Would you like to search for a Hyperion Server and adjust settings?"
 msgstr "Szeretne keresni egy Hyperion szervert és módosítani a beállításokat?"
 
-#:
+#: 
 msgctxt "#32102"
 msgid "Select a Hyperion Server, we found more than one"
 msgstr "Válasszon egy Hyperion kiszolgálót, többet is találtunk"
 
-#:
+#: 
 msgctxt "#32104"
 msgid "We are sorry, no Hyperion Server has been found. You need to configure IP address and port by hand"
 msgstr "Sajnáljuk, nem található Hyperion Server. Az IP-címet és a portot kézzel kell konfigurálnia!"
 
-#:
+#: 
 msgctxt "#32105"
 msgid "The Authorization Token isn't valid"
 msgstr "Az engedélyezési token nem érvényes"
 
-#:
+#: 
 msgctxt "#32150"
 msgid "Execute"
 msgstr "Végrehajtás"
 
-#:
+#: 
 msgctxt "#32151"
 msgid "Execute a specific task you might need again.[CR]Select a task from the tasklist and press OK to close the settings dialog."
 msgstr "Hajtsa végre újra az adott feladatot, amelyre szüksége lehet.[CR]Válasszon ki egy feladatot a feladatlistából, és nyomja meg az OK gombot a beállítások párbeszédpanel bezárásához."
 
-#:
+#: 
 msgctxt "#32152"
 msgid "The addon will handle your request immediately.[CR]Be aware that the addon should be already enabled"
 msgstr "A bővítmény azonnal kezeli a kérést.[CR]Ne feledje, hogy a kiegészítőnek már engedélyezve kell lennie"
 
-#:
+#: 
 msgctxt "#32153"
 msgid "Tasklist"
 msgstr "Feladat lista"
 
-#:
+#: 
 msgctxt "#32154"
 msgid "No Task"
 msgstr "Nincs feladat"
 
-#:
+#: 
 msgctxt "#32155"
 msgid "Search: Hyperion Server"
 msgstr "Keresés: Hyperion Server"
 
-#:
+#: 
 msgctxt "#32044"
 msgid "Blackbar detector"
 msgstr "Feketesáv detector"
 
-#:
+#: 
 msgctxt "#32040"
 msgid "Screen Capture"
 msgstr "Screen Capture"
 
-#:
+#: 
 msgctxt "#32100"
 msgid "Welcome to Hyperion Control!"
 msgstr "Üdvözli a Hyperion Control!"
 
-#:
+#: 
 msgctxt "#32103"
 msgid "We found the following Hyperion Server for usage:"
 msgstr "A következő Hyperion szervert találtuk használatra:"
+
+#: 
+msgctxt "#32046"
+msgid "Boblight Server"
+msgstr "Boblight Server"
+
+#: 
+msgctxt "#32047"
+msgid "Hyperion"
+msgstr "Hyperion"
+
+#: 
+msgctxt "#32048"
+msgid "Audio Capture"
+msgstr "Hangrögzítés"
+
