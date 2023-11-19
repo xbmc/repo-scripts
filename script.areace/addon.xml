@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.areace" version="1.0.3" name="Are Ace" provider-name="pustovit">
+	<requires>
+		<import addon="xbmc.python" version="3.0.1"/>
+		<import addon="script.module.requests" version="2.27.1"/>
+	</requires>
+	<extension point="xbmc.python.script" library="script.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">scrapes live sport event links from Telegram and seamlessly opens them in the Acestream player</summary>
+		<description lang="en_GB">Tired of the endless hunt for live sports event streams? "Are Ace" simplifies the process by scanning Telegram channels and groups known for sharing sports event links, collecting them for you. With an easy integration to the Acestream media player, it ensures you have quick access to high-quality, buffer-free sports event streams. Stay updated effortlessly, and enjoy a user-friendly interface for a seamless sports viewing experience. Say goodbye to the hassle of link searching, and say hello to the convenience of "Are Ace".</description>
+		<license>MIT</license>
+        <platform>android</platform>
+		<source>https://github.com/pustovitDmytro/areace</source>
+		<email>dipustovit@gmail.com</email>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+	</extension>
+</addon>
