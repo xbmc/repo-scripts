@@ -1,6 +1,6 @@
 # script.audio.motherearth
 Mother Earth Radio - Hi Res Audio and Vinyl 192kHz/24bit FLAC streaming
 
-Version 2.1
+Version 2.2
 
 Choose FLAC or AAC-stream in addon options.

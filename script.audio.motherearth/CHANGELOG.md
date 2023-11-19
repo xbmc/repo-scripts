@@ -1,3 +1,6 @@
+## 2.2
+- added Mother Earth Jazz channel
+
 ## 2.1
 - updated to https 
 - added artist fanart background when available

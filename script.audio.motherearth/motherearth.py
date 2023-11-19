@@ -25,6 +25,12 @@ STREAMS = [
         'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental.aac',
         'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental',
     },
+        {
+        'channel': 3,
+        'title': 'Mother Earth Jazz',
+        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz.mp4',
+        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz',
+    },
 ]
 STREAM_INFO = {s['url_aac']: s for s in STREAMS}
 STREAM_INFO.update({s['url_flac']: s for s in STREAMS})
