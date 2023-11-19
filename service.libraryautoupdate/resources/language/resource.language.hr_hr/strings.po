@@ -8,37 +8,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-23 18:37+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Croatian (http://www.transifex.com/teamxbmc/xbmc-addons/language/hr/)\n"
+"PO-Revision-Date: 2023-01-08 21:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/hr_hr/>\n"
+"Language: hr_hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
-msgstr "Ažurirajte svoju ​​Kodi Videoteku i Fonoteku u zakazano vrijeme. Zakazano vrijeme radi kao Kodi usluga, tako da nikada nećete propustiti ažuriranje."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
+msgstr "Nadppunite svoju Kodi Videoteku i Fonoteku u zakazano vrijeme. Zakazano vrijeme radi kao Kodi usluga, tako da nikada nećete propustiti nadopunu."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
-msgstr "Ovo je Kodi usluga koja će ažurirati vašu Fonoteku i Videoteku u zakazano vrijeme. Možete odabrati neko drugo razdoblje pretraživanja vaše medijske baze podataka (glazba, video, obadvoje) ili možete postaviti cron-stil zakazano vrijeme za veću kontrolu. Ako se reproducira glazba ili video datoteka kada se zakazano vrijeme pokrene, ažuriranje ne započinje dok reprodukcija ne završi zato da se reprodukcija medija ne prekida. Ažuriranje određene Video putanje, i čišćenje Fonoteke i Videoteke sada je podržano."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
+msgstr "Ovo je Kodi usluga koja će nadopuniti vašu Fonoteku i Videoteku u zakazano vrijeme. Možete odabrati neko drugo razdoblje pretraživanja vaše medijske baze podataka (glazba, video, obadvoje) ili možete postaviti cron-stil zakazano vrijeme za veću kontrolu. Ako se reproducira glazba ili video datoteka kada se zakazano vrijeme pokrene, nadopuna ne započinje dok reprodukcija ne završi zato da se reprodukcija medija ne prekida. Nadopunite određene Video putanje, i čišćenje Fonoteke i Videoteke sada je podržano."
 
 msgctxt "#30000"
 msgid "Kodi Library Auto Update"
-msgstr "Kodi automatsko ažuriranje zbirke"
+msgstr "Kodi automatska nadopuna zbirke"
 
 msgctxt "#30001"
 msgid "General"
@@ -54,11 +46,11 @@ msgstr "Glazba"
 
 msgctxt "#30004"
 msgid "Update Video Library"
-msgstr "Ažuriraj videoteku"
+msgstr "Nadopuni videoteku"
 
 msgctxt "#30005"
 msgid "Update Music Library"
-msgstr "Ažuriraj fonoteku"
+msgstr "Nadopuni fonoteku"
 
 msgctxt "#30006"
 msgid "Show Notifications"
@@ -69,16 +61,16 @@ msgid "Run during playback"
 msgstr "Pokreni tijekom reprodukcije"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Odgoda pokretanja (minute)"
+msgid "Startup Delay"
+msgstr "Odgoda pokretanja"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Koristi napredno zakazano vrijeme"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Vrijeme između ažuriranja (sati)"
+msgid "Amount of time between updates"
+msgstr "Količina vremena između nadopuna"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -86,47 +78,55 @@ msgstr "Cron izraz"
 
 msgctxt "#30012"
 msgid "Update Video Library"
-msgstr "Ažuriraj videoteku"
+msgstr "Nadopuni videoteku"
 
 msgctxt "#30013"
 msgid "Update Music Library"
-msgstr "Ažuriraj fonoteku"
+msgstr "Nadopuni fonoteku"
 
 msgctxt "#30014"
 msgid "Only run when idle"
-msgstr "Samo pokreni u stanju morovanja"
+msgstr "Samo pokreni u stanju mirovanja"
 
 msgctxt "#30015"
 msgid "Disable manual run prompt"
-msgstr ""
+msgstr "Onemogući ručni upit pokretanja"
+
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "Cron sintaksa %s je nevaljana, zadano na 2 sata"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "Provjeri postoji li izvor prije pretrage"
 
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "Ažuriraj određenu putanju 1"
+msgid "Edit Custom Paths"
+msgstr "Uredi prilagođene putanje"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "Ažuriraj određenu putanju 2"
+msgid "Choose Action"
+msgstr "Odaberi radnju"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "Ažuriraj određenu putanju 3"
+msgid "Delete this item?"
+msgstr "Obriši ovu stavku?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Video putanja"
+msgid "Browse for path"
+msgstr "Potraži putanju"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "Pročitajte suglasnost"
+msgid "This update broke custom paths, you must remake them"
+msgstr "Ova nadopuna slamlja prilagiđene putanje, morate ih ponovno postaviti"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "Suglasnost video putanje"
+msgid "Custom Paths Disclaimer"
+msgstr "Odricanje od odgovornosti za prilagođene putanje"
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "Putanja mora biti video izvor sa sadržajem"
+msgid "Path must already be a valid source with content"
+msgstr "Putanja mora biti valjani izvor sa sadržajem"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -150,7 +150,7 @@ msgstr "Učestalost"
 
 msgctxt "#30044"
 msgid "After Update"
-msgstr "Nakon ažuriranja"
+msgstr "Nakon nadopune"
 
 msgctxt "#30045"
 msgid "Once Per Day"
@@ -166,15 +166,15 @@ msgstr "Jednom mjesečno"
 
 msgctxt "#30048"
 msgid "Clean Video Library"
-msgstr "Čisćenje videoteke"
+msgstr "Čišćenje videoteke"
 
 msgctxt "#30049"
 msgid "Clean Music Library"
-msgstr "Čisćenje fonoteke"
+msgstr "Čišćenje fonoteke"
 
 msgctxt "#30050"
 msgid "Error Cleaning Database"
-msgstr "Greška čisćenja baze podataka"
+msgstr "Greška čišćenja baze podataka"
 
 msgctxt "#30051"
 msgid "Prompt User Before Cleaning Library"
@@ -182,7 +182,7 @@ msgstr "Upitaj korisnika prije čišćenja zbirke"
 
 msgctxt "#30052"
 msgid "A database clean is scheduled to run"
-msgstr "Čišćenje baze podataka  je zakazano"
+msgstr "Čišćenje baze podataka je zakazano"
 
 msgctxt "#30053"
 msgid "Would you like to run it now?"
@@ -202,12 +202,140 @@ msgstr "Video Cron izraz"
 
 msgctxt "#30057"
 msgid "Music Cron Expression"
-msgstr "Muzički Cron izraz"
+msgstr "Glazbeni Cron izraz"
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "Ažuriranje će se pokrenuti ponovno"
+msgstr "Nadopuna će se iznova pokrenuti "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
-msgstr "Želite li ručno pokrenuti ažuriranje?"
+msgstr "Želite li ručno pokrenuti nadopunu?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "Bez odgode"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 minuta"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 minute"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 minuta"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 minute"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 minuta"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 sat"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 sata"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 sata"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 sata"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 sata"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 sata"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "Koliko dugo treba odgoditi propuštenu pretragu nakon pokretanja sustava"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Dopusti pretragu medija pri reprodukciji medija"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "Samo dopusti pokretanje pretrage kada je sustav u mirovanju (čuvar zaslona je aktivan)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "Onemogućava dijalog kada se pokreće ručno pokretanje"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "Uklj/Isklj corn zakazano vrijeme umjesto jednostavnog zakazanog vremena"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "Odaberi koliko često treba pretraživati zbirku"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "Postavi prilagođeno razdoblje koristeći cron sintaksu - primjer je '15 */5 * * *' za četvrt sata svakih pet sati svakog dana"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "Pokreni uređivača prilagođenih putanji za odabir određenih direktorija pretrage umjesto cijele zbirke"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "Pokreni proces čišćenja Kodi zbirke za uklanjanje obrisanih medija"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "Dodaje dodatne upite potvrde prije nego se proces čišćenja pokrene"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "Postavite koliko često treba pokrenuti proces čišćenja. Nakon svake nadopune, jednom dnevno, jednom tjedno, jednom mjesečno ili prilagođeno"
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Odgoda pokretanja (minute)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Vrijeme između ažuriranja (sati)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "Ažuriraj određenu putanju 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "Ažuriraj određenu putanju 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "Ažuriraj određenu putanju 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Video putanja"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "Pročitajte suglasnost"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "Suglasnost video putanje"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "Putanja mora biti video izvor sa sadržajem"
