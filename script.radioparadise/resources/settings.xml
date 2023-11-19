@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+	<section id="script.radioparadise">
+		<category id="settings" label="5">
+			<group id="audio" label="292">
+				<setting id="audio_format" type="string" label="30101">
+					<level>0</level>
+					<default>aac</default>
+					<constraints>
+						<options>
+							<option label="30201">aac</option>
+							<option label="30202">flac</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="auto_play" type="integer" label="30102">
+					<level>0</level>
+					<default>-1</default>
+					<constraints>
+						<options>
+							<option label="1223">-1</option>
+							<option label="30203">0</option>
+							<option label="30204">1</option>
+							<option label="30205">2</option>
+							<option label="30206">3</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+			</group>
+			<group id="visuals" label="30103">
+				<setting id="slideshow" type="string" label="108">
+					<level>0</level>
+					<default>rp</default>
+					<constraints>
+						<options>
+							<option label="1223">disabled</option>
+							<option label="30207">rp</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="slide_duration" type="integer" label="30104">
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<minimum>10</minimum>
+						<step>1</step>
+						<maximum>60</maximum>
+					</constraints>
+					<control type="slider" format="integer"/>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="slideshow">disabled</dependency>
+					</dependencies>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

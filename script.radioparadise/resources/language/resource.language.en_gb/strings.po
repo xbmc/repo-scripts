@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30101"
+msgid "Audio Format"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Auto Play"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Visuals"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Slide Duration (seconds)"
+msgstr ""
+
+msgctxt "#30201"
+msgid "AAC"
+msgstr ""
+
+msgctxt "#30202"
+msgid "FLAC"
+msgstr ""
+
+msgctxt "#30203"
+msgid "RP Main Mix"
+msgstr ""
+
+msgctxt "#30204"
+msgid "RP Mellow Mix"
+msgstr ""
+
+msgctxt "#30205"
+msgid "RP Rock Mix"
+msgstr ""
+
+msgctxt "#30206"
+msgid "RP Global Mix"
+msgstr ""
+
+msgctxt "#30207"
+msgid "RP Slideshow"
+msgstr ""
