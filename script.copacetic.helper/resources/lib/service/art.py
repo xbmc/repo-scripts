@@ -42,6 +42,7 @@ class ImageEditor():
         lookup_tree = ET.parse(self.lookup)
         root = lookup_tree.getroot()
         for key, value in list(clearlogos.items()):
+            self.id = xbmc.getInfoLabel(f'{path}.dbid')
             self.destination, self.height, self.color, self.luminosity = False, False, False, False
             name = reporting_key or key
             if value:
@@ -67,6 +68,7 @@ class ImageEditor():
                     luminosity.text = str(self.luminosity)
                     lookup_tree.write(self.lookup, encoding="utf-8")
             reporting(key=f'{name}_cropped', set=self.destination)
+            reporting(key=f'{name}_cropped-id', set=self.id)
             reporting(key=f'{name}_cropped-height', set=self.height)
             if return_color:
                 reporting(key=f'{name}_cropped-color', set=self.color)
