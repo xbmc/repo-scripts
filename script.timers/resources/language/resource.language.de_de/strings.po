@@ -77,6 +77,10 @@ msgctxt "#32030"
 msgid "Presets"
 msgstr "Voreinstellungen"
 
+msgctxt "#32031"
+msgid "Don't put display to sleep on audio playback"
+msgstr "Ruhezustand des Bildschirms bei Audiowiedergabe vermeiden"
+
 msgctxt "#32032"
 msgid "Prevent lock screen"
 msgstr "Verhindere Bildschirmsperre"
@@ -104,6 +108,10 @@ msgstr "Tage"
 msgctxt "#32038"
 msgid "Presets for snooze timer"
 msgstr "Voreinstellungen für Schlummern"
+
+msgctxt "#32039"
+msgid "Deactivate sleep display on audio playback"
+msgstr "Deaktiviere Ruhezustand des Bildschirms während der Audiowiedergabe"
 
 msgctxt "#32040"
 msgid "and"
@@ -273,6 +281,10 @@ msgctxt "#32093"
 msgid "Standby TV via CEC"
 msgstr "Standby TV via CEC"
 
+msgctxt "#32094"
+msgid "Restart Kodi"
+msgstr "Kodi neu starten"
+
 msgctxt "#32095"
 msgid "Low volume"
 msgstr "Niedrige Lautstärke"
@@ -288,6 +300,10 @@ msgstr "Benachrichtigungen"
 msgctxt "#32098"
 msgid "Timer Notifications"
 msgstr "Benachrichtigungen anzeigen"
+
+msgctxt "#32099"
+msgid "Reboot system"
+msgstr "System neu starten"
 
 msgctxt "#32100"
 msgid "Timer starts"

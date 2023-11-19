@@ -16,6 +16,8 @@ from resources.lib.timer.timer import (FADE_IN_FROM_MIN, FADE_OUT_FROM_CURRENT,
                                        SYSTEM_ACTION_HIBERNATE,
                                        SYSTEM_ACTION_POWEROFF,
                                        SYSTEM_ACTION_QUIT_KODI,
+                                       SYSTEM_ACTION_RESTART_KODI,
+                                       SYSTEM_ACTION_REBOOT_SYSTEM,
                                        SYSTEM_ACTION_SHUTDOWN_KODI,
                                        SYSTEM_ACTION_STANDBY, TIMER_WEEKLY,
                                        Timer)
@@ -166,8 +168,7 @@ class SchedulerAction:
             addon = xbmcaddon.Addon()
             lines = list()
             lines.append(addon.getLocalizedString(32270))
-            lines.append(addon.getLocalizedString(
-                32081 + self.timerWithSystemAction.system_action))
+            lines.append(self.timerWithSystemAction.format("$P"))
             lines.append(addon.getLocalizedString(32271))
             abort = xbmcgui.Dialog().yesno(heading="%s: %s" % (addon.getLocalizedString(32256), self.timerWithSystemAction.label),
                                            message="\n".join(lines),
@@ -248,7 +249,7 @@ class SchedulerAction:
         vol_max = self.fader.return_vol if self.fader.fade == FADE_OUT_FROM_CURRENT else self.fader.vol_max
         vol_diff = vol_max - self.fader.vol_min
 
-        return delta_end_start/vol_diff
+        return delta_end_start / vol_diff if vol_diff != 0 else None
 
     def _setTimerToPlayAny(self, timer: Timer) -> None:
 
@@ -370,6 +371,10 @@ class SchedulerAction:
                 showNotification(self.timerWithSystemAction, msg_id=32083)
                 xbmc.executebuiltin("Quit()")
 
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_RESTART_KODI:
+                showNotification(self.timerWithSystemAction, msg_id=32094)
+                xbmc.executebuiltin("RestartApp()")
+
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_STANDBY:
                 showNotification(self.timerWithSystemAction, msg_id=32084)
                 xbmc.executebuiltin("Suspend()")
@@ -381,6 +386,10 @@ class SchedulerAction:
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_POWEROFF:
                 showNotification(self.timerWithSystemAction, msg_id=32086)
                 xbmc.executebuiltin("Powerdown()")
+
+            elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_REBOOT_SYSTEM:
+                showNotification(self.timerWithSystemAction, msg_id=32099)
+                xbmc.executebuiltin("Reboot()")
 
             elif self.timerWithSystemAction.system_action == SYSTEM_ACTION_CEC_STANDBY:
                 showNotification(self.timerWithSystemAction, msg_id=32093)
