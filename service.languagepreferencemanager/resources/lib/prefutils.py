@@ -150,6 +150,14 @@ class LangPrefMan_Player(xbmc.Player) :
                     log(LOG_DEBUG, 'Subtitle: enabling subs' )
                     self.showSubtitles(True)
 
+        # Workaround to an old Kodi bug creating 10-15 sec latency when activating a subtitle track.
+        # Force very short rewind to avoid 10-15sec delay and first few subtitles lines potentially lost
+        #       but if we are very close to beginning, then restart from time 0        
+        if (self.getTime() <= 10):
+            self.seekTime(0)
+        else:
+            self.seekTime(self.getTime()-1)
+
     def evalFilenamePrefs(self):
         log(LOG_DEBUG, 'Evaluating filename preferences' )
         audio = -1
@@ -225,7 +233,7 @@ class LangPrefMan_Player(xbmc.Player) :
                         continue 
                     if (self.selected_sub and
                         'language' in self.selected_sub and
-                        ((code == self.selected_sub['language'] or name == self.selected_sub['language']) and self.testForcedFlag(forced, self.selected_sub['name']))):
+                        ((code == self.selected_sub['language'] or name == self.selected_sub['language']) and self.testForcedFlag(forced, self.selected_sub['name'], self.selected_sub['isforced']))):
                             log(LOG_INFO, 'Selected subtitle language matches preference {0} ({1})'.format(i, name) )
                             return -1
                     else:
@@ -236,7 +244,7 @@ class LangPrefMan_Player(xbmc.Player) :
                             if (settings.ignore_signs_on and self.isSignsSub(sub['name'])):
                                 log(LOG_INFO,'SubPrefs : ignore_signs toggle is on and one such subtitle track is found. Skipping it.')
                                 continue
-                            if ((code == sub['language'] or name == sub['language']) and self.testForcedFlag(forced, sub['name'])):
+                            if ((code == sub['language'] or name == sub['language']) and self.testForcedFlag(forced, sub['name'], sub['isforced'])):
                                 log(LOG_INFO, 'Subtitle language of subtitle {0} matches preference {1} ({2})'.format((sub['index']+1), i, name) )
                                 return sub['index']
                         log(LOG_INFO, 'Subtitle: preference {0} ({1}:{2}) not available'.format(i, name, code) )
@@ -278,7 +286,7 @@ class LangPrefMan_Player(xbmc.Player) :
                                     log(LOG_DEBUG, 'Looping subtitles...')
                                     if ((audio_code == sub['language']) or (audio_name == sub['language'])):
                                         log(LOG_DEBUG, 'One potential match found...')
-                                        if (self.testForcedFlag(forced, sub['name'])):
+                                        if (self.testForcedFlag(forced, sub['name'], sub['isforced'])):
                                             log(LOG_DEBUG, 'One forced match found...')
                                             log(LOG_INFO, 'Language of subtitle {0} matches audio preference {1} ({2}:{3}) with forced overriding rule {4}'.format((sub['index']+1), i, audio_name, sub_name, forced) )
                                             return sub['index']
@@ -293,7 +301,7 @@ class LangPrefMan_Player(xbmc.Player) :
                                     log(LOG_INFO,'CondSubs : ignore_signs toggle is on and one such subtitle track is found. Skipping it.')
                                     continue
                                 if ((sub_code == sub['language']) or (sub_name == sub['language'])):
-                                    if (self.testForcedFlag(forced, sub['name'])):
+                                    if (self.testForcedFlag(forced, sub['name'], sub['isforced'])):
                                         log(LOG_INFO, 'Language of subtitle {0} matches conditional preference {1} ({2}:{3}) forced {4}'.format((sub['index']+1), i, audio_name, sub_name, forced) )
                                         return sub['index']
                             log(LOG_INFO, 'Conditional subtitle: no match found for preference {0} ({1}:{2})'.format(i, audio_name, sub_name) )
@@ -305,10 +313,15 @@ class LangPrefMan_Player(xbmc.Player) :
         matches = ['signs']
         return any(x in test for x in matches)
     
-    def testForcedFlag(self, forced, subName):
+    def testForcedFlag(self, forced, subName, subForcedTag):
         test = subName.lower()
         matches = ['forced', 'forcés']
         found = any(x in test for x in matches)
+        # Only when looking for forced subs :
+        #   in case the sub name is plain empty or not well documented, 
+        #   check also the sub isforced tag and consider it a match if set
+        if (forced and not found and subForcedTag):
+            found = True
         return ((forced == 'false') and not found) or ((forced == 'true') and found)
 
     def isExternalSub(self, subName):
