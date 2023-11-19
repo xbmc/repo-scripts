@@ -6,6 +6,7 @@ replacement.
 
 
 import calendar
+import re
 import sys
 from datetime import date
 from datetime import datetime as dt_datetime
@@ -32,6 +33,7 @@ from dateutil import tz as dateutil_tz
 from dateutil.relativedelta import relativedelta
 
 from arrow import formatter, locales, parser, util
+from arrow.constants import DEFAULT_LOCALE, DEHUMANIZE_LOCALES
 from arrow.locales import TimeFrameLiteral
 
 if sys.version_info < (3, 8):  # pragma: no cover
@@ -73,6 +75,7 @@ _GRANULARITY = Literal[
     "day",
     "week",
     "month",
+    "quarter",
     "year",
 ]
 
@@ -91,7 +94,7 @@ class Arrow:
     :param second: (optional) the second, Defaults to 0.
     :param microsecond: (optional) the microsecond. Defaults to 0.
     :param tzinfo: (optional) A timezone expression.  Defaults to UTC.
-    :param fold: (optional) 0 or 1, used to disambiguate repeated times. Defaults to 0.
+    :param fold: (optional) 0 or 1, used to disambiguate repeated wall times. Defaults to 0.
 
     .. _tz-expr:
 
@@ -130,6 +133,7 @@ class Arrow:
     _SECS_PER_DAY: Final[int] = 60 * 60 * 24
     _SECS_PER_WEEK: Final[int] = 60 * 60 * 24 * 7
     _SECS_PER_MONTH: Final[float] = 60 * 60 * 24 * 30.5
+    _SECS_PER_QUARTER: Final[float] = 60 * 60 * 24 * 30.5 * 3
     _SECS_PER_YEAR: Final[int] = 60 * 60 * 24 * 365
 
     _SECS_MAP: Final[Mapping[TimeFrameLiteral, float]] = {
@@ -139,6 +143,7 @@ class Arrow:
         "day": _SECS_PER_DAY,
         "week": _SECS_PER_WEEK,
         "month": _SECS_PER_MONTH,
+        "quarter": _SECS_PER_QUARTER,
         "year": _SECS_PER_YEAR,
     }
 
@@ -245,6 +250,7 @@ class Arrow:
 
         :param timestamp: an ``int`` or ``float`` timestamp, or a ``str`` that converts to either.
         :param tzinfo: (optional) a ``tzinfo`` object.  Defaults to local time.
+
         """
 
         if tzinfo is None:
@@ -305,12 +311,12 @@ class Arrow:
         :param tzinfo: (optional) A :ref:`timezone expression <tz-expr>`.  Defaults to ``dt``'s
             timezone, or UTC if naive.
 
-        If you only want to replace the timezone of naive datetimes::
+        Usage::
 
             >>> dt
-            datetime.datetime(2013, 5, 5, 0, 0, tzinfo=tzutc())
-            >>> arrow.Arrow.fromdatetime(dt, dt.tzinfo or 'US/Pacific')
-            <Arrow [2013-05-05T00:00:00+00:00]>
+            datetime.datetime(2021, 4, 7, 13, 48, tzinfo=tzfile('/usr/share/zoneinfo/US/Pacific'))
+            >>> arrow.Arrow.fromdatetime(dt)
+            <Arrow [2021-04-07T13:48:00-07:00]>
 
         """
 
@@ -335,10 +341,11 @@ class Arrow:
     @classmethod
     def fromdate(cls, date: date, tzinfo: Optional[TZ_EXPR] = None) -> "Arrow":
         """Constructs an :class:`Arrow <arrow.arrow.Arrow>` object from a ``date`` and optional
-        replacement timezone.  Time values are set to 0.
+        replacement timezone.  All time values are set to 0.
 
         :param date: the ``date``
         :param tzinfo: (optional) A :ref:`timezone expression <tz-expr>`.  Defaults to UTC.
+
         """
 
         if tzinfo is None:
@@ -354,7 +361,7 @@ class Arrow:
         in the style of ``datetime.strptime``.  Optionally replaces the parsed timezone.
 
         :param date_str: the date string.
-        :param fmt: the format string.
+        :param fmt: the format string using datetime format codes.
         :param tzinfo: (optional) A :ref:`timezone expression <tz-expr>`.  Defaults to the parsed
             timezone if ``fmt`` contains a timezone directive, otherwise UTC.
 
@@ -438,7 +445,7 @@ class Arrow:
         iterating.  As such, either call with naive objects and ``tz``, or aware objects from the
         same timezone and no ``tz``.
 
-        Supported frame values: year, quarter, month, week, day, hour, minute, second.
+        Supported frame values: year, quarter, month, week, day, hour, minute, second, microsecond.
 
         Recognized datetime expressions:
 
@@ -504,8 +511,9 @@ class Arrow:
         count: int = 1,
         bounds: _BOUNDS = "[)",
         exact: bool = False,
+        week_start: int = 1,
     ) -> Tuple["Arrow", "Arrow"]:
-        """Returns two new :class:`Arrow <arrow.arrow.Arrow>` objects, representing the timespan
+        """Returns a tuple of two new :class:`Arrow <arrow.arrow.Arrow>` objects, representing the timespan
         of the :class:`Arrow <arrow.arrow.Arrow>` object in a given timeframe.
 
         :param frame: the timeframe.  Can be any ``datetime`` property (day, hour, minute...).
@@ -517,6 +525,8 @@ class Arrow:
         :param exact: (optional) whether to have the start of the timespan begin exactly
             at the time specified by ``start`` and the end of the timespan truncated
             so as not to extend beyond ``end``.
+        :param week_start: (optional) only used in combination with the week timeframe. Follows isoweekday() where
+            Monday is 1 and Sunday is 7.
 
         Supported frame values: year, quarter, month, week, day, hour, minute, second.
 
@@ -537,7 +547,15 @@ class Arrow:
             >>> arrow.utcnow().span('day', bounds='[]')
             (<Arrow [2013-05-09T00:00:00+00:00]>, <Arrow [2013-05-10T00:00:00+00:00]>)
 
+            >>> arrow.utcnow().span('week')
+            (<Arrow [2021-02-22T00:00:00+00:00]>, <Arrow [2021-02-28T23:59:59.999999+00:00]>)
+
+            >>> arrow.utcnow().span('week', week_start=6)
+            (<Arrow [2021-02-20T00:00:00+00:00]>, <Arrow [2021-02-26T23:59:59.999999+00:00]>)
+
         """
+        if not 1 <= week_start <= 7:
+            raise ValueError("week_start argument must be between 1 and 7.")
 
         util.validate_bounds(bounds)
 
@@ -563,7 +581,9 @@ class Arrow:
             floor = self.__class__(*values, tzinfo=self.tzinfo)  # type: ignore
 
             if frame_absolute == "week":
-                floor = floor.shift(days=-(self.isoweekday() - 1))
+                # if week_start is greater than self.isoweekday() go back one week by setting delta = 7
+                delta = 7 if week_start > self.isoweekday() else 0
+                floor = floor.shift(days=-(self.isoweekday() - week_start) - delta)
             elif frame_absolute == "quarter":
                 floor = floor.shift(months=-((self.month - 1) % 3))
 
@@ -589,6 +609,7 @@ class Arrow:
 
             >>> arrow.utcnow().floor('hour')
             <Arrow [2013-05-09T03:00:00+00:00]>
+
         """
 
         return self.span(frame)[0]
@@ -605,6 +626,7 @@ class Arrow:
 
             >>> arrow.utcnow().ceil('hour')
             <Arrow [2013-05-09T03:59:59.999999+00:00]>
+
         """
 
         return self.span(frame)[1]
@@ -645,7 +667,7 @@ class Arrow:
         iterating.  As such, either call with naive objects and ``tz``, or aware objects from the
         same timezone and no ``tz``.
 
-        Supported frame values: year, quarter, month, week, day, hour, minute, second.
+        Supported frame values: year, quarter, month, week, day, hour, minute, second, microsecond.
 
         Recognized datetime expressions:
 
@@ -737,7 +759,7 @@ class Arrow:
             >>> start = datetime(2013, 5, 5, 12, 30)
             >>> end = datetime(2013, 5, 5, 17, 15)
             >>> for r in arrow.Arrow.interval('hour', start, end, 2):
-            ...     print r
+            ...     print(r)
             ...
             (<Arrow [2013-05-05T12:00:00+00:00]>, <Arrow [2013-05-05T13:59:59.999999+00:00]>)
             (<Arrow [2013-05-05T14:00:00+00:00]>, <Arrow [2013-05-05T15:59:59.999999+00:00]>)
@@ -849,8 +871,8 @@ class Arrow:
 
         Usage::
 
-            >>> arrow.utcnow().timestamp
-            1548260567
+            >>> arrow.utcnow().timestamp()
+            1616882340.256501
 
         """
 
@@ -858,7 +880,7 @@ class Arrow:
 
     @property
     def int_timestamp(self) -> int:
-        """Returns a timestamp representation of the :class:`Arrow <arrow.arrow.Arrow>` object, in
+        """Returns an integer timestamp representation of the :class:`Arrow <arrow.arrow.Arrow>` object, in
         UTC time.
 
         Usage::
@@ -872,7 +894,7 @@ class Arrow:
 
     @property
     def float_timestamp(self) -> float:
-        """Returns a floating-point representation of the :class:`Arrow <arrow.arrow.Arrow>`
+        """Returns a floating-point timestamp representation of the :class:`Arrow <arrow.arrow.Arrow>`
         object, in UTC time.
 
         Usage::
@@ -886,13 +908,16 @@ class Arrow:
 
     @property
     def fold(self) -> int:
-        """ Returns the ``fold`` value of the :class:`Arrow <arrow.arrow.Arrow>` object. """
+        """Returns the ``fold`` value of the :class:`Arrow <arrow.arrow.Arrow>` object."""
 
         return self._datetime.fold
 
     @property
     def ambiguous(self) -> bool:
-        """ Returns a boolean indicating whether the :class:`Arrow <arrow.arrow.Arrow>` object is ambiguous."""
+        """Indicates whether the :class:`Arrow <arrow.arrow.Arrow>` object is a repeated wall time in the current
+        timezone.
+
+        """
 
         return dateutil_tz.datetime_ambiguous(self._datetime)
 
@@ -1067,9 +1092,11 @@ class Arrow:
 
     # string output and formatting
 
-    def format(self, fmt: str = "YYYY-MM-DD HH:mm:ssZZ", locale: str = "en_us") -> str:
+    def format(
+        self, fmt: str = "YYYY-MM-DD HH:mm:ssZZ", locale: str = DEFAULT_LOCALE
+    ) -> str:
         """Returns a string representation of the :class:`Arrow <arrow.arrow.Arrow>` object,
-        formatted according to a format string.
+        formatted according to the provided format string.
 
         :param fmt: the format string.
         :param locale: the locale to format.
@@ -1095,7 +1122,7 @@ class Arrow:
     def humanize(
         self,
         other: Union["Arrow", dt_datetime, None] = None,
-        locale: str = "en_us",
+        locale: str = DEFAULT_LOCALE,
         only_distance: bool = False,
         granularity: Union[_GRANULARITY, List[_GRANULARITY]] = "auto",
     ) -> str:
@@ -1103,7 +1130,7 @@ class Arrow:
 
         :param other: (optional) an :class:`Arrow <arrow.arrow.Arrow>` or ``datetime`` object.
             Defaults to now in the current :class:`Arrow <arrow.arrow.Arrow>` object's timezone.
-        :param locale: (optional) a ``str`` specifying a locale.  Defaults to 'en_us'.
+        :param locale: (optional) a ``str`` specifying a locale.  Defaults to 'en-us'.
         :param only_distance: (optional) returns only time difference eg: "11 seconds" without "in" or "ago" part.
         :param granularity: (optional) defines the precision of the output. Set it to strings 'second', 'minute',
                            'hour', 'day', 'week', 'month' or 'year' or a list of any combination of these strings
@@ -1221,12 +1248,14 @@ class Arrow:
                     delta = sign * delta_second / self._SECS_PER_WEEK
                 elif granularity == "month":
                     delta = sign * delta_second / self._SECS_PER_MONTH
+                elif granularity == "quarter":
+                    delta = sign * delta_second / self._SECS_PER_QUARTER
                 elif granularity == "year":
                     delta = sign * delta_second / self._SECS_PER_YEAR
                 else:
                     raise ValueError(
                         "Invalid level of granularity. "
-                        "Please select between 'second', 'minute', 'hour', 'day', 'week', 'month' or 'year'."
+                        "Please select between 'second', 'minute', 'hour', 'day', 'week', 'month', 'quarter' or 'year'."
                     )
 
                 if trunc(abs(delta)) != 1:
@@ -1234,6 +1263,13 @@ class Arrow:
                 return locale.describe(granularity, delta, only_distance=only_distance)
 
             else:
+
+                if not granularity:
+                    raise ValueError(
+                        "Empty granularity list provided. "
+                        "Please select one or more from 'second', 'minute', 'hour', 'day', 'week', 'month', 'quarter', 'year'."
+                    )
+
                 timeframes: List[Tuple[TimeFrameLiteral, float]] = []
 
                 def gather_timeframes(_delta: float, _frame: TimeFrameLiteral) -> float:
@@ -1251,6 +1287,7 @@ class Arrow:
                 delta = float(delta_second)
                 frames: Tuple[TimeFrameLiteral, ...] = (
                     "year",
+                    "quarter",
                     "month",
                     "week",
                     "day",
@@ -1264,7 +1301,7 @@ class Arrow:
                 if len(timeframes) < len(granularity):
                     raise ValueError(
                         "Invalid level of granularity. "
-                        "Please select between 'second', 'minute', 'hour', 'day', 'week', 'month' or 'year'."
+                        "Please select between 'second', 'minute', 'hour', 'day', 'week', 'month', 'quarter' or 'year'."
                     )
 
                 return locale.describe_multi(timeframes, only_distance=only_distance)
@@ -1275,6 +1312,147 @@ class Arrow:
                 "Please consider making a contribution to this locale."
             )
 
+    def dehumanize(self, input_string: str, locale: str = "en_us") -> "Arrow":
+        """Returns a new :class:`Arrow <arrow.arrow.Arrow>` object, that represents
+        the time difference relative to the attrbiutes of the
+        :class:`Arrow <arrow.arrow.Arrow>` object.
+
+        :param timestring: a ``str`` representing a humanized relative time.
+        :param locale: (optional) a ``str`` specifying a locale.  Defaults to 'en-us'.
+
+        Usage::
+
+                >>> arw = arrow.utcnow()
+                >>> arw
+                <Arrow [2021-04-20T22:27:34.787885+00:00]>
+                >>> earlier = arw.dehumanize("2 days ago")
+                >>> earlier
+                <Arrow [2021-04-18T22:27:34.787885+00:00]>
+
+                >>> arw = arrow.utcnow()
+                >>> arw
+                <Arrow [2021-04-20T22:27:34.787885+00:00]>
+                >>> later = arw.dehumanize("in a month")
+                >>> later
+                <Arrow [2021-05-18T22:27:34.787885+00:00]>
+
+        """
+
+        # Create a locale object based off given local
+        locale_obj = locales.get_locale(locale)
+
+        # Check to see if locale is supported
+        normalized_locale_name = locale.lower().replace("_", "-")
+
+        if normalized_locale_name not in DEHUMANIZE_LOCALES:
+            raise ValueError(
+                f"Dehumanize does not currently support the {locale} locale, please consider making a contribution to add support for this locale."
+            )
+
+        current_time = self.fromdatetime(self._datetime)
+
+        # Create an object containing the relative time info
+        time_object_info = dict.fromkeys(
+            ["seconds", "minutes", "hours", "days", "weeks", "months", "years"], 0
+        )
+
+        # Create an object representing if unit has been seen
+        unit_visited = dict.fromkeys(
+            ["now", "seconds", "minutes", "hours", "days", "weeks", "months", "years"],
+            False,
+        )
+
+        # Create a regex pattern object for numbers
+        num_pattern = re.compile(r"\d+")
+
+        # Search input string for each time unit within locale
+        for unit, unit_object in locale_obj.timeframes.items():
+
+            # Need to check the type of unit_object to create the correct dictionary
+            if isinstance(unit_object, Mapping):
+                strings_to_search = unit_object
+            else:
+                strings_to_search = {unit: str(unit_object)}
+
+            # Search for any matches that exist for that locale's unit.
+            # Needs to cycle all through strings as some locales have strings that
+            # could overlap in a regex match, since input validation isn't being performed.
+            for time_delta, time_string in strings_to_search.items():
+
+                # Replace {0} with regex \d representing digits
+                search_string = str(time_string)
+                search_string = search_string.format(r"\d+")
+
+                # Create search pattern and find within string
+                pattern = re.compile(rf"(^|\b|\d){search_string}")
+                match = pattern.search(input_string)
+
+                # If there is no match continue to next iteration
+                if not match:
+                    continue
+
+                match_string = match.group()
+                num_match = num_pattern.search(match_string)
+
+                # If no number matches
+                # Need for absolute value as some locales have signs included in their objects
+                if not num_match:
+                    change_value = (
+                        1 if not time_delta.isnumeric() else abs(int(time_delta))
+                    )
+                else:
+                    change_value = int(num_match.group())
+
+                # No time to update if now is the unit
+                if unit == "now":
+                    unit_visited[unit] = True
+                    continue
+
+                # Add change value to the correct unit (incorporates the plurality that exists within timeframe i.e second v.s seconds)
+                time_unit_to_change = str(unit)
+                time_unit_to_change += (
+                    "s" if (str(time_unit_to_change)[-1] != "s") else ""
+                )
+                time_object_info[time_unit_to_change] = change_value
+                unit_visited[time_unit_to_change] = True
+
+        # Assert error if string does not modify any units
+        if not any([True for k, v in unit_visited.items() if v]):
+            raise ValueError(
+                "Input string not valid. Note: Some locales do not support the week granulairty in Arrow. "
+                "If you are attempting to use the week granularity on an unsupported locale, this could be the cause of this error."
+            )
+
+        # Sign logic
+        future_string = locale_obj.future
+        future_string = future_string.format(".*")
+        future_pattern = re.compile(rf"^{future_string}$")
+        future_pattern_match = future_pattern.findall(input_string)
+
+        past_string = locale_obj.past
+        past_string = past_string.format(".*")
+        past_pattern = re.compile(rf"^{past_string}$")
+        past_pattern_match = past_pattern.findall(input_string)
+
+        # If a string contains the now unit, there will be no relative units, hence the need to check if the now unit
+        # was visited before raising a ValueError
+        if past_pattern_match:
+            sign_val = -1
+        elif future_pattern_match:
+            sign_val = 1
+        elif unit_visited["now"]:
+            sign_val = 0
+        else:
+            raise ValueError(
+                "Invalid input String. String does not contain any relative time information. "
+                "String should either represent a time in the future or a time in the past. "
+                "Ex: 'in 5 seconds' or '5 seconds ago'."
+            )
+
+        time_changes = {k: sign_val * v for k, v in time_object_info.items()}
+
+        return current_time.shift(**time_changes)
+
     # query functions
 
     def is_between(
@@ -1283,8 +1461,8 @@ class Arrow:
         end: "Arrow",
         bounds: _BOUNDS = "()",
     ) -> bool:
-        """Returns a boolean denoting whether the specified date and time is between
-        the start and end dates and times.
+        """Returns a boolean denoting whether the :class:`Arrow <arrow.arrow.Arrow>` object is between
+        the start and end limits.
 
         :param start: an :class:`Arrow <arrow.arrow.Arrow>` object.
         :param end: an :class:`Arrow <arrow.arrow.Arrow>` object.
@@ -1622,10 +1800,9 @@ class Arrow:
         return self._datetime <= self._get_datetime(other)
 
     # internal methods
-
     @staticmethod
     def _get_tzinfo(tz_expr: Optional[TZ_EXPR]) -> dt_tzinfo:
-
+        """Get normalized tzinfo object from various inputs."""
         if tz_expr is None:
             return dateutil_tz.tzutc()
         if isinstance(tz_expr, dt_tzinfo):
@@ -1640,7 +1817,7 @@ class Arrow:
     def _get_datetime(
         cls, expr: Union["Arrow", dt_datetime, int, float, str]
     ) -> dt_datetime:
-        """Get datetime object for a specified expression."""
+        """Get datetime object from a specified expression."""
         if isinstance(expr, Arrow):
             return expr.datetime
         elif isinstance(expr, dt_datetime):
@@ -1653,7 +1830,11 @@ class Arrow:
 
     @classmethod
     def _get_frames(cls, name: _T_FRAMES) -> Tuple[str, str, int]:
+        """Finds relevant timeframe and steps for use in range and span methods.
 
+        Returns a 3 element tuple in the form (frame, plural frame, step), for example ("day", "days", 1)
+
+        """
         if name in cls._ATTRS:
             return name, f"{name}s", 1
         elif name[-1] == "s" and name[:-1] in cls._ATTRS:
@@ -1682,7 +1863,7 @@ class Arrow:
 
     @classmethod
     def _get_iteration_params(cls, end: Any, limit: Optional[int]) -> Tuple[Any, int]:
-
+        """Sets default end and limit values for range method."""
         if end is None:
 
             if limit is None:
@@ -1697,6 +1878,7 @@ class Arrow:
 
     @staticmethod
     def _is_last_day_of_month(date: "Arrow") -> bool:
+        """Returns a boolean indicating whether the datetime is the last day of the month."""
         return date.day == calendar.monthrange(date.year, date.month)[1]
 
 

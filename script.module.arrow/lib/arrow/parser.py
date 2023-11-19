@@ -1,3 +1,5 @@
+"""Provides the :class:`Arrow <arrow.parser.DateTimeParser>` class, a better way to parse datetime strings."""
+
 import re
 import sys
 from datetime import datetime, timedelta
@@ -23,6 +25,7 @@ from typing import (
 from dateutil import tz
 
 from arrow import locales
+from arrow.constants import DEFAULT_LOCALE
 from arrow.util import next_weekday, normalize_timestamp
 
 if sys.version_info < (3, 8):  # pragma: no cover
@@ -155,7 +158,7 @@ class DateTimeParser:
     locale: locales.Locale
     _input_re_map: Dict[_FORMAT_TYPE, Pattern[str]]
 
-    def __init__(self, locale: str = "en_us", cache_size: int = 0) -> None:
+    def __init__(self, locale: str = DEFAULT_LOCALE, cache_size: int = 0) -> None:
 
         self.locale = locales.get_locale(locale)
         self._input_re_map = self._BASE_INPUT_RE_MAP.copy()
@@ -571,9 +574,12 @@ class DateTimeParser:
         elif token in ["a", "A"]:
             if value in (self.locale.meridians["am"], self.locale.meridians["AM"]):
                 parts["am_pm"] = "am"
+                if "hour" in parts and not 0 <= parts["hour"] <= 12:
+                    raise ParserMatchError(
+                        f"Hour token value must be between 0 and 12 inclusive for token {token!r}."
+                    )
             elif value in (self.locale.meridians["pm"], self.locale.meridians["PM"]):
                 parts["am_pm"] = "pm"
-
         elif token == "W":
             parts["weekdate"] = value
 
