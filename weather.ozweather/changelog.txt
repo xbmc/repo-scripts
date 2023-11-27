@@ -1,3 +1,6 @@
+2.1.0
+- Fix light_rain icon & update BOM radar list
+
 2.0.9
 - Better fix for ABC weather video
 
