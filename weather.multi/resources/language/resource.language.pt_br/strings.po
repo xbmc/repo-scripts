@@ -247,71 +247,71 @@ msgstr "Precipitação Desconhecida"
 
 msgctxt "#32251"
 msgid "Tornado"
-msgstr ""
+msgstr "Tornado"
 
 msgctxt "#32252"
 msgid "Tropical Storm"
-msgstr ""
+msgstr "Tempestade Tropical"
 
 msgctxt "#32253"
 msgid "Hurricane"
-msgstr ""
+msgstr "Furacao"
 
 msgctxt "#32254"
 msgid "Severe Thunderstorms"
-msgstr ""
+msgstr "Tempestades severas"
 
 msgctxt "#32255"
 msgid "Thunderstorms"
-msgstr ""
+msgstr "Tempestades"
 
 msgctxt "#32256"
 msgid "Mixed Rain and Snow"
-msgstr ""
+msgstr "Chuva e Neve"
 
 msgctxt "#32257"
 msgid "Mixed Rain and Sleet"
-msgstr ""
+msgstr "Chuva mista e granizo"
 
 msgctxt "#32258"
 msgid "Mixed Snow and Sleet"
-msgstr ""
+msgstr "Neve mista e granizo"
 
 msgctxt "#32259"
 msgid "Freezing Drizzle"
-msgstr ""
+msgstr "Garoa Congelante"
 
 msgctxt "#32260"
 msgid "Drizzle"
-msgstr ""
+msgstr "Garoa"
 
 msgctxt "#32261"
 msgid "Freezing Rain"
-msgstr ""
+msgstr "Chuva Congelante"
 
 msgctxt "#32262"
 msgid "Showers"
-msgstr ""
+msgstr "Nevascas"
 
 msgctxt "#32263"
 msgid "Rain"
-msgstr ""
+msgstr "Chuva"
 
 msgctxt "#32264"
 msgid "Snow Flurries"
-msgstr ""
+msgstr "Flocos de neve"
 
 msgctxt "#32265"
 msgid "Light Snow Showers"
-msgstr ""
+msgstr "Nevascas leves"
 
 msgctxt "#32266"
 msgid "Blowing Snow"
-msgstr ""
+msgstr "Soprando neve"
 
 msgctxt "#32267"
 msgid "Snow"
-msgstr ""
+msgstr "Neve"
 
 msgctxt "#32268"
 msgid "Hail"
@@ -319,111 +319,111 @@ msgstr ""
 
 msgctxt "#32269"
 msgid "Sleet"
-msgstr ""
+msgstr "Granizo"
 
 msgctxt "#32270"
 msgid "Dust"
-msgstr ""
+msgstr "Empoeirado"
 
 msgctxt "#32271"
 msgid "Foggy"
-msgstr ""
+msgstr "Enevoado"
 
 msgctxt "#32272"
 msgid "Haze"
-msgstr ""
+msgstr "Névoa"
 
 msgctxt "#32273"
 msgid "Smoky"
-msgstr ""
+msgstr "Esfumaçado"
 
 msgctxt "#32274"
 msgid "Blustery"
-msgstr ""
+msgstr "Tempestuoso"
 
 msgctxt "#32275"
 msgid "Windy"
-msgstr ""
+msgstr "Ventoso"
 
 msgctxt "#32276"
 msgid "Cold"
-msgstr ""
+msgstr "Frio"
 
 msgctxt "#32277"
 msgid "Cloudy"
-msgstr ""
+msgstr "Nublado"
 
 msgctxt "#32278"
 msgid "Mostly Cloudy"
-msgstr ""
+msgstr "Predominantemente nublado"
 
 msgctxt "#32279"
 msgid "Partly Cloudy"
-msgstr ""
+msgstr "Parcialmente Nublado"
 
 msgctxt "#32280"
 msgid "Clear"
-msgstr ""
+msgstr "Limpo"
 
 msgctxt "#32281"
 msgid "Sunny"
-msgstr ""
+msgstr "Ensolarado"
 
 msgctxt "#32282"
 msgid "Fair"
-msgstr ""
+msgstr "Justa"
 
 msgctxt "#32283"
 msgid "Mixed Rain and Hail"
-msgstr ""
+msgstr "Ombrófila Mista e granizo"
 
 msgctxt "#32284"
 msgid "Hot"
-msgstr ""
+msgstr "Quente"
 
 msgctxt "#32285"
 msgid "Isolated Thunderstorms"
-msgstr ""
+msgstr "Tempestades Isoladas"
 
 msgctxt "#32286"
 msgid "Scattered Thunderstorms"
-msgstr ""
+msgstr "Tempestade Esparsa"
 
 msgctxt "#32287"
 msgid "Scattered Showers"
-msgstr ""
+msgstr "Chuvas Esparsas"
 
 msgctxt "#32288"
 msgid "Heavy Rain"
-msgstr ""
+msgstr "Chuva Pesada"
 
 msgctxt "#32289"
 msgid "Scattered Snow Showers"
-msgstr ""
+msgstr "Chuvas de neve dispersas"
 
 msgctxt "#32290"
 msgid "Heavy Snow"
-msgstr ""
+msgstr "Neve Pesada"
 
 msgctxt "#32291"
 msgid "Blizzard"
-msgstr ""
+msgstr "Nevasca"
 
 msgctxt "#32292"
 msgid "Not Available"
-msgstr ""
+msgstr "Não Disponível"
 
 msgctxt "#32293"
 msgid "Scattered Showers"
-msgstr ""
+msgstr "Chuvas Esparsas"
 
 msgctxt "#32294"
 msgid "Scattered Snow Showers"
-msgstr ""
+msgstr "Chuvas de neve dispersas"
 
 msgctxt "#32295"
 msgid "Scattered Thundershowers"
-msgstr ""
+msgstr "Trovoadas Esparsas"
 
 msgctxt "#32300"
 msgid "New Moon"

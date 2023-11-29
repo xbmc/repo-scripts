@@ -1,3 +1,9 @@
+v0.0.20
+- fix weatherbit
+
+v0.0.19
+- fix yahoo weather again
+
 v0.0.18
 - fix yahoo weather again
 
