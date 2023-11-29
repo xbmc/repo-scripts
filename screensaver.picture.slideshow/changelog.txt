@@ -1,3 +1,12 @@
+v7.0.3
+- bump for release
+
+v7.0.2
+- fix encoding
+
+v7.0.1
+- add support for image types provided by imagedecoder addons
+
 v7.0.0
 - update for kodi nexus
 

@@ -213,8 +213,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         iptcfile = BinaryFile(img[0])
                         try:
                             iptc = IPTCInfo(iptcfile)
-                            if iptc['headline']:
-                                title = bytes(iptc['headline']).decode('utf-8')
+                            if iptc['object name']:
+                                title = bytes(iptc['object name']).decode('utf-8')
                                 iptc_ti = True
                             if iptc['caption/abstract']:
                                 description = bytes(iptc['caption/abstract']).decode('utf-8')
@@ -237,15 +237,15 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                                 if xmpdata:
                                     titlematch = re.search(r'<dc:title.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata.group(1), flags=re.DOTALL)
                                     if titlematch and not iptc_ti:
-                                        title = titlematch.group(1)
+                                        title = titlematch.group(1).encode('cp437').decode('utf-8')
                                         iptc_ti = True
                                     descmatch = re.search(r'<dc:description.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata.group(1), flags=re.DOTALL)
                                     if descmatch and not iptc_de:
-                                        description = descmatch.group(1)
+                                        description = descmatch.group(1).encode('cp437').decode('utf-8')
                                         iptc_de = True
                                     subjmatch = re.search(r'<dc:subject.*?rdf:Bag.*?>(.*?)</rdf:Bag', xmpdata.group(1), flags=re.DOTALL)
                                     if subjmatch and not iptc_ke:
-                                        keywords = ', '.join(subjmatch.group(1).split()).replace('<rdf:li>', '').replace('</rdf:li>', '')
+                                        keywords = ', '.join(subjmatch.group(1).encode('cp437').decode('utf-8').split()).replace('<rdf:li>', '').replace('</rdf:li>', '')
                                         iptc_ke = True
                             except:
                                 pass
