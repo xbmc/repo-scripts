@@ -240,16 +240,16 @@ msgstr "Jika Anda menyembunyikan OSD Musik dan info Sedang Diputar, latar belaka
 
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr ""
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "GomAudio"
+msgid "Megalobiz"
+msgstr ""
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +278,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Lirik Gelap"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr ""
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 #~ msgctxt "#32905"
 #~ msgid "Syair"

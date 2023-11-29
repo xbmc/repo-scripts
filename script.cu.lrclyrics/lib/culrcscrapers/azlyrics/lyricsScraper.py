@@ -33,7 +33,7 @@ class LyricsFetcher:
             return None
         req.close()
         try:
-            lyricscode = response.split('. -->')[1].split('</div')[0]
+            lyricscode = response.split('t. -->')[1].split('</div')[0]
             lyricstext = html.unescape(lyricscode).replace('<br />', '\n')
             lyr = re.sub('<[^<]+?>', '', lyricstext)
             lyrics.lyrics = lyr

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-08-15 22:34+0000\n"
+"PO-Revision-Date: 2023-09-13 07:11+0000\n"
 "Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/it_it/>\n"
 "Language: it_it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 5.0.1\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -40,11 +40,11 @@ msgstr "Incorporato"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr "Compensazione testo"
+msgstr "Sfasamento testo"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr "Ricerca testi..."
+msgstr "Ricerca testi in corso..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
@@ -134,7 +134,7 @@ msgstr "Opzioni visualizzazione"
 
 msgctxt "#32116"
 msgid "Search options"
-msgstr "Opzioni di ricerca"
+msgstr "Opzioni ricerca"
 
 msgctxt "#32117"
 msgid "Lyrics files"
@@ -180,11 +180,11 @@ msgstr "Cerca file di testo .lrc locali"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Scraper testi sincronizzato"
+msgstr "Scraper testi sincronizzati"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "Scraper testi regolare"
+msgstr "Scraper testi regolari"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
@@ -208,23 +208,23 @@ msgstr "Nascondi notifiche"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
-msgstr "Rimuovi testo Cinese/Coreano dai testi"
+msgstr "Rimuovi parti in Cinese/Coreano dai testi"
 
 msgctxt "#32162"
 msgid "Scraper test"
-msgstr "Testa scraper"
+msgstr "Prova scraper"
 
 msgctxt "#32163"
 msgid "Testing: %s"
-msgstr "Testando: %s"
+msgstr "Provando: %s"
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr "Tutti gli scraper stanno funzionando"
+msgstr "Tutti gli scraper funzionano correttamente"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
-msgstr "Scraper falliti: %s"
+msgstr "Scraper non riusciti: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
@@ -232,24 +232,24 @@ msgstr "Tempo di sfasamento sincronizzazione testi"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
-msgstr "Elimina i testi"
+msgstr "Elimina testi"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
-msgstr "Se nascondi l'OSD della musica e le informazioni in riproduzione, anche lo sfondo della finestra di dialogo dei testi verrà nascosto."
+msgstr "Se nascondi l'OSD della musica e le informazioni sul brano in riproduzione, anche lo sfondo della finestra di dialogo dei testi verrà nascosto."
 
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "GomAudio"
+msgid "Megalobiz"
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +278,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Dark Lyrics"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr "Super Music"
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 # empty strings from id 32010 to 32100
 # Settings labels
