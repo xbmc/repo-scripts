@@ -1,3 +1,7 @@
+v0.6.4 (2023-11-30)
+- Adapted to changes in the service API
+- Added German translation (kyoforkshomebrews)
+
 v0.6.3 (2021-09-27)
 - Fixed identified bugs
 
