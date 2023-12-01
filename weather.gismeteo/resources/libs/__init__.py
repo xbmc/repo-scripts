@@ -2,7 +2,9 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 from __future__ import unicode_literals
+
 import time
+
 import xbmc
 
 from .gismeteo import GismeteoError, GismeteoClient
@@ -16,10 +18,9 @@ __all__ = ['GismeteoError', 'Gismeteo', 'WebClientError',
 class Gismeteo(GismeteoClient):
 
     def __init__(self, *args, **kwargs):
-
         super(Gismeteo, self).__init__(*args, **kwargs)
 
-        addon = simpleweather.Addon()
+        addon = Addon()
 
         headers = self._client.headers
         if addon.kodi_major_version() >= '17':
@@ -76,6 +77,8 @@ class Weather(SW_Weather, WeatherProperties):
             lang = 'de'
         elif lang_id == 8:
             lang = 'pl'
+        else:
+            lang = 'en'
 
         return lang
 
@@ -120,7 +123,7 @@ class Weather(SW_Weather, WeatherProperties):
         return localtime + '  ' + localdate
 
     def is_weekend(self, day):
-        return (self.get_weekday(day['date'], 'x') in self.WEEKENDS)
+        return self.get_weekday(day['date'], 'x') in self.WEEKENDS
 
     def get_weekday(self, date, form):
         date_time = self._get_timestamp(date)
@@ -146,6 +149,9 @@ class Weather(SW_Weather, WeatherProperties):
             label = xbmc.getLocalizedString(self.MONTH_NAME_SHORT[month]) + ' ' + day
         elif form == 'ml':
             label = xbmc.getLocalizedString(self.MONTH_NAME_LONG[month]) + ' ' + day
+        else:
+            label = ''
+
         return label
 
     def _weekends(self):
@@ -164,80 +170,80 @@ class Weather(SW_Weather, WeatherProperties):
     def _lang():
 
         return {  # kodi lang name          # gismeteo code
-                'afrikaans'             : '',
-                'albanian'              : '',
-                'amharic'               : '',
-                'arabic'                : '',
-                'armenian'              : '',
-                'azerbaijani'           : '',
-                'basque'                : '',
-                'belarusian'            : 'ru',
-                'bosnian'               : '',
-                'bulgarian'             : '',
-                'burmese'               : '',
-                'catalan'               : '',
-                'chinese (simple)'      : '',
-                'chinese (traditional)' : '',
-                'croatian'              : '',
-                'czech'                 : '',
-                'danish'                : '',
-                'dutch'                 : '',
-                'english'               : 'en',
-                'english (us)'          : 'en',
-                'english (australia)'   : 'en',
-                'english (new zealand)' : 'en',
-                'esperanto'             : '',
-                'estonian'              : '',
-                'faroese'               : '',
-                'finnish'               : '',
-                'french'                : '',
-                'galician'              : '',
-                'german'                : 'de',
-                'greek'                 : '',
-                'georgian'              : '',
-                'hebrew'                : '',
-                'hindi (devanagiri)'    : '',
-                'hungarian'             : '',
-                'icelandic'             : '',
-                'indonesian'            : '',
-                'italian'               : '',
-                'japanese'              : '',
-                'korean'                : '',
-                'latvian'               : 'lt',
-                'lithuanian'            : 'li',
-                'macedonian'            : '',
-                'malay'                 : '',
-                'malayalam'             : '',
-                'maltese'               : '',
-                'maori'                 : '',
-                'mongolian (mongolia)'  : '',
-                'norwegian'             : '',
-                'ossetic'               : '',
-                'persian'               : '',
-                'persian (iran)'        : '',
-                'polish'                : 'pl',
-                'portuguese'            : '',
-                'portuguese (brazil)'   : '',
-                'romanian'              : 'ro',
-                'russian'               : 'ru',
-                'serbian'               : '',
-                'serbian (cyrillic)'    : '',
-                'sinhala'               : '',
-                'slovak'                : '',
-                'slovenian'             : '',
-                'spanish'               : '',
-                'spanish (argentina)'   : '',
-                'spanish (mexico)'      : '',
-                'swedish'               : '',
-                'tajik'                 : '',
-                'tamil (india)'         : '',
-                'telugu'                : '',
-                'thai'                  : '',
-                'turkish'               : '',
-                'ukrainian'             : 'ua',
-                'uzbek'                 : '',
-                'vietnamese'            : '',
-                'welsh'                 : '',
+                'afrikaans':             '',
+                'albanian':              '',
+                'amharic':               '',
+                'arabic':                '',
+                'armenian':              '',
+                'azerbaijani':           '',
+                'basque':                '',
+                'belarusian':            'ru',
+                'bosnian':               '',
+                'bulgarian':             '',
+                'burmese':               '',
+                'catalan':               '',
+                'chinese (simple)':      '',
+                'chinese (traditional)': '',
+                'croatian':              '',
+                'czech':                 '',
+                'danish':                '',
+                'dutch':                 '',
+                'english':               'en',
+                'english (us)':          'en',
+                'english (australia)':   'en',
+                'english (new zealand)': 'en',
+                'esperanto':             '',
+                'estonian':              '',
+                'faroese':               '',
+                'finnish':               '',
+                'french':                '',
+                'galician':              '',
+                'german':                'de',
+                'greek':                 '',
+                'georgian':              '',
+                'hebrew':                '',
+                'hindi (devanagiri)':    '',
+                'hungarian':             '',
+                'icelandic':             '',
+                'indonesian':            '',
+                'italian':               '',
+                'japanese':              '',
+                'korean':                '',
+                'latvian':               'lt',
+                'lithuanian':            'li',
+                'macedonian':            '',
+                'malay':                 '',
+                'malayalam':             '',
+                'maltese':               '',
+                'maori':                 '',
+                'mongolian (mongolia)':  '',
+                'norwegian':             '',
+                'ossetic':               '',
+                'persian':               '',
+                'persian (iran)':        '',
+                'polish':                'pl',
+                'portuguese':            '',
+                'portuguese (brazil)':   '',
+                'romanian':              'ro',
+                'russian':               'ru',
+                'serbian':               '',
+                'serbian (cyrillic)':    '',
+                'sinhala':               '',
+                'slovak':                '',
+                'slovenian':             '',
+                'spanish':               '',
+                'spanish (argentina)':   '',
+                'spanish (mexico)':      '',
+                'swedish':               '',
+                'tajik':                 '',
+                'tamil (india)':         '',
+                'telugu':                '',
+                'thai':                  '',
+                'turkish':               '',
+                'ukrainian':             'ua',
+                'uzbek':                 '',
+                'vietnamese':            '',
+                'welsh':                 '',
                 }
 
     @staticmethod

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="weather.gismeteo" version="0.6.3" name="Gismeteo" provider-name="vl.maksime">
+<addon id="weather.gismeteo" version="0.6.4" name="Gismeteo" provider-name="vl.maksime">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.simpleplugin3" version="3.0.5"/>
@@ -13,25 +13,28 @@
 		<summary lang="fr_FR">Gismeteo prévisions météorologiques. Prévisions météorologiques en temps réel à travers le monde.</summary>
 		<summary lang="sv_SE">Gismeteo Weather Forecast. Realtidsväder och detaljerade prognoser över hela världen</summary>
 		<summary lang="is_IS">Gismeteo veðurspá. Rauntíma veðurlýsing og nákvæmar veðurspár um víða veröld</summary>
+		<summary lang="de_DE">Gismeteo Wettervorhersage. Echtzeitwetter und detailierte Vorhersagen auf der ganzen Welt</summary>
 		<description lang="en_GB">The weather is provided solely for personal non-commercial use</description>
 		<description lang="ru_RU">Погода предоставлена исключительно для личного некоммерческого использования</description>
 		<description lang="es_ES">El clima se proporciona únicamente para su uso personal y no comercial</description>
 		<description lang="fr_FR">La météo est fournie pour un usage personnel non-commercial.</description>
 		<description lang="sv_SE">Vädret tillhandahålls enbart för personligt, icke-kommersiellt bruk</description>
 		<description lang="is_IS">Veðurupplýsingarnar eru einungis til einkanota og ekki í hagnaðarskyni</description>
+		<description lang="de_DE">Das Wetter wird nur für persönlichen, nicht-kommerziellen Gebrauch zur Verfügung gestellt</description>
 		<disclaimer lang="en_GB">The weather forecast has been prepared by MapMakers Group Ltd</disclaimer>
 		<disclaimer lang="ru_RU">Прогноз погоды подготовлен НПЦ "Мэп Мейкер"</disclaimer>
 		<disclaimer lang="es_ES">El pronóstico del tiempo ha sido preparado por MapMakers Group Ltd</disclaimer>
 		<disclaimer lang="fr_FR">Les prévisions météorologiques sont mises à disposition par MapMakers Group Ltd</disclaimer>
 		<disclaimer lang="sv_SE">Väderprognosen har utarbetats av MapMakers Group Ltd.</disclaimer>
 		<disclaimer lang="is_IS">Veðurspáin var útbúin af MapMakers Group Ltd</disclaimer>
+		<disclaimer lang="de_DE">Die Wettervorhersage wurde von MapMakers Group Ltd vorbereitet</disclaimer>
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=323624</forum>
 		<website>https://www.gismeteo.com/</website>
 		<email>vl.maksime@gmail.com</email>
 		<source>https://github.com/vlmaksime/weather.gismeteo</source>
-		<news>v0.6.3 (2021-09-27)[CR]- Fixed identified bugs[CR][CR]v0.6.2 (2021-05-31)[CR]- Updated compatibility with Kodi 19[CR]- Added Icelandic translation (sveinki) [CR][CR]v0.6.1 (2021-04-03)[CR]- SimplePlugin 3 module moved into external addon[CR]- Small changes in the add-on structure [CR]- Added French translation (DavidHenryThoreau)[CR]- Added Swedish translation (Sopor)</news>
+		<news>v0.6.4 (2023-10-30)[CR]- Adapted to changes in the service API[CR]- Added German translation (kyoforkshomebrews)[CR][CR]v0.6.3 (2021-09-27)[CR]- Fixed identified bugs[CR][CR]v0.6.2 (2021-05-31)[CR]- Updated compatibility with Kodi 19[CR]- Added Icelandic translation (sveinki)[CR][CR]v0.6.1 (2021-04-03)[CR]- SimplePlugin 3 module moved into external addon[CR]- Small changes in the add-on structure [CR]- Added French translation (DavidHenryThoreau)[CR]- Added Swedish translation (Sopor)</news>
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
