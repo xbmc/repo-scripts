@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-22 14:29+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2023-01-31 22:15+0000\n"
+"Last-Translator: Demian <Demian@gmx.co.uk>\n"
 "Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/de_de/>\n"
 "Language: de_de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
@@ -23,11 +23,11 @@ msgstr "Bildschirmschoner, der eine Bilder-Diashow anzeigt"
 
 msgctxt "Addon Description"
 msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
-msgstr "Der Slideshow-Bildschirmschoner zeigt eine Bilder-Slideshow mit verschiedenen Übergangseffekten. Er kann so konfiguriert werden, dass Musik oder Video Fanarts aus der Bibliothek, oder Bilder eines bestimmten Ordners angezeigt werden."
+msgstr "Der Slideshow-Bildschirmschoner zeigt eine Bilder-Diashow mit verschiedenen Übergangseffekten. Er kann so konfiguriert werden, dass Musik- oder Videofanart aus der Bibliothek oder Bilder eines bestimmten Ordners angezeigt werden"
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Quelle der Diashow-Bilder"
+msgstr "Quelle der Diashowbilder"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -35,11 +35,11 @@ msgstr "Ordner"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Video-Fankunst"
+msgstr "Videofanart"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Musik-Fankunst"
+msgstr "Musikfanart"
 
 msgctxt "#30004"
 msgid "Image Folder"
@@ -95,7 +95,7 @@ msgstr "Bilder in zufälliger Reihenfolge anzeigen"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "Vollständigen Pfad verwenden"
 
 # empty string with id 30017
 msgctxt "#30018"
@@ -125,7 +125,7 @@ msgstr "Zusätzlich"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "Diashow von letzter Position vorsetzen"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
@@ -134,4 +134,4 @@ msgstr "Hintergrundbild anzeigen"
 
 msgctxt "#30030"
 msgid "Use vignette overlay"
-msgstr ""
+msgstr "Vignettenoverlay verwenden"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="7.0.0" provider-name="Team Kodi">
+<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="7.0.3" provider-name="Team Kodi">
 	<requires>
 		<import addon="xbmc.python" version="3.0.1" />
 		<import addon="script.module.exifread" version="2.1.2+matrix.0" />
@@ -117,6 +117,6 @@
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
-		<news>- first version for Kodi Nexus</news>
+		<news>- add support for image types provided by imagedecoder addons</news>
 	</extension>
 </addon>

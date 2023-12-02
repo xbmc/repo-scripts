@@ -14,7 +14,10 @@ ADDONID = ADDON.getAddonInfo('id')
 LANGUAGE = ADDON.getLocalizedString
 
 # supported image types by the screensaver
-IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef', '.webp', '.jp2', '.apng')
+IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef', '.webp', '.jp2', '.apng']
+HEIF_TYPES = ['.heic', '.heif']
+MPO_TYPES = ['.mpo']
+RAW_TYPES = ['.3fr', '.arw', '.cr2', '.crw', '.dcr', '.dng', '.erf', '.kdc', '.mdc', '.mef', '.mos', '.mrw', '.nef', '.nrw', '.orf', '.pef', '.ppm', '.raf', '.raw', '.rw2', '.srw', '.x3f']
 CACHEFOLDER = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 CACHEFILE = os.path.join(CACHEFOLDER, 'cache_%s')
 RESUMEFILE = os.path.join(CACHEFOLDER, 'offset')
@@ -75,6 +78,12 @@ def walk(path):
         if xbmcvfs.exists(xbmcvfs.translatePath(folder)):
             dirs = []
             files = []
+            if xbmc.getCondVisibility('System.HasAddon(imagedecoder.heif)'):
+                IMAGE_TYPES.extend(HEIF_TYPES)
+            if xbmc.getCondVisibility('System.HasAddon(imagedecoder.mpo)'):
+                IMAGE_TYPES.extend(MPO_TYPES)
+            if xbmc.getCondVisibility('System.HasAddon(imagedecoder.raw)'):
+                IMAGE_TYPES.extend(RAW_TYPES)
             # get all files and subfolders
             if folder.startswith('plugin://'):
                 getroot = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Files.GetDirectory", "params":{"directory":"%s", "sort":{"method":"label"}}, "id":1 }' % folder)
