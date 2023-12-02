@@ -1,3 +1,16 @@
+v6.6.1
+- add supermusic scraper
+
+v6.6.0
+- removed minilyrics
+- removed gomaudio
+- fixed lyricsify
+- fixed lyricscom
+- fixed azlyrics
+- added lrclib
+- added megalobiz
+- added musixmatch lrc
+
 v6.5.2
 - remove invalid characters from filenames
 

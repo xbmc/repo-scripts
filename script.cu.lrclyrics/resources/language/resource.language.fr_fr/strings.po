@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-10-02 16:15+0000\n"
+"PO-Revision-Date: 2022-12-28 16:15+0000\n"
 "Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fr_fr/>\n"
 "Language: fr_fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -102,15 +102,15 @@ msgstr "Format de nom du fichier"
 
 msgctxt "#32108"
 msgid "%A - %T"
-msgstr "Artiste - Chanson.ext"
+msgstr "%A - %T"
 
 msgctxt "#32109"
 msgid "%A\\%B\\%T"
-msgstr "Artiste\\Album\\Chanson.ext"
+msgstr "%A\\%B\\%T"
 
 msgctxt "#32110"
 msgid "%A\\%B\\%N (-) %T"
-msgstr "Artiste\\Album\\Piste Chanson.ext"
+msgstr "%A\\%B\\%N (-) %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
@@ -240,16 +240,16 @@ msgstr "Si vous masquez l'OSD Musique et les informations de lecture en cours, l
 
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr ""
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "GomAudio"
+msgid "Megalobiz"
+msgstr ""
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +278,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Dark Lyrics"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr ""
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 # empty strings from id 32010 to 32100
 # Settings labels
