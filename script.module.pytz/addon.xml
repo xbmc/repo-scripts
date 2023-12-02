@@ -1,17 +1,18 @@
-<addon id="script.module.pytz" name="pytz" version="2021.3.0+matrix.1" provider-name="Stuart Bishop, Paul Backhouse">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib"/>
-	<extension point="xbmc.addon.metadata">
-	    <summary lang="en_GB">World Timezone Definitions for Python.</summary>
-	    <description lang="en_GB">pytz brings the Olson tz database into Python. This library allows accurate and cross platform timezone calculations using Python 2.4 or higher. It also solves the issue of ambiguous times at the end of daylight saving time, which you can read more about in the Python Library Reference (datetime.tzinfo).</description>
-	    <platform>all</platform>
-	    <license>MIT</license>
-	    <website>https://pythonhosted.org/pytz/</website>
-	    <source>https://github.com/stub42/pytz</source>
-	    <assets>
-            <icon>icon.png</icon>
-	    </assets>
-	</extension>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pytz" name="pytz" version="2023.3.0+matrix.1" provider-name="Stuart Bishop">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">World Timezone Definitions for Python.</summary>
+    <description lang="en_GB">pytz brings the Olson tz database into Python. This library allows accurate and cross platform timezone calculations using Python 2.4 or higher. It also solves the issue of ambiguous times at the end of daylight saving time, which you can read more about in the Python Library Reference (datetime.tzinfo).</description>
+    <license>MIT</license>
+    <platform>all</platform>
+    <website>https://pythonhosted.org/pytz/</website>
+    <source>https://github.com/stub42/pytz</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
 </addon>

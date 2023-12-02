@@ -772,3 +772,8 @@ msgstr ""
 msgctxt "#32174"
 msgid "OMDb API Key"
 msgstr ""
+
+msgctxt "#32184"
+msgid "ExtendedInfo Script"
+msgstr ""
+

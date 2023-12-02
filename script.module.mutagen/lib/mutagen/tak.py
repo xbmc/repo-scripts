@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2008  Lukáš Lalinský
 # Copyright (C) 2019  Philipp Wolfer
 #
@@ -21,7 +20,6 @@ __all__ = ["TAK", "Open", "delete"]
 
 import struct
 
-from ._compat import endswith
 from mutagen import StreamInfo
 from mutagen.apev2 import (
     APEv2File,
@@ -33,6 +31,7 @@ from mutagen._util import (
     BitReaderError,
     convert_error,
     enum,
+    endswith,
 )
 
 
@@ -163,6 +162,7 @@ class TAKInfo(StreamInfo):
             raise TAKHeaderError("not a TAK file")
 
         bitreader = _LSBBitReader(fileobj)
+        found_stream_info = False
         while True:
             type = TAKMetadata(bitreader.bits(7))
             bitreader.skip(1)  # Unused
@@ -174,11 +174,15 @@ class TAKInfo(StreamInfo):
                 break
             elif type == TAKMetadata.STREAM_INFO:
                 self._parse_stream_info(bitreader, size)
+                found_stream_info = True
             elif type == TAKMetadata.ENCODER_INFO:
                 self._parse_encoder_info(bitreader, data_size)
 
             assert bitreader.is_aligned()
             fileobj.seek(pos + size)
+
+        if not found_stream_info:
+            raise TAKHeaderError("missing stream info")
 
         if self.sample_rate > 0:
             self.length = self.number_of_samples / float(self.sample_rate)

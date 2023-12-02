@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2005  Michael Urman
 #
 # This program is free software; you can redistribute it and/or modify
@@ -7,9 +6,9 @@
 # (at your option) any later version.
 
 import warnings
+from typing import List
 
 from mutagen._util import DictMixin, loadfile
-from mutagen._compat import izip
 
 
 class FileType(DictMixin):
@@ -83,9 +82,9 @@ class FileType(DictMixin):
         if self.tags is None:
             raise KeyError(key)
         else:
-            del(self.tags[key])
+            del self.tags[key]
 
-    def keys(self):
+    def keys(self) -> list:
         """Return a list of keys in the metadata tag.
 
         If the file has no tags at all, an empty list is returned.
@@ -132,12 +131,13 @@ class FileType(DictMixin):
         if self.tags is not None:
             return self.tags.save(filething, **kwargs)
 
-    def pprint(self):
+    def pprint(self) -> str:
         """
         Returns:
             text: stream information and comment key=value pairs.
         """
 
+        assert self.info is not None
         stream = "%s (%s)" % (self.info.pprint(), self.mime[0])
         try:
             tags = self.tags.pprint()
@@ -146,7 +146,7 @@ class FileType(DictMixin):
         else:
             return stream + ((tags and "\n" + tags) or "")
 
-    def add_tags(self):
+    def add_tags(self) -> None:
         """Adds new tags to the file.
 
         Raises:
@@ -157,7 +157,7 @@ class FileType(DictMixin):
         raise NotImplementedError
 
     @property
-    def mime(self):
+    def mime(self) -> List[str]:
         """A list of mime types (:class:`mutagen.text`)"""
 
         mimes = []
@@ -168,7 +168,7 @@ class FileType(DictMixin):
         return mimes
 
     @staticmethod
-    def score(filename, fileobj, header):
+    def score(filename, fileobj, header) -> int:
         """Returns a score for how likely the file can be parsed by this type.
 
         Args:
@@ -196,7 +196,7 @@ class StreamInfo(object):
 
     __module__ = "mutagen"
 
-    def pprint(self):
+    def pprint(self) -> str:
         """
         Returns:
             text: Print stream information
@@ -221,13 +221,13 @@ def File(filething, options=None, easy=False):
         filething (filething)
         options: Sequence of :class:`FileType` implementations,
             defaults to all included ones.
-        easy (bool):  If the easy wrappers should be returnd if available.
+        easy (bool):  If the easy wrappers should be returned if available.
             For example :class:`EasyMP3 <mp3.EasyMP3>` instead of
             :class:`MP3 <mp3.MP3>`.
 
     Returns:
         FileType: A FileType instance for the detected type or `None` in case
-            the type couln't be determined.
+            the type couldn't be determined.
 
     Raises:
         MutagenError: in case the detected type fails to load the file.
@@ -268,10 +268,12 @@ def File(filething, options=None, easy=False):
         from mutagen.smf import SMF
         from mutagen.tak import TAK
         from mutagen.dsf import DSF
+        from mutagen.dsdiff import DSDIFF
+        from mutagen.wave import WAVE
         options = [MP3, TrueAudio, OggTheora, OggSpeex, OggVorbis, OggFLAC,
                    FLAC, AIFF, APEv2File, MP4, ID3FileType, WavPack,
                    Musepack, MonkeysAudio, OptimFROG, ASF, OggOpus, AAC, AC3,
-                   SMF, TAK, DSF]
+                   SMF, TAK, DSF, DSDIFF, WAVE]
 
     if not options:
         return None
@@ -289,7 +291,7 @@ def File(filething, options=None, easy=False):
     results = [(Kind.score(filething.name, fileobj, header), Kind.__name__)
                for Kind in options]
 
-    results = list(izip(results, options))
+    results = list(zip(results, options))
     results.sort()
     (score, name), Kind = results[-1]
     if score > 0:

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.websocket" name="websocket library" version="0.58.0+matrix.2" provider-name="liris">
+<addon id="script.module.websocket" name="websocket-client" version="1.6.2" provider-name="liris">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
-    <import addon="script.module.six" version="1.14.0+matrix.2" />
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <assets>
-      <icon>icon.png</icon>
-    </assets>
-    <summary lang="en_GB">websocket library repacked for Kodi</summary>
-    <source>https://github.com/pkscout/script.module.websocket</source>
+    <summary lang="en_GB">WebSocket client for Python with low level API options</summary>
+    <description lang="en_GB">WebSocket client for Python with low level API options</description>
+    <source>https://github.com/websocket-client/websocket-client</source>
     <website>https://github.com/websocket-client/websocket-client</website>
+    <license>Apache-2.0</license>
     <platform>all</platform>
-    <license>LGPL-2.1-only</license>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
   </extension>
 </addon>

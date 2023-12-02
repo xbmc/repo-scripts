@@ -1,41 +1,33 @@
-# coding: utf-8
 """Mimics built-in logging module"""
 
-from __future__ import unicode_literals
-import sys
 from traceback import format_exc
 import xbmc
 
 __all__ = ['Logger', 'getLogger']
 
-PY2 = sys.version_info[0] == 2
 
-
-def encode(string):
-    if PY2 and isinstance(string, unicode):
-        string = string.encode('utf-8')
-    return string
-
-
-class Logger(object):
+class Logger:
     def __init__(self, name=''):
         self._name = name
 
+    def _log(self, msg, level):
+        xbmc.log(f'{self._name}: {msg}', level)
+
     def info(self, msg):
-        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGINFO)
+        self._log(msg, xbmc.LOGINFO)
 
     def error(self, msg):
-        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGERROR)
+        self._log(msg, xbmc.LOGERROR)
 
     def exception(self, msg):
-        self.error(msg)
+        self._log(msg, xbmc.LOGERROR)
         xbmc.log(format_exc(), xbmc.LOGERROR)
 
     def debug(self, msg):
-        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGDEBUG)
+        self._log(msg, xbmc.LOGDEBUG)
 
     def critical(self, msg):
-        xbmc.log(encode('{}: {}'.format(self._name, msg)), xbmc.LOGFATAL)
+        self._log(msg, xbmc.LOGFATAL)
 
 
 def getLogger(name):

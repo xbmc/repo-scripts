@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 1.0.5
+# Service LegendasDivx.com version 1.0.6
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -10,7 +10,6 @@
 
 import os
 from os.path import join as pjoin
-import re
 import fnmatch
 import shutil
 import sys
@@ -27,6 +26,13 @@ import http.cookiejar
 import uuid
 import socket
 from urllib.parse import unquote, quote_plus
+import http.cookiejar
+import urllib.error
+import urllib.parse
+import urllib.request
+import socket
+import re
+
 
 _addon = xbmcaddon.Addon()
 _author     = _addon.getAddonInfo('author')
@@ -36,10 +42,10 @@ _version    = _addon.getAddonInfo('version')
 _language   = _addon.getLocalizedString
 _dialog     = xbmcgui.Dialog()
 
-_cwd        = xbmc.translatePath(_addon.getAddonInfo('path'))
-_profile    = xbmc.translatePath(_addon.getAddonInfo('profile'))
-_resource   = xbmc.translatePath(os.path.join(_cwd, 'resources', 'lib' ))
-_temp       = xbmc.translatePath(os.path.join(_profile, 'temp'))
+_cwd        = xbmcvfs.translatePath(_addon.getAddonInfo('path'))
+_profile    = xbmcvfs.translatePath(_addon.getAddonInfo('profile'))
+_resource   = xbmcvfs.translatePath(os.path.join(_cwd, 'resources', 'lib' ))
+_temp       = xbmcvfs.translatePath(os.path.join(_profile, 'temp'))
 
 if os.path.isdir(_temp):shutil.rmtree(_temp)
 xbmcvfs.mkdirs(_temp)
@@ -116,37 +122,34 @@ def _log(module, msg):
 def log(msg):
     if debug == 'true': _log(_scriptname, msg)
 
-def recursive_glob(treeroot, pattern):
+def recursive_glob(treeroot, extensions):
+    extensions = set(extensions)
     results = []
     for base, dirs, files in os.walk(treeroot):
-        for extension in pattern:
-            for filename in fnmatch.filter(files, '*.' + extension): results.append(os.path.join(base, filename))
+        for filename in files:
+            _, ext = os.path.splitext(filename)
+            if ext.lower() in extensions:
+                results.append(os.path.join(base, filename))
     return results
 
 def xbmc_extract(SRC, DEST):
     dd_ext, ff_ext = xbmcvfs.listdir(SRC)
+    ff_ext = (ff for ff in ff_ext if os.path.splitext(ff)[1][1:].lower() in SUB_EXTS)
+    dest_path = xbmcvfs.translatePath(DEST)
     for ff in ff_ext:
-        ext = os.path.splitext(ff)[1][1:].lower()
-        if ext in SUB_EXTS:
-            src_file = pjoin(SRC,ff).replace('\\','/')
-            dst_file = pjoin(xbmc.translatePath(DEST),ff)
-            success = xbmcvfs.copy(src_file,dst_file)
-            if not success:
-                log("Error extracting: '%s' to '%s'" % (src_file,dst_file))
-            else:
-                log("Extracting: '%s' to '%s'" % (src_file,dst_file))
+        src_file = os.path.join(SRC, ff)
+        dst_file = os.path.join(dest_path, ff)
+        success = xbmcvfs.copy(src_file,dst_file)
+        if not success:
+            log("Error extracting: '%s' to '%s'" % (src_file,dst_file))
         else:
-            log("NO FILES YET...")
+            log("Extracting: '%s' to '%s'" % (src_file,dst_file))
     for dd in dd_ext:
-        dd_mk = pjoin(DEST,dd).replace('\\','/')
-        success_mk = xbmcvfs.mkdir(dd_mk)
-        if not success_mk:
-            log("Error creating directory: '%s'" % dd_mk)
-        else:
-            log("Created directory: '%s'" % dd_mk)
-        now_SRC = pjoin(SRC,dd,'').replace('\\','/')
-        now_DEST = pjoin(DEST,dd)
-        success_dd = xbmc_extract(now_SRC,now_DEST)
+        dd_mk = os.path.join(DEST, dd)
+        os.makedirs(dd_mk, exist_ok=True)
+        now_SRC = os.path.join(SRC, dd, '')
+        now_DEST = os.path.join(DEST, dd)
+        success_dd = xbmc_extract(now_SRC, now_DEST)
         if not success_dd:
             log("Error extracting inside dir: '%s' to '%s'" % (now_SRC,now_DEST))
         else:
@@ -164,14 +167,10 @@ def login():
     return my_opener
 
 def urlpost(query, lang, page):
-
-    my_opener=login()
-    
-    postdata = urllib.parse.urlencode({'query' : query, 'form_cat' : lang}).encode("utf-8")
-
-    my_opener.addheaders = [('Referer', main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page))]
-    urllib.request.install_opener(my_opener)
-    request = urllib.request.Request(main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page), postdata)
+    my_opener = login()
+    postdata = urllib.parse.urlencode({'query': query, 'form_cat': lang}).encode("utf-8")
+    headers = {'Referer': main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page=' + str(page)}
+    request = urllib.request.Request(main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page=' + str(page), data=postdata, headers=headers)
     log("POST url page: %s" % page)
     log("POST url data: %s" % postdata)
     try:
@@ -192,6 +191,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     log("getallsubs: Search String = '%s'" % searchstring)
     log("getallsubs: Search String Not Clean = '%s'" % searchstring_notclean)
     page = 1
+    listsResult = 0
     if languageshort == "pt": content = urlpost(searchstring, "28", page)
     elif languageshort == "pb": content = urlpost(searchstring, "29", page)
     elif languageshort == "es": content = urlpost(searchstring, "30", page)
@@ -273,13 +273,21 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             else: filename = "From: " + uploader + " - "  + filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
             subtitles_list.append({'rating': str(downloads), 'filename': filename, 'uploader': uploader, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
             log("getallsubs: SUBS LIST = '%s'" % subtitles_list)
-        page = page + 1
+            listsResult = listsResult + 1 
         
-        if languageshort == "pt": content = urlpost(searchstring, "28", page)
-        elif languageshort == "pb": content = urlpost(searchstring, "29", page)
-        elif languageshort == "es": content = urlpost(searchstring, "30", page)
-        elif languageshort == "en": content = urlpost(searchstring, "31", page)
-
+        
+        page = page + 1
+        if listsResult == 5 and page < 6:
+            
+            if languageshort == "pt": content = urlpost(searchstring, "28", page)
+            elif languageshort == "pb": content = urlpost(searchstring, "29", page)
+            elif languageshort == "es": content = urlpost(searchstring, "30", page)
+            elif languageshort == "en": content = urlpost(searchstring, "31", page)
+            listsResult = 0
+            
+        else:
+            page = 6
+    
 #   Bubble sort, to put syncs on top
     for n in range(0,len(subtitles_list)):
         for i in range(1, len(subtitles_list)):
@@ -287,6 +295,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             if subtitles_list[i]["sync"] > subtitles_list[i-1]["sync"]:
                 subtitles_list[i] = subtitles_list[i-1]
                 subtitles_list[i-1] = temp
+                
     return subtitles_list
 
 def append_subtitle(item):
@@ -351,6 +360,10 @@ class Main:
         israr = str.split(israr[-1], '.')
         israr = str.lower(israr[-1])
 
+        '''
+        imdb = xbmc.Player().getVideoInfoTag().getIMDBNumber()
+        log("imdb:  = %s" % imdb)
+        '''
 
         title = xbmc.getCleanMovieTitle(item['title'])[0]
         year = item['year']
@@ -431,6 +444,7 @@ class Main:
         if 'por' in item['languages'] and PT_ON == 'true':
             subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
             for sub in subtitles_list: append_subtitle(sub)
+        #if 'por' in item['languages'] and PTBR_ON == 'true' and len(subtitles_list) == 0:
         if 'por' in item['languages'] and PTBR_ON == 'true':
             subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
             for sub in subtitles_list: append_subtitle(sub)
@@ -452,7 +466,7 @@ class Main:
         if not os.path.isdir(_temp):xbmcvfs.mkdir(_temp)
         unpacked = 'ldivx-' + str(uuid.uuid4()).replace("-","")[0:6]
         xbmcvfs.mkdirs(pjoin(_temp,unpacked,''))
-        _newtemp = os.path.join(_temp, xbmc.translatePath(unpacked).replace('\\','/'))
+        _newtemp = os.path.join(_temp, xbmcvfs.translatePath(unpacked).replace('\\','/'))
 
         subtitles_list = []
         my_opener = login()

@@ -3,7 +3,6 @@
 import os
 import defusedxml.ElementTree as _xmltree
 from resources.lib.fileops import readFile, checkPath
-from kodi_six.utils import py2_encode, py2_decode
 
 
 class objectConfig(object):
@@ -21,18 +20,18 @@ class objectConfig(object):
         albums = []
         filepath = os.path.join(album_params.get(
             'localartistdir', ''), self.ALBUMFILEPATH)
-        local_path = os.path.join(album_params.get('localartistdir', ''), py2_decode(
-            album_params.get('artist', '')), 'override')
+        local_path = os.path.join(album_params.get(
+            'localartistdir', ''), album_params.get('artist', ''), 'override')
         self.loglines.append('checking ' + filepath)
         rloglines, rawxml = readFile(filepath)
         self.loglines.extend(rloglines)
         if rawxml:
-            xmldata = _xmltree.fromstring(py2_encode(rawxml))
+            xmldata = _xmltree.fromstring(rawxml)
         else:
             return [], self.loglines
         for element in xmldata.iter():
             if element.tag == "name":
-                name = py2_encode(element.text)
+                name = element.text
             elif element.tag == "image":
                 image_text = element.text
                 if not image_text:
@@ -55,7 +54,7 @@ class objectConfig(object):
         loglines, rawxml = readFile(filepath)
         self.loglines.extend(loglines)
         if rawxml:
-            xmldata = _xmltree.fromstring(py2_encode(rawxml))
+            xmldata = _xmltree.fromstring(rawxml)
         else:
             return '', self.loglines
         for element in xmldata.iter():
@@ -85,18 +84,18 @@ class objectConfig(object):
         similar_artists = []
         filepath = os.path.join(sim_params.get(
             'localartistdir', ''), self.SIMILARFILEPATH)
-        local_path = os.path.join(sim_params.get('localartistdir', ''), py2_decode(
-            sim_params.get('artist', '')), 'override')
+        local_path = os.path.join(sim_params.get('localartistdir', ''),
+                                  sim_params.get('artist', ''), 'override')
         self.loglines.append('checking ' + filepath)
         rloglines, rawxml = readFile(filepath)
         self.loglines.extend(rloglines)
         if rawxml:
-            xmldata = _xmltree.fromstring(py2_encode(rawxml))
+            xmldata = _xmltree.fromstring(rawxml)
         else:
             return [], self.loglines
         for element in xmldata.iter():
             if element.tag == "name":
-                name = py2_encode(element.text)
+                name = element.text
             elif element.tag == "image":
                 image_text = element.text
                 if not image_text:

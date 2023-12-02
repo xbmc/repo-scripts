@@ -1,3 +1,5 @@
+"""Provides the :class:`Arrow <arrow.formatter.DateTimeFormatter>` class, an improved formatter for datetimes."""
+
 import re
 import sys
 from datetime import datetime, timedelta
@@ -6,6 +8,7 @@ from typing import Optional, Pattern, cast
 from dateutil import tz as dateutil_tz
 
 from arrow import locales
+from arrow.constants import DEFAULT_LOCALE
 
 if sys.version_info < (3, 8):  # pragma: no cover
     from typing_extensions import Final
@@ -37,7 +40,7 @@ class DateTimeFormatter:
 
     locale: locales.Locale
 
-    def __init__(self, locale: str = "en_us") -> None:
+    def __init__(self, locale: str = DEFAULT_LOCALE) -> None:
 
         self.locale = locales.get_locale(locale)
 

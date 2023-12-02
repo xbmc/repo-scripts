@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2006  Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
@@ -25,13 +24,15 @@ were all consulted.
 
 import struct
 import sys
+from io import BytesIO
+from collections.abc import Sequence
+from datetime import timedelta
 
 from mutagen import FileType, Tags, StreamInfo, PaddingInfo
 from mutagen._constants import GENRES
 from mutagen._util import cdata, insert_bytes, DictProxy, MutagenError, \
-    hashable, enum, get_size, resize_bytes, loadfile, convert_error
-from mutagen._compat import (reraise, PY2, string_types, text_type, chr_,
-                             iteritems, PY3, cBytesIO, izip, xrange)
+    hashable, enum, get_size, resize_bytes, loadfile, convert_error, bchr, \
+    reraise
 from ._atom import Atoms, Atom, AtomError
 from ._util import parse_full_atom
 from ._as_entry import AudioSampleEntry, ASEntryError
@@ -205,14 +206,10 @@ class MP4FreeForm(bytes):
 
 
 def _name2key(name):
-    if PY2:
-        return name
     return name.decode("latin-1")
 
 
 def _key2name(key):
-    if PY2:
-        return key
     return key.encode("latin-1")
 
 
@@ -246,11 +243,11 @@ def _item_sort_key(key, value):
              "\xa9gen", "gnre", "trkn", "disk",
              "\xa9day", "cpil", "pgap", "pcst", "tmpo",
              "\xa9too", "----", "covr", "\xa9lyr"]
-    order = dict(izip(order, xrange(len(order))))
+    order = dict(zip(order, range(len(order))))
     last = len(order)
     # If there's no key-based way to distinguish, order by length.
     # If there's still no way, go by string comparison on the
-    # values, so we at least have something determinstic.
+    # values, so we at least have something deterministic.
     return (order.get(key[:4], last), len(repr(value)), repr(value))
 
 
@@ -367,8 +364,7 @@ class MP4Tags(DictProxy, Tags):
                     self.__parse_text(atom, data, implicit=False)
             except MP4MetadataError:
                 # parsing failed, save them so we can write them back
-                key = _name2key(atom.name)
-                self._failed_atoms.setdefault(key, []).append(data)
+                self._failed_atoms.setdefault(_name2key(atom.name), []).append(data)
 
     def __setitem__(self, key, value):
         if not isinstance(key, str):
@@ -403,7 +399,7 @@ class MP4Tags(DictProxy, Tags):
             except (TypeError, ValueError) as s:
                 reraise(MP4MetadataValueError, s, sys.exc_info()[2])
 
-        for key, failed in iteritems(self._failed_atoms):
+        for key, failed in self._failed_atoms.items():
             # don't write atoms back if we have added a new one with
             # the same name, this excludes freeform which can have
             # multiple atoms with the same key (most parsers seem to be able
@@ -523,10 +519,13 @@ class MP4Tags(DictProxy, Tags):
         fileobj.seek(atom.offset + 12)
         data = fileobj.read(atom.length - 12)
         fmt = fmt % cdata.uint_be(data[:4])
-        offsets = struct.unpack(fmt, data[4:])
-        offsets = [o + (0, delta)[offset < o] for o in offsets]
-        fileobj.seek(atom.offset + 16)
-        fileobj.write(struct.pack(fmt, *offsets))
+        try:
+            offsets = struct.unpack(fmt, data[4:])
+            offsets = [o + (0, delta)[offset < o] for o in offsets]
+            fileobj.seek(atom.offset + 16)
+            fileobj.write(struct.pack(fmt, *offsets))
+        except struct.error:
+            raise MP4MetadataError("wrong offset inside %r" % atom.name)
 
     def __update_tfhd(self, fileobj, atom, delta, offset):
         if atom.offset > offset:
@@ -752,7 +751,7 @@ class MP4Tags(DictProxy, Tags):
 
     def __render_bool(self, key, value):
         return self.__render_data(
-            key, 0, AtomDataType.INTEGER, [chr_(bool(value))])
+            key, 0, AtomDataType.INTEGER, [bchr(bool(value))])
 
     def __parse_cover(self, atom, data):
         values = []
@@ -816,18 +815,14 @@ class MP4Tags(DictProxy, Tags):
         self.__add(key, values)
 
     def __render_text(self, key, value, flags=AtomDataType.UTF8):
-        if isinstance(value, string_types):
+        if isinstance(value, str):
             value = [value]
 
         encoded = []
         for v in value:
-            if not isinstance(v, text_type):
-                if PY3:
-                    raise TypeError("%r not str" % v)
-                try:
-                    v = v.decode("utf-8")
-                except (AttributeError, UnicodeDecodeError) as e:
-                    raise TypeError(e)
+            if not isinstance(v, str):
+                raise TypeError("%r not str" % v)
+
             encoded.append(v.encode("utf-8"))
 
         return self.__render_data(key, 0, flags, encoded)
@@ -879,14 +874,14 @@ class MP4Tags(DictProxy, Tags):
     def pprint(self):
 
         def to_line(key, value):
-            assert isinstance(key, text_type)
-            if isinstance(value, text_type):
+            assert isinstance(key, str)
+            if isinstance(value, str):
                 return u"%s=%s" % (key, value)
             return u"%s=%r" % (key, value)
 
         values = []
-        for key, value in sorted(iteritems(self)):
-            if not isinstance(key, text_type):
+        for key, value in sorted(self.items()):
+            if not isinstance(key, str):
                 key = key.decode("latin-1")
             if key == "covr":
                 values.append(u"%s=%s" % (key, u", ".join(
@@ -897,6 +892,123 @@ class MP4Tags(DictProxy, Tags):
             else:
                 values.append(to_line(key, value))
         return u"\n".join(values)
+
+
+class Chapter(object):
+    """Chapter()
+
+    Chapter information container
+    """
+    def __init__(self, start, title):
+        self.start = start
+        self.title = title
+
+
+class MP4Chapters(Sequence):
+    """MP4Chapters()
+
+    MPEG-4 Chapter information.
+
+    Supports the 'moov.udta.chpl' box.
+
+    A sequence of Chapter objects with the following members:
+        start (`float`): position from the start of the file in seconds
+        title (`str`): title of the chapter
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        self._timescale = None
+        self._duration = None
+        self._chapters = []
+        super(MP4Chapters, self).__init__()
+        if args or kwargs:
+            self.load(*args, **kwargs)
+
+    def __len__(self):
+        return self._chapters.__len__()
+
+    def __getitem__(self, key):
+        return self._chapters.__getitem__(key)
+
+    def load(self, atoms, fileobj):
+        try:
+            mvhd = atoms.path(b"moov", b"mvhd")[-1]
+        except KeyError as key:
+            return MP4MetadataError(key)
+
+        self._parse_mvhd(mvhd, fileobj)
+
+        if not self._timescale:
+            raise MP4MetadataError("Unable to get timescale")
+
+        try:
+            chpl = atoms.path(b"moov", b"udta", b"chpl")[-1]
+        except KeyError as key:
+            return MP4MetadataError(key)
+
+        self._parse_chpl(chpl, fileobj)
+
+    @classmethod
+    def _can_load(cls, atoms):
+        return b"moov.udta.chpl" in atoms and b"moov.mvhd" in atoms
+
+    def _parse_mvhd(self, atom, fileobj):
+        assert atom.name == b"mvhd"
+
+        ok, data = atom.read(fileobj)
+        if not ok:
+            raise MP4StreamInfoError("Invalid mvhd")
+
+        version = data[0]
+
+        pos = 4
+        if version == 0:
+            pos += 8  # created, modified
+
+            self._timescale = struct.unpack(">l", data[pos:pos + 4])[0]
+            pos += 4
+
+            self._duration = struct.unpack(">l", data[pos:pos + 4])[0]
+            pos += 4
+        elif version == 1:
+            pos += 16  # created, modified
+
+            self._timescale = struct.unpack(">l", data[pos:pos + 4])[0]
+            pos += 4
+
+            self._duration = struct.unpack(">q", data[pos:pos + 8])[0]
+            pos += 8
+
+    def _parse_chpl(self, atom, fileobj):
+        assert atom.name == b"chpl"
+
+        ok, data = atom.read(fileobj)
+        if not ok:
+            raise MP4StreamInfoError("Invalid atom")
+
+        chapters = data[8]
+
+        pos = 9
+        for i in range(chapters):
+            start = struct.unpack(">Q", data[pos:pos + 8])[0] / 10000
+            pos += 8
+
+            title_len = data[pos]
+            pos += 1
+
+            try:
+                title = data[pos:pos + title_len].decode()
+            except UnicodeDecodeError as e:
+                raise MP4MetadataError("chapter %d title: %s" % (i, e))
+            pos += title_len
+
+            self._chapters.append(Chapter(start / self._timescale, title))
+
+    def pprint(self):
+        chapters = ["%s %s" % (timedelta(seconds=chapter.start), chapter.title)
+                    for chapter in self._chapters]
+        return "chapters=%s" % '\n  '.join(chapters)
 
 
 class MP4Info(StreamInfo):
@@ -1014,7 +1126,7 @@ class MP4Info(StreamInfo):
             return
 
         # look at the first entry if there is one
-        entry_fileobj = cBytesIO(data[offset:])
+        entry_fileobj = BytesIO(data[offset:])
         try:
             entry_atom = Atom(entry_fileobj)
         except AtomError as e:
@@ -1054,6 +1166,7 @@ class MP4(FileType):
     """
 
     MP4Tags = MP4Tags
+    MP4Chapters = MP4Chapters
 
     _mimes = ["audio/mp4", "audio/x-m4a", "audio/mpeg4", "audio/aac"]
 
@@ -1086,6 +1199,16 @@ class MP4(FileType):
             except Exception as err:
                 reraise(MP4MetadataError, err, sys.exc_info()[2])
 
+        if not MP4Chapters._can_load(atoms):
+            self.chapters = None
+        else:
+            try:
+                self.chapters = self.MP4Chapters(atoms, fileobj)
+            except error:
+                raise
+            except Exception as err:
+                reraise(MP4MetadataError, err, sys.exc_info()[2])
+
     @property
     def _padding(self):
         if self.tags is None:
@@ -1097,6 +1220,28 @@ class MP4(FileType):
         """save(filething=None, padding=None)"""
 
         super(MP4, self).save(*args, **kwargs)
+
+    def pprint(self):
+        """
+        Returns:
+            text: stream information, comment key=value pairs and chapters.
+        """
+        stream = "%s (%s)" % (self.info.pprint(), self.mime[0])
+        try:
+            tags = self.tags.pprint()
+        except AttributeError:
+            pass
+        else:
+            stream += ((tags and "\n" + tags) or "")
+
+        try:
+            chapters = self.chapters.pprint()
+        except AttributeError:
+            pass
+        else:
+            stream += "\n" + chapters
+
+        return stream
 
     def add_tags(self):
         if self.tags is None:

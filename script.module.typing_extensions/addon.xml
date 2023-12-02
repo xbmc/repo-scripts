@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.typing_extensions"
-       name="typing_extensions"
-       version="3.7.4.3"
-       provider-name="guido, ilevkivskyi, Razzeee">
+<addon id="script.module.typing_extensions" name="typing_extensions" version="4.7.1" provider-name="Python Software Foundation">
   <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="xbmc.python" version="3.0.0" />
   </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
+  <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Typing Extensions – Backported and Experimental Type Hints for Python</summary>
-    <description lang="en_GB">Packed for Kodi from https://github.com/python/typing/blob/master/typing_extensions/</description>
+    <summary lang="en_GB">Backported and Experimental Type Hints for Python 3.7+</summary>
+    <description lang="en_GB">Backported and Experimental Type Hints for Python 3.7+</description>
     <platform>all</platform>
     <license>PSF-2.0</license>
-    <source>https://github.com/Razzeee/script.module.typing_extensions</source>
-    <email></email>
+    <website>https://typing-extensions.readthedocs.io/en/latest/</website>
+    <source>https://github.com/python/typing_extensions</source>
     <assets>
-      <icon>icon.png</icon>
+      <icon>resources/icon.png</icon>
     </assets>
   </extension>
 </addon>

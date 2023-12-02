@@ -28,3 +28,7 @@ msgstr ""
 msgctxt "#30205"
 msgid "Mother Earth Instrumental"
 msgstr ""
+
+msgctxt "#30206"
+msgid "Mother Earth Jazz"
+msgstr ""

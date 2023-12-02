@@ -23,6 +23,8 @@ SYSTEM_ACTION_STANDBY = 3
 SYSTEM_ACTION_HIBERNATE = 4
 SYSTEM_ACTION_POWEROFF = 5
 SYSTEM_ACTION_CEC_STANDBY = 6
+SYSTEM_ACTION_RESTART_KODI = 7
+SYSTEM_ACTION_REBOOT_SYSTEM = 8
 
 MEDIA_ACTION_NONE = 0
 MEDIA_ACTION_START_STOP = 1
@@ -231,6 +233,12 @@ class Timer():
 
         elif self.system_action == SYSTEM_ACTION_CEC_STANDBY:
             return self._addon.getLocalizedString(32093)
+
+        elif self.system_action == SYSTEM_ACTION_RESTART_KODI:
+            return self._addon.getLocalizedString(32094)
+
+        elif self.system_action == SYSTEM_ACTION_REBOOT_SYSTEM:
+            return self._addon.getLocalizedString(32099)
 
         else:
             return self._addon.getLocalizedString(32071)

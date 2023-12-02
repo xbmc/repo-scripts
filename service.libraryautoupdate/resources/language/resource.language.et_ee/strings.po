@@ -7,37 +7,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Subclub. Eu <subclub.eu@gmail.com>\n"
-"Language-Team: Estonian (http://www.transifex.com/teamxbmc/xbmc-addons/language/et/)\n"
+"PO-Revision-Date: 2022-03-19 06:50+0000\n"
+"Last-Translator: rimasx <riks_12@hot.ee>\n"
+"Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/et_ee/>\n"
+"Language: et_ee\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
-msgstr ""
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
+msgstr "Värskenda oma Kodi video- ja muusikakogusid taimeriga. Taimer töötab Kodi teenusena, nii et meediakogud on alati uuendatud."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
-msgstr ""
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
+msgstr "See on Kodi teenus, mis värskendab muusika- ja videokogusi taimeriga. Andmebaaside värskendamiseks saab valida ajavahemiku või suuremaks juhtimiseks määrata cron-stiilis taimeri. Vajadusel võib teenus uuendusaega edasi lükata, et meediaesitus ei katkeks. Teenus toetab ka valitud failide asukohtade värskendamist ja andmebaaside puhastamist."
 
 msgctxt "#30000"
 msgid "Kodi Library Auto Update"
-msgstr "Kodi andmebaaside automaagiline uuendamine"
+msgstr "Kodi andmebaaside automaatne uuendamine"
 
 msgctxt "#30001"
 msgid "General"
@@ -53,11 +45,11 @@ msgstr "Muusika"
 
 msgctxt "#30004"
 msgid "Update Video Library"
-msgstr "Uuenda video andmebaasi"
+msgstr "Uuenda videokogu"
 
 msgctxt "#30005"
 msgid "Update Music Library"
-msgstr "Uuenda muusika andmebaasi"
+msgstr "Uuenda muusikakogu"
 
 msgctxt "#30006"
 msgid "Show Notifications"
@@ -65,19 +57,19 @@ msgstr "Näita teateid"
 
 msgctxt "#30007"
 msgid "Run during playback"
-msgstr "Käivita muusika/video esituse ajal"
+msgstr "Käivita taasesituse ajal"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Käivituse viivitus (minutites)"
+msgid "Startup Delay"
+msgstr "Käivitamise viivitus"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
-msgstr ""
+msgstr "Kasuta täiustatud taimerit"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Uuenduste vaheline aeg (tundides)"
+msgid "Amount of time between updates"
+msgstr "Värskenduste vaheline aeg"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -85,11 +77,11 @@ msgstr ""
 
 msgctxt "#30012"
 msgid "Update Video Library"
-msgstr "Uuenda video andmebaasi"
+msgstr "Uuenda videokogu"
 
 msgctxt "#30013"
 msgid "Update Music Library"
-msgstr "Uuenda muusika andmebaasi"
+msgstr "Uuenda muusikakogu"
 
 msgctxt "#30014"
 msgid "Only run when idle"
@@ -99,33 +91,41 @@ msgctxt "#30015"
 msgid "Disable manual run prompt"
 msgstr "Ära küsi kinnitust käsitsi uuendamisel"
 
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "Croni süntaks %s on vale, vaikimisi 2 tundi"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "Enne uuendust kontrolli, kas allikad on olemas"
+
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr ""
+msgid "Edit Custom Paths"
+msgstr "Muuda kohandatud rada"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr ""
+msgid "Choose Action"
+msgstr "Vali toiming"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr ""
+msgid "Delete this item?"
+msgstr "Kas kustutada see üksus?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Video asukoht"
+msgid "Browse for path"
+msgstr "Vali asukoht"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr ""
+msgid "This update broke custom paths, you must remake them"
+msgstr "See värskendus rikkus kohandatud asukohad, need tuleb määrata uuesti"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
+msgid "Custom Paths Disclaimer"
 msgstr ""
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr ""
+msgid "Path must already be a valid source with content"
+msgstr "Asukoht peab olema kehtiv ja sisuga"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -205,8 +205,112 @@ msgstr ""
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "Andmebaasi uuendamine käivitub uuesti"
+msgstr "Andmebaasi uuendamine käivitub uuesti "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "Soovid andmebaasi uuendamise kohe käivitada?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "Viiteajata"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 minut"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 minutit"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 minutit"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 minutit"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 minutit"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 tund"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 tundi"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 tundi"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 tundi"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 tundi"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 tundi"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "Kui pikalt lükata edasi vahelejäänud uuendust pärast Kodi käivitumist"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Luba andmebaasi uuendus taasesituse ajal"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr ""
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr ""
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr ""
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Käivituse viivitus (minutites)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Uuenduste vaheline aeg (tundides)"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Video asukoht"

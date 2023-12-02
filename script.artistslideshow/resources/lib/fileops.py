@@ -4,7 +4,7 @@ import os
 import re
 import sys
 try:
-    from kodi_six import xbmcvfs
+    import xbmcvfs
     isXBMC = True
 except ImportError:
     isXBMC = False

@@ -9,6 +9,7 @@ construction scenarios.
 import calendar
 from datetime import date, datetime
 from datetime import tzinfo as dt_tzinfo
+from decimal import Decimal
 from time import struct_time
 from typing import Any, List, Optional, Tuple, Type, Union, overload
 
@@ -16,6 +17,7 @@ from dateutil import tz as dateutil_tz
 
 from arrow import parser
 from arrow.arrow import TZ_EXPR, Arrow
+from arrow.constants import DEFAULT_LOCALE
 from arrow.util import is_timestamp, iso_to_gregorian
 
 
@@ -36,7 +38,7 @@ class ArrowFactory:
     def get(
         self,
         *,
-        locale: str = "en_us",
+        locale: str = DEFAULT_LOCALE,
         tzinfo: Optional[TZ_EXPR] = None,
         normalize_whitespace: bool = False,
     ) -> Arrow:
@@ -57,7 +59,7 @@ class ArrowFactory:
             Tuple[int, int, int],
         ],
         *,
-        locale: str = "en_us",
+        locale: str = DEFAULT_LOCALE,
         tzinfo: Optional[TZ_EXPR] = None,
         normalize_whitespace: bool = False,
     ) -> Arrow:
@@ -69,7 +71,7 @@ class ArrowFactory:
         __arg1: Union[datetime, date],
         __arg2: TZ_EXPR,
         *,
-        locale: str = "en_us",
+        locale: str = DEFAULT_LOCALE,
         tzinfo: Optional[TZ_EXPR] = None,
         normalize_whitespace: bool = False,
     ) -> Arrow:
@@ -81,7 +83,7 @@ class ArrowFactory:
         __arg1: str,
         __arg2: Union[str, List[str]],
         *,
-        locale: str = "en_us",
+        locale: str = DEFAULT_LOCALE,
         tzinfo: Optional[TZ_EXPR] = None,
         normalize_whitespace: bool = False,
     ) -> Arrow:
@@ -90,7 +92,7 @@ class ArrowFactory:
     def get(self, *args: Any, **kwargs: Any) -> Arrow:
         """Returns an :class:`Arrow <arrow.arrow.Arrow>` object based on flexible inputs.
 
-        :param locale: (optional) a ``str`` specifying a locale for the parser. Defaults to 'en_us'.
+        :param locale: (optional) a ``str`` specifying a locale for the parser. Defaults to 'en-us'.
         :param tzinfo: (optional) a :ref:`timezone expression <tz-expr>` or tzinfo object.
             Replaces the timezone unless using an input form that is explicitly UTC or specifies
             the timezone in a positional argument. Defaults to UTC.
@@ -106,11 +108,6 @@ class ArrowFactory:
 
             >>> arrow.get()
             <Arrow [2013-05-08T05:51:43.316458+00:00]>
-
-        **None** to also get current UTC time::
-
-            >>> arrow.get(None)
-            <Arrow [2013-05-08T05:51:49.016458+00:00]>
 
         **One** :class:`Arrow <arrow.arrow.Arrow>` object, to get a copy.
 
@@ -189,7 +186,7 @@ class ArrowFactory:
             >>> arrow.get('2013-05-05 12:30:45', ['MM/DD/YYYY', 'YYYY-MM-DD HH:mm:ss'])
             <Arrow [2013-05-05T12:30:45+00:00]>
 
-        **Three or more** arguments, as for the constructor of a ``datetime``::
+        **Three or more** arguments, as for the direct constructor of an ``Arrow`` object::
 
             >>> arrow.get(2013, 5, 5, 12, 30, 45)
             <Arrow [2013-05-05T12:30:45+00:00]>
@@ -197,7 +194,7 @@ class ArrowFactory:
         """
 
         arg_count = len(args)
-        locale = kwargs.pop("locale", "en_us")
+        locale = kwargs.pop("locale", DEFAULT_LOCALE)
         tz = kwargs.get("tzinfo", None)
         normalize_whitespace = kwargs.pop("normalize_whitespace", False)
 
@@ -209,60 +206,62 @@ class ArrowFactory:
         if len(kwargs) == 1 and tz is None:
             arg_count = 3
 
-        # () -> now, @ utc.
+        # () -> now, @ tzinfo or utc
         if arg_count == 0:
             if isinstance(tz, str):
                 tz = parser.TzinfoParser.parse(tz)
-                return self.type.now(tz)
+                return self.type.now(tzinfo=tz)
 
             if isinstance(tz, dt_tzinfo):
-                return self.type.now(tz)
+                return self.type.now(tzinfo=tz)
 
             return self.type.utcnow()
 
         if arg_count == 1:
             arg = args[0]
+            if isinstance(arg, Decimal):
+                arg = float(arg)
 
             # (None) -> raises an exception
             if arg is None:
                 raise TypeError("Cannot parse argument of type None.")
 
-            # try (int, float) -> from timestamp with tz
+            # try (int, float) -> from timestamp @ tzinfo
             elif not isinstance(arg, str) and is_timestamp(arg):
                 if tz is None:
                     # set to UTC by default
                     tz = dateutil_tz.tzutc()
                 return self.type.fromtimestamp(arg, tzinfo=tz)
 
-            # (Arrow) -> from the object's datetime.
+            # (Arrow) -> from the object's datetime @ tzinfo
             elif isinstance(arg, Arrow):
-                return self.type.fromdatetime(arg.datetime)
+                return self.type.fromdatetime(arg.datetime, tzinfo=tz)
 
-            # (datetime) -> from datetime.
+            # (datetime) -> from datetime @ tzinfo
             elif isinstance(arg, datetime):
-                return self.type.fromdatetime(arg)
+                return self.type.fromdatetime(arg, tzinfo=tz)
 
-            # (date) -> from date.
+            # (date) -> from date @ tzinfo
             elif isinstance(arg, date):
-                return self.type.fromdate(arg)
+                return self.type.fromdate(arg, tzinfo=tz)
 
-            # (tzinfo) -> now, @ tzinfo.
+            # (tzinfo) -> now @ tzinfo
             elif isinstance(arg, dt_tzinfo):
-                return self.type.now(arg)
+                return self.type.now(tzinfo=arg)
 
-            # (str) -> parse.
+            # (str) -> parse @ tzinfo
             elif isinstance(arg, str):
                 dt = parser.DateTimeParser(locale).parse_iso(arg, normalize_whitespace)
-                return self.type.fromdatetime(dt, tz)
+                return self.type.fromdatetime(dt, tzinfo=tz)
 
             # (struct_time) -> from struct_time
             elif isinstance(arg, struct_time):
                 return self.type.utcfromtimestamp(calendar.timegm(arg))
 
-            # (iso calendar) -> convert then from date
+            # (iso calendar) -> convert then from date @ tzinfo
             elif isinstance(arg, tuple) and len(arg) == 3:
                 d = iso_to_gregorian(*arg)
-                return self.type.fromdate(d)
+                return self.type.fromdate(d, tzinfo=tz)
 
             else:
                 raise TypeError(f"Cannot parse single argument of type {type(arg)!r}.")
@@ -273,9 +272,9 @@ class ArrowFactory:
 
             if isinstance(arg_1, datetime):
 
-                # (datetime, tzinfo/str) -> fromdatetime replace tzinfo.
+                # (datetime, tzinfo/str) -> fromdatetime @ tzinfo
                 if isinstance(arg_2, (dt_tzinfo, str)):
-                    return self.type.fromdatetime(arg_1, arg_2)
+                    return self.type.fromdatetime(arg_1, tzinfo=arg_2)
                 else:
                     raise TypeError(
                         f"Cannot parse two arguments of types 'datetime', {type(arg_2)!r}."
@@ -283,7 +282,7 @@ class ArrowFactory:
 
             elif isinstance(arg_1, date):
 
-                # (date, tzinfo/str) -> fromdate replace tzinfo.
+                # (date, tzinfo/str) -> fromdate @ tzinfo
                 if isinstance(arg_2, (dt_tzinfo, str)):
                     return self.type.fromdate(arg_1, tzinfo=arg_2)
                 else:
@@ -291,7 +290,7 @@ class ArrowFactory:
                         f"Cannot parse two arguments of types 'date', {type(arg_2)!r}."
                     )
 
-            # (str, format) -> parse.
+            # (str, format) -> parse @ tzinfo
             elif isinstance(arg_1, str) and isinstance(arg_2, (str, list)):
                 dt = parser.DateTimeParser(locale).parse(
                     args[0], args[1], normalize_whitespace
@@ -303,7 +302,7 @@ class ArrowFactory:
                     f"Cannot parse two arguments of types {type(arg_1)!r} and {type(arg_2)!r}."
                 )
 
-        # 3+ args -> datetime-like via constructor.
+        # 3+ args -> datetime-like via constructor
         else:
             return self.type(*args, **kwargs)
 

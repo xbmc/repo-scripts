@@ -1,3 +1,16 @@
+# All good things come to an end
+
+After retiring NFL Gamepass Domestic in 2022, the NFL decided to shutdown the international Gamepass service
+as well in 2023, rendering this add-on obsolete.
+
+Outside of the States, DAZN is the new home for the NFL Gamepass service. You can watch the games with a DAZN
+account and an NFL Gamepass subscription.
+
+The good news is that there is a DAZN add-on available for Kodi, so it is still possible to watch NFL games on our
+most favorite media center.
+
+---
+
 # NOTE #
 
 This addon supports NFL Game Pass, which is a merger of previous

@@ -352,23 +352,6 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="ABCQuality" type="string" label="32196" help="">
-					<level>0</level>
-					<default>1000k</default>
-					<constraints>
-						<options>
-							<option>256k</option>
-							<option>512K</option>
-							<option>1000k</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="spinner" format="string"/>
-				</setting>
 					<group id="55" label="32212">
 
 					</group>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <defaultcontrol always="true">5000</defaultcontrol>
+    <allowoverlay>no</allowoverlay>
+    <controls>
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <fadetime>500</fadetime>
+            <texture>common/black.png</texture>
+            <animation effect="fade" start="0" end="100" time="300" tween="sine">WindowOpen</animation>
+            <animation effect="fade" end="100" time="200" tween="sine">WindowClose</animation>
+        </control>
+        <control type="image">
+            <left>910</left>
+            <top>503</top>
+            <width>100</width>
+            <height>100</height>
+            <visible>!Container(5000).OnScrollPrevious + !Container(5000).OnScrollNext</visible>
+            <animation effect="fade" time="320" delay="400">Visible</animation>
+            <animation effect="rotate" end="-360" center="auto" time="2000" loop="true" reversible="false" condition="true">Conditional</animation>
+            <texture colordiffuse="FFFAFAFA">spinner.png</texture>
+            <animation effect="fade" start="70" time="1200" condition="true" pulse="true">Conditional</animation>
+        </control>
+        <control type="image">
+            <left>925</left>
+            <top>518</top>
+            <width>70</width>
+            <height>70</height>
+            <visible>!Container(5000).OnScrollPrevious + !Container(5000).OnScrollNext</visible>
+            <animation effect="fade" time="320" delay="400">Visible</animation>
+            <animation effect="rotate" end="360" center="auto" time="2000" loop="true" reversible="false" condition="true">Conditional</animation>
+            <texture flipx="true" colordiffuse="FFFAFAFA">spinner.png</texture>
+            <animation effect="fade" start="70" time="1200" condition="true" pulse="true">Conditional</animation>
+        </control>
+        <control type="list" id="5000">
+            <left>-90</left>
+            <top>0</top>
+            <width>2100</width>
+            <height>1080</height>
+            <onleft>5000</onleft>
+            <onright>5000</onright>
+            <ondown>9001</ondown>
+            <animation effect="fade" start="0" end="100" time="300" tween="sine">WindowOpen</animation>
+            <animation effect="fade" end="100" time="200" tween="sine">WindowClose</animation>
+            <scrolltime tween="sine">400</scrolltime>
+            <orientation>Horizontal</orientation>
+            <itemlayout height="1080" width="1920">
+                <control type="image">
+                    <left>90</left>
+                    <top>0</top>
+                    <width>1920</width>
+                    <height>1080</height>
+                    <aspectratio>keep</aspectratio>
+                    <fadetime>200</fadetime>
+                    <texture>$INFO[ListItem.Art(original)]</texture>
+                </control>
+            </itemlayout>
+            <focusedlayout height="1080" width="1920">
+                <control type="image">
+                    <left>90</left>
+                    <top>0</top>
+                    <width>1920</width>
+                    <height>1080</height>
+                    <aspectratio>keep</aspectratio>
+                    <fadetime>200</fadetime>
+                    <texture>$INFO[ListItem.Art(original)]</texture>
+                </control>
+            </focusedlayout>
+        </control>
+    </controls>
+</window>

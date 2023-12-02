@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2006  Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
@@ -12,8 +11,7 @@ import struct
 
 from mutagen import StreamInfo
 from mutagen._util import MutagenError, enum, BitReader, BitReaderError, \
-    convert_error, intround
-from mutagen._compat import endswith, xrange
+    convert_error, intround, endswith
 from mutagen.id3 import ID3FileType, delete
 from mutagen.id3._util import BitPaddedInt
 
@@ -75,27 +73,27 @@ def _guess_xing_bitrate_mode(xing):
 
 
 # Mode values.
-STEREO, JOINTSTEREO, DUALCHANNEL, MONO = xrange(4)
+STEREO, JOINTSTEREO, DUALCHANNEL, MONO = range(4)
 
 
 class MPEGFrame(object):
 
     # Map (version, layer) tuples to bitrates.
     __BITRATE = {
-        (1, 1): [0, 32, 64, 96, 128, 160, 192, 224,
-                 256, 288, 320, 352, 384, 416, 448],
-        (1, 2): [0, 32, 48, 56, 64, 80, 96, 112, 128,
-                 160, 192, 224, 256, 320, 384],
-        (1, 3): [0, 32, 40, 48, 56, 64, 80, 96, 112,
-                 128, 160, 192, 224, 256, 320],
-        (2, 1): [0, 32, 48, 56, 64, 80, 96, 112, 128,
-                 144, 160, 176, 192, 224, 256],
-        (2, 2): [0, 8, 16, 24, 32, 40, 48, 56, 64,
-                 80, 96, 112, 128, 144, 160],
+        (1., 1): [0, 32, 64, 96, 128, 160, 192, 224,
+                  256, 288, 320, 352, 384, 416, 448],
+        (1., 2): [0, 32, 48, 56, 64, 80, 96, 112, 128,
+                  160, 192, 224, 256, 320, 384],
+        (1., 3): [0, 32, 40, 48, 56, 64, 80, 96, 112,
+                  128, 160, 192, 224, 256, 320],
+        (2., 1): [0, 32, 48, 56, 64, 80, 96, 112, 128,
+                  144, 160, 176, 192, 224, 256],
+        (2., 2): [0, 8, 16, 24, 32, 40, 48, 56, 64,
+                  80, 96, 112, 128, 144, 160],
     }
 
     __BITRATE[(2, 3)] = __BITRATE[(2, 2)]
-    for i in xrange(1, 4):
+    for i in range(1, 4):
         __BITRATE[(2.5, i)] = __BITRATE[(2, i)]
 
     # Map version to sample rates.
@@ -370,7 +368,7 @@ class MPEGInfo(StreamInfo):
             if max_syncs <= 0:
                 break
 
-            for _ in xrange(enough_frames):
+            for _ in range(enough_frames):
                 try:
                     frame = MPEGFrame(fileobj)
                 except HeaderNotFoundError:
@@ -457,7 +455,11 @@ class MP3(ID3FileType):
     def score(filename, fileobj, header_data):
         filename = filename.lower()
 
-        return (header_data.startswith(b"ID3") * 2 +
+        return ((header_data.startswith(b"ID3") or
+                 header_data.startswith(b'\xFF\xF2') or
+                 header_data.startswith(b'\xFF\xF3') or
+                 header_data.startswith(b'\xFF\xFA') or
+                 header_data.startswith(b'\xFF\xFB')) * 2 +
                 endswith(filename, b".mp3") +
                 endswith(filename, b".mp2") + endswith(filename, b".mpg") +
                 endswith(filename, b".mpeg"))
@@ -480,4 +482,4 @@ class EasyMP3(MP3):
     """
 
     from mutagen.easyid3 import EasyID3 as ID3
-    ID3 = ID3
+    ID3 = ID3  # type: ignore

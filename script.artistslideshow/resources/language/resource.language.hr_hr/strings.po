@@ -5,17 +5,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-03-01 17:13+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2023-01-15 13:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/hr_hr/>\n"
 "Language: hr_hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -36,15 +36,15 @@ msgstr "Pohrana"
 
 msgctxt "#32002"
 msgid "Images"
-msgstr ""
+msgstr "Slike"
 
 msgctxt "#32003"
 msgid "Album Info"
-msgstr ""
+msgstr "Informacije albuma"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr ""
+msgstr "Životopis izvođača"
 
 msgctxt "#32005"
 msgid "Similar Artists"
@@ -58,51 +58,51 @@ msgstr "Napredno"
 # Settings
 msgctxt "#32101"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "Preuzmi slike s fanart.tv"
 
 msgctxt "#32102"
 msgid "Download images from theaudiodb.com"
-msgstr ""
+msgstr "Preuzmi slike s theaudiodb.com"
 
 msgctxt "#32103"
 msgid "Download album info from the audiodb.com"
-msgstr ""
+msgstr "Preuzmi informacije albuma s audiodb.com"
 
 msgctxt "#32104"
 msgid "Download album info from the last.fm"
-msgstr ""
+msgstr "Preuzmi informacije albuma s last.fm"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr ""
+msgstr "Preuzmi informacije životopisa izvođača s theaudiodb.com"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr ""
+msgstr "Preuzmi informacije životopisa izvođača s last.fm"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr ""
+msgstr "Preuzmi srodne izvođače s last.fm"
 
 msgctxt "#32108"
 msgid "Download all images regardless of resolution"
-msgstr ""
+msgstr "Preuzmi sve slike neovisno o razlučivosti"
 
 msgctxt "#32109"
 msgid "Client API key"
-msgstr ""
+msgstr "API ključ klijenta"
 
 msgctxt "#32110"
 msgid "I donate to this service"
-msgstr ""
+msgstr "Donirao sam ovoj usluzi"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "Koristi pričuvne slike prezentacije"
 
 msgctxt "#32112"
 msgid "Use override slideshow"
-msgstr ""
+msgstr "Koristi zaobiđene slike prezentacije"
 
 msgctxt "#32113"
 msgid "Custom location"
@@ -110,23 +110,23 @@ msgstr "Prilagođena lokacija"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr ""
+msgstr "Uključi Kodi slike omota izvođača"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
-msgstr ""
+msgstr "Uključi Kodi slike omota albuma"
 
 msgctxt "#32116"
 msgid "Limit size of download cache"
-msgstr ""
+msgstr "Ograničenje veličine predmemorije preuzimanja"
 
 msgctxt "#32117"
 msgid "Maximum cache size (in megabytes)"
-msgstr ""
+msgstr "Najveća veličina predmemorije (u megabajtima)"
 
 msgctxt "#32118"
 msgid "Alternate name for local fanart folder"
-msgstr ""
+msgstr "Zamjenski naziv za lokalnu mapu slika omota"
 
 msgctxt "#32119"
 msgid "Enable debug logging"
@@ -134,19 +134,19 @@ msgstr "Omogući zapisivanje otklanjanja grešaka"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr ""
+msgstr "Onemogući pomoćne i istaknute slike izvođača"
 
 msgctxt "#32121"
 msgid "Store artist images in"
-msgstr ""
+msgstr "Spremi slike izvođača u"
 
 msgctxt "#32122"
 msgid "addon_data folder"
-msgstr ""
+msgstr "addon_data mapa"
 
 msgctxt "#32123"
 msgid "Kodi artist information folder"
-msgstr ""
+msgstr "Kodi mapa informacija izvođača"
 
 msgctxt "#32124"
 msgid "Priority"
@@ -154,97 +154,97 @@ msgstr "Prioritet"
 
 msgctxt "#32125"
 msgid "Store artist information in"
-msgstr ""
+msgstr "Spremi informacije izvođača u"
 
 msgctxt "#32126"
 msgid "Preferred language for artist bio"
-msgstr ""
+msgstr "Željeni jezik životopisa izvođača"
 
 msgctxt "#32127"
 msgid "Use extrafanart folder"
-msgstr ""
+msgstr "Koristi mapu dodatnih slika omota"
 
 msgctxt "#32128"
 msgid "Platform for image storage"
-msgstr ""
+msgstr "Platforma za pohranu slika"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr ""
+msgstr "Zamijeni nevaljanu putanju znakova u nazivu izvođača s"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
-msgstr ""
+msgstr "Zamijenite točku na kraju nazivu izvođača s"
 
 msgctxt "#32131"
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 msgctxt "#32132"
 msgid "Other"
-msgstr ""
+msgstr "Ostali"
 
 msgctxt "#32133"
 msgid "MacOS"
-msgstr ""
+msgstr "MacOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr ""
+msgstr "Premjesti slike u Kodi glazbenu mapu izvođača"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
-msgstr ""
+msgstr "Nabavi životopis izvođača s Kodija"
 
 msgctxt "#32136"
 msgid "Custom location"
-msgstr ""
+msgstr "Prilagođena lokacija"
 
 msgctxt "#32137"
 msgid "Delay between slide transitions (in seconds)"
-msgstr ""
+msgstr "Odgoda između prijelaza prezentacija (u sekundama)"
 
 msgctxt "#32138"
 msgid "Fade to black during change in artists"
-msgstr ""
+msgstr "Prijeđi u crno tijekom promjene izvođača"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
-msgstr ""
+msgstr "Vrijeme spavanja glavnog niza (u sekundama)"
 
 msgctxt "#32140"
 msgid "Main thread idle sleep time (in seconds)"
-msgstr ""
+msgstr "Vrijeme mirovanja spavanja glavnog niza (u sekundama)"
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
-msgstr ""
+msgstr "Vrijeme mirovanja niza prezentacije (u sekundama)"
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
-msgstr ""
+msgstr "Prikaži obavijesti tijekom preuzimanja slike"
 
 msgctxt "#32143"
 msgid "Only show notification if there are images to download"
-msgstr ""
+msgstr "Samo prikaži obavijesti ako ima slika za preuzimanje"
 
 msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
-msgstr ""
+msgstr "Koristi agresivniju pretragu izvođača za strujanja"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
-msgstr ""
+msgstr "Pauziraj prezentaciju pri pauzi repordukcije"
 
 # empty strings from id 32145 to 32199
 # Dialog headings
 msgctxt "#32200"
 msgid "Artist Slideshow"
-msgstr ""
+msgstr "Prezentacija izvođača"
 
 msgctxt "#32201"
 msgid "Warning"
-msgstr ""
+msgstr "Upozorenje"
 
 msgctxt "#32202"
 msgid "Error"
@@ -252,235 +252,235 @@ msgstr "Greška"
 
 msgctxt "#32203"
 msgid "Progress"
-msgstr ""
+msgstr "Napredak"
 
 msgctxt "#32204"
 msgid "Downloading"
-msgstr ""
+msgstr "Preuzimanje"
 
 msgctxt "#32205"
 msgid "Download Complete"
-msgstr ""
+msgstr "Preuzimanje završeno"
 
 # empty strings from id 32206 to 32299
 # Dialog texts
 msgctxt "#32300"
 msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
-msgstr ""
+msgstr "Ovo će premjestiti i preimenovati vaše datoteke slika, i ovo se ne može poništiti. Sigurno želite ovo učiniti?"
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr ""
+msgstr "Nemoguće preuzimanje putanje u Kodi glazbenu pohranu slika izvođača. Provjerite Postavke > Mediji > Glazba i pobrinite se da je mapa informacija izvođača postavljena."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr ""
+msgstr "Prezentacija izvođača je već postavljena da koristi Kodi mapu informacija izvođača. Postavite korištenje ili addon_data mape ili prilagođenu lokaciju i pokušajte ponovno."
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
-msgstr ""
+msgstr "Premještanje i preimenovanje slika iz prilagođene lokacije..."
 
 msgctxt "#32304"
 msgid "Moving and renaming images from addon_data folder..."
-msgstr ""
+msgstr "Premještanje i preimenovanje slika iz addon_data mape..."
 
 msgctxt "#32305"
 msgid "No artist directories found."
-msgstr ""
+msgstr "Nema pronađenih direktorija izvođača."
 
 msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
-msgstr ""
+msgstr "Premještanje slika je završeno. Sada možete promijeniti lokaciju pohrane prezentacije izvođača u Kodi mapu informacija izvođača."
 
 msgctxt "#32307"
 msgid "Downloading new artist images"
-msgstr ""
+msgstr "Preuzimanje novih slika izvođača"
 
 msgctxt "#32308"
 msgid "artist images downloaded"
-msgstr ""
+msgstr "slike izvođača preuzete"
 
 msgctxt "#32309"
 msgid "artist image downloaded"
-msgstr ""
+msgstr "slika izvođača preuzeta"
 
 # empty strings from id 32310 to 32900
 # Languages
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "Albanski"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "Arapski"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "Bjeloruski"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "Bosanski (Latinica)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bugarski"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "Katalonski"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "Kineski"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "Hrvatski"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "Češki"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "Danski"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "Nizozemski"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "Engleski"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "Estonski"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "Finski"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "Francuski"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "Njemački"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "Grčki"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrejski"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "Hindski"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "Mađarski"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandski"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonezijski"
 
 # empty string with id 32923
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "Talijanski"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "Japanski"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "Korejski"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "Latvijski"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Letonski"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "Makedonski"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
+msgstr "Norveški"
 
 # empty string with id 32931
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "Poljski"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugalski"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portugalski (Brazil)"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "Rumunjski"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "Ruski"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "Srpski latinica"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "Slovački"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "Slovenski"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
+msgstr "Španjolski"
 
 # empty string with id 32941
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "Švedski"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "Tajlandski"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "Turski"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrajinski"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vijetnamski"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "Farsi"

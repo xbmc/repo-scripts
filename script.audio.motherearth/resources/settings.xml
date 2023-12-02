@@ -5,7 +5,7 @@
 			<group id="audio" label="292">
 				<setting id="audio_format" type="string" label="30101">
 					<level>0</level>
-					<default>aac</default>
+					<default>flac</default>
 					<constraints>
 						<options>
 							<option label="30201">aac</option>
@@ -23,6 +23,7 @@
 							<option label="30203">0</option>
 							<option label="30204">1</option>
 							<option label="30205">2</option>
+							<option label="30206">3</option>
 						</options>
 					</constraints>
 					<control type="spinner" format="string"/>

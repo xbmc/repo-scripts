@@ -3,6 +3,7 @@ import time
 import xbmcaddon
 import xbmcgui
 from resources.lib.timer.storage import Storage
+from resources.lib.player.mediatype import VIDEO
 from resources.lib.timer.timer import (DEFAULT_TIME, END_TYPE_NO, FADE_OFF,
                                        MEDIA_ACTION_NONE, SYSTEM_ACTION_NONE,
                                        Timer)
@@ -67,7 +68,7 @@ def prepare_empty_timer_in_setting(timer_id=None) -> None:
     addon.setSettingInt("timer_system_action", SYSTEM_ACTION_NONE)
     addon.setSettingInt("timer_media_action", MEDIA_ACTION_NONE)
     addon.setSettingString("timer_path", "")
-    addon.setSettingString("timer_mediatype", "")
+    addon.setSettingString("timer_mediatype", VIDEO)
     addon.setSettingBool("timer_repeat", False)
     addon.setSettingBool("timer_shuffle", False)
     addon.setSettingBool("timer_resume", True)

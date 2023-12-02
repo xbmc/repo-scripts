@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-11-09 20:21+0000\n"
+"PO-Revision-Date: 2023-04-25 18:16+0000\n"
 "Last-Translator: vgbsd <vg72i@protonmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/ru_ru/>\n"
 "Language: ru_ru\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -110,11 +110,11 @@ msgstr "Собственное расположение"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr "Включить иллюстрации художников Kodi"
+msgstr "Использовать иллюстрации исполнителей из Kodi"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
-msgstr "Включить обложки альбомов Kodi"
+msgstr "Использовать обложки альбомов из Kodi"
 
 msgctxt "#32116"
 msgid "Limit size of download cache"
@@ -170,11 +170,11 @@ msgstr "Платформа хранения изображений"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr "Замените недопустимые символы пути в имени исполнителя"
+msgstr "Заменить недопустимые символы пути в имени исполнителя на"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
-msgstr ""
+msgstr "Заменить точку в имени исполнителя на"
 
 msgctxt "#32131"
 msgid "Windows"
@@ -218,7 +218,7 @@ msgstr "Время ожидания бездействия основного п
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
-msgstr ""
+msgstr "Время задержки в режиме слайд-шоу (в секундах)"
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
@@ -244,7 +244,7 @@ msgstr "Слайд-шоу исполнителей"
 
 msgctxt "#32201"
 msgid "Warning"
-msgstr ""
+msgstr "Внимание"
 
 msgctxt "#32202"
 msgid "Error"
@@ -252,7 +252,7 @@ msgstr "Ошибка"
 
 msgctxt "#32203"
 msgid "Progress"
-msgstr ""
+msgstr "Прогресс"
 
 msgctxt "#32204"
 msgid "Downloading"
@@ -274,7 +274,7 @@ msgstr "Не удаётся установить путь к каталогу с
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr ""
+msgstr "Artist Slideshow уже настроено на использование папки с информацией об исполнителе в Kodi. Пожалуйста, задайте использование папки addon_data или пользовательского расположения и повторите попытку."
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
@@ -282,7 +282,7 @@ msgstr "Перемещение и переименование изображе�
 
 msgctxt "#32304"
 msgid "Moving and renaming images from addon_data folder..."
-msgstr ""
+msgstr "Перемещение и переименование изображений из папки addon_data..."
 
 msgctxt "#32305"
 msgid "No artist directories found."

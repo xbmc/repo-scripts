@@ -135,12 +135,12 @@ def parse_time(s_time: str, i_day=0) -> datetime.timedelta:
         minutes=t_time.tm_min)
 
 
-def abs_time_diff(td1: datetime.timedelta, td2: datetime.timedelta) -> datetime.timedelta:
+def abs_time_diff(td1: datetime.timedelta, td2: datetime.timedelta) -> int:
 
     return abs(time_diff(td1, td2))
 
 
-def time_diff(td1: datetime.timedelta, td2: datetime.timedelta) -> datetime.timedelta:
+def time_diff(td1: datetime.timedelta, td2: datetime.timedelta) -> int:
 
     s1 = td1.days * 86400 + td1.seconds
     s2 = td2.days * 86400 + td2.seconds

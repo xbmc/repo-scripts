@@ -36,8 +36,8 @@ class t1mAddon(object):
         self.addonName = self.addon.getAddonInfo('name')
         self.localLang = self.addon.getLocalizedString
         self.homeDir = self.addon.getAddonInfo('path')
-        self.addonIcon = xbmc.translatePath(os.path.join(self.homeDir, 'resources', 'icon.png'))
-        self.addonFanart = xbmc.translatePath(os.path.join(self.homeDir,'resources' 'fanart.jpg'))
+        self.addonIcon = xbmcvfs.translatePath(os.path.join(self.homeDir, 'resources', 'icon.png'))
+        self.addonFanart = xbmcvfs.translatePath(os.path.join(self.homeDir,'resources' 'fanart.jpg'))
         self.defaultHeaders = httpHeaders
         self.defaultVidStream = {'codec': 'h264', 'width': 1280, 'height': 720, 'aspect': 1.78}
         self.defaultAudStream = {'codec': 'aac', 'language': 'en'}
@@ -175,8 +175,8 @@ class t1mAddon(object):
         if name is None:
             name  = self.cleanFilename(xbmc.getInfoLabel('ListItem.Title').replace('(Series)','',1).strip())
         profile = self.script.getAddonInfo('profile')
-        moviesDir  = xbmc.translatePath(os.path.join(profile,str(ftype)))
-        movieDir  = xbmc.translatePath(os.path.join(moviesDir, name))
+        moviesDir  = xbmcvfs.translatePath(os.path.join(profile,str(ftype)))
+        movieDir  = xbmcvfs.translatePath(os.path.join(moviesDir, name))
         if not os.path.isdir(movieDir):
             os.makedirs(movieDir)
         return movieDir
@@ -189,20 +189,20 @@ class t1mAddon(object):
     def addMusicVideoToLibrary(self, url):
         from xml.etree.ElementTree import Element
         from xml.etree.ElementTree import tostring
-        import html.parser
+        import html
         from xml.dom import minidom
-        UNESCAPE = html.parser.HTMLParser().unescape
+        UNESCAPE = html.unescape
 
         url, infoList = urllib.parse.unquote_plus(url).split('||',1)
         infoList = eval(infoList)
         artist = infoList.get('artist')
         title = infoList.get('title')
         movieDir = self.makeLibraryPath('music_videos', name=self.cleanFilename(artist))
-        strmFile = xbmc.translatePath(os.path.join(movieDir, ''.join([self.cleanFilename(title),'.strm'])))
+        strmFile = xbmcvfs.translatePath(os.path.join(movieDir, ''.join([self.cleanFilename(title),'.strm'])))
         url = ''.join([sys.argv[0],'?mode=GV&url=',url])
         with open(strmFile, 'w') as outfile:
             outfile.write(url)
-        nfoFile = xbmc.translatePath(os.path.join(movieDir, ''.join([self.cleanFilename(title),'.nfo'])))
+        nfoFile = xbmcvfs.translatePath(os.path.join(movieDir, ''.join([self.cleanFilename(title),'.nfo'])))
         nfoData = Element('musicvideo')
         for key, val in infoList.items():
             child = Element(key)
@@ -219,7 +219,7 @@ class t1mAddon(object):
     def addMovieToLibrary(self, url):
         name  = self.cleanFilename(''.join([xbmc.getInfoLabel('ListItem.Title'),'.strm']))
         movieDir = self.makeLibraryPath('movies')
-        strmFile = xbmc.translatePath(os.path.join(movieDir, name))
+        strmFile = xbmcvfs.translatePath(os.path.join(movieDir, name))
         url = ''.join([sys.argv[0],'?mode=GV&url=',url])
         with open(strmFile, 'w') as outfile:
             outfile.write(url)
@@ -238,7 +238,7 @@ class t1mAddon(object):
             title = self.cleanFilename(str(liz.getVideoInfoTag().getTitle()))
             TVShowTitle = self.cleanFilename(str(liz.getVideoInfoTag().getTVShowTitle()))
             se = ''.join([TVShowTitle,' ',pdate,' [',title,'].strm'])
-            strmFile = xbmc.translatePath(os.path.join(movieDir, se))
+            strmFile = xbmcvfs.translatePath(os.path.join(movieDir, se))
             with open(strmFile, 'w') as outfile:
                 outfile.write(url)
         self.doScan(movieDir)
@@ -253,7 +253,7 @@ class t1mAddon(object):
             episode = str(liz.getVideoInfoTag().getEpisode())
             title = self.cleanFilename(str(liz.getVideoInfoTag().getTitle()))
             se = ''.join(['S',season,'E',episode,'  ',title,'.strm'])
-            strmFile = xbmc.translatePath(os.path.join(movieDir, se))
+            strmFile = xbmcvfs.translatePath(os.path.join(movieDir, se))
             with open(strmFile, 'w') as outfile:
                 outfile.write(url)
         self.doScan(movieDir)

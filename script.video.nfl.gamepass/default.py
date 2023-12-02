@@ -271,6 +271,13 @@ class GamepassGUI(xbmcgui.WindowXML):
             listitem.setProperty('is_game', 'true')
             listitem.setProperty('is_show', 'false')
 
+            if addon.getSetting('time_notation') == '0':  # 12-hour clock
+                datetime_format = '%A, %b %d - %I:%M %p'
+            else:  # 24-hour clock
+                datetime_format = '%A, %b %d - %H:%M'
+
+            datetime_obj = self.gp.nfldate_to_datetime(game['gameDateTimeUtc'], True)
+
             if game['phase'] == 'FINAL' or game['phase'] == 'FINAL_OVERTIME':
                 # show game duration only if user wants to see it
                 if addon.getSetting('hide_game_length') == 'false' and game['video']:
@@ -280,16 +287,16 @@ class GamepassGUI(xbmcgui.WindowXML):
                         game['phase'],
                         str(timedelta(seconds=int(float(game['video']['videoDuration'].replace(',', '.'))))))
                 else:
-                    game_info = game['phase']
-                    if addon.getSetting('hide_game_length') == 'true' and game_info == 'FINAL_OVERTIME':
-                        game_info = 'FINAL'
+                    if addon.getSetting('display_datetime') == 'true':
+                        if addon.getSetting('hide_game_length') == 'true' and game['phase'] != 'FINAL':
+                            game_info = 'FINAL' + '\n' + '(' + datetime_obj.strftime(datetime_format) +')'
+                        else:
+                            game_info = game['phase'] + '\n' + '(' + datetime_obj.strftime(datetime_format) +')'
+                    else:
+                        game_info = game['phase']
+                        if addon.getSetting('hide_game_length') == 'true' and game['phase'] != 'FINAL':
+                            game_info = 'FINAL'
             else:
-                if addon.getSetting('time_notation') == '0':  # 12-hour clock
-                    datetime_format = '%A, %b %d - %I:%M %p'
-                else:  # 24-hour clock
-                    datetime_format = '%A, %b %d - %H:%M'
-
-                datetime_obj = self.gp.nfldate_to_datetime(game['gameDateTimeUtc'], True)
                 game_info = datetime_obj.strftime(datetime_format)
 
             if game['videoStatus'] == 'SCHEDULED':
@@ -490,11 +497,13 @@ class GamepassGUI(xbmcgui.WindowXML):
 
                     try:
                         self.display_seasons_weeks()
-                        self.display_weeks_games()
+                        if addon.getSetting('display_current_week') == 'true':
+                            self.display_weeks_games()
                     except Exception as e:
                         logger.debug('Error while reading seasons weeks and games')
                         logger.debug('Trace Message:\n{}'.format(format_exc()))
                 elif controlId == 130:
+                    xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
                     self.main_selection = 'NFL Network'
                     self.window.setProperty('NW_clicked', 'true')
                     self.window.setProperty('GP_clicked', 'false')
@@ -509,7 +518,7 @@ class GamepassGUI(xbmcgui.WindowXML):
 
                     self.live_list.addItems(self.live_items)
                     self.display_nfln_seasons()
-
+                    xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
                 return
 
             if self.main_selection == 'GamePass':

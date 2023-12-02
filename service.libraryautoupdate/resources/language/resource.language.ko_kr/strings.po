@@ -9,37 +9,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Korean (http://www.transifex.com/teamxbmc/xbmc-addons/language/ko/)\n"
+"PO-Revision-Date: 2021-08-25 23:29+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/ko_kr/>\n"
+"Language: ko_kr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
 msgstr "Kodi 비디오, 음악 라이브러리를 타이머로 자동 업데이트 하세요. 타이머는 Kodi 서비스로 실행되므로 업데이트를 잊어버리는 일은 없습니다."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr "음악과 비디오 라이브러리 업데이트를 예약 실행하는 Kodi 서비스입니다. 미디어 데이터베이스(오디오, 비디오, 모두)를 각각 다른 간격으로 업데이트하도록 선택하거나 cron 스타일의 타이머를 설정할 수 있습니다. 타이머가 시작될 때 오디오나 비디오를 재생하고 있다면 재생을 완료할 때까지 라이브러리 업데이트 프로세스를 생략할 수 있습니다. 지정한 비디오 경로 업데이트, 음악/비디오 라이브러리 정리도 지원합니다."
 
 msgctxt "#30000"
 msgid "Kodi Library Auto Update"
-msgstr "Kodi Library Auto Update"
+msgstr "Kodi 라이브러리 자동 업데이트"
 
 msgctxt "#30001"
 msgid "General"
@@ -70,20 +62,20 @@ msgid "Run during playback"
 msgstr "재생중 실행"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "시작 지연 (분)"
+msgid "Startup Delay"
+msgstr "시작 지연"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "고급 타이머 사용"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "업데이트 간격 (시간)"
+msgid "Amount of time between updates"
+msgstr "업데이트 간격"
 
 msgctxt "#30011"
 msgid "Cron Expression"
-msgstr "Cron Expression"
+msgstr "Cron 표현식"
 
 msgctxt "#30012"
 msgid "Update Video Library"
@@ -99,35 +91,43 @@ msgstr "유휴상태일 때만 실행"
 
 msgctxt "#30015"
 msgid "Disable manual run prompt"
-msgstr ""
+msgstr "수동 실행 프롬프트 사용 안 함"
+
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "Cron 구문 %s이(가) 올바르지 않습니다. 기본값은 2시간"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "스캔하기 전에 소스가 있는지 확인"
 
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "지정한 경로 1 업데이트"
+msgid "Edit Custom Paths"
+msgstr "사용자 정의 경로 편집"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "지정한 경로 2 업데이트"
+msgid "Choose Action"
+msgstr "작업 선택"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "지정한 경로 3 업데이트"
+msgid "Delete this item?"
+msgstr "이 항목을 지울까요?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "비디오 경로"
+msgid "Browse for path"
+msgstr "경로 찾아보기"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "주의사항 읽기"
+msgid "This update broke custom paths, you must remake them"
+msgstr "이 업데이트로 사용자 지정 경로가 손상되었습니다. 다시 만들어야 합니다"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "비디오 경로 주의사항"
+msgid "Custom Paths Disclaimer"
+msgstr "사용자 정의 경로 사용 안 함"
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "경로는 콘텐츠가 있는 비디오 소스여야 합니다"
+msgid "Path must already be a valid source with content"
+msgstr "경로는 이미 콘텐츠가 있는 유효한 출처여야 함"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -207,8 +207,136 @@ msgstr "음악 Cron 표현식"
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "업데이트가 다시 실행됩니다"
+msgstr "업데이트가 다시 실행됩니다 "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "업데이트를 수동으로 시작하겠습니까?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "지연 없음"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 분"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 분"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 분"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 분"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 분"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 시간"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 시간"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 시간"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 시간"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 시간"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 시간"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "시스템 시작 후 누락된 스캔 지연 시간"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "미디어가 재생 중일 때 라이브러리 검색 허용"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "시스템이 유휴 상태일 때만 스캔 시작 허용(화면 보호기 활성화)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "수동으로 시작할 때 대화 상자를 사용하지 않음"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "간단한 타이머 대신 cron 타이머 사용 토글"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "라이브러리 스캔을 시작할 간격 선택"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "cron 구문을 사용하여 사용자 정의 간격 설정 - 예. 매일 5시간마다 15분의 경우 '15 */5 * * *'"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "사용자 정의 경로 편집기를 실행하여 전체 라이브러리 대신 특정 스캔 디렉토리 선택"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "Kodi 라이브러리 정리 프로세스를 실행하여 삭제된 미디어 제거"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "프로세스 실행을 정리하기 전에 추가 확인 프롬프트 추가"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "프로세스를 정리할 간격을 설정합니다. 매번 업데이트, 하루에 한 번, 일주일에 한 번, 한 달에 한 번 또는 사용자 지정"
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "시작 지연 (분)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "업데이트 간격 (시간)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "지정한 경로 1 업데이트"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "지정한 경로 2 업데이트"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "지정한 경로 3 업데이트"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "비디오 경로"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "주의사항 읽기"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "비디오 경로 주의사항"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "경로는 콘텐츠가 있는 비디오 소스여야 합니다"

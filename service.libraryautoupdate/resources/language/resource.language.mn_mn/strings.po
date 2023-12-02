@@ -1,0 +1,303 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-03-09 14:15+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Mongolian <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/mn_mn/>\n"
+"Language: mn_mn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11.2\n"
+
+msgctxt "Addon Summary"
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
+msgstr ""
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr ""
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Ерөнхий"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Music"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Startup Delay"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Amount of time between updates"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Edit Custom Paths"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Choose Action"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Delete this item?"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Browse for path"
+msgstr ""
+
+msgctxt "#30030"
+msgid "This update broke custom paths, you must remake them"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Custom Paths Disclaimer"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Path must already be a valid source with content"
+msgstr ""
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr ""
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr ""
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Both"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr ""
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr ""
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr ""
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr ""
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr ""
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr ""
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr ""
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr ""
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr ""
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr ""
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr ""
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr ""
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr ""
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr ""
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr ""
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr ""
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr ""
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr ""
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr ""

@@ -2,8 +2,9 @@
 <settings>
 	<category label="30888">
 		<setting id="domoticz_host"     	label="30401"  type="text"      default="127.0.0.1"/>
-		<setting id="domoticz_port"	    	label="30404"  type="number"      default="8081"/>
+		<setting id="domoticz_port"	    	label="30404"  type="number"      default="8080"/>
 		<setting id="SSL" 			    label="30400"  type="bool"      default="false"/>
+		<setting id="ignore_SSL" 			    label="30408"  type="bool"      default="false"/>
 		<setting id="domoticz_user"		    label="30402"  type="text"      default="Administrator"/>
 		<setting id="domoticz_pass"    		label="30403"  type="text"      option="hidden"/>
 

@@ -1,9 +1,13 @@
+import xbmcgui
 from resources.lib.contextmenu.abstract_set_timer import (CONFIRM_YES,
                                                           AbstractSetTimer)
 from resources.lib.timer.concurrency import (ask_overlapping_timers,
                                              get_next_higher_prio,
                                              get_next_lower_prio)
 from resources.lib.timer.timer import Timer
+from resources.lib.utils.settings_utils import (CONFIRM_CUSTOM, CONFIRM_ESCAPE,
+                                                CONFIRM_NO, CONFIRM_YES,
+                                                trigger_settings_changed_event)
 
 
 class SetQuickEpgTimer(AbstractSetTimer):
@@ -22,7 +26,28 @@ class SetQuickEpgTimer(AbstractSetTimer):
                 found = i
 
         if found != -1:
-            timer.id = timers[found].id
+            rv = xbmcgui.Dialog().yesnocustom(heading=self.addon.getLocalizedString(32260),
+                                              message="%s\n\n%s" % (timers[found].format("$L\n$H"), self.addon.getLocalizedString(
+                                                  32261)),
+                                              customlabel=self.addon.getLocalizedString(
+                                                  32262),
+                                              yeslabel=self.addon.getLocalizedString(
+                                                  32263),
+                                              nolabel=self.addon.getLocalizedString(
+                                                  32022)
+                                              )
+
+            if rv == CONFIRM_YES:
+                timer.id = timers[found].id
+                return True
+
+            elif rv == CONFIRM_CUSTOM:
+                self.storage.delete_timer(timers[found].id)
+                trigger_settings_changed_event()
+                xbmcgui.Dialog().notification(self.addon.getLocalizedString(
+                    32000), self.addon.getLocalizedString(32029))
+
+            return False
 
         return True
 

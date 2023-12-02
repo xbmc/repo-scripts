@@ -9,10 +9,10 @@ from . import config
 from .kodiutils import (addon_version, browsesingle, delete, exists, get_proxies, get_setting, get_setting_bool, get_setting_float, get_setting_int, jsonrpc,
                         kodi_to_ascii, kodi_version, listdir, localize, log, notification, ok_dialog, progress_dialog, select_dialog,
                         set_setting, set_setting_bool, textviewer, translate_path, yesno_dialog)
-from .utils import arch, http_download, parse_version, remove_tree, store, system_os, temp_path, unzip
+from .utils import arch, download_path, http_download, parse_version, remove_tree, store, system_os, temp_path, unzip, userspace64
 from .widevine.arm import dl_extract_widevine, extract_widevine, install_widevine_arm
-from .widevine.widevine import (backup_path, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_available_widevine_from_repo,
-                                latest_widevine_version, load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevinecdm_path)
+from .widevine.widevine import (backup_path, cdm_from_repo, choose_widevine_from_repo, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_widevine_available_from_repo,
+                                latest_widevine_version, load_widevine_config, missing_widevine_libs, widevines_available_from_repo, widevine_config_path, widevine_eula, widevinecdm_path)
 from .unicodes import compat_path
 
 # NOTE: Work around issue caused by platform still using os.popen()
@@ -110,7 +110,7 @@ class Helper:
 
     def _has_inputstream(self):
         """Checks if selected InputStream add-on is installed."""
-        data = jsonrpc(method='Addons.GetAddonDetails', params=dict(addonid=self.inputstream_addon))
+        data = jsonrpc(method='Addons.GetAddonDetails', params={'addonid': self.inputstream_addon})
         if 'error' in data:
             log(3, '{addon} is not installed.', addon=self.inputstream_addon)
             return False
@@ -120,7 +120,7 @@ class Helper:
 
     def _inputstream_enabled(self):
         """Returns whether selected InputStream add-on is enabled.."""
-        data = jsonrpc(method='Addons.GetAddonDetails', params=dict(addonid=self.inputstream_addon, properties=['enabled']))
+        data = jsonrpc(method='Addons.GetAddonDetails', params={'addonid': self.inputstream_addon, 'properties': ['enabled']})
         if data.get('result', {}).get('addon', {}).get('enabled'):
             log(0, '{addon} {version} is enabled.', addon=self.inputstream_addon, version=self._inputstream_version())
             return True
@@ -130,24 +130,29 @@ class Helper:
 
     def _enable_inputstream(self):
         """Enables selected InputStream add-on."""
-        data = jsonrpc(method='Addons.SetAddonEnabled', params=dict(addonid=self.inputstream_addon, enabled=True))
+        data = jsonrpc(method='Addons.SetAddonEnabled', params={'addonid': self.inputstream_addon, 'enabled': True})
         if 'error' in data:
             return False
         return True
 
-    @staticmethod
-    def _supports_widevine():
+    def _supports_widevine(self):
         """Checks if Widevine is supported on the architecture/operating system/Kodi version."""
         if arch() not in config.WIDEVINE_SUPPORTED_ARCHS:
             log(4, 'Unsupported Widevine architecture found: {arch}', arch=arch())
             ok_dialog(localize(30004), localize(30007, arch=arch()))  # Widevine not available on this architecture
             return False
 
-        if arch() == 'arm64' and system_os() != 'Android':
-            import struct
-            if struct.calcsize('P') * 8 == 64:
-                log(4, 'Unsupported 64-bit userspace found. User needs 32-bit userspace on {arch}', arch=arch())
-                ok_dialog(localize(30004), localize(30039))  # Widevine not available on ARM64
+        if arch() == 'arm64' and system_os() not in ['Android', 'Darwin'] and userspace64():
+            is_version = parse_version(addon_version(self.inputstream_addon))
+            try:
+                compat_version = parse_version(config.MINIMUM_INPUTSTREAM_VERSION_ARM64[self.inputstream_addon])
+            except KeyError:
+                log(4, 'Minimum version of {addon} for 64bit support unknown. Continuing into the unknown...'.format(addon=self.inputstream_addon))
+                compat_version = parse_version("0.0.0")
+
+            if is_version < compat_version:
+                log(4, 'Unsupported 64bit userspace found. Needs 32bit or newer ISA (currently {v}) on {arch}', arch=arch(), v=is_version)
+                ok_dialog(localize(30004), localize(30068, addon=self.inputstream_addon, version=compat_version))  # Need newer ISA or 32bit userspace
                 return False
 
         if system_os() not in config.WIDEVINE_SUPPORTED_OS:
@@ -168,12 +173,15 @@ class Helper:
         return True
 
     @staticmethod
-    def _install_widevine_x86(bpath):
-        """Install Widevine CDM on x86 based architectures."""
-        cdm = latest_available_widevine_from_repo()
+    def _install_widevine_from_repo(bpath, choose_version=False):
+        """Install Widevine CDM from Google's library CDM repository"""
+        if choose_version:
+            cdm = choose_widevine_from_repo()
+        else:
+            cdm = latest_widevine_available_from_repo()
         cdm_version = cdm.get('version')
 
-        if not store('download_path'):
+        if not exists(download_path(cdm.get('url'))):
             downloaded = http_download(cdm.get('url'))
         else:
             downloaded = True
@@ -206,7 +214,7 @@ class Helper:
         return False
 
     @cleanup_decorator
-    def install_widevine(self):
+    def install_widevine(self, choose_version=False):
         """Wrapper function that calls Widevine installer method depending on architecture"""
         if not self._supports_widevine():
             return False
@@ -214,9 +222,11 @@ class Helper:
         if not widevine_eula():
             return False
 
-        if 'x86' in arch():
-            result = self._install_widevine_x86(backup_path())
+        if cdm_from_repo():
+            result = self._install_widevine_from_repo(backup_path(), choose_version=choose_version)
         else:
+            if choose_version:
+                log(1, "Choosing a version to install is only implemented if the lib is found in googles repo.")
             result = install_widevine_arm(backup_path())
         if not result:
             return result
@@ -232,7 +242,7 @@ class Helper:
     @cleanup_decorator
     def install_widevine_from(self):
         """Install Widevine from a given URL or file."""
-        if yesno_dialog(None, localize(30066)): # download resource with widevine from url? no means specify local
+        if yesno_dialog(None, localize(30066)):  # download resource with widevine from url? no means specify local
             result = dl_extract_widevine(get_setting("image_url"), backup_path())
             if not result:
                 return result
@@ -254,7 +264,6 @@ class Helper:
                 return True
 
         return False
-
 
     @staticmethod
     def remove_widevine():
@@ -303,10 +312,10 @@ class Helper:
         if not wv_config:
             log(3, 'Widevine config missing. Could not determine current version, forcing update.')
             current_version = '0'
-        elif 'x86' in arch():
+        elif cdm_from_repo():
             component = 'Widevine CDM'
             current_version = wv_config['version']
-            latest_version = latest_available_widevine_from_repo().get('version')
+            latest_version = latest_widevine_available_from_repo().get('version')
         else:
             component = 'Chrome OS'
             current_version = wv_config['version']
@@ -339,9 +348,9 @@ class Helper:
             ok_dialog(localize(30001), localize(30031))  # An update of Widevine is required
             return self.install_widevine()
 
-        if 'x86' in arch():  # check that widevine arch matches system arch
+        if cdm_from_repo():  # check that widevine arch matches system arch
             wv_config = load_widevine_config()
-            if config.WIDEVINE_ARCH_MAP_X86[arch()] != wv_config['arch']:
+            if config.WIDEVINE_ARCH_MAP_REPO[arch()] != wv_config['arch']:
                 log(4, 'Widevine/system arch mismatch. Reinstall is required.')
                 ok_dialog(localize(30001), localize(30031))  # An update of Widevine is required
                 return self.install_widevine()
@@ -450,7 +459,7 @@ class Helper:
             else:
                 wv_updated = 'Never'
             text += localize(30821, version=self._get_lib_version(widevinecdm_path()), date=wv_updated) + '\n'
-            if arch() in ('arm', 'arm64'):  # Chrome OS version
+            if arch() == 'arm' or arch() == 'arm64' and system_os() != 'Darwin':  # Chrome OS version
                 wv_cfg = load_widevine_config()
                 if wv_cfg:
                     text += localize(30822, name=wv_cfg['hwidmatch'].split()[0].lstrip('^'), version=wv_cfg['version']) + '\n'
@@ -481,7 +490,7 @@ class Helper:
         installed_version = load_widevine_config()['version']
         del versions[versions.index(installed_version)]
 
-        if 'x86' in arch():
+        if cdm_from_repo():
             show_versions = versions
         else:
             show_versions = []

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.urllib3" name="urllib3" version="1.26.13+matrix.1" provider-name="urllib3">
+<addon id="script.module.urllib3" name="urllib3" version="1.26.16+matrix.1" provider-name="urllib3">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -9,7 +9,7 @@
     <description lang="en_GB">urllib3 is a powerful, user-friendly HTTP client for Python. Much of the Python ecosystem already uses urllib3 and you should too. urllib3 brings many critical features that are missing from the Python standard libraries</description>
     <license>MIT</license>
     <platform>all</platform>
-    <website>https://urllib3.readthedocs.io/en/latest/</website>
+    <website>https://urllib3.readthedocs.io/</website>
     <source>https://github.com/urllib3/urllib3</source>
     <assets>
       <icon>resources/icon.png</icon>

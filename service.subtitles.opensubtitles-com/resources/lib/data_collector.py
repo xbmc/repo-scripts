@@ -143,6 +143,13 @@ def convert_language(language, reverse=False):
     else:
         return xbmc.convertLanguage(language, xbmc_param)
 
+def get_flag(language_code):
+    language_list = {
+        "pt-pt": "pt",
+        "pt-br": "pb"
+    }
+    return language_list.get(language_code.lower(), language_code)
+
 
 def clean_feature_release_name(title, release, movie_name=""):
     if not title:

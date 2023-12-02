@@ -80,9 +80,9 @@ def translate_path(path):
     return to_unicode(translatePath(from_unicode(path)))
 
 
-def get_addon_info(key):
+def get_addon_info(key, addon=ADDON):
     """Return addon information"""
-    return to_unicode(ADDON.getAddonInfo(key))
+    return to_unicode(addon.getAddonInfo(key))
 
 
 def addon_id():
@@ -95,9 +95,14 @@ def addon_profile():
     return translate_path(get_addon_info('profile'))
 
 
-def addon_version():
+def addon_version(addon_name=None):
     """Cache and return add-on version"""
-    return get_addon_info('version')
+    if not addon_name:
+        addon = ADDON
+    else:
+        addon = xbmcaddon.Addon(addon_name)
+
+    return get_addon_info('version', addon)
 
 
 def browsesingle(type, heading, shares='', mask='', useThumbs=False, treatAsFolder=False, defaultt=None):  # pylint: disable=invalid-name,redefined-builtin
@@ -132,7 +137,7 @@ def select_dialog(heading='', opt_list=None, autoclose=0, preselect=-1, useDetai
     from xbmcgui import Dialog
     if not heading:
         heading = ADDON.getAddonInfo('name')
-    return Dialog().select(heading, opt_list, autoclose=autoclose, preselect=preselect, useDetails=useDetails)
+    return Dialog().select(heading, [str(opt) for opt in opt_list], autoclose=autoclose, preselect=preselect, useDetails=useDetails)
 
 
 def textviewer(heading='', text='', usemono=False):
@@ -231,13 +236,13 @@ def set_setting_bool(key, value):
 
 def get_global_setting(key):
     """Get a Kodi setting"""
-    result = jsonrpc(method='Settings.GetSettingValue', params=dict(setting=key))
+    result = jsonrpc(method='Settings.GetSettingValue', params={'setting': key})
     return result.get('result', {}).get('value')
 
 
 def get_current_window_id():
     """Get current window id"""
-    result = jsonrpc(method='GUI.GetProperties', params=dict(properties=['currentwindow']))
+    result = jsonrpc(method='GUI.GetProperties', params={'properties': ['currentwindow']})
     if result.get('error'):
         return None
     return result.get('result', {}).get('currentwindow').get('id')
@@ -276,13 +281,13 @@ def get_proxies():
 
     proxy_types = ['http', 'socks4', 'socks4a', 'socks5', 'socks5h']
 
-    proxy = dict(
-        scheme=proxy_types[httpproxytype] if 0 <= httpproxytype < 5 else 'http',
-        server=get_global_setting('network.httpproxyserver'),
-        port=get_global_setting('network.httpproxyport'),
-        username=get_global_setting('network.httpproxyusername'),
-        password=get_global_setting('network.httpproxypassword'),
-    )
+    proxy = {
+        'scheme': proxy_types[httpproxytype] if 0 <= httpproxytype < 5 else 'http',
+        'server': get_global_setting('network.httpproxyserver'),
+        'port': get_global_setting('network.httpproxyport'),
+        'username': get_global_setting('network.httpproxyusername'),
+        'password': get_global_setting('network.httpproxypassword'),
+    }
 
     if proxy.get('username') and proxy.get('password') and proxy.get('server') and proxy.get('port'):
         proxy_address = '{scheme}://{username}:{password}@{server}:{port}'.format(**proxy)
@@ -295,7 +300,7 @@ def get_proxies():
     else:
         return None
 
-    return dict(http=proxy_address, https=proxy_address)
+    return {'http': proxy_address, 'https': proxy_address}
 
 
 def log(level=0, message='', **kwargs):

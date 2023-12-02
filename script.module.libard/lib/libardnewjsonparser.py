@@ -144,7 +144,7 @@ class parser:
 				d['metadata']['art']['thumb'] = teaser['images']['aspect16x9']['src'].format(width='512')
 			if 'aspect3x4' in teaser['images']:
 				d['metadata']['art']['poster'] = teaser['images']['aspect3x4']['src'].format(width='512')
-		if 'show' in teaser and 'images' in teaser['show'] and '16x9' in teaser['show']['images']:
+		if 'show' in teaser and teaser['show'] and 'images' in teaser['show'] and teaser['show']['images'] and '16x9' in teaser['show']['images']:
 			d['metadata']['art']['fanart'] = teaser['show']['images']['16x9']['src'].format(width='512')
 		if client:
 			d['params']['client'] = client

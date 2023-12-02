@@ -44,7 +44,7 @@ class Storage():
             wait -= 1
 
         if wait == 0:
-            xbmc.log("%s is locked. Unlock now with small risk of data loss." %
+            xbmc.log("[script.timers] %s is locked. Unlock now with small risk of data loss." %
                      self._get_storage_path(), xbmc.LOGWARNING)
             self.release_lock()
 
@@ -60,7 +60,7 @@ class Storage():
                     _storage.extend(json.load(file))
                 except:
                     # this should normally not be a problem, but it fails when running unit tests
-                    xbmc.log("Can't read timers from storage.",
+                    xbmc.log("[script.timers] Can't read timers from storage.",
                              xbmc.LOGWARNING)
 
         return _storage

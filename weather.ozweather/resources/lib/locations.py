@@ -1,3 +1,4 @@
+# noinspection PyPackages
 from .common import *
 
 
@@ -17,7 +18,7 @@ def refresh_locations():
 
     locations = 0
 
-    # If either the main location or the fall back is set, then enable the location
+    # If either the main location or the fallback is set, then enable the location
     # This is to cope with the transition period where folks will have the fallbacks set from their legacy settings
     # But not the new BOM locations
     if location1 != '':

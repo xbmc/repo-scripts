@@ -1,7 +1,7 @@
 Digital clock screensaver
 =================
 **Branches guide:**
- - **master:** Works just on Kodi v19 Codename Matrix
+ - **master:** Works on Kodi v19 Codename Matrix and up
  - **krypton:** Works on Kodi v17 Codename Krypton and on Kodi V18 Codename Leia
 
 Digital clock screensaver with a lot of options.

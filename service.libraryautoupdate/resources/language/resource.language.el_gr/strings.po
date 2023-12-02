@@ -13,27 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2017-09-23 18:37+0000\n"
 "Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/teamxbmc/xbmc-addons/language/el/)\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
 msgstr "Ενημερώστε τις συλλογές ταινιών και μουσικής σας με χρονοδιακόπτη. Ο χρονοδιακόπτης εκτελείται σαν υπηρεσία του Kodi ούτως ώστε να μη χάνετε ποτέ καμία ενημέρωση."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr "Αυτή είναι μία Υπηρεσία του Kodi που ενημερώνει τις συλλογές ταινιών και μουσικής σας με χρονοδιακόπτη. Μπορείτε να επιλέξετε διαφορετικό χρονικό διάστημα για σάρωση των πολυμέσων σας (Μουσική, Βίντεο, Και Τα Δυο) ή μπορείτε να ορίσετε ένα χρονοδιακόπτη τύπου cron για καλύτερο έλεγχο. Αν αναπαράγεται μία ταινία ή ένα τραγούδι όταν αρχίσει ο χρονοδιακόπτης μπορεί να αναβληθεί η διαδικασία της ενημέρωσης της συλλογής μέχρις ότου τελειώσει, προκειμένου να μην επηρεαστεί η αναπαραγωγή. Πλέον υποστηρίζεται η ενημέρωση συγκεκριμένης Διαδρομής Βίντεο, καθώς και Εκκαθάριση των συλλογών Ταινιών/Μουσικής."
 
 msgctxt "#30000"
@@ -69,16 +60,16 @@ msgid "Run during playback"
 msgstr "Εκτέλεση κατά την αναπαραγωγή"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Καθυστέρηση Έναρξης (λεπτά)"
+msgid "Startup Delay"
+msgstr ""
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Χρήση Προηγμένου Χρονοδιακόπτη"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Διάστημα μεταξύ των ενημερώσεων (ώρες)"
+msgid "Amount of time between updates"
+msgstr ""
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -100,33 +91,41 @@ msgctxt "#30015"
 msgid "Disable manual run prompt"
 msgstr ""
 
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr ""
+
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 1"
+msgid "Edit Custom Paths"
+msgstr ""
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 2"
+msgid "Choose Action"
+msgstr ""
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 3"
+msgid "Delete this item?"
+msgstr ""
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Διαδρομή Βίντεο"
+msgid "Browse for path"
+msgstr ""
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "Διαβάστε την Αποποίηση Ευθυνών"
+msgid "This update broke custom paths, you must remake them"
+msgstr ""
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "Αποποίηση Ευθυνών Διαδρομών Βίντεο"
+msgid "Custom Paths Disclaimer"
+msgstr ""
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "Η διαδρομή πρέπει να είναι ήδη μία πηγή βίντεο με περιεχόμενο"
+msgid "Path must already be a valid source with content"
+msgstr ""
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -211,3 +210,131 @@ msgstr "Η ενημέρωση θα γίνει ξανά"
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "Να γίνει η ενημέρωση χειροκίνητα;"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr ""
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr ""
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr ""
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr ""
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr ""
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr ""
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr ""
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr ""
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr ""
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr ""
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr ""
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr ""
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr ""
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr ""
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr ""
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr ""
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr ""
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Καθυστέρηση Έναρξης (λεπτά)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Διάστημα μεταξύ των ενημερώσεων (ώρες)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Διαδρομή Βίντεο"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "Διαβάστε την Αποποίηση Ευθυνών"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "Αποποίηση Ευθυνών Διαδρομών Βίντεο"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "Η διαδρομή πρέπει να είναι ήδη μία πηγή βίντεο με περιεχόμενο"

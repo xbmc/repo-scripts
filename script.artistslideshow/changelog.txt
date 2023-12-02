@@ -1,3 +1,8 @@
+v.3.3.5
+- fix for AS not accepting images with uppercase extensions
+- removed Leia to Matrix transition code
+- updated translation files
+
 v.3.3.3
 - trim_cache now deletes information as well as images
 - update to new settings format

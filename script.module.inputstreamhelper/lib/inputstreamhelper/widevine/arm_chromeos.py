@@ -73,12 +73,67 @@ class ChromeOSImage:
 
         return offset
 
-    def find_file(self, filename, path_to_file=("opt", "google", "chrome", "WidevineCdm", "_platform_specific", "cros_arm")):
+    def _find_file_in_chunk(self, bfname, chunk):
         """
-        Finds a file at a given path, or search upwards if not found.
+        Checks if the filename is found in the given chunk.
+        Then makes some plausibility checks, to see if it is in fact a proper dentry.
+
+        returns the dentry if found, else False.
+        """
+
+        if bfname in chunk:
+            i_index_pos = chunk.index(bfname) - 8  # the filename is the last element of the dentry, the elements before are 8 bytes total
+            file_entry = self.dir_entry(chunk[i_index_pos:i_index_pos + len(bfname) + 8])  # 8 because see above
+            if file_entry['inode'] < self.sb_dict['s_inodes_count'] and file_entry['name_len'] == len(bfname):
+                return file_entry
+
+            log(0, 'Found filename, but checks did not pass:')
+            log(0, 'inode number: {inode} < {count}, name_len: {name_len} == {len_fname}'.format(inode=file_entry['inode'],
+                                                                                                 count=self.sb_dict['s_inodes_count'],
+                                                                                                 name_len=file_entry['name_len'],
+                                                                                                 len_fname=len(bfname)))
+        return False
+
+    def _find_file_naive(self, fname):
+        """
+        Finds a file by basically searching for the filename as bytes in the bytestream.
+        Searches through the whole image only once, making it fast, but may be unreliable at times.
+
         Returns a directory entry.
+        """
+
+        fname_alt = fname + '#new'  # Sometimes the filename has "#new" at the end
+        bfname = fname.encode('ascii')
+        bfname_alt = fname_alt.encode('ascii')
+        chunksize = 4 * 1024**2
+        chunk1 = self.read_stream(chunksize)
+        while True:
+            chunk2 = self.read_stream(chunksize)
+            if not chunk2:
+                raise ChromeOSError('File {fname} not found in the ChromeOS image'.format(fname=fname))
+
+            chunk = chunk1 + chunk2
+
+            file_entry = self._find_file_in_chunk(bfname, chunk)
+            if file_entry:
+                break
+
+            file_entry = self._find_file_in_chunk(bfname_alt, chunk)
+            if file_entry:
+                break
+
+            chunk1 = chunk2
+
+        return file_entry
+
+    def _find_file_properly(self, filename, path_to_file=("opt", "google", "chrome", "WidevineCdm", "_platform_specific", "cros_arm")):
+        """
+        Finds a file at a given path, or searches upwards if not found.
 
         Assumes the path is roughly correct, else it might take long.
+        It also might take long for ZIP files, since it might have to jump back and forth while traversing down the given path.
+
+        Returns a directory entry.
         """
         root_inode_pos = self._calc_inode_pos(2)
         root_inode_dict = self._inode_table(root_inode_pos)
@@ -107,10 +162,9 @@ class ChromeOSImage:
     def _find_file_in_dir(self, filename, dentries):
         """
         Finds a file in a directory or recursively in its subdirectories.
-        Returns a directory entry.
-
         Can take long for deep searches.
-        Returns the first result.
+
+        Returns the first result as a directory entry.
         """
         try:
             return dentries[filename]
@@ -127,6 +181,23 @@ class ChromeOSImage:
                     return file_entry
 
             return None
+
+    def find_file(self, filename, path_to_file=None):
+        """
+        Finds a file. Supplying a path could take longer for ZIP files!
+
+        Returns a directory entry.
+        """
+
+        if path_to_file:
+            return self._find_file_properly(filename, path_to_file)
+
+        try:
+            return self._find_file_naive(filename)
+        except ChromeOSError:
+            if self.progress:
+                self.progress.update(5, localize(30071))  # Could not find file, doing proper search
+            return self._find_file_properly(filename)
 
     def _calc_inode_pos(self, inode_num):
         """Calculate the byte position of an inode from its index"""
@@ -223,10 +294,10 @@ class ChromeOSImage:
         dir_names = ('inode', 'rec_len', 'name_len', 'file_type', 'name')
         dir_fmt = '<IHBB' + str(len(chunk) - 8) + 's'
 
-        dir_dict = dict(list(zip(dir_names, unpack(dir_fmt, chunk))))
-        dir_dict["name"] = dir_dict["name"][:dir_dict["name_len"]]
+        entry = dict(list(zip(dir_names, unpack(dir_fmt, chunk))))
+        entry["name"] = entry["name"][:entry["name_len"]]
 
-        return dir_dict
+        return entry
 
     def dir_entries(self, dir_file):
         """Returns all directory entries of a directory file as dict of dicts with name as key"""
@@ -371,11 +442,11 @@ class ChromeOSImage:
         try:
             if self.progress:
                 self.progress.update(5, localize(30061))
-            dir_dict = self.find_file(filename)
+            file_entry = self.find_file(filename)
 
             if self.progress:
                 self.progress.update(32, localize(30062))
-            inode_pos = self._calc_inode_pos(dir_dict["inode"])
+            inode_pos = self._calc_inode_pos(file_entry["inode"])
             inode_dict = self._inode_table(inode_pos)
 
             self.write_file(inode_dict, os.path.join(extract_path, filename))

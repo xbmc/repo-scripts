@@ -10,24 +10,17 @@
 Asynchronous WebSocket handler
 """
 
-from __future__ import absolute_import
-import sys
-VER = sys.version_info[0]
-if VER >= 3:
-    from http.server import BaseHTTPRequestHandler
-    from io import StringIO, BytesIO
-else:
-    from BaseHTTPServer import BaseHTTPRequestHandler
-    from StringIO import StringIO
-
-import asyncore
-import hashlib
 import base64
+import codecs
+import errno
+import hashlib
 import socket
 import struct
-import errno
-import codecs
 from collections import deque
+from http.server import BaseHTTPRequestHandler
+from io import BytesIO
+
+from . import asyncore
 from .. import logging
 
 __all__ = ['WebSocket', 'AsyncWebSocketHandler']
@@ -36,10 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 def _check_unicode(val):
-    if VER >= 3:
-        return isinstance(val, str)
-    else:
-        return isinstance(val, unicode)
+    return isinstance(val, str)
 
 
 class WebSocketError(Exception):
@@ -47,11 +37,9 @@ class WebSocketError(Exception):
 
 
 class HTTPRequest(BaseHTTPRequestHandler):
+
     def __init__(self, request_text):
-        if VER >= 3:
-            self.rfile = BytesIO(request_text)
-        else:
-            self.rfile = StringIO(request_text)
+        self.rfile = BytesIO(request_text)
         self.raw_requestline = self.rfile.readline()
         self.error_code = self.error_message = None
         self.parse_request()
@@ -290,12 +278,8 @@ class WebSocket(object):
             if not data:
                 raise WebSocketError("remote socket closed")
 
-            if VER >= 3:
-                for d in data:
-                    self._parseMessage(d)
-            else:
-                for d in data:
-                    self._parseMessage(ord(d))
+            for d in data:
+                self._parseMessage(d)
 
     def close(self, status=1000, reason=u''):
         """

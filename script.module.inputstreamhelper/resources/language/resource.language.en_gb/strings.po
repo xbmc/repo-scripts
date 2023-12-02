@@ -21,6 +21,10 @@ msgctxt "#30002"
 msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
 msgstr ""
 
+msgctxt "#30003"
+msgid "Warning"
+msgstr ""
+
 msgctxt "#30004"
 msgid "Error"
 msgstr ""
@@ -153,10 +157,6 @@ msgctxt "#30038"
 msgid "Install Widevine"
 msgstr ""
 
-msgctxt "#30039"
-msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
-msgstr ""
-
 msgctxt "#30040"
 msgid "Update available"
 msgstr ""
@@ -263,6 +263,22 @@ msgstr ""
 
 msgctxt "#30067"
 msgid "Specify the resource Widevine should be extracted from."
+msgstr ""
+
+msgctxt "#30068"
+msgid "On ARM64 with 64bit userspace, a newer version of {addon} is needed to use [B]Widevine CDM[/B] natively. Please either switch to a 32-bit userspace or install {addon} in version {version} or later."
+msgstr ""
+
+msgctxt "#30069"
+msgid "Choose which version to install"
+msgstr ""
+
+msgctxt "#30070"
+msgid "Something seems wrong with the downloaded {filename}. Shall we try to continue anyway?"
+msgstr ""
+
+msgctxt "#30071"
+msgid "Could not find the Widevine CDM by a quick scan. Now doing a proper search, but this might take very long..."
 msgstr ""
 
 

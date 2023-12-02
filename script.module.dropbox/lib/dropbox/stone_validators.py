@@ -92,9 +92,8 @@ def generic_type_name(v):
         return type(v).__name__
 
 
-class Validator(object):
+class Validator(six.with_metaclass(ABCMeta, object)):
     """All primitive and composite data types should be a subclass of this."""
-    __metaclass__ = ABCMeta
 
     @abstractmethod
     def validate(self, val):
@@ -306,7 +305,7 @@ class String(Primitive):
             try:
                 val = val.decode('utf-8')
             except UnicodeDecodeError:
-                raise ValidationError("'%s' was not valid utf-8")
+                raise ValidationError("'%s' was not valid utf-8" % val)
 
         if self.max_length is not None and len(val) > self.max_length:
             raise ValidationError("'%s' must be at most %d characters, got %d"

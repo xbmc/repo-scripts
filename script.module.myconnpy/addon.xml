@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.myconnpy" name="MySQL Connector/Python" version="8.0.18+matrix.1" provider-name="MySQL">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib"/>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en_GB">MySQL Connector/Python</summary>
-		<description lang="en_GB">MySQL Connector/Python is implementing the MySQL Client/Server protocol completely in Python. This means you don't have to compile anything or MySQL (client library) doesn't even have to be installed on the machine.</description>
-		<license>GPLv2</license>
-		<platform>all</platform>
-		<website>http://dev.mysql.com/doc/connector-python/en/index.html</website>
-		<source>http://dev.mysql.com/downloads/connector/python/</source>
-	</extension>
+<addon id="script.module.myconnpy" name="mysql-connector-python" version="8.0.33" provider-name="Oracle and/or its affiliates">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">MySQL driver written in Python</summary>
+    <description lang="en_GB">MySQL driver written in Python which does not depend on MySQL C client libraries and implements the DB API v2.0 specification (PEP-249)</description>
+    <license>GPLv2</license>
+    <platform>all</platform>
+    <website>https://dev.mysql.com/doc/connector-python/en/</website>
+    <source>https://dev.mysql.com/downloads/connector/python/</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
 </addon>
 

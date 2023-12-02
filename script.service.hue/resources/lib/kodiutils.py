@@ -67,7 +67,7 @@ def cache_get(key: str):
         return None
 
 
-def cache_set(key, data):
+def cache_set(key: str, data):
     data_str = json.dumps(data)
     # xbmc.log(f"[script.service.hue] Cache Set: {key}, {data_str} - {data_type}")
     cache_window.setProperty(f"{ADDONID}.{key}]", data_str)

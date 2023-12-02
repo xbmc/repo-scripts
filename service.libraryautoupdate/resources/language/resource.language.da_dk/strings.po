@@ -10,37 +10,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Danish (http://www.transifex.com/teamxbmc/xbmc-addons/language/da/)\n"
+"PO-Revision-Date: 2021-11-19 12:13+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/da_dk/>\n"
+"Language: da_dk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: da\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
-msgstr "Opdater dine Kodi video- og musikbiblioteker ved hjælp af en timer. Timeren kører som en Kodi service, så du aldrig glipper en opdatering"
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
+msgstr "Opdater dine Kodi video- og musikbiblioteker ved hjælp af en timer. Timeren kører som en Kodi service, så du aldrig glipper en opdatering."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
-msgstr "Dette er en Kodi service, der opdaterer dine musik- og videobiblioteker ved hjælp af en timer. Du kan vælge forskellige intervaller for skanningen af din mediedatabase (lyd, video, begge) eller du kan vælge en cron-baseret timer for øget kontrol. Hvis du afspiller en lyd- eller videofil, når timeren begynder, kan den springe over opdatering af biblioteket indtil emnet er færdigafspillet, så din medieoplevelse ikke afbrydes. Opdatering af specifikke videostier og oprydning i musik/videobibliotekerne er nu understøttet."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
+msgstr "Dette er en Kodi service, der opdaterer dine musik- og videobiblioteker ved hjælp af en timer. Du kan vælge forskellige intervaller for skanning af din mediedatabase (lyd, video, begge) eller du kan vælge en cron-baseret timer for øget kontrol. Hvis du afspiller en lyd- eller videofil, når timeren begynder, kan den springe opdatering af biblioteket over indtil emnet er færdigafspillet, så din medieoplevelse ikke afbrydes. Opdatering af specifikke videostier og oprydning i musik-/videobibliotekerne er nu understøttet."
 
 msgctxt "#30000"
 msgid "Kodi Library Auto Update"
-msgstr "Kodi autoopdatering af bibliotek"
+msgstr "Kodi automatisk opdatering af bibliotek"
 
 msgctxt "#30001"
 msgid "General"
@@ -71,16 +63,16 @@ msgid "Run during playback"
 msgstr "Kør under afspilning"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Opstartsforsinkelse (minutter)"
+msgid "Startup Delay"
+msgstr "Forsinket start"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Brug avanceret timer"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Tidsinterval mellem opdateringer (timer)"
+msgid "Amount of time between updates"
+msgstr "Tidsinterval mellem opdateringer"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -96,39 +88,47 @@ msgstr "Opdater musikbibliotek"
 
 msgctxt "#30014"
 msgid "Only run when idle"
-msgstr "Kør kun når ledig"
+msgstr "Kør kun ved inaktivitet"
 
 msgctxt "#30015"
 msgid "Disable manual run prompt"
-msgstr ""
+msgstr "Deaktiver prompt om manuel kørsel"
+
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "Cron-syntaks %s er forkert, returnerer til standard 2 timer"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "Kontroller om kilder eksisterer før scanning"
 
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "Opdater specifik mappesti 1"
+msgid "Edit Custom Paths"
+msgstr "Rediger brugerdefinerede stier"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "Opdater specifik mappesti 2"
+msgid "Choose Action"
+msgstr "Vælg handling"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "Opdater specifik mappesti 3"
+msgid "Delete this item?"
+msgstr "Slet dette emne?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Mappesti for videoer"
+msgid "Browse for path"
+msgstr "Søg efter sti"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "Læs ansvarsfraskrivelse"
+msgid "This update broke custom paths, you must remake them"
+msgstr "Denne opdatering fjernede brugerdefinerede stier. Du er nødt til at lave dem igen."
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "Videosti ansvarsfraskrivelse"
+msgid "Custom Paths Disclaimer"
+msgstr "Ansvarsfraskrivelse for brugerdefinerede stier"
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "Det er et krav, at stien i forvejen er en videokilde med indhold "
+msgid "Path must already be a valid source with content"
+msgstr "Stien skal allerede være en gyldig kilde med indhold"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -156,15 +156,15 @@ msgstr "Efter opdatering"
 
 msgctxt "#30045"
 msgid "Once Per Day"
-msgstr "Én gang per dag"
+msgstr "Én gang om dagen"
 
 msgctxt "#30046"
 msgid "Once Per Week"
-msgstr "Én gang per uge"
+msgstr "Én gang om ugen"
 
 msgctxt "#30047"
 msgid "Once Per Month"
-msgstr "Én gang per måned"
+msgstr "Én gang om måneden"
 
 msgctxt "#30048"
 msgid "Clean Video Library"
@@ -188,11 +188,11 @@ msgstr "En databaseoprydning er planlagt til at køre"
 
 msgctxt "#30053"
 msgid "Would you like to run it now?"
-msgstr "Vil du køre den nu"
+msgstr "Vil du køre den nu?"
 
 msgctxt "#30054"
 msgid "Library to clean"
-msgstr "Biblioteker at rydde op i"
+msgstr "Bibliotek der ryddes op i"
 
 msgctxt "#30055"
 msgid "Both"
@@ -200,16 +200,144 @@ msgstr "Begge"
 
 msgctxt "#30056"
 msgid "Video Cron Expression"
-msgstr "Cron-udtryk til Video"
+msgstr "Cron-udtryk til video"
 
 msgctxt "#30057"
 msgid "Music Cron Expression"
-msgstr "Cron-udtryk til Musik"
+msgstr "Cron-udtryk til musik"
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "Opdatering vil køre igen"
+msgstr "Opdatering vil køre igen "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "Ønsker du at køre en opdatering manuelt?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "Ingen forsinkelse"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 minut"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 minutter"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 minutter"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 minutter"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 minutter"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 time"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 timer"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 timer"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 timer"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 timer"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 timer"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "Hvor lang tid fejlet scanning forsinkes efter systemstart"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Tillad scanninger af bibliotek når medier afspilles"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "Tillad kun start af scanninger når systemet er inaktivt (pauseskærm aktiv)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "Deaktiverer dialogboksen ved start af en manuel kørsel"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "Skift til en cron-timer i stedet for den simple timer"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "Vælg hvor ofte biblioteksscanninger skal startes"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "Indstil et brugerdefineret interval ved hjælp af cron-syntaks - eksempel er '15 */5 * * *' for kvart over en time hver 5. time hver dag"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "Start redigeringsværktøjet til brugerdefinerede stier for at vælge specifikke scanningsmapper i stedet for hele biblioteket"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "Kør Kodi-bibliotekets oprydningsproces for at fjerne slettede medier"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "Tilføjer yderligere bekræftelsesprompt, før oprydningsprocessen kører"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "Indstil hvor ofte oprydningsprocessen skal køres: efter hver opdatering, en gang om dagen, en gang om ugen, en gang om måneden eller brugerdefineret"
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Opstartsforsinkelse (minutter)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Tidsinterval mellem opdateringer (timer)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "Opdater specifik mappesti 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "Opdater specifik mappesti 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "Opdater specifik mappesti 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Mappesti for videoer"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "Læs ansvarsfraskrivelse"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "Videosti ansvarsfraskrivelse"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "Det er et krav, at stien i forvejen er en videokilde med indhold "

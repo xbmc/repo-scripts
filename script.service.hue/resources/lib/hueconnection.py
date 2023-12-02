@@ -193,6 +193,8 @@ class HueConnection(object):
         req = ""
         try:
             req = requests.get('https://discovery.meethue.com/')
+            if req.status_code == 429:
+                return None
             result = req.json()
         except requests.exceptions.RequestException as error:
             xbmc.log(f"[script.service.hue] Nupnp failed: {error}")

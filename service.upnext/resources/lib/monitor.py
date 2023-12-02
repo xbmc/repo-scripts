@@ -6,7 +6,7 @@ from xbmc import Monitor
 from api import Api
 from playbackmanager import PlaybackManager
 from player import UpNextPlayer
-from statichelper import from_unicode
+from statichelper import to_unicode
 from utils import decode_json, get_property, get_setting_bool, kodi_version_major, log as ulog
 
 
@@ -57,7 +57,7 @@ class UpNextMonitor(Monitor):
 
             last_file = self.player.get_last_file()
             try:
-                current_file = self.player.getPlayingFile()
+                current_file = to_unicode(self.player.getPlayingFile())
             except RuntimeError:
                 self.log('Up Next tracking stopped, failed player.getPlayingFile()', 2)
                 self.player.disable_tracking()
@@ -73,7 +73,7 @@ class UpNextMonitor(Monitor):
                 self.playback_manager.demo.hide()
                 continue
 
-            if last_file and last_file == from_unicode(current_file):
+            if last_file and last_file == current_file:
                 # Already processed this playback before
                 continue
 
@@ -104,7 +104,7 @@ class UpNextMonitor(Monitor):
                 # Media hasn't reach notification time yet, waiting a bit longer...
                 continue
 
-            self.player.set_last_file(from_unicode(current_file))
+            self.player.set_last_file(current_file)
             self.log('Show notification as episode (of length %d secs) ends in %d secs' % (total_time, notification_time), 2)
             self.playback_manager.launch_up_next()
             self.log('Up Next style autoplay succeeded', 2)

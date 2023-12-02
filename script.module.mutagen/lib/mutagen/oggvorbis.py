@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2006 Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
@@ -56,13 +55,20 @@ class OggVorbisInfo(StreamInfo):
         """Raises ogg.error, IOError"""
 
         page = OggPage(fileobj)
+        if not page.packets:
+            raise OggVorbisHeaderError("page has not packets")
         while not page.packets[0].startswith(b"\x01vorbis"):
             page = OggPage(fileobj)
         if not page.first:
             raise OggVorbisHeaderError(
                 "page has ID header, but doesn't start a stream")
+        if len(page.packets[0]) < 28:
+            raise OggVorbisHeaderError(
+                "page contains a packet too short to be valid")
         (self.channels, self.sample_rate, max_bitrate, nominal_bitrate,
-         min_bitrate) = struct.unpack("<B4i", page.packets[0][11:28])
+         min_bitrate) = struct.unpack("<BI3i", page.packets[0][11:28])
+        if self.sample_rate == 0:
+            raise OggVorbisHeaderError("sample rate can't be zero")
         self.serial = page.serial
 
         max_bitrate = max(0, max_bitrate)

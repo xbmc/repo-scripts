@@ -1,3 +1,9 @@
+1.0.2 (Thanks Leinad4Mind)
+- Cleaning unused functions
+- Improve performance
+- Enhance readability
+- Fix bug on regex
+- Add notifications errors
 1.0.1 Matrix Ready!
 1.0.0 (Thanks Leinad4Mind)
 - Refactor extract function

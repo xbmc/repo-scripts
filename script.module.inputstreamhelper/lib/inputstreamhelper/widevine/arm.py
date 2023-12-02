@@ -8,7 +8,7 @@ import json
 
 from .. import config
 from ..kodiutils import browsesingle, localize, log, ok_dialog, open_file, progress_dialog, yesno_dialog
-from ..utils import diskspace, http_download, http_get, parse_version, sizeof_fmt, store, system_os, update_temp_path
+from ..utils import diskspace, http_download, http_get, parse_version, sizeof_fmt, store, system_os, update_temp_path, userspace64
 from .arm_chromeos import ChromeOSImage
 
 
@@ -16,42 +16,45 @@ def select_best_chromeos_image(devices):
     """Finds the newest and smallest of the ChromeOS images given"""
     log(0, 'Find best ARM image to use from the Chrome OS recovery.json')
 
+    if userspace64():
+        arm_bnames = config.CHROMEOS_RECOVERY_ARM64_BNAMES
+    else:
+        arm_bnames = config.CHROMEOS_RECOVERY_ARM_BNAMES
+
     best = None
     for device in devices:
         # Select ARM hardware only
-        for arm_hwid in config.CHROMEOS_RECOVERY_ARM_HWIDS:
-            if '^{0} '.format(arm_hwid) in device['hwidmatch']:
-                hwid = arm_hwid
+        for arm_bname in arm_bnames:
+            if arm_bname == device['file'].split('_')[2]:
+                device['boardname'] = arm_bname  # add this new entry to avoid extracting it from the filename all the time
                 break  # We found an ARM device, rejoice !
         else:
             continue  # Not ARM, skip this device
-
-        device['hwid'] = hwid
 
         # Select the first ARM device
         if best is None:
             best = device
             continue  # Go to the next device
 
-        # Skip identical hwid
-        if hwid == best['hwid']:
+        # Skip identical boardname
+        if device['boardname'] == best['boardname']:
             continue
 
         # Select the newest version
         if parse_version(device['version']) > parse_version(best['version']):
-            log(0, '{device[hwid]} ({device[version]}) is newer than {best[hwid]} ({best[version]})',
+            log(0, '{device[boardname]} ({device[version]}) is newer than {best[boardname]} ({best[version]})',
                 device=device,
                 best=best)
             best = device
 
         # Select the smallest image (disk space requirement)
         elif parse_version(device['version']) == parse_version(best['version']):
-            if int(device['filesize']) + int(device['zipfilesize']) < int(best['filesize']) + int(best['zipfilesize']):
-                log(0, '{device[hwid]} ({device_size}) is smaller than {best[hwid]} ({best_size})',
+            if int(device['zipfilesize']) < int(best['zipfilesize']):
+                log(0, '{device[boardname]} ({device_size}) is smaller than {best[boardname]} ({best_size})',
                     device=device,
+                    device_size=int(device['zipfilesize']),
                     best=best,
-                    device_size=int(device['filesize']) + int(device['zipfilesize']),
-                    best_size=int(best['filesize']) + int(best['zipfilesize']))
+                    best_size=int(best['zipfilesize']))
                 best = device
 
     return best
@@ -90,7 +93,7 @@ def install_widevine_arm(backup_path):
                       localize(30018, diskspace=sizeof_fmt(required_diskspace)))
             return False
 
-        log(2, 'Downloading ChromeOS image for Widevine: {hwid} ({version})'.format(**arm_device))
+        log(2, 'Downloading ChromeOS image for Widevine: {boardname} ({version})'.format(**arm_device))
         url = arm_device['url']
 
         extracted = dl_extract_widevine(url, backup_path, arm_device)

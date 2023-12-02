@@ -7,8 +7,7 @@ import random
 import defusedxml.ElementTree as _xmltree
 from resources.lib.url import URL
 from resources.lib.fileops import readFile, writeFile, checkPath
-from kodi_six.utils import py2_encode
-from kodi_six import xbmcvfs
+import xbmcvfs
 try:
     from . import lastfm_info as settings
 except ImportError:
@@ -55,8 +54,8 @@ class objectConfig(object):
                           list(additionalparams.items()))
         self.LOGLINES.append('trying to get artist albums from ' + self.URL)
         try:
-            xmldata = _xmltree.fromstring(py2_encode(
-                self._get_data(filepath, cachefilepath, url_params)))
+            xmldata = _xmltree.fromstring(self._get_data(
+                filepath, cachefilepath, url_params))
         except _xmltree.ParseError:
             self.LOGLINES.append('error reading XML file')
             return [], self.LOGLINES
@@ -66,7 +65,7 @@ class objectConfig(object):
                 if match:
                     match = False
                 else:
-                    name = py2_encode(element.text)
+                    name = element.text
                     match = True
             elif element.tag == "image":
                 if element.attrib.get('size') == "extralarge":
@@ -95,8 +94,8 @@ class objectConfig(object):
                           list(additionalparams.items()))
         self.LOGLINES.append('trying to get artist bio from ' + self.URL)
         try:
-            xmldata = _xmltree.fromstring(py2_encode(
-                self._get_data(filepath, cachefilepath, url_params)))
+            xmldata = _xmltree.fromstring(
+                self._get_data(filepath, cachefilepath, url_params))
         except _xmltree.ParseError:
             self.LOGLINES.append('error reading XML file')
             return '', self.LOGLINES
@@ -122,8 +121,8 @@ class objectConfig(object):
                           list(additionalparams.items()))
         self.LOGLINES.append('trying to get similar artists from ' + self.URL)
         try:
-            xmldata = _xmltree.fromstring(py2_encode(
-                self._get_data(filepath, cachefilepath, url_params)))
+            xmldata = _xmltree.fromstring(
+                self._get_data(filepath, cachefilepath, url_params))
         except _xmltree.ParseError:
             self.LOGLINES.append('error reading XML file')
             return [], self.LOGLINES
@@ -133,7 +132,7 @@ class objectConfig(object):
                 if match:
                     match = False
                 else:
-                    name = py2_encode(element.text)
+                    name = element.text
                     match = True
             elif element.tag == "image":
                 if element.attrib.get('size') == "extralarge":
@@ -159,7 +158,7 @@ class objectConfig(object):
             rloglines, rawxml = readFile(filepath)
             self.LOGLINES.extend(rloglines)
             try:
-                xmldata = _xmltree.fromstring(py2_encode(rawxml))
+                xmldata = _xmltree.fromstring(rawxml)
             except _xmltree.ParseError:
                 self.LOGLINES.append(
                     'error reading musicbrainz ID from ' + filepath)
@@ -198,7 +197,7 @@ class objectConfig(object):
                 self.URL, params=url_params)
             self.LOGLINES.extend(uloglines)
             if success:
-                success, wloglines = writeFile(py2_encode(data), filepath)
+                success, wloglines = writeFile(data, filepath)
                 self.LOGLINES.extend(wloglines)
         exists, cloglines = checkPath(filepath, False)
         self.LOGLINES.extend(cloglines)

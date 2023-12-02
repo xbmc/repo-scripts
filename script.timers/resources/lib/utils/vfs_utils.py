@@ -26,24 +26,6 @@ _PLAYLIST_TYPES = [".m3u", ".m3u8", ".pls"]
 _EXTERNAL_PATHS = ["http://", "https://"]
 
 
-def scan_dirs_with_filecount(path: str) -> 'tuple[int,list[tuple[str,int]]]':
-
-    def _scan(path: str, result: 'list[tuple[str,int]]') -> 'tuple[int,list[tuple[str,int]]]':
-
-        dirs, files = xbmcvfs.listdir(path)
-        files_count = len(files)
-        for d in dirs:
-            _files_count, result = _scan("%s%s/" % (path, d), result=result)
-            files_count += _files_count
-
-        result.append((path, files_count))
-
-        return files_count, result
-
-    result = list()
-    return _scan(path, result=result)
-
-
 def is_folder(path: str) -> bool:
 
     dirs, files = xbmcvfs.listdir(path)

@@ -31,8 +31,6 @@ The server in the preceding example serves a demo WSGI app from
 the Standard Library and the echo WebSocket on ``'/ws'`` path.
 """
 
-from __future__ import absolute_import
-import asyncore
 import select
 import socket
 from errno import EINTR
@@ -40,6 +38,8 @@ from io import BytesIO
 from shutil import copyfileobj
 from tempfile import TemporaryFile
 from wsgiref.simple_server import WSGIServer, ServerHandler, WSGIRequestHandler
+
+from . import asyncore
 from .SimpleWebSocketServer import AsyncWebSocketHandler
 from .. import logging
 

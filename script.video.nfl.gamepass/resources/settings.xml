@@ -66,6 +66,22 @@
           <level>0</level>
           <default>false</default>
           <control type="toggle"/>
+          <dependencies>
+            <dependency type="enable" operator="!is" setting="display_datetime">true</dependency>
+          </dependencies>
+        </setting>
+        <setting help="" id="display_datetime" label="30052" type="boolean">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle"/>
+          <dependencies>
+            <dependency type="enable" operator="is" setting="hide_game_length">true</dependency>
+          </dependencies>
+        </setting>
+        <setting help="" id="display_current_week" label="30031" type="boolean">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
         </setting>
       </group>
     </category>

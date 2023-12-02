@@ -1,3 +1,6 @@
+v2.0.5
+- Fix wierd bug with resume points: https://forum.kodi.tv/showthread.php?tid=355383&pid=3163480#pid3163480
+
 v2.0.4
 - Handle unicode characters in video names
 

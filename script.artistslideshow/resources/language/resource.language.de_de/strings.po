@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-18 09:29+0000\n"
+"PO-Revision-Date: 2023-02-06 23:15+0000\n"
 "Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
 "Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/de_de/>\n"
 "Language: de_de\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.1\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -94,7 +94,7 @@ msgstr "Client-API-Key"
 
 msgctxt "#32110"
 msgid "I donate to this service"
-msgstr "Ich spende für diesen Service"
+msgstr "Ich spende für diesen Dienst"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
@@ -118,11 +118,11 @@ msgstr "Album-Fanart von Kodi einschließen"
 
 msgctxt "#32116"
 msgid "Limit size of download cache"
-msgstr "Größe des Download-Caches begrenzen"
+msgstr "Größe des Downloadcaches begrenzen"
 
 msgctxt "#32117"
 msgid "Maximum cache size (in megabytes)"
-msgstr "Maximale Cache-Größe (in Megabytes)"
+msgstr "Maximale Cachegröße (in Megabytes)"
 
 msgctxt "#32118"
 msgid "Alternate name for local fanart folder"
@@ -134,7 +134,7 @@ msgstr "Debug-Protokollierung aktivieren"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr "Sekundäre und vorgestellte Interpertenbilder deaktivieren"
+msgstr "Sekundäre und vorgestellte Interpretenbilder deaktivieren"
 
 msgctxt "#32121"
 msgid "Store artist images in"
@@ -190,7 +190,7 @@ msgstr "macOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr "Bilder in Kodis Musikinterpreten-Ordner verschieben"
+msgstr "Bilder in Kodis Musikinterpretenordner verschieben"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
@@ -210,11 +210,11 @@ msgstr "Schwarzblende beim Interpretenwechsel"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
-msgstr "Wartezeit des Haupt-Threads (in Sekunden)"
+msgstr "Wartezeit des Hauptthreads (in Sekunden)"
 
 msgctxt "#32140"
 msgid "Main thread idle sleep time (in seconds)"
-msgstr "Leerlauf-Wartezeit des Haupt-Threads (in Sekunden)"
+msgstr "Leerlaufwartezeit des Hauptthreads (in Sekunden)"
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
@@ -222,7 +222,7 @@ msgstr "Wartezeit des Diashow-Threads (in Sekunden)"
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
-msgstr "Benachrichtigung während Herunterladen von Bildern anzeigen"
+msgstr "Benachrichtigung beim Herunterladen von Bildern anzeigen"
 
 msgctxt "#32143"
 msgid "Only show notification if there are images to download"
@@ -266,11 +266,11 @@ msgstr "Herunterladen abgeschlossen"
 # Dialog texts
 msgctxt "#32300"
 msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
-msgstr "Dies wird die Bilddateien verschieben und umbenennen und kann nicht rückgängig gemacht werden. Fortfahren?"
+msgstr "Dies verschiebt und benennt die Bilddateien um und kann nicht rückgängig gemacht werden. Fortfahren?"
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr "Pfad für Kodis Musikinterpreten-Bilderspeicherort kann nicht ermittelt werden. Bitte prüfen, dass unter Einstellungen > Medien > Musik der Ordner für Interpreteninformationen festgelegt ist."
+msgstr "Pfad für Kodis Speicherort der Musikinterpretenbilder kann nicht ermittelt werden. Bitte prüfen, dass unter Einstellungen > Medien > Musik der Ordner für Interpreteninformationen festgelegt ist."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
@@ -278,11 +278,11 @@ msgstr "Artist Slideshow ist bereits konfiguriert, Kodis Interpreteninformatione
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
-msgstr "Verschieben und Umbennenen der Bilder aus benutzerdefiertem Ordner ..."
+msgstr "Verschieben und Umbenennen der Bilder aus benutzerdefiertem Ordner ..."
 
 msgctxt "#32304"
 msgid "Moving and renaming images from addon_data folder..."
-msgstr "Verschieben und Umbennenen der Bilder aus Ordner „addon_data“ ..."
+msgstr "Verschieben und Umbenennen der Bilder aus Ordner „addon_data“ …"
 
 msgctxt "#32305"
 msgid "No artist directories found."

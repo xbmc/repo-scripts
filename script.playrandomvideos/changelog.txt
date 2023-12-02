@@ -1,3 +1,6 @@
+v2.1.1 (2023-05-09)
+- Fix: recently played filter
+
 v2.1.0 (2022-02-20)
 - Feature: option to filter out recently played videos
 - Feature: add more metadata to playlist items

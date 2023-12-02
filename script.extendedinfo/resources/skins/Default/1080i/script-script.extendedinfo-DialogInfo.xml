@@ -23,7 +23,7 @@
 		<control type="button" id="20000">
 			<height>0</height>
 			<width>0</width>
-			<texturefocus>-</texturefocus>
+			<texturefocus></texturefocus>
 			<left>-5000</left>
 			<onfocus>SetFocus(132)</onfocus>
 			<onclick>noop</onclick>
@@ -32,7 +32,7 @@
 		<control type="button" id="20001">
 			<height>0</height>
 			<width>0</width>
-			<texturefocus>-</texturefocus>
+			<texturefocus></texturefocus>
 			<left>-5000</left>
 			<onclick>noop</onclick>
 			<visible allowhiddenfocus="true">Control.HasFocus(20001)</visible>
@@ -131,7 +131,7 @@
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
 						<font>font12</font>
-						<label>$INFO[Window.Property(Birthday),$ADDON[script.extendedinfo 32012]: [COLOR=FFFAFAFA],[/COLOR]] $INFO[Window.Property(Age),$ADDON[script.extendedinfo 32020]: [COLOR=FFFAFAFA],[/COLOR]]</label>
+							<label>$INFO[Window.Property(Birthday),$ADDON[script.extendedinfo 32012]: [COLOR=FFFAFAFA],[/COLOR]] $INFO[Window.Property(Age),$ADDON[script.extendedinfo 32020]: [COLOR=FFFAFAFA],     [/COLOR]]$INFO[Window.Property(Deathday),$ADDON[script.extendedinfo 32013]: [COLOR=FFFAFAFA],[/COLOR]]</label>
 						<visible>!String.isEmpty(Window.Property(Birthday))</visible>
 					</control>
 					<control type="label">
@@ -182,7 +182,7 @@
 						<label>$INFO[Window.Property(Homepage),$ADDON[script.extendedinfo 32017]: [COLOR=FFFAFAFA],[/COLOR]]</label>
 						<visible>!String.isEmpty(Window.Property(Homepage))</visible>
 					</control>
-					<control type="label">
+					<!-- <control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
 						<left>40</left>
@@ -193,7 +193,7 @@
 						<font>font12</font>
 						<label>$INFO[Window.Property(Deathday),$ADDON[script.extendedinfo 32013]: [COLOR=FFFAFAFA],[/COLOR]]</label>
 						<visible>!String.isEmpty(Window.Property(Deathday))</visible>
-					</control>
+					</control> -->
 					<control type="group" id="140">
 						<height>255</height>
 						<control type="button" id="132">
@@ -205,7 +205,7 @@
 							<ondown>150</ondown>
 							<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/button-fo.png</texturefocus>
 							<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/button-nofo.png</texturenofocus>
-							<label>-</label>
+							<label></label>
 						</control>
 						<control type="textbox" id="800">
 							<left>55</left>

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2006 Joe Wreschnig
 #           2014 Christoph Reiter
 #
@@ -78,6 +77,7 @@ class WavPackInfo(StreamInfo):
         channels (int): number of audio channels (1 or 2)
         length (float): file length in seconds, as a float
         sample_rate (int): audio sampling rate in Hz
+        bits_per_sample (int): audio sample size
         version (int): WavPack stream version
     """
 
@@ -90,6 +90,12 @@ class WavPackInfo(StreamInfo):
         self.version = header.version
         self.channels = bool(header.flags & 4) or 2
         self.sample_rate = RATES[(header.flags >> 23) & 0xF]
+        self.bits_per_sample = ((header.flags & 3) + 1) * 8
+
+        # most common multiplier (DSD64)
+        if (header.flags >> 31) & 1:
+            self.sample_rate *= 4
+            self.bits_per_sample = 1
 
         if header.total_samples == -1 or header.block_index != 0:
             # TODO: we could make this faster by using the tag size

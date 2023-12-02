@@ -1,4 +1,3 @@
-# coding: utf-8
 # Author: Roman Miroshnychenko aka Roman V.M.
 # E-mail: roman1972@gmail.com
 #
@@ -25,11 +24,12 @@
 Web-UI WSGI application
 """
 
+import gzip
 import json
 import os
-import gzip
-from io import BytesIO
 from functools import wraps
+from io import BytesIO
+
 import bottle
 
 __all__ = ['app']
@@ -39,11 +39,6 @@ __all__ = ['app']
 cwd = os.path.dirname(os.path.abspath(__file__))
 bottle.TEMPLATE_PATH.append(os.path.join(cwd, 'templates'))
 static_path = os.path.join(cwd, 'static')
-try:
-    string_type = basestring
-except NameError:
-    string_type = (bytes, str)
-    unicode = str
 
 
 def compress(func):
@@ -54,9 +49,9 @@ def compress(func):
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
         if ('gzip' in bottle.request.headers.get('Accept-Encoding', '') and
-                isinstance(result, string_type) and
+                isinstance(result, (str, bytes)) and
                 len(result) > 1024):
-            if isinstance(result, unicode):
+            if isinstance(result, str):
                 result = result.encode('utf-8')
             tmp_fo = BytesIO()
             with gzip.GzipFile(mode='wb', fileobj=tmp_fo) as gzip_fo:

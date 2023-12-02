@@ -18,8 +18,9 @@ from resources.lib.common import *
 """
 
 
-# This is a hack fix for a wicked long standing Python bug...
+# This is a hack fix for a wicked long-standing Python bug...
 # See: https://forum.kodi.tv/showthread.php?tid=112916
+# noinspection PyMethodOverriding,PyShadowingBuiltins,SpellCheckingInspection
 class ProxyDatetime(datetime.datetime):
     @staticmethod
     def strptime(date_string, format):
@@ -30,6 +31,7 @@ class ProxyDatetime(datetime.datetime):
 datetime.datetime = ProxyDatetime
 
 
+# noinspection PyShadowingNames
 def set_key(weather_data, index, key, value):
     """
     Set a key - for old and new weather label support
@@ -50,6 +52,7 @@ def set_key(weather_data, index, key, value):
     weather_data['Daily.' + str(index + 1) + '.' + key] = value.strip()
 
 
+# noinspection PyShadowingNames
 def set_keys(weather_data, index, keys, value):
     """
     Set a group of keys at once - for old and new weather label support
@@ -91,6 +94,7 @@ def utc_str_to_local_str(utc_str: str, utc_format: str = '%Y-%m-%dT%H:%M:%SZ', l
     return local_time.strftime(local_format).lstrip('0').lower()
 
 
+# noinspection PyBroadException,PyShadowingNames
 def bom_forecast(geohash):
     """
     Return are information, current observations, warnings, and forecast for the given geohash
@@ -101,8 +105,6 @@ def bom_forecast(geohash):
 
     # Gather the weather data into a dict from which we will later set all the Kodi labels
     weather_data = {}
-
-
 
     # The areahash is the geohash minus the last character
     areahash = geohash[:-1]
@@ -116,18 +118,18 @@ def bom_forecast(geohash):
     bom_api_current_observations_url = f'{bom_api_url_areahash}/observations'
     bom_api_forecast_seven_days_url = f'{bom_api_url_areahash}/forecasts/daily'
     # FUTURE? - these API end points exist, but are not yet used by OzWeather
-    bom_api_forecast_three_hourly_url = f'{bom_api_url_areahash}/forecasts/3-hourly'
-    bom_api_forecast_rain = f'{bom_api_url_areahash}/forecast/rain'
+    # bom_api_forecast_three_hourly_url = f'{bom_api_url_areahash}/forecasts/3-hourly'
+    # bom_api_forecast_rain = f'{bom_api_url_areahash}/forecast/rain'
 
     # Holders for the BOM JSON API results...
     area_information = None
-    current_observations = None
+    # current_observations = None
     warnings = None
-    forecast_seven_days = None
+    # forecast_seven_days = None
     # forecast_three_hourly = None
     # forecast_rain = None
 
-    # Get the AREA INFORMATION, including the location's timezone so we can correctly show the location local times
+    # Get the AREA INFORMATION, including the location's timezone, so we can correctly show the location local times
     location_timezone = ""
     # In case we can't get the localised now time, below...
     now = datetime.datetime.now()
@@ -143,7 +145,7 @@ def bom_forecast(geohash):
             # For any date comparisons - this is the localised now...
             now = datetime.datetime.now(location_timezone)
 
-    except Exception as inst:
+    except:
         log(f'Error retrieving area information from {bom_api_area_information_url}')
 
     # Get CURRENT OBSERVATIONS
@@ -154,7 +156,7 @@ def bom_forecast(geohash):
         weather_data['ObservationsStation'] = r.json()["data"]['station']['name']
         log(current_observations)
 
-    except Exception as inst:
+    except:
         log(f'Error retrieving current observations from {bom_api_current_observations_url}')
         return False
 
@@ -164,10 +166,10 @@ def bom_forecast(geohash):
         warnings = r.json()["data"]
         log(warnings)
 
-    except Exception as inst:
+    except:
         log(f'Error retrieving warnings from {bom_api_warnings_url}')
 
-    # Get 7 DAY FORECAST
+    # Get 7-DAY FORECAST
     try:
         r = requests.get(bom_api_forecast_seven_days_url)
         forecast_seven_days = r.json()["data"]
@@ -176,7 +178,7 @@ def bom_forecast(geohash):
         weather_data['ForecastType'] = r.json()["metadata"]["forecast_type"].title()
         log(forecast_seven_days)
 
-    except Exception as inst:
+    except:
         log(f'Error retrieving seven day forecast from {bom_api_forecast_seven_days_url}')
         return False
 
@@ -203,11 +205,11 @@ def bom_forecast(geohash):
 
     # CURRENT OBSERVATIONS
 
-    # IMPORTANT - to avoid issues with Kodi malforming weather values due to 'magic'
-    # (the magic is presumably because Kodi seeks to support both farenheit and celsius, so unofrtunately tends to return 0
-    # for any non-numeric value in these labels...
+    # IMPORTANT - to avoid issues with Kodi mal-forming weather values due to 'magic'
+    # (the magic is presumably because Kodi seeks to support both Fahrenheit and Celsius, so unfortunately tends to return 0
+    # for any non-numeric value in these labels...)
     # ...So, we set the normal Kodi weather labels as best we can.
-    # ...But, we also set a version with OzW_ prepended to the label name, which is used in OzWeather Skin files to avoid this.
+    # ...But, we also set a version with OzW_ prepended to the label name, which is used in OzWeather Skin files, to avoid this.
 
     if current_observations:
         weather_data['Current.Temperature'] = current_observations['temp']
@@ -247,7 +249,7 @@ def bom_forecast(geohash):
     warnings_text = ""
     if warnings:
         for i, warning in enumerate(warnings):
-            # Warnings body...only major warnings as we don't need every little message about sheep grazing etc..
+            # Warnings body...only major warnings as we don't need every little message about sheep grazing etc...
             if warning['warning_group_type'] == 'major':
                 # Don't really care when it was issue, if it hasn't expired, it's current, so show it..
                 # warning_issued = utc_str_to_local_str(warning['issue_time'], local_format='%d/%m %I:%M%p', time_zone=location_timezone)
@@ -311,6 +313,7 @@ def bom_forecast(geohash):
             # However, preferentially try and use the short text, to cope with BOM madness like:
             # "icon_descriptor":"mostly_sunny","short_text":"Mostly cloudy."
             icon_descriptor = forecast_seven_days[i]['icon_descriptor']
+            descriptor_from_short_text = None
             if forecast_seven_days[i]['short_text']:
                 descriptor_from_short_text = forecast_seven_days[i]['short_text'].lower()
                 descriptor_from_short_text = descriptor_from_short_text.replace(' ', '_').replace('.', '').strip()
@@ -393,7 +396,7 @@ def bom_forecast(geohash):
 
             # TESTING for skin scrolling - DON'T LEAVE THIS UNCOMMENTED!
             # for j in range(0, 5):
-            #     extended_text += "add some more random text on the end so it just goes on and on\n"
+            #     extended_text += "add some more random text on the end, so it just goes on and on\n"
 
             set_key(weather_data, i, "OutlookLong", extended_text)
             set_key(weather_data, i, "ConditionLong", extended_text)
@@ -415,12 +418,12 @@ if __name__ == "__main__":
     geohashes_to_test = ['r1r11df', 'r1f94ew']
     for geohash in geohashes_to_test:
         log(f'Getting weather data from BOM for geohash "{geohash}"')
-        weather_data = bom_forecast(geohash)
+        test_data = bom_forecast(geohash)
 
-        for key in sorted(weather_data):
-            if weather_data[key] == "?" or weather_data[key] == "na":
+        for key in sorted(test_data):
+            if test_data[key] == "?" or test_data[key] == "na":
                 log("**** MISSING: ")
-            log(f'{key}: "{weather_data[key]}"')
+            log(f'{key}: "{test_data[key]}"')
 
 """
 BOM API

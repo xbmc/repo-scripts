@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.iso8601"
-       name="iso8601"
-       version="0.1.12+matrix.2"
-       provider-name="Michael Twomey">
+<addon id="script.module.iso8601" name="iso8601" version="2.0.0" provider-name="Michael Twomey">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Simple module to parse ISO 8601 dates</summary>
-    <description lang="en_GB">This module parses the most common forms of ISO 8601 date strings (e.g. 2007-01-14T20:34:22+00:00) into datetime objects.</description>
+    <description lang="en_GB">Simple module to parse ISO 8601 dates</description>
     <license>MIT</license>
-    <website>https://pypi.org/project/iso8601/</website>
-    <source>https://bitbucket.org/micktwomey/pyiso8601</source>
+    <platform>all</platform>
+    <website>https://pyiso8601.readthedocs.io/en/latest/</website>
+    <source>https://github.com/micktwomey/pyiso8601</source>
     <assets>
-      <icon>icon.png</icon>
+      <icon>resources/icon.png</icon>
     </assets>
   </extension>
 </addon>

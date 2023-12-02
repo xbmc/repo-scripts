@@ -5,15 +5,16 @@
 # Licence: GPL v.3 <http://www.gnu.org/licenses/gpl.html>
 """Classes for defining the appearance of PyXBMCt Windows and Controls"""
 
-from __future__ import unicode_literals
 import os
-from abc import ABCMeta, abstractmethod
-from six import with_metaclass
-import xbmc
+from abc import ABC, abstractmethod
+
+import xbmcvfs
 from xbmcaddon import Addon
 
+ADDON_DIR = xbmcvfs.translatePath(Addon('script.module.pyxbmct').getAddonInfo('path'))
 
-class BaseSkin(with_metaclass(ABCMeta, object)):
+
+class BaseSkin(ABC):
     """
     Abstract class for creating fully customized skins
 
@@ -201,13 +202,8 @@ class Skin(BaseSkin):
     the appearance of PyXBMCt windows and controls.
     """
     def __init__(self):
-        kodi_version = xbmc.getInfoLabel('System.BuildVersion')[:2]
-        # Kodistubs return an empty string
-        if kodi_version and kodi_version >= '17':
-            self._estuary = True
-        else:
-            self._estuary = False
-        self._texture_dir = os.path.join(Addon('script.module.pyxbmct').getAddonInfo('path'),
+        self._estuary = True
+        self._texture_dir = os.path.join(ADDON_DIR,
                                          'lib', 'pyxbmct', 'textures')
 
     @property

@@ -2,7 +2,7 @@
 <addon
    id="service.subtitles.legendastv"
    name="Legendas.TV"
-   version="3.0.0"
+   version="3.0.1"
    provider-name="gfjardim,andrebrait">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -16,6 +16,7 @@
     <disclaimer lang="pt_PT">Para bugs, pedidos ou perguntas visite o subfórum 'Subtitle add-on' no fórum oficial do KODI.</disclaimer>
     <platform>all</platform>
     <license>GPL-3.0-or-later</license>
+    <broken>Legendas.tv has closed its service</broken>
     <forum>https://forum.kodi.tv/showthread.php?tid=360127</forum>
     <source>https://github.com/andrebrait/service.subtitles.legendastv</source>
     <assets>
