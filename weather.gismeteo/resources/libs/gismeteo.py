@@ -3,12 +3,14 @@
 
 from __future__ import unicode_literals
 
-import time
 import calendar
+import time
+
 import requests
 
-import xml.etree.cElementTree as etree
 try:
+    import xml.etree.cElementTree as etree
+
     etree.fromstring('<?xml version="1.0"?><foo><bar/></foo>')
 except TypeError:
     import xml.etree.ElementTree as etree
@@ -17,12 +19,10 @@ __all__ = ['GismeteoError', 'GismeteoClient']
 
 
 class GismeteoError(Exception):
-
     pass
 
 
 class GismeteoClient(object):
-
     _base_url = 'https://services.gismeteo.net/inform-service/inf_chrome'
 
     def __init__(self, lang='en'):
@@ -57,8 +57,7 @@ class GismeteoClient(object):
 
         result = []
         for item in root:
-
-            location = {'name' : item.attrib['n'],
+            location = {'name': item.attrib['n'],
                         'id': item.attrib['id'],
                         'country': item.attrib['country_name'],
                         'district': item.attrib.get('district_name', ''),
@@ -95,14 +94,15 @@ class GismeteoClient(object):
 
         xml_location = root[0]
 
-        return {'name' : xml_location.attrib['name'],
+        return {'name': xml_location.attrib['name'],
                 'id': xml_location.attrib['id'],
                 'kind': xml_location.attrib['kind'],
                 'country': xml_location.attrib['country_name'],
                 'district': xml_location.attrib.get('district_name', ''),
                 'lat': xml_location.attrib['lat'],
                 'lng': xml_location.attrib['lng'],
-                'cur_time': self._get_date(xml_location.attrib['cur_time'], self._get_int(xml_location.attrib['tzone'])),
+                'cur_time': self._get_date(xml_location.attrib['cur_time'],
+                                           self._get_int(xml_location.attrib['tzone'])),
                 'current': self._get_fact_forecast(xml_location),
                 'days': self._get_days_forecast(xml_location),
                 }
@@ -129,11 +129,11 @@ class GismeteoClient(object):
         result['cloudiness'] = xml_values.attrib['cl']
         result['storm'] = (xml_values.attrib['ts'] == '1')
         result['precipitation'] = {'type': xml_values.attrib['pt'],
-                                   'amount': xml_values.attrib.get('prflt'),
+                                   'amount': self._get_float(xml_values.attrib.get('prflt')),
                                    'intensity': xml_values.attrib['pr'],
                                    }
         if xml_values.attrib.get('ph') is not None \
-          and xml_values.attrib['ph']:
+                and xml_values.attrib['ph']:
             result['phenomenon'] = self._get_int(xml_values.attrib['ph'])
         if xml_item.attrib.get('tod') is not None:
             result['tod'] = self._get_int(xml_item.attrib['tod'])
@@ -171,12 +171,12 @@ class GismeteoClient(object):
                                 },
                    'pressure': {'min': self._get_int(xml_day.attrib['pmin']),
                                 'max': self._get_int(xml_day.attrib['pmax']),
-                                'avg': self._get_int(xml_day.attrib['p']),
+                                'avg': self._get_int(xml_day.attrib.get('p')),
                                 },
                    'cloudiness': xml_day.attrib['cl'],
                    'storm': (xml_day.attrib['ts'] == '1'),
                    'precipitation': {'type': xml_day.attrib['pt'],
-                                     'amount': xml_day.attrib['prflt'],
+                                     'amount': self._get_float(xml_day.attrib.get('prflt')),
                                      'intensity': xml_day.attrib['pr'],
                                      },
                    'icon': xml_day.attrib['icon'],
@@ -205,6 +205,9 @@ class GismeteoClient(object):
 
     @staticmethod
     def _get_int(value):
+        if value is None:
+            return 0
+
         try:
             return int(value)
         except ValueError:
@@ -212,6 +215,9 @@ class GismeteoClient(object):
 
     @staticmethod
     def _get_float(value):
+        if value is None:
+            return 0.0
+
         try:
             return float(value)
         except ValueError:
