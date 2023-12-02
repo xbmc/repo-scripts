@@ -15,8 +15,7 @@ Copyright (C) 2010 Hiroki Ohtani(liris)
 
     You should have received a copy of the GNU Lesser General Public
     License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor,
-    Boston, MA  02110-1335  USA
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 """
 import errno
@@ -47,6 +46,7 @@ except:
     class ProxyConnectionError(BaseException):
         pass
     HAS_PYSOCKS = False
+
 
 class proxy_info(object):
 
@@ -81,15 +81,15 @@ def _open_proxied_socket(url, options, proxy):
         rdns = True
 
     sock = socks.create_connection(
-            (hostname, port),
-            proxy_type = ptype,
-            proxy_addr = proxy.host,
-            proxy_port = proxy.port,
-            proxy_rdns = rdns,
-            proxy_username = proxy.auth[0] if proxy.auth else None,
-            proxy_password = proxy.auth[1] if proxy.auth else None,
-            timeout = options.timeout,
-            socket_options = DEFAULT_SOCKET_OPTION + options.sockopt
+        (hostname, port),
+        proxy_type=ptype,
+        proxy_addr=proxy.host,
+        proxy_port=proxy.port,
+        proxy_rdns=rdns,
+        proxy_username=proxy.auth[0] if proxy.auth else None,
+        proxy_password=proxy.auth[1] if proxy.auth else None,
+        timeout=options.timeout,
+        socket_options=DEFAULT_SOCKET_OPTION + options.sockopt
     )
 
     if is_secure:
@@ -274,7 +274,9 @@ def _ssl_socket(sock, user_sslopt, hostname):
 
 def _tunnel(sock, host, port, auth):
     debug("Connecting proxy...")
-    connect_header = "CONNECT %s:%d HTTP/1.0\r\n" % (host, port)
+    connect_header = "CONNECT %s:%d HTTP/1.1\r\n" % (host, port)
+    connect_header += "Host: %s:%d\r\n" % (host, port)
+
     # TODO: support digest auth.
     if auth and auth[0]:
         auth_str = auth[0]
@@ -321,7 +323,10 @@ def read_headers(sock):
             kv = line.split(":", 1)
             if len(kv) == 2:
                 key, value = kv
-                headers[key.lower()] = value.strip()
+                if key.lower() == "set-cookie" and headers.get("set-cookie"):
+                    headers["set-cookie"] = headers.get("set-cookie") + "; " + value.strip()
+                else:
+                    headers[key.lower()] = value.strip()
             else:
                 raise WebSocketException("Invalid header")
 
