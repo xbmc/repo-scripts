@@ -29,7 +29,7 @@ from bs4 import BeautifulSoup
 
 
 class Zimuku_Agent:
-    def __init__(self, base_url, dl_location, logger, unpacker, settings, ocrUrl='https://ddddocr.lm317379829.repl.co/'):
+    def __init__(self, base_url, dl_location, logger, unpacker, settings, ocrUrl=''):
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
         # self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
