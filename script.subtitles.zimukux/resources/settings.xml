@@ -9,7 +9,7 @@
 					<control type="edit" format="string">
 						<heading>30101</heading>
 					</control>
-                	<default>https://so.zimuku.org</default>
+					<default>https://srtku.com</default>
                 	<constraints>
                 		<allowempty>false</allowempty>
                 	</constraints>
@@ -19,7 +19,7 @@
 					<control type="edit" format="string">
 						<heading>301011</heading>
 					</control>
-                	<default>https://ddddocr.lm317379829.repl.co/</default>
+                	<default></default>
                 	<constraints>
                 		<allowempty>false</allowempty>
                 	</constraints>
