@@ -1,3 +1,7 @@
+v6.0.7
+- reworked tmdb logon / accreditation
+- various code refactoring / pylint items / docstrings (WIP)
+
 v6.0.5
 - removed support for broken/obsolete addons artwork downloader, couch potato, sick rage, trakt helper
 - removed support for youtube-dl
