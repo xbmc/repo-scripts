@@ -239,7 +239,7 @@ msgstr ""
 
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
+msgid "Lrclib"
 msgstr ""
 
 msgctxt "#32902"
@@ -247,7 +247,7 @@ msgid "MusixMatch"
 msgstr ""
 
 msgctxt "#32903"
-msgid "GomAudio"
+msgid "Megalobiz"
 msgstr ""
 
 msgctxt "#32904"
@@ -276,4 +276,8 @@ msgstr ""
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Super Music"
 msgstr ""

@@ -20,7 +20,7 @@ class LyricsFetcher:
     def __init__(self, *args, **kwargs):
         self.DEBUG = kwargs['debug']
         self.settings = kwargs['settings']
-        self.SEARCH_URL = 'https://www.lyricsify.com/search?q=%s'
+        self.SEARCH_URL = 'https://www.lyricsify.com/lyrics/%s/%s'
         self.LYRIC_URL = 'https://www.lyricsify.com%s'
 
     def get_lyrics(self, song):
@@ -29,11 +29,10 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-        artist = song.artist.replace(' ', '+')
-        title = song.title.replace(' ', '+')
-        search = '%s+%s' % (artist, title)
+        artist = song.artist.replace(' ', '-')
+        title = song.title.replace(' ', '-')
         try:
-            url = self.SEARCH_URL % search
+            url = self.SEARCH_URL % (artist, title)
             search = requests.get(url, headers=UserAgent, timeout=10)
             response = search.text
         except:
@@ -41,7 +40,7 @@ class LyricsFetcher:
         links = []
         soup = BeautifulSoup(response, 'html.parser')
         for link in soup.find_all('a'):
-            if link.string and link.get('href').startswith('/lyrics/'):
+            if link.string and link.get('href').startswith('/lrc/'):
                 foundartist = link.string.split(' - ', 1)[0]
                 # some links don't have a proper 'artist - title' format
                 try:
@@ -69,7 +68,7 @@ class LyricsFetcher:
             response = search.text
         except:
             return None
-        matchcode = re.search('div id="entry">(.*?)<div', response, flags=re.DOTALL)
+        matchcode = re.search('/h3>(.*?)</div', response, flags=re.DOTALL)
         if matchcode:
             lyricscode = (matchcode.group(1))
             cleanlyrics = re.sub('<[^<]+?>', '', lyricscode)

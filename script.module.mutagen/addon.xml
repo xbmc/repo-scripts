@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.mutagen" name="Mutagen" version="1.44.0+matrix.1" provider-name="Christoph Reiter">
+<addon id="script.module.mutagen" name="Mutagen" version="1.47.0" provider-name="Christoph Reiter">
   <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="xbmc.python" version="3.0.0" />
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
@@ -12,7 +12,7 @@
     <website>https://mutagen.readthedocs.io/en/latest/</website>
 	<source>https://github.com/quodlibet/mutagen</source>
     <assets>
-      <icon>icon.png</icon>
+      <icon>resources/icon.png</icon>
     </assets>
   </extension>
 </addon>

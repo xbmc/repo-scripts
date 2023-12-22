@@ -9,32 +9,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Trottel <trottel09@gmail.com>\n"
-"Language-Team: Czech (http://www.transifex.com/teamxbmc/xbmc-addons/language/cs/)\n"
+"PO-Revision-Date: 2021-11-05 00:25+0000\n"
+"Last-Translator: HansCR <h.vanek@gmail.com>\n"
+"Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/cs_cz/>\n"
+"Language: cs_cz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.8.1\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
 msgstr "Aktualizujte svou knihovnu videa a hudby v Kodi podle časovače. Časovač běží jako služba Kodi, takže nikdy nezmeškáte aktualizaci."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr "Toto je služba Kodi, která aktualizuje vaše knihovny hudby a videa podle časovače. Můžete vybrat různý interval pro prohledávání vašich databází médií (audio, video, obojí) nebo můžete nastavit časovač ve stylu cronu pro lepší ovládání. Pokud přehráváte soubor audia nebo videa, když se spustí časovač, může být proces aktualizace knihovny přeskočen, dokud není přehrávání dokončeno, aby nebylo přerušeno. Nyní jsou také podporovány Aktualizace konkrétní cesty k videu a Čištění knihoven hudby a videa."
 
 msgctxt "#30000"
@@ -70,16 +62,16 @@ msgid "Run during playback"
 msgstr "Spustit během přehrávání"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Zpoždění spuštění (minuty)"
+msgid "Startup Delay"
+msgstr "Zpoždění spuštění"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Použít rozšířený časovač"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Doba mezi aktualizacemi (hodiny)"
+msgid "Amount of time between updates"
+msgstr "Délka doby mezi aktualizacemi"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -101,33 +93,41 @@ msgctxt "#30015"
 msgid "Disable manual run prompt"
 msgstr "Zakázat výzvu ručního spuštění"
 
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "Syntax Cronu %s není správný, nastaveno na výchozí 2 hodiny"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "Zkontrolovat před prohledáním, zda jsou zdroje dostupné"
+
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "Aktualizovat konkrétní cestu 1"
+msgid "Edit Custom Paths"
+msgstr "Upravit vlastní cesty"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "Aktualizovat konkrétní cestu 2"
+msgid "Choose Action"
+msgstr "Vyberte akci"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "Aktualizovat konkrétní cestu 3"
+msgid "Delete this item?"
+msgstr "Odstranit tuto položku?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Cesta k videu"
+msgid "Browse for path"
+msgstr "Vyhledat cestu"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "Přečtěte si zřeknutí se odpovědnosti"
+msgid "This update broke custom paths, you must remake them"
+msgstr "Tato aktualizace zničila vlastní cesty, musíte je znovu vytvořit"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "Cesty k videu - zřeknutí se odpovědnosti"
+msgid "Custom Paths Disclaimer"
+msgstr "Vlastní cesty - zřeknutí se odpovědnosti"
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "Cesta již musí být zdroj videa s obsahem"
+msgid "Path must already be a valid source with content"
+msgstr "Cesta již musí být platný zdroj s obsahem"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -207,8 +207,136 @@ msgstr "Výraz Cron pro hudbu"
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "Aktualizace se spustí znovu"
+msgstr "Aktualizace se spustí znovu "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "Chcete spustit aktualizaci ručně?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "Žádná prodleva"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 Minuta"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 Minuty"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 Minuty"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 Minuty"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 Minut"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 Hodina"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 Hodiny"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 Hodiny"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 Hodin"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 Hodin"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 Hodin"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "Jak dlouho pozdržet zmeškané prohledávání po spuštění systému"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Povolit prohledávání knihoven když se přehrávají média"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "Povolit spuštění prohledávání pouze když je systém v nečinnosti (spořič obrazovky aktivní)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "Zakáže dialogové okno když se spouští Ruční spuštění"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "Přepnutí používá časovač cron namísto jednoduchého časovače"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "Vyberte jak často spouštět prohledávání knihoven"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "Nastavte vlastní interval pomocí cron syntaxe - příklad je '15 */5 * * *' pro čtvrt hodiny každých 5 hodin každý den"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "Spustit editor vlastních cest pro nastavení vybraných složek k prohledávání místo prohledávání celé knihovny"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "Spustit čistící proces knihoven Kodi pro odstranění smazaných médií"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "Přidá další potvrzovací dotaz před spuštěním čištění knihoven"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "Nastavte jak často se spustí čistící proces. Po každé aktualizaci, jednou denně, jednou týdně, jednou měsíčně nebo vlastní"
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Zpoždění spuštění (minuty)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Doba mezi aktualizacemi (hodiny)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "Aktualizovat konkrétní cestu 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "Aktualizovat konkrétní cestu 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "Aktualizovat konkrétní cestu 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Cesta k videu"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "Přečtěte si zřeknutí se odpovědnosti"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "Cesty k videu - zřeknutí se odpovědnosti"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "Cesta již musí být zdroj videa s obsahem"

@@ -18,7 +18,7 @@ except:
     pass
 
 __title__ = 'darklyrics'
-__priority__ = '250'
+__priority__ = '260'
 __lrc__ = False
 
 

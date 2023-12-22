@@ -20,13 +20,13 @@ class AutoUpdater:
 
     def __init__(self):
         utils.check_data_dir()  # in case this directory does not exist yet
-        self.monitor = UpdateMonitor(update_settings=self.createSchedules, after_scan=self.databaseUpdated)
         self.readLastRun()
 
         # force and update on startup to create the array
         self.createSchedules(True)
 
     def runProgram(self):
+        self.monitor = UpdateMonitor(update_settings=self.createSchedules, after_scan=self.databaseUpdated)
         # a one-time catch for the startup delay
         if(utils.getSettingInt("startup_delay") != 0):
             count = 0
@@ -70,7 +70,7 @@ class AutoUpdater:
             while count < len(self.schedules):
                 cronJob = self.schedules[count]
 
-                if(cronJob.next_run <= now):
+                if(cronJob.next_run <= now or manual):
                     if(not player.isPlaying() or utils.getSetting("run_during_playback") == "true"):
 
                         # check if run on idle is checked and screen is idle - disable this on manual run
@@ -199,7 +199,7 @@ class AutoUpdater:
 
     def checkTimer(self, settingName):
         result = ''
-
+        utils.log(utils.getSetting(settingName + "_timer"))
         # figure out if using standard or advanced timer
         if(utils.getSettingBool(settingName + '_advanced_timer')):
             # copy the expression

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.8.0" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.9.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -66,6 +66,11 @@
     <website>https://github.com/Heckie75/kodi-addon-timers</website>
     <source>https://github.com/Heckie75/kodi-addon-timers</source>
     <news>
+v3.9.0 (2023-11-11)
+- Add new system action 'restart Kodi'
+- Add new extra feature to prevent display off when audio is playing
+- Bugfix: Prevent exception in fader context
+
 v3.8.0 (2023-08-06)
 - Context menu quicktimer: Added dialog if item is already scheduled and ask to replace or delete
 
@@ -83,16 +88,6 @@ v3.5.0 (2023-02-07)
 - New feature: priority of timers and competitive behavior
 - New feature: System action to put playing device on standby via a CEC peripheral
 - Fixed issue so that favourites can be scheduled again
-
-v3.4.0 (2023-01-10)
-- New feature: Media action in order to pause audio or video, feature request #21
-- Refactoring: moved state to timer object
-- Reorganized setting levels (simple, standard, advanced, expert)
-- Introduced logging (see kodi.log)
-
-v3.3.1 (2022-11-26)
-- Bugfix: scheduled timers stop working that are scheduled after Sunday (week change Sun -> Mon)
-- Refactoring
 
 Complete changelog see https://github.com/Heckie75/kodi-addon-timers
     </news>

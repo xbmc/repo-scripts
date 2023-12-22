@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.arrow"
-       name="arrow"
-       version="1.0.3.1"
-       provider-name="crsmithdev, Razzeee">
+<addon id="script.module.arrow" name="arrow" version="1.2.3" provider-name="Chris Smith">
   <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.dateutil" version="2.8.1"/>
-    <import addon="script.module.typing_extensions" version="3.7.4.3"/>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.dateutil" version="2.8.2" />
+    <import addon="script.module.typing_extensions" version="4.7.1" />
   </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
+  <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Arrow: better dates and times for Python</summary>
-    <description lang="en_GB">Packed for Kodi from https://github.com/crsmithdev/arrow</description>
+    <summary lang="en_GB">Better dates and times for Python</summary>
+    <description lang="en_GB">Better dates and times for Python</description>
+    <license>Apache-2.0</license>
     <platform>all</platform>
-    <license>Apache2</license>
-    <source>https://github.com/Razzeee/script.module.arrow</source>
-    <email>beenje AT gmail.com</email>
+    <website>https://arrow.readthedocs.io/en/latest/</website>
+    <source>https://github.com/arrow-py/arrow</source>
     <assets>
-      <icon>icon.png</icon>
+      <icon>resources/icon.png</icon>
     </assets>
   </extension>
 </addon>

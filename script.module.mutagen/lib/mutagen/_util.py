@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2006  Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,24 +17,41 @@ import codecs
 import errno
 import decimal
 from io import BytesIO
-
-try:
-    import mmap
-except ImportError:
-    # Google App Engine has no mmap:
-    #   https://github.com/quodlibet/mutagen/issues/286
-    mmap = None
+from typing import Tuple, List
 
 from collections import namedtuple
 from contextlib import contextmanager
 from functools import wraps
 from fnmatch import fnmatchcase
 
-from ._compat import chr_, PY2, iteritems, iterbytes, integer_types, xrange, \
-    izip, text_type, reraise
+
+_DEFAULT_BUFFER_SIZE = 2 ** 20
 
 
-def intround(value):
+def endswith(text, end):
+    # useful for paths which can be both, str and bytes
+    if isinstance(text, str):
+        if not isinstance(end, str):
+            end = end.decode("ascii")
+    else:
+        if not isinstance(end, bytes):
+            end = end.encode("ascii")
+    return text.endswith(end)
+
+
+def reraise(tp, value, tb):
+    raise tp(value).with_traceback(tb)
+
+
+def bchr(x):
+    return bytes([x])
+
+
+def iterbytes(b):
+    return (bytes([v]) for v in b)
+
+
+def intround(value: float) -> int:
     """Given a float returns a rounded int. Should give the same result on
     both Py2/3
     """
@@ -44,13 +60,13 @@ def intround(value):
         value).to_integral_value(decimal.ROUND_HALF_EVEN))
 
 
-def is_fileobj(fileobj):
+def is_fileobj(fileobj) -> bool:
     """Returns:
         bool: if an argument passed ot mutagen should be treated as a
             file object
     """
 
-    return not (isinstance(fileobj, (text_type, bytes)) or
+    return not (isinstance(fileobj, (str, bytes)) or
                 hasattr(fileobj, "__fspath__"))
 
 
@@ -105,8 +121,8 @@ def fileobj_name(fileobj):
     """
 
     value = getattr(fileobj, "name", u"")
-    if not isinstance(value, (text_type, bytes)):
-        value = text_type(value)
+    if not isinstance(value, (str, bytes)):
+        value = str(value)
     return value
 
 
@@ -212,7 +228,7 @@ def _openfile(instance, filething, filename, fileobj, writable, create):
             fileobj = filething
         elif hasattr(filething, "__fspath__"):
             filename = filething.__fspath__()
-            if not isinstance(filename, (bytes, text_type)):
+            if not isinstance(filename, (bytes, str)):
                 raise TypeError("expected __fspath__() to return a filename")
         else:
             filename = filething
@@ -302,9 +318,6 @@ def hashable(cls):
     Needs a working __eq__ and __hash__ and will add a __ne__.
     """
 
-    # py2
-    assert "__hash__" in cls.__dict__
-    # py3
     assert cls.__dict__["__hash__"] is not None
     assert "__eq__" in cls.__dict__
 
@@ -340,8 +353,8 @@ def enum(cls):
     new_type.__module__ = cls.__module__
 
     map_ = {}
-    for key, value in iteritems(d):
-        if key.upper() == key and isinstance(value, integer_types):
+    for key, value in d.items():
+        if key.upper() == key and isinstance(value, int):
             value_instance = new_type(value)
             setattr(new_type, key, value_instance)
             map_[value] = key
@@ -389,8 +402,8 @@ def flags(cls):
     new_type.__module__ = cls.__module__
 
     map_ = {}
-    for key, value in iteritems(d):
-        if key.upper() == key and isinstance(value, integer_types):
+    for key, value in d.items():
+        if key.upper() == key and isinstance(value, int):
             value_instance = new_type(value)
             setattr(new_type, key, value_instance)
             map_[value] = key
@@ -403,7 +416,7 @@ def flags(cls):
                 matches.append("%s.%s" % (type(self).__name__, v))
                 value &= ~k
         if value != 0 or not matches:
-            matches.append(text_type(value))
+            matches.append(str(value))
 
         return " | ".join(matches)
 
@@ -443,25 +456,13 @@ class DictMixin(object):
         else:
             return True
 
-    if PY2:
-        has_key = __has_key
-
     __contains__ = __has_key
-
-    if PY2:
-        iterkeys = lambda self: iter(self.keys())
 
     def values(self):
         return [self[k] for k in self.keys()]
 
-    if PY2:
-        itervalues = lambda self: iter(self.values())
-
     def items(self):
-        return list(izip(self.keys(), self.values()))
-
-    if PY2:
-        iteritems = lambda s: iter(s.items())
+        return list(zip(self.keys(), self.values()))
 
     def clear(self):
         for key in list(self.keys()):
@@ -477,7 +478,7 @@ class DictMixin(object):
                 return args[0]
             else:
                 raise
-        del(self[key])
+        del self[key]
         return value
 
     def popitem(self):
@@ -539,7 +540,7 @@ class DictProxy(DictMixin):
         self.__dict[key] = value
 
     def __delitem__(self, key):
-        del(self.__dict[key])
+        del self.__dict[key]
 
     def keys(self):
         return self.__dict.keys()
@@ -591,7 +592,7 @@ def _fill_cdata(cls):
                 funcs["to_%s%s%s" % (prefix, name, esuffix)] = pack
                 funcs["to_%sint%s%s" % (prefix, bits, esuffix)] = pack
 
-    for key, func in iteritems(funcs):
+    for key, func in funcs.items():
         setattr(cls, key, staticmethod(func))
 
 
@@ -602,12 +603,11 @@ class cdata(object):
     uint32_le(data)/to_uint32_le(num)/uint32_le_from(data, offset=0)
     """
 
-    from struct import error
-    error = error
+    error = struct.error
 
     bitswap = b''.join(
-        chr_(sum(((val >> i) & 1) << (7 - i) for i in xrange(8)))
-        for val in xrange(256))
+        bchr(sum(((val >> i) & 1) << (7 - i) for i in range(8)))
+        for val in range(256))
 
     test_bit = staticmethod(lambda value, n: bool((value >> n) & 1))
 
@@ -615,7 +615,7 @@ class cdata(object):
 _fill_cdata(cdata)
 
 
-def get_size(fileobj):
+def get_size(fileobj) -> int:
     """Returns the size of the file.
     The position when passed in will be preserved if no error occurs.
 
@@ -635,7 +635,7 @@ def get_size(fileobj):
         fileobj.seek(old_pos, 0)
 
 
-def read_full(fileobj, size):
+def read_full(fileobj, size: int) -> None:
     """Like fileobj.read but raises IOError if not all requested data is
     returned.
 
@@ -658,7 +658,7 @@ def read_full(fileobj, size):
     return data
 
 
-def seek_end(fileobj, offset):
+def seek_end(fileobj, offset: int) -> None:
     """Like fileobj.seek(-offset, 2), but will not try to go beyond the start
 
     Needed since file objects from BytesIO will not raise IOError and
@@ -683,65 +683,7 @@ def seek_end(fileobj, offset):
         fileobj.seek(-offset, 2)
 
 
-def mmap_move(fileobj, dest, src, count):
-    """Mmaps the file object if possible and moves 'count' data
-    from 'src' to 'dest'. All data has to be inside the file size
-    (enlarging the file through this function isn't possible)
-
-    Will adjust the file offset.
-
-    Args:
-        fileobj (fileobj)
-        dest (int): The destination offset
-        src (int): The source offset
-        count (int) The amount of data to move
-    Raises:
-        mmap.error: In case move failed
-        IOError: In case an operation on the fileobj fails
-        ValueError: In case invalid parameters were given
-    """
-
-    assert mmap is not None, "no mmap support"
-
-    if dest < 0 or src < 0 or count < 0:
-        raise ValueError("Invalid parameters")
-
-    try:
-        fileno = fileobj.fileno()
-    except (AttributeError, IOError):
-        raise mmap.error(
-            "File object does not expose/support a file descriptor")
-
-    fileobj.seek(0, 2)
-    filesize = fileobj.tell()
-    length = max(dest, src) + count
-
-    if length > filesize:
-        raise ValueError("Not in file size boundary")
-
-    offset = ((min(dest, src) // mmap.ALLOCATIONGRANULARITY) *
-              mmap.ALLOCATIONGRANULARITY)
-    assert dest >= offset
-    assert src >= offset
-    assert offset % mmap.ALLOCATIONGRANULARITY == 0
-
-    # Windows doesn't handle empty mappings, add a fast path here instead
-    if count == 0:
-        return
-
-    # fast path
-    if src == dest:
-        return
-
-    fileobj.flush()
-    file_map = mmap.mmap(fileno, length - offset, offset=offset)
-    try:
-        file_map.move(dest - offset, src - offset, count)
-    finally:
-        file_map.close()
-
-
-def resize_file(fobj, diff, BUFFER_SIZE=2 ** 16):
+def resize_file(fobj, diff: int, BUFFER_SIZE: int = _DEFAULT_BUFFER_SIZE) -> None:
     """Resize a file by `diff`.
 
     New space will be filled with zeros.
@@ -778,7 +720,8 @@ def resize_file(fobj, diff, BUFFER_SIZE=2 ** 16):
             raise
 
 
-def fallback_move(fobj, dest, src, count, BUFFER_SIZE=2 ** 16):
+def move_bytes(fobj, dest: int, src: int, count: int,
+               BUFFER_SIZE: int = _DEFAULT_BUFFER_SIZE) -> None:
     """Moves data around using read()/write().
 
     Args:
@@ -821,12 +764,12 @@ def fallback_move(fobj, dest, src, count, BUFFER_SIZE=2 ** 16):
         fobj.flush()
 
 
-def insert_bytes(fobj, size, offset, BUFFER_SIZE=2 ** 16):
+def insert_bytes(fobj, size: int, offset: int,
+                 BUFFER_SIZE: int = _DEFAULT_BUFFER_SIZE) -> None:
     """Insert size bytes of empty space starting at offset.
 
     fobj must be an open file object, open rb+ or
-    equivalent. Mutagen tries to use mmap to resize the file, but
-    falls back to a significantly slower method if mmap fails.
+    equivalent.
 
     Args:
         fobj (fileobj)
@@ -847,22 +790,15 @@ def insert_bytes(fobj, size, offset, BUFFER_SIZE=2 ** 16):
         raise ValueError
 
     resize_file(fobj, size, BUFFER_SIZE)
-
-    if mmap is not None:
-        try:
-            mmap_move(fobj, offset + size, offset, movesize)
-        except mmap.error:
-            fallback_move(fobj, offset + size, offset, movesize, BUFFER_SIZE)
-    else:
-        fallback_move(fobj, offset + size, offset, movesize, BUFFER_SIZE)
+    move_bytes(fobj, offset + size, offset, movesize, BUFFER_SIZE)
 
 
-def delete_bytes(fobj, size, offset, BUFFER_SIZE=2 ** 16):
+def delete_bytes(fobj, size: int, offset: int,
+                 BUFFER_SIZE: int = _DEFAULT_BUFFER_SIZE) -> None:
     """Delete size bytes of empty space starting at offset.
 
     fobj must be an open file object, open rb+ or
-    equivalent. Mutagen tries to use mmap to resize the file, but
-    falls back to a significantly slower method if mmap fails.
+    equivalent.
 
     Args:
         fobj (fileobj)
@@ -882,18 +818,11 @@ def delete_bytes(fobj, size, offset, BUFFER_SIZE=2 ** 16):
     if movesize < 0:
         raise ValueError
 
-    if mmap is not None:
-        try:
-            mmap_move(fobj, offset, offset + size, movesize)
-        except mmap.error:
-            fallback_move(fobj, offset, offset + size, movesize, BUFFER_SIZE)
-    else:
-        fallback_move(fobj, offset, offset + size, movesize, BUFFER_SIZE)
-
+    move_bytes(fobj, offset, offset + size, movesize, BUFFER_SIZE)
     resize_file(fobj, -size, BUFFER_SIZE)
 
 
-def resize_bytes(fobj, old_size, new_size, offset):
+def resize_bytes(fobj, old_size: int, new_size: int, offset: int) -> None:
     """Resize an area in a file adding and deleting at the end of it.
     Does nothing if no resizing is needed.
 
@@ -933,13 +862,14 @@ def dict_match(d, key, default=None):
     if key in d and "[" not in key:
         return d[key]
     else:
-        for pattern, value in iteritems(d):
+        for pattern, value in d.items():
             if fnmatchcase(key, pattern):
                 return value
     return default
 
 
-def encode_endian(text, encoding, errors="strict", le=True):
+def encode_endian(text: str, encoding: str,
+                  errors: str = "strict", le: bool = True) -> bytes:
     """Like text.encode(encoding) but always returns little endian/big endian
     BOMs instead of the system one.
 
@@ -971,7 +901,8 @@ def encode_endian(text, encoding, errors="strict", le=True):
         return text.encode(encoding, errors)
 
 
-def decode_terminated(data, encoding, strict=True):
+def decode_terminated(data: bytes, encoding: str,
+                      strict: bool = True) -> Tuple[str, bytes]:
     """Returns the decoded data until the first NULL terminator
     and all data after it.
 
@@ -1011,7 +942,7 @@ def decode_terminated(data, encoding, strict=True):
 
     # slow path
     decoder = codec_info.incrementaldecoder()
-    r = []
+    r: List[str] = []
     for i, b in enumerate(iterbytes(data)):
         c = decoder.decode(b)
         if c == u"\x00":
@@ -1037,7 +968,7 @@ class BitReader(object):
         self._bits = 0
         self._pos = fileobj.tell()
 
-    def bits(self, count):
+    def bits(self, count: int) -> int:
         """Reads `count` bits and returns an uint, MSB read first.
 
         May raise BitReaderError if not enough data could be read or
@@ -1062,7 +993,7 @@ class BitReader(object):
         assert self._bits < 8
         return value
 
-    def bytes(self, count):
+    def bytes(self, count: int) -> bytes:
         """Returns a bytearray of length `count`. Works unaligned."""
 
         if count < 0:
@@ -1075,9 +1006,9 @@ class BitReader(object):
                 raise BitReaderError("not enough data")
             return data
 
-        return bytes(bytearray(self.bits(8) for _ in xrange(count)))
+        return bytes(bytearray(self.bits(8) for _ in range(count)))
 
-    def skip(self, count):
+    def skip(self, count: int) -> None:
         """Skip `count` bits.
 
         Might raise BitReaderError if there wasn't enough data to skip,
@@ -1096,12 +1027,12 @@ class BitReader(object):
             count -= n_bytes * 8
             self.bits(count)
 
-    def get_position(self):
+    def get_position(self) -> int:
         """Returns the amount of bits read or skipped so far"""
 
         return (self._fileobj.tell() - self._pos) * 8 - self._bits
 
-    def align(self):
+    def align(self) -> int:
         """Align to the next byte, returns the amount of bits skipped"""
 
         bits = self._bits
@@ -1109,7 +1040,7 @@ class BitReader(object):
         self._bits = 0
         return bits
 
-    def is_aligned(self):
+    def is_aligned(self) -> bool:
         """If we are currently aligned to bytes and nothing is buffered"""
 
         return self._bits == 0

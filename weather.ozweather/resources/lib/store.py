@@ -98,7 +98,7 @@ class Store:
         # http://www.bom.gov.au/australia/radar/info/nt_info.shtml
         (-23.82, 133.90, "Alice Springs", "IDR253"),
         (-12.46, 130.93, "Darwin/Berrimah", "IDR633"),
-        (-12.28, 136.82, "Gove", "IDR093"),
+        (-12.27, 136.82, "Gove", "IDR1123"),
         (-14.51, 132.45, "Katherine/Tindal", "IDR423"),
         (-11.6494, 133.38, "Warruwi", "IDR773")
     ]
@@ -186,7 +186,7 @@ class Store:
                            'rain': '45',
                            'rain_and_snow': '46',
                            'rain_clearing': '45',
-                           'Light_rain': '12',
+                           'light_rain': '12',
                            'rain_developing': '45',
                            'rain_tending to_snow': '45',
                            'shower': '45',

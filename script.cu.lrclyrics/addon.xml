@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.5.2" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.6.2" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.8.2+matrix.1"/>
@@ -80,6 +80,6 @@
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
-		<news>- remove invalid characters from filenames</news>
+		<news>- fixed broken scrapers and added new ones</news>
 	</extension>
 </addon>

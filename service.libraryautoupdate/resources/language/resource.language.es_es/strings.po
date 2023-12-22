@@ -10,32 +10,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Pablo Rodríguez <trujulu@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/teamxbmc/xbmc-addons/language/es/)\n"
+"PO-Revision-Date: 2023-06-24 15:42+0000\n"
+"Last-Translator: José Antonio Alvarado <jalvarado0.eses@gmail.com>\n"
+"Language-Team: Spanish (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/es_es/>\n"
+"Language: es_es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
-msgstr "Actualice sus librerías de Video y Musica de Kodi con un temporizador. El temporizador se ejecuta como un servicio para que nunca se pierda una actualización."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
+msgstr "Actualiza tus bibliotecas de vídeo y música Kodi con un temporizador. Timer se ejecuta como un servicio de Kodi para que nunca te pierdas una actualización."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr "Este es un servicio de Kodi que actualizara sus librerías de música y video con un temporizador. Puede elegir intervalos diferentes para escanear sus bases de datos (video, música, ambas) o puede elegir un temporizador del estilo \"cron\" para un mayor control. Si esta reproduciendo audio o video cuando el temporizador se ejecuta, omitirá la actualización hasta que acabe la reproducción, para que no interrumpa su experiencia multimedia. Actualizar una ruta especifica y limpiar las bases de datos de música y video esta ahora soportado."
 
 msgctxt "#30000"
@@ -71,16 +63,16 @@ msgid "Run during playback"
 msgstr "Ejecutar durante la reproducción"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Retraso de inicio (minutos)"
+msgid "Startup Delay"
+msgstr "Retardo de arranque"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Usar temporizador avanzado"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Tiempo entre actualizaciones (horas)"
+msgid "Amount of time between updates"
+msgstr "Tiempo transcurrido entre actualizaciones"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -102,33 +94,41 @@ msgctxt "#30015"
 msgid "Disable manual run prompt"
 msgstr "Desactivar ejecución manual de prompt"
 
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr "La sintaxis de Cron %s es incorrecta, por defecto 2 horas"
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "Comprobar si existen fuentes antes de escanear"
+
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "Actualizar ruta especifica 1"
+msgid "Edit Custom Paths"
+msgstr "Editar rutas personalizadas"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "Actualizar ruta especifica 2"
+msgid "Choose Action"
+msgstr "Elegir acción"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "Actualizar ruta especifica 3"
+msgid "Delete this item?"
+msgstr "¿Borrar este elemento?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Rutas de Video"
+msgid "Browse for path"
+msgstr "Examinar la ruta"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "Leer Advertencia"
+msgid "This update broke custom paths, you must remake them"
+msgstr "Esta actualización ha roto las rutas personalizadas, debes rehacerlas"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "Advertencia rutas de video"
+msgid "Custom Paths Disclaimer"
+msgstr "Descargo de responsabilidad para rutas personalizadas"
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "La ruta debe ser un origen de video con contenido"
+msgid "Path must already be a valid source with content"
+msgstr "La ruta ya debe ser una fuente válida con contenido"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -172,7 +172,7 @@ msgstr "Limpiar Libreria de Video"
 
 msgctxt "#30049"
 msgid "Clean Music Library"
-msgstr "Limpiar Libreria de Musica"
+msgstr "Limpiar biblioteca de música"
 
 msgctxt "#30050"
 msgid "Error Cleaning Database"
@@ -208,8 +208,136 @@ msgstr "Expresión de Música Cron"
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "La actualización se ejecutara otra vez"
+msgstr "La actualización se ejecutará de nuevo "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "¿Quiere ejecutar la actualización manualmente?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr "Sin retraso"
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 minuto"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 minutos"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 minutos"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 minutos"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 minutos"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 hora"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 horas"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 horas"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 horas"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 horas"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 horas"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "Cuánto tiempo retrasar el escaneo perdido tras del inicio del sistema"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Permitir el escaneo de la biblioteca durante la reproducción de archivos multimedia"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "Sólo permitir que se inicien los escaneos cuando el sistema está inactivo (salvapantallas activo)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr "Desactiva el cuadro de diálogo al iniciar una ejecución manual"
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr "Alternar el uso de un temporizador cron en lugar del temporizador simple"
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "Seleccionar la frecuencia de inicio de las exploraciones de la biblioteca"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr "Establecer un intervalo personalizado utilizando la sintaxis cron - por ejemplo '15 */5 * * * *' para cada cuarto de hora cada 5 horas todos los días"
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr "Iniciar el editor de rutas personalizadas para seleccionar directorios de exploración específicos en lugar de toda la biblioteca"
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr "Ejecuta el proceso de limpieza de la biblioteca de Kodi para eliminar los medios borrados"
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "Añadir un mensaje de confirmación adicional antes de que se ejecute el proceso de limpieza"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "Establecer la frecuencia de ejecución del proceso de limpieza. Después de cada actualización, una vez al día, una vez a la semana, una vez al mes o personalizado"
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Retraso de inicio (minutos)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Tiempo entre actualizaciones (horas)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "Actualizar ruta especifica 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "Actualizar ruta especifica 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "Actualizar ruta especifica 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Rutas de Video"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "Leer Advertencia"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "Advertencia rutas de video"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "La ruta debe ser un origen de video con contenido"

@@ -12,27 +12,18 @@ msgstr ""
 "PO-Revision-Date: 2017-09-19 14:20+0000\n"
 "Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
 "Language-Team: Icelandic (http://www.transifex.com/teamxbmc/xbmc-addons/language/is/)\n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: is\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
 msgstr "Uppfæra Kvikmynda og Tónlistarsöfnin þín á Kodi á ákveðnum tímum. Tímasetningin keyrir sem þjónusta á Kodi svo þú missir aldrei af uppfærslu."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr "Þetta er Kodi þjónusta sem uppfærir tónlistar- og kvikmyndasöfnin þín á ákveðnum tímum. Þú getur valið mismunandi tímabil til að skanna miðlunar gagnasöfn þín. (Tónlist, Kvikmyndir, Bæði) eða þú getur still cron tímasetningu til að hafa frekari stjórnun. Ef þú ert að keyra hljóð eða mynd þegar tíminn kemur þá bíður hann með uppfærslu þangað til að þú ert búinn til að trufla ekki afspilunina. Stuðningur er nú við uppfærslur á tilgreindum slóðum og Tiltekt á tónlistar/myndefnis söfnum."
 
 msgctxt "#30000"
@@ -68,16 +59,16 @@ msgid "Run during playback"
 msgstr "Keyra á meðan afspilun er í gangi"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
-msgstr "Biðtími ræsingar (mínútur)"
+msgid "Startup Delay"
+msgstr ""
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
 msgstr "Notaði Ítarlega Tímasetningu"
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr "Tímalengd á milli uppfærslna (klukkutímar)"
+msgid "Amount of time between updates"
+msgstr ""
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -99,33 +90,41 @@ msgctxt "#30015"
 msgid "Disable manual run prompt"
 msgstr "Gera handvirka keyrslu óvirka"
 
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr ""
+
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr "Uppfæra tilgreinda slóð 1"
+msgid "Edit Custom Paths"
+msgstr ""
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr "Uppfæra tilgreinda slóð 2"
+msgid "Choose Action"
+msgstr ""
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr "Uppfæra tilgreinda slóð 3"
+msgid "Delete this item?"
+msgstr ""
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr "Kvikmyndaslóð"
+msgid "Browse for path"
+msgstr ""
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr "Lestu Fyrirvarann"
+msgid "This update broke custom paths, you must remake them"
+msgstr ""
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
-msgstr "Fyrirvari Kvikmyndaslóða"
+msgid "Custom Paths Disclaimer"
+msgstr ""
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr "Slóðin þarf að vera þegar skilgreind sem kvikmyndaveita með efni"
+msgid "Path must already be a valid source with content"
+msgstr ""
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
@@ -210,3 +209,131 @@ msgstr "Uppfærslan mun keyra aftur"
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
 msgstr "Viltu ræsa handvirkt uppfærslu?"
+
+msgctxt "#30062"
+msgid "No Delay"
+msgstr ""
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr ""
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr ""
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr ""
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr ""
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr ""
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr ""
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr ""
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr ""
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr ""
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr ""
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr ""
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr ""
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr ""
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr ""
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr ""
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr ""
+
+#~ msgctxt "#30008"
+#~ msgid "Startup Delay (minutes)"
+#~ msgstr "Biðtími ræsingar (mínútur)"
+
+#~ msgctxt "#30010"
+#~ msgid "Amount of time between updates (hours)"
+#~ msgstr "Tímalengd á milli uppfærslna (klukkutímar)"
+
+#~ msgctxt "#30020"
+#~ msgid "Update Specific Path 1"
+#~ msgstr "Uppfæra tilgreinda slóð 1"
+
+#~ msgctxt "#30021"
+#~ msgid "Update Specific Path 2"
+#~ msgstr "Uppfæra tilgreinda slóð 2"
+
+#~ msgctxt "#30022"
+#~ msgid "Update Specific Path 3"
+#~ msgstr "Uppfæra tilgreinda slóð 3"
+
+#~ msgctxt "#30023"
+#~ msgid "Video Path"
+#~ msgstr "Kvikmyndaslóð"
+
+#~ msgctxt "#30030"
+#~ msgid "Read Disclaimer"
+#~ msgstr "Lestu Fyrirvarann"
+
+#~ msgctxt "#30031"
+#~ msgid "Video Paths Disclaimer"
+#~ msgstr "Fyrirvari Kvikmyndaslóða"
+
+#~ msgctxt "#30032"
+#~ msgid "Path must already be a video source with content"
+#~ msgstr "Slóðin þarf að vera þegar skilgreind sem kvikmyndaveita með efni"
