@@ -1,0 +1,335 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <section id="script.plex">
+
+        <!-- General -->
+        <category id="general" label="32000">
+            <group id="1" label="">
+                <!-- <setting id="transcode_format" label="32023" type="labelenum" values="mkv|hls" default="mkv" /> -->
+
+                <!-- <setting id="playback_directplay_force" type="boolean" label="32027" enable="eq(-1,true)" subsetting="true" /> -->
+                <setting id="debug" type="boolean" label="32024">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="oldprofile" type="boolean" label="33400" help="33401">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="subtitle_use_extended_title" type="boolean" label="32950" help="32951">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="poster_resolution_scale_perc" type="integer" label="32956" help="32957">
+                    <level>0</level>
+                    <default>100</default>
+                    <constraints>
+                        <minimum>25</minimum>
+                        <step>25</step>
+                        <maximum>750</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+        </category>
+        <!-- Player -->
+        <category id="player" label="32464">
+            <group id="2" label="">
+                <setting id="auto_seek" type="boolean" label="32466" help="32900">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="auto_seek_delay" parent="auto_seek" type="number" label="32487" help="32901">
+                    <level>0</level>
+                    <default>1</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.1</step>
+                        <maximum>5</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="auto_seek">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="kodi_skip_stepping" type="boolean" label="32465" help="32902">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="dynamic_timeline_seek" type="boolean" label="32471" help="32903">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="show_media_ends_info" type="boolean" label="32540" help="32541">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="show_media_ends_label" type="boolean" label="32542" help="">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="show_media_ends_info">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="player_show_buffer" type="boolean" label="32912" help="32913">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="buffer_wait_max" type="integer" label="32918" help="32919">
+                    <level>0</level>
+                    <default>120</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>600</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="buffer_insufficient_wait" type="integer" label="32920" help="32921">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>600</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+        </category>
+        <!-- Markers -->
+        <category id="markers" label="33612">
+            <group id="3" label="">
+                <setting id="auto_skip_offset" type="number" label="33629" help="33630">
+                    <level>0</level>
+                    <default>2.5</default>
+                    <constraints>
+                        <minimum>-10</minimum>
+                        <step>0.5</step>
+                        <maximum>10</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <heading>33630</heading>
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="skip_intro_button_timeout" type="integer" label="32521" help="32524">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>40</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <heading>32524</heading>
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="skip_credits_button_timeout" type="integer" label="32525" help="32528">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>40</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <heading>32528</heading>
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="skip_intro_button_show_early_threshold1" type="integer" label="33509" help="33510">
+                    <level>0</level>
+                    <default>60</default>
+                    <constraints>
+                        <minimum>10</minimum>
+                        <step>10</step>
+                        <maximum>1800</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <heading>33510</heading>
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="skip_marker_timer_cancel" type="boolean" label="32906" help="32907">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="skip_marker_timer_immediate" type="boolean" label="32908" help="32909">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <!-- UI -->
+        <category id="user_interface" label="32467">
+            <group id="4" label="">
+                <setting id="fast_back" type="boolean" label="32485">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="postplay_always" type="boolean" label="32500">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="dynamic_backgrounds" type="boolean" label="32468">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="dbg_crossfade" type="boolean" label="32943">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                      <dependency type="enable" setting="dynamic_backgrounds">true</dependency>
+                  </dependencies>
+                </setting>
+                <setting id="background_colour" type="string" label="33200" help="33201">
+                  <level>0</level>
+                  <default>-</default> <!-- Black -->
+	              <control type="colorbutton" />
+                  <dependencies>
+                      <dependency type="enable" setting="dynamic_backgrounds">false</dependency>
+                  </dependencies>
+                </setting>
+                <setting id="background_art_blur_amount2" type="integer" label="32469">
+                    <level>0</level>
+                    <default>0</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>256</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                    <dependencies>
+                      <dependency type="enable" setting="dynamic_backgrounds">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="background_art_opacity_amount2" type="integer" label="32470">
+                    <level>0</level>
+                    <default>20</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>100</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                    <dependencies>
+                      <dependency type="enable" setting="dynamic_backgrounds">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="use_bg_fallback" type="boolean" label="32929">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                      <dependency type="enable" setting="dynamic_backgrounds">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="continue_use_thumb" type="boolean" label="32927" help="32928">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="playlist_visit_media" type="boolean" label="32505">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="postplay_timeout" type="integer" label="32501" help="32904">
+                    <level>0</level>
+                    <default>16</default>
+                    <control type="edit" format="integer">
+                        <heading>32501</heading>
+                    </control>
+                </setting>
+                <setting id="postplay_cancel" type="boolean" label="32905">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="dialog_flicker_fix" type="boolean" label="32952">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="screensaver" label="32488">
+            <group id="5" label="">
+                <setting id="screensaver_quiz" type="boolean" label="32489">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="system" label="33600">
+            <group id="6" label="">
+                <setting id="requests_timeout" type="number" label="33620" help="33621">
+                    <level>0</level>
+                    <default>5</default>
+                    <constraints>
+                        <minimum>0.1</minimum>
+                        <step>0.1</step>
+                        <maximum>20</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="conn_check_timeout" type="number" label="33632" help="33633">
+                    <level>0</level>
+                    <default>2.5</default>
+                    <constraints>
+                        <minimum>0.1</minimum>
+                        <step>0.1</step>
+                        <maximum>20</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="local_reach_timeout" type="number" label="33622" help="33623">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>1000</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
