@@ -20,6 +20,19 @@ def is_between(now, start, end):
     return is_between
 
 
+def convert_to_nhl_periods(period):
+    if period == 1:
+        return "1st"
+    elif period == 2:
+        return "2nd"
+    elif period == 3:
+        return "3rd"
+    elif period > 3:
+        # For overtime periods
+        return f"{period - 3} OT"
+    else:
+        return "Invalid period"
+
 class Scores:
 
     def __init__(self):
@@ -28,7 +41,7 @@ class Scores:
         self.local_string = self.addon.getLocalizedString
         self.ua_ipad = 'Mozilla/5.0 (iPad; CPU OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H143 ipad nhl 5.0925'
         self.nhl_logo = os.path.join(self.addon_path,'resources','nhl_logo.png')
-        self.api_url = 'http://statsapi.web.nhl.com/api/v1/schedule?date=%s&expand=schedule.teams,schedule.linescore,schedule.scoringplays'
+        self.api_url = 'https://api-web.nhle.com/v1/score/now'
         self.headshot_url = 'http://nhl.bamcontent.com/images/headshots/current/60x60/%s@2x.png'
         self.score_color = 'FF00B7EB'
         self.gametime_color = 'FFFFFF66'
@@ -62,13 +75,6 @@ class Scores:
 
             self.monitor.waitForAbort(self.daily_check_timer)
 
-
-    def local_to_pacific(self):
-        pacific = pytz.timezone('US/Pacific')
-        local_to_utc = datetime.datetime.now(pytz.timezone('UTC'))
-        local_to_pacific = local_to_utc.astimezone(pacific).strftime('%Y-%m-%d')
-        return local_to_pacific
-
     def string_to_date(self, string, date_format):
         try:
             date = datetime.datetime.strptime(str(string), date_format)
@@ -81,18 +87,18 @@ class Scores:
         # Check if any games are scheduled for today.
         # If so, check if any are live and if not sleep until first game starts
         json = self.get_scoreboard()
-        if json['totalGames'] == 0:
+        if 'games' not in json or len(json['games']) == 0:
             self.addon.setSetting(id='score_updates', value='false')
             self.notify(self.local_string(30300), self.local_string(30351))
         else:
             live_games = 0
-            for game in json['dates'][0]['games']:
-                if game['status']['abstractGameState'].lower() == 'live':
+            for game in json['games']:
+                if game['gameState'].lower() == 'live':
                     live_games += 1
                     break
 
             if live_games == 0:
-                first_game_start = self.string_to_date(json['dates'][0]['games'][0]['gameDate'], "%Y-%m-%dT%H:%M:%SZ")
+                first_game_start = self.string_to_date(json['games'][0]['startTimeUTC'], "%Y-%m-%dT%H:%M:%SZ")
                 sleep_seconds = int((first_game_start - datetime.datetime.utcnow()).total_seconds())
                 if sleep_seconds >= 6600:
                     # hour and 50 minutes or more just display hours
@@ -111,13 +117,8 @@ class Scores:
                 self.monitor.waitForAbort(sleep_seconds)
 
     def get_scoreboard(self):
-        if self.test:
-            url = self.api_url % '2022-4-18'
-        else:
-            url = self.api_url % self.local_to_pacific()
-
         headers = {'User-Agent': self.ua_ipad}
-        r = requests.get(url, headers=headers)
+        r = requests.get(self.api_url, headers=headers)
         return r.json()
 
     def scoring_updates_on(self):
@@ -128,44 +129,39 @@ class Scores:
         if xbmc.Player().isPlayingVideo(): video_playing = xbmc.Player().getPlayingFile().lower()
         return video_playing
 
-    def get_new_stats(self, game):
-        video_playing = self.get_video_playing()
-        ateam = game['teams']['away']['team']['abbreviation']
-        hteam = game['teams']['home']['team']['abbreviation']
-        current_period = game['linescore']['currentPeriod']
-        if 'currentPeriodOrdinal' in game['linescore']: current_period = game['linescore']['currentPeriodOrdinal']
+    def get_new_stats(self, game, old_game_stats):
+        ateam = game['awayTeam']
+        hteam = game['homeTeam']
+        current_period = convert_to_nhl_periods(game['periodDescriptor']['number']) if 'periodDescriptor' in game else ''
+        game_clock = f"{current_period} {game['clock']['timeRemaining']}" if 'clock' in game else ''
 
         desc = ''
         headshot = ''
-        try:
-            desc = game['scoringPlays'][-1]['result']['description']
-            # Remove Assists if there are none
-            if ', assists: none' in desc: desc = desc[:desc.find(', assists: none')]
-            player_id = game['scoringPlays'][-1]['players'][0]['player']['link']
-            player_id = player_id[player_id.rfind('/') + 1:]
-            headshot = self.headshot_url % player_id
-        except:
-            pass
+        if 'goals' in game and len(game['goals']) > 0:
+            last_goal = game['goals'][-1]
+            desc = f"{last_goal['name']['default']} ({last_goal['goalsToDate']})"
+            headshot = last_goal['mugshot']
 
-        game_clock = game['status']['detailedState']
-        if 'in progress' in game_clock.lower():
-            game_clock = f"{game['linescore']['currentPeriodTimeRemaining']} {game['linescore']['currentPeriodOrdinal']}"
+        # If home score and away score is more than the length of the goals array
+        # Don't store the new value, use the old one until the description is filled
+        if 'goals' in game and len(game['goals']) > 0 and (ateam['score'] + hteam['score'] > len(game['goals'])):
+            for old_item in old_game_stats:
+                if not self.scoring_updates_on(): break
+                if game['game_id'] == old_item['game_id']:
+                    self.new_game_stats.append(old_item)
 
-        # Disable spoiler by not showing score notifications for the game the user is currently watching
-        if ateam.lower() not in video_playing and hteam.lower() not in video_playing:
-            # Sometimes goal desc are generic, don't alert until more info has been added to the feed
-            if self.addon.getSetting(id="goal_desc") != 'true' or desc.lower() != 'goal':
-                self.new_game_stats.append(
-                    {"game_id": game['gamePk'],
-                     "away_name": game['teams']['away']['team']['abbreviation'],
-                     "home_name": game['teams']['home']['team']['abbreviation'],
-                     "away_score": game['linescore']['teams']['away']['goals'],
-                     "home_score": game['linescore']['teams']['home']['goals'],
-                     "game_clock": game_clock,
-                     "period": current_period,
-                     "goal_desc": desc,
-                     "headshot": headshot,
-                     "abstract_state": game['status']['abstractGameState']})
+        else:
+            self.new_game_stats.append(
+                {"game_id": game['id'],
+                 "away_name": ateam['abbrev'],
+                 "home_name": hteam['abbrev'],
+                 "away_score": ateam['score'] if 'score' in ateam else '',
+                 "home_score": hteam['score'] if 'score' in hteam else '',
+                 "game_clock": game_clock,
+                 "period": current_period,
+                 "goal_desc": desc,
+                 "headshot": headshot,
+                 "abstract_state": game['gameState']})
 
     def set_display_time(self):
         self.display_seconds = int(self.addon.getSetting(id="display_seconds"))
@@ -182,12 +178,12 @@ class Scores:
             home_score = f"[COLOR={self.score_color}]{new_item['home_name']} {new_item['home_score']}[/COLOR]"
 
         game_clock = f"[COLOR={self.gametime_color}]{new_item['game_clock']}[/COLOR]"
-        message = f"{away_score}    {home_score}    {game_clock}"
+        message = f"{away_score}  {home_score}  {game_clock}"
         return title, message
 
     def game_started_message(self, new_item):
         title = self.local_string(30358)
-        message = f"{new_item['away_name']} vs {new_item['home_name']}"
+        message = f"{new_item['away_name']} @ {new_item['home_name']}"
         return title, message
 
     def period_change_message(self, new_item):
@@ -212,9 +208,9 @@ class Scores:
 
         if self.addon.getSetting(id="goal_desc") == 'false':
             title = self.local_string(30365)
-            message = f"{away_score}    {home_score}    {game_clock}"
+            message = f"{away_score}  {home_score}  {game_clock}"
         else:
-            title = f"{away_score}    {home_score}    {game_clock}"
+            title = f"{away_score}  {home_score}  {game_clock}"
             message = new_item['goal_desc']
 
         return title, message
@@ -271,11 +267,11 @@ class Scores:
         while self.scoring_updates_on() and not self.monitor.abortRequested():
             json = self.get_scoreboard()
             self.new_game_stats.clear()
-            xbmc.log("Games: " + str(len(json['dates'][0]['games'])))
-            for game in json['dates'][0]['games']:
+            xbmc.log("Games: " + str(len(json['games'])))
+            for game in json['games']:
                 # Break out of loop if updates disabled
                 if not self.scoring_updates_on(): break
-                self.get_new_stats(game)
+                self.get_new_stats(game, old_game_stats)
 
             if first_time_thru != 1:
                 self.set_display_time()
