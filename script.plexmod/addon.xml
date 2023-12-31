@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.plexmod"
+       name="PM4K for Plex"
+       version="0.7.3-rev2"
+       provider-name="pannal">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.27.1+matrix.1"/>
+        <import addon="script.module.six" version="1.15.0+matrix.1"/>
+        <import addon="script.module.kodi-six" version="0.1.3.1" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="plugin.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">PlexMod for Kodi</summary>
+        <description lang="en_GB">Unofficial Plex for Kodi add-on</description>
+        <license>GPL-2.0-only</license>
+        <forum>https://forums.plex.tv/t/plexmod-for-kodi-18-19-20-21/481208</forum>
+        <website>https://www.plex.tv</website>
+        <source>https://github.com/pannal/plex-for-kodi</source>
+        <platform>all</platform>
+        <news>
+- Fix: certain home hubs were limited to 10 items without pagination
+- Fix: very rare infinite playback loop with enabled embedded subtitles (thanks @florinvlaicu for reporting)
+- Fix: Partially fix issues when switching audio streams during Transcoded/DirectStream playback
+- Fix: Fix error in ExtendHubTask
+- Fix: Partially revert "Home: Increase section change timeout from 0.3s to 0.5s; re-jig section change handling to allow using ENTER/SELECT to immediately select a section below 0.5s wait time" due to instability
+- Fix: Fix a couple of SyntaxWarnings for invalid escape sequences
+- Fix: Unfocusable buttons throw focus errors occasionally on shutdown
+- Fix: Laggy UI after playback/5 minutes due to requesting certain hubs without limits applied. Drastically improving UI smoothness even for smaller hubs (below 1000 items)
+       This also fixes crash and shutdown issues and by proxy should enable everyone to use a poster resolution scale of at least 200%.
+- Fix: Depending on the situation, the home hubs update request could be sent multiple times while waiting for the first one to finish. (thanks @bowlingbeeg)
+- Subtitles: Supply OpenSubtitles.com hash if possible and enabled
+- Subtitles: Add setting to Audio/Subtitles to calculate the OpenSubtitles.com hash (default: off)
+- Core: Advanced Settings: make default resolution scale a percentage; limit to 750% max (based on Plex max poster size)
+- Core: Add more debug logging for player events
+- Core: Add more debug logging details for hub refresh events
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

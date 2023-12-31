@@ -1,0 +1,655 @@
+[- 0.7.3-rev2 -]
+- Fix: certain home hubs were limited to 10 items without pagination
+- Fix: very rare infinite playback loop with enabled embedded subtitles (thanks @florinvlaicu for reporting)
+- Fix: Partially fix issues when switching audio streams during Transcoded/DirectStream playback
+- Fix: Fix error in ExtendHubTask
+- Fix: Partially revert "Home: Increase section change timeout from 0.3s to 0.5s; re-jig section change handling to allow using ENTER/SELECT to immediately select a section below 0.5s wait time" due to instability
+- Fix: Fix a couple of SyntaxWarnings for invalid escape sequences
+- Fix: Unfocusable buttons throw focus errors occasionally on shutdown
+- Fix: Laggy UI after playback/5 minutes due to requesting certain hubs without limits applied. Drastically improving UI smoothness even for smaller hubs (<1000 items)
+       This also fixes crash and shutdown issues and by proxy should enable everyone to use a poster resolution scale of at least 200%.
+- Fix: Depending on the situation, the home hubs update request could be sent multiple times while waiting for the first one to finish. (thanks @bowlingbeeg)
+- Subtitles: Supply OpenSubtitles.com hash if possible and enabled
+- Subtitles: Add setting to Audio/Subtitles to calculate the OpenSubtitles.com hash (default: off)
+- Core: Advanced Settings: make default resolution scale a percentage; limit to 750% max (based on Plex max poster size)
+- Core: Add more debug logging for player events
+- Core: Add more debug logging details for hub refresh events
+
+
+[- 0.7.2 -]
+- Fix: playing next episode when episode played threshold was met when hitting STOP button
+- Fix: Dropdown would roundrobin falsely onup item when initial item wasn't item 0
+- Fix: Movies: pressing back in a scrolled movie view with the header options open wouldn't back out properly
+- Fix: Reset library filters when Role/Cast view opened
+- Fix: Cast display in movies/preplay
+- Fix: Apply dialog flicker fix in Role/Cast
+- Fix: Dropdowns were broken sometimes (especially library view)
+- Fix: Addon crash on non-default Kodi (e.g. OSMC) due to System.BuildVersion not matching Kodi's default
+- Fix: Error on no data returned on PlexObject.reload (disconnect); Handle connection errors more gracefully
+- Fix: Background of info page (thanks @bowlingbeeg)
+- Fix: Rare SeekDialog crashes between episodes
+- Fix: OpenSubtitles not finding subtitles for certain Movies
+
+- Core: Harden against network disconnects in multiple views, home and videoplayer/seekdialog
+- Core: Re-enable backing out of videoplayer (inbetween screen)
+- Core: Player: Alternative implementation of bingeMode auto-next; ignore stop events when triggering non-user-stop
+- Core: Add setting for poster/thumbnail resolution scaling, implement everywhere sensible
+- Core: Thumbnails/Art: use the same parameters as PlexWeb for images
+- SeekDialog: Possible fix for OSD not coming up again in some scenarios
+
+
+[- 0.7.1 -]
+- Fix: Embedded subtitle could be set to the wrong one (edge case)
+- Fix: Episodes: theme music error when clicking on seasons
+- Possibly fix rare traceback when closing an episodes window while waiting for an episode reload task
+- Fix: Core: only stop playback on screensaver if player is playing video (not audio, ...)
+- Fix: rare UI crash for items before 1970-01-02 (yes, we've had media back then)
+
+- Set Accept-Language to Kodi's language setting when talking to the Plex Server, localizes subtitle titles, Library translations etc.
+- Use extended title for subtitles (and add advanced/addon setting)
+- Add: Show buffer state in stream info
+- Reduce dialog flickering in certain situations (not fully, probably impossible)
+- Player: bingeMode/autoskip credits/manual-next: avoid double-next in certain circumstances
+- VideoPlayer: don't react to inputs while waiting for playback (AVStarted) to start (fixes early-back-out-crashes)
+- SeekDialog: stop marker countdown on seek
+- SeekDialog: auto-skip marker: ignore input while auto skipping to next video
+- SeekDialog: only count down marker when OSD not shown
+- SeekDialog: ignore input while handling next-video-pressed
+- SeekDialog: hide OSD fast on ACTION_PAUSE/ACTION_PLAYER_PLAY/ACTION_PLAYER_PLAYPAUSE and OSD is shown
+- Player/SeekDialog: Fix crash when handling SIGINT (alt+f4 on windows)
+- Hubs: make all TV/movie hubs as hub types that receive updates after items being watched or marked (un) watched
+- Settings: Disable alternative home hubs refresh by default
+- ServerList: further hardening, list shouldn't visually "crash" anymore in certain conditions
+- Pagination/Episodes: allow right round-robin on paginated long item lists (>26)
+- Movies: Reorder Cast/Related/Extras according to PlexWeb
+- Movies: Add reviews
+- Cast: Increase Cast picture quality everywhere
+- Core/Settings: Adjust recommended cache/buffer/readfactor values for different Kodi versions, starting with 21.0-BETA2 (20.90.821)
+- Core/Settings: Incorporate new Kodi cache/readfactor values; clamp cache values to divisible by 16
+- Serverlist: allow roundrobin at the bottom boundary
+- StreamInfo: hide OSD after closing streaminfo
+- Settings: Add setting to use Kodi keyboard for searching (default: off)
+- Main: harden main loop (still not exiting properly when exiting fast after server change; reinits previously inited windows on exit, sometimes)
+- SubtitleDownload/OpenSubtitles.com: set global videoinfo infoLabels to improve subtitle search hinting (waiting for PR to be accepted)
+
+
+[- 0.7.0 -]
+- Fix kiosk mode startup issue when other modal dialogs were active when PM4K was trying to start in kiosk mode
+- Fix video OSD hiding too fast in certain circumstances
+- Fix photoplayer issues; skip ugly initial loading image; show loading state only when it takes longer than 500ms; fix prev/next not always working; increase speed by x10
+- Fix episodes view replaying the theme music when returning from a different-season-view
+- Fix mediaBufferSize reported to the Plex MDE endpoint was always empty (resulting in Plex assuming we only have 5 MB cache, leading to all sorts of buffer issues)
+- Fix pin entry with J characters looking like an uppercase i
+- Fix episode regularly ending in bingeMode (not credits skipped) still showing post play
+- Fix enabled subtitles always leading to a transcode (and subtitle burn-in) of the video stream in DirectStream scenarios
+- Fix player UI for transcoded/DirectStream sessions
+
+- UI: background/transition/rendering core rework, reducing flickering, "bouncy" background fades, improving overall snappiness of the interface (dialog transition flicker not solved)
+- UI: remove the [...]-loading-spinner for everything that takes under 500ms, making the UI more natural
+- UI: crossfade backgrounds before entering a view, if possible, reducing the animation load between view transitions
+- UI: support more elements as background-providers (e.g. photos)
+- Add advanced/plugin setting to enable/disable background crossfading altogether
+- Add setting to stop video playback when screensaver (Kodi) is activated
+- Add setting to stop video playback after a set idle time
+- Increase home section change timeout from 0.3s to 0.5s and allow immediate section selection using ENTER
+
+- Completely rework the AC3 handling, allowing to select in which channel configurations one wants to transcode to AC3
+- Allow subtitles to be DirectStreamed; resulting in possibly ONLY the audio being transcoded
+- Add setting to burn in SSA/ASS subtitles when DirectStreaming. When disabled, they're converted to raw text and DirectStreamed, if enabled (previous default), they lead to the video stream being transcoded
+- Enable markers (intro/credits) functionality in transcoded/DirectStream sessions
+- Harden chapter selection logic in player UI
+- SeekDialog: Unify time formatting as much as possible between transcoded and directplay modes
+- Add setting to allow or deny auto-skip functionality when transcoding/DirectStreaming
+- Movies preplay: raise the ratings up by 70 pixels to be in line with the title, fixes issues with certain skins
+- Core: improve skin compatibility: font30 is no more as we're not using Confluence but Estuary as default. Replace with its fallback, font13
+- Core: improve skin compatibility: font16 is no more as we're not using Confluence but Estuary as default. Replace with its fallback, font13
+- Core: allow DirectStreaming of webvtt subtitles in Kodi >= 20
+- AdvancedSettings: reset background blur and opacity to their new defaults
+- BGM: store last "good" audio volume before playing theme music, and apply it upon start of the addon, in case the volume reset after BGM failed/was skipped
+- Core: Harden and speed up server change
+
+
+[- 0.6.5+rev5 -]
+- Add support for urllib3 >= 2.1.0
+
+
+[- 0.6.5+rev4 -]
+- Fix dropdown roundrobin needing two UPs if first selected item is item 0, introduced in 0.6.5
+- Theme music: Harden BGM handler; wait for correct volume to be re-set, might fix not-so-rare stale volume issue
+- Episodes: Show TV Show's other seasons in episodes window
+
+
+[- 0.6.5 -]
+- Fix rare postplay still shown on bingemode/autoskip credits
+- Fix quick subtitle selection when override forced advanced setting is active
+- Fix rare round robin case skipping item 0 onup in dropdowns
+- Fix episode progress and time remaining not updating (thanks @bowlingbeeg)
+- Fix embedded subtitle display delay when Cycling/using buttons to switch subtitles
+- Fix rare subtitles not shown issue
+
+- Add: Allow video player UI buttons customization via settings; remove a couple of player navbar buttons by default
+- Add "Previous Subtitle" to quick subtitles nav item
+- Remember subtitle actions (prev, next, download, delay) via quick nav
+- Use our own CycleSubtitles/ShowSubtitles implementation;
+- Rely even less on Kodi's Player states for subtitles
+- Parse and show SDH/HI flag for subtitle streams
+- Hide OSD faster after closing settings; try hiding OSD faster in general if necessary
+- Lose orange fallback BG on userselect as well by default
+- Settings: rename Player to Player UI, rename Player (user-specific) to Playback (user-specific)
+- Settings: Move forced subtitles fix from plugin settings to settings interface audio/subtitles
+- Store last background URL in settings if dynamic backgrounds is active; use last BG url on startup to prevent blank BG
+- Reduce embedded subtitle display backseek to 100ms
+- Use episode thumbnails in continue hub if available, by default; add advanced setting
+- Set default background blur to 0 (was 4), background opacity to 20 (was 30)
+- Disable legacy background image fallback by default; add advanced setting
+- Core improvements
+
+
+[- 0.6.4 -]
+- Fix preplay mediachoice issues
+- Fix seeking with auto-skip scenarios on slower devices
+- Fix online/trailer quality issues (was always using a low quality before)
+- Fix round-robining in episode view
+- Fix Kodi 18
+- Fix some rare Kodi playback errors in logs, mostly cosmetic
+- Fix player sometimes not sending the last timeline state after playback ends
+- Fix playback issues when multiple versions exist but one of them is missing
+- Fix embedded subtitle display delays on playback start and on subtitle change while playing back (backseeks 1 second)
+- Fix double-back-button necessary to exit when cancelling autoskip
+- Fix chapters not showing when no markers present
+- Fix User Pin entry not showing errors
+- Fix reactivating addon after minimize
+- Fix autoskip marker continuing to count down when paused; don't hide autoskip marker when paused
+
+- Add support for multiple media versions and fix individual stream selection support
+- Add support for stream selection in trailers/extras
+- Add current cache/buffer state to progress bar
+- Add video/audio/subtitle stream selection for trailers
+- Add zero drift playback timers for current time, time left, ends at
+- Add minimize option to exit
+- Add playback settings manager to enable full settings per TV show instead of just binge mode toggle;
+- Add slow connection support (e.g. in a hotel); waits for the buffer to fill to a reasonable amount until playback; sets readfactor to 20 (don't use with passthrough)
+Migrate previous binge mode data to new extensible format, stored as addon_data/playback_settings.json
+
+- Player: Better/more immediate intro-auto-skip implementation
+- Cache/Buffer: Allow 26% and 30% "overcommit" (+android 23%)
+- Cache/Buffer: Add readfactor to settings (needs Kodi restart)
+- Cache/Buffer: Add support for new kodi-omega-master Cache/Buffer GUI settings
+- Harden next/prev episode handling in auto-skip scenarios
+- Harden next/prev button handling
+- Settings: allow vertical round-robining for settings and options lists
+- User Switch: Allow cancellation of switch; select the current user by default when switching
+
+
+[- 0.6.2 -]
+- Add system setting to execute action upon sleep event (e.g. exit Kodi when display goes to sleep; fixes passthrough issues on SHIELD)
+- Allow canceling postplay timeout with enter/OK
+- Binge mode: show postplay if video was exited manually
+- Show local/LAN server status in status bar and server list via new icon; server list is live now
+- Discover local/LAN servers automatically (if any of the plex.tv/resource's DNS points to a local IP and is reachable)
+- plexapp/account/main: init account earlier to pick up ID early; slightly reorder initialization sequence to pick up preferred servers earlier
+- Connection logic: refactor connection significance; wait for manual connections if necessary/wanted; add way more logging (as this might break things)
+- Remember last used server per user
+- Refactor seekdialog autoskip handling and chapter/marker display logic
+- Harden the episodeswindow's paginator, making it less easy to generate a huge amount of requests when paging quickly (holding down left/right)
+- Harden chapter/marker autoskip
+- Add "combined chapters", intelligently merging chapters and markers into one, if available
+- Add BIF preview images to markers if available ("Enable video preview thumbnails" needs to be enabled on server and library)
+- Add separate "show autoskip info early" offset to addon settings (default: 2.5s)
+- Add countdown to autoskip info button, informing the user that we're about to auto skip the next marker (intro/credits)
+- Set skip intro button show early threshold to 60s (was 120s) to skip recaps but only those
+- Seek as fast as possible on immediately occurring intro; skip directly to next video if possible on last credits with autoskip enabled
+- Add separate connectivity check timeout; properly set up timeouts for async requests; log ping in local network tests
+- Harden server discovery; further improvements to preferring local over secure
+- Update reachability of servers live in server list;
+- Remove server refresh button due to issues;
+- Add fontawesome license
+- Show busy dialog when selecting a new user, preventing errors
+- Trigger force available servers/connections refresh when changing network settings;
+
+- Fix Bingemode not properly stored per user
+- Fix multiple credits naming in seekdialog
+- Fix error upon episodes window reinit; catch error upon missing listitem
+- Remove time left tag after watching more than one episode
+- Add some missing advanced/addon setting descriptions; cleanup
+- Disable GDM discovery by default
+- Fix late display of embedded subtitles; the change has been forgotten, sorry; fixes #54
+
+
+[- 0.6.0-rc1 -]
+- Add Kodi Buffer/Cache settings to new System tab
+- Add pm4k_cache_template.xml to allow further customization (copy to profile folder)
+- Add addon path and Kodi profile path to Settings/About
+- Add advanced/addon setting to set (Plex) HTTP request timeouts; change default from 10 to 5 (on display/crash issues, increase timeout)
+- Add explicit LAN check for servers (docker-based ones won't show as local by default); only works on Kodi 19 and above; add icmplib and license
+- Add setting to specify LAN check connection timeout (default 10ms)
+- If desired, prefer an insecure local server over a secure one after switching users, as well
+- Add warning when preferring local server connections over secure ones
+- Add long timeout for essential plex.tv requests
+- Add force server list refresh button to server list (allows reloading the available servers after changing PMS network settings)
+- Add setting to verify local/LAN connections even if plex.tv doesn't think they're local
+- Add setting to prefer local connections over secure ones, enabling enforced manual servers
+- Add advanced/addon setting to add an offset to intro/credits autoskip, as the Plex markers might be a little early (default +2 seconds)
+
+- Show video chapters if available in playback instead of bigSeek (also add a setting)
+- Show virtual chapters in playback (from Plex markers, intro, credits etc.) if no chapters exist for a video file
+- Reload items properly with chapters upon preplay-reinit
+- Reorder settings, advanced is now system, add network settings
+- Show chapters and/or markers in info view of a video item
+
+- Implement TV binge mode (auto skip intros if not first EP of season; auto skip credits; skip postplay)
+- Implement per-user settings
+- Make Binge-mode overridable per show
+- Make Binge-mode, all auto-skip and whether to display chapters or markers a per-user setting
+
+- Fix focusing the wrong episode after opening the info screen
+- Fix reloading episodes list after watching multiple episodes
+- Strip out MP4 file name in stream URL to prevent subtitles trying to be downloaded, fixing long wait time (thanks @microadam)
+- Fix failure on video with no audio stream
+- Optimize remaining time calculations for preplay screen
+
+
+[- 0.5.5-rev2 -]
+- Fix auto intro skip not working after skipping to next episode
+- Skip postplay when skipping to next video from player
+- Limit early-show-intro-skip to intros occurring in the first 2 minutes;
+- add advanced setting to customize this value
+- Add option to show and episodes-windows (they toggle their show) to override the global auto-skip-intro setting for a show
+
+
+[- 0.5.5 -]
+- Add main setting to show the intro skip button early; enables recap skipping; works with auto-intro-skip!
+- Move some boolean settings from Main>Advanced to Main
+- Add main setting to use alternative home hubs refresh method introduced by @bowlingbeeg; default on
+- Add main setting to specify item-played-threshold in main settings, please sync with your Plex Server; possibly fixes edge cases (postplay/next-overskip issues)
+- Fix postplay timer-circle display on later (Nexus++?) Kodi versions
+- Rework time formatting and hour padding detection for "Ends at" display completely
+- Change watched status to also look at resume offset (thanks @bowlingbeeg)
+- Fix crash when background threads are still running on library exit (thanks @bowlingbeeg)
+- Fix playlist issues (thanks @bowlingbeeg)
+- Change look of letter jump list (thanks @bowlingbeeg)
+- Fix sorting/filtering issues (thanks @bowlingbeeg)
+- Add second view type for episodes and albums (thanks @bowlingbeeg)
+- Support showing collections inline (thanks @bowlingbeeg)
+- Add support for smaller poster size view (thanks @bowlingbeeg)
+
+
+[- 0.5.4 -]
+- Store user thumbnail in cache (improves home "load" time)
+- Change client identifier from Plex-for-Kodi to PM4K;
+  possibly fix "PlexNet" entries in Authorized Devices; might also break stuff, please report back
+- fix closing quote in chinese translation
+- Add missing German translations
+- Add "Ends at" to player ends-at time by default; add option to disable this label
+- Add fallback for missing audiooutput.channels setting (seems to affect libreelec only); relates to #48
+- Change resume dialog to show resume time (thanks @bowlingbeeg)
+- Add unwatched status to pre-play screen and add progress bars to more hubs (thanks @bowlingbeeg)
+- Fix missing parameters on Plex API queries (thanks @bowlingbeeg)
+- Add time left to pre-play screen (thanks @bowlingbeeg)
+- Fix audio/subtitle selection not updating correctly in pre-play screen (thanks @bowlingbeeg)
+
+
+[- 0.5.3 -]
+- Inhibit screensaver when in photo slideshow (Kodi 19 and above)
+- Add addon setting to use old profile from P4K instead of the optimized one (might fix 3D issues with DP; not sure why?); default: off
+- Show video stream render type in preplay/epidoses screen (SDR/HDR/DV/HLG)
+- Adjust default background image blur/opacity from 0/40 to 4/30
+- Add addon setting to set solid background colour instead of pictures (Kodi 19 and above)
+- Add addon setting to hide when current media will end (default: shown, as before)
+- Split filename in info screen to avoid overflow
+- Don't show "no content" on home; amended PR #43
+- Bad temporary fix for photo playqueues containing videos
+- Photos: Use Kodi slideshow interval; fixes #41
+- Add Simplified Chinese Translation (thanks @Liqianyu)
+- Fix AV1 setting description
+- Fix single-season pagination (anime)
+- Update german translation (thanks @jamal2362)
+- Fix issue when displaying a library that has no hubs to display (thanks @bowlingbeeg)
+- Fixed an issue with video playlists and the general play button not working (thanks @bowlingbeeg)
+- Fixed a couple of places that require integer division (thanks @bowlingbeeg)
+
+
+[- 0.5.2-beta0.1 -]
+re-add support for leia (Kodi 18)
+
+
+[- 0.5.1 -]
+add media/part/stream info to info screen
+read and honor advancedsettings/memorysize
+
+
+[- 0.5.0 -]
+implement multiple markers per video file
+add skip credits Plex-style (skip to post-credit scene if applicable or skip to end)
+add auto skip credits feature
+actually respect DirectPlay=Off and DirectStream=Off
+fix directstream/transcoding (DS never worked apart from h264)
+fix transcoded audio always being MP3
+deviate from Web-client-based profile to own dynamic profile
+allow directplay/stream/transcode of virtually anything on Kodi
+add settings to force directstream/transcoded audio to AC3 and/or DTS (for passthrough)
+add setting to limit directstream/transcoded audio to original audio bitrate/channels
+add setting to limit directstream/transcoded audio to Kodi audio channel setting
+prevent PMS transcoding audio to higher channel count than original audio
+show video codec in preplay screen
+settings: round-robin when at the end of the left heading list
+stream status dialog: show HW encoding state
+replace progressive jpg files (thanks @shyzus)
+
+note: massive thanks to @hbbs for reporting the MP3 issue and sticking with me for the whole process of figuring out how to do audio stuff in a Plex client
+
+
+[- 0.4.6 -]
+add more sort options for ratings where applicable (rating, audienceRating, contentRating, userRating)
+add smart desc/asc default sort (need feedback)
+use PlexWeb sort field naming (except for PlexWeb Rating=My Rating which is clearer)
+note: TV shows "By Audience Rating" seems to be broken in Plex
+previous beta fixes
+small bugfixes
+
+
+[- 0.4.5-beta1.3 -]
+properly refocus after stopping music via the mini player fix msgstr
+reset autoseektimer prematurely before auto skipping intro
+stream details: don't show unknown values
+some music fixes; internals
+auto intro skip: skip only once, show manual skipping otherwise, measures for preventing wrong jump
+fix HEVC default
+
+
+[- 0.4.5-beta1.2 -]
+fix music and photo handlers (thanks @Buttzy10169)
+fix next/prev handlers in general
+fix previous release's issues
+use different photos temp path resolution
+enable HEVC by default
+
+
+[- 0.4.4 -]
+community fixes (thanks @Buttzy10169 @fvlaicu)
+add auto-skip intro setting (default: off)
+add addon-setting to customize how long skip-intro button is shown (default: 10s)
+
+
+[- 0.4.3 -]
+Allow skip-intro for users on a plexpass enabled server (thanks @fvlaicu)
+Fix visual issues (due to botched addon rename)
+Make AV1 setting Kodi major version dependant; pave way for hybrid codebase for 19/20
+Implement new network discovery mech on windows (GDM) using powershell (experimental)
+Possibly fix GDM on windows (especially on non-english variants)
+Possibly fix GDM on Linux (non-BSD)
+
+
+[- 0.4.2 -]
+Fix skip intro button
+Fix duplicate addon setting
+Enable dynamic backgrounds by default set defaults for dynamic backgrounds: blur=0, opacity=40
+Fix kiosk mode (autorun plex on kodi startup)
+Fix music playback
+Fix theme music playback; set default theme music volume to 50%
+
+
+[- 0.4.1 -]
+Initial PlexMod for Kodi release, based on my plex-for-kodi fork's develop branch
+Add support for Kodi Nexus (20) on LibreELEC and Android
+Add AV1 toggle and AV1 direct play support
+Rename addon to "script.plexmod"
+Add all non-plex-conform features of the develop branch as default features
+
+[- 0.2.3 -]
+
+Fix error causing playback to fail
+
+[- 0.2.2 -]
+
+Added support for collections in library views
+Update Polish strings (thanks to Zachar)
+Fix GDM issue (thanks to MrPumo)
+Fix Python 3 issues (thanks to MrPumo and pannal)
+
+[- 0.2.1 -]
+
+Added Skip Intro (thanks to pannal)
+Use device name for friendly name
+Fix some hubs not displaying
+Added title scrolling when focused on some items
+Show playback speed on OSD
+Fix possible error on playlists window
+
+[- 0.2.0 -]
+
+Bump version to 0.2.0 to differentiate from deprecated Kodi 17 0.1.x versions
+
+[- 0.1.8 -]
+
+Fix seek resetting when clicking select on seek bar with OSD visible
+Add Spanish translations (thanks to rdcalle)
+Add Portuguese (Portugal) translations (thanks to Generator)
+Make python 3 compatible (thanks to pannal)
+
+[- 0.1.7 -]
+
+Fix transcode failures on Windows (possibly other platforms)
+Add Italian translations (thanks to iz8mbw)
+Use Kodi time format setting (Issue #90) (thanks to pannal)
+Restore last window when starting the add-on while it is running (Issue #126)
+Add Portuguese (Brazil) translations (thanks to DiogoAbu)
+Add ability to exit search edit box with previous menu (escape) button (Issue #194) (thanks to pannal)
+Only play unwatched media when pressing play or shuffle and filtering for unwatched (thanks to tlt21)
+Fix issue with duplicated icons when fast-scrolling a hub (Issue #177) (thanks to pannal)
+Fixed GUI not responding after public IP renewal (thanks to pannal and mkliche)
+Advanced setting: Automatically seek selected position after a delay (Issue #172) (thanks to pannal)
+Advanced setting: Use skip step settings from Kodi (Issue #133) (thanks to pannal)
+Advanced setting: Use Plex/Kodi steps for timeline (Issue #133) (thanks to pannal)
+OSD-Autohide improvements (thanks to pannal)
+Show post play on user stop when item is considered played (thanks to pannal)
+Use Unplayed/Played instead of Unwatched/Watched (thanks to pannal)
+Fix issue with cast popup displaying partially offscreen (thanks to pannal)
+Various fixes for incorrectly transcoded playback (Issue #201) (thanks to pannal)
+Support new subtitles menu in playback for Leia (thanks to pannal)
+Make sure progress bar is visible on items with less than 2% watched (thanks to pannal)
+Fix focus issues caused when hubs are removed, i.e. On Deck, Continue Watching (thanks to pannal)
+Fix issues with flattened seasons
+Allow Kodi info display to be visible when hitting the info button
+Fixes hubs not updating and some crash issues
+More fixes for Kodi 18, ex. missing letters list (Issue #265)
+Fix resume behavior with DSPlayer (thanks to pannal)
+Add Polish translations (thanks to Zachar2)
+Playlist and album view tweaks (thanks to pannal)
+Quality selection clean up and fixes (thanks to pannal)
+Fix to allow 3D mode selection
+Add advanced option to skip the header when going back (thanks to pannal)
+Ensure paused state is retained after seeking or changing video settings (thanks to pannal)
+Allow closing of the options header in scrolled views using context menu button (thanks to pannal)
+Some direct playback fixes (thanks to pannal)
+Some shutdown fixes (thanks to pannal)
+Show play state indicators to related items in preplays and On Deck in postplay (thanks to pannal)
+Fix some resume issues (thanks to pannal)
+
+[- 0.1.6 -]
+
+Fix issues when selecting subtitles for users of certain languages (Issue #188)
+
+[- 0.1.5 -]
+
+Allow direct playback of episodes and movies using the play button on hub screen (thanks to pannal)
+In progress watched items had the 'Mark unwatched' option instead of 'Mark watched'
+Fix an issue causing the home window to start slightly scrolled down if it was closed scolled down
+Fix an issue causing an error when sort was sort was "BY UNWATCHED" and the filtering "UNWATCHED" (Issue #187)
+Fix issue with letter shortcuts sometimes being shown/not shown incorrectly
+Fix a bug causing crash and reboot on startup on Raspberry Pi (LibreElec specific?) - Reverts "Fix autostart to work with profiles"
+
+[- 0.1.4 -]
+
+Kodi v18: Fix skin compatability issues
+Kodi v18: Fix incompatibility with requests module update
+Kodi v18: Fix issue with playback not resuming properly when direct playing
+Kodi v18: Fix issue with progress bar not moving on music player/music playlist screens
+Fix album display on artist screen
+Fix bug causing failure to show audio player when clicking the mini player from some screens
+Show original artist when available (Issue #143)
+Improve centering over label backgrounds on pre-play screens
+Fix some spots where tokens could still be logged
+Play correct track when playing a multi-disc album (Issue #148)
+Improve headers for better identification in 'Now Playing' and future server profile
+Updated German language strings (thanks to coffinbearer)
+Fix French translations file (thanks to coffinbearer)
+Fix some Hungarian translations (thanks to vampywiz17)
+Add Russian translations (thanks to shady2k)
+Fix autostart to work with profiles (thanks to pannal)
+Fix focus loss on home screen due to error (Issue #169)
+Fix "No Servers Found" when preferred server is unavailable (Issue #159)
+Fix system keyboard not working for search (Kodi 17+)(Issue #165)
+Fix issue causing hubs to scroll up when settings were opened
+Fix failure to sign in when signed off externally (Issue #110 & #117)
+
+[- 0.1.3 -]
+
+Fix incompatibility with requests module update
+
+[- 0.1.2 -]
+
+Fix issue with hubs not showing with (newer?) server versions
+
+[- 0.1.1 -]
+
+Remove PlexPass disclaimer from add-on info
+
+[- 0.1.0 -]
+
+Improved hub vertical scrolling animation
+Fix (#87): Switching between managed users causes Kodi to crash
+Fix (#119): Occasional crashes when exiting the add-on
+Remove PlexPass requirement
+
+[- 0.0.102 -]
+
+Handle connection errors on link screen polling
+Handle skip next/prev when playing video playlists
+Home Screen: Navigating to the 'More' button now causes an update for all movement
+Add ability to view episodes/albums in library view
+Add German translation (thanks to coffinbearer)
+Add Czech translation (thanks to Pavuucek)
+Add Hungarian translation (thanks to vampywiz17)
+Add French translation (thanks to raffoul/rlimbach)
+Fix issue #64 (multi part movies won't playback)
+Improve timeline reporting
+Friendly name now includes hostname to differentiate Kodi devices
+Possible fix for issue #102
+Fix a bug causing an error on server decisions
+Fix errors caused by localization on episodes and pre-play screens
+Fix some errors caused when no internet
+
+[- 0.0.101 -]
+
+Fix (Issue #68): Artist screen options button was showing Mark Unwatched
+Fix (Issue #65): When returning from playback episode pre-play did not update the selected episode
+Fix: Codec info button ('o') handling on Krypton+
+Remove mkv/hls testing option in add-on Kodi settings
+Add Debug Logging option to Advanced Settings
+Fix: Post-play after the last item in the playlist was replaying the last item instead of the displayed up next item
+
+[- 0.0.100 -]
+
+Fix some stability issues
+Fix encoding error on startup
+Improve fallbaack background quality
+Fix an error causing opening of photo directories to fail
+Disable debug logging by default
+Make Home hub square items smaller
+Improve startup and shutdown times
+Fix some server reachability testing bugs and improve performance
+Possible fix for crashing when shutting down Kodi while the add-on is running
+Add workaround to allow launching from My Add-ons and shortcuts
+Fix text cutoff for post-play in Estuary
+Prevent the add-on from starting another instance on update
+Skip user select in offline mode
+Show 'Offline Mode' item in user options when in offline mode - selecting attempts going online
+
+[- 0.0.99 -]
+
+Fix: Episodes were not resuming
+
+[- 0.0.98 -]
+
+Fix: Was allowing non-Plex-Pass users
+Fix: Some videos failed to play with certain audio stream selections
+Fix: Some videos failed to play due to a logging error
+
+[- 0.0.97 -]
+
+Add 'Play Version...' to the pre-play options (Issue #34)
+Added spring loaded playlists to Playlist section on Home screen (Issue #28)
+Fix playlist composite images
+Fix: Extending a hub again after a section change was starting where the previous extension left off
+Handle no content and 404 for section hubs on Home screen (Issue #52)
+Handle no content or no content for filter on library screen
+Handle videos without duration set
+Some Home screen hub loading optimization
+
+[- 0.0.96 -]
+
+Remove PIL usage
+Use plex.tv instead of my.plexapp.com when requesting pin (Issue #50)
+
+[- 0.0.95 -]
+
+Now remembers unwatched filter state and sorting selection on library views (Issue #44)
+Fix: Local media was being treated as remote media for playback decisions
+Added a dialog to search for when selected playlists are not accessible by the current user (Issue #42)
+Fixed font issues on episode/movie pre-plays and settings screens (Issue #45)
+
+[- 0.0.94 -]
+
+Fix: Filtering for unwatched movies was causing nothing to be displayed (regression)
+Fix (Issue #41): Incorrect strings were being displayed on the episode pre-play delete dialog
+Playlists now load in progressively in the background (Issue #35)
+Added a dialog on failure to connect when getting sign-in pin (Issue #32)
+Change posters view so that two rows are always visible
+
+[- 0.0.93 -]
+
+Fix: (Issue #20) Filtering by unwatched still showed watched items
+Fix: (Issue #33) Photo directories were failing to open from the Home screen
+Fix: (Issue #33) Some photos failed to open from the Home screen
+Fix: Disabling the 'Allow HEVC' setting had no effect
+Added a busy indicator while photos are loading
+Fixes for DVR episodes without episode numbers
+
+[- 0.0.92 -]
+
+Official Kodi repo submission
+Only change audio streams when necessary
+
+[- 0.0.91 -]
+
+Fix (Issue #23): Pressing a play on a show was not starting on the first unwatched or in progress episode
+Implement (Issue #30): Decision endpoint handling for proper interaaction with streaming brain - fixes related failed playback issues
+Various minor bug fixes causing fanart screen stalls, etc
+
+[- 0.0.90 -]
+
+Fix: (Issue #13) Errors caused by encoding issues in episodes pre-play and track playback
+Fix: Player settings dialog would sometimes not close without some user input
+Fix: (Issue #25) Increased music playback thumbnail resolution - affects add-on player screen and skin views outside the addon
+Fix: (Issue #24) Items in movie playlists were not playable
+Change: Player settings dialog now puts focus on the selected setting when displaying setting lists
+Change: (Issue #21) Now back button only jumps to top bar when top bar is off screen
+
+[- 0.0.89 -]
+
+Fix: Selecting non plex pass not managed users caused sign out on addon restart
+Fix: Playlists view showed empty space when no audio playlists were present and prevented focus
+
+[- 0.0.88 -]
+
+Fix: Starting a video while audio was playing triggered an error causing issues with OSD/control
+Fix: Selected audio track was not being played with direct play
+
+[- 0.0.87 -]
+
+Initial public beta
+
+[- 0.0.1 -]
+
+Initial development
