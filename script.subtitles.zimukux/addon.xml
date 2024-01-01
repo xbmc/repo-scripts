@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.1.9" provider-name="pizzamx">
+<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.2.1" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -20,6 +20,13 @@
             <fanart>resources/fanart.png</fanart>
         </assets>
         <news>
+v0.2.1(2023/12/11)
+- Merged https://github.com/pizzamx/zimuku_for_kodi/pull/23（thanks @jiangpengcheng for solving the cookie issue）
+
+v0.2.0(2023/5/30)
+- Merged https://github.com/pizzamx/zimuku_for_kodi/pull/18 (big thanks to lm317379829 for solving the captcha issue)
+- Let's bump version a bit
+
 v0.1.9(2022/12/23)
 - Merged https://github.com/pizzamx/zimuku_for_kodi/pull/14
 - New setting allow showing only language suffix of sub file name to prevent the UI from scrolling (slowly!)
@@ -41,19 +48,7 @@ v0.1.5(2022/4/22)
 - Misc. bug fix and code tweaks
 - Is COVID-19 gonna last forever?
 
-v0.1.1(2021/6/21)
-- Rename addon to script.subtitles.zimukux
-
-V0.1.0 (2021/6/14)
-- Episode match logic gets more flexibility
-- You can now specify your preferred sub type (srt, ass) and language (be cautious setting this parameter)
-- A bit of refactoring to separate crawl logic from Kodi GUI and local file r/w interaction
-- Some unit tests
-
-V0.0.3 (2021/5/18)
-- Fork from service.subtitles.zimuku V2.0.3
-- Episode match for drama to locate the subtitle you need faster
-- add support to change site URL on the fly
+CHECK https://github.com/pizzamx/zimuku_for_kodi/releases FOR EARLIER RELEASE NOTES...
         </news>
     </extension>
 </addon>

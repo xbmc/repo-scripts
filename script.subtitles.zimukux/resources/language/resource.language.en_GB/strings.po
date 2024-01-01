@@ -9,6 +9,10 @@ msgctxt "#30101"
 msgid "Site URL"
 msgstr ""
 
+msgctxt "#301011"
+msgid "OCR URL"
+msgstr "OCR API"
+
 msgctxt "#30200"
 msgid "Sub preference"
 msgstr ""
