@@ -69,7 +69,8 @@ class OpenSubtitlesProvider:
         self.username = username
         self.password = password
 
-        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.2" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.3" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+
 
         self.session = Session()
         self.session.headers = self.request_headers
@@ -216,5 +217,5 @@ class OpenSubtitlesProvider:
             if not subtitle["content"]:
                 logging(f"Could not download subtitle from {subtitle.download_link}")
 
-        return subtitle
 
+        return subtitle
