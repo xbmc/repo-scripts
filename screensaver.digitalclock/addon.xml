@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="screensaver.digitalclock"
 	name="Digital Clock Screensaver"
-	version="6.0.4"
+	version="6.0.5"
 	provider-name="Vojislav Vlasic">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
@@ -14,6 +14,7 @@
 		<forum>https://forum.kodi.tv/showthread.php?tid=237338</forum>
 		<source>https://github.com/vdb86/screensaver.digitalclock</source>
 		<news>
+			6.0.5 (2024-1-2) - Added support for AeonMQ7 matrix mod, AeonMQ8 mods, for AeonMQ9, Arctic Zephyr - Reloaded, EllipsisUI, Embuary-Matrix, Mimic-LR, TetradUI, updated OSMC skin - thanks Ch1llb0 and petroid! Improved handling of no hour zero padding, added 2 more time formats, added support for turning off screen via CEC	
 			6.0.4 (2023-8-16) - Translations and a visual improvement for ftv skin - thanks Kevin!
 			6.0.3 (2021-9-7) - Bug fixes and translations
 			6.0.2 (2021-1-20) - Got skin.helper.backgrounds to work again
