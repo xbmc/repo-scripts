@@ -3,7 +3,7 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 
-CURL = 'https://www.yahoo.com/'
+CURL = 'https://www.yahoo.com/?guccounter=2'
 YURL = 'https://www.yahoo.com/news/weather/'
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'

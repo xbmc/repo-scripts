@@ -4,6 +4,9 @@ Search and download subtitles for movies and TV-Series from OpenSubtitles.com. S
 
 REST API implementation based on tomburke25 [python-opensubtitles-rest-api](https://github.com/tomburke25/python-opensubtitles-rest-api)                            
 
+v1.0.3 (2023-12-18)
+- Fixed issue with file path
+
 v1.0.2 (2023-08-28)
 - Update user agent header
 
