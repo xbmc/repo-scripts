@@ -73,7 +73,7 @@
 			</control>						
 			<control type="label" id="30101">
 				<description>Hour</description>
-				<posx>60</posx>
+				<posx>180</posx>
 				<posy>10</posy>
 				<width>120</width>
 				<height>65</height>
@@ -101,7 +101,7 @@
 				</control>
 			<control type="label" id="30103">
 				<description>Minute</description>
-				<posx>180</posx>
+				<posx>200</posx>
 				<posy>10</posy>
 				<width>120</width>
 				<height>65</height>

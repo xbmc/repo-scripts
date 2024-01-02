@@ -104,7 +104,8 @@ If the skin is not on the list screensaver will use default font names from conf
 - Aeon MQ5
 - Aeon MQ5
 - Aeon MQ6
-- Aeon MQ8
+- Aeon MQ8 (And some mods)
+- Aeon MQ9
 - Amber
 - AppTV
 - Arctic: Zephyr
