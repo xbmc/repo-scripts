@@ -27,6 +27,8 @@ def clear_properties():
 
         set_property(WEATHER_WINDOW, 'Forecast.City')
         set_property(WEATHER_WINDOW, 'Forecast.Country')
+        set_property(WEATHER_WINDOW, 'Forecast.Latitude')
+        set_property(WEATHER_WINDOW, 'Forecast.Longitude')
         set_property(WEATHER_WINDOW, 'Forecast.Updated')
 
         set_property(WEATHER_WINDOW, 'ForecastUpdated')
@@ -248,6 +250,8 @@ def get_weather():
 
     # Set the location we updated
     location_in_use = ADDON.getSetting(f'Location{sys.argv[1]}BOM')
+    latitude = ADDON.getSetting(f'Location{sys.argv[1]}Lat')
+    longitude = ADDON.getSetting(f'Location{sys.argv[1]}Lon')
     try:
         location_in_use = location_in_use[0:location_in_use.index(' (')]
     except ValueError:
@@ -258,5 +262,7 @@ def get_weather():
     set_property(WEATHER_WINDOW, 'Current.Location', location_in_use)
     set_property(WEATHER_WINDOW, 'Forecast.City', location_in_use)
     set_property(WEATHER_WINDOW, 'Forecast.Country', "Australia")
+    set_property(WEATHER_WINDOW, 'Forecast.Latitude', latitude)
+    set_property(WEATHER_WINDOW, 'Forecast.Longitude', longitude)
     set_property(WEATHER_WINDOW, 'Forecast.Updated', time.strftime("%d/%m @ %H:%M").lower())
 
