@@ -1,3 +1,9 @@
+v0.0.22
+- fix weatherbit ozone value could be none
+
+v0.0.21
+- fix getting yahoo cookie
+
 v0.0.20
 - fix weatherbit
 
