@@ -1,9 +1,10 @@
 from __future__ import absolute_import
 from . import plexobjects
 from . import util
+from .mixins import AudioCodecMixin
 
 
-class PlexStream(plexobjects.PlexObject):
+class PlexStream(plexobjects.PlexObject, AudioCodecMixin):
     # Constants
     TYPE_UNKNOWN = 0
     TYPE_VIDEO = 1
@@ -54,7 +55,7 @@ class PlexStream(plexobjects.PlexObject):
         if streamType == self.TYPE_VIDEO:
             title = self.getCodec() or translate_func("Unknown")
         elif streamType == self.TYPE_AUDIO:
-            codec = self.getCodec()
+            codec = self.translateAudioCodec((self.codec or '').lower())
             channels = self.getChannels(translate_func)
 
             if codec != "" and channels != "":
@@ -87,14 +88,7 @@ class PlexStream(plexobjects.PlexObject):
         return title
 
     def getCodec(self):
-        codec = (self.codec or '').lower()
-
-        if codec in ('dca', 'dca-ma', 'dts-hd', 'dts-es', 'dts-hra'):
-            codec = "DTS"
-        else:
-            codec = codec.upper()
-
-        return codec
+        return (self.codec or '').upper()
 
     def getChannels(self, translate_func=util.dummyTranslate):
         channels = self.channels.asInt()
@@ -149,13 +143,12 @@ class PlexStream(plexobjects.PlexObject):
     def videoCodecRendering(self):
         render = "sdr"
 
-        if self.colorTrc == "smpte2084":
-            if self.DOVIProfile == "8" and self.DOVIBLCompatID == "1":
-                render = "dv/hdr10"
-            elif self.DOVIProfile:
-                render = "dv"
-            else:
-                render = "hdr"
+        if self.DOVIProfile == "8" and self.DOVIBLCompatID == "1":
+            render = "dv/hdr10"
+        elif self.DOVIProfile:
+            render = "dv"
+        elif self.colorTrc == "smpte2084":
+            render = "hdr"
         elif self.colorTrc == "arib-std-b67":
             render = "hlg"
 

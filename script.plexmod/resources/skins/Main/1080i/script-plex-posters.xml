@@ -11,6 +11,14 @@
         <control type="group">
             <visible>String.IsEmpty(Window.Property(use_solid_background))</visible>
             <control type="image">
+                <visible>String.IsEmpty(Window.Property(use_solid_background)) + String.IsEmpty(Window.Property(use_bg_fallback)) + String.IsEmpty(Window.Property(background_static))</visible>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1920</width>
+                <height>1080</height>
+                <texture>script.plex/home/background-fallback_black.png</texture>
+            </control>
+            <control type="image">
                 <visible>!String.IsEmpty(Window.Property(use_bg_fallback))</visible>
                 <posx>0</posx>
                 <posy>0</posy>

@@ -218,7 +218,7 @@ class PhotoWindow(kodigui.BaseWindow):
             self.playQueue.on('change', self.updateProperties)
 
             util.DEBUG_LOG('waiting for playQueue to initialize')
-            if busy.widthDialog(self.playQueue.waitForInitialization, None):
+            if busy.widthDialog(self.playQueue.waitForInitialization, None, delay=True):
                 util.DEBUG_LOG('playQueue initialized: {0}'.format(self.playQueue))
             else:
                 util.DEBUG_LOG('playQueue timed out wating for initialization')
@@ -241,6 +241,7 @@ class PhotoWindow(kodigui.BaseWindow):
 
         self.pqueueList.selectItem(selected.pos())
 
+    @busy.dialog(delay=True, delay_time=1.5)
     def showPhoto(self, trigger=None, **kwargs):
         self.slideshowNext = 0
 

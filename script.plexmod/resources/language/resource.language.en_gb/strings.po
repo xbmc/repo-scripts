@@ -1645,3 +1645,31 @@ msgstr ""
 msgctxt "#32959"
 msgid "When opening the subtitle download feature, automatically calculate the OpenSubtitles.com hash for the given file. Can improve search results, downloads 2*64 KB of the video file to calculate the hash."
 msgstr ""
+
+msgctxt "#32960"
+msgid "Similar Artists"
+msgstr ""
+
+msgctxt "#32961"
+msgid "Show hub bifurcation lines"
+msgstr ""
+
+msgctxt "#32962"
+msgid "Visually separate hubs horizontally using a thin line."
+msgstr ""
+
+msgctxt "#32963"
+msgid "Wait between videos (s)"
+msgstr ""
+
+msgctxt "#32964"
+msgid "When playing back consecutive videos (e.g. TV shows), wait this long before starting the next one in the queue. Might fix compatibility issues with certain configurations."
+msgstr ""
+
+msgctxt "#32965"
+msgid "Quit Kodi on exit by default"
+msgstr ""
+
+msgctxt "#32966"
+msgid "When exiting the addon, use \"Quit Kodi\" as default option. Can be dynamically switched using CONTEXT_MENU (often longpress SELECT)"
+msgstr ""

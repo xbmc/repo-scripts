@@ -693,7 +693,7 @@ def createRemotePlayQueue(item, contentType, options, args):
             }
 
             for key in convert:
-                regex = re.compile("(?i)([?&])" + key + "=")
+                regex = re.compile(r"(?i)([?&])" + key + "=")
                 path = regex.sub("\1" + convert[key] + "=", path)
 
         util.DEBUG_LOG("playQueue path: " + str(path))

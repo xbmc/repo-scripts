@@ -264,6 +264,11 @@ class Settings(object):
                     )
                 ),
                 BoolSetting(
+                    'hubs_bifurcation_lines', T(32961, 'Show hub bifurcation lines'), False
+                ).description(
+                    T(32962, "Visually separate hubs horizontally using a thin line.")
+                ),
+                BoolSetting(
                     'search_use_kodi_kbd', T(32955, 'Use Kodi keyboard for searching'), False
                 ),
                 ThemeMusicSetting('theme_music', T(32480, 'Theme music'), 5),
@@ -456,6 +461,8 @@ class Settings(object):
             T(33600, 'System'), (
 
                 BoolSetting('kiosk.mode', T(32043, 'Start Plex On Kodi Startup'), False),
+                BoolSetting('exit_default_is_quit', T(32965, 'Start Plex On Kodi Startup'), False)
+                .description(T(32966, "stub")),
                 BufferSetting('cache_size',
                               T(33613, 'Kodi Buffer Size (MB)'),
                               20,

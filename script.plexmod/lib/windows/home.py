@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 import time
 import threading
-import re
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
@@ -9,7 +8,6 @@ from kodi_six import xbmcgui
 from . import kodigui
 from lib import util
 from lib import backgroundthread
-from lib import colors
 from lib import player
 
 import plexnet
@@ -24,7 +22,6 @@ from . import optionsdialog
 
 from lib.util import T
 from six.moves import range
-
 
 HUBS_REFRESH_INTERVAL = 300  # 5 Minutes
 HUB_PAGE_SIZE = 10
@@ -416,6 +413,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
         self.hookSignals()
         util.CRON.registerReceiver(self)
+        self.updateProperties()
 
     def onReInit(self):
         if self.lastFocusID:
@@ -434,6 +432,9 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
             else:
                 self.setFocusId(self.lastFocusID)
+
+    def updateProperties(self, *args, **kwargs):
+        self.setBoolProperty('bifurcation_lines', util.getSetting('hubs_bifurcation_lines', False))
 
     def focusFirstValidHub(self, startIndex=None):
         indices = self.hubFocusIndexes
@@ -469,6 +470,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         plexapp.util.APP.on('change:selectedServer', self.onSelectedServerChange)
         plexapp.util.APP.on('account:response', self.displayServerAndUser)
         plexapp.util.APP.on('sli:reachability:received', self.displayServerAndUser)
+        plexapp.util.APP.on('change:hubs_bifurcation_lines', self.updateProperties)
 
         player.PLAYER.on('session.ended', self.updateOnDeckHubs)
         util.MONITOR.on('changed.watchstatus', self.updateOnDeckHubs)
@@ -481,6 +483,8 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
         plexapp.util.APP.off('change:selectedServer', self.onSelectedServerChange)
         plexapp.util.APP.off('account:response', self.displayServerAndUser)
+        plexapp.util.APP.off('sli:reachability:received', self.displayServerAndUser)
+        plexapp.util.APP.off('change:hubs_bifurcation_lines', self.updateProperties)
 
         player.PLAYER.off('session.ended', self.updateOnDeckHubs)
         util.MONITOR.off('changed.watchstatus', self.updateOnDeckHubs)
@@ -504,18 +508,28 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
             pass
 
         self.unhookSignals()
+        self.storeLastBG()
 
+    def storeLastBG(self):
         if util.advancedSettings.dynamicBackgrounds:
             # store BG url of first hub, first item, as this is most likely to be the one we're focusing on the
             # next start
             try:
-                indices = self.hubFocusIndexes
-                for index in indices:
-                    if self.hubControls[index]:
-                        ds = self.hubControls[index][0].dataSource
-                        util.setSetting("last_bg_url",
-                                        util.backgroundFromArt(ds.art, width=self.width, height=self.height))
-                        return
+                # only store background for home section hubs
+                if self.lastSection and self.lastSection.key is None:
+                    indices = self.hubFocusIndexes
+                    for index in indices:
+                        if self.hubControls[index]:
+                            ds = self.hubControls[index][0].dataSource
+                            if not ds.art:
+                                continue
+
+                            bg = util.backgroundFromArt(ds.art, width=self.width, height=self.height)
+                            if bg:
+                                util.DEBUG_LOG('Storing BG for {0}, "{1}"'.format(self.hubControls[index].dataSource,
+                                                                                  ds.defaultTitle))
+                                util.setSetting("last_bg_url", bg)
+                                return
             except:
                 util.LOG("Couldn't store last background")
 
@@ -606,13 +620,16 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                 if action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
                     ex = self.confirmExit()
                     # 0 = exit; 1 = minimize; 2 = cancel
-                    if ex in (2, None):
+                    if ex.button in (2, None):
                         return
-                    elif ex == 1:
+                    elif ex.button == 1:
                         xbmc.executebuiltin('ActivateWindow(10000)')
                         return
-                    elif ex == 0:
+                    elif ex.button == 0:
                         self._shuttingDown = True
+                        if ex.modifier == "quit":
+                            self.closeOption = "quit"
+
                     # 0 passes the action to the BaseWindow and exits HOME
         except:
             util.ERROR()
@@ -660,15 +677,33 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
             player.PLAYER.stopAndWait()
 
     def confirmExit(self):
+        lBtnExit = T(32336, 'Exit')
+        lBtnQuit = T(32704, 'Quit Kodi')
+        modifier = util.getSetting('exit_default_is_quit', False) and "quit" or "exit"
+
+        ret = plexnet.util.AttributeDict(button=None, modifier=modifier)
+
+        def actionCallback(dialog, actionID, controlID):
+            if actionID == xbmcgui.ACTION_CONTEXT_MENU and controlID == dialog.BUTTON_IDS[0]:
+                control = dialog.getControl(controlID)
+                if control.getLabel() == lBtnExit:
+                    control.setLabel(lBtnQuit)
+                    ret.modifier = "quit"
+                else:
+                    control.setLabel(lBtnExit)
+                    ret.modifier = "exit"
+
         button = optionsdialog.show(
             T(32334, 'Confirm Exit'),
             T(32335, 'Are you ready to exit Plex?'),
-            T(32336, 'Exit'),
+            modifier == "exit" and lBtnExit or lBtnQuit,
             T(32924, 'Minimize'),
-            T(32337, 'Cancel')
+            T(32337, 'Cancel'),
+            action_callback=actionCallback
         )
+        ret.button = button
 
-        return button
+        return ret
 
     def searchButtonClicked(self):
         self.processCommand(search.dialog(self))
@@ -1006,6 +1041,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
                 if focus is not None:
                     self.setFocusId(focus)
+            self.storeLastBG()
         finally:
             self.showBusy(False)
 

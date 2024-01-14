@@ -180,7 +180,7 @@
                     <posx>604</posx>
                     <posy>0</posy>
                     <width>776</width>
-                    <height>666</height>
+                    <height>640</height>
                     <onleft>75</onleft>
                     <onright>150</onright>
                     <scrolltime>200</scrolltime>
@@ -370,7 +370,7 @@
                     <left>1388</left>
                     <top>40</top>
                     <width>9</width>
-                    <height>525</height>
+                    <height>600</height>
                     <visible>true</visible>
                     <texturesliderbackground colordiffuse="66000000" border="4">script.plex/white-square-rounded-4r.png</texturesliderbackground>
                     <texturesliderbar colordiffuse="66FFFFFF" border="4">script.plex/white-square-rounded-4r.png</texturesliderbar>

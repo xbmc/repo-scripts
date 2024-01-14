@@ -239,7 +239,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         if not path:
             return ''
 
-        eOpts = {"minSize": 1, "upscale": 1}
+        eOpts = {"minSize": 1}
         eOpts.update(extraOpts)
 
         params = ("&width=%s&height=%s" % (width, height)) + ''.join(["&%s=%s" % (key, eOpts[key]) for key in eOpts])

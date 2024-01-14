@@ -1,4 +1,6 @@
 from __future__ import absolute_import
+
+import requests.exceptions
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 from . import kodigui
@@ -50,6 +52,8 @@ class EpisodeReloadTask(backgroundthread.Task):
             if self.isCanceled():
                 return
             self.callback(self, self.episode, with_progress=self.withProgress)
+        except requests.exceptions.RequestException:
+            raise util.NoDataException
         except:
             util.ERROR()
 
@@ -189,9 +193,9 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
 
     EPISODE_LIST_ID = 400
     SEASONS_LIST_ID = 401
-    EXTRA_LIST_ID = 402
-    RELATED_LIST_ID = 403
-    ROLES_LIST_ID = 404
+    ROLES_LIST_ID = 402
+    EXTRA_LIST_ID = 403
+    RELATED_LIST_ID = 404
 
     OPTIONS_GROUP_ID = 200
 
@@ -259,10 +263,10 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         self.episodeListControl = kodigui.ManagedControlList(self, self.EPISODE_LIST_ID, 5)
         self.progressImageControl = self.getControl(self.PROGRESS_IMAGE_ID)
 
+        self.seasonsListControl = kodigui.ManagedControlList(self, self.SEASONS_LIST_ID, 5)
+        self.rolesListControl = kodigui.ManagedControlList(self, self.ROLES_LIST_ID, 5)
         self.extraListControl = kodigui.ManagedControlList(self, self.EXTRA_LIST_ID, 5)
         self.relatedListControl = kodigui.ManagedControlList(self, self.RELATED_LIST_ID, 5)
-        self.rolesListControl = kodigui.ManagedControlList(self, self.ROLES_LIST_ID, 5)
-        self.seasonsListControl = kodigui.ManagedControlList(self, self.SEASONS_LIST_ID, 5)
 
         self._setup()
         self.postSetup()
@@ -339,6 +343,7 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         self.updateProperties()
         self.setBoolProperty("initialized", True)
         self.fillEpisodes()
+
         hasSeasons = self.fillSeasons(self.show_, seasonsFilter=lambda x: len(x) > 1, selectSeason=self.season)
         hasPrev = self.fillExtras(hasSeasons)
 
@@ -348,7 +353,7 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         self.fillRoles(hasPrev)
 
     def selectEpisode(self, from_select_episode=False):
-        if not self.episode:
+        if not self.episode or not self.episodesPaginator:
             return
 
         for mli in self.episodeListControl:
@@ -464,17 +469,17 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
             self.episodeListClicked()
         elif controlID == self.PLAYER_STATUS_BUTTON_ID:
             self.showAudioPlayer()
-        elif controlID == self.PLAY_BUTTON_ID:
+        elif controlID in (self.PLAY_BUTTON_ID, self.PLAY_BUTTON_ID+1000):
             self.playButtonClicked()
-        elif controlID == self.SHUFFLE_BUTTON_ID:
+        elif controlID in (self.SHUFFLE_BUTTON_ID, self.SHUFFLE_BUTTON_ID+1000):
             self.shuffleButtonClicked()
-        elif controlID == self.OPTIONS_BUTTON_ID:
+        elif controlID in (self.OPTIONS_BUTTON_ID, self.OPTIONS_BUTTON_ID+1000):
             self.optionsButtonClicked()
-        elif controlID == self.SETTINGS_BUTTON_ID:
+        elif controlID in (self.SETTINGS_BUTTON_ID, self.SETTINGS_BUTTON_ID+1000):
             self.settingsButtonClicked()
-        elif controlID == self.MEDIA_BUTTON_ID:
+        elif controlID == self.MEDIA_BUTTON_ID+1000:
             self.mediaButtonClicked()
-        elif controlID == self.INFO_BUTTON_ID:
+        elif controlID in (self.INFO_BUTTON_ID, self.INFO_BUTTON_ID+1000):
             self.infoButtonClicked()
         elif controlID == self.SEARCH_BUTTON_ID:
             self.searchButtonClicked()
@@ -487,23 +492,30 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
                 self.openItem(self.seasonsListControl, came_from=self.season.parentRatingKey)
             else:
                 self.setFocusId(self.EPISODE_LIST_ID)
+        elif controlID == self.ROLES_LIST_ID:
+            self.roleClicked()
         elif controlID == self.EXTRA_LIST_ID:
             self.openItem(self.extraListControl)
         elif controlID == self.RELATED_LIST_ID:
             self.openItem(self.relatedListControl)
-        elif controlID == self.ROLES_LIST_ID:
-            self.roleClicked()
 
     def onFocus(self, controlID):
         self.lastFocusID = controlID
+
+        # we allow hidden focus on the play button when we're in multiple video files mode. in that case focus the
+        # correct play button after the hidden one has been focused
+        if controlID == self.PLAY_BUTTON_ID and xbmc.getCondVisibility(
+                '!String.IsEmpty(Container(400).ListItem.Property(media.multiple))'):
+            self.setFocusId(self.PLAY_BUTTON_ID + 1000)
+            return
 
         if 399 < controlID < 500:
             self.setProperty('hub.focus', str(controlID - 400))
             if controlID == self.RELATED_LIST_ID:
                 self.updateBackgroundFrom(self.relatedListControl.getSelectedItem().dataSource)
-        if xbmc.getCondVisibility('ControlGroup(50).HasFocus(0) + ControlGroup(300).HasFocus(0)'):
+        if xbmc.getCondVisibility('ControlGroup(50).HasFocus(0) + [ControlGroup(300).HasFocus(0) | ControlGroup(1300).HasFocus(0)]'):
             self.setProperty('on.extras', '')
-        elif xbmc.getCondVisibility('ControlGroup(50).HasFocus(0) + !ControlGroup(300).HasFocus(0)'):
+        elif xbmc.getCondVisibility('ControlGroup(50).HasFocus(0) + !ControlGroup(300).HasFocus(0) + !ControlGroup(1300).HasFocus(0)'):
             self.setProperty('on.extras', '1')
 
         if player.PLAYER.bgmPlaying and player.PLAYER.handler.currentlyPlaying != self.season.show().ratingKey:
@@ -547,21 +559,17 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
     def getRoleItemDDPosition(self):
         y = 980
         if xbmc.getCondVisibility('Control.IsVisible(500)'):
-            y += 360
+            y += 380
         if xbmc.getCondVisibility('Control.IsVisible(501)'):
-            y += 520
-        if xbmc.getCondVisibility('Control.IsVisible(502)'):
-            y += 520
+            y += 420
         if xbmc.getCondVisibility('!String.IsEmpty(Window.Property(on.extras))'):
-            y -= 125
+            y -= 80
         if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),0) + Control.IsVisible(500)'):
             y -= 500
         if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),1) + Control.IsVisible(501)'):
             y -= 500
-        if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),1) + Control.IsVisible(502)'):
-            y -= 500
 
-        focus = int(xbmc.getInfoLabel('Container(403).Position'))
+        focus = int(xbmc.getInfoLabel('Container(402).Position'))
 
         x = ((focus + 1) * 304) - 100
         return x, y
@@ -732,8 +740,6 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
 
             if choice['key'] == 'resume':
                 resume = True
-                if util.advancedSettings.dialogFlickerFix:
-                    xbmc.sleep(750)
 
         self._reloadVideos.append(episode)
 
@@ -831,8 +837,6 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
             self.updateItems()
             util.MONITOR.watchStatusChanged()
         elif choice['key'] == 'to_show':
-            if util.advancedSettings.dialogFlickerFix:
-                xbmc.sleep(750)
             self.processCommand(opener.open(
                 self.season.parentRatingKey,
                 came_from=self.season.parentRatingKey)
@@ -1020,31 +1024,20 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         mli.setProperty('audio.channels', video.audioChannelsString(metadata.apiTranslate))
         mli.setProperty('video.rendering', video.videoCodecRendering)
         mli.setBoolProperty('unavailable', not video.available())
-
-        defW = 176
-        defH = 140
-        ids = [301, 302, 303, 304, 305]
-        if len(list(filter(lambda x: x.isAccessible(), video.media()))) > 1:
-            mli.setBoolProperty('media.multiple', True)
-            # adjust button sizes
-            ids.append(307)
-            for id in ids:
-                ctrl = self.getControl(id)
-                ctrl.setWidth(161)
-                ctrl.setHeight(125)
-                del ctrl
-        else:
-            mli.setBoolProperty('media.multiple', False)
-            # reset button sizes
-            for id in ids:
-                ctrl = self.getControl(id)
-                ctrl.setWidth(defW)
-                ctrl.setHeight(defH)
-                del ctrl
+        mli.setBoolProperty('media.multiple', len(list(filter(lambda x: x.isAccessible(), video.media()))) > 1)
 
     def setItemAudioAndSubtitleInfo(self, video, mli):
         sas = video.selectedAudioStream()
-        mli.setProperty('audio', sas and sas.getTitle(metadata.apiTranslate) or T(32309, 'None'))
+
+        if sas:
+            if len(video.audioStreams) > 1:
+                mli.setProperty(
+                    'audio', sas and u'{0} \u2022 {1} {2}'.format(sas.getTitle(metadata.apiTranslate),
+                                                                  len(video.audioStreams) - 1, T(32307, 'More'))
+                    or T(32309, 'None')
+                )
+            else:
+                mli.setProperty('audio', sas and sas.getTitle(metadata.apiTranslate) or T(32309, 'None'))
 
         sss = video.selectedSubtitleStream(forced_subtitles_override=
                                            util.getSetting("forced_subtitles_override", False))
@@ -1122,7 +1115,12 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
                 if not episode.mediaChoice:
                     episode.setMediaChoice()
 
-                self.setPostReloadItemInfo(episode, mli)
+                try:
+                    self.setPostReloadItemInfo(episode, mli)
+                except:
+                    util.ERROR("No data - disconnected?", notify=True, time_ms=5000)
+                    self.doClose()
+
                 if with_progress:
                     self.episodesPaginator.prepareListItem(None, mli)
                 if mli == selected:
@@ -1166,7 +1164,7 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         return True
 
     def fillRelated(self, has_prev=False):
-        if not self.relatedPaginator.leafCount:
+        if not self.relatedPaginator or not self.relatedPaginator.leafCount:
             self.relatedListControl.reset()
             return has_prev
 

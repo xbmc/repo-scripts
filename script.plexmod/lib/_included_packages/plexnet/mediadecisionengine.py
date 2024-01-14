@@ -78,7 +78,6 @@ class MediaDecisionEngine(object):
                     choice = mediachoice.MediaChoice(media)
                 choices.append(choice)
         item.mediaChoice = self.sortChoices(choices)[-1]
-        util.LOG("MDE: MediaChoice: {0}".format(item.mediaChoice))
         return item.mediaChoice
 
     def sortChoices(self, choices):
@@ -91,7 +90,7 @@ class MediaDecisionEngine(object):
             self.sort(choices, "audioDS")
             self.sort(choices, "resolution")
             self.sort(choices, "videoDS")
-            self.sort(choices, "directPlay")
+            self.sort(choices, "isDirectPlayable")
             self.sort(choices, self.higherResIfCapable)
             self.sort(choices, self.cloudIfRemote)
 
@@ -157,6 +156,9 @@ class MediaDecisionEngine(object):
                     stream.codec == "vp9" and item.settings.getGlobal("vp9Support")
                 ):
                     choice.sorts.videoDS = 1
+            elif streamType == stream.TYPE_AUDIO:
+                # fixme: really?
+                choice.sorts.audioDS = 1
 
         # Special cases to force direct play
         forceDirectPlay = False
@@ -179,8 +181,11 @@ class MediaDecisionEngine(object):
             choice.isDirectPlayable = True
         elif choice.hasBurnedInSubtitles:
             util.LOG("MDE: Need to burn in subtitles")
-        elif choice.protocol != "http":
-            util.LOG("MDE: " + choice.protocol + " not supported")
+
+        # allow non-http "protocol" tags for extras (PMS bug?)
+        elif (choice.protocol != "http" and not item.isExtra) or \
+                (item.isExtra and choice.protocol not in ("mp4", "http")):
+            util.LOG("MDE: Protocol " + choice.protocol + " not supported")
         # elif numVideoStreams > 1:
         #     util.LOG("MDE: Multiple video streams, won't try to direct play")
         elif problematicAudioStream:
@@ -474,10 +479,17 @@ class MediaDecisionEngine(object):
         if not isinstance(choices, list):
             return
 
+        # key is a stringtype, get the value and return a sort value
+        def sortWithKey(choice):
+            val = getattr(choice, key, 0)
+            if type(val).__name__ == "PlexObject":
+                return getattr(choice, key).asInt(0)
+            return val
+
         if key is None:
             choices.sort()
         elif isinstance(key, six.string_types):
-            choices.sort(key=lambda x: getattr(x.media, key))
+            choices.sort(key=sortWithKey)
         elif hasattr(key, '__call__'):
             choices.sort(key=key)
 

@@ -261,7 +261,7 @@ class PlexPlayer(object):
                 # on the video player. This will let the server decide if it can supply
                 # sidecar subs, burn or embed w/ an optional transcode.
                 for key in ("subtitles", "advancedSubtitles"):
-                    decisionPath = re.sub('([?&]{0}=)\w+'.format(key), '', decisionPath)
+                    decisionPath = re.sub(r'([?&]{0}=)\w+'.format(key), '', decisionPath)
                 subType = 'sidecar'  # AppSettings().getBoolPreference("custom_video_player"), "embedded", "sidecar")
                 decisionPath = http.addUrlParam(decisionPath, "subtitles=" + subType)
 

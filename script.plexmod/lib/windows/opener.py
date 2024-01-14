@@ -41,6 +41,9 @@ def open(obj, **kwargs):
     elif obj.TYPE in ('photodirectory'):
         return photoDirectoryClicked(obj, **kwargs)
     elif obj.TYPE in ('track'):
+        album = obj.album()
+        if album:
+            return trackClicked(obj, album=album, **kwargs)
         return trackClicked(obj, **kwargs)
     elif obj.TYPE in ('playlist'):
         return playlistClicked(obj, **kwargs)

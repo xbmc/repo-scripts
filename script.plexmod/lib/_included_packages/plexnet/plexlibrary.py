@@ -396,6 +396,19 @@ class Collection(media.MediaItem):
         items.totalSize = items.size
         return items
 
+    @property
+    def defaultThumb(self):
+        if not self.thumb:
+            return ""
+        return plexobjects.PlexValue(self.thumb.split("?")[0], parent=self)
+
+    def artCompositeURL(self, w, h, **kw):
+        if not self.thumb:
+            return ""
+
+        path = "{0}?width={1}&height={2}".format(self.defaultThumb, w, h)
+        return self.server.buildUrl(path, includeToken=True)
+
     def isMusicOrDirectoryItem(self):
         return self.container.viewGroup in ('artist', 'album', 'track')
 

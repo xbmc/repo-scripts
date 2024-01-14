@@ -1,3 +1,46 @@
+[- 0.7.4 -]
+- Add: Show video codec rendering type (SDR/HDR, ...) in "choose version" dialog
+- Add: Add imperfect (but better-than-none) representation of DTS profiles and EAC3 JOC to preplay and stream screens
+- Add: Artists/Albums: Show similar artists
+- Add: Fade-to-black background when current item has no art
+- Fix: All instances of UI flickering
+- Fix: Use correct resolution name in "choose version" dialog
+- Fix: Collections 16x9 view thumbnail
+- Fix: DV HDR detection
+- Fix: Properly quote url params (e.g. when searching for "AC/DC")
+- Fix: Missing artists albums by adding related albums with types: live, soundtrack, singles, demo, remix, compilation
+- Fix: Choices sorting for extras/trailers (and possibly other videos); fix switching qualities during extras/trailers playback
+- Fix: Playing a track directly from search results by supplying its album info if possible
+- Fix: Crash when readfactor isn't readable in advancedsettings.xml
+- Fix: Unstable "smaller" buttons in episodes view with multiple media versions available
+- Fix: Multi-line cast names on seasons screen (thanks @bowlingbeeg)
+- Fix: PlayerSettingsDialog: enable ACTION_LEFT to leave scrollbar
+- Core: Thumbnails/Art: Don't unnecessarily upscale images serverside above their native resolution
+- Core: Allow DirectPlay of non-http-protocol Extras with protocol falsely(?) set to mp4
+- Core: Properly sort mediaChoices if there are multiple choices to make (trailers)
+- Core: Harden library view with regards to switching view types
+- Movies/Preplay: remove "cast" heading, move cast up so their names and roles are visible without scrolling
+- SeekDialog: PPI: Reduce videoSession wait timeout to 2 seconds
+- SeekDialog: Fix seeking via RWD/FFWD buttons when autoSeek is off; fix seeking via OSD via timeline pressing ENTER; hide OSD after seeking via ENTER
+- Seekdialog/Markers: Fix issue where a canceled countdown-autoskip-marker still skipped using SELECT/ENTER/OK
+- Player/Seekdialog: DirectPlay: Show additional cumulative parts time on multi part videos
+- Player: Remove (probably) unnecessary sleep between videos
+- Episodes/Preplay: Add "X more" label when video has multiple audio streams (thanks @bowlingbeeg for the idea)
+- Episodes/Seasons: Move actor images on episodes and seasons screens to better conform to other official Plex clients (thanks @bowlingbeeg)
+- Episodes: further harden view against network errors/disconnects
+- Home: Only store valid last-background on shutdown, preventing potential flicker on boot; Only store last BG for home section hubs
+- Home: Properly unhook signal receiver (possibly preventing a timely shutdown)
+- Playersettings/Audio: Show audio stream title as well, if available
+- Playersettings: show "X more" in stream selection as well
+- UI: Improve rendering smoothness and resolve flickering issues by providing a dark background while any background is currently loading (mostly invisible)
+- GUI/AdvSettings: Remove dialog flicker fix
+- GUI: Add longpress/CONTEXT_MENU handler to exit dialog, to switch from exitting the addon to quitting kodi
+- Photoviewer: Improve performance again
+- Hubs/Settings: Add setting to show hub bifurcation lines (default off)
+- Settings: Add setting to swap the default exit action with quit Kodi
+- AdvancedSettings: Player: Add setting to wait an amount of time before starting the next item in the queue (default: off)
+
+
 [- 0.7.3-rev2 -]
 - Fix: certain home hubs were limited to 10 items without pagination
 - Fix: very rare infinite playback loop with enabled embedded subtitles (thanks @florinvlaicu for reporting)

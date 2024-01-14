@@ -352,10 +352,6 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         else:
             role = sectionRoles[0]
 
-        if util.advancedSettings.dialogFlickerFix:
-            with busy.BusyContext():
-                xbmc.sleep(100)
-            xbmc.sleep(650)
         self.processCommand(opener.open(role))
 
     def getVideos(self):
@@ -608,7 +604,16 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def setAudioAndSubtitleInfo(self):
         sas = self.video.selectedAudioStream()
-        self.setProperty('audio', sas and sas.getTitle(metadata.apiTranslate) or T(32309, 'None'))
+
+        if sas:
+            if len(self.video.audioStreams) > 1:
+                self.setProperty(
+                    'audio', sas and u'{0} \u2022 {1} {2}'.format(sas.getTitle(metadata.apiTranslate),
+                                                                  len(self.video.audioStreams) - 1, T(32307, 'More'))
+                    or T(32309, 'None')
+                )
+            else:
+                self.setProperty('audio', sas and sas.getTitle(metadata.apiTranslate) or T(32309, 'None'))
 
         sss = self.video.selectedSubtitleStream(
             forced_subtitles_override=util.getSetting("forced_subtitles_override", False))

@@ -142,7 +142,7 @@
             <top>280</top>
             <width>10</width>
             <height>600</height>
-            <onleft>101</onleft>
+            <onleft>100</onleft>
             <visible>true</visible>
             <texturesliderbackground colordiffuse="30000000" border="5">script.plex/white-square.png</texturesliderbackground>
             <texturesliderbar colordiffuse="77FFFFFF" border="5">script.plex/white-square.png</texturesliderbar>

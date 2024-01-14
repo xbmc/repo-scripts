@@ -20,6 +20,7 @@ from . import backgroundthread
 from . import util
 
 BACKGROUND = None
+quitKodi = False
 
 
 if six.PY2:
@@ -47,6 +48,9 @@ def waitForThreads():
 @atexit.register
 def realExit():
     xbmc.log('Main: script.plex: REALLY FINISHED', xbmc.LOGINFO)
+    if quitKodi:
+        xbmc.log('Main: script.plex: QUITTING KODI', xbmc.LOGINFO)
+        xbmc.executebuiltin('Quit')
 
 
 def signout():
@@ -83,6 +87,7 @@ def main():
 
 
 def _main():
+    global quitKodi
     util.DEBUG_LOG('[ STARTED: {0} -------------------------------------------------------------------- ]'.format(util.ADDON.getAddonInfo('version')))
     util.DEBUG_LOG('USER-AGENT: {0}'.format(plex.defaultUserAgent()))
     background.setSplash()
@@ -137,7 +142,9 @@ def _main():
                         windowutils.HOME = home.HomeWindow.open()
                         util.CRON.cancelReceiver(windowutils.HOME)
 
-                        if not windowutils.HOME.closeOption:
+                        if not windowutils.HOME.closeOption or windowutils.HOME.closeOption == "quit":
+                            if windowutils.HOME.closeOption == "quit":
+                                quitKodi = True
                             return
 
                         closeOption = windowutils.HOME.closeOption
@@ -176,3 +183,7 @@ def _main():
         util.shutdown()
 
         gc.collect(2)
+
+        if util.KODI_VERSION_MAJOR == 18 and quitKodi:
+            xbmc.log('Main: script.plex: QUITTING KODI', xbmc.LOGINFO)
+            xbmc.executebuiltin('Quit')

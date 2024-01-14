@@ -136,7 +136,7 @@
                     <align>right</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
-                    <label>$INFO[Player.TimeRemaining($INFO[Window.Property(time.fmt)])]</label>
+                    <label>$INFO[Player.TimeRemaining($INFO[Window.Property(time.fmt)])]$INFO[Window.Property(time.add)]</label>
                 </control>
                 <control type="label">
                     <visible>String.IsEmpty(Window.Property(direct.play))</visible>

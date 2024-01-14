@@ -109,6 +109,15 @@ class PlexMedia(plexobjects.PlexObject):
     def versionString(self, log_safe=False):
         details = []
         details.append(self.getVideoResolutionString())
+        if self.hasStreams():
+            videoStream = self.parts[0].getSelectedStreamOfType(plexpart.plexstream.PlexStream.TYPE_VIDEO)
+            if videoStream:
+                details.append(videoStream.videoCodecRendering)
+
+            audioStream = self.parts[0].getSelectedStreamOfType(plexpart.plexstream.PlexStream.TYPE_AUDIO)
+            if audioStream:
+                details.append(audioStream.translateAudioCodec())
+
         if self.bitrate.asInt() > 0:
             details.append(util.bitrateToString(self.bitrate.asInt() * 1000))
 
@@ -141,7 +150,7 @@ class PlexMedia(plexobjects.PlexObject):
         return self.height.asInt()
 
     def getVideoResolutionString(self):
-        resNumber = util.validInt(list(filter(six.text_type.isdigit, self.videoResolution)))
+        resNumber = util.validInt("".join(list(filter(six.text_type.isdigit, self.videoResolution))))
         if resNumber > 0 and str(resNumber) == self.videoResolution:
             return self.videoResolution + "p"
 

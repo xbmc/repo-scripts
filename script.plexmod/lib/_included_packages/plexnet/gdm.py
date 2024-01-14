@@ -47,7 +47,7 @@ class GDMDiscovery(object):
 
         multicast = "239.0.0.250"
         ip = multicast
-        subnetRegex = re.compile("((\d+)\.(\d+)\.(\d+)\.)(\d+)")
+        subnetRegex = re.compile(r"((\d+)\.(\d+)\.(\d+)\.)(\d+)")
         addr = getFirstIPAddress()  # TODO:: -------------------------------------------------------------------------------------------------------- HANDLE
         if addr:
             match = subnetRegex.search(addr)

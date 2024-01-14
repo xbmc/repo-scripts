@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.plexmod"
        name="PM4K for Plex"
-       version="0.7.3"
+       version="0.7.4"
        provider-name="pannal">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
@@ -21,12 +21,11 @@
         <description lang="en_GB">Unofficial Plex for Kodi add-on</description>
         <license>GPL-2.0-only</license>
         <forum>https://forums.plex.tv/t/plexmod-for-kodi-18-19-20-21/481208</forum>
-        <website>https://forums.plex.tv/t/plexmod-for-kodi-18-19-20-21/481208</website>
+        <website>https://www.plex.tv</website>
         <source>https://github.com/pannal/plex-for-kodi</source>
         <platform>all</platform>
         <news>
-Initial release of PM4K for Plex in the official Kodi repository.
-Based on: 0.7.3-rev2
+0.7.4
         </news>
         <assets>
             <icon>icon.png</icon>

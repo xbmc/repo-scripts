@@ -76,7 +76,7 @@
                 <posy>220</posy>
                 <width>770</width>
                 <height>155</height>
-                <align>right</align>
+                <align>center</align>
                 <itemgap>-50</itemgap>
                 <orientation>horizontal</orientation>
                 <scrolltime>0</scrolltime>

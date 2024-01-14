@@ -10,6 +10,7 @@ from . import compat
 from . import plexlibrary
 from . import util
 from . import mediachoice
+from .mixins import AudioCodecMixin
 
 
 class PlexVideoItemList(plexobjects.PlexItemList):
@@ -43,7 +44,7 @@ def forceMediaChoice(method):
     return _impl
 
 
-class Video(media.MediaItem):
+class Video(media.MediaItem, AudioCodecMixin):
     TYPE = None
     manually_selected_sub_stream = False
     current_subtitle_is_embedded = False
@@ -52,6 +53,7 @@ class Video(media.MediaItem):
     def __init__(self, *args, **kwargs):
         self._settings = None
         media.MediaItem.__init__(self, *args, **kwargs)
+        AudioCodecMixin.__init__(self)
 
     def __eq__(self, other):
         return other and self.ratingKey == other.ratingKey
@@ -298,12 +300,7 @@ class Video(media.MediaItem):
     def audioCodecString(self):
         codec = (self.mediaChoice.media.audioCodec or '').lower()
 
-        if codec in ('dca', 'dca-ma', 'dts-hd', 'dts-es', 'dts-hra'):
-            codec = "DTS"
-        else:
-            codec = codec.upper()
-
-        return codec
+        return self.translateAudioCodec(codec).upper()
 
     @forceMediaChoice
     def videoCodecString(self):
@@ -351,33 +348,6 @@ class Video(media.MediaItem):
         return any(v.isAccessible() for v in self.media())
 
 
-class RelatedMixin(object):
-    _relatedCount = None
-
-    @property
-    def relatedCount(self):
-        if self._relatedCount is None:
-            related = self.getRelated(0, 0)
-            if related is not None:
-                self._relatedCount = related.totalSize
-            else:
-                self._relatedCount = 0
-
-        return self._relatedCount
-
-    @property
-    def related(self):
-        return self.getRelated(0, 8)
-
-    def getRelated(self, offset=None, limit=None, _max=36):
-        path = '/library/metadata/%s/similar' % self.ratingKey
-        try:
-            return plexobjects.listItems(self.server, path, offset=offset, limit=limit, params={"count": _max})
-        except exceptions.BadRequest:
-            util.DEBUG_LOG("Invalid related items response returned for %s" % self)
-            return None
-
-
 class SectionOnDeckMixin(object):
     _sectionOnDeckCount = None
 
@@ -393,7 +363,7 @@ class SectionOnDeckMixin(object):
         return self._sectionOnDeckCount
 
 
-class PlayableVideo(Video, RelatedMixin):
+class PlayableVideo(Video, media.RelatedMixin):
     TYPE = None
     _videoStreams = None
     _audioStreams = None
@@ -404,6 +374,11 @@ class PlayableVideo(Video, RelatedMixin):
         Video._setData(self, data)
         if self.isFullObject():
             self.extras = PlexVideoItemList(data.find('Extras'), initpath=self.initpath, server=self.server, container=self)
+
+            # the PMS Extras API can return protocol=mp4 when it doesn't make sense, mark this as an extra so the MDE
+            # knows what to do
+            for extra in self.extras:
+                extra.isExtra = True
             self.chapters = plexobjects.PlexItemList(data, media.Chapter, media.Chapter.TYPE, server=self.server)
 
         self.resetStreams()
@@ -441,8 +416,13 @@ class PlayableVideo(Video, RelatedMixin):
             streamIDs = []
             if self.mediaChoice.media.hasStreams():
                 subtitleStream = self.selectedSubtitleStream(fallback=False)
-                streamIDs = [self.selectedVideoStream(fallback=True).id,
-                             self.selectedAudioStream(fallback=True).id]
+                videoStream = self.selectedVideoStream(fallback=True)
+                audioStream = self.selectedAudioStream(fallback=True)
+                streamIDs = []
+                if videoStream:
+                    streamIDs.append(videoStream.id)
+                if audioStream:
+                    streamIDs.append(audioStream.id)
                 if subtitleStream:
                     streamIDs.append(subtitleStream.id)
 
@@ -559,7 +539,7 @@ class Movie(PlayableVideo):
 
 
 @plexobjects.registerLibType
-class Show(Video, RelatedMixin, SectionOnDeckMixin):
+class Show(Video, media.RelatedMixin, SectionOnDeckMixin):
     TYPE = 'show'
 
     def _setData(self, data):

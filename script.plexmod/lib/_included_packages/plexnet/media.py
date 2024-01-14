@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from . import plexobjects
 from . import plexstream
 from . import util
+from . import exceptions
 
 METADATA_RELATED_TRAILER = 1
 METADATA_RELATED_DELETED_SCENE = 2
@@ -65,6 +66,28 @@ class MediaItem(plexobjects.PlexObject):
         # req = plexrequest.PlexRequest(self.server, '/library/metadata/{0}'.format(self.ratingKey), method='HEAD')
         # req.getToStringWithTimeout(10)
         # return not req.wasNotFound()
+
+    def relatedHubs(self, data, _itemCls, hubIdentifiers=None, _filter=None):
+        hubs = data.find("Related")
+        if _filter is None and hubIdentifiers is None:
+            raise NotImplemented
+
+        _f = lambda x: x
+        if _filter is not None:
+            _f = _filter
+        if hubIdentifiers is not None:
+            hubIds = hubIdentifiers
+            if not isinstance(hubIds, (list, set, tuple)):
+                hubIds = [hubIds]
+            _f = lambda x: x.attrib.get("hubIdentifier", None) in hubIds
+
+        results = []
+        if hubs is not None:
+            for hub in hubs:
+                if hub.attrib.get("size", 0) and _f(hub):
+                    results += list(plexobjects.PlexItemList(hub, _itemCls, 'Directory', server=self.server,
+                                                             container=self))
+        return results
 
     def fixedDuration(self):
         duration = self.duration.asInt()
@@ -256,3 +279,30 @@ class Review(MediaTag):
             return ''
 
         return img.split('rottentomatoes://')[1]
+
+
+class RelatedMixin(object):
+    _relatedCount = None
+
+    @property
+    def relatedCount(self):
+        if self._relatedCount is None:
+            related = self.getRelated(0, 0)
+            if related is not None:
+                self._relatedCount = related.totalSize
+            else:
+                self._relatedCount = 0
+
+        return self._relatedCount
+
+    @property
+    def related(self):
+        return self.getRelated(0, 8)
+
+    def getRelated(self, offset=None, limit=None, _max=36):
+        path = '/library/metadata/%s/similar' % self.ratingKey
+        try:
+            return plexobjects.listItems(self.server, path, offset=offset, limit=limit, params={"count": _max})
+        except exceptions.BadRequest:
+            util.DEBUG_LOG("Invalid related items response returned for %s" % self)
+            return None

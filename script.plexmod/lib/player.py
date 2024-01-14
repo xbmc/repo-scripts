@@ -228,6 +228,8 @@ class SeekPlayerHandler(BasePlayerHandler):
         if self.isTranscoded:
             return self.baseOffset + self.player.currentTime
         else:
+            if not self.player.playerObject:
+                return 0
             if self.seekOnStart:
                 return self.player.playerObject.startOffset + (self.seekOnStart / 1000)
             else:
@@ -276,8 +278,6 @@ class SeekPlayerHandler(BasePlayerHandler):
         if not self.playlist or self.stoppedInBingeMode:
             return False
 
-        xbmc.sleep(500)
-
         self.player.playVideoPlaylist(self.playlist, handler=self, resume=self.player.resume)
 
         return True
@@ -315,7 +315,7 @@ class SeekPlayerHandler(BasePlayerHandler):
     def hideOSD(self, delete=False):
         util.CRON.forceTick()
         if self.dialog:
-            self.dialog.hideOSD(closing=delete)
+            self.dialog.hideOSD(closing=delete, skipMarkerFocus=True)
             if delete:
                 d = self.dialog
                 self.dialog = None
@@ -385,6 +385,9 @@ class SeekPlayerHandler(BasePlayerHandler):
     def onAVStarted(self):
         util.DEBUG_LOG('SeekHandler: onAVStarted')
 
+        if self.isDirectPlay:
+            self.seekAbsolute()
+
         if self.dialog:
             self.dialog.onAVStarted()
 
@@ -437,6 +440,8 @@ class SeekPlayerHandler(BasePlayerHandler):
             self.dialog.onPlayBackStopped()
 
         if self.queuingNext and self.inBingeMode:
+            if self.isDirectPlay and self.playlist and self.playlist.hasNext():
+                self.hideOSD(delete=True)
             if self.next(on_end=False):
                 return
 
@@ -580,9 +585,6 @@ class SeekPlayerHandler(BasePlayerHandler):
             self.player.showSubtitles(True)
         self.setAudioTrack()
 
-        if self.isDirectPlay:
-            self.seekAbsolute()
-
     def onPlayBackFailed(self):
         if self.ended:
             return False
@@ -628,7 +630,7 @@ class SeekPlayerHandler(BasePlayerHandler):
         if self.seeking != self.SEEK_IN_PROGRESS:
             self.updateNowPlaying(force=True)
 
-        if self.dialog:
+        if self.dialog and getattr(self.dialog, "_ignoreTick", None) is not True:
             self.dialog.tick()
 
     def close(self):
@@ -1071,6 +1073,11 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
 
         self.ignoreStopEvents = True
         self.stopAndWait()  # Stop before setting up the handler to prevent player events from causing havoc
+        if self.handler and self.handler.queuingNext and util.advancedSettings.consecutiveVideoPbWait:
+            util.DEBUG_LOG(
+                "Waiting for {}s until playing back next item".format(util.advancedSettings.consecutiveVideoPbWait))
+            util.MONITOR.waitForAbort(util.advancedSettings.consecutiveVideoPbWait)
+
         self.ignoreStopEvents = False
 
         self.handler.setup(self.video.duration.asInt(), meta, offset, bifURL, title=self.video.grandparentTitle,
@@ -1120,6 +1127,7 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
             'title': self.video.title,
             'originaltitle': self.video.title,
             'tvshowtitle': self.video.grandparentTitle,
+            'showtitle': self.video.grandparentTitle,
             'episode': vtype == "episode" and self.video.index.asInt() or '',
             'season': vtype == "episode" and self.video.parentIndex.asInt() or '',
             #'year': self.video.year.asInt(),

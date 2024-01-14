@@ -23,6 +23,7 @@ from kodi_six import xbmcaddon
 from kodi_six import xbmcvfs
 
 from . import colors
+from .exceptions import NoDataException
 from plexnet import signalsmixin, plexapp
 
 DEBUG = True
@@ -170,8 +171,8 @@ class AdvancedSettings(object):
         ("use_bg_fallback", False),
         ("dbg_crossfade", True),
         ("subtitle_use_extended_title", True),
-        ("dialog_flicker_fix", True),
         ("poster_resolution_scale_perc", 100),
+        ("consecutive_video_pb_wait", 0.0),
     )
 
     def __init__(self):
@@ -374,12 +375,12 @@ class KodiCacheManager(object):
 
                 try:
                     self.memorySize = int(ADV_MSIZE_RE.search(cachexml).group(1)) // 1024 // 1024
-                except (ValueError, IndexError, TypeError):
+                except:
                     DEBUG_LOG("script.plex: invalid or not found memorysize in advancedsettings.xml")
 
                 try:
                     self.readFactor = int(ADV_RFACT_RE.search(cachexml).group(1))
-                except (ValueError, IndexError, TypeError):
+                except:
                     DEBUG_LOG("script.plex: invalid or not found readfactor in advancedsettings.xml")
 
                 self._cleanData = data.replace(cachexml, "")
@@ -550,26 +551,28 @@ def durationToText(seconds):
     return '0 seconds'
 
 
-def durationToShortText(seconds):
+def durationToShortText(ms, shortHourMins=False):
     """
     Converts seconds to a short user friendly string
     Example: 143 -> 2m 23s
     """
-    days = int(seconds / 86400000)
+    days = int(ms / 86400000)
     if days:
         return '{0} d'.format(days)
-    left = seconds % 86400000
+    left = ms % 86400000
     hours = int(left / 3600000)
     if hours:
-        hours = '{0} h '.format(hours)
+        hours_s = '{0} h '.format(hours)
     else:
-        hours = ''
+        hours_s = ''
     left = left % 3600000
     mins = int(left / 60000)
     if mins:
-        return hours + '{0} m'.format(mins)
-    elif hours:
-        return hours.rstrip()
+        if shortHourMins and hours:
+            return '{0}:{1} h'.format(hours, mins)
+        return hours_s + '{0} m'.format(mins)
+    elif hours_s:
+        return hours_s.rstrip()
     secs = int(left % 60000)
     if secs:
         secs /= 1000

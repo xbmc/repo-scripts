@@ -136,7 +136,15 @@ class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
 
     def getAudioAndSubtitleInfo(self):
         sas = self.video.selectedAudioStream()
-        audio = sas and sas.getTitle(metadata.apiTranslate) or T(32309, 'None')
+        if sas:
+            if len(self.video.audioStreams) > 1:
+                audio = sas and u'{0} \u2022 {1} {2}'.format(sas.getTitle(metadata.apiTranslate),
+                                                             len(self.video.audioStreams) - 1, T(32307, 'More')) \
+                        or T(32309, 'None')
+            else:
+                audio = sas and sas.getTitle(metadata.apiTranslate) or T(32309, 'None')
+        else:
+            audio = T(32309, 'None')
 
         sss = self.video.selectedSubtitleStream(
             forced_subtitles_override=util.getSetting("forced_subtitles_override", False))
@@ -270,8 +278,11 @@ class SelectDialog(kodigui.BaseDialog, util.CronReceiver):
 
     def showOptions(self):
         items = []
-        for o in self.options:
-            item = kodigui.ManagedListItem(o[1], data_source=o[0])
+        for ds, title1 in self.options:
+            title2 = ''
+            if isinstance(title1, (list, set, tuple)):
+                title1, title2 = title1
+            item = kodigui.ManagedListItem(title1, plexnet.util.trimString(title2, limit=40), data_source=ds)
             items.append(item)
 
         self.optionsList.reset()
@@ -297,7 +308,7 @@ def showAudioDialog(video, non_playback=False):
     for i, s in enumerate(video.audioStreams):
         if s.isSelected():
             idx = i
-        options.append((s, s.getTitle(metadata.apiTranslate)))
+        options.append((s, (s.getTitle(metadata.apiTranslate), s.title)))
     choice = showOptionsDialog(T(32395, 'Audio'), options, non_playback=non_playback, selected_idx=idx)
     if choice is None:
         return

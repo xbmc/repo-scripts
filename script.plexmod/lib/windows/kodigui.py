@@ -96,6 +96,7 @@ class BaseFunctions:
 
 
 LAST_BG_URL = None
+BG_NA = "script.plex/home/background-fallback_black.png"
 
 
 class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
@@ -173,10 +174,11 @@ class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
         global LAST_BG_URL
 
         if not value:
-            if LAST_BG_URL:
-                self.setProperty("background_static", LAST_BG_URL)
-                return LAST_BG_URL
-            return
+            bg = LAST_BG_URL or BG_NA
+            self.setProperty("background_static", bg)
+            self.setProperty("background", BG_NA)
+            LAST_BG_URL = BG_NA
+            return BG_NA
 
         cur1 = self.getProperty('background')
         if not cur1:

@@ -964,9 +964,25 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         if choice == ITEM_TYPE:
             return
 
-        self.tasks.cancel()
+        with self.lock:
+            if self.tasks and any(list(filter(lambda x: not x.finished, self.tasks))):
+                util.DEBUG_LOG("Waiting for tasks to finish")
+                with busy.BusyContext(delay=True, delay_time=0.2):
+                    while self.tasks and not util.MONITOR.abortRequested():
+                        task = self.tasks.pop()
+                        if task.isValid():
+                            task.cancel()
+                            ct = 0
+                            while not task.finished and not util.MONITOR.abortRequested() and ct < 40:
+                                xbmc.sleep(100)
+                                ct += 1
+                        del task
 
-        self.showPanelControl = None  # TODO: Need to do some check here I think
+            try:
+                self.showPanelControl.reset()
+            except:
+                util.DEBUG_LOG("Couldn't reset showPanelControl on view change")
+            self.showPanelControl = None  # TODO: Need to do some check here I think
 
         self.librarySettings.setItemType(choice)
 
@@ -1648,6 +1664,9 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         if self.chunkMode and not self.chunkMode.posIsValid(start):
             return
 
+        if not self.showPanelControl or not items:
+            return
+
         with self.lock:
             if self.chunkMode and not self.chunkMode.posIsValid(start):
                 return
@@ -1666,6 +1685,9 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             if ITEM_TYPE == 'episode':
                 for offset, obj in enumerate(items):
+                    if not self.showPanelControl:
+                        return
+
                     mli = self.showPanelControl[pos]
                     if obj:
                         mli.dataSource = obj
@@ -1699,6 +1721,9 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             elif ITEM_TYPE == 'album':
                 for offset, obj in enumerate(items):
+                    if not self.showPanelControl:
+                        return
+
                     mli = self.showPanelControl[pos]
                     if obj:
                         mli.dataSource = obj
@@ -1726,11 +1751,20 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                     pos += 1
             else:
                 for offset, obj in enumerate(items):
+                    if not self.showPanelControl:
+                        return
+
                     mli = self.showPanelControl[pos]
                     if obj:
                         mli.setProperty('index', str(pos))
                         mli.setLabel(obj.defaultTitle or '')
-                        mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
+
+                        if obj.TYPE == 'collection':
+                            colArtDim = TYPE_KEYS.get('collection').get('art_dim', (256, 256))
+                            mli.setProperty('art', obj.artCompositeURL(*colArtDim))
+                            mli.setThumbnailImage(obj.artCompositeURL(*thumbDim))
+                        else:
+                            mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
                         mli.dataSource = obj
                         mli.setProperty('summary', obj.get('summary'))
 

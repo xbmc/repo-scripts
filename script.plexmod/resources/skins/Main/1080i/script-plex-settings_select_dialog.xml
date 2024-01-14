@@ -56,6 +56,7 @@
                 <!-- ITEM LAYOUT ########################################## -->
                 <itemlayout height="100">
                     <control type="label">
+                        <visible>String.IsEmpty(ListItem.Label2)</visible>
                         <posx>20</posx>
                         <posy>0</posy>
                         <width>560</width>
@@ -65,6 +66,29 @@
                         <aligny>center</aligny>
                         <textcolor>FFFFFFFF</textcolor>
                         <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!String.IsEmpty(ListItem.Label2)</visible>
+                        <posx>20</posx>
+                        <posy>15</posy>
+                        <width>560</width>
+                        <height>40</height>
+                        <font>font12</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!String.IsEmpty(ListItem.Label2)</visible>
+                        <posx>20</posx>
+                        <posy>40</posy>
+                        <width>560</width>
+                        <font>font10</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>FFBBBBBB</textcolor>
+                        <label>$INFO[ListItem.Label2]</label>
                     </control>
                 </itemlayout>
                 <focusedlayout height="100">
@@ -76,6 +100,7 @@
                         <texture colordiffuse="FFE5A00D">script.plex/white-square.png</texture>
                     </control>
                     <control type="label">
+                        <visible>String.IsEmpty(ListItem.Label2)</visible>
                         <posx>20</posx>
                         <posy>0</posy>
                         <width>560</width>
@@ -85,6 +110,29 @@
                         <aligny>center</aligny>
                         <textcolor>FF000000</textcolor>
                         <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!String.IsEmpty(ListItem.Label2)</visible>
+                        <posx>20</posx>
+                        <posy>15</posy>
+                        <width>560</width>
+                        <height>40</height>
+                        <font>font12</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>FF000000</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!String.IsEmpty(ListItem.Label2)</visible>
+                        <posx>20</posx>
+                        <posy>40</posy>
+                        <width>560</width>
+                        <font>font10</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>FF222222</textcolor>
+                        <label>$INFO[ListItem.Label2]</label>
                     </control>
                 </focusedlayout>
             </control>

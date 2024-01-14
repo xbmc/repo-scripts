@@ -1944,3 +1944,31 @@ msgstr "OpenSubtitles.com Prüfsumme berechnen"
 msgctxt "#32959"
 msgid "When opening the subtitle download feature, automatically calculate the OpenSubtitles.com hash for the given file. Can improve search results, downloads 2*64 KB of the video file to calculate the hash."
 msgstr "Beim Öffnen der Untertitel-Herunterladen-Funktion die Prüfsumme der Datei für OpenSubtitles.com automatisch berechnen. Kann die Suchergebnisse verbessern, lädt 2*64 KB der Videodatei herunter um die Prüfsumme zu berechnen."
+
+msgctxt "#32960"
+msgid "Similar Artists"
+msgstr "Ähnliche Künstler"
+
+msgctxt "#32961"
+msgid "Show hub bifurcation lines"
+msgstr "Hub-Trennlinie anzeigen"
+
+msgctxt "#32962"
+msgid "Visually separate hubs horizontally using a thin line."
+msgstr "Trennt Hubs visuell horizontal mit Hilfe einer dünnen Linie."
+
+msgctxt "#32963"
+msgid "Wait between videos (s)"
+msgstr "Zwischen Videos warten (s)"
+
+msgctxt "#32964"
+msgid "When playing back consecutive videos (e.g. TV shows), wait this long before starting the next one in the queue. Might fix compatibility issues with certain configurations."
+msgstr "Werden aufeinanderfolgende Videos abgespielt (z. B. Serien), so lange warten, bis das nächste Video in der Warteschlange abgespielt wird. Könnte Kompatibilitätsprobleme mit gewissen Konfigurationen beheben."
+
+msgctxt "#32965"
+msgid "Quit Kodi on exit by default"
+msgstr "Kodi beenden anstatt PM4K"
+
+msgctxt "#32966"
+msgid "When showing the addon exit confirmation, use \"Quit Kodi\" as default option. Can be dynamically switched using CONTEXT_MENU (often longpress SELECT)"
+msgstr "Wenn die Addon-Beendigungsbestätigung angezeigt wird, \"Kodi beenden\" als Standardoption verwenden. Kann dynamisch mit CONTEXT_MENU (oft lange gedrücktes SELECT) getauscht werden."

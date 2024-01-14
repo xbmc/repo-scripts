@@ -22,6 +22,7 @@ class OptionsDialog(kodigui.BaseDialog):
         self.button0 = kwargs.get('button0')
         self.button1 = kwargs.get('button1')
         self.button2 = kwargs.get('button2')
+        self.actionCallback = kwargs.get('action_callback')
         self.buttonChoice = None
 
     def onFirstInit(self):
@@ -41,14 +42,26 @@ class OptionsDialog(kodigui.BaseDialog):
         util.MONITOR.waitForAbort(0.1)
         self.setFocusId(self.BUTTON_IDS[0])
 
+    def onAction(self, action):
+        controlID = self.getFocusId()
+        actionID = action.getId()
+
+        if self.actionCallback:
+            res = self.actionCallback(self, actionID, controlID)
+            if res:
+                return
+
+        return kodigui.BaseDialog.onAction(self, action)
+
     def onClick(self, controlID):
         if controlID in self.BUTTON_IDS:
             self.buttonChoice = self.BUTTON_IDS.index(controlID)
             self.doClose()
 
 
-def show(header, info, button0=None, button1=None, button2=None):
-    w = OptionsDialog.open(header=header, info=info, button0=button0, button1=button1, button2=button2)
+def show(header, info, button0=None, button1=None, button2=None, action_callback=None):
+    w = OptionsDialog.open(header=header, info=info, button0=button0, button1=button1, button2=button2,
+                           action_callback=action_callback)
     choice = w.buttonChoice
     del w
     util.garbageCollect()
