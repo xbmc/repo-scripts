@@ -2,7 +2,7 @@
 <addon
 	id="service.languagepreferencemanager"
 	name="Language Preference Manager"
-	version="1.0.2"
+	version="1.0.3"
 	provider-name="ace20022/scott967/rockrider69"
 	>
 	<requires>
@@ -26,7 +26,12 @@
 1.0.1     : Initial version for main Kodi.tv addons repository
 1.0.2     : Fix 10sec latency on subs display and possible few lines lost - at video start or when switching audio.
             Forced sub tracks : check also subtitle field "isforced" in case field "name" is empty or misspelled.
-
+1.0.3	  : Improve 10sec subs latency workaround: new option to disable it (default), or enable it at 'start only' or 'start+resume'.
+            Option to prioritize 'SignsSongs' tracks via custom conditional sub preferences. Syntax is ...>Eng:Eng-ss>...
+            New Keywords Blacklist for Audio tracks. Same principle as for Subtitles, based on track name, to skip some (ex. Commentary, ...)
+            Fix Greek and Serbian language codes according to iso639-2/T. Fix some typos.
+            Fix multiple 3 digit codes per language (ex. German ger,deu). Now OK also for Conditional Subtitles preferences.
+			
 		</news>
 		<assets>
 			<icon>resources/icon.png</icon>

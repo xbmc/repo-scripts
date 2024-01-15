@@ -70,11 +70,11 @@ msgid "Delay the evaluation by the following value [ms]"
 msgstr ""
 
 msgctxt "#30113"
-msgid "Turn on subtitles if a subtitle prefrence matched"
+msgid "Turn on subtitles if a subtitle preference matched"
 msgstr ""
 
 msgctxt "#30114"
-msgid "Turn off subtitles if no subtitle prefrence matched"
+msgid "Turn off subtitles if no subtitle preference matched"
 msgstr ""
 
 msgctxt "#30115"
@@ -114,7 +114,7 @@ msgid "Ignore all Signs and Songs subtitles tracks"
 msgstr ""
 
 msgctxt "#30125"
-msgid "Enable Keyword Blacklist"
+msgid "Enable Subtitle Keyword Blacklist"
 msgstr "
 
 msgctxt "#30126"
@@ -122,7 +122,35 @@ msgid "Enter a comma-separated list of keywords to blacklist in subtitle names"
 msgstr "
 
 msgctxt "#30127"
-msgid "Keyword List:"
+msgid "Subtitle Keyword List:"
+msgstr "
+
+msgctxt "#30128"
+msgid "Enable Audio Keyword Blacklist"
+msgstr "
+
+msgctxt "#30129"
+msgid "Enter a comma-separated list of keywords to blacklist in audio names"
+msgstr "
+
+msgctxt "#30130"
+msgid "Audio Keyword List:"
+msgstr "
+
+msgctxt "#30131"
+msgid "Fast Subtitles Display:"
+msgstr "
+
+msgctxt "#30132"
+msgid "Disabled"
+msgstr "
+
+msgctxt "#30133"
+msgid "New Start only"
+msgstr "
+
+msgctxt "#30134"
+msgid "Start & Resume"
 msgstr "
 
 msgctxt "#30201"
