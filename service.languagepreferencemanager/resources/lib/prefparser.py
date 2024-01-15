@@ -31,6 +31,7 @@ class PrefParser:
         self.custom_g_t_pref_delim = r'#'
         self.custom_g_t_delim = r','
         self.custom_condSub_delim = r':'
+        self.custom_subtag_delim = r'-'
         
     def parsePrefString(self, pref_string):
         preferences = []
@@ -79,13 +80,25 @@ class PrefParser:
                             self.log(LOG_INFO, 'Custom cond subs prefs parse error: {0}'.format(pref))
                 else:
                     temp_a = (languageTranslate(pref[0], 3, 0), pref[0])
+                    # Searching if a sub tag is present (like Eng:Eng-ss to prioritize Signs&Songs tracks)
+                    ss_tag = 'false'
+                    if (pref[1].find(self.custom_subtag_delim) > 0):
+                        st_pref = pref[1].split(self.custom_subtag_delim)
+                        if len(st_pref) != 2:
+                            print('Custom cond subs prefs parse error: {0}'.format(pref))
+                        else:
+                            if (st_pref[1] == 'ss'):
+                                ss_tag = 'true'
+                            else:
+                                self.log(LOG_INFO, 'Custom cond subs prefs parse error: {0}. Unknown sub tag is ignored'.format(pref))
+                        pref[1] = st_pref[0]
                     temp_s = (languageTranslate(pref[1], 3, 0), pref[1])
                     if (temp_a[0] and temp_a[1] and temp_s[0] and temp_s[1]):
                         if (temp_s[1] == 'non'):
                             forced_tag = 'true'
                         else:
                             forced_tag = 'false'
-                        lang_prefs.append((temp_a[0], temp_a[1], temp_s[0], temp_s[1], forced_tag))
+                        lang_prefs.append((temp_a[0], temp_a[1], temp_s[0], temp_s[1], forced_tag, ss_tag))
                     else:
                         self.log(LOG_INFO, 'Custom cond sub prefs: lang code not found in db!'\
                                  ' Please report this: {0}:{1}'.format(temp_a, temp_s))

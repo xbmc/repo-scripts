@@ -50,7 +50,9 @@ class settings():
                  'cond subs on: {3}\n' \
                  'turn subs on: {4}, turn subs off: {5}\n' \
                  'signs: {15}\n' \
-                 'blacklisted keywords: {16}\n' \
+                 'blacklisted keywords (subtitles): {16}\n' \
+                 'blacklisted keywords (audio): {17}\n' \
+                 'fast subtitles display (10sec latency workaround): {18}\n' \
                  'use file name: {6}, file name regex: {7}\n' \
                  'at least one pref on: {8}\n'\
                  'audio prefs: {9}\n' \
@@ -65,7 +67,10 @@ class settings():
                          self.useFilename, self.filenameRegex, self.at_least_one_pref_on,
                          self.AudioPrefs, self.SubtitlePrefs, self.CondSubtitlePrefs,
                          self.custom_audio, self.custom_subs, self.custom_condsub, self.ignore_signs_on,
-                         ','.join(self.keyword_blacklist))
+                         ','.join(self.subtitle_keyword_blacklist),
+                         ','.join(self.audio_keyword_blacklist),
+                         self.fast_subs_display
+                        )
                  )
       
     def readPrefs(self):
@@ -79,12 +84,19 @@ class settings():
       self.turn_subs_on = addon.getSetting('turnSubsOn') == 'true'
       self.turn_subs_off = addon.getSetting('turnSubsOff') == 'true'
       self.ignore_signs_on = addon.getSetting('signs') == 'true'
-      self.keyword_blacklist_enabled = addon.getSetting('enableKeywordBlacklist') == 'true'
-      self.keyword_blacklist = addon.getSetting('KeywordBlacklist')
-      if self.keyword_blacklist and self.keyword_blacklist_enabled:
-          self.keyword_blacklist = self.keyword_blacklist.lower().split(',')
+      self.subtitle_keyword_blacklist_enabled = addon.getSetting('enableSubtitleKeywordBlacklist') == 'true'
+      self.subtitle_keyword_blacklist = addon.getSetting('SubtitleKeywordBlacklist')
+      if self.subtitle_keyword_blacklist and self.subtitle_keyword_blacklist_enabled:
+          self.subtitle_keyword_blacklist = self.subtitle_keyword_blacklist.lower().split(',')
       else:
-          self.keyword_blacklist = []
+          self.subtitle_keyword_blacklist = []
+      self.audio_keyword_blacklist_enabled = addon.getSetting('enableAudioKeywordBlacklist') == 'true'
+      self.audio_keyword_blacklist = addon.getSetting('AudioKeywordBlacklist')
+      if self.audio_keyword_blacklist and self.audio_keyword_blacklist_enabled:
+          self.audio_keyword_blacklist = self.audio_keyword_blacklist.lower().split(',')
+      else:
+          self.audio_keyword_blacklist = []
+      self.fast_subs_display = int(addon.getSetting('FastSubsDisplay'))
       self.useFilename = addon.getSetting('useFilename') == 'true'
       self.filenameRegex = addon.getSetting('filenameRegex')
       if self.useFilename:
@@ -95,6 +107,8 @@ class settings():
                                   or self.sub_prefs_on
                                   or self.condsub_prefs_on
                                   or self.useFilename)
+      
+      self.CondSubTag = 'false'
       
       self.AudioPrefs = [(set(), [
           (languageTranslate(addon.getSetting('AudioLang01'), 4, 0) ,
@@ -121,21 +135,24 @@ class settings():
               languageTranslate(addon.getSetting('CondAudioLang01'), 4, 3),
               languageTranslate(addon.getSetting('CondSubLang01'), 4, 0),
               languageTranslate(addon.getSetting('CondSubLang01'), 4, 3),
-              addon.getSetting('CondSubForced01')
+              addon.getSetting('CondSubForced01'),
+              self.CondSubTag
           ),
           (
               languageTranslate(addon.getSetting('CondAudioLang02'), 4, 0),
               languageTranslate(addon.getSetting('CondAudioLang02'), 4, 3),
               languageTranslate(addon.getSetting('CondSubLang02'), 4, 0),
               languageTranslate(addon.getSetting('CondSubLang02'), 4, 3),
-              addon.getSetting('CondSubForced02')
+              addon.getSetting('CondSubForced02'),
+              self.CondSubTag
           ),
           (
               languageTranslate(addon.getSetting('CondAudioLang03'), 4, 0),
               languageTranslate(addon.getSetting('CondAudioLang03'), 4, 3),
               languageTranslate(addon.getSetting('CondSubLang03'), 4, 0),
               languageTranslate(addon.getSetting('CondSubLang03'), 4, 3),
-              addon.getSetting('CondSubForced03')
+              addon.getSetting('CondSubForced03'),
+              self.CondSubTag
           )]
       )]
 
