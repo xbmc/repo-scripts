@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.areace" version="1.0.3" name="Are Ace" provider-name="pustovit">
+<addon id="script.areace" version="1.1.0" name="Are Ace" provider-name="pustovit">
 	<requires>
 		<import addon="xbmc.python" version="3.0.1"/>
 		<import addon="script.module.requests" version="2.27.1"/>
@@ -17,6 +17,11 @@
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screenshots/settings.jpg</screenshot> 
+			<screenshot>resources/screenshots/telegram_channel.png</screenshot> 
+			<screenshot>resources/screenshots/select_stream.jpg</screenshot> 
+			<screenshot>resources/screenshots/chose_app.jpg</screenshot>
+			<screenshot>resources/screenshots/acestream_buffering.jpg</screenshot>
         </assets>
 	</extension>
 </addon>
