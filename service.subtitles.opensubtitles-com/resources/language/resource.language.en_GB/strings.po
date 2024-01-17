@@ -21,7 +21,7 @@ msgid "Plugin is not properly configured, insert valid OpenSubtitles.com usernam
 msgstr ""
 
 msgctxt "#32003"
-msgid "Unable to authenticate. Check your OpenSubtitles.com username, password."
+msgid "Unable to authenticate. Check your OpenSubtitles.com username and password."
 msgstr ""
 
 msgctxt "#32004"
@@ -62,4 +62,8 @@ msgstr ""
 
 msgctxt "#32213"
 msgid "Machine Translated"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Bad username. Make sure you have entered your username and not your email in the username field."
 msgstr ""
