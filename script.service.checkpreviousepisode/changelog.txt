@@ -1,3 +1,6 @@
+v0.4.6
+- Ignore shows that have already been decided on (i.e. those with a non-zero resume point)
+
 v0.4.5
 - Fix logic of ignore if previous episode not actually in library 
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.checkpreviousepisode" version="0.4.5" name="Kodi Check Previous Episode" provider-name="bossanova808, Razzeee, Lucleonhart" >
+<addon id="script.service.checkpreviousepisode" version="0.4.6" name="Kodi Check Previous Episode" provider-name="bossanova808, Razzeee, Lucleonhart" >
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="script.module.yaml" version="3.11.0" />
@@ -16,8 +16,8 @@
     <forum>https://forum.kodi.tv/showthread.php?tid=355464</forum>
     <website>https://kodi.wiki/view/Add-on:XBMC_Check_Previous_Episode</website>
     <source>https://github.com/bossanova808/script.service.checkpreviousepisode</source>
-    <news>v0.4.5
-    - Fix logic of ignore if previous episode not actually in library 
+    <news>v0.4.6
+    - Ignore shows that have already been decided on (i.e. those with a non-zero resume point)
     </news>
   <assets>
      <icon>icon.png</icon>

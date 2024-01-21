@@ -58,7 +58,7 @@ class KodiPlayer(xbmc.Player):
                     "method": "VideoLibrary.GetEpisodeDetails",
                     "params": {
                         "episodeid": json_object['result']['item']['id'],
-                        "properties": ["tvshowid", "showtitle", "season", "episode"]
+                        "properties": ["tvshowid", "showtitle", "season", "episode", "resume"]
                     }
                 })
                 json_object = send_kodi_json("Get episode details", command)
@@ -70,11 +70,18 @@ class KodiPlayer(xbmc.Player):
                     playing_tvshow_title = json_object['result']['episodedetails']['showtitle']
                     playing_season = json_object['result']['episodedetails']['season']
                     playing_episode = json_object['result']['episodedetails']['episode']
-                    log(f'Playing - title: {playing_tvshow_title} , id: {playing_tvshowid} , season: {playing_season}, episode: {playing_episode}')
+                    resume_point = json_object['result']['episodedetails']['resume']['position']
+
+                    log(f'Playing - title: {playing_tvshow_title} , id: {playing_tvshowid} , season: {playing_season}, episode: {playing_episode}, resume: {resume_point}')
 
                     # Is show set to be ignored?
                     if Store.ignored_shows and playing_tvshowid in Store.ignored_shows:
-                        log(f'Show {playing_tvshow_title} set to ignore, carry on...')
+                        log(f'Show {playing_tvshow_title} set to ignore, so allowing.')
+                        return
+
+                    # Is the resume point is non-zero - then we've previously made a decision about playing this episode, so don't make the user make it again
+                    if resume_point > 0.0:
+                        log(f"Show {playing_tvshow_title} Season {playing_season} Episode {playing_episode} has a non-zero resume point, so decision has been previously made to play this episode, so allowing.")
                         return
 
                     # We ignore first episodes...
@@ -106,7 +113,7 @@ class KodiPlayer(xbmc.Player):
                             # If we couldn't find the previous episode in the library
                             # AND the user has asked us to ignore this, we're done.
                             if not found and Store.ignore_if_episode_absent_from_library:
-                                log("Previous episode was not found, and ignore if absent from library is true")
+                                log("Previous episode was not found in library, and setting ignore if absent from library is true, so allowing.")
                                 return
 
                             # If we couldn't find the previous episode in the library,
