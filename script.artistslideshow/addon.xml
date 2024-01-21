@@ -1,4 +1,4 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.5">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.6">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
@@ -10,10 +10,9 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.3.3.5
-- fix for AS not accepting images with uppercase extensions
-- removed Leia to Matrix transition code
-- updated translation files
+v.3.3.6
+- fix to allow blank as illegal replace character in Nexus
+- updated language files
 		</news>
 		<assets>
         	<icon>icon.png</icon>
@@ -76,7 +75,7 @@ v.3.3.5
 		<description lang="he_IL">הרחבה להורדת תמונות ומידע נוסף על האמן המושמע כעת מ-fanart.tv ו- theaudiodb.com. התמונות, בנוסף לתמונות אמנים מקומיות והמידע על אמן יכולים לשמש את המעטפת ליצירת מצגת עבור האמן המושמע כעת.</description>
 		<description lang="hr_HR">Dodatak za preuzimanje slika i dodatnih informacije trenutno reproduciranog izvođača s fanart.tv, theaudiodb.com i theaudiodb.com. Slike, zajedno s lokalnim slikama izvođača i informacijama mogu se koristiti s presvlakom za stvaranje slikovne prezentacije izvođača koji se sluša.</description>
 		<description lang="hu_HU">A Kiegészítő letölt képeket és infromációkat a fanart.tv és theaudiodb.com oldalakról az éppen hallgatott előadóhoz. A képek a helyben tárolt képekkel együtt felhasználhatóak a Felszín által diavetítéshez.</description>
-		<description lang="it_IT">Addon per scaricare immagini ed informazioni aggiuntive da fanart.tv e theaudiodb.com sull&apos;artista attualmente in esecuzione. Le immagini possono essere usate dallo skin, insieme a quelle locali, per creare una presentazione per l&apos;artista che si sta ascoltando.</description>
+		<description lang="it_IT">Add-on per scaricare immagini ed informazioni aggiuntive da fanart.tv e theaudiodb.com sull&apos;artista attualmente in riproduzione. Le immagini possono essere usate dalla skin, insieme a quelle locali, per creare una presentazione per l&apos;artista che si sta ascoltando.</description>
 		<description lang="ko_KR">현재 재생중인 아티스트의 이미지와 추가정보를 fanart.tv 와 theaudiodb.com 에서 다운로드합니다. 다운로드한 이미지와 정보는 로컬 이미지와 함께 현재 재생중인 음악의 아티스트 슬라이드쇼에 사용할 수 있습니다.</description>
 		<description lang="nb_NO">Tillegg for å laste ned bilder og ytterligere informasjon fra fanart.tv og theaudiodb.com for artisten som spilles av for øyeblikket. Bildene, sammen med lokale artistbilder og info, kan bli brukt av skallet til å lage en lysbildefremvisning for artisten som blir lyttet til for øyeblikket.</description>
 		<description lang="nl_NL">Add-on om afbeeldingen en bijkomende informatie van Fanart.tv en theaudiodb.com van de te horen artiest binnen te halen. de afbeeldingen, net als de lokaal aanwezige artiest-afbeeldingen en -info kunnen gebruikt worden door de skin om een diashow te tonen van de artiest di nu beluisterd wordt.</description>

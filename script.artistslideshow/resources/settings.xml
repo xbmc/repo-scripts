@@ -543,6 +543,9 @@
 				<setting id="illegal_replace" type="string" label=" 32129" help="">
 					<level>0</level>
 					<default>_</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
 					<control type="edit" format="string">
 						<heading> 32129</heading>
 					</control>
