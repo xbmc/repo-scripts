@@ -113,14 +113,14 @@ def encode_string(clear: str) -> str:
     enc = []
     key = str(uuid.getnode())
     clear_enc = clear.encode()
-    for i in range(len(clear_enc)):
+    for i, ele in enumerate(clear_enc):
         key_c = key[i % len(key)]
-        enc_c = chr((clear_enc[i] + ord(key_c)) % 256)
+        enc_c = chr((ele + ord(key_c)) % 256)
         enc.append(enc_c)
     return base64.urlsafe_b64encode("".join(enc).encode()).decode()
 
 
-def decode_string(enc: str) -> str:
+def decode_string(enc: str, uuick: str='') -> str:
     """return decoded string (encoded with uuid)
 
     Args:
@@ -130,10 +130,10 @@ def decode_string(enc: str) -> str:
         str:  the decoded string
     """
     dec = []
-    key = str(uuid.getnode())
+    key = str(uuid.getnode()) if not uuick else uuick
     enc = base64.urlsafe_b64decode(enc.encode()).decode()
-    for i in range(len(enc)):
+    for i, ele in enumerate(enc):
         key_c = key[i % len(key)]
-        dec_c = ((256 + ord(enc[i]) - ord(key_c)) % 256).to_bytes(1, 'little')
+        dec_c = ((256 + ord(ele) - ord(key_c)) % 256).to_bytes(1, 'little')
         dec.append(dec_c)
     return bytes.join(b'', dec).decode()

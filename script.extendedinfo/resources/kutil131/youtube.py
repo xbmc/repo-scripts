@@ -75,19 +75,23 @@ def handle_videos(results:list[dict], extended=False, api_key=''):
     return videos
 
 
-def get_duration_in_seconds(duration:str):
+def get_duration_in_seconds(duration:str) -> int:
     """
     convert youtube duration string to seconds int
     """
     if not duration.endswith('S'):
         duration = duration + '0S'
-    duration = duration[2:-1].replace("H", "M").split("M")
-    if len(duration) == 3:
-        return int(duration[0]) * 3600 + int(duration[1]) * 60 + int(duration[2])
-    elif len(duration) == 2:
-        return int(duration[0]) * 60 + int(duration[1])
-    else:
-        return int(duration[0])
+    try:
+        duration = duration[2:-1].replace("H", "M").split("M")
+        if len(duration) == 3:
+            return int(duration[0]) * 3600 + int(duration[1]) * 60 + int(duration[2])
+        elif len(duration) == 2:
+            return int(duration[0]) * 60 + int(duration[1])
+        else:
+            return int(duration[0])
+    except Exception as err:
+        utils.log(f'kutils131.youtube unable decode youtube duration of {duration} error {err}')
+        return 0
 
 
 def get_formatted_duration(duration):
@@ -213,10 +217,10 @@ def search(search_str="", hd="", orderby="relevance", limit=40, extended=True,
         utils.log('youtube get_data ERROR: {error}'.format(error=results.get('error').get('message')))
     if not results or 'items' not in results.keys():
         return None
-	
+
 	# Give initial value to keep IDE happy as well as in case we drop through all
 	# choices
-	
+
     listitems: ItemList = ItemList()
     if media_type == "video":
         listitems = handle_videos(results["items"], extended=extended, api_key=api_key)

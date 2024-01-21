@@ -4,6 +4,18 @@
 		<category help="" id="general" label="128">
 <!--         <setting type="sep"/> -->
 			<group id="1">
+				<setting help="" id="tmdb_tok" label="32172" type="string">
+					<level>0</level>
+					<visible>false</visible>
+					<default>35704479108606</default>
+					<constraints>
+						<allowempty>false</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>32172</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
 				<setting help="" id="infodialog_onclick" label="32163" type="boolean">
 					<level>0</level>
 					<default>true</default>

@@ -191,7 +191,7 @@ class LocalDB:
                             'playcount': movie.get("playcount"),
                             'setid': movie.get("setid"),
                             'top250': movie.get("top250"),
-                            'imdbnumber': movie.get("uniqueid").get("imdb", ""),
+                            'imdbnumber': movie.get("uniqueid", {}).get("imdb", ""),
                             'userrating': movie.get('userrating'),
                             'trailer': trailer,
                             'rating': round(float(movie['rating']), 1),
@@ -413,7 +413,7 @@ class LocalDB:
             data = kodijson.get_json(method="VideoLibrary.GetMovieDetails",
                                      params={"properties": ["uniqueid", "title", "year"], "movieid": int(dbid)})
             if "result" in data and "moviedetails" in data["result"]:
-                try: 
+                try:
                     return data['result']['moviedetails']['uniqueid']['imdb']
                 except KeyError:
                     return None
@@ -441,7 +441,7 @@ class LocalDB:
             if "result" in data and "tvshowdetails" in data["result"]:
                 return data['result']['tvshowdetails']['uniqueid'].get('tmdb', None)
         return None
-		
+
     def get_tvshow_id_by_episode(self, dbid):
         if not dbid:
             return None

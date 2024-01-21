@@ -359,7 +359,7 @@ def start_info_actions(info: str, params: dict[str, str]):
                             mode="search")
         finally:
             addon.clear_global('infodialogs.active')
-    elif info == 'extendedinfo': # called with movie
+    elif info == 'extendedinfo': # called with movie id
         if addon.get_global('infodialogs.active'):
             return None
         addon.set_global('infodialogs.active', "true")

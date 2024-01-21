@@ -375,7 +375,7 @@ def get_window(window_type):
         def set_company_filter(self, control_id):
             result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
-            if not result or result < 0:
+            if not result:
                 return None
             items = tmdb.search_companies(result)
             if len(items) > 1:
