@@ -70,7 +70,7 @@ class OpenSubtitlesProvider:
         self.password = password
 
         if not self.username or not self.password:
-            print(f"Username: {self.username}, Password: {self.password}")
+            logging(f"Username: {self.username}, Password: {self.password}")
 
 
         self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.4" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
