@@ -1,13 +1,5 @@
 # Changelog
 
-## [v0.2.4](https://github.com/add-ons/service.iptv.manager/tree/v0.2.4) (2023-12-02)
-
-[Full Changelog](https://github.com/add-ons/service.iptv.manager/compare/v0.2.3...v0.2.4)
-
-**Fixed bugs:**
-
-- Fix for Configure IPTV automatically [\#109](https://github.com/add-ons/service.iptv.manager/pull/109)
-
 ## [v0.2.3](https://github.com/add-ons/service.iptv.manager/tree/v0.2.3) (2021-02-04)
 
 [Full Changelog](https://github.com/add-ons/service.iptv.manager/compare/v0.2.2...v0.2.3)

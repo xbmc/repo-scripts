@@ -12,8 +12,6 @@ import dateutil.tz
 
 from resources.lib import kodiutils
 
-import xbmcvfs, glob, shutil
-
 _LOGGER = logging.getLogger(__name__)
 
 IPTV_SIMPLE_ID = 'pvr.iptvsimple'
@@ -66,14 +64,6 @@ class IptvSimple:
 
         # Activate IPTV Simple
         cls._activate()
-
-        # If iptv simple uses another name than settings.xml for the configuration file then copy the generated settings.xml to that other name
-        path = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
-        settingsxml = path + 'settings.xml'
-        if os.path.isfile(settingsxml):
-            for f in glob.glob(path + "*.xml"):
-                if os.path.basename(f) != 'settings.xml':
-                    shutil.copyfile(settingsxml, f)
 
         return True
 
