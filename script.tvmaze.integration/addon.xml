@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvmaze.integration" name="TV Maze Integration" version="0.7.1+matrix.1" provider-name="pkscout">
+<addon id="script.tvmaze.integration" name="TV Maze Integration" version="0.8.0" provider-name="pkscout">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
-		<import addon="script.module.kodi-six" version="0.1.3.1" />
 	</requires>
 	<extension point="xbmc.python.script" library="default.py" />
 	<extension point="xbmc.service" library="service.py" />
@@ -47,17 +46,36 @@
 	  </menu>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>v.0.7.1
-fix for Python3 logging issue
+		<news>v.0.8.0
+- fix for translatePath error in Nexus
+- updated translation files
 		</news>
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<summary lang="en_GB">Integration between Kodi and TV Maze.</summary>
-		<description lang="en_GB">This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows.</description>
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=354945</forum>
 		<source>https://github.com/pkscout/script.tvmaze.integration</source>
+		<summary lang="da_DK">Integration mellem Kodi og TV Maze.</summary>
+		<summary lang="de_DE">Integration zwischen Kodi und TV Maze.</summary>
+		<summary lang="en_GB">Integration between Kodi and TV Maze.</summary>
+		<summary lang="es_ES">Integración entre Kodi y TV Maze.</summary>
+		<summary lang="fi_FI">Yhdistä TV Maze -palvelu Kodiin.</summary>
+		<summary lang="fr_FR">Intégration entre Kodi et TV Maze.</summary>
+		<summary lang="hr_HR">Integracija između Kodija i TV Maze.</summary>
+		<summary lang="it_IT">Integrazione tra Kodi e TV Maze.</summary>
+		<summary lang="ko_KR">Kodi와 TV Maze의 통합.</summary>
+		<summary lang="zh_CN">Kodi与TV Maze的集成。</summary>
+		<description lang="da_DK">Denne integration giver dig mulighed for at markere serier som erhvervet på TV Maze (og føje dem til dine fulgte shows, hvis det er nødvendigt), når du tilføjer dem til dit bibliotek og markerer dem som set på TV Maze, efter du har set dem. Du kan også manuelt følge, fjerne, markere og fjerne markerede serier.</description>
+		<description lang="de_DE">Diese Integration erlaubt das Markieren von Serien als über TV Maze bezogen (und das Hinzufügen zu den beobachteten Serien, falls benötigt), wenn sie zur Bibliothek hinzugefügt werden, und das Markieren dieser als auf TV Maze angesehen, nachdem sie angesehen worden sind.  Das manuelle Folgen, Entfolgen, Taggen und Untaggen von Serien ist ebenso möglich.</description>
+		<description lang="en_GB">This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows.</description>
+		<description lang="es_ES">Esta integración te permite marcar programas como adquiridos en TV Maze (y añadirlos a los programas que sigues si es necesario) cuando los añades a tu biblioteca y marcarlos como vistos en TV Maze después de verlos.  También puedes seguir, dejar de seguir, etiquetar y desetiquetar programas manualmente.</description>
+		<description lang="fi_FI">Tämän avulla Kodin kirjastoon lisätyt sarjat voidaan merkitä TV Maze -palvelussa hankituiksi (tarvittaessa ne voidaan myös lisätä seurattuihin sarjoihin) ja katsotuiksi, kun ne katsellaan Kodissa. Sarjojen seurantaa ja tunnisteita voidaan muuttaa myös manuaalisesti.</description>
+		<description lang="fr_FR">Cette intégration vous permet de marquer les programmes comme acquis sur TV Maze (et de les ajouter à vos programmes suivis si nécessaire) lorsque vous les ajoutez à votre bibliothèque et de les marquer comme regardés sur TV Maze après les avoir regardés. Vous pouvez également suivre, désélectionner, taguer et dé-taguer manuellement des programmes.</description>
+		<description lang="hr_HR">Ova integracija omogućuje vam da označite serije kao kupljene na TV Mazeu (i dodate ih svojim praćenim serijama ako je potrebno) kada ih dodate u svoju videoteku i označite ih kao gledane na TV Mazeu nakon što ih pogledate.  Također ih možete ručno pratiti, prestati pratiti, označavati i poništavati oznake serija.</description>
+		<description lang="it_IT">Questa integrazione ti consente di contrassegnare le serie come acquisite su TV Maze (e di aggiungerle alle tue serie seguite, se necessario) quando le aggiungi alla tua libreria e di contrassegnarle come viste su TV Maze dopo averli guardate.  Puoi anche seguire manualmente, smettere di seguire, aggiungere e rimuovere etichette alle serie.</description>
+		<description lang="ko_KR">시청후에 라이브러리에 추가하고 TV Maze에서 시청한 것으로 표시할 때, 이 통합으로 TV Maze에서 얻은 것으로 표시하고 필요한 경우 팔로우하는 프로그램에 추가할 수 있습니다 . 또한 프로그램을 수동으로 팔로우, 팔로우 해제, 태그 지정 및 태그 해제할 수 있습니다.</description>
+		<description lang="zh_CN">这种集成允许您在TV Maze上获取节目（并在当需要时将其添加到您的关注）当您将其添加到您的库中，观看后会将其标记在TV Maze。  您还可以手动关注、取消关注、标记和取消标记放映。</description>
 	</extension>
 </addon>

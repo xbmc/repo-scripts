@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-02-07 14:28+0000\n"
+"PO-Revision-Date: 2021-08-06 17:29+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tvmaze-integration/da_dk/>\n"
 "Language: da_dk\n"
@@ -15,12 +15,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.7.2\n"
+
+msgctxt "Addon Summary"
+msgid "Integration between Kodi and TV Maze."
+msgstr "Integration mellem Kodi og TV Maze."
+
+msgctxt "Addon Description"
+msgid "This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows."
+msgstr "Denne integration giver dig mulighed for at markere serier som erhvervet på TV Maze (og føje dem til dine fulgte shows, hvis det er nødvendigt), når du tilføjer dem til dit bibliotek og markerer dem som set på TV Maze, efter du har set dem. Du kan også manuelt følge, fjerne, markere og fjerne markerede serier."
 
 # Section Headings
 msgctxt "#32000"
 msgid "General"
-msgstr "Generel"
+msgstr "Generelt"
 
 msgctxt "#32001"
 msgid "Advanced"
@@ -34,7 +42,7 @@ msgstr "TV Maze handling"
 # Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr "Aktivér fejlfindingslogføring"
+msgstr "Aktiver fejlfindingslogføring"
 
 msgctxt "#32101"
 msgid "TV Maze User"
@@ -50,11 +58,11 @@ msgstr "Tilføj nye Kodi-serier til den fulgte liste"
 
 msgctxt "#32104"
 msgid "Mark new Kodi episodes as acquired"
-msgstr "Marker nye Kodi-episoder som erhvervet"
+msgstr "Marker nye Kodi-afsnit som erhvervet"
 
 msgctxt "#32105"
 msgid "Mark watched Kodi episodes as watched"
-msgstr "Marker sete Kodi-episoder som sete"
+msgstr "Marker sete Kodi-afsnit som sete"
 
 msgctxt "#32106"
 msgid "Mark watched after"
@@ -66,7 +74,7 @@ msgstr "Marker som set ved fjernelse fra Kodi"
 
 msgctxt "#32108"
 msgid "Hide context menu items"
-msgstr ""
+msgstr "Skjul emner i kontekstmenuen"
 
 # empty strings from id 32108 to 32199
 # Dialog Headings
@@ -88,15 +96,15 @@ msgstr "Vælg serier der ikke skal følges"
 
 msgctxt "#32204"
 msgid "Select tag"
-msgstr ""
+msgstr "Vælg nøgleord"
 
 msgctxt "#32205"
 msgid "Select shows to tag"
-msgstr ""
+msgstr "Vælg serier der skal tildeles nøgleord"
 
 msgctxt "#32206"
 msgid "Select shows to untag"
-msgstr ""
+msgstr "Vælg serier der skal have fjernet nøgleord"
 
 # empty strings from id 32207 to 32300
 # Dialog Messages
@@ -132,24 +140,24 @@ msgstr "Følg ikke serie"
 
 msgctxt "#32404"
 msgid "Tag show"
-msgstr ""
+msgstr "Tildel nøgleord til serie"
 
 msgctxt "#32405"
 msgid "Untag show"
-msgstr ""
+msgstr "Fjern nøgleord fra serie"
 
 msgctxt "#32406"
 msgid "Mark episode acquired"
-msgstr "Marker episode som erhvervet"
+msgstr "Marker afsnit som erhvervet"
 
 msgctxt "#32407"
 msgid "Mark episode watched"
-msgstr "Marker episode som set"
+msgstr "Marker afsnit som set"
 
 msgctxt "#32408"
 msgid "Mark episode skipped"
-msgstr "Marker episode som sprunget over"
+msgstr "Marker afsnit som sprunget over"
 
 msgctxt "#32409"
 msgid "Unmark episode"
-msgstr "Marker ikke episode"
+msgstr "Marker ikke afsnit"
