@@ -1,3 +1,13 @@
+--- Version 1.0.3
+
+- Improve 10sec subs latency workaround: new option to disable it (default), or enable it at 'start only' or 'start+resume'.
+   (fast multiple resumes could sometimes generate video restart or long freeze due to large audio/video desynch)
+- Option to prioritize 'SignsSongs' tracks via custom conditional sub preferences. Syntax is ...>Eng:Eng-ss>...
+   (Overrides general 'Ignore Signs and Songs toggle' or 'Blacklisting Signs via keyword', if ever used)
+- New Keywords Blacklist for Audio tracks. Same principle as for Subtitles, based on track name, to skip some (ex. Commentary, ...)
+- Fix Greek and Serbian language codes according to Iso639-2/T. Fix some typos.
+- Fix support of multiple 3 digit codes per language (ex. German ger,deu). Now OK also for Conditional Subtitles preferences.
+
 --- Version 1.0.2
 
 - Fix 10sec latency on subs display and possible few lines lost - at video start or when switching audio.
