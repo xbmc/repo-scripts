@@ -9,7 +9,7 @@
 		<setting label="32121" type="text" enable="false" visible="eq(-5,2) | eq(-5,3)"/>
 	</category>
     <category id="format" label="32001">
-		<setting id="timeformat" type="select" label="32130" default="0" lvalues="32131|32132|32133|32134|32135|32136|32137"/>
+		<setting id="timeformat" type="select" label="32130" default="0" lvalues="32131|32132|32133|32180|32134|32135|32181|32136|32137"/>
 		<setting id="colonblink" label="32139" type="bool" default="true"/>
 		<setting id="dateformat" type="select" label="32140" default="1" lvalues="32141|32142|32143|32144|32145"/>
 		<setting id="customdateformat" label="32170" type="text" subsetting="true" visible="eq(-1,4)"/>
@@ -84,5 +84,8 @@
 		<setting id="logouttime" label="32612" type="number" subsetting="true" visible="eq(-2,true)" default="10" option="int"/>
 		<setting id="rss" label="32620" type="bool" default="false"/>
 		<setting label="32621" type="text" enable="false" subsetting="true" visible="eq(-1,true)"/>
+		<setting id="cecoff" label="32630" type="bool" default="false"/>
+		<setting id="cecoffplaying" label="32631" type="bool" subsetting="true" visible="eq(-1,true)" default="false"/>
+		<setting id="cecofftime" label="32632" type="number" subsetting="true" visible="eq(-2,true)" default="10" option="int"/>
 	</category>
 </settings>
