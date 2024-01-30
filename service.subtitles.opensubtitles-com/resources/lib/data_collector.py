@@ -24,12 +24,12 @@ def get_media_data():
   #          "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
   #          "imdb_id": xbmc.getInfoLabel("VideoPlayer.IMDBNumber")}
 
-    item = {"year": xbmc.getInfoLabel("VideoPlayer.Year"),
+    item = {"query": None,
+            "year": xbmc.getInfoLabel("VideoPlayer.Year"),
             "season_number": str(xbmc.getInfoLabel("VideoPlayer.Season")),
             "episode_number": str(xbmc.getInfoLabel("VideoPlayer.Episode")),
             "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
             "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))}
-
 
 
 
@@ -43,10 +43,10 @@ def get_media_data():
     elif item["original_title"]:
         item["query"] = item["original_title"]
 
-  #  if not item["query"]:
-  #      log(__name__, "VideoPlayer.OriginalTitle not found")
-  #      item["query"] = normalize_string(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
-  #      # TODO try guessit if no proper title here
+
+    if not item["query"]:
+        log(__name__, "query still blank, fallback to title")
+        item["query"] = normalize_string(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
 
     # TODO get episodes like that and test them properly out
     if item["episode_number"].lower().find("s") > -1:  # Check if season is "Special"
@@ -65,33 +65,33 @@ def get_language_data(params):
 
 
 
-    if preferred_language and preferred_language not in search_languages and preferred_language != "Unknown"  and preferred_language != "Undetermined": 
+    if preferred_language and preferred_language not in search_languages and preferred_language != "Unknown"  and preferred_language != "Undetermined":
         search_languages.append(preferred_language)
         search_languages_str=search_languages_str+","+preferred_language
 
     """ should implement properly as fallback, not additional language, leave it for now
     """
-    
+
     #if fallback_language and fallback_language not in search_languages:
     #    search_languages_str=search_languages_str+","+fallback_language
 
         #search_languages_str=fallback_language
-        
+
     for language in search_languages:
         lang = convert_language(language)
         if lang:
             log(__name__, f"Language  found: '{lang}' search_languages_str:'{search_languages_str}")
             if search_languages_str=="":
-                search_languages_str=lang    
+                search_languages_str=lang
             else:
                 search_languages_str=search_languages_str+","+lang
         #item["languages"].append(lang)
             #if search_languages_str=="":
-            #    search_languages_str=lang                            
+            #    search_languages_str=lang
            # if lang=="Undetermined":
             #    search_languages_str=search_languages_str
-            #else:    
-            
+            #else:
+
         else:
             log(__name__, f"Language code not found: '{language}'")
 
@@ -103,7 +103,7 @@ def get_language_data(params):
 
 
 
-    
+
     item = {
         "hearing_impaired": __addon__.getSetting("hearing_impaired"),
         "foreign_parts_only": __addon__.getSetting("foreign_parts_only"),
@@ -118,7 +118,7 @@ def get_language_data(params):
      #      item["languages"]=item["languages"]+","+lang
      #  else:
      #      log(__name__, f"Language code not found: '{language}'")
-     
+
     return item
 
 
