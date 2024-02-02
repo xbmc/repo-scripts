@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr "字幕搜索出错"
+
+msgctxt "#32002"
+msgid "Plugin is not properly configured, insert valid OpenSubtitles.com username and password."
+msgstr "插件配置不正确，请输入有效的 OpenSubtitles.com 用户名和密码。"
+
+msgctxt "#32003"
+msgid "Unable to authenticate. Check your OpenSubtitles.com username and password."
+msgstr "无法验证。请检查您的 OpenSubtitles.com 用户名和密码。"
+
+msgctxt "#32004"
+msgid "You have reached OpenSubtitles.com download limit. Get a VIP subscription or try again tomorrow."
+msgstr "您已达到 OpenSubtitles.com 的下载上限。获取 VIP 订阅或明天再试。"
+
+msgctxt "#32006"
+msgid "You have reached OpenSubtitles.com download limit for unauthenticated users. Create an account on opensubtitles.com and enter your credentials in addon settings, or try again tomorrow."
+msgstr "您已达到 OpenSubtitles.com 未认证用户的下载上限。请在 opensubtitles.com 上创建一个账户并在插件设置中输入您的凭据，或明天再试。"
+
+msgctxt "#32101"
+msgid "Login Details"
+msgstr "登录详细信息"
+
+msgctxt "#32201"
+msgid "Username"
+msgstr "用户名"
+
+msgctxt "#32202"
+msgid "Password"
+msgstr "密码"
+
+msgctxt "#32203"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Subtitle Options"
+msgstr "字幕选项"
+
+msgctxt "#32211"
+msgid "Hearing Impaired"
+msgstr "听障人士"
+
+msgctxt "#32212"
+msgid "Foreign Parts Only"
+msgstr "仅限外国零件"
+
+msgctxt "#32213"
+msgid "Machine Translated"
+msgstr 机器翻译"
+
+msgctxt "#32214"
+msgid "Bad username. Make sure you have entered your username and not your email in the username field"
+msgstr "用户名错误。请确保在用户名栏中输入的是用户名而不是电子邮件."
+
