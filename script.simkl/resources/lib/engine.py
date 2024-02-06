@@ -130,7 +130,7 @@ class Player(xbmc.Player):
         if hasattr(self, '_playback_lock'): self._playback_lock.clear()
         if not hasattr(self, '_tracker'): return
         if self._tracker is None: return
-        if self._tracker.isAlive(): self._tracker.join()
+        if self._tracker.is_alive(): self._tracker.join()
         self._tracker = None
 
     def _thread_tracker(self):

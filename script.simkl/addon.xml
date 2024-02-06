@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.simkl"
        name="Simkl TV Tracker"
-       version="3.2.0"
+       version="3.2.2"
        provider-name="David Davó, Simkl">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -25,6 +25,8 @@
     </assets>
     <language>en</language>
     <news>
+      v3.2.2 (05-01-24)
+      - fixed new pything isAlive fn
       v3.2 (22-09-22)
       - right click, mark as watched/unwatched added
       v3.1 (21-07-13)
