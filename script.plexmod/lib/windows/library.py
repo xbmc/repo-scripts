@@ -29,9 +29,6 @@ from lib.util import T
 import six
 from six.moves import range
 
-CHUNK_SIZE = 200
-# CHUNK_SIZE = 30
-
 KEYS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 MOVE_SET = frozenset(
@@ -301,135 +298,16 @@ class LibrarySettings(object):
         self._saveSettings()
 
 
-class ChunkedWrapList(kodigui.ManagedControlList):
-    LIST_MAX = CHUNK_SIZE * 3
-
-    def __getitem__(self, idx):
-        # if isinstance(idx, slice):
-        #     return self.items[idx]
-        # else:
-        idx = idx % self.LIST_MAX
-        return self.items[idx]
-        # return self.getListItem(idx)
-
-
-class ChunkModeWrapped(object):
-    ALL_MAX = CHUNK_SIZE * 2
-
-    def __init__(self):
-        self.reset()
-
-    def reset(self):
-        self.midStart = 0
-        self.itemCount = 0
-        self.keys = {}
-
-    def addKeyRange(self, key, krange):
-        self.keys[key] = krange
-
-    def getKey(self, pos):
-        for k, krange in self.keys.items():
-            if krange[0] <= pos <= krange[1]:
-                return k
-
-    def isAtBeginning(self):
-        return self.midStart == 0
-
-    def posIsForward(self, pos):
-        if self.itemCount <= self.ALL_MAX:
-            return False
-        return pos >= self.midStart + CHUNK_SIZE
-
-    def posIsBackward(self, pos):
-        if self.itemCount <= self.ALL_MAX:
-            return False
-        return pos < self.midStart
-
-    def posIsValid(self, pos):
-        return self.midStart - CHUNK_SIZE <= pos < self.midStart + (CHUNK_SIZE * 2)
-
-    def shift(self, mod):
-        if mod < 0 and self.midStart == 0:
-            return None
-        elif mod > 0 and self.midStart + CHUNK_SIZE >= self.itemCount:
-            return None
-
-        offset = CHUNK_SIZE * mod
-        self.midStart += offset
-        start = self.midStart + offset
-
-        return start
-
-    def shiftToKey(self, key, keyStart=None):
-        if keyStart is None:
-            if key not in self.keys:
-                util.DEBUG_LOG('CHUNK MODE: NO ITEMS FOR KEY')
-                return
-
-            keyStart = self.keys[key][0]
-        self.midStart = keyStart - keyStart % CHUNK_SIZE
-        return keyStart, max(self.midStart - CHUNK_SIZE, 0)
-
-    def addObjects(self, pos, objects):
-        if not self.posIsValid(pos):
-            return
-
-        if pos == self.midStart - CHUNK_SIZE:
-            self.objects = objects + self.objects[CHUNK_SIZE:]
-        elif pos == self.midStart:
-            self.objects = self.objects[:CHUNK_SIZE] + objects + self.objects[CHUNK_SIZE * 2:]
-        elif pos == self.midStart + CHUNK_SIZE:
-            self.objects = self.objects[:CHUNK_SIZE * 2] + objects
-
-
-class CustomScrollBar(object):
-    def __init__(self, window, bar_group_id, bar_image_id, bar_image_focus_id, button_id, min_bar_height=20):
-        self._barGroup = window.getControl(bar_group_id)
-        self._barImage = window.getControl(bar_image_id)
-        self._barImageFocus = window.getControl(bar_image_focus_id)
-        self._button = window.getControl(button_id)
-        self.height = self._button.getHeight()
-        self.x, self.y = self._barGroup.getPosition()
-        self._minBarHeight = min_bar_height
-        self._barHeight = min_bar_height
-        self.reset()
-
-    def reset(self):
-        self.size = 0
-        self.count = 0
-        self.pos = 0
-
-    def setSizeAndCount(self, size, count):
-        self.size = size
-        self.count = count
-        self._barHeight = min(self.height, max(self._minBarHeight, int(self.height * (count / float(size)))))
-        self._moveHeight = self.height - self._barHeight
-        self._barImage.setHeight(self._barHeight)
-        self._barImageFocus.setHeight(self._barHeight)
-        self.setPosition(0)
-
-    def setPosition(self, pos):
-        self.pos = pos
-        offset = int((pos / float(max(self.size, 2) - 1)) * self._moveHeight)
-        self._barGroup.setPosition(self.x, self.y + offset)
-
-    def getPosFromY(self, y):
-        y -= int(self._barHeight / 2) + 150
-        y = min(max(y, 0), self._moveHeight)
-        return int((self.size - 1) * (y / float(self._moveHeight)))
-
-    def onMouseDrag(self, window, action):
-        y = window.mouseYTrans(action.getAmount2())
-        y -= int(self._barHeight / 2) + 150
-        y = min(max(y, 0), self._moveHeight)
-        self._barGroup.setPosition(self.x, self.y)
-
-
 class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
     bgXML = 'script-plex-blank.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
     res = '1080i'
+
+    # Needs to be an even multiple of 6(posters) and 10(small posters) and 12(list)
+    # so that we fill an entire row
+    CHUNK_SIZE = 240
+    CHUNK_OVERCOMMIT = 6
 
     def __init__(self, *args, **kwargs):
         kodigui.MultiWindow.__init__(self, *args, **kwargs)
@@ -467,29 +345,22 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.sort = self.librarySettings.getSetting('sort', 'titleSort')
         self.sortDesc = self.librarySettings.getSetting('sort.desc', False)
 
-        self.chunkMode = None
-        #if ITEM_TYPE in ('episode', 'album'):
-        #    self.chunkMode = ChunkModeWrapped()
+        self.alreadyFetchedChunkList = set()
+        self.finalChunkPosition = 0
+
+        self.CHUNK_SIZE = util.advancedSettings.libraryChunkSize
 
         key = self.section.key
         if not key.isdigit():
             key = self.section.getLibrarySectionId()
         viewtype = util.getSetting('viewtype.{0}.{1}'.format(self.section.server.uuid, key))
 
-        if self.chunkMode:
-            if self.section.TYPE in ('artist', 'photo', 'photodirectory'):
-                self.setWindows(VIEWS_SQUARE_CHUNKED.get('all'))
-                self.setDefault(VIEWS_SQUARE_CHUNKED.get(viewtype))
-            else:
-                self.setWindows(VIEWS_POSTER_CHUNKED.get('all'))
-                self.setDefault(VIEWS_POSTER_CHUNKED.get(viewtype))
+        if self.section.TYPE in ('artist', 'photo', 'photodirectory'):
+            self.setWindows(VIEWS_SQUARE.get('all'))
+            self.setDefault(VIEWS_SQUARE.get(viewtype))
         else:
-            if self.section.TYPE in ('artist', 'photo', 'photodirectory'):
-                self.setWindows(VIEWS_SQUARE.get('all'))
-                self.setDefault(VIEWS_SQUARE.get(viewtype))
-            else:
-                self.setWindows(VIEWS_POSTER.get('all'))
-                self.setDefault(VIEWS_POSTER.get(viewtype))
+            self.setWindows(VIEWS_POSTER.get('all'))
+            self.setDefault(VIEWS_POSTER.get(viewtype))
 
     @busy.dialog()
     def doClose(self):
@@ -497,10 +368,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         kodigui.MultiWindow.doClose(self)
 
     def onFirstInit(self):
-        self.scrollBar = None
-        #if ITEM_TYPE in ('episode', 'album'):
-        #    self.scrollBar = CustomScrollBar(self, 950, 952, 953, 951)
-
         if self.showPanelControl and not self.refill:
             self.showPanelControl.newControl(self)
             self.keyListControl.newControl(self)
@@ -508,10 +375,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
             self.setFocusId(self.VIEWTYPE_BUTTON_ID)
             self.setBoolProperty("initialized", True)
         else:
-            if self.chunkMode:
-                self.showPanelControl = ChunkedWrapList(self, self.POSTERS_PANEL_ID, 5)
-            else:
-                self.showPanelControl = kodigui.ManagedControlList(self, self.POSTERS_PANEL_ID, 5)
+            self.showPanelControl = kodigui.ManagedControlList(self, self.POSTERS_PANEL_ID, 5)
 
             hideFilterOptions = self.section.TYPE == 'photodirectory' or self.section.TYPE == 'collection'
 
@@ -544,24 +408,17 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                     self.setBoolProperty('dragging', self.dragging)
 
             if action.getId() in MOVE_SET:
+                mli = self.showPanelControl.getSelectedItem()
+                if mli:
+                    self.requestChunk(mli.pos())
+
                 if util.advancedSettings.dynamicBackgrounds:
-                    mli = self.showPanelControl.getSelectedItem()
                     if mli and mli.dataSource:
                         self.updateBackgroundFrom(mli.dataSource)
 
                 controlID = self.getFocusId()
                 if controlID == self.POSTERS_PANEL_ID or controlID == self.SCROLLBAR_ID:
                     self.updateKey()
-                    self.checkChunkedNav(action)
-                elif controlID == self.CUSTOM_SCOLLBAR_BUTTON_ID:
-                    if action == xbmcgui.ACTION_MOVE_UP:
-                        self.shiftSelection(-12)
-                    elif action == xbmcgui.ACTION_MOVE_DOWN:
-                        self.shiftSelection(12)
-            # elif action == xbmcgui.KEY_MOUSE_DRAG_START:
-            #     self.onMouseDragStart(action)
-            # elif action == xbmcgui.KEY_MOUSE_DRAG_END:
-            #     self.onMouseDragEnd(action)
             elif action == xbmcgui.ACTION_MOUSE_DRAG:
                 self.onMouseDrag(action)
             elif action == xbmcgui.ACTION_CONTEXT_MENU:
@@ -633,83 +490,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
         self.showPhotoItemProperties(mli.dataSource)
 
-    def onMouseDragStart(self, action):
-        if not self.scrollBar:
-            return
-
-        controlID = self.getFocusId()
-        if controlID != self.CUSTOM_SCOLLBAR_BUTTON_ID:
-            return
-
-        self.dragging = True
-        self.setBoolProperty('dragging', self.dragging)
-
-    def onMouseDragEnd(self, action):
-        if not self.scrollBar:
-            return
-
-        if not self.dragging:
-            return
-
-        self.dragging = False
-        self.setBoolProperty('dragging', self.dragging)
-
-        y = self.mouseYTrans(action.getAmount2())
-
-        pos = self.scrollBar.getPosFromY(y)
-        self.shiftSelection(pos=pos)
-
-    def onMouseDrag(self, action):
-        if not self.scrollBar:
-            return
-
-        if not self.dragging:
-            controlID = self.getFocusId()
-            if controlID != self.CUSTOM_SCOLLBAR_BUTTON_ID:
-                return
-
-            self.onMouseDragStart(action)
-            if not self.dragging:
-                return
-
-        # self.scrollBar.onMouseDrag(self, action)
-
-        y = self.mouseYTrans(action.getAmount2())
-
-        pos = self.scrollBar.getPosFromY(y)
-        if self.chunkMode.posIsForward(pos) or self.chunkMode.posIsBackward(pos):
-            self.shiftSelection(pos=pos)
-        else:
-            self.showPanelControl.selectItem(pos)
-            self.checkChunkedNav()
-
-    def shiftSelection(self, offset=0, pos=None):
-        if pos is not None:
-            self.scrollBar.setPosition(pos)
-            return self.delayedChunkedPosJump(pos)
-        else:
-            mli = self.showPanelControl.getSelectedItem()
-
-            try:
-                idx = int(mli.getProperty('index'))
-            except ValueError:
-                return
-
-            target = idx + offset
-            if target >= self.chunkMode.itemCount:
-                pos = self.chunkMode.itemCount - 1
-            elif target < 0:
-                pos = 0
-            else:
-                pos = self.showPanelControl.getSelectedPosition()
-                pos += offset
-
-            if pos < 0 or pos >= self.showPanelControl.size():
-                pos = pos % self.showPanelControl.size()
-
-        self.showPanelControl.selectItem(pos)
-        self.checkChunkedNav(idx=pos)
-
     def updateKey(self, mli=None):
         mli = mli or self.showPanelControl.getSelectedItem()
         if not mli:
@@ -722,78 +502,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         util.setGlobalProperty('key', mli.getProperty('key'))
 
         self.selectKey(mli)
-
-    def checkChunkedNav(self, action=None, idx=None):
-        if not self.chunkMode:
-            return
-
-        # if action == xbmcgui.ACTION_PAGE_DOWN:
-        #     idx = self.showPanelControl.getSelectedPosition() - 5
-        #     if idx < 0:
-        #         idx += self.showPanelControl.size()
-        #     mli = self.showPanelControl.getListItem(idx)
-        #     self.showPanelControl.selectItem(idx)
-        # elif action == xbmcgui.ACTION_PAGE_UP:
-        #     idx = self.showPanelControl.getSelectedPosition() + 5
-        #     if idx >= self.showPanelControl.size():
-        #         idx %= self.showPanelControl.size()
-        #     mli = self.showPanelControl.getListItem(idx)
-        #     self.showPanelControl.selectItem(idx)
-        # else:
-        mli = self.showPanelControl.getSelectedItem()
-
-        try:
-            if idx is not None:
-                pos = int(self.showPanelControl[idx].getProperty('index'))
-            else:
-                pos = int(mli.getProperty('index'))
-
-            if pos >= self.chunkMode.itemCount:
-                raise ValueError
-        except ValueError:
-            if self.chunkMode.isAtBeginning() and action not in (xbmcgui.ACTION_MOVE_DOWN, xbmcgui.ACTION_PAGE_DOWN):
-                idx = 0
-            else:
-                idx = ((self.chunkMode.itemCount - 1) % self.showPanelControl.LIST_MAX)
-
-            self.showPanelControl.selectItem(idx)
-            mli = self.showPanelControl[idx]
-            self.updateKey(mli)
-            if self.scrollBar:
-                try:
-                    pos = int(mli.getProperty('index'))
-                    self.scrollBar.setPosition(pos)
-                except ValueError:
-                    pass
-
-            if idx == 0 and action == xbmcgui.ACTION_MOVE_UP:
-                self.setFocusId(600)
-
-            return
-
-        if self.scrollBar:
-            self.scrollBar.setPosition(pos)
-
-        if self.chunkMode.posIsForward(pos):
-            self.shiftChunks()
-        elif self.chunkMode.posIsBackward(pos):
-            self.shiftChunks(-1)
-
-    def shiftChunks(self, mod=1):
-        start = self.chunkMode.shift(mod)
-        if start is None:
-            return
-
-        if start < 0:
-            self.chunkCallback([None] * CHUNK_SIZE, -CHUNK_SIZE)
-        else:
-            self.chunkCallback([False] * CHUNK_SIZE, start)
-            task = ChunkRequestTask().setup(
-                self.section, start, CHUNK_SIZE, self.chunkCallback, filter_=self.getFilterOpts(), sort=self.getSortOpts(), unwatched=self.filterUnwatched, subDir=self.subDir
-            )
-
-            self.tasks.add(task)
-            backgroundthread.BGThreader.addTasksToFront([task])
 
     def selectKey(self, mli=None):
         if not mli:
@@ -809,78 +517,30 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
     def searchButtonClicked(self):
         self.processCommand(search.dialog(self, section_id=self.section.key))
 
-    def delayedChunkedPosJump(self, pos):
-        if not self.cleared:
-            self.chunkCallback(None, None, clear=True)
-        self.dcpjTimeout = time.time() + 0.5
-        self.dcpjPos = pos
-        if not self.dcpjThread or not self.dcpjThread.is_alive():
-            self.dcpjThread = threading.Thread(target=self._chunkedPosJump)
-            self.dcpjThread.start()
-
-    def _chunkedPosJump(self):
-        while not util.MONITOR.waitForAbort(0.1):
-            if time.time() >= self.dcpjTimeout:
-                break
-        else:
-            return
-
-        keyStart_start = self.chunkMode.shiftToKey(None, keyStart=self.dcpjPos)
-        if not keyStart_start:
-            return
-
-        keyStart, start = keyStart_start
-        pos = keyStart % self.showPanelControl.LIST_MAX
-        self.chunkedPosJump(pos, start)
-        self.showPanelControl.selectItem(pos)
-
-    def chunkedPosJump(self, pos, start=None):
-        if start is None:
-            start = max(pos - CHUNK_SIZE, 0)
-
-        mul = 3
-        if not start:
-            mul = 2
-
-        tasks = []
-        for x in range(mul):
-            task = ChunkRequestTask().setup(
-                self.section,
-                start + (CHUNK_SIZE * x),
-                CHUNK_SIZE,
-                self.chunkCallback,
-                filter_=self.getFilterOpts(),
-                sort=self.getSortOpts(),
-                unwatched=self.filterUnwatched,
-                subDir=self.subDir
-            )
-
-            self.tasks.add(task)
-            tasks.append(task)
-
-        mid = tasks.pop(1)
-        backgroundthread.BGThreader.addTasksToFront([mid] + tasks)
-
     def keyClicked(self):
         li = self.keyListControl.getSelectedItem()
         if not li:
             return
 
-        if self.chunkMode:
-            keyStart_start = self.chunkMode.shiftToKey(li.dataSource)
-            if not keyStart_start:
-                return
-            keyStart, start = keyStart_start
+        mli = self.firstOfKeyItems.get(li.dataSource)
+        if not mli:
+            return
+        pos = mli.pos()
 
-            pos = keyStart % self.showPanelControl.LIST_MAX
-            self.chunkedPosJump(pos, start)
-        else:
-            mli = self.firstOfKeyItems.get(li.dataSource)
-            if not mli:
-                return
-            pos = mli.pos()
-
+        # This code is a little goofy but what it's trying to do is move the selected item from the
+        # jumplist up to the top of the panel and then it requests the chunk for the current position
+        # and the chunk for the current position + CHUNK_OVERCOMMIT.  The reason we need to potentially
+        # request a different chunk is if the items on the panel are in two different chunks this code
+        # will request both chunks so that we don't have blank items.  The requestChunk will only request
+        # chunks that haven't already been fetched so if the current position and current position
+        # plus the CHUNK_OVERCOMMIT are in the same chunk then the second requestChunk call doesn't
+        # do anything.
+        chunkOC = getattr(self._current, "CHUNK_OVERCOMMIT", self.CHUNK_OVERCOMMIT)
+        self.showPanelControl.selectItem(pos+chunkOC)
         self.showPanelControl.selectItem(pos)
+        self.requestChunk(pos)
+        self.requestChunk(pos+chunkOC)
+
         self.setFocusId(self.POSTERS_PANEL_ID)
         util.setGlobalProperty('key', li.dataSource)
 
@@ -915,16 +575,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         options = []
         if xbmc.getCondVisibility('Player.HasAudio + MusicPlayer.HasNext'):
             options.append({'key': 'play_next', 'display': T(32325, 'Play Next')})
-
-        # if self.section.TYPE not in ('artist', 'photo', 'photodirectory'):
-        #     options.append({'key': 'mark_watched', 'display': 'Mark All Watched'})
-        #     options.append({'key': 'mark_unwatched', 'display': 'Mark All Unwatched'})
-
-        # if xbmc.getCondVisibility('Player.HasAudio') and self.section.TYPE == 'artist':
-        #     options.append({'key': 'add_to_queue', 'display': 'Add To Queue'})
-
-        # if False:
-        #     options.append({'key': 'add_to_playlist', 'display': 'Add To Playlist'})
 
         if self.section.TYPE == 'photodirectory':
             if options:
@@ -1061,13 +711,10 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
         choice = result['type']
 
-        forceRefresh = False
         if choice == self.sort:
             self.sortDesc = not self.sortDesc
         else:
             self.sortDesc = defSortByOption.get(choice, False)
-            if choice == 'titleSort':
-                forceRefresh = True
 
         self.sort = choice
 
@@ -1077,7 +724,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         util.setGlobalProperty('sort', choice)
         self.setProperty('sort.display', result['title'])
 
-        self.sortShowPanel(choice, forceRefresh)
+        self.sortShowPanel(choice, True)
 
     def viewTypeButtonClicked(self):
         for task in self.tasks:
@@ -1095,7 +742,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         util.setSetting('viewtype.{0}.{1}'.format(self.section.server.uuid, key), win.VIEWTYPE)
 
     def sortShowPanel(self, choice, force_refresh=False):
-        if force_refresh or self.chunkMode or self.showPanelControl.size() == 0:
+        if force_refresh or self.showPanelControl.size() == 0:
             self.fillShows()
             return
 
@@ -1170,7 +817,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
         options = []
 
-        if self.section.TYPE in ('movie', 'show'):
+        if self.section.TYPE in ('movie', 'show') and not ITEM_TYPE == 'collection':
             options.append({'type': 'unwatched', 'display': T(32368, 'UNPLAYED').upper(), 'indicator': self.filterUnwatched and check or ''})
 
         if self.filter:
@@ -1202,8 +849,11 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         }
 
         if self.section.TYPE == 'movie':
-            for k in ('year', 'decade', 'genre', 'contentRating', 'collection', 'director', 'actor', 'country', 'studio', 'resolution', 'labels'):
-                options.append(optionsMap[k])
+            if ITEM_TYPE == 'collection':
+                options.append(optionsMap['contentRating'])
+            else:
+                for k in ('year', 'decade', 'genre', 'contentRating', 'collection', 'director', 'actor', 'country', 'studio', 'resolution', 'labels'):
+                    options.append(optionsMap[k])
         elif self.section.TYPE == 'show':
             if ITEM_TYPE == 'episode':
                 for k in ('year', 'collection', 'resolution'):
@@ -1380,9 +1030,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.backgroundSet = True
 
     def fill(self):
-        if self.chunkMode:
-            self.chunkMode.reset()
-
         self.backgroundSet = False
 
         if self.section.TYPE in ('photo', 'photodirectory'):
@@ -1415,6 +1062,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.keyItems = {}
         self.firstOfKeyItems = {}
         totalSize = 0
+        self.alreadyFetchedChunkList = set()
+        self.finalChunkPosition = 0
 
         type_ = None
         if ITEM_TYPE == 'episode':
@@ -1444,12 +1093,11 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                 else:
                     self.setBoolProperty('no.content', True)
             else:
-                if not self.chunkMode:
-                    for x in range(totalSize):
-                        mli = kodigui.ManagedListItem('')
-                        mli.setProperty('thumb.fallback', fallback)
-                        mli.setProperty('index', str(x))
-                        items.append(mli)
+                for x in range(totalSize):
+                    mli = kodigui.ManagedListItem('')
+                    mli.setProperty('thumb.fallback', fallback)
+                    mli.setProperty('index', str(x))
+                    items.append(mli)
         else:
             jumpList = self.section.jumpList(filter_=self.getFilterOpts(), sort=self.getSortOpts(), unwatched=self.filterUnwatched, type_=type_)
 
@@ -1475,32 +1123,17 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                 jitems.append(mli)
                 totalSize += ji.size.asInt()
 
-                if self.chunkMode:
-                    self.chunkMode.addKeyRange(ji.key, (idx, (idx + ji.size.asInt()) - 1))
-                    idx += ji.size.asInt()
-                else:
-                    for x in range(ji.size.asInt()):
-                        mli = kodigui.ManagedListItem('')
-                        mli.setProperty('key', ji.key)
-                        mli.setProperty('thumb.fallback', fallback)
-                        mli.setProperty('index', str(idx))
-                        items.append(mli)
-                        if not x:  # i.e. first item
-                            self.firstOfKeyItems[ji.key] = mli
-                        idx += 1
+                for x in range(ji.size.asInt()):
+                    mli = kodigui.ManagedListItem('')
+                    mli.setProperty('key', ji.key)
+                    mli.setProperty('thumb.fallback', fallback)
+                    mli.setProperty('index', str(idx))
+                    items.append(mli)
+                    if not x:  # i.e. first item
+                        self.firstOfKeyItems[ji.key] = mli
+                    idx += 1
 
             util.setGlobalProperty('key', jumpList[0].key)
-
-        if self.scrollBar:
-            self.scrollBar.setSizeAndCount(totalSize, 12)
-
-        if self.chunkMode:
-            self.chunkMode.itemCount = totalSize
-            items = [
-                kodigui.ManagedListItem('', properties={'index': str(i)}) for i in range(CHUNK_SIZE * 2)
-            ] + [
-                kodigui.ManagedListItem('') for i in range(CHUNK_SIZE)
-            ]
 
         self.showPanelControl.reset()
         self.keyListControl.reset()
@@ -1512,16 +1145,20 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.setFocusId(self.POSTERS_PANEL_ID)
 
         tasks = []
-        ct = 0
-        for start in range(0, totalSize, CHUNK_SIZE):
+        for startChunkPosition in range(0, totalSize, self.CHUNK_SIZE):
             tasks.append(
                 ChunkRequestTask().setup(
-                    self.section, start, CHUNK_SIZE, self.chunkCallback, filter_=self.getFilterOpts(), sort=self.getSortOpts(), unwatched=self.filterUnwatched, subDir=self.subDir
+                    self.section, startChunkPosition, self.CHUNK_SIZE, self._chunkCallback, filter_=self.getFilterOpts(), sort=self.getSortOpts(), unwatched=self.filterUnwatched, subDir=self.subDir
                 )
             )
-            ct += 1
 
-            if self.chunkMode and ct > 1:
+            # If we're retrieving media as we navigate then we just want to request the first
+            # chunk of media and stop.  We'll fetch the rest as the user navigates to those items
+            if not util.advancedSettings.retrieveAllMediaUpFront:
+                # Calculate the end chunk's starting position based on the totalSize of items
+                self.finalChunkPosition = (totalSize // self.CHUNK_SIZE) * self.CHUNK_SIZE
+                # Keep track of the chunks we've already fetched by storing the chunk's starting position
+                self.alreadyFetchedChunkList.add(startChunkPosition)
                 break
 
         self.tasks.add(tasks)
@@ -1643,33 +1280,11 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         if keys:
             util.setGlobalProperty('key', keys[0])
 
-    def chunkCallback(self, items, start, clear=False):
-        if clear:
-            with self.lock:
-                items = [kodigui.ManagedListItem('') for i in range(CHUNK_SIZE * 3)]
-
-                self.showPanelControl.reset()
-                self.showPanelControl.addItems(items)
-
-                self.cleared = True
-            return
-
-        if self.cleared:
-            self.cleared = False
-            busy.widthDialog(self._chunkCallback, self, items, start)
-        else:
-            self._chunkCallback(items, start)
-
     def _chunkCallback(self, items, start):
-        if self.chunkMode and not self.chunkMode.posIsValid(start):
-            return
-
         if not self.showPanelControl or not items:
             return
 
         with self.lock:
-            if self.chunkMode and not self.chunkMode.posIsValid(start):
-                return
             pos = start
             self.setBackground(items, pos, randomize=not util.advancedSettings.dynamicBackgrounds)
 
@@ -1679,9 +1294,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
             showUnwatched = False
             if (self.section.TYPE in ('movie', 'show') and items[0].TYPE != 'collection') or (self.section.TYPE == 'collection' and items[0].TYPE in ('movie', 'show', 'episode')): # NOTE: A collection with Seasons doesn't have the leafCount/viewedLeafCount until you actually go into the season so we can't update the unwatched count here
                 showUnwatched = True
-
-            if self.chunkMode and len(items) < CHUNK_SIZE:
-                items += [None] * (CHUNK_SIZE - len(items))
 
             if ITEM_TYPE == 'episode':
                 for offset, obj in enumerate(items):
@@ -1703,8 +1315,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                         mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
 
                         mli.setProperty('summary', obj.summary)
-
-                        # # mli.setProperty('key', self.chunkMode.getKey(pos))
 
                         mli.setLabel2(util.durationToText(obj.fixedDuration()))
                         mli.setProperty('art', obj.defaultArt.asTranscodedImageURL(*artDim))
@@ -1734,13 +1344,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
                         mli.setProperty('summary', obj.summary)
 
-                        # # mli.setProperty('key', self.chunkMode.getKey(pos))
-
                         mli.setLabel2(obj.year)
-
-                        if self.chunkMode:
-                            mli.setProperty('key', self.chunkMode.getKey(pos))
-
                     else:
                         mli.clear()
                         if obj is False:
@@ -1768,11 +1372,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                         mli.dataSource = obj
                         mli.setProperty('summary', obj.get('summary'))
 
-                        #if self.chunkMode:
-                        #    mli.setProperty('key', self.chunkMode.getKey(pos))
-                        #else:
-                        #    mli.setProperty('key', obj.key)
-
                         if showUnwatched and obj.TYPE != 'collection':
                             if not obj.isDirectory():
                                 mli.setLabel2(util.durationToText(obj.fixedDuration()))
@@ -1792,6 +1391,28 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                             mli.setProperty('index', '')
 
                     pos += 1
+
+    def requestChunk(self, start):
+        if util.advancedSettings.retrieveAllMediaUpFront:
+            return
+
+        # Calculate the correct starting chunk position for the item they passed in
+        startChunkPosition = (start // self.CHUNK_SIZE) * self.CHUNK_SIZE
+        # If we calculated a chunk position that's beyond the end chunk then just return
+        if startChunkPosition > self.finalChunkPosition:
+            return
+
+        # Check if the chunk has already been requested, if not then go fetch the data
+        if startChunkPosition not in self.alreadyFetchedChunkList:
+            util.DEBUG_LOG('Position {0} so requesting chunk {1}'.format(start, startChunkPosition))
+            # Keep track of the chunks we've already fetched by storing the chunk's starting position
+            self.alreadyFetchedChunkList.add(startChunkPosition)
+            task = ChunkRequestTask().setup(self.section, startChunkPosition, self.CHUNK_SIZE,
+                                            self._chunkCallback, filter_=self.getFilterOpts(), sort=self.getSortOpts(),
+                                            unwatched=self.filterUnwatched, subDir=self.subDir)
+
+            self.tasks.add(task)
+            backgroundthread.BGThreader.addTasksToFront([task])
 
 
 class PostersWindow(kodigui.ControlledWindow):
@@ -1825,31 +1446,21 @@ class PostersWindow(kodigui.ControlledWindow):
     VIEWTYPE = 'panel'
     MULTI_WINDOW_ID = 0
 
-    CUSTOM_SCOLLBAR_BUTTON_ID = 951
+    CHUNK_OVERCOMMIT = 6
 
 
 class PostersSmallWindow(PostersWindow):
     xmlFile = 'script-plex-posters-small.xml'
     VIEWTYPE = 'panel2'
     MULTI_WINDOW_ID = 1
-
-
-class PostersChunkedWindow(PostersWindow):
-    xmlFile = 'script-plex-listview-16x9-chunked.xml'
-    VIEWTYPE = 'list'
-    MULTI_WINDOW_ID = 0
+    CHUNK_OVERCOMMIT = 30
 
 
 class ListView16x9Window(PostersWindow):
     xmlFile = 'script-plex-listview-16x9.xml'
     VIEWTYPE = 'list'
     MULTI_WINDOW_ID = 2
-
-
-class ListView16x9ChunkedWindow(PostersWindow):
-    xmlFile = 'script-plex-listview-16x9-chunked.xml'
-    VIEWTYPE = 'list'
-    MULTI_WINDOW_ID = 1
+    CHUNK_OVERCOMMIT = 12
 
 
 class SquaresWindow(PostersWindow):
@@ -1858,20 +1469,8 @@ class SquaresWindow(PostersWindow):
     MULTI_WINDOW_ID = 0
 
 
-class SquaresChunkedWindow(PostersWindow):
-    xmlFile = 'script-plex-listview-square-chunked.xml'
-    VIEWTYPE = 'list'
-    MULTI_WINDOW_ID = 0
-
-
 class ListViewSquareWindow(PostersWindow):
     xmlFile = 'script-plex-listview-square.xml'
-    VIEWTYPE = 'list'
-    MULTI_WINDOW_ID = 1
-
-
-class ListViewSquareChunkedWindow(PostersWindow):
-    xmlFile = 'script-plex-listview-square-chunked.xml'
     VIEWTYPE = 'list'
     MULTI_WINDOW_ID = 1
 
@@ -1883,20 +1482,8 @@ VIEWS_POSTER = {
     'all': (PostersWindow, PostersSmallWindow, ListView16x9Window)
 }
 
-VIEWS_POSTER_CHUNKED = {
-    'panel': PostersChunkedWindow,
-    'list': ListView16x9ChunkedWindow,
-    'all': (PostersChunkedWindow, ListView16x9ChunkedWindow)
-}
-
 VIEWS_SQUARE = {
     'panel': SquaresWindow,
     'list': ListViewSquareWindow,
     'all': (SquaresWindow, ListViewSquareWindow)
-}
-
-VIEWS_SQUARE_CHUNKED = {
-    'panel': SquaresChunkedWindow,
-    'list': ListViewSquareChunkedWindow,
-    'all': (SquaresChunkedWindow, ListViewSquareChunkedWindow)
 }

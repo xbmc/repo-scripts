@@ -1103,7 +1103,7 @@ msgid "Automatically Skip Intro"
 msgstr ""
 
 msgctxt "#32523"
-msgid "Automatically skip intros if available. Doesn't override enabled binge mode."
+msgid "Automatically skip intros if available. Doesn't override enabled binge mode.\nCan be disabled/enabled per TV show."
 msgstr ""
 
 msgctxt "#32524"
@@ -1119,7 +1119,7 @@ msgid "Automatically Skip Credits"
 msgstr ""
 
 msgctxt "#32527"
-msgid "Automatically skip credits if available. Doesn't override enabled binge mode."
+msgid "Automatically skip credits if available. Doesn't override enabled binge mode.\nCan be disabled/enabled per TV show."
 msgstr ""
 
 msgctxt "#32528"
@@ -1219,7 +1219,7 @@ msgid "Show intro skip button early"
 msgstr ""
 
 msgctxt "#33506"
-msgid "Show the intro skip button from the start of a video with an intro marker. The auto-skipping setting applies. Doesn\'t override enabled binge mode."
+msgid "Show the intro skip button from the start of a video with an intro marker. The auto-skipping setting applies. Doesn\'t override enabled binge mode.\nCan be disabled/enabled per TV show."
 msgstr ""
 
 msgctxt "#33507"
@@ -1315,7 +1315,7 @@ msgid "TV binge-viewing mode"
 msgstr ""
 
 msgctxt "#33619"
-msgid "Automatically skips episode intros, credits and tries to skip episode recaps. Doesn\'t skip the intro of the first episode of a season.\n\nCan be disabled/enabled per TV show."
+msgid "Automatically skips episode intros, credits and tries to skip episode recaps. Doesn\'t skip the intro of the first episode of a season and doesn't skip the final credits of a show.\n\nCan be disabled/enabled per TV show.\nOverrides any setting below."
 msgstr ""
 
 msgctxt "#33620"
@@ -1672,4 +1672,40 @@ msgstr ""
 
 msgctxt "#32966"
 msgid "When exiting the addon, use \"Quit Kodi\" as default option. Can be dynamically switched using CONTEXT_MENU (often longpress SELECT)"
+msgstr ""
+
+msgctxt "#32967"
+msgid "Kodi Colour Management"
+msgstr ""
+
+msgctxt "#32968"
+msgid "Kodi Resolution Settings"
+msgstr ""
+
+msgctxt "#32969"
+msgid "Always request all library media items at once"
+msgstr ""
+
+msgctxt "#32970"
+msgid "Retrieve all media in library up front instead of fetching it in chunks as the user navigates through the library"
+msgstr ""
+
+msgctxt "#32971"
+msgid "Library item-request chunk size"
+msgstr ""
+
+msgctxt "#32972"
+msgid "Request this amount of media items per chunk request in library view (+6-30 depending on view mode; less can be less straining for the UI at first, but puts more strain on the server)"
+msgstr ""
+
+msgctxt "#32973"
+msgid "Episodes: Skip Post Play screen"
+msgstr ""
+
+msgctxt "#32974"
+msgid "When finishing an episode, don't show Post Play but go to the next one immediately.\nCan be disabled/enabled per TV show. Doesn't override enabled binge mode. Overrides the Post Play setting."
+msgstr ""
+
+msgctxt "#32975"
+msgid "Delete Season"
 msgstr ""

@@ -57,15 +57,18 @@ class MediaItem(plexobjects.PlexObject):
         self.deleted = req.wasOK()
         return self.deleted
 
-    def exists(self):
-        if self.deleted or self.deletedAt:
+    def exists(self, force_full_check=False):
+        if (self.deleted or self.deletedAt) and not force_full_check:
             return False
 
-        data = self.server.query('/library/metadata/{0}'.format(self.ratingKey))
+        # force_full_check is imperfect, as it doesn't check for existence of its mediaparts
+        try:
+            data = self.server.query('/library/metadata/{0}'.format(self.ratingKey))
+        except exceptions.BadRequest:
+            # item does not exist anymore
+            util.DEBUG_LOG("Item {} doesn't exist.".format(self.ratingKey))
+            return False
         return data is not None and data.attrib.get('size') != '0'
-        # req = plexrequest.PlexRequest(self.server, '/library/metadata/{0}'.format(self.ratingKey), method='HEAD')
-        # req.getToStringWithTimeout(10)
-        # return not req.wasNotFound()
 
     def relatedHubs(self, data, _itemCls, hubIdentifiers=None, _filter=None):
         hubs = data.find("Related")

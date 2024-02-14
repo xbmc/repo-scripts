@@ -349,6 +349,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self.sectionChangeTimeout = 0
         self.lastFocusID = None
         self.lastNonOptionsFocusID = None
+        self._lastSelectedItem = None
         self.sectionHubs = {}
         self.updateHubs = {}
         self.changingServer = False
@@ -512,6 +513,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
     def storeLastBG(self):
         if util.advancedSettings.dynamicBackgrounds:
+            oldbg = util.getSetting("last_bg_url", "")
             # store BG url of first hub, first item, as this is most likely to be the one we're focusing on the
             # next start
             try:
@@ -523,6 +525,11 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                             ds = self.hubControls[index][0].dataSource
                             if not ds.art:
                                 continue
+
+                            if oldbg:
+                                url = plexnet.compat.quote_plus(ds.art)
+                                if url in oldbg:
+                                    return
 
                             bg = util.backgroundFromArt(ds.art, width=self.width, height=self.height)
                             if bg:
@@ -578,7 +585,8 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                 self.setFocusId(self.SERVER_BUTTON_ID)
             elif 399 < controlID < 500:
                 if action.getId() in MOVE_SET:
-                    self.checkHubItem(controlID)
+                    self.checkHubItem(controlID, actionID=action.getId())
+                    return
                 elif action.getId() == xbmcgui.ACTION_PLAYER_PLAY:
                     self.hubItemClicked(controlID, auto_play=True)
                     return
@@ -598,6 +606,11 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                         self.setFocusId(self.SERVER_BUTTON_ID)
                         return
 
+                    if controlID == self.SECTION_LIST_ID and self.sectionList.control.getSelectedPosition() > 0:
+                        self.sectionList.setSelectedItemByPos(0)
+                        self.showHubs(HomeSection)
+                        return
+
                     if util.advancedSettings.fastBack and not optionsFocused and offSections \
                             and self.lastFocusID not in (self.USER_BUTTON_ID, self.SERVER_BUTTON_ID,
                                                          self.SEARCH_BUTTON_ID, self.SECTION_LIST_ID):
@@ -605,7 +618,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                         self.setFocusId(self.SECTION_LIST_ID)
                         return
 
-                if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
+                if action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                     if not optionsFocused and offSections \
                             and (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                         self.lastNonOptionsFocusID = self.lastFocusID
@@ -623,6 +636,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                     if ex.button in (2, None):
                         return
                     elif ex.button == 1:
+                        self.storeLastBG()
                         xbmc.executebuiltin('ActivateWindow(10000)')
                         return
                     elif ex.button == 0:
@@ -752,8 +766,17 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         if mli.dataSource is None:
             return
 
+        carryProps = None
+        if auto_play and self.hubControls:
+            # carry over some props to the new window as we might end up showing a resume dialog not rendering the
+            # underlying window. the new window class will invalidate the old one temporarily, though, as it seems
+            # and the properties vanish, resulting in all text2lines enabled hubs to lose their title2 labels
+            carryProps = dict(
+                ('hub.text2lines.4{0:02d}'.format(i), '1') for i, hubCtrl in enumerate(self.hubControls) if
+                hubCtrl.dataSource and self.HUBMAP[hubCtrl.dataSource.getCleanHubIdentifier()].get("text2lines"))
+
         try:
-            command = opener.open(mli.dataSource, auto_play=auto_play)
+            command = opener.open(mli.dataSource, auto_play=auto_play, dialog_props=carryProps)
             if command == "NODATA":
                 raise util.NoDataException
         except util.NoDataException:
@@ -765,7 +788,9 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         if not mli:
             return
 
-        if not mli.dataSource.exists():
+        # MediaItem.exists checks for the deleted and deletedAt flags. We still want to show the media if it's still
+        # valid, but has deleted files. Do a more thorough check for existence in this case
+        if not mli.dataSource.exists() and not mli.dataSource.exists(force_full_check=True):
             try:
                 control.removeItem(mli.pos())
             except (ValueError, TypeError):
@@ -808,19 +833,33 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                 self.sectionList.selectItem(self.bottomItem)
                 item = self.sectionList[self.bottomItem]
 
+        if item.getProperty('is.home'):
+            self.storeLastBG()
+
         if item.dataSource != self.lastSection:
             self.lastSection = item.dataSource
             self.sectionChanged(force)
 
-    def checkHubItem(self, controlID):
+    def checkHubItem(self, controlID, actionID=None):
         control = self.hubControls[controlID - 400]
         mli = control.getSelectedItem()
         is_valid_mli = mli and mli.getProperty('is.end') != '1'
+        is_last_item = is_valid_mli and control.isLastItem(mli)
 
         if util.advancedSettings.dynamicBackgrounds and is_valid_mli:
             self.updateBackgroundFrom(mli.dataSource)
 
         if not mli or not mli.getProperty('is.end') or mli.getProperty('is.updating') == '1':
+            mlipos = control.getManagedItemPosition(mli)
+
+            # in order to not round robin when the next chunk is loading, implement our own cheap round robining
+            # by storing the last selected item of the current control. if we've seen it twice, we need to wrap around
+            if mli and not mli.getProperty('is.end') and is_last_item and actionID == xbmcgui.ACTION_MOVE_RIGHT:
+                if (controlID, mlipos) == self._lastSelectedItem:
+                    control.selectItem(0)
+                    self._lastSelectedItem = None
+                else:
+                    self._lastSelectedItem = (controlID, mlipos)
             return
 
         mli.setBoolProperty('is.updating', True)
@@ -855,7 +894,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self.tasks = [t for t in self.tasks if t.isValid()]
 
     def sectionChanged(self, force=False):
-        self.sectionChangeTimeout = time.time() + 0.3
+        self.sectionChangeTimeout = time.time() + 0.5
         if not self.sectionChangeThread or not self.sectionChangeThread.is_alive() or force:
             self.sectionChangeThread = threading.Thread(target=self._sectionChanged, name="sectionchanged")
             self.sectionChangeThread.start()
@@ -894,6 +933,10 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                     continue
 
                 hubs = self.sectionHubs.get(section.key, ())
+                if not hubs:
+                    util.LOG("Hubs for {} not found/no data".format(section.key))
+                    continue
+
                 for idx, ihub in enumerate(hubs):
                     if ihub == hub:
                         if self.lastSection == section:

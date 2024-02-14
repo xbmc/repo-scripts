@@ -111,6 +111,10 @@ class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
             ]
             if util.KODI_VERSION_MAJOR >= 18:
                 options.append(('kodi_subtitle', T(32492, 'Kodi Subtitle Settings'), ''))
+                if xbmc.getCondVisibility('Player.HasResolutions'):
+                    options.append(('kodi_resolutions', T(32968, 'Kodi Resolution Settings'), ''))
+            if util.KODI_VERSION_MAJOR >= 20 and xbmc.getCondVisibility('System.HasCMS'):
+                options.append(('kodi_colours', T(32967, 'Kodi Colour Settings'), ''))
 
         if self.viaOSD:
             if self.parent.getProperty("show.PPI"):
@@ -184,6 +188,10 @@ class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
             xbmc.executebuiltin('ActivateWindow(OSDAudioSettings)')
         elif result == 'kodi_subtitle':
             xbmc.executebuiltin('ActivateWindow(OSDSubtitleSettings)')
+        elif result == 'kodi_colours':
+            xbmc.executebuiltin('ActivateWindow(osdcmssettings)')
+        elif result == 'kodi_resolutions':
+            xbmc.executebuiltin("Action(PlayerResolutionSelect)")
         elif result == "stream_info":
             if self.parent:
                 if self.parent.getProperty("show.PPI"):

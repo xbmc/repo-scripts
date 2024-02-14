@@ -23,6 +23,7 @@ from kodi_six import xbmcaddon
 from kodi_six import xbmcvfs
 
 from . import colors
+# noinspection PyUnresolvedReferences
 from .exceptions import NoDataException
 from plexnet import signalsmixin, plexapp
 
@@ -37,17 +38,29 @@ _build = None
 # buildversion looks like: XX.X[-TAG] (a+.b+.c+) (.+); there are kodi builds that don't set the build version
 sys_ver = xbmc.getInfoLabel('System.BuildVersion')
 _ver = sys_ver
-if ' ' in sys_ver and '(' in sys_ver:
-    _ver, _build = sys_ver.split()[:2]
 
-_splitver = _ver.split(".")
-KODI_VERSION_MAJOR, KODI_VERSION_MINOR = int(_splitver[0].split("-")[0].strip()), \
-                                         int(_splitver[1].split("-")[0].strip())
+try:
+    if ' ' in sys_ver and '(' in sys_ver:
+        _ver, _build = sys_ver.split()[:2]
+
+    _splitver = _ver.split(".")
+    KODI_VERSION_MAJOR, KODI_VERSION_MINOR = int(_splitver[0].split("-")[0].strip()), \
+                                             int(_splitver[1].split(" ")[0].split("-")[0].strip())
+except:
+    xbmc.log('script.plex: Couldn\'t determine Kodi version, assuming 19.4. Got: {}'.format(sys_ver))
+    # assume something "old"
+    KODI_VERSION_MAJOR = 19
+    KODI_VERSION_MINOR = 4
 
 _bmajor, _bminor, _bpatch = (KODI_VERSION_MAJOR, KODI_VERSION_MINOR, 0)
+parsedBuild = False
 if _build:
-    _bmajor, _bminor, _bpatch = _build[1:-1].split(".")
-else:
+    try:
+        _bmajor, _bminor, _bpatch = _build[1:-1].split(".")
+        parsedBuild = True
+    except:
+        pass
+if not parsedBuild:
     xbmc.log('script.plex: Couldn\'t determine build version, falling back to Kodi version', xbmc.LOGINFO)
 
 # calculate a comparable build number
@@ -140,7 +153,7 @@ class AdvancedSettings(object):
         ("auto_seek", True),
         ("auto_seek_delay", 1),
         ("dynamic_timeline_seek", False),
-        ("fast_back", False),
+        ("fast_back", True),
         ("dynamic_backgrounds", True),
         ("background_art_blur_amount2", 0),
         ("background_art_opacity_amount2", 20),
@@ -173,6 +186,8 @@ class AdvancedSettings(object):
         ("subtitle_use_extended_title", True),
         ("poster_resolution_scale_perc", 100),
         ("consecutive_video_pb_wait", 0.0),
+        ("retrieve_all_media_up_front", False),
+        ("library_chunk_size", 240),
     )
 
     def __init__(self):
@@ -271,14 +286,12 @@ class UtilityMonitor(xbmc.Monitor, signalsmixin.SignalsMixin):
                 setGlobalProperty('stop_running', '1')
                 return
             if kodigui.BaseFunctions.lastWinID > 13000:
+                reInitAddon()
                 xbmc.executebuiltin('ActivateWindow({0})'.format(kodigui.BaseFunctions.lastWinID))
             else:
                 ERROR("Addon never properly started, can't reactivate")
                 setGlobalProperty('stop_running', '1')
                 return
-
-            getAdvancedSettings()
-            populateTimeFormat()
 
         elif sender == "xbmc" and method == "System.OnSleep" and getSetting('action_on_sleep', "none") != "none":
             getattr(self, "action{}".format(getSetting('action_on_sleep', "none").capitalize()))()
@@ -295,6 +308,10 @@ class UtilityMonitor(xbmc.Monitor, signalsmixin.SignalsMixin):
     def onDPMSActivated(self):
         DEBUG_LOG("Monitor: OnDPMSActivated")
         #self.stopPlayback()
+
+    def onSettingsChanged(self):
+        """ unused stub, but works if needed """
+        pass
 
 
 MONITOR = UtilityMonitor()
@@ -470,6 +487,14 @@ def getAdvancedSettings():
     # yes, global, hang me!
     global advancedSettings
     advancedSettings = AdvancedSettings()
+
+
+def reInitAddon():
+    global ADDON
+    # reinit the ADDON reference so we get the updated addon settings
+    ADDON = xbmcaddon.Addon()
+    getAdvancedSettings()
+    populateTimeFormat()
 
 
 def setSetting(key, value):
@@ -940,10 +965,16 @@ def getPlatform():
             return key.rsplit('.', 1)[-1]
 
 
-def getProgressImage(obj):
-    if not obj.get('viewOffset') or not obj.get('duration'):
+def getProgressImage(obj, perc=None):
+    if not obj and not perc:
         return ''
-    pct = int((obj.viewOffset.asInt() / obj.duration.asFloat()) * 100)
+
+    if obj:
+        if not obj.get('viewOffset') or not obj.get('duration'):
+            return ''
+        pct = int((obj.viewOffset.asInt() / obj.duration.asFloat()) * 100)
+    else:
+        pct = perc
     pct = pct - pct % 2  # Round to even number - we have even numbered progress only
     pct = max(pct, 2)
     return 'script.plex/progress/{0}.png'.format(pct)
@@ -998,6 +1029,18 @@ def getOpenSubtitlesHash(size, url):
         hash_ = hash_ & 0xFFFFFFFFFFFFFFFF
 
     return format(hash_, "016x")
+
+
+def ensureHome():
+    if xbmcgui.getCurrentWindowId() != 10000:
+        LOG("Switching to home screen before starting addon")
+        xbmc.executebuiltin('ActivateWindow(home)')
+        ct = 0
+        while xbmcgui.getCurrentWindowId() != 10000 and ct <= 50:
+            xbmc.Monitor().waitForAbort(0.1)
+            ct += 1
+        if ct > 50:
+            DEBUG_LOG("Still active window: %s" % xbmcgui.getCurrentWindowId())
 
 
 def garbageCollect():

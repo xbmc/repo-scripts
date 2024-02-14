@@ -5,13 +5,11 @@ from kodi_six import xbmc
 from kodi_six import xbmcgui
 from . import kodigui
 
-from lib import colors
 from lib import util
 from lib import metadata
 from lib import player
 
 from plexnet import playlist
-from plexnet.util import INTERFACE
 
 from . import busy
 from . import episodes
@@ -27,7 +25,7 @@ from . import pagination
 from . import playbacksettings
 
 from lib.util import T
-from .mixins import SeasonsMixin
+from .mixins import SeasonsMixin, DeleteMediaMixin, RatingsMixin
 
 
 class RelatedPaginator(pagination.BaseRelatedPaginator):
@@ -35,7 +33,8 @@ class RelatedPaginator(pagination.BaseRelatedPaginator):
         return self.parentWindow.mediaItem.getRelated(offset=offset, limit=amount)
 
 
-class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, playbacksettings.PlaybackSettingsMixin):
+class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, DeleteMediaMixin, RatingsMixin,
+                 playbacksettings.PlaybackSettingsMixin):
     xmlFile = 'script-plex-seasons.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -68,6 +67,8 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
     def __init__(self, *args, **kwargs):
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
+        SeasonsMixin.__init__(*args, **kwargs)
+        DeleteMediaMixin.__init__(*args, **kwargs)
         self.mediaItem = kwargs.get('media_item')
         self.parentList = kwargs.get('parent_list')
         self.cameFrom = kwargs.get('came_from')
@@ -106,7 +107,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                                                   self.mediaItem.ratingKey)
 
     def setup(self):
-        self.mediaItem.reload(includeExtras=1, includeExtrasCount=10)
+        self.mediaItem.reload(includeExtras=1, includeExtrasCount=10, includeOnDeck=1)
 
         self.relatedPaginator = RelatedPaginator(self.relatedListControl, leaf_count=int(self.mediaItem.relatedCount),
                                                  parent_window=self)
@@ -142,27 +143,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         genres = self.mediaItem.genres()
         self.setProperty('info', genres and (u' / '.join([g.tag for g in genres][:3])) or '')
 
-        self.setProperties(('rating.stars', 'rating', 'rating.image', 'rating2', 'rating2.image'), '')
-
-        if self.mediaItem.userRating:
-            stars = str(int(round((self.mediaItem.userRating.asFloat() / 10) * 5)))
-            self.setProperty('rating.stars', stars)
-
-        if self.mediaItem.ratingImage:
-            rating = self.mediaItem.rating
-            audienceRating = self.mediaItem.audienceRating
-            if self.mediaItem.ratingImage.startswith('rottentomatoes:'):
-                rating = '{0}%'.format(int(rating.asFloat() * 10))
-                if audienceRating:
-                    audienceRating = '{0}%'.format(int(audienceRating.asFloat() * 10))
-
-            self.setProperty('rating', rating)
-            self.setProperty('rating.image', 'script.plex/ratings/{0}.png'.format(self.mediaItem.ratingImage.replace('://', '/')))
-            if self.mediaItem.audienceRatingImage:
-                self.setProperty('rating2', audienceRating)
-                self.setProperty('rating2.image', 'script.plex/ratings/{0}.png'.format(self.mediaItem.audienceRatingImage.replace('://', '/')))
-        else:
-            self.setProperty('rating', self.mediaItem.rating)
+        self.populateRatings(self.mediaItem, self)
 
         sas = self.mediaItem.selectedAudioStream()
         self.setProperty('audio', sas and sas.getTitle() or 'None')
@@ -173,7 +154,14 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
         leafcount = self.mediaItem.leafCount.asFloat()
         if leafcount:
-            width = (int((self.mediaItem.viewedLeafCount.asInt() / leafcount) * self.width)) or 1
+            wBase = self.mediaItem.viewedLeafCount.asInt() / leafcount
+            for v in self.mediaItem.onDeck:
+                if v.viewOffset:
+                    wBase += v.viewOffset.asInt() / v.duration.asFloat() / leafcount
+
+            # if we have _any_ progress, display it as the smallest step
+            wBase = 0 < wBase < 0.01 and 0.01 or wBase
+            width = (int(wBase * self.width)) or 1
             self.progressImageControl.setWidth(width)
 
     def onAction(self, action):
@@ -184,7 +172,10 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                 self.setFocusId(self.lastFocusID)
 
             if action == xbmcgui.ACTION_CONTEXT_MENU:
-                if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
+                if controlID == self.SUB_ITEM_LIST_ID:
+                    self.optionsButtonClicked(from_item=True)
+                    return
+                elif not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
                     self.lastNonOptionsFocusID = self.lastFocusID
                     self.setFocusId(self.OPTIONS_GROUP_ID)
                     return
@@ -380,7 +371,8 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             return
 
         if update:
-            mli.setProperty('unwatched.count', not mli.dataSource.isWatched and str(mli.dataSource.unViewedLeafCount) or '')
+            if mli and mli.dataSource:
+                mli.setProperty('unwatched.count', not mli.dataSource.isWatched and str(mli.dataSource.unViewedLeafCount) or '')
             self.mediaItem.reload(includeRelated=1, includeRelatedCount=10, includeExtras=1, includeExtrasCount=10)
             self.updateProperties()
 
@@ -422,23 +414,38 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
     def shuffleButtonClicked(self):
         self.playButtonClicked(shuffle=True)
 
-    def optionsButtonClicked(self):
+    def optionsButtonClicked(self, from_item=None):
         options = []
-        oldBingeModeValue = None
         if xbmc.getCondVisibility('Player.HasAudio + MusicPlayer.HasNext'):
             options.append({'key': 'play_next', 'display': 'Play Next'})
 
-        if self.mediaItem.type != 'artist':
-            if self.mediaItem.isWatched:
+        item = self.mediaItem
+        if from_item:
+            sel = self.subItemListControl.getSelectedItem()
+            if sel.dataSource:
+                item = sel.dataSource
+
+        if not item:
+            return
+
+        if item.type != 'artist':
+            if item.isWatched:
                 options.append({'key': 'mark_unwatched', 'display': T(32318, 'Mark Unplayed')})
             else:
                 options.append({'key': 'mark_watched', 'display': T(32319, 'Mark Played')})
 
-            if self.mediaItem.type == "show":
+            if item.type == "show":
                 if options:
                     options.append(dropdown.SEPARATOR)
 
                 options.append({'key': 'playback_settings', 'display': T(32925, 'Playback Settings')})
+                if item.server.allowsMediaDeletion:
+                    options.append(dropdown.SEPARATOR)
+                    options.append({'key': 'delete', 'display': T(32322, 'Delete')})
+            elif item.type == "season":
+                if item.server.allowsMediaDeletion:
+                    options.append(dropdown.SEPARATOR)
+                    options.append({'key': 'delete', 'display': T(32975, 'Delete Season')})
 
         # if xbmc.getCondVisibility('Player.HasAudio') and self.section.TYPE == 'artist':
         #     options.append({'key': 'add_to_queue', 'display': 'Add To Queue'})
@@ -450,6 +457,11 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
         options.append({'key': 'to_section', 'display': u'Go to {0}'.format(self.mediaItem.getLibrarySectionTitle())})
         pos = (880, 618)
+        if from_item:
+            viewPos = self.subItemListControl.getViewPosition()
+            optsLen = len(list(filter(None, options)))
+            # dropDown handles any overlap with the right window boundary so we don't need to care here
+            pos = ((((viewPos + 1) * 218) - 100), 460 if optsLen < 7 else 460 - 66 * (optsLen - 6))
 
         choice = dropdown.showDropdown(options, pos, close_direction='left')
         if not choice:
@@ -458,12 +470,12 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         if choice['key'] == 'play_next':
             xbmc.executebuiltin('PlayerControl(Next)')
         elif choice['key'] == 'mark_watched':
-            self.mediaItem.markWatched()
+            item.markWatched()
             self.updateItems()
             self.updateProperties()
             util.MONITOR.watchStatusChanged()
         elif choice['key'] == 'mark_unwatched':
-            self.mediaItem.markUnwatched()
+            item.markUnwatched()
             self.updateItems()
             self.updateProperties()
             util.MONITOR.watchStatusChanged()
@@ -471,6 +483,11 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             self.goHome(self.mediaItem.getLibrarySectionId())
         elif choice['key'] == 'playback_settings':
             self.playbackSettings(self.mediaItem, pos, False)
+        elif choice['key'] == 'delete':
+            if self.delete(item):
+                # cheap way of requesting a home hub refresh because of major deletion
+                util.MONITOR.watchStatusChanged()
+                self.goHome()
 
     def roleClicked(self):
         mli = self.rolesListControl.getSelectedItem()

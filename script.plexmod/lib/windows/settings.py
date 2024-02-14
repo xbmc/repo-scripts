@@ -379,6 +379,23 @@ class Settings(object):
         'player_user': (
             T(32631, 'Playback (user-specific)'), (
                 BoolUserSetting(
+                    'show_chapters', T(33601, 'Show video chapters'), True
+                ).description(
+                    T(33602, 'If available, show video chapters from the video-file instead of the '
+                             'timeline-big-seek-steps.')
+                ),
+                BoolUserSetting(
+                    'virtual_chapters', T(33603, 'Use virtual chapters'), True
+                ).description(
+                    T(33604, 'When the above is enabled and no video chapters are available, simulate them by using the'
+                             ' markers identified by the Plex Server (Intro, Credits).')
+                ),
+                BoolUserSetting(
+                    'auto_skip_in_transcode', T(32948, 'Allow auto-skip when transcoding'), True
+                ).description(
+                    T(32949, 'When transcoding/DirectStreaming, allow auto-skip functionality.')
+                ),
+                BoolUserSetting(
                     'post_play_auto', T(32039, 'Post Play Auto Play'), True
                 ).description(
                     T(
@@ -391,40 +408,32 @@ class Settings(object):
                     'binge_mode', T(33618, 'TV binge-viewing mode'), False
                 ).description(
                     T(33619, 'Automatically skips episode intros, credits and tries to skip episode recaps. Doesn\'t '
-                             'skip the intro of the first episode of a season.\n\nCan be disabled/enabled per TV show.')
+                             'skip the intro of the first episode of a season and doesn\'t skip the final credits of a '
+                             'show.\n\nCan be disabled/enabled per TV show.'
+                             '\n\nOverrides any playback setting below.')
                 ),
                 BoolUserSetting(
                     'auto_skip_intro', T(32522, 'Automatically Skip Intro'), False
                 ).description(
-                    T(32523, 'Automatically skip intros if available. Doesn\'t override enabled binge mode.')
+                    T(32523, 'Automatically skip intros if available. Doesn\'t override enabled binge mode.\nCan be disabled/enabled per TV show.')
                 ),
                 BoolUserSetting(
                     'auto_skip_credits', T(32526, 'Auto Skip Credits'), False
                 ).description(
-                    T(32527, 'Automatically skip credits if available. Doesn\'t override enabled binge mode.')
+                    T(32527, 'Automatically skip credits if available. Doesn\'t override enabled binge mode.\nCan be disabled/enabled per TV show.')
                 ),
                 BoolUserSetting(
                     'show_intro_skip_early', T(33505, 'Show intro skip button early'), False
                 ).description(
                     T(33506, 'Show the intro skip button from the start of a video with an intro marker. The auto-skipp'
-                             'ing setting applies. Doesn\'t override enabled binge mode.')
+                             'ing setting applies. Doesn\'t override enabled binge mode.\nCan be disabled/enabled per TV show.')
                 ),
                 BoolUserSetting(
-                    'auto_skip_in_transcode', T(32948, 'Allow auto-skip when transcoding'), True
+                    'skip_post_play_tv', T(32973, 'Episodes: Skip Post Play screen'), False
                 ).description(
-                    T(32949, 'When transcoding/DirectStreaming, allow auto-skip functionality.')
-                ),
-                BoolUserSetting(
-                    'show_chapters', T(33601, 'Show video chapters'), True
-                ).description(
-                    T(33602, 'If available, show video chapters from the video-file instead of the '
-                             'timeline-big-seek-steps.')
-                ),
-                BoolUserSetting(
-                    'virtual_chapters', T(33603, 'Use virtual chapters'), True
-                ).description(
-                    T(33604, 'When the above is enabled and no video chapters are available, simulate them by using the'
-                             ' markers identified by the Plex Server (Intro, Credits).')
+                    T(32974, 'When finishing an episode, don\'t show Post Play but go to the next one immediately.'
+                             '\nCan be disabled/enabled per TV show. Doesn\'t override enabled binge mode. '
+                             'Overrides the Post Play setting.')
                 ),
             )
         ),

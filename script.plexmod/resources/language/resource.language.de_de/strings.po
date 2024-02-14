@@ -1369,8 +1369,8 @@ msgstr "Intro automatisch überspringen"
 
 #: 
 msgctxt "#32523"
-msgid "Automatically skip intros if available."
-msgstr "Automatisches Überspringen von Intros, falls vorhanden. Überschreibt aktivierten Binge-Modus nicht."
+msgid "Automatically skip intros if available. Doesn't override enabled binge mode.\nCan be disabled/enabled per TV show."
+msgstr "Automatisches Überspringen von Intros, falls vorhanden. Überschreibt aktivierten Binge-Modus nicht.\nKann pro Serie aktiviert/deaktiviert werden."
 
 #: 
 msgctxt "#32524"
@@ -1389,8 +1389,8 @@ msgstr "Automatisches Überspringen von Abspann"
 
 #: 
 msgctxt "#32527"
-msgid "Automatically skip credits if available."
-msgstr "Automatisches Überspringen von Abspann, falls vorhanden. Überschreibt aktivierten Binge-Modus nicht."
+msgid "Automatically skip credits if available. Doesn't override enabled binge mode.\nCan be disabled/enabled per TV show."
+msgstr "Automatisches Überspringen von Abspann, falls vorhanden. Überschreibt aktivierten Binge-Modus nicht.\nKann pro Serie aktiviert/deaktiviert werden."
 
 #: 
 msgctxt "#32528"
@@ -1518,8 +1518,8 @@ msgid "Show intro skip button early"
 msgstr "Intro überspringen früher anzeigen"
 
 msgctxt "#33506"
-msgid "Show the intro skip button from the start of a video with an intro marker. The auto-skipping setting applies."
-msgstr "Zeige den Intro-Überspringen-Knopf von Anfang an. Die Automatische-Intro-Überspringen-Einstellung wird angewandt. Überschreibt aktivierten Binge-Modus nicht."
+msgid "Show the intro skip button from the start of a video with an intro marker. The auto-skipping setting applies. Doesn\'t override enabled binge mode.\nCan be disabled/enabled per TV show."
+msgstr "Zeige den Intro-Überspringen-Knopf von Anfang an. Die Automatische-Intro-Überspringen-Einstellung wird angewandt. Überschreibt aktivierten Binge-Modus nicht.\nKann pro Serie aktiviert/deaktiviert werden."
 
 msgctxt "#33507"
 msgid "Enabled"
@@ -1614,8 +1614,8 @@ msgid "TV binge-viewing mode"
 msgstr "TV Binge-Viewing-Modus"
 
 msgctxt "#33619"
-msgid "Automatically skips episode intros, credits and tries to skip episode recaps. Doesn\'t skip the intro of the first episode of a season.\n\nCan be disabled/enabled per TV show."
-msgstr "Überspringt automatisch Intros und Abspänne von Episoden und versucht Recaps zu vermeiden. Überspringt das Intro der ersten Episode einer Staffel nicht."
+msgid "Automatically skips episode intros, credits and tries to skip episode recaps. Doesn\'t skip the intro of the first episode of a season and doesn't skip the final credits of a show.\n\nCan be disabled/enabled per TV show.\nOverrides any setting below."
+msgstr "Überspringt automatisch Intros und Abspänne von Episoden und versucht Recaps zu vermeiden. Überspringt das Intro der ersten Episode einer Staffel und den Abspann der letzten Episode einer Serie nicht.\n\nKann pro Serie aktiviert/deaktiviert werden.\nÜberschreibt jegliche Einstellung unterhalb dieser."
 
 msgctxt "#33620"
 msgid "Plex requests timeout (seconds)"
@@ -1972,3 +1972,35 @@ msgstr "Kodi beenden anstatt PM4K"
 msgctxt "#32966"
 msgid "When showing the addon exit confirmation, use \"Quit Kodi\" as default option. Can be dynamically switched using CONTEXT_MENU (often longpress SELECT)"
 msgstr "Wenn die Addon-Beendigungsbestätigung angezeigt wird, \"Kodi beenden\" als Standardoption verwenden. Kann dynamisch mit CONTEXT_MENU (oft lange gedrücktes SELECT) getauscht werden."
+
+msgctxt "#32967"
+msgid "Kodi Colour Management"
+msgstr "Kodi Farbeinstellungen"
+
+msgctxt "#32968"
+msgid "Kodi Resolution Settings"
+msgstr "Kodi Auflösungseinstellungen"
+
+msgctxt "#32969"
+msgid "Always request all library media items at once"
+msgstr "Immer die vollständige Bibliothek laden"
+
+msgctxt "#32970"
+msgid "Retrieve all media in library up front instead of fetching it in chunks as the user navigates through the library"
+msgstr "Alle Medieninhalte einer Bibliothek anfordern, anstatt diese gestückelt nachzuladen"
+
+msgctxt "#32971"
+msgid "Library item-request chunk size"
+msgstr "Bibliothek Anfrage-Blockgröße"
+
+msgctxt "#32972"
+msgid "Request this amount of media items per chunk request in library view (+6-30 depending on view mode; less can be less straining for the UI at first, but puts more strain on the server)"
+msgstr "Diese Anzahl an Medieninhalten pro gestückelter Anfrage in der Bibliothekenansicht laden (+6-30 abhängig von der Ansicht; weniger kann vorerst geringere UI-Last bedeuten, aber mehr Last beim Server erzeugen)"
+
+msgctxt "#32973"
+msgid "Episodes: Skip Post Play screen"
+msgstr "Direkt zur nächsten Episode springen"
+
+msgctxt "#32974"
+msgid "When finishing an episode, don't show Post Play but go to the next one immediately.\nCan be disabled/enabled per TV show. Doesn't override enabled binge mode. Overrides the Post Play setting."
+msgstr "Beim Beenden einer Episode nicht in die Post Play Ansicht gehen und stattdessen sofort zur nächsten Episode springen.\nCan be disabled/enabled per TV show. Überschreibt aktivierten Binge-Modus nicht. Überschreibt die \"Automatisch nächsten Titel abspielen\"-Einstellung"

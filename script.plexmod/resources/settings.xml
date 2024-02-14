@@ -35,6 +35,30 @@
                         <popup>false</popup>
                     </control>
                 </setting>
+                <setting id="retrieve_all_media_up_front" type="boolean" label="32969" help="32970">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_chunk_size" type="string" label="32971" help="32972">
+                    <level>0</level>
+                    <default>240</default>
+                    <constraints>
+                        <options>
+                            <option>60</option>
+                            <option>120</option>
+                            <option>180</option>
+                            <option>240</option>
+                            <option>360</option>
+                            <option>540</option>
+                        </options>
+                        <allowempty>false</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="enable" setting="retrieve_all_media_up_front">false</dependency>
+                    </dependencies>
+                    <control type="list" format="string"/>
+                </setting>
             </group>
         </category>
         <!-- Player -->
@@ -198,7 +222,7 @@
             <group id="4" label="">
                 <setting id="fast_back" type="boolean" label="32485">
                     <level>0</level>
-                    <default>false</default>
+                    <default>true</default>
                     <control type="toggle"/>
                 </setting>
                 <setting id="postplay_always" type="boolean" label="32500">
