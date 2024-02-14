@@ -1,21 +1,23 @@
-# coding: utf-8
-# Created on: 15.03.2016
-# Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
-# License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
+# (c) Roman Miroshnychenko, 2023
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, unicode_literals
 import json
+import logging
 from pprint import pformat
-from kodi_six import xbmc
-from . import logger
 
-__all__ = ['get_item_details', 'get_tvdb_id', 'get_movies', 'get_tvshows',
-           'get_episodes']
-
-# Starting from v.17.0 (Krypton), Kodi JSON-RPC API returns item's unique IDs
-# (IMDB ID, TheTVDB ID etc.) in "uniqueid" property. Old "imdbnumber" property
-# may contain incorrect data or be empty.
-HAS_UNIQUEID = xbmc.getInfoLabel('System.BuildVersion') >= '17.0'
+import xbmc
 
 
 class NoDataError(Exception):
@@ -36,9 +38,9 @@ def send_json_rpc(method, params=None):
     request = {'jsonrpc': '2.0', 'method': method, 'id': '1'}
     if params is not None:
         request['params'] = params
-    logger.log_debug('JSON-RPC request:\n{0}'.format(pformat(request)))
+    logging.debug('JSON-RPC request:\n%s', pformat(request))
     json_reply = json.loads(xbmc.executeJSONRPC(json.dumps(request)))
-    logger.log_debug('JSON-RPC reply:\n{0}'.format(pformat(json_reply)))
+    logging.debug('JSON-RPC reply:\n%s', pformat(json_reply))
     return json_reply['result']
 
 
@@ -53,11 +55,9 @@ def get_movies():
     :raises NoDataError: if the Kodi library has no movies
     """
     params = {
-        'properties': ['playcount', 'imdbnumber'],
+        'properties': ['playcount', 'imdbnumber', 'uniqueid'],
         'sort': {'order': 'ascending', 'method': 'label'}
     }
-    if HAS_UNIQUEID:
-        params['properties'].append('uniqueid')
     result = send_json_rpc('VideoLibrary.GetMovies', params)
     if not result.get('movies'):
         raise NoDataError
@@ -114,9 +114,7 @@ def get_tvdb_id(tvshowid):
     :return: TheTVDB ID
     :rtype: str
     """
-    params = {'tvshowid': tvshowid, 'properties': ['imdbnumber']}
-    if HAS_UNIQUEID:
-        params['properties'].append('uniqueid')
+    params = {'tvshowid': tvshowid, 'properties': ['imdbnumber', 'uniqueid']}
     result = send_json_rpc('VideoLibrary.GetTVShowDetails',
                            params)['tvshowdetails']
     tvdbid = None
@@ -135,9 +133,7 @@ def get_recent_movies():
     :rtype: list
     :raises NoDataError: if the Kodi library has no recent movies.
     """
-    params = {'properties': ['imdbnumber', 'playcount']}
-    if HAS_UNIQUEID:
-        params['properties'].append('uniqueid')
+    params = {'properties': ['imdbnumber', 'playcount', 'uniqueid']}
     result = send_json_rpc('VideoLibrary.GetRecentlyAddedMovies', params)
     if not result.get('movies'):
         raise NoDataError
@@ -176,7 +172,5 @@ def get_item_details(id_, type_):
         params['properties'].append('imdbnumber')
     else:
         method = 'VideoLibrary.GetEpisodeDetails'
-        params['properties'] += ['tvshowid', 'season', 'episode']
-    if HAS_UNIQUEID:
-        params['properties'].append('uniqueid')
+        params['properties'] += ['tvshowid', 'season', 'episode', 'uniqueid']
     return send_json_rpc(method, params)[type_ + 'details']

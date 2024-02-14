@@ -145,7 +145,7 @@ class DialogMovieInfo(DialogVideoInfo):
         author = self.FocusedItem(control_id).getProperty("author")
         text = "[B]%s[/B][CR]%s" % (author,
                                     self.FocusedItem(control_id).getProperty("content"))
-        xbmcgui.Dialog().textviewer(heading=addon.LANG(207),
+        xbmcgui.Dialog().textviewer(heading=addon.LANG(183),
                                     text=text)
 
     @ch.click(ID_LIST_KEYWORDS)

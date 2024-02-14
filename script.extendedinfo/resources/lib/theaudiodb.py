@@ -23,14 +23,14 @@ BASE_URL = 'https://www.theaudiodb.com/api/v1/json'
 PLUGIN_BASE = 'plugin://script.extendedinfo/?info='
 
 
-def _handle_albums(results):
-    """[summary]
+def _handle_albums(results:dict) -> ItemList:
+    """Creates an ItemList of kutils131 AudioItems
 
     Args:
-        results ([type]): [description]
+        results (dict): TADB album info
 
     Returns:
-        [type]: [description]
+        ItemList: kutils131 ItemList of AudioItems
     """
     albums = ItemList(content_type="albums")
     if not results.get('album'):
@@ -45,8 +45,7 @@ def _handle_albums(results):
         elif item.get('strDescription'):
             desc = item['strDescription']
         if item.get('strReview'):
-            desc += "[CR][CR][B]%s:[/B][CR][CR]%s" % (
-                addon.LANG(185), item['strReview'])
+            desc += f"[CR][CR][B]{addon.LANG(185)}:[/B][CR][CR]{item['strReview']}"
         album = AudioItem(label=item['strAlbum'],
                           path="")
         album.set_infos({'artist': item['strArtist'],
@@ -77,43 +76,67 @@ def _handle_albums(results):
 
 
 def _handle_tracks(results: dict) -> ItemList:
+    """Creates an ItemList of track AudioItems
+
+    Args:
+        results (dict): TADB tracks
+
+    Returns:
+        ItemList: The kutils131 itemlist of the tracts
+    """
     tracks = ItemList(content_type="songs")
     if not results.get('track'):
         return tracks
     for item in results['track']:
         youtube_id = utils.extract_youtube_id(item.get('strMusicVid', ''))
         track = AudioItem(label=item['strTrack'],
-                          path="%syoutubevideo&&id=%s" % (PLUGIN_BASE, youtube_id))
+                          path=f"{PLUGIN_BASE}youtubevideo&&id={youtube_id}")
         track.set_infos({'title': item['strTrack'],
                          'album': item['strAlbum'],
                          'artist': item['strArtist'],
                          'mediatype': "song"})
         track.set_properties({'mbid': item['strMusicBrainzID']})
         track.set_artwork(
-            {'thumb': "http://i.ytimg.com/vi/%s/0.jpg" % youtube_id})
+            {'thumb': f"http://i.ytimg.com/vi/{youtube_id}/0.jpg"})
         tracks.append(track)
     return tracks
 
 
-def _handle_musicvideos(results):
+def _handle_musicvideos(results:dict) -> ItemList:
+    """Creates an ItemList of TADB VideoItems 
+
+    Args:
+        results (dict): TADB musicvideos
+
+    Returns:
+        ItemList: the kutils131 ItemList of musicvideos
+    """
     mvids = ItemList(content_type="musicvideos")
     if not results.get('mvids'):
         return mvids
     for item in results['mvids']:
         youtube_id = utils.extract_youtube_id(item.get('strMusicVid', ''))
         mvid = VideoItem(label=item['strTrack'],
-                         path="%syoutubevideo&&id=%s" % (PLUGIN_BASE, youtube_id))
+                         path=f"{PLUGIN_BASE}youtubevideo&&id={youtube_id}")
         mvid.set_infos({'title': item['strTrack'],
                         'plot': item['strDescriptionEN'],
                         'mediatype': "musicvideo"})
         mvid.set_properties({'id': item['idTrack']})
         mvid.set_artwork(
-            {'thumb': "http://i.ytimg.com/vi/%s/0.jpg" % youtube_id})
+            {'thumb': f"http://i.ytimg.com/vi/{youtube_id}/0.jpg"})
         mvids.append(mvid)
     return mvids
 
 
 def extended_artist_info(results: dict) -> dict:
+    """Gets artist info from TADB and returns artist dict
+
+    Args:
+        results (dict): TADB artist info
+
+    Returns:
+        dict: artist details using Kodi properties keywords
+    """
     if not results.get('artists'):
         return {}
     local_bio = 'strBiography' + addon.setting("LanguageID").upper()
@@ -164,7 +187,7 @@ def get_artist_discography(search_str) -> ItemList:
         search_str (str): Artist name
 
     Returns:
-        [ItemList]: Kutils list instance of AudioItems
+        [ItemList]: kutils131 ItemList instance of AudioItems
     """
     if not search_str:
         return ItemList(content_type="albums")
@@ -214,7 +237,17 @@ def get_most_loved_tracks(search_str="", mbid="") -> ItemList | list:
     return _handle_tracks(results)
 
 
-def get_album_details(audiodb_id="", mbid=""):
+def get_album_details(audiodb_id="", mbid="") -> ItemList | list:
+    """Creates ItemList of TADB alubm detals
+
+    Args:
+        audiodb_id (str, optional): TADB album id "".
+        mbid (str, optional): mbid album groupd id Defaults to "".
+
+    Returns:
+        list: empty if no results
+        ItemList: kutils131 ItemList of album AudioItems
+    """
     if audiodb_id:
         url = 'album'
         params = {"m": audiodb_id}
@@ -227,7 +260,15 @@ def get_album_details(audiodb_id="", mbid=""):
     return _handle_albums(results)[0]
 
 
-def get_musicvideos(audiodb_id):
+def get_musicvideos(audiodb_id) -> ItemList:
+    """Creates ItemList of musicvideo Videoitems
+
+    Args:
+        audiodb_id (str): TADB id
+
+    Returns:
+        ItemList: kutils131 ItemList
+    """
     if not audiodb_id:
         return ItemList(content_type="musicvideos")
     params = {"i": audiodb_id}
@@ -265,7 +306,6 @@ def get_data(url: str, params: dict) -> dict:
     if tadb_key is None or tadb_key == '':
         tadb_key = AUDIO_DB_KEY #limited function key
     params: dict = {k: str(v) for k, v in params.items() if v}
-    url: str = "{0}/{1}/{2}.php?{3}".format(BASE_URL,
-                                            tadb_key, url, urllib.parse.urlencode(params))
+    url: str = f"{BASE_URL}/{tadb_key}/{url}.php?{urllib.parse.urlencode(params)}"
     return utils.get_JSON_response(url=url,
                                    folder="TheAudioDB")

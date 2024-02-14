@@ -24,7 +24,7 @@ def pass_list_to_skin(name: str, data, prefix: str = "", limit: int = False) -> 
         name (str): Type of data being returned derived from runscript info
             parameter.  Used to construct the skin window property key
             eg. topratedmovies from invocation parameter info=
-        data (kutils.itemlist.ItemList): collection of ListItems
+        data (kutils131.itemlist.ItemList): collection of ListItems
             (Video or Audio)
         prefix (str, optional):  Optional prefix for the name.  May be set
             as a param in runscript.  Defaults to "".

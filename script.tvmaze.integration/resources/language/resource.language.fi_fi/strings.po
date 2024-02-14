@@ -5,148 +5,159 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-07-07 18:14+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tvmaze-integration/fi_fi/>\n"
 "Language: fi_fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Summary"
+msgid "Integration between Kodi and TV Maze."
+msgstr "Yhdistä TV Maze -palvelu Kodiin."
+
+msgctxt "Addon Description"
+msgid "This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows."
+msgstr "Tämän avulla Kodin kirjastoon lisätyt sarjat voidaan merkitä TV Maze -palvelussa hankituiksi (tarvittaessa ne voidaan myös lisätä seurattuihin sarjoihin) ja katsotuiksi, kun ne katsellaan Kodissa. Sarjojen seurantaa ja tunnisteita voidaan muuttaa myös manuaalisesti."
 
 # Section Headings
 msgctxt "#32000"
 msgid "General"
-msgstr ""
+msgstr "Yleiset"
 
 msgctxt "#32001"
 msgid "Advanced"
-msgstr ""
+msgstr "Lisäasetukset"
 
 msgctxt "#32002"
 msgid "TV Maze action"
-msgstr ""
+msgstr "TV Maze -toiminto"
 
 # empty strings from id 32001 to 32099
 # Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Käytä vianselvityslokia"
 
 msgctxt "#32101"
 msgid "TV Maze User"
-msgstr ""
+msgstr "TV Maze -käyttäjä"
 
 msgctxt "#32102"
 msgid "TV Maze API Key"
-msgstr ""
+msgstr "TV Maze API-avain"
 
 msgctxt "#32103"
 msgid "Add new Kodi shows to followed list"
-msgstr ""
+msgstr "Lisää Kodin uudet sarjat seurantalistalle"
 
 msgctxt "#32104"
 msgid "Mark new Kodi episodes as acquired"
-msgstr ""
+msgstr "Merkitse Kodin uudet jaksot hankituiksi"
 
 msgctxt "#32105"
 msgid "Mark watched Kodi episodes as watched"
-msgstr ""
+msgstr "Merkitse Kodin katsotut jaksot katsotuiksi"
 
 msgctxt "#32106"
 msgid "Mark watched after"
-msgstr ""
+msgstr "Merkitse katsotuksi, kun on katsottu"
 
 msgctxt "#32107"
 msgid "Mark watched when removing from Kodi"
-msgstr ""
+msgstr "Merkitse katsotuksi, kun poistetaan Kodista"
 
 msgctxt "#32108"
 msgid "Hide context menu items"
-msgstr ""
+msgstr "Piilota sisältövalikon kohteet"
 
 # empty strings from id 32108 to 32199
 # Dialog Headings
 msgctxt "#32200"
 msgid "API Credentials Needed"
-msgstr ""
+msgstr "Tarvitaan API-tunnukset"
 
 msgctxt "#32201"
 msgid "Select action"
-msgstr ""
+msgstr "Valitse toiminto"
 
 msgctxt "#32202"
 msgid "Select shows to follow"
-msgstr ""
+msgstr "Valitse seurattavat sarjat"
 
 msgctxt "#32203"
 msgid "Select shows to unfollow"
-msgstr ""
+msgstr "Valitse sarjat, joiden seuranta lopetetaan"
 
 msgctxt "#32204"
 msgid "Select tag"
-msgstr ""
+msgstr "Valitse tunniste"
 
 msgctxt "#32205"
 msgid "Select shows to tag"
-msgstr ""
+msgstr "Valitse tunnisteilla merkittävät sarjat"
 
 msgctxt "#32206"
 msgid "Select shows to untag"
-msgstr ""
+msgstr "Valitse sarjat, joilta tunnisteet poistetaan"
 
 # empty strings from id 32207 to 32300
 # Dialog Messages
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
-msgstr ""
+msgstr "TV Maze API -tunnukset on ilmoitettava ennen jatkoa."
 
 msgctxt "#32302"
 msgid "Open settings"
-msgstr ""
+msgstr "Avaa asetukset"
 
 msgctxt "#32303"
 msgid "Select All (Click OK to reload list)"
-msgstr ""
+msgstr "Valitse kaikki (päivitä lista painamalla OK)"
 
 msgctxt "#32304"
 msgid "Deselect All (Click OK to reload list)"
-msgstr ""
+msgstr "Poista kaikkien valinnat (päivitä lista painamalla OK)"
 
 # empty strings from 32305 to 32400
 # Context Menu
 msgctxt "#32401"
 msgid "TV Maze"
-msgstr ""
+msgstr "TV Maze"
 
 msgctxt "#32402"
 msgid "Follow show"
-msgstr ""
+msgstr "Seuraa sarjaa"
 
 msgctxt "#32403"
 msgid "Unfollow show"
-msgstr ""
+msgstr "Lopeta sarjan seuranta"
 
 msgctxt "#32404"
 msgid "Tag show"
-msgstr ""
+msgstr "Merkitse sarja tunnisteella"
 
 msgctxt "#32405"
 msgid "Untag show"
-msgstr ""
+msgstr "Poista tunniste sarjalta"
 
 msgctxt "#32406"
 msgid "Mark episode acquired"
-msgstr ""
+msgstr "Merkitse jakso hankituksi"
 
 msgctxt "#32407"
 msgid "Mark episode watched"
-msgstr ""
+msgstr "Merkitse jakso katsotuksi"
 
 msgctxt "#32408"
 msgid "Mark episode skipped"
-msgstr ""
+msgstr "Merkitse jakso ohitetuksi"
 
 msgctxt "#32409"
 msgid "Unmark episode"
-msgstr ""
+msgstr "Poista jakson merkintä"

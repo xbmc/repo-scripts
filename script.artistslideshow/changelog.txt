@@ -1,7 +1,12 @@
+v.3.3.6
+- fix to allow blank as illegal replace character in Nexus
+- updated language files
+
 v.3.3.5
-- fix for AS not accepting images with uppercase extensions
+- fix for AS not accepting images with uppcase extensions
+
+v.3.3.4
 - removed Leia to Matrix transition code
-- updated translation files
 
 v.3.3.3
 - trim_cache now deletes information as well as images

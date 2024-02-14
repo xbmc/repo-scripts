@@ -63,3 +63,7 @@ msgstr "Endast delar med främmande språk"
 msgctxt "#32213"
 msgid "Machine Translated"
 msgstr "Maskinöversatt"
+
+msgctxt "#32214"
+msgid "Bad username. Make sure you have entered your username and not your email in the username field"
+msgstr "Felaktigt användarnamn. Kontrollera att du har angett ditt användarnamn och inte din e-postadress i fältet för användarnamn."

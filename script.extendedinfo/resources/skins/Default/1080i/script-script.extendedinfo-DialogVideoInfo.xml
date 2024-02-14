@@ -265,7 +265,7 @@
 								<radiowidth>44</radiowidth>
 								<radioheight>44</radioheight>
 								<selected>!String.IsEmpty(Window.Property(favorite))</selected>
-								<visible>!String.IsEmpty(Window.Property(tmdb_logged_in))</visible>
+								<visible>!String.IsEmpty(Window.Property(tmdb_logged_in)) + !String.IsEmpty(Window.Property(FavButton_Label))</visible>
 								<visible>!String.IsEqual(Window.Property(type),season) + !String.IsEqual(Window.Property(type),episode)</visible>
 							</control>
 							<control type="radiobutton" id="6005">

@@ -83,7 +83,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>WeatherTemp</font>
+				<font>font60</font>
 			</control>
 			<control type="label" id="30102">
 				<description>Colon</description>
@@ -97,7 +97,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>WeatherTemp</font>
+				<font>font60</font>
 				</control>
 			<control type="label" id="30103">
 				<description>Minute</description>
@@ -111,7 +111,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>WeatherTemp</font>
+				<font>font60</font>
 			</control>
 			<control type="label" id="30104">
 				<description>AMPM</description>
@@ -125,7 +125,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>font13_title</font>
+				<font>font12</font>
 			</control>			
 			<control type="label" id="30100">
 				<description>Date</description>
@@ -140,7 +140,7 @@
 				<aligny>center</aligny>
 				<scroll>true</scroll>
 				<label></label>
-				<font>font13_title</font>
+				<font>font12</font>
 			</control>	
 			<control type="label" id="30110">
 				<description>Information</description>
@@ -155,7 +155,7 @@
 				<aligny>center</aligny>
 				<scroll>true</scroll>
 				<label></label>
-				<font>font13_title</font>
+				<font>font12</font>
 			</control>				
 			<control type="label" id="30105">
 				<description>Hour color control</description>
@@ -233,7 +233,7 @@
 				<label></label>
 				<font>font14</font>
 				<visible>false</visible>
-			</control>				
+			</control>	
 		</control>
 	</controls>
 </window>

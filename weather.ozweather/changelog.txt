@@ -1,3 +1,6 @@
+2.1.1
+- Add Latitude and Longitude to Window data for skins that display 'season' using (arguably dubious) logic
+
 2.1.0
 - Fix light_rain icon & update BOM radar list
 

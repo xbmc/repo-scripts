@@ -242,8 +242,9 @@ class WindowManager:
         """opens the info dialog
 
         Args:
-            dialog (DialogActorInfo): a DialogActorinfo instance of a Kodi dialog
-            self.info is a kutils.VideoItem or AudioItem to display in dialog
+            dialog (DialogActorInfo | DialogMovieInfo | DialogTVShowInfo | DialogEpisodeInfo | DialogSeasonInfo):
+                a Dialog*Info instance of a Kodi dialog
+            dialog.info is a kutils131.VideoItem or AudioItem to display in dialog
         """
         if dialog.info:
             self.open_dialog(dialog)
@@ -255,7 +256,7 @@ class WindowManager:
         """Opens a Kodi dialog managing a stack of dialogs
 
         Args:
-            dialog (DialogActorInfo): a Kodi xml dialog window
+            dialog (DialogVideoList | DialogYoutubeList | Dialog*Info): a Kodi xml dialog window
         """
         if self.active_dialog:
             self.window_stack.append(self.active_dialog)
@@ -274,7 +275,12 @@ class WindowManager:
 #            addon.set_global("infobackground", self.saved_background)
 #            self.window_stack = []
 #            return None
-        if self.window_stack and not self.monitor.abortRequested():
+#
+#        if self.window_stack and not self.monitor.abortRequested():
+#
+        if self.window_stack:
+            while not self.monitor.abortRequested() and player.started and not player.stopped:
+                self.monitor.waitForAbort(2)
             self.active_dialog = self.window_stack.pop()
             xbmc.sleep(300)
             try:
