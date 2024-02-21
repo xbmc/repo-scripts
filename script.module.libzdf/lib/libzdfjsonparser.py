@@ -195,14 +195,14 @@ class parser:
 		self._grepActors(target)
 
 		if target['contentType'] == 'topic':
-			if target['hasVideo'] == False: return False
+			if target.get("hasVideo", False) == False: return False
 
 			self.d['params']['url'] = self.baseApi + target['self']+'&limit=100'
 			self.d['params']['mode'] = 'libZdfListPage'
 			self.d['type'] = 'dir'
 
 		elif target['contentType'] in ['brand','category','topic']:
-			if target['hasVideo'] == False: return False
+			if target.get("hasVideo", False) == False: return False
 
 			self.d['params']['url'] = self.baseApi + target['http://zdf.de/rels/search/page-video-counter-with-video']['self'].replace('&limit=0','&limit=100')
 			self.d['params']['mode'] = 'libZdfListPage'
