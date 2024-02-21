@@ -69,7 +69,7 @@ class lm4:
 					if 'aired' in metadata:
 						if 'ISO8601' in metadata['aired']:
 							if metadata['aired']['ISO8601'].endswith('Z'):
-								t = time.strptime(metadata['aired']['ISO8601'][:19],'%Y-%m-%dT%H:%M:%S')
+								t = time.strptime(metadata['aired']['ISO8601'],'%Y-%m-%dT%H:%M:%SZ')
 							else:
 								t = time.strptime(metadata['aired']['ISO8601'],'%Y-%m-%dT%H:%M:%S%z')
 							ilabels['aired'] = time.strftime('%Y-%m-%d',t)
