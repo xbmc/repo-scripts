@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.libzdf" name="libzdf" version="5.0.2" provider-name="sarbes">
+<addon id="script.module.libzdf" name="libzdf" version="5.0.3" provider-name="sarbes">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.libmediathek4" version="1.0.0"/>
