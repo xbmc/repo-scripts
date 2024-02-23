@@ -17,9 +17,17 @@ msgctxt "#32030"
 msgid "General"
 msgstr "Allgemein"
 
+msgctxt "#32031"
+msgid "Don't put display to sleep on audio playback"
+msgstr "Ruhezustand des Bildschirms bei Audiowiedergabe vermeiden"
+
 msgctxt "#32032"
 msgid "Prevent lock screen"
 msgstr "Verhindere Bildschirmsperre"
+
+msgctxt "#32033"
+msgid "Deactivate sleep display on audio playback"
+msgstr "Deaktiviere Ruhezustand des Bildschirms während der Audiowiedergabe"
 
 msgctxt "#32130"
 msgid "Put display only in fullscreen mode to sleep"
