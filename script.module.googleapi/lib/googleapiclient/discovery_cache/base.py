@@ -18,28 +18,29 @@ import abc
 
 
 class Cache(object):
-  """A base abstract cache class."""
-  __metaclass__ = abc.ABCMeta
+    """A base abstract cache class."""
 
-  @abc.abstractmethod
-  def get(self, url):
-    """Gets the content from the memcache with a given key.
+    __metaclass__ = abc.ABCMeta
 
-    Args:
-      url: string, the key for the cache.
+    @abc.abstractmethod
+    def get(self, url):
+        """Gets the content from the memcache with a given key.
 
-    Returns:
-      object, the value in the cache for the given key, or None if the key is
-      not in the cache.
-    """
-    raise NotImplementedError()
+        Args:
+          url: string, the key for the cache.
 
-  @abc.abstractmethod
-  def set(self, url, content):
-    """Sets the given key and content in the cache.
+        Returns:
+          object, the value in the cache for the given key, or None if the key is
+          not in the cache.
+        """
+        raise NotImplementedError()
 
-    Args:
-      url: string, the key for the cache.
-      content: string, the discovery document.
-    """
-    raise NotImplementedError()
+    @abc.abstractmethod
+    def set(self, url, content):
+        """Sets the given key and content in the cache.
+
+        Args:
+          url: string, the key for the cache.
+          content: string, the discovery document.
+        """
+        raise NotImplementedError()
