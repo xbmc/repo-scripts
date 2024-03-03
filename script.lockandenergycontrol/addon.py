@@ -6,13 +6,15 @@ import xbmcaddon
 
 class Monitor(xbmc.Monitor):
 
-    _powermanagement_displaysoff = 0
-    _disabled_powermanagement_displaysoff = False
-    _windows_unlock = False
 
     def __init__(self) -> None:
 
         super().__init__()
+        self._powermanagement_displaysoff = 0
+        self._disabled_powermanagement_displaysoff = False
+        self._windows_unlock = False
+        self._disable_displayoff_on_audio = False
+        self._player = xbmc.Player()
         self._update()
 
     def _update(self) -> None:
@@ -22,6 +24,7 @@ class Monitor(xbmc.Monitor):
         self._windows_unlock = addon.getSettingBool("windows_unlock")
         self._powermanagement_displaysoff = addon.getSettingInt(
             "powermanagement_displaysoff")
+        self._disable_displayoff_on_audio = addon.getSettingBool("audio_displaysoff")
         self.reset_powermanagement_displaysoff()
 
     def onSettingsChanged(self) -> None:
@@ -57,13 +60,22 @@ class Monitor(xbmc.Monitor):
 
     def _prevent_powermanagement_displaysoff(self) -> None:
 
-        is_fullscreen = xbmc.getCondVisibility("System.IsFullscreen")
-        if is_fullscreen and self._disabled_powermanagement_displaysoff:
+        fullscreen = xbmc.getCondVisibility("System.IsFullscreen")
+        audio = self._player.isPlayingAudio()
+
+        if self._disabled_powermanagement_displaysoff and ((fullscreen and not audio) \
+                or (not self._powermanagement_displaysoff and (not self._disable_displayoff_on_audio or not audio)) \
+                or (not self._powermanagement_displaysoff and not fullscreen and self._disable_displayoff_on_audio and not audio) \
+                or (not self._disable_displayoff_on_audio and fullscreen)):
             self.reset_powermanagement_displaysoff()
 
-        elif not is_fullscreen and not self._disabled_powermanagement_displaysoff:
+        elif not self._disabled_powermanagement_displaysoff and \
+                ((self._powermanagement_displaysoff and not fullscreen) \
+                or (self._disable_displayoff_on_audio and audio)):
             self._disabled_powermanagement_displaysoff = True
             self.set_powermanagement_displaysoff(0)
+
+
 
     def reset_powermanagement_displaysoff(self) -> None:
 
