@@ -334,7 +334,7 @@ class KodiCacheManager(object):
     readFactor = 4
     defRF = 4
     defRFSM = 20
-    recRFRange = (4, 10)
+    recRFRange = "4-10"
     template = None
     orig_tpl_path = os.path.join(ADDON.getAddonInfo('path'), "pm4k_cache_template.xml")
     custom_tpl_path = "special://profile/pm4k_cache_template.xml"
@@ -352,7 +352,10 @@ class KodiCacheManager(object):
             DEBUG_LOG("Not using advancedsettings.xml for cache/buffer management, we're at least Kodi 21 non-alpha")
             self.useModernAPI = True
             self.defRFSM = 7
-            self.recRFRange = (1.5, 4)
+            self.recRFRange = "1.5-4"
+
+            if KODI_BUILD_NUMBER >= 2090830:
+                self.recRFRange = ADDON.getLocalizedString(32976)
 
         else:
             self.load()
@@ -454,7 +457,11 @@ class KodiCacheManager(object):
 
     @property
     def readFactorOpts(self):
-        return list(sorted(list(set([1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7, 10, 15, 20, 30, 50] + [self.readFactor]))))
+        ret = list(sorted(list(set([1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7, 10, 15, 20, 30, 50] + [self.readFactor]))))
+        if KODI_BUILD_NUMBER >= 2090830 and self.readFactor > 0:
+            # support for adaptive read factor from build 2090822 onwards
+            ret.insert(0, 0)
+        return ret
 
     @property
     def free(self):

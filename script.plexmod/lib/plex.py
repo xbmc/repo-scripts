@@ -109,7 +109,7 @@ class PlexInterface(plexapp.AppInterface):
             maxVideoRes, maxVideoRes, maxVideoRes, maxVideoRes, maxVideoRes
         ],
         'transcodeVideoBitrates': [
-            "64", "96", "208", "320", "720", "1500", "2000", "3000", "4000", "8000", "10000", "12000", "20000", "400000"
+            "64", "96", "208", "320", "720", "1500", "2000", "3000", "4000", "8000", "10000", "12000", "20000", "0"
         ],
         'deviceInfo': plexapp.DeviceInfo()
     }
@@ -341,8 +341,8 @@ def init():
     util.DEBUG_LOG('Initializing...')
 
     with CallbackEvent(plexapp.util.APP, 'init'):
+        util.DEBUG_LOG('Waiting for plexapp initialization...')
         plexapp.init()
-        util.DEBUG_LOG('Waiting for account initialization...')
 
     util.DEBUG_LOG('Account initialized: {}'.format(plexapp.ACCOUNT.ID))
 
@@ -359,7 +359,7 @@ def init():
                 return False
 
             with CallbackEvent(plexapp.util.APP, 'account:response'):
-                plexapp.ACCOUNT.validateToken(token)
+                plexapp.ACCOUNT.validateToken(token, force_resource_refresh=True)
                 util.DEBUG_LOG('Waiting for account initialization...')
 
         # if not PLEX:

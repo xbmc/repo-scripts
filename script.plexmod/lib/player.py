@@ -4,6 +4,7 @@ import threading
 import six
 import re
 import os
+import random
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
@@ -1269,7 +1270,7 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
                 xbmc.executebuiltin('PlayerControl(RandomOff)')
         self.stopAndWait()
         self.ignoreStopEvents = False
-        self.sessionID = "PLS%s" % playlist.ratingKey
+        self.sessionID = "PLS%s" % getattr(playlist, "ratingKey", getattr(playlist, "id", random.randint(0, 1000)))
         self.play(plist, startpos=startpos, **kwargs)
 
     def createTrackListItem(self, track, fanart=None, index=0):

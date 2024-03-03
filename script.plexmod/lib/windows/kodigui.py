@@ -151,6 +151,18 @@ class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
     def onReInit(self):
         pass
 
+    def waitForOpen(self):
+        tries = 0
+        while not self.isOpen and not util.MONITOR.waitForAbort(2) and tries < 60:
+            if tries == 0:
+                util.LOG("Couldn't open window {}, other dialog open? Retrying for 120s.".format(self))
+            self.show()
+            tries += 1
+
+        util.DEBUG_LOG("Window {} opened: {}".format(self, self.isOpen))
+
+        return self.isOpen
+
     def setProperty(self, key, value):
         if self._closing:
             return
@@ -315,6 +327,14 @@ class DummyDataSource(object):
 
     def exists(self, *args, **kwargs):
         return False
+
+
+class EmptyDataSource(DummyDataSource):
+    def __getattr__(self, item):
+        return None
+
+    def __setattr__(self, key, value):
+        raise NotImplementedError
 
 
 DUMMY_DATA_SOURCE = DummyDataSource()

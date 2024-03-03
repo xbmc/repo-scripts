@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.plexmod"
        name="PM4K for Plex"
-       version="0.7.5"
+       version="0.7.6"
        provider-name="pannal">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
@@ -33,7 +33,7 @@
         <source>https://github.com/pannal/plex-for-kodi</source>
         <platform>all</platform>
         <news>
-- Based on 0.7.5-rev2
+- Based on 0.7.6-rev2
         </news>
         <assets>
             <icon>icon.png</icon>

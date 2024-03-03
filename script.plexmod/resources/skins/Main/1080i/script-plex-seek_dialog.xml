@@ -54,24 +54,28 @@
                     <visible>!String.IsEmpty(Window.Property(is.show))</visible>
                     <posx>60</posx>
                     <posy>0</posy>
-                    <width>1500</width>
+                    <width>1720</width>
                     <height>60</height>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
-                    <label>[B]$INFO[VideoPlayer.TVShowTitle][/B]$INFO[VideoPlayer.Title, &#8226; ]$INFO[VideoPlayer.Season, &#8226; Season ]$INFO[VideoPlayer.Episode, Episode ]</label>
+                    <scroll>true</scroll>
+                    <scrollspeed>15</scrollspeed>
+                    <label>[B]$INFO[VideoPlayer.TVShowTitle][/B]$INFO[VideoPlayer.Title, &#8226; ]$INFO[VideoPlayer.Season, &#8226; Season ]$INFO[VideoPlayer.Episode, Episode ]$INFO[Window.Property(ep.year), &#8226; ]</label>
                 </control>
                 <control type="label">
                     <visible>String.IsEmpty(Window.Property(is.show))</visible>
                     <posx>60</posx>
                     <posy>0</posy>
-                    <width>1500</width>
+                    <width>1720</width>
                     <height>60</height>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
+                    <scroll>true</scroll>
+                    <scrollspeed>15</scrollspeed>
                     <label>[B]$INFO[VideoPlayer.Title][/B]$INFO[VideoPlayer.Year, &#8226; ]</label>
                 </control>
                 <control type="label">
