@@ -94,9 +94,9 @@ QUERY_CREATE_SS_SQLITE = "CREATE TABLE IF NOT EXISTS tvshows (idShow INTEGER, ti
 QUERY_CREATE_MV_MYSQL = ("CREATE TABLE IF NOT EXISTS `movie_watched` ("
                          "`idMovieImdb` int unsigned NOT NULL,"
                          "`playCount` tinyint unsigned DEFAULT NULL,"
-                         "`lastChange` timestamp NULL DEFAULT NULL,"
-                         "`lastPlayed` timestamp NULL DEFAULT NULL,"
-                         "`title` text,"
+                         "`lastChange` datetime NULL DEFAULT NULL,"
+                         "`lastPlayed` datetime NULL DEFAULT NULL,"
+                         "`title` mediumtext,"
                          "PRIMARY KEY (`idMovieImdb`)"
                          ") ENGINE=InnoDB DEFAULT CHARSET=utf8;")
 QUERY_CREATE_EP_MYSQL = ("CREATE TABLE IF NOT EXISTS `episode_watched` ("
@@ -104,13 +104,13 @@ QUERY_CREATE_EP_MYSQL = ("CREATE TABLE IF NOT EXISTS `episode_watched` ("
                          "`season` smallint unsigned NOT NULL DEFAULT '0',"
                          "`episode` smallint unsigned NOT NULL DEFAULT '0',"
                          "`playCount` tinyint unsigned DEFAULT NULL,"
-                         "`lastChange` timestamp NULL DEFAULT NULL,"
-                         "`lastPlayed` timestamp NULL DEFAULT NULL,"
+                         "`lastChange` datetime NULL DEFAULT NULL,"
+                         "`lastPlayed` datetime NULL DEFAULT NULL,"
                          "PRIMARY KEY (`idShow`,`season`,`episode`)"
                          ") ENGINE=InnoDB DEFAULT CHARSET=utf8;")
 QUERY_CREATE_SS_MYSQL = ("CREATE TABLE IF NOT EXISTS `tvshows` ("
                          "`idShow` int unsigned NOT NULL,"
-                         "`title` text,"
+                         "`title` mediumtext,"
                          "PRIMARY KEY (`idShow`)"
                          ") ENGINE=InnoDB DEFAULT CHARSET=utf8;")
 
@@ -1415,6 +1415,11 @@ class WatchedList:
                     sql = QUERY_EP_UPDATE_SQLITE
                 else:  # mysql
                     sql = QUERY_EP_UPDATE_MYSQL
+                    # fix timestamp/timezone; from https://github.com/SchapplM/xbmc-addon-service-watchedlist/issues/28#issuecomment-1890145879
+                    if lastplayed_new == 0:
+                        lastplayed_new = 1
+                    if lastchange_new == 0:
+                        lastchange_new = 1
                 values = list([playcount_xbmc, lastplayed_new, lastchange_new, imdbId, season, episode])
             self.sqlcursor_wl.execute(sql, values)
             retval['num_update'] = self.sqlcursor_wl.rowcount
