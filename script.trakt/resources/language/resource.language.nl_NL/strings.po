@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-16 12:29+0000\n"
+"PO-Revision-Date: 2022-06-11 11:14+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Dutch <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-trakt/nl_nl/>\n"
 "Language: nl_NL\n"
@@ -15,23 +15,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.1\n"
+"X-Generator: Weblate 4.12.2\n"
 
 msgctxt "Addon Summary"
 msgid "TV and movie scrobbler for Trakt.tv"
 msgstr "TV- en films-scrobbler voor Trakt.tv"
 
 msgctxt "Addon Description"
-msgid "Automatically scrobble all TV episodes and movies you are watching to Trakt.tv! Keep a comprehensive history of everything you've watched and be part of a global community of TV and movie enthusiasts. Sign up for a free account at http://trakt.tv and get a ton of features:&#10;&#10;- Automatically scrobble what you're watching&#10;- Mobile apps for iPhone, iPad, Android, and Windows Phone&#10;- Share what you're watching (in real time) and rating to facebook and twitter&#10;- Personalized calendar so you never miss a TV show&#10;- Follow your friends and people you're interesed in&#10;- Use watchlists so you don't forget to what to watch&#10;- Track your media collections and impress your friends&#10;- Create custom lists around any topics you choose&#10;- Easily track your TV show progress across all seasons and episodes&#10;- Track your progress against industry lists such as the IMDb Top 250&#10;- Discover new shows and movies based on your viewing habits&#10;- Widgets for your forum signature&#10;&#10;What can this addon do?&#10;&#10;- Automatically scrobble all TV episodes and movies you are watching&#10;- Sync your TV episode and movie collections to Trakt (triggered after a library update)&#10;- Auto clean your Trakt collection so that it matches up with Kodi&#10;- Keep watched statuses synced between Kodi and Trakt&#10;- Rate movies and episode after watching them&#10;&#10;Special thanks to all who contributed to this plugin! Check the commit history and changelog to see these talented developers."
-msgstr "Scrobble automatisch alle TV afleveringen en films die je aan bekijken bent naar Trakt.tv! Hou een uitgebreide historie bij van alles wat je hebt bekeken en maak deel uit van een wereldwijde gemeenschap van TV- en filmliefhebbers. Schrijf je in voor een gratis account op http://trakt.tv en krijg een enorme hoeveelheid aan mogelijkheden:&#10;&#10;- Automatisch scrobblen wat je aan het bekijken bent&#10;- Mobiele apps voor iPhone, iPad, Android en Windows Phone&#10;- Deel wat je aan het bekijken ben (gelijktijdig) en stuur je waardering door naar Facebook en Twitter&#10;- Persoonlijke kalender zodat je nooit een TV aflevering mist&#10;- Volg je vrienden en mensen waarin je ben geïnteresseerd&#10;- Gebruik kijklijsten zodat je niets mist van wat je wilt kijken&#10;- Leg je eigen mediaverzameling aan en maak indruk op je vrienden&#10;- Maak aangepaste lijsten over onderwerpen die je zelf kiest&#10;- Volg het verloop van je tv serie voor alle seizoenen en afleveringen&#10;- Vergelijk je bekeken films en series met bekende lijsten zoals de IMDb Top 250&#10;- Ontdek nieuwe series en films gebaseerd op jouw kijk gewoonten&#10;- Widgets voor jouw forum handtekening&#10;&#10;Wat kan deze add-on doen?&#10;&#10;- Automatisch scrobblen van alle TV afleveringen en films die je aan het bekijken bent&#10;- Synchroniseer je TV afleveringen en film collecties naar Trakt (start na een bibliotheekupdate)&#10;- Automatisch opschonen van je Trakt collectie zodat deze overeenkomt met Kodi&#10;- Houdt de bekeken status gesynchroniseerd tussen Kodi en Trakt&#10;- Geef een cijfer aan films en afleveringen na ze te hebben bekeken&#10;&#10;Speciale dank aan allen die hebben meegeholpen met deze plugin! Bekijk de commentaar historie en wijzigingenlijst om deze getalenteerde ontwikkelaars te zien."
+msgid "Automatically scrobble all TV episodes and movies you are watching to Trakt.tv! Keep a comprehensive history of everything you've watched and be part of a global community of TV and movie enthusiasts. Sign up for a free account at http://trakt.tv and get a ton of features:[CR][CR]- Automatically scrobble what you're watching[CR]- Mobile apps for iPhone, iPad, Android, and Windows Phone[CR]- Share what you're watching (in real time) and rating to facebook and twitter[CR]- Personalized calendar so you never miss a TV show[CR]- Follow your friends and people you're interesed in[CR]- Use watchlists so you don't forget to what to watch[CR]- Track your media collections and impress your friends[CR]- Create custom lists around any topics you choose[CR]- Easily track your TV show progress across all seasons and episodes[CR]- Track your progress against industry lists such as the IMDb Top 250[CR]- Discover new shows and movies based on your viewing habits[CR]- Widgets for your forum signature[CR][CR]What can this addon do?[CR][CR]- Automatically scrobble all TV episodes and movies you are watching[CR]- Sync your TV episode and movie collections to Trakt (triggered after a library update)[CR]- Auto clean your Trakt collection so that it matches up with Kodi[CR]- Keep watched statuses synced between Kodi and Trakt[CR]- Rate movies and episode after watching them[CR][CR]Special thanks to all who contributed to this plugin! Check the commit history and changelog to see these talented developers."
+msgstr "Scrobble automatisch alle TV afleveringen en films die je aan bekijken bent naar Trakt.tv! Hou een uitgebreide historie bij van alles wat je hebt bekeken en maak deel uit van een wereldwijde gemeenschap van TV- en filmliefhebbers. Schrijf je in voor een gratis account op http://trakt.tv en krijg een enorme hoeveelheid aan mogelijkheden:[CR][CR]- Automatisch scrobblen wat je aan het bekijken bent[CR]- Mobiele apps voor iPhone, iPad, Android en Windows Phone[CR]- Deel wat je aan het bekijken ben (gelijktijdig) en stuur je waardering door naar Facebook en Twitter[CR]- Persoonlijke kalender zodat je nooit een TV aflevering mist[CR]- Volg je vrienden en mensen waarin je ben geïnteresseerd[CR]- Gebruik kijklijsten zodat je niets mist van wat je wilt kijken[CR]- Leg je eigen mediaverzameling aan en maak indruk op je vrienden[CR]- Maak aangepaste lijsten over onderwerpen die je zelf kiest[CR]- Volg het verloop van je tv serie voor alle seizoenen en afleveringen[CR]- Vergelijk je bekeken films en series met bekende lijsten zoals de IMDb Top 250[CR]- Ontdek nieuwe series en films gebaseerd op jouw kijk gewoonten[CR]- Widgets voor jouw forum handtekening[CR][CR]Wat kan deze add-on doen?[CR][CR]- Automatisch scrobblen van alle TV afleveringen en films die je aan het bekijken bent[CR]- Synchroniseer je TV afleveringen en film collecties naar Trakt (start na een bibliotheekupdate)[CR]- Automatisch opschonen van je Trakt collectie zodat deze overeenkomt met Kodi[CR]- Houdt de bekeken status gesynchroniseerd tussen Kodi en Trakt[CR]- Geef een cijfer aan films en afleveringen na ze te hebben bekeken[CR][CR]Speciale dank aan allen die hebben meegeholpen met deze plugin! Bekijk de commentaar historie en wijzigingenlijst om deze getalenteerde ontwikkelaars te zien."
 
 msgctxt "#32000"
 msgid "General"
 msgstr "Algemeen"
 
+# empty strings from id 32001 to 32002
 msgctxt "#32003"
-msgid "Startup Delay"
-msgstr "Startvertraging"
+msgid "Startup Delay (seconds)"
+msgstr "Opstart vertraging (seconden)"
 
 msgctxt "#32004"
 msgid "Rating"
@@ -721,6 +722,50 @@ msgstr ""
 msgctxt "#32186"
 msgid "Allow script exclusions"
 msgstr ""
+
+msgctxt "#32187"
+msgid "Override proxy"
+msgstr ""
+
+msgctxt "#42187"
+msgid "Always enable a proxy, regardless of the kodi configuration. The default value is from the kodi configuration, but can be overriden below. The trakt plugin currently only supports HTTP or HTTPS proxies where kodi also supports SOCKS proxies."
+msgstr ""
+
+msgctxt "#32188"
+msgid "Proxy URI"
+msgstr ""
+
+msgctxt "#42188"
+msgid "Location of the proxy server."
+msgstr ""
+
+msgctxt "#32189"
+msgid "Proxy port"
+msgstr ""
+
+msgctxt "#42189"
+msgid "Port of the proxy server."
+msgstr ""
+
+msgctxt "#32190"
+msgid "Username"
+msgstr ""
+
+msgctxt "#42190"
+msgid "Optional user name needed to authenticate with the proxy."
+msgstr ""
+
+msgctxt "#32191"
+msgid "Password"
+msgstr ""
+
+msgctxt "#42191"
+msgid "Optional password needed to authenticate with the proxy."
+msgstr ""
+
+#~ msgctxt "#32003"
+#~ msgid "Startup Delay"
+#~ msgstr "Startvertraging"
 
 #~ msgctxt "#32159"
 #~ msgid "Visit {0} or scan the QR Code below."
