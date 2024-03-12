@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.keymap" name="Keymap Editor" version="1.2.1" provider-name="takoi,pkscout">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.defusedxml" version="0.6.0+matrix.1" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<news>v.1.2.1
+- added video versions and video extras windows
+- replaced favourites (depreciated) with favouritesbrowser
+- updated translation files
+		</news>
+		<assets>
+        	<icon>icon.png</icon>
+        </assets>
+		<platform>all</platform>
+		<license>GPL-3.0-only</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=168767</forum>
+		<source>https://github.com/pkscout/script.keymap</source>
+		<summary lang="da_DK">Et redigeringsværktøj for keymap-filer</summary>
+		<summary lang="de_DE">Ein Editor für Keymap-Dateien</summary>
+		<summary lang="en_GB">An editor for keymap files</summary>
+		<summary lang="es_ES">Un editor de ficheros de mapas de teclas</summary>
+		<summary lang="et_EE">Nupuasetuse redaktor</summary>
+		<summary lang="fi_FI">Editori keymap-näppäinmääritystiedostoille</summary>
+		<summary lang="fr_FR">Un éditeur de fichiers de définition de clavier</summary>
+		<summary lang="hr_HR">Uređivač datoteka s rasporedom tipki</summary>
+		<summary lang="hu_HU">Távvezérlő fájlok kezelője</summary>
+		<summary lang="it_IT">Un editor per i file keymap</summary>
+		<summary lang="ko_KR">키맵 파일용 편집기</summary>
+		<summary lang="nl_NL">Een editor voor keymap-bestanden</summary>
+		<summary lang="ru_RU">Редактор файлов раскладки клавиатуры</summary>
+		<summary lang="sk_SK">Editor keymap súborov</summary>
+		<summary lang="zh_CN">一个键映射文件的编辑器</summary>
+		<description lang="da_DK">Keymap Editor er en GUI til konfiguration af mappinger for fjernbetjeninger, tastatur og andre input, der understøttes af Kodi. Bemærk: eksisterende brugerdefinerede nøglemappinger vil blive omdøbt til .bak.</description>
+		<description lang="de_DE">Keymap Editor ist eine grafische Oberfläche zum Konfigurieren von Tastenzuordnungen für Fernbedienungen, Tastaturen und anderen von Kodi unterstützten Eingabegeräten. Hinweis: Existierende benutzerdefinierte Tastenzuordnungen werden zu .bak umbenannt.</description>
+		<description lang="en_GB">Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak.</description>
+		<description lang="es_ES">Keymap Editor es una interfaz gráfica para configurar mapeados de teclas para mandos a distancia, teclados y otros métodos de entrada soportados por Kodi. Nota: Cualquier mapeado existente será renombrado por .bak.</description>
+		<description lang="et_EE">Keymap Editor vahend kaugjuhtimispultide, klaviatuuri ja muude Kodi toetatavate sisendite nupuasetuste seadistamiseks. Märkus. Olemasolevad kasutaja määratletud nupuasetused salvestatakse faili .bak.</description>
+		<description lang="fi_FI">Keymap-näppäinmäärityseditori on graafinen käyttöliittymä kaukosäätimien, näppäimistöjen ja muiden Kodin tukemien syöttölaitteiden näppäinten määritykseen. Huomioi: Käyttäjän aiempien näppäinmääritystiedostojen nimiin lisätään .bak-pääte.</description>
+		<description lang="fr_FR">Keymap Editor est une interface graphique permettant de configurer les correspondances de touches pour les télécommandes, les claviers et les autres entrées prises en charge par Kodi. Remarque : les correspondances de touches existantes définies par l&apos;utilisateur seront renommées en .bak.</description>
+		<description lang="hr_HR">Uređivač datoteka s rasporedom tipki je grafičko sučelje za podešavanje mapiranja za daljinske upravljače, tipkovnice i ostale ulazne uređaje podržane Kodijem. Napomena: Postojeće korisnički određeno mapiranje će biti preimenovano u .bak.</description>
+		<description lang="hu_HU">A Keymap Editor egy grafikus felhasználói felület a távvezérlők, a billentyűzet és a Kodi által támogatott egyéb bemenetek konfigurálásához. Megjegyzés: a meglévő, felhasználó által definiált keymap fájlok át lesznek nevezve .bak -ra.</description>
+		<description lang="it_IT">Keymap Editor è una GUI per la configurazione di mappature per telecomandi, tastiere e altri input supportati da Kodi. Nota: le mappature delle chiavi definite dall&apos;utente esistenti verranno rinominate in .bak.</description>
+		<description lang="ko_KR">키맵 편집기는 Kodi에서 지원하는 리모컨, 키보드 및 기타 입력에 대한 매핑을 구성하기 위한 GUI입니다. 참고: 기존 사용자 정의 키 매핑은 .bak으로 이름이 바뀝니다.</description>
+		<description lang="nl_NL">Keymap Editor is een GUI voor het configureren van toewijzingen voor afstandsbedieningen, toetsenbord en andere invoer die door Kodi wordt ondersteund. Opmerking: bestaande door de gebruiker gedefinieerde toetstoewijzingen worden hernoemd naar .bak.</description>
+		<description lang="ru_RU">Keymap Editor - это графический интерфейс для настройки привязки клавиш пультов, клавиатуры и других устройств ввода, поддерживаемых Kodi. Примечание: существующие пользовательские привязки клавиш будут переименованы в .bak.</description>
+		<description lang="sk_SK">Keymap Editor je grafický nástroj na nastavovanie mapovania tlačidiel diaľkových ovládačov, klávesníc a iných vstupných zariadení podporovaných Kodi. Poznámka: k existujúcim používateľom definovaným mapovaniam bude pridaná prípona .bak.</description>
+		<description lang="zh_CN">键映射编辑器是一个用于配置 Kodi 支持的遥控器、键盘和其他输入设备的功能映射的图形界面。注意：现有的用户定义键映射将重命名为.bak。</description>
+	</extension>
+</addon>

@@ -1,0 +1,1288 @@
+# Kodi Media Center language file
+# Addon Name: Keymap Editor
+# Addon id: script.keymap
+# Addon Provider: takoi|pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-15 10:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/hr_hr/>\n"
+"Language: hr_hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
+
+msgctxt "Addon Summary"
+msgid "An editor for keymap files"
+msgstr "Uređivač datoteka s rasporedom tipki"
+
+msgctxt "Addon Description"
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgstr "Uređivač datoteka s rasporedom tipki je grafičko sučelje za podešavanje mapiranja za daljinske upravljače, tipkovnice i ostale ulazne uređaje podržane Kodijem. Napomena: Postojeće korisnički određeno mapiranje će biti preimenovano u .bak."
+
+# Text Messages
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr "Uređivač rasporeda tipki"
+
+msgctxt "#30001"
+msgid "Failed to remove old keymap file"
+msgstr "Neuspjelo uklanjanje stare datoteke rasporeda tipki"
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr "Pritisni tipku koju želite dodijeliti odmah"
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr "Uredi"
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr "Vrati izvorno"
+
+msgctxt "#30005"
+msgid "Save"
+msgstr "Spremi"
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr "Odbaci promjene?"
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr "Odaberi prozor za upravljanje prečacima"
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr "Odaberi kategoriju radnje"
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr "Odaberi radnju za dodjeljivanje tipke"
+
+msgctxt "#30010"
+msgid "Timeout in %.0f seconds..."
+msgstr "Vrijeme isteka za %.0f sekundi..."
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr "Uredi tipku"
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr "Ukloni"
+
+# empty strings from id 30013 to 30099
+# Window names
+msgctxt "#30100"
+msgid "Global"
+msgstr "Globalno"
+
+msgctxt "#30101"
+msgid "Fullscreen Video"
+msgstr "Cjelozaslonski video"
+
+msgctxt "#30102"
+msgid "Fullscreen Live TV"
+msgstr "Cjelozaslonski TV uživo"
+
+msgctxt "#30103"
+msgid "Fullscreen Radio"
+msgstr "Cjelozaslonski Radio"
+
+msgctxt "#30104"
+msgid "Fullscreen Game"
+msgstr "Cjelozaslonska igra"
+
+msgctxt "#30105"
+msgid "Home"
+msgstr "Početno"
+
+msgctxt "#30106"
+msgid "Programs"
+msgstr "Programi"
+
+msgctxt "#30107"
+msgid "Videos"
+msgstr "Videi"
+
+msgctxt "#30108"
+msgid "Music"
+msgstr "Glazba"
+
+msgctxt "#30109"
+msgid "Pictures"
+msgstr "Slike"
+
+msgctxt "#30110"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#30111"
+msgid "Filemanager"
+msgstr "Upravitelj datoteka"
+
+msgctxt "#30112"
+msgid "Virtual Keyboard"
+msgstr "Virtualna tipkovnica"
+
+msgctxt "#30113"
+msgid "Player Controls"
+msgstr "Upravljanja reproduktora"
+
+msgctxt "#30114"
+msgid "Seek bar"
+msgstr "Traka premotavanja"
+
+msgctxt "#30115"
+msgid "Music OSD"
+msgstr "Glazbeni OSD"
+
+msgctxt "#30116"
+msgid "Video OSD Settings"
+msgstr "Video OSD postavke"
+
+msgctxt "#30117"
+msgid "Audio OSD Settings"
+msgstr "Zvučne OSD postavke"
+
+msgctxt "#30118"
+msgid "Visualisation"
+msgstr "Vizualizacija"
+
+msgctxt "#30119"
+msgid "Slideshow"
+msgstr "Prezentacija"
+
+# empty strings from id 30120 to 30199
+# Navigation
+msgctxt "#30200"
+msgid "Move Left"
+msgstr "Pomakni lijevo"
+
+msgctxt "#30201"
+msgid "Move Right"
+msgstr "Pomakni desno"
+
+msgctxt "#30202"
+msgid "Move Up"
+msgstr "Pomakni gore"
+
+msgctxt "#30203"
+msgid "Move Down"
+msgstr "Pomakni gore"
+
+msgctxt "#30204"
+msgid "Page Up"
+msgstr "Stranica gore"
+
+msgctxt "#30205"
+msgid "Page Down"
+msgstr "Stranica dolje"
+
+msgctxt "#30206"
+msgid "Select Item"
+msgstr "Odaberi stavku"
+
+msgctxt "#30207"
+msgid "Highlight Item"
+msgstr "Istakni stavku"
+
+msgctxt "#30208"
+msgid "Parent Directory"
+msgstr "Sadržani direktorij"
+
+msgctxt "#30209"
+msgid "Back"
+msgstr "Natrag"
+
+msgctxt "#30210"
+msgid "Previous Menu"
+msgstr "Prijašnji izbornik"
+
+msgctxt "#30211"
+msgid "Show Info"
+msgstr "Prikaži informacije"
+
+msgctxt "#30212"
+msgid "Context Menu"
+msgstr "Sadržajni izbornik"
+
+msgctxt "#30213"
+msgid "Menu"
+msgstr "Izbornik"
+
+msgctxt "#30214"
+msgid "First Page"
+msgstr "Prva stranica"
+
+msgctxt "#30215"
+msgid "Last Page"
+msgstr "Posljednja stranica"
+
+msgctxt "#30216"
+msgid "Next Letter"
+msgstr "Sljedeće slovo"
+
+msgctxt "#30217"
+msgid "Previous Letter"
+msgstr "Prijašnje slovo"
+
+msgctxt "#30218"
+msgid "Scroll Up"
+msgstr "Pomakni gore"
+
+msgctxt "#30219"
+msgid "Scroll Down"
+msgstr "Pomakni dolje"
+
+msgctxt "#30220"
+msgid "Cursor Left"
+msgstr "Pokazivač lijevo"
+
+msgctxt "#30221"
+msgid "Cursor Right"
+msgstr "Pokazivač desno"
+
+# empty strings from id 30222 to 30299
+# Playback
+msgctxt "#30300"
+msgid "Play"
+msgstr "Reproduciraj"
+
+msgctxt "#30301"
+msgid "Pause"
+msgstr "Pauziraj"
+
+msgctxt "#30302"
+msgid "Play/Pause"
+msgstr "Reprodukcija/Pauza"
+
+msgctxt "#30303"
+msgid "Stop"
+msgstr "Zaustavi"
+
+msgctxt "#30304"
+msgid "Next"
+msgstr "Sljedeće"
+
+msgctxt "#30305"
+msgid "Previous"
+msgstr "Prijašnje"
+
+msgctxt "#30306"
+msgid "Fast Forward"
+msgstr "Brzo premotavanje unaprijed"
+
+msgctxt "#30307"
+msgid "Rewind"
+msgstr "Premotavanje unatrag"
+
+msgctxt "#30308"
+msgid "Small Step Back"
+msgstr "Mali korak natrag"
+
+msgctxt "#30309"
+msgid "Step Forward"
+msgstr "Korak unaprijed"
+
+msgctxt "#30310"
+msgid "Step Back"
+msgstr "Korak unatrag"
+
+msgctxt "#30311"
+msgid "Big Step Forward"
+msgstr "Velik korak unaprijed"
+
+msgctxt "#30312"
+msgid "Big Step Back"
+msgstr "Velik korak unatrag"
+
+msgctxt "#30313"
+msgid "Next Chapter or Big Step Forward"
+msgstr "Sljedeće poglavlje ili Velik korak unaprijed"
+
+msgctxt "#30314"
+msgid "Previous Chapter or Big Step Back"
+msgstr "Prijašnje poglavlje ili Velik korak unatrag"
+
+msgctxt "#30315"
+msgid "Show OSD"
+msgstr "Prikaži OSD"
+
+msgctxt "#30316"
+msgid "Show current play time"
+msgstr "Prikaži trenutno vrijeme repodukcije"
+
+msgctxt "#30317"
+msgid "Show Playlist"
+msgstr "Prikaži popis izvođenja"
+
+msgctxt "#30318"
+msgid "Toggle Fullscreen"
+msgstr "Uklj/Isklj cjelozaslonski prikaz"
+
+msgctxt "#30319"
+msgid "Change Aspect Ratio"
+msgstr "Promijeni omjer slike"
+
+msgctxt "#30320"
+msgid "Go to DVD Video Menu"
+msgstr "Idi u DVD Video izbornik"
+
+msgctxt "#30321"
+msgid "Toggle Repeat"
+msgstr "Uklj/Isklj ponavljanje"
+
+msgctxt "#30322"
+msgid "Repeat One"
+msgstr "Ponovi jednom"
+
+msgctxt "#30323"
+msgid "Repeat All"
+msgstr "Ponovi sve"
+
+msgctxt "#30324"
+msgid "Repeat Off"
+msgstr "Isključi ponavljanje"
+
+msgctxt "#30325"
+msgid "Toggle Random"
+msgstr "Uklj/Isklj naizmjenično"
+
+msgctxt "#30326"
+msgid "Random On"
+msgstr "Naizmjenično uključeno"
+
+msgctxt "#30327"
+msgid "Random Off"
+msgstr "Naizmjenično isključeno"
+
+msgctxt "#30328"
+msgid "Playback Speed Faster"
+msgstr "Brža brzina reprodukcije"
+
+msgctxt "#30329"
+msgid "Playback Speed Slower"
+msgstr "Sporija brzina reprodukcije"
+
+msgctxt "#30330"
+msgid "Create Bookmark"
+msgstr "Stvori zabilješku"
+
+msgctxt "#30331"
+msgid "Create Episode Bookmark"
+msgstr "Stvori zabilješku epizode"
+
+msgctxt "#30332"
+msgid "Toggle 3D/Stereoscopic mode"
+msgstr "Uklj/Isklj 3D/Stereoscopic način"
+
+msgctxt "#30333"
+msgid "Switch Player"
+msgstr "Zamijni reproduktor"
+
+msgctxt "#30334"
+msgid "Play Next"
+msgstr "Reproduciraj sljedeće"
+
+msgctxt "#30335"
+msgid "Select Program"
+msgstr "Odaberi program"
+
+msgctxt "#30336"
+msgid "Select Resolution"
+msgstr "Odaberi razlučivost"
+
+msgctxt "#30337"
+msgid "Shift Video Up"
+msgstr "Pomakni video gore"
+
+msgctxt "#30338"
+msgid "Shift Video Down"
+msgstr "Pomakni video dolje"
+
+msgctxt "#30339"
+msgid "Show Time"
+msgstr "Prikaži vrijeme"
+
+msgctxt "#30340"
+msgid "Next Scene"
+msgstr "Sljedeća scena"
+
+msgctxt "#30341"
+msgid "Previous Scene"
+msgstr "Prijašnja scena"
+
+msgctxt "#30342"
+msgid "Next Video Stream"
+msgstr "Sljedeće video strujanje"
+
+msgctxt "#30343"
+msgid "Toggle HDHR"
+msgstr "Uklj/Isklj HDHR"
+
+msgctxt "#30344"
+msgid "Cycle 3D Mode"
+msgstr "Kruži 3D načinom"
+
+msgctxt "#30345"
+msgid "Next 3D Mode"
+msgstr "Sljedeći 3D način"
+
+msgctxt "#30346"
+msgid "Previous 3D Mode"
+msgstr "Prijašnji 3D način"
+
+msgctxt "#30347"
+msgid "3D Mono"
+msgstr "3D Mono"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr "Ubrzaj tempo"
+
+msgctxt "#30349"
+msgid "Tempo Down"
+msgstr "Smanji tempo"
+
+# empty strings from id 30348 to 30399
+# Audio
+msgctxt "#30400"
+msgid "Mute"
+msgstr "Utišaj"
+
+msgctxt "#30401"
+msgid "Volume Up"
+msgstr "Pojačaj glasnoću zvuka"
+
+msgctxt "#30402"
+msgid "Volume Down"
+msgstr "Smanji glasnoću zvuka"
+
+msgctxt "#30403"
+msgid "Next Language"
+msgstr "Sljedeći jezik"
+
+msgctxt "#30404"
+msgid "Delay"
+msgstr "Odgoda"
+
+msgctxt "#30405"
+msgid "Delay Minus"
+msgstr "Odgoda minus"
+
+msgctxt "#30406"
+msgid "Delay Plus"
+msgstr "Odgoda plus"
+
+msgctxt "#30407"
+msgid "Toggle Digital/Analog"
+msgstr "Uklj/Isklj Digitalno/Analogno"
+
+msgctxt "#30408"
+msgid "Volume Amp Up"
+msgstr "Pojačaj pojačanje glasnoće zvuka"
+
+msgctxt "#30409"
+msgid "Volume Amp Down"
+msgstr "Smanji pojačanje glasnoće zvuka"
+
+msgctxt "#30410"
+msgid "Volume Amplification"
+msgstr "Pojačanje glasnoće zvuka"
+
+# empty strings from id 30411 to 30499
+# Pictures
+msgctxt "#30500"
+msgid "Next Picture"
+msgstr "Sljedeća slika"
+
+msgctxt "#30501"
+msgid "Previous Picture"
+msgstr "Prijašnja slika"
+
+msgctxt "#30502"
+msgid "Rotate Picture"
+msgstr "Zakreni sliku"
+
+msgctxt "#30503"
+msgid "Rotate Picture CCW"
+msgstr "Zakreni sliku CCW"
+
+msgctxt "#30504"
+msgid "Zoom Out"
+msgstr "Umanji"
+
+msgctxt "#30505"
+msgid "Zoom In "
+msgstr "Uvećaj "
+
+msgctxt "#30506"
+msgid "Zoom level Normal"
+msgstr "Razina uvećanja normalna"
+
+msgctxt "#30507"
+msgid "Zoom level 1"
+msgstr "Razina uvećanja 1"
+
+msgctxt "#30508"
+msgid "Zoom level 2"
+msgstr "Razina uvećanja 2"
+
+msgctxt "#30509"
+msgid "Zoom level 3"
+msgstr "Razina uvećanja 3"
+
+msgctxt "#30510"
+msgid "Zoom level 4"
+msgstr "Razina uvećanja 4"
+
+msgctxt "#30511"
+msgid "Zoom level 5"
+msgstr "Razina uvećanja 5"
+
+msgctxt "#30512"
+msgid "Zoom level 6"
+msgstr "Razina uvećanja 6"
+
+msgctxt "#30513"
+msgid "Zoom level 7"
+msgstr "Razina uvećanja 7"
+
+msgctxt "#30514"
+msgid "Zoom level 8"
+msgstr "Razina uvećanja 8"
+
+msgctxt "#30515"
+msgid "Zoom level 9"
+msgstr "Razina uvećanja 9"
+
+# empty strings from id 30516 to 30599
+# Subtitle
+msgctxt "#30600"
+msgid "Show Subtitles"
+msgstr "Prikaži podnaslove"
+
+msgctxt "#30601"
+msgid "Next Subtitle"
+msgstr "Sljedeći podnaslov"
+
+msgctxt "#30602"
+msgid "Browse Subtitle"
+msgstr "Potraži podnaslov"
+
+msgctxt "#30603"
+msgid "Cycle Subtitle"
+msgstr "Kruži podnaslov"
+
+msgctxt "#30604"
+msgid "Delay"
+msgstr "Odgoda"
+
+msgctxt "#30605"
+msgid "Delay Minus"
+msgstr "Odgoda minus"
+
+msgctxt "#30606"
+msgid "Delay Plus"
+msgstr "Odgoda plus"
+
+msgctxt "#30607"
+msgid "Align"
+msgstr "Poravnanje"
+
+msgctxt "#30608"
+msgid "Shift Subtitle Up"
+msgstr "Pomakni podnaslov gore"
+
+msgctxt "#30609"
+msgid "Shift Subtitle Down"
+msgstr "Pomakni podnaslov dolje"
+
+# empty strings from id 30610 to 30699
+# PVR
+msgctxt "#30700"
+msgid "Channel Up"
+msgstr "Sljedeći program"
+
+msgctxt "#30701"
+msgid "Channel Down"
+msgstr "Prijašnji program"
+
+msgctxt "#30702"
+msgid "Previous channel group"
+msgstr "Prijašnja grupa programa"
+
+msgctxt "#30703"
+msgid "Next channel group"
+msgstr "Sljedeća grupa programa"
+
+msgctxt "#30704"
+msgid "PVR Play"
+msgstr "PVR reprodukcija"
+
+msgctxt "#30705"
+msgid "PVR Play TV"
+msgstr "PVR TV reprodukcija"
+
+msgctxt "#30706"
+msgid "PVR Play Radio"
+msgstr "PVR Radio reprodukcija"
+
+msgctxt "#30707"
+msgid "Record"
+msgstr "Snimi"
+
+msgctxt "#30708"
+msgid "Toggle Commskip"
+msgstr "Uklj/Isklj preskakanje reklama"
+
+msgctxt "#30709"
+msgid "PVR Show Timer Rule"
+msgstr "PVR prikaži pravila zakazanih snimanja"
+
+msgctxt "#30710"
+msgid "Channel Number Separator"
+msgstr "Razdjelink broja programa"
+
+# empty strings from id 30711 to 30799
+# Item Actions
+msgctxt "#30800"
+msgid "Queue item"
+msgstr "Stavka na čekanju"
+
+msgctxt "#30801"
+msgid "Delete item"
+msgstr "Obriši stavku"
+
+msgctxt "#30802"
+msgid "Copy item"
+msgstr "Kopiraj stavku"
+
+msgctxt "#30803"
+msgid "Move item"
+msgstr "Pomakni stavku"
+
+msgctxt "#30804"
+msgid "Move item up"
+msgstr "Pomakni stavku gore"
+
+msgctxt "#30805"
+msgid "Move item down"
+msgstr "Pomakni stavku dolje"
+
+msgctxt "#30806"
+msgid "Rename item"
+msgstr "Preimenuj stavku"
+
+msgctxt "#30807"
+msgid "Scan item"
+msgstr "Pretraži stavku"
+
+msgctxt "#30808"
+msgid "Toggle Watched"
+msgstr "Uklj/Isklj gledano"
+
+msgctxt "#30809"
+msgid "Increase Rating"
+msgstr "Povećaj ocjenu"
+
+msgctxt "#30810"
+msgid "Decrease Rating"
+msgstr "Smanji ocjenu"
+
+msgctxt "#30811"
+msgid "Set Rating"
+msgstr "Postavi ocjenu"
+
+# empty strings from id 30812 to 30899
+# System
+msgctxt "#30900"
+msgid "Toggle Fullscreen"
+msgstr "Uklj/Isklj cjelozaslonski prikaz"
+
+msgctxt "#30901"
+msgid "Minimise"
+msgstr "Smanji"
+
+msgctxt "#30902"
+msgid "Shutdown"
+msgstr "Isključi"
+
+msgctxt "#30903"
+msgid "Reboot"
+msgstr "Ponovno pokreni"
+
+msgctxt "#30904"
+msgid "Hibernate"
+msgstr "Hiberniraj"
+
+msgctxt "#30905"
+msgid "Suspend"
+msgstr "Suspendiraj"
+
+msgctxt "#30906"
+msgid "Restart Kodi"
+msgstr "Ponovno pokreni Kodi"
+
+msgctxt "#30907"
+msgid "Log off"
+msgstr "Odjava"
+
+msgctxt "#30908"
+msgid "Quit Kodi"
+msgstr "Zatvori Kodi"
+
+msgctxt "#30909"
+msgid "Reset Settings"
+msgstr "Vrati izvorne postavke"
+
+msgctxt "#30910"
+msgid "Change Settings Level"
+msgstr "Promijeni razinu postavki"
+
+msgctxt "#30911"
+msgid "Toggle Font"
+msgstr "Uklj/Isklj slovo"
+
+# empty strings from id 30912 to 30999
+# Virtual Keyboard
+msgctxt "#31000"
+msgid "Enter"
+msgstr "Enter"
+
+msgctxt "#31001"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#31002"
+msgid "Symbols"
+msgstr "Simboli"
+
+msgctxt "#31003"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#31004"
+msgid "0"
+msgstr "0"
+
+msgctxt "#31005"
+msgid "1"
+msgstr "1"
+
+msgctxt "#31006"
+msgid "2"
+msgstr "2"
+
+msgctxt "#31007"
+msgid "3"
+msgstr "3"
+
+msgctxt "#31008"
+msgid "4"
+msgstr "4"
+
+msgctxt "#31009"
+msgid "5"
+msgstr "5"
+
+msgctxt "#31010"
+msgid "6"
+msgstr "6"
+
+msgctxt "#31011"
+msgid "7"
+msgstr "7"
+
+msgctxt "#31012"
+msgid "8"
+msgstr "8"
+
+msgctxt "#31013"
+msgid "9"
+msgstr "9"
+
+msgctxt "#31014"
+msgid "Teletext Red"
+msgstr "Teletekst crveno"
+
+msgctxt "#31015"
+msgid "Teletext Green"
+msgstr "Teletekst zeleno"
+
+msgctxt "#31016"
+msgid "Teletext Yellow"
+msgstr "Teletekst žuto"
+
+msgctxt "#31017"
+msgid "Teletext Blue"
+msgstr "Teletekst plavo"
+
+# empty strings from id 31018 to 31099
+# Other
+msgctxt "#31100"
+msgid "Update Video Library"
+msgstr "Nadopuni videoteku"
+
+msgctxt "#31101"
+msgid "Update Music Library"
+msgstr "Nadopuni fonoteku"
+
+msgctxt "#31102"
+msgid "Clean Video Library"
+msgstr "Očisti videoteku"
+
+msgctxt "#31103"
+msgid "Clean Music Library"
+msgstr "Očisti fonoteku"
+
+msgctxt "#31104"
+msgid "Player Process Info"
+msgstr "Informacije procesa reproduktora"
+
+msgctxt "#31105"
+msgid "Player debug"
+msgstr "Otklanjanje grešaka reporduktora"
+
+msgctxt "#31106"
+msgid "Take screenshot"
+msgstr "Uslikaj"
+
+msgctxt "#31107"
+msgid "Reload Keymaps"
+msgstr "Ponovno učitaj raspored tipki"
+
+msgctxt "#31108"
+msgid "Increase PAR"
+msgstr "Povećaj PAR"
+
+msgctxt "#31109"
+msgid "Decrease PAR"
+msgstr "Smanji PAR"
+
+msgctxt "#31110"
+msgid "Change resolution"
+msgstr "Promijeni razlučivost"
+
+msgctxt "#31111"
+msgid "Next calibration"
+msgstr "Sljedeća kalibracija"
+
+msgctxt "#31112"
+msgid "Reset calibration"
+msgstr "Izvorna kalibracija"
+
+msgctxt "#31113"
+msgid "Show current visualisation preset"
+msgstr "Prikaži predložak trenutne vizualizacije"
+
+msgctxt "#31114"
+msgid "Show visualisation preset list"
+msgstr "Prikaži popis predložaka vizualizacije"
+
+msgctxt "#31115"
+msgid "Next visualisation preset"
+msgstr "Sljedeći predložak vizualizacije"
+
+msgctxt "#31116"
+msgid "Previous visualisation preset"
+msgstr "Prijašnji predložak vizualizacije"
+
+msgctxt "#31117"
+msgid "Lock current visualisation preset"
+msgstr "Zaključaj trenutni predložak vizualizacije"
+
+msgctxt "#31118"
+msgid "Switch to a new random preset"
+msgstr "Prebaci na novi naizmjenični predložak"
+
+# empty strings from id 31119 to 31199
+# Activate Window
+msgctxt "#31200"
+msgid "Settings"
+msgstr "Postavke"
+
+msgctxt "#31201"
+msgid "Player Settings"
+msgstr "Postavke reproduktora"
+
+msgctxt "#31202"
+msgid "Programs Settings"
+msgstr "Postavke programa"
+
+msgctxt "#31203"
+msgid "Information Provider Settings"
+msgstr "Postavke pružatelja usluge"
+
+msgctxt "#31204"
+msgid "Interface Settings"
+msgstr "Postavke sučelja"
+
+msgctxt "#31205"
+msgid "System Settings"
+msgstr "Postavke sustava"
+
+msgctxt "#31206"
+msgid "Media Settings"
+msgstr "Postavke medija"
+
+msgctxt "#31207"
+msgid "Service Settings"
+msgstr "Postavke usluge"
+
+msgctxt "#31208"
+msgid "Appearance Settings"
+msgstr "Postavke izgleda"
+
+msgctxt "#31209"
+msgid "Peripherals Settings"
+msgstr "Postavke periferije"
+
+msgctxt "#31210"
+msgid "Library Export Settings"
+msgstr "Postavke izvoza zbirke"
+
+msgctxt "#31211"
+msgid "PVR Settings"
+msgstr "PVR postavke"
+
+msgctxt "#31212"
+msgid "PVR Recording Settings"
+msgstr "Postavke PVR snimanja"
+
+msgctxt "#31213"
+msgid "Game Settings"
+msgstr "Postavke igre"
+
+msgctxt "#31214"
+msgid "Advanced Game Settings"
+msgstr "Napredne postavke igre"
+
+msgctxt "#31215"
+msgid "Game Controllers"
+msgstr "Upravljači igrama"
+
+msgctxt "#31216"
+msgid "Game Video Filters"
+msgstr "Video filtri igra"
+
+msgctxt "#31217"
+msgid "Game Video Rotation"
+msgstr "Zakretanje video igra"
+
+msgctxt "#31218"
+msgid "Game View Mode"
+msgstr "Način prikaza igra"
+
+msgctxt "#31219"
+msgid "Skin Settings"
+msgstr "Postavke presvlake"
+
+msgctxt "#31220"
+msgid "Addon Browser"
+msgstr "Dodatak preglednika"
+
+msgctxt "#31221"
+msgid "Addon Settings"
+msgstr "Postavke dodatka"
+
+msgctxt "#31222"
+msgid "Profile Settings"
+msgstr "Postavke profila"
+
+msgctxt "#31223"
+msgid "Lock Settings"
+msgstr "Postavke zaključavanja"
+
+msgctxt "#31224"
+msgid "Content Settings"
+msgstr "Postavke sadržaja"
+
+msgctxt "#31225"
+msgid "Profiles"
+msgstr "Profili"
+
+msgctxt "#31226"
+msgid "System info"
+msgstr "Informacije sustava"
+
+msgctxt "#31227"
+msgid "Test Pattern"
+msgstr "Uzorak testa"
+
+msgctxt "#31228"
+msgid "Screen Calibration"
+msgstr "Kalibracija zaslona"
+
+msgctxt "#31229"
+msgid "Login Screen"
+msgstr "Zaslon prijave"
+
+msgctxt "#31230"
+msgid "File Browser"
+msgstr "Preglednik datoteka"
+
+msgctxt "#31231"
+msgid "Network Setup"
+msgstr "Postavljanje mreže"
+
+msgctxt "#31232"
+msgid "Access Points"
+msgstr "Pristupne točke"
+
+msgctxt "#31233"
+msgid "Mediasource Dialog"
+msgstr "Dijalog izvora medija"
+
+msgctxt "#31234"
+msgid "Start"
+msgstr "Pokreni"
+
+msgctxt "#31235"
+msgid "Favourites"
+msgstr "Omiljeni"
+
+msgctxt "#31236"
+msgid "Context Menu"
+msgstr "Sadržajni izbornik"
+
+msgctxt "#31237"
+msgid "Media filter"
+msgstr "Medijski filter"
+
+msgctxt "#31238"
+msgid "Visualisation Preset List"
+msgstr "Popis predložaka vizualizacije"
+
+msgctxt "#31239"
+msgid "Smart Playlist Editor"
+msgstr "Pametan uređivač popisa izvođenja"
+
+msgctxt "#31240"
+msgid "Smart Playlist Rule"
+msgstr "Pravilo pametnog popisa izvođenja"
+
+msgctxt "#31241"
+msgid "Shutdown Menu"
+msgstr "Izbornik isključivanja"
+
+msgctxt "#31242"
+msgid "Fullscreen Info"
+msgstr "Cjelozaslonske informacije"
+
+msgctxt "#31243"
+msgid "Subtitle Search"
+msgstr "Pretraga podnaslova"
+
+msgctxt "#31244"
+msgid "Weather"
+msgstr "Vrijeme"
+
+msgctxt "#31245"
+msgid "Screensaver"
+msgstr "Čuvar zaslona"
+
+msgctxt "#31246"
+msgid "Picture Info"
+msgstr "Informacija slike"
+
+msgctxt "#31247"
+msgid "Addon Info"
+msgstr "Informacija dodatka"
+
+# empty string 31248
+msgctxt "#31249"
+msgid "Music Playlist"
+msgstr "Glazbeni popis izvođenja"
+
+msgctxt "#31250"
+msgid "Music Playlist Editor"
+msgstr "Glazbeni uređivač popisa izvođenja"
+
+msgctxt "#31251"
+msgid "Music Info"
+msgstr "Glazbene informacije"
+
+msgctxt "#31252"
+msgid "Song Info"
+msgstr "Informacija pjesme"
+
+msgctxt "#31253"
+msgid "Movie Info"
+msgstr "Informacija filma"
+
+msgctxt "#31254"
+msgid "Player Process Info"
+msgstr "Informacija procesa reproduktora"
+
+msgctxt "#31255"
+msgid "Video Menu"
+msgstr "Video izbornik"
+
+msgctxt "#31256"
+msgid "Video OSD"
+msgstr "Video OSD"
+
+msgctxt "#31257"
+msgid "Colour Management Settings"
+msgstr "Postavke upravljanja bojom"
+
+msgctxt "#31258"
+msgid "Subtitle Settings"
+msgstr "Postavke podnaslova"
+
+msgctxt "#31259"
+msgid "Video Time Seek"
+msgstr "Vremensko pretraživanje videa"
+
+msgctxt "#31260"
+msgid "Video Bookmarks"
+msgstr "Video zabilješke"
+
+msgctxt "#31261"
+msgid "Video Playlist"
+msgstr "Video popis izvođenja"
+
+msgctxt "#31262"
+msgid "PVR Guide Info"
+msgstr "Informacije PVR vodiča"
+
+msgctxt "#31263"
+msgid "PVR Recording Info"
+msgstr "Informacije PVR snimanja"
+
+msgctxt "#31264"
+msgid "PVR Timer Setting"
+msgstr "Postavke PVR zakazanih snimanja"
+
+msgctxt "#31265"
+msgid "PVR Group Manager"
+msgstr "Upravitelj PVR grupa"
+
+msgctxt "#31266"
+msgid "PVR Channel Manager"
+msgstr "Upravitelj PVR programa"
+
+msgctxt "#31267"
+msgid "PVR Guide Search"
+msgstr "Pretraga PVR vodiča"
+
+msgctxt "#31268"
+msgid "PVR Channel Scan"
+msgstr "Pretraživanje PVR programa"
+
+msgctxt "#31269"
+msgid "PVR Update Progress"
+msgstr "Napredak PVR nadopune"
+
+msgctxt "#31270"
+msgid "PVR OSD Channels"
+msgstr "PVR OSD programi"
+
+msgctxt "#31271"
+msgid "PVR OSD Guide"
+msgstr "PVR OSD vodič"
+
+msgctxt "#31272"
+msgid "TV Channels"
+msgstr "TV programi"
+
+msgctxt "#31273"
+msgid "TV Recordings"
+msgstr "TV snimke"
+
+msgctxt "#31274"
+msgid "TV Guide"
+msgstr "TV vodič"
+
+msgctxt "#31275"
+msgid "TV Timers"
+msgstr "TV zakazana snimanja"
+
+msgctxt "#31276"
+msgid "TV Search"
+msgstr "TV pretraga"
+
+msgctxt "#31277"
+msgid "Radio Channels"
+msgstr "Radio programi"
+
+msgctxt "#31278"
+msgid "Radio Recordings"
+msgstr "Radio snimke"
+
+msgctxt "#31279"
+msgid "Radio Guide"
+msgstr "Radio vodič"
+
+msgctxt "#31280"
+msgid "Radio Timers"
+msgstr "Radio zakazana snimanja"
+
+msgctxt "#31281"
+msgid "Radio Timer Rules"
+msgstr "Radio pravila zakazanih snimanja"
+
+msgctxt "#31282"
+msgid "Radio Search"
+msgstr "Radio pretraga"
+
+msgctxt "#31283"
+msgid "RDS Info"
+msgstr "RDS informacije"
+
+msgctxt "#31284"
+msgid "Movies"
+msgstr "Filmovi"
+
+msgctxt "#31285"
+msgid "Movie Titles"
+msgstr "Naslovi filma"
+
+msgctxt "#31286"
+msgid "TV Shows"
+msgstr "TV serije"
+
+msgctxt "#31287"
+msgid "TV Show Titles"
+msgstr "Naslovi TV serija"
+
+msgctxt "#31288"
+msgid "Music Videos"
+msgstr "Glazbeni spotovi"
+
+msgctxt "#31289"
+msgid "Recently Added Movies"
+msgstr "Nedavno dodani filmovi"
+
+msgctxt "#31290"
+msgid "Recently Added Episodes"
+msgstr "Nedavno dodane epizode"
+
+msgctxt "#31291"
+msgid "Recently Added Music Videos"
+msgstr "Nedavno dodani glazbeni spotovi"
+
+msgctxt "#31292"
+msgid "Games"
+msgstr "Igre"
+
+msgctxt "#31293"
+msgid "Games OSD"
+msgstr "OSD igre"
+
+msgctxt "#31294"
+msgid "Game Pad Input"
+msgstr "Ulaz za igraću ploču"
+
+msgctxt "#31295"
+msgid "Game Volume"
+msgstr "Glasnoća zvuka igre"

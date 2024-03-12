@@ -1,0 +1,1288 @@
+# Kodi Media Center language file
+# Addon Name: Keymap Editor
+# Addon id: script.keymap
+# Addon Provider: takoi|pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-12-13 09:11+0000\n"
+"Last-Translator: Frodo19 <bilbohu@gmail.com>\n"
+"Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/hu_hu/>\n"
+"Language: hu_hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.2.1\n"
+
+msgctxt "Addon Summary"
+msgid "An editor for keymap files"
+msgstr "Távvezérlő fájlok kezelője"
+
+msgctxt "Addon Description"
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgstr "A Keymap Editor egy grafikus felhasználói felület a távvezérlők, a billentyűzet és a Kodi által támogatott egyéb bemenetek konfigurálásához. Megjegyzés: a meglévő, felhasználó által definiált keymap fájlok át lesznek nevezve .bak -ra."
+
+# Text Messages
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr "Távvezérlő szerkesztő"
+
+msgctxt "#30001"
+msgid "Failed to remove old keymap file"
+msgstr "Régi távvezérlő fájl visszavonása sikertelen"
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr "Nyomja meg a hozzárendelni kívánt gombot"
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr "Szerkesztés"
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr "Alapállapotba visszaállít"
+
+msgctxt "#30005"
+msgid "Save"
+msgstr "Mentés"
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr "Változtatások elvetése?"
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr "Válasszon ablakot a parancsikonok kezeléséhez"
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr "Kategória akció kiválasztása"
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr "Akció kiválasztása a gombhoz"
+
+msgctxt "#30010"
+msgid "Timeout in %.0f seconds..."
+msgstr "Időtúllépés %.0f másodperc..."
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr "Gomb szerkesztése"
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr "Törlés"
+
+# empty strings from id 30013 to 30099
+# Window names
+msgctxt "#30100"
+msgid "Global"
+msgstr "Általános"
+
+msgctxt "#30101"
+msgid "Fullscreen Video"
+msgstr "Teljesképernyős videó"
+
+msgctxt "#30102"
+msgid "Fullscreen Live TV"
+msgstr "Teljesképernyős élő TV"
+
+msgctxt "#30103"
+msgid "Fullscreen Radio"
+msgstr "Teljesképernyős rádió"
+
+msgctxt "#30104"
+msgid "Fullscreen Game"
+msgstr "Teljesképernyős játék"
+
+msgctxt "#30105"
+msgid "Home"
+msgstr "Főmenü"
+
+msgctxt "#30106"
+msgid "Programs"
+msgstr "Programok"
+
+msgctxt "#30107"
+msgid "Videos"
+msgstr "Videók"
+
+msgctxt "#30108"
+msgid "Music"
+msgstr "Zene"
+
+msgctxt "#30109"
+msgid "Pictures"
+msgstr "Képek"
+
+msgctxt "#30110"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#30111"
+msgid "Filemanager"
+msgstr "Fájlkezelő"
+
+msgctxt "#30112"
+msgid "Virtual Keyboard"
+msgstr "Virtuális billentyűzet"
+
+msgctxt "#30113"
+msgid "Player Controls"
+msgstr "Lejátszóvezérlő gombok"
+
+msgctxt "#30114"
+msgid "Seek bar"
+msgstr "Seek bar"
+
+msgctxt "#30115"
+msgid "Music OSD"
+msgstr "Zenei OSD"
+
+msgctxt "#30116"
+msgid "Video OSD Settings"
+msgstr "Film OSD beállítások"
+
+msgctxt "#30117"
+msgid "Audio OSD Settings"
+msgstr "Hang OSD beállítások"
+
+msgctxt "#30118"
+msgid "Visualisation"
+msgstr "Vizualizáció"
+
+msgctxt "#30119"
+msgid "Slideshow"
+msgstr "Diavetítés"
+
+# empty strings from id 30120 to 30199
+# Navigation
+msgctxt "#30200"
+msgid "Move Left"
+msgstr "Balra mozgat"
+
+msgctxt "#30201"
+msgid "Move Right"
+msgstr "Jobbra mozgat"
+
+msgctxt "#30202"
+msgid "Move Up"
+msgstr "Fel mozgat"
+
+msgctxt "#30203"
+msgid "Move Down"
+msgstr "Le mozgat"
+
+msgctxt "#30204"
+msgid "Page Up"
+msgstr "Oldal fel"
+
+msgctxt "#30205"
+msgid "Page Down"
+msgstr "Oldal le"
+
+msgctxt "#30206"
+msgid "Select Item"
+msgstr "Elem kiválasztása"
+
+msgctxt "#30207"
+msgid "Highlight Item"
+msgstr "Kiemelt elem"
+
+msgctxt "#30208"
+msgid "Parent Directory"
+msgstr "Szülő könyvtár"
+
+msgctxt "#30209"
+msgid "Back"
+msgstr "Vissza"
+
+msgctxt "#30210"
+msgid "Previous Menu"
+msgstr "Előző menü"
+
+msgctxt "#30211"
+msgid "Show Info"
+msgstr "Infó mutatása"
+
+msgctxt "#30212"
+msgid "Context Menu"
+msgstr "Kontext menü"
+
+msgctxt "#30213"
+msgid "Menu"
+msgstr "Menü"
+
+msgctxt "#30214"
+msgid "First Page"
+msgstr "Első oldal"
+
+msgctxt "#30215"
+msgid "Last Page"
+msgstr "Utolsó oldal"
+
+msgctxt "#30216"
+msgid "Next Letter"
+msgstr "Következő betű"
+
+msgctxt "#30217"
+msgid "Previous Letter"
+msgstr "Előző betű"
+
+msgctxt "#30218"
+msgid "Scroll Up"
+msgstr "Görgess fel"
+
+msgctxt "#30219"
+msgid "Scroll Down"
+msgstr "Görgess le"
+
+msgctxt "#30220"
+msgid "Cursor Left"
+msgstr "Bal kurzor"
+
+msgctxt "#30221"
+msgid "Cursor Right"
+msgstr "Jobb kurzor"
+
+# empty strings from id 30222 to 30299
+# Playback
+msgctxt "#30300"
+msgid "Play"
+msgstr "Lejátszás"
+
+msgctxt "#30301"
+msgid "Pause"
+msgstr "Pillanat állj"
+
+msgctxt "#30302"
+msgid "Play/Pause"
+msgstr "Lejátszás/Szünet"
+
+msgctxt "#30303"
+msgid "Stop"
+msgstr "Állj"
+
+msgctxt "#30304"
+msgid "Next"
+msgstr "Következő"
+
+msgctxt "#30305"
+msgid "Previous"
+msgstr "Előző"
+
+msgctxt "#30306"
+msgid "Fast Forward"
+msgstr "Gyors előre"
+
+msgctxt "#30307"
+msgid "Rewind"
+msgstr "Gyors hátra"
+
+msgctxt "#30308"
+msgid "Small Step Back"
+msgstr "Kis lépés vissza"
+
+msgctxt "#30309"
+msgid "Step Forward"
+msgstr "Előre lépés"
+
+msgctxt "#30310"
+msgid "Step Back"
+msgstr "Vissza lépés"
+
+msgctxt "#30311"
+msgid "Big Step Forward"
+msgstr "Nagyobb előre lépés"
+
+msgctxt "#30312"
+msgid "Big Step Back"
+msgstr "Nagyobb vissza lépés"
+
+msgctxt "#30313"
+msgid "Next Chapter or Big Step Forward"
+msgstr "Következő fejezet vagy nagy lépés előre"
+
+msgctxt "#30314"
+msgid "Previous Chapter or Big Step Back"
+msgstr "Előző fejezet vagy nagy lépés vissza"
+
+msgctxt "#30315"
+msgid "Show OSD"
+msgstr "OSD mutatása"
+
+msgctxt "#30316"
+msgid "Show current play time"
+msgstr "Az aktuális lejátszási idő megjelenítése"
+
+msgctxt "#30317"
+msgid "Show Playlist"
+msgstr "Lejátszási lista megjelenítése"
+
+msgctxt "#30318"
+msgid "Toggle Fullscreen"
+msgstr "Teljes képernyőre váltás"
+
+msgctxt "#30319"
+msgid "Change Aspect Ratio"
+msgstr "Képarány módosítása"
+
+msgctxt "#30320"
+msgid "Go to DVD Video Menu"
+msgstr "Lépjen a DVD Video menübe"
+
+msgctxt "#30321"
+msgid "Toggle Repeat"
+msgstr "Kapcsolja be az Ismétlést"
+
+msgctxt "#30322"
+msgid "Repeat One"
+msgstr "Ismételjen meg egyet"
+
+msgctxt "#30323"
+msgid "Repeat All"
+msgstr "Összes ismétlése"
+
+msgctxt "#30324"
+msgid "Repeat Off"
+msgstr "Ismétlés Ki"
+
+msgctxt "#30325"
+msgid "Toggle Random"
+msgstr "Véletlenszerű váltás"
+
+msgctxt "#30326"
+msgid "Random On"
+msgstr "Véletlenszerű váltás Be"
+
+msgctxt "#30327"
+msgid "Random Off"
+msgstr "Véletlenszerű váltás Ki"
+
+msgctxt "#30328"
+msgid "Playback Speed Faster"
+msgstr "Lejátszási sebesség gyorsítás"
+
+msgctxt "#30329"
+msgid "Playback Speed Slower"
+msgstr "Lejátszási sebesség lassítás"
+
+msgctxt "#30330"
+msgid "Create Bookmark"
+msgstr "Könyvjelző hozzáadása"
+
+msgctxt "#30331"
+msgid "Create Episode Bookmark"
+msgstr "Epizód könyvjelző hozzáadása"
+
+msgctxt "#30332"
+msgid "Toggle 3D/Stereoscopic mode"
+msgstr "Váltás a 3D/Sztereoszkóp mód között"
+
+msgctxt "#30333"
+msgid "Switch Player"
+msgstr "Lejátszó váltás"
+
+msgctxt "#30334"
+msgid "Play Next"
+msgstr "Következő lejátszása"
+
+msgctxt "#30335"
+msgid "Select Program"
+msgstr "Program kiválasztás"
+
+msgctxt "#30336"
+msgid "Select Resolution"
+msgstr "Felbontás kiválasztása"
+
+msgctxt "#30337"
+msgid "Shift Video Up"
+msgstr "Videó eltolás felfelé"
+
+msgctxt "#30338"
+msgid "Shift Video Down"
+msgstr "Videó eltolás lelfelé"
+
+msgctxt "#30339"
+msgid "Show Time"
+msgstr "Idő mutatása"
+
+msgctxt "#30340"
+msgid "Next Scene"
+msgstr "Következő jelenet"
+
+msgctxt "#30341"
+msgid "Previous Scene"
+msgstr "Előző jelenet"
+
+msgctxt "#30342"
+msgid "Next Video Stream"
+msgstr "Következő Video Stream"
+
+msgctxt "#30343"
+msgid "Toggle HDHR"
+msgstr "HDHR váltás"
+
+msgctxt "#30344"
+msgid "Cycle 3D Mode"
+msgstr "Bekapcsolja a 3D módot"
+
+msgctxt "#30345"
+msgid "Next 3D Mode"
+msgstr "Következő 3D mód"
+
+msgctxt "#30346"
+msgid "Previous 3D Mode"
+msgstr "Előző 3D mód"
+
+msgctxt "#30347"
+msgid "3D Mono"
+msgstr "3D mono"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr "Tempó felfelé"
+
+msgctxt "#30349"
+msgid "Tempo Down"
+msgstr "Tempó lefelé"
+
+# empty strings from id 30348 to 30399
+# Audio
+msgctxt "#30400"
+msgid "Mute"
+msgstr "Némítás"
+
+msgctxt "#30401"
+msgid "Volume Up"
+msgstr "Hangerő fel"
+
+msgctxt "#30402"
+msgid "Volume Down"
+msgstr "Hangerő le"
+
+msgctxt "#30403"
+msgid "Next Language"
+msgstr "Következő nyelv"
+
+msgctxt "#30404"
+msgid "Delay"
+msgstr "Késleltetés"
+
+msgctxt "#30405"
+msgid "Delay Minus"
+msgstr "Késleltetés mínusz"
+
+msgctxt "#30406"
+msgid "Delay Plus"
+msgstr "Késleltetés plusz"
+
+msgctxt "#30407"
+msgid "Toggle Digital/Analog"
+msgstr "Digitális/analóg váltás"
+
+msgctxt "#30408"
+msgid "Volume Amp Up"
+msgstr "Hangerő erősítés fel"
+
+msgctxt "#30409"
+msgid "Volume Amp Down"
+msgstr "Hangerő erősítés le"
+
+msgctxt "#30410"
+msgid "Volume Amplification"
+msgstr "Hangerő erősítés"
+
+# empty strings from id 30411 to 30499
+# Pictures
+msgctxt "#30500"
+msgid "Next Picture"
+msgstr "Következő kép"
+
+msgctxt "#30501"
+msgid "Previous Picture"
+msgstr "Előző kép"
+
+msgctxt "#30502"
+msgid "Rotate Picture"
+msgstr "Képek forgatása"
+
+msgctxt "#30503"
+msgid "Rotate Picture CCW"
+msgstr "Kép forgatása jobbra"
+
+msgctxt "#30504"
+msgid "Zoom Out"
+msgstr "Nagyítás ki"
+
+msgctxt "#30505"
+msgid "Zoom In "
+msgstr "Nagyítás be "
+
+msgctxt "#30506"
+msgid "Zoom level Normal"
+msgstr "Nagyítás normál"
+
+msgctxt "#30507"
+msgid "Zoom level 1"
+msgstr "Nagyítási szint 1"
+
+msgctxt "#30508"
+msgid "Zoom level 2"
+msgstr "Nagyítási szint 2"
+
+msgctxt "#30509"
+msgid "Zoom level 3"
+msgstr "Nagyítási szint 3"
+
+msgctxt "#30510"
+msgid "Zoom level 4"
+msgstr "Nagyítási szint 4"
+
+msgctxt "#30511"
+msgid "Zoom level 5"
+msgstr "Nagyítási szint 5"
+
+msgctxt "#30512"
+msgid "Zoom level 6"
+msgstr "Nagyítási szint 6"
+
+msgctxt "#30513"
+msgid "Zoom level 7"
+msgstr "Nagyítási szint 7"
+
+msgctxt "#30514"
+msgid "Zoom level 8"
+msgstr "Nagyítási szint 8"
+
+msgctxt "#30515"
+msgid "Zoom level 9"
+msgstr "Nagyítási szint 9"
+
+# empty strings from id 30516 to 30599
+# Subtitle
+msgctxt "#30600"
+msgid "Show Subtitles"
+msgstr "Feliratok mutatása"
+
+msgctxt "#30601"
+msgid "Next Subtitle"
+msgstr "Következő felirat"
+
+msgctxt "#30602"
+msgid "Browse Subtitle"
+msgstr "Felirat böngésző"
+
+msgctxt "#30603"
+msgid "Cycle Subtitle"
+msgstr "Felirat ciklikus"
+
+msgctxt "#30604"
+msgid "Delay"
+msgstr "Késleltetés"
+
+msgctxt "#30605"
+msgid "Delay Minus"
+msgstr "Késleltetés mínusz"
+
+msgctxt "#30606"
+msgid "Delay Plus"
+msgstr "Késleltetés plusz"
+
+msgctxt "#30607"
+msgid "Align"
+msgstr "Igazítás"
+
+msgctxt "#30608"
+msgid "Shift Subtitle Up"
+msgstr "Felirat mozgatás fel"
+
+msgctxt "#30609"
+msgid "Shift Subtitle Down"
+msgstr "Felirat mozgatás le"
+
+# empty strings from id 30610 to 30699
+# PVR
+msgctxt "#30700"
+msgid "Channel Up"
+msgstr "Csatornaváltás fel"
+
+msgctxt "#30701"
+msgid "Channel Down"
+msgstr "Csatornaváltás le"
+
+msgctxt "#30702"
+msgid "Previous channel group"
+msgstr "Előző csatornacsoport"
+
+msgctxt "#30703"
+msgid "Next channel group"
+msgstr "Következő csatornacsoport"
+
+msgctxt "#30704"
+msgid "PVR Play"
+msgstr "PVR lejátszás"
+
+msgctxt "#30705"
+msgid "PVR Play TV"
+msgstr "PVR TV lejátszás"
+
+msgctxt "#30706"
+msgid "PVR Play Radio"
+msgstr "PVR Rádió lejátszás"
+
+msgctxt "#30707"
+msgid "Record"
+msgstr "Felvétel"
+
+msgctxt "#30708"
+msgid "Toggle Commskip"
+msgstr "Kapcsolja be a Commskip funkciót"
+
+msgctxt "#30709"
+msgid "PVR Show Timer Rule"
+msgstr "PVR időzítő szabály"
+
+msgctxt "#30710"
+msgid "Channel Number Separator"
+msgstr "Csatornaszám-elválasztó"
+
+# empty strings from id 30711 to 30799
+# Item Actions
+msgctxt "#30800"
+msgid "Queue item"
+msgstr "Várólista elem"
+
+msgctxt "#30801"
+msgid "Delete item"
+msgstr "Elem törlése"
+
+msgctxt "#30802"
+msgid "Copy item"
+msgstr "Elem másolása"
+
+msgctxt "#30803"
+msgid "Move item"
+msgstr "Elem mozgatása"
+
+msgctxt "#30804"
+msgid "Move item up"
+msgstr "Elem mozgatása fel"
+
+msgctxt "#30805"
+msgid "Move item down"
+msgstr "Elem mozgatása le"
+
+msgctxt "#30806"
+msgid "Rename item"
+msgstr "Elem átnevezése"
+
+msgctxt "#30807"
+msgid "Scan item"
+msgstr "Elem keresése"
+
+msgctxt "#30808"
+msgid "Toggle Watched"
+msgstr "Megnézettként jelöl"
+
+msgctxt "#30809"
+msgid "Increase Rating"
+msgstr "Értékelés növelése"
+
+msgctxt "#30810"
+msgid "Decrease Rating"
+msgstr "Értékelés csökkentése"
+
+msgctxt "#30811"
+msgid "Set Rating"
+msgstr "Értékelés beállítása"
+
+# empty strings from id 30812 to 30899
+# System
+msgctxt "#30900"
+msgid "Toggle Fullscreen"
+msgstr "Teljes képernyőre váltás"
+
+msgctxt "#30901"
+msgid "Minimise"
+msgstr "Minimalizálás"
+
+msgctxt "#30902"
+msgid "Shutdown"
+msgstr "Kikapcsolás"
+
+msgctxt "#30903"
+msgid "Reboot"
+msgstr "Újraindítás"
+
+msgctxt "#30904"
+msgid "Hibernate"
+msgstr "Hibernálás"
+
+msgctxt "#30905"
+msgid "Suspend"
+msgstr "Felfüggesztés"
+
+msgctxt "#30906"
+msgid "Restart Kodi"
+msgstr "Kodi ujraíndítása"
+
+msgctxt "#30907"
+msgid "Log off"
+msgstr "Kijelentkezés"
+
+msgctxt "#30908"
+msgid "Quit Kodi"
+msgstr "Kilépés a Kodiból"
+
+msgctxt "#30909"
+msgid "Reset Settings"
+msgstr "Beállítások alapállapotba"
+
+msgctxt "#30910"
+msgid "Change Settings Level"
+msgstr "Módosítsa a beállítások szintjét"
+
+msgctxt "#30911"
+msgid "Toggle Font"
+msgstr "Betűtípus váltása"
+
+# empty strings from id 30912 to 30999
+# Virtual Keyboard
+msgctxt "#31000"
+msgid "Enter"
+msgstr "Megerősítés"
+
+msgctxt "#31001"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#31002"
+msgid "Symbols"
+msgstr "Szimbólumok"
+
+msgctxt "#31003"
+msgid "Backspace"
+msgstr "Visszafelé"
+
+msgctxt "#31004"
+msgid "0"
+msgstr "0"
+
+msgctxt "#31005"
+msgid "1"
+msgstr "1"
+
+msgctxt "#31006"
+msgid "2"
+msgstr "2"
+
+msgctxt "#31007"
+msgid "3"
+msgstr "3"
+
+msgctxt "#31008"
+msgid "4"
+msgstr "4"
+
+msgctxt "#31009"
+msgid "5"
+msgstr "5"
+
+msgctxt "#31010"
+msgid "6"
+msgstr "6"
+
+msgctxt "#31011"
+msgid "7"
+msgstr "7"
+
+msgctxt "#31012"
+msgid "8"
+msgstr "8"
+
+msgctxt "#31013"
+msgid "9"
+msgstr "9"
+
+msgctxt "#31014"
+msgid "Teletext Red"
+msgstr "Teletext piros"
+
+msgctxt "#31015"
+msgid "Teletext Green"
+msgstr "Teletext zöld"
+
+msgctxt "#31016"
+msgid "Teletext Yellow"
+msgstr "Teletext sárga"
+
+msgctxt "#31017"
+msgid "Teletext Blue"
+msgstr "Teletext kék"
+
+# empty strings from id 31018 to 31099
+# Other
+msgctxt "#31100"
+msgid "Update Video Library"
+msgstr "Videotár frissítése"
+
+msgctxt "#31101"
+msgid "Update Music Library"
+msgstr "Zenetár frissítése"
+
+msgctxt "#31102"
+msgid "Clean Video Library"
+msgstr "Videotár tisztítása"
+
+msgctxt "#31103"
+msgid "Clean Music Library"
+msgstr "Zenetár tisztítása"
+
+msgctxt "#31104"
+msgid "Player Process Info"
+msgstr "Lejátszó folyamat információ"
+
+msgctxt "#31105"
+msgid "Player debug"
+msgstr "Lejátszó debuginformáció"
+
+msgctxt "#31106"
+msgid "Take screenshot"
+msgstr "Képernyőmentés"
+
+msgctxt "#31107"
+msgid "Reload Keymaps"
+msgstr "Keymap újra betöltése"
+
+msgctxt "#31108"
+msgid "Increase PAR"
+msgstr "PAR növelése"
+
+msgctxt "#31109"
+msgid "Decrease PAR"
+msgstr "PAR csökkentése"
+
+msgctxt "#31110"
+msgid "Change resolution"
+msgstr "Felbontás váltása"
+
+msgctxt "#31111"
+msgid "Next calibration"
+msgstr "Következő kalibráció"
+
+msgctxt "#31112"
+msgid "Reset calibration"
+msgstr "Kalibráció visszaállítás"
+
+msgctxt "#31113"
+msgid "Show current visualisation preset"
+msgstr "Az aktuális vizualizáció megjelenítése"
+
+msgctxt "#31114"
+msgid "Show visualisation preset list"
+msgstr "Vizualizációs lista"
+
+msgctxt "#31115"
+msgid "Next visualisation preset"
+msgstr "A következő vizualizáció megjelenítése"
+
+msgctxt "#31116"
+msgid "Previous visualisation preset"
+msgstr "Az előző vizualizáció megjelenítése"
+
+msgctxt "#31117"
+msgid "Lock current visualisation preset"
+msgstr "Az aktuális vizualizáció lezárása"
+
+msgctxt "#31118"
+msgid "Switch to a new random preset"
+msgstr "Új véletlenszerű megjelenítés"
+
+# empty strings from id 31119 to 31199
+# Activate Window
+msgctxt "#31200"
+msgid "Settings"
+msgstr "Beállítások"
+
+msgctxt "#31201"
+msgid "Player Settings"
+msgstr "Lejátszó beállítások"
+
+msgctxt "#31202"
+msgid "Programs Settings"
+msgstr "Program beállítások"
+
+msgctxt "#31203"
+msgid "Information Provider Settings"
+msgstr "Információszolgáltató beállításai"
+
+msgctxt "#31204"
+msgid "Interface Settings"
+msgstr "Megjelenítés beállításai"
+
+msgctxt "#31205"
+msgid "System Settings"
+msgstr "Rendszer beállítások"
+
+msgctxt "#31206"
+msgid "Media Settings"
+msgstr "Média beállítások"
+
+msgctxt "#31207"
+msgid "Service Settings"
+msgstr "Szerviz beállítások"
+
+msgctxt "#31208"
+msgid "Appearance Settings"
+msgstr "Megjelenés beállításai"
+
+msgctxt "#31209"
+msgid "Peripherals Settings"
+msgstr "Periféria beállítások"
+
+msgctxt "#31210"
+msgid "Library Export Settings"
+msgstr "Médiatár export beállítások"
+
+msgctxt "#31211"
+msgid "PVR Settings"
+msgstr "PVR beállítások"
+
+msgctxt "#31212"
+msgid "PVR Recording Settings"
+msgstr "PVR felvétel beállítások"
+
+msgctxt "#31213"
+msgid "Game Settings"
+msgstr "Játék beállítások"
+
+msgctxt "#31214"
+msgid "Advanced Game Settings"
+msgstr "Speciális játékbeállítások"
+
+msgctxt "#31215"
+msgid "Game Controllers"
+msgstr "Játék vezérlők"
+
+msgctxt "#31216"
+msgid "Game Video Filters"
+msgstr "Játék videószűrők"
+
+msgctxt "#31217"
+msgid "Game Video Rotation"
+msgstr "Játék videó csere"
+
+msgctxt "#31218"
+msgid "Game View Mode"
+msgstr "Játék nézet mód"
+
+msgctxt "#31219"
+msgid "Skin Settings"
+msgstr "Felszín beállítások"
+
+msgctxt "#31220"
+msgid "Addon Browser"
+msgstr "Kiegészítő böngésző"
+
+msgctxt "#31221"
+msgid "Addon Settings"
+msgstr "Kiegészítő beállítások"
+
+msgctxt "#31222"
+msgid "Profile Settings"
+msgstr "Profil beállítások"
+
+msgctxt "#31223"
+msgid "Lock Settings"
+msgstr "Beállítások zárolása"
+
+msgctxt "#31224"
+msgid "Content Settings"
+msgstr "Tartalom beállítások"
+
+msgctxt "#31225"
+msgid "Profiles"
+msgstr "Profilok"
+
+msgctxt "#31226"
+msgid "System info"
+msgstr "Rendszerinfó"
+
+msgctxt "#31227"
+msgid "Test Pattern"
+msgstr "Teszt Pattern"
+
+msgctxt "#31228"
+msgid "Screen Calibration"
+msgstr "Kijelző kalibrálás"
+
+msgctxt "#31229"
+msgid "Login Screen"
+msgstr "Bejelentkezési képernyő"
+
+msgctxt "#31230"
+msgid "File Browser"
+msgstr "Fájlböngésző"
+
+msgctxt "#31231"
+msgid "Network Setup"
+msgstr "Hálózat beállítása"
+
+msgctxt "#31232"
+msgid "Access Points"
+msgstr "Hozzáférési pont"
+
+msgctxt "#31233"
+msgid "Mediasource Dialog"
+msgstr "Médiaforrás párbeszédpanel"
+
+msgctxt "#31234"
+msgid "Start"
+msgstr "Indítás"
+
+msgctxt "#31235"
+msgid "Favourites"
+msgstr "Kedvencek"
+
+msgctxt "#31236"
+msgid "Context Menu"
+msgstr "Felugró menü"
+
+msgctxt "#31237"
+msgid "Media filter"
+msgstr "Média szűrő"
+
+msgctxt "#31238"
+msgid "Visualisation Preset List"
+msgstr "Előre beállított vizualizációs lista"
+
+msgctxt "#31239"
+msgid "Smart Playlist Editor"
+msgstr "Smart lejátszási lista szerkesztő"
+
+msgctxt "#31240"
+msgid "Smart Playlist Rule"
+msgstr "Smart lejátszási lista szabályok"
+
+msgctxt "#31241"
+msgid "Shutdown Menu"
+msgstr "Kikapcsolási menü"
+
+msgctxt "#31242"
+msgid "Fullscreen Info"
+msgstr "Teljesképernyős infó"
+
+msgctxt "#31243"
+msgid "Subtitle Search"
+msgstr "Felirat keresés"
+
+msgctxt "#31244"
+msgid "Weather"
+msgstr "Időjárás"
+
+msgctxt "#31245"
+msgid "Screensaver"
+msgstr "Képernyővédő"
+
+msgctxt "#31246"
+msgid "Picture Info"
+msgstr "Képinfó"
+
+msgctxt "#31247"
+msgid "Addon Info"
+msgstr "Kiegészítőinfó"
+
+# empty string 31248
+msgctxt "#31249"
+msgid "Music Playlist"
+msgstr "Zene lejátszási lista"
+
+msgctxt "#31250"
+msgid "Music Playlist Editor"
+msgstr "Zene lejátszási lista szerkesztő"
+
+msgctxt "#31251"
+msgid "Music Info"
+msgstr "Zeneinfó"
+
+msgctxt "#31252"
+msgid "Song Info"
+msgstr "Dal infó"
+
+msgctxt "#31253"
+msgid "Movie Info"
+msgstr "Filminfó"
+
+msgctxt "#31254"
+msgid "Player Process Info"
+msgstr "Lejátszó folyamat információ"
+
+msgctxt "#31255"
+msgid "Video Menu"
+msgstr "Videó menü"
+
+msgctxt "#31256"
+msgid "Video OSD"
+msgstr "Videó OSD"
+
+msgctxt "#31257"
+msgid "Colour Management Settings"
+msgstr "Színkezelési beállítások"
+
+msgctxt "#31258"
+msgid "Subtitle Settings"
+msgstr "Feliratbeállítások"
+
+msgctxt "#31259"
+msgid "Video Time Seek"
+msgstr "Videó Időkeresés"
+
+msgctxt "#31260"
+msgid "Video Bookmarks"
+msgstr "Videó könyvjelzők"
+
+msgctxt "#31261"
+msgid "Video Playlist"
+msgstr "Videó lejátszási lista"
+
+msgctxt "#31262"
+msgid "PVR Guide Info"
+msgstr "PVR útmutató információ"
+
+msgctxt "#31263"
+msgid "PVR Recording Info"
+msgstr "PVR felvétel információ"
+
+msgctxt "#31264"
+msgid "PVR Timer Setting"
+msgstr "PVR időzítől beállítás"
+
+msgctxt "#31265"
+msgid "PVR Group Manager"
+msgstr "PVR csoport rendező"
+
+msgctxt "#31266"
+msgid "PVR Channel Manager"
+msgstr "PVR csatorna rendező"
+
+msgctxt "#31267"
+msgid "PVR Guide Search"
+msgstr "PVR útmutató keresés"
+
+msgctxt "#31268"
+msgid "PVR Channel Scan"
+msgstr "PVR csatorna keresés"
+
+msgctxt "#31269"
+msgid "PVR Update Progress"
+msgstr "PVR frissítés állapotjelzés"
+
+msgctxt "#31270"
+msgid "PVR OSD Channels"
+msgstr "PVR OSD csatornák"
+
+msgctxt "#31271"
+msgid "PVR OSD Guide"
+msgstr "PVR OSD információ"
+
+msgctxt "#31272"
+msgid "TV Channels"
+msgstr "TV csatornák"
+
+msgctxt "#31273"
+msgid "TV Recordings"
+msgstr "TV felvételek"
+
+msgctxt "#31274"
+msgid "TV Guide"
+msgstr "Tv műsorújság"
+
+msgctxt "#31275"
+msgid "TV Timers"
+msgstr "Tv időzítő"
+
+msgctxt "#31276"
+msgid "TV Search"
+msgstr "Tv keresés"
+
+msgctxt "#31277"
+msgid "Radio Channels"
+msgstr "Rádió csatornák"
+
+msgctxt "#31278"
+msgid "Radio Recordings"
+msgstr "Rádió felvételek"
+
+msgctxt "#31279"
+msgid "Radio Guide"
+msgstr "Rádió műsorújság"
+
+msgctxt "#31280"
+msgid "Radio Timers"
+msgstr "Rádió időzítő"
+
+msgctxt "#31281"
+msgid "Radio Timer Rules"
+msgstr "Rádió időzítő szabályai"
+
+msgctxt "#31282"
+msgid "Radio Search"
+msgstr "Rádió kereső"
+
+msgctxt "#31283"
+msgid "RDS Info"
+msgstr "RDS infó"
+
+msgctxt "#31284"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#31285"
+msgid "Movie Titles"
+msgstr "Filmcímek"
+
+msgctxt "#31286"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#31287"
+msgid "TV Show Titles"
+msgstr "Sorozat címek"
+
+msgctxt "#31288"
+msgid "Music Videos"
+msgstr "Zene videók"
+
+msgctxt "#31289"
+msgid "Recently Added Movies"
+msgstr "Utoljára hozzáadott filmek"
+
+msgctxt "#31290"
+msgid "Recently Added Episodes"
+msgstr "Nemrég hozzáadott epizódok"
+
+msgctxt "#31291"
+msgid "Recently Added Music Videos"
+msgstr "Nemrég hozzáadott zenei videók"
+
+msgctxt "#31292"
+msgid "Games"
+msgstr "Játékok"
+
+msgctxt "#31293"
+msgid "Games OSD"
+msgstr "Játék OSD"
+
+msgctxt "#31294"
+msgid "Game Pad Input"
+msgstr "Game Pad bemenet"
+
+msgctxt "#31295"
+msgid "Game Volume"
+msgstr "Játék hangerő"
