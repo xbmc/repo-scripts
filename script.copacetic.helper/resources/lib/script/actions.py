@@ -1,7 +1,7 @@
 # author: realcopacetic
 
 from resources.lib.service.art import ImageEditor
-from resources.lib.utilities import (DIALOG, clear_playlists, condition,
+from resources.lib.utilities import (ADDON, DIALOG, clear_playlists, condition,
                                      infolabel, json_call, log_and_execute,
                                      skin_string, window_property, xbmc)
 
@@ -226,6 +226,18 @@ def shuffle_artist(**kwargs):
               options={'shuffled': True},
               parent='shuffle_artist')
     
+
+def toggle_addon(id, **kwargs):
+    if condition(f'System.AddonIsEnabled({id})'):
+        json_call('Addons.SetAddonEnabled',
+                  params={'addonid': id, 'enabled': False},
+                  parent='toggle_addon')
+        DIALOG.notification(id, ADDON.getLocalizedString(32205))
+    else:
+        json_call('Addons.SetAddonEnabled',
+                  params={'addonid': id, 'enabled': True},
+                  parent='toggle_addon')
+        DIALOG.notification(id, ADDON.getLocalizedString(32206))
 
 def widget_move(posa, posb, **kwargs):
     tempa_name = ''

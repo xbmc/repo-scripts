@@ -150,7 +150,6 @@ class Monitor(xbmc.Monitor):
         elif condition(
             '!Skin.HasSetting(Background_Disabled) + ['
             'Window.IsVisible(home) | '
-            'Window.IsVisible(settings) | '
             'Window.IsVisible(skinsettings) | '
             'Window.IsVisible(appearancesettings) | '
             'Window.IsVisible(mediasettings) | '
@@ -167,7 +166,6 @@ class Monitor(xbmc.Monitor):
             'Window.IsVisible(mediasource) | '
             'Window.IsVisible(smartplaylisteditor) | '
             'Window.IsVisible(musicplaylisteditor) | '
-            'Window.IsVisible(mediasource) | '
             'Window.IsVisible(tvguide) | '
             'Container.Content(genres) | '
             'Container.Content(years) | '
