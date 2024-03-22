@@ -55,6 +55,16 @@ msgctxt "#32004"
 msgid "- Include json call/response logging"
 msgstr ""
 
+#: /resources/settings.xml
+msgctxt "#32004"
+msgid "- Include json call/response logging"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32004"
+msgid "- Include json call/response logging"
+msgstr ""
+
 
 
 
@@ -64,26 +74,35 @@ msgstr ""
 
 #########################################################################################################
 
-#: /resources/settings.xml
+#: /resources/lib/utilities.py, /resources/lib/script/acions.py
 msgctxt "#32201"
 msgid "Cropped cache cleared"
 msgstr ""
 
-#: /resources/settings.xml
+#: /resources/lib/utilities.py, /resources/lib/script/acions.py
 msgctxt "#32202"
 msgid "saved"
 msgstr ""
 
-#: /resources/settings.xml
+#: /resources/lib/service/settings.py
 msgctxt "#32203"
 msgid "setting changed"
 msgstr ""
 
-#: /resources/settings.xml
+#: /resources/lib/service/settings.py
 msgctxt "#32204"
 msgid "settings changed"
 msgstr ""
 
+#: /resources/lib/script/acions.py
+msgctxt "#32205"
+msgid "Disabled"
+msgstr ""
+
+#: /resources/lib/script/acions.py
+msgctxt "#32206"
+msgid "Enabled"
+msgstr ""
 
 
 

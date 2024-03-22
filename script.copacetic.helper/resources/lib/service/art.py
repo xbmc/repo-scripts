@@ -8,9 +8,10 @@ import xml.etree.ElementTree as ET
 from PIL import Image
 
 from resources.lib.utilities import (CROPPED_FOLDERPATH, LOOKUP_XML,
-                                     TEMP_FOLDERPATH, infolabel, json_call,
-                                     log, os, validate_path,
-                                     window_property, xbmc, xbmcvfs)
+                                     TEMP_FOLDERPATH, condition, infolabel,
+                                     json_call, log, os, skin_string, 
+                                     validate_path, window_property, xbmc, 
+                                     xbmcvfs)
 
 
 class ImageEditor():
@@ -35,14 +36,14 @@ class ImageEditor():
             else:
                 path = f'Container({source}).ListItem'
             for key in clearlogos:
-                url = xbmc.getInfoLabel(f'{path}.Art({key})')
+                url = infolabel(f'{path}.Art({key})')
                 if url:
                     clearlogos[key] = url
         # lookup urls in table or run _crop_image() and write values to table
         lookup_tree = ET.parse(self.lookup)
         root = lookup_tree.getroot()
         for key, value in list(clearlogos.items()):
-            self.id = xbmc.getInfoLabel(f'{path}.dbid')
+            self.id = infolabel(f'{path}.dbid')
             self.destination, self.height, self.color, self.luminosity = False, False, False, False
             name = reporting_key or key
             if value:
@@ -73,7 +74,7 @@ class ImageEditor():
             if return_color:
                 reporting(key=f'{name}_cropped-color', set=self.color)
                 reporting(key=f'{name}_cropped-luminosity',
-                            set=self.luminosity)
+                          set=self.luminosity)
 
     def return_luminosity(self, rgb):
         # Credit to Mark Ransom for luminosity calculation
@@ -181,8 +182,9 @@ class ImageEditor():
         try:
             palette_index = color_counts[0][1]
         except IndexError as error:
-             log(f'ImageEditor: Error - could not calculate dominant colour for {infolabel("ListItem.Label")} --> {error}', force=True)
-             return (False, False)
+            log(
+                f'ImageEditor: Error - could not calculate dominant colour for {infolabel("ListItem.Label")} --> {error}', force=True)
+            return (False, False)
         else:
             # Convert to rgb and calculate luminosity
             dominant = palette[palette_index*3:palette_index*3+3]
@@ -214,19 +216,18 @@ class ImageEditor():
 class SlideshowMonitor:
     def __init__(self):
         self.refresh_count = self.refresh_interval = self._get_refresh_interval()
-        self.fetch_count = self.fetch_interval = self.refresh_interval * 30
-
+        self.fetch_count = self.fetch_interval = self.refresh_interval * 40
+       
     def background_slideshow(self):
         # Check if refresh interval has been adjusted in skin settings
         if self.refresh_interval != self._get_refresh_interval():
-            self.refresh_count = self.refresh_interval = self._get_refresh_interval()
-            self.fetch_count = self.fetch_interval = self.refresh_interval * 30
-        # Fech art every 30 x refresh interval
+            self.refresh_interval = self._get_refresh_interval()
+            self.fetch_interval = self.refresh_interval * 40
+        # Fech art every 40 x refresh interval
         if self.fetch_count >= self.fetch_interval:
             log('Monitor fetching background art')
             self.art = self._get_art()
-            self.fetch_interval = len(self.art) if (len(self.art) < 30) else self.fetch_interval
-            self.fetch_count = 0
+            self.fetch_count = 1
         else:
             self.fetch_count += 1
         # Set art every refresh interval
@@ -241,28 +242,58 @@ class SlideshowMonitor:
                 self._set_art('Background_Videos', self.art['videos'])
             if self.art.get('artists'):
                 self._set_art('Background_Artists', self.art['artists'])
-            self.refresh_count = 0
+            if self.art.get('custom'):
+                self._set_art('Background_Custom', self.art['custom'])
+            self.refresh_count = 1
         else:
             self.refresh_count += 1
 
     def _get_refresh_interval(self):
         try:
-            self.refresh_interval = int(
+            self.refresh_interval_check = int(
                 infolabel('Skin.String(Background_Interval)')
             )
         except ValueError:
-            self.refresh_interval = 10
-        return self.refresh_interval
+            self.refresh_interval_check = 10
+        return self.refresh_interval_check
 
     def _get_art(self):
         self.art = {}
         self.art['movies'] = []
         self.art['tvshows'] = []
         self.art['artists'] = []
-        self.art['musicvideos'] = []
         self.art['videos'] = []
         self.art['all'] = []
-        for item in ['movies', 'tvshows', 'artists', 'musicvideos']:
+        self.art['custom'] = []
+        
+        # Populate custom path/playlist slideshow if selected in skin settings
+        custom_path = infolabel(
+            'Skin.String(Background_Slideshow_Custom_Path)')
+        if custom_path and condition('Skin.String(Background_Slideshow,Custom)'):
+            query = json_call('Files.GetDirectory',
+                              params={'directory': custom_path},
+                              sort={'method': 'random'},
+                              limit=40, parent='get_directory')
+
+            try:
+                for result in query['result']['files']:
+                    type = result['type']
+                    id = result['id']
+                    dbtype = 'Video' if type != 'artist' else 'Audio'
+                    query = json_call(f'{dbtype}Library.Get{type}Details',
+                                      params={'properties': [
+                                          'art'], f'{type}id': id},
+                                      parent='get_item_details')
+                    result = query['result'][f'{type}details']
+                    if result['art'].get('fanart'):
+                        data = {'title': result.get('label', '')}
+                        data.update(result['art'])
+                        self.art['custom'].append(data)
+            except KeyError:
+                pass
+
+        # Populate global slidshows
+        for item in ['movies', 'tvshows', 'artists']:
             dbtype = 'Video' if item != 'artists' else 'Audio'
             query = json_call(f'{dbtype}Library.Get{item}', properties=['art'], sort={
                               'method': 'random'}, limit=40, parent='get_art')
@@ -274,6 +305,7 @@ class SlideshowMonitor:
                         self.art[item].append(data)
             except KeyError:
                 pass
+
         self.art['videos'] = self.art['movies'] + self.art['tvshows']
         for list in self.art:
             if self.art[list]:
@@ -282,8 +314,10 @@ class SlideshowMonitor:
 
     def _set_art(self, key, items):
         art = random.choice(items)
+        art.pop('set.fanart', None)
         # fanart = self._url_decode_path(art.get('fanart'))
-        fanarts = {key: value for (key, value) in art.items() if 'fanart' in key}
+        fanarts = {key: value for (
+            key, value) in art.items() if 'fanart' in key}
         fanart = random.choice(list(fanarts.values()))
         fanart = self._url_decode_path(fanart)
         window_property(f'{key}_Fanart', set=fanart)
