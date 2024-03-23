@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.videolinks"
+       name="Video link scraper"
+       version="1.0.1"
+       provider-name="black_eagle">
+  <requires>
+      <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">This script fetches any music video links from theaudiodb and links them with songs you have in your database already[CR]</summary>
+    <description lang="en_GB">Search TheAudioDB for video links for each artist in your music database and add any matching links so you can watch the videos for songs you already have in your music db.  Needs skin support and a working youtube plugin</description>
+    <news>
+    v1.0.1 - Improve error handling, update URL's for new youtube plugin format
+    </news>
+    <assets>
+    <icon>resources/art/icon.png</icon>
+    <fanart>resources/art/fanart.jpg</fanart>
+  </assets>
+  </extension>
+  
+</addon>
