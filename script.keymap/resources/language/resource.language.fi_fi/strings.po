@@ -1,0 +1,1288 @@
+# Kodi Media Center language file
+# Addon Name: Keymap Editor
+# Addon id: script.keymap
+# Addon Provider: takoi|pkscout
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-10-11 10:11+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-keymap/fi_fi/>\n"
+"Language: fi_fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.0.2\n"
+
+msgctxt "Addon Summary"
+msgid "An editor for keymap files"
+msgstr "Editori keymap-näppäinmääritystiedostoille"
+
+msgctxt "Addon Description"
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgstr "Keymap-näppäinmäärityseditori on graafinen käyttöliittymä kaukosäätimien, näppäimistöjen ja muiden Kodin tukemien syöttölaitteiden näppäinten määritykseen. Huomioi: Käyttäjän aiempien näppäinmääritystiedostojen nimiin lisätään .bak-pääte."
+
+# Text Messages
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr "Keymap-näppäinmäärityseditori"
+
+msgctxt "#30001"
+msgid "Failed to remove old keymap file"
+msgstr "Vanhan keymap-näppäinmääritystiedoston poisto epäonnistui"
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr "Paina nyt näppäintä, jonka haluat määrittää"
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr "Palauta oletukset"
+
+msgctxt "#30005"
+msgid "Save"
+msgstr "Tallenna"
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr "Hylätäänkö muutokset?"
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr "Valitse ikkuna pikanäppäinten määrittämiseksi"
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr "Valitse toimintoluokka"
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr "Määritä näppäin valitsemalla toiminto"
+
+msgctxt "#30010"
+msgid "Timeout in %.0f seconds..."
+msgstr "Aikakatkaistaan %.0f sekunnin kuluttua..."
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr "Muokkaa näppäintä"
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr "Poista"
+
+# empty strings from id 30013 to 30099
+# Window names
+msgctxt "#30100"
+msgid "Global"
+msgstr "Järjestelmänlaajuinen"
+
+msgctxt "#30101"
+msgid "Fullscreen Video"
+msgstr "Koko ruudun video"
+
+msgctxt "#30102"
+msgid "Fullscreen Live TV"
+msgstr "Koko ruudun televisio"
+
+msgctxt "#30103"
+msgid "Fullscreen Radio"
+msgstr "Kuko ruudun radio"
+
+msgctxt "#30104"
+msgid "Fullscreen Game"
+msgstr "Koko ruudun peli"
+
+msgctxt "#30105"
+msgid "Home"
+msgstr "Aloitusnäyttö"
+
+msgctxt "#30106"
+msgid "Programs"
+msgstr "Ohjelmat"
+
+msgctxt "#30107"
+msgid "Videos"
+msgstr "Videot"
+
+msgctxt "#30108"
+msgid "Music"
+msgstr "Musiikki"
+
+msgctxt "#30109"
+msgid "Pictures"
+msgstr "Kuvat"
+
+msgctxt "#30110"
+msgid "PVR"
+msgstr "Televisio"
+
+msgctxt "#30111"
+msgid "Filemanager"
+msgstr "Tiedostonhallinta"
+
+msgctxt "#30112"
+msgid "Virtual Keyboard"
+msgstr "Virtuaalinäppäimistö"
+
+msgctxt "#30113"
+msgid "Player Controls"
+msgstr "Toiston ohjaimet"
+
+msgctxt "#30114"
+msgid "Seek bar"
+msgstr "Toistopalkki"
+
+msgctxt "#30115"
+msgid "Music OSD"
+msgstr "Musiikin kuvaruutuvalikko"
+
+msgctxt "#30116"
+msgid "Video OSD Settings"
+msgstr "Videotoiston kuvaruutuvalikon asetukset"
+
+msgctxt "#30117"
+msgid "Audio OSD Settings"
+msgstr "Äänitoiston kuvaruutuvalikon asetukset"
+
+msgctxt "#30118"
+msgid "Visualisation"
+msgstr "Visualisointi"
+
+msgctxt "#30119"
+msgid "Slideshow"
+msgstr "Kuvaesitys"
+
+# empty strings from id 30120 to 30199
+# Navigation
+msgctxt "#30200"
+msgid "Move Left"
+msgstr "Siirry vasemmalle"
+
+msgctxt "#30201"
+msgid "Move Right"
+msgstr "Siirry oikealle"
+
+msgctxt "#30202"
+msgid "Move Up"
+msgstr "Siirry ylös"
+
+msgctxt "#30203"
+msgid "Move Down"
+msgstr "Siirry alas"
+
+msgctxt "#30204"
+msgid "Page Up"
+msgstr "Sivu ylös"
+
+msgctxt "#30205"
+msgid "Page Down"
+msgstr "Sivu alas"
+
+msgctxt "#30206"
+msgid "Select Item"
+msgstr "Valitse kohde"
+
+msgctxt "#30207"
+msgid "Highlight Item"
+msgstr "Korosta kohde"
+
+msgctxt "#30208"
+msgid "Parent Directory"
+msgstr "Yläkansio"
+
+msgctxt "#30209"
+msgid "Back"
+msgstr "Takaisin"
+
+msgctxt "#30210"
+msgid "Previous Menu"
+msgstr "Edellinen valikko"
+
+msgctxt "#30211"
+msgid "Show Info"
+msgstr "Näytä tiedot"
+
+msgctxt "#30212"
+msgid "Context Menu"
+msgstr "Sisältövalikko"
+
+msgctxt "#30213"
+msgid "Menu"
+msgstr "Valikko"
+
+msgctxt "#30214"
+msgid "First Page"
+msgstr "Ensimmäinen sivu"
+
+msgctxt "#30215"
+msgid "Last Page"
+msgstr "Viimeinen sivu"
+
+msgctxt "#30216"
+msgid "Next Letter"
+msgstr "Seuraava kirjain"
+
+msgctxt "#30217"
+msgid "Previous Letter"
+msgstr "Edellinen kirjain"
+
+msgctxt "#30218"
+msgid "Scroll Up"
+msgstr "Vieritä ylös"
+
+msgctxt "#30219"
+msgid "Scroll Down"
+msgstr "Vieritä alas"
+
+msgctxt "#30220"
+msgid "Cursor Left"
+msgstr "Osoitin vasemmalle"
+
+msgctxt "#30221"
+msgid "Cursor Right"
+msgstr "Osoitin oikealle"
+
+# empty strings from id 30222 to 30299
+# Playback
+msgctxt "#30300"
+msgid "Play"
+msgstr "Toista"
+
+msgctxt "#30301"
+msgid "Pause"
+msgstr "Tauota"
+
+msgctxt "#30302"
+msgid "Play/Pause"
+msgstr "Toista/tauota"
+
+msgctxt "#30303"
+msgid "Stop"
+msgstr "Pysäytä"
+
+msgctxt "#30304"
+msgid "Next"
+msgstr "Seuraava"
+
+msgctxt "#30305"
+msgid "Previous"
+msgstr "Edellinen"
+
+msgctxt "#30306"
+msgid "Fast Forward"
+msgstr "Eteenpäin"
+
+msgctxt "#30307"
+msgid "Rewind"
+msgstr "Taaksepäin"
+
+msgctxt "#30308"
+msgid "Small Step Back"
+msgstr "Siirry hieman taaksepäin"
+
+msgctxt "#30309"
+msgid "Step Forward"
+msgstr "Siirry eteenpäin"
+
+msgctxt "#30310"
+msgid "Step Back"
+msgstr "Siirry taaksepäin"
+
+msgctxt "#30311"
+msgid "Big Step Forward"
+msgstr "Siirry reilusti eteenpäin"
+
+msgctxt "#30312"
+msgid "Big Step Back"
+msgstr "Siirry reilusti taaksepäin"
+
+msgctxt "#30313"
+msgid "Next Chapter or Big Step Forward"
+msgstr "Seuraava kappale tai reilu siirto eteenpäin"
+
+msgctxt "#30314"
+msgid "Previous Chapter or Big Step Back"
+msgstr "Edellinen kappale tai reilu siirto taaksepäin"
+
+msgctxt "#30315"
+msgid "Show OSD"
+msgstr "Näytä kuvaruutuvalikko"
+
+msgctxt "#30316"
+msgid "Show current play time"
+msgstr "Näytä nykyinen toistoaika"
+
+msgctxt "#30317"
+msgid "Show Playlist"
+msgstr "Näytä toistolista"
+
+msgctxt "#30318"
+msgid "Toggle Fullscreen"
+msgstr "Kytke koko ruutu"
+
+msgctxt "#30319"
+msgid "Change Aspect Ratio"
+msgstr "Vaihda kuvasuhdetta"
+
+msgctxt "#30320"
+msgid "Go to DVD Video Menu"
+msgstr "Avaa videolevyn valikko"
+
+msgctxt "#30321"
+msgid "Toggle Repeat"
+msgstr "Kytke jatkuva toisto"
+
+msgctxt "#30322"
+msgid "Repeat One"
+msgstr "Toista yhtä"
+
+msgctxt "#30323"
+msgid "Repeat All"
+msgstr "Toista kaikkia"
+
+msgctxt "#30324"
+msgid "Repeat Off"
+msgstr "Ei toistoa"
+
+msgctxt "#30325"
+msgid "Toggle Random"
+msgstr "Kytke satunnaistoisto"
+
+msgctxt "#30326"
+msgid "Random On"
+msgstr "Satunnaistoisto käytössä"
+
+msgctxt "#30327"
+msgid "Random Off"
+msgstr "Ei satunnaistoistoa"
+
+msgctxt "#30328"
+msgid "Playback Speed Faster"
+msgstr "Nopeuta toistonopeutta"
+
+msgctxt "#30329"
+msgid "Playback Speed Slower"
+msgstr "Hidasta toistonopeutta"
+
+msgctxt "#30330"
+msgid "Create Bookmark"
+msgstr "Luo kirjanmerkki"
+
+msgctxt "#30331"
+msgid "Create Episode Bookmark"
+msgstr "Luo jakson kirjanmerkki"
+
+msgctxt "#30332"
+msgid "Toggle 3D/Stereoscopic mode"
+msgstr "Kytke 3D-/stereoskoppinen tila"
+
+msgctxt "#30333"
+msgid "Switch Player"
+msgstr "Vaihda soitinta"
+
+msgctxt "#30334"
+msgid "Play Next"
+msgstr "Toista seuraava"
+
+msgctxt "#30335"
+msgid "Select Program"
+msgstr "Valitse ohjelma"
+
+msgctxt "#30336"
+msgid "Select Resolution"
+msgstr "Valitse resoluutio"
+
+msgctxt "#30337"
+msgid "Shift Video Up"
+msgstr "Siirrä videota ylemmäs"
+
+msgctxt "#30338"
+msgid "Shift Video Down"
+msgstr "Siirrä videota alemmas"
+
+msgctxt "#30339"
+msgid "Show Time"
+msgstr "Näytä aika"
+
+msgctxt "#30340"
+msgid "Next Scene"
+msgstr "Seuraava kohtaus"
+
+msgctxt "#30341"
+msgid "Previous Scene"
+msgstr "Edellinen kohtaus"
+
+msgctxt "#30342"
+msgid "Next Video Stream"
+msgstr "Seuraava videovirta"
+
+msgctxt "#30343"
+msgid "Toggle HDHR"
+msgstr "Kytke HDHR"
+
+msgctxt "#30344"
+msgid "Cycle 3D Mode"
+msgstr "Kierrätä 3D-tiloja"
+
+msgctxt "#30345"
+msgid "Next 3D Mode"
+msgstr "Seuraava 3D-tila"
+
+msgctxt "#30346"
+msgid "Previous 3D Mode"
+msgstr "Edellinen 3D-tila"
+
+msgctxt "#30347"
+msgid "3D Mono"
+msgstr "3D-mono"
+
+msgctxt "#30348"
+msgid "Tempo Up"
+msgstr "Nopeuta tempoa"
+
+msgctxt "#30349"
+msgid "Tempo Down"
+msgstr "Hidasta tempoa"
+
+# empty strings from id 30348 to 30399
+# Audio
+msgctxt "#30400"
+msgid "Mute"
+msgstr "Mykistä"
+
+msgctxt "#30401"
+msgid "Volume Up"
+msgstr "Korota äänenvoimakkuutta"
+
+msgctxt "#30402"
+msgid "Volume Down"
+msgstr "Alenna äänenvoimakkuutta"
+
+msgctxt "#30403"
+msgid "Next Language"
+msgstr "Seuraava kieli"
+
+msgctxt "#30404"
+msgid "Delay"
+msgstr "Viive"
+
+msgctxt "#30405"
+msgid "Delay Minus"
+msgstr "Lyhennä viivettä"
+
+msgctxt "#30406"
+msgid "Delay Plus"
+msgstr "Pidennä viivettä"
+
+msgctxt "#30407"
+msgid "Toggle Digital/Analog"
+msgstr "Kytke digitaalinen/analoginen"
+
+msgctxt "#30408"
+msgid "Volume Amp Up"
+msgstr "Korota äänen vahvistusta"
+
+msgctxt "#30409"
+msgid "Volume Amp Down"
+msgstr "Alenna äänen vahvistusta"
+
+msgctxt "#30410"
+msgid "Volume Amplification"
+msgstr "Äänen vahvistus"
+
+# empty strings from id 30411 to 30499
+# Pictures
+msgctxt "#30500"
+msgid "Next Picture"
+msgstr "Seuraava kuva"
+
+msgctxt "#30501"
+msgid "Previous Picture"
+msgstr "Edellinen kuva"
+
+msgctxt "#30502"
+msgid "Rotate Picture"
+msgstr "Käännä kuvaa myötäpäivään"
+
+msgctxt "#30503"
+msgid "Rotate Picture CCW"
+msgstr "Käännä kuvaa vastapäivään"
+
+msgctxt "#30504"
+msgid "Zoom Out"
+msgstr "Loitonna"
+
+msgctxt "#30505"
+msgid "Zoom In "
+msgstr "Lähennä "
+
+msgctxt "#30506"
+msgid "Zoom level Normal"
+msgstr "Palauta zoomaustaso"
+
+msgctxt "#30507"
+msgid "Zoom level 1"
+msgstr "Zoomaustaso 1"
+
+msgctxt "#30508"
+msgid "Zoom level 2"
+msgstr "Zoomaustaso 2"
+
+msgctxt "#30509"
+msgid "Zoom level 3"
+msgstr "Zoomaustaso 3"
+
+msgctxt "#30510"
+msgid "Zoom level 4"
+msgstr "Zoomaustaso 4"
+
+msgctxt "#30511"
+msgid "Zoom level 5"
+msgstr "Zoomaustaso 5"
+
+msgctxt "#30512"
+msgid "Zoom level 6"
+msgstr "Zoomaustaso 6"
+
+msgctxt "#30513"
+msgid "Zoom level 7"
+msgstr "Zoomaustaso 7"
+
+msgctxt "#30514"
+msgid "Zoom level 8"
+msgstr "Zoomaustaso 8"
+
+msgctxt "#30515"
+msgid "Zoom level 9"
+msgstr "Zoomaustaso 9"
+
+# empty strings from id 30516 to 30599
+# Subtitle
+msgctxt "#30600"
+msgid "Show Subtitles"
+msgstr "Näytä tekstitys"
+
+msgctxt "#30601"
+msgid "Next Subtitle"
+msgstr "Seuraava tekstitys"
+
+msgctxt "#30602"
+msgid "Browse Subtitle"
+msgstr "Valitse tekstitys"
+
+msgctxt "#30603"
+msgid "Cycle Subtitle"
+msgstr "Kierrätä tekstityksiä"
+
+msgctxt "#30604"
+msgid "Delay"
+msgstr "Viive"
+
+msgctxt "#30605"
+msgid "Delay Minus"
+msgstr "Lyhennä viivettä"
+
+msgctxt "#30606"
+msgid "Delay Plus"
+msgstr "Pidennä viivettä"
+
+msgctxt "#30607"
+msgid "Align"
+msgstr "Tasaa"
+
+msgctxt "#30608"
+msgid "Shift Subtitle Up"
+msgstr "Siirrä tekstitystä ylemmäs"
+
+msgctxt "#30609"
+msgid "Shift Subtitle Down"
+msgstr "Siirrä tekstitystä alemmas"
+
+# empty strings from id 30610 to 30699
+# PVR
+msgctxt "#30700"
+msgid "Channel Up"
+msgstr "Kanava ylös"
+
+msgctxt "#30701"
+msgid "Channel Down"
+msgstr "Kanava alas"
+
+msgctxt "#30702"
+msgid "Previous channel group"
+msgstr "Edellinen kanavaryhmä"
+
+msgctxt "#30703"
+msgid "Next channel group"
+msgstr "Seuraava kanavaryhmä"
+
+msgctxt "#30704"
+msgid "PVR Play"
+msgstr "Television toisto"
+
+msgctxt "#30705"
+msgid "PVR Play TV"
+msgstr "Avaa televisio"
+
+msgctxt "#30706"
+msgid "PVR Play Radio"
+msgstr "Avaa radio"
+
+msgctxt "#30707"
+msgid "Record"
+msgstr "Tallenna"
+
+msgctxt "#30708"
+msgid "Toggle Commskip"
+msgstr "Kytke mainosohitus"
+
+msgctxt "#30709"
+msgid "PVR Show Timer Rule"
+msgstr "Näytä television ajastussääntö"
+
+msgctxt "#30710"
+msgid "Channel Number Separator"
+msgstr "Kanavanumeroiden erotin"
+
+# empty strings from id 30711 to 30799
+# Item Actions
+msgctxt "#30800"
+msgid "Queue item"
+msgstr "Lisää kohde jonoon"
+
+msgctxt "#30801"
+msgid "Delete item"
+msgstr "Poista kohde"
+
+msgctxt "#30802"
+msgid "Copy item"
+msgstr "Kopioi kohde"
+
+msgctxt "#30803"
+msgid "Move item"
+msgstr "Siirrä kohdetta"
+
+msgctxt "#30804"
+msgid "Move item up"
+msgstr "Siirrä kohdetta ylemmäs"
+
+msgctxt "#30805"
+msgid "Move item down"
+msgstr "Siirrä kohdetta alemmas"
+
+msgctxt "#30806"
+msgid "Rename item"
+msgstr "Uudelleennimeä kohde"
+
+msgctxt "#30807"
+msgid "Scan item"
+msgstr "Tutki kohde"
+
+msgctxt "#30808"
+msgid "Toggle Watched"
+msgstr "Kytke katselutila"
+
+msgctxt "#30809"
+msgid "Increase Rating"
+msgstr "Korota arviota"
+
+msgctxt "#30810"
+msgid "Decrease Rating"
+msgstr "Alenna arviota"
+
+msgctxt "#30811"
+msgid "Set Rating"
+msgstr "Aseta arvio"
+
+# empty strings from id 30812 to 30899
+# System
+msgctxt "#30900"
+msgid "Toggle Fullscreen"
+msgstr "Kytke kokoruututila"
+
+msgctxt "#30901"
+msgid "Minimise"
+msgstr "Pienennä"
+
+msgctxt "#30902"
+msgid "Shutdown"
+msgstr "Sammuta"
+
+msgctxt "#30903"
+msgid "Reboot"
+msgstr "Käynnistä uudelleen"
+
+msgctxt "#30904"
+msgid "Hibernate"
+msgstr "Lepotila"
+
+msgctxt "#30905"
+msgid "Suspend"
+msgstr "Valmiustila"
+
+msgctxt "#30906"
+msgid "Restart Kodi"
+msgstr "Käynnistä Kodi uudelleen"
+
+msgctxt "#30907"
+msgid "Log off"
+msgstr "Kirjaudu ulos"
+
+msgctxt "#30908"
+msgid "Quit Kodi"
+msgstr "Sulje Kodi"
+
+msgctxt "#30909"
+msgid "Reset Settings"
+msgstr "Palauta asetukset"
+
+msgctxt "#30910"
+msgid "Change Settings Level"
+msgstr "Vaihda asetusten laajuutta"
+
+msgctxt "#30911"
+msgid "Toggle Font"
+msgstr "Kytke fontti"
+
+# empty strings from id 30912 to 30999
+# Virtual Keyboard
+msgctxt "#31000"
+msgid "Enter"
+msgstr "Enter"
+
+msgctxt "#31001"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#31002"
+msgid "Symbols"
+msgstr "Symbolit"
+
+msgctxt "#31003"
+msgid "Backspace"
+msgstr "Askelpalautin"
+
+msgctxt "#31004"
+msgid "0"
+msgstr "0"
+
+msgctxt "#31005"
+msgid "1"
+msgstr "1"
+
+msgctxt "#31006"
+msgid "2"
+msgstr "2"
+
+msgctxt "#31007"
+msgid "3"
+msgstr "3"
+
+msgctxt "#31008"
+msgid "4"
+msgstr "4"
+
+msgctxt "#31009"
+msgid "5"
+msgstr "5"
+
+msgctxt "#31010"
+msgid "6"
+msgstr "6"
+
+msgctxt "#31011"
+msgid "7"
+msgstr "7"
+
+msgctxt "#31012"
+msgid "8"
+msgstr "8"
+
+msgctxt "#31013"
+msgid "9"
+msgstr "9"
+
+msgctxt "#31014"
+msgid "Teletext Red"
+msgstr "Teksti-TV punainen"
+
+msgctxt "#31015"
+msgid "Teletext Green"
+msgstr "Teksti-TV vihreä"
+
+msgctxt "#31016"
+msgid "Teletext Yellow"
+msgstr "Teksti-TV keltainen"
+
+msgctxt "#31017"
+msgid "Teletext Blue"
+msgstr "Teksti-TV sininen"
+
+# empty strings from id 31018 to 31099
+# Other
+msgctxt "#31100"
+msgid "Update Video Library"
+msgstr "Päivitä videokirjasto"
+
+msgctxt "#31101"
+msgid "Update Music Library"
+msgstr "Päivitä musiikkikirjasto"
+
+msgctxt "#31102"
+msgid "Clean Video Library"
+msgstr "Siivoa videokirjasto"
+
+msgctxt "#31103"
+msgid "Clean Music Library"
+msgstr "Siivoa musiikkikirjasto"
+
+msgctxt "#31104"
+msgid "Player Process Info"
+msgstr "Soitinprosessin tiedot"
+
+msgctxt "#31105"
+msgid "Player debug"
+msgstr "Soittimen vianselvitys"
+
+msgctxt "#31106"
+msgid "Take screenshot"
+msgstr "Ota kuvankaappaus"
+
+msgctxt "#31107"
+msgid "Reload Keymaps"
+msgstr "Lataa keymap-näppäinmääritys uudelleen"
+
+msgctxt "#31108"
+msgid "Increase PAR"
+msgstr "Kasvata PAR-arvoa"
+
+msgctxt "#31109"
+msgid "Decrease PAR"
+msgstr "Pienennä PAR-arvoa"
+
+msgctxt "#31110"
+msgid "Change resolution"
+msgstr "Vaihda resoluutiota"
+
+msgctxt "#31111"
+msgid "Next calibration"
+msgstr "Seuraava kohdistus"
+
+msgctxt "#31112"
+msgid "Reset calibration"
+msgstr "Palauta kohdistus"
+
+msgctxt "#31113"
+msgid "Show current visualisation preset"
+msgstr "Näytä visualisoinnin nykyinen esiasetus"
+
+msgctxt "#31114"
+msgid "Show visualisation preset list"
+msgstr "Näytä visualisoinnin esiasetukset"
+
+msgctxt "#31115"
+msgid "Next visualisation preset"
+msgstr "Visualisoinnin seuraava esiasetus"
+
+msgctxt "#31116"
+msgid "Previous visualisation preset"
+msgstr "Visualisoinnin edellinen esiasetus"
+
+msgctxt "#31117"
+msgid "Lock current visualisation preset"
+msgstr "Lukitse visualisoinnin nykyinen esiasetus"
+
+msgctxt "#31118"
+msgid "Switch to a new random preset"
+msgstr "Vaihda satunnaiseen esiastukseen"
+
+# empty strings from id 31119 to 31199
+# Activate Window
+msgctxt "#31200"
+msgid "Settings"
+msgstr "Asetukset"
+
+msgctxt "#31201"
+msgid "Player Settings"
+msgstr "Soittimen asetukset"
+
+msgctxt "#31202"
+msgid "Programs Settings"
+msgstr "Ohjelma-asetukset"
+
+msgctxt "#31203"
+msgid "Information Provider Settings"
+msgstr "Tietolähteiden asetukset"
+
+msgctxt "#31204"
+msgid "Interface Settings"
+msgstr "Käyttöliittymän asetukset"
+
+msgctxt "#31205"
+msgid "System Settings"
+msgstr "Järjestelmän asetukset"
+
+msgctxt "#31206"
+msgid "Media Settings"
+msgstr "Median asetukset"
+
+msgctxt "#31207"
+msgid "Service Settings"
+msgstr "Palveluiden asetukset"
+
+msgctxt "#31208"
+msgid "Appearance Settings"
+msgstr "Ulkoasun asetukset"
+
+msgctxt "#31209"
+msgid "Peripherals Settings"
+msgstr "Oheislaitteiden asetukset"
+
+msgctxt "#31210"
+msgid "Library Export Settings"
+msgstr "Kirjaston viennin asetukset"
+
+msgctxt "#31211"
+msgid "PVR Settings"
+msgstr "Television asetukset"
+
+msgctxt "#31212"
+msgid "PVR Recording Settings"
+msgstr "Television tallennusasetukset"
+
+msgctxt "#31213"
+msgid "Game Settings"
+msgstr "Pelien asetukset"
+
+msgctxt "#31214"
+msgid "Advanced Game Settings"
+msgstr "Pelien lisäasetukset"
+
+msgctxt "#31215"
+msgid "Game Controllers"
+msgstr "Peliohjaimet"
+
+msgctxt "#31216"
+msgid "Game Video Filters"
+msgstr "Pelin videosuodattimet"
+
+msgctxt "#31217"
+msgid "Game Video Rotation"
+msgstr "Pelin ruudun kääntö"
+
+msgctxt "#31218"
+msgid "Game View Mode"
+msgstr "Pelin näyttötila"
+
+msgctxt "#31219"
+msgid "Skin Settings"
+msgstr "Ulkoasukohtaiset asetukset"
+
+msgctxt "#31220"
+msgid "Addon Browser"
+msgstr "Lisäosien selaus"
+
+msgctxt "#31221"
+msgid "Addon Settings"
+msgstr "Lisäosan asetukset"
+
+msgctxt "#31222"
+msgid "Profile Settings"
+msgstr "Profiiliasetukset"
+
+msgctxt "#31223"
+msgid "Lock Settings"
+msgstr "Lukitusasetukset"
+
+msgctxt "#31224"
+msgid "Content Settings"
+msgstr "Sisältöasetukset"
+
+msgctxt "#31225"
+msgid "Profiles"
+msgstr "Profiilit"
+
+msgctxt "#31226"
+msgid "System info"
+msgstr "Järjestelmätiedot"
+
+msgctxt "#31227"
+msgid "Test Pattern"
+msgstr "Testikuvio"
+
+msgctxt "#31228"
+msgid "Screen Calibration"
+msgstr "Näytön kohdistus"
+
+msgctxt "#31229"
+msgid "Login Screen"
+msgstr "Kirjautumisruutu"
+
+msgctxt "#31230"
+msgid "File Browser"
+msgstr "Tiedostoselain"
+
+msgctxt "#31231"
+msgid "Network Setup"
+msgstr "Verkon määritys"
+
+msgctxt "#31232"
+msgid "Access Points"
+msgstr "Tukiasema"
+
+msgctxt "#31233"
+msgid "Mediasource Dialog"
+msgstr "Medialähderuutu"
+
+msgctxt "#31234"
+msgid "Start"
+msgstr "Aloitus"
+
+msgctxt "#31235"
+msgid "Favourites"
+msgstr "Suosikit"
+
+msgctxt "#31236"
+msgid "Context Menu"
+msgstr "Sisältövalikko"
+
+msgctxt "#31237"
+msgid "Media filter"
+msgstr "Median suodatus"
+
+msgctxt "#31238"
+msgid "Visualisation Preset List"
+msgstr "Visualisoinnin esiastukset"
+
+msgctxt "#31239"
+msgid "Smart Playlist Editor"
+msgstr "Älätoistolistan muokkaus"
+
+msgctxt "#31240"
+msgid "Smart Playlist Rule"
+msgstr "Älytoistolistan sääntö"
+
+msgctxt "#31241"
+msgid "Shutdown Menu"
+msgstr "Sammutusvalikko"
+
+msgctxt "#31242"
+msgid "Fullscreen Info"
+msgstr "Koko ruudun tiedot"
+
+msgctxt "#31243"
+msgid "Subtitle Search"
+msgstr "Tekstityshaku"
+
+msgctxt "#31244"
+msgid "Weather"
+msgstr "Sää"
+
+msgctxt "#31245"
+msgid "Screensaver"
+msgstr "Näytönsäästäjä"
+
+msgctxt "#31246"
+msgid "Picture Info"
+msgstr "Kuvan tiedot"
+
+msgctxt "#31247"
+msgid "Addon Info"
+msgstr "Lisäosan tiedot"
+
+# empty string 31248
+msgctxt "#31249"
+msgid "Music Playlist"
+msgstr "Musiikkitoistolista"
+
+msgctxt "#31250"
+msgid "Music Playlist Editor"
+msgstr "Musiikkitoistolistan muokkaus"
+
+msgctxt "#31251"
+msgid "Music Info"
+msgstr "Musiikin tiedot"
+
+msgctxt "#31252"
+msgid "Song Info"
+msgstr "Kappaleen tiedot"
+
+msgctxt "#31253"
+msgid "Movie Info"
+msgstr "Elokuvan tiedot"
+
+msgctxt "#31254"
+msgid "Player Process Info"
+msgstr "Soitinprosessin tiedot"
+
+msgctxt "#31255"
+msgid "Video Menu"
+msgstr "Videon valikko"
+
+msgctxt "#31256"
+msgid "Video OSD"
+msgstr "Videon kuvaruutuvalikko"
+
+msgctxt "#31257"
+msgid "Colour Management Settings"
+msgstr "Värinhallinnan asetukset"
+
+msgctxt "#31258"
+msgid "Subtitle Settings"
+msgstr "Tekstitysten asetukset"
+
+msgctxt "#31259"
+msgid "Video Time Seek"
+msgstr "Videotoiston aikahaku"
+
+msgctxt "#31260"
+msgid "Video Bookmarks"
+msgstr "Videon kirjanmerkit"
+
+msgctxt "#31261"
+msgid "Video Playlist"
+msgstr "Videotoistolista"
+
+msgctxt "#31262"
+msgid "PVR Guide Info"
+msgstr "Television ohjelmaopas"
+
+msgctxt "#31263"
+msgid "PVR Recording Info"
+msgstr "Televisiotallenteen tiedot"
+
+msgctxt "#31264"
+msgid "PVR Timer Setting"
+msgstr "Television ajastusastukset"
+
+msgctxt "#31265"
+msgid "PVR Group Manager"
+msgstr "Television ryhmien hallinta"
+
+msgctxt "#31266"
+msgid "PVR Channel Manager"
+msgstr "Televisiokanavien hallinta"
+
+msgctxt "#31267"
+msgid "PVR Guide Search"
+msgstr "Television ohjelmaopashaku"
+
+msgctxt "#31268"
+msgid "PVR Channel Scan"
+msgstr "Television kanavahaku"
+
+msgctxt "#31269"
+msgid "PVR Update Progress"
+msgstr "Television päivityksen edistyminen"
+
+msgctxt "#31270"
+msgid "PVR OSD Channels"
+msgstr "Television kuvaruutuvalikon kanavat"
+
+msgctxt "#31271"
+msgid "PVR OSD Guide"
+msgstr "Television kuvaruutuvalikon ohjelmaopas"
+
+msgctxt "#31272"
+msgid "TV Channels"
+msgstr "Televisiokanavat"
+
+msgctxt "#31273"
+msgid "TV Recordings"
+msgstr "Televisiotallenteet"
+
+msgctxt "#31274"
+msgid "TV Guide"
+msgstr "Television ohjelmaopas"
+
+msgctxt "#31275"
+msgid "TV Timers"
+msgstr "Television ajastukset"
+
+msgctxt "#31276"
+msgid "TV Search"
+msgstr "Televisiohaku"
+
+msgctxt "#31277"
+msgid "Radio Channels"
+msgstr "Radiokanavat"
+
+msgctxt "#31278"
+msgid "Radio Recordings"
+msgstr "Radiotallenteet"
+
+msgctxt "#31279"
+msgid "Radio Guide"
+msgstr "Radion ohjelmaopas"
+
+msgctxt "#31280"
+msgid "Radio Timers"
+msgstr "Radion ajastukset"
+
+msgctxt "#31281"
+msgid "Radio Timer Rules"
+msgstr "Radion ajastussäännöt"
+
+msgctxt "#31282"
+msgid "Radio Search"
+msgstr "Radiohaku"
+
+msgctxt "#31283"
+msgid "RDS Info"
+msgstr "RDS-tiedot"
+
+msgctxt "#31284"
+msgid "Movies"
+msgstr "Elokuvat"
+
+msgctxt "#31285"
+msgid "Movie Titles"
+msgstr "Elokuvien nimikkeet"
+
+msgctxt "#31286"
+msgid "TV Shows"
+msgstr "Sarjat"
+
+msgctxt "#31287"
+msgid "TV Show Titles"
+msgstr "Sarjojen nimikkeet"
+
+msgctxt "#31288"
+msgid "Music Videos"
+msgstr "Musiikkivideot"
+
+msgctxt "#31289"
+msgid "Recently Added Movies"
+msgstr "Viimeksi lisätyt elokuvat"
+
+msgctxt "#31290"
+msgid "Recently Added Episodes"
+msgstr "Viimeksi lisätyt jaksot"
+
+msgctxt "#31291"
+msgid "Recently Added Music Videos"
+msgstr "Viimeksi lisätyt musiikkivideot"
+
+msgctxt "#31292"
+msgid "Games"
+msgstr "Pelit"
+
+msgctxt "#31293"
+msgid "Games OSD"
+msgstr "Pelien kuvaruutuvalikko"
+
+msgctxt "#31294"
+msgid "Game Pad Input"
+msgstr "Peliohjaimen syöte"
+
+msgctxt "#31295"
+msgid "Game Volume"
+msgstr "Pelin äänenvoimakkuus"
