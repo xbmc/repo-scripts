@@ -13,6 +13,16 @@ All code contained in this project is licensed under GPL 3.0.
 * __jurialmunkey__ for all the best-practice code examples from [plugin.video.themoviedb.helper](https://github.com/jurialmunkey/plugin.video.themoviedb.helper) and forum support.
 
 ### Changelog
+**1.0.9**
+- Background slideshows from custom paths/playlists are now generated via the background fanart fetching service and available globally throughout the skin, via a window property. Previously this was done in-skin using a container so would not be available persistently across windows.
+- Removed glitch in background slideshows causing them to fetch new fanarts too often
+- Removed unnecessary conditions from background monitor
+- Added toggle_addon action to script.
+- Switched incorrect labels Enabled/Disabled for script enabler toggle function
+- Reordered addon.xml extension points to update how addon is categorised in Kodi repository
+
+TO DO
+- Add check of json repsonse before notifying of addon status toggle success
 
 **1.0.8**
 - Push dbid of corresponding cropped clearlogo to window prop for comparison so cropped clearlogos only show on correct listitems.
