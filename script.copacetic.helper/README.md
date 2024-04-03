@@ -13,6 +13,20 @@ All code contained in this project is licensed under GPL 3.0.
 * __jurialmunkey__ for all the best-practice code examples from [plugin.video.themoviedb.helper](https://github.com/jurialmunkey/plugin.video.themoviedb.helper) and forum support.
 
 ### Changelog
+**1.0.11**
+- Removed visualisation waveform setting from list of settings changed by SettingsMonitor
+
+**1.0.11**
+- Reordered addon.xml back to how it was before 1.0.9 due to removal of script.copacetic.helper as a plugin source selectable for widgets.
+- Enhanced Slideshow_Monitor class so that it can now fetch fanarts from containers with plugin sources when they are available then use these fanarts in the custom background slideshow. In this way, you can use a custom path to populate a global custom fanart slideshow even without any content in your local library
+
+**1.0.10**
+- read_fanart() method added in 1.0.10 now triggers on services monitor initialise rather than the first time that the SlideShow monitor is run so it should display backgrounds slightly quicker
+
+**1.0.10**
+- Custom path for Global slideshows can now be refreshed on first entry or on change of path without needing Kodi to restart https://github.com/realcopacetic/script.copacetic.helper/issues/6
+- Added new methods to SlideShow monitor class enabling the service monitor to save current global slideshow fanarts to XML on exit, then make these available during initialisation. The aim of this is to serve the last fanart URL from the previous session while new fanarts are being fetched by the slideshow monitor, which should minimise the black-screen delay on starting up Kodi on slower hardware while fanarts are fetched for the first time https://github.com/realcopacetic/script.copacetic.helper/issues/4
+
 **1.0.9**
 - Background slideshows from custom paths/playlists are now generated via the background fanart fetching service and available globally throughout the skin, via a window property. Previously this was done in-skin using a container so would not be available persistently across windows.
 - Removed glitch in background slideshows causing them to fetch new fanarts too often
@@ -20,9 +34,6 @@ All code contained in this project is licensed under GPL 3.0.
 - Added toggle_addon action to script.
 - Switched incorrect labels Enabled/Disabled for script enabler toggle function
 - Reordered addon.xml extension points to update how addon is categorised in Kodi repository
-
-TO DO
-- Add check of json repsonse before notifying of addon status toggle success
 
 **1.0.8**
 - Push dbid of corresponding cropped clearlogo to window prop for comparison so cropped clearlogos only show on correct listitems.

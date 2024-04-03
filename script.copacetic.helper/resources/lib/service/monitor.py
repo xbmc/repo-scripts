@@ -16,6 +16,7 @@ from resources.lib.utilities import (CROPPED_FOLDERPATH, LOOKUP_XML,
 
 XMLSTR = '''<?xml version="1.0" encoding="utf-8"?>
 <data>
+    <backgrounds />
     <clearlogos />
 </data>
 '''
@@ -56,6 +57,7 @@ class Monitor(xbmc.Monitor):
             log('Monitor started', force=True)
             self.start = False
             self.player_monitor = PlayerMonitor()
+            self.art_monitor.read_fanart()
         else:
             log('Monitor resumed', force=True) if self._conditions_met() else None
         while not self.abortRequested() and self._conditions_met():
@@ -64,11 +66,7 @@ class Monitor(xbmc.Monitor):
 
     def _conditions_met(self):
         return (
-            self._get_skindir() and not self.idle and
-            (
-                condition('!Skin.HasSetting(Background_Disabled)') or
-                condition('Skin.HasSetting(Crop_Clearlogos)')
-            )
+            self._get_skindir() and not self.idle
         )
 
     def _get_skindir(self):
@@ -148,8 +146,7 @@ class Monitor(xbmc.Monitor):
 
         # slideshow window is visible run SlideshowMonitor()
         elif condition(
-            '!Skin.HasSetting(Background_Disabled) + ['
-            'Window.IsVisible(home) | '
+            '[Window.IsVisible(home) | '
             'Window.IsVisible(skinsettings) | '
             'Window.IsVisible(appearancesettings) | '
             'Window.IsVisible(mediasettings) | '
@@ -231,6 +228,7 @@ class Monitor(xbmc.Monitor):
         if not self.abortRequested():
             self._on_start()
         else:
+            self.art_monitor.write_art()
             del self.player_monitor
             del self.settings_monitor
             del self.art_monitor
