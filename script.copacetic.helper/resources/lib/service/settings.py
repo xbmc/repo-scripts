@@ -19,8 +19,7 @@ class SettingsMonitor:
             'videolibrary.tvshowartwhitelist': ['keyart', 'square', 'clearlogo', 'clearlogo-alt', 'clearlogo-billboard'],
             'musiclibrary.showallitems': False,
             'musiclibrary.showcompilationartists': False,
-            'pictures.generatethumbs': True,
-            'musicplayer.visualisation': 'visualization.waveform'
+            'pictures.generatethumbs': True
         }
         self.settings_to_change = {}
 

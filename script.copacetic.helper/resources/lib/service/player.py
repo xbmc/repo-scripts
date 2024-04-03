@@ -4,7 +4,7 @@ from xbmc import Player
 
 from resources.lib.script.actions import clean_filename
 from resources.lib.service.art import ImageEditor
-from resources.lib.utilities import condition, window_property
+from resources.lib.utilities import condition, json_call, log, window_property
 
 
 class PlayerMonitor(Player):
