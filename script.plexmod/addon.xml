@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.plexmod"
+       name="PM4K for Plex"
+       version="0.7.6"
+       provider-name="pannal">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.27.1+matrix.1"/>
+        <import addon="script.module.six" version="1.15.0+matrix.1"/>
+        <import addon="script.module.kodi-six" version="0.1.3.1" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="plugin.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">PlexMod for Kodi</summary>
+        <summary lang="es_ES">PlexMod para Kodi</summary>
+        <summary lang="de_DE">PlexMod für Kodi</summary>
+        <description lang="en_GB">Unofficial Plex for Kodi add-on</description>
+        <description lang="es_ES">Complemento no oficial de Plex para Kodi</description>
+        <description lang="de_DE">Inoffizielles Plex für Kodi add-on</description>
+        <disclaimer lang="en">This add-on is not supported by Plex</disclaimer>
+        <disclaimer lang="es">Este add-on no está respaldado por Plex</disclaimer>
+        <disclaimer lang="de">Dieses Addon wird nicht von der Firma Plex Inc. unterstützt</disclaimer>
+
+        <license>GPL-2.0-only</license>
+        <forum>https://forums.plex.tv/t/plexmod-for-kodi-18-19-20-21/481208</forum>
+        <website>https://www.plex.tv</website>
+        <source>https://github.com/pannal/plex-for-kodi</source>
+        <platform>all</platform>
+        <news>
+- Based on 0.7.6-rev2
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

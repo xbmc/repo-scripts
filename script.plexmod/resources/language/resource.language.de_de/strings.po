@@ -1,0 +1,2030 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: PM4K\n"
+"Language: de\n"
+
+#: 
+msgctxt "#32000"
+msgid "Main"
+msgstr "Allgemein"
+
+#: 
+msgctxt "#32001"
+msgid "Original"
+msgstr "Original"
+
+#: 
+msgctxt "#32002"
+msgid "20 Mbps 1080p"
+msgstr "20 Mbit/s 1080p"
+
+#: 
+msgctxt "#32003"
+msgid "12 Mbps 1080p"
+msgstr "12 Mbit/s 1080p"
+
+#: 
+msgctxt "#32004"
+msgid "10 Mbps 1080p"
+msgstr "10 Mbit/s 1080p"
+
+#: 
+msgctxt "#32005"
+msgid "8 Mbps 1080p"
+msgstr "8 Mbit/s 1080p"
+
+#: 
+msgctxt "#32006"
+msgid "4 Mbps 720p"
+msgstr "4 Mbit/s 720p"
+
+#: 
+msgctxt "#32007"
+msgid "3 Mbps 720p"
+msgstr "3 Mbit/s 720p"
+
+#: 
+msgctxt "#32008"
+msgid "2 Mbps 720p"
+msgstr "2 Mbit/s 720p"
+
+#: 
+msgctxt "#32009"
+msgid "1.5 Mbps 480p"
+msgstr "1.5 Mbit/s 480p"
+
+#: 
+msgctxt "#32010"
+msgid "720 kbps"
+msgstr "720 kbit/s"
+
+#: 
+msgctxt "#32011"
+msgid "320 kbps"
+msgstr "320 kbit/s"
+
+#: 
+msgctxt "#32012"
+msgid "208 kbps"
+msgstr "208 kbit/s"
+
+#: 
+msgctxt "#32013"
+msgid "96 kbps"
+msgstr "96 kbit/s"
+
+#: 
+msgctxt "#32014"
+msgid "64 kbps"
+msgstr "64 kbit/s"
+
+#: 
+msgctxt "#32020"
+msgid "Local Quality"
+msgstr "Qualität für lokale Geräte"
+
+#: 
+msgctxt "#32021"
+msgid "Remote Quality"
+msgstr "Qualität für entfernte Geräte"
+
+#: 
+msgctxt "#32022"
+msgid "Online Quality"
+msgstr "Online Qualität"
+
+#: 
+msgctxt "#32023"
+msgid "Transcode Format"
+msgstr "Transkodierungsformat"
+
+#: 
+msgctxt "#32024"
+msgid "Debug Logging"
+msgstr "Debug-Protokollierung"
+
+#: 
+msgctxt "#32025"
+msgid "Allow Direct Play"
+msgstr "Direkte Wiedergabe erlauben"
+
+#: 
+msgctxt "#32026"
+msgid "Allow Direct Stream"
+msgstr "Direktes streamen erlauben"
+
+#: 
+msgctxt "#32027"
+msgid "Force"
+msgstr "Erzwingen"
+
+#: 
+msgctxt "#32028"
+msgid "Always"
+msgstr "Immer"
+
+#: 
+msgctxt "#32029"
+msgid "Only Image Formats"
+msgstr "nur Bildformate"
+
+#: 
+msgctxt "#32030"
+msgid "Auto"
+msgstr "Automatisch"
+
+#: 
+msgctxt "#32031"
+msgid "Burn-in Subtitles"
+msgstr "Untertitel einbrennen"
+
+#: 
+msgctxt "#32032"
+msgid "Allow Insecure Connections"
+msgstr "Unsichere Verbindung erlauben"
+
+#: 
+msgctxt "#32033"
+msgid "Never"
+msgstr "Nie"
+
+#: 
+msgctxt "#32034"
+msgid "On Same network"
+msgstr "Im selben Netzwerk"
+
+#: 
+msgctxt "#32035"
+msgid "Always"
+msgstr "Immer"
+
+#: 
+msgctxt "#32036"
+msgid "Allow 4K"
+msgstr "4K erlauben"
+
+#: 
+msgctxt "#32037"
+msgid "Allow HEVC (h265)"
+msgstr "HEVC erlauben (H265)"
+
+#: 
+msgctxt "#32038"
+msgid "Automatically Sign In"
+msgstr "Automatisch anmelden"
+
+#: 
+msgctxt "#32039"
+msgid "Post Play Auto Play"
+msgstr "Automatisch nächsten Titel abspielen"
+
+#: 
+msgctxt "#32040"
+msgid "Enable Subtitle Downloading"
+msgstr "Untertitel download aktivieren"
+
+#: 
+msgctxt "#32041"
+msgid "Enable Subtitle Downloading"
+msgstr "Untertitel download aktivieren"
+
+#: 
+msgctxt "#32042"
+msgid "Server Discovery (GDM)"
+msgstr "Server Erkennung (GDM)"
+
+#: 
+msgctxt "#32043"
+msgid "Start Plex On Kodi Startup"
+msgstr "Plex mit Kodi starten"
+
+#: 
+msgctxt "#32044"
+msgid "Connection 1 IP"
+msgstr "Verbindung 1 IP"
+
+#: 
+msgctxt "#32045"
+msgid "Connection 1 Port"
+msgstr "Verbindung 1 Port"
+
+#: 
+msgctxt "#32046"
+msgid "Connection 2 IP"
+msgstr "Verbindung 2 IP"
+
+#: 
+msgctxt "#32047"
+msgid "Connection 2 Port"
+msgstr "Verbindung 2 Port"
+
+#: 
+msgctxt "#32048"
+msgid "Audio"
+msgstr "Ton"
+
+#: 
+msgctxt "#32049"
+msgid "Advanced"
+msgstr "Erweitert"
+
+#: 
+msgctxt "#32050"
+msgid "Manual Servers"
+msgstr "Manuelle Server"
+
+#: 
+msgctxt "#32051"
+msgid "Privacy"
+msgstr "Datenschutz"
+
+#: 
+msgctxt "#32052"
+msgid "About"
+msgstr "Über"
+
+#: 
+msgctxt "#32053"
+msgid "Video"
+msgstr "Video"
+
+#: 
+msgctxt "#32054"
+msgid "Addon Version"
+msgstr "Erweiterung Version"
+
+#: 
+msgctxt "#32055"
+msgid "Kodi Version"
+msgstr "Kodi Version"
+
+#: 
+msgctxt "#32056"
+msgid "Screen Resolution"
+msgstr "Bilschirmauflösung"
+
+#: 
+msgctxt "#32057"
+msgid "Current Server Version"
+msgstr "Aktuelle Server Version"
+
+#: 
+msgctxt "#32058"
+msgid "Never exceed original audio codec"
+msgstr "Niemals den ursprünglichen Audio-Codec überschreiten"
+
+#: 
+msgctxt "#32059"
+msgid "When transcoding audio, never exceed the original audio bitrate or channel count on the same codec."
+msgstr "Bei der Transkodierung von Audio niemals die ursprüngliche Audio-Bitrate oder die Anzahl der Kanäle mit demselben Codec überschreiten."
+
+#: 
+msgctxt "#32060"
+msgid "Use Kodi audio channels"
+msgstr "Kodi-Audiokanäle verwenden"
+
+#: 
+msgctxt "#32061"
+msgid "When transcoding audio, target the audio channels set in Kodi."
+msgstr "Beim Transkodieren von Audio werden die in Kodi eingestellten Audiokanäle verwendet."
+
+#: 
+msgctxt "#32062"
+msgid "Transcode audio to AC3"
+msgstr "Transkodiere Ton zu AC3"
+
+#: 
+msgctxt "#32063"
+msgid "Transcode audio to AC3 in certain conditions (useful for passthrough)."
+msgstr "Transkodiere Ton zu AC3 in bestimmten Umständen (nützlich für Passthrough)"
+
+#: 
+msgctxt "#32064"
+msgid "Treat DTS like AC3"
+msgstr "DTS wie AC3 behandeln"
+
+#: 
+msgctxt "#32065"
+msgid "When any of the force AC3 settings are enabled, treat DTS the same as AC3 (useful for Optical passthrough)"
+msgstr "Wenn einer der AC3 Optionen aktiviert ist, wird DTS wie AC3 behandelt (nützlich für Optical Passthrough)"
+
+
+msgctxt "#32066"
+msgid "Force audio to AC3"
+msgstr "Audio immer als AC3 erzwingen"
+
+
+msgctxt "#32067"
+msgid "Only force multichannel audio to AC3"
+msgstr "Nur Mehrkanal-Audio als AC3 erzwingen"
+
+#: 
+msgctxt "#32100"
+msgid "Skip user selection and pin entry on startup."
+msgstr "Benutzerauswahl und Pin-Eingabe beim Start überspringen."
+
+#: 
+msgctxt "#32101"
+msgid "If enabled, when playback ends and there is a 'Next Up' item available, it will be automatically be played after a 15 second delay."
+msgstr "Falls aktiviert wird, sofern verfügbar, nachdem die Wiedergabe endet ein 'nächster Titel' automatisch nach 15 Sekunden gestartet."
+
+#: 
+msgctxt "#32102"
+msgid "Enable this if your hardware can handle 4K playback. Disable it to force transcoding."
+msgstr "Aktiviert 4K Wiedergabe per Hardware. Deaktivierung erzwingt Transcodierung."
+
+#: 
+msgctxt "#32103"
+msgid "Enable this if your hardware can handle HEVC/h265. Disable it to force transcoding."
+msgstr "Aktiviert HEVC/H265 Wiedergabe per Hardware. Deaktivierung erzwingt Transcodierung."
+
+#: 
+msgctxt "#32104"
+msgid "When to connect to servers with no secure connections.[CR][CR]* [B]Never[/B]: Never connect to a server insecurely[CR]* [B]On Same Network[/B]: Allow if on the same network[CR]* [B]Always[/B]: Allow same network and remote connections"
+msgstr "Wann soll zu Servern ohne 'sichere Verbindung' verbunden werden[CR]* [B]Nie[/B]: Niemals unsicher zu eine Server verbinden.[CR]* [B]Im selben Netzwerk[/B]: Im selben Netzwerk erlauben[CR]* [B]Immer[/B]: Im selben Netzwerk und bei entfernter Verbindung erlauben"
+
+#: 
+msgctxt "#32201"
+msgid "Trailer"
+msgstr "Trailer"
+
+#: 
+msgctxt "#32202"
+msgid "Deleted Scene"
+msgstr "Entfernte Szene"
+
+#: 
+msgctxt "#32203"
+msgid "Interview"
+msgstr "Interview"
+
+#: 
+msgctxt "#32204"
+msgid "Music Video"
+msgstr "Musik-Video"
+
+#: 
+msgctxt "#32205"
+msgid "Behind the Scenes"
+msgstr "Hinter den Kulissen"
+
+#: 
+msgctxt "#32206"
+msgid "Scene"
+msgstr "Szene"
+
+#: 
+msgctxt "#32207"
+msgid "Live Music Video"
+msgstr "Live Musikvideo"
+
+#: 
+msgctxt "#32208"
+msgid "Lyric Music Video"
+msgstr "Musikvideo mit Lyrics"
+
+#: 
+msgctxt "#32209"
+msgid "Concert"
+msgstr "Konzert"
+
+#: 
+msgctxt "#32210"
+msgid "Featurette"
+msgstr "Featurette"
+
+#: 
+msgctxt "#32211"
+msgid "Short"
+msgstr "Kurzfilm"
+
+#: 
+msgctxt "#32212"
+msgid "Other"
+msgstr "Sonstige"
+
+#: 
+msgctxt "#32300"
+msgid "Go to Album"
+msgstr "Gehe zu Album"
+
+#: 
+msgctxt "#32301"
+msgid "Go to Artist"
+msgstr "Gehe zu Künstler(in)"
+
+#: 
+msgctxt "#32302"
+msgid "Go to {0}"
+msgstr "Gehe zu {0}"
+
+#: 
+msgctxt "#32303"
+msgid "Season"
+msgstr "Staffel"
+
+#: 
+msgctxt "#32304"
+msgid "Episode"
+msgstr "Folge"
+
+#: 
+msgctxt "#32305"
+msgid "Extras"
+msgstr "Extras"
+
+#: 
+msgctxt "#32306"
+msgid "Related Shows"
+msgstr "Ähnliche Serien"
+
+#: 
+msgctxt "#32307"
+msgid "More"
+msgstr "Film"
+
+#: 
+msgctxt "#32308"
+msgid "Available"
+msgstr "Verfügbar"
+
+#: 
+msgctxt "#32309"
+msgid "None"
+msgstr "Ohne"
+
+#: 
+msgctxt "#32310"
+msgid "S"
+msgstr "S"
+
+#: 
+msgctxt "#32311"
+msgid "E"
+msgstr "E"
+
+#: 
+msgctxt "#32312"
+msgid "Unavailable"
+msgstr "Nicht verfügbar"
+
+#: 
+msgctxt "#32313"
+msgid "This item is currently unavailable."
+msgstr "Dieser Eintrag ist aktuell nicht verfügbar."
+
+#: 
+msgctxt "#32314"
+msgid "In Progress"
+msgstr "in Bearbeitung"
+
+#: 
+msgctxt "#32315"
+msgid "Resume playback?"
+msgstr "Wiedergabe fortsetzen?"
+
+#: 
+msgctxt "#32316"
+msgid "Resume"
+msgstr "Fortsetzen"
+
+#: 
+msgctxt "#32317"
+msgid "Play from beginning"
+msgstr "Von vorne wiedergeben"
+
+#: 
+msgctxt "#32318"
+msgid "Mark Unplayed"
+msgstr "Als ungesehen markieren"
+
+#: 
+msgctxt "#32319"
+msgid "Mark Played"
+msgstr "Als gesehen markieren"
+
+#: 
+msgctxt "#32320"
+msgid "Mark Season Unplayed"
+msgstr "Staffel als ungesehen markieren"
+
+#: 
+msgctxt "#32321"
+msgid "Mark Season Played"
+msgstr "Staffel als gesehen markieren"
+
+#: 
+msgctxt "#32322"
+msgid "Delete"
+msgstr "Löschen"
+
+#: 
+msgctxt "#32323"
+msgid "Go To Show"
+msgstr "Gehe zu Serie"
+
+#: 
+msgctxt "#32324"
+msgid "Go To {0}"
+msgstr "Gehe zu {0}"
+
+#: 
+msgctxt "#32325"
+msgid "Play Next"
+msgstr "Nächster Titel"
+
+#: 
+msgctxt "#32326"
+msgid "Really Delete?"
+msgstr "Wirklich löschen?"
+
+#: 
+msgctxt "#32327"
+msgid "Are you sure you really want to delete this media?"
+msgstr "Soll diese Mediandatei wirklich gelöscht werden?"
+
+#: 
+msgctxt "#32328"
+msgid "Yes"
+msgstr "Ja"
+
+#: 
+msgctxt "#32329"
+msgid "No"
+msgstr "Nein"
+
+#: 
+msgctxt "#32330"
+msgid "Message"
+msgstr "Nachricht"
+
+#: 
+msgctxt "#32331"
+msgid "There was a problem while attempting to delete the media."
+msgstr "Es gab einen Fehler beim Löschversuch dieser Mediendatei."
+
+#: 
+msgctxt "#32332"
+msgid "Home"
+msgstr "Start"
+
+#: 
+msgctxt "#32333"
+msgid "Playlists"
+msgstr "Wiedergabelisten"
+
+#: 
+msgctxt "#32334"
+msgid "Confirm Exit"
+msgstr "Beenden bestätigen"
+
+#: 
+msgctxt "#32335"
+msgid "Are you ready to exit Plex?"
+msgstr "Bereit um Plex zu beenden?"
+
+#: 
+msgctxt "#32336"
+msgid "Exit"
+msgstr "Beenden"
+
+#: 
+msgctxt "#32337"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: 
+msgctxt "#32338"
+msgid "No Servers Found"
+msgstr "Keine Server gefunden"
+
+#: 
+msgctxt "#32339"
+msgid "Server is not accessible"
+msgstr "Server ist nicht erreichbar"
+
+#: 
+msgctxt "#32340"
+msgid "Connection tests are in progress. Please wait."
+msgstr "Verbindungstests laufen. Bitte warten."
+
+#: 
+msgctxt "#32341"
+msgid "Server is not accessible. Please sign into your server and check your connection."
+msgstr "Der Server ist nicht erreichbar. Bitte einloggen und Verbindung prüfen."
+
+#: 
+msgctxt "#32342"
+msgid "Switch User"
+msgstr "Benutzer wechseln"
+
+#: 
+msgctxt "#32343"
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: 
+msgctxt "#32344"
+msgid "Sign Out"
+msgstr "Abmelden"
+
+#: 
+msgctxt "#32345"
+msgid "All"
+msgstr "Alle"
+
+#: 
+msgctxt "#32346"
+msgid "By Name"
+msgstr "Nach Name"
+
+#: 
+msgctxt "#32347"
+msgid "Artists"
+msgstr "Künstler"
+
+#: 
+msgctxt "#32348"
+msgid "Movies"
+msgstr "Filme"
+
+#: 
+msgctxt "#32349"
+msgid "photos"
+msgstr "Fotos"
+
+#: 
+msgctxt "#32350"
+msgid "Shows"
+msgstr "Serien"
+
+#: 
+msgctxt "#32351"
+msgid "By Date Added"
+msgstr "Nach 'Hinzugefügt am'"
+
+#: 
+msgctxt "#32352"
+msgid "Date Added"
+msgstr "Hinzugefügt am"
+
+#: 
+msgctxt "#32353"
+msgid "By Release Date"
+msgstr "Nach Erscheinungsdatum"
+
+#: 
+msgctxt "#32354"
+msgid "Release Date"
+msgstr "Erscheinungsdatum"
+
+#: 
+msgctxt "#32355"
+msgid "By Date Viewed"
+msgstr "Nach 'Gesehen am'"
+
+#: 
+msgctxt "#32356"
+msgid "Date Viewed"
+msgstr "Gesehen am"
+
+#: 
+msgctxt "#32357"
+msgid "By Name"
+msgstr "Nach Name"
+
+#: 
+msgctxt "#32358"
+msgid "Name"
+msgstr "Name"
+
+#: 
+msgctxt "#32359"
+msgid "By Rating"
+msgstr "Nach Bewertung"
+
+#: 
+msgctxt "#32360"
+msgid "Rating"
+msgstr "Bewertung"
+
+#: 
+msgctxt "#32361"
+msgid "By Resolution"
+msgstr "Nach Auflösung"
+
+#: 
+msgctxt "#32362"
+msgid "Resolution"
+msgstr "Auflösung"
+
+#: 
+msgctxt "#32363"
+msgid "By Duration"
+msgstr "Nach Dauer"
+
+#: 
+msgctxt "#32364"
+msgid "Duration"
+msgstr "Dauer"
+
+#: 
+msgctxt "#32365"
+msgid "By First Aired"
+msgstr "Nach Erstausstrahlung"
+
+#: 
+msgctxt "#32366"
+msgid "First Aired"
+msgstr "Erstausstrahlung"
+
+#: 
+msgctxt "#32367"
+msgid "By Unplayed"
+msgstr "Nach Ungesehen"
+
+#: 
+msgctxt "#32368"
+msgid "Unplayed"
+msgstr "Ungesehen"
+
+#: 
+msgctxt "#32369"
+msgid "By Date Played"
+msgstr "Nach 'Abgespielt am'"
+
+#: 
+msgctxt "#32370"
+msgid "Date Played"
+msgstr "Abgespielt am"
+
+#: 
+msgctxt "#32371"
+msgid "By Play Count"
+msgstr "Nach Wiedergabe-Zähler"
+
+#: 
+msgctxt "#32372"
+msgid "Play Count"
+msgstr "Wiedergabe-Zähler"
+
+#: 
+msgctxt "#32373"
+msgid "By Date Taken"
+msgstr "Nach Aufnahmedatum"
+
+#: 
+msgctxt "#32374"
+msgid "Date Taken"
+msgstr "Aufnahmedatum"
+
+#: 
+msgctxt "#32375"
+msgid "No filters available"
+msgstr "Keine Filter verfügbar"
+
+#: 
+msgctxt "#32376"
+msgid "Clear Filter"
+msgstr "Filter bereinigen"
+
+#: 
+msgctxt "#32377"
+msgid "Year"
+msgstr "Jahr"
+
+#: 
+msgctxt "#32378"
+msgid "Decade"
+msgstr "Jahrzent"
+
+#: 
+msgctxt "#32379"
+msgid "Genre"
+msgstr "Genre"
+
+#: 
+msgctxt "#32380"
+msgid "Content Rating"
+msgstr "Jugendfreigabe"
+
+#: 
+msgctxt "#32381"
+msgid "Network"
+msgstr "Netzwerk"
+
+#: 
+msgctxt "#32382"
+msgid "Collection"
+msgstr "Sammlung"
+
+#: 
+msgctxt "#32383"
+msgid "Director"
+msgstr "Regisseur(in)"
+
+#: 
+msgctxt "#32384"
+msgid "Actor"
+msgstr "Schauspieler(in)"
+
+#: 
+msgctxt "#32385"
+msgid "Country"
+msgstr "Land"
+
+#: 
+msgctxt "#32386"
+msgid "Studio"
+msgstr "Studio"
+
+#: 
+msgctxt "#32387"
+msgid "Labels"
+msgstr "Labels"
+
+#: 
+msgctxt "#32388"
+msgid "Camera Make"
+msgstr "Kamerahersteller"
+
+#: 
+msgctxt "#32389"
+msgid "Camera Model"
+msgstr "Kameramodell"
+
+#: 
+msgctxt "#32390"
+msgid "Aperture"
+msgstr "Blendenöffnung"
+
+#: 
+msgctxt "#32391"
+msgid "Shutter Speed"
+msgstr "Verschlusszeit"
+
+#: 
+msgctxt "#32392"
+msgid "Lens"
+msgstr "Linse"
+
+#: 
+msgctxt "#32393"
+msgid "TV Shows"
+msgstr "Fernsehserien"
+
+#: 
+msgctxt "#32394"
+msgid "Music"
+msgstr "Musik"
+
+#: 
+msgctxt "#32395"
+msgid "Audio"
+msgstr "Ton"
+
+#: 
+msgctxt "#32396"
+msgid "Subtitles"
+msgstr "Untertitel"
+
+#: 
+msgctxt "#32397"
+msgid "Quality"
+msgstr "Qualität"
+
+#: 
+msgctxt "#32398"
+msgid "Kodi Video Settings"
+msgstr "Kodi Bild Einstellungen"
+
+#: 
+msgctxt "#32399"
+msgid "Kodi Audio Settings"
+msgstr "Kodi Ton Einstellungen"
+
+#: 
+msgctxt "#32400"
+msgid "Go To Season"
+msgstr "Gehe zu Staffel"
+
+#: 
+msgctxt "#32401"
+msgid "Directors"
+msgstr "Regisseure"
+
+#: 
+msgctxt "#32402"
+msgid "Writer"
+msgstr "Autor(in)"
+
+#: 
+msgctxt "#32403"
+msgid "Writers"
+msgstr "Autoren"
+
+#: 
+msgctxt "#32404"
+msgid "Related Movies"
+msgstr "Ähnliche Filme"
+
+#: 
+msgctxt "#32405"
+msgid "Download Subtitles"
+msgstr "Untertitel downloaden"
+
+#: 
+msgctxt "#32406"
+msgid "Subtitle Delay"
+msgstr "Untertitel Verzögerung"
+
+#: 
+msgctxt "#32407"
+msgid "Next Subtitle"
+msgstr "Nächster Untertitel"
+
+#: 
+msgctxt "#32408"
+msgid "Disable Subtitles"
+msgstr "Untertitel deaktiviren"
+
+#: 
+msgctxt "#32409"
+msgid "Enable Subtitles"
+msgstr "Untertitel aktivieren"
+
+#: 
+msgctxt "#32410"
+msgid "Platform Version"
+msgstr "Platform Version"
+
+#: 
+msgctxt "#32411"
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: 
+msgctxt "#32412"
+msgid "Edit Or Clear"
+msgstr "Bearbeiten oder bereinigen"
+
+#: 
+msgctxt "#32413"
+msgid "Edit IP address or clear the current setting?"
+msgstr "IP Adresse bearbeiten oder die aktuellen Einstellungen bereinigen?"
+
+#: 
+msgctxt "#32414"
+msgid "Clear"
+msgstr "Bereinigen"
+
+#: 
+msgctxt "#32415"
+msgid "Edit"
+msgstr "Ändern"
+
+#: 
+msgctxt "#32416"
+msgid "Enter IP Address"
+msgstr "IP Adresse eingeben"
+
+#: 
+msgctxt "#32417"
+msgid "Enter Port Number"
+msgstr "Port Nummer eingeben"
+
+#: 
+msgctxt "#32418"
+msgid "Creator"
+msgstr "Urheber(in)"
+
+#: 
+msgctxt "#32419"
+msgid "Cast"
+msgstr "Besetzung"
+
+#: 
+msgctxt "#32420"
+msgid "Disc"
+msgstr "Disk"
+
+#: 
+msgctxt "#32421"
+msgid "Sign Out"
+msgstr "Abmelden"
+
+#: 
+msgctxt "#32422"
+msgid "Exit"
+msgstr "Beenden"
+
+#: 
+msgctxt "#32423"
+msgid "Shutdown"
+msgstr "Herunterfahren"
+
+#: 
+msgctxt "#32424"
+msgid "Suspend"
+msgstr "Energie sparen"
+
+#: 
+msgctxt "#32425"
+msgid "Hibernate"
+msgstr "Ruhezustand"
+
+#: 
+msgctxt "#32426"
+msgid "Reboot"
+msgstr "Neustart"
+
+#: 
+msgctxt "#32427"
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+#: 
+msgctxt "#32428"
+msgid "Login failed!"
+msgstr "Anmeldung fehlgeschlagen!"
+
+#: 
+msgctxt "#32429"
+msgid "Resume from {0}"
+msgstr "Fortsetzen ab {0}"
+
+#: 
+msgctxt "#32430"
+msgid "Discovery"
+msgstr "Entdecken"
+
+#: 
+msgctxt "#32431"
+msgid "Search"
+msgstr "Suche"
+
+#: 
+msgctxt "#32432"
+msgid "Space"
+msgstr "Leerzeichen"
+
+#: 
+msgctxt "#32433"
+msgid "Clear"
+msgstr "Bereinigen"
+
+#: 
+msgctxt "#32434"
+msgid "Searching..."
+msgstr "Suche..."
+
+#: 
+msgctxt "#32435"
+msgid "No Results"
+msgstr "Keine Ergebnisse"
+
+#: 
+msgctxt "#32436"
+msgid "Paused"
+msgstr "Pausiert"
+
+#: 
+msgctxt "#32437"
+msgid "Welcome"
+msgstr "Willkommen"
+
+#: 
+msgctxt "#32438"
+msgid "Previous"
+msgstr "Vorheriger Titel"
+
+#: 
+msgctxt "#32439"
+msgid "Playing Next"
+msgstr "Nächster Titel"
+
+#: 
+msgctxt "#32440"
+msgid "On Deck"
+msgstr "Aktuell"
+
+#: 
+msgctxt "#32441"
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: 
+msgctxt "#32442"
+msgid "Embedded"
+msgstr "Eingebettet"
+
+#: 
+msgctxt "#32443"
+msgid "Forced"
+msgstr "Zwangsuntertitel"
+
+#: 
+msgctxt "#32444"
+msgid "Lyrics"
+msgstr "Lyrics"
+
+#: 
+msgctxt "#32445"
+msgid "Mono"
+msgstr "Mono"
+
+#: 
+msgctxt "#32446"
+msgid "Stereo"
+msgstr "Stereo"
+
+#: 
+msgctxt "#32447"
+msgid "None"
+msgstr "Nichts"
+
+#: 
+msgctxt "#32448"
+msgid "Playback Failed!"
+msgstr "Wiedergabe fehlgeschlagen!"
+
+#: 
+msgctxt "#32449"
+msgid "Can't connect to plex.tv[CR]Check your internet connection and try again."
+msgstr "Keine Verbindung zu plex.tv[CR]Internetverbindung prüfen und erneut versuchen."
+
+#: 
+msgctxt "#32450"
+msgid "Choose Version"
+msgstr "Version auswählen"
+
+#: 
+msgctxt "#32451"
+msgid "Play Version..."
+msgstr "Version abspielen..."
+
+#: 
+msgctxt "#32452"
+msgid "No Content available in this library"
+msgstr "In dieser Bibliothek ist nichts vorhanden"
+
+#: 
+msgctxt "#32453"
+msgid "Please add content and/or check that 'Include in dashboard' is enabled."
+msgstr "Bitte Inhalte ergänzen und/oder prüfen ob 'In Dashboard anzeigen' aktiv ist."
+
+#: 
+msgctxt "#32454"
+msgid "No Content available for this filter"
+msgstr "Mit diesem Filter ist kein Inhalt verfügbar"
+
+#: 
+msgctxt "#32455"
+msgid "Please change change or remove the current filter"
+msgstr "Bitte aktuellen Filter ändern oder entfernen"
+
+#: 
+msgctxt "#32456"
+msgid "Show"
+msgstr "Serie"
+
+#: 
+msgctxt "#32457"
+msgid "By Show"
+msgstr "Nach Serie"
+
+#: 
+msgctxt "#32458"
+msgid "Episodes"
+msgstr "Episoden"
+
+#: 
+msgctxt "#32459"
+msgid "Offline Mode"
+msgstr "Offline-Modus"
+
+#: 
+msgctxt "#32460"
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: 
+msgctxt "#32461"
+msgid "Albums"
+msgstr "Alben"
+
+#: 
+msgctxt "#32462"
+msgid "Artist"
+msgstr "Künstler(in)"
+
+#: 
+msgctxt "#32463"
+msgid "By Artist"
+msgstr "Nach Künstler(in)"
+
+#: 
+msgctxt "#32464"
+msgid "Player"
+msgstr "Wiedergabe"
+
+#: 
+msgctxt "#32465"
+msgid "Use skip step settings from Kodi"
+msgstr "Skip-Schritte-Einstellung von Kodi benutzen"
+
+#: 
+msgctxt "#32466"
+msgid "Automatically seek selected position after a delay"
+msgstr "Automatisch verzögert zur ausgewählten Position springen"
+
+#: 
+msgctxt "#32467"
+msgid "User Interface"
+msgstr "Benutzeroberfläche"
+
+#: 
+msgctxt "#32468"
+msgid "Show dynamic background art"
+msgstr "Dynamische Hintergrundbilder aktivieren"
+
+#: 
+msgctxt "#32469"
+msgid "Background art blur amount"
+msgstr "Unschärfe der Hintergrundbilder"
+
+#: 
+msgctxt "#32470"
+msgid "Background art opacity"
+msgstr "Deckkraft der Hintergrundbilder"
+
+#: 
+msgctxt "#32471"
+msgid "Use Plex/Kodi steps for timeline"
+msgstr "Plex/Kodi-Skip-Schritte für die Zeitachse verwenden"
+
+#: 
+msgctxt "#32480"
+msgid "Theme music"
+msgstr "Titelmusik"
+
+#: 
+msgctxt "#32481"
+msgid "Off"
+msgstr "Aus"
+
+#: 
+msgctxt "#32482"
+msgid "%(percentage)s %%"
+msgstr "%(percentage)s %%"
+
+#: 
+msgctxt "#32483"
+msgid "Hide Stream Info"
+msgstr "Stream Info nicht anzeigen"
+
+#: 
+msgctxt "#32484"
+msgid "Show Stream Info"
+msgstr "Stream Info anzeigen"
+
+#: 
+msgctxt "#32485"
+msgid "Go back instantly with the previous menu action in scrolled views"
+msgstr "Mit der Previous-Menu-Aktion In gescrollten Ansichten sofort zurückgehen"
+
+#: 
+msgctxt "#32487"
+msgid "Seek Delay"
+msgstr "Vorspulverzögerung"
+
+#: 
+msgctxt "#32488"
+msgid "Screensaver"
+msgstr "Bildschirmschoner"
+
+#: 
+msgctxt "#32489"
+msgid "Quiz Mode"
+msgstr "Quiz-Modus"
+
+#: 
+msgctxt "#32490"
+msgid "Collections"
+msgstr "Sammlungen"
+
+#: 
+msgctxt "#32491"
+msgid "Folders"
+msgstr "Ordner"
+
+#: 
+msgctxt "#32492"
+msgid "Kodi Subtitle Settings"
+msgstr "Kodi Untertitel-Einstellungen"
+
+#: 
+msgctxt "#32493"
+msgid "When a media file has a forced/foreign subtitle for a subtitle-enabled language, the Plex Media Server preselects it. This behaviour is usually not necessary and not configurable. This setting fixes that by ignoring the PMSs decision and selecting the same language without a forced flag if possible."
+msgstr "Hat eine Mediendatei erzwungenge Untertitel für eine Sprache, bei der Untertitel erwünscht sind, wählt der Plex Media Server diesen standardmäßig aus. Das Verhalten ist normalerweise unerwünscht und nicht konfigurierbar. Diese Einstellung behebt das Problem, indem versucht wird, einen Untertitel der selben Sprache ohne Erzwungen-Markierung zu wählen."
+
+#: 
+msgctxt "#32495"
+msgid "Skip intro"
+msgstr "Intro überspringen"
+
+#: 
+msgctxt "#32496"
+msgid "Skip credits"
+msgstr "Abspann überspringen"
+
+#: 
+msgctxt "#32500"
+msgid "Always show post-play screen (even for short videos)"
+msgstr "Immer den Nachwiedergabe-Bildschirm anzeigen (auch bei kurzen Videos)"
+
+#: 
+msgctxt "#32501"
+msgid "Time-to-wait between videos on post-play"
+msgstr "Wartezeit zwischen Videos bei Nachwiedergabe"
+
+#: 
+msgctxt "#32505"
+msgid "Visit media in video playlist instead of playing it"
+msgstr "Medien in der Video-Wiedergabeliste anzeigen, anstatt sie abzuspielen"
+
+#: 
+msgctxt "#32521"
+msgid "Skip Intro Button Timeout"
+msgstr "Zeitlimit für die Schaltfläche Intro überspringen"
+
+#: 
+msgctxt "#32522"
+msgid "Automatically Skip Intro"
+msgstr "Intro automatisch überspringen"
+
+#: 
+msgctxt "#32523"
+msgid "Automatically skip intros if available. Doesn't override enabled binge mode.\nCan be disabled/enabled per TV show."
+msgstr "Automatisches Überspringen von Intros, falls vorhanden. Überschreibt aktivierten Binge-Modus nicht.\nKann pro Serie aktiviert/deaktiviert werden."
+
+#: 
+msgctxt "#32524"
+msgid "Set how long the skip intro button shows for."
+msgstr "Festlegen, wie lange die Schaltfläche zum Überspringen des Intros angezeigt werden soll."
+
+#: 
+msgctxt "#32525"
+msgid "Skip Credits Button Timeout"
+msgstr "Zeitlimit für die Schaltfläche Abspann überspringen"
+
+#: 
+msgctxt "#32526"
+msgid "Automatically Skip Credits"
+msgstr "Automatisches Überspringen von Abspann"
+
+#: 
+msgctxt "#32527"
+msgid "Automatically skip credits if available. Doesn't override enabled binge mode.\nCan be disabled/enabled per TV show."
+msgstr "Automatisches Überspringen von Abspann, falls vorhanden. Überschreibt aktivierten Binge-Modus nicht.\nKann pro Serie aktiviert/deaktiviert werden."
+
+#: 
+msgctxt "#32528"
+msgid "Set how long the skip credits button shows for."
+msgstr "Festlegen, wie lange die Schaltfläche zum Überspringen des Abspann angezeigt werden soll."
+
+#: 
+msgctxt "#32540"
+msgid "Show when the current video will end in player"
+msgstr "Im Player anzeigen, wann das aktuelle Video endet"
+
+#: 
+msgctxt "#32541"
+msgid "Shows time left and at which time the media will end."
+msgstr "Zeigt im Player an, wann und zu welchem Zeitpunkt das aktuelle Video endet."
+
+#: 
+msgctxt "#32542"
+msgid "Show \"Ends at\" label for the end-time as well"
+msgstr "\"Endet um\"-Label für die Endzeit auch anzeigen"
+
+#: 
+msgctxt "#32543"
+msgid "Ends at"
+msgstr "Endet um"
+
+#: 
+msgctxt "#32601"
+msgid "Allow AV1"
+msgstr "AV1 zulassen"
+
+#: 
+msgctxt "#32602"
+msgid "Enable this if your hardware can handle AV1. Disable it to force transcoding."
+msgstr "Diese Option aktivieren, wenn die Hardware AV1 verarbeiten kann. Deaktivieren, um die Transkodierung zu erzwingen."
+
+#: 
+msgctxt "#33101"
+msgid "By Audience Rating"
+msgstr "Nach Zuschauerwertung"
+
+#: 
+msgctxt "#33102"
+msgid "Audience Rating"
+msgstr "Zuschauerwertung"
+
+#: 
+msgctxt "#33103"
+msgid "By my Rating"
+msgstr "Nach meiner Bewertung"
+
+#: 
+msgctxt "#33104"
+msgid "My Rating"
+msgstr "Meine Bewertung"
+
+#: 
+msgctxt "#33105"
+msgid "By Content Rating"
+msgstr "Nach Inhaltsbewertung"
+
+#: 
+msgctxt "#33106"
+msgid "Content Rating"
+msgstr "Inhaltsbewertung"
+
+#: 
+msgctxt "#33107"
+msgid "By Critic Rating"
+msgstr "Nach kritischer Bewertung"
+
+#: 
+msgctxt "#33108"
+msgid "Critic Rating"
+msgstr "Kritikerwertung"
+
+#: 
+msgctxt "#33200"
+msgid "Background Color"
+msgstr "Hintergrundfarbe"
+
+#: 
+msgctxt "#33201"
+msgid "Specify solid Background Color instead of using media images"
+msgstr "Hintergrundfarbe anstatt Bilder verwenden"
+
+#: 
+msgctxt "#33400"
+msgid "Use old compatibility profile"
+msgstr "Altes Kompatibilitätsprofil verwenden"
+
+#: 
+msgctxt "#33401"
+msgid "Uses the Chrome client profile instead of the custom one. Might fix rare issues with 3D playback."
+msgstr "Benutzt das alte Chrome Client-Profil anstatt des angepassten. Könnte seltene Fehler beim Abspielen von 3D-Inhalten verhindern."
+
+#: 
+msgctxt "#32348"
+msgid "movies"
+msgstr "Filme"
+
+#: 
+msgctxt "#32466"
+msgid "Automatically seek to the selected timeline position after a second"
+msgstr "Nach Verzögerung automatisch zur aktuell gewählten Position springen"
+
+msgctxt "#33501"
+msgid "Video played threshold"
+msgstr "Video-abgespielt-Grenzwert"
+
+msgctxt "#33502"
+msgid "Set this to the same value as your Plex server (Settings>Library>Video played threshold) to avoid certain pitfalls, Default: 90 %"
+msgstr "Auf dem selben wert wie im Plex server setzen (Einstellungen>Mediathek>Video played threshold) um bestimmte Fehler zu umgehen, Standardwert: 90 %"
+
+msgctxt "#33503"
+msgid "Use alternative hubs refresh"
+msgstr "Alternative Aktualisierung der Hubs"
+
+msgctxt "#33504"
+msgid "Refreshes all hubs for all libraries after an item's watch-state has changed, instead of only those likely affected. Use this if you find a hub that doesn't update properly."
+msgstr "Aktualisiert alle Hubs aller Bibliotheken, anstatt nur die, die möglicherweise zutreffend sind, nachdem sich der Abspielstatus eines Items geändert hat. Benutzen, wenn sich ein Hub nicht aktualisiert."
+
+msgctxt "#33505"
+msgid "Show intro skip button early"
+msgstr "Intro überspringen früher anzeigen"
+
+msgctxt "#33506"
+msgid "Show the intro skip button from the start of a video with an intro marker. The auto-skipping setting applies. Doesn\'t override enabled binge mode.\nCan be disabled/enabled per TV show."
+msgstr "Zeige den Intro-Überspringen-Knopf von Anfang an. Die Automatische-Intro-Überspringen-Einstellung wird angewandt. Überschreibt aktivierten Binge-Modus nicht.\nKann pro Serie aktiviert/deaktiviert werden."
+
+msgctxt "#33507"
+msgid "Enabled"
+msgstr "Aktiviert"
+
+msgctxt "#33508"
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgctxt "#33509"
+msgid "Early intro skip threshold (default: < 60s/1m)"
+msgstr "Frühes Intro-Überspringen Grenzwert (default: < 60s/1m)"
+
+msgctxt "#33510"
+msgid "When showing the intro skip button early, only do so if the intro starts within the first X seconds."
+msgstr "Wenn der Into-Überspringen-Knopf früher angezeigt werden soll, nur anzeigen, wenn das Intro innerhalb der ersten X Sekunden startet."
+
+msgctxt "#33600"
+msgid "System"
+msgstr "System"
+
+msgctxt "#33601"
+msgid "Show video chapters"
+msgstr "Video-Kapitel anzeigen"
+
+msgctxt "#33602"
+msgid "If available, show video chapters from the video-file instead of the timeline-big-seek-steps."
+msgstr "Wenn verfügbar, Video-Kapitel aus der Video-Datei anstatt der Zeitleiste-Big-Seek-Schritte anzeigen."
+
+msgctxt "#33603"
+msgid "Use virtual chapters"
+msgstr "Virtuelle Kapitel verwenden"
+
+msgctxt "#33604"
+msgid "When the above is enabled and no video chapters are available, simulate them by using the markers identified by the Plex Server (Intro, Credits)."
+msgstr "Wenn die obrige aktiviert ist und keine Video-Kapitel verfügbar sind, virtuelle Kapitel aus den Plex Server Markern (Intro, Abspann) erzeugen."
+
+msgctxt "#33605"
+msgid "Video Chapters"
+msgstr "Video-Kapitel"
+
+msgctxt "#33606"
+msgid "Virtual Chapters"
+msgstr "Virtuelle Kapitel"
+
+msgctxt "#33607"
+msgid "Chapter {}"
+msgstr "Kapitel {}"
+
+msgctxt "#33608"
+msgid "Intro"
+msgstr "Intro"
+
+msgctxt "#33609"
+msgid "Credits"
+msgstr "Abspann"
+
+msgctxt "#33610"
+msgid "Main"
+msgstr "Haupt"
+
+msgctxt "#33611"
+msgid "Chapters"
+msgstr "Kapitel"
+
+msgctxt "#33612"
+msgid "Markers"
+msgstr "Markierungen"
+
+msgctxt "#33613"
+msgid "Kodi Buffer Size (MB)"
+msgstr "Kodi Puffergröße (MB)"
+
+msgctxt "#33614"
+msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~100 MB, Recommended max: {} MB, Default: 20 MB."
+msgstr "Setzt die Kodi Cache/Puffer Größe. Frei: {} MB, empfohlen: ~100 MB, empfohlenes Max.: {} MB, Default: 20 MB."
+
+msgctxt "#33615"
+msgid "{time} left"
+msgstr "{time} übrig"
+
+msgctxt "#33616"
+msgid "Addon Path"
+msgstr "Addon-Pfad"
+
+msgctxt "#33617"
+msgid "Userdata/Profile Path"
+msgstr "Benutzerdaten-/Profilpfad"
+
+msgctxt "#33618"
+msgid "TV binge-viewing mode"
+msgstr "TV Binge-Viewing-Modus"
+
+msgctxt "#33619"
+msgid "Automatically skips episode intros, credits and tries to skip episode recaps. Doesn\'t skip the intro of the first episode of a season and doesn't skip the final credits of a show.\n\nCan be disabled/enabled per TV show.\nOverrides any setting below."
+msgstr "Überspringt automatisch Intros und Abspänne von Episoden und versucht Recaps zu vermeiden. Überspringt das Intro der ersten Episode einer Staffel und den Abspann der letzten Episode einer Serie nicht.\n\nKann pro Serie aktiviert/deaktiviert werden.\nÜberschreibt jegliche Einstellung unterhalb dieser."
+
+msgctxt "#33620"
+msgid "Plex requests timeout (seconds)"
+msgstr "Plex HTTP Zeitlimit (Sekunden)"
+
+msgctxt "#33621"
+msgid "Set the (async and connection) timeout value of the Python requests library in seconds. Default: 5 seconds"
+msgstr "Setzt das Zeitlimit für die Python Requests Bibliothek bei asynchronen Verbindungen und Verbindungsanfragen. Default: 5 Sekunden"
+
+msgctxt "#33622"
+msgid "LAN reachability timeout (ms)"
+msgstr "LAN-Erreichbarkeits-Zeitlimit (ms)"
+
+msgctxt "#33623"
+msgid "When checking for Server-in-LAN reachability, use this timeout. Default: 10ms"
+msgstr "Wenn die lokale Serververbindung im LAN überprüft wird, benutze dieses Zeitlimit. Default: 10ms"
+
+msgctxt "#33624"
+msgid "Network"
+msgstr "Netzwerk"
+
+msgctxt "#33625"
+msgid "Smart LAN/local server discovery"
+msgstr "Smartes LAN/lokale Server-Auffinden"
+
+msgctxt "#33626"
+msgid "Checks whether servers returned from Plex.tv are actually local/in your LAN. For specific setups (e.g. Docker) Plex.tv might not properly detect a local server.\n\nNOTE: Only works on Kodi 19 or above."
+msgstr "Überprüft, ob von Plex.tv zurückgegebene Server tatsächlich lokal/in Deinem LAN sind. Für bestimmte Setups (z. B. Docker) könnte Plex.tv einen lokalen Servern nicht als solchen entdecken.\n\nACHTUNG: Funktioniert nur unter Kodi 19 oder neuer."
+
+msgctxt "#33627"
+msgid "Prefer LAN/local servers over security"
+msgstr "LAN/lokale Server bevorzugen"
+
+msgctxt "#33628"
+msgid "Prioritizes local connections over secure ones. Needs the proper setting in \"Allow Insecure Connections\" and the Plex Server's \"Secure connections\" at \"Preferred\". Can be used to enforce manual servers."
+msgstr "Priorisiert lokale Verbindungen über sichere. Benötigt die korrekte Einstellung in \"Unsichere Verbindung erlauben\" und die Plex Server Einstellung \"Sichere Verbindungen\" auf \"Bevorzugt\". Kann verwendet werden um manuelle Server zu forcieren."
+
+msgctxt "#33629"
+msgid "Auto-skip intro/credits offset"
+msgstr "Auto-Überspringen-Versatz"
+
+msgctxt "#33630"
+msgid "Intro/credits markers might be a little early in Plex. When auto skipping add (or subtract) this many seconds from the marker. This avoids cutting off content, while possibly skipping the marker a little late."
+msgstr "Intro-/Abspann-Markierungen können ein wenig früh erscheinen in Plex. Wenn diese automatisch übersprungen werden sollen, addiere (oder subtrahiere) diese Menge an Sekunden. Das verhindert das verfrühte Abschneiden von Inhalten, kann aber zu etwas verspätetem Springen führen."
+
+msgctxt "#32631"
+msgid "Playback (user-specific)"
+msgstr "Wiedergabe (benutzerspezifisch)"
+
+msgctxt "#33632"
+msgid "Server connectivity check timeout (seconds)"
+msgstr "Server Konnektivitätscheck-Timeout (Sekunden)"
+
+msgctxt "#33633"
+msgid "Set the maximum amount of time a server connection has to answer a connectivity request. Default: 2.5"
+msgstr "Setzt die maximale Zeit, in der eine Serververbindung antworten muss. Voreinstellung: 2.5"
+
+msgctxt "#33634"
+msgid "Combined Chapters"
+msgstr "Kombinierte Kapitel"
+
+msgctxt "#33635"
+msgid "Final Credits"
+msgstr "Finaler Abspann"
+
+msgctxt "#32700"
+msgid "Action on Sleep event"
+msgstr "Aktion bei Sleep-Ereignis"
+
+msgctxt "#32701"
+msgid "When Kodi receives a sleep event from the system, run the following action."
+msgstr "Wenn Kodi ein Sleep-Ereignis vom System erhält, folgende Aktion ausführen."
+
+msgctxt "#32702"
+msgid "Nothing"
+msgstr "Nichts"
+
+msgctxt "#32703"
+msgid "Stop playback"
+msgstr "Abspielen stoppen"
+
+msgctxt "#32704"
+msgid "Quit Kodi"
+msgstr "Kodi beenden"
+
+msgctxt "#32705"
+msgid "CEC Standby"
+msgstr "CEC Standby"
+
+msgctxt "#32800"
+msgid "Skipping intro"
+msgstr "Überspringe Intro"
+
+msgctxt "#32801"
+msgid "Skipping credits"
+msgstr "Überspringe Abspann"
+
+msgctxt "#32900"
+msgid "While playing back an item and seeking on the seekbar, automatically seek to the selected position after a delay instead of having to confirm the selection."
+msgstr "Wird während des Abspielens die Position auf der Zeitleiste verändert, automatisch nach einer Verzögerung auf die gewählte Position springen, ohne diese bestätigen zu müssen."
+
+msgctxt "#32901"
+msgid "Seek delay in seconds."
+msgstr "Sprungverzögerung in Sekunden."
+
+msgctxt "#32902"
+msgid "Kodi has its own skip step settings. Try to use them if they're configured instead of the default ones."
+msgstr "Kodi besitzt seine eigenen Sprungeinstellungen. Versuche diese anstatt der standardmäßigen zu verwenden, sollten sie konfiguriert sein."
+
+msgctxt "#32903"
+msgid "Use the above for seeking on the timeline as well."
+msgstr "Benutze die obrige Einstellung auch für die Zeitleiste."
+
+msgctxt "#32904"
+msgid "In seconds."
+msgstr "In Sekunden."
+
+msgctxt "#32905"
+msgid "Cancel post-play timer by pressing OK/SELECT"
+msgstr "Post-Play Timer durch OK/AUSWAHL abbrechen"
+
+msgctxt "#32906"
+msgid "Cancel skip marker timer with BACK"
+msgstr "Markierung überspringen durch Zurück-Taste abbrechen"
+
+msgctxt "#32907"
+msgid "When auto-skipping a marker, allow cancelling the timer by pressing BACK."
+msgstr "Wenn eine Markierung mit einem Zeitgeber automatisch übersprungen wird, durch Zurück-Taste abbrechen."
+
+msgctxt "#32908"
+msgid "Immediately skip marker with OK/SELECT"
+msgstr "Markierung sofort überspringen mit OK/AUSWAHL"
+
+msgctxt "#32909"
+msgid "When auto-skipping a marker with a timer, allow skipping immediately by pressing OK/SELECT."
+msgstr "Wenn eine Markierung mit einem Zeitgeber automatisch übersprungen wird, durch OK/AUSWAHL-Taste sofort überspringen."
+
+msgctxt "#32912"
+msgid "Show buffer-state on timeline"
+msgstr "Zeige Puffer-Stand auf Zeitachse"
+
+msgctxt "#32913"
+msgid "Shows the current Kodi buffer/cache state on the video player timeline."
+msgstr "Zeigt den aktuellen Kodi Puffer/Cache-Stand auf der Videoplayer Zeitachse."
+
+msgctxt "#32914"
+msgid "Loading"
+msgstr "Lädt"
+
+msgctxt "#32915"
+msgid "Slow connection"
+msgstr "Langsame Verbindung"
+
+msgctxt "#32916"
+msgid "Use with a wonky/slow connection, e.g. in a hotel room. Adjusts the UI to visually wait for item refreshes and waits for the buffer to fill when starting playback. Automatically sets readfactor=20, requires Kodi restart."
+msgstr "Bei langsamer Verbindung benutzen, z.B. im Hotel. Passt die Oberfläche visuell an um auf Media Auffrischungen zu warten und füllt den Kodi Puffer vor dem Abspielen. Setzt automatisch Kodi Cache readfactor=20, benötigt einen Kodi Neustart."
+
+msgctxt "#32917"
+msgid "Couldn't fill buffer in time ({}s)"
+msgstr "Konnte den Puffer nicht schnell genug füllen ({} Sek.)"
+
+msgctxt "#32918"
+msgid "Buffer wait timeout (seconds)"
+msgstr "Puffer-Wartezeit (Sekunden)"
+
+msgctxt "#32919"
+msgid "When slow connection is enabled in the addon, wait this long for the buffer to fill. Default: 120 s"
+msgstr "Wenn Langsame Verbindung im Addon aktiviert ist, warte so lange bis der Puffer gefüllt ist. Voreinstellung: 120 Sek."
+
+msgctxt "#32920"
+msgid "Insufficient buffer wait (seconds)"
+msgstr "Ungenügender Puffer Wartezeit (Sekunden)"
+
+msgctxt "#32921"
+msgid "When slow connection is enabled in the addon and the configured cache/buffer isn't big enough for us to determine its fill state, wait this long when starting playback. Default: 10 s"
+msgstr "Wenn \"Langsame Verbindung\" im Addon aktiviert ist und der konfigurierte Puffer/Cache nicht groß genug ist, um seinen Füllstand zu ermitteln, wird so lange gewartet, bevor die Wiedergabe gestartet wird. Voreinstellung: 10 Sek."
+
+msgctxt "#32922"
+msgid "Kodi Cache Readfactor"
+msgstr "Kodi Puffer Readfactor"
+
+msgctxt "#32923"
+msgid "Sets the Kodi cache readfactor value. Default: {0}, recommended: {1}. With \"Slow connection\" enabled this will be set to {2}, as otherwise the cache doesn't fill fast/aggressively enough."
+msgstr "Setzt den Kodi Cache/Puffer readfactor Wert. Standard: {0}, Empfohlen: {1}. Bei aktivem \"Langsame Verbindung\" wird dies automatisch auf {2} gesetzt, da ansonsten der Cache nicht schnell/agressiv genug gefüllt wird."
+
+msgctxt "#32924"
+msgid "Minimize"
+msgstr "Minimieren"
+
+msgctxt "#32925"
+msgid "Playback Settings"
+msgstr "Abspieleinstell."
+
+msgctxt "#32926"
+msgid "Wrong pin entered!"
+msgstr "Falsche PIN eingegeben!"
+
+msgctxt "#32927"
+msgid "Use episode thumbnails in continue hub"
+msgstr "Vorschaubild für Episoden im Fortsetzen-Hub verwenden"
+
+msgctxt "#32928"
+msgid "Instead of using media artwork, use thumbnails for episodes in the continue hub on the home screen if available."
+msgstr "Verwende Vorschaubilder anstatt Media-Artwork für Episoden im Fortsetzen-Hub auf der Start-Ansicht."
+
+msgctxt "#32929"
+msgid "Use legacy background fallback image"
+msgstr "Veraltetes Ausweich-Hintergrundbild verwenden"
+
+msgctxt "#32930"
+msgid "Previous Subtitle"
+msgstr "Vorheriger Untertitel"
+
+msgctxt "#32931"
+msgid "Audio/Subtitles"
+msgstr "Audio/Untertitel"
+
+msgctxt "#32932"
+msgid "Show subtitle quick-actions button"
+msgstr "Zeige Untertitel-Schnellaktionen-Knopf"
+
+msgctxt "#32933"
+msgid "Show FFWD/RWD buttons"
+msgstr "Zeige Vorspulen-Zurückspulen-Knopf"
+
+msgctxt "#32934"
+msgid "Show repeat button"
+msgstr "Zeige Wiederholen-Knopf"
+
+msgctxt "#32935"
+msgid "Show shuffle button"
+msgstr "Zeige Zufällige-Wiedergabe-Knopf"
+
+msgctxt "#32936"
+msgid "Show playlist button"
+msgstr "Zeige Wiedergabeliste-Knopf"
+
+msgctxt "#32937"
+msgid "Show prev/next button"
+msgstr "Zeige Vorheriger/Nächster-Knopf"
+
+msgctxt "#32938"
+msgid "Only for Episodes"
+msgstr "Nur bei Episoden"
+
+msgctxt "#32939"
+msgid "Only applies to video player UI"
+msgstr "Gilt nur für die Video Abspieloberfläche"
+
+msgctxt "#32940"
+msgid "Player UI"
+msgstr "Abspieloberfläche"
+
+msgctxt "#32941"
+msgid "Forced subtitles fix"
+msgstr "Erzwungene Untertitel beheben"
+
+msgctxt "#32942"
+msgid "Other seasons"
+msgstr "Weitere Staffeln"
+
+msgctxt "#32943"
+msgid "Crossfade dynamic background art"
+msgstr "Dynamische Hintergrundbilder überblenden"
+
+msgctxt "#32944"
+msgid "Burn-in SSA subtitles (DirectStream)"
+msgstr "SSA-Untertitel einbrennen (DirectStream)"
+
+msgctxt "#32945"
+msgid "When Direct Streaming instruct the Plex Server to burn in SSA/ASS subtitles (thus transcoding the video stream). If disabled it will not touch the video stream, but will convert the subtitle to unstyled text."
+msgstr "Wird Direct Streaming verwendet, den Plex Server dazu bringen, SSA/ASS-Untertitel einzubrennen (also den Video Stream zu transcoden). Wenn deaktiviert, wird dieser den Video Stream nicht anfassen, jedoch den Untertitel als reinen Text anzeigen."
+
+msgctxt "#32946"
+msgid "Stop video playback on idle after"
+msgstr "Bei Inaktivität Video stoppen nach"
+
+msgctxt "#32947"
+msgid "Stop video playback on screensaver"
+msgstr "Video stoppen bei Bildschirmschoner"
+
+msgctxt "#32948"
+msgid "Allow auto-skip when transcoding"
+msgstr "Überspringen beim Transkodieren erlauben"
+
+msgctxt "#32949"
+msgid "When transcoding/DirectStreaming, allow auto-skip functionality."
+msgstr "Beim Transkodieren/DirectStream die automatische Überspringen-Funktionalität erlauben."
+
+msgctxt "#32950"
+msgid "Use extended title for subtitles"
+msgstr "Erweiterten Titel für Untertitel verwenden"
+
+msgctxt "#32951"
+msgid "When displaying subtitles use the extendedDisplayTitle Plex exposes."
+msgstr "Verwende erweiterte Namen wenn Untertitelnamen angezeigt werden."
+
+msgctxt "#32952"
+msgid "Dialog-Flackern beheben"
+msgstr ""
+
+msgctxt "#32953"
+msgid "Reviews"
+msgstr "Kritik"
+
+msgctxt "#32954"
+msgid "Needs Kodi restart. WARNING: This will overwrite advancedsettings.xml!\n\nTo customize other cache/network-related values, copy \"script.plexmod/pm4k_cache_template.xml\" to profile folder and edit it to your liking. (See About section for the file paths)"
+msgstr "Benötigt Kodi Neustart. ACHTUNG: Überschreibt advancedsettings.xml!\n\nUm weitere Cache-/Netzwerkbezogene Werte zu ändern, kopiere \"script.plexmod/pm4k_cache_template.xml\" in den Profilordner und editiere sie. (Für die Dateipfade schaue in die Über-Sektion)"
+
+msgctxt "#32955"
+msgid "Use Kodi keyboard for searching"
+msgstr "Kodi-Tastatur bei der Suche verwenden"
+
+msgctxt "#32956"
+msgid "Poster resolution scaling %"
+msgstr "Poster Auflösungsskalierung %"
+
+msgctxt "#32957"
+msgid "In percent. Scales the resolution of all posters/thumbnails for better image quality. May impact PMS/PM4K performance, will increase the cache usage accordingly. Recommended: 200-300 % for big screens if your hardware can handle it. Needs addon restart."
+msgstr "In Prozent. Skaliert die Auflösung aller Poster/Vorschaubilder für bessere Bildqualität. Kann die PMS/PM4K Performance beeinflussen, wird die Cache-Nutzung dementsprechend erhöhen. Empfohlen: 200-300 % für große Bildschirme, wenn die Hardware damit umgehen kann. Benötigt Addon-Neustart."
+
+msgctxt "#32958"
+msgid "Calculate OpenSubtitles.com hash"
+msgstr "OpenSubtitles.com Prüfsumme berechnen"
+
+msgctxt "#32959"
+msgid "When opening the subtitle download feature, automatically calculate the OpenSubtitles.com hash for the given file. Can improve search results, downloads 2*64 KB of the video file to calculate the hash."
+msgstr "Beim Öffnen der Untertitel-Herunterladen-Funktion die Prüfsumme der Datei für OpenSubtitles.com automatisch berechnen. Kann die Suchergebnisse verbessern, lädt 2*64 KB der Videodatei herunter um die Prüfsumme zu berechnen."
+
+msgctxt "#32960"
+msgid "Similar Artists"
+msgstr "Ähnliche Künstler"
+
+msgctxt "#32961"
+msgid "Show hub bifurcation lines"
+msgstr "Hub-Trennlinie anzeigen"
+
+msgctxt "#32962"
+msgid "Visually separate hubs horizontally using a thin line."
+msgstr "Trennt Hubs visuell horizontal mit Hilfe einer dünnen Linie."
+
+msgctxt "#32963"
+msgid "Wait between videos (s)"
+msgstr "Zwischen Videos warten (s)"
+
+msgctxt "#32964"
+msgid "When playing back consecutive videos (e.g. TV shows), wait this long before starting the next one in the queue. Might fix compatibility issues with certain configurations."
+msgstr "Werden aufeinanderfolgende Videos abgespielt (z. B. Serien), so lange warten, bis das nächste Video in der Warteschlange abgespielt wird. Könnte Kompatibilitätsprobleme mit gewissen Konfigurationen beheben."
+
+msgctxt "#32965"
+msgid "Quit Kodi on exit by default"
+msgstr "Kodi beenden anstatt PM4K"
+
+msgctxt "#32966"
+msgid "When showing the addon exit confirmation, use \"Quit Kodi\" as default option. Can be dynamically switched using CONTEXT_MENU (often longpress SELECT)"
+msgstr "Wenn die Addon-Beendigungsbestätigung angezeigt wird, \"Kodi beenden\" als Standardoption verwenden. Kann dynamisch mit CONTEXT_MENU (oft lange gedrücktes SELECT) getauscht werden."
+
+msgctxt "#32967"
+msgid "Kodi Colour Management"
+msgstr "Kodi Farbeinstellungen"
+
+msgctxt "#32968"
+msgid "Kodi Resolution Settings"
+msgstr "Kodi Auflösungseinstellungen"
+
+msgctxt "#32969"
+msgid "Always request all library media items at once"
+msgstr "Immer die vollständige Bibliothek laden"
+
+msgctxt "#32970"
+msgid "Retrieve all media in library up front instead of fetching it in chunks as the user navigates through the library"
+msgstr "Alle Medieninhalte einer Bibliothek anfordern, anstatt diese gestückelt nachzuladen"
+
+msgctxt "#32971"
+msgid "Library item-request chunk size"
+msgstr "Bibliothek Anfrage-Blockgröße"
+
+msgctxt "#32972"
+msgid "Request this amount of media items per chunk request in library view (+6-30 depending on view mode; less can be less straining for the UI at first, but puts more strain on the server)"
+msgstr "Diese Anzahl an Medieninhalten pro gestückelter Anfrage in der Bibliothekenansicht laden (+6-30 abhängig von der Ansicht; weniger kann vorerst geringere UI-Last bedeuten, aber mehr Last beim Server erzeugen)"
+
+msgctxt "#32973"
+msgid "Episodes: Skip Post Play screen"
+msgstr "Direkt zur nächsten Episode springen"
+
+msgctxt "#32974"
+msgid "When finishing an episode, don't show Post Play but go to the next one immediately.\nCan be disabled/enabled per TV show. Doesn't override enabled binge mode. Overrides the Post Play setting."
+msgstr "Beim Beenden einer Episode nicht in die Post Play Ansicht gehen und stattdessen sofort zur nächsten Episode springen.\nCan be disabled/enabled per TV show. Überschreibt aktivierten Binge-Modus nicht. Überschreibt die \"Automatisch nächsten Titel abspielen\"-Einstellung"
+
+msgctxt "#32975"
+msgid "Delete Season"
+msgstr "Staffel löschen"
+
+msgctxt "#32976"
+msgid "Adaptive"
+msgstr "Adaptiv"
+
+msgctxt "#32977"
+msgid "Allow VC1"
+msgstr "VC1 zulassen"
+
+msgctxt "#32978"
+msgid "Enable this if your hardware can handle VC1. Disable it to force transcoding."
+msgstr "Diese Option aktivieren, wenn die Hardware VC1 verarbeiten kann. Deaktivieren, um die Transkodierung zu erzwingen."
+
+msgctxt "#32979"
+msgid "Allows the server to only transcode streams of a video that need transcoding, while streaming the others unaltered. If disabled, force the server to transcode everything not direct playable."
+msgstr "Erlaubt dem Server nur Streams eines Videos zu transkodieren, die dies benötigen, während die anderen unverändert übertragen werden. Ist dies deaktiviert, wird der Server dazu gezwungen, alles zu transkodieren, was nicht direkt abspielbar ist."
+
+msgctxt "#32980"
+msgid "Refresh Users"
+msgstr "Benutzer aktual."
