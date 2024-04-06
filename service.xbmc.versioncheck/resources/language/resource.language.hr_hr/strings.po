@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2022-02-10 11:38+0000\n"
 "Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
@@ -90,16 +90,6 @@ msgid "Linux: Upgrade using apt"
 msgstr "Linux: Nadogradi putem apt upravitelja paketa"
 
 #. Used in OK dialog
-msgctxt "#32030"
-msgid "A new stable version of Kodi is available."
-msgstr "Dostupna je nova stabilna inačica Kodija."
-
-#. Direct people to the website. Used in OK dialog
-msgctxt "#32031"
-msgid "Visit http://kodi.tv for more information."
-msgstr "Za više informacija posjetite http://kodi.tv."
-
-#. Used in OK dialog
 msgctxt "#32032"
 msgid "A new stable version of Kodi is available."
 msgstr "Dostupna je nova stabilna inačica Kodija."
@@ -131,6 +121,14 @@ msgstr "Nadogradite svoj operativni sustav."
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "Za više informacija, posjetite https://kodi.wiki/view/Linux"
+
+#~ msgctxt "#32030"
+#~ msgid "A new stable version of Kodi is available."
+#~ msgstr "Dostupna je nova stabilna inačica Kodija."
+
+#~ msgctxt "#32031"
+#~ msgid "Visit http://kodi.tv for more information."
+#~ msgstr "Za više informacija posjetite http://kodi.tv."
 
 #~ msgctxt "#32035"
 #~ msgid "It is recommended that you to upgrade to a newer version."
