@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-12-25 11:15+0000\n"
+"PO-Revision-Date: 2023-04-05 16:16+0000\n"
 "Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-core/service-xbmc-versioncheck/fr_fr/>\n"
 "Language: fr_fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Kodi Version Check checks if you are running latest released version."
@@ -90,16 +90,6 @@ msgid "Linux: Upgrade using apt"
 msgstr "Linux: mettre à niveau en utilisant apt"
 
 #. Used in OK dialog
-msgctxt "#32030"
-msgid "A new stable version of Kodi is available."
-msgstr "Une nouvelle version stable de Kodi est disponible."
-
-#. Direct people to the website. Used in OK dialog
-msgctxt "#32031"
-msgid "Visit http://kodi.tv for more information."
-msgstr "Consulter http://kodi.tv pour plus d'informations."
-
-#. Used in OK dialog
 msgctxt "#32032"
 msgid "A new stable version of Kodi is available."
 msgstr "Une nouvelle version stable de Kodi est disponible."
@@ -126,11 +116,19 @@ msgstr "Votre version %s du module Python de cryptographie est trop vieille. Vou
 
 msgctxt "#32041"
 msgid "Please upgrade your operating system."
-msgstr "Veuillez mettre à jour votre système d’exploitation."
+msgstr "Mettez a jour votre système d'exploitation."
 
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
-msgstr "Plus d’informations disponibles sur https://kodi.wiki/view/Linux"
+msgstr "Pour plus d'information, voir https://kodi.wiki/view/Linux"
+
+#~ msgctxt "#32030"
+#~ msgid "A new stable version of Kodi is available."
+#~ msgstr "Une nouvelle version stable de Kodi est disponible."
+
+#~ msgctxt "#32031"
+#~ msgid "Visit http://kodi.tv for more information."
+#~ msgstr "Consulter http://kodi.tv pour plus d'informations."
 
 #~ msgctxt "#32035"
 #~ msgid "It is recommended that you to upgrade to a newer version."
