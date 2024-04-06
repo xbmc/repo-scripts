@@ -17,10 +17,12 @@ import sys
 from .common import log
 from .handler import Handler
 
+
 try:
     from subprocess import check_output
 except ImportError:
-    check_output = None
+    def check_output(*args, **kwargs):
+        return
     log('ImportError: subprocess')
 
 
@@ -53,7 +55,12 @@ class ShellHandlerApt(Handler):
             return False, False
 
         try:
-            result = check_output([_cmd], shell=True).split('\n')
+            result = check_output([_cmd], shell=True)
+            try:
+                result = result.decode('utf-8')
+            except (AttributeError, UnicodeDecodeError):
+                pass
+            result = result.split('\n')
         except Exception as error:  # pylint: disable=broad-except
             log('ShellHandlerApt: exception while executing shell command %s: %s' % (_cmd, error))
             return False, False
