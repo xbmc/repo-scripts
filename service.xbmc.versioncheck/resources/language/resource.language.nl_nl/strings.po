@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2021-12-14 15:13+0000\n"
 "Last-Translator: Deleted User <noreply+158@weblate.org>\n"
@@ -90,16 +90,6 @@ msgid "Linux: Upgrade using apt"
 msgstr "Linux: Upgrade gebruikt apt"
 
 #. Used in OK dialog
-msgctxt "#32030"
-msgid "A new stable version of Kodi is available."
-msgstr "Een nieuwe stabiele versie van Kodi is beschikbaar."
-
-#. Direct people to the website. Used in OK dialog
-msgctxt "#32031"
-msgid "Visit http://kodi.tv for more information."
-msgstr "Bezoek http://kodi.tv voor meer informatie."
-
-#. Used in OK dialog
 msgctxt "#32032"
 msgid "A new stable version of Kodi is available."
 msgstr "Een nieuwe stabiele versie van Kodi is beschikbaar."
@@ -131,6 +121,14 @@ msgstr "Update uw besturingssysteem."
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "Voor meer informatie, kijk op https://kodi.wiki/view/Linux"
+
+#~ msgctxt "#32030"
+#~ msgid "A new stable version of Kodi is available."
+#~ msgstr "Een nieuwe stabiele versie van Kodi is beschikbaar."
+
+#~ msgctxt "#32031"
+#~ msgid "Visit http://kodi.tv for more information."
+#~ msgstr "Bezoek http://kodi.tv voor meer informatie."
 
 #~ msgctxt "#32035"
 #~ msgid "It is recommended that you to upgrade to a newer version."
