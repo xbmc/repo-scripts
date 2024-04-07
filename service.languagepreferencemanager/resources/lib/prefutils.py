@@ -245,7 +245,11 @@ class LangPrefMan_Player(xbmc.Player) :
 
             log(LOG_INFO,'Subtitle: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
             for pref in preferences:
-                name, codes, forced = pref
+                if len(pref) == 2:
+                    name, codes = pref
+                    forced = 'false'
+                else:
+                    name, codes, forced = pref
                 codes = codes.split(r',')
                 for code in codes:
                     if (code is None):
