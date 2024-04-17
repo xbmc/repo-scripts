@@ -93,7 +93,7 @@ class XbmcBackup:
             file_ext = aFile.split('.')[-1]
             folderName = aFile.split('.')[0]
 
-            if(file_ext == 'zip' and len(folderName) == 12 and folderName.isdigit()):
+            if(file_ext == 'zip' and len(folderName) >= 12 and folderName[0:12].isdigit()):
 
                 # format the name according to regional settings and display the file size
                 folderName = "%s - %s" % (self._dateFormat(folderName), utils.diskString(self.remote_vfs.fileSize(self.remote_base_path + aFile)))
@@ -285,7 +285,9 @@ class XbmcBackup:
                     self._createResumeBackupFile()
 
                     # do not continue running
-                    xbmcgui.Dialog().ok(utils.getString(30077), utils.getString(30078))
+                    if(xbmcgui.Dialog().yesno(utils.getString(30077), utils.getString(30078), autoclose=15000)):
+                        xbmc.executebuiltin('Quit')
+
                     return
 
             # check if settings should be restored from this backup
@@ -347,6 +349,11 @@ class XbmcBackup:
             # call update addons to refresh everything
             xbmc.executebuiltin('UpdateLocalAddons')
 
+            # notify user that restart is recommended
+            if(xbmcgui.Dialog().yesno(utils.getString(30077), utils.getString(30078), autoclose=15000)):
+                xbmc.executebuiltin('Quit')
+
+
     def _setupVFS(self, mode=-1, progressOverride=False):
         # set windows setting to true
         window = xbmcgui.Window(10000)
@@ -368,7 +375,7 @@ class XbmcBackup:
                 self.saved_remote_vfs = self.remote_vfs
                 self.remote_vfs = ZipFileSystem(zip_path, "w")
 
-            self.remote_vfs.set_root(self.remote_vfs.root_path + time.strftime("%Y%m%d%H%M") + "/")
+            self.remote_vfs.set_root(self.remote_vfs.root_path + time.strftime("%Y%m%d%H%M") + utils.getSetting('backup_suffix').strip() + "/")
             progressBarTitle = progressBarTitle + utils.getString(30023) + ": " + utils.getString(30016)
         elif(mode == self.Restore and self.restore_point is not None and self.remote_vfs.root_path != ''):
             if(self.restore_point.split('.')[-1] != 'zip'):
@@ -414,11 +421,11 @@ class XbmcBackup:
                 if(utils.getSettingBool('verbose_logging')):
                     utils.log('Writing file: ' + aFile['file'])
 
-                if(aFile['file'].startswith("-")):
-                    self._updateProgress('%s remaining, writing %s' % (utils.diskString(self.transferLeft), os.path.basename(aFile['file'][len(source.root_path):]) + "/"))
-                    dest.mkdir(dest.root_path + aFile['file'][len(source.root_path) + 1:])
+                if(aFile['is_dir']):
+                    self._updateProgress('%s remaining\nwriting %s' % (utils.diskString(self.transferLeft), os.path.basename(aFile['file'][len(source.root_path):]) + "/"))
+                    dest.mkdir(dest.root_path + aFile['file'][len(source.root_path):])
                 else:
-                    self._updateProgress('%s remaining, writing %s' % (utils.diskString(self.transferLeft), os.path.basename(aFile['file'][len(source.root_path):])))
+                    self._updateProgress('%s remaining\nwriting %s' % (utils.diskString(self.transferLeft), os.path.basename(aFile['file'][len(source.root_path):])))
                     self.transferLeft = self.transferLeft - aFile['size']
 
                     # copy the file
@@ -426,6 +433,7 @@ class XbmcBackup:
 
                     # if result is still true but this file failed
                     if(not wroteFile and result):
+                        utils.log("Failed to write " + aFile['file'])
                         result = False
 
         return result
@@ -495,7 +503,7 @@ class XbmcBackup:
                     remove_num = remove_num + 1
 
     def _createValidationFile(self, dirList):
-        valInfo = {"name": "XBMC Backup Validation File", "xbmc_version": xbmc.getInfoLabel('System.BuildVersion'), "type": 0, "system_settings": []}
+        valInfo = {"name": "XBMC Backup Validation File", "xbmc_version": xbmc.getInfoLabel('System.BuildVersion'), "type": 0, "system_settings": [], "addons": []}
         valDirs = []
 
         # save list of file sets
@@ -506,6 +514,9 @@ class XbmcBackup:
         # dump all current Kodi settings
         gui_settings = GuiSettingsManager()
         valInfo['system_settings'] = gui_settings.backup()
+
+        # save all currently installed addons
+        valInfo['addons'] = gui_settings.list_addons()
 
         vFile = xbmcvfs.File(xbmcvfs.translatePath(utils.data_dir() + "xbmcbackup.val"), 'w')
         vFile.write(json.dumps(valInfo))
@@ -569,7 +580,7 @@ class FileManager:
     exclude_dir = []
     root_dirs = []
     pathSep = '/'
-    totalSize = 0
+    totalSize = 1
 
     def __init__(self, vfs):
         self.vfs = vfs
@@ -580,7 +591,7 @@ class FileManager:
     def walk(self):
 
         for aDir in self.root_dirs:
-            self.addFile('-' + xbmcvfs.translatePath(aDir['path']))
+            self.addFile(xbmcvfs.translatePath(aDir['path']), True)
             self.walkTree(xbmcvfs.translatePath(aDir['path']), aDir['recurse'])
 
     def walkTree(self, directory, recurse=True):
@@ -602,7 +613,7 @@ class FileManager:
                     # check if directory is excluded
                     if(not any(dirPath.startswith(exDir) for exDir in self.exclude_dir)):
 
-                        self.addFile("-" + dirPath)
+                        self.addFile(dirPath, True)
 
                         # catch for "non directory" type files
                         shouldWalk = True
@@ -625,7 +636,7 @@ class FileManager:
         else:
             self.excludeFile(xbmcvfs.translatePath(dirMeta['path']))
 
-    def addFile(self, filename):
+    def addFile(self, filename, is_dir = False):
         # write the full remote path name of this file
         if(utils.getSettingBool('verbose_logging')):
             utils.log("Add File: " + filename)
@@ -634,7 +645,7 @@ class FileManager:
         fSize = self.vfs.fileSize(filename)
         self.totalSize = self.totalSize + fSize
 
-        self.fileArray.append({'file': filename, 'size': fSize})
+        self.fileArray.append({'file': filename, 'size': fSize, 'is_dir': is_dir})
 
     def excludeFile(self, filename):
         # remove trailing slash

@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2021-10-13 09:30+0000\n"
 "Last-Translator: taxigps <taxigps@sina.com>\n"
@@ -626,6 +626,14 @@ msgstr "按每日、每周、每月或自定义计划运行备份"
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
 msgstr "备份以未知模式启动"
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
+msgstr ""
 
 #~ msgctxt "#30036"
 #~ msgid "Custom Directory 1"

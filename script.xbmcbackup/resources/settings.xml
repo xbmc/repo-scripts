@@ -50,6 +50,17 @@
           </constraints>
           <control type="spinner" format="string" />
         </setting>
+        <!-- backup suffix -->
+        <setting id="backup_suffix" type="string" label="30160" help="30161">
+          <level>2</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>30024</heading>
+          </control>
+        </setting>
       </group>
       <group id="2" label="">
         <!-- verbose logging -->
