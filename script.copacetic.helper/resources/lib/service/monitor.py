@@ -147,6 +147,7 @@ class Monitor(xbmc.Monitor):
         # slideshow window is visible run SlideshowMonitor()
         elif condition(
             '[Window.IsVisible(home) | '
+            'Window.IsVisible(favouritesbrowser) | '
             'Window.IsVisible(skinsettings) | '
             'Window.IsVisible(appearancesettings) | '
             'Window.IsVisible(mediasettings) | '

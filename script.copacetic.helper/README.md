@@ -13,7 +13,10 @@ All code contained in this project is licensed under GPL 3.0.
 * __jurialmunkey__ for all the best-practice code examples from [plugin.video.themoviedb.helper](https://github.com/jurialmunkey/plugin.video.themoviedb.helper) and forum support.
 
 ### Changelog
-**1.0.11**
+**1.0.13**
+- Player monitor captures Set ID for currently playing movie and passes to a window property for skin.copacetic to use for Now_Playing indicator on sets 
+
+**1.0.12**
 - Removed visualisation waveform setting from list of settings changed by SettingsMonitor
 
 **1.0.11**
