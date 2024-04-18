@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
+
 """
-Handy utility functions for Kodi Addons
-By bossanova808
-Free in all senses....
-VERSION 0.2.4 2021-08-10
-(For Kodi Matrix & later)
+
+Handy utility functions & constants for Kodi Addons
+For Kodi Matrix & later
+By bossanova808 - freely released
+VERSION 0.2.7 2024-04-19
+
+Changelog:
+0.2.7 - Fix getting the major Kodi version (& change float -> int), as it was failing on e.g. 'RC' being in the string apparently
+0.2.6 - (SkinPatcher) - add float KODI_VERSION_FLOAT constant, alongside string KODI_VERSION
+0.2.5 - (Skin) - move to storing copy of latest in bossanova808 repo and adding this mini changelog
+
+For latest version - ALWAYS COPY BACK ANY CHANGES, plus do changelog, and a version & date bump above:
+https://github.com/bossanova808/repository.bossanova808/blob/main/latest-common/common.py
+
+
 """
+
 import sys
 import traceback
 
@@ -27,6 +39,7 @@ CWD = ADDON.getAddonInfo('path')
 LANGUAGE = ADDON.getLocalizedString
 PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
+KODI_VERSION_INT = int(KODI_VERSION.split(".")[0])
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
 HOME_WINDOW = xbmcgui.Window(10000)
 WEATHER_WINDOW = xbmcgui.Window(12600)
@@ -51,6 +64,8 @@ from resources.lib.common import *
 """
 
 unit_testing = False
+
+# Testing outside of Kodi
 if not xbmc.getUserAgent():
 
     xbmc = None
@@ -65,6 +80,7 @@ if not xbmc.getUserAgent():
             print(f'EXCPT: {traceback.format_exc(exception_instance)}')
 
 
+# Running inside of Kodi
 else:
 
     def log(message, exception_instance=None, level=xbmc.LOGDEBUG):
@@ -192,7 +208,7 @@ def footprints(startup=True):
     """
     if startup:
         log(f'Starting...', level=xbmc.LOGINFO)
-        log(f'Kodi Version: {KODI_VERSION}', level=xbmc.LOGINFO)
+        log(f'Kodi System.BuildVersion: {KODI_VERSION}, which is Kodi major version: {KODI_VERSION_INT}', level=xbmc.LOGINFO)
         log(f'Addon arguments: {ADDON_ARGUMENTS}', level=xbmc.LOGINFO)
     else:
         log(f'Exiting...', level=xbmc.LOGINFO)

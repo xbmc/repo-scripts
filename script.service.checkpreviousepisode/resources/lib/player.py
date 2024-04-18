@@ -125,7 +125,10 @@ class KodiPlayer(xbmc.Player):
                                     log("Prior episode not watched! -> pausing playback")
                                     self.pause()
 
+                                # Set a window property per Hitcher's request - https://forum.kodi.tv/showthread.php?tid=355464&pid=3191615#pid3191615
+                                HOME_WINDOW.setProperty("CheckPreviousEpisode", "MissingPreviousEpisode")
                                 result = xbmcgui.Dialog().select(LANGUAGE(32020), [LANGUAGE(32021), LANGUAGE(32022), LANGUAGE(32023)], preselect=0)
+                                HOME_WINDOW.setProperty("CheckPreviousEpisode", "")
 
                                 # User has requested we ignore this particular show from now on...
                                 if result == 2:
