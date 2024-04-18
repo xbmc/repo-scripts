@@ -1,3 +1,7 @@
+v2.0.6
+
+- Add support for non library videos
+
 v2.0.5
 - Fix wierd bug with resume points: https://forum.kodi.tv/showthread.php?tid=355383&pid=3163480#pid3163480
 

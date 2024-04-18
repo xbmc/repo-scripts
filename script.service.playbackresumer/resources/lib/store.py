@@ -24,7 +24,7 @@ class Store:
     # Store the full path of the currently playing file
     currently_playing_file_path = ''
     # What type of video is it?  episode, movie, musicvideo
-    type_of_video = 'unknown'
+    type_of_video = None
     # What is the library id of this video, if there is one?
     library_id = -1
     # if the video was paused, at what time was it paused?
@@ -194,18 +194,15 @@ class Store:
         json_response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
         log(f'JSON-RPC Files.GetFileDetails response: {json.dumps(json_response)}')
 
-        Store.type_of_video = 'unknown'
-
         try:
             Store.type_of_video = json_response['result']['filedetails']['type']
-        except:
+        except KeyError:
             Store.library_id = -1
-            log(f'Error determining type of video; probably not in Kodi\'s library: {Store.currently_playing_file_path}')
+            log(f"ERROR: Kodi did not return even an 'unknown' file type for: {Store.currently_playing_file_path}")
 
-        if Store.type_of_video == 'episode' or Store.type_of_video == 'movie' or Store.type_of_video == 'musicvideo':
+        if Store.type_of_video in ['episode', 'movie', 'musicvideo']:
             Store.library_id = json_response['result']['filedetails']['id']
-            log(f'The library id for this {Store.type_of_video} is {Store.library_id}')
         else:
             Store.library_id = None
-            log(f'Unsupported type of video {Store.type_of_video} for {Store.currently_playing_file_path}')
 
+        log(f'Kodi type: {Store.type_of_video}, library id: {Store.library_id}')
