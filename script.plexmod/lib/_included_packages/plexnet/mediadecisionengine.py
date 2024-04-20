@@ -24,7 +24,8 @@ class MediaDecisionEngine(object):
 
     def chooseMedia(self, item, forceUpdate=False):
         # If we've already evaluated this item, use our previous choice.
-        if not forceUpdate and item.mediaChoice is not None and item.mediaChoice.media is not None and not item.mediaChoice.media.isIndirect():
+        if not forceUpdate and item.mediaChoice is not None and item.mediaChoice.media is not None and \
+                not item.mediaChoice.media.isIndirect():
             return item.mediaChoice
 
         # See if we're missing media/stream details for this item.

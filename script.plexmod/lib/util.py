@@ -142,7 +142,7 @@ def _processSetting(setting, default):
     return setting
 
 
-class AdvancedSettings(object):
+class AddonSettings(object):
     """
     @DynamicAttrs
     """
@@ -188,6 +188,7 @@ class AdvancedSettings(object):
         ("consecutive_video_pb_wait", 0.0),
         ("retrieve_all_media_up_front", False),
         ("library_chunk_size", 240),
+        ("verify_mapped_files", True)
     )
 
     def __init__(self):
@@ -198,7 +199,7 @@ class AdvancedSettings(object):
                     getSetting(setting, default))
 
 
-advancedSettings = AdvancedSettings()
+addonSettings = AddonSettings()
 
 
 def LOG(msg, level=xbmc.LOGINFO):
@@ -209,7 +210,7 @@ def DEBUG_LOG(msg):
     if _SHUTDOWN:
         return
 
-    if not advancedSettings.debug and not xbmc.getCondVisibility('System.GetBool(debug.showloginfo)'):
+    if not addonSettings.debug and not xbmc.getCondVisibility('System.GetBool(debug.showloginfo)'):
         return
 
     LOG(msg)
@@ -316,169 +317,6 @@ class UtilityMonitor(xbmc.Monitor, signalsmixin.SignalsMixin):
 
 MONITOR = UtilityMonitor()
 
-ADV_MSIZE_RE = re.compile(r'<memorysize>(\d+)</memorysize>')
-ADV_RFACT_RE = re.compile(r'<readfactor>(\d+)</readfactor>')
-ADV_CACHE_RE = re.compile(r'\s*<cache>.*</cache>', re.S | re.I)
-
-
-class KodiCacheManager(object):
-    """
-    A pretty cheap approach at managing the <cache> section of advancedsettings.xml
-
-    Starting with build 20.90.821 (Kodi 21.0-BETA2) a lot of caching issues have been fixed and
-    readfactor behaves better. We need to adjust for that.
-    """
-    _cleanData = None
-    useModernAPI = False
-    memorySize = 20  # in MB
-    readFactor = 4
-    defRF = 4
-    defRFSM = 20
-    recRFRange = "4-10"
-    template = None
-    orig_tpl_path = os.path.join(ADDON.getAddonInfo('path'), "pm4k_cache_template.xml")
-    custom_tpl_path = "special://profile/pm4k_cache_template.xml"
-    translated_ctpl_path = translatePath(custom_tpl_path)
-
-    # give Android a little more leeway with its sometimes weird memory management; otherwise stick with 23% of free mem
-    safeFactor = .20 if xbmc.getCondVisibility('System.Platform.Android') else .23
-
-    def __init__(self):
-        if KODI_BUILD_NUMBER >= 2090821:
-            self.memorySize = rpc.Settings.GetSettingValue(setting='filecache.memorysize')['value']
-            self.readFactor = rpc.Settings.GetSettingValue(setting='filecache.readfactor')['value'] / 100.0
-            if self.readFactor % 1 == 0:
-                self.readFactor = int(self.readFactor)
-            DEBUG_LOG("Not using advancedsettings.xml for cache/buffer management, we're at least Kodi 21 non-alpha")
-            self.useModernAPI = True
-            self.defRFSM = 7
-            self.recRFRange = "1.5-4"
-
-            if KODI_BUILD_NUMBER >= 2090830:
-                self.recRFRange = ADDON.getLocalizedString(32976)
-
-        else:
-            self.load()
-            self.template = self.getTemplate()
-
-        plexapp.util.APP.on('change:slow_connection',
-                            lambda value=None, **kwargs: self.write(readFactor=value and self.defRFSM or self.defRF))
-
-    def getTemplate(self):
-        if xbmcvfs.exists(self.custom_tpl_path):
-            try:
-                f = xbmcvfs.File(self.custom_tpl_path)
-                data = f.read()
-                f.close()
-                if data:
-                    return data
-            except:
-                pass
-
-        DEBUG_LOG("Custom pm4k_cache_template.xml not found, using default")
-        f = xbmcvfs.File(self.orig_tpl_path)
-        data = f.read()
-        f.close()
-        return data
-
-    def load(self):
-        try:
-            f = xbmcvfs.File("special://profile/advancedsettings.xml")
-            data = f.read()
-            f.close()
-        except:
-            LOG('script.plex: No advancedsettings.xml found')
-        else:
-            cachexml_match = ADV_CACHE_RE.search(data)
-            if cachexml_match:
-                cachexml = cachexml_match.group(0)
-
-                try:
-                    self.memorySize = int(ADV_MSIZE_RE.search(cachexml).group(1)) // 1024 // 1024
-                except:
-                    DEBUG_LOG("script.plex: invalid or not found memorysize in advancedsettings.xml")
-
-                try:
-                    self.readFactor = int(ADV_RFACT_RE.search(cachexml).group(1))
-                except:
-                    DEBUG_LOG("script.plex: invalid or not found readfactor in advancedsettings.xml")
-
-                self._cleanData = data.replace(cachexml, "")
-            else:
-                self._cleanData = data
-
-    def write(self, memorySize=None, readFactor=None):
-        memorySize = self.memorySize = memorySize if memorySize is not None else self.memorySize
-        readFactor = self.readFactor = readFactor if readFactor is not None else self.readFactor
-
-        if self.useModernAPI:
-            # kodi cache settings have moved to Services>Caching
-            try:
-                rpc.Settings.SetSettingValue(setting='filecache.memorysize', value=self.memorySize)
-                rpc.Settings.SetSettingValue(setting='filecache.readfactor', value=int(self.readFactor * 100))
-            except:
-                pass
-            return
-
-        cd = self._cleanData
-        if not cd:
-            cd = "<advancedsettings>\n</advancedsettings>"
-
-        finalxml = "{}\n</advancedsettings>".format(
-            cd.replace("</advancedsettings>", self.template.format(memorysize=memorySize * 1024 * 1024,
-                                                                   readfactor=readFactor))
-        )
-
-        try:
-            f = xbmcvfs.File("special://profile/advancedsettings.xml", "w")
-            f.write(finalxml)
-            f.close()
-        except:
-            ERROR("Couldn't write advancedsettings.xml")
-
-    def clamp16(self, x):
-        return x - x % 16
-
-    @property
-    def viableOptions(self):
-        default = list(filter(lambda x: x < self.recMax,
-                              [16, 20, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512, 768, 1024]))
-
-        # add option to overcommit slightly
-        overcommit = []
-        if xbmc.getCondVisibility('System.Platform.Android'):
-            overcommit.append(min(self.clamp16(int(self.free * 0.23)), 2048))
-
-        overcommit.append(min(self.clamp16(int(self.free * 0.26)), 2048))
-        overcommit.append(min(self.clamp16(int(self.free * 0.3)), 2048))
-
-        # re-append current memorySize here, as recommended max might have changed
-        return list(sorted(list(set(default + [self.memorySize, self.recMax] + overcommit))))
-
-    @property
-    def readFactorOpts(self):
-        ret = list(sorted(list(set([1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7, 10, 15, 20, 30, 50] + [self.readFactor]))))
-        if KODI_BUILD_NUMBER >= 2090830 and self.readFactor > 0:
-            # support for adaptive read factor from build 2090822 onwards
-            ret.insert(0, 0)
-        return ret
-
-    @property
-    def free(self):
-        return float(xbmc.getInfoLabel('System.Memory(free)')[:-2])
-
-    @property
-    def recMax(self):
-        freeMem = self.free
-        recMem = min(int(freeMem * self.safeFactor), 2048)
-        LOG("Free memory: {} MB, recommended max: {} MB".format(freeMem, recMem))
-        return recMem
-
-
-kcm = KodiCacheManager()
-
-CACHE_SIZE = kcm.memorySize
-
 
 def T(ID, eng=''):
     return ADDON.getLocalizedString(ID)
@@ -486,14 +324,14 @@ def T(ID, eng=''):
 
 hasCustomBGColour = False
 if KODI_VERSION_MAJOR > 18:
-    hasCustomBGColour = not advancedSettings.dynamicBackgrounds and advancedSettings.backgroundColour and \
-                        advancedSettings.backgroundColour != "-"
+    hasCustomBGColour = not addonSettings.dynamicBackgrounds and addonSettings.backgroundColour and \
+                        addonSettings.backgroundColour != "-"
 
 
 def getAdvancedSettings():
     # yes, global, hang me!
-    global advancedSettings
-    advancedSettings = AdvancedSettings()
+    global addonSettings
+    addonSettings = AddonSettings()
 
 
 def reInitAddon():
@@ -665,7 +503,7 @@ def shortenText(text, size):
 
 def scaleResolution(w, h, by=None):
     if by is None:
-        by = advancedSettings.posterResolutionScalePerc
+        by = addonSettings.posterResolutionScalePerc
 
     if 0 < by != 100.0:
         px = w * h * (by / 100.0)
@@ -951,6 +789,103 @@ def getTimeFormat():
 
 timeFormat, timeFormatKN, padHour = getTimeFormat()
 
+DEF_THEME = "modern-colored"
+THEME_VERSION = 2
+
+
+def applyTheme(theme=None):
+    """
+    Dynamically build script-plex-seek_dialog.xml by combining a player button template with
+    script-plex-seek_dialog_skeleton.xml
+    """
+    theme = theme or getSetting('theme', DEF_THEME)
+    skel = os.path.join(ADDON.getAddonInfo('path'), "resources", "skins", "Main", "1080i",
+                        "script-plex-seek_dialog_skeleton.xml")
+    if theme == "custom":
+        btnTheme = os.path.join(ADDON.getAddonInfo("profile"), "templates",
+                                "seek_dialog_buttons_custom.xml")
+        customSkel = os.path.join(ADDON.getAddonInfo("profile"), "templates",
+                                  "script-plex-seek_dialog_skeleton_custom.xml")
+        if xbmcvfs.exists(customSkel):
+            skel = customSkel
+    else:
+        btnTheme = os.path.join(ADDON.getAddonInfo('path'), "resources", "skins", "Main", "1080i", "templates",
+                                "seek_dialog_buttons_{}.xml".format(theme))
+
+    if not xbmcvfs.exists(btnTheme):
+        LOG("Theme {} doesn't exist, falling back to modern".format(theme))
+        setSetting('theme', DEF_THEME)
+        return applyTheme(DEF_THEME)
+
+    try:
+        # read skeleton
+        f = xbmcvfs.File(skel)
+        skelData = f.read()
+        f.close()
+    except:
+        ERROR("Couldn't find {}".format("script-plex-seek_dialog_skeleton.xml"))
+    else:
+        try:
+            # read button theme
+            f = xbmcvfs.File(btnTheme)
+            btnData = f.read()
+            f.close()
+        except:
+            ERROR("Couldn't find {}".format("seek_dialog_buttons_{}.xml".format(theme)))
+        else:
+            # combine both
+            finalXML = skelData.replace('<!-- BUTTON_INCLUDE -->', btnData)
+            try:
+                # write final file
+                f = xbmcvfs.File(os.path.join(ADDON.getAddonInfo('path'), "resources", "skins", "Main", "1080i",
+                                 "script-plex-seek_dialog.xml"), "w")
+                f.write(finalXML)
+                f.close()
+            except:
+                ERROR("Couldn't write script-plex-seek_dialog.xml")
+            else:
+                LOG('Using theme: {}'.format(theme))
+
+
+# apply theme if version changed
+theme = getSetting('theme', DEF_THEME)
+curThemeVer = getSetting('theme_version', 0)
+if curThemeVer < THEME_VERSION:
+    setSetting('theme_version', THEME_VERSION)
+    # apply seekdialog button theme
+    applyTheme(theme)
+
+# apply theme if seek_dialog xml missing
+if not xbmcvfs.exists(os.path.join(ADDON.getAddonInfo('path'), "resources", "skins", "Main", "1080i",
+                                   "script-plex-seek_dialog.xml")):
+    applyTheme(theme)
+
+PM_MCMT_RE = re.compile(r'/\*.+\*/\s?', re.IGNORECASE | re.MULTILINE | re.DOTALL)
+PM_CMT_RE = re.compile(r'[\t ]+//.+\n?')
+PM_COMMA_RE = re.compile(r',\s*}\s*}')
+
+# path mapping
+mapfile = os.path.join(translatePath(ADDON.getAddonInfo("profile")), "path_mapping.json")
+PATH_MAP = None
+if xbmcvfs.exists(mapfile):
+    try:
+        f = xbmcvfs.File(mapfile)
+        # sanitize json
+
+        # remove multiline comments
+        data = PM_MCMT_RE.sub("", f.read())
+        # remove comments
+        data = PM_CMT_RE.sub("", data)
+        # remove invalid trailing comma
+
+        data = PM_COMMA_RE.sub("}}", data)
+        PATH_MAP = json.loads(data)
+        f.close()
+    except:
+        ERROR("Couldn't read path_mapping.json")
+    else:
+        LOG("Path mapping: {}".format(repr(PATH_MAP)))
+
 
 def populateTimeFormat():
     global timeFormat, timeFormatKN, padHour
@@ -972,14 +907,16 @@ def getPlatform():
             return key.rsplit('.', 1)[-1]
 
 
-def getProgressImage(obj, perc=None):
+def getProgressImage(obj, perc=None, view_offset=None):
     if not obj and not perc:
         return ''
 
     if obj:
-        if not obj.get('viewOffset') or not obj.get('duration'):
+        if not view_offset:
+            view_offset = obj.get('viewOffset') and obj.viewOffset.asInt()
+        if not view_offset or not obj.get('duration'):
             return ''
-        pct = int((obj.viewOffset.asInt() / obj.duration.asFloat()) * 100)
+        pct = int((view_offset / obj.duration.asFloat()) * 100)
     else:
         pct = perc
     pct = pct - pct % 2  # Round to even number - we have even numbered progress only
@@ -992,8 +929,8 @@ def backgroundFromArt(art, width=1920, height=1080, background=colors.noAlpha.Ba
         return
     return art.asTranscodedImageURL(
         width, height,
-        blur=advancedSettings.backgroundArtBlurAmount2,
-        opacity=advancedSettings.backgroundArtOpacityAmount2,
+        blur=addonSettings.backgroundArtBlurAmount2,
+        opacity=addonSettings.backgroundArtOpacityAmount2,
         background=background
     )
 

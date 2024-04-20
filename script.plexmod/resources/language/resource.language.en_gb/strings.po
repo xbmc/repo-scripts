@@ -1295,7 +1295,7 @@ msgid "Kodi Buffer Size (MB)"
 msgstr ""
 
 msgctxt "#33614"
-msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~100 MB, Recommended max: {} MB, Default: 20 MB."
+msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~50 MB, Recommended max: {} MB, Default: 20 MB."
 msgstr ""
 
 msgctxt "#33615"
@@ -1728,4 +1728,104 @@ msgstr ""
 
 msgctxt "#32980"
 msgid "Refresh Users"
+msgstr ""
+
+msgctxt "#32981"
+msgid "Background worker count"
+msgstr ""
+
+msgctxt "#32982"
+msgid "Depending on how many cores your CPU has and how much it can handle, increasing this might improve certain situations. If you experience crashes or other annormalities, leave this at its default (3). Needs an addon restart."
+msgstr ""
+
+msgctxt "#32983"
+msgid "Player Theme"
+msgstr ""
+
+msgctxt "#32984"
+msgid "Sets the player theme. Currently only customizes the playback control buttons. ATTENTION: [I]Might[/I] need an addon restart.\nIn order to customize this, copy one of the xml's in script.plexmod/resources/skins/Main/1080i/templates to addon_data/script.plexmod/templates/seek_dialog_buttons_custom.xml and adjust it to your liking, then select \"Custom\" as your theme."
+msgstr ""
+
+msgctxt "#32985"
+msgid "Modern"
+msgstr ""
+
+msgctxt "#32986"
+msgid "Modern (dotted)"
+msgstr ""
+
+msgctxt "#32987"
+msgid "Classic"
+msgstr ""
+
+msgctxt "#32988"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32989"
+msgid "Modern (colored)"
+msgstr ""
+
+msgctxt "#32990"
+msgid "Handle plex.direct mapping"
+msgstr ""
+
+msgctxt "#32991"
+msgid "Notify"
+msgstr ""
+
+msgctxt "#32992"
+msgid "When using servers with a plex.direct connection (most of them), should we automatically adjust advancedsettings.xml to cope with plex.direct domains? If not, you might want to add plex.direct to your router's DNS rebind exemption list."
+msgstr ""
+
+msgctxt "#32993"
+msgid "{} unhandled plex.direct connections found"
+msgstr ""
+
+msgctxt "#32994"
+msgid "In order for PM4K to work properly, we need to add special handling for plex.direct connections. We've found {} new unhandled connections. Do you want us to write those to Kodi's advancedsettings.xml automatically? If not, you might want to add plex.direct to your router's DNS rebind exemption list. This can be changed in the settings as well."
+msgstr ""
+
+msgctxt "#32995"
+msgid "Advancedsettings.xml modified (plex.direct mappings)"
+msgstr ""
+
+msgctxt "#32996"
+msgid "The advancedsettings.xml file has been modified. Please restart Kodi for the changes to apply."
+msgstr ""
+
+msgctxt "#32997"
+msgid "OK"
+msgstr ""
+
+msgctxt "#32998"
+msgid "Use new Continue Watching hub on Home"
+msgstr ""
+
+msgctxt "#32999"
+msgid "Instead of separating Continue Watching and On Deck hubs, behave like the modern Plex clients, which combine those two types of hubs into one Continue Watching hub."
+msgstr ""
+
+msgctxt "#33000"
+msgid "Enable path mapping"
+msgstr ""
+
+msgctxt "#33001"
+msgid "Honor path_mapping.json in the addon_data/script.plexmod folder when DirectPlaying media. This can be used to stream using other techniques such as SMB/NFS/etc. instead of the default HTTP handler. path_mapping.example.json is included in the addon's main directory."
+msgstr ""
+
+msgctxt "#33002"
+msgid "Verify mapped files exist"
+msgstr ""
+
+msgctxt "#33003"
+msgid "When path mapping is enabled and we've successfully mapped a file, verify its existence."
+msgstr ""
+
+msgctxt "#33004"
+msgid "No spoilers without OSD"
+msgstr ""
+
+msgctxt "#33005"
+msgid "When seeking without the OSD open, hide all time-related information from the user."
 msgstr ""

@@ -2,6 +2,8 @@ from __future__ import absolute_import
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 from kodi_six import xbmcvfs
+
+import lib.cache
 from . import kodigui
 from . import windowutils
 
@@ -150,7 +152,7 @@ class OptionsSetting(BasicSetting):
 
 class BufferSetting(OptionsSetting):
     def get(self):
-        return util.kcm.memorySize
+        return lib.cache.kcm.memorySize
 
     def set(self, val):
         old = self.get()
@@ -158,12 +160,12 @@ class BufferSetting(OptionsSetting):
             util.DEBUG_LOG('Setting: {0} - changed from [{1}] to [{2}]'.format(self.ID, old, val))
             plexnet.util.APP.trigger('change:{0}'.format(self.ID), value=val)
 
-        util.kcm.write(memorySize=val)
+        lib.cache.kcm.write(memorySize=val)
 
 
 class ReadFactorSetting(OptionsSetting):
     def get(self):
-        return util.kcm.readFactor
+        return lib.cache.kcm.readFactor
 
     def set(self, val):
         old = self.get()
@@ -171,7 +173,7 @@ class ReadFactorSetting(OptionsSetting):
             util.DEBUG_LOG('Setting: {0} - changed from [{1}] to [{2}]'.format(self.ID, old, val))
             plexnet.util.APP.trigger('change:{0}'.format(self.ID), value=val)
 
-        util.kcm.write(readFactor=val)
+        lib.cache.kcm.write(readFactor=val)
 
 
 class InfoSetting(BasicSetting):
@@ -262,6 +264,11 @@ class Settings(object):
                         "Refreshes all hubs for all libraries after an item's watch-state has changed, instead of "
                         "only those likely affected. Use this if you find a hub that doesn't update properly."
                     )
+                ),
+                BoolSetting(
+                    'hubs_use_new_continue_watching', T(32998, ''), False
+                ).description(
+                    T(32999, "")
                 ),
                 BoolSetting(
                     'hubs_bifurcation_lines', T(32961, 'Show hub bifurcation lines'), False
@@ -359,6 +366,22 @@ class Settings(object):
         ),
         'player': (
             T(32940, 'Player UI'), (
+                OptionsSetting(
+                    'theme',
+                    T(32983, 'Player Theme'),
+                    util.DEF_THEME,
+                    (
+                        ('modern', T(32985, 'Modern')),
+                        ('modern-dotted', T(32986, 'Modern (dotted)')),
+                        ('modern-colored', T(32989, 'Modern (colored)')),
+                        ('classic', T(32987, 'Classic')),
+                        ('custom', T(32988, 'Custom')),
+                    )
+                ).description(
+                    T(32984, 'stub')
+                ),
+                BoolSetting('no_spoilers', T(33004, ''), False).description(
+                    T(33005, '')),
                 BoolSetting('subtitle_downloads', T(32932, 'Show subtitle quick-actions button'), False).description(
                     T(32939, 'Only applies to video player UI')),
                 BoolSetting('video_show_ffwdrwd', T(32933, 'Show FFWD/RWD buttons'), False).description(
@@ -467,6 +490,12 @@ class Settings(object):
                       )
                 ),
                 BoolSetting('gdm_discovery', T(32042, 'Server Discovery (GDM)'), False),
+                OptionsSetting(
+                    'handle_plexdirect', T(32990), 'ask',
+                    (('ask', T(32991)), ('always', T(32035)), ('never', T(32033)))
+                ).description(
+                    T(32992, 'stub')
+                ),
                 IPSetting('manual_ip_0', T(32044, 'Connection 1 IP'), ''),
                 IntegerSetting('manual_port_0', T(32045, 'Connection 1 Port'), 32400),
                 IPSetting('manual_ip_1', T(32046, 'Connection 2 IP'), ''),
@@ -479,25 +508,26 @@ class Settings(object):
                 BoolSetting('kiosk.mode', T(32043, 'Start Plex On Kodi Startup'), False),
                 BoolSetting('exit_default_is_quit', T(32965, 'Start Plex On Kodi Startup'), False)
                 .description(T(32966, "stub")),
+                BoolSetting('path_mapping', T(33000, ''), True).description(T(33001, '')),
                 BufferSetting('cache_size',
                               T(33613, 'Kodi Buffer Size (MB)'),
                               20,
-                              [(mem, '{} MB'.format(mem)) for mem in util.kcm.viableOptions])
+                              [(mem, '{} MB'.format(mem)) for mem in lib.cache.kcm.viableOptions])
                 .description(
                     '{}{}'.format(T(33614, 'stub1').format(
-                        util.kcm.free, util.kcm.recMax),
-                        '' if util.kcm.useModernAPI else ' '+T(32954, 'stub2'))
+                        lib.cache.kcm.free, lib.cache.kcm.recMax),
+                        '' if lib.cache.kcm.useModernAPI else ' ' + T(32954, 'stub2'))
                 ),
                 ReadFactorSetting('readfactor',
                                   T(32922, 'Kodi Cache Readfactor'),
                                   4,
-                                  [(rf, str(rf) if rf > 0 else T(32976, 'stub')) for rf in util.kcm.readFactorOpts])
+                                  [(rf, str(rf) if rf > 0 else T(32976, 'stub')) for rf in lib.cache.kcm.readFactorOpts])
                 .description(
                     T(32923, 'Sets the Kodi cache readfactor value. Default: {0}, recommended: {1}.'
                              'With "Slow connection" enabled this will be set to {2}, as otherwise the cache doesn\'t'
-                             'fill fast/aggressively enough.').format(util.kcm.defRF,
-                                                                      util.kcm.recRFRange,
-                                                                      util.kcm.defRFSM)
+                             'fill fast/aggressively enough.').format(lib.cache.kcm.defRF,
+                                                                      lib.cache.kcm.recRFRange,
+                                                                      lib.cache.kcm.defRFSM)
                 ),
                 BoolSetting(
                     'slow_connection', T(32915, 'Slow connection'), False

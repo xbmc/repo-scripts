@@ -324,9 +324,14 @@
         </category>
         <category id="system" label="33600">
             <group id="6" label="">
+                <setting id="verify_mapped_files" type="boolean" label="33002" help="33003">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
                 <setting id="requests_timeout" type="number" label="33620" help="33621">
                     <level>0</level>
-                    <default>5</default>
+                    <default>10</default>
                     <constraints>
                         <minimum>0.1</minimum>
                         <step>0.1</step>
@@ -355,6 +360,18 @@
                         <minimum>1</minimum>
                         <step>1</step>
                         <maximum>1000</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="worker_count" type="number" label="32981" help="32982">
+                    <level>0</level>
+                    <default>3</default>
+                    <constraints>
+                        <minimum>2</minimum>
+                        <step>1</step>
+                        <maximum>32</maximum>
                     </constraints>
                     <control type="slider" format="number">
                         <popup>false</popup>

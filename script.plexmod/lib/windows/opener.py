@@ -14,7 +14,7 @@ def open(obj, **kwargs):
                 return handleOpen(musicplayer.MusicPlayerWindow, track=obj.current(), playlist=obj)
             elif obj.type == 'photo':
                 from . import photos
-                return handleOpen(photos.PhotoWindow, play_queue=obj)
+                return handleOpen(photos.PhotoWindow, play_queue=obj, **kwargs)
             else:
                 from . import videoplayer
                 videoplayer.play(play_queue=obj)

@@ -25,8 +25,7 @@ class TimelineData(util.AttributeDict):
         util.AttributeDict.__init__(self, *args, **kwargs)
         self.type = timelineType
         self.state = "stopped"
-        self.item = None
-        self.choice = None
+        self.itemData = None
         self.playQueue = None
 
         self.controllable = util.AttributeDict()
@@ -61,51 +60,6 @@ class TimelineData(util.AttributeDict):
                     prependComma = True
                 self.controllableStr += name
 
-    def toXmlAttributes(self, elem):
-        self.updateControllableStr()
-        elem.attrib["type"] = self.type
-        elem.attrib["start"] = self.state
-        elem.attrib["controllable"] = self.controllableStr
-
-        if self.item:
-            if self.item.duration:
-                elem.attrib['duration'] = self.item.duration
-            if self.item.ratingKey:
-                elem.attrib['ratingKey'] = self.item.ratingKey
-            if self.item.key:
-                elem.attrib['key'] = self.item.key
-            if self.item.container.address:
-                elem.attrib['containerKey'] = self.item.container.address
-
-            # Send the audio, video and subtitle choice if it's available
-            if self.choice:
-                for stream in ("audioStream", "videoStream", "subtitleStream"):
-                    if self.choice.get(stream) and self.choice[stream].id:
-                        elem.attrib[stream + "ID"] = self.choice[stream].id
-
-            server = self.item.getServer()
-            if server:
-                elem.attrib["machineIdentifier"] = server.uuid
-
-                if server.activeConnection:
-                    parts = six.moves.urllib.parse.uslparse(server.activeConnection.address)
-                    elem.attrib["protocol"] = parts.scheme
-                    elem.attrib["address"] = parts.netloc.split(':', 1)[0]
-                    if ':' in parts.netloc:
-                        elem.attrib["port"] = parts.netloc.split(':', 1)[-1]
-                    elif parts.scheme == 'https':
-                        elem.attrib["port"] = '443'
-                    else:
-                        elem.attrib["port"] = '80'
-
-        if self.playQueue:
-            elem.attrib["playQueueID"] = str(self.playQueue.id)
-            elem.attrib["playQueueItemID"] = str(self.playQueue.selectedId)
-            elem.attrib["playQueueVersion"] = str(self.playQueue.version)
-
-        for key, val in self.attrs.items():
-            elem.attrib[key] = val
-
 
 class NowPlayingManager(object):
     def __init__(self):
@@ -131,11 +85,10 @@ class NowPlayingManager(object):
         for timelineType in self.TIMELINE_TYPES:
             self.timelines[timelineType] = TimelineData(timelineType)
 
-    def updatePlaybackState(self, timelineType, playerObject, state, t, playQueue=None, duration=0, force=False):
+    def updatePlaybackState(self, timelineType, itemData, state, t, playQueue=None, duration=0, force=False):
         timeline = self.timelines[timelineType]
         timeline.state = state
-        timeline.item = playerObject.item
-        timeline.choice = playerObject.choice
+        timeline.itemData = itemData
         timeline.playQueue = playQueue
         timeline.attrs["time"] = str(t)
         timeline.duration = duration
@@ -145,29 +98,25 @@ class NowPlayingManager(object):
         self.sendTimelineToServer(timelineType, timeline, t, force=force)
 
     def sendTimelineToServer(self, timelineType, timeline, t, force=False):
-        if not hasattr(timeline.item, 'getServer') or not timeline.item.getServer():
+        server = util.APP.serverManager.selectedServer
+        if not server:
             return
 
         serverTimeline = self.getServerTimeline(timelineType)
 
         # Only send timeline if it's the first, item changes, playstate changes or timer pops
-        itemsEqual = timeline.item and serverTimeline.item and timeline.item.ratingKey == serverTimeline.item.ratingKey
+        itemsEqual = timeline.itemData and serverTimeline.itemData \
+            and timeline.itemData.ratingKey == serverTimeline.itemData.ratingKey
         if itemsEqual and timeline.state == serverTimeline.state and not serverTimeline.isExpired() and not force:
             return
 
         serverTimeline.reset()
-        serverTimeline.item = timeline.item
+        serverTimeline.itemData = timeline.itemData
         serverTimeline.state = timeline.state
-
-        # Ignore sending timelines for multi part media with no duration
-        obj = timeline.choice
-        if obj and obj.part and obj.part.duration.asInt() == 0 and obj.media.parts and len(obj.media.parts) > 1:
-            util.WARN_LOG("Timeline not supported: the current part doesn't have a valid duration")
-            return
 
         # It's possible with timers and in player seeking for the time to be greater than the
         # duration, which causes a 400, so in that case we'll set the time to the duration.
-        duration = timeline.item.duration.asInt() or timeline.duration
+        duration = timeline.itemData.duration or timeline.duration
         if t > duration:
             t = duration
 
@@ -175,11 +124,11 @@ class NowPlayingManager(object):
         params["time"] = t
         params["duration"] = duration
         params["state"] = timeline.state
-        params["guid"] = timeline.item.guid
-        params["ratingKey"] = timeline.item.ratingKey
-        params["url"] = timeline.item.url
-        params["key"] = timeline.item.key
-        params["containerKey"] = timeline.item.container.address
+        params["guid"] = timeline.itemData.guid
+        params["ratingKey"] = timeline.itemData.ratingKey
+        params["url"] = timeline.itemData.url
+        params["key"] = timeline.itemData.key
+        params["containerKey"] = timeline.itemData.containerKey
         if timeline.playQueue:
             params["playQueueItemID"] = timeline.playQueue.selectedId
 
@@ -188,7 +137,7 @@ class NowPlayingManager(object):
             if params[paramKey]:
                 path = http.addUrlParam(path, paramKey + "=" + six.moves.urllib.parse.quote(str(params[paramKey])))
 
-        request = plexrequest.PlexRequest(timeline.item.getServer(), path)
+        request = plexrequest.PlexRequest(server, path)
 
         context = request.createRequestContext("timelineUpdate", callback.Callable(self.onTimelineResponse))
         context.playQueue = timeline.playQueue

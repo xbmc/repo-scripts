@@ -167,7 +167,7 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     pq = plexnet.playqueue.createPlayQueueForItem(self.playlist, options=args)
                     opener.open(pq)
             elif self.playlist.playlistType == 'video':
-                if not util.advancedSettings.playlistVisitMedia:
+                if not util.addonSettings.playlistVisitMedia:
                     if self.playlist.leafCount.asInt() <= PLAYLIST_INITIAL_SIZE:
                         self.playlist.setShuffle(shuffle)
                         self.playlist.setCurrent(mli and mli.pos() or 0)

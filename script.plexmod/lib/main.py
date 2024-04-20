@@ -77,6 +77,7 @@ def main():
         try:
             util.setGlobalProperty('running', '')
             util.setGlobalProperty('stop_running', '')
+            util.setGlobalProperty('ignore_spinner', '')
         except:
             pass
 
@@ -99,7 +100,7 @@ def _main():
                         (len(plexapp.ACCOUNT.homeUsers) > 1 or plexapp.ACCOUNT.isProtected)
 
                     ):
-                        result = userselect.start()
+                        result = userselect.start(BACKGROUND._winID)
                         if not result:
                             return
                         elif result == 'signout':
@@ -110,7 +111,8 @@ def _main():
                         elif result == 'cancel' and fromSwitch:
                             util.DEBUG_LOG('Main: User selection canceled, reusing previous user')
                             plexapp.ACCOUNT.isAuthenticated = True
-
+                        elif result == 'cancel':
+                            return
                         if not fromSwitch:
                             util.DEBUG_LOG('Main: User selected')
 
@@ -135,7 +137,7 @@ def _main():
                         util.DEBUG_LOG('Main: STARTING WITH SERVER: {0}'.format(selectedServer))
 
                         windowutils.HOME = home.HomeWindow.create()
-                        if windowutils.HOME.waitForOpen():
+                        if windowutils.HOME.waitForOpen(base_win_id=BACKGROUND._winID):
                             windowutils.HOME.modal()
                         else:
                             util.LOG("Couldn't open home window, exiting")

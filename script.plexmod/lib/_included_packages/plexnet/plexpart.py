@@ -1,8 +1,11 @@
 from __future__ import absolute_import
+from kodi_six import xbmcvfs
 from . import plexobjects
 from . import plexstream
 from . import plexrequest
 from . import util
+
+from lib.util import PATH_MAP, addonSettings
 
 
 class PlexPart(plexobjects.PlexObject):
@@ -156,6 +159,47 @@ class PlexPart(plexobjects.PlexObject):
 
     def hasStreams(self):
         return bool(self.streams)
+
+    def getPathMappedUrl(self, return_only_folder=False):
+        verify = addonSettings.verifyMappedFiles
+        if PATH_MAP and util.INTERFACE.getPreference("path_mapping", True):
+            match = ("", "")
+
+            for map_path, pms_path in PATH_MAP.get(self.getServer().name, {}).items():
+                # the longest matching path wins
+                if self.file.startswith(pms_path) and len(pms_path) > len(match[1]):
+                    match = (map_path, pms_path)
+
+            if all(match):
+                map_path, pms_path = match
+                if return_only_folder:
+                    return map_path
+
+                sep = "\\" in map_path and "\\" or "/"
+
+                # replace match and normalize path separator to separator style of map_path
+                url = self.file.replace(pms_path, map_path, 1).replace(sep == "/" and "\\" or "/", sep)
+
+                if (verify and xbmcvfs.exists(url)) or not verify:
+                    util.DEBUG_LOG("File {} found in path map, mapping to {}".format(self.file, pms_path))
+                    return url
+                util.LOG("Mapped file {} doesn't exist".format(url))
+        return ""
+
+    @property
+    def isPathMapped(self):
+        return bool(self.getPathMappedUrl())
+
+    def getPathMappedProto(self):
+        url = self.getPathMappedUrl()
+        if url:
+            prot = url.split("://")[0]
+            if prot == url:
+                ret = "mnt://"
+            else:
+                ret = "{}://".format(prot)
+            return ret
+        return ""
 
     def __str__(self):
         return "PlexPart {0} {1}".format(self.id("NaN"), self.key)

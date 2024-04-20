@@ -1594,8 +1594,8 @@ msgid "Kodi Buffer Size (MB)"
 msgstr "Kodi Puffergröße (MB)"
 
 msgctxt "#33614"
-msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~100 MB, Recommended max: {} MB, Default: 20 MB."
-msgstr "Setzt die Kodi Cache/Puffer Größe. Frei: {} MB, empfohlen: ~100 MB, empfohlenes Max.: {} MB, Default: 20 MB."
+msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~50 MB, Recommended max: {} MB, Default: 20 MB."
+msgstr "Setzt die Kodi Cache/Puffer Größe. Frei: {} MB, empfohlen: ~50 MB, empfohlenes Max.: {} MB, Default: 20 MB."
 
 msgctxt "#33615"
 msgid "{time} left"
@@ -2028,3 +2028,103 @@ msgstr "Erlaubt dem Server nur Streams eines Videos zu transkodieren, die dies b
 msgctxt "#32980"
 msgid "Refresh Users"
 msgstr "Benutzer aktual."
+
+msgctxt "#32981"
+msgid "Background worker count"
+msgstr "Anzahl Hintergrund-Worker"
+
+msgctxt "#32982"
+msgid "Depending on how many cores your CPU has and how much it can handle, increasing this might improve certain situations. If you experience crashes or other annormalities, leave this at its default (3). Needs an addon restart."
+msgstr "Je nachdem, wie viele Kerne Deine CPU hat und wie viel sie verarbeiten kann, kann eine höhere Zahl bestimmte Situationen verbessern. Solltest Du Abstürze oder andere Annomalien bemerken, stelle dies auf den Standardwert zurück (3). Benötigt einen Addon-Neustart."
+
+msgctxt "#32983"
+msgid "Player Theme"
+msgstr "Player-Theme"
+
+msgctxt "#32984"
+msgid "Sets the player theme. Currently only customizes the playback control buttons. ATTENTION: [I]Might[/I] need an addon restart.\nIn order to customize this, copy one of the xml's in script.plexmod/resources/skins/Main/1080i/templates to addon_data/script.plexmod/templates/seek_dialog_buttons_custom.xml and adjust it to your liking, then select \"Custom\" as your theme."
+msgstr "Wählt das Theme des Players. Verändert aktuell nur die Abspiel-Knöpfe. ACHTUNG: Ein Addon-Neustart [I]könnte[/I] notwendig sein.\nUm dies individuell anzupassen, kopiere eine der xml's aus script.plexmod/resources/skins/Main/1080i/templates nach addon_data/script.plexmod/templates/seek_dialog_buttons_custom.xml und passe es nach Deinen Ansprüchen an, danach \"Individualisiert\" als Theme wählen."
+
+msgctxt "#32985"
+msgid "Modern"
+msgstr "Modern"
+
+msgctxt "#32986"
+msgid "Modern (dotted)"
+msgstr "Modern (gepunktet)"
+
+msgctxt "#32987"
+msgid "Classic"
+msgstr "Klassisch"
+
+msgctxt "#32988"
+msgid "Custom"
+msgstr "Individualisiert"
+
+msgctxt "#32989"
+msgid "Modern (colored)"
+msgstr "Modern (eingefärbt)"
+
+msgctxt "#32990"
+msgid "Handle plex.direct mapping"
+msgstr "plex.direct Zuordnung abwickeln"
+
+msgctxt "#32991"
+msgid "Notify"
+msgstr "Benachrichtigen"
+
+msgctxt "#32992"
+msgid "When using servers with a plex.direct connection (most of them), should we automatically adjust advancedsettings.xml to cope with plex.direct domains? If not, you might want to add plex.direct to your router's DNS rebind exemption list."
+msgstr "Wenn Server mit einer plex.direct Verbindung verwendet werden (die meisten), sollen wir automatisch die advancedsettings.xml anpassen? Wenn nicht, solltest Du plex.direct in die DNS Rebind Ausschlussliste Deines Routers eintragen."
+
+msgctxt "#32993"
+msgid "{} unhandled plex.direct connections found: {}"
+msgstr "{} unbehandelte plex.direct Verbindungen gefunden"
+
+msgctxt "#32994"
+msgid "In order for PM4K to work properly, we need to add special handling for plex.direct connections. We've found {} new unhandled connections. Do you want us to write those to Kodi's advancedsettings.xml automatically? If not, you might want to add plex.direct to your router's DNS rebind exemption list. This can be changed in the settings as well."
+msgstr "Damit PM4K korrekt funktioniert, müssen wir spezielles Handling für plex.direct Verbindungen einrichten. Es wurden {} neue unbehandelte Verbindungen gefunden. Sollen wir diese in Kodi's advancedsettings.xml eintragen? Wenn nicht, solltest Du plex.direct in die DNS Rebind Ausschlussliste Deines Routers eintragen. Dies kann später in den Einstellungen verändert werden."
+
+msgctxt "#32995"
+msgid "Advancedsettings.xml modified (plex.direct mappings)"
+msgstr "Advancedsettings.xml modifiziert (plex.direct mappings)"
+
+msgctxt "#32996"
+msgid "The advancedsettings.xml file has been modified. Please restart Kodi for them to take effect."
+msgstr "Die advancedsettings.xml-Datei wurde modifiziert. Bitte starte Kodi neu, damit die Änderungen in Effekt treten."
+
+msgctxt "#32997"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32998"
+msgid "Use new Continue Watching hub on Home"
+msgstr "Neuen \"Fortsetzen\" Home-Hub verwenden"
+
+msgctxt "#32999"
+msgid "Instead of separating Continue Watching and On Deck hubs, behave like the modern Plex clients, which combine those two types of hubs into one Continue Watching hub."
+msgstr "Anstatt die separaten Fortsetzen und "
+
+msgctxt "#33000"
+msgid "Enable path mapping"
+msgstr "Path mapping aktivieren"
+
+msgctxt "#33001"
+msgid "Honor path_mapping.json in the addon_data/script.plexmod folder when DirectPlaying media. This can be used to stream using other techniques such as SMB/NFS/etc. instead of the default HTTP handler. path_mapping.example.json is included in the addon's main directory."
+msgstr "Lese path_mapping.json im addon_data/script.plexmod Ordner wenn etwas DirectPlayed wird. Dies kann verwendet werden, um andere Techniken beim Streamen zu benutzen, wie z. B. SMB/NFS/etc., anstatt des HTTP handlers. path_mapping.example.json liegt im Hauptverzeichnis vom Addon."
+
+msgctxt "#33002"
+msgid "Verify mapped files exist"
+msgstr "Gemappte Dateien verifizieren"
+
+msgctxt "#33003"
+msgid "When path mapping is enabled and we've successfully mapped a file, verify its existence."
+msgstr "Wenn path mapping aktiviert ist und wir erfolgreich eine Datei gemappt haben, auch ihre Existenz verifizieren."
+
+msgctxt "#33004"
+msgid "No spoilers without OSD"
+msgstr "Keine Spoiler ohne OSD"
+
+msgctxt "#33005"
+msgid "When seeking without the OSD open, hide all time-related information from the user."
+msgstr "Wenn ohne OSD gesprungen wird, alle zeitrelevanten Informationen verstecken."

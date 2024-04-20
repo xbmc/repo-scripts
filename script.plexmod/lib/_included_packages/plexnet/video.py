@@ -331,15 +331,23 @@ class Video(media.MediaItem, AudioCodecMixin):
 
     @property
     def remainingTime(self):
-        if not self.viewOffset.asInt():
+        return self._remainingTime()
+
+    def _remainingTime(self, view_offset=None):
+        view_offset = view_offset if view_offset is not None else self.viewOffset.asInt()
+        if not view_offset:
             return
-        return (self.duration.asInt() - self.viewOffset.asInt()) // 1000
+        return (self.duration.asInt() - view_offset) // 1000
 
     @property
     def remainingTimeString(self):
-        if not self.remainingTime:
+        return self._remainingTimeString()
+
+    def _remainingTimeString(self, view_offset=None):
+        remt = self._remainingTime(view_offset=view_offset)
+        if not remt:
             return ''
-        seconds = self.remainingTime
+        seconds = remt
         hours = seconds // 3600
         minutes = (seconds - hours * 3600) // 60
         return (hours and "{}h ".format(hours) or '') + (minutes and "{}m".format(minutes) or "0m")
@@ -534,6 +542,10 @@ class Movie(PlayableVideo):
     def isWatched(self):
         return self.get('viewCount').asInt() > 0 or self.get('viewOffset').asInt() > 0
 
+    @property
+    def isFullyWatched(self):
+        return self.get('viewCount').asInt() > 0 and not self.get('viewOffset').asInt()
+
     def getStreamURL(self, **params):
         return self._getStreamURL(**params)
 
@@ -580,7 +592,7 @@ class Show(Video, media.RelatedMixin, SectionOnDeckMixin):
         path = '/library/metadata/%s/allLeaves' % self.ratingKey
         return plexobjects.findItem(self.server, path, title)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return self.episodes()
 
     def watched(self):
@@ -622,7 +634,7 @@ class Season(Video):
         path = self.key
         return plexobjects.findItem(self.server, path, title)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return self.episodes()
 
     def show(self):
@@ -693,6 +705,10 @@ class Episode(PlayableVideo, SectionOnDeckMixin):
         return self.get('viewCount').asInt() > 0 or self.get('viewOffset').asInt() > 0
 
     @property
+    def isFullyWatched(self):
+        return self.get('viewCount').asInt() > 0 and not self.get('viewOffset').asInt()
+
+    @property
     def playbackSettings(self):
         return self.show().playbackSettings
 
@@ -741,6 +757,10 @@ class Clip(PlayableVideo):
     @property
     def isWatched(self):
         return self.get('viewCount').asInt() > 0 or self.get('viewOffset').asInt() > 0
+
+    @property
+    def isFullyWatched(self):
+        return self.get('viewCount').asInt() > 0 and not self.get('viewOffset').asInt()
 
     def getStreamURL(self, **params):
         return self._getStreamURL(**params)

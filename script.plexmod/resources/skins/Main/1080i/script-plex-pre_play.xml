@@ -10,12 +10,12 @@
         <control type="group">
             <visible>String.IsEmpty(Window.Property(use_solid_background))</visible>
             <control type="image">
-                <visible>String.IsEmpty(Window.Property(use_solid_background)) + String.IsEmpty(Window.Property(use_bg_fallback)) + String.IsEmpty(Window.Property(background_static))</visible>
+                <visible>String.IsEmpty(Window.Property(use_bg_fallback))</visible>
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>1920</width>
                 <height>1080</height>
-                <texture>script.plex/home/background-fallback_black.png</texture>
+                <texture background="true">script.plex/home/background-fallback_black.png</texture>
             </control>
             <control type="image">
                 <visible>!String.IsEmpty(Window.Property(use_bg_fallback))</visible>
@@ -23,7 +23,7 @@
                 <posy>0</posy>
                 <width>1920</width>
                 <height>1080</height>
-                <texture>script.plex/home/background-fallback.png</texture>
+                <texture background="true">script.plex/home/background-fallback.png</texture>
             </control>
             <control type="image">
                 <visible>String.IsEmpty(Window.Property(use_bg_fallback))</visible>
@@ -31,7 +31,7 @@
                 <posy>0</posy>
                 <width>1920</width>
                 <height>1080</height>
-                <texture background="true">$INFO[Window.Property(background_static)]</texture>
+                <texture background="true" fallback="script.plex/home/background-fallback_black.png">$INFO[Window.Property(background_static)]</texture>
             </control>
             <control type="image">
                 <visible>String.IsEmpty(Window.Property(use_bg_fallback))</visible>
@@ -1447,9 +1447,9 @@
             </control>
             <control type="image">
                 <posx>153r</posx>
-                <posy>54</posy>
+                <posy>47.5</posy>
                 <width>93</width>
-                <height>30</height>
+                <height>43</height>
                 <texture>script.plex/home/plex.png</texture>
             </control>
         </control>

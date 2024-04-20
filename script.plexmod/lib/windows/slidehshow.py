@@ -25,7 +25,7 @@ class Slideshow(kodigui.BaseWindow, util.CronReceiver):
         self.timeBetweenImages = self.TIME_BETWEEN_IMAGES
         self.timeBetweenDisplayMove = self.TIME_DISPLAY_MOVE
         self.timeTitleIsHidden = self.TIME_HIDE_TITLE_IN_QUIZ
-        self.quizMode = util.advancedSettings.screensaverQuiz
+        self.quizMode = util.addonSettings.screensaverQuiz
         self.initialized = False
 
     def onFirstInit(self):

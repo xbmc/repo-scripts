@@ -76,6 +76,13 @@ def defaultUserAgent():
                      '%s/%s' % (p_system, p_release)])
 
 
+def getFriendlyName():
+    fn = util.rpc.Settings.GetSettingValue(setting='services.devicename').get('value', 'Kodi')
+    if fn:
+        fn = fn.strip()
+    return fn or 'Kodi'
+
+
 class PlexInterface(plexapp.AppInterface):
     _regs = {
         None: {},
@@ -89,7 +96,7 @@ class PlexInterface(plexapp.AppInterface):
         'provides': 'player',
         'device': util.getPlatform() or plexapp.PLATFORM,
         'model': 'Unknown',
-        'friendlyName': util.rpc.Settings.GetSettingValue(setting='services.devicename').get('value') or 'Kodi',
+        'friendlyName': getFriendlyName(),
         'supports1080p60': True,
         'vp9Support': True,
         'audioChannels': '2.0',
@@ -284,15 +291,16 @@ plexapp.util.CHECK_LOCAL = util.getSetting('smart_discover_local', True)
 plexapp.util.LOCAL_OVER_SECURE = util.getSetting('prefer_local', False)
 
 # set requests timeout
-TIMEOUT = float(util.advancedSettings.requestsTimeout)
-CONNCHECK_TIMEOUT = float(util.advancedSettings.connCheckTimeout)
+TIMEOUT = float(util.addonSettings.requestsTimeout)
+CONNCHECK_TIMEOUT = float(util.addonSettings.connCheckTimeout)
 plexapp.util.TIMEOUT = TIMEOUT
 plexapp.util.CONN_CHECK_TIMEOUT = asyncadapter.AsyncTimeout(CONNCHECK_TIMEOUT).setConnectTimeout(CONNCHECK_TIMEOUT)
-plexapp.util.LAN_REACHABILITY_TIMEOUT = util.advancedSettings.localReachTimeout / 1000.0
+plexapp.util.LAN_REACHABILITY_TIMEOUT = util.addonSettings.localReachTimeout / 1000.0
 pnhttp.DEFAULT_TIMEOUT = asyncadapter.AsyncTimeout(TIMEOUT).setConnectTimeout(TIMEOUT)
 asyncadapter.DEFAULT_TIMEOUT = pnhttp.DEFAULT_TIMEOUT
 plexapp.util.ACCEPT_LANGUAGE = util.ACCEPT_LANGUAGE_CODE
 plexapp.setUserAgent(defaultUserAgent())
+plexnet_util.BASE_HEADERS = plexnet_util.getPlexHeaders()
 
 
 class CallbackEvent(plexapp.util.CompatEvent):

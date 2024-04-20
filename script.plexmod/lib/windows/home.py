@@ -21,6 +21,7 @@ from . import search
 from . import optionsdialog
 
 from lib.util import T
+from lib.plex_hosts import pdm
 from six.moves import range
 
 HUBS_REFRESH_INTERVAL = 300  # 5 Minutes
@@ -280,18 +281,24 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
     HUBMAP = {
         # HOME
         'home.continue': {'index': 0, 'with_progress': True, 'with_art': True, 'do_updates': True, 'text2lines': True},
+        # This hub can be enabled in the settings so PM4K behaves like any other Plex client.
+        # It overrides home.continue and home.ondeck
+        'continueWatching': {'index': 1, 'with_progress': True, 'do_updates': True, 'text2lines': True},
         'home.ondeck': {'index': 1, 'with_progress': True, 'do_updates': True, 'text2lines': True},
         'home.television.recent': {'index': 2, 'do_updates': True, 'with_progress': True, 'text2lines': True},
+        # This is a virtual hub and it appears when the library recommendation is customized in Plex and
+        # Recently Released is checked.
+        'home.VIRTUAL.movies.recentlyreleased': {'index': 3, 'do_updates': True, 'with_progress': True, 'text2lines': True},
         'home.movies.recent': {'index': 4, 'do_updates': True, 'with_progress': True, 'text2lines': True},
         'home.music.recent': {'index': 5, 'text2lines': True},
         'home.videos.recent': {'index': 6, 'with_progress': True, 'ar16x9': True},
         #'home.playlists': {'index': 9}, # No other Plex home screen shows playlists so removing it from here
         'home.photos.recent': {'index': 10, 'text2lines': True},
         # SHOW
-        'tv.ondeck': {'index': 1, 'with_progress': True, 'do_updates': True, 'text2lines': True},
-        'tv.recentlyaired': {'index': 2, 'do_updates': True, 'with_progress': True, 'text2lines': True},
-        'tv.recentlyadded': {'index': 3, 'do_updates': True, 'with_progress': True, 'text2lines': True},
-        'tv.inprogress': {'index': 4, 'with_progress': True, 'do_updates': True, 'text2lines': True},
+        'tv.inprogress': {'index': 1, 'with_progress': True, 'do_updates': True, 'text2lines': True},
+        'tv.ondeck': {'index': 2, 'with_progress': True, 'do_updates': True, 'text2lines': True},
+        'tv.recentlyaired': {'index': 3, 'do_updates': True, 'with_progress': True, 'text2lines': True},
+        'tv.recentlyadded': {'index': 4, 'do_updates': True, 'with_progress': True, 'text2lines': True},
         'tv.startwatching': {'index': 7, 'with_progress': True, 'do_updates': True},
         'tv.rediscover': {'index': 8, 'with_progress': True, 'do_updates': True},
         'tv.morefromnetwork': {'index': 13, 'with_progress': True, 'do_updates': True},
@@ -364,7 +371,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
     def onFirstInit(self):
         # set last BG image if possible
-        if util.advancedSettings.dynamicBackgrounds:
+        if util.addonSettings.dynamicBackgrounds:
             bgUrl = util.getSetting("last_bg_url")
             if bgUrl:
                 self.windowSetBackground(bgUrl)
@@ -417,6 +424,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self.hookSignals()
         util.CRON.registerReceiver(self)
         self.updateProperties()
+        self.checkPlexDirectHosts(plexapp.SERVERMANAGER.allConnections, source="stored")
 
     def onReInit(self):
         if self.lastFocusID:
@@ -436,8 +444,62 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
             else:
                 self.setFocusId(self.lastFocusID)
 
+    def checkPlexDirectHosts(self, hosts, source="stored", *args, **kwargs):
+        handlePD = util.getSetting('handle_plexdirect', 'ask')
+        if handlePD == "never":
+            return
+
+        knownHosts = pdm.getHosts()
+        pdHosts = [host for host in hosts if ".plex.direct:" in host]
+
+        util.DEBUG_LOG("Checking host mapping for {} {} connections".format(len(pdHosts), source))
+
+        newHosts = set(pdHosts) - set(knownHosts)
+        if newHosts:
+            pdm.newHosts(newHosts, source=source)
+        diffLen = len(pdm.diff)
+
+        # there are situations where the myPlexManager's resources are ready earlier than
+        # any other. In that case, force the check.
+        force = plexapp.MANAGER.gotResources
+
+        if ((source == "stored" and plexapp.ACCOUNT.isOffline) or source == "myplex" or force) and pdm.differs:
+            if handlePD == 'ask':
+                button = optionsdialog.show(
+                    T(32993, '').format(diffLen),
+                    T(32994, '').format(diffLen),
+                    T(32328, 'Yes'),
+                    T(32035, 'Always'),
+                    T(32033, 'Never'),
+                )
+                if button not in (0, 1, 2):
+                    return
+
+                if button == 1:
+                    util.setSetting('handle_plexdirect', 'always')
+                elif button == 2:
+                    util.setSetting('handle_plexdirect', 'never')
+                    return
+
+            hadHosts = pdm.hadHosts
+            pdm.write()
+
+            if not hadHosts and handlePD == "ask":
+                optionsdialog.show(
+                    T(32995, ''),
+                    T(32996, ''),
+                    T(32997, 'OK'),
+                )
+            else:
+                # be less intrusive
+                util.showNotification(T(32996, ''), header=T(32995, ''))
+
     def updateProperties(self, *args, **kwargs):
         self.setBoolProperty('bifurcation_lines', util.getSetting('hubs_bifurcation_lines', False))
+
+    def setTheme(self, *args, **kwargs):
+        util.theme = kwargs["value"]
+        util.applyTheme()
 
     def focusFirstValidHub(self, startIndex=None):
         indices = self.hubFocusIndexes
@@ -471,9 +533,12 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         plexapp.SERVERMANAGER.on('reachable:server', self.displayServerAndUser)
 
         plexapp.util.APP.on('change:selectedServer', self.onSelectedServerChange)
+        plexapp.util.APP.on('loaded:server_connections', self.checkPlexDirectHosts)
         plexapp.util.APP.on('account:response', self.displayServerAndUser)
         plexapp.util.APP.on('sli:reachability:received', self.displayServerAndUser)
         plexapp.util.APP.on('change:hubs_bifurcation_lines', self.updateProperties)
+        plexapp.util.APP.on('change:hubs_use_new_continue_watching', self.fullyRefreshHome)
+        plexapp.util.APP.on('change:theme', self.setTheme)
 
         player.PLAYER.on('session.ended', self.updateOnDeckHubs)
         util.MONITOR.on('changed.watchstatus', self.updateOnDeckHubs)
@@ -485,9 +550,12 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         plexapp.SERVERMANAGER.off('reachable:server', self.displayServerAndUser)
 
         plexapp.util.APP.off('change:selectedServer', self.onSelectedServerChange)
+        plexapp.util.APP.off('loaded:server_connections', self.checkPlexDirectHosts)
         plexapp.util.APP.off('account:response', self.displayServerAndUser)
         plexapp.util.APP.off('sli:reachability:received', self.displayServerAndUser)
         plexapp.util.APP.off('change:hubs_bifurcation_lines', self.updateProperties)
+        plexapp.util.APP.off('change:hubs_use_new_continue_watching', self.fullyRefreshHome)
+        plexapp.util.APP.off('change:theme', self.setTheme)
 
         player.PLAYER.off('session.ended', self.updateOnDeckHubs)
         util.MONITOR.off('changed.watchstatus', self.updateOnDeckHubs)
@@ -500,7 +568,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         if not hubs:
             return
 
-        if time.time() - hubs.lastUpdated > HUBS_REFRESH_INTERVAL:
+        if time.time() - hubs.lastUpdated > HUBS_REFRESH_INTERVAL and not xbmc.Player().isPlayingVideo():
             self.showHubs(self.lastSection, update=True)
 
     def shutdown(self):
@@ -514,7 +582,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self.storeLastBG()
 
     def storeLastBG(self):
-        if util.advancedSettings.dynamicBackgrounds:
+        if util.addonSettings.dynamicBackgrounds:
             oldbg = util.getSetting("last_bg_url", "")
             # store BG url of first hub, first item, as this is most likely to be the one we're focusing on the
             # next start
@@ -617,7 +685,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                         self.showHubs(HomeSection)
                         return
 
-                    if util.advancedSettings.fastBack and not optionsFocused and offSections \
+                    if util.addonSettings.fastBack and not optionsFocused and offSections \
                             and self.lastFocusID not in (self.USER_BUTTON_ID, self.SERVER_BUTTON_ID,
                                                          self.SEARCH_BUTTON_ID, self.SECTION_LIST_ID):
                         self.setProperty('hub.focus', '0')
@@ -626,7 +694,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
                 if action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                     if not optionsFocused and offSections \
-                            and (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
+                            and (not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                         self.lastNonOptionsFocusID = self.lastFocusID
                         self.setFocusId(self.OPTIONS_GROUP_ID)
                         return
@@ -745,6 +813,11 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
     def showBusy(self, on=True):
         self.setProperty('busy', on and '1' or '')
 
+    def fullyRefreshHome(self, *args, **kwargs):
+        self.showSections()
+        self.backgroundSet = False
+        self.showHubs(HomeSection)
+
     @busy.dialog()
     def serverRefresh(self):
         backgroundthread.BGThreader.reset()
@@ -759,9 +832,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                 self.setFocusId(self.USER_BUTTON_ID)
                 return False
 
-            self.showSections()
-            self.backgroundSet = False
-            self.showHubs(HomeSection)
+            self.fullyRefreshHome()
             return True
 
     def hubItemClicked(self, hubControlID, auto_play=False):
@@ -844,7 +915,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
             self.storeLastBG()
 
         if item.dataSource != self.lastSection:
-            self.sectionChanged(force)
+            self.sectionChanged()
 
     def checkHubItem(self, controlID, actionID=None):
         control = self.hubControls[controlID - 400]
@@ -852,20 +923,21 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         is_valid_mli = mli and mli.getProperty('is.end') != '1'
         is_last_item = is_valid_mli and control.isLastItem(mli)
 
-        if util.advancedSettings.dynamicBackgrounds and is_valid_mli:
+        if util.addonSettings.dynamicBackgrounds and is_valid_mli:
             self.updateBackgroundFrom(mli.dataSource)
 
         if not mli or not mli.getProperty('is.end') or mli.getProperty('is.updating') == '1':
-            mlipos = control.getManagedItemPosition(mli)
+            if mli:
+                mlipos = control.getManagedItemPosition(mli)
 
-            # in order to not round robin when the next chunk is loading, implement our own cheap round robining
-            # by storing the last selected item of the current control. if we've seen it twice, we need to wrap around
-            if mli and not mli.getProperty('is.end') and is_last_item and actionID == xbmcgui.ACTION_MOVE_RIGHT:
-                if (controlID, mlipos) == self._lastSelectedItem:
-                    control.selectItem(0)
-                    self._lastSelectedItem = None
-                else:
-                    self._lastSelectedItem = (controlID, mlipos)
+                # in order to not round robin when the next chunk is loading, implement our own cheap round robining
+                # by storing the last selected item of the current control. if we've seen it twice, we need to wrap around
+                if not mli.getProperty('is.end') and is_last_item and actionID == xbmcgui.ACTION_MOVE_RIGHT:
+                    if (controlID, mlipos) == self._lastSelectedItem:
+                        control.selectItem(0)
+                        self._lastSelectedItem = None
+                        return
+                self._lastSelectedItem = (controlID, mlipos)
             return
 
         mli.setBoolProperty('is.updating', True)
@@ -897,18 +969,27 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
             self.setProperty('server.iconmod2', '')
 
     def cleanTasks(self):
-        self.tasks = [t for t in self.tasks if t.isValid()]
+        self.tasks = [t for t in self.tasks if t]
 
-    def sectionChanged(self, force=False):
+    def sectionChanged(self):
         self.sectionChangeTimeout = time.time() + 0.5
-        if not self.sectionChangeThread or not self.sectionChangeThread.is_alive() or force:
-            if self.sectionChangeThread and self.sectionChangeThread.is_alive():
-                self.sectionChangeThread.join()
 
+        # wait 2s at max if we're currently awaiting any hubs to reload
+        # fixme: this can be done in a better way, probably
+        waited = 0
+        while any(self.tasks) and waited < 20:
+            self.showBusy(True)
+            util.MONITOR.waitForAbort(0.1)
+            waited += 1
+        self.showBusy(False)
+
+        if not self.sectionChangeThread or (self.sectionChangeThread and not self.sectionChangeThread.is_alive()):
             self.sectionChangeThread = threading.Thread(target=self._sectionChanged, name="sectionchanged")
             self.sectionChangeThread.start()
 
     def _sectionChanged(self):
+        if not self.sectionChangeTimeout:
+            return
         while not util.MONITOR.waitForAbort(0.1):
             if time.time() >= self.sectionChangeTimeout:
                 break
@@ -917,21 +998,18 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         if self.lastSection == ds:
             return
 
-        self.lastSection = ds
+        self._sectionReallyChanged(ds)
 
-        self._sectionReallyChanged()
-
-    def _sectionReallyChanged(self):
+    def _sectionReallyChanged(self, section):
         with self.lock:
-            section = self.lastSection
             self.setProperty('hub.focus', '')
-            if util.advancedSettings.dynamicBackgrounds:
+            if util.addonSettings.dynamicBackgrounds:
                 self.backgroundSet = False
 
             util.DEBUG_LOG('Section changed ({0}): {1}'.format(section.key, repr(section.title)))
             self.showHubs(section)
             self.lastSection = section
-            self.checkSectionItem(force=True)
+            #self.checkSectionItem(force=True)
 
     def sectionHubsCallback(self, section, hubs):
         with self.lock:
@@ -1065,16 +1143,18 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         try:
             hasContent = False
             skip = {}
+
             for hub in hubs:
-                identifier = hub.getCleanHubIdentifier()
+                identifier = hub.getCleanHubIdentifier(is_home=not section.key)
 
                 if identifier not in self.HUBMAP:
-                    util.DEBUG_LOG('UNHANDLED - Hub: {0} [{1}]({2})'.format(hub.hubIdentifier, identifier, len(hub.items)))
+                    util.DEBUG_LOG('UNHANDLED - Hub: {0} [{1}]({2})'.format(hub.hubIdentifier, identifier,
+                                                                            len(hub.items)))
                     continue
 
                 skip[self.HUBMAP[identifier]['index']] = 1
 
-                if self.showHub(hub):
+                if self.showHub(hub, is_home=not section.key):
                     if hub.items:
                         hasContent = True
                     if self.HUBMAP[identifier].get('do_updates'):
@@ -1103,8 +1183,8 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         finally:
             self.showBusy(False)
 
-    def showHub(self, hub, items=None):
-        identifier = hub.getCleanHubIdentifier()
+    def showHub(self, hub, items=None, is_home=False):
+        identifier = hub.getCleanHubIdentifier(is_home=is_home)
 
         if identifier in self.HUBMAP:
             util.DEBUG_LOG('HUB: {0} [{1}]({2}, {3})'.format(hub.hubIdentifier,
@@ -1277,7 +1357,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                 mli.setProperty('progress', util.getProgressImage(mli.dataSource))
         if with_art:
             for mli in items:
-                thumb = (util.advancedSettings.continueUseThumb
+                thumb = (util.addonSettings.continueUseThumb
                          and mli.dataSource.type == 'episode'
                          and mli.dataSource.thumb
                          ) \
@@ -1471,7 +1551,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         elif option == 'go_online':
             plexapp.ACCOUNT.refreshAccount()
         elif option == 'refresh_users':
-            plexapp.ACCOUNT.updateHomeUsers()
+            plexapp.ACCOUNT.updateHomeUsers(refreshSubscription=True)
             return True
         else:
             self.closeOption = option

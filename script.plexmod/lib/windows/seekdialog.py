@@ -2,12 +2,12 @@ from __future__ import absolute_import
 import re
 import time
 import threading
-import math
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 from collections import OrderedDict
 
+import lib.cache
 from . import kodigui
 from . import playersettings
 from . import dropdown
@@ -17,7 +17,6 @@ from plexnet import plexapp
 from lib import util
 from plexnet.videosession import VideoSessionInfo, ATTRIBUTE_TYPES as SESSION_ATTRIBUTE_TYPES
 from plexnet.exceptions import ServerNotOwned, NotFound
-from plexnet.signalsmixin import SignalsMixin
 
 from lib.kodijsonrpc import builtin
 
@@ -171,7 +170,7 @@ class SeekDialog(kodigui.BaseDialog):
         self._delayedSeekTimeout = 0
         self._osdHideAnimationTimeout = 0
         self._hideDelay = self.HIDE_DELAY
-        self._autoSeekDelay = util.advancedSettings.autoSeek and util.advancedSettings.autoSeekDelay or 0
+        self._autoSeekDelay = util.addonSettings.autoSeek and util.addonSettings.autoSeekDelay or 0
         self._atSkipStep = -1
         self._lastSkipDirection = None
         self._forcedLastSkipAmount = None
@@ -203,8 +202,8 @@ class SeekDialog(kodigui.BaseDialog):
         self._creditsSkipShownStarted = None
         self._currentMarker = None
         self.skipSteps = self.SKIP_STEPS
-        self.useAutoSeek = util.advancedSettings.autoSeek
-        self.useDynamicStepsForTimeline = util.advancedSettings.dynamicTimelineSeek
+        self.useAutoSeek = util.addonSettings.autoSeek
+        self.useDynamicStepsForTimeline = util.addonSettings.dynamicTimelineSeek
 
         self.bingeMode = False
         self.autoSkipIntro = False
@@ -212,14 +211,14 @@ class SeekDialog(kodigui.BaseDialog):
         self.showIntroSkipEarly = False
         self.skipPostPlay = False
 
-        self.skipIntroButtonTimeout = util.advancedSettings.skipIntroButtonTimeout
-        self.skipCreditsButtonTimeout = util.advancedSettings.skipCreditsButtonTimeout
-        self.showItemEndsInfo = util.advancedSettings.showMediaEndsInfo
-        self.showItemEndsLabel = util.advancedSettings.showMediaEndsLabel
+        self.skipIntroButtonTimeout = util.addonSettings.skipIntroButtonTimeout
+        self.skipCreditsButtonTimeout = util.addonSettings.skipCreditsButtonTimeout
+        self.showItemEndsInfo = util.addonSettings.showMediaEndsInfo
+        self.showItemEndsLabel = util.addonSettings.showMediaEndsLabel
 
         self.player.video.server.on("np:timelineResponse", self.timelineResponseCallback)
 
-        if util.kodiSkipSteps and util.advancedSettings.kodiSkipStepping:
+        if util.kodiSkipSteps and util.addonSettings.kodiSkipStepping:
             self.skipSteps = {"negative": [], "positive": []}
             for step in util.kodiSkipSteps:
                 key = "negative" if step < 0 else "positive"
@@ -290,7 +289,6 @@ class SeekDialog(kodigui.BaseDialog):
 
     @property
     def markers(self):
-        # fixme: fix transcoded marker skip
         if not self._enableMarkerSkip:
             return None
 
@@ -300,6 +298,10 @@ class SeekDialog(kodigui.BaseDialog):
             for marker in self.handler.player.video.markers:
                 if marker.type in MARKERS:
                     m = MARKERS[marker.type].copy()
+                    marker.startTimeOffset = marker.startTimeOffset.asInt() \
+                        if not isinstance(marker.startTimeOffset, int) else marker.startTimeOffset
+                    marker.endTimeOffset = marker.endTimeOffset.asInt() \
+                        if not isinstance(marker.endTimeOffset, int) else marker.endTimeOffset
                     m["marker"] = marker
                     m["marker_type"] = marker.type
                     markers.append(m)
@@ -311,6 +313,42 @@ class SeekDialog(kodigui.BaseDialog):
     @markers.setter
     def markers(self, val):
         self._markers = val
+
+    def getCurrentMarkerDef(self, offset=None):
+        """
+        Show intro/credits skip button at current time
+        """
+
+        if not self.markers:
+            return
+
+        off = offset if offset is not None else self.trueOffset()
+
+        for markerDef in self.markers:
+            marker = markerDef["marker"]
+            if marker:
+                startTimeOffset = marker.startTimeOffset
+
+                # show intro skip early? (only if intro is during the first X minutes)
+                if self.showIntroSkipEarly and markerDef["marker_type"] == "intro" and \
+                        startTimeOffset <= util.addonSettings.skipIntroButtonShowEarlyThreshold1 * 1000:
+                    startTimeOffset = 0
+                    markerDef["overrideStartOff"] = 0
+
+                # fix markers with a bad endTimeOffset
+                if marker.endTimeOffset > self.duration:
+                    marker.endTimeOffset = self.duration
+                    util.DEBUG_LOG("Fixing marker endTimeOffset for: {}".format(marker))
+
+                # skip completely bad markers
+                if marker.startTimeOffset > self.duration:
+                    continue
+
+                markerEndNegoff = FINAL_MARKER_NEGOFF if getattr(markerDef["marker"], "final", False) else 0
+
+                if startTimeOffset - MARKER_SHOW_NEGOFF <= off < marker.endTimeOffset - markerEndNegoff:
+
+                    return markerDef
 
     def onFirstInit(self):
         try:
@@ -384,15 +422,13 @@ class SeekDialog(kodigui.BaseDialog):
         self.chapters = chapters or []
         self.isDirectPlay = not meta.isTranscoded
         self.isTranscoded = not self.isDirectPlay
-        self.showChapters = util.getUserSetting('show_chapters', True) and (
-                bool(chapters) or (util.getUserSetting('virtual_chapters', True) and bool(self.markers)))
         self.setProperty('video.title', title)
         self.setProperty('is.show', (self.player.video.type == 'episode') and '1' or '')
         self.setProperty('ep.year', (self.player.video.type == 'episode') and self.player.video.year or '')
         self.setProperty('has.playlist', self.handler.playlist and '1' or '')
         self.setProperty('shuffled', (self.handler.playlist and self.handler.playlist.isShuffled) and '1' or '')
-        self.setProperty('has.chapters', self.showChapters and '1' or '')
-        self.setProperty('show.buffer', (util.advancedSettings.playerShowBuffer and self.isDirectPlay) and '1' or '')
+        self.setProperty('show.buffer', (util.addonSettings.playerShowBuffer and self.isDirectPlay) and '1' or '')
+        self.setProperty('theme', 'modern')
 
         self.killTimeKeeper()
 
@@ -434,6 +470,11 @@ class SeekDialog(kodigui.BaseDialog):
         except IndexError:
             self.doClose(delete=True)
             raise util.NoDataException
+
+        self.showChapters = util.getUserSetting('show_chapters', True) and (
+                bool(chapters) or (util.getUserSetting('virtual_chapters', True) and bool(self.markers)))
+        self.setProperty('has.chapters', self.showChapters and '1' or '')
+
         self.baseOffset = offset
         self.offset = 0
         self.idleTime = None
@@ -513,13 +554,15 @@ class SeekDialog(kodigui.BaseDialog):
                         if markerDef["marker"]:
                             marker = markerDef["marker"]
                             final = getattr(marker, "final", False)
-                            markerOff = 0 if final else MARKER_END_JUMP_OFF
+                            markerOff = -FINAL_MARKER_NEGOFF if final else MARKER_END_JUMP_OFF
 
-                            util.DEBUG_LOG('MarkerSkip: Skipping marker {}'.format(markerDef["marker"]))
+                            util.DEBUG_LOG('MarkerSkip: Skipping marker'
+                                           ' {} (final: {}, to: {}, offset: {})'.format(markerDef["marker"],
+                                                                            final, marker.endTimeOffset, markerOff))
                             self.setProperty('show.markerSkip', '')
                             self.setProperty('show.markerSkip_OSDOnly', '')
                             markerDef["skipped"] = True
-                            self.doSeek(math.ceil(float(marker.endTimeOffset)) + markerOff)
+                            self.doSeek(marker.endTimeOffset + markerOff)
                             self.hideOSD(skipMarkerFocus=True)
 
                             if marker.type == "credits" and not final:
@@ -663,16 +706,16 @@ class SeekDialog(kodigui.BaseDialog):
                     # immediate marker timer actions
                     if self.countingDownMarker:
                         if controlID != self.BIG_SEEK_LIST_ID and \
-                                (util.advancedSettings.skipMarkerTimerCancel
-                                 or util.advancedSettings.skipMarkerTimerImmediate):
-                            if util.advancedSettings.skipMarkerTimerCancel and \
+                                (util.addonSettings.skipMarkerTimerCancel
+                                 or util.addonSettings.skipMarkerTimerImmediate):
+                            if util.addonSettings.skipMarkerTimerCancel and \
                                     action in (xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK):
                                 self.displayMarkers(cancelTimer=True)
                                 return
 
                             # skip the first second of a marker shown with countdown to avoid unexpected OK/SELECT
                             # behaviour
-                            elif util.advancedSettings.skipMarkerTimerImmediate \
+                            elif util.addonSettings.skipMarkerTimerImmediate \
                                     and action == xbmcgui.ACTION_SELECT_ITEM and \
                                     self._currentMarker["countdown"] is not None and \
                                     self._currentMarker["countdown_initial"] is not None and \
@@ -779,7 +822,7 @@ class SeekDialog(kodigui.BaseDialog):
                     if not self._seeking:
                         # we might be reacting to an immediate marker skip while showing a marker with timeout;
                         # in that case, don't show the OSD
-                        if not self._currentMarker or not util.advancedSettings.skipMarkerTimerImmediate or \
+                        if not self._currentMarker or not util.addonSettings.skipMarkerTimerImmediate or \
                                 self._currentMarker["countdown"] is None:
                             self.showOSD()
                     else:
@@ -1123,7 +1166,8 @@ class SeekDialog(kodigui.BaseDialog):
     def subtitleButtonClicked(self):
         options = []
 
-        options.append({'key': 'download', 'display': T(32405, 'Download Subtitles')})
+        if self.isDirectPlay:
+            options.append({'key': 'download', 'display': T(32405, 'Download Subtitles')})
 
         # select "enable" by default
         selectIndex = 1
@@ -1177,10 +1221,14 @@ class SeekDialog(kodigui.BaseDialog):
             if self.handler and self.handler.player and self.handler.player.playerObject \
                     and util.getSetting('calculate_oshash', False):
                 meta = self.handler.player.playerObject.metadata
-                oss_hash = util.getOpenSubtitlesHash(meta.size, meta.streamUrls[0])
-                if oss_hash:
-                    util.DEBUG_LOG("OpenSubtitles hash: %s" % oss_hash)
-                    util.setGlobalProperty("current_oshash", oss_hash, base='videoinfo.{0}')
+                if not meta.size:
+                    util.LOG("Can't calculate OpenSubtitles hash because we're transcoding")
+
+                else:
+                    oss_hash = util.getOpenSubtitlesHash(meta.size, meta.streamUrls[0])
+                    if oss_hash:
+                        util.DEBUG_LOG("OpenSubtitles hash: %s" % oss_hash)
+                        util.setGlobalProperty("current_oshash", oss_hash, base='videoinfo.{0}')
             else:
                 util.setGlobalProperty("current_oshash", '', base='videoinfo.{0}')
             self.lastSubtitleNavAction = "download"
@@ -1213,6 +1261,8 @@ class SeekDialog(kodigui.BaseDialog):
     def disableSubtitles(self):
         self.player.video.disableSubtitles()
         self.setSubtitles()
+        if self.isTranscoded:
+            self.doSeek(self.trueOffset(), settings_changed=True)
 
     def cycleSubtitles(self, forward=True):
         """
@@ -1221,6 +1271,8 @@ class SeekDialog(kodigui.BaseDialog):
         stream = self.player.video.cycleSubtitles(forward=forward)
         self.setSubtitles(honor_forced_subtitles_override=False)
         util.showNotification(str(stream), time_ms=1500, header=util.T(32396, "Subtitles"))
+        if self.isTranscoded:
+            self.doSeek(self.trueOffset(), settings_changed=True)
 
     def setSubtitles(self, do_sleep=False, honor_forced_subtitles_override=False):
         self.handler.setSubtitles(do_sleep=do_sleep, honor_forced_subtitles_override=honor_forced_subtitles_override)
@@ -1315,6 +1367,7 @@ class SeekDialog(kodigui.BaseDialog):
         self.setProperty('is.show', (self.player.video.type == 'episode') and '1' or '')
         self.setProperty('media.show_ends', self.showItemEndsInfo and '1' or '')
         self.setProperty('time.ends_label', self.showItemEndsLabel and (util.T(32543, 'Ends at')) or '')
+        self.setBoolProperty('no.osd.hide_info', util.getSetting('no_spoilers', False))
 
         if self.isDirectPlay:
             self.setProperty('time.fmt', self.timeFmtKodi)
@@ -1392,8 +1445,8 @@ class SeekDialog(kodigui.BaseDialog):
                     marker = markerDef["marker"]
                     if marker:
                         if markerDef["marker_type"] == "intro":
-                            preparedMarkers.append((int(marker.startTimeOffset), T(33608, "Intro"), False))
-                            preparedMarkers.append((int(marker.endTimeOffset), T(33610, "Main"), False))
+                            preparedMarkers.append((marker.startTimeOffset, T(33608, "Intro"), False))
+                            preparedMarkers.append((marker.endTimeOffset, T(33610, "Main"), False))
 
                         elif markerDef["marker_type"] == "credits":
                             creditsCounter += 1
@@ -1401,7 +1454,7 @@ class SeekDialog(kodigui.BaseDialog):
                                 label = T(33635, "Final Credits")
                             else:
                                 label = T(33609, "Credits") + "{}"
-                            preparedMarkers.append((int(marker.startTimeOffset), label, True))
+                            preparedMarkers.append((marker.startTimeOffset, label, True))
 
                 # add staggered virtual markers
                 preparedMarkers.append((int(self.duration * 0.25), "25 %", False))
@@ -1458,7 +1511,7 @@ class SeekDialog(kodigui.BaseDialog):
             self.positionControl.setWidth(w)
 
         # update cache/buffer bar
-        if util.advancedSettings.playerShowBuffer and self.isDirectPlay and util.KODI_VERSION_MAJOR > 18:
+        if util.addonSettings.playerShowBuffer and self.isDirectPlay and util.KODI_VERSION_MAJOR > 18:
             cache_w = int(xbmc.getInfoLabel("Player.ProgressCache")) * self.SEEK_IMAGE_WIDTH // 100
             self.cacheControl.setWidth(cache_w)
 
@@ -1554,33 +1607,6 @@ class SeekDialog(kodigui.BaseDialog):
             self.updateProgress(set_to_current=False)
             self.setProperty('button.seek', '1')
 
-    def getCurrentMarkerDef(self, offset=None):
-        """
-        Show intro/credits skip button at current time
-        """
-
-        if not self.markers:
-            return
-
-        off = offset if offset is not None else self.trueOffset()
-
-        for markerDef in self.markers:
-            marker = markerDef["marker"]
-            if marker:
-                startTimeOffset = int(marker.startTimeOffset)
-
-                # show intro skip early? (only if intro is during the first X minutes)
-                if self.showIntroSkipEarly and markerDef["marker_type"] == "intro" and \
-                        startTimeOffset <= util.advancedSettings.skipIntroButtonShowEarlyThreshold1 * 1000:
-                    startTimeOffset = 0
-                    markerDef["overrideStartOff"] = 0
-
-                markerEndNegoff = FINAL_MARKER_NEGOFF if getattr(markerDef["marker"], "final", False) else 0
-
-                if startTimeOffset - MARKER_SHOW_NEGOFF <= off < int(marker.endTimeOffset) - markerEndNegoff:
-
-                    return markerDef
-
 
     @property
     def duration(self):
@@ -1672,7 +1698,7 @@ class SeekDialog(kodigui.BaseDialog):
         currentBufferPerc = int(xbmc.getInfoLabel("Player.ProgressCache")) - int(xbmc.getInfoLabel("Player.Progress"))
 
         # configured buffer size
-        bufferBytes = util.kcm.memorySize * 1024 * 1024
+        bufferBytes = lib.cache.kcm.memorySize * 1024 * 1024
 
         # wait for the full buffer or for 10% of the file at max
         # a full buffer is typically 30% of the configured cache value
@@ -1693,7 +1719,7 @@ class SeekDialog(kodigui.BaseDialog):
                     wasPlaying = True
 
                 waitedFor = 0
-                waitMax = util.advancedSettings.bufferWaitMax
+                waitMax = util.addonSettings.bufferWaitMax
                 waitExceeded = False
                 self.waitingForBuffer = True
                 self.showOSD(focusButton=False)
@@ -1744,7 +1770,7 @@ class SeekDialog(kodigui.BaseDialog):
                 util.DEBUG_LOG("SeekDialog.buffer: Buffer already filled, not waiting for buffer")
 
         else:
-            wait = util.advancedSettings.bufferInsufficientWait
+            wait = util.addonSettings.bufferInsufficientWait
             util.DEBUG_LOG("SeekDialog.buffer: Buffer is too small for us to see, waiting {} seconds".format(wait))
             self.waitingForBuffer = True
 
@@ -1905,7 +1931,7 @@ class SeekDialog(kodigui.BaseDialog):
 
         # getCurrentMarkerDef might have overridden the startTimeOffset, use that
         startTimeOff = markerDef["overrideStartOff"] if markerDef["overrideStartOff"] is not None else \
-            int(markerDef["marker"].startTimeOffset)
+            markerDef["marker"].startTimeOffset
 
         markerAutoSkip = getattr(self, markerDef["markerAutoSkip"])
 
@@ -1916,14 +1942,14 @@ class SeekDialog(kodigui.BaseDialog):
 
         markerAutoSkipped = markerDef["markerAutoSkipped"]
 
-        sTOffWThres = startTimeOff + util.advancedSettings.autoSkipOffset * 1000
+        sTOffWThres = startTimeOff + util.addonSettings.autoSkipOffset * 1000
 
         # we just want to return an early marker if we want to autoSkip it, so we can tell the handler to seekOnStart
         if onlyReturnIntroMD and markerDef["marker_type"] == "intro" and markerAutoSkip:
             if startTimeOff == 0 and not markerDef["markerAutoSkipped"]:
                 if setSkipped:
                     markerDef["markerAutoSkipped"] = True
-                return int(markerDef["marker"].endTimeOffset) + MARKER_END_JUMP_OFF
+                return markerDef["marker"].endTimeOffset + MARKER_END_JUMP_OFF
             return False
 
         if cancelTimer and self.countingDownMarker:
@@ -1953,8 +1979,8 @@ class SeekDialog(kodigui.BaseDialog):
 
             if getattr(markerDef["marker"], "final", False):
                 # final marker is _not_ at the end of video, seek and do nothing
-                if int(markerDef["marker"].endTimeOffset) < self.duration - FINAL_MARKER_NEGOFF:
-                    target = int(markerDef["marker"].endTimeOffset)
+                if markerDef["marker"].endTimeOffset < self.duration - FINAL_MARKER_NEGOFF:
+                    target = markerDef["marker"].endTimeOffset
                     util.DEBUG_LOG(
                         "MarkerAutoSkip: Skipping final marker, its endTime is too early, "
                         "though, seeking and playing back")
@@ -1982,7 +2008,7 @@ class SeekDialog(kodigui.BaseDialog):
                 return False
 
             util.DEBUG_LOG('MarkerAutoSkip: Skipping marker {}'.format(markerDef["marker"]))
-            self.doSeek(int(markerDef["marker"].endTimeOffset) + MARKER_END_JUMP_OFF)
+            self.doSeek(markerDef["marker"].endTimeOffset + MARKER_END_JUMP_OFF)
             return True
 
         # got a marker, display logic
@@ -2014,13 +2040,22 @@ class SeekDialog(kodigui.BaseDialog):
                 # reset countdown on new marker
                 if not self._currentMarker or self._currentMarker != markerDef or markerDef["countdown"] is None:
                     # fixme: round might not be right here, but who cares
-                    markerDef["countdown"] = int(max(round((sTOffWThres - self.trueOffset()) / 1000.0) + 1, 1))
+                    to = self.trueOffset()
+                    # set the countdown to either the auto skip offset, or, if we're already "inside" the marker time
+                    # area through seeking, at max the difference between the current offset and the end of the
+                    # video
+                    markerDef["countdown"] = int(
+                        max(
+                            round((sTOffWThres - to) / 1000.0) + 1,
+                            min(util.addonSettings.autoSkipOffset, int((self.duration - to) / 1000.0))
+                        )
+                    )
                     isNew = True
 
             if self.player.playState == self.player.STATE_PLAYING and not self.osdVisible():
                 markerDef["countdown"] -= 1
-                if isNew:
-                    markerDef["countdown_initial"] = markerDef["countdown"]
+            if isNew:
+                markerDef["countdown_initial"] = markerDef["countdown"]
 
             self.setProperty('marker.countdown', '1')
 

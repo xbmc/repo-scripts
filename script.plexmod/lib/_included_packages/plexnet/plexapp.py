@@ -1,10 +1,7 @@
 from __future__ import print_function, absolute_import
-import threading
 import platform
 import uuid
-import sys
 
-from . import callback
 from . import signalsmixin
 from . import simpleobjects
 from . import util
@@ -43,6 +40,10 @@ class App(signalsmixin.SignalsMixin):
 
     def addTimer(self, timer):
         self.timers.append(timer)
+
+    @property
+    def serverManager(self):
+        return SERVERMANAGER
 
     def startRequest(self, request, context, body=None, contentType=None):
         context.request = request

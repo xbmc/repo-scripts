@@ -56,7 +56,7 @@ class Artist(Audio, media.RelatedMixin):
         leavesKey = '/library/metadata/%s/allLeaves' % self.ratingKey
         return plexobjects.listItems(self.server, leavesKey, watched=watched)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return self.tracks()
 
     def track(self, title):
@@ -93,7 +93,7 @@ class Album(Audio):
         path = '%s/children' % self.key
         return plexobjects.findItem(self.server, path, title)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return self.tracks()
 
     def isFullObject(self):

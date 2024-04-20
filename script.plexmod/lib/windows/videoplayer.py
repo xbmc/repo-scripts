@@ -152,7 +152,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 self.resetPassoutProtection()
                 if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                     if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
-                        if not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU:
+                        if not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU:
                             self.lastNonOptionsFocusID = self.lastFocusID
                             self.setFocusId(self.OPTIONS_GROUP_ID)
                             return
@@ -195,7 +195,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             return
 
         timeoutCanceled = False
-        if util.advancedSettings.postplayCancel:
+        if util.addonSettings.postplayCancel:
             timeoutCanceled = bool(self.timeout)
             self.cancelTimer()
 
@@ -422,7 +422,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             millis = (self.passoutProtection - time.time()) * 1000
             util.DEBUG_LOG('Post play auto-play: Passout protection in {0}'.format(util.durationToShortText(millis)))
 
-        self.timeout = time.time() + abs(util.advancedSettings.postplayTimeout)
+        self.timeout = time.time() + abs(util.addonSettings.postplayTimeout)
         util.DEBUG_LOG('Starting post-play timer until: %i' % self.timeout)
         threading.Thread(target=self.countdown).start()
 
@@ -447,8 +447,8 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 # self.playVideo()
                 break
             elif self.timeout is not None:
-                cd = min(abs(util.advancedSettings.postplayTimeout-1), int((self.timeout or now) - now))
-                base = 15 / float(util.advancedSettings.postplayTimeout-1)
+                cd = min(abs(util.addonSettings.postplayTimeout - 1), int((self.timeout or now) - now))
+                base = 15 / float(util.addonSettings.postplayTimeout - 1)
                 self.setProperty('countdown', str(int(math.ceil(base*cd))))
 
     def getHubs(self):

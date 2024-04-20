@@ -6,14 +6,34 @@ from . import http
 from . import plexrequest
 from . import mediadecisionengine
 from . import serverdecision
-from lib.util import CACHE_SIZE, advancedSettings, KODI_VERSION_MAJOR
+from lib.util import addonSettings, KODI_VERSION_MAJOR
+from lib.cache import CACHE_SIZE
 
 from six.moves import range
 
 DecisionFailure = serverdecision.DecisionFailure
 
 
-class PlexPlayer(object):
+class BasePlayer(object):
+    item = None
+
+    def setupObj(self, obj, part, server, force_request_to_server=False):
+        # check for path mapping
+        url = part.getPathMappedUrl()
+
+        if not url:
+            url = server.buildUrl(part.getAbsolutePath("key"))
+            # Check if we should include our token or not for this request
+            obj.isRequestToServer = force_request_to_server or server.isRequestToServer(url)
+            obj.streamUrls = [server.buildUrl(part.getAbsolutePath("key"), obj.isRequestToServer)]
+            obj.isMapped = False
+        else:
+            obj.isRequestToServer = False
+            obj.streamUrls = [url]
+            obj.isMapped = True
+
+
+class PlexPlayer(BasePlayer):
     DECISION_ENDPOINT = "/video/:/transcode/universal/decision"
 
     def __init__(self, item, seekValue=0, forceUpdate=False):
@@ -271,7 +291,7 @@ class PlexPlayer(object):
                                             "mediaBufferSize={}".format(str(CACHE_SIZE * 1024)))
             decisionPath = http.addUrlParam(decisionPath, "hasMDE=1")
 
-            if not advancedSettings.oldprofile:
+            if not addonSettings.oldprofile:
                 decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Client-Profile-Name=Generic')
             else:
                 decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Client-Profile-Name=Chrome')
@@ -303,7 +323,7 @@ class PlexPlayer(object):
         builder.addParam("protocol", "hls")
 
         # TODO: This should be Generic, but will need to re-evaluate the augmentations with that change
-        if not advancedSettings.oldprofile:
+        if not addonSettings.oldprofile:
             builder.addParam("X-Plex-Client-Profile-Name", "Generic")
         else:
             builder.addParam("X-Plex-Client-Profile-Name", "Chrome")
@@ -318,7 +338,7 @@ class PlexPlayer(object):
         # Augment the server's profile for things that depend on the Roku's configuration.
         if self.item.settings.supportsAudioStream("ac3", 6):
             builder.extras.append("append-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=hls&audioCodec=ac3)")
-            if not advancedSettings.oldprofile:
+            if not addonSettings.oldprofile:
                 builder.extras.append("add-direct-play-profile(type=videoProfile&container=mkv&videoCodec=*&audioCodec=ac3)")
             else:
                 builder.extras.append(
@@ -336,7 +356,7 @@ class PlexPlayer(object):
         builder.extras = []
         builder.addParam("protocol", "http")
         builder.addParam("copyts", "1")
-        if not advancedSettings.oldprofile:
+        if not addonSettings.oldprofile:
             builder.addParam("X-Plex-Client-Profile-Name", "Generic")
         else:
             builder.addParam("X-Plex-Client-Profile-Name", "Chrome")
@@ -684,10 +704,9 @@ class PlexPlayer(object):
 
         server = self.item.getServer()
 
-        # Check if we should include our token or not for this request
-        obj.isRequestToServer = server.isRequestToServer(server.buildUrl(part.getAbsolutePath("key")))
-        obj.streamUrls = [server.buildUrl(part.getAbsolutePath("key"), obj.isRequestToServer)]
+        self.setupObj(obj, part, server)
         obj.token = obj.isRequestToServer and server.getToken() or None
+
         if self.media.protocol == "hls":
             obj.streamFormat = "hls"
             obj.switchingStrategy = "full-adaptation"
@@ -748,7 +767,7 @@ class PlexPlayer(object):
 
         # if server.supportsFeature("mkvTranscode") and self.item.settings.getPreference("transcode_format", 'mkv') != "hls":
         if server.supportsFeature("mkvTranscode"):
-            if not advancedSettings.oldprofile:
+            if not addonSettings.oldprofile:
                 builder = self.buildTranscodeMkv(obj, directStream=directStream)
             else:
                 builder = self.buildTranscodeMkvLegacy(obj, directStream=directStream)
@@ -840,38 +859,34 @@ class PlexPlayer(object):
         return obj
 
 
-class PlexAudioPlayer(object):
-    def __init__(self, item):
+class PlexAudioPlayer(BasePlayer):
+    def __init__(self, item=None):
+        self.item = item
+        self.choice = None
         self.containerFormats = {
             'aac': "es.aac-adts"
         }
 
-        self.item = item
-        self.choice = mediadecisionengine.MediaDecisionEngine().chooseMedia(item)
-        if self.choice:
-            self.media = self.choice.media
         self.lyrics = None  # createLyrics(item, self.media)
 
-    def build(self, directPlay=None):
-        directPlay = directPlay or self.choice.isDirectPlayable
+    def build(self, item, directPlay=None):
+        item = item or self.item
+        self.choice = choice = mediadecisionengine.MediaDecisionEngine().chooseMedia(item)
+        directPlay = directPlay or choice.isDirectPlayable
 
         obj = util.AttributeDict()
 
-        # TODO(schuyler): Do we want/need to add anything generic here? Title? Duration?
-
         if directPlay:
-            obj = self.buildDirectPlay(obj)
+            obj = self.buildDirectPlay(item, choice, obj)
         else:
-            obj = self.buildTranscode(obj)
-
-        self.metadata = obj
+            obj = self.buildTranscode(item, choice, obj)
 
         util.LOG("Constructed audio item for playback: {0}".format(util.cleanObjTokens(dict(obj))))
 
-        return self.metadata
+        return obj
 
-    def buildTranscode(self, obj):
-        transcodeServer = self.item.getTranscodeServer(True, "audio")
+    def buildTranscode(self, item, choice, obj):
+        transcodeServer = item.getTranscodeServer(True, "audio")
         if not transcodeServer:
             return None
 
@@ -882,8 +897,8 @@ class PlexAudioPlayer(object):
 
         builder = http.HttpRequest(transcodeServer.buildUrl(obj.transcodeEndpoint, True))
         # builder.addParam("protocol", "http")
-        builder.addParam("path", self.item.getAbsolutePath("key"))
-        builder.addParam("session", self.item.getGlobal("clientIdentifier"))
+        builder.addParam("path", item.getAbsolutePath("key"))
+        builder.addParam("session", item.getGlobal("clientIdentifier"))
         builder.addParam("directPlay", "0")
         builder.addParam("directStream", "0")
 
@@ -891,26 +906,27 @@ class PlexAudioPlayer(object):
 
         return obj
 
-    def buildDirectPlay(self, obj):
-        if self.choice.part:
-            obj.url = self.item.getServer().buildUrl(self.choice.part.getAbsolutePath("key"), True)
+    def buildDirectPlay(self, item, choice, obj):
+        if choice.part:
+            self.setupObj(obj, choice.part, item.getServer(), force_request_to_server=True)
+            obj.url = obj.streamUrls[0]
 
             # Set and override the stream format if applicable
-            obj.streamFormat = self.choice.media.get('container', 'mp3')
+            obj.streamFormat = choice.media.get('container', 'mp3')
             if self.containerFormats.get(obj.streamFormat):
                 obj.streamFormat = self.containerFormats[obj.streamFormat]
 
             # If we're direct playing a FLAC, bitrate can be required, and supposedly
             # this is the only way to do it. plexinc/roku-client#48
             #
-            bitrate = self.choice.media.bitrate.asInt()
+            bitrate = choice.media.bitrate.asInt()
             if bitrate > 0:
                 obj.streams = [{'url': obj.url, 'bitrate': bitrate}]
 
             return obj
 
         # We may as well fallback to transcoding if we could not direct play
-        return self.buildTranscode(obj)
+        return self.buildTranscode(item, choice, obj)
 
     def getLyrics(self):
         return self.lyrics

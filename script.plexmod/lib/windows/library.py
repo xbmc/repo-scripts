@@ -348,7 +348,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.alreadyFetchedChunkList = set()
         self.finalChunkPosition = 0
 
-        self.CHUNK_SIZE = util.advancedSettings.libraryChunkSize
+        self.CHUNK_SIZE = util.addonSettings.libraryChunkSize
 
         key = self.section.key
         if not key.isdigit():
@@ -412,7 +412,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                 if mli:
                     self.requestChunk(mli.pos())
 
-                if util.advancedSettings.dynamicBackgrounds:
+                if util.addonSettings.dynamicBackgrounds:
                     if mli and mli.dataSource:
                         self.updateBackgroundFrom(mli.dataSource)
 
@@ -434,7 +434,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             elif action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                 if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)) and \
-                        (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
+                        (not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                     if xbmc.getCondVisibility('Integer.IsGreater(Container(101).ListItem.Property(index),5)'):
                         self.showPanelControl.selectItem(0)
                         return
@@ -566,7 +566,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
             args['unwatched'] = '1'
 
         pq = playqueue.createPlayQueueForItem(self.section, options={'shuffle': shuffle}, args=args)
-        opener.open(pq)
+        opener.open(pq, auto_play=True)
 
     def shuffleButtonClicked(self):
         self.playButtonClicked(shuffle=True)
@@ -786,7 +786,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.showPanelControl.selectItem(0)
         self.setFocusId(self.POSTERS_PANEL_ID)
         self.backgroundSet = False
-        self.setBackground([item.dataSource for item in self.showPanelControl], 0, randomize=not util.advancedSettings.dynamicBackgrounds)
+        self.setBackground([item.dataSource for item in self.showPanelControl], 0, randomize=not util.addonSettings.dynamicBackgrounds)
 
     def subOptionCallback(self, option):
         check = 'script.plex/home/device/check.png'
@@ -1156,7 +1156,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             # If we're retrieving media as we navigate then we just want to request the first
             # chunk of media and stop.  We'll fetch the rest as the user navigates to those items
-            if not util.advancedSettings.retrieveAllMediaUpFront:
+            if not util.addonSettings.retrieveAllMediaUpFront:
                 # Calculate the end chunk's starting position based on the totalSize of items
                 self.finalChunkPosition = (totalSize // self.CHUNK_SIZE) * self.CHUNK_SIZE
                 # Keep track of the chunks we've already fetched by storing the chunk's starting position
@@ -1290,7 +1290,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
         with self.lock:
             pos = start
-            self.setBackground(items, pos, randomize=not util.advancedSettings.dynamicBackgrounds)
+            self.setBackground(items, pos, randomize=not util.addonSettings.dynamicBackgrounds)
 
             thumbDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie'])['thumb_dim']
             artDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie']).get('art_dim', (256, 256))
@@ -1372,7 +1372,10 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                             mli.setProperty('art', obj.artCompositeURL(*colArtDim))
                             mli.setThumbnailImage(obj.artCompositeURL(*thumbDim))
                         else:
-                            mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
+                            if obj.TYPE == 'photodirectory' and obj.composite:
+                                mli.setThumbnailImage(obj.composite.asTranscodedImageURL(*thumbDim))
+                            else:
+                                mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
                         mli.dataSource = obj
                         mli.setProperty('summary', obj.get('summary'))
 
@@ -1397,7 +1400,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                     pos += 1
 
     def requestChunk(self, start):
-        if util.advancedSettings.retrieveAllMediaUpFront:
+        if util.addonSettings.retrieveAllMediaUpFront:
             return
 
         # Calculate the correct starting chunk position for the item they passed in

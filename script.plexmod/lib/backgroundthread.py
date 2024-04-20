@@ -42,6 +42,9 @@ class Task:
     def __gt__(self, other):
         return self._priority > other._priority
 
+    def __bool__(self):
+        return self.isValid()
+
     def start(self):
         BGThreader.addTask(self)
 
@@ -146,7 +149,7 @@ class BackgroundWorker:
 
 
 class BackgroundThreader:
-    def __init__(self, name=None, worker_count=3):
+    def __init__(self, name=None, worker_count=5):
         self.name = name
         self._queue = MutablePriorityQueue()
         self._abort = False
@@ -227,10 +230,10 @@ class BackgroundThreader:
 
 
 class ThreaderManager:
-    def __init__(self):
+    def __init__(self, worker_count=5):
         self.index = 0
         self.abandoned = []
-        self.threader = BackgroundThreader(str(self.index))
+        self.threader = BackgroundThreader(str(self.index), worker_count=worker_count)
 
     def __getattr__(self, name):
         return getattr(self.threader, name)
@@ -252,4 +255,4 @@ class ThreaderManager:
         self.threader.kill()
 
 
-BGThreader = ThreaderManager()
+BGThreader = ThreaderManager(worker_count=util.getSetting('worker_count', 5))

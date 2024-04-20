@@ -1,6 +1,46 @@
-[-0.7.6-rev2 -]
-- Core: Avoid DNS rebind protection issues for plex.direct
+[-0.7.7-rev2-]
+- UserSelect: When not switching user (startup), close the addon on cancel actions
+- Libraries/Photos: Do autoplay when Play or Shuffle buttons are pressed in photo library view
+- Libraries/Photos: Fix wonky thumbnail display on photodirectories; support dynamic backgrounds for Photo items
+- SeekDialog: Fix final credits marker skipping wrongly on manual marker skip
+- SeekDialog: Fix several marker issues (over-jumping, invalid markers)
+- SeekDialog: Show stream transport type in video session info (smb, nfs, path mapped, http(s))
+- SeekDialog: Fix empty chapters list shown when watching an episode without markers via NEXT after watching one with markers
+- SeekDialog/Settings: Add option to hide all time-related information from the user when the OSD isn't open
+- SeekDialog: Transcode Session Only: Don't show subtitle download option in subtitle quick actions; properly show subtitles when toggling them via subtitle quick actions
+- Core: Advanced/Addon settings: Set default Plex requests timeout to 10 (was 5)
+- Core/Mainloop: Make sure we were able to open the Home/UserSelect window after our BACKGROUND successfully opened, even if another modal dialog opened in the meantime
 - Core: Firstrun: Refresh resources after signin and/or home user switch, otherwise the first time the addon's run the user sees no servers
+- Core: UI: Fall back to black background image when we have backgrounds set but they didn't load
+- Core: Finally fix and handle plex.direct mappings via advancedsettings.xml
+- Core: Fix issues resulting in new devices being registered with plex.tv on every plugin start
+- Core: Only use mapped file path if mapped file exists or verification is off
+- Core: Backgrounds: More concise fallback handling
+- Core/Player: Add optional DirectPlay path mapping via addon_data/script.plexmod/path_mapping.json (path_mapping.example.json included in addon directory). Allows for arbitrary replacements of HTTP playback with SMB, NFS, local mounts etc.
+- Home: Rework and simplify section/library change logic
+- Home: Never update hubs while playing a video to avoid hickups in high bitrate scenarios
+- Home: Properly cache user thumbnail (by removing the ?c timestamp from the URL), increasing performance
+- Home: Fix round robining on hubs (going left once before the last item, then right falsely round-robined to the start, early)
+- Home: Add virtual hub 'home.VIRTUAL.movies.recentlyreleased' on index 3 if we encounter 'movie.recentlyreleased' on the home hubs
+- Home/Settings: Add setting to use the modern Continue Watching hub on Home instead of the separated In Progress/On Deck hubs
+- Episodes: Complete rework of the watch-state handler for TV; instantly update progress while watching
+- Theme: Update assets, icon, splash
+- Music: Rework music player and handler; remove plugin:// path and handle tracks directly; fixed all stability issues; massively improve performance
+- Player: Add button theme support, use new modern colored theme; support custom themes
+- Player: Improve handling when postplay screen is not wanted and we're at the end of a show; harden progressEvent handler
+- Player: Remove all /file.xxx instances instead of just .mkv and .mp4 from non mapped stream URLs
+- Musicplayer: Partially fix "dangling" playing tracks in Plex Dashboard after stopping playback
+- Music: Hide spinner on prev/next button clicks as well (only with Plextuary skin 4.0.0-pm4k0.9 (omega), 3.0.10-pm4k0.8 (nexus and older))
+- Settings: Add setting to toggle path mapping dynamically
+- Settings: Adjust cache recommendations down from 100MB to 50MB
+- AddonSettings: Add advanced setting to verify mapped files before playing them (default: on)
+- Account/HomeUsers: Use new API to determine the PlexPass subscription status of the Plex Home
+- Account/HomeUsers: Refresh home users once a week if we've never seen a plex home
+- Home/RefreshUsers/UserSelect: Refresh subscription state
+
+
+[-0.7.6-]
+- Core: Avoid DNS rebind protection issues for plex.direct
 - Core: Support ipv6 plex.direct hosts when checking for locality/LAN
 - Core: Network: Massively speed up local connection checks
 - Core: Network: Skip local connection checks for plex.tv
@@ -25,7 +65,6 @@
 - SeekDialog: Autoscroll episode/movie title lines for too long titles
 - SeekDialog: Hide non-autoskipping marker into the OSD using NAV_BACK/PREVIOUS_MENU
 - SeekDialog: Apply positive marker endtime offset to manually skipping markers as well (unifying with the autoskip handling), to avoid re-showing the marker occasionally after seeking
-- SeekDialog: Fix final credits marker skipping wrongly on manual marker skip
 - Library: Show current total item count in title
 - Settings: Add description for Direct Stream
 

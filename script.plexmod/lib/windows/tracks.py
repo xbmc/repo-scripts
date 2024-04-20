@@ -3,7 +3,7 @@ from kodi_six import xbmc
 from kodi_six import xbmcgui
 from . import kodigui
 
-from lib import colors
+from lib import player
 from lib import util
 
 from plexnet import playlist

@@ -23,7 +23,7 @@ status_codes = requests.status_codes._codes
 
 DEFAULT_TIMEOUT = asyncadapter.AsyncTimeout(util.TIMEOUT).setConnectTimeout(util.TIMEOUT)
 
-KNOWN_HOSTS = {}
+RESOLVED_PD_HOSTS = {}
 
 _getaddrinfo = socket.getaddrinfo
 
@@ -34,11 +34,11 @@ def pgetaddrinfo(host, port, *args, **kwargs):
     """
     if host.endswith("plex.direct"):
         v6 = host.count("-") > 3
-        if host in KNOWN_HOSTS:
-            ip = KNOWN_HOSTS[host]
+        if host in RESOLVED_PD_HOSTS:
+            ip = RESOLVED_PD_HOSTS[host]
         else:
             base = host.split(".", 1)[0]
-            ip = KNOWN_HOSTS[host] = v6 and base.replace("-", ":") or base.replace("-", ".")
+            ip = RESOLVED_PD_HOSTS[host] = v6 and base.replace("-", ":") or base.replace("-", ".")
             util.DEBUG_LOG("Dynamically resolving {} to {}".format(host, ip))
 
         fam = v6 and socket.AF_INET6 or socket.AF_INET

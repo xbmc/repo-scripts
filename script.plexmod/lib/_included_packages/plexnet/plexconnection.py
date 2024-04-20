@@ -128,9 +128,7 @@ class PlexConnection(object):
 
         if hostname.endswith("plex.direct"):
             util.DEBUG_LOG("Using shortcut for hostname IP detection due to plex.direct host: {}".format(hostname))
-            v6 = hostname.count("-") > 3
-            base = hostname.split(".", 1)[0]
-            ips = [v6 and base.replace("-", ":") or base.replace("-", ".")]
+            ips = [util.parsePlexDirectHost(hostname)]
 
         else:
             try:

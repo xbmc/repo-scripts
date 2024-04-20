@@ -72,6 +72,7 @@ class InfoWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     addMedia.append("Unavailable: {}".format(os.path.basename(part.file)))
                     continue
 
+                pmFolder = part.getPathMappedUrl(return_only_folder=True)
                 addMedia.append("File: ")
                 splitFnAt = 74
                 fnLen = len(os.path.basename(part.file))
@@ -82,6 +83,8 @@ class InfoWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                         appended = True
                         continue
                     addMedia.append("{}\n".format(s))
+                if pmFolder:
+                    addMedia.append("Mapped via: {}\n".format(pmFolder))
                 addMedia.append("Duration: {}, Size: {}\n".format(util.durationToShortText(int(part.duration)),
                                                                   util.simpleSize(int(part.size))))
 

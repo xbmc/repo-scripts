@@ -61,7 +61,7 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.musicPlayerWinID = kwargs.get('winID')
 
     def doClose(self, **kwargs):
-        player.PLAYER.off('playback.started', self.onPlayBackStarted)
+        player.PLAYER.off('av.started', self.onPlayBackStarted)
         player.PLAYER.off('playlist.changed', self.playQueueCallback)
         if player.PLAYER.handler.playQueue and player.PLAYER.handler.playQueue.isRemote:
             player.PLAYER.handler.playQueue.off('change', self.updateProperties)
@@ -123,7 +123,6 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             self.updateSelectedProgress()
 
     def onPlayBackStarted(self, **kwargs):
-        xbmc.sleep(2000)
         self.setDuration()
 
     def repeatButtonClicked(self):
@@ -180,7 +179,8 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def stopButtonClicked(self):
         xbmc.executebuiltin('Action(Back, {})'.format(self.musicPlayerWinID))
-        xbmc.sleep(500)
+        util.MONITOR.waitForAbort(0.5)
+        player.PLAYER.stopAndWait()
         self.doClose()
 
     def selectPlayingItem(self):
@@ -257,7 +257,7 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.selectionBox = self.getControl(self.SELECTION_BOX)
         self.selectionBoxHalf = self.SELECTION_BOX_WIDTH // 2
         self.selectionBoxMax = self.SEEK_IMAGE_WIDTH
-        player.PLAYER.on('playback.started', self.onPlayBackStarted)
+        player.PLAYER.on('av.started', self.onPlayBackStarted)
 
     def checkSeekActions(self, action, controlID):
         if controlID == self.SEEK_BUTTON_ID:
