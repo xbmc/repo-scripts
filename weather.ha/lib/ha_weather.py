@@ -20,9 +20,6 @@ from xbmc import log as xbmc_log
 
 from .util import *
 
-from time import sleep
-from time import sleep
-
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addonversion__ = __addon__.getAddonInfo('version')
@@ -71,7 +68,7 @@ WND = None
 class MAIN():
     def __init__(self, *args, **kwargs):
         log('Home Assistant Weather started.')
-        #self.MONITOR = MyMonitor()
+        self.MONITOR = MyMonitor()
         mode = kwargs['mode']
         global WND
         WND = kwargs['w']
@@ -97,7 +94,7 @@ class MAIN():
         global headers, ha_server
         retry = 0
         r = None
-        while retry < MAX_REQUEST_RETRIES:
+        while (retry < MAX_REQUEST_RETRIES) and (not self.MONITOR.abortRequested()):
             try:
                 log('Trying to make a get request to ' + ha_server + api_ext)
                 r = requests.get(ha_server + api_ext, headers=headers)
@@ -111,14 +108,14 @@ class MAIN():
             except:
                 log('Status code error is: ' + str(r.raise_for_status() if r else 'unknown' ))
             retry += 1
-            sleep(RETRY_DELAY_S)
+            self.MONITOR.waitForAbort(RETRY_DELAY_S)
         show_dialog(__addon__.getLocalizedString(30013)) #Unknown error: Check IP address or if server is online
 
     def postRequest(self, api_ext, payload):
         global headers, ha_server
         retry = 0
         r = None
-        while retry < MAX_REQUEST_RETRIES:
+        while (retry < MAX_REQUEST_RETRIES) and (not self.MONITOR.abortRequested()):
             try:
                 log('Trying to make a post request to ' + ha_server + api_ext + ' with payload: ' + payload)
                 r = requests.post(ha_server + api_ext, headers=headers, data=payload)
@@ -132,7 +129,7 @@ class MAIN():
             except:
                 log('Status code error is: ' + str(r.raise_for_status() if r else 'unknown' ))
             retry += 1
-            sleep(RETRY_DELAY_S)
+            self.MONITOR.waitForAbort(RETRY_DELAY_S)
         show_dialog(__addon__.getLocalizedString(30013)) #Unknown error: Check IP address or if server is online
 
     def getForecasts(self):
