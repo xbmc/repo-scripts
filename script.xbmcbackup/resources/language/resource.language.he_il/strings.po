@@ -15,14 +15,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-23 18:37+0000\n"
-"Last-Translator: Eran Bodankin <eran.bod@gmail.com>\n"
-"Language-Team: Hebrew (http://www.transifex.com/teamxbmc/xbmc-addons/language/he/)\n"
-"Language: he\n"
+"PO-Revision-Date: 2023-02-23 16:15+0000\n"
+"Last-Translator: Dan Davidson <nnnvvv450@gmail.com>\n"
+"Language-Team: Hebrew (Israel) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/he_il/>\n"
+"Language: he_il\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
@@ -30,11 +31,11 @@ msgstr "גיבוי ושחזור מסד הנתונים וקבצי ההגדרות 
 
 msgctxt "Addon Description"
 msgid "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
-msgstr "האם אי פעם נפגמו הגדרות קודי וייחלת שהיה לך גיבוי ? כעת אתה יכול ליצור כזה בלחיצת כפתור. ניתן לייצא את בסיס הנתונים, רשימות ההשמעה, התמונות הממוזערות, הרחבות והגדרות נוספות לכל יעד שיש לקודי הרשאת כתיבה לו או ישירות לשירות אחסון הענן דרופבוקס. ניתן לתזמן מראש גיבויים או להריצם ידנית."
+msgstr "האם אי פעם נפגמו הגדרות קודי וייחלת שהיה לך גיבוי? כעת ניתן ליצור כזה בלחיצת כפתור. ניתן לייצא את בסיס הנתונים, רשימות ההשמעה, התמונות הממוזערות, הרחבות והגדרות נוספות לכל יעד שיש לקודי הרשאת כתיבה אליו או ישירות לשירות אחסון הענן דרופבוקס. ניתן לתזמן מראש גיבויים או להריצם ידנית. "
 
 msgctxt "#30010"
 msgid "Backup"
-msgstr "גיבוי קודי"
+msgstr "גיבוי"
 
 msgctxt "#30011"
 msgid "General"
@@ -106,11 +107,11 @@ msgstr "דרופבוקס"
 
 msgctxt "#30028"
 msgid "Dropbox Key"
-msgstr "Dropbox Key"
+msgstr "מפתח דרופבוקס"
 
 msgctxt "#30029"
 msgid "Dropbox Secret"
-msgstr "Dropbox Secret"
+msgstr "סוד דרופבוקס"
 
 msgctxt "#30030"
 msgid "User Addons"
@@ -130,7 +131,7 @@ msgstr "רשימת השמעה"
 
 msgctxt "#30034"
 msgid "Thumbnails/Fanart"
-msgstr "תמונות ממוזערות/פאנארט"
+msgstr "תמונות ממוזערות/פנארט"
 
 msgctxt "#30035"
 msgid "Config Files"
@@ -146,19 +147,19 @@ msgstr ""
 
 msgctxt "#30038"
 msgid "Advanced Settings Detected"
-msgstr "זוהה Advanced Settings"
+msgstr "זוהו הגדרות מתקדמות"
 
 msgctxt "#30039"
 msgid "The advancedsettings file should be restored first"
-msgstr "יש לשחזר תחילה את הקובץ advancedsettings"
+msgstr "יש לשחזר תחילה את קובץ ההגדרות המתקדמות"
 
 msgctxt "#30040"
 msgid "Select Yes to restore this file and restart Kodi"
-msgstr "בחר 'כן' לשחזור קובץ זה ולהפעלת קודי מחדש"
+msgstr "בחירה בכן כדי לשחזר קובץ זה ולהפעיל מחדש את קודי"
 
 msgctxt "#30041"
 msgid "Select No to continue"
-msgstr "בחר \"לא\" להמשך"
+msgstr "בחירה בלא להמשך"
 
 msgctxt "#30042"
 msgid "Resume Restore"
@@ -166,7 +167,7 @@ msgstr "המשך שחזור"
 
 msgctxt "#30043"
 msgid "The Backup addon has detected an unfinished restore"
-msgstr "הרחבת הגיבוי של קודי זיהתה שחזור שלא הסתיים"
+msgstr "תוסף הגיבוי זיהה שחזור שלא הסתיים"
 
 msgctxt "#30044"
 msgid "Would you like to continue?"
@@ -226,11 +227,11 @@ msgstr ""
 
 msgctxt "#30059"
 msgid "Visit https://www.dropbox.com/developers"
-msgstr "בקר בכתובת https://www.dropbox.com/developers"
+msgstr "ביקור ב-https://www.dropbox.com/developers"
 
 msgctxt "#30060"
 msgid "Enable Scheduler"
-msgstr "הפעל מתזמן"
+msgstr "איפשור מתזמן"
 
 msgctxt "#30061"
 msgid "Schedule"
@@ -250,31 +251,31 @@ msgstr "תזמון Cron"
 
 msgctxt "#30065"
 msgid "Sunday"
-msgstr "יום ראשון"
+msgstr "ראשון"
 
 msgctxt "#30066"
 msgid "Monday"
-msgstr "יום שני"
+msgstr "שני"
 
 msgctxt "#30067"
 msgid "Tuesday"
-msgstr "יום שלישי"
+msgstr "שלישי"
 
 msgctxt "#30068"
 msgid "Wednesday"
-msgstr "יום רביעי"
+msgstr "רביעי"
 
 msgctxt "#30069"
 msgid "Thursday"
-msgstr "יום חמישי"
+msgstr "חמישי"
 
 msgctxt "#30070"
 msgid "Friday"
-msgstr "יום שישי"
+msgstr "שישי"
 
 msgctxt "#30071"
 msgid "Saturday"
-msgstr "יום שבת"
+msgstr "שבת"
 
 msgctxt "#30072"
 msgid "Every Day"
@@ -298,7 +299,7 @@ msgstr "כיבוי בתום הגיבוי"
 
 msgctxt "#30077"
 msgid "Restart Kodi"
-msgstr "הפעל את קודי מחדש"
+msgstr "הפעלת קודי מחדש"
 
 msgctxt "#30078"
 msgid "You should restart Kodi to continue"
@@ -318,11 +319,11 @@ msgstr "המתזמן יופעל שוב ב-"
 
 msgctxt "#30082"
 msgid "Progress Bar"
-msgstr "פס התקדמות"
+msgstr "סרגל התקדמות"
 
 msgctxt "#30083"
 msgid "Background Progress Bar"
-msgstr "פס התקדמות ברקע"
+msgstr "סרגל התקדמות ברקע"
 
 msgctxt "#30084"
 msgid "None (Silent)"
@@ -346,7 +347,7 @@ msgstr "מעתיק קובץ Zip"
 
 msgctxt "#30089"
 msgid "Write Error Detected"
-msgstr " זוהתה שגיאת כתיבה"
+msgstr "זוהתה שגיאת כתיבה"
 
 msgctxt "#30090"
 msgid "The destination may not be writeable"
@@ -362,7 +363,7 @@ msgstr "לא כל הקבצים הועתקו"
 
 msgctxt "#30093"
 msgid "Delete Authorization Info"
-msgstr "מחק פרטי הרשאה"
+msgstr "מחיקת פרטי הרשאה"
 
 msgctxt "#30094"
 msgid "This will delete any OAuth token files"
@@ -386,7 +387,7 @@ msgstr "גוגל דרייב"
 
 msgctxt "#30099"
 msgid "Open Settings"
-msgstr "פתח הגדרות"
+msgstr "פתיחת הגדרות"
 
 msgctxt "#30100"
 msgid "Extracting Archive"
@@ -394,7 +395,7 @@ msgstr "מחלץ ארכיון"
 
 msgctxt "#30101"
 msgid "Error extracting the zip archive"
-msgstr "שגיאה בחילוץ ארכיון ה-Zip"
+msgstr "שגיאה בחילוץ ארכיון Zip"
 
 msgctxt "#30102"
 msgid "Click OK to enter code"
@@ -482,7 +483,7 @@ msgstr ""
 
 msgctxt "#30123"
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 msgctxt "#30124"
 msgid "Choose Action"
@@ -558,7 +559,7 @@ msgstr ""
 
 msgctxt "#30142"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "הפעלת רישום תקלות מפורט"
 
 msgctxt "#30143"
 msgid "Exclude a specific folder from this backup set"
@@ -594,7 +595,7 @@ msgstr ""
 
 msgctxt "#30151"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "הפעלת רישום תקלות מפורט"
 
 msgctxt "#30152"
 msgid "Set Zip File Location"
@@ -626,6 +627,14 @@ msgstr ""
 
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
+msgstr ""
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
 msgstr ""
 
 #~ msgctxt "#30036"

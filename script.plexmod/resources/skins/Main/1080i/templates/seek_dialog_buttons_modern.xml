@@ -1,0 +1,312 @@
+            <control type="grouplist" id="400">
+                <defaultcontrol>406</defaultcontrol>
+                <hitrect x="460" y="998" w="1000" h="55" />
+                <posx>360</posx>
+                <posy>964</posy>
+                <width>1200</width>
+
+                <height>124</height>
+                <align>center</align>
+                <onup>100</onup>
+                <itemgap>-40</itemgap>
+                <orientation>horizontal</orientation>
+                <scrolltime tween="quadratic" easing="out">200</scrolltime>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="group" id="421">
+                    <visible>!String.IsEmpty(Window.Property(nav.repeat))</visible>
+                    <width>125</width>
+                    <height>101</height>
+                    <control type="button" id="401">
+                        <hitrect x="28" y="28" w="69" h="45" />
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>125</width>
+                        <height>101</height>
+                        <onup>100</onup>
+                        <onright>402</onright>
+                        <onleft>412</onleft>
+                        <font>font12</font>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <label> </label>
+                    </control>
+                    <control type="group">
+                        <visible>!Control.HasFocus(401)</visible>
+                        <control type="image">
+                            <visible>!Playlist.IsRepeatOne + !Playlist.IsRepeat + String.IsEmpty(Window.Property(pq.repeat))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="88FFFFFF">script.plex/buttons/player/modern/repeat.png</texture>
+                        </control>
+                        <control type="image">
+                            <visible>Playlist.IsRepeat | !String.IsEmpty(Window.Property(pq.repeat))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="FFCC7B19">script.plex/buttons/player/modern/repeat.png</texture>
+                        </control>
+                        <control type="image">
+                            <visible>Playlist.IsRepeatOne | !String.IsEmpty(Window.Property(pq.repeat.one))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="FFCC7B19">script.plex/buttons/player/modern/repeat-one.png</texture>
+                        </control>
+                    </control>
+                    <control type="group">
+                        <visible>Control.HasFocus(401)</visible>
+                        <control type="image">
+                            <visible>!Playlist.IsRepeatOne + !Playlist.IsRepeat + String.IsEmpty(Window.Property(pq.repeat))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture>script.plex/buttons/player/modern/repeat.png</texture>
+                        </control>
+                        <control type="image">
+                            <visible>Playlist.IsRepeat | !String.IsEmpty(Window.Property(pq.repeat))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="FFCC7B19">script.plex/buttons/player/modern/repeat.png</texture>
+                        </control>
+                        <control type="image">
+                            <visible>Playlist.IsRepeatOne | !String.IsEmpty(Window.Property(pq.repeat.one))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="FFCC7B19">script.plex/buttons/player/modern/repeat-one.png</texture>
+                        </control>
+                    </control>
+                </control>
+
+                <control type="togglebutton" id="402">
+                    <visible>!String.IsEmpty(Window.Property(has.playlist)) + !String.IsEmpty(Window.Property(nav.shuffle))</visible>
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/shuffle.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/shuffle.png</texturenofocus>
+                    <usealttexture>!String.IsEmpty(Window.Property(pq.shuffled))</usealttexture>
+                    <alttexturefocus colordiffuse="FFCC7B19">script.plex/buttons/player/modern/shuffle.png</alttexturefocus>
+                    <alttexturenofocus colordiffuse="FFCC7B19">script.plex/buttons/player/modern/shuffle.png</alttexturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="422">
+                    <enable>false</enable>
+                    <visible>String.IsEmpty(Window.Property(has.playlist)) + !String.IsEmpty(Window.Property(nav.shuffle))</visible>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus colordiffuse="40FFFFFF">script.plex/buttons/shuffle.png</texturefocus>
+                    <texturenofocus colordiffuse="40FFFFFF">script.plex/buttons/shuffle.png</texturenofocus>
+                    <label> </label>
+                </control>
+
+                <control type="button" id="403">
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/settings.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/settings.png</texturenofocus>
+                    <label> </label>
+                </control>
+
+
+                <control type="button" id="404">
+                    <visible>!String.IsEmpty(Window.Property(pq.hasprev)) + !String.IsEmpty(Window.Property(nav.prevnext))</visible>
+                    <hitrect x="58" y="28" w="69" h="45" />
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus flipx="true">script.plex/buttons/player/modern/next.png</texturefocus>
+                    <texturenofocus flipx="true" colordiffuse="88FFFFFF">script.plex/buttons/player/modern/next.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="424">
+                    <enable>false</enable>
+                    <visible>String.IsEmpty(Window.Property(pq.hasprev)) + !String.IsEmpty(Window.Property(nav.prevnext))</visible>
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus flipx="true" colordiffuse="40FFFFFF">script.plex/buttons/player/modern/next.png</texturefocus>
+                    <texturenofocus flipx="true" colordiffuse="40FFFFFF">script.plex/buttons/player/modern/next.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="405">
+                    <visible>!String.IsEmpty(Window.Property(nav.ffwdrwd))</visible>
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus flipx="true">script.plex/buttons/player/modern/skip-forward.png</texturefocus>
+                    <texturenofocus flipx="true" colordiffuse="88FFFFFF">script.plex/buttons/player/modern/skip-forward.png</texturenofocus>
+                    <label> </label>
+                </control>
+
+                <control type="group" id="426">
+                    <animation effect="zoom" start="100" end="124" time="100" center="63,50" reversible="false" condition="Control.HasFocus(406)">Conditional</animation>
+                    <animation effect="zoom" start="124" end="100" time="100" center="63,50" reversible="false" condition="!Control.HasFocus(406)">Conditional</animation>
+                    <width>125</width>
+                    <height>101</height>
+                    <control type="button" id="406">
+                        <hitrect x="28" y="28" w="69" h="45" />
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>125</width>
+                        <height>101</height>
+                        <onup>100</onup>
+                        <onright>407</onright>
+                        <onleft>405</onleft>
+                        <font>font12</font>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <label> </label>
+                        <onclick>PlayerControl(Play)</onclick>
+                    </control>
+                    <control type="group">
+                        <visible>!Control.HasFocus(406)</visible>
+                        <control type="image">
+                            <visible>!Player.Paused + !Player.Forwarding + !Player.Rewinding</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="88FFFFFF">script.plex/buttons/player/modern/pause.png</texture>
+                        </control>
+                        <control type="image">
+                            <visible>Player.Paused | Player.Forwarding | Player.Rewinding</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture colordiffuse="88FFFFFF">script.plex/buttons/player/modern/play.png</texture>
+                        </control>
+                    </control>
+                    <control type="group">
+                        <visible>Control.HasFocus(406)</visible>
+                        <control type="image">
+                            <visible>!Player.Paused + !Player.Forwarding + !Player.Rewinding</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture>script.plex/buttons/player/modern/pause.png</texture>
+                        </control>
+                        <control type="image">
+                            <visible>Player.Paused | Player.Forwarding | Player.Rewinding</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>125</width>
+                            <height>101</height>
+                            <texture>script.plex/buttons/player/modern/play.png</texture>
+                        </control>
+                    </control>
+                </control>
+
+                <control type="button" id="407">
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/stop.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/stop.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="408">
+                    <visible>!String.IsEmpty(Window.Property(nav.ffwdrwd))</visible>
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/skip-forward.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/skip-forward.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="409">
+                    <visible>!String.IsEmpty(Window.Property(pq.hasnext)) + !String.IsEmpty(Window.Property(nav.prevnext))</visible>
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/next.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/next.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="419">
+                    <enable>false</enable>
+                    <visible>String.IsEmpty(Window.Property(pq.hasnext)) + !String.IsEmpty(Window.Property(nav.prevnext))</visible>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <texturefocus colordiffuse="40FFFFFF">script.plex/buttons/player/modern/next.png</texturefocus>
+                    <texturenofocus colordiffuse="40FFFFFF">script.plex/buttons/player/modern/next.png</texturenofocus>
+                    <label> </label>
+                </control>
+
+
+                <control type="button" id="410">
+                    <visible>[!String.IsEmpty(Window.Property(pq.hasnext)) | !String.IsEmpty(Window.Property(pq.hasprev))] + !String.IsEmpty(Window.Property(nav.playlist))</visible>
+                    <hitrect x="58" y="28" w="69" h="45" />
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/pqueue.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/pqueue.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="430">
+                    <enable>false</enable>
+                    <visible>String.IsEmpty(Window.Property(pq.hasnext)) + String.IsEmpty(Window.Property(pq.hasprev)) + !String.IsEmpty(Window.Property(nav.playlist))</visible>
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus colordiffuse="40FFFFFF">script.plex/buttons/player/modern/pqueue.png</texturefocus>
+                    <texturenofocus colordiffuse="40FFFFFF">script.plex/buttons/player/modern/pqueue.png</texturenofocus>
+                    <label> </label>
+                </control>
+                <control type="button" id="412">
+                    <visible>!String.IsEmpty(Window.Property(nav.quick_subtitles))</visible>
+                    <hitrect x="28" y="28" w="69" h="45" />
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>125</width>
+                    <height>101</height>
+                    <font>font12</font>
+                    <texturefocus>script.plex/buttons/player/modern/subtitle.png</texturefocus>
+                    <texturenofocus colordiffuse="88FFFFFF">script.plex/buttons/player/modern/subtitle.png</texturenofocus>
+                    <label> </label>
+                </control>
+            </control>
