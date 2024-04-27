@@ -17,7 +17,6 @@ class PlayerMonitor(Player):
             # Crop clearlogo for use on fullscreen info or pause
             self.clearlogo_cropper(source='VideoPlayer',
                                    reporting=window_property)
-
             # Clean filename
             item = self.getPlayingItem()
             label = item.getLabel()
@@ -25,6 +24,21 @@ class PlayerMonitor(Player):
                 clean_filename(label=label)
             else:
                 window_property('Return_Label', clear=True)
+            
+            # Get set id
+            tag = self.getVideoInfoTag()
+            dbid = tag.getDbId()
+            if dbid:
+                query = json_call(
+                    'VideoLibrary.GetMovieDetails',
+                    params={'properties': [
+                        'setid'], 'movieid': dbid},
+                    parent='get_set_id'
+                )
+                if query['result'].get('moviedetails', None):
+                    setid = int(query['result']['moviedetails']['setid'])
+                    window_property('VideoPlayer_SetID', set=setid)
+
 
         # Get user rating on music playback
         if self.isPlayingAudio():
@@ -38,4 +52,5 @@ class PlayerMonitor(Player):
         # Clean properties
         window_property('MusicPlayer_UserRating', clear=True)
         window_property('MusicPlayer_AlbumArtist', clear=True)
+        window_property('VideoPlayer_SetID', clear=True)
         window_property('Return_Label', clear=True)
