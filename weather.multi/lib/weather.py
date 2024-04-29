@@ -3,7 +3,7 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 
-CURL = 'https://www.yahoo.com/?guccounter=2'
+CURL = ['https://www.yahoo.com/', 'https://www.yahoo.com/?guccounter=1', 'https://www.yahoo.com/?guccounter=2', 'https://www.yahoo.com/?guccounter=', 'https://ca.yahoo.com/']
 YURL = 'https://www.yahoo.com/news/weather/'
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
@@ -86,7 +86,6 @@ class MAIN():
         return location, locationid, locationlat, locationlon
 
     def get_ycreds(self):
-        ysess = requests.Session()
         ycookie = ADDON.getSettingString('ycookie')
         ycrumb = ADDON.getSettingString('ycrumb')
         ystamp = ADDON.getSettingString('ystamp')
@@ -95,25 +94,34 @@ class MAIN():
         log('stamp from settings: %s' % ystamp)
         if ystamp == '' or (int(time.time()) - int(ystamp) > 31536000): # cookie expires after 1 year
             try:
-                retry = 0
-                while (retry < 6) and (not self.MONITOR.abortRequested()):
-                    response = ysess.get(CURL, headers=HEADERS, timeout=10)
-                    if response.status_code == 200:
+                for URL in CURL:
+                    ysess = requests.Session()
+                    retry = 0
+                    while (retry < 6) and (not self.MONITOR.abortRequested()):
+                        response = ysess.get(URL, headers=HEADERS, timeout=10)
+                        if response.status_code == 200:
+                            break
+                        else:
+                            self.MONITOR.waitForAbort(10)
+                            retry += 1
+                            log('getting yahoo website failed')
+                    if 'consent' in response.url: # EU users are asked for cookie consent
+                        log('EU user')
+                        token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                        sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                        redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                        log('EU token: %s' % token)
+                        log('EU sessionid: %s' % sessionid)
+                        log('EU redirect %s' % redirect)
+                        DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'reject': 'reject'}
+                        response = ysess.post(response.url, headers=HEADERS, data=DATA)
+                    log('cookies: %s' % str(response.cookies))
+                    if 'A3' in response.cookies:
+                        ycookie = response.cookies['A3']
                         break
-                    else:
-                        self.MONITOR.waitForAbort(10)
-                        retry += 1
-                        log('getting yahoo website failed')
-                if 'consent' in response.url: # EU users are asked for cookie consent
-                    token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                    sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                    redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                    DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'reject': 'reject'}
-                    response = ysess.post(response.url, headers=HEADERS, data=DATA)
-                try:
-                    ycookie = response.cookies['A3']
-                except:
-                    ycookie = response.cookies['A1']
+                    elif 'A1' in response.cookies:
+                        ycookie = response.cookies['A1']
+                        break
                 response = ysess.get(YURL, headers=HEADERS, cookies=dict(A3=ycookie), timeout=10)
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
                 if not match:
