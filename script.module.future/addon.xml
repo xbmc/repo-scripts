@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.future" name="future" version="0.18.3+matrix.1" provider-name="Ed Schofield">
+<addon id="script.module.future" name="future" version="1.0.0+matrix.1" provider-name="Ed Schofield">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
