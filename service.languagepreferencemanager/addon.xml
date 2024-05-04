@@ -2,7 +2,7 @@
 <addon
 	id="service.languagepreferencemanager"
 	name="Language Preference Manager"
-	version="1.0.3"
+	version="1.0.4"
 	provider-name="ace20022/scott967/rockrider69"
 	>
 	<requires>
@@ -17,12 +17,7 @@
 		<description lang="en_GB">Sets the audio and subtitle track according to your language preferences</description>
 		<disclaimer lang="en_GB">For bugs, requests or general questions visit the Language Preference Manager thread on the Kodi forum.</disclaimer>
 		<platform>all</platform>
-		<news>0.1.3     : Updated with changes required for Kodi 19 / Python 3 + Fixed Languages labels/tables, ConditionnalSubs to None, Custom settings
-0.1.4BETA : Conditional Subtitles rules are re-assessed on-the-fly when toggling audio tracks
-0.1.5     : Some minor optimisation
-0.1.6     : Fix Custom CondSubs not working. Switch to ignore 'Signs' tracks. Add special 'Any' audio language code. Fix some typos
-0.1.7BETA : New Keywords Blacklist to ignore chosen subtitles tracks based on name content.
-1.0.0     : Mandatory clean-up to propose as candidate version for Kodi.tv addons repository.
+		<news>1.0.0     : Mandatory clean-up to propose as candidate version for Kodi.tv addons repository.
 1.0.1     : Initial version for main Kodi.tv addons repository
 1.0.2     : Fix 10sec latency on subs display and possible few lines lost - at video start or when switching audio.
             Forced sub tracks : check also subtitle field "isforced" in case field "name" is empty or misspelled.
@@ -31,6 +26,7 @@
             New Keywords Blacklist for Audio tracks. Same principle as for Subtitles, based on track name, to skip some (ex. Commentary, ...)
             Fix Greek and Serbian language codes according to iso639-2/T. Fix some typos.
             Fix multiple 3 digit codes per language (ex. German ger,deu). Now OK also for Conditional Subtitles preferences.
+1.0.4     : Fix and simplify SignsSongs subtagging (was colliding with language codes subtagging ie. pt-br). Thanks to BrutuZ!
 			
 		</news>
 		<assets>
