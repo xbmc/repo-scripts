@@ -126,6 +126,7 @@
 							<option label="32110">2</option>
 							<option label="32104">3</option>
 							<option label="32114">4</option>
+							<option label="32120">5</option>
 						</options>
 					</constraints>
 				</setting>
@@ -220,6 +221,13 @@
 					<control format="string" type="edit">
 						<heading>32112</heading>
 					</control>
+				</setting>
+			</group>
+			<group id="4" label="32169">
+				<setting help="" id="internetradio" label="32170" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 		</category>
