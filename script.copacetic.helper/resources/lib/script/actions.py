@@ -2,8 +2,8 @@
 
 from resources.lib.service.art import ImageEditor
 from resources.lib.utilities import (ADDON, DIALOG, clear_playlists, condition,
-                                     infolabel, json_call, log_and_execute,
-                                     skin_string, window_property, xbmc)
+                                     infolabel, json_call, log, log_and_execute,
+                                     skin_string, window_property, xbmc, urllib)
 
 
 def clean_filename(label=False, **kwargs):
@@ -31,6 +31,16 @@ def dialog_yesno(heading, message, **kwargs):
     else:
         for action in no_actions:
             log_and_execute(action)
+
+
+def globalsearch_input(**kwargs):
+    kb = xbmc.Keyboard(
+        infolabel('$INFO[Skin.String(globalsearch)]'), infolabel('$LOCALIZE[137]'))
+    kb.doModal()
+    if (kb.isConfirmed()):
+        text = kb.getText()
+        skin_string('globalsearch', set=text)
+        xbmc.executebuiltin('ActivateWindow(1180)')
 
 
 def hex_contrast_check(**kwargs):
@@ -99,32 +109,34 @@ def play_items(id, **kwargs):
     else:
         method = f'Container({id}).ListItemAbsolute'
 
-    for count in range(int(xbmc.getInfoLabel(f'Container({id}).NumItems'))):
+    for count in range(int(infolabel(f'Container({id}).NumItems'))):
+        try:
+            dbid = int(xbmc.getInfoLabel(f'{method}({count}).DBID'))
+            url = xbmc.getInfoLabel(f'{method}({count}).Filenameandpath')
+        except ValueError:
+            break
+        else:
+            if condition(f'String.IsEqual({method}({count}).DBType,movie)'):
+                media_type = 'movie'
+            elif condition(f'String.IsEqual({method}({count}).DBType,episode)'):
+                media_type = 'episode'
+            elif condition(f'String.IsEqual({method}({count}).DBType,song)'):
+                media_type = 'song'
+            elif condition(f'String.IsEqual({method}({count}).DBType,musicvideo)'):
+                media_type = 'musicvideo'
 
-        if xbmc.getCondVisibility(f'String.IsEqual({method}({count}).DBType,movie)'):
-            media_type = 'movie'
-        elif xbmc.getCondVisibility(f'String.IsEqual({method}({count}).DBType,episode)'):
-            media_type = 'episode'
-        elif xbmc.getCondVisibility(f'String.IsEqual({method}({count}).DBType,song)'):
-            media_type = 'song'
-        elif xbmc.getCondVisibility(f'String.IsEqual({method}({count}).DBType,musicvideo)'):
-            media_type = 'musicvideo'
-
-        dbid = int(xbmc.getInfoLabel(f'{method}({count}).DBID'))
-        url = xbmc.getInfoLabel(f'{method}({count}).Filenameandpath')
-
-        if media_type and dbid:
-            json_call('Playlist.Add',
-                      item={f'{media_type}id': dbid},
-                      params={'playlistid': playlistid},
-                      parent='play_items'
-                      )
-        elif url:
-            json_call('Playlist.Add',
-                      item={'file': url},
-                      params={'playlistid': playlistid},
-                      parent='play_items'
-                      )
+            if media_type and dbid:
+                json_call('Playlist.Add',
+                          item={f'{media_type}id': dbid},
+                          params={'playlistid': playlistid},
+                          parent='play_items'
+                          )
+            elif url:
+                json_call('Playlist.Add',
+                          item={'file': url},
+                          params={'playlistid': playlistid},
+                          parent='play_items'
+                          )
 
     json_call('Playlist.GetItems',
               params={'playlistid': playlistid},
@@ -225,7 +237,7 @@ def shuffle_artist(**kwargs):
               item={'artistid': dbid},
               options={'shuffled': True},
               parent='shuffle_artist')
-    
+
 
 def toggle_addon(id, **kwargs):
     if condition(f'System.AddonIsEnabled({id})'):
@@ -239,118 +251,50 @@ def toggle_addon(id, **kwargs):
                   parent='toggle_addon')
         DIALOG.notification(id, ADDON.getLocalizedString(32206))
 
+
+def url_encode(name, string, **kwargs):
+    encoded = urllib.quote(string)
+    window_property(name, set=encoded)
+
+
 def widget_move(posa, posb, **kwargs):
-    tempa_name = ''
-    tempa_target = ''
-    tempa_sortmethod = ''
-    tempa_sortorder = ''
-    tempa_path = ''
-    tempa_limit = ''
-    tempa_thumb = False,
-    tempb_name = ''
-    tempb_target = ''
-    tempb_sortmethod = ''
-    tempb_sortorder = ''
-    tempb_path = ''
-    tempb_limit = ''
-    tempb_thumb = False
+    # create list of (widget position, dictionary)
+    content_types = ['Disabled', 'InProgress', 'NextUp', 'LatestMovies', 'LatestTVShows', 'RandomMovies',
+                     'RandomTVShows', 'LatestAlbums', 'RecentAlbums', 'RandomALbums', 'LikedSongs', 'Favourites', 'Custom']
+    template = {
+        'View': '', 'Display': '', 'Content': '', 'Custom_Name': '', 'Custom_Target': '', 'Custom_SortMethod': '', 'Custom_SortOrder': '', 'Custom_Path': '', 'Custom_Limit': '', 'Autoscroll': False,
+        'Trailer_Autoplay': False, 'Clearlogos_Enabled': False, 'Prefer_Keyart': False, 'Prefer_Landscape': False
+    }
+    dica, dicb = {}, {}
+    dica.update(template)
+    dicb.update(template)
 
-    tempa_view = infolabel(f'Skin.String(Widget{posa}_View)')
-    tempa_display = infolabel(f'Skin.String(Widget{posa}_Display)')
-    tempb_view = infolabel(f'Skin.String(Widget{posb}_View)')
-    tempb_display = infolabel(f'Skin.String(Widget{posb}_Display)')
-
-    if condition(f'Skin.HasSetting(Widget{posa}_Content_Disabled)'):
-        tempa_content = 'Disabled'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_InProgress)'):
-        tempa_content = 'InProgress'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_NextUp)'):
-        tempa_content = 'NextUp'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LatestMovies)'):
-        tempa_content = 'LatestMovies'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LatestTVShows)'):
-        tempa_content = 'LatestTVShows'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RandomMovies)'):
-        tempa_content = 'RandomMovies'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RandomTVShows)'):
-        tempa_content = 'RandomTVShows'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LatestAlbums)'):
-        tempa_content = 'LatestAlbums'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RecentAlbums)'):
-        tempa_content = 'RecentAlbums'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_RandomAlbums)'):
-        tempa_content = 'RandomAlbums'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_LikedSongs)'):
-        tempa_content = 'LikedSongs'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_Favourites)'):
-        tempa_content = 'Favourites'
-    elif condition(f'Skin.HasSetting(Widget{posa}_Content_Custom)'):
-        tempa_content = 'Custom'
-        tempa_name = infolabel(f'Skin.String(Widget{posa}_Custom_Name)')
-        tempa_target = infolabel(f'Skin.String(Widget{posa}_Custom_Target)')
-        tempa_sortmethod = infolabel(f'Skin.String(Widget{posa}_Custom_SortMethod)')
-        tempa_sortorder = infolabel(f'Skin.String(Widget{posa}_Custom_SortOrder)')
-        tempa_path = infolabel(f'Skin.String(Widget{posa}_Custom_Path)')
-        tempa_limit = infolabel(f'Skin.String(Widget{posa}_Custom_Limit)')
-        tempa_thumb = True if condition(f'Skin.HasSetting(Widget{posa}_Episode_Thumbs)') else False
-
-    if condition(f'Skin.HasSetting(Widget{posb}_Content_Disabled)'):
-        tempb_content = 'Disabled'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_InProgress)'):
-        tempb_content = 'InProgress'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_NextUp)'):
-        tempb_content = 'NextUp'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LatestMovies)'):
-        tempb_content = 'LatestMovies'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LatestTVShows)'):
-        tempb_content = 'LatestTVShows'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RandomMovies)'):
-        tempb_content = 'RandomMovies'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RandomTVShows)'):
-        tempb_content = 'RandomTVShows'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LatestAlbums)'):
-        tempb_content = 'LatestAlbums'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RecentAlbums)'):
-        tempb_content = 'RecentAlbums'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_RandomAlbums)'):
-        tempb_content = 'RandomAlbums'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_LikedSongs)'):
-        tempb_content = 'LikedSongs'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_Favourites)'):
-        tempb_content = 'Favourites'
-    elif condition(f'Skin.HasSetting(Widget{posb}_Content_Custom)'):
-        tempb_content = 'Custom'
-        tempb_name = infolabel(f'Skin.String(Widget{posb}_Custom_Name)')
-        tempb_target = infolabel(f'Skin.String(Widget{posb}_Custom_Target)')
-        tempb_sortmethod = infolabel(f'Skin.String(Widget{posb}_Custom_SortMethod)')
-        tempb_sortorder = infolabel(f'Skin.String(Widget{posb}_Custom_SortOrder)')
-        tempb_path = infolabel(f'Skin.String(Widget{posb}_Custom_Path)')
-        tempb_limit = infolabel(f'Skin.String(Widget{posb}_Custom_Limit)')
-        tempb_thumb = True if condition(f'Skin.HasSetting(Widget{posb}_Episode_Thumbs)') else False
-    
-    xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posa}_Content_{tempa_content})')
-    xbmc.executebuiltin(f'Skin.SetBool(Widget{posa}_Content_{tempb_content})')
-    xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posb}_Content_{tempb_content})')
-    xbmc.executebuiltin(f'Skin.SetBool(Widget{posb}_Content_{tempa_content})')
-    skin_string(f'Widget{posb}_View', set=tempa_view)
-    skin_string(f'Widget{posa}_View', set=tempb_view)
-    skin_string(f'Widget{posb}_Display', set=tempa_display)
-    skin_string(f'Widget{posa}_Display', set=tempb_display)
-    skin_string(f'Widget{posb}_Custom_Name', set=tempa_name)
-    skin_string(f'Widget{posa}_Custom_Name', set=tempb_name)
-    skin_string(f'Widget{posb}_Custom_Target', set=tempa_target)
-    skin_string(f'Widget{posa}_Custom_Target', set=tempb_target)
-    skin_string(f'Widget{posb}_Custom_SortMethod', set=tempa_sortmethod)
-    skin_string(f'Widget{posa}_Custom_SortMethod', set=tempb_sortmethod)
-    skin_string(f'Widget{posb}_Custom_SortOrder', set=tempa_sortorder)
-    skin_string(f'Widget{posa}_Custom_SortOrder', set=tempb_sortorder)
-    skin_string(f'Widget{posb}_Custom_Path', set=tempa_path)
-    skin_string(f'Widget{posa}_Custom_Path', set=tempb_path)
-    skin_string(f'Widget{posb}_Custom_Limit', set=tempa_limit)
-    skin_string(f'Widget{posa}_Custom_Limit', set=tempb_limit)
-    if tempa_thumb and not tempb_thumb:
-        xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posa}_Episode_Thumbs)')
-        xbmc.executebuiltin(f'Skin.SetBool(Widget{posb}_Episode_Thumbs)')
-    elif tempb_thumb and not tempa_thumb:
-        xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{posb}_Episode_Thumbs)')
-        xbmc.executebuiltin(f'Skin.SetBool(Widget{posa}_Episode_Thumbs)')
+    # populate dictionaries with values from Kodi
+    list = [(posa, dica), (posb, dicb)]
+    for item in list:
+        for content in content_types:
+            if condition(f'Skin.HasSetting(Widget{item[0]}_Content_{content})'):
+                # capture value of bool then reset it in Kodi
+                item[1]['Content'] = content
+                xbmc.executebuiltin(
+                    f'Skin.Reset(Widget{item[0]}_Content_{content})')
+                break
+        for key, value in item[1].items():
+            if type(value) == str and not value:
+                item[1][key] = infolabel(f'Skin.String(Widget{item[0]}_{key})')
+            elif type(value) == bool and not value:
+                if condition(f'Skin.HasSetting(Widget{item[0]}_{key})'):
+                    # capture value of bool then reset it in Kodi
+                    item[1][key] = True
+                    xbmc.executebuiltin(
+                        f'Skin.Reset(Widget{item[0]}_{key})')
+    # swap values
+    swapped_list = [(posa, dicb), (posb, dica)]
+    for item in swapped_list:
+        xbmc.executebuiltin(f'Skin.ToggleSetting(Widget{item[0]}_Content_{item[1]["Content"]})')
+        for key, value in item[1].items():
+            if type(value) == str:
+                skin_string(f'Widget{item[0]}_{key}', set=value)
+            elif type(value) == bool and value and 'Content' not in key:
+                xbmc.executebuiltin(
+                    f'Skin.ToggleSetting(Widget{item[0]}_{key})')

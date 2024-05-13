@@ -110,15 +110,20 @@ class ImageEditor():
                     converted_image = Image.new("RGBA", image.size)
                     converted_image.paste(image)
                     image = converted_image
-                image = image.crop(image.convert('RGBa').getbbox())
-                with xbmcvfs.File(self.destination, 'wb') as f:
-                    image.save(f, 'PNG')
-                self._image_functions(image)
-                log(
-                    f'ImageEditor: Image cropped and saved: {url} --> {self.destination}')
-                if self.temp_folder in url:  # If temp file  created, delete it now
-                    xbmcvfs.delete(url)
-                    log(f'ImageEditor: Temporary file deleted --> {url}')
+                try:
+                    image = image.crop(image.convert('RGBa').getbbox())
+                except ValueError as error:
+                    log(
+                        f'ImageEditor: Error - could not convert image due to unsupport mode {image.mode} --> {error}', force=True)
+                else:
+                    with xbmcvfs.File(self.destination, 'wb') as f:
+                        image.save(f, 'PNG')
+                    self._image_functions(image)
+                    log(
+                        f'ImageEditor: Image cropped and saved: {url} --> {self.destination}')
+                    if self.temp_folder in url:  # If temp file  created, delete it now
+                        xbmcvfs.delete(url)
+                        log(f'ImageEditor: Temporary file deleted --> {url}')
 
     def _return_image_path(self, source, suffix):
         # Use source URL to generate cached url. If cached url doesn't exist, return source url
@@ -219,6 +224,7 @@ class SlideshowMonitor:
         self.art_types = ['global', 'movies',
                           'tvshows', 'videos', 'artists', 'custom']
         self.on_next_run_flag = True
+        self.custom_source = ''
         self.custom_path = infolabel(
             'Skin.String(Background_Slideshow_Custom_Path)')
         self.refresh_count = self.refresh_interval = self._get_refresh_interval()
@@ -231,16 +237,26 @@ class SlideshowMonitor:
             self.fetch_interval = self.refresh_interval * 40
 
         # Capture plugin art if it's available and on_next_run flag is true
+        if 'plugin://' in self.custom_path:
+            self.custom_source = 'plugin'
+        elif 'videodb://' in self.custom_path:
+            self.custom_source = 'library'
+        elif 'musicdb://' in self.custom_path:
+            self.custom_source = 'library'
+        elif 'library://' in self.custom_path:
+            self.custom_source = 'library'
+        else:
+            self.custom_source = 'other'
         if condition(
             'Integer.IsGreater(Container(3300).NumItems,0)'
-        ) and 'plugin://' in self.custom_path and self.on_next_run_flag:
-            self._get_plugin_arts()
+        ) and not 'library' in self.custom_source and self.on_next_run_flag:
+            self._get_external_arts()
 
         # Fech art every 40 x refresh interval, reset if custom path changes
         if self.fetch_count >= self.fetch_interval or self.custom_path != infolabel('Skin.String(Background_Slideshow_Custom_Path)'):
             self.custom_path = infolabel(
                 'Skin.String(Background_Slideshow_Custom_Path)')
-            if 'plugin://' in self.custom_path and not self.on_next_run_flag:
+            if not 'library' in self.custom_source and not self.on_next_run_flag:
                 self.on_next_run_flag = True
             log('Monitor fetching background art')
             self.art = self._get_art()
@@ -288,21 +304,25 @@ class SlideshowMonitor:
                 path.text = current_fanart
         lookup_tree.write(self.lookup, encoding="utf-8")
 
-    def _get_plugin_arts(self):
+    def _get_external_arts(self):
         if self.on_next_run_flag:
             self.art['custom'] = []
             num_items = int(infolabel('Container(3300).NumItems'))
             for i in range(num_items):
-                item = {
-                    'title': infolabel(
-                        f'Container(3300).ListItem({i}).Label'),
-                    'fanart': infolabel(
-                        f'Container(3300).ListItem({i}).Art(fanart)'),
-                    'clearlogo': infolabel(
-                        f'Container(3300).ListItem({i}).Art(clearlogo)')
-                }
-                if item['fanart']:
-                   self.art['custom'].append(item)
+                fanart = infolabel(
+                    f'Container(3300).ListItem({i}).Art(fanart)')
+                if not fanart and 'other' in self.custom_source:
+                    fanart = infolabel(
+                        f'Container(3300).ListItem({i}).Art(thumb)')
+                if fanart:
+                    item = {
+                        'title': infolabel(
+                            f'Container(3300).ListItem({i}).Label'),
+                        'fanart': fanart,
+                        'clearlogo': infolabel(
+                            f'Container(3300).ListItem({i}).Art(clearlogo)')
+                    }
+                    self.art['custom'].append(item)
             self.on_next_run_flag = False
 
     def _get_art(self):
@@ -311,7 +331,7 @@ class SlideshowMonitor:
             self.art[type] = []
 
         # Populate custom path/playlist slideshow if selected in skin settings
-        if self.custom_path and 'plugin://' not in self.custom_path and condition('Skin.String(Background_Slideshow,Custom)'):
+        if self.custom_path and 'library' in self.custom_source and condition('Skin.String(Background_Slideshow,Custom)'):
             query = json_call('Files.GetDirectory',
                               params={'directory': self.custom_path},
                               sort={'method': 'random'},
@@ -366,11 +386,12 @@ class SlideshowMonitor:
     def _set_art(self, key, items):
         art = random.choice(items)
         art.pop('set.fanart', None)
-        # fanart = self._url_decode_path(art.get('fanart'))
         fanarts = {key: value for (
             key, value) in art.items() if 'fanart' in key}
         fanart = random.choice(list(fanarts.values()))
         fanart = self._url_decode_path(fanart)
+        if 'transform?size=thumb' in fanart:
+            fanart = fanart[:-21]
         window_property(f'{key}_fanart', set=fanart)
         # clearlogo if present otherwise clear
         clearlogo = art.get('clearlogo', False)

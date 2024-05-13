@@ -15,8 +15,8 @@ class SettingsMonitor:
             'videolibrary.tvshowsselectfirstunwatcheditem': 2,
             'videolibrary.tvshowsincludeallseasonsandspecials': 3,
             'videolibrary.artworklevel': 2,
-            'videolibrary.movieartwhitelist': ['keyart', 'square', 'clearlogo', 'clearlogo-alt', 'clearlogo-billboard'],
-            'videolibrary.tvshowartwhitelist': ['keyart', 'square', 'clearlogo', 'clearlogo-alt', 'clearlogo-billboard'],
+            'videolibrary.movieartwhitelist': ['keyart', 'landscape', 'square', 'clearlogo', 'clearlogo-alt', 'clearlogo-billboard'],
+            'videolibrary.tvshowartwhitelist': ['keyart', 'landscape', 'square', 'clearlogo', 'clearlogo-alt', 'clearlogo-billboard'],
             'musiclibrary.showallitems': False,
             'musiclibrary.showcompilationartists': False,
             'pictures.generatethumbs': True

@@ -28,7 +28,7 @@ class PlayerMonitor(Player):
             # Get set id
             tag = self.getVideoInfoTag()
             dbid = tag.getDbId()
-            if dbid:
+            if dbid and condition('VideoPlayer.Content(movie)'):
                 query = json_call(
                     'VideoLibrary.GetMovieDetails',
                     params={'properties': [
