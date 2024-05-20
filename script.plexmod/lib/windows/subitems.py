@@ -1,30 +1,28 @@
 from __future__ import absolute_import
+
 import gc
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
-
-from lib import util
-from lib import metadata
-from lib import player
-
 from plexnet import playlist
 
+from lib import metadata
+from lib import player
+from lib import util
+from lib.util import T
 from . import busy
-from . import episodes
-from . import tracks
-from . import opener
-from . import info
-from . import musicplayer
-from . import videoplayer
 from . import dropdown
-from . import windowutils
-from . import search
+from . import episodes
+from . import info
+from . import kodigui
+from . import musicplayer
+from . import opener
 from . import pagination
 from . import playbacksettings
-
-from lib.util import T
+from . import search
+from . import tracks
+from . import videoplayer
+from . import windowutils
 from .mixins import SeasonsMixin, DeleteMediaMixin, RatingsMixin
 
 
@@ -136,7 +134,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         elif self.mediaItem.studio:
             self.setProperty('directors', u'{0}    {1}'.format(T(32386, 'Studio').upper(), self.mediaItem.studio))
 
-        cast = u' / '.join([r.tag for r in self.mediaItem.roles()][:5])
+        cast = self.mediaItem.roles and u' / '.join([r.tag for r in self.mediaItem.roles()][:5]) or ''
         castLabel = T(32419, 'Cast').upper()
         self.setProperty('writers', cast and u'{0}    {1}'.format(castLabel, cast) or '')
 
@@ -188,7 +186,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             elif action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                 if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(
                         self.OPTIONS_GROUP_ID)) and \
-                        (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
+                        (not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                     if self.getProperty('on.extras'):
                         self.setFocusId(self.OPTIONS_GROUP_ID)
                         return
@@ -404,7 +402,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         pl = playlist.LocalPlaylist(items, self.mediaItem.getServer())
         resume = False
         if not shuffle and self.mediaItem.type == 'show':
-            resume = self.getPlaylistResume(pl, items, self.mediaItem.title)
+            resume = self.getNextShowEp(pl, items, self.mediaItem.title)
             if resume is None:
                 return
 
@@ -487,7 +485,11 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             if self.delete(item):
                 # cheap way of requesting a home hub refresh because of major deletion
                 util.MONITOR.watchStatusChanged()
-                self.goHome()
+                self.initialized = False
+                self.setBoolProperty("initialized", False)
+                self.setup()
+                self.initialized = True
+                self.setFocusId(self.PLAY_BUTTON_ID)
 
     def roleClicked(self):
         mli = self.rolesListControl.getSelectedItem()

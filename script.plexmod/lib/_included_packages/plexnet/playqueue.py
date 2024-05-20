@@ -68,9 +68,17 @@ class UsageFactory(object):
         if obj.type:
             if obj.type == "audio":
                 return obj.createAudioUsage()
+            elif obj.type == "photo":
+                return obj.createPhotoUsage()
 
         util.DEBUG_LOG("Don't know how to usage for " + str(obj.type))
         return None
+
+    def createPhotoUsage(self):
+        if not self.usage or self.usage.playQueueId != self.playQueue.id:
+            self.usage = self.playQueue.usage
+
+        return self.usage
 
     def createAudioUsage(self):
         skips = self.playQueue.container.stationSkipsPerHour.asInt(-1)

@@ -1,15 +1,14 @@
 from __future__ import absolute_import
+
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-
-from . import kodigui
-from . import dropdown
-from . import busy
-
-from lib import util
 from plexnet import plexapp
 
+from lib import util
 from lib.util import T
+from . import busy
+from . import dropdown
+from . import kodigui
 
 
 class UserSelectWindow(kodigui.BaseWindow):
@@ -82,7 +81,7 @@ class UserSelectWindow(kodigui.BaseWindow):
                 with self.propertyContext('busy'):
                     self.userList.reset()
                     self.setProperty('initialized', '')
-                    plexapp.ACCOUNT.updateHomeUsers()
+                    plexapp.ACCOUNT.updateHomeUsers(refreshSubscription=True)
                     self.start(with_busy=False)
             else:
                 self.userSelected(item)
@@ -216,8 +215,10 @@ class UserSelectWindow(kodigui.BaseWindow):
             self.task.cancel()
 
 
-def start():
-    w = UserSelectWindow.open()
+def start(base_win_id):
+    w = UserSelectWindow.create()
+    if w.waitForOpen(base_win_id=base_win_id):
+        w.modal()
     selected = w.selected
     del w
     return selected

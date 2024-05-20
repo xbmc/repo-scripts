@@ -1,17 +1,17 @@
 from __future__ import absolute_import
-import time
+
 import threading
+import time
 
 from kodi_six import xbmcgui, xbmc
+from plexnet import plexapp
 
+from lib import util
+from lib.kodijsonrpc import rpc
 from . import kodigui
 from . import opener
 from . import windowutils
 
-from lib import util
-from lib.kodijsonrpc import rpc
-
-from plexnet import plexapp
 
 class SearchDialog(kodigui.BaseDialog, windowutils.UtilMixin):
     xmlFile = 'script-plex-search.xml'

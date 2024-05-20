@@ -118,7 +118,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         data = self.query(key)
         return plexobjects.buildItem(self, data[0], key, container=self)
 
-    def hubs(self, section=None, count=None, search_query=None):
+    def hubs(self, section=None, count=None, search_query=None, section_ids=None):
         hubs = []
 
         params = {"includeMarkers": 1}
@@ -143,6 +143,10 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
                     return hubs
                 else:
                     q = '/hubs/sections/%s' % section
+            else:
+                # home hub
+                if section_ids:
+                    params['pinnedContentDirectoryID'] = ",".join(section_ids)
 
             if count is not None:
                 params['count'] = count
@@ -150,8 +154,34 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         data = self.query(q, params=params)
         container = plexobjects.PlexContainer(data, initpath=q, server=self, address=q)
 
+        newCW = util.INTERFACE.getPreference('hubs_use_new_continue_watching', False) and not search_query \
+            and not section
+
+        if newCW:
+            # home, add continueWatching
+            cq = '/hubs/continueWatching'
+            if section_ids:
+                cq += util.joinArgs(params)
+
+            cdata = self.query(cq, params=params)
+            ccontainer = plexobjects.PlexContainer(cdata, initpath=cq, server=self, address=cq)
+            hubs.append(plexlibrary.Hub(cdata[0], server=self, container=ccontainer))
+
         for elem in data:
+            hubIdent = elem.attrib.get('hubIdentifier')
+            # if we've added continueWatching, which combines continue and ondeck, skip those two hubs
+            if newCW and hubIdent and \
+                    (hubIdent.startswith('home.continue') or hubIdent.startswith('home.ondeck')):
+                continue
+
             hubs.append(plexlibrary.Hub(elem, server=self, container=container))
+
+        if section_ids:
+            # when we have hidden sections, apply the filter to the hubs keys for subsequent queries
+            for hub in hubs:
+                if "pinnedContentDirectoryID" not in hub.key:
+                    hub.key += util.joinArgs(params, '?' not in hub.key)
+
         return hubs
 
     def playlists(self, start=0, size=10, hub=None):

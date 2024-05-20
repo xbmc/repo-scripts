@@ -306,11 +306,11 @@ msgid "Go to {0}"
 msgstr "跳转到 {0}"
 
 msgctxt "#32303"
-msgid "Season"
+msgid "Season {}"
 msgstr "季数"
 
 msgctxt "#32304"
-msgid "Episode"
+msgid "Episode {}"
 msgstr "集数"
 
 msgctxt "#32305"
@@ -334,11 +334,11 @@ msgid "None"
 msgstr "无"
 
 msgctxt "#32310"
-msgid "S"
+msgid "S{}"
 msgstr ""
 
 msgctxt "#32311"
-msgid "E"
+msgid "E{}"
 msgstr ""
 
 msgctxt "#32312"

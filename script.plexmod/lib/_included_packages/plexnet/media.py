@@ -176,10 +176,11 @@ class TranscodeSession(plexobjects.PlexObject):
 class MediaTag(plexobjects.PlexObject):
     TYPE = None
     ID = 'None'
+    virtual = False
 
     def __repr__(self):
         tag = self.tag.replace(' ', '.')[0:20]
-        return '<%s:%s:%s>' % (self.__class__.__name__, self.id, tag)
+        return '<%s:%s:%s:%s>' % (self.__class__.__name__, self.id, tag, self.virtual)
 
     def __eq__(self, other):
         if other.__class__ != self.__class__:
@@ -194,6 +195,11 @@ class MediaTag(plexobjects.PlexObject):
 class Collection(MediaTag):
     TYPE = 'Collection'
     FILTER = 'collection'
+
+
+class Location(MediaTag):
+    TYPE = 'Location'
+    FILTER = 'location'
 
 
 class Country(MediaTag):
@@ -255,6 +261,11 @@ class Writer(MediaTag):
     FILTER = 'writer'
 
 
+class Guid(MediaTag):
+    TYPE = 'Guid'
+    FILTER = 'guid'
+
+
 class Chapter(MediaTag):
     TYPE = 'Chapter'
     
@@ -269,6 +280,9 @@ class Bandwidth(plexobjects.PlexObject):
 class Marker(MediaTag):
     TYPE = 'Marker'
     FILTER = 'Marker'
+
+    def __repr__(self):
+        return '<%s:%s:%s:%s>' % (self.__class__.__name__, self.id, self.type, self.final and "final" or "")
 
 
 class Review(MediaTag):

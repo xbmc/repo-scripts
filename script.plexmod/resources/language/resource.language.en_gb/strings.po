@@ -346,11 +346,11 @@ msgid "Go to {0}"
 msgstr ""
 
 msgctxt "#32303"
-msgid "Season"
+msgid "Season {}"
 msgstr ""
 
 msgctxt "#32304"
-msgid "Episode"
+msgid "Episode {}"
 msgstr ""
 
 msgctxt "#32305"
@@ -374,11 +374,11 @@ msgid "None"
 msgstr ""
 
 msgctxt "#32310"
-msgid "S"
+msgid "S{}"
 msgstr ""
 
 msgctxt "#32311"
-msgid "E"
+msgid "E{}"
 msgstr ""
 
 msgctxt "#32312"
@@ -1295,7 +1295,7 @@ msgid "Kodi Buffer Size (MB)"
 msgstr ""
 
 msgctxt "#33614"
-msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~100 MB, Recommended max: {} MB, Default: 20 MB."
+msgid "Set the Kodi Cache/Buffer size. Free: {} MB, Recommended: ~50 MB, Recommended max: {} MB, Default: 20 MB."
 msgstr ""
 
 msgctxt "#33615"
@@ -1559,7 +1559,7 @@ msgid "Show prev/next button"
 msgstr ""
 
 msgctxt "#32938"
-msgid "Only for Episodes"
+msgid "Only for Episodes/Playlists"
 msgstr ""
 
 msgctxt "#32939"
@@ -1612,10 +1612,6 @@ msgstr ""
 
 msgctxt "#32951"
 msgid "When displaying subtitles use the extendedDisplayTitle Plex exposes."
-msgstr ""
-
-msgctxt "#32952"
-msgid "Dialog flicker fix"
 msgstr ""
 
 msgctxt "#32953"
@@ -1728,4 +1724,244 @@ msgstr ""
 
 msgctxt "#32980"
 msgid "Refresh Users"
+msgstr ""
+
+msgctxt "#32981"
+msgid "Background worker count"
+msgstr ""
+
+msgctxt "#32982"
+msgid "Depending on how many cores your CPU has and how much it can handle, increasing this might improve certain situations. If you experience crashes or other annormalities, leave this at its default (3). Needs an addon restart."
+msgstr ""
+
+msgctxt "#32983"
+msgid "Player Theme"
+msgstr ""
+
+msgctxt "#32984"
+msgid "Sets the player theme. Currently only customizes the playback control buttons. ATTENTION: [I]Might[/I] need an addon restart.\nIn order to customize this, copy one of the xml's in script.plexmod/resources/skins/Main/1080i/templates to addon_data/script.plexmod/templates/seek_dialog_buttons_custom.xml and adjust it to your liking, then select \"Custom\" as your theme."
+msgstr ""
+
+msgctxt "#32985"
+msgid "Modern"
+msgstr ""
+
+msgctxt "#32986"
+msgid "Modern (dotted)"
+msgstr ""
+
+msgctxt "#32987"
+msgid "Classic"
+msgstr ""
+
+msgctxt "#32988"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32989"
+msgid "Modern (colored)"
+msgstr ""
+
+msgctxt "#32990"
+msgid "Handle plex.direct mapping"
+msgstr ""
+
+msgctxt "#32991"
+msgid "Notify"
+msgstr ""
+
+msgctxt "#32992"
+msgid "When using servers with a plex.direct connection (most of them), should we automatically adjust advancedsettings.xml to cope with plex.direct domains? If not, you might want to add plex.direct to your router's DNS rebind exemption list."
+msgstr ""
+
+msgctxt "#32993"
+msgid "{} unhandled plex.direct connections found"
+msgstr ""
+
+msgctxt "#32994"
+msgid "In order for PM4K to work properly, we need to add special handling for plex.direct connections. We've found {} new unhandled connections. Do you want us to write those to Kodi's advancedsettings.xml automatically? If not, you might want to add plex.direct to your router's DNS rebind exemption list. This can be changed in the settings as well."
+msgstr ""
+
+msgctxt "#32995"
+msgid "Advancedsettings.xml modified (plex.direct mappings)"
+msgstr ""
+
+msgctxt "#32996"
+msgid "The advancedsettings.xml file has been modified. Please restart Kodi for the changes to apply."
+msgstr ""
+
+msgctxt "#32997"
+msgid "OK"
+msgstr ""
+
+msgctxt "#32998"
+msgid "Use new Continue Watching hub on Home"
+msgstr ""
+
+msgctxt "#32999"
+msgid "Instead of separating Continue Watching and On Deck hubs, behave like the modern Plex clients, which combine those two types of hubs into one Continue Watching hub."
+msgstr ""
+
+msgctxt "#33000"
+msgid "Enable path mapping"
+msgstr ""
+
+msgctxt "#33001"
+msgid "Honor path_mapping.json in the addon_data/script.plexmod folder when DirectPlaying media. This can be used to stream using other techniques such as SMB/NFS/etc. instead of the default HTTP handler. path_mapping.example.json is included in the addon's main directory."
+msgstr ""
+
+msgctxt "#33002"
+msgid "Verify mapped files exist"
+msgstr ""
+
+msgctxt "#33003"
+msgid "When path mapping is enabled and we've successfully mapped a file, verify its existence."
+msgstr ""
+
+msgctxt "#33004"
+msgid "No spoilers without OSD"
+msgstr ""
+
+msgctxt "#33005"
+msgid "When seeking without the OSD open, hide all time-related information from the user."
+msgstr ""
+
+msgctxt "#33006"
+msgid "No TV spoilers"
+msgstr ""
+
+msgctxt "#33007"
+msgid "When visiting an episode/season view, blur unwatched/unwatched+in-progress episode thumbnails, previews and redact summaries. When the Addon Setting \"Use episode thumbnails in continue hub\" is enabled, blur them as well."
+msgstr ""
+
+msgctxt "#33008"
+msgid "[Spoilers removed]"
+msgstr ""
+
+msgctxt "#33009"
+msgid "Blur amount for unwatched/in-progress episodes"
+msgstr ""
+
+msgctxt "#33010"
+msgid "Unwatched"
+msgstr ""
+
+msgctxt "#33011"
+msgid "Unwatched/in progress"
+msgstr ""
+
+msgctxt "#33012"
+msgid "No unwatched episode titles"
+msgstr ""
+
+msgctxt "#33013"
+msgid "When the above is anything but \"off\", hide episode titles as well."
+msgstr ""
+
+msgctxt "#33014"
+msgid "Ignore plex.direct docker hosts"
+msgstr ""
+
+msgctxt "#33015"
+msgid "When checking for plex.direct host mapping, ignore local Docker IPv4 addresses (172.16.0.0/12)."
+msgstr ""
+
+msgctxt "#33016"
+msgid "Allow TV spoilers for specific genres"
+msgstr ""
+
+msgctxt "#33017"
+msgid "Overrides the above for: {}"
+msgstr ""
+
+msgctxt "#33018"
+msgid "Cache Plex Home users"
+msgstr ""
+
+msgctxt "#33019"
+msgid "Visit media item"
+msgstr ""
+
+msgctxt "#33020"
+msgid "Play"
+msgstr ""
+
+msgctxt "#33021"
+msgid "Choose action"
+msgstr ""
+
+msgctxt "#33022"
+msgid "Use modern inverted watched states"
+msgstr ""
+
+msgctxt "#33023"
+msgid "Instead of marking unwatched items, mark watched items with a checkmark (modern clients; default: off)"
+msgstr ""
+
+msgctxt "#33024"
+msgid "Hide black backdrop in inverted watched states"
+msgstr ""
+
+msgctxt "#33025"
+msgid "When the above is enabled, hide the black backdrop of the watched state."
+msgstr ""
+
+msgctxt "#33026"
+msgid "Map path: {}"
+msgstr ""
+
+msgctxt "#33027"
+msgid "Remove mapping: {}"
+msgstr ""
+
+msgctxt "#33028"
+msgid "Hide library"
+msgstr ""
+
+msgctxt "#33029"
+msgid "Show library: {}"
+msgstr ""
+
+msgctxt "#33030"
+msgid "Choose action for: {}"
+msgstr ""
+
+msgctxt "#33031"
+msgid "Select Kodi source for {}"
+msgstr ""
+
+msgctxt "#33032"
+msgid "Show path mapping indicators"
+msgstr ""
+
+msgctxt "#33033"
+msgid "When path mapping is active for a library, display an indicator."
+msgstr ""
+
+msgctxt "#33034"
+msgid "Library settings"
+msgstr ""
+
+msgctxt "#33035"
+msgid "Delete {}: {}?"
+msgstr ""
+
+msgctxt "#33036"
+msgid "Delete episode S{0:02d}E{1:02d} from {2}?"
+msgstr ""
+
+msgctxt "#33037"
+msgid "Maximum intro offset to consider"
+msgstr ""
+
+msgctxt "#33038"
+msgid "When encountering an intro marker with a start time offset greater than this, ignore it (default: 600s/10m)"
+msgstr ""
+
+msgctxt "#33039"
+msgid "Move"
+msgstr ""
+
+msgctxt "#33040"
+msgid "Reset library order"
 msgstr ""

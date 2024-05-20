@@ -2,6 +2,7 @@
 import six
 from collections import OrderedDict
 from plexnet import plexapp
+from kodi_six import xbmc
 
 
 class MediaDetails:
@@ -289,6 +290,24 @@ class DPAttributeEqualsValue(DPAttribute):
             return self.resolve(self.retVal, obj)
 
 
+class DPAttributeMapped(DPAttribute):
+    def __init__(self):
+        pass
+
+    def value(self, obj):
+        p = xbmc.Player()
+        if p.isPlaying():
+            f = p.getPlayingFile()
+            prot = f.split("://")[0]
+            if prot == f:
+                ret = "path mapped"
+            elif prot.startswith("http"):
+                ret = prot
+            else:
+                ret = "mapped ({})".format(prot)
+            return ret
+
+
 class ComputedPPIValue:
     """
     Holds the final computed attribute data for display
@@ -318,7 +337,8 @@ class ModePPI(ComputedPPIValue):
     name = "Mode"
     dataPoints = [
         DPAttributeSession("partDecision"),
-        DPAttributeExists("local", source="session.player", returnValue="local")
+        DPAttributeExists("local", source="session.player", returnValue="local"),
+        DPAttributeMapped()
     ]
 
 

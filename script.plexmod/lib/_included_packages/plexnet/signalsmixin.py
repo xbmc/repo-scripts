@@ -3,7 +3,7 @@ from . import signalslot
 
 
 class SignalsMixin(object):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self._signals = {}
 
     def on(self, signalName, callback):
@@ -13,6 +13,12 @@ class SignalsMixin(object):
         signal = self._signals[signalName]
 
         signal.connect(callback)
+
+    def has_signal(self, signalName, callback):
+        if not self._signals:
+            return
+
+        return signalName in self._signals and self._signals[signalName].is_connected(callback)
 
     def off(self, signalName, callback):
         if not self._signals:

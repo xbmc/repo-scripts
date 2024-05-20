@@ -1,10 +1,11 @@
-import time
 import random
+import time
 
-from . import kodigui
+from plexnet import plexapp
 
 from lib import util
-from plexnet import plexapp
+from . import kodigui
+
 
 class Slideshow(kodigui.BaseWindow, util.CronReceiver):
     xmlFile = 'script-plex-slideshow.xml'
@@ -25,7 +26,7 @@ class Slideshow(kodigui.BaseWindow, util.CronReceiver):
         self.timeBetweenImages = self.TIME_BETWEEN_IMAGES
         self.timeBetweenDisplayMove = self.TIME_DISPLAY_MOVE
         self.timeTitleIsHidden = self.TIME_HIDE_TITLE_IN_QUIZ
-        self.quizMode = util.advancedSettings.screensaverQuiz
+        self.quizMode = util.addonSettings.screensaverQuiz
         self.initialized = False
 
     def onFirstInit(self):

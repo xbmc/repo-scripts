@@ -108,6 +108,8 @@
                         <align>center</align>
                         <aligny>center</aligny>
                         <textcolor>FFFFFFFF</textcolor>
+                        <scroll>true</scroll>
+                        <scrollspeed>60</scrollspeed>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="label">
@@ -120,6 +122,8 @@
                         <align>left</align>
                         <aligny>center</aligny>
                         <textcolor>FFFFFFFF</textcolor>
+                        <scroll>true</scroll>
+                        <scrollspeed>60</scrollspeed>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="group">
@@ -133,6 +137,8 @@
                             <align>left</align>
                             <aligny>center</aligny>
                             <textcolor>FFFFFFFF</textcolor>
+                            <scroll>true</scroll>
+                            <scrollspeed>60</scrollspeed>
                             <label>$INFO[ListItem.Label]</label>
                         </control>
                         <control type="image">
@@ -196,6 +202,8 @@
                         <align>center</align>
                         <aligny>center</aligny>
                         <textcolor>FF000000</textcolor>
+                        <scroll>true</scroll>
+                        <scrollspeed>60</scrollspeed>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="label">
@@ -208,6 +216,8 @@
                         <align>left</align>
                         <aligny>center</aligny>
                         <textcolor>FF000000</textcolor>
+                        <scroll>true</scroll>
+                        <scrollspeed>60</scrollspeed>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="group">
@@ -221,6 +231,8 @@
                             <align>left</align>
                             <aligny>center</aligny>
                             <textcolor>FF000000</textcolor>
+                            <scroll>true</scroll>
+                            <scrollspeed>60</scrollspeed>
                             <label>$INFO[ListItem.Label]</label>
                         </control>
                         <control type="image">

@@ -1,10 +1,9 @@
 from __future__ import absolute_import
+
 from lib import util
-from . import opener
-from . import dropdown
-
 from lib.util import T
-
+from . import dropdown
+from . import opener
 
 HOME = None
 
@@ -41,37 +40,50 @@ class UtilMixin():
         from . import musicplayer
         self.processCommand(opener.handleOpen(musicplayer.MusicPlayerWindow, **kwargs))
 
-    def getPlaylistResume(self, pl, items, title):
-        resume = False
+    def getNextShowEp(self, pl, items, title):
+        revitems = list(reversed(items))
+        in_progress = [i for i in revitems if i.get('viewOffset').asInt()]
+        if in_progress:
+            n = in_progress[0]
+            pl.setCurrent(n)
+            choice = dropdown.showDropdown(
+                options=[
+                    {'key': 'resume', 'display': T(32429, 'Resume from {0}').format(
+                        util.timeDisplay(n.viewOffset.asInt()).lstrip('0').lstrip(':'))},
+                    {'key': 'play', 'display': T(32317, 'Play from beginning')}
+                ],
+                pos=(660, 441),
+                close_direction='none',
+                set_dropdown_prop=False,
+                header=u'{0} - {1} \u2022 {2}'.format(title,
+                                                      T(32310, 'S').format(n.parentIndex),
+                                                      T(32311, 'E').format(n.index))
+            )
+
+            if not choice:
+                return None
+
+            if choice['key'] == 'resume':
+                return True
+            return False
+
         watched = False
-        for i in items:
-            if (watched and not i.isWatched) or i.get('viewOffset').asInt():
-                if i.get('viewOffset'):
-                    choice = dropdown.showDropdown(
-                        options=[
-                            {'key': 'resume', 'display': T(32429, 'Resume from {0}').format(util.timeDisplay(i.viewOffset.asInt()).lstrip('0').lstrip(':'))},
-                            {'key': 'play', 'display': T(32317, 'Play from beginning')}
-                        ],
-                        pos=(660, 441),
-                        close_direction='none',
-                        set_dropdown_prop=False,
-                        header=u'{0} - {1}{2} \u2022 {3}{4}'.format(title, T(32310, 'S'), i.parentIndex, T(32311, 'E'), i.index)
-                    )
-
-                    if not choice:
-                        return None
-
-                    if choice['key'] == 'resume':
-                        resume = True
-
-                pl.setCurrent(i)
-                break
-            elif i.isWatched:
+        for (k, i) in enumerate(revitems):
+            if watched:
+                try:
+                    pl.setCurrent(revitems[k-2])
+                    return False
+                except IndexError:
+                    break
+            if i.get('viewCount').asInt() > 0:
                 watched = True
-            else:
-                break
 
-        return resume
+        non_special = [i for i in revitems if i.get('parentIndex').asInt() and i.get('viewCount').asInt() == 0]
+        use = items[0]
+        if non_special:
+            use = non_special[-1]
+        pl.setCurrent(use)
+        return False
 
 
 def shutdownHome():

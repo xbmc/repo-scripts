@@ -46,7 +46,7 @@ class Photo(media.MediaItem):
 class PhotoDirectory(media.MediaItem):
     TYPE = 'photodirectory'
 
-    def all(self):
+    def all(self, *args, **kwargs):
         path = self.key
         return plexobjects.listItems(self.server, path)
 

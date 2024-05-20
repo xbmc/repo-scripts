@@ -34,6 +34,8 @@ def registerLibFactory(ftype):
 
 
 class PlexValue(six.text_type):
+    __slots__ = ("parent", "NA")
+
     def __new__(cls, value, parent=None):
         self = super(PlexValue, cls).__new__(cls, value)
         self.parent = parent
@@ -153,6 +155,8 @@ class Checks(object):
 
 
 class PlexObject(Checks):
+    __slots__ = ("initpath", "key", "server", "container", "mediaChoice", "titleSort", "deleted", "_reloaded", "data")
+
     def __init__(self, data, initpath=None, server=None, container=None):
         self.initpath = initpath
         self.key = None
@@ -198,7 +202,7 @@ class PlexObject(Checks):
         return True
 
     def get(self, attr, default=''):
-        ret = self.__dict__.get(attr)
+        ret = self.__dict__.get(attr, getattr(self, attr) if attr in self.__slots__ else None)
         return ret is not None and ret or PlexValue(default, self)
 
     def set(self, attr, value):
@@ -233,8 +237,6 @@ class PlexObject(Checks):
         """ Reload the data for this object from PlexServer XML. """
         if _soft and self._reloaded:
             return self
-
-        kwargs["includeMarkers"] = 1
 
         try:
             if self.get('ratingKey'):
@@ -422,6 +424,8 @@ class PlexObject(Checks):
 
 
 class PlexContainer(PlexObject):
+    __slots__ = ("address",)
+
     def __init__(self, data, initpath=None, server=None, address=None):
         PlexObject.__init__(self, data, initpath, server)
         self.setAddress(address)
@@ -446,6 +450,8 @@ class PlexContainer(PlexObject):
 
 
 class PlexServerContainer(PlexContainer):
+    __slots__ = ("resources",)
+
     def __init__(self, data, initpath=None, server=None, address=None):
         PlexContainer.__init__(self, data, initpath, server, address)
         from . import plexserver
@@ -463,6 +469,8 @@ class PlexServerContainer(PlexContainer):
 
 
 class PlexItemList(object):
+    __slots__ = ("_data", "_itemClass", "_itemTag", "_server", "_container", "_items")
+
     def __init__(self, data, item_cls, tag, server=None, container=None):
         self._data = data
         self._itemClass = item_cls
@@ -502,6 +510,8 @@ class PlexItemList(object):
 
 
 class PlexMediaItemList(PlexItemList):
+    __slots__ = ("_initpath", "_media", "_items")
+
     def __init__(self, data, item_cls, tag, initpath=None, server=None, media=None):
         PlexItemList.__init__(self, data, item_cls, tag, server)
         self._initpath = initpath
@@ -538,6 +548,8 @@ def buildItem(server, elem, initpath, bytag=False, container=None, tag_fallback=
 
 
 class ItemContainer(list):
+    __slots__ = ("container", "totalSize")
+
     def __getattr__(self, attr):
         return getattr(self.container, attr)
 

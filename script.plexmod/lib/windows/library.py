@@ -1,33 +1,32 @@
 from __future__ import absolute_import
+
+import json
 import os
 import random
-import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
-import json
-import time
 import threading
 
+import plexnet
+import six
+import six.moves.urllib.error
+import six.moves.urllib.parse
+import six.moves.urllib.request
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
+from plexnet import playqueue
+from six.moves import range
 
-from lib import util
 from lib import backgroundthread
 from lib import player
-
+from lib import util
+from lib.util import T
 from . import busy
-from . import subitems
+from . import dropdown
+from . import kodigui
+from . import opener
 from . import preplay
 from . import search
-import plexnet
-from . import dropdown
-from . import opener
+from . import subitems
 from . import windowutils
-
-from plexnet import playqueue
-
-from lib.util import T
-import six
-from six.moves import range
 
 KEYS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -348,7 +347,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.alreadyFetchedChunkList = set()
         self.finalChunkPosition = 0
 
-        self.CHUNK_SIZE = util.advancedSettings.libraryChunkSize
+        self.CHUNK_SIZE = util.addonSettings.libraryChunkSize
 
         key = self.section.key
         if not key.isdigit():
@@ -412,7 +411,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                 if mli:
                     self.requestChunk(mli.pos())
 
-                if util.advancedSettings.dynamicBackgrounds:
+                if util.addonSettings.dynamicBackgrounds:
                     if mli and mli.dataSource:
                         self.updateBackgroundFrom(mli.dataSource)
 
@@ -434,7 +433,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             elif action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                 if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)) and \
-                        (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
+                        (not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                     if xbmc.getCondVisibility('Integer.IsGreater(Container(101).ListItem.Property(index),5)'):
                         self.showPanelControl.selectItem(0)
                         return
@@ -566,7 +565,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
             args['unwatched'] = '1'
 
         pq = playqueue.createPlayQueueForItem(self.section, options={'shuffle': shuffle}, args=args)
-        opener.open(pq)
+        opener.open(pq, auto_play=True)
 
     def shuffleButtonClicked(self):
         self.playButtonClicked(shuffle=True)
@@ -786,7 +785,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.showPanelControl.selectItem(0)
         self.setFocusId(self.POSTERS_PANEL_ID)
         self.backgroundSet = False
-        self.setBackground([item.dataSource for item in self.showPanelControl], 0, randomize=not util.advancedSettings.dynamicBackgrounds)
+        self.setBackground([item.dataSource for item in self.showPanelControl], 0, randomize=not util.addonSettings.dynamicBackgrounds)
 
     def subOptionCallback(self, option):
         check = 'script.plex/home/device/check.png'
@@ -983,6 +982,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         mli.dataSource.reload()
         if mli.dataSource.isWatched:
             mli.setProperty('unwatched', '')
+            mli.setBoolProperty('watched', mli.dataSource.isFullyWatched)
             mli.setProperty('unwatched.count', '')
         else:
             if self.section.TYPE == 'show' or mli.dataSource.TYPE == 'show' or mli.dataSource.TYPE == 'season':
@@ -1156,7 +1156,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             # If we're retrieving media as we navigate then we just want to request the first
             # chunk of media and stop.  We'll fetch the rest as the user navigates to those items
-            if not util.advancedSettings.retrieveAllMediaUpFront:
+            if not util.addonSettings.retrieveAllMediaUpFront:
                 # Calculate the end chunk's starting position based on the totalSize of items
                 self.finalChunkPosition = (totalSize // self.CHUNK_SIZE) * self.CHUNK_SIZE
                 # Keep track of the chunks we've already fetched by storing the chunk's starting position
@@ -1290,14 +1290,10 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
         with self.lock:
             pos = start
-            self.setBackground(items, pos, randomize=not util.advancedSettings.dynamicBackgrounds)
+            self.setBackground(items, pos, randomize=not util.addonSettings.dynamicBackgrounds)
 
             thumbDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie'])['thumb_dim']
             artDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie']).get('art_dim', (256, 256))
-
-            showUnwatched = False
-            if (self.section.TYPE in ('movie', 'show') and items[0].TYPE != 'collection') or (self.section.TYPE == 'collection' and items[0].TYPE in ('movie', 'show', 'episode')): # NOTE: A collection with Seasons doesn't have the leafCount/viewedLeafCount until you actually go into the season so we can't update the unwatched count here
-                showUnwatched = True
 
             if ITEM_TYPE == 'episode':
                 for offset, obj in enumerate(items):
@@ -1309,7 +1305,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                         mli.dataSource = obj
                         mli.setProperty('index', str(pos))
                         if obj.index:
-                            subtitle = u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), obj.parentIndex, T(32311, 'E'), obj.index)
+                            subtitle = u'{0} \u2022 {1}'.format(T(32310, 'S').format(obj.parentIndex),
+                                                                T(32311, 'E').format(obj.index))
                             mli.setProperty('subtitle', subtitle)
                             subtitle = "\n" + subtitle
                         else:
@@ -1324,6 +1321,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                         mli.setProperty('art', obj.defaultArt.asTranscodedImageURL(*artDim))
                         if not obj.isWatched:
                             mli.setProperty('unwatched', '1')
+                        mli.setBoolProperty('watched', obj.isFullyWatched)
+                        mli.setProperty('initialized', '1')
                     else:
                         mli.clear()
                         if obj is False:
@@ -1372,12 +1371,16 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                             mli.setProperty('art', obj.artCompositeURL(*colArtDim))
                             mli.setThumbnailImage(obj.artCompositeURL(*thumbDim))
                         else:
-                            mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
+                            if obj.TYPE == 'photodirectory' and obj.composite:
+                                mli.setThumbnailImage(obj.composite.asTranscodedImageURL(*thumbDim))
+                            else:
+                                mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
                         mli.dataSource = obj
                         mli.setProperty('summary', obj.get('summary'))
+                        mli.setProperty('year', obj.get('year'))
 
-                        if showUnwatched and obj.TYPE != 'collection':
-                            if not obj.isDirectory():
+                        if obj.TYPE != 'collection':
+                            if not obj.isDirectory() and obj.get('duration').asInt():
                                 mli.setLabel2(util.durationToText(obj.fixedDuration()))
                             mli.setProperty('art', obj.defaultArt.asTranscodedImageURL(*artDim))
                             if not obj.isWatched and obj.TYPE != "Directory":
@@ -1385,6 +1388,9 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                                     mli.setProperty('unwatched.count', str(obj.unViewedLeafCount))
                                 else:
                                     mli.setProperty('unwatched', '1')
+                            elif obj.isFullyWatched and obj.TYPE != "Directory":
+                                mli.setBoolProperty('watched', '1')
+                            mli.setProperty('initialized', '1')
 
                         mli.setProperty('progress', util.getProgressImage(obj))
                     else:
@@ -1397,7 +1403,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                     pos += 1
 
     def requestChunk(self, start):
-        if util.advancedSettings.retrieveAllMediaUpFront:
+        if util.addonSettings.retrieveAllMediaUpFront:
             return
 
         # Calculate the correct starting chunk position for the item they passed in

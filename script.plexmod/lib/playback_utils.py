@@ -62,6 +62,11 @@ class PlaybackManager(object):
         plexapp.util.APP.on("change:user", lambda **kwargs: self.setUserID(**kwargs))
         plexapp.util.APP.on('init', lambda **kwargs: self.setUserID(**kwargs))
 
+    def deinit(self):
+        plexapp.util.APP.off('change:selectedServer', lambda **kwargs: self.setServerUUID(**kwargs))
+        plexapp.util.APP.off("change:user", lambda **kwargs: self.setUserID(**kwargs))
+        plexapp.util.APP.off('init', lambda **kwargs: self.setUserID(**kwargs))
+
     def __call__(self, obj, key=None, value=None, kv_dict=None):
         # shouldn't happen
         if not self._currentServerUUID or not self._currentUserID:

@@ -1,10 +1,7 @@
 from __future__ import print_function, absolute_import
-import threading
 import platform
 import uuid
-import sys
 
-from . import callback
 from . import signalsmixin
 from . import simpleobjects
 from . import util
@@ -28,6 +25,8 @@ def init():
     SERVERMANAGER = plexservermanager.MANAGER
     from . import myplexmanager
     util.MANAGER = MANAGER = myplexmanager.MANAGER
+    util.ACCOUNT = ACCOUNT
+    util.SERVERMANAGER = SERVERMANAGER
     util.DEBUG_LOG("Verifying account...")
     ACCOUNT.verifyAccount()
 
@@ -43,6 +42,10 @@ class App(signalsmixin.SignalsMixin):
 
     def addTimer(self, timer):
         self.timers.append(timer)
+
+    @property
+    def serverManager(self):
+        return SERVERMANAGER
 
     def startRequest(self, request, context, body=None, contentType=None):
         context.request = request
