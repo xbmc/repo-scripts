@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+
 import gc
 import sys
 import re
@@ -10,11 +11,15 @@ import math
 import time
 import datetime
 import contextlib
+import unicodedata
+
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 import six
 import os
 import struct
 import requests
+
+import plexnet.util
 
 from .kodijsonrpc import rpc
 from kodi_six import xbmc
@@ -25,7 +30,7 @@ from kodi_six import xbmcvfs
 from . import colors
 # noinspection PyUnresolvedReferences
 from .exceptions import NoDataException
-from plexnet import signalsmixin, plexapp
+from plexnet import signalsmixin
 
 DEBUG = True
 _SHUTDOWN = False
@@ -115,10 +120,10 @@ def getSetting(key, default=None):
 
 
 def getUserSetting(key, default=None):
-    if not plexapp.ACCOUNT:
+    if not plexnet.util.ACCOUNT:
         return default
 
-    key = '{}.{}'.format(key, plexapp.ACCOUNT.ID)
+    key = '{}.{}'.format(key, plexnet.util.ACCOUNT.ID)
     with SETTINGS_LOCK:
         setting = ADDON.getSetting(key)
         return _processSetting(setting, default)
@@ -162,12 +167,11 @@ class AddonSettings(object):
         ("postplay_timeout", 16),
         ("skip_intro_button_timeout", 10),
         ("skip_credits_button_timeout", 10),
-        ("playlist_visit_media", True),
+        ("playlist_visit_media", False),
         ("intro_skip_early", False),
         ("show_media_ends_info", True),
         ("show_media_ends_label", True),
         ("background_colour", None),
-        ("oldprofile", False),
         ("skip_intro_button_show_early_threshold1", 60),
         ("requests_timeout", 5.0),
         ("local_reach_timeout", 10),
@@ -188,7 +192,11 @@ class AddonSettings(object):
         ("consecutive_video_pb_wait", 0.0),
         ("retrieve_all_media_up_front", False),
         ("library_chunk_size", 240),
-        ("verify_mapped_files", True)
+        ("verify_mapped_files", True),
+        ("episode_no_spoiler_blur", 16),
+        ("ignore_docker_v4", True),
+        ("cache_home_users", True),
+        ("intro_marker_max_offset", 600),
     )
 
     def __init__(self):
@@ -294,8 +302,13 @@ class UtilityMonitor(xbmc.Monitor, signalsmixin.SignalsMixin):
                 setGlobalProperty('stop_running', '1')
                 return
 
-        elif sender == "xbmc" and method == "System.OnSleep" and getSetting('action_on_sleep', "none") != "none":
-            getattr(self, "action{}".format(getSetting('action_on_sleep', "none").capitalize()))()
+        elif sender == "xbmc" and method == "System.OnSleep":
+            if getSetting('action_on_sleep', "none") != "none":
+                getattr(self, "action{}".format(getSetting('action_on_sleep', "none").capitalize()))()
+            self.trigger('system.sleep')
+
+        elif sender == "xbmc" and method == "System.OnWake":
+            self.trigger('system.wakeup')
 
     def stopPlayback(self):
         LOG('Monitor: Stopping media playback')
@@ -303,11 +316,22 @@ class UtilityMonitor(xbmc.Monitor, signalsmixin.SignalsMixin):
 
     def onScreensaverActivated(self):
         DEBUG_LOG("Monitor: OnScreensaverActivated")
+        self.trigger('screensaver.activated')
         if getSetting('player_stop_on_screensaver', True) and xbmc.Player().isPlayingVideo():
             self.stopPlayback()
 
+    def onScreensaverDeactivated(self):
+        DEBUG_LOG("Monitor: OnScreensaverDeactivated")
+        self.trigger('screensaver.deactivated')
+
     def onDPMSActivated(self):
         DEBUG_LOG("Monitor: OnDPMSActivated")
+        self.trigger('dpms.activated')
+        #self.stopPlayback()
+
+    def onDPMSDeactivated(self):
+        DEBUG_LOG("Monitor: OnDPMSDeactivated")
+        self.trigger('dpms.deactivated')
         #self.stopPlayback()
 
     def onSettingsChanged(self):
@@ -511,6 +535,9 @@ def scaleResolution(w, h, by=None):
         hratio = w / float(h)
         return int(round((px / wratio) ** .5)), int(round((px / hratio) ** .5))
     return w, h
+
+
+SPOILER_ALLOWED_GENRES = ("Reality", "Game Show", "Documentary", "Sport")
 
 
 class TextBox:
@@ -790,7 +817,7 @@ def getTimeFormat():
 timeFormat, timeFormatKN, padHour = getTimeFormat()
 
 DEF_THEME = "modern-colored"
-THEME_VERSION = 2
+THEME_VERSION = 3
 
 
 def applyTheme(theme=None):
@@ -860,31 +887,26 @@ if not xbmcvfs.exists(os.path.join(ADDON.getAddonInfo('path'), "resources", "ski
                                    "script-plex-seek_dialog.xml")):
     applyTheme(theme)
 
-PM_MCMT_RE = re.compile(r'/\*.+\*/\s?', re.IGNORECASE | re.MULTILINE | re.DOTALL)
-PM_CMT_RE = re.compile(r'[\t ]+//.+\n?')
-PM_COMMA_RE = re.compile(r',\s*}\s*}')
 
-# path mapping
-mapfile = os.path.join(translatePath(ADDON.getAddonInfo("profile")), "path_mapping.json")
-PATH_MAP = None
-if xbmcvfs.exists(mapfile):
+# get mounts
+KODI_SOURCES = []
+
+
+def getKodiSources():
     try:
-        f = xbmcvfs.File(mapfile)
-        # sanitize json
-
-        # remove multiline comments
-        data = PM_MCMT_RE.sub("", f.read())
-        # remove comments
-        data = PM_CMT_RE.sub("", data)
-        # remove invalid trailing comma
-
-        data = PM_COMMA_RE.sub("}}", data)
-        PATH_MAP = json.loads(data)
-        f.close()
+        data = rpc.Files.GetSources(media="files")["sources"]
     except:
-        ERROR("Couldn't read path_mapping.json")
+        LOG("Couldn't parse Kodi sources")
     else:
-        LOG("Path mapping: {}".format(repr(PATH_MAP)))
+        for d in data:
+            f = d["file"]
+            if f.startswith("smb://") or f.startswith("nfs://") or f.startswith("/") or ':\\\\' in f:
+                KODI_SOURCES.append(d)
+        LOG("Parsed {} Kodi sources: {}".format(len(KODI_SOURCES), KODI_SOURCES))
+
+
+if getSetting('path_mapping', True):
+    getKodiSources()
 
 
 def populateTimeFormat():
@@ -905,6 +927,38 @@ def getPlatform():
     ]:
         if xbmc.getCondVisibility(key):
             return key.rsplit('.', 1)[-1]
+
+
+def getRunningAddons():
+    try:
+        return xbmcvfs.listdir('addons://running/')[1]
+    except:
+        return []
+
+
+def getUserAddons():
+    try:
+        return xbmcvfs.listdir('addons://user/all')[1]
+    except:
+        return []
+
+
+USER_ADDONS = getUserAddons()
+
+
+SLUGIFY_RE1 = re.compile(r'[^\w\s-]')
+SLUGIFY_RE2 = re.compile(r'[-\s]+')
+
+
+def slugify(value):
+    """
+    Converts to lowercase, removes non-word characters (alphanumerics and
+    underscores) and converts spaces to hyphens. Also strips leading and
+    trailing whitespace.
+    """
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = SLUGIFY_RE1.sub('', value).strip().lower()
+    return SLUGIFY_RE2.sub('-', value)
 
 
 def getProgressImage(obj, perc=None, view_offset=None):

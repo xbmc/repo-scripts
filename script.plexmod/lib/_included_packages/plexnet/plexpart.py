@@ -5,7 +5,8 @@ from . import plexstream
 from . import plexrequest
 from . import util
 
-from lib.util import PATH_MAP, addonSettings
+from lib.util import addonSettings
+from lib.path_mapping import pmm, norm_sep
 
 
 class PlexPart(plexobjects.PlexObject):
@@ -123,7 +124,6 @@ class PlexPart(plexobjects.PlexObject):
 
         if _async:
             context = request.createRequestContext("ignored")
-            from . import plexapp
             util.APP.startRequest(request, context, "")
         else:
             request.postToStringWithTimeout()
@@ -162,28 +162,21 @@ class PlexPart(plexobjects.PlexObject):
 
     def getPathMappedUrl(self, return_only_folder=False):
         verify = addonSettings.verifyMappedFiles
-        if PATH_MAP and util.INTERFACE.getPreference("path_mapping", True):
-            match = ("", "")
 
-            for map_path, pms_path in PATH_MAP.get(self.getServer().name, {}).items():
-                # the longest matching path wins
-                if self.file.startswith(pms_path) and len(pms_path) > len(match[1]):
-                    match = (map_path, pms_path)
+        map_path, pms_path = pmm.getMappedPathFor(self.file, self.getServer())
+        if map_path and pms_path:
+            if return_only_folder:
+                return map_path
 
-            if all(match):
-                map_path, pms_path = match
-                if return_only_folder:
-                    return map_path
+            sep = norm_sep(map_path)
 
-                sep = "\\" in map_path and "\\" or "/"
+            # replace match and normalize path separator to separator style of map_path
+            url = self.file.replace(pms_path, map_path, 1).replace(sep == "/" and "\\" or "/", sep)
 
-                # replace match and normalize path separator to separator style of map_path
-                url = self.file.replace(pms_path, map_path, 1).replace(sep == "/" and "\\" or "/", sep)
-
-                if (verify and xbmcvfs.exists(url)) or not verify:
-                    util.DEBUG_LOG("File {} found in path map, mapping to {}".format(self.file, pms_path))
-                    return url
-                util.LOG("Mapped file {} doesn't exist".format(url))
+            if (verify and xbmcvfs.exists(url)) or not verify:
+                util.DEBUG_LOG("File {} found in path map, mapping to {}".format(self.file, pms_path))
+                return url
+            util.LOG("Mapped file {} doesn't exist".format(url))
         return ""
 
     @property

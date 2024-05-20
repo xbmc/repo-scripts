@@ -1,7 +1,83 @@
+[-0.7.8-]
+- Global: Use watched markers instead of unwatched markers (green checkmark vs. yellow triangle)
+- Home: Blur in-progress episode thumbnails if Addon Setting “Use episode thumbnails in continue hub” is enabled and titles if requested
+- Home: Refresh hubs when no episode spoiler setting changed
+- Home/Settings: After changing home-relevant settings, reload Home on revisit, not immediately
+- Home: Dynamically reload home when relevant settings have changed
+- Home/Sections: Improve handling for sections that errored out once, and retry loading them just like any stale section every 5 minutes
+- Home: Fix hubs not coming back after disconnect
+- Home: Harden disconnect handling in general; PM4K should be able to "live" forever now
+- Home: Refresh last section on: screensaver deactivated, DPMS deactivated, system wakeup after sleep
+- Home/PowerEvents: Disable updates when system goes to sleep, enable them when it wakes up; force a hubs update when waking up
+- Home: Probably fix long-running section change issue (partially reverting a previous change and being a little smarter about the current selection state); add debug logging for when we detect the "anomaly"
+- Home: Don't let any tasks remain in a crashed state
+- Core/Home: Add easy path mapping
+- Core/Home: Add library context option to hide them for current user/server; Add context option for "Home" to unhide hidden libraries
+- Home: Hide hidden library content from home hubs as well
+- Home: Add library reordering functionality
+- Home: Remove Hub round-robining altogether
+- Home: Use ACTION_NAV_BACK/ACTION_PREVIOUS_MENU in home hubs to select the first item when any item other than the first item is selected
+- Home: After refreshing stale section hubs (every 5m), re-select the last selected position in every hub, possibly re-extending the hubs to match the last position
+- Episodes: Blur unwatched/in-progress episode thumbnails and redact spoiler texts, and episode titles if requested
+- Episodes: Possibly use correct episode when playing TV Show from TV Show overview; always play latest in progress, unwatched, deprioritize specials
+- Episodes: after watching an episode, remove chevron immediately
+- Episodes: After watching multiple episodes in a row that span more than one season (e.g. watched S01E10, S02E01), properly redirect to the latest correct season view of the just watched episodes
+- Episodes: Inject watched/progress state into listitem datasource (fixes wrong "Mark as (Un) Played" menu item behaviour immediately after watching an episode)
+- Episodes: Don't play theme music when coming back from Home-Direct-Play (pressed P or ACTION_PLAYER_PLAY)
+- Episodes: Select the correct episode after returning from direct playback from home (P/PLAY pressed)
+- SeekDialog: Hide episode title if wanted
+- SeekDialog: Properly update VideoPlaylist when using next/prev
+- SeekDialog: Improve chapter visibility (selected and deselected (current))
+- SeekDialog: Throw away intro markers with an unreasonably late start offset (>10m)
+- SeekDialog: Throw invalid markers away once, not every tick
+- SeekDialog/Settings/Video Playlists: change the setting options for showing the prev/next and playlist buttons from "Only for Episodes" to "Only for Episodes/Playlists"; Show next/prev/playlist buttons in player for video playlists if wanted
+- Core/Players: Remove all Kodi media-loading spinners when using Plextuary skin
+- Core/Player: Always set infolabel "year" and remove it when downloading subtitles; don't set infolabels "episode" and "season" at all for non-TV-shows (fixes scrobbling issues with trakt plugin)
+- Core/Player: Report all known Guids to script.trakt if it's installed; generate slug for movies
+- Player/SeekDialog: Properly handle a manual stop action on episodes when OSD was visible (possibly other occasions)
+- Player/PostPlay: Hide spoilers as well, if configured
+- Postplay: Don't show the same episode on deck which is going to be played next
+- TV Shows/Seasons: Try reloading instead of exiting to home when deleting a season if possible
+- Libraries: Add movie/show year to label (thanks @bowlingbeeg)
+- Libraries: Fix year display, fix Art display in listview 16x9; make small posters view a little less cramped
+- VideoPlaylists: Show playback menu when an item can be resumed
+- VideoPlaylists: Show playback menu when CONTEXT_MENU action is detected
+- VideoPlaylists: Allow resuming, or, if possible, Start from Beginning
+- Core: Ignore local IPv4 docker plex.direct hosts when checking for host mapping
+- Core: Unify spoiler handling across multiple windows
+- Core: API requests: Don't generally include markers, only for PlayableVideos
+- Core: Open up translations to everyone, using POEditor
+- Core/AddonSettings: Remove old compatibility profile code and setting
+- Core/AddonSettings: Make caching home users optional; add setting (default: on)
+- Core/Home: When home user caching is disabled, refresh home users when opening the user dropdown (once)
+- Core: Add support for Guids in new library agents
+- Core/Episodes/Player: Inject Show reference into episodes to speed up playback start and avoid additional API hits; Don't initiate a playlist if only one episode is being played
+- Core: Compatibility with script.trakt
+- Core: Add automated generic JSON data cache, stored as addon_data/script.plexmod/data_cache.json
+- Core/TV: Store and use "once seen" genres for a show in the data cache to speed up certain views (such as postplay and continue watching, with no spoiler mode active)
+- Core: Automatically clean up old unused data cache entries which haven't been accessed for 30 days
+- Core/Settings: Add option to use watched markers instead of unwatched markers (default: on)
+- Core/Settings: Add option to hide the black background on inverted watched markers (default: off)
+- Core: Fix dialogs reverting the underlying window's watched marker setting temporarily
+- Core: Memory usage and performance optimizations (possibly >10% in py3 and >30% in py2 by using __slots__ on massively used classes)
+- Core: Allow for custom watched.png, unwatched.png, unwatched-rounded.png in addon_data/script.plexmod/media/
+- Core: Improve delete media clarity
+- Core/Playlists: Fix context menu "play" action on playlist items when addonSetting playlist visit media is on
+- Core/Windows: Optimize Imports
+- Settings: Add setting to show indicators for libraries with active path mapping (default: on)
+- Settings: Add setting to blur episode thumbnails and preview images, as well as redact spoilers for unwatched or unwatched+in progress episodes
+- Settings: Add setting to also hide episode titles based on the above
+- AddonSettings: Add setting to configure the blur amount for unwatched episodes (default: 16/255)
+- AddonSettings: Add setting for ignoring local docker IPv4 hosts when checking for host mapping (default: enabled)
+- AddonSettings: Change default of "Visit media in video playlist instead of playing it" to False
+- AddonSettings: Add setting to define the maximum start offset of an intro marker to consider it (default: 600s/10m)
+- Theme: Bump theme version to 3
+
+
 [-0.7.7-rev2-]
 - UserSelect: When not switching user (startup), close the addon on cancel actions
 - Libraries/Photos: Do autoplay when Play or Shuffle buttons are pressed in photo library view
-- Libraries/Photos: Fix wonky thumbnail display on photodirectories; support dynamic backgrounds for Photo items
+- Libraries/Photos: Fix wonky thumbnail display on photodirectories
 - SeekDialog: Fix final credits marker skipping wrongly on manual marker skip
 - SeekDialog: Fix several marker issues (over-jumping, invalid markers)
 - SeekDialog: Show stream transport type in video session info (smb, nfs, path mapped, http(s))

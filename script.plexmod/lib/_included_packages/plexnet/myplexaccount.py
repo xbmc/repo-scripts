@@ -35,6 +35,7 @@ class MyPlexAccount(object):
 
         # Booleans
         self.isAuthenticated = util.INTERFACE.getPreference('auto_signin', False)
+        self.cacheHomeUsers = util.INTERFACE.getPreference('cache_home_users', True)
         self.isSignedIn = False
         self.isOffline = False
         self.isExpired = False
@@ -70,9 +71,11 @@ class MyPlexAccount(object):
             'isSecure': self.isSecure,
             'adminHasPlexPass': self.adminHasPlexPass,
             'thumb': self.thumb,
-            'homeUsers': self.homeUsers,
             'lastHomeUserUpdate': self.lastHomeUserUpdate
         }
+
+        if self.cacheHomeUsers:
+            obj["homeUsers"] = self.homeUsers
 
         util.INTERFACE.setRegistry("MyPlexAccount", json.dumps(obj), "myplex")
 
@@ -106,7 +109,8 @@ class MyPlexAccount(object):
                 self.adminHasPlexPass = obj.get('adminHasPlexPass') or self.adminHasPlexPass
                 self.thumb = obj.get('thumb')
                 self.lastHomeUserUpdate = obj.get('lastHomeUserUpdate')
-                self.homeUsers = [HomeUser(data) for data in obj.get('homeUsers', [])]
+                if self.cacheHomeUsers:
+                    self.homeUsers = [HomeUser(data) for data in obj.get('homeUsers', [])]
                 if self.homeUsers:
                     util.LOG("cached home users: {0} (last update: {1})".format(self.homeUsers,
                                                                                 self.lastHomeUserUpdate))

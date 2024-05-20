@@ -1,9 +1,10 @@
 from __future__ import absolute_import
-from . import busy
 
-from plexnet import playqueue, plexapp, plexlibrary
-from lib import util
 import six
+from plexnet import playqueue, plexapp, plexlibrary
+
+from lib import util
+from . import busy
 
 
 def open(obj, **kwargs):
@@ -17,7 +18,7 @@ def open(obj, **kwargs):
                 return handleOpen(photos.PhotoWindow, play_queue=obj, **kwargs)
             else:
                 from . import videoplayer
-                videoplayer.play(play_queue=obj)
+                videoplayer.play(play_queue=obj, **kwargs)
                 return ''
     elif isinstance(obj, six.string_types):
         key = obj

@@ -77,6 +77,8 @@ DEFAULT_TIMEOUT = AsyncTimeout(10).setConnectTimeout(10)
 
 
 class AsyncVerifiedHTTPSConnection(VerifiedHTTPSConnection):
+    __slots__ = ("_canceled", "deadline", "_timeout")
+
     def __init__(self, *args, **kwargs):
         VerifiedHTTPSConnection.__init__(self, *args, **kwargs)
         self._canceled = False
@@ -166,6 +168,7 @@ class AsyncVerifiedHTTPSConnection(VerifiedHTTPSConnection):
 
 
 class AsyncHTTPConnection(HTTPConnection):
+    __slots__ = ("_canceled", "deadline")
     def __init__(self, *args, **kwargs):
         HTTPConnection.__init__(self, *args, **kwargs)
         self._canceled = False
@@ -176,6 +179,8 @@ class AsyncHTTPConnection(HTTPConnection):
 
 
 class AsyncHTTPConnectionPool(HTTPConnectionPool):
+    __slots__ = ("connections",)
+
     def __init__(self, *args, **kwargs):
         HTTPConnectionPool.__init__(self, *args, **kwargs)
         self.connections = []
@@ -209,6 +214,8 @@ class AsyncHTTPConnectionPool(HTTPConnectionPool):
 
 
 class AsyncHTTPSConnectionPool(HTTPSConnectionPool):
+    __slots__ = ("connections",)
+
     def __init__(self, *args, **kwargs):
         HTTPSConnectionPool.__init__(self, *args, **kwargs)
         self.connections = []

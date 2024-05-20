@@ -25,6 +25,8 @@ def init():
     SERVERMANAGER = plexservermanager.MANAGER
     from . import myplexmanager
     util.MANAGER = MANAGER = myplexmanager.MANAGER
+    util.ACCOUNT = ACCOUNT
+    util.SERVERMANAGER = SERVERMANAGER
     util.DEBUG_LOG("Verifying account...")
     ACCOUNT.verifyAccount()
 

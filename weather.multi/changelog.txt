@@ -1,3 +1,15 @@
+v0.0.26
+- language update
+
+v0.0.25
+- reinit session with each new url
+
+v0.0.24
+- try multiple yahoo urls in order to get cookie
+
+v0.0.23
+- fix yahoo weather again
+
 v0.0.22
 - fix weatherbit ozone value could be none
 

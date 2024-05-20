@@ -68,6 +68,8 @@ INTERFACE = None
 TIMER = None
 APP = None
 MANAGER = None
+ACCOUNT = None
+SERVERMANAGER = None
 
 try:
     _platform = platform.system()

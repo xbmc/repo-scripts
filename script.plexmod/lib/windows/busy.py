@@ -1,8 +1,11 @@
 from __future__ import absolute_import
-from . import kodigui
-from lib import util
-from kodi_six import xbmcgui
+
 import threading
+
+from kodi_six import xbmcgui
+
+from lib import util
+from . import kodigui
 
 
 class BusyWindow(kodigui.BaseDialog):

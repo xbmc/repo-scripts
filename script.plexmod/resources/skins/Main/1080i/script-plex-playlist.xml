@@ -247,7 +247,7 @@
                                     <posy>-1</posy>
                                     <width>35</width>
                                     <height>35</height>
-                                    <texture>script.plex/indicators/unwatched.png</texture>
+                                    <texture fallback="script.plex/indicators/unwatched.png">special://profile/addon_data/script.plexmod/media/unwatched.png</texture>
                                 </control>
                                 <control type="group">
                                     <posx>226</posx>
@@ -402,7 +402,7 @@
                                         <posy>-1</posy>
                                         <width>35</width>
                                         <height>35</height>
-                                        <texture>script.plex/indicators/unwatched.png</texture>
+                                        <texture fallback="script.plex/indicators/unwatched.png">special://profile/addon_data/script.plexmod/media/unwatched.png</texture>
                                     </control>
                                     <control type="group">
                                         <posx>226</posx>
@@ -585,7 +585,7 @@
                                         <posy>0</posy>
                                         <width>48</width>
                                         <height>48</height>
-                                        <texture>script.plex/indicators/unwatched.png</texture>
+                                        <texture fallback="script.plex/indicators/unwatched.png">special://profile/addon_data/script.plexmod/media/unwatched.png</texture>
                                     </control>
                                     <control type="group">
                                         <posx>313</posx>

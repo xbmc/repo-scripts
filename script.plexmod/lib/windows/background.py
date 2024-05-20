@@ -1,6 +1,7 @@
 from __future__ import absolute_import
-from . import kodigui
+
 from lib import util
+from . import kodigui
 
 util.setGlobalProperty('background.busy', '')
 util.setGlobalProperty('background.shutdown', '')

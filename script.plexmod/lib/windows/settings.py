@@ -1,17 +1,16 @@
 from __future__ import absolute_import
-from kodi_six import xbmc
-from kodi_six import xbmcgui
-from kodi_six import xbmcvfs
 
-import lib.cache
-from . import kodigui
-from . import windowutils
-
-from lib import util
-from lib.util import T
+import sys
 
 import plexnet
-import sys
+from kodi_six import xbmc
+from kodi_six import xbmcgui
+
+import lib.cache
+from lib import util
+from lib.util import T
+from . import kodigui
+from . import windowutils
 
 
 class Setting(object):
@@ -257,13 +256,33 @@ class Settings(object):
                     T(32100, 'Skip user selection and pin entry on startup.')
                 ),
                 BoolSetting(
-                    'speedy_home_hubs2', T(33503, 'Use alternative hubs refresh'), False
+                    'use_alt_watched', T(33022, ''), True
                 ).description(
-                    T(
-                        33504,
-                        "Refreshes all hubs for all libraries after an item's watch-state has changed, instead of "
-                        "only those likely affected. Use this if you find a hub that doesn't update properly."
+                    T(33023, "")
+                ),
+                BoolSetting(
+                    'hide_aw_bg', T(33024, ''), False
+                ).description(
+                    T(33025, "")
+                ),
+                OptionsSetting(
+                    'no_episode_spoilers2', T(33006, ''),
+                    'unwatched',
+                    (
+                        ('off', T(32481, '')),
+                        ('unwatched', T(33010, '')),
+                        ('funwatched', T(33011, '')),
                     )
+                ).description(T(33007, "")),
+                BoolSetting(
+                    'no_unwatched_episode_titles', T(33012, ''), True
+                ).description(
+                    T(33013, "")
+                ),
+                BoolSetting(
+                    'spoilers_allowed_genres', T(33016, ''), True
+                ).description(
+                    T(33017, "").format(", ".join('"{}"'.format(t) for t in util.SPOILER_ALLOWED_GENRES))
                 ),
                 BoolSetting(
                     'hubs_use_new_continue_watching', T(32998, ''), False
@@ -274,6 +293,11 @@ class Settings(object):
                     'hubs_bifurcation_lines', T(32961, 'Show hub bifurcation lines'), False
                 ).description(
                     T(32962, "Visually separate hubs horizontally using a thin line.")
+                ),
+                BoolSetting(
+                    'path_mapping_indicators', T(33032, 'Show path mapping indicators'), True
+                ).description(
+                    T(33033, "When path mapping is active for a library, display an indicator.")
                 ),
                 BoolSetting(
                     'search_use_kodi_kbd', T(32955, 'Use Kodi keyboard for searching'), False
@@ -393,14 +417,14 @@ class Settings(object):
                 OptionsSetting(
                     'video_show_playlist', T(32936, 'Show playlist button'), 'eponly',
                     (
-                        ('always', T(32035, 'Always')), ('eponly', T(32938, 'Only for Episodes')),
+                        ('always', T(32035, 'Always')), ('eponly', T(32938, 'Only for Episodes/Playlists')),
                         ('never', T(32033, 'Never'))
                     )
                 ).description(T(32939, 'Only applies to video player UI')),
                 OptionsSetting(
                     'video_show_prevnext', T(32937, 'Show prev/next button'), 'eponly',
                     (
-                        ('always', T(32035, 'Always')), ('eponly', T(32938, 'Only for Episodes')),
+                        ('always', T(32035, 'Always')), ('eponly', T(32938, 'Only for Episodes/Playlists')),
                         ('never', T(32033, 'Never'))
                     )
                 ).description(T(32939, 'Only applies to video player UI')),

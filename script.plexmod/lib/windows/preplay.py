@@ -2,28 +2,23 @@ from __future__ import absolute_import
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
-
-from . import busy
-from . import opener
-from . import info
-from . import videoplayer
-from . import playersettings
-from . import search
-from . import dropdown
-from . import windowutils
-from . import optionsdialog
-from . import preplayutils
-from . import pagination
-from .mixins import RatingsMixin
-
 from plexnet import plexplayer, media
 
-from lib import util
 from lib import metadata
-
+from lib import util
 from lib.util import T
-
+from . import busy
+from . import dropdown
+from . import info
+from . import kodigui
+from . import opener
+from . import optionsdialog
+from . import pagination
+from . import playersettings
+from . import search
+from . import videoplayer
+from . import windowutils
+from .mixins import RatingsMixin
 
 VIDEO_RELOAD_KW = dict(includeExtras=1, includeExtrasCount=10, includeChapters=1, includeReviews=1)
 
@@ -310,7 +305,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
     def delete(self):
         button = optionsdialog.show(
             T(32326, 'Really delete?'),
-            T(32327, 'Are you sure you really want to delete this media?'),
+            T(33035, "Delete {}: {}?").format(type(self.video).__name__, self.video.defaultTitle),
             T(32328, 'Yes'),
             T(32329, 'No')
         )
@@ -528,6 +523,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
         self.setProperty('duration', util.durationToText(self.video.duration.asInt()))
         self.setProperty('summary', self.video.summary.strip().replace('\t', ' '))
         self.setProperty('unwatched', not self.video.isWatched and '1' or '')
+        self.setBoolProperty('watched', self.video.isFullyWatched)
 
         directors = u' / '.join([d.tag for d in self.video.directors()][:3])
         directorsLabel = len(self.video.directors) > 1 and T(32401, u'DIRECTORS').upper() or T(32383, u'DIRECTOR').upper()
@@ -542,7 +538,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
             self.setProperty('content.rating', '')
             self.setProperty('thumb', self.video.defaultThumb.asTranscodedImageURL(*self.THUMB_POSTER_DIM))
             self.setProperty('preview', self.video.thumb.asTranscodedImageURL(*self.PREVIEW_DIM))
-            self.setProperty('info', u'{0} {1} {2} {3}'.format(T(32303, 'Season'), self.video.parentIndex, T(32304, 'Episode'), self.video.index))
+            self.setProperty('info', u'{0} {1}'.format(T(32303, 'Season').format(self.video.parentIndex), T(32304, 'Episode').format(self.video.index)))
             self.setProperty('date', util.cleanLeadingZeros(self.video.originallyAvailableAt.asDatetime('%B %d, %Y')))
             self.setProperty('related.header', T(32306, 'Related Shows'))
         elif self.video.type == 'movie':

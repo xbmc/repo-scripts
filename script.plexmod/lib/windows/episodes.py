@@ -3,29 +3,26 @@ from __future__ import absolute_import
 import requests.exceptions
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
+from plexnet import plexapp, playlist, plexplayer
 
-from lib import util
 from lib import backgroundthread
 from lib import metadata
 from lib import player
-
-from plexnet import plexapp, playlist, plexplayer
-
+from lib import util
+from lib.util import T
 from . import busy
-from . import videoplayer
 from . import dropdown
-from . import windowutils
-from . import opener
-from . import search
-from . import playersettings
 from . import info
+from . import kodigui
+from . import opener
 from . import optionsdialog
 from . import pagination
 from . import playbacksettings
-
-from lib.util import T
-from .mixins import SeasonsMixin, RatingsMixin
+from . import playersettings
+from . import search
+from . import videoplayer
+from . import windowutils
+from .mixins import SeasonsMixin, RatingsMixin, SpoilersMixin
 
 VIDEO_RELOAD_KW = dict(includeExtras=1, includeExtrasCount=10, includeChapters=1)
 
@@ -73,8 +70,10 @@ class EpisodesPaginator(pagination.MCLPaginator):
         return mli
 
     def prepareListItem(self, data, mli):
+        mli.setBoolProperty('watched', mli.dataSource.isFullyWatched)
         if not mli.dataSource.isWatched:
             mli.setProperty('unwatched.count', str(mli.dataSource.unViewedLeafCount))
+            mli.setProperty('unwatched', '1')
         mli.setProperty('progress', util.getProgressImage(mli.dataSource))
 
     def setEpisode(self, ep):
@@ -172,7 +171,7 @@ class RelatedPaginator(pagination.BaseRelatedPaginator):
         return self.parentWindow.show_.getRelated(offset=offset, limit=amount)
 
 
-class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, RatingsMixin,
+class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, RatingsMixin, SpoilersMixin,
                      playbacksettings.PlaybackSettingsMixin):
     xmlFile = 'script-plex-episodes.xml'
     path = util.ADDON.getAddonInfo('path')
@@ -216,25 +215,16 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
     def __init__(self, *args, **kwargs):
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
         windowutils.UtilMixin.__init__(self)
+        SpoilersMixin.__init__(self, *args, **kwargs)
         self.episode = None
         self.reset(kwargs.get('episode'), kwargs.get('season'), kwargs.get('show'))
-        self.initialEpisode = kwargs.get('episode')
         self.parentList = kwargs.get('parentList')
-        self.lastItem = None
-        self.lastFocusID = None
-        self.lastNonOptionsFocusID = None
-        self.episodesPaginator = None
-        self.relatedPaginator = None
         self.cameFrom = kwargs.get('came_from')
         self.tasks = backgroundthread.Tasks()
-        self.initialized = False
-        self.currentItemLoaded = False
-        self.closing = False
-        self.manuallySelected = False
-        self._videoProgress = None
 
     def reset(self, episode, season=None, show=None):
         self.episode = episode
+        self.initialEpisode = episode
         self.season = season if season is not None else self.episode.season()
         try:
             self.show_ = show or (self.episode or self.season).show().reload(includeExtras=1, includeExtrasCount=10,
@@ -242,11 +232,19 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         except IndexError:
             raise util.NoDataException
 
+        self.initialized = False
+        self.closing = False
         self.parentList = None
+        self.episodesPaginator = None
+        self.relatedPaginator = None
         self.seasons = None
         self.manuallySelected = False
+        self.currentItemLoaded = False
+        self.lastItem = None
+        self.lastFocusID = None
+        self.lastNonOptionsFocusID = None
         self._videoProgress = None
-        #self.initialized = False
+        self.openedWithAutoPlay = False
 
     def doClose(self):
         self.closing = True
@@ -272,23 +270,31 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         self.extraListControl = kodigui.ManagedControlList(self, self.EXTRA_LIST_ID, 5)
         self.relatedListControl = kodigui.ManagedControlList(self, self.RELATED_LIST_ID, 5)
 
+        if not self.openedWithAutoPlay:
+            # we may have set up the hooks before
+            self._setup_hooks()
         self._setup()
         self.postSetup()
 
     def doAutoPlay(self):
         # First reload the video to get all the other info
         self.initialEpisode.reload(checkFiles=1, **VIDEO_RELOAD_KW)
+
+        # We're not hitting onFirstInit when autoplaying from home, setup hooks here, so we can grab video progress
+        self._setup_hooks()
+        self.openedWithAutoPlay = True
         return self.playButtonClicked(force_episode=self.initialEpisode, from_auto_play=True)
 
     def onFirstInit(self):
         self._onFirstInit()
 
         if self.show_ and self.show_.theme and not util.getSetting("slow_connection", False) and \
-                (not self.cameFrom or self.cameFrom != self.show_.ratingKey):
+                (not self.cameFrom or self.cameFrom != self.show_.ratingKey) and not self.openedWithAutoPlay:
             volume = self.show_.settings.getThemeMusicValue()
             if volume > 0:
                 player.PLAYER.playBackgroundMusic(self.show_.theme.asURL(True), volume,
                                                   self.show_.ratingKey)
+        self.openedWithAutoPlay = False
 
     @busy.dialog()
     def onReInit(self):
@@ -304,9 +310,18 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         util.DEBUG_LOG("Episodes: {}: Got progress info: {}".format(
             self.episode and self.episode.ratingKey or None, self._videoProgress))
         try:
-            self.selectEpisode(progress_data=self._videoProgress)
+            redirect = self.selectEpisode(progress_data=self._videoProgress)
         except AttributeError:
             raise util.NoDataException
+
+        if redirect:
+            util.DEBUG_LOG("Got episode progress for a different season, redirecting")
+            self.episodeListControl.reset()
+            self.relatedListControl.reset()
+            self.reset(episode=redirect)
+            self._setup()
+            self.postSetup()
+            return
 
         mli = self.episodeListControl.getSelectedItem()
         if not mli or not self.episodesPaginator:
@@ -353,9 +368,11 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
     def setup(self):
         self._setup()
 
-    def _setup(self):
+    def _setup_hooks(self):
         player.PLAYER.on('new.video', self.onNewVideo)
         player.PLAYER.on('video.progress', self.onVideoProgress)
+
+    def _setup(self):
         (self.season or self.show_).reload(checkFiles=1, **VIDEO_RELOAD_KW)
 
         if not self.episodesPaginator:
@@ -401,12 +418,21 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
                 # progress can be False (no entry), a number (progress), or True (fully watched just now)
                 # select it if it's not watched or in progress
                 if progress is True:
+                    # ep was just watched
                     just_fully_watched = True
                     mli.setProperty('unwatched', '')
+                    mli.setProperty('watched', '1')
                     mli.setProperty('progress', '')
+                    mli.setProperty('unwatched.count', '')
+                    mli.dataSource.set('viewCount', 1)
+                    self.setUserItemInfo(mli, fully_watched=True)
 
                 elif progress and progress > 60000:
+                    # ep has progress
+                    mli.setProperty('watched', '')
                     mli.setProperty('progress', util.getProgressImage(mli.dataSource, view_offset=progress))
+                    mli.dataSource.set('viewOffset', progress)
+                    self.setUserItemInfo(mli, watched=True)
                     set_main_progress_to = progress
 
                 # after immediately updating the watched state, if we still have data left, continue
@@ -436,6 +462,13 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
             # no matching episode found
             mli = self.episodeListControl.getSelectedItem()
             self.setProgress(mli, view_offset=0)
+
+        if progress_data_left:
+            # we've probably watched something in the next season
+            key = '/library/metadata/{0}'.format(list(progress_data_left.keys())[-1])
+            ep = plexapp.SERVERMANAGER.selectedServer.getObject(key)
+            if ep.parentIndex != self.show_.parentIndex:
+                return ep
 
         self.episode = None
 
@@ -773,17 +806,21 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         episode = mli.dataSource
 
         if episode.index:
-            subtitle = u'{0} {1} {2} {3}'.format(T(32303, 'Season'), episode.parentIndex, T(32304, 'Episode'), episode.index)
+            subtitle = u'{0} {1}'.format(T(32303, 'Season').format(episode.parentIndex),
+                                         T(32304, 'Episode').format(episode.index))
         else:
             subtitle = episode.originallyAvailableAt.asDatetime('%B %d, %Y')
 
+        hide_spoilers = self.hideSpoilers(episode)
+
         opener.handleOpen(
             info.InfoWindow,
-            title=episode.title,
+            title=hide_spoilers and self.noTitles and T(33008, '') or episode.title,
             sub_title=subtitle,
             thumb=episode.thumb,
+            thumb_opts=self.getThumbnailOpts(episode, hide_spoilers=hide_spoilers),
             thumb_fallback='script.plex/thumb_fallbacks/show.png',
-            info=episode.summary,
+            info=hide_spoilers and T(33008, '') or episode.summary,
             background=self.getProperty('background'),
             is_16x9=True,
             video=episode
@@ -828,7 +865,12 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
 
         pl = playlist.LocalPlaylist(self.show_.all(), self.show_.getServer())
         try:
-            if len(pl):  # Don't use playlist if it's only this video
+            # inject our show in case we need to access show metadata from the player
+            episode._show = self.show_
+            if len(pl) > 1:  # Don't use playlist if it's only this video
+                for ep in pl:
+                    ep._show = self.show_
+
                 pl.setCurrent(episode)
                 self.processCommand(videoplayer.play(play_queue=pl, resume=resume))
                 return True
@@ -922,7 +964,7 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         elif choice['key'] == 'to_section':
             self.goHome(self.show_.getLibrarySectionId())
         elif choice['key'] == 'delete':
-            self.delete()
+            self.delete(mli.dataSource)
         elif choice['key'] == 'playback_settings':
             self.playbackSettings(self.show_, pos, bottom)
 
@@ -946,10 +988,11 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         choice['key'].set('selected', 1)
         self.setPostReloadItemInfo(ds, mli)
 
-    def delete(self):
+    def delete(self, item):
         button = optionsdialog.show(
             T(32326, 'Really delete?'),
-            T(32327, 'Are you sure you really want to delete this media?'),
+            T(33036, "Delete episode S{0:02d}E{1:02d} from {2}?").format(item.parentIndex.asInt(),
+                                                                         item.index.asInt(), item.defaultTitle),
             T(32328, 'Yes'),
             T(32329, 'No')
         )
@@ -1027,8 +1070,10 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         self.setProperty('season.title', (self.season or self.show_).title)
 
         if self.season:
-            self.setProperty('episodes.header', u'{0} \u2022 {1} {2}'.format(showTitle, T(32303, 'Season'), self.season.index))
-            self.setProperty('extras.header', u'{0} \u2022 {1} {2}'.format(T(32305, 'Extras'), T(32303, 'Season'), self.season.index))
+            self.setProperty('episodes.header', u'{0} \u2022 {1}'.format(showTitle,
+                                                                         T(32303, 'Season').format(self.season.index)))
+            self.setProperty('extras.header', u'{0} \u2022 {1}'.format(T(32305, 'Extras'),
+                                                                       T(32303, 'Season').format(self.season.index)))
         else:
             self.setProperty('episodes.header', u'Episodes')
             self.setProperty('extras.header', u'Extras')
@@ -1042,27 +1087,73 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
     def updateItems(self, item=None):
         if item:
             item.setProperty('unwatched', not item.dataSource.isWatched and '1' or '')
+            item.setProperty('watched', item.dataSource.isFullyWatched and '1' or '')
             self.setProgress(item)
             item.setProperty('progress', util.getProgressImage(item.dataSource))
             (self.season or self.show_).reload()
+
+            self.setUserItemInfo(item)
         else:
             self.fillEpisodes(update=True)
 
         if self.episode:
             self.episode.reload()
 
+    def setUserItemInfo(self, mli, video=None, types=("title", "thumbnail", "summary"), watched=None,
+                        fully_watched=None, hide_spoilers=None):
+        video = video or mli.dataSource
+
+        properties = {}
+        methods = []
+        if self.noSpoilers == "off" and not hide_spoilers:
+            # no special handling
+            if "title" in types:
+                properties["title"] = video.title
+                methods.append(("setLabel", video.title))
+            if "summary" in types:
+                properties["summary"] = video.summary.strip().replace('\t', ' ')
+
+            if "thumbnail" in types:
+                methods.append(("setThumbnailImage", video.thumb.asTranscodedImageURL(*self.THUMB_AR16X9_DIM)))
+
+        else:
+            hide_spoilers = hide_spoilers if hide_spoilers is not None else \
+                self.hideSpoilers(video, fully_watched=fully_watched, watched=watched)
+            hide_title = hide_spoilers and self.noTitles
+            if "title" in types:
+                tit = hide_title and T(33008, '') or video.title
+                properties["title"] = tit
+                methods.append(("setLabel", tit))
+
+            if "summary" in types:
+                properties["summary"] = hide_spoilers and T(33008, '') or video.summary.strip().replace('\t', ' ')
+
+            if "thumbnail" in types:
+                methods.append(("setThumbnailImage",
+                                video.thumb.asTranscodedImageURL(
+                                    *self.THUMB_AR16X9_DIM,
+                                    **self.getThumbnailOpts(video, fully_watched=fully_watched, watched=watched,
+                                                            hide_spoilers=hide_spoilers)
+                                )
+                                ))
+
+        for property, value in properties.items():
+            mli.setProperty(property, value)
+
+        for method, value in methods:
+            getattr(mli, method)(value)
+
     def setItemInfo(self, video, mli):
         # video.reload(checkFiles=1)
         mli.setProperty('background', util.backgroundFromArt(video.art, width=self.width, height=self.height))
-        mli.setProperty('title', video.title)
         mli.setProperty('show.title', video.grandparentTitle or (self.show_.title if self.show_ else ''))
         mli.setProperty('duration', util.durationToText(video.duration.asInt()))
-        mli.setProperty('summary', video.summary.strip().replace('\t', ' '))
         mli.setProperty('video.rendering', video.videoCodecRendering)
+        self.setUserItemInfo(mli, video, types=("title", "summary"))
 
         if video.index:
-            mli.setProperty('season', u'{0} {1}'.format(T(32303, 'Season'), video.parentIndex))
-            mli.setProperty('episode', u'{0} {1}'.format(T(32304, 'Episode'), video.index))
+            mli.setProperty('season', T(32303, 'Season').format(video.parentIndex))
+            mli.setProperty('episode', T(32304, 'Episode').format(video.index))
         else:
             mli.setProperty('season', '')
             mli.setProperty('episode', '')
@@ -1079,6 +1170,7 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
     def setPostReloadItemInfo(self, video, mli):
         self.setItemAudioAndSubtitleInfo(video, mli)
         mli.setProperty('unwatched', not video.isWatched and '1' or '')
+        mli.setProperty('watched', video.isFullyWatched and '1' or '')
         mli.setProperty('video.res', video.resolutionString())
         mli.setProperty('audio.codec', video.audioCodecString())
         mli.setProperty('video.codec', video.videoCodecString())
@@ -1141,26 +1233,28 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
 
     def createListItem(self, episode):
         if episode.index:
-            subtitle = u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), episode.parentIndex, T(32311, 'E'), episode.index)
+            subtitle = u'{0} \u2022 {1}'.format(T(32310, 'S').format(episode.parentIndex),
+                                                T(32311, 'E').format(episode.index))
         else:
             subtitle = episode.originallyAvailableAt.asDatetime('%m/%d/%y')
 
         mli = kodigui.ManagedListItem(
-            episode.title,
+            '',
             subtitle,
-            thumbnailImage=episode.thumb.asTranscodedImageURL(*self.THUMB_AR16X9_DIM),
             data_source=episode
         )
+        self.setUserItemInfo(mli, types=("title", "thumbnail"))
         mli.setProperty('episode.number', str(episode.index) or '')
         mli.setProperty('episode.duration', util.durationToText(episode.duration.asInt()))
         mli.setProperty('unwatched', not episode.isWatched and '1' or '')
+        mli.setProperty('watched', episode.isFullyWatched and '1' or '')
         # mli.setProperty('progress', util.getProgressImage(obj))
         return mli
 
     def fillEpisodes(self, update=False):
         items = self.episodesPaginator.paginate()
         if not update:
-            self.selectEpisode()
+            self.selectEpisode(progress_data=self._videoProgress)
         self.reloadItems(items, with_progress=True)
 
     def reloadItems(self, items, with_progress=False, skip_progress_for=None):

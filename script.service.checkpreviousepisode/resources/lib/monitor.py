@@ -15,4 +15,3 @@ class KodiEventMonitor(xbmc.Monitor):
 
     def onAbortRequested(self):
         log('onAbortRequested')
-        log("Abort Requested")

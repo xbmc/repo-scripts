@@ -1,33 +1,32 @@
 from __future__ import absolute_import
+
+import json
 import os
 import random
-import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
-import json
-import time
 import threading
 
+import plexnet
+import six
+import six.moves.urllib.error
+import six.moves.urllib.parse
+import six.moves.urllib.request
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
+from plexnet import playqueue
+from six.moves import range
 
-from lib import util
 from lib import backgroundthread
 from lib import player
-
+from lib import util
+from lib.util import T
 from . import busy
-from . import subitems
+from . import dropdown
+from . import kodigui
+from . import opener
 from . import preplay
 from . import search
-import plexnet
-from . import dropdown
-from . import opener
+from . import subitems
 from . import windowutils
-
-from plexnet import playqueue
-
-from lib.util import T
-import six
-from six.moves import range
 
 KEYS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -983,6 +982,7 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         mli.dataSource.reload()
         if mli.dataSource.isWatched:
             mli.setProperty('unwatched', '')
+            mli.setBoolProperty('watched', mli.dataSource.isFullyWatched)
             mli.setProperty('unwatched.count', '')
         else:
             if self.section.TYPE == 'show' or mli.dataSource.TYPE == 'show' or mli.dataSource.TYPE == 'season':
@@ -1295,10 +1295,6 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
             thumbDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie'])['thumb_dim']
             artDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie']).get('art_dim', (256, 256))
 
-            showUnwatched = False
-            if (self.section.TYPE in ('movie', 'show') and items[0].TYPE != 'collection') or (self.section.TYPE == 'collection' and items[0].TYPE in ('movie', 'show', 'episode')): # NOTE: A collection with Seasons doesn't have the leafCount/viewedLeafCount until you actually go into the season so we can't update the unwatched count here
-                showUnwatched = True
-
             if ITEM_TYPE == 'episode':
                 for offset, obj in enumerate(items):
                     if not self.showPanelControl:
@@ -1309,7 +1305,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                         mli.dataSource = obj
                         mli.setProperty('index', str(pos))
                         if obj.index:
-                            subtitle = u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), obj.parentIndex, T(32311, 'E'), obj.index)
+                            subtitle = u'{0} \u2022 {1}'.format(T(32310, 'S').format(obj.parentIndex),
+                                                                T(32311, 'E').format(obj.index))
                             mli.setProperty('subtitle', subtitle)
                             subtitle = "\n" + subtitle
                         else:
@@ -1324,6 +1321,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                         mli.setProperty('art', obj.defaultArt.asTranscodedImageURL(*artDim))
                         if not obj.isWatched:
                             mli.setProperty('unwatched', '1')
+                        mli.setBoolProperty('watched', obj.isFullyWatched)
+                        mli.setProperty('initialized', '1')
                     else:
                         mli.clear()
                         if obj is False:
@@ -1378,9 +1377,10 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                                 mli.setThumbnailImage(obj.defaultThumb.asTranscodedImageURL(*thumbDim))
                         mli.dataSource = obj
                         mli.setProperty('summary', obj.get('summary'))
+                        mli.setProperty('year', obj.get('year'))
 
-                        if showUnwatched and obj.TYPE != 'collection':
-                            if not obj.isDirectory():
+                        if obj.TYPE != 'collection':
+                            if not obj.isDirectory() and obj.get('duration').asInt():
                                 mli.setLabel2(util.durationToText(obj.fixedDuration()))
                             mli.setProperty('art', obj.defaultArt.asTranscodedImageURL(*artDim))
                             if not obj.isWatched and obj.TYPE != "Directory":
@@ -1388,6 +1388,9 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
                                     mli.setProperty('unwatched.count', str(obj.unViewedLeafCount))
                                 else:
                                     mli.setProperty('unwatched', '1')
+                            elif obj.isFullyWatched and obj.TYPE != "Directory":
+                                mli.setBoolProperty('watched', '1')
+                            mli.setProperty('initialized', '1')
 
                         mli.setProperty('progress', util.getProgressImage(obj))
                     else:

@@ -291,10 +291,7 @@ class PlexPlayer(BasePlayer):
                                             "mediaBufferSize={}".format(str(CACHE_SIZE * 1024)))
             decisionPath = http.addUrlParam(decisionPath, "hasMDE=1")
 
-            if not addonSettings.oldprofile:
-                decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Client-Profile-Name=Generic')
-            else:
-                decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Client-Profile-Name=Chrome')
+            decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Client-Profile-Name=Generic')
 
         return decisionPath
 
@@ -322,11 +319,7 @@ class PlexPlayer(BasePlayer):
         builder.extras = []
         builder.addParam("protocol", "hls")
 
-        # TODO: This should be Generic, but will need to re-evaluate the augmentations with that change
-        if not addonSettings.oldprofile:
-            builder.addParam("X-Plex-Client-Profile-Name", "Generic")
-        else:
-            builder.addParam("X-Plex-Client-Profile-Name", "Chrome")
+        builder.addParam("X-Plex-Client-Profile-Name", "Generic")
 
         if self.choice.subtitleDecision == self.choice.SUBTITLES_SOFT_ANY:
             builder.addParam("skipSubtitles", "1")
@@ -338,11 +331,7 @@ class PlexPlayer(BasePlayer):
         # Augment the server's profile for things that depend on the Roku's configuration.
         if self.item.settings.supportsAudioStream("ac3", 6):
             builder.extras.append("append-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=hls&audioCodec=ac3)")
-            if not addonSettings.oldprofile:
-                builder.extras.append("add-direct-play-profile(type=videoProfile&container=mkv&videoCodec=*&audioCodec=ac3)")
-            else:
-                builder.extras.append(
-                    "add-direct-play-profile(type=videoProfile&container=matroska&videoCodec=*&audioCodec=ac3)")
+            builder.extras.append("add-direct-play-profile(type=videoProfile&container=mkv&videoCodec=*&audioCodec=ac3)")
 
         return builder
 
@@ -356,10 +345,7 @@ class PlexPlayer(BasePlayer):
         builder.extras = []
         builder.addParam("protocol", "http")
         builder.addParam("copyts", "1")
-        if not addonSettings.oldprofile:
-            builder.addParam("X-Plex-Client-Profile-Name", "Generic")
-        else:
-            builder.addParam("X-Plex-Client-Profile-Name", "Chrome")
+        builder.addParam("X-Plex-Client-Profile-Name", "Generic")
 
         obj.subtitleUrl = None
 
@@ -555,149 +541,6 @@ class PlexPlayer(BasePlayer):
 
         return builder
 
-    def buildTranscodeMkvLegacy(self, obj, directStream=True):
-        util.DEBUG_LOG('buildTranscodeMkvLegacy()')
-        obj.streamFormat = "mkv"
-        obj.streamBitrates = [0]
-        obj.transcodeEndpoint = "/video/:/transcode/universal/start.mkv"
-
-        builder = http.HttpRequest(obj.transcodeServer.buildUrl(obj.transcodeEndpoint, True))
-        builder.extras = []
-        builder.addParam("protocol", "http")
-        builder.addParam("copyts", "1")
-        builder.addParam("X-Plex-Client-Profile-Name", "Generic")
-
-        obj.subtitleUrl = None
-
-        # fixme: still necessary?
-        if True:  # if self.choice.subtitleDecision == self.choice.SUBTITLES_BURN:  # Must burn transcoded because we can't set offset
-            builder.addParam("subtitles", "burn")
-            captionSize = captions.CAPTIONS.getBurnedSize()
-            if captionSize is not None:
-                builder.addParam("subtitleSize", captionSize)
-
-        else:
-            # TODO(rob): can we safely assume the id will also be 3 (one based index).
-            # If not, we will have to get tricky and select the subtitle stream after
-            # video playback starts via roCaptionRenderer: GetSubtitleTracks() and
-            # ChangeSubtitleTrack()
-
-            obj.subtitleConfig = {'TrackName': "mkv/3"}
-
-            # Allow text conversion of subtitles if we only burn image formats
-            if self.item.settings.getPreference("burn_subtitles") == "image":
-                builder.addParam("advancedSubtitles", "text")
-
-            builder.addParam("subtitles", "auto")
-
-        if directStream:
-            audioCodecs = "eac3,ac3,dca,aac,mp3,mp2,pcm,flac,alac,wmav2,wmapro,wmavoice,opus,vorbis,truehd"
-        else:
-            audioCodecs = "mp3,ac3,aac,opus"
-
-        # Allow virtually anything in Kodi playback.
-
-        # DP might not do anything here
-        # builder.extras.append(
-        #     "add-direct-play-profile(type=videoProfile&videoCodec="
-        #     "h264,mpeg1video,mpeg2video,mpeg4,msmpeg4v2,msmpeg4v3,vc1,wmv3&container=*&"
-        #     "audioCodec="+audioCodecs+"&protocol=http)")
-
-        builder.extras.append(
-            "add-transcode-target(type=videoProfile&videoCodec="
-            "h264,mpeg1video,mpeg2video,mpeg4,msmpeg4v2,msmpeg4v3,wmv3&container=mkv&"
-            "audioCodec="+audioCodecs+"&protocol=http&context=streaming)")
-
-        # builder.extras.append(
-        #     "append-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=http&audioCodec=" +
-        #     audioCodecs + ")")
-
-        # if self.item.settings.supportsSurroundSound():
-        #     if self.choice.audioStream is not None:
-        #         numChannels = self.choice.audioStream.channels.asInt(8)
-        #     else:
-        #         numChannels = 8
-        #
-        #     for codec in ("ac3", "eac3", "dca"):
-        #         if self.item.settings.supportsAudioStream(codec, numChannels):
-        #             builder.extras.append("append-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=http&audioCodec=" + codec + ")")
-        #             builder.extras.append("add-direct-play-profile(type=videoProfile&videoCodec=*&container=mkv&audioCodec=" + codec + ")")
-        #             if codec == "dca":
-        #                 builder.extras.append(
-        #                     "add-limitation(scope=videoAudioCodec&scopeName=dca&type=upperBound&name=audio.channels&value=8&isRequired=false)"
-        #                 )
-        #
-        # for codec in ("ac3", "eac3", "dca"):
-        #     builder.extras.append("append-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=http&audioCodec=" + codec + ")")
-        #     builder.extras.append("add-direct-play-profile(type=videoProfile&videoCodec=*&container=mkv&audioCodec=" + codec + ")")
-
-        # limit OPUS to 334kbit
-        numChannels = self.choice.audioStream.channels.asInt(8) if self.choice.audioStream else 8
-
-        if numChannels == 8:
-            # 7.1
-            opusBitrate = 334
-        elif numChannels >= 6:
-            # 5.1
-            opusBitrate = 256
-        else:
-            # 2
-            opusBitrate = 128
-
-        builder.extras.append(
-            "add-limitation(scope=videoAudioCodec&scopeName=opus&type=upperBound&name=audio.bitrate&"
-            "value={}&isRequired=false)".format(opusBitrate)
-        )
-
-        # limit AC3
-        builder.extras.append(
-            "add-limitation(scope=videoAudioCodec&scopeName=ac3&type=upperBound&name=audio.bitrate&value=640)"
-        )
-
-        # limit audio to Kodi audio channels
-        builder.extras.append(
-            "add-limitation(scope=videoAudioCodec&scopeName=*&type=upperBound&"
-            "name=audio.channels&value={})".format(self.audioChannels)
-        )
-
-        # AAC sample rate cannot be less than 22050hz (HLS is capable).
-        if self.choice.audioStream is not None and self.choice.audioStream.samplingRate.asInt(22050) < 22050:
-            builder.extras.append(
-                "add-limitation(scope=videoAudioCodec&scopeName=aac&type=lowerBound&"
-                "name=audio.samplingRate&value=22050&isRequired=false)")
-
-        # HEVC
-        if self.item.settings.getPreference("allow_hevc", True):
-            builder.extras.append(
-                "append-transcode-target-codec(type=videoProfile&context=streaming&container=mkv&"
-                "protocol=http&videoCodec=hevc)")
-            # builder.extras.append(
-            #     "add-direct-play-profile(type=videoProfile&videoCodec=hevc&container=*&audioCodec=*)")
-
-        # VP9
-        if self.item.settings.getGlobal("vp9Support"):
-            builder.extras.append(
-                "append-transcode-target-codec(type=videoProfile&context=streaming&container=mkv&"
-                "protocol=http&videoCodec=vp9)")
-            # builder.extras.append(
-            #     "add-direct-play-profile(type=videoProfile&videoCodec=vp9&container=*&audioCodec=*)")
-
-        # AV1
-        if self.item.settings.getPreference("allow_av1", False):
-            builder.extras.append(
-                "append-transcode-target-codec(type=videoProfile&context=streaming&container=mkv&"
-                "protocol=http&videoCodec=av1)")
-            # builder.extras.append(
-            #     "add-direct-play-profile(type=videoProfile&videoCodec=av1&container=*&audioCodec=*)")
-
-        # VC1
-        if self.item.settings.getPreference("allow_vc1", True):
-            builder.extras.append(
-                "append-transcode-target-codec(type=videoProfile&context=streaming&container=mkv&"
-                "protocol=http&videoCodec=vc1)")
-
-        return builder
-
     def buildDirectPlay(self, obj, partIndex):
         util.DEBUG_LOG('buildDirectPlay()')
         part = self.media.parts[partIndex]
@@ -767,10 +610,7 @@ class PlexPlayer(BasePlayer):
 
         # if server.supportsFeature("mkvTranscode") and self.item.settings.getPreference("transcode_format", 'mkv') != "hls":
         if server.supportsFeature("mkvTranscode"):
-            if not addonSettings.oldprofile:
-                builder = self.buildTranscodeMkv(obj, directStream=directStream)
-            else:
-                builder = self.buildTranscodeMkvLegacy(obj, directStream=directStream)
+            builder = self.buildTranscodeMkv(obj, directStream=directStream)
         else:
             builder = self.buildTranscodeHls(obj)
 

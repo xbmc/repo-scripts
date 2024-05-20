@@ -1,15 +1,14 @@
 from __future__ import absolute_import
+
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-
-from . import kodigui
-from . import dropdown
-from . import busy
-
-from lib import util
 from plexnet import plexapp
 
+from lib import util
 from lib.util import T
+from . import busy
+from . import dropdown
+from . import kodigui
 
 
 class UserSelectWindow(kodigui.BaseWindow):

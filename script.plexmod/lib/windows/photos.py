@@ -1,20 +1,21 @@
 from __future__ import absolute_import
-import threading
-import time
+
+import hashlib
 import os
 import shutil
-import hashlib
+import threading
+import time
+
 import requests
-
-from kodi_six import xbmc, xbmcvfs
+from kodi_six import xbmc
 from kodi_six import xbmcgui
-
-from . import kodigui
-from . import busy
-
-from lib import util, colors
 from plexnet import plexapp, plexplayer, playqueue
 from plexnet import util as plexnetUtil
+
+from lib import util, colors
+from . import busy
+from . import kodigui
+
 
 class PhotoWindow(kodigui.BaseWindow):
     xmlFile = 'script-plex-photo.xml'

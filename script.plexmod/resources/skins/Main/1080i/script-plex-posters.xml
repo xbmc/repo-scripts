@@ -187,12 +187,33 @@
                                 </control>
                                 <control type="group">
                                     <control type="image">
-                                        <visible>!String.IsEmpty(ListItem.Property(unwatched))</visible>
+                                        <visible>String.IsEmpty(ListItem.Property(use_alt_watched)) + !String.IsEmpty(ListItem.Property(unwatched)) + String.IsEmpty(ListItem.Property(watched))</visible>
                                         <posx>199</posx>
                                         <posy>0</posy>
                                         <width>45</width>
                                         <height>45</height>
-                                        <texture>script.plex/indicators/unwatched.png</texture>
+                                        <texture fallback="script.plex/indicators/unwatched.png">special://profile/addon_data/script.plexmod/media/unwatched.png</texture>
+                                    </control>
+                                    <control type="group">
+                                        <visible>!String.IsEmpty(Window.Property(use_alt_watched)) + !String.IsEmpty(ListItem.Property(initialized)) + String.IsEmpty(ListItem.Property(unwatched)) + String.IsEmpty(ListItem.Property(unwatched.count)) + String.IsEmpty(ListItem.Property(progress))</visible>
+                                        <posx>198</posx>
+                                        <posy>0</posy>
+                                        <control type="image">
+                                            <posx>0</posx>
+                                            <posy>0</posy>
+                                            <width>46</width>
+                                            <height>46</height>
+                                            <visible>String.IsEmpty(ListItem.Property(hide_aw_bg))</visible>
+                                            <texture>script.plex/white-square-bl-rounded_w.png</texture>
+                                            <colordiffuse>CC000000</colordiffuse>
+                                        </control>
+                                        <control type="image">
+                                            <posx>15</posx>
+                                            <posy>15</posy>
+                                            <width>16</width>
+                                            <height>16</height>
+                                            <texture fallback="script.plex/indicators/watched.png">special://profile/addon_data/script.plexmod/media/watched.png</texture>
+                                        </control>
                                     </control>
                                     <control type="group">
                                         <visible>!String.IsEmpty(ListItem.Property(unwatched.count))</visible>
@@ -235,6 +256,18 @@
                                     <align>center</align>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>$INFO[ListItem.Label]</label>
+                                </control>
+                                <control type="label">
+                                    <visible>!String.IsEmpty(ListItem.Property(year))</visible>
+                                    <scroll>false</scroll>
+                                    <posx>0</posx>
+                                    <posy>396</posy>
+                                    <width>244</width>
+                                    <height>72</height>
+                                    <font>font10</font>
+                                    <align>center</align>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>$INFO[ListItem.Property(year)]</label>
                                 </control>
                             </control>
                         </control>
@@ -299,12 +332,33 @@
                                     </control>
                                     <control type="group">
                                         <control type="image">
-                                            <visible>!String.IsEmpty(ListItem.Property(unwatched))</visible>
+                                            <visible>String.IsEmpty(ListItem.Property(use_alt_watched)) + !String.IsEmpty(ListItem.Property(unwatched)) + String.IsEmpty(ListItem.Property(watched))</visible>
                                             <posx>199</posx>
                                             <posy>0</posy>
                                             <width>45</width>
                                             <height>45</height>
-                                            <texture>script.plex/indicators/unwatched.png</texture>
+                                            <texture fallback="script.plex/indicators/unwatched.png">special://profile/addon_data/script.plexmod/media/unwatched.png</texture>
+                                        </control>
+                                        <control type="group">
+                                            <visible>!String.IsEmpty(Window.Property(use_alt_watched)) + !String.IsEmpty(ListItem.Property(initialized)) + String.IsEmpty(ListItem.Property(unwatched)) + String.IsEmpty(ListItem.Property(unwatched.count)) + String.IsEmpty(ListItem.Property(progress))</visible>
+                                            <posx>198</posx>
+                                            <posy>0</posy>
+                                            <control type="image">
+                                                <posx>0</posx>
+                                                <posy>0</posy>
+                                                <width>46</width>
+                                                <height>46</height>
+                                                <visible>String.IsEmpty(ListItem.Property(hide_aw_bg))</visible>
+                                                <texture>script.plex/white-square-bl-rounded_w.png</texture>
+                                                <colordiffuse>CC000000</colordiffuse>
+                                            </control>
+                                            <control type="image">
+                                                <posx>15</posx>
+                                                <posy>15</posy>
+                                                <width>16</width>
+                                                <height>16</height>
+                                                <texture fallback="script.plex/indicators/watched.png">special://profile/addon_data/script.plexmod/media/watched.png</texture>
+                                            </control>
                                         </control>
                                         <control type="group">
                                             <visible>!String.IsEmpty(ListItem.Property(unwatched.count))</visible>
@@ -347,6 +401,18 @@
                                         <align>center</align>
                                         <textcolor>FFFFFFFF</textcolor>
                                         <label>$INFO[ListItem.Label]</label>
+                                    </control>
+                                    <control type="label">
+                                        <visible>!String.IsEmpty(ListItem.Property(year))</visible>
+                                        <scroll>false</scroll>
+                                        <posx>0</posx>
+                                        <posy>396</posy>
+                                        <width>244</width>
+                                        <height>72</height>
+                                        <font>font10</font>
+                                        <align>center</align>
+                                        <textcolor>FFFFFFFF</textcolor>
+                                        <label>$INFO[ListItem.Property(year)]</label>
                                     </control>
                                 </control>
                                 <control type="image">

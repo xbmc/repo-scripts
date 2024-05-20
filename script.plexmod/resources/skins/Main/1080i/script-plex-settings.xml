@@ -200,6 +200,7 @@
                                 <align>left</align>
                                 <aligny>center</aligny>
                                 <textcolor>FFFFFFFF</textcolor>
+                                <scroll>true</scroll>
                                 <label>$INFO[ListItem.Label]</label>
                             </control>
                             <control type="label">
@@ -292,6 +293,7 @@
                                     <align>left</align>
                                     <aligny>center</aligny>
                                     <textcolor>FF000000</textcolor>
+                                    <scroll>true</scroll>
                                     <label>$INFO[ListItem.Label]</label>
                                 </control>
                                 <control type="label">
@@ -303,6 +305,7 @@
                                     <align>right</align>
                                     <aligny>center</aligny>
                                     <textcolor>FF000000</textcolor>
+                                    <scroll>true</scroll>
                                     <label>$INFO[ListItem.Label2]</label>
                                 </control>
                             </control>
@@ -320,6 +323,7 @@
                                 <align>left</align>
                                 <aligny>center</aligny>
                                 <textcolor>FFFFFFFF</textcolor>
+                                <scroll>true</scroll>
                                 <label>$INFO[ListItem.Label]</label>
                             </control>
                             <control type="label">
@@ -331,6 +335,7 @@
                                 <align>right</align>
                                 <aligny>center</aligny>
                                 <textcolor>FFFFFFFF</textcolor>
+                                <scroll>true</scroll>
                                 <label>$INFO[ListItem.Label2]</label>
                             </control>
                             <control type="image">

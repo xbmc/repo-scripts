@@ -7,10 +7,13 @@ except ImportError:
 
 import plexnet.http
 
+from six import text_type
+
 from lib import util
 from lib.advancedsettings import adv
 
 from plexnet.util import parsePlexDirectHost
+from plexnet.plexconnection import DOCKER_NETWORK, IPv4Address
 
 HOSTS_RE = re.compile(r'\s*<hosts>.*</hosts>', re.S | re.I)
 HOST_RE = re.compile(r'<entry name="(?P<hostname>.+)">(?P<ip>.+)</entry>')
@@ -48,9 +51,14 @@ class PlexHostsManager(object):
         """
         for address in hosts:
             parsed = urlparse(address)
+            ip = parsePlexDirectHost(parsed.hostname)
+            # ignore docker V4 hosts
+            if util.addonSettings.ignoreDockerV4 and ":" not in ip and IPv4Address(text_type(ip)) in DOCKER_NETWORK:
+                util.DEBUG_LOG("Ignoring plex.direct local Docker IPv4 address: {}".format(source, parsed.hostname))
+                continue
+
             if parsed.hostname not in self._hosts:
-                self._hosts[parsed.hostname] = plexnet.http.RESOLVED_PD_HOSTS.get(parsed.hostname,
-                                                                                  parsePlexDirectHost(parsed.hostname))
+                self._hosts[parsed.hostname] = plexnet.http.RESOLVED_PD_HOSTS.get(parsed.hostname, ip)
                 util.LOG("Found new unmapped {} plex.direct host: {}".format(source, parsed.hostname))
 
     @property

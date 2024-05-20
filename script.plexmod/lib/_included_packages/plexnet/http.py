@@ -77,6 +77,8 @@ class RequestContext(dict):
 
 
 class HttpRequest(object):
+    __slots__ = ("server", "path", "hasParams", "ignoreResponse", "session", "currentResponse", "method", "url",
+                 "thread", "__dict__")
     _cancel = False
 
     def __init__(self, url, method=None, forceCertificate=False):

@@ -1,13 +1,13 @@
 from __future__ import absolute_import
-from kodi_six import xbmc
-from kodi_six import xbmcgui
-from . import kodigui
-
-from lib import util
-from lib import metadata
-from lib.util import T
 
 import plexnet
+from kodi_six import xbmc
+from kodi_six import xbmcgui
+
+from lib import metadata
+from lib import util
+from lib.util import T
+from . import kodigui
 
 
 class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):

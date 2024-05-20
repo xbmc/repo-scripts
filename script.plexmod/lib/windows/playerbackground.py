@@ -1,7 +1,9 @@
 from __future__ import absolute_import
+
 import contextlib
-from . import kodigui
+
 from lib import util
+from . import kodigui
 
 
 class PlayerBackground(kodigui.BaseWindow):

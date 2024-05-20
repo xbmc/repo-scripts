@@ -346,11 +346,11 @@ msgid "Go to {0}"
 msgstr ""
 
 msgctxt "#32303"
-msgid "Season"
+msgid "Season {}"
 msgstr ""
 
 msgctxt "#32304"
-msgid "Episode"
+msgid "Episode {}"
 msgstr ""
 
 msgctxt "#32305"
@@ -374,11 +374,11 @@ msgid "None"
 msgstr ""
 
 msgctxt "#32310"
-msgid "S"
+msgid "S{}"
 msgstr ""
 
 msgctxt "#32311"
-msgid "E"
+msgid "E{}"
 msgstr ""
 
 msgctxt "#32312"
@@ -1559,7 +1559,7 @@ msgid "Show prev/next button"
 msgstr ""
 
 msgctxt "#32938"
-msgid "Only for Episodes"
+msgid "Only for Episodes/Playlists"
 msgstr ""
 
 msgctxt "#32939"
@@ -1612,10 +1612,6 @@ msgstr ""
 
 msgctxt "#32951"
 msgid "When displaying subtitles use the extendedDisplayTitle Plex exposes."
-msgstr ""
-
-msgctxt "#32952"
-msgid "Dialog flicker fix"
 msgstr ""
 
 msgctxt "#32953"
@@ -1828,4 +1824,148 @@ msgstr ""
 
 msgctxt "#33005"
 msgid "When seeking without the OSD open, hide all time-related information from the user."
+msgstr ""
+
+msgctxt "#33006"
+msgid "No TV spoilers"
+msgstr ""
+
+msgctxt "#33007"
+msgid "When visiting an episode/season view, blur unwatched/unwatched+in-progress episode thumbnails, previews and redact summaries. When the Addon Setting \"Use episode thumbnails in continue hub\" is enabled, blur them as well."
+msgstr ""
+
+msgctxt "#33008"
+msgid "[Spoilers removed]"
+msgstr ""
+
+msgctxt "#33009"
+msgid "Blur amount for unwatched/in-progress episodes"
+msgstr ""
+
+msgctxt "#33010"
+msgid "Unwatched"
+msgstr ""
+
+msgctxt "#33011"
+msgid "Unwatched/in progress"
+msgstr ""
+
+msgctxt "#33012"
+msgid "No unwatched episode titles"
+msgstr ""
+
+msgctxt "#33013"
+msgid "When the above is anything but \"off\", hide episode titles as well."
+msgstr ""
+
+msgctxt "#33014"
+msgid "Ignore plex.direct docker hosts"
+msgstr ""
+
+msgctxt "#33015"
+msgid "When checking for plex.direct host mapping, ignore local Docker IPv4 addresses (172.16.0.0/12)."
+msgstr ""
+
+msgctxt "#33016"
+msgid "Allow TV spoilers for specific genres"
+msgstr ""
+
+msgctxt "#33017"
+msgid "Overrides the above for: {}"
+msgstr ""
+
+msgctxt "#33018"
+msgid "Cache Plex Home users"
+msgstr ""
+
+msgctxt "#33019"
+msgid "Visit media item"
+msgstr ""
+
+msgctxt "#33020"
+msgid "Play"
+msgstr ""
+
+msgctxt "#33021"
+msgid "Choose action"
+msgstr ""
+
+msgctxt "#33022"
+msgid "Use modern inverted watched states"
+msgstr ""
+
+msgctxt "#33023"
+msgid "Instead of marking unwatched items, mark watched items with a checkmark (modern clients; default: off)"
+msgstr ""
+
+msgctxt "#33024"
+msgid "Hide black backdrop in inverted watched states"
+msgstr ""
+
+msgctxt "#33025"
+msgid "When the above is enabled, hide the black backdrop of the watched state."
+msgstr ""
+
+msgctxt "#33026"
+msgid "Map path: {}"
+msgstr ""
+
+msgctxt "#33027"
+msgid "Remove mapping: {}"
+msgstr ""
+
+msgctxt "#33028"
+msgid "Hide library"
+msgstr ""
+
+msgctxt "#33029"
+msgid "Show library: {}"
+msgstr ""
+
+msgctxt "#33030"
+msgid "Choose action for: {}"
+msgstr ""
+
+msgctxt "#33031"
+msgid "Select Kodi source for {}"
+msgstr ""
+
+msgctxt "#33032"
+msgid "Show path mapping indicators"
+msgstr ""
+
+msgctxt "#33033"
+msgid "When path mapping is active for a library, display an indicator."
+msgstr ""
+
+msgctxt "#33034"
+msgid "Library settings"
+msgstr ""
+
+msgctxt "#33035"
+msgid "Delete {}: {}?"
+msgstr ""
+
+msgctxt "#33036"
+msgid "Delete episode S{0:02d}E{1:02d} from {2}?"
+msgstr ""
+
+msgctxt "#33037"
+msgid "Maximum intro offset to consider"
+msgstr ""
+
+msgctxt "#33038"
+msgid "When encountering an intro marker with a start time offset greater than this, ignore it (default: 600s/10m)"
+msgstr ""
+
+msgctxt "#33039"
+msgid "Move"
+msgstr ""
+
+msgctxt "#33040"
+msgid "Reset library order"
+msgstr ""
+
+msgctxt "#33041"
+msgid "Show hub: {}"
 msgstr ""

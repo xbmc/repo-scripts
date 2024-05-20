@@ -13,11 +13,6 @@
                     <default>false</default>
                     <control type="toggle"/>
                 </setting>
-                <setting id="oldprofile" type="boolean" label="33400" help="33401">
-                    <level>0</level>
-                    <default>false</default>
-                    <control type="toggle"/>
-                </setting>
                 <setting id="subtitle_use_extended_title" type="boolean" label="32950" help="32951">
                     <level>0</level>
                     <default>true</default>
@@ -58,6 +53,11 @@
                         <dependency type="enable" setting="retrieve_all_media_up_front">false</dependency>
                     </dependencies>
                     <control type="list" format="string"/>
+                </setting>
+                <setting id="cache_home_users" type="boolean" label="33018">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
                 </setting>
             </group>
         </category>
@@ -205,6 +205,19 @@
                         <popup>false</popup>
                     </control>
                 </setting>
+                <setting id="intro_marker_max_offset" type="integer" label="33037" help="33038">
+                    <level>0</level>
+                    <default>600</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>10</step>
+                        <maximum>1800</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <heading>33510</heading>
+                        <popup>false</popup>
+                    </control>
+                </setting>
                 <setting id="skip_marker_timer_cancel" type="boolean" label="32906" help="32907">
                     <level>0</level>
                     <default>true</default>
@@ -294,9 +307,21 @@
                     <default>true</default>
                     <control type="toggle"/>
                 </setting>
+                <setting id="episode_no_spoiler_blur" type="integer" label="33009">
+                    <level>0</level>
+                    <default>16</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>256</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
                 <setting id="playlist_visit_media" type="boolean" label="32505">
                     <level>0</level>
-                    <default>true</default>
+                    <default>false</default>
                     <control type="toggle"/>
                 </setting>
                 <setting id="postplay_timeout" type="integer" label="32501" help="32904">
@@ -325,6 +350,11 @@
         <category id="system" label="33600">
             <group id="6" label="">
                 <setting id="verify_mapped_files" type="boolean" label="33002" help="33003">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="ignore_docker_v4" type="boolean" label="33014" help="33015">
                     <level>0</level>
                     <default>true</default>
                     <control type="toggle"/>

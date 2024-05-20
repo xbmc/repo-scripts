@@ -8,6 +8,8 @@ from . import util
 
 
 class Locks(object):
+    __slots__ = ("locks", "oneTimeLocks")
+
     def __init__(self):
         self.locks = {}
         self.oneTimeLocks = {}

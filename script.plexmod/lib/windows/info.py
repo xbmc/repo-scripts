@@ -1,10 +1,12 @@
 from __future__ import absolute_import
-from . import kodigui
-from . import windowutils
-from lib import util
-from plexnet.video import Episode, Movie, Clip
 
 import os
+
+from plexnet.video import Episode, Movie, Clip
+
+from lib import util
+from . import kodigui
+from . import windowutils
 
 
 def split2len(s, n):
@@ -33,6 +35,7 @@ class InfoWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.title = kwargs.get('title')
         self.subTitle = kwargs.get('sub_title')
         self.thumb = kwargs.get('thumb')
+        self.thumb_opts = kwargs.get('thumb_opts', {})
         self.thumbFallback = kwargs.get('thumb_fallback')
         self.info = kwargs.get('info')
         self.background = kwargs.get('background')
@@ -155,7 +158,7 @@ class InfoWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.setProperty('title.main', self.title)
         self.setProperty('title.sub', self.subTitle)
         self.setProperty('thumb.fallback', self.thumbFallback)
-        self.setProperty('thumb', self.thumb.asTranscodedImageURL(*self.thumbDim))
+        self.setProperty('thumb', self.thumb.asTranscodedImageURL(*self.thumbDim, **self.thumb_opts))
         self.setProperty('info', self.getVideoInfo())
         self.setProperty('background', self.background)
 

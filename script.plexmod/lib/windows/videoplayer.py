@@ -1,26 +1,25 @@
 from __future__ import absolute_import
-import time
-import threading
+
 import math
+import threading
+import time
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 
-from . import kodigui
-from . import windowutils
-from . import opener
-from . import busy
-from . import search
-from . import dropdown
-from . import pagination
-
-from lib import util
-from lib import player
 from lib import colors
 from lib import kodijsonrpc
-
+from lib import player
+from lib import util
 from lib.util import T
-
+from . import busy
+from . import dropdown
+from . import kodigui
+from . import opener
+from . import pagination
+from . import search
+from . import windowutils
+from .mixins import SpoilersMixin
 
 PASSOUT_PROTECTION_DURATION_SECONDS = 7200
 PASSOUT_LAST_VIDEO_DURATION_MILLIS = 1200000
@@ -44,17 +43,20 @@ class OnDeckPaginator(pagination.MCLPaginator):
     def prepareListItem(self, data, mli):
         mli.setProperty('progress', util.getProgressImage(mli.dataSource))
         mli.setProperty('unwatched', not mli.dataSource.isWatched and '1' or '')
+        mli.setProperty('watched', mli.dataSource.isFullyWatched and '1' or '')
 
         if data.type in 'episode':
             mli.setLabel2(
-                u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), data.parentIndex, T(32311, 'E'), data.index))
+                u'{0} \u2022 {1}'.format(T(32310, 'S').format(data.parentIndex), T(32311, 'E').format(data.index)))
         else:
             mli.setLabel2(data.year)
 
     def createListItem(self, ondeck):
         title = ondeck.grandparentTitle or ondeck.title
         if ondeck.type == 'episode':
-            thumb = ondeck.thumb.asTranscodedImageURL(*self.parentWindow.ONDECK_DIM)
+            hide_spoilers = self.parentWindow.hideSpoilers(ondeck, use_cache=False)
+            thumb_opts = self.parentWindow.getThumbnailOpts(ondeck, hide_spoilers=hide_spoilers)
+            thumb = ondeck.thumb.asTranscodedImageURL(*self.parentWindow.ONDECK_DIM, **thumb_opts)
         else:
             thumb = ondeck.defaultArt.asTranscodedImageURL(*self.parentWindow.ONDECK_DIM)
 
@@ -63,10 +65,13 @@ class OnDeckPaginator(pagination.MCLPaginator):
             return mli
 
     def getData(self, offset, amount):
-        return (self.parentWindow.prev or self.parentWindow.next).sectionOnDeck(offset=offset, limit=amount)
+        data = (self.parentWindow.prev or self.parentWindow.next).sectionOnDeck(offset=offset, limit=amount)
+        if self.parentWindow.next:
+            return list(filter(lambda x: x.ratingKey != self.parentWindow.next.ratingKey, data))
+        return data
 
 
-class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
+class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SpoilersMixin):
     xmlFile = 'script-plex-video_player.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -97,6 +102,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def __init__(self, *args, **kwargs):
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
         windowutils.UtilMixin.__init__(self)
+        SpoilersMixin.__init__(self, *args, **kwargs)
         self.playQueue = kwargs.get('play_queue')
         self.video = kwargs.get('video')
         self.resume = bool(kwargs.get('resume'))
@@ -129,6 +135,9 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def onFirstInit(self):
         player.PLAYER.on('session.ended', self.sessionEnded)
         player.PLAYER.on('av.started', self.playerPlaybackStarted)
+        player.PLAYER.on('starting.video', self.onVideoStarting)
+        player.PLAYER.on('started.video', self.onVideoStarted)
+        player.PLAYER.on('changed.video', self.onVideoChanged)
         player.PLAYER.on('post.play', self.postPlay)
         player.PLAYER.on('change.background', self.changeBackground)
 
@@ -139,6 +148,16 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         util.DEBUG_LOG('VideoPlayerWindow: Starting session (ID: {0})'.format(id(self)))
         self.resetPassoutProtection()
         self.play(resume=self.resume)
+
+    def onVideoStarting(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '1')
+
+    def onVideoStarted(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '')
+
+    def onVideoChanged(self, *args, **kwargs):
+        #util.setGlobalProperty('ignore_spinner', '')
+        pass
 
     def onReInit(self):
         self.setBackground()
@@ -472,14 +491,26 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             self.setProperty('has.next', '1')
 
     def setInfo(self):
+        hide_spoilers = False
+        if self.next and self.next.type == "episode":
+            hide_spoilers = self.hideSpoilers(self.next, use_cache=False)
         if self.next:
             self.setProperty(
                 'post.play.background',
                 util.backgroundFromArt(self.next.art, width=self.width, height=self.height)
             )
-            self.setProperty('info.title', self.next.title)
+            if self.next.type == "episode" and hide_spoilers:
+                if self.noTitles:
+                    self.setProperty('info.title',
+                                     u'{0} \u2022 {1}'.format(T(32310, 'S').format(self.next.parentIndex),
+                                                              T(32311, 'E').format(self.next.index)))
+                else:
+                    self.setProperty('info.title', self.next.title)
+                self.setProperty('info.summary', T(33008, ''))
+            else:
+                self.setProperty('info.title', self.next.title)
+                self.setProperty('info.summary', self.next.summary)
             self.setProperty('info.duration', util.durationToText(self.next.duration.asInt()))
-            self.setProperty('info.summary', self.next.summary)
 
         if self.prev:
             self.setProperty(
@@ -493,18 +524,25 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         if self.prev.type == 'episode':
             self.setProperty('related.header', T(32306, 'Related Shows'))
             if self.next:
-                self.setProperty('next.thumb', self.next.thumb.asTranscodedImageURL(*self.NEXT_DIM))
-                self.setProperty('info.date', util.cleanLeadingZeros(self.next.originallyAvailableAt.asDatetime('%B %d, %Y')))
+                thumb_opts = {}
+                if hide_spoilers:
+                    thumb_opts = self.getThumbnailOpts(self.next, hide_spoilers=hide_spoilers)
+                self.setProperty('next.thumb', self.next.thumb.asTranscodedImageURL(*self.NEXT_DIM, **thumb_opts))
+                self.setProperty('info.date',
+                                 util.cleanLeadingZeros(self.next.originallyAvailableAt.asDatetime('%B %d, %Y')))
 
                 self.setProperty('next.title', self.next.grandparentTitle)
                 self.setProperty(
-                    'next.subtitle', u'{0} {1} \u2022 {2} {3}'.format(T(32303, 'Season'), self.next.parentIndex, T(32304, 'Episode'), self.next.index)
+                    'next.subtitle',
+                    u'{0} \u2022 {1}'.format(T(32303, 'Season').format(self.next.parentIndex),
+                                             T(32304, 'Episode').format(self.next.index))
                 )
             if self.prev:
                 self.setProperty('prev.thumb', self.prev.thumb.asTranscodedImageURL(*self.PREV_DIM))
                 self.setProperty('prev.title', self.prev.grandparentTitle)
                 self.setProperty(
-                    'prev.subtitle', u'{0} {1} \u2022 {2} {3}'.format(T(32303, 'Season'), self.prev.parentIndex, T(32304, 'Episode'), self.prev.index)
+                    'prev.subtitle', u'{0} \u2022 {1}'.format(T(32303, 'Season').format(self.prev.parentIndex),
+                                                              T(32304, 'Episode').format(self.prev.index))
                 )
                 self.setProperty('prev.info.date', util.cleanLeadingZeros(self.prev.originallyAvailableAt.asDatetime('%B %d, %Y')))
         elif self.prev.type == 'movie':
@@ -610,6 +648,9 @@ def play(video=None, play_queue=None, resume=False):
         player.PLAYER.off('session.ended', w.sessionEnded)
         player.PLAYER.off('post.play', w.postPlay)
         player.PLAYER.off('av.started', w.playerPlaybackStarted)
+        player.PLAYER.off('starting.video', w.onVideoStarting)
+        player.PLAYER.off('started.video', w.onVideoStarted)
+        player.PLAYER.off('changed.video', w.onVideoChanged)
         player.PLAYER.off('change.background', w.changeBackground)
         player.PLAYER.reset()
         command = w.exitCommand

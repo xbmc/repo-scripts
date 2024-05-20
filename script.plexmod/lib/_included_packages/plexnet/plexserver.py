@@ -65,6 +65,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         self.versionNorm = None
         self.rawVersion = None
         self.transcodeSupport = False
+        self.currentHubs = None
 
         if data is None:
             return
@@ -118,7 +119,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         data = self.query(key)
         return plexobjects.buildItem(self, data[0], key, container=self)
 
-    def hubs(self, section=None, count=None, search_query=None):
+    def hubs(self, section=None, count=None, search_query=None, section_ids=None, ignore_hubs=None):
         hubs = []
 
         params = {"includeMarkers": 1}
@@ -143,6 +144,10 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
                     return hubs
                 else:
                     q = '/hubs/sections/%s' % section
+            else:
+                # home hub
+                if section_ids:
+                    params['pinnedContentDirectoryID'] = ",".join(section_ids)
 
             if count is not None:
                 params['count'] = count
@@ -156,18 +161,36 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         if newCW:
             # home, add continueWatching
             cq = '/hubs/continueWatching'
+            if section_ids:
+                cq += util.joinArgs(params)
+
             cdata = self.query(cq, params=params)
             ccontainer = plexobjects.PlexContainer(cdata, initpath=cq, server=self, address=cq)
+            self.currentHubs[cdata[0].attrib.get('hubIdentifier')] = cdata[0].attrib.get('title')
             hubs.append(plexlibrary.Hub(cdata[0], server=self, container=ccontainer))
+
+        self.currentHubs = {} if self.currentHubs is None else self.currentHubs
 
         for elem in data:
             hubIdent = elem.attrib.get('hubIdentifier')
+            self.currentHubs["{}:{}".format(section, hubIdent)] = elem.attrib.get('title')
+
             # if we've added continueWatching, which combines continue and ondeck, skip those two hubs
             if newCW and hubIdent and \
                     (hubIdent.startswith('home.continue') or hubIdent.startswith('home.ondeck')):
                 continue
 
+            if ignore_hubs and "{}:{}".format(section, hubIdent) in ignore_hubs:
+                continue
+
             hubs.append(plexlibrary.Hub(elem, server=self, container=container))
+
+        if section_ids:
+            # when we have hidden sections, apply the filter to the hubs keys for subsequent queries
+            for hub in hubs:
+                if "pinnedContentDirectoryID" not in hub.key:
+                    hub.key += util.joinArgs(params, '?' not in hub.key)
+
         return hubs
 
     def playlists(self, start=0, size=10, hub=None):

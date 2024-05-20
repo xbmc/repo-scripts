@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 import base64
+import json
 import threading
 import six
 import re
@@ -419,11 +420,13 @@ class SeekPlayerHandler(BasePlayerHandler):
 
     def onAVChange(self):
         util.DEBUG_LOG('SeekHandler: onAVChange')
+        self.player.trigger('changed.video')
         if self.dialog:
             self.dialog.onAVChange()
 
     def onAVStarted(self):
         util.DEBUG_LOG('SeekHandler: onAVStarted')
+        self.player.trigger('started.video')
 
         if self.isDirectPlay:
             self.seekAbsolute()
@@ -1220,28 +1223,86 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
         util.setGlobalProperty("current_size", str(meta.size), base='videoinfo.{0}')
 
         imdbNum = None
-        if "com.plexapp.agents.imdb" in self.video.guid:
-            a = self.video.guid
+
+        fill_trakt_ids = False
+        trakt_ids = {}
+
+        # generate guids when script.trakt is installed
+        if "script.trakt" in util.USER_ADDONS:
+            fill_trakt_ids = True
+
+        a = self.video.guid
+        if "com.plexapp.agents.imdb" in a:
             imdbNum = a.split("?lang=")[0][a.index("com.plexapp.agents.imdb://")+len("com.plexapp.agents.imdb://"):]
-        li.setInfo('video', {
+            if fill_trakt_ids:
+                if imdbNum:
+                    trakt_ids["imdb"] = imdbNum
+
+        elif fill_trakt_ids and "com.plexapp.agents.themoviedb" in a:
+            trakt_ids["tmdb"] = a.split("?lang=")[0][
+                                a.index("com.plexapp.agents.themoviedb://") + len("com.plexapp.agents.themoviedb://"):]
+
+        elif fill_trakt_ids and "com.plexapp.agents.thetvdb" in a:
+            trakt_ids["tvdb"] = a.split("?lang=")[0][
+                                a.index("com.plexapp.agents.thetvdb://") +
+                                len("com.plexapp.agents.thetvdb://"):].split("/", 1)[0]
+
+        elif "plex://movie" in a or "plex://episode" in a:
+            ref = self.video
+            if fill_trakt_ids and "plex://episode" in a:
+                ref = self.video.show()
+                if not ref.isFullObject():
+                    ref.reload()
+
+            for guid in ref.guids:
+                if not imdbNum and guid.id.startswith('imdb://'):
+                    imdbNum = guid.id.split('imdb://')[1]
+
+                if fill_trakt_ids:
+                    sabbr, gid = guid.id.split("://")
+                    try:
+                        gid = int(gid)
+                    except:
+                        pass
+
+                    trakt_ids[sabbr] = gid
+        if fill_trakt_ids:
+            # generate trakt slug
+            if vtype == "movie":
+                year = self.video.year.asInt()
+                trakt_ids['slug'] = util.slugify("{}{}".format(self.video.title, year and " {}".format(year) or ""))
+
+            util.DEBUG_LOG("Setting Trakt IDs: {}".format(trakt_ids))
+            # report IDs to trakt
+            xbmcgui.Window(10000).setProperty('script.trakt.ids', json.dumps(trakt_ids))
+
+        info = {
             'mediatype': vtype,
             'title': self.video.title,
             'originaltitle': self.video.title,
             'tvshowtitle': self.video.grandparentTitle,
-            'episode': vtype == "episode" and self.video.index.asInt() or '',
-            'season': vtype == "episode" and self.video.parentIndex.asInt() or '',
-            #'year': self.video.year.asInt(),
+            'year': self.video.year.asInt(),
             'plot': self.video.summary,
             'path': meta.path,
             'size': meta.size,
             'imdbnumber': imdbNum
-        })
+        }
+        if vtype == "episode":
+            info.update({
+                'episode': self.video.index.asInt(),
+                'season': self.video.parentIndex.asInt(),
+            })
+        util.DEBUG_LOG("Setting VideoInfo: {}".format(
+            plexnetUtil.cleanObjTokens(info, flistkeys=[], fstrkeys=("path",))
+        ))
+        li.setInfo('video', info)
         li.setArt({
             'poster': self.video.defaultThumb.asTranscodedImageURL(347, 518),
             'fanart': self.video.defaultArt.asTranscodedImageURL(1920, 1080),
             'thumb': self.video.defaultThumb.asTranscodedImageURL(256, 256),
         })
 
+        self.trigger('starting.video')
         self.play(url, li)
 
     def playVideoPlaylist(self, playlist, resume=False, handler=None, session_id=None):
@@ -1470,6 +1531,19 @@ class PlexPlayer(xbmc.Player, signalsmixin.SignalsMixin):
         if not self.handler:
             return
         self.handler.onPlayBackSeek(time, offset)
+
+    def onPlayBackError(self):
+        if not self.sessionID:
+            return
+        util.DEBUG_LOG('Player - ERROR: {}'.format(self.handler))
+        if not self.handler:
+            return
+
+        if self.handler.onPlayBackFailed():
+            self.ignoreStopEvents = True
+            util.showNotification('Playback Error!')
+            self.stopAndWait()
+            self.close()
 
     def onPlayBackFailed(self):
         if not self.sessionID:

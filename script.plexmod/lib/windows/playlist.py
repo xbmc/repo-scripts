@@ -1,25 +1,23 @@
 from __future__ import absolute_import
+
 import threading
 
+import plexnet
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
+from six.moves import range
 
+from lib import backgroundthread
+from lib import player
+from lib import util
+from lib.util import T
 from . import busy
+from . import dropdown
+from . import kodigui
+from . import opener
+from . import search
 from . import videoplayer
 from . import windowutils
-from . import dropdown
-from . import search
-import plexnet
-from . import opener
-
-from lib import colors
-from lib import util
-from lib import player
-from lib import backgroundthread
-
-from lib.util import T
-from six.moves import range
 
 PLAYLIST_PAGE_SIZE = 500
 PLAYLIST_INITIAL_SIZE = 100
@@ -114,6 +112,8 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         try:
             if action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
                 self.doClose()
+            elif self.playlist.playlistType == 'video' and action == xbmcgui.ACTION_CONTEXT_MENU:
+                return self.plItemPlaybackMenu()
         except:
             util.ERROR()
 
@@ -140,10 +140,44 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.tasks.cancel()
         ChunkRequestTask.reset()
 
+    def plItemPlaybackMenu(self, select_choice='visit'):
+        mli = self.playlistListControl.getSelectedItem()
+        if not mli or not mli.dataSource:
+            return
+
+        can_resume = mli.dataSource.viewOffset.asInt()
+
+        options = [
+            {'key': 'visit', 'display': T(33019, 'Visit Media Item')},
+            {'key': 'play', 'display': T(33020, 'Play') if not can_resume else T(32317, 'Play from beginning')},
+        ]
+        if can_resume:
+            options.append({'key': 'resume', 'display': T(32429, 'Resume from {0}').format(
+                    util.timeDisplay(mli.dataSource.viewOffset.asInt()).lstrip('0').lstrip(':'))})
+
+        choice = dropdown.showDropdown(
+            options,
+            pos=(660, 441),
+            close_direction='none',
+            set_dropdown_prop=False,
+            header=T(33021, 'Choose action'),
+            select_index=2 if select_choice == 'resume' else 1 if util.addonSettings.playlistVisitMedia else 0
+        )
+
+        if not choice:
+            return
+
+        if choice['key'] == 'visit':
+            self.openItem(mli.dataSource)
+        elif choice['key'] == 'play':
+            self.playlistListClicked(resume=False, play=True)
+        elif choice['key'] == 'resume':
+            self.playlistListClicked(resume=True, play=True)
+
     def searchButtonClicked(self):
         self.processCommand(search.dialog(self))
 
-    def playlistListClicked(self, no_item=False, shuffle=False):
+    def playlistListClicked(self, no_item=False, shuffle=False, resume=None, play=False):
         if no_item:
             mli = None
         else:
@@ -167,17 +201,20 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     pq = plexnet.playqueue.createPlayQueueForItem(self.playlist, options=args)
                     opener.open(pq)
             elif self.playlist.playlistType == 'video':
-                if not util.addonSettings.playlistVisitMedia:
+                if not util.addonSettings.playlistVisitMedia or play:
+                    if resume is None and bool(mli.dataSource.viewOffset.asInt()):
+                        return self.plItemPlaybackMenu(select_choice='resume')
+
                     if self.playlist.leafCount.asInt() <= PLAYLIST_INITIAL_SIZE:
                         self.playlist.setShuffle(shuffle)
                         self.playlist.setCurrent(mli and mli.pos() or 0)
-                        videoplayer.play(play_queue=self.playlist)
+                        videoplayer.play(play_queue=self.playlist, resume=resume)
                     else:
                         args = {'shuffle': shuffle}
                         if mli:
                             args['key'] = mli.dataSource.key
                         pq = plexnet.playqueue.createPlayQueueForItem(self.playlist, options=args)
-                        opener.open(pq)
+                        opener.open(pq, resume=resume)
                 else:
                     if not mli:
                         firstItem = 0
@@ -272,7 +309,8 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def createEpisodeListItem(self, mli, episode):
         label2 = u'{0} \u2022 {1}'.format(
-            episode.grandparentTitle, u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), episode.parentIndex, T(32311, 'E'), episode.index)
+            episode.grandparentTitle, u'{0} \u2022 {1}'.format(T(32310, 'S').format(episode.parentIndex),
+                                                               T(32311, 'E').format(episode.index))
         )
         mli.setLabel2(label2)
         mli.setThumbnailImage(episode.thumb.asTranscodedImageURL(*self.LI_AR16X9_THUMB_DIM))

@@ -10,6 +10,8 @@ import six
 
 
 class PlexMedia(plexobjects.PlexObject):
+    __slots__ = ("_data", "container_", "container", "indirectHeaders", "parts")
+
     def __init__(self, data, initpath=None, server=None, container=None):
         self._data = data.attrib
         plexobjects.PlexObject.__init__(self, data, initpath, server)

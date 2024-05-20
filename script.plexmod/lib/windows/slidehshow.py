@@ -1,10 +1,11 @@
-import time
 import random
+import time
 
-from . import kodigui
+from plexnet import plexapp
 
 from lib import util
-from plexnet import plexapp
+from . import kodigui
+
 
 class Slideshow(kodigui.BaseWindow, util.CronReceiver):
     xmlFile = 'script-plex-slideshow.xml'

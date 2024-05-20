@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+
+import threading
+import time
+import traceback
+
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-import time
-import threading
-import traceback
+from plexnet import util as pnUtil
 from six.moves import range
 from six.moves import zip
+
 from .. import util
 
 MONITOR = None
 
 
-class BaseFunctions:
+class BaseFunctions(object):
     xmlFile = ''
     path = ''
     theme = ''
@@ -100,6 +104,8 @@ BG_NA = "script.plex/home/background-fallback_black.png"
 
 
 class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
+    __slots__ = ("_closing", "_winID", "started", "finishedInit", "dialogProps", "isOpen")
+
     def __init__(self, *args, **kwargs):
         BaseFunctions.__init__(self)
         self._closing = False
@@ -111,6 +117,8 @@ class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
         carryProps = kwargs.get("window_props", None)
         if carryProps:
             self.setProperties(list(carryProps.keys()), list(carryProps.values()))
+        self.setBoolProperty('use_alt_watched', util.getSetting('use_alt_watched', True))
+        self.setBoolProperty('hide_aw_bg', util.getSetting('hide_aw_bg', False))
 
     def onInit(self):
         global LAST_BG_URL
@@ -229,6 +237,8 @@ class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
 
 
 class BaseDialog(xbmcgui.WindowXMLDialog, BaseFunctions):
+    __slots__ = ("_closing", "_winID", "started", "isOpen")
+
     def __init__(self, *args, **kwargs):
         BaseFunctions.__init__(self)
         self._closing = False
@@ -238,6 +248,8 @@ class BaseDialog(xbmcgui.WindowXMLDialog, BaseFunctions):
         carryProps = kwargs.get("dialog_props", None)
         if carryProps:
             self.setProperties(list(carryProps.keys()), list(carryProps.values()))
+        self.setBoolProperty('use_alt_watched', util.getSetting('use_alt_watched', True))
+        self.setBoolProperty('hide_aw_bg', util.getSetting('hide_aw_bg', False))
 
     def onInit(self):
         self._winID = xbmcgui.getCurrentWindowDialogId()
@@ -343,7 +355,16 @@ DUMMY_DATA_SOURCE = DummyDataSource()
 
 
 class ManagedListItem(object):
-    def __init__(self, label='', label2='', iconImage='', thumbnailImage='', path='', data_source=None, properties=None):
+    __slots__ = ("_listItem", "dataSource", "properties", "label", "label2", "iconImage", "thumbnailImage", "path",
+                 "_ID", "_manager", "_valid")
+
+    PROPS = {
+        'use_alt_watched': util.getSetting('use_alt_watched', True) and '1' or '',
+        'hide_aw_bg': util.getSetting('hide_aw_bg', False) and '1' or ''
+    }
+
+    def __init__(self, label='', label2='', iconImage='', thumbnailImage='', path='', data_source=None,
+                 properties=None):
         self._listItem = xbmcgui.ListItem(label, label2, path=path)
         self._listItem.setArt({"thumb": thumbnailImage, "icon": iconImage})
         self.dataSource = data_source
@@ -356,6 +377,9 @@ class ManagedListItem(object):
         self._ID = None
         self._manager = None
         self._valid = True
+        for k, v in self.PROPS.items():
+            self.setProperty(k, v)
+
         if properties:
             for k, v in properties.items():
                 self.setProperty(k, v)
@@ -499,7 +523,19 @@ class ManagedListItem(object):
         pass
 
 
+def watchMarkerSettingsChanged(*args, **kwargs):
+    ManagedListItem.PROPS['use_alt_watched'] = util.getSetting('use_alt_watched', True) and '1' or ''
+    ManagedListItem.PROPS['hide_aw_bg'] = util.getSetting('hide_aw_bg', False) and '1' or ''
+
+
+pnUtil.APP.on('change:use_alt_watched', watchMarkerSettingsChanged)
+pnUtil.APP.on('change:hide_aw_bg', watchMarkerSettingsChanged)
+
+
 class ManagedControlList(object):
+    __slots__ = ("controlID", "control", "items", "_sortKey", "_idCounter", "_maxViewIndex", "_properties",
+                 "dataSource")
+
     def __init__(self, window, control_id, max_view_index, data_source=None):
         self.controlID = control_id
         self.control = window.getControl(control_id)
@@ -635,7 +671,21 @@ class ManagedControlList(object):
             return None
         return self.getListItem(pos)
 
+    def getSelectedPos(self):
+        pos = self.control.getSelectedPosition()
+        if not self.positionIsValid(pos):
+            pos = self.size() - 1
+
+        if pos < 0:
+            return None
+        return pos
+
     def setSelectedItemByPos(self, pos):
+        if self.positionIsValid(pos):
+            self.control.selectItem(pos)
+
+    def setSelectedItem(self, item):
+        pos = self.getManagedItemPosition(item)
         if self.positionIsValid(pos):
             self.control.selectItem(pos)
 
@@ -793,6 +843,8 @@ class ManagedControlList(object):
 
 
 class _MWBackground(ControlledWindow):
+    __slots__ = ("_multiWindow", "started")
+
     def __init__(self, *args, **kwargs):
         self._multiWindow = kwargs.get('multi_window')
         self.started = False
@@ -807,6 +859,8 @@ class _MWBackground(ControlledWindow):
 
 
 class MultiWindow(object):
+    __slots__ = ("_windows", "_next", "_properties", "_current", "_allClosed", "exitCommand", "_currentOnAction")
+
     def __init__(self, windows=None, default_window=None, **kwargs):
         self._windows = windows
         self._next = default_window or self._windows[0]
@@ -1115,6 +1169,8 @@ class PropertyTimer():
 
 
 class WindowProperty():
+    __slots__ = ("win", "prop", "val", "end", "old")
+
     def __init__(self, win, prop, val='1', end=None):
         self.win = win
         self.prop = prop
@@ -1131,6 +1187,8 @@ class WindowProperty():
 
 
 class GlobalProperty():
+    __slots__ = ("_addonID", "prop", "val", "end", "old")
+
     def __init__(self, prop, val='1', end=None):
         from kodi_six import xbmcaddon
         self._addonID = xbmcaddon.Addon().getAddonInfo('id')
