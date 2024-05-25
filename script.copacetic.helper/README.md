@@ -13,6 +13,23 @@ All code contained in this project is licensed under GPL 3.0.
 * __jurialmunkey__ for all the best-practice code examples from [plugin.video.themoviedb.helper](https://github.com/jurialmunkey/plugin.video.themoviedb.helper) and forum support.
 
 ### Changelog
+**1.0.17**
+- Parse args for script actions to enable values with special characters to be properly escaped from Kodi using '"$INFO[ListItem.Title]"'
+
+**1.0.16**
+- Added tvchannels/radiochannels to background_slideshow()
+- Error handling for clearlogos that aren't in a supported PIL mode https://github.com/realcopacetic/script.copacetic.helper/issues/3
+- Added landscape to movieartwhitelist/tvshowartwhitelist recommended settings
+- SlideshowMonitor class extended to accept custom paths to folders of images e.g. special://profile/backgrounds/ - it can now populate background slideshows sourced from library paths, playlists, plugin sources (e.g. themoviedbhelper) and folders
+- Rebuilt wideget_move() to account for new widget settings
+
+**1.0.15**
+- Global search action to open keyboard and return value to relevant skin string.
+- Minor error catching in play_all()
+
+**1.0.14**
+- Test fix for issue: IndexError: list index out of range https://github.com/realcopacetic/script.copacetic.helper/issues/5
+
 **1.0.13**
 - Player monitor captures Set ID for currently playing movie and passes to a window property for skin.copacetic to use for Now_Playing indicator on sets 
 

@@ -175,13 +175,13 @@ class PluginContent(object):
 
             try:
                 episode_details = episode_query['result']['episodes']
+                ''' Add tv show studio and mpaa to episode dictionary '''
+                episode_details[0]['studio'] = studio
+                episode_details[0]['mpaa'] = mpaa
             except Exception:
                 log(
                     f"Widget next_up: No next episodes found for {episode['title']}")
             else:
-                ''' Add tv show studio and mpaa to episode dictionary '''
-                episode_details[0]['studio'] = studio
-                episode_details[0]['mpaa'] = mpaa
                 add_items(self.li, episode_details, type='episode')
                 set_plugincontent(content='episodes',
                                   category=ADDON.getLocalizedString(32600))
