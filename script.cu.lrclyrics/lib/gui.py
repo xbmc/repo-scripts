@@ -53,6 +53,7 @@ class MAIN():
         self.SETTING_SAVE_SUBFOLDER = ADDON.getSettingBool('save_subfolder')
         self.SETTING_SAVE_SUBFOLDER_PATH = ADDON.getSettingString('save_subfolder_path')
         self.SETTING_CLEAN_TITLE = ADDON.getSettingBool('clean_title')
+        self.SETTING_INTERNETRADIO = ADDON.getSettingBool('internetradio')
         self.lyricssettings = {}
         self.lyricssettings['debug'] = self.DEBUG
         self.lyricssettings['read_filename'] = self.SETTING_READ_FILENAME
@@ -84,7 +85,7 @@ class MAIN():
             # do not try and get lyrics for any background media
             if self.proceed():
                 if not self.CULRC_FIRSTRUN:
-                    # only the first lyrics are fetched by main_loop, the rest is done through onAVChanged. this makes sure both don't run simultaniously
+                    # only the first lyrics are fetched by main_loop, the rest is done through onAVStarted. this makes sure both don't run simultaniously
                     self.CULRC_FIRSTRUN = True
                     # notify user the script is searching for lyrics
                     if not self.SETTING_SILENT:
@@ -96,7 +97,10 @@ class MAIN():
                     WIN.setProperty('culrc.force','FALSE')
                     self.current_lyrics = Lyrics(settings=self.lyricssettings)
                     self.myPlayerChanged()
-                elif xbmc.getCondVisibility('Player.IsInternetStream'):
+                # internetstreams may (like spotify) or may not (like many internet radio stations) generate onAVStarted callbacks to indicate a new song has started.
+                # TODO: no idea how to differentiate between those automatically.
+                # for now, add a setting for internet radio, which will cause issues with spotify and the likes.
+                elif xbmc.getCondVisibility('Player.IsInternetStream') and self.SETTING_INTERNETRADIO:
                     self.myPlayerChanged()
             else:
                 # we may have exited the music visualization screen, reset current lyrics so we show them again when re-entering the visualization screen
@@ -224,6 +228,9 @@ class MAIN():
             # Search same path with song file
             lyricsfile = song.path2(getlrc)
             log('path2: %s' % lyricsfile, debug=self.DEBUG)
+            # don't search online sources for saved lyrics files
+            if xbmc.getCondVisibility('Player.IsInternetStream') or xbmc.getCondVisibility('Pvr.IsPlayingRadio'):
+                return None
             if xbmcvfs.exists(lyricsfile):
                 lyr = get_textfile(lyricsfile)
                 if lyr != None:
@@ -568,8 +575,9 @@ class GUI(xbmcgui.WindowXMLDialog):
             WIN.setProperty('culrc.islrc', 'true')
             self.parser_lyrics(lyrics.lyrics)
             for num, (time, line) in enumerate(self.pOverlay):
-                parts = self.get_parts(line)
-                listitem = xbmcgui.ListItem(line, offscreen=True)
+                cleanline = line.strip()
+                parts = self.get_parts(cleanline)
+                listitem = xbmcgui.ListItem(cleanline, offscreen=True)
                 for count, item in enumerate(parts):
                     listitem.setProperty('part%i' % (count + 1), item)
                 delta = 100000 # in case duration of the last line is undefined
@@ -582,8 +590,9 @@ class GUI(xbmcgui.WindowXMLDialog):
             WIN.clearProperty('culrc.islrc')
             splitLyrics = lyrics.lyrics.splitlines()
             for line in splitLyrics:
-                parts = self.get_parts(line)
-                listitem = xbmcgui.ListItem(line, offscreen=True)
+                cleanline = line.strip()
+                parts = self.get_parts(cleanline)
+                listitem = xbmcgui.ListItem(cleanline, offscreen=True)
                 for count, item in enumerate(parts):
                     listitem.setProperty('part%i' % (count + 1), item)
                 self.text.addItem(listitem)

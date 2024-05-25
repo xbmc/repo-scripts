@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-13 07:11+0000\n"
+"PO-Revision-Date: 2024-04-07 02:13+0000\n"
 "Last-Translator: Marek Adamski <fevbew@wp.pl>\n"
 "Language-Team: Polish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/pl_pl/>\n"
 "Language: pl_pl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.1\n"
+"X-Generator: Weblate 5.4\n"
 
 # Script labels
 msgctxt "Addon Summary"
@@ -237,6 +237,14 @@ msgstr "Usuń tekst utworu"
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "Jeśli ukryjesz OSD muzyki oraz informacje o bieżącym odtwarzaniu, tło okienka tekstów będzie również ukryte."
+
+msgctxt "#32169"
+msgid "Sources"
+msgstr "Źródła"
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr "Pobieraj teksty piosenek podczas słuchania internetowych stacji radiowych"
 
 # Scrapers - do not translate!
 msgctxt "#32901"

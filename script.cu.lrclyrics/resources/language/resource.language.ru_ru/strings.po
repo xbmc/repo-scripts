@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-11-05 15:15+0000\n"
+"PO-Revision-Date: 2024-04-30 17:26+0000\n"
 "Last-Translator: vgbsd <vg72i@protonmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/ru_ru/>\n"
 "Language: ru_ru\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 5.5.2\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -238,10 +238,18 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "Если скрыть экранное меню музыки и информацию \"Сейчас играет\", фон диалогового окна с текстом песни также будет скрыт."
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr "Источники"
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr "Получать тексты песен при прослушивании интернет-радиостанций"
+
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "Lrclib"
-msgstr ""
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
@@ -249,7 +257,7 @@ msgstr "MusixMatch"
 
 msgctxt "#32903"
 msgid "Megalobiz"
-msgstr ""
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -281,7 +289,7 @@ msgstr "Тёмный текст песен"
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
+msgstr "Super Music"
 
 # Scrapers - do not translate!
 #~ msgctxt "#32901"

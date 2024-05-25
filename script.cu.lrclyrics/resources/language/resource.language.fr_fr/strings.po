@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-12-28 16:15+0000\n"
+"PO-Revision-Date: 2024-02-17 16:13+0000\n"
 "Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fr_fr/>\n"
 "Language: fr_fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15\n"
+"X-Generator: Weblate 5.4\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -238,10 +238,18 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "Si vous masquez l'OSD Musique et les informations de lecture en cours, l'arrière-plan de la boîte de dialogue des paroles sera également masqué."
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr ""
+
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "Lrclib"
-msgstr ""
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
@@ -249,7 +257,7 @@ msgstr "MusixMatch"
 
 msgctxt "#32903"
 msgid "Megalobiz"
-msgstr ""
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -281,7 +289,7 @@ msgstr "Dark Lyrics"
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
+msgstr "Super Music"
 
 # Scrapers - do not translate!
 #~ msgctxt "#32901"

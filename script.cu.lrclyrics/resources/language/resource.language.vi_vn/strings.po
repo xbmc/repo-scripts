@@ -238,6 +238,14 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr ""
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr ""
+
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "Lrclib"
