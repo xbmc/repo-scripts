@@ -232,7 +232,11 @@ def split_random_return(string, **kwargs):
 
     window_property(name, set=random)
     return random
-    
+
+def url_decode_path(path):
+    path = path[:-1] if path.endswith('/') else path
+    path = urllib.unquote(path.replace('image://', ''))
+    return path
 
 def window_property(key, set=False, clear=False, window_id=10000, debug=False):
     window = Window(window_id)
