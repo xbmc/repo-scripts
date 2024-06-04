@@ -153,7 +153,11 @@ msgctxt "#32120"
 msgid "%N. %A - %T"
 msgstr ""
 
-# empty strings from id 32120 to 32146
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
+
+# empty strings from id 32122 to 32146
 
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
@@ -295,5 +299,9 @@ msgstr ""
 
 msgctxt "#32917"
 msgid "Super Music"
+msgstr ""
+
+msgctxt "#32918"
+msgid "RCLyricsBand"
 msgstr ""
 

@@ -76,6 +76,9 @@ def get_artist_from_filename(*args, **kwargs):
         elif SETTING_READ_FILENAME_FORMAT == 4:
             artist = basename.split('-', 2)[1].strip()
             title = os.path.splitext(basename.split('-', 2)[2].strip())[0]
+        elif SETTING_READ_FILENAME_FORMAT == 6:
+            artist = basename.split('-', 1)[0].strip()
+            title = os.path.splitext(basename.split('-', 3)[3].strip())[0]
     except:
         # invalid format selected
         log('failed to get artist and title from filename', debug=DEBUG)

@@ -42,6 +42,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="" id="rclyricsband" label="32918" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting help="" id="megalobiz" label="32903" type="boolean">
 					<level>0</level>
 					<default>true</default>
@@ -127,6 +132,7 @@
 							<option label="32104">3</option>
 							<option label="32114">4</option>
 							<option label="32120">5</option>
+							<option label="32121">6</option>
 						</options>
 					</constraints>
 				</setting>

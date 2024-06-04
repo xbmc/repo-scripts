@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
-"Language: pt_BR\n"
+"PO-Revision-Date: 2024-05-17 05:26+0000\n"
+"Last-Translator: Havok Dan <havokdan@yahoo.com.br>\n"
+"Language-Team: Portuguese (Brazil) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/pt_br/>\n"
+"Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.5.4\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -39,7 +40,7 @@ msgstr "Embutida"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr ""
+msgstr "Deslocamento de letras"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
@@ -47,33 +48,33 @@ msgstr "Procurando letras da música..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
-msgstr ""
+msgstr "Selecionar a letra:"
 
 msgctxt "#32006"
 msgid "Select different lyrics"
-msgstr ""
+msgstr "Selecione letras diferentes"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr ""
+msgstr "Sincronizar letras manualmente"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
-msgstr ""
+msgstr "Atrasado por: %ss"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr ""
+msgstr "Adiantar por: %ss"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Procure e salve as letras lrc em uma pasta de letras separada"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Pesquise e salve letras em txt em uma pasta de letras separada"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
@@ -113,53 +114,63 @@ msgstr "%A\\%B\\%N %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- As letras estão em uma subpasta"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Nome da subpasta"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Procure e salve as letras lrc na pasta de músicas"
 
+#, fuzzy
 msgctxt "#32114"
 msgid "%N - %A - %T"
-msgstr ""
+msgstr "%N - %A - %T"
 
 msgctxt "#32115"
 msgid "Display options"
-msgstr ""
+msgstr "Opções de exibição"
 
 msgctxt "#32116"
 msgid "Search options"
-msgstr ""
+msgstr "Opções de busca"
 
 msgctxt "#32117"
 msgid "Lyrics files"
-msgstr ""
+msgstr "Arquivos de letras"
 
 msgctxt "#32118"
 msgid "Debugging"
-msgstr ""
+msgstr "Depurar"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
+msgstr "Procure e salve letras em txt na pasta de músicas"
+
+#, fuzzy
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr "%N. %A - %T"
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
 msgstr ""
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Pesquise arquivos de letras .txt locais"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Ocultar o fundo da caixa de diálogo, mostrar apenas as letras"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr ""
+msgstr "Especialista"
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -175,7 +186,7 @@ msgstr "Procurar por letras embutidas"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
-msgstr ""
+msgstr "Pesquise arquivos de letras .lrc locais"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
@@ -207,88 +218,98 @@ msgstr "Ocultar notificações"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
-msgstr ""
+msgstr "Remover texto em chinês/coreano das letras"
 
 msgctxt "#32162"
 msgid "Scraper test"
-msgstr ""
+msgstr "Testar pesquisa"
 
 msgctxt "#32163"
 msgid "Testing: %s"
-msgstr ""
+msgstr "Testando: %s"
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr ""
+msgstr "Todos os sites estão funcionando bem"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
-msgstr ""
+msgstr "Sites com falha: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr ""
+msgstr "Deslocamento de tempo para letras sincronizadas"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
-msgstr ""
+msgstr "Excluir letras"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
-msgstr ""
+msgstr "Se você ocultar o OSD da música e as informações do Reproduzindo Agora, o plano de fundo da caixa de diálogo da letra também ficará oculto."
 
 msgctxt "#32169"
 msgid "Sources"
-msgstr ""
+msgstr "Fontes"
 
 msgctxt "#32170"
 msgid "Get lyrics when listening to internet radio stations"
-msgstr ""
+msgstr "Obtenha letras ao ouvir estações de rádio da Internet"
 
 # Scrapers - do not translate!
+#, fuzzy
 msgctxt "#32901"
 msgid "Lrclib"
-msgstr ""
+msgstr "Lrclib"
 
+#, fuzzy
 msgctxt "#32902"
 msgid "MusixMatch"
-msgstr ""
+msgstr "MusixMatch"
 
+#, fuzzy
 msgctxt "#32903"
 msgid "Megalobiz"
-msgstr ""
+msgstr "Megalobiz"
 
+#, fuzzy
 msgctxt "#32904"
 msgid "Music 163"
-msgstr ""
+msgstr "Music 163"
 
+#, fuzzy
 msgctxt "#32905"
 msgid "Lyricsify"
-msgstr ""
+msgstr "Lyricsify"
 
+#, fuzzy
 msgctxt "#32912"
 msgid "Genius"
-msgstr ""
+msgstr "Genius"
 
+#, fuzzy
 msgctxt "#32913"
 msgid "Lyrics Mode"
-msgstr ""
+msgstr "Lyrics Mode"
 
+#, fuzzy
 msgctxt "#32914"
 msgid "AZLyrics"
-msgstr ""
+msgstr "AZLyrics"
 
+#, fuzzy
 msgctxt "#32915"
 msgid "Lyrics.com"
-msgstr ""
+msgstr "Lyrics.com"
 
+#, fuzzy
 msgctxt "#32916"
 msgid "Dark Lyrics"
-msgstr ""
+msgstr "Dark Lyrics"
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
+msgstr "Supermúsica"
 
 # empty strings from id 32010 to 32100
 # Settings labels

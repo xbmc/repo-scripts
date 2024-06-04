@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-04-07 02:13+0000\n"
+"PO-Revision-Date: 2024-05-13 07:14+0000\n"
 "Last-Translator: Marek Adamski <fevbew@wp.pl>\n"
 "Language-Team: Polish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/pl_pl/>\n"
 "Language: pl_pl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.4\n"
+"X-Generator: Weblate 5.5.4\n"
 
 # Script labels
 msgctxt "Addon Summary"
@@ -147,6 +147,14 @@ msgstr "Diagnostyka"
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr "Wyszukaj i zapisz teksty utworów w formacie TXT w folderze z piosenkami"
+
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr "%N. %A - %T"
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
