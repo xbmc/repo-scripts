@@ -31,6 +31,8 @@ class SimpleCache(object):
     _memcache = False
     _basefolder = ''
     _fileutils = FILEUTILS
+    _retries = 4
+    _retry_polling = 0.1
 
     def __init__(self, folder=None, filename=None):
         '''Initialize our caching class'''
@@ -77,12 +79,12 @@ class SimpleCache(object):
         finally:
             self._busy_tasks.remove(task_name)
 
-    def get(self, endpoint):
+    def get(self, endpoint, cur_time=None):
         '''
             get object from cache and return the results
             endpoint: the (unique) name of the cache object as reference
         '''
-        cur_time = set_timestamp(0, True)
+        cur_time = cur_time or set_timestamp(0, True)
         result = self._get_mem_cache(endpoint, cur_time)  # Try from memory first
         return result or self._get_db_cache(endpoint, cur_time)  # Fallback to checking database if not in memory
 
@@ -100,7 +102,8 @@ class SimpleCache(object):
         lastexecuted = self._win.getProperty(f'{self._sc_name}.clean.lastexecuted')
         if not lastexecuted:
             self._win.setProperty(f'{self._sc_name}.clean.lastexecuted', str(cur_time - self._auto_clean_interval + 600))
-        elif (int(lastexecuted) + self._auto_clean_interval) < cur_time:
+            return
+        if (int(lastexecuted) + self._auto_clean_interval) < cur_time:
             self._do_cleanup()
 
     def _get_mem_cache(self, endpoint, cur_time):
@@ -166,17 +169,16 @@ class SimpleCache(object):
         if self._exit or self._monitor.abortRequested():
             return
 
+        self._win.setProperty(f'{self._sc_name}.cleanbusy', "busy")
+        self.kodi_log(f'CACHE: Deleting {self._sc_name}...')
+
         with self.busy_tasks(__name__):
-            cur_time = set_timestamp(0, True)
-            self.kodi_log(f'CACHE: Deleting {self._sc_name}...')
-
-            self._win.setProperty(f'{self._sc_name}.cleanbusy', "busy")
-
             query = 'DELETE FROM simplecache'
             self._execute_sql(query)
             self._execute_sql("VACUUM")
 
         # Washup
+        cur_time = set_timestamp(0, True)
         self._win.setProperty(f'{self._sc_name}.clean.lastexecuted', str(cur_time))
         self._win.clearProperty(f'{self._sc_name}.cleanbusy')
         self.kodi_log(f'CACHE: Delete {self._sc_name} done')
@@ -186,26 +188,28 @@ class SimpleCache(object):
         if self._exit or self._monitor.abortRequested():
             return
 
+        if self._win.getProperty(f'{self._sc_name}.cleanbusy'):
+            return
+
+        self._win.setProperty(f'{self._sc_name}.cleanbusy', "busy")
+        self.kodi_log(f"CACHE: Running cleanup...\n{self._sc_name}", 1)
+
         with self.busy_tasks(__name__):
             cur_time = set_timestamp(0, True)
-            self.kodi_log(f"CACHE: Running cleanup...\n{self._sc_name}", 1)
-            if self._win.getProperty(f'{self._sc_name}.cleanbusy'):
-                return
-            self._win.setProperty(f'{self._sc_name}.cleanbusy', "busy")
-
             query = "SELECT id, expires FROM simplecache"
             for cache_data in self._execute_sql(query).fetchall():
-                cache_id = cache_data[0]
-                cache_expires = cache_data[1]
                 if self._exit or self._monitor.abortRequested():
                     return
+                cache_id = cache_data[0]
+                cache_expires = cache_data[1]
                 # always cleanup all memory objects on each interval
                 self._win.clearProperty(cache_id)
                 # clean up db cache object only if expired
-                if force or int(cache_expires) < cur_time:
-                    query = 'DELETE FROM simplecache WHERE id = ?'
-                    self._execute_sql(query, (cache_id,))
-                    self.kodi_log(f'CACHE: delete from db {cache_id}')
+                if not force and int(cache_expires) >= cur_time:
+                    continue
+                query = 'DELETE FROM simplecache WHERE id = ?'
+                self._execute_sql(query, (cache_id,))
+                self.kodi_log(f'CACHE: delete from db {cache_id}')
 
             # compact db
             self._execute_sql("VACUUM")
@@ -226,7 +230,7 @@ class SimpleCache(object):
     def _get_database(self, attempts=2):
         '''get reference to our sqllite _database - performs basic integrity check'''
         try:
-            connection = self._connection or sqlite3.connect(self._db_file, timeout=5, isolation_level=None, check_same_thread=not self._re_use_con)
+            connection = self._connection or sqlite3.connect(self._db_file, timeout=2.0, isolation_level=None, check_same_thread=not self._re_use_con)
             connection.execute('SELECT * FROM simplecache LIMIT 1')
             return self._set_pragmas(connection)
         except Exception:
@@ -236,14 +240,14 @@ class SimpleCache(object):
                 xbmcvfs.delete(self._db_file)
             try:
                 self.kodi_log(f'CACHE: Initialising: {self._db_file}...', 1)
-                connection = self._connection or sqlite3.connect(self._db_file, timeout=5, isolation_level=None, check_same_thread=not self._re_use_con)
+                connection = self._connection or sqlite3.connect(self._db_file, timeout=2.0, isolation_level=None, check_same_thread=not self._re_use_con)
                 connection.execute(
                     """CREATE TABLE IF NOT EXISTS simplecache(
                     id TEXT UNIQUE, expires INTEGER, data TEXT, checksum INTEGER)""")
                 connection.execute("CREATE INDEX idx ON simplecache(id)")
                 return self._set_pragmas(connection)
             except Exception as error:
-                self.kodi_log(f'CACHE: Exception while initializing _database: {error} ({attempts})', 1)
+                self.kodi_log(f'CACHE: Exception while initializing _database: {error} ({attempts})\n{self._sc_name}', 1)
                 if attempts < 1:
                     return
                 attempts -= 1
@@ -252,34 +256,39 @@ class SimpleCache(object):
 
     def _execute_sql(self, query, data=None):
         '''little wrapper around execute and executemany to just retry a db command if db is locked'''
-        retries = 10
-        result = None
-        error = ''
+        retries = self._retries
+
+        def _database_execute(_database):
+            if not data:
+                return _database.execute(query)
+            if isinstance(data, list):
+                return _database.executemany(query, data)
+            return _database.execute(query, data)
+
         # always use new db object because we need to be sure that data is available for other simplecache instances
+        error = None
         with self._get_database() as _database:
             while retries > 0 and not self._monitor.abortRequested():
                 if self._exit:
                     return None
                 try:
-                    if isinstance(data, list):
-                        result = _database.executemany(query, data)
-                    elif data:
-                        result = _database.execute(query, data)
-                    else:
-                        result = _database.execute(query)
-                    return result
+                    return _database_execute(_database)
                 except sqlite3.OperationalError as err:
-                    error = err
-                    try:
-                        if "database is locked" == f'{error}':
-                            self.kodi_log("CACHE: Locked: Retrying DB commit...", 1)
-                            retries -= 1
-                            self._monitor.waitForAbort(0.5)
-                        else:
-                            break
-                    except TypeError:
-                        break
-                except Exception:
+                    error = f'{err}'
+                except Exception as err:
+                    error = f'{err}'
+                if error is None:
+                    continue
+                if error != 'database is locked':
                     break
-            self.kodi_log(f'CACHE: _database ERROR ! -- {error}', 1)
+                retries = retries - 1
+                if retries > 0:
+                    log_level = 1 if retries < self._retries - 1 else 2  # Only debug log for first retry
+                    transaction = 'commit' if data else 'lookup'
+                    self.kodi_log(f'CACHE: _database LOCKED -- Retrying DB {transaction}...\n{self._sc_name}', log_level)
+                    self._monitor.waitForAbort(self._retry_polling)
+                    continue
+                error = 'Retry failed. Database locked.'
+        if error not in [None, 'not an error']:
+            self.kodi_log(f'CACHE: _database ERROR! -- {error}\n{self._sc_name}', 1)
         return None

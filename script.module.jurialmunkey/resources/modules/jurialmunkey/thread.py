@@ -17,21 +17,29 @@ class ParallelThread():
         self.queue = [None] * len(items)
         self._pool = [None] * thread_max
         self._exit = False
+
+        threading_enabled = True
         for x, i in enumerate(items):
-            n = x
-            while n >= thread_max and not self._mon.abortRequested():  # Hit our thread limit so look for a spare spot in the queue
-                for y, j in enumerate(self._pool):
-                    if j.is_alive():
-                        continue
-                    n = y
-                    break
-                if n >= thread_max:
-                    self._mon.waitForAbort(0.025)
-            try:
-                self._pool[n] = Thread(target=self._threadwrapper, args=[x, i, func, *args], kwargs=kwargs)
-                self._pool[n].start()
-            except IndexError:
-                self.kodi_log(f'ParallelThread: INDEX {n} OUT OF RANGE {thread_max}', 1)
+            if threading_enabled:
+                n = x
+                while n >= thread_max and not self._mon.abortRequested():  # Hit our thread limit so look for a spare spot in the queue
+                    for y, j in enumerate(self._pool):
+                        if j.is_alive():
+                            continue
+                        n = y
+                        break
+                    if n >= thread_max:
+                        self._mon.waitForAbort(0.025)
+                try:
+                    self._pool[n] = Thread(target=self._threadwrapper, args=[x, i, func, *args], kwargs=kwargs)
+                    self._pool[n].start()
+                except IndexError:
+                    self.kodi_log(f'ParallelThread: INDEX {n} OUT OF RANGE {thread_max}', 1)
+                except RuntimeError as exc:
+                    self.kodi_log(f'ParallelThread: RUNTIME ERROR: UNABLE TO SPAWN {n} THREAD {thread_max}\nREDUCE MAX THREAD COUNT\n{exc}', 1)
+                    threading_enabled = False
+            if not threading_enabled:  # Execute rest of queue in series if threading disabled due to RuntimeError
+                self._threadwrapper(x, i, func, *args, **kwargs)
 
     def _threadwrapper(self, x, i, func, *args, **kwargs):
         self.queue[x] = func(i, *args, **kwargs)

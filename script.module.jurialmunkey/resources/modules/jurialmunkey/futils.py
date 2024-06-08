@@ -27,6 +27,22 @@ class FileUtils():
     def get_file_path(self, folder, filename, join_addon_data=True, make_dir=True):
         return validate_join(self.get_write_path(folder, join_addon_data, make_dir), filename)
 
+    def dumps_to_file(self, data, folder, filename, indent=2, join_addon_data=True):
+        from json import dump
+        path = self.get_file_path(folder, filename, join_addon_data)
+        with xbmcvfs.File(path, 'w') as file:
+            dump(data, file, indent=indent)
+        return path
+
+    def delete_file(self, folder, filename, join_addon_data=True):
+        xbmcvfs.delete(self.get_file_path(folder, filename, join_addon_data, make_dir=False))
+
+    def delete_folder(self, folder, join_addon_data=True, force=False, check_exists=False):
+        path = self.get_write_path(folder, join_addon_data, make_dir=False)
+        if check_exists and not xbmcvfs.exists(path):
+            return
+        xbmcvfs.rmdir(path, force=force)
+
 
 def json_loads(obj):
     import json
@@ -111,3 +127,15 @@ def write_skinfile(filename=None, folders=None, content=None, hashvalue=None, ha
 
     if checksum:
         xbmc.executebuiltin('Skin.SetString({},{})'.format(checksum, make_hash(content)))
+
+
+def get_files_in_folder(folder, regex):
+    import re
+    return [x for x in xbmcvfs.listdir(folder)[1] if re.match(regex, x)]
+
+
+def read_file(filepath):
+    content = ''
+    with xbmcvfs.File(filepath) as vfs_file:
+        content = vfs_file.read()
+    return content
