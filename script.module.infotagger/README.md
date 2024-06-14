@@ -48,3 +48,18 @@ stream_details = {
 info_tag.set_stream_details(stream_details)
 ```
 
+
+Currently there are no setters for the size, count, and date infolabels. The optional `set_info_tag` method will first set these infolabels using `setInfo()` method of the listitem before passing through the remainer of the dictionary to the `set_info` method of ListItemInfoTag. The method then returns the ListItemInfoTag object for further use.
+
+Using this method is not recommended unless these infolabels are essential. It has additional overhead costs in rerouting the dictionary, and it may not remain backwards compatible in future versions of Kodi when the setInfo method is eventually depreciated entirely.
+
+```python
+from infotagger.listitem import set_info_tag
+
+# Make your listitem as normal
+li = xbmcgui.ListItem()
+
+# Pass listitem to the method and specify tag type
+info_tag = set_info_tag(li, infolabels, 'video')
+```
+
