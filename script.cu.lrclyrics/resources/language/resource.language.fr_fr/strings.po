@@ -148,6 +148,14 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr "Rechercher et enregistrer les paroles txt dans le dossier de la chanson"
 
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr ""
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
+
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
