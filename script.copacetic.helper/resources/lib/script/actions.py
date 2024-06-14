@@ -239,6 +239,28 @@ def shuffle_artist(**kwargs):
               parent='shuffle_artist')
 
 
+def subtitle_limiter(lang,**kwargs):
+    if condition('VideoPlayer.HasSubtitles'):
+        player = xbmc.Player()
+        subtitles = []
+        current_subtitle = player.getSubtitles()
+        subtitles = player.getAvailableSubtitleStreams()
+        if lang not in current_subtitle or condition('!VideoPlayer.SubtitlesEnabled'):
+            try:
+                index = subtitles.index(lang)
+            except ValueError as error:
+                log(
+                    f'Subtitle Limiter: Error - Preferred subtitle stream ({lang}) not available, toggling through available streams instead --> {error}', force=True)
+                log_and_execute('Action(NextSubtitle)')
+            else:
+                player.setSubtitleStream(index)
+                log(f'Subtitle Limiter: Switching to subtitle stream {index} in preferred language: {lang}', force=True)
+        elif condition('VideoPlayer.SubtitlesEnabled'):
+            log_and_execute('Action(ShowSubtitles)')
+    else:
+        log('Subtitle Limiter: Error - Playing video has no subtitles', force=True)
+
+
 def toggle_addon(id, **kwargs):
     if condition(f'System.AddonIsEnabled({id})'):
         json_call('Addons.SetAddonEnabled',

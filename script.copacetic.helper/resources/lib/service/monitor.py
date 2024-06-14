@@ -57,7 +57,7 @@ class Monitor(xbmc.Monitor):
             log('Monitor started', force=True)
             self.start = False
             self.player_monitor = PlayerMonitor()
-            self.art_monitor.read_fanart()
+            self.art_monitor.fanart_read()
         else:
             log('Monitor resumed', force=True) if self._conditions_met() else None
         while not self.abortRequested() and self._conditions_met():
@@ -181,7 +181,6 @@ class Monitor(xbmc.Monitor):
             self._on_skinsettings()
             self._on_recommendedsettings()
             self.waitForAbort(1)
-
         # else wait for next poll
         else:
             self.check_cache = True
@@ -196,7 +195,7 @@ class Monitor(xbmc.Monitor):
             current_dbid != self.dbid or
             current_dbtype != self.dbtype
         ) and not self._container_scrolling(key):
-            if crop:
+            if crop and condition('!Skin.HasSetting(Experiment_Disable_Transitions)'):
                 self._clearlogo_cropper(
                     source=key, return_color=return_color, reporting=window_property)
             if get_info:
@@ -230,7 +229,7 @@ class Monitor(xbmc.Monitor):
         if not self.abortRequested():
             self._on_start()
         else:
-            self.art_monitor.write_art()
+            self.art_monitor.fanart_write()
             del self.player_monitor
             del self.settings_monitor
             del self.art_monitor
