@@ -1,3 +1,11 @@
+def boolean(string):
+    if not isinstance(string, str):
+        return bool(string)
+    if string.lower() in ('false', '0', ''):
+        return False
+    return True
+
+
 def try_int(string, base=None, fallback=0):
     '''helper to parse int from string without erroring on empty or misformed string'''
     try:
@@ -66,8 +74,6 @@ def get_between_strings(string, startswith='', endswith=''):
 def reconfigure_legacy_params(**kwargs):
     if 'type' in kwargs:
         kwargs['tmdb_type'] = kwargs.pop('type')
-    # if kwargs.get('tmdb_type') in ['season', 'episode']:
-    #     kwargs['tmdb_type'] = 'tv'
     return kwargs
 
 
@@ -159,6 +165,71 @@ def split_items(items, separator='/'):
     if not isinstance(items, list):
         return [items]
     return items
+
+
+def math_operators():
+    import operator
+    _add, _sub, _mul = operator.add, operator.sub, operator.mul
+    _truediv, _pow = operator.truediv, operator.pow
+    return {
+        "+": (2, _add),
+        "-": (2, _sub),
+        "*": (2, _mul),
+        "/": (2, _truediv),
+        "**": (2, _pow),
+    }
+
+
+def evaluate_math_expression(expression):
+    if isinstance(expression, str):
+        expression = expression.split()
+
+    stack = []
+    skipnext = False
+    operators = math_operators()
+    for x, val in enumerate(expression):
+        if skipnext:
+            skipnext = False
+            continue
+        if val in operators:
+            n, op = operators[val]
+            stack.append(float(expression[x + 1]))  # Readahead
+            skipnext = True
+            if n > len(stack):
+                stack.append(0)
+                # raise ValueError(F"Not enough data to evaluate $MATH[] expression\nstack: {stack} expr: {expression}")
+            args = stack[-n:]
+            stack[-n:] = [op(*args)]
+            continue
+        stack.append(float(val))
+    return stack[-1]
+
+
+def parse_math(string, fstring='{:.0f}'):
+    import re
+    MATH_REGEX = r'\$MATH\[(.*?)\]'
+    match = re.search(MATH_REGEX, string)
+    if not match:
+        return string
+    values = match.group(1)
+    string = string.replace(match.group(0), fstring.format(evaluate_math_expression(values)))
+    return parse_math(string)
+
+
+def parse_localize(string):
+    import re
+    import xbmc
+    LOCALIZE_REGEX = r'\$LOCALIZE\[(.*?)\]'
+    match = re.search(LOCALIZE_REGEX, string)
+    if not match:
+        return string
+    try:
+        localized_id = int(match.group(1))
+    except (TypeError, ValueError):
+        string = string.replace(match.group(0), '')
+    else:
+        string = string.replace(match.group(0), xbmc.getLocalizedString(localized_id))
+    return parse_localize(string)
 
 
 class EncodeURL():

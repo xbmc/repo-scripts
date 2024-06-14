@@ -5,8 +5,9 @@ from xbmc import executebuiltin
 class ProgressDialog(object):
     """ ContextManager for DialogProgressBG use in with statement """
 
-    def __init__(self, title='', message='', total=100, logging=1):
+    def __init__(self, title='', message='', total=100, logging=1, background=True):
         self.logging = logging
+        self.background = background
         self._create(title, message, total)
 
     def __enter__(self):
@@ -21,7 +22,7 @@ class ProgressDialog(object):
         Logger('[script.module.jurialmunkey]\n').kodi_log(msg, level)
 
     def _create(self, title='', message='', total=100):
-        self._pd = xbmcgui.DialogProgressBG()
+        self._pd = xbmcgui.DialogProgressBG() if self.background else xbmcgui.DialogProgress()
         self._pd.create(title, message)
         self._count = 0
         self._total = total

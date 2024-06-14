@@ -27,10 +27,11 @@ class BasicCache():
         return self._cache
 
     @kodi_try_except_internal_traceback('lib.addon.cache get_cache')
-    def get_cache(self, cache_name):
+    def get_cache(self, cache_name, cache_only=False):
         self.ret_cache()
+        cur_time = -1 if cache_only else None  # Set negative time value if cache_only so we always get cache even if expired
         cache_name = get_filecache_name(cache_name or '')
-        return self._cache.get(cache_name)
+        return self._cache.get(cache_name, cur_time=cur_time)
 
     @kodi_try_except_internal_traceback('lib.addon.cache set_cache')
     def set_cache(self, my_object, cache_name, cache_days=14, force=False, fallback=None):
@@ -67,9 +68,14 @@ class BasicCache():
             cache_name = format_name(cache_name, *args, **kwargs)
             for k, v in cache_strip:
                 cache_name = cache_name.replace(k, v)
-        my_cache = self.get_cache(cache_name) if not cache_refresh else None
+
+        my_cache = None
+        if cache_only or not cache_refresh:
+            my_cache = self.get_cache(cache_name, cache_only=cache_only)
+
         if my_cache:
             return my_cache
+
         if not cache_only:
             if headers:
                 kwargs['headers'] = headers

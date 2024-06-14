@@ -119,25 +119,33 @@ class TimerList():
         self.log_threshold = log_threshold
         self.timer_a = timer() if logging else None
 
+    @property
+    def total_time(self):
+        try:
+            return self._total_time
+        except AttributeError:
+            self._total_time = timer() - self.timer_a
+            return self._total_time
+
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         if not self.timer_a:
             return
-        timer_z = timer()
-        total_time = timer_z - self.timer_a
-        if total_time > self.log_threshold:
-            self.list_obj.append(total_time)
+        if self.total_time > self.log_threshold:
+            self.list_obj.append(self.total_time)
 
 
 class TimerFunc():
+    kodi_log = None
+
     def __init__(self, timer_name, log_threshold=0.05, inline=False, kodi_log=None):
         """ ContextManager for timing code blocks and outputing to log """
         self.inline = ' ' if inline else '\n'
         self.timer_name = timer_name
         self.log_threshold = log_threshold
-        self.kodi_log = kodi_log or Logger().kodi_log
+        self.kodi_log = self.kodi_log or kodi_log or Logger().kodi_log
         self.timer_a = timer()
 
     def __enter__(self):
@@ -146,5 +154,6 @@ class TimerFunc():
     def __exit__(self, exc_type, exc_value, exc_traceback):
         timer_z = timer()
         total_time = timer_z - self.timer_a
-        if total_time > self.log_threshold:
-            self.kodi_log(f'{self.timer_name}{self.inline}{total_time:.3f} sec', 1)
+        if total_time <= self.log_threshold:
+            return
+        self.kodi_log(f'{self.timer_name}{self.inline}{total_time:.3f} sec', 1)
