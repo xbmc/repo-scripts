@@ -1,3 +1,7 @@
+v0.0.27
+- disable cookie expiration
+- Yahoo no longer provides weather data to new users
+
 v0.0.26
 - language update
 

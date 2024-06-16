@@ -31,7 +31,9 @@ class MAIN():
             log('location: %s' % (location))
             log('location id: %s' % (locationid))
             if locationid > 0:
-                ycookie, ycrumb = self.get_ycreds()
+                #ycookie, ycrumb = self.get_ycreds()
+                ycookie = ADDON.getSettingString('ycookie')
+                ycrumb = ADDON.getSettingString('ycrumb')
                 if not ycookie:
                     log('no cookie')
                 else:
