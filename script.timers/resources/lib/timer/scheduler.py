@@ -99,6 +99,9 @@ class Scheduler(xbmc.Monitor):
             if former_timer.is_fading_timer():
                 changed |= (former_timer.vol_min != timer_from_storage.vol_min)
                 changed |= (former_timer.vol_max != timer_from_storage.vol_max)
+            elif timer_from_storage.is_fading_timer():
+                changed = True
+                restart = True                
 
             return changed, restart
 
