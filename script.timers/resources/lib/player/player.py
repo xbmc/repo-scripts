@@ -172,6 +172,7 @@ class Player(xbmc.Player):
             _rst = self._running_stop_at_end_timer
             self._reset()
             if _rst[0] and not _rst[1]:
+                xbmc.log("set timer to be already stopped: %s" % str(_rst[0]), xbmc.LOGINFO)
                 self._running_stop_at_end_timer = (_rst[0], True)
                 showNotification(_rst[0], msg_id=32289)
 
@@ -210,6 +211,8 @@ class Player(xbmc.Player):
                 self.stopPlayer(PICTURE)
             elif timer != self._running_stop_at_end_timer[0] or not self._running_stop_at_end_timer[1]:
                 self.stop()
+            else:
+                xbmc.log("Skip timer's stop action since timer's playback has already been stopped by user: %s" % str(self._running_stop_at_end_timer[0]), xbmc.LOGINFO)
 
             self._reset(type=timer.media_type)
             xbmc.sleep(self._RESPITE)
