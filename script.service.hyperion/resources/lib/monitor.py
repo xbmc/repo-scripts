@@ -1,7 +1,7 @@
 """
 Kodi video capturer for Hyperion.
 
-Copyright (c) 2013-2023 Hyperion Team
+Copyright (c) 2013-2024 Hyperion Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 from typing import Callable
+from typing import Tuple
 
 import xbmc
 from PIL import Image
@@ -114,7 +115,7 @@ class HyperionMonitor(xbmc.Monitor):
         self._hyperion = Hyperion(settings.address, settings.port)
         self._capture = xbmc.RenderCapture()
 
-    def get_capture_size(self) -> tuple[tuple[int, int], int]:
+    def get_capture_size(self) -> Tuple[Tuple[int, int], int]:
         width = self.settings.capture_width
         aspect_ratio = self._capture.getAspectRatio()
         height = int(width / aspect_ratio)
