@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.subtitles.napisy24pl" name="Napisy24.pl" version="3.0.6" provider-name="CaTz">
+<addon id="service.subtitles.napisy24pl" name="Napisy24.pl" version="3.0.7" provider-name="CaTz">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -17,5 +17,6 @@
             <icon>icon.png</icon>
             <clearlogo>logo.png</clearlogo>
         </assets>
-    </extension>
+    <news>v3.0.7 - by CaTz [15.07.2024]
+- Fix login issues</news></extension>
 </addon>
