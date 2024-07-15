@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
-"Language: hr\n"
+"PO-Revision-Date: 2023-01-07 18:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/hr_hr/>\n"
+"Language: hr_hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -39,7 +40,7 @@ msgstr "Ugrađeno"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr ""
+msgstr "Pomak teksta pjesma"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
@@ -47,33 +48,33 @@ msgstr "Pretraživanje teksta pjesama..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
-msgstr ""
+msgstr "Odaberi tekst pjesma:"
 
 msgctxt "#32006"
 msgid "Select different lyrics"
-msgstr ""
+msgstr "Odaberi drugačiji tekst pjesama"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr ""
+msgstr "Ručno uskladi tekst pjesme"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
-msgstr ""
+msgstr "Odgodio: %ss"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr ""
+msgstr "Naprijed: %ss"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Pretraži i spremi lrc tekstove pjesama u zasebnoj mapi tekstova pjesama"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Pretraži i sakrij txt tekstove pjesama u zasebnoj mapi teksta pjesama"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
@@ -81,7 +82,7 @@ msgstr "- Mapa tekstova pjesama"
 
 msgctxt "#32103"
 msgid "- Filename format"
-msgstr "- Spremi format"
+msgstr "- Format naziva datoteka"
 
 msgctxt "#32104"
 msgid "%N %A - %T"
@@ -113,53 +114,61 @@ msgstr "%A\\%B\\%N %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- Tekstovi pjesama su u podmapi"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Naziv podmape"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Pretraži i spremi lrc tekstove pjesama u mapu pjesme"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
-msgstr ""
+msgstr "%N - %A - %T"
 
 msgctxt "#32115"
 msgid "Display options"
-msgstr ""
+msgstr "Mogućnosti prikaza"
 
 msgctxt "#32116"
 msgid "Search options"
-msgstr ""
+msgstr "Mogućnosti pretrage"
 
 msgctxt "#32117"
 msgid "Lyrics files"
-msgstr ""
+msgstr "Datoteke tekstova pjesama"
 
 msgctxt "#32118"
 msgid "Debugging"
-msgstr ""
+msgstr "Otklanjanje grešaka"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
+msgstr "Pretraži i spremi txt tekstove pjesama u mapu pjesme"
+
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr ""
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
 msgstr ""
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Pretraži lokalne .txt datoteke tekstova pjesama"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Sakrij pozadinu dijaloga, prikaži samo tekstove pjesama"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr ""
+msgstr "Stručno"
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -171,11 +180,11 @@ msgstr "Mogućnosti"
 
 msgctxt "#32152"
 msgid "Search for embedded lyrics"
-msgstr "Traži ugrađene tekstove pjesama"
+msgstr "Pretraži ugrađene tekstove pjesama"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
-msgstr ""
+msgstr "Pretraži lokalne .lrc datoteke tekstova pjesama"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
@@ -203,80 +212,101 @@ msgstr "Omogući zapisivanje otklanjanja grešaka"
 
 msgctxt "#32160"
 msgid "Hide notifications"
-msgstr ""
+msgstr "Sakrij obavijesti"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
-msgstr ""
+msgstr "Ukloni kineski/korejski tekst iz teksta pjesama"
 
 msgctxt "#32162"
 msgid "Scraper test"
-msgstr ""
+msgstr "Test sakupljača"
 
 msgctxt "#32163"
 msgid "Testing: %s"
-msgstr ""
+msgstr "Testiram: %s"
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr ""
+msgstr "Svi sakupljači rade uredu"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
-msgstr ""
+msgstr "Neuspjeli sakupljači: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr ""
+msgstr "Vremenski pomak za usklađene tekstove pjesama"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
-msgstr ""
+msgstr "Obriši tekstove pjesama"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
+msgstr "Ako sakrijete Glazbeni OSD i Informacije trenutne reprodukcije, dijalog pozadine teksta pjesama biti će isto skriven."
+
+msgctxt "#32169"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
 msgstr ""
 
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
+msgid "Lrclib"
 msgstr ""
 
 msgctxt "#32902"
 msgid "MusixMatch"
-msgstr ""
+msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
+msgid "Megalobiz"
 msgstr ""
 
 msgctxt "#32904"
 msgid "Music 163"
-msgstr ""
+msgstr "Music 163"
 
 msgctxt "#32905"
 msgid "Lyricsify"
-msgstr ""
+msgstr "Lyricsify"
 
 msgctxt "#32912"
 msgid "Genius"
-msgstr ""
+msgstr "Genius"
 
 msgctxt "#32913"
 msgid "Lyrics Mode"
-msgstr ""
+msgstr "Lyrics Mode"
 
 msgctxt "#32914"
 msgid "AZLyrics"
-msgstr ""
+msgstr "AZLyrics"
 
 msgctxt "#32915"
 msgid "Lyrics.com"
-msgstr ""
+msgstr "Lyrics.com"
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
+msgstr "Dark Lyrics"
+
+msgctxt "#32917"
+msgid "Super Music"
 msgstr ""
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 # empty strings from id 32010 to 32100
 # Settings labels

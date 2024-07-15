@@ -1048,7 +1048,7 @@ class LibraryFunctions:
             self.create(["ActivateWindow(TVGuide)", "22020", "32017", {
                 "icon": "DefaultTVShows.png"
             }]),
-            self.create(["ActivateWindow(TVRecordings)", "19163", "32017", {
+            self.create(["ActivateWindow(TVRecordings)", "19017", "32017", {
                 "icon": "DefaultTVShows.png"
             }]),
             self.create(["ActivateWindow(TVTimers)", "19040", "32017", {
@@ -1115,7 +1115,7 @@ class LibraryFunctions:
             self.create(["ActivateWindow(RadioGuide)", "22020", "32087", {
                 "icon": "DefaultAudio.png"
             }]),
-            self.create(["ActivateWindow(RadioRecordings)", "19163", "32087", {
+            self.create(["ActivateWindow(RadioRecordings)", "19017", "32087", {
                 "icon": "DefaultAudio.png"
             }]),
             self.create(["ActivateWindow(RadioTimers)", "19040", "32087", {
@@ -1393,7 +1393,7 @@ class LibraryFunctions:
         for favourite in listing:
             name = favourite.attributes['name'].nodeValue
             path = favourite.childNodes[0].nodeValue
-            if ('RunScript' not in path) and ('StartAndroidActivity' not in path) and \
+            if path.lower().startswith('activatewindow') and \
                     not path.endswith(',return)'):
                 path = path.rstrip(')')
                 path = '%s,return)' % path
@@ -2475,7 +2475,7 @@ class LibraryFunctions:
         # Show select dialog
         _ = self._allow_install_widget_provider(None, is_widget, self.allow_widget_install)
         show_dialog = ShowDialog("DialogSelect.xml", CWD, listing=available_shortcuts,
-                                 windowtitle=window_title)
+                                 window_title=window_title)
         show_dialog.doModal()
         number = show_dialog.result
         del show_dialog

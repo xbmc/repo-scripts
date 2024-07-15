@@ -4,13 +4,16 @@ from lib.utils import *
 from lib.culrcscrapers.azlyrics import lyricsScraper as lyricsScraper_azlyrics
 from lib.culrcscrapers.darklyrics import lyricsScraper as lyricsScraper_darklyrics
 from lib.culrcscrapers.genius import lyricsScraper as lyricsScraper_genius
-from lib.culrcscrapers.gomaudio import lyricsScraper as lyricsScraper_gomaudio
+from lib.culrcscrapers.lrclib import lyricsScraper as lyricsScraper_lrclib
 from lib.culrcscrapers.lyricscom import lyricsScraper as lyricsScraper_lyricscom
 from lib.culrcscrapers.lyricsify import lyricsScraper as lyricsScraper_lyricsify
 from lib.culrcscrapers.lyricsmode import lyricsScraper as lyricsScraper_lyricsmode
-from lib.culrcscrapers.minilyrics import lyricsScraper as lyricsScraper_minilyrics
+from lib.culrcscrapers.megalobiz import lyricsScraper as lyricsScraper_megalobiz
 from lib.culrcscrapers.music163 import lyricsScraper as lyricsScraper_music163
 from lib.culrcscrapers.musixmatch import lyricsScraper as lyricsScraper_musixmatch
+from lib.culrcscrapers.musixmatchlrc import lyricsScraper as lyricsScraper_musixmatchlrc
+from lib.culrcscrapers.rclyricsband import lyricsScraper as lyricsScraper_rclyricsband
+from lib.culrcscrapers.supermusic import lyricsScraper as lyricsScraper_supermusic
 
 FAILED = []
 
@@ -45,7 +48,7 @@ def test_scrapers():
         return
 
     # test darklyrics
-    dialog.update(11, LANGUAGE(32163) % 'darklyrics')
+    dialog.update(7, LANGUAGE(32163) % 'darklyrics')
     log('==================== darklyrics ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Neurosis'
@@ -64,7 +67,7 @@ def test_scrapers():
         return
 
     # test genius
-    dialog.update(22, LANGUAGE(32163) % 'genius')
+    dialog.update(14, LANGUAGE(32163) % 'genius')
     log('==================== genius ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Maren Morris'
@@ -82,27 +85,27 @@ def test_scrapers():
     if dialog.iscanceled():
         return
 
-    # test gomaudio
-    dialog.update(33, LANGUAGE(32163) % 'gomaudio')
-    log('==================== gomaudio ====================', debug=True)
+    # test lrclib
+    dialog.update(21, LANGUAGE(32163) % 'lrclib')
+    log('==================== lrclib ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Lady Gaga'
-    song.title = 'Just Dance'
+    song.artist = 'CHVRCHES'
+    song.title = 'Clearest Blue'
     st = time.time()
-    lyrics = lyricsScraper_gomaudio.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song, 'd106534632cb43306423acb351f8e6e9', '.mp3')
+    lyrics = lyricsScraper_lrclib.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
     tt = ft - st
-    TIMINGS.append(['gomaudio',tt])
+    TIMINGS.append(['lrclib',tt])
     if lyrics:
         log(lyrics.lyrics, debug=True)
     else:
-        FAILED.append('gomaudio')
-        log('FAILED: gomaudio', debug=True)
+        FAILED.append('lrclib')
+        log('FAILED: lrclib', debug=True)
     if dialog.iscanceled():
         return
 
     # test lyricscom
-    dialog.update(44, LANGUAGE(32163) % 'lyricscom')
+    dialog.update(28, LANGUAGE(32163) % 'lyricscom')
     log('==================== lyricscom ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Blur'
@@ -121,11 +124,11 @@ def test_scrapers():
         return
 
     # test lyricsify
-    dialog.update(55, LANGUAGE(32163) % 'lyricsify')
+    dialog.update(35, LANGUAGE(32163) % 'lyricsify')
     log('==================== lyricsify ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Madonna'
-    song.title = 'Crazy For You'
+    song.artist = 'Tears For Fears'
+    song.title = 'Shout'
     st = time.time()
     lyrics = lyricsScraper_lyricsify.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
@@ -140,7 +143,7 @@ def test_scrapers():
         return
 
     # test lyricsmode
-    dialog.update(66, LANGUAGE(32163) % 'lyricsmode')
+    dialog.update(42, LANGUAGE(32163) % 'lyricsmode')
     log('==================== lyricsmode ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Maren Morris'
@@ -158,32 +161,31 @@ def test_scrapers():
     if dialog.iscanceled():
         return
 
-
-    # test minilyrics
-    dialog.update(77, LANGUAGE(32163) % 'minilyrics')
-    log('==================== minilyrics ====================', debug=True)
+    # test megalobiz
+    dialog.update(50, LANGUAGE(32163) % 'megalobiz')
+    log('==================== megalobiz ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Chicago'
-    song.title = 'Stay The Night'
+    song.artist = 'Michael Jackson'
+    song.title = 'Beat It'
     st = time.time()
-    lyrics = lyricsScraper_minilyrics.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
+    lyrics = lyricsScraper_megalobiz.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
     tt = ft - st
-    TIMINGS.append(['minilyrics',tt])
+    TIMINGS.append(['megalobiz',tt])
     if lyrics:
         log(lyrics.lyrics, debug=True)
     else:
-        FAILED.append('minilyrics')
-        log('FAILED: minilyrics', debug=True)
+        FAILED.append('megalobiz')
+        log('FAILED: megalobiz', debug=True)
     if dialog.iscanceled():
         return
 
     # test music163
-    dialog.update(88, LANGUAGE(32163) % 'music163')
+    dialog.update(58, LANGUAGE(32163) % 'music163')
     log('==================== music163 ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Chicago'
-    song.title = 'Stay The Night'
+    song.artist = 'Madonna'
+    song.title = 'Vogue'
     st = time.time()
     lyrics = lyricsScraper_music163.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
@@ -198,7 +200,7 @@ def test_scrapers():
         return
 
     # test musixmatch
-    dialog.update(88, LANGUAGE(32163) % 'musixmatch')
+    dialog.update(66, LANGUAGE(32163) % 'musixmatch')
     log('==================== musixmatch ====================', debug=True)
     song = Song(opt=lyricssettings)
     song.artist = 'Kate Bush'
@@ -213,6 +215,63 @@ def test_scrapers():
     else:
         FAILED.append('musixmatch')
         log('FAILED: musixmatch', debug=True)
+    if dialog.iscanceled():
+        return
+
+    # test musixmatchlrc
+    dialog.update(73, LANGUAGE(32163) % 'musixmatchlrc')
+    log('==================== musixmatchlrc ====================', debug=True)
+    song = Song(opt=lyricssettings)
+    song.artist = 'Kate Bush'
+    song.title = 'Wuthering Heights'
+    st = time.time()
+    lyrics = lyricsScraper_musixmatchlrc.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['musixmatchlrc',tt])
+    if lyrics:
+        log(lyrics.lyrics, debug=True)
+    else:
+        FAILED.append('musixmatchlrc')
+        log('FAILED: musixmatchlrc', debug=True)
+    if dialog.iscanceled():
+        return
+
+    # test rclyricsband
+    dialog.update(80, LANGUAGE(32163) % 'rclyricsband')
+    log('==================== rclyricsband ====================', debug=True)
+    song = Song(opt=lyricssettings)
+    song.artist = 'Taylor Swift'
+    song.title = 'The Archer'
+    st = time.time()
+    lyrics = lyricsScraper_rclyricsband.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['rclyricsband',tt])
+    if lyrics:
+        log(lyrics.lyrics, debug=True)
+    else:
+        FAILED.append('rclyricsband')
+        log('FAILED: rclyricsband', debug=True)
+    if dialog.iscanceled():
+        return
+
+    # test supermusic
+    dialog.update(88, LANGUAGE(32163) % 'supermusic')
+    log('==================== supermusic ====================', debug=True)
+    song = Song(opt=lyricssettings)
+    song.artist = 'Karel Gott'
+    song.title = 'Trezor'
+    st = time.time()
+    lyrics = lyricsScraper_supermusic.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['supermusic',tt])
+    if lyrics:
+        log(lyrics.lyrics, debug=True)
+    else:
+        FAILED.append('supermusic')
+        log('FAILED: supermusic', debug=True)
     if dialog.iscanceled():
         return
 

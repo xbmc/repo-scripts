@@ -12,28 +12,27 @@ import xbmcgui
 from PIL import Image
 from qhue import QhueException
 
-from resources.lib import ADDON, MINIMUM_COLOR_DISTANCE, imageprocess, lightgroup
-from resources.lib import PROCESS_TIMES, reporting, AMBI_RUNNING
-from resources.lib.language import get_string as _
+from . import ADDON, MINIMUM_COLOR_DISTANCE, imageprocess, lightgroup
+from . import PROCESS_TIMES, reporting, AMBI_RUNNING
 from .kodiutils import notification
+from .language import get_string as _
 from .lightgroup import STATE_STOPPED, STATE_PAUSED, STATE_PLAYING
 from .rgbxy import Converter, ColorHelper  # https://github.com/benknight/hue-python-rgb-converter
 from .rgbxy import XYPoint, GamutA, GamutB, GamutC
 
 
 class AmbiGroup(lightgroup.LightGroup):
-    def __init__(self, light_group_id, hue_connection, initial_state=STATE_STOPPED, video_info_tag=xbmc.InfoTagVideo):
-        self.hue_connection = hue_connection
-        self.light_group_id = light_group_id
-        self.bridge = hue_connection.bridge
-        self.monitor = hue_connection.monitor
-        self.group0 = self.bridge.groups[0]
-        self.bridge_error500 = 0
-        self.state = initial_state
-        self.enabled = ADDON.getSettingBool(f"group{self.light_group_id}_enabled")
+    def __init__(self, light_group_id, hue_connection, media_type=lightgroup.VIDEO, initial_state=STATE_STOPPED, video_info_tag=xbmc.InfoTagVideo):
 
-        self.saved_light_states = {}
+        self.bridge = hue_connection.bridge
+        self.light_group_id = light_group_id
+        self.enabled = ADDON.getSettingBool(f"group{self.light_group_id}_enabled")
+        self.monitor = hue_connection.monitor
+        self.state = initial_state
         self.video_info_tag = video_info_tag
+
+        self.bridge_error500 = 0
+        self.saved_light_states = {}
 
         self.image_process = imageprocess.ImageProcess()
 
@@ -41,8 +40,6 @@ class AmbiGroup(lightgroup.LightGroup):
         self.converterB = Converter(GamutB)
         self.converterC = Converter(GamutC)
         self.helper = ColorHelper(GamutC)  # Gamut doesn't matter for this usage
-
-        self.enabled = ADDON.getSettingBool(f"group{self.light_group_id}_enabled")
 
         self.transition_time = int(ADDON.getSettingInt(f"group{self.light_group_id}_TransitionTime") / 100)  # This is given as a multiple of 100ms and defaults to 4 (400ms). transition_time:10 will make the transition last 1 second.
         self.force_on = ADDON.getSettingBool(f"group{self.light_group_id}_forceOn")
@@ -60,7 +57,7 @@ class AmbiGroup(lightgroup.LightGroup):
 
         if self.enabled:
             self.ambi_lights = {}
-            light_ids = ADDON.getSetting(f"group{self.light_group_id}_Lights").split(",")
+            light_ids = ADDON.getSetting(f"group{light_group_id}_Lights").split(",")
             index = 0
 
             if len(light_ids) > 0:
@@ -70,7 +67,7 @@ class AmbiGroup(lightgroup.LightGroup):
                     self.ambi_lights.update(light)
                     index = index + 1
 
-                super(xbmc.Player).__init__()
+            super().__init__(light_group_id, hue_connection, media_type, initial_state, video_info_tag)
 
     @staticmethod
     def _force_on(ambi_lights, bridge, saved_light_states):
@@ -86,23 +83,25 @@ class AmbiGroup(lightgroup.LightGroup):
     def onAVStarted(self):
         xbmc.log(f"Ambilight AV Started. Group enabled: {self.enabled} , isPlayingVideo: {self.isPlayingVideo()}, isPlayingAudio: {self.isPlayingAudio()}, self.playbackType(): {self.playback_type()}")
         # xbmc.log(f"Ambilight Settings: Interval: {self.update_interval}, transitionTime: {self.transition_time}")
-        self.state = STATE_PLAYING
-        if self.enabled:
-            # save light state
-            self.saved_light_states = self._get_light_states(self.ambi_lights, self.bridge)
 
-            self.video_info_tag = self.getVideoInfoTag()
-            if self.isPlayingVideo():
-                if self.enabled and self.check_active_time() and self.check_video_activation(self.video_info_tag):
+        if self.isPlayingVideo():
+            self.state = STATE_PLAYING
+            if self.enabled:
+                # save light state
+                self.saved_light_states = self._get_light_states(self.ambi_lights, self.bridge)
 
-                    if self.disable_labs:
-                        self._stop_effects()
+                self.video_info_tag = self.getVideoInfoTag()
+                if self.isPlayingVideo():
+                    if self.enabled and self.check_active_time() and self.check_video_activation(self.video_info_tag):
 
-                    if self.force_on:
-                        self._force_on(self.ambi_lights, self.bridge, self.saved_light_states)
+                        if self.disable_labs:
+                            self._stop_effects()
 
-                    ambi_loop_thread = Thread(target=self._ambi_loop, name="_ambi_loop", daemon=True)
-                    ambi_loop_thread.start()
+                        if self.force_on:
+                            self._force_on(self.ambi_lights, self.bridge, self.saved_light_states)
+
+                        ambi_loop_thread = Thread(target=self._ambi_loop, name="_ambi_loop", daemon=True)
+                        ambi_loop_thread.start()
 
     def onPlayBackStopped(self):
         # always stop ambilight even if group is disabled or it'll run forever
@@ -143,12 +142,12 @@ class AmbiGroup(lightgroup.LightGroup):
                 if "201" in exc.type_id:  # 201 Param not modifiable because light is off error. 901: internal hue bridge error.
                     pass
                 else:
-                    xbmc.log(f"[script.service.hue] resumeLightState: Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
                     reporting.process_exception(exc)
 
     def _ambi_loop(self):
         AMBI_RUNNING.set()
         cap = xbmc.RenderCapture()
+        cap_image = bytes
         xbmc.log("[script.service.hue] _ambiLoop started")
         aspect_ratio = cap.getAspectRatio()
 
@@ -265,8 +264,8 @@ class AmbiGroup(lightgroup.LightGroup):
 
         # Find all sensor IDs for active Hue Labs effects
         all_sensors = self.bridge.sensors()
-        effects = [id
-                   for id, sensor in list(all_sensors.items())
+        effects = [effect_id
+                   for effect_id, sensor in list(all_sensors.items())
                    if sensor['modelid'] == 'HUELABSVTOGGLE' and 'status' in sensor['state'] and sensor['state']['status'] == 1
                    ]
 
@@ -280,6 +279,7 @@ class AmbiGroup(lightgroup.LightGroup):
                             ]
 
             for link in sensor_links:
+
                 i = link.split('/')[-1]
                 if link.startswith('/lights/'):
                     lights.setdefault(i, set())
@@ -303,11 +303,11 @@ class AmbiGroup(lightgroup.LightGroup):
             # an effect will also power on its lights.
             try:
                 sensors = set([sensor
-                               for id in list(self.ambi_lights.keys())
-                               for sensor in lights[id]
-                               if id in lights
-                               and id in self.saved_light_states
-                               and self.saved_light_states[id]['state']['on']
+                               for sensor_id in list(self.ambi_lights.keys())
+                               for sensor in lights[sensor_id]
+                               if sensor_id in lights
+                               and sensor_id in self.saved_light_states
+                               and self.saved_light_states[sensor_id]['state']['on']
                                ])
                 return sensors
             except KeyError:
@@ -356,9 +356,9 @@ class AmbiGroup(lightgroup.LightGroup):
         for L in lights:
             try:
                 states[L] = (bridge.lights[L]())
-            except QhueException as exc:
-                xbmc.log(f"[script.service.hue] Hue call fail: {exc.type_id}: {exc.message} {traceback.format_exc()}")
             except requests.RequestException as exc:
                 xbmc.log(f"[script.service.hue] Requests exception: {exc}")
                 notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+            except Exception as exc:
+                reporting.process_exception(exc)
         return states

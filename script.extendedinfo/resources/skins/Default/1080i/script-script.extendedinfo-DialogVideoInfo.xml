@@ -24,7 +24,7 @@
 			<control type="button" id="20000">
 				<height>0</height>
 				<width>0</width>
-				<texturefocus>-</texturefocus>
+				<texturefocus></texturefocus>
 				<left>-5000</left>
 				<onfocus>SetFocus(132)</onfocus>
 				<onclick>noop</onclick>
@@ -33,7 +33,7 @@
 			<control type="button" id="20001">
 				<height>0</height>
 				<width>0</width>
-				<texturefocus>-</texturefocus>
+				<texturefocus></texturefocus>
 				<left>-5000</left>
 				<onclick>noop</onclick>
 				<visible allowhiddenfocus="true">Control.HasFocus(20001)</visible>
@@ -69,7 +69,7 @@
 							<onup>SetFocus(20000)</onup>
 							<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/button-fo.png</texturefocus>
 							<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/button-nofo.png</texturenofocus>
-							<label>-</label>
+							<label></label>
 						</control>
 						<control type="textbox" id="800">
 							<left>55</left>
@@ -200,10 +200,10 @@
 								<height>400</height>
 								<control type="radiobutton" id="6001">
 									<label>$ADDON[script.extendedinfo 32129]</label>
-									<textureradioonfocus colordiffuse="FFFAFAFA">-</textureradioonfocus>
+									<textureradioonfocus colordiffuse="FFFAFAFA"></textureradioonfocus>
 									<textureradioofffocus colordiffuse="FFFAFAFA">icons/heart.png</textureradioofffocus>
 									<textureradiooffnofocus colordiffuse="FF999999">icons/heart.png</textureradiooffnofocus>
-									<textureradioonnofocus colordiffuse="FF999999">-</textureradioonnofocus>
+									<textureradioonnofocus colordiffuse="FF999999"></textureradioonnofocus>
 									<left>0</left>
 									<top>0</top>
 									<width>280</width>
@@ -265,7 +265,7 @@
 								<radiowidth>44</radiowidth>
 								<radioheight>44</radioheight>
 								<selected>!String.IsEmpty(Window.Property(favorite))</selected>
-								<visible>!String.IsEmpty(Window.Property(tmdb_logged_in))</visible>
+								<visible>!String.IsEmpty(Window.Property(tmdb_logged_in)) + !String.IsEmpty(Window.Property(FavButton_Label))</visible>
 								<visible>!String.IsEqual(Window.Property(type),season) + !String.IsEqual(Window.Property(type),episode)</visible>
 							</control>
 							<control type="radiobutton" id="6005">
@@ -290,7 +290,7 @@
 								<radiowidth>44</radiowidth>
 								<radioheight>44</radioheight>
 								<visible>!String.IsEmpty(Window.Property(tmdb_logged_in))</visible>
-								<visible>!String.IsEqual(Window.Property(type),season) + !String.IsEqual(Window.Property(type),episode)</visible>
+								<visible>!String.IsEqual(Window.Property(type),season) + !String.IsEqual(Window.Property(type),episode) + !String.IsEqual(Window.Property(type),tvshow)</visible>
 							</control>
 							<control type="radiobutton" id="6002">
 								<label>$ADDON[script.extendedinfo 32130]</label>
@@ -3030,7 +3030,7 @@
 				<height>1100</height>
 				<aspectratio aligny="top">scale</aspectratio>
 				<texture background="true">common/black.png</texture>
-				<bordertexture colordiffuse="$INFO[Window(home).Property(ImageColor)]" border="10">thumbs/homewidget_shadow.png</bordertexture>
+				<bordertexture colordiffuse="$INFO[Window(home).Property(ImageColor)]" border="10">overlays/shadow.png</bordertexture>
 				<bordersize>10</bordersize>
 			</control>
 			<control type="image">

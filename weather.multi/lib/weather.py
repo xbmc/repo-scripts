@@ -3,7 +3,7 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 
-CURL = 'https://www.yahoo.com/'
+CURL = ['https://www.yahoo.com/', 'https://www.yahoo.com/?guccounter=1', 'https://www.yahoo.com/?guccounter=2', 'https://www.yahoo.com/?guccounter=', 'https://ca.yahoo.com/']
 YURL = 'https://www.yahoo.com/news/weather/'
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
@@ -28,8 +28,12 @@ class MAIN():
             self.search_location(mode)
         else:
             location, locationid, locationlat, locationlon = self.get_location(mode)
+            log('location: %s' % (location))
+            log('location id: %s' % (locationid))
             if locationid > 0:
-                ycookie, ycrumb = self.get_ycreds()
+                #ycookie, ycrumb = self.get_ycreds()
+                ycookie = ADDON.getSettingString('ycookie')
+                ycrumb = ADDON.getSettingString('ycrumb')
                 if not ycookie:
                     log('no cookie')
                 else:
@@ -92,31 +96,40 @@ class MAIN():
         log('stamp from settings: %s' % ystamp)
         if ystamp == '' or (int(time.time()) - int(ystamp) > 31536000): # cookie expires after 1 year
             try:
-                retry = 0
-                while (retry < 6) and (not self.MONITOR.abortRequested()):
-                    response = requests.get(CURL, headers=HEADERS, timeout=10)
-                    if response.status_code == 200:
+                for URL in CURL:
+                    ysess = requests.Session()
+                    retry = 0
+                    while (retry < 6) and (not self.MONITOR.abortRequested()):
+                        response = ysess.get(URL, headers=HEADERS, timeout=10)
+                        if response.status_code == 200:
+                            break
+                        else:
+                            self.MONITOR.waitForAbort(10)
+                            retry += 1
+                            log('getting yahoo website failed')
+                    if 'consent' in response.url: # EU users are asked for cookie consent
+                        log('EU user')
+                        token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                        sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                        redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                        log('EU token: %s' % token)
+                        log('EU sessionid: %s' % sessionid)
+                        log('EU redirect %s' % redirect)
+                        DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'reject': 'reject'}
+                        response = ysess.post(response.url, headers=HEADERS, data=DATA)
+                    log('cookies: %s' % str(response.cookies))
+                    if 'A3' in response.cookies:
+                        ycookie = response.cookies['A3']
                         break
-                    else:
-                        self.MONITOR.waitForAbort(10)
-                        retry += 1
-                        log('getting yahoo website failed')
-                if 'consent' in response.url: # EU users need to accept cookies
-                    token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                    sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                    redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                    DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'agree': 'agree'}
-                    posturl = 'https://consent.yahoo.com/v2/collectConsent?sessionId=%s' % sessionid
-                    response = requests.post(posturl, headers=HEADERS, data=DATA)
-                try:
-                    ycookie = response.cookies['A1']
-                except:
-                    ycookie = response.cookies['A1S'].replace('&j=GDPR', '')
-                response = requests.get(YURL, headers=HEADERS, cookies=dict(A1=ycookie), timeout=10)
+                    elif 'A1' in response.cookies:
+                        ycookie = response.cookies['A1']
+                        break
+                response = ysess.get(YURL, headers=HEADERS, cookies=dict(A3=ycookie), timeout=10)
                 match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
                 if not match:
                     match = re.search("win.YAHOO.context.crumb = '(.*?)'", response.text, re.IGNORECASE)
-#                    match = re.search('type="hidden" name="crumb" value="(.*?)"', response.text, re.IGNORECASE)
+                if not match:
+                    match = re.search('window.YAHOO.context.*?"crumb": "(.*?)"', response.text, flags=re.DOTALL)
                 ycrumb = codecs.decode(match.group(1), 'unicode-escape')
                 ystamp = time.time()
                 ADDON.setSettingString('ycookie', ycookie)
@@ -133,7 +146,7 @@ class MAIN():
     def get_data(self, url, cookie=''):
         try:
             if cookie:
-                response = requests.get(url, headers=HEADERS, cookies=dict(A1=cookie), timeout=10)
+                response = requests.get(url, headers=HEADERS, cookies=dict(A3=cookie), timeout=10)
             else:
                 response = requests.get(url, headers=HEADERS, timeout=10)
             return response.json()
@@ -163,7 +176,7 @@ class MAIN():
             return
         add_weather = ''
         if WADD and APPID:
-            daily_string = 'forecast/daily?key=%s&lat=%s&lon=%s' % (APPID, lat, lon)
+            daily_string = 'forecast/daily?lat=%s&lon=%s&key=%s' % (lat, lon, APPID)
             url = AURL % daily_string
             add_weather = self.get_data(url)
             log('weatherbit data: %s' % add_weather)

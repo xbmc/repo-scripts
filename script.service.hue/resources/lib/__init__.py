@@ -8,7 +8,6 @@ import time
 from collections import deque
 from threading import Event
 
-import simplecache
 import xbmc
 import xbmcaddon
 import xbmcvfs
@@ -19,7 +18,7 @@ MINIMUM_COLOR_DISTANCE = 0.005
 SETTINGS_CHANGED = Event()
 AMBI_RUNNING = Event()
 PROCESS_TIMES = deque(maxlen=100)
-ROLLBAR_API_KEY = "b871c6292a454fb490344f77da186e10"
+ROLLBAR_API_KEY = "48f832ef0f3947c9a8443a36b94bcfbd"
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
@@ -27,8 +26,6 @@ ADDONID = ADDON.getAddonInfo('id')
 ADDONPATH = xbmcvfs.translatePath(ADDON.getAddonInfo("path"))
 ADDONVERSION = ADDON.getAddonInfo('version')
 KODIVERSION = xbmc.getInfoLabel('System.BuildVersion')
-
-CACHE = simplecache.SimpleCache()
 
 
 def timer(func):
@@ -42,4 +39,5 @@ def timer(func):
         run_time = end_time - start_time  # 3
         PROCESS_TIMES.append(run_time)
         return value
+
     return wrapper_timer

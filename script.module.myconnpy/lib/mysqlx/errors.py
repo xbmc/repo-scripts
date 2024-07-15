@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -28,30 +28,24 @@
 
 """Implementation of the Python Database API Specification v2.0 exceptions."""
 
-import sys
-import struct
+from struct import unpack as struct_unpack
+from typing import Dict, Optional, Tuple, Union
 
 from .locales import get_client_error
-
-PY2 = sys.version_info[0] == 2
-
-if PY2:
-    # pylint: disable=E0602
-    def struct_unpack(fmt, buf):
-        """Wrapper around struct.unpack handling buffer as bytes and strings.
-        """
-        if isinstance(buf, (bytearray, bytes)):
-            return struct.unpack_from(fmt, buffer(buf))
-        return struct.unpack_from(fmt, buf)
-    # pylint: enable=E0602
-else:
-    from struct import unpack as struct_unpack
+from .types import ErrorClassTypes, ErrorTypes, StrOrBytes
 
 
 class Error(Exception):
     """Exception that is base class for all other error exceptions."""
-    def __init__(self, msg=None, errno=None, values=None, sqlstate=None):
-        super(Error, self).__init__()
+
+    def __init__(
+        self,
+        msg: Optional[str] = None,
+        errno: Optional[int] = None,
+        values: Optional[Tuple[Union[int, str], ...]] = None,
+        sqlstate: Optional[str] = None,
+    ) -> None:
+        super().__init__()
         self.msg = msg
         self._full_msg = self.msg
         self.errno = errno or -1
@@ -63,15 +57,12 @@ class Error(Exception):
                 try:
                     self.msg = self.msg % values
                 except TypeError as err:
-                    self.msg = "{0} (Warning: {1})".format(self.msg, str(err))
+                    self.msg = f"{self.msg} (Warning: {err})"
         elif not self.msg:
             self._full_msg = self.msg = "Unknown error"
 
         if self.msg and self.errno != -1:
-            fields = {
-                "errno": self.errno,
-                "msg": self.msg.encode("utf8") if PY2 else self.msg
-            }
+            fields = {"errno": self.errno, "msg": self.msg}
             if self.sqlstate:
                 fmt = "{errno} ({state}): {msg}"
                 fields["state"] = self.sqlstate
@@ -81,92 +72,74 @@ class Error(Exception):
 
         self.args = (self.errno, self._full_msg, self.sqlstate)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self._full_msg
 
 
 class InterfaceError(Error):
     """Exception for errors related to the interface."""
-    pass
 
 
 class DatabaseError(Error):
     """Exception for errors related to the database."""
-    pass
 
 
 class InternalError(DatabaseError):
     """Exception for errors internal database errors."""
-    pass
 
 
 class OperationalError(DatabaseError):
     """Exception for errors related to the database's operation."""
-    pass
 
 
 class ProgrammingError(DatabaseError):
     """Exception for errors programming errors."""
-    pass
 
 
 class IntegrityError(DatabaseError):
     """Exception for errors regarding relational integrity."""
-    pass
 
 
 class DataError(DatabaseError):
     """Exception for errors reporting problems with processed data."""
-    pass
 
 
 class NotSupportedError(DatabaseError):
     """Exception for errors when an unsupported database feature was used."""
-    pass
 
 
 class PoolError(Error):
     """Exception for errors relating to connection pooling."""
-    pass
 
-# pylint: disable=W0622
-class TimeoutError(Error):
+
+class TimeoutError(Error):  # pylint: disable=redefined-builtin
     """Exception for errors relating to connection timeout."""
-    pass
 
 
-def intread(buf):
+def intread(buf: bytes) -> int:
     """Unpacks the given buffer to an integer."""
-    try:
-        if isinstance(buf, int):
-            return buf
-        length = len(buf)
-        if length == 1:
-            return buf[0]
-        elif length <= 4:
-            tmp = buf + b"\x00" * (4 - length)
-            return struct_unpack("<I", tmp)[0]
-        tmp = buf + b"\x00" * (8 - length)
-        return struct_unpack("<Q", tmp)[0]
-    except:
-        raise
+    if isinstance(buf, int):
+        return buf
+    length = len(buf)
+    if length == 1:
+        return buf[0]
+    if length <= 4:
+        tmp = buf + b"\x00" * (4 - length)
+        return struct_unpack("<I", tmp)[0]
+    tmp = buf + b"\x00" * (8 - length)
+    return struct_unpack("<Q", tmp)[0]
 
 
-def read_int(buf, size):
+def read_int(buf: bytes, size: int) -> Tuple[bytes, int]:
     """Read an integer from buffer.
 
     Returns a tuple (truncated buffer, int).
     """
-
-    try:
-        res = intread(buf[0:size])
-    except:
-        raise
-
+    res = intread(buf[0:size])
     return (buf[size:], res)
 
 
-def read_bytes(buf, size):
+def read_bytes(buf: bytes, size: int) -> Tuple[bytes, bytes]:
     """Reads bytes from a buffer.
 
     Returns a tuple with buffer less the read bytes, and the bytes.
@@ -175,7 +148,9 @@ def read_bytes(buf, size):
     return (buf[size:], res)
 
 
-def get_mysql_exception(errno, msg=None, sqlstate=None):
+def get_mysql_exception(
+    errno: int, msg: Optional[str] = None, sqlstate: Optional[str] = None
+) -> ErrorTypes:
     """Get the exception matching the MySQL error.
 
     This function will return an exception based on the SQLState. The given
@@ -184,8 +159,7 @@ def get_mysql_exception(errno, msg=None, sqlstate=None):
     Returns an Exception.
     """
     try:
-        return _ERROR_EXCEPTIONS[errno](msg=msg, errno=errno,
-                                        sqlstate=sqlstate)
+        return _ERROR_EXCEPTIONS[errno](msg=msg, errno=errno, sqlstate=sqlstate)
     except KeyError:
         # Error was not mapped to particular exception
         pass
@@ -194,14 +168,15 @@ def get_mysql_exception(errno, msg=None, sqlstate=None):
         return DatabaseError(msg=msg, errno=errno)
 
     try:
-        return _SQLSTATE_CLASS_EXCEPTION[sqlstate[0:2]](msg=msg, errno=errno,
-                                                        sqlstate=sqlstate)
+        return _SQLSTATE_CLASS_EXCEPTION[sqlstate[0:2]](
+            msg=msg, errno=errno, sqlstate=sqlstate
+        )
     except KeyError:
         # Return default InterfaceError
         return DatabaseError(msg=msg, errno=errno, sqlstate=sqlstate)
 
 
-def get_exception(packet):
+def get_exception(packet: bytes) -> ErrorTypes:
     """Returns an exception object based on the MySQL error.
 
     Returns an exception object based on the MySQL error in the given
@@ -215,31 +190,29 @@ def get_exception(packet):
         if packet[4] != 255:
             raise ValueError("Packet is not an error packet")
     except IndexError as err:
-        return InterfaceError("Failed getting Error information ({0})"
-                              "".format(err))
+        return InterfaceError(f"Failed getting Error information ({err})")
 
-    sqlstate = None
+    sqlstate: Optional[StrOrBytes] = None
     try:
         packet = packet[5:]
         packet, errno = read_int(packet, 2)
         if packet[0] != 35:
             # Error without SQLState
-            if isinstance(packet, (bytes, bytearray)):
-                errmsg = packet.decode("utf8")
-            else:
-                errmsg = packet
+            errmsg = (
+                packet.decode("utf8")
+                if isinstance(packet, (bytes, bytearray))
+                else packet
+            )
         else:
             packet, sqlstate = read_bytes(packet[1:], 5)
             sqlstate = sqlstate.decode("utf8")
             errmsg = packet.decode("utf8")
-    except Exception as err:  # pylint: disable=W0703
-        return InterfaceError("Failed getting Error information ({0})"
-                              "".format(err))
-    else:
-        return get_mysql_exception(errno, errmsg, sqlstate)
+    except (IndexError, ValueError) as err:
+        return InterfaceError(f"Failed getting Error information ({err})")
+    return get_mysql_exception(errno, errmsg, sqlstate)  # type: ignore[arg-type]
 
 
-_SQLSTATE_CLASS_EXCEPTION = {
+_SQLSTATE_CLASS_EXCEPTION: Dict[str, ErrorClassTypes] = {
     "02": DataError,  # no data
     "07": DatabaseError,  # dynamic SQL error
     "08": OperationalError,  # connection exception
@@ -266,14 +239,14 @@ _SQLSTATE_CLASS_EXCEPTION = {
     "3F": ProgrammingError,  # invalid schema name
     "40": InternalError,  # transaction rollback
     "42": ProgrammingError,  # syntax error or access rule violation
-    "44": InternalError,   # with check option violation
+    "44": InternalError,  # with check option violation
     "HZ": OperationalError,  # remote database access
     "XA": IntegrityError,
     "0K": OperationalError,
     "HY": DatabaseError,  # default when no SQLState provided by MySQL server
 }
 
-_ERROR_EXCEPTIONS = {
+_ERROR_EXCEPTIONS: Dict[int, ErrorClassTypes] = {
     1243: ProgrammingError,
     1210: ProgrammingError,
     2002: InterfaceError,

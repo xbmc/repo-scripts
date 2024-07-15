@@ -4,11 +4,13 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 from resources.lib.player.player import Player
-from resources.lib.timer import storage
+from resources.lib.timer.concurrency import determine_overlappings
 from resources.lib.timer.scheduleraction import SchedulerAction
+from resources.lib.timer.storage import Storage
 from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_TIME,
                                        STATE_WAITING, Timer)
-from resources.lib.utils.datetime_utils import DateTimeDelta, parse_datetime_str
+from resources.lib.utils.datetime_utils import (DateTimeDelta,
+                                                parse_datetime_str)
 from resources.lib.utils.settings_utils import (is_settings_changed_events,
                                                 save_timer_from_settings)
 from resources.lib.utils.system_utils import (is_fullscreen,
@@ -32,6 +34,7 @@ class Scheduler(xbmc.Monitor):
 
         self._powermanagement_displaysoff = 0
         self._disabled_powermanagement_displaysoff = False
+        self._disable_displayoff_on_audio = False
         self._windows_unlock = False
 
         self._player = Player()
@@ -39,9 +42,10 @@ class Scheduler(xbmc.Monitor):
         self._player.setDefaultVolume(_default_volume)
         self._player.setVolume(_default_volume)
 
-        self.action = SchedulerAction(self._player)
+        self._storage = Storage()
+        self.action = SchedulerAction(self._player, self._storage)
 
-        storage.release_lock()
+        self._storage.release_lock()
 
         self._update()
 
@@ -76,9 +80,15 @@ class Scheduler(xbmc.Monitor):
 
             changed |= (former_timer.media_action !=
                         timer_from_storage.media_action)
-            if former_timer._is_playing_media_timer():
+            if former_timer.is_playing_media_timer():
                 restart |= (former_timer.path != timer_from_storage.path)
                 changed |= (former_timer.path != timer_from_storage.path)
+
+                restart |= (former_timer.priority !=
+                            timer_from_storage.priority)
+                changed |= (former_timer.priority !=
+                            timer_from_storage.priority)
+
                 changed |= (former_timer.media_type !=
                             timer_from_storage.media_type)
                 changed |= (former_timer.repeat != timer_from_storage.repeat)
@@ -89,38 +99,52 @@ class Scheduler(xbmc.Monitor):
             if former_timer.is_fading_timer():
                 changed |= (former_timer.vol_min != timer_from_storage.vol_min)
                 changed |= (former_timer.vol_max != timer_from_storage.vol_max)
+            elif timer_from_storage.is_fading_timer():
+                changed = True
+                restart = True                
 
             return changed, restart
+
+        def _reset_overlappings(timer: Timer) -> None:
+
+            overlappings = determine_overlappings(
+                timer, scheduled_timers)
+            for overlap in overlappings:
+                overlap.state = STATE_WAITING
 
         def _update_from_storage(scheduled_timers: 'list[Timer]') -> 'list[Timer]':
 
             for timer in scheduled_timers:
 
+                changed = False
                 former_timer = [
                     t for t in self._timers if t.id == timer.id]
-                if not former_timer:
-                    continue
 
-                timer.state = former_timer[0].state
-                timer.return_vol = former_timer[0].return_vol
+                if former_timer:
+                    timer.state = former_timer[0].state
+                    timer.return_vol = former_timer[0].return_vol
 
-                changed, restart = _has_changed(
-                    former_timer=former_timer[0], timer_from_storage=timer)
+                    changed, restart = _has_changed(
+                        former_timer=former_timer[0], timer_from_storage=timer)
 
-                if timer.state is not STATE_WAITING and restart:
-                    timer.state = STATE_WAITING
+                    if timer.state is not STATE_WAITING and restart:
+                        timer.state = STATE_WAITING
 
-                if changed:
-                    self._player.resetResumeOfTimer(timer=former_timer[0])
+                    if changed:
+                        self._player.resetResumeOfTimer(timer=former_timer[0])
 
-        scheduled_timers = storage.get_scheduled_timers()
+                if not former_timer or changed:
+                    _reset_overlappings(timer)
+
+        scheduled_timers = self._storage.get_scheduled_timers()
 
         if self._timers:
             _update_from_storage(scheduled_timers)
 
             ids = [t.id for t in scheduled_timers]
-            removed_timers = list([t for t in self._timers if t.id not in ids])
+            removed_timers = [t for t in self._timers if t.id not in ids]
             for removed_timer in removed_timers:
+                _reset_overlappings(removed_timer)
                 self._player.resetResumeOfTimer(timer=removed_timer)
 
         self._timers = scheduled_timers
@@ -144,6 +168,7 @@ class Scheduler(xbmc.Monitor):
         self._windows_unlock = addon.getSettingBool("windows_unlock")
         self._powermanagement_displaysoff = addon.getSettingInt(
             "powermanagement_displaysoff")
+        self._disable_displayoff_on_audio = addon.getSettingBool("audio_displaysoff")
         self.reset_powermanagement_displaysoff()
 
     def start(self) -> None:
@@ -180,8 +205,7 @@ class Scheduler(xbmc.Monitor):
             if self._windows_unlock != prev_windows_unlock:
                 prev_windows_unlock = set_windows_unlock(self._windows_unlock)
 
-            if self._powermanagement_displaysoff:
-                self._prevent_powermanagement_displaysoff()
+            self._prevent_powermanagement_displaysoff()
 
             wait = min(CHECK_INTERVAL, interval if interval >= MIN_INTERVAL else MIN_INTERVAL, (
                 self.action.upcoming_event - now.dt).total_seconds() if self.action.upcoming_event else MIN_INTERVAL)
@@ -191,10 +215,18 @@ class Scheduler(xbmc.Monitor):
 
     def _prevent_powermanagement_displaysoff(self) -> None:
 
-        if is_fullscreen() and self._disabled_powermanagement_displaysoff:
-            self.reset_powermanagement_displaysoff()
+        fullscreen = is_fullscreen()
+        audio = self._player.isPlayingAudio()
 
-        elif not is_fullscreen() and not self._disabled_powermanagement_displaysoff:
+        if self._disabled_powermanagement_displaysoff and ((fullscreen and not audio) \
+                or (not self._powermanagement_displaysoff and (not self._disable_displayoff_on_audio or not audio)) \
+                or (not self._powermanagement_displaysoff and not fullscreen and self._disable_displayoff_on_audio and not audio) \
+                or (not self._disable_displayoff_on_audio and fullscreen)):
+            self.reset_powermanagement_displaysoff()
+            
+        elif not self._disabled_powermanagement_displaysoff and \
+                ((self._powermanagement_displaysoff and not fullscreen) \
+                or (self._disable_displayoff_on_audio and audio)):
             self._disabled_powermanagement_displaysoff = True
             set_powermanagement_displaysoff(0)
 

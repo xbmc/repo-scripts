@@ -7,6 +7,8 @@ import os
 from time import time
 from socket import timeout
 from ssl import SSLError
+import struct
+
 
 try:  # Python 3
     from urllib.error import HTTPError, URLError
@@ -37,6 +39,13 @@ def update_temp_path(new_temp_path):
     if old_temp_path != temp_path():
         from shutil import move
         move(old_temp_path, temp_path())
+
+
+def download_path(url):
+    """Choose download target directory based on url."""
+    filename = url.split('/')[-1]
+
+    return os.path.join(temp_path(), filename)
 
 
 def _http_request(url, headers=None, time_out=10):
@@ -100,11 +109,11 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
     if req is None:
         return None
 
-    filename = url.split('/')[-1]
+    dl_path = download_path(url)
+    filename = os.path.basename(dl_path)
     if not message:  # display "downloading [filename]"
         message = localize(30015, filename=filename)  # Downloading file
 
-    download_path = os.path.join(temp_path(), filename)
     total_length = int(req.info().get('content-length'))
     if dl_size and dl_size != total_length:
         log(2, 'The given file size does not match the request!')
@@ -118,7 +127,7 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
 
     starttime = time()
     chunk_size = 32 * 1024
-    with open(compat_path(download_path), 'wb') as image:
+    with open(compat_path(dl_path), 'wb') as image:
         size = 0
         while size < total_length:
             try:
@@ -155,22 +164,27 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
 
             progress.update(percent, prog_message)
 
-    if checksum and calc_checksum.hexdigest() != checksum:
-        progress.close()
-        req.close()
-        log(4, 'Download failed, checksums do not match!')
-        return False
-
-    if dl_size and stat_file(download_path).st_size() != dl_size:
-        progress.close()
-        req.close()
-        free_space = sizeof_fmt(diskspace())
-        log(4, 'Download failed, filesize does not match! Filesystem full? Remaining diskspace in temp: {}.'.format(free_space))
-        return False
-
     progress.close()
     req.close()
-    store('download_path', download_path)
+
+    checksum_ok = (not checksum or calc_checksum.hexdigest() == checksum)
+    size_ok = (not dl_size or stat_file(dl_path).st_size() == dl_size)
+
+    if not all((checksum_ok, size_ok)):
+        free_space = sizeof_fmt(diskspace())
+        log(4, 'Something may be wrong with the downloaded file.')
+        if not checksum_ok:
+            log(4, 'Provided checksum: {}\nCalculated checksum: {}'.format(checksum, calc_checksum.hexdigest()))
+        if not size_ok:
+            free_space = sizeof_fmt(diskspace())
+            log(4, 'Expected filesize: {}\nReal filesize: {}\nRemaining diskspace: {}'.format(dl_size, stat_file(dl_path).st_size(), free_space))
+
+        if yesno_dialog(localize(30003), localize(30070, filename=filename)):  # file maybe broken. Continue anyway?
+            log(4, 'Continuing despite possibly corrupt file!')
+        else:
+            return False
+
+    store('download_path', dl_path)
     return True
 
 
@@ -309,6 +323,11 @@ def arch():
 
     arch.cached = sys_arch
     return sys_arch
+
+
+def userspace64():
+    """To check if userspace is 64bit or 32bit"""
+    return struct.calcsize('P') * 8 == 64
 
 
 def hardlink(src, dest):

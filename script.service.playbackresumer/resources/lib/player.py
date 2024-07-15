@@ -121,9 +121,9 @@ class KodiPlayer(xbmc.Player):
 
         # Short circuits
 
-        # No library ID or weird library ID
-        if not Store.library_id or Store.library_id < 0:
-            log(f"No/invalid library id ({Store.library_id}) for {Store.currently_playing_file_path} so can't set a resume point")
+        # Weird library ID
+        if Store.library_id and Store.library_id < 0:
+            log(f"No/invalid library id ({Store.library_id}) for {Store.currently_playing_file_path}")
             return
         # Kodi doing its normal stopping thing
         if seconds == -2:
@@ -150,52 +150,77 @@ class KodiPlayer(xbmc.Player):
 
         # Log what we are doing
         if seconds == 0:
-            log(f'Removing resume point for {Store.type_of_video} id {Store.library_id}')
+            log(f'Removing resume point for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, library id: {Store.library_id}')
         else:
-            log(f'Setting resume point for {Store.type_of_video} id {Store.library_id} to {seconds} seconds')
+            log(f'Setting resume point for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, library id: {Store.library_id}, to: {seconds} seconds')
 
         # Determine the JSON-RPC setFooDetails method to use and what the library id name is based of the type of video
+        id_name = None
         if Store.type_of_video == 'episode':
-            method = 'SetEpisodeDetails'
-            get_method = 'GetEpisodeDetails'
+            method = 'VideoLibrary.SetEpisodeDetails'
+            get_method = 'VideoLibrary.GetEpisodeDetails'
             id_name = 'episodeid'
         elif Store.type_of_video == 'movie':
-            method = 'SetMovieDetails'
-            get_method = 'GetMovieDetails'
+            method = 'VideoLibrary.SetMovieDetails'
+            get_method = 'VideoLibrary.GetMovieDetails'
             id_name = 'movieid'
         elif Store.type_of_video == 'musicvideo':
-            method = 'SetMusicVideoDetails'
-            get_method = 'GetMusicVideoDetails'
+            method = 'VideoLibrary.SetMusicVideoDetails'
+            get_method = 'VideoLibrary.GetMusicVideoDetails'
             id_name = 'musicvideoid'
         else:
-            log(f'Can\'t update resume point as did not recognise type of video [{Store.type_of_video}]')
-            return
+            log(f'Did not recognise type of video [{Store.type_of_video}] - assume non-library video')
+            method = 'Files.SetFileDetails'
+            get_method = 'Files.GetFileDetails'
 
-        query = json.dumps({
+        json_dict = {
             "jsonrpc": "2.0",
             "id": "setResumePoint",
-            "method": "VideoLibrary." + method,
-            "params": {
+            "method": method,
+        }
+        if id_name:
+            params = {
                 id_name: Store.library_id,
                 "resume": {
                     "position": seconds,
-                    # "total": 0 # Not needed: https://forum.kodi.tv/showthread.php?tid=161912&pid=1596436#pid1596436
+                    "total": Store.length_of_currently_playing_file
                 }
             }
-        })
-        send_kodi_json(f'Set resume point to {seconds}', query)
+        else:
+            params = {
+                "file": Store.currently_playing_file_path,
+                "media": "video",
+                "resume": {
+                    "position": seconds,
+                    "total": Store.length_of_currently_playing_file
+                }
+            }
 
-        # For debugging - let's retrieve and log the current resume point...
-        query = json.dumps({
+        json_dict['params'] = params
+        query = json.dumps(json_dict)
+        send_kodi_json(f'Set resume point for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, id: {Store.library_id}, to: {seconds} seconds, total: {Store.length_of_currently_playing_file}', query)
+
+        # For debugging - let's retrieve and log the current resume point to check it was actually set as intended...
+        json_dict = {
             "jsonrpc": "2.0",
             "id": "getResumePoint",
-            "method": "VideoLibrary." + get_method,
-            "params": {
+            "method": get_method,
+        }
+        if id_name:
+            params = {
                 id_name: Store.library_id,
                 "properties": ["resume"],
             }
-        })
-        send_kodi_json(f'Get resume point for id {Store.library_id}', query)
+        else:
+            params = {
+                "file": Store.currently_playing_file_path,
+                "media": "video",
+                "properties": ["resume"],
+            }
+
+        json_dict['params'] = params
+        query = json.dumps(json_dict)
+        send_kodi_json(f'Check new resume point & total for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, id: {Store.library_id}', query)
 
     def resume_if_was_playing(self):
         """

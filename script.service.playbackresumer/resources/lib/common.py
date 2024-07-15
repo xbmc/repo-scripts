@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
+
 """
-Handy utility functions for Kodi Addons
-By bossanova808
-Free in all senses....
-VERSION 0.2.3 2021-06-21
-(For Kodi Matrix & later)
+
+Handy utility functions & constants for Kodi Addons
+For Kodi Matrix & later
+By bossanova808 - freely released
+VERSION 0.2.7 2024-04-19
+
+Changelog:
+0.2.7 - Fix getting the major Kodi version (& change float -> int), as it was failing on e.g. 'RC' being in the string apparently
+0.2.6 - (SkinPatcher) - add float KODI_VERSION_FLOAT constant, alongside string KODI_VERSION
+0.2.5 - (Skin) - move to storing copy of latest in bossanova808 repo and adding this mini changelog
+
+For latest version - ALWAYS COPY BACK ANY CHANGES, plus do changelog, and a version & date bump above:
+https://github.com/bossanova808/repository.bossanova808/blob/main/latest-common/common.py
+
+
 """
+
 import sys
 import traceback
 
@@ -13,6 +25,8 @@ import xbmc
 import xbmcvfs
 import xbmcgui
 import xbmcaddon
+import json
+
 
 ADDON = xbmcaddon.Addon()
 ADDON_NAME = ADDON.getAddonInfo('name')
@@ -25,6 +39,7 @@ CWD = ADDON.getAddonInfo('path')
 LANGUAGE = ADDON.getLocalizedString
 PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
+KODI_VERSION_INT = int(KODI_VERSION.split(".")[0])
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
 HOME_WINDOW = xbmcgui.Window(10000)
 WEATHER_WINDOW = xbmcgui.Window(12600)
@@ -49,6 +64,8 @@ from resources.lib.common import *
 """
 
 unit_testing = False
+
+# Testing outside of Kodi
 if not xbmc.getUserAgent():
 
     xbmc = None
@@ -63,6 +80,7 @@ if not xbmc.getUserAgent():
             print(f'EXCPT: {traceback.format_exc(exception_instance)}')
 
 
+# Running inside of Kodi
 else:
 
     def log(message, exception_instance=None, level=xbmc.LOGDEBUG):
@@ -105,9 +123,9 @@ else:
     def get_property(window, name):
         """
         Return the value of a window property
-        @param window:
-        @param name:
-        @return:
+        :param window: the Kodi window to get the property value from
+        :param name: the name of the property to get
+        :return: the value of the window property
         """
         return window.getProperty(name)
 
@@ -115,32 +133,33 @@ else:
     def get_property_as_bool(window, name):
         """
         Return the value of a window property as a boolean
-        @param window:
-        @param name:
-        @return:
+        :param window: the Kodi window to get the property value from
+        :param name: the name of the property to get
+        :return: the value of the window property in boolean form
         """
         return window.getProperty(name).lower() == "true"
 
 
     def send_kodi_json(human_description, json_string):
         """
-        Send a JSON command to Kodi, logging the human description, command, and result returned.
+        Send a JSON command to Kodi, logging the human description, command, and result as returned.
 
         :param human_description: Required. A human sensible description of what the command is aiming to do/retrieve.
         :param json_string: Required. The json command to send.
+        :return the json object loaded from the result string
         """
         log(f'KODI JSON RPC command: {human_description} [{json_string}]')
         result = xbmc.executeJSONRPC(json_string)
         log(f'KODI JSON RPC result: {result}')
-        return result
+        return json.loads(result)
 
 
     def get_setting(setting):
         """
         Helper function to get string type from settings
 
-        @param setting:
-        @return: setting value
+        :param setting: The addon setting to return
+        :return: the setting value
         """
         return ADDON.getSetting(setting).strip()
 
@@ -149,8 +168,8 @@ else:
         """
         Helper function to get bool type from settings
 
-        @param setting:
-        @return: setting value as boolen
+        :param setting: The addon setting to return
+        :return: the setting value as boolean
         """
         return get_setting(setting).lower() == "true"
 
@@ -159,10 +178,10 @@ else:
         """
         Send a notification to the user via the Kodi GUI
 
-        @param message: the message to send
-        @param notification_type: xbmcgui.NOTIFICATION_ERROR (default), xbmcgui.NOTIFICATION_WARNING, or xbmcgui.NOTIFICATION_INFO
-        @param duration: time to display notification in milliseconds, default 5000
-        @return: None
+        :param message: the message to send
+        :param notification_type: xbmcgui.NOTIFICATION_ERROR (default), xbmcgui.NOTIFICATION_WARNING, or xbmcgui.NOTIFICATION_INFO
+        :param duration: time to display notification in milliseconds, default 5000
+        :return: None
         """
         dialog = xbmcgui.Dialog()
 
@@ -170,6 +189,15 @@ else:
                             message,
                             notification_type,
                             duration)
+
+    def is_playback_paused():
+        """
+        Helper function to return Kodi player state.
+        (Odd this is needed, it should be a testable state on Player really..)
+
+        :return: boolean indicating player paused state
+        """
+        return bool(xbmc.getCondVisibility("Player.Paused"))
 
 
 def footprints(startup=True):
@@ -180,7 +208,7 @@ def footprints(startup=True):
     """
     if startup:
         log(f'Starting...', level=xbmc.LOGINFO)
-        log(f'Kodi Version: {KODI_VERSION}', level=xbmc.LOGINFO)
+        log(f'Kodi System.BuildVersion: {KODI_VERSION}, which is Kodi major version: {KODI_VERSION_INT}', level=xbmc.LOGINFO)
         log(f'Addon arguments: {ADDON_ARGUMENTS}', level=xbmc.LOGINFO)
     else:
         log(f'Exiting...', level=xbmc.LOGINFO)

@@ -22,12 +22,12 @@
 				</setting>
 			</group>
 			<group id="3" label="32154">
-				<setting help="" id="minilyrics" label="32901" type="boolean">
+				<setting help="" id="musixmatchlrc" label="32902" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="gomaudio" label="32903" type="boolean">
+				<setting help="" id="lrclib" label="32901" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -38,6 +38,16 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="lyricsify" label="32905" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="rclyricsband" label="32918" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="megalobiz" label="32903" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -65,6 +75,11 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="lyricscom" label="32915" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="supermusic" label="32917" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -116,6 +131,8 @@
 							<option label="32110">2</option>
 							<option label="32104">3</option>
 							<option label="32114">4</option>
+							<option label="32120">5</option>
+							<option label="32121">6</option>
 						</options>
 					</constraints>
 				</setting>
@@ -210,6 +227,13 @@
 					<control format="string" type="edit">
 						<heading>32112</heading>
 					</control>
+				</setting>
+			</group>
+			<group id="4" label="32169">
+				<setting help="" id="internetradio" label="32170" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 		</category>

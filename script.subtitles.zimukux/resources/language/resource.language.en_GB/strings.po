@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30100"
+msgid "Site config for ZiMuKu"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Site URL"
+msgstr ""
+
+msgctxt "#301011"
+msgid "OCR URL"
+msgstr "OCR API"
+
+msgctxt "#30200"
+msgid "Sub preference"
+msgstr ""
+
+msgctxt "#30210"
+msgid "Preferred sub type"
+msgstr ""
+
+msgctxt "#30211"
+msgid "No preference"
+msgstr ""
+
+msgctxt "#30212"
+msgid "ASS - colorful kind with various fonts"
+msgstr ""
+
+msgctxt "#30213"
+msgid "SRT - text only"
+msgstr ""
+
+msgctxt "#30220"
+msgid "Preferred sub language"
+msgstr ""
+
+msgctxt "#30221"
+msgid "No preference"
+msgstr ""
+
+msgctxt "#30222"
+msgid "Simplified Chinese"
+msgstr ""
+
+msgctxt "#30223"
+msgid "Traditional Chinese"
+msgstr ""
+
+msgctxt "#30224"
+msgid "Engish + Simplified Chinese"
+msgstr ""
+
+msgctxt "#30225"
+msgid "English + Traditional Chinese"
+msgstr ""
+
+msgctxt "#30230"
+msgid "Cut duplicated part of sub filename to avoid scrolling"
+msgstr ""
+
+msgctxt "#30240"
+msgid "Use year to make search result more accurate"
+msgstr ""
+
+msgctxt "#30300"
+msgid "Proxy Settings"
+msgstr ""
+
+msgctxt "#30310"
+msgid "Follow kodi proxy settings"
+msgstr ""
+
+msgctxt "#30311"
+msgid "Use proxy"
+msgstr ""
+
+msgctxt "#30312"
+msgid "Proxy server"
+msgstr ""
+
+msgctxt "#30901"
+msgid "Choose subtitle"
+msgstr ""

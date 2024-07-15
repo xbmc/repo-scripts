@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.4" provider-name="bossanova808, bradvido88">
+<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.6" provider-name="bossanova808, bradvido88">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -15,9 +15,7 @@
     <source>https://github.com/bossanova808/script.service.playbackresumer</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=355383</forum>
     <email>bossanova808@gmail.com</email>
-    <news>v2.0.4
-      - Handle unicode characters in video names
-    </news>
+    <news>v2.0.6 - Add support for non-library videos</news>
     <assets>
       <icon>icon.png</icon>
     </assets>

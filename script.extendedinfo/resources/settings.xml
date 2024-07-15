@@ -4,6 +4,18 @@
 		<category help="" id="general" label="128">
 <!--         <setting type="sep"/> -->
 			<group id="1">
+				<setting help="" id="tmdb_tok" label="32172" type="string">
+					<level>0</level>
+					<visible>false</visible>
+					<default>35704479108606</default>
+					<constraints>
+						<allowempty>false</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>32172</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
 				<setting help="" id="infodialog_onclick" label="32163" type="boolean">
 					<level>0</level>
 					<default>true</default>
@@ -12,6 +24,12 @@
 				<setting help="" id="classic_search" label="32084" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="first_start_infodialog" label="29915" type="boolean">
+					<level>0</level>
+					<visible>false</visible>
+					<default>true</default>
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="delete cache" label="32164" type="action">
@@ -50,6 +68,28 @@
 					</constraints>
 					<control format="string" type="edit">
 						<heading>32174</heading>
+					</control>
+				</setting>
+				<setting help="" id="viewtype_selection" label="582" type="string">
+					<level>0</level>
+					<visible>false</visible>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>582</heading>
+					</control>
+				</setting>
+				<setting help="" id="session_id" label="560" type="string">
+					<level>0</level>
+					<visible>false</visible>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>560</heading>
 					</control>
 				</setting>
 			</group>

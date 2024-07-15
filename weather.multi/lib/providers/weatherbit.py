@@ -76,5 +76,8 @@ class Weather():
             set_property('Daily.%i.Moonrise'          % (count+1), convert_datetime(item['moonrise_ts'], 'timestamp', 'timedate', None))
             set_property('Daily.%i.Moonset'           % (count+1), convert_datetime(item['moonset_ts'], 'timestamp', 'timedate', None))
             set_property('Daily.%i.MoonPhase'         % (count+1), str(item['moon_phase']))
-            set_property('Daily.%i.Ozone'             % (count+1), str(int(round(item['ozone']))) + ' DU')
+            if item['ozone']:
+                set_property('Daily.%i.Ozone'         % (count+1), str(int(round(item['ozone']))) + ' DU')
+            else:
+                set_property('Daily.%i.Ozone'         % (count+1), '')
         set_property('Daily.IsFetched'                , 'true')

@@ -40,11 +40,10 @@ def unpack(file_path):
                     so raise TypeError to avoid the worst condition.
     """
     exts = (".srt", ".sub", ".smi", ".ssa", ".ass", ".sup")
-    supported_archive_exts = (".zip", ".7z", ".tar", ".bz2", ".rar", ".gz",
-                              ".xz", ".iso", ".tgz", ".tbz2", ".cbr")
-    self_archive_exts = (".zip", ".rar")
+    # supported_archive_exts = (".zip", ".7z", ".tar", ".bz2", ".rar", ".gz", ".xz", ".iso", ".tgz", ".tbz2", ".cbr")
+    self_archive_exts = (".zip", ".rar", ".7z")
 
-    if not file_path.endswith(supported_archive_exts):
+    if not file_path.endswith(self_archive_exts):
         log(sys._getframe().f_code.co_name,
             "Unknown file ext: %s" % (os.path.basename(file_path)),
             level=xbmc.LOGERROR)
@@ -57,7 +56,7 @@ def unpack(file_path):
         'protocol': ext,
         'archive_file': archive_file
     }
-    if file_path.endswith(self_archive_exts):
+    if file_path.endswith((".zip", ".rar")):
         log(sys._getframe().f_code.co_name,
             "UNPACK %s FILE: %s" % (ext, archive_path),
             level=xbmc.LOGDEBUG)
@@ -72,7 +71,8 @@ def unpack(file_path):
 
         subtitle_list = []
         for subfile in files:
-            if subfile.endswith(exts):
+            # 小写扩展名
+            if subfile[-4:].lower().endswith(exts):
                 subtitle_list.append(subfile)
 
     elif file_path.endswith('.7z'):
@@ -107,4 +107,7 @@ def unpack_7z(file_path):
     """
     decompress_path = ''
     subtitle_list = []
+    log(sys._getframe().f_code.co_name, "目前不知道怎么解压 7z: %s" %
+        (file_path), level=xbmc.LOGERROR)
+
     return decompress_path, subtitle_list

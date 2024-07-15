@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-27 HO:MI+ZONE\n"
+"Last-Translator: Sopor\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr "Fel vid sökning efter undertexter"
+
+msgctxt "#32002"
+msgid "Plugin is not properly configured, insert valid OpenSubtitles.com username and password."
+msgstr "Tillägget är inte korrekt konfigurerad, ange ett giltigt användarnamn och lösenord för opensubtitles.com."
+
+msgctxt "#32003"
+msgid "Unable to authenticate. Check your OpenSubtitles.com username, password."
+msgstr "Det går inte att logga in. Kontrollera ditt användarnamn och lösenord för opensubtitles.com."
+
+msgctxt "#32004"
+msgid "You have reached OpenSubtitles.com download limit. Get a VIP subscription or try again tomorrow."
+msgstr "Du har nått nerladdningsgränsen för OpenSubtitles.com. Skaffa en VIP-prenumeration eller försök igen i morgon."
+
+msgctxt "#32006"
+msgid "You have reached OpenSubtitles.com download limit for unauthenticated users. Create an account on opensubtitles.com and enter your credentials in addon settings, or try again tomorrow."
+msgstr "Du har nått nerladdningsgränsen för ej inloggade användare på opensubtitles.com. Skaffa en konto på opensubtitles.com och ange dina inloggningsuppgifter i tilläggets inställningar eller försök igen i morgon."
+
+msgctxt "#32101"
+msgid "Login Details"
+msgstr "Inloggningsdetaljer"
+
+msgctxt "#32201"
+msgid "Username"
+msgstr "Användarnamn"
+
+msgctxt "#32202"
+msgid "Password"
+msgstr "Lösenord"
+
+msgctxt "#32203"
+msgid "API Key"
+msgstr "API-nyckel"
+
+msgctxt "#32102"
+msgid "Subtitle Options"
+msgstr "Undertextalternativ"
+
+msgctxt "#32211"
+msgid "Hearing Impaired"
+msgstr "Hörselskadad"
+
+msgctxt "#32212"
+msgid "Foreign Parts Only"
+msgstr "Endast delar med främmande språk"
+
+msgctxt "#32213"
+msgid "Machine Translated"
+msgstr "Maskinöversatt"
+
+msgctxt "#32214"
+msgid "Bad username. Make sure you have entered your username and not your email in the username field"
+msgstr "Felaktigt användarnamn. Kontrollera att du har angett ditt användarnamn och inte din e-postadress i fältet för användarnamn."

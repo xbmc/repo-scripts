@@ -1,3 +1,44 @@
+v6.0.7
+- reworked tmdb logon / accreditation
+- various code refactoring / pylint items / docstrings (WIP)
+
+v6.0.5
+- removed support for broken/obsolete addons artwork downloader, couch potato, sick rage, trakt helper
+- removed support for youtube-dl
+- renamed all files to lowercase
+- various code refactoring to current python 3.8 standards
+- remove dependency on kutils (incorporate mdoules within addon)
+- addon.xml bump ver 6.0.5
+- add menucontrol to skin files
+- add dependency on autocompletion (required due to changes in autocompletion library)
+- for Kodi 20, use new listitem setter classes/methods
+- add "known for" for actor info when tmdb actor search as multiple results
+- skin -- rearrange some actor info labels 
+- default.py  switch to f-strings	
+						add/update docstrings
+						wrap try/finally to clear state property on exception
+- plugin.py	fix exception V19 ListItem args deprecated
+- process.py	add/update docstrings
+						make import paths absolute
+						wrap try/finally to clear state property on exception
+- theaudiodb.py		add/update docstrings
+								remove dead TADB api key (patreon subscription now required) 
+- themoviedb.py	add/update docstrings
+								add/update PEP 484 type annotations
+								debug logging message changes
+								switch to f-strings
+								fix exception due to key missing in dict (use .get method)
+- windowmanager.py		make import paths absolute
+											add/update docstrings
+											add a "hidebusy" function call to clear stuck busy dialog
+- dialogactorinfo.py		add/update docstrings
+											add/update PEP 484 type annotations
+- dialogbaseinfo.py			add/update docstrings
+
+- trakt.py	add docstrings
+		fix get_episodes getting more than 20 episodes
+- various bug fix/better handling of query results when error returned
+
 v6.0.1
 - Move codebase to python3
 - Kodi Matrix / Nexus changes

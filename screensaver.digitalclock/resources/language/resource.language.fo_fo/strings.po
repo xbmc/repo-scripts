@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: KODI Addons\n"
 "Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-03-10 15:00+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Faroese <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-digitalclock/fo_fo/>\n"
 "Language: fo_fo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
 msgid "Digital clock screensaver"
@@ -89,11 +90,11 @@ msgstr ""
 
 msgctxt "#32112"
 msgid "Normal"
-msgstr ""
+msgstr "Vanligt"
 
 msgctxt "#32113"
 msgid "Fast"
-msgstr ""
+msgstr "Skjótt"
 
 # empty strings from id 32114 to 32119
 msgctxt "#32120"
@@ -191,6 +192,15 @@ msgstr ""
 
 msgctxt "#32173"
 msgid "Year: yy(2-digit year) yyyy(4-digit year)"
+msgstr ""
+
+# empty strings from id 32174 to 32179
+msgctxt "#32180"
+msgid "17:14 No hour zero padding Windows"
+msgstr ""
+
+msgctxt "#32181"
+msgid "17:14 No hour zero padding Unix"
 msgstr ""
 
 # empty strings from id 32174 to 32199
@@ -652,4 +662,16 @@ msgstr ""
 
 msgctxt "#32621"
 msgid "RSS needs to be properly configured in Kodi and enabled!"
+msgstr ""
+
+msgctxt "#32630"
+msgid "Turn off screen via CEC"
+msgstr ""
+
+msgctxt "#32631"
+msgid "Stop now playing media"
+msgstr ""
+
+msgctxt "#32632"
+msgid "Turn off screen via CEC after (minutes)"
 msgstr ""

@@ -2,7 +2,7 @@
 import os
 import struct
 
-import xbmcvfs
+import xbmcvfs, xbmc
 
 from resources.lib.utilities import log
 
@@ -12,6 +12,21 @@ def get_file_data(file_original_path):
 
 
     if file_original_path.find("http") > -1:
+        orig_path = xbmc.getInfoLabel('Window(10000).Property(videoinfo.current_path)')
+        orig_size = xbmc.getInfoLabel('Window(10000).Property(videoinfo.current_size)')
+        orig_oshash = xbmc.getInfoLabel('Window(10000).Property(videoinfo.current_oshash)')
+        if orig_path:
+            orig_path = str(orig_path)
+            item["basename"] = os.path.basename(orig_path)
+            item["file_original_path"] = orig_path
+        if orig_size:
+            item["file_size"] = int(orig_size)
+        if orig_oshash:
+            item["moviehash"] = orig_oshash
+
+        if any((orig_path, orig_size, orig_oshash)):
+            return item
+
         item["temp"] = True
 
     elif file_original_path.find("rar://") > -1:

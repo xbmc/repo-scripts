@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-07-23 07:14+0000\n"
-"Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
+"PO-Revision-Date: 2024-05-31 05:32+0000\n"
+"Last-Translator: Kai Sommerfeld <ksooo@users.noreply.kodi.weblate.cloud>\n"
 "Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/de_de/>\n"
 "Language: de_de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 5.5.4\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -23,7 +23,7 @@ msgstr "CU LRC Lyrics"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr "CU LRC Lyrics ist ein Liedtext-Skript für Kodi, das sowohl normale als auch LRC-Liedtexte unterstützt. Das Skript kann nach synchronisierten / unsynchronisierten eingebetteten Liedtexten von Dateien oder Scrapern suchen. Es kann .lrc- / .txt-Liedtextdateien lesen, die im gleichen Pfad und mit dem gleichen Dateinamen mit einem .mp3 (oder eine anderen Musikart) gespeichert wurden."
+msgstr "CU LRC Lyrics ist ein Liedtextskript für Kodi, das sowohl normale als auch LRC-Liedtexte unterstützt. Das Skript kann nach synchronisierten/unsynchronisierten eingebetteten Liedtexten von Dateien oder Scrapern suchen. Es kann .lrc-/.txt-Liedtextdateien lesen, die im gleichen Pfad und mit dem gleichen Dateinamen mit einem .mp3 (oder eine anderen Musikart) gespeichert wurden."
 
 # Script labels
 msgctxt "#32000"
@@ -122,7 +122,7 @@ msgstr "-- Name des Unterordners"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr "lrc-Liedtext in Titel-Ordner suchen und speichern"
+msgstr "lrc-Liedtext in Titelordner suchen und speichern"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
@@ -146,7 +146,15 @@ msgstr "Fehlersuche"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
-msgstr "txt-Liedtext in Titel-Ordner suchen und speichern"
+msgstr "txt-Liedtext in Titelordner suchen und speichern"
+
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr "%N. %A - %T"
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr "%A - %B - %N - %T"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
@@ -200,7 +208,7 @@ msgstr "Skript läuft bereits!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"
-msgstr "Fehlersuch-Protokollierung aktivieren"
+msgstr "Debugprotokollierung aktivieren"
 
 msgctxt "#32160"
 msgid "Hide notifications"
@@ -208,7 +216,7 @@ msgstr "Benachrichtigungen ausblenden"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
-msgstr "Chinesischen / koreanischen Text aus Liedtexten entfernen"
+msgstr "Chinesischen/koreanischen Text aus Liedtexten entfernen"
 
 msgctxt "#32162"
 msgid "Scraper test"
@@ -238,18 +246,26 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "Wenn Musik-OSD und „Gerade läuft“-Information ausgeblendet sind, wird der Hintergrund des Liedtextdialogs ebenfalls ausgeblendet."
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr "Quellen"
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr "Liedtexte beim Hören von Internet Radiosendern"
+
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr "LrcLib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "GomAudio"
+msgid "Megalobiz"
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +294,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Dark Lyrics"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr "Super Music"
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 #~ msgctxt "#32905"
 #~ msgid "Syair"

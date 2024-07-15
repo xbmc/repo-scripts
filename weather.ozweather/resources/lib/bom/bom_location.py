@@ -6,8 +6,6 @@ import xbmc
 if not xbmc.getUserAgent():
     sys.path.insert(0, '../../..')
 
-from resources.lib.store import Store
-from resources.lib.common import *
 from resources.lib.bom.bom_radar import *
 
 
@@ -31,7 +29,7 @@ def get_bom_locations_for(text):
         return locations, location_geohashes
 
     except Exception as inst:
-        log(f'Exception getting locations from {bom_locations_api} for search term {text}')
+        log(f'Exception getting locations from {Store.BOM_API_LOCATIONS_URL} for search term {text}')
         log(str(inst))
         raise
 

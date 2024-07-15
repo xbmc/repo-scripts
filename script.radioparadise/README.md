@@ -32,7 +32,7 @@ Mix parameter:
 | 0 | RP Main Mix |
 | 1 | RP Mellow Mix |
 | 2 | RP Rock Mix |
-| 3 | RP World/Etc Mix |
+| 3 | RP Global Mix |
 
 This can be used to add shortcuts for RP mixes in [favourites.xml][].
 

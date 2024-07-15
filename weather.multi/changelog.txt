@@ -1,3 +1,34 @@
+v0.0.27
+- disable cookie expiration
+- Yahoo no longer provides weather data to new users
+
+v0.0.26
+- language update
+
+v0.0.25
+- reinit session with each new url
+
+v0.0.24
+- try multiple yahoo urls in order to get cookie
+
+v0.0.23
+- fix yahoo weather again
+
+v0.0.22
+- fix weatherbit ozone value could be none
+
+v0.0.21
+- fix getting yahoo cookie
+
+v0.0.20
+- fix weatherbit
+
+v0.0.19
+- fix yahoo weather again
+
+v0.0.18
+- fix yahoo weather again
+
 v0.0.17
 - fix yahoo weather again
 

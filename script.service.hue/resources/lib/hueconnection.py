@@ -14,8 +14,8 @@ import xbmc
 import xbmcgui
 from qhue import QhueException
 
-from resources.lib import ADDON, QHUE_TIMEOUT, reporting
-from resources.lib.kodiutils import notification
+from . import ADDON, QHUE_TIMEOUT, reporting
+from .kodiutils import notification
 from .language import get_string as _
 
 
@@ -28,20 +28,20 @@ class HueConnection(object):
         self.connected = False
 
         if discover:
-            self.discover_bridge()
+            self.discover()
         else:
-            self.connect_bridge(silent)
+            self.connect(silent)
 
-    def connect_bridge(self, silent=False):
+    def connect(self, silent=False):
 
-        xbmc.log(f"[script.service.hue] in connect_bridge() with settings: bridgeIP: {self.bridge_ip}, bridgeUser: {self.bridge_user}")
+        xbmc.log(f"[script.service.hue] in connect() with settings: bridgeIP: {self.bridge_ip}, bridgeUser: {self.bridge_user}")
 
         if self.bridge_ip and self.bridge_user:
             if not self._check_version():
-                xbmc.log("[script.service.hue] in connect_bridge(): Bridge not responding to connection test, attempt finding a new bridge IP.")
+                xbmc.log("[script.service.hue] in connect(): Bridge not responding to connection test, attempt finding a new bridge IP.")
 
                 if self._discover_bridge_ip():
-                    xbmc.log(f"[script.service.hue] in connect_bridge(): New IP found: {self.bridge_ip}. Saving")
+                    xbmc.log(f"[script.service.hue] in connect(): New IP found: {self.bridge_ip}. Saving")
                     ADDON.setSettingString("bridgeIP", self.bridge_ip)
                 else:
                     xbmc.log("[script.service.hue] Bridge not found")
@@ -68,8 +68,37 @@ class HueConnection(object):
             notification(_("Hue Service"), _("Bridge not configured"), icon=xbmcgui.NOTIFICATION_ERROR)
             self.connected = False
 
-    def discover_bridge(self):
-        xbmc.log("[script.service.hue] Start bridgeDiscover")
+    def reconnect(self, monitor):
+        xbmc.log(f"[script.service.hue] reconnect() with settings: bridgeIP: {self.bridge_ip}, bridgeUser: {self.bridge_user}")
+        retries = 0
+
+        while retries < 11 and not monitor.abortRequested():
+            if self._check_version():
+                xbmc.log(f"[script.service.hue] reconnect(): Check version successful! ")
+                notification(_("Hue Service"), _("Reconnected"))
+                return True
+            else:
+                if self._discover_bridge_ip():
+                    xbmc.log(f"[script.service.hue] in reconnect(): New IP found: {self.bridge_ip}. Saving")
+                    if self._check_version():
+                        xbmc.log(f"[script.service.hue] in reconnect(): Version check successful. Saving bridge IP")
+                        ADDON.setSettingString("bridgeIP", self.bridge_ip)
+                        return True
+                else:
+                    xbmc.log(f"[script.service.hue] Bridge not found. Attempt {retries}/10. Trying again in 2 minutes.")
+                    notification(_("Hue Service"), _("Connection lost. Trying again in 2 minutes"))
+
+            retries = retries + 1
+            monitor.waitForAbort(120)  # Retry in 2 minutes
+
+        # give up
+        xbmc.log(f"[script.service.hue] Reconnect. Attempt: {retries}/10. Shutting down")
+        notification(_("Hue Service"), _("Connection lost. Check settings. Shutting down"))
+        self.connected = False
+        return False
+
+    def discover(self):
+        xbmc.log("[script.service.hue] Start discover")
         # Create new config if none exists. Returns success or fail as bool
         ADDON.setSettingString("bridgeIP", "")
         ADDON.setSettingString("bridgeUser", "")
@@ -113,12 +142,11 @@ class HueConnection(object):
                         self.monitor.waitForAbort(5)
                         progress_bar.close()
                         xbmc.log("[script.service.hue] Bridge discovery complete")
-                        self.connect_bridge(True)
+                        self.connect(True)
                         return True
 
                     elif progress_bar.iscanceled():
                         xbmc.log("[script.service.hue] Cancelled 2")
-                        complete = True
                         progress_bar.update(percent=100, message=_("Cancelled"))
                         progress_bar.close()
 
@@ -126,19 +154,17 @@ class HueConnection(object):
                         xbmc.log(f"[script.service.hue] User not created, received: {self.bridge_user}")
                         progress_bar.update(percent=100, message=_("User not found[CR]Check your bridge and network."))
                         self.monitor.waitForAbort(5)
-                        complete = True
                         progress_bar.close()
                         return
                 elif progress_bar.iscanceled():
                     xbmc.log("[script.service.hue] Cancelled 3")
-                    complete = True
+
                     progress_bar.update(percent=100, message=_("Cancelled"))
                     progress_bar.close()
                 else:
                     progress_bar.update(percent=100, message=_("Bridge not found[CR]Check your bridge and network."))
                     xbmc.log("[script.service.hue] Bridge not found, check your bridge and network")
                     self.monitor.waitForAbort(5)
-                    complete = True
                     progress_bar.close()
 
             xbmc.log("[script.service.hue] Cancelled 4")
@@ -155,16 +181,22 @@ class HueConnection(object):
         # discover hue bridge IP silently for non-interactive discovery / bridge IP change.
         xbmc.log("[script.service.hue] In discoverBridgeIP")
         if self._discover_nupnp():
+            xbmc.log(f"[script.service.hue] In discoverBridgeIP, discover_nupnp SUCCESS: {self.bridge_ip}")
             if self._check_version():
+                xbmc.log(f"[script.service.hue] In discoverBridgeIP, check version SUCCESS")
                 return True
+        xbmc.log(f"[script.service.hue] In discoverBridgeIP, discover_nupnp FAIL: {self.bridge_ip}")
         return False
 
     def _discover_nupnp(self):
         xbmc.log("[script.service.hue] In kodiHue discover_nupnp()")
+        req = ""
         try:
             req = requests.get('https://discovery.meethue.com/')
+            if req.status_code == 429:
+                return None
             result = req.json()
-        except requests.RequestException as error:
+        except requests.exceptions.RequestException as error:
             xbmc.log(f"[script.service.hue] Nupnp failed: {error}")
             return None
         except (JSONDecodeError, json.JSONDecodeError) as error:  # when discovery.meethue.com returns empty JSON or 429
@@ -183,16 +215,19 @@ class HueConnection(object):
 
     def _check_bridge_model(self):
         bridge = qhue.Bridge(self.bridge_ip, None, timeout=QHUE_TIMEOUT)
+        model = ""  # variable is used
+
         try:
             bridge_config = bridge.config()
             model = bridge_config["modelid"]
-        except QhueException as exc:
-            xbmc.log(f"[script.service.hue] Exception: checkBridgeModel {exc.type_id}: {exc.message} {traceback.format_exc()}")
-            reporting.process_exception(exc)
-            return None
         except requests.RequestException as exc:
             xbmc.log(f"[script.service.hue] Requests exception: {exc}")
             notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+            return None
+        except Exception as exc:
+            reporting.process_exception(exc)
+            return None
+
         if model == "BSB002":
             xbmc.log(f"[script.service.hue] Bridge model OK: {model}")
             return True
@@ -201,19 +236,19 @@ class HueConnection(object):
         return None
 
     def _check_version(self):
+        api_version = ""
         b = qhue.Bridge(self.bridge_ip, None, timeout=QHUE_TIMEOUT)
         try:
             api_version = b.config()['apiversion']
-        except QhueException as error:
-            xbmc.log(f"[script.service.hue] Version check connection failed.  {error.type_id}: {error.message} {traceback.format_exc()}")
-            reporting.process_exception(error)
-            return False
         except requests.RequestException as error:
             xbmc.log(f"[script.service.hue] Version check connection failed.  {error}")
             return False
         except KeyError as error:
             notification(_("Hue Service"), _("Bridge outdated. Please update your bridge."), icon=xbmcgui.NOTIFICATION_ERROR)
             xbmc.log(f"[script.service.hue] in _version_check():  Connected! Bridge too old: {api_version}, error: {error}")
+            return False
+        except Exception as exc:
+            reporting.process_exception(exc)
             return False
 
         api_split = api_version.split(".")
@@ -231,7 +266,10 @@ class HueConnection(object):
         b = qhue.Bridge(self.bridge_ip, self.bridge_user, timeout=QHUE_TIMEOUT)
         try:
             zigbee = b.config()['zigbeechannel']
-        except (requests.RequestException, qhue.QhueException, KeyError):
+        except (requests.RequestException, QhueException, KeyError):
+            return False
+        except Exception as exc:
+            reporting.process_exception(exc)
             return False
 
         if zigbee:
@@ -315,6 +353,7 @@ class HueConnection(object):
         scene_name = xbmcgui.Dialog().input(_("Scene Name"))
 
         if scene_name:
+            result = ""
             try:
                 transition_time = int(xbmcgui.Dialog().numeric(0, _("Fade Time (Seconds)"), defaultt="10")) * 10  # yes, default with two ts. *10 to convert secs to msecs
             except ValueError:
@@ -344,6 +383,7 @@ class HueConnection(object):
             xbmcgui.Dialog().ok(_("Error"), _("ERROR: Scene not created"))
 
     def delete_hue_scene(self):
+        result = ""
         xbmc.log("[script.service.hue] In kodiHue deleteHueScene")
         scene = self.select_hue_scene()
         if scene is not None:
@@ -355,10 +395,13 @@ class HueConnection(object):
                 except QhueException as exc:
                     xbmc.log(f"[script.service.hue]: Delete Hue Scene QhueException: {exc.type_id}: {exc.message} {traceback.format_exc()}")
                     notification(_("Hue Service"), _("ERROR: Scene not deleted") + f"[CR]{exc.message}")
-                # xbmc.log(f"[script.service.hue] In kodiHue createHueGroup. Res: {result}")
+                    # xbmc.log(f"[script.service.hue] In kodiHue createHueGroup. Res: {result}")
+                    return
                 except requests.RequestException as exc:
                     xbmc.log(f"[script.service.hue]: Delete Hue Scene requestsException: {result} {exc}")
                     notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+                    return
+
                 if result[0]["success"]:
                     notification(_("Hue Service"), _("Scene deleted"))
                 else:
@@ -368,13 +411,13 @@ class HueConnection(object):
     def select_hue_lights(self):
         try:
             hue_lights = self.bridge.lights()
-        except QhueException as exc:
-            xbmc.log(f"[script.service.hue]: Select Hue Lights QhueException: {exc.type_id}: {exc.message} {traceback.format_exc()}")
-            notification(_("Hue Service"), _("Bridge connection failed"), icon=xbmcgui.NOTIFICATION_ERROR)
-            return None
+
         except requests.RequestException as exc:
             xbmc.log(f"[script.service.hue] Requests exception: {exc}")
             notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+            return None
+        except Exception as exc:
+            reporting.process_exception(exc)
             return None
 
         items = []
@@ -402,19 +445,18 @@ class HueConnection(object):
         return None
 
     def select_hue_scene(self):
+        hue_scenes = ""
+        h_scene_name = ""
         xbmc.log("[script.service.hue] In selectHueScene{}")
 
         try:
             hue_scenes = self.bridge.scenes()
-        except QhueException as exc:
-            xbmc.log(f"[script.service.hue]: Select Hue Lights QhueException: {exc.type_id}: {exc.message} {traceback.format_exc()}")
-            notification(_("Hue Service"), _("Bridge connection failed"), icon=xbmcgui.NOTIFICATION_ERROR)
-            reporting.process_exception(exc)
-            return None
         except requests.RequestException as exc:
             xbmc.log(f"[script.service.hue] Requests exception: {exc}")
             notification(header=_("Hue Service"), message=_(f"Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
             return None
+        except Exception as exc:
+            reporting.process_exception(exc)
 
         items = []
         index = []
@@ -440,19 +482,14 @@ class HueConnection(object):
         return None
 
     def get_daylight(self):
-        try:
-            daylight = self.bridge.sensors['1']()['state']['daylight']
-        except QhueException as exc:
-            xbmc.log(f"[script.service.hue]: Get Daylight Qhue Exception: {exc.type_id}: {exc.message} {traceback.format_exc()}")
-            reporting.process_exception(exc)
-            return
+        daylight = self.bridge.sensors['1']()['state']['daylight']
         return daylight
 
     def _get_light_name(self, light):
         try:
             name = self.bridge.lights()[light]['name']
-        except (qhue.QhueException, requests.RequestException) as exc:
-            xbmc.log(f"[script.service.hue] getLightName Qhue Exception: {exc} {traceback.format_exc()}")
+        except Exception as exc:
+            reporting.process_exception(exc)
             return None
 
         if name is None:

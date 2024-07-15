@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.next-episode"
    name="Next Episode (next-episode.net)"
-   version="1.2.5+matrix.1"
-   provider-name="next-episode.net">
+   version="1.2.6"
+   provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="script.module.pyxbmct" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.future" />
-    <import addon="script.module.kodi-six" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.python.script" library="main.py">
@@ -25,14 +22,14 @@
     <license>GPL-3.0-or-later</license>
     <website>http://next-episode.net</website>
     <email>roman1972@gmail.com</email>
-    <source>https://github.com/santah/next-episode-kodi</source>
+    <source>https://github.com/romanvm/next-episode-kodi</source>
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <news>1.2.5:
-- Fixed crashes when movies do not have IMDB ID.
+    <news>1.2.6:
+- Removed Python 2 compatibility
 
-1.2.4:
-- Fixed compatibility with Kodi 20 "Nexus".</news>
+1.2.5:
+- Fixed crashes when movies do not have IMDB ID.</news>
   </extension>
 </addon>

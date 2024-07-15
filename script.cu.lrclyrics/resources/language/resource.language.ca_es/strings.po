@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
-"Language: ca\n"
+"PO-Revision-Date: 2024-01-30 23:13+0000\n"
+"Last-Translator: \"Pere O.\" <gotrunks@gmail.com>\n"
+"Language-Team: Catalan (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/ca_es/>\n"
+"Language: ca_es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.3\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -22,7 +23,7 @@ msgstr "CU LRC Lyrics"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr "CU LRC Lyrics es un script de lletres de cançons per a Kodi. Suporta lletres normal tan com LRC Lyrics. El script busca lletres sincronitzades o no, incrustades al fitxer d'àudio, des de un altre fitxer o per scrapers. Pot llegir fitxers .lrc/.txt guardats al mateix directori i nom de fitxer amb .mp3(o un altre tipus de música)."
+msgstr "CU LRC Lyrics és un script de lletres de cançons per al Kodi. Suporta lletres normals tant com LRC Lyrics. L'script busca lletres sincronitzades o no, incrustades al fitxer d'àudio, des d'un altre fitxer o per raspadors. Pot llegir fitxers .lrc/.txt guardats al mateix directori i nom de fitxer amb .mp3 (o un altre format de música)."
 
 # Script labels
 msgctxt "#32000"
@@ -147,6 +148,14 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr ""
 
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr ""
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
+
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
@@ -163,7 +172,7 @@ msgstr ""
 
 msgctxt "#32150"
 msgid "Scrapers"
-msgstr "Scrapers"
+msgstr "Raspadors"
 
 msgctxt "#32151"
 msgid "Options"
@@ -179,11 +188,11 @@ msgstr ""
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Scrapers de lletres sincronitzats"
+msgstr "Raspadors de lletres sincronitzats"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "Scrapers de lletres normals"
+msgstr "Raspadors de lletres normals"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
@@ -211,7 +220,7 @@ msgstr ""
 
 msgctxt "#32162"
 msgid "Scraper test"
-msgstr ""
+msgstr "Prova del raspador"
 
 msgctxt "#32163"
 msgid "Testing: %s"
@@ -219,11 +228,11 @@ msgstr ""
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr ""
+msgstr "Tots els raspadors funcionen bé"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
-msgstr ""
+msgstr "Han fallat els raspadors: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
@@ -237,9 +246,17 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr ""
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr ""
+
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
+msgid "Lrclib"
 msgstr ""
 
 msgctxt "#32902"
@@ -247,7 +264,7 @@ msgid "MusixMatch"
 msgstr ""
 
 msgctxt "#32903"
-msgid "GomAudio"
+msgid "Megalobiz"
 msgstr ""
 
 msgctxt "#32904"
@@ -276,6 +293,10 @@ msgstr ""
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Super Music"
 msgstr ""
 
 # empty strings from id 32010 to 32100

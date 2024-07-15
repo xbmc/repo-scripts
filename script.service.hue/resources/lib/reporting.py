@@ -5,19 +5,33 @@
 
 import platform
 import sys
+import traceback
+
 
 import rollbar
 import xbmc
 import xbmcgui
+from qhue import QhueException
+from requests import RequestException
 
-from resources.lib import ADDONVERSION, ROLLBAR_API_KEY, KODIVERSION, ADDONPATH, ADDON
-from resources.lib.language import get_string as _
+from . import ADDONVERSION, ROLLBAR_API_KEY, KODIVERSION, ADDONPATH, ADDON
+from .kodiutils import notification
+from .language import get_string as _
 
 
 def process_exception(exc, level="critical", error=""):
-    if ADDON.getSettingBool("error_reporting"):
-        if _error_report_dialog(exc):
-            _report_error(level, error, exc)
+    xbmc.log(f"[script.service.hue] Exception: {type(exc)}, {exc}, {error}, {traceback.format_exc()}")
+
+    if type(exc) == QhueException and exc.type_id in ["3", "7"]:  # 3: resource not found, 7: invalid value for parameter
+        xbmc.log("[script.service.hue] Qhue resource not found, not reporting to rollbar")
+        notification(_("Hue Service"), _("ERROR: Scene or Light not found, it may have changed or been deleted. Check your configuration."), icon=xbmcgui.NOTIFICATION_ERROR)
+    elif type(exc) == RequestException:
+        xbmc.log("[script.service.hue] RequestException, not reporting to rollbar")
+        notification(_("Hue Service"), _("Connection Error"), icon=xbmcgui.NOTIFICATION_ERROR)
+    else:
+        if ADDON.getSettingBool("error_reporting"):
+            if _error_report_dialog(exc):
+                _report_error(level, error, exc)
 
 
 def _error_report_dialog(exc):
@@ -30,7 +44,7 @@ def _error_report_dialog(exc):
 
 
 def _report_error(level="critical", error="", exc=""):
-    if "dev" in ADDONVERSION or "alpha" in ADDONVERSION or "beta" in ADDONVERSION:
+    if any(val in ADDONVERSION for val in ["dev", "alpha", "beta"]):
         env = "dev"
     else:
         env = "production"
@@ -42,5 +56,5 @@ def _report_error(level="critical", error="", exc=""):
         'error': error,
         'exc': exc
     }
-    rollbar.init(ROLLBAR_API_KEY, capture_ip=False, code_version="v" + ADDONVERSION, root=ADDONPATH, scrub_fields='bridgeUser, bridgeIP, bridge_user, bridge_ip', environment=env)
+    rollbar.init(ROLLBAR_API_KEY, capture_ip=False, code_version="v" + ADDONVERSION, root=ADDONPATH, scrub_fields='bridgeUser, bridgeIP, bridge_user, bridge_ip, server.host', environment=env)
     rollbar.report_exc_info(sys.exc_info(), extra_data=data, level=level)

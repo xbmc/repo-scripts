@@ -6,37 +6,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-19 14:20+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/teamxbmc/xbmc-addons/language/vi/)\n"
+"PO-Revision-Date: 2021-08-25 23:29+0000\n"
+"Last-Translator: Nguyễn Trung Hậu <trunghau1712@gmail.com>\n"
+"Language-Team: Vietnamese <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/vi_vn/>\n"
+"Language: vi_vn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
 
 msgctxt "Addon Summary"
-msgid ""
-"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
-" service so you never miss an update."
-msgstr ""
+msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
+msgstr "Cập nhật Thư viện video và âm nhạc Kodi của bạn theo bộ hẹn giờ. Hẹn giờ chạy dưới dạng dịch vụ Kodi để bạn không bao giờ bỏ lỡ bản cập nhật."
 
 msgctxt "Addon Description"
-msgid ""
-"This is an Kodi Service that will update your music and video libraries on a"
-" timer. You can select a different interval to scan your media databases "
-"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
-" you are playing an audio or video file when the timer starts it can skip "
-"the library update process until it is completed so that you're media "
-"experience is not interrupted. Updating a specific Video Path, and Cleaning "
-"the Music/Video libraries is now supported."
+msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
 msgstr ""
 
 msgctxt "#30000"
 msgid "Kodi Library Auto Update"
-msgstr ""
+msgstr "Tự động cập nhật thư viện Kodi"
 
 msgctxt "#30001"
 msgid "General"
@@ -52,22 +44,22 @@ msgstr "Nhạc"
 
 msgctxt "#30004"
 msgid "Update Video Library"
-msgstr ""
+msgstr "Cập nhật thư viện Video"
 
 msgctxt "#30005"
 msgid "Update Music Library"
-msgstr ""
+msgstr "Cập nhật thư viện nhạc"
 
 msgctxt "#30006"
 msgid "Show Notifications"
-msgstr ""
+msgstr "Hiện thông báo"
 
 msgctxt "#30007"
 msgid "Run during playback"
-msgstr ""
+msgstr "Chạy trong khi phát"
 
 msgctxt "#30008"
-msgid "Startup Delay (minutes)"
+msgid "Startup Delay"
 msgstr ""
 
 msgctxt "#30009"
@@ -75,8 +67,8 @@ msgid "Used Advanced Timer"
 msgstr ""
 
 msgctxt "#30010"
-msgid "Amount of time between updates (hours)"
-msgstr ""
+msgid "Amount of time between updates"
+msgstr "Khoảng thời gian giữa các lần cập nhật"
 
 msgctxt "#30011"
 msgid "Cron Expression"
@@ -84,63 +76,71 @@ msgstr ""
 
 msgctxt "#30012"
 msgid "Update Video Library"
-msgstr ""
+msgstr "Cập nhật thư viện video"
 
 msgctxt "#30013"
 msgid "Update Music Library"
-msgstr ""
+msgstr "Cập nhật thư viện nhạc"
 
 msgctxt "#30014"
 msgid "Only run when idle"
-msgstr ""
+msgstr "Chỉ chạy khi nhàn rỗi"
 
 msgctxt "#30015"
 msgid "Disable manual run prompt"
+msgstr "Tắt lời nhắc chạy thủ công"
+
+msgctxt "#30016"
+msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
 msgstr ""
+
+msgctxt "#30017"
+msgid "Check if sources exist before scan"
+msgstr "Kiểm tra xem các nguồn có tồn tại hay không trước khi quét"
 
 msgctxt "#30020"
-msgid "Update Specific Path 1"
-msgstr ""
+msgid "Edit Custom Paths"
+msgstr "Chỉnh sửa đường dẫn"
 
 msgctxt "#30021"
-msgid "Update Specific Path 2"
-msgstr ""
+msgid "Choose Action"
+msgstr "Chọn hành động"
 
 msgctxt "#30022"
-msgid "Update Specific Path 3"
-msgstr ""
+msgid "Delete this item?"
+msgstr "Xóa mục này?"
 
 msgctxt "#30023"
-msgid "Video Path"
-msgstr ""
+msgid "Browse for path"
+msgstr "Duyệt qua đường dẫn"
 
 msgctxt "#30030"
-msgid "Read Disclaimer"
-msgstr ""
+msgid "This update broke custom paths, you must remake them"
+msgstr "Bản cập nhật này đã phá vỡ các đường dẫn tùy chỉnh, bạn phải làm lại chúng"
 
 msgctxt "#30031"
-msgid "Video Paths Disclaimer"
+msgid "Custom Paths Disclaimer"
 msgstr ""
 
 msgctxt "#30032"
-msgid "Path must already be a video source with content"
-msgstr ""
+msgid "Path must already be a valid source with content"
+msgstr "Đường dẫn phải là một nguồn hợp lệ có nội dung"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
-msgstr ""
+msgstr "Đường dẫn phải khớp chính xác với đường dẫn nguồn để quét"
 
 msgctxt "#30040"
 msgid "Cleaning"
-msgstr ""
+msgstr "Đang xóa"
 
 msgctxt "#30041"
 msgid "Clean Libraries"
-msgstr ""
+msgstr "Xóa thư viện"
 
 msgctxt "#30042"
 msgid "Verify Sources Before Clean"
-msgstr ""
+msgstr "Xác minh nguồn trước khi làm sạch"
 
 msgctxt "#30043"
 msgid "Frequency"
@@ -148,47 +148,47 @@ msgstr ""
 
 msgctxt "#30044"
 msgid "After Update"
-msgstr ""
+msgstr "Sau khi cập nhật"
 
 msgctxt "#30045"
 msgid "Once Per Day"
-msgstr ""
+msgstr "Mỗi ngày"
 
 msgctxt "#30046"
 msgid "Once Per Week"
-msgstr ""
+msgstr "Mỗi tuần"
 
 msgctxt "#30047"
 msgid "Once Per Month"
-msgstr ""
+msgstr "Mỗi tháng"
 
 msgctxt "#30048"
 msgid "Clean Video Library"
-msgstr ""
+msgstr "Xóa thư viện video"
 
 msgctxt "#30049"
 msgid "Clean Music Library"
-msgstr ""
+msgstr "Xóa thư viện nhạc"
 
 msgctxt "#30050"
 msgid "Error Cleaning Database"
-msgstr ""
+msgstr "Lỗi khi xóa cơ sở dữ liệu"
 
 msgctxt "#30051"
 msgid "Prompt User Before Cleaning Library"
-msgstr ""
+msgstr "Nhắc người dùng trước khi xóa thư viện"
 
 msgctxt "#30052"
 msgid "A database clean is scheduled to run"
-msgstr ""
+msgstr "Quá trình xóa cơ sở dữ liệu được lên lịch chạy"
 
 msgctxt "#30053"
 msgid "Would you like to run it now?"
-msgstr ""
+msgstr "Bạn có muốn chạy nó ngay bây giờ không?"
 
 msgctxt "#30054"
 msgid "Library to clean"
-msgstr ""
+msgstr "Thư viện để xóa"
 
 msgctxt "#30055"
 msgid "Both"
@@ -204,8 +204,100 @@ msgstr ""
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr ""
+msgstr "Cập nhật sẽ chạy lại "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
+msgstr "Bạn có muốn chạy bản cập nhật theo cách thủ công không?"
+
+msgctxt "#30062"
+msgid "No Delay"
 msgstr ""
+
+msgctxt "#30063"
+msgid "1 Minute"
+msgstr "1 phút"
+
+msgctxt "#30064"
+msgid "2 Minutes"
+msgstr "2 phút"
+
+msgctxt "#30065"
+msgid "3 Minutes"
+msgstr "3 phút"
+
+msgctxt "#30066"
+msgid "4 Minutes"
+msgstr "4 phút"
+
+msgctxt "#30067"
+msgid "5 Minutes"
+msgstr "5 phút"
+
+msgctxt "#30068"
+msgid "1 Hour"
+msgstr "1 giờ"
+
+msgctxt "#30069"
+msgid "2 Hours"
+msgstr "2 giờ"
+
+msgctxt "#30070"
+msgid "4 Hours"
+msgstr "4 giờ"
+
+msgctxt "#30071"
+msgid "6 Hours"
+msgstr "6 giờ"
+
+msgctxt "#30072"
+msgid "12 Hours"
+msgstr "12 giờ"
+
+msgctxt "#30073"
+msgid "24 Hours"
+msgstr "24 giờ"
+
+msgctxt "#30074"
+msgid "How long to delay missed scan after system startup"
+msgstr "Bao lâu để trì hoãn quá trình quét bị bỏ lỡ sau khi khởi động hệ thống"
+
+msgctxt "#30075"
+msgid "Allow library scans when media is playing"
+msgstr "Cho phép quét thư viện khi đang phát đa phương tiện"
+
+msgctxt "#30076"
+msgid "Only allow scans to start when system is idle (screensaver active)"
+msgstr "Chỉ cho phép bắt đầu quét khi hệ thống không hoạt động (trình bảo vệ màn hình đang hoạt động)"
+
+msgctxt "#30077"
+msgid "Disables the dialog box when starting a Manual Run"
+msgstr ""
+
+msgctxt "#30078"
+msgid "Toggle use a cron timer instead of the simple timer"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Select how often to start library scans"
+msgstr "Chọn tần suất bắt đầu quét thư viện"
+
+msgctxt "#30080"
+msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Run the Kodi library clean process to remove deleted media"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Adds additional confirmation prompt before clean process runs"
+msgstr "Thêm lời nhắc xác nhận bổ sung trước khi chạy quy trình xóa"
+
+msgctxt "#30084"
+msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
+msgstr "Đặt tần suất chạy quy trình xóa. Sau mỗi lần cập nhật, mỗi ngày một lần, mỗi tuần một lần, mỗi tháng một lần hoặc tùy chỉnh"

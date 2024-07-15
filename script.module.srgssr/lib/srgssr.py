@@ -29,7 +29,6 @@ import traceback
 import datetime
 import json
 import requests
-import utils
 
 import xbmc
 import xbmcgui
@@ -41,6 +40,7 @@ import inputstreamhelper
 import simplecache
 import youtube_channels
 
+import utils
 
 ADDON_ID = 'script.module.srgssr'
 REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
@@ -106,7 +106,8 @@ class SRGSSR:
 
     def get_youtube_icon(self):
         path = os.path.join(
-            xbmc.translatePath(self.media_uri), 'icon_youtube.png')
+            # https://github.com/xbmc/xbmc/pull/19301
+            xbmcvfs.translatePath(self.media_uri), 'icon_youtube.png')
         if os.path.exists(path):
             return path
         return self.icon
@@ -383,7 +384,7 @@ class SRGSSR:
                 item, is_show=is_show, whitelist_ids=whitelist_ids)
 
         if cursor:
-            if page == 0 or page == '0':
+            if page in (0, '0'):
                 return
 
             # Next page urls containing the string 'urns=' do not work
@@ -654,6 +655,16 @@ class SRGSSR:
         urn = data['urn']
         self.log(f'build_entry_apiv3: urn = {urn}')
         title = utils.try_get(data, 'title')
+
+        # Add the date & time to the title for upcoming livestreams:
+        if utils.try_get(data, 'type') == 'SCHEDULED_LIVESTREAM':
+            dt = utils.try_get(data, 'date')
+            if dt:
+                dt = utils.parse_datetime(dt)
+            if dt:
+                dts = dt.strftime('(%d.%m.%Y, %H:%M)')
+                title = dts + ' ' + title
+
         media_id = utils.try_get(data, 'id')
         if whitelist_ids is not None and media_id not in whitelist_ids:
             return
@@ -1341,7 +1352,7 @@ class SRGSSR:
         containing these ids.
         An empty list will be returned in case of failure.
         """
-        path = xbmc.translatePath(
+        path = xbmcvfs.translatePath(
             self.real_settings.getAddonInfo('profile'))
         file_path = os.path.join(path, FAVOURITE_SHOWS_FILENAME)
         try:
@@ -1365,7 +1376,7 @@ class SRGSSR:
         show_ids -- a list of show ids (as strings)
         """
         show_ids_dict_list = [{'id': show_id} for show_id in show_ids]
-        path = xbmc.translatePath(
+        path = xbmcvfs.translatePath(
             self.real_settings.getAddonInfo('profile'))
         file_path = os.path.join(path, FAVOURITE_SHOWS_FILENAME)
         if not os.path.exists(path):
@@ -1374,7 +1385,8 @@ class SRGSSR:
             json.dump(show_ids_dict_list, f)
 
     def read_searches(self, filename):
-        path = xbmc.translatePath(self.real_settings.getAddonInfo('profile'))
+        path = xbmcvfs.translatePath(
+            self.real_settings.getAddonInfo('profile'))
         file_path = os.path.join(path, filename)
         try:
             with open(file_path, 'r') as f:
@@ -1397,7 +1409,8 @@ class SRGSSR:
             searches.pop()
         searches.insert(0, name)
         write_dict_list = [{'search': entry} for entry in searches]
-        path = xbmc.translatePath(self.real_settings.getAddonInfo('profile'))
+        path = xbmcvfs.translatePath(
+            self.real_settings.getAddonInfo('profile'))
         file_path = os.path.join(path, filename)
         if not os.path.exists(path):
             os.makedirs(path)
@@ -1441,7 +1454,7 @@ class SRGSSR:
         Keyword arguments:
         fname  -- the path to the file to be read
         """
-        data_file = os.path.join(xbmc.translatePath(self.data_uri), fname)
+        data_file = os.path.join(xbmcvfs.translatePath(self.data_uri), fname)
         with open(data_file, 'r', encoding='utf-8') as f:
             ch_content = json.load(f)
             cids = [elem['channel'] for elem in ch_content.get('channels', [])]

@@ -156,6 +156,10 @@ def stopPlayback(notifymsg, logmsg):                            # Function to st
         dialog.notification(notifymsg, mgenlog, addon_icon, 5000)
         if settings('screensaver') == 'true':                   #  Active screensaver if option selected
             xbmc.executebuiltin('ActivateScreensaver')
+        if settings('asreset') == 'true':                       #  Reset sleep timer if option selected
+            settings('plstop', '0')
+            mgenlog = "Autostop sleep timer reset enabled.  Sleep timer reset to 0."
+            xbmc.log(mgenlog, xbmc.LOGINFO)
         settings('notifyset', 'no')                             # Clear notification flag
         settings('varextnotify', 'no')                          # Clear notification flag
     except:

@@ -1,6 +1,6 @@
 # v.0.3.0
 
-from kodi_six import xbmc
+import xbmc
 import json as _json
 
 

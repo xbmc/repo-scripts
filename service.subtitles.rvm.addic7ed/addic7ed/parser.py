@@ -1,34 +1,60 @@
-# -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
-# Name:        addic7ed
-# Purpose:     Parsing and downloading subs from addic7ed.com
-# Author:      Roman Miroshnychenko
-# Created on:  05.03.2013
-# Copyright:   (c) Roman Miroshnychenko, 2013
-# Licence:     GPL v.3 http://www.gnu.org/licenses/gpl.html
-#-------------------------------------------------------------------------------
+## Copyright (C) 2013, Roman Miroshnychenko aka Roman V.M.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, unicode_literals
 import re
-from contextlib import closing
 from collections import namedtuple
-from bs4 import BeautifulSoup
-from kodi_six.xbmcvfs import File
-from .exceptions import SubsSearchError, DailyLimitError
-from .utils import LanguageData
-from .webclient import Session
 
-__all__ = ['search_episode', 'get_episode', 'download_subs']
+from bs4 import BeautifulSoup
+
+from addic7ed.exceptions import SubsSearchError, ParseError
+from addic7ed.webclient import Session
+
+__all__ = [
+    'search_episode',
+    'get_episode',
+    'parse_filename',
+    'normalize_showname',
+    'get_languages',
+]
 
 session = Session()
+
 SubsSearchResult = namedtuple('SubsSearchResult', ['subtitles', 'episode_url'])
 EpisodeItem = namedtuple('EpisodeItem', ['title', 'link'])
 SubsItem = namedtuple('SubsItem', ['language', 'version', 'link', 'hi', 'unfinished'])
+LanguageData = namedtuple('LanguageData', ['kodi_lang', 'add7_lang'])
+
 serie_re = re.compile(r'^serie')
 version_re = re.compile(r'Version (.*?),')
 original_download_re = re.compile(r'^/original')
 updated_download_re = re.compile(r'^/updated')
 jointranslation_re = re.compile('^/jointranslation')
+spanish_re = re.compile(r'Spanish \(.*?\)')
+
+episode_patterns = (
+    re.compile(r'^(.*?)[ \.](?:\d*?[ \.])?s(\d+)[ \.]?e(\d+)\.', re.I | re.U),
+    re.compile(r'^(.*?)[ \.](?:\d*?[ \.])?(\d+)x(\d+)\.', re.I | re.U),
+    re.compile(r'^(.*?)[ \.](?:\d*?[ \.])?(\d{1,2}?)[ \.]?(\d{2})\.', re.I | re.U),
+)
+# Convert show names from TheTVDB format to Addic7ed.com format
+# Keys must be all lowercase
+NAME_CONVERSIONS = {
+    'castle (2009)': 'castle',
+    'law & order: special victims unit': 'Law and order SVU',
+    'bodyguard (2018)': 'bodyguard',
+}
 
 
 def search_episode(query, languages=None):
@@ -60,9 +86,8 @@ def search_episode(query, languages=None):
                       )
     if table is not None:
         results = list(parse_search_results(table))
-        if not results:
-            raise SubsSearchError
-        return results
+        if results:
+            return results
     else:
         sub_cells = soup.find_all(
             'table',
@@ -73,8 +98,7 @@ def search_episode(query, languages=None):
             return SubsSearchResult(
                 parse_episode(sub_cells, languages), session.last_url
             )
-        else:
-            raise SubsSearchError
+    raise SubsSearchError
 
 
 def parse_search_results(table):
@@ -92,12 +116,11 @@ def get_episode(link, languages=None):
         'table',
         {'width': '100%', 'border': '0', 'align': 'center', 'class': 'tabel95'}
     )
-    if sub_cells:
-        return SubsSearchResult(
-            parse_episode(sub_cells, languages), session.last_url
-        )
-    else:
+    if not sub_cells:
         raise SubsSearchError
+    return SubsSearchResult(
+        parse_episode(sub_cells, languages), session.last_url
+    )
 
 
 def parse_episode(sub_cells, languages):
@@ -128,7 +151,7 @@ def parse_episode(sub_cells, languages):
             'td', {'class': 'newsDate', 'colspan': '3'}
         ).get_text(strip=True)
         if works_with:
-            version += u', ' + works_with
+            version += ', ' + works_with
         lang_cells = sub_cell.find_all('td', {'class': 'language'})
         for lang_cell in lang_cells:
             for language in languages:
@@ -159,20 +182,59 @@ def parse_episode(sub_cells, languages):
                     break
 
 
-def download_subs(link, referer, filename='subtitles.srt'):
+def parse_filename(filename):
     """
-    Download subtitles from addic7ed.com
+    Filename parser for extracting show name, season # and episode # from
+    a filename.
 
-    :param link: relative lint to .srt file
-    :param referer: episode page for referer header
-    :param filename: file name for subtitles
-    :raises ConnectionError: if addic7ed.com cannot be opened
-    :raises DailyLimitError: if a user exceeded their daily download quota
-        (10 subtitles).
+    :param filename: episode filename
+    :return: parsed showname, season and episode
+    :raises ParseError: if the filename does not match any episode patterns
     """
-    subtitles = session.download_subs(link, referer=referer)
-    if subtitles[:9].lower() != b'<!doctype':
-        with closing(File(filename, 'w')) as fo:
-            fo.write(bytearray(subtitles))
-    else:
-        raise DailyLimitError
+    filename = filename.replace(' ', '.')
+    for regexp in episode_patterns:
+        episode_data = regexp.search(filename)
+        if episode_data is not None:
+            showname = episode_data.group(1).replace('.', ' ')
+            season = episode_data.group(2).zfill(2)
+            episode = episode_data.group(3).zfill(2)
+            return showname, season, episode
+    raise ParseError
+
+
+def normalize_showname(showname):
+    """
+    Normalize showname if there are differences
+    between TheTVDB and Addic7ed
+
+    :param showname: TV show name
+    :return: normalized show name
+    """
+    showname = showname.strip().lower()
+    showname = NAME_CONVERSIONS.get(showname, showname)
+    return showname.replace(':', '')
+
+
+def get_languages(languages_raw):
+    """
+    Create the list of pairs of language names.
+    The 1st item in a pair is used by Kodi.
+    The 2nd item in a pair is used by
+    the addic7ed web site parser.
+
+    :param languages_raw: the list of subtitle languages from Kodi
+    :return: the list of language pairs
+    """
+    languages = []
+    for language in languages_raw:
+        kodi_lang = language
+        if 'English' in kodi_lang:
+            add7_lang = 'English'
+        elif kodi_lang == 'Portuguese (Brazil)':
+            add7_lang = 'Portuguese (Brazilian)'
+        elif spanish_re.search(kodi_lang) is not None:
+            add7_lang = 'Spanish (Latin America)'
+        else:
+            add7_lang = language
+        languages.append(LanguageData(kodi_lang, add7_lang))
+    return languages

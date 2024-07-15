@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-07-25 09:14+0000\n"
+"PO-Revision-Date: 2024-05-30 04:42+0000\n"
 "Last-Translator: Minho Park <parkmino@gmail.com>\n"
 "Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/ko_kr/>\n"
 "Language: ko_kr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 5.5.4\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -148,6 +148,14 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr "노래 폴더에서 txt 가사 검색 및 저장"
 
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr "%N. %A - %T"
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr "%A - %B - %N - %T"
+
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
@@ -238,18 +246,26 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "음악 OSD 및 지금 재생 중 정보를 숨기면, 가사 대화 상자의 배경도 숨겨집니다."
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr "출처"
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr "인터넷 라디오 방송을 들을 때 가사 받기"
+
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "곰오디오"
+msgid "Megalobiz"
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +294,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "어두운 가사"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr "Super Music"
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "곰오디오"
 
 #~ msgctxt "#32905"
 #~ msgid "Syair"

@@ -1,7 +1,7 @@
 Digital clock screensaver
 =================
 **Branches guide:**
- - **master:** Works just on Kodi v19 Codename Matrix
+ - **master:** Works on Kodi v19 Codename Matrix and up
  - **krypton:** Works on Kodi v17 Codename Krypton and on Kodi V18 Codename Leia
 
 Digital clock screensaver with a lot of options.
@@ -87,60 +87,33 @@ __Extra Options__
 - Enable RSS (The screensaver will show the same RSS Kodi shows, so make sure it's properly configured and enabled in Kodi)
 
 This screensaver is configured for every skin separately since it has to use Fonts defined by the skin!
-
-Skin developers have an option to use script-screensaver-digitalclock-custom.xml in their skins 1080i, 720p... folder.
-They should provide and maintain that xml file with their skin!
-Screensaver will check for skin folders in this order: 1080i, 720p, 21x9, 16x9, 4x3Hirez.
-If no script-screensaver-digitalclock-custom.xml is found screensaver will look for an appropriate xml file within screensavers folder.
 If there is no appropriate xml file it will use skin.default.xml
 
-If the skin is not on the list screensaver will use default font names from confluence (It might not look pretty but it will work with any skin):
-
-- Ace2
-- Adonic
-- Aeon Nox 5
+If the skin is not on the list below screensaver will use default font names from confluence (It might not look pretty but it will work with any skin).
+List of supported skins (If the skin is in the official repository it will be supported):
 - Aeon Nox Silvo
-- Aeon Tajo
-- Aeon MQ5
-- Aeon MQ5
-- Aeon MQ6
-- Aeon MQ8
+- Aeon MQ7 (Matrix mod)
+- Aeon MQ8 (Matrix mod, Nexus mod)
+- Aeon MQ9
 - Amber
 - AppTV
-- Arctic: Zephyr
-- Arctic: Zephyr 2
-- Aura
-- Bello 6
-- Bello 7
-- Black Glass Nova
-- Box
-- Chroma
+- Arctic: Zephyr - Reloaded
+- Bello 8
 - Confluence
-- Embuary-Leia
+- EllipsisUI
+- Embuary-Matrix
 - Eminence.2
 - Estouchy
 - Estuary
 - Ftv
-- (Fuse)neue
-- Grid
-- Horizon
-- Madnox
 - Metropolis
-- Mimic
-- Nebula
-- Omni
+- Mimic-LR
 - OSMC
 - Pellucid
-- Phenomenal
 - Quartz
 - Rapier
-- Retouched
-- Reestuarized
-- Revolve
-- Titan
-- Transparency
+- TetradUI
 - Unity
-- Xperience1080
 
 If your skin is not on the list, and you would like it to be - send me a message.
 

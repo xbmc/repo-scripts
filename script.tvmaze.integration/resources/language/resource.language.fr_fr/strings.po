@@ -5,148 +5,160 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-07-18 17:11+0000\n"
+"Last-Translator: skypichat <skypichat@hotmail.fr>\n"
+"Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tvmaze-integration/fr_fr/>\n"
 "Language: fr_fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.18.2\n"
+
+msgctxt "Addon Summary"
+msgid "Integration between Kodi and TV Maze."
+msgstr "Intégration entre Kodi et TV Maze."
+
+msgctxt "Addon Description"
+msgid "This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows."
+msgstr "Cette intégration vous permet de marquer les programmes comme acquis sur TV Maze (et de les ajouter à vos programmes suivis si nécessaire) lorsque vous les ajoutez à votre bibliothèque et de les marquer comme regardés sur TV Maze après les avoir regardés. Vous pouvez également suivre, désélectionner, taguer et dé-taguer manuellement des programmes."
 
 # Section Headings
 msgctxt "#32000"
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 msgctxt "#32001"
 msgid "Advanced"
-msgstr ""
+msgstr "Avancé"
 
 msgctxt "#32002"
 msgid "TV Maze action"
-msgstr ""
+msgstr "Action TV Maze"
 
 # empty strings from id 32001 to 32099
 # Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Activer le mode de débogage"
 
 msgctxt "#32101"
 msgid "TV Maze User"
-msgstr ""
+msgstr "Utilisateur TV Maze"
 
 msgctxt "#32102"
 msgid "TV Maze API Key"
-msgstr ""
+msgstr "Clé d'API de TV Maze"
 
 msgctxt "#32103"
 msgid "Add new Kodi shows to followed list"
-msgstr ""
+msgstr "Ajouter de nouveaux programmes à la liste suivie"
 
 msgctxt "#32104"
 msgid "Mark new Kodi episodes as acquired"
-msgstr ""
+msgstr "Marquer les nouveaux épisodes de Kodi comme acquis"
 
 msgctxt "#32105"
 msgid "Mark watched Kodi episodes as watched"
-msgstr ""
+msgstr "Marquer un épisode de Kodi comme vu"
 
 msgctxt "#32106"
 msgid "Mark watched after"
-msgstr ""
+msgstr "Marquer comme vu après"
 
 msgctxt "#32107"
 msgid "Mark watched when removing from Kodi"
-msgstr ""
+msgstr "Marquer comme vu lors de la suppression de Kodi"
 
 msgctxt "#32108"
 msgid "Hide context menu items"
-msgstr ""
+msgstr "Masquer les items du menu contextuel"
 
 # empty strings from id 32108 to 32199
 # Dialog Headings
 msgctxt "#32200"
 msgid "API Credentials Needed"
-msgstr ""
+msgstr "Informations d'identification de l'API nécessaires"
 
 msgctxt "#32201"
 msgid "Select action"
-msgstr ""
+msgstr "Sélectionner une action"
 
 msgctxt "#32202"
 msgid "Select shows to follow"
-msgstr ""
+msgstr "Sélectionner les programmes à suivre"
 
 msgctxt "#32203"
 msgid "Select shows to unfollow"
-msgstr ""
+msgstr "Sélectionner les programmes à ne plus suivre"
 
 msgctxt "#32204"
 msgid "Select tag"
-msgstr ""
+msgstr "Sélectionner le tag"
 
 msgctxt "#32205"
 msgid "Select shows to tag"
-msgstr ""
+msgstr "Sélectionner les programmes à taguer"
 
 msgctxt "#32206"
 msgid "Select shows to untag"
-msgstr ""
+msgstr "Sélectionner les programmes à dé-taguer"
 
 # empty strings from id 32207 to 32300
 # Dialog Messages
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
-msgstr ""
+msgstr "Les informations de connexion de l'API TV Maze doivent être fournies avant de continuer."
 
 msgctxt "#32302"
 msgid "Open settings"
-msgstr ""
+msgstr "Ouvrir les paramètres"
 
 msgctxt "#32303"
 msgid "Select All (Click OK to reload list)"
-msgstr ""
+msgstr "Tout sélectionner (Cliquer sur OK pour recharger la liste)"
 
 msgctxt "#32304"
 msgid "Deselect All (Click OK to reload list)"
-msgstr ""
+msgstr "Tout désélectionner (Cliquer OK pour recharger la liste)"
 
 # empty strings from 32305 to 32400
 # Context Menu
+#, fuzzy
 msgctxt "#32401"
 msgid "TV Maze"
-msgstr ""
+msgstr "TV Maze"
 
 msgctxt "#32402"
 msgid "Follow show"
-msgstr ""
+msgstr "Suivre le programme"
 
 msgctxt "#32403"
 msgid "Unfollow show"
-msgstr ""
+msgstr "Ne pas suivre ce programme"
 
 msgctxt "#32404"
 msgid "Tag show"
-msgstr ""
+msgstr "Tag de l'émission"
 
 msgctxt "#32405"
 msgid "Untag show"
-msgstr ""
+msgstr "Dé-taguer le programme"
 
 msgctxt "#32406"
 msgid "Mark episode acquired"
-msgstr ""
+msgstr "Marquer les épisodes comme acquis"
 
 msgctxt "#32407"
 msgid "Mark episode watched"
-msgstr ""
+msgstr "Marquer l'épisode comme vu"
 
 msgctxt "#32408"
 msgid "Mark episode skipped"
-msgstr ""
+msgstr "Marquer l'épisode sauté"
 
 msgctxt "#32409"
 msgid "Unmark episode"
-msgstr ""
+msgstr "Retirer la marque sur l'épisode"

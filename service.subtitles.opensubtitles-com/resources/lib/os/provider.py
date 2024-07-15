@@ -8,7 +8,7 @@ from resources.lib.os.model.request.download import OpenSubtitlesDownloadRequest
 
 '''local kodi module imports. replace by any other exception, cache, log provider'''
 from resources.lib.exceptions import AuthenticationError, ConfigurationError, DownloadLimitExceeded, ProviderError, \
-    ServiceUnavailable, TooManyRequests
+    ServiceUnavailable, TooManyRequests, BadUsernameError
 from resources.lib.cache import Cache
 from resources.lib.utilities import log
 
@@ -16,6 +16,7 @@ API_URL = "https://api.opensubtitles.com/api/v1/"
 API_LOGIN = "login"
 API_SUBTITLES = "subtitles"
 API_DOWNLOAD = "download"
+
 
 CONTENT_TYPE = "application/json"
 REQUEST_TIMEOUT = 30
@@ -68,7 +69,11 @@ class OpenSubtitlesProvider:
         self.username = username
         self.password = password
 
-        self.request_headers = {"Api-Key": self.api_key, "Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+        if not self.username or not self.password:
+            logging(f"Username: {self.username}, Password: {self.password}")
+
+
+        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.4" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
 
         self.session = Session()
         self.session.headers = self.request_headers
@@ -93,6 +98,8 @@ class OpenSubtitlesProvider:
             status_code = e.response.status_code
             if status_code == 401:
                 raise AuthenticationError(f"Login failed: {e}")
+            elif status_code == 400:
+                raise BadUsernameError(f"Login failed: {e}")
             elif status_code == 429:
                 raise TooManyRequests()
             elif status_code == 503:
@@ -152,24 +159,42 @@ class OpenSubtitlesProvider:
 
         return None
 
+#   def download_subtitle(self, query: Union[dict, OpenSubtitlesDownloadRequest]):
+#       if self.user_token is None:
+#           logging("No cached token, we'll try to login again.")
+#           try:
+#               self.login()
+#           except AuthenticationError as e:
+#               logging("Unable to authenticate.")
+#               raise AuthenticationError("Unable to authenticate.")
+#           except (ServiceUnavailable, TooManyRequests, ProviderError, ValueError) as e:
+#               logging("Unable to obtain an authentication token.")
+#               raise ProviderError(f"Unable to obtain an authentication token: {e}")
+#       if self.user_token == "":
+#           logging("Unable to obtain an authentication token.")
+#           #raise ProviderError("Unable to obtain an authentication token")
+        
     def download_subtitle(self, query: Union[dict, OpenSubtitlesDownloadRequest]):
-        if self.user_token is None:
+        if self.user_token is None and self.username and self.password:
             logging("No cached token, we'll try to login again.")
             try:
                 self.login()
             except AuthenticationError as e:
                 logging("Unable to authenticate.")
-            #    raise AuthenticationError("Unable to authenticate.")
-            #except (ServiceUnavailable, TooManyRequests, ProviderError, ValueError) as e:
-            #    logging("Unable to obtain an authentication token.")
-            #    raise ProviderError(f"Unable to obtain an authentication token: {e}")
+                raise AuthenticationError("Unable to authenticate.")
+            except BadUsernameError as e:
+                logging("Bad username, email instead of useername.")
+                raise BadUsernameError("Bad username. Email instead of username. ")
+            except (ServiceUnavailable, TooManyRequests, ProviderError, ValueError) as e:
+                logging("Unable to obtain an authentication token.")
+                raise ProviderError(f"Unable to obtain an authentication token: {e}")
+        elif self.user_token is None:
+            logging("No cached token, but username or password is missing. Proceeding with free downloads.")
         if self.user_token == "":
             logging("Unable to obtain an authentication token.")
-            #raise ProviderError("Unable to obtain an authentication token")
-        
+            #raise ProviderError("Unable to obtain an authentication token")            
             
-        
-        logging(f"user token is {self.user_token}")
+            logging(f"user token is {self.user_token}")
 
         params = query_to_params(query, "OpenSubtitlesDownloadRequest")
 

@@ -148,6 +148,14 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr "Cari dan simpan lirik txt di folder lagu"
 
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr ""
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
+
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
@@ -238,18 +246,26 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "Jika Anda menyembunyikan OSD Musik dan info Sedang Diputar, latar belakang dialog lirik juga akan disembunyikan."
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr ""
+
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr ""
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "GomAudio"
+msgid "Megalobiz"
+msgstr ""
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +294,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Lirik Gelap"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr ""
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 #~ msgctxt "#32905"
 #~ msgid "Syair"

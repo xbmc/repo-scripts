@@ -149,7 +149,15 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr ""
 
-# empty strings from id 32120 to 32146
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr ""
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
+
+# empty strings from id 32122 to 32146
 
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
@@ -239,10 +247,18 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr ""
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr ""
+
 # Scrapers - do not translate!
 
 msgctxt "#32901"
-msgid "MiniLyrics"
+msgid "Lrclib"
 msgstr ""
 
 msgctxt "#32902"
@@ -250,7 +266,7 @@ msgid "MusixMatch"
 msgstr ""
 
 msgctxt "#32903"
-msgid "GomAudio"
+msgid "Megalobiz"
 msgstr ""
 
 msgctxt "#32904"
@@ -279,5 +295,13 @@ msgstr ""
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr ""
+
+msgctxt "#32918"
+msgid "RCLyricsBand"
 msgstr ""
 

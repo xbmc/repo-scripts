@@ -1,3 +1,18 @@
+2.1.1
+- Add Latitude and Longitude to Window data for skins that display 'season' using (arguably dubious) logic
+
+2.1.0
+- Fix light_rain icon & update BOM radar list
+
+2.0.9
+- Better fix for ABC weather video
+
+2.0.8
+- Fix for moved ABC weather videos, update list of radars
+
+2.0.6
+- Update list of radars
+
 2.0.5
 - Improve error handling if the BOM disappears for a bit...
       

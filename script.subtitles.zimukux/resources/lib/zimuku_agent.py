@@ -17,24 +17,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-from ast import expr_context
+
 import os
 import sys
 import time
+import json
+import base64
 import urllib
-
 import requests
 from bs4 import BeautifulSoup
 
 
 class Zimuku_Agent:
-    def __init__(self, base_url, dl_location, logger, unpacker, settings):
+    def __init__(self, base_url, dl_location, logger, unpacker, settings, ocrUrl=''):
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
-        self.INIT_PAGE = base_url + '/?security_verify_data=313932302c31303830'
-        #self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
-        self.TOKEN_PARAM = 'security_verify_data=313932302c31303830'
+        # self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
         self.ZIMUKU_API = '%s/search?q=%%s' % base_url
+        self.INIT_PAGE = base_url + '/?security_verify_data=313932302c31303830'
         self.DOWNLOAD_LOCATION = dl_location
         self.FILE_MIN_SIZE = 1024
 
@@ -43,22 +43,18 @@ class Zimuku_Agent:
         self.plugin_settings = settings
         self.session = requests.Session()
         self.vertoken = ''
+        self.ocrUrl = ocrUrl
 
-        # 一次性调用，获取那个vertoken。目测这东西会过期，不过不管那么多了，感觉过两天验证机制又要变
-        # self.init_site()
+        # 一次性调用，获取必需的cookies，验证机制可能之后会变
+        self.init_site()
 
     def set_setting(self, settings):
         # for unittestting purpose
         self.plugin_settings = settings
 
     def init_site(self):
-        self.session.cookies.set(
-            'srcurl', '68747470733a2f2f7a696d756b752e6f72672f')
-        self.get_page(self.ZIMUKU_BASE)
-
         self.get_page(self.INIT_PAGE)
-        _, resp = self.get_page(self.ZIMUKU_BASE)
-        self.get_vertoken(resp)
+        self.get_page(self.INIT_PAGE)
 
     def get_page(self, url, **kwargs):
         """
@@ -84,8 +80,8 @@ class Zimuku_Agent:
             a = requests.adapters.HTTPAdapter(max_retries=3)
             s.mount('http://', a)
 
-            #url += '&' if '?' in url else '?'
-            #url += 'security_verify_data=313932302c31303830'
+            # url += '&' if '?' in url else '?'
+            # url += 'security_verify_data=313932302c31303830'
 
             self.logger.log(sys._getframe().f_code.co_name,
                             'requests GET [%s]' % (url), level=3)
@@ -104,6 +100,58 @@ class Zimuku_Agent:
                             "ERROR READING %s: %s" % (url, e), level=3)
 
         return headers, http_body
+
+    def verify(self, url, append):
+        headers = None
+        http_body = None
+        s = self.session
+        try:
+            request_headers = {'User-Agent': self.ua}
+
+            a = requests.adapters.HTTPAdapter(max_retries=3)
+            s.mount('https://', a)
+
+            self.logger.log(sys._getframe().f_code.co_name,
+                            '[CHALLENGE VERI-CODE] requests GET [%s]' % (url), level=3)
+
+            http_response = s.get(url, headers=request_headers)
+
+            if http_response.status_code != 200:
+                soup = BeautifulSoup(http_response.content, 'html.parser')
+                content = soup.find_all(attrs={'class': 'verifyimg'})[
+                    0].get('src')
+                if content is not None:
+                    # 处理编码
+                    ocrurl = self.ocrUrl
+                    payload = {'imgdata': content}
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36'
+                    }
+                    response = requests.request(
+                        "POST", ocrurl, headers=headers, json=payload)
+                    result_json = json.loads(response.text)
+                    text = ''
+                    if result_json['code'] == 1:
+                        text = result_json['result']
+                    str1 = ''
+                    i = 0
+                    for ch in text:
+                        if str1 == '':
+                            str1 = hex(ord(text[i]))
+                        else:
+                            str1 += hex(ord(text[i]))
+                        i = i + 1
+
+                    # 使用带验证码的访问
+                    get_cookie_url = '%s%s&%s' % (
+                        url, append, 'security_verify_img=' + str1.replace('0x', ''))
+                    http_response = s.get(
+                        get_cookie_url, headers=request_headers)
+                    a = 1
+
+        except Exception as e:
+            self.logger.log(sys._getframe().f_code.co_name,
+                            "ERROR CHALLENGING VERI-CODE(target URL: %s): %s" % (url, e), level=3)
 
     def extract_sub_info(self, sub, lang_info_mode):
         """
@@ -169,7 +217,7 @@ class Zimuku_Agent:
             if rating not in ["0", "1", "2", "3", "4", "5"]:
                 self.logger.log(
                     sys._getframe().f_code.co_name, "NO RATING AVAILABLE IN (%s), URL: %s" %
-                    (rating_div_str, link),
+                                                    (rating_div_str, link),
                     2)
                 rating = "0"
         except:
@@ -200,7 +248,7 @@ class Zimuku_Agent:
         self.logger.log(sys._getframe().f_code.co_name,
                         "Fetching new vertoken form home page")
         try:
-            headers, data = self.get_page(self.ZIMUKU_BASE+'/')
+            headers, data = self.get_page(self.ZIMUKU_BASE + '/')
             hsoup = BeautifulSoup(resp, 'html.parser')
             vertoken = hsoup.find(
                 'input', attrs={'name': 'vertoken'}).attrs.get('value', '')
@@ -211,7 +259,7 @@ class Zimuku_Agent:
                             (Exception, e), level=3)
             return ''
 
-    def search(self, title, item):
+    def search(self, title, items):
         """
         搜索字幕
 
@@ -231,28 +279,31 @@ class Zimuku_Agent:
         """
         subtitle_list = []
 
-        #vertoken = self.get_vertoken()
+        # vertoken = self.get_vertoken()
 
-        get_cookie_url = '%s&%s' % (self.ZIMUKU_API %
-                                    (urllib.parse.quote(title)), self.TOKEN_PARAM)
         url = self.ZIMUKU_API % urllib.parse.quote(title)
         try:
             # 10/10/22: 变成搜索要先拿 cookie
-            self.get_page(url)
-            self.get_page(get_cookie_url)
+            # self.get_page(url)
+            # self.get_page(get_cookie_url)
+
+            # 处理验证码逻辑
+            # self.verify(url, '&chost=zimuku.org')
 
             # 真正的搜索
             self.logger.log(sys._getframe().f_code.co_name,
                             "Search API url: %s" % (url))
-            headers, data = self.get_page(url)
+
+            url += '&chost=zimuku.org'
+            _, data = self.get_page(url)
             soup = BeautifulSoup(data, 'html.parser')
         except Exception as e:
             self.logger.log(sys._getframe().f_code.co_name, 'ERROR SEARCHING, E=(%s: %s)' %
                             (Exception, e), level=3)
             return []
 
-        s_e = 'S%02dE%02d' % (int(item['season']), int(item['episode'])
-                              ) if item['season'] != '' and item['episode'] != '' else 'N/A'
+        s_e = 'S%02dE%02d' % (int(items['season']), int(items['episode'])
+                              ) if items['season'] != '' and items['episode'] != '' else 'N/A'
         if s_e != 'N/A':
             # 1. 从搜索结果中看看是否能直接找到
             sub_list = soup.find_all('tr')
@@ -265,11 +316,12 @@ class Zimuku_Agent:
                     # break  还是全列出来吧
 
         if len(subtitle_list) != 0:
-            return subtitle_list
+            return self.double_filter(subtitle_list, items)
 
         # 2. 直接找不到，看是否存在同一季的链接，进去找
-        season_name_chn = ('一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四', '十五')[
-            int(item['season']) - 1] if s_e != 'N/A' else 'N/A'
+        season_name_chn = \
+            ('一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四', '十五')[
+                int(items['season']) - 1] if s_e != 'N/A' else 'N/A'
         season_list = soup.find_all("div", class_="item prel clearfix")
 
         page_list = soup.find('div', class_='pagination')
@@ -305,11 +357,19 @@ class Zimuku_Agent:
                                     'Error getting sub page', level=3)
                     return []
                 subs = soup.tbody.find_all("tr")
+                unfiltered_sub_list = []
                 for sub in reversed(subs):
+                    subtitle = self.extract_sub_info(sub, 2)
+                    unfiltered_sub_list.append(subtitle)
                     sub_name = sub.a.text
                     if s_e in sub_name.upper():
-                        subtitle_list.append(self.extract_sub_info(sub, 2))
-                return subtitle_list    # 如果匹配到了季，那就得返回了，没有就是没有
+                        subtitle_list.append(subtitle)
+                # 如果匹配到了季，那就得返回了，没有就是没有
+                # 如果没有匹配到，可能整季度的字幕被打包到一个文件中了，那就把所有的结果都返回让用户自己选择
+                if len(subtitle_list) > 0:
+                    return self.double_filter(subtitle_list, items)
+                else:
+                    return unfiltered_sub_list
 
         # 精确查找没找到，那就返回所有
         subtitle_list = []
@@ -330,7 +390,18 @@ class Zimuku_Agent:
             for sub in reversed(subs):
                 subtitle_list.append(self.extract_sub_info(sub, 2))
 
-        return subtitle_list
+        return self.double_filter(subtitle_list, items)
+
+    def double_filter(self, subtitle_list, items):
+        # 适用当前集数再次过滤字幕
+        try:
+            episode = int(items['episode'])
+            es = 'E%02d' % episode
+            filtered = [
+                s for s in subtitle_list if es in s['filename'].upper()]
+            return filtered if len(filtered) > 0 else subtitle_list
+        except:
+            return subtitle_list
 
     def find_in_list(self, lst, include, *kws):
         """
@@ -362,19 +433,20 @@ class Zimuku_Agent:
                 new_lst.append(e)
         return new_lst
 
-    def get_preferred_subs(self, sub_name_list, sub_file_list):
+    def get_preferred_subs(self, sub_name_list, short_sub_name_list, sub_file_list):
         """
         根据插件的参数找出偏好的字幕
 
         Params:
-            sub_name_list    文件名
-            sub_file_list    对应的文件绝对路径
+            sub_name_list       文件名
+            short_sub_name_list 短文件名
+            sub_file_list       对应的文件绝对路径
 
         Return:
-            [], []  返回筛选列表。如果筛选结果是空，意味着没有匹配上任意一条，那就返回传进来的列表；也可能不止一条，比如只指定了 srt 然后有不止一条
+            [], [], []  返回筛选列表。如果筛选结果是空，意味着没有匹配上任意一条，那就返回传进来的列表；也可能不止一条，比如只指定了 srt 然后有不止一条
         """
         if len(sub_name_list) <= 1:
-            return sub_name_list, sub_file_list
+            return sub_name_list, short_sub_name_list, sub_file_list
         else:
             tpe = self.plugin_settings['subtype']
             lang = self.plugin_settings['sublang']
@@ -384,7 +456,7 @@ class Zimuku_Agent:
                             level=1)
 
             if tpe == 'none ' and lang == 'none':
-                return sub_name_list, sub_file_list
+                return sub_name_list, short_sub_name_list, sub_file_list
             filtered_name_list = sub_name_list
             if tpe != 'none':
                 filtered_name_list = self.find_in_list(
@@ -414,26 +486,33 @@ class Zimuku_Agent:
                 self.logger.log(sys._getframe().f_code.co_name, "筛完语言：%s" %
                                 filtered_name_list, level=1)
             if len(filtered_name_list) == 0:
-                return sub_name_list, sub_file_list
+                return sub_name_list, short_sub_name_list, sub_file_list
 
             # 把原先的路径找回来
             indices = [sub_name_list.index(x) for x in filtered_name_list]
-            return filtered_name_list, [sub_file_list[x] for x in indices]
+            return filtered_name_list, [short_sub_name_list[x] for x in indices], [sub_file_list[x] for x in indices]
 
     def download(self, url):
         """
         下载并返回字幕文件列表
 
         Params:
-            url    字幕详情页面，如 http://zimuku.org/detail/155262.html
+            url    字幕详情页面，如 https://srtku.com/detail/155262.html
 
         Return:
-            [], []  返回两个列表，第一个为文件名（用于不止一个时在 Kodi 界面上让用户选择），第二个为完整路径（用户送给播放器使用）
+            [], [], []  返回 3 个列表
+            第一个为文件名（用于不止一个时在 Kodi 界面上让用户选择）
+            第二个是极短文件名（通过参数 cutsubfn 控制，避免文件名过长滚动）
+                短文件名本来在 sub_provider_service 做更合适（PR 也是这么提的），但问题是那样不好写 testcase，所以先放这里
+            第三个为完整路径（用户送给播放器使用）
         """
         exts = (".srt", ".sub", ".smi", ".ssa", ".ass", ".sup")
         supported_archive_exts = (".zip", ".7z", ".tar", ".bz2", ".rar",
                                   ".gz", ".xz", ".iso", ".tgz", ".tbz2", ".cbr")
         try:
+            # 处理验证码逻辑
+            # self.verify(url, '?')
+
             # Subtitle detail page.
             headers, data = self.get_page(url)
             soup = BeautifulSoup(data, 'html.parser')
@@ -441,8 +520,9 @@ class Zimuku_Agent:
 
             if not (url.startswith(('http://', 'https://'))):
                 url = urllib.parse.urljoin(self.ZIMUKU_BASE, url)
-            self.logger.log(sys._getframe().f_code.co_name,
-                            "GET SUB DETAIL PAGE: %s" % (url))
+
+            # 处理验证码逻辑
+            # self.verify(url, '?')
 
             # Subtitle download-list page.
             headers, data = self.get_page(url)
@@ -451,22 +531,25 @@ class Zimuku_Agent:
         except:
             self.logger.log(sys._getframe().f_code.co_name, "Error (%d) [%s]" % (
                 sys.exc_info()[2].tb_lineno, sys.exc_info()[1]), level=3)
-            return [], []
+            return [], [], []
 
         filename, data = self.download_links(links, url)
         if filename == '':
             # No file received.
-            return [], []
+            return [], [], []
+
+        # 小写扩展名
+        dot = filename.rfind(".")
+        if dot != -1:
+            filename = filename[:dot] + filename[dot:].lower()
 
         rtn_list = []
         if filename.endswith(exts):
             full_path = self.store_file(filename, data)
             fn = self.fix_garbled_filename(os.path.basename(full_path))
-            return [fn], [full_path]
+            return [fn], [fn], [full_path]
         elif filename.endswith(supported_archive_exts):
             full_path = self.store_file(filename, data)
-            # libarchive requires the access to the file, so sleep a while to ensure the file.
-            time.sleep(0.5)
             archive_path, sub_name_list = self.unpacker.unpack(full_path)
 
             # 返回的文件名不能做乱码修正，不然找不到……
@@ -475,12 +558,25 @@ class Zimuku_Agent:
             sub_name_list = [self.fix_garbled_filename(
                 x) for x in sub_name_list]
 
-            return sub_name_list, sub_file_list
+            if len(sub_name_list) > 1:
+                # 不显示相同的前缀，防止文件名过长滚动
+                shortest_fn = min(sub_name_list, key=len)
+                diff_index = next(filter(
+                    lambda i: any(s[i] != shortest_fn[i]
+                                  for s in sub_name_list),
+                    range(len(shortest_fn))
+                ))
+                dot = shortest_fn[:diff_index].rfind('.') + 1
+                short_sub_name_list = [s[dot:] for s in sub_name_list]
+
+                return sub_name_list, short_sub_name_list, sub_file_list
+            else:
+                return sub_name_list, sub_name_list, sub_file_list
         else:
             self.logger.log(sys._getframe().f_code.co_name, "UNSUPPORTED FILE: % s" %
                             (filename), level=2)
             # xbmc.executebuiltin(('XBMC.Notification("zimuku","不支持的压缩格式，请选择其他字幕文件。")'), True)
-            return [], []
+            return [], [], []
 
     def fix_garbled_filename(self, fn):
         # hack to fix encoding problem of zip file
@@ -512,8 +608,8 @@ class Zimuku_Agent:
             ts, os.path.splitext(filename)[1])).replace('\\', '/')
         with open(tempfile, "wb") as sub_file:
             sub_file.write(data)
-            # May require close file explicitly to ensure the file.
-            sub_file.close()
+            sub_file.flush()
+            os.fsync(sub_file.fileno())
         return tempfile.replace('\\', '/')
 
     def download_links(self, links, referer):
@@ -543,6 +639,10 @@ class Zimuku_Agent:
             try:
                 self.logger.log(sys._getframe().f_code.co_name,
                                 "DOWNLOAD SUBTITLE: %s" % (url))
+
+                # 处理验证码逻辑
+                # self.verify(url, '?')
+
                 # Download subtitle one by one until success.
                 headers, data = self.get_page(url, Referer=referer)
 
@@ -573,13 +673,13 @@ class Zimuku_Agent:
             else:
                 self.logger.log(
                     sys._getframe().f_code.co_name, 'File received but too small: %s %d bytes' %
-                    (filename, len(data)),
+                                                    (filename, len(data)),
                     level=2)
                 return '', ''
         else:
             self.logger.log(
                 sys._getframe().f_code.co_name, 'Failed to download subtitle from all links: %s' %
-                (referer),
+                                                (referer),
                 level=2)
             return '', ''
 

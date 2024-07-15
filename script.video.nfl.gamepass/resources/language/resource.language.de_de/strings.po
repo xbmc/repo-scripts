@@ -85,6 +85,10 @@ msgctxt "#30030"
 msgid "Display/Video"
 msgstr "Anzeige"
 
+msgctxt "#30031"
+msgid "Load and display games of current week"
+msgstr "Zeige die Spiele der aktuellen Woche"
+
 msgctxt "#30032"
 msgid "Coaches Film"
 msgstr ""
@@ -152,3 +156,7 @@ msgstr "Bitte geben Sie Benutzernamen und Passwort für Ihr NFL Game Pass Abo ei
 msgctxt "#30051"
 msgid "Inputstream Adaptive is not installed or is disabled."
 msgstr "Inputstream Adaptive ist nicht installiert oder nicht aktiviert."
+
+msgctxt "#30052"
+msgid "Display date and time of kickoff"
+msgstr "Zeige das Datum und die Uhrzeit des Kickoffs an"

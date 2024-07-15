@@ -46,8 +46,8 @@ def root():
              ("randommusicvideos", ADDON_LANGUAGE(32022), "DefaultMusicVideos.png"),
              ("recentmusicvideos", ADDON_LANGUAGE(32023), "DefaultRecentlyAddedMusicVideos.png")]
     for call, title, thumb in items:
-        liz = xbmcgui.ListItem(label=title,
-                               thumbnailImage=thumb)
+        liz = xbmcgui.ListItem(title)
+        liz.setArt({"thumb": thumb})
         url = 'plugin://service.library.data.provider?type=%s' % call
         xbmcplugin.addDirectoryItem(handle=plugin.handle,
                                     url=url,

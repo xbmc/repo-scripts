@@ -25,6 +25,7 @@ CWD = ADDON.getAddonInfo('path')
 LANGUAGE = ADDON.getLocalizedString
 PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
+# noinspection SpellCheckingInspection
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
 HOME_WINDOW = xbmcgui.Window(10000)
 WEATHER_WINDOW = xbmcgui.Window(12600)
@@ -58,9 +59,9 @@ if not xbmc.getUserAgent():
     print("\nNo user agent, must be unit testing.\n")
 
     def log(message, exception_instance=None, level=None):
-        print(f'DEBUG: {message}')
+        print(f'DEBUG {level}: {message}')
         if exception_instance:
-            print(f'EXCPT: {traceback.format_exc(exception_instance)}')
+            print(f'EXCEPTION: {traceback.format_exc(exception_instance)}')
 
 
 else:
@@ -150,7 +151,7 @@ else:
         Helper function to get bool type from settings
 
         @param setting:
-        @return: setting value as boolen
+        @return: setting value as boolean
         """
         return get_setting(setting).lower() == "true"
 

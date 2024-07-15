@@ -9,7 +9,17 @@
 					<control type="edit" format="string">
 						<heading>30101</heading>
 					</control>
-                	<default>http://zimuku.org</default>
+					<default>https://srtku.com</default>
+                	<constraints>
+                		<allowempty>false</allowempty>
+                	</constraints>
+                </setting>
+				 <setting id="ocr_url" type="string" label="301011" help="">
+                	<level>0</level>
+					<control type="edit" format="string">
+						<heading>301011</heading>
+					</control>
+                	<default></default>
                 	<constraints>
                 		<allowempty>false</allowempty>
                 	</constraints>
@@ -33,7 +43,7 @@
 					</constraints>
 				</setting>
 				<setting id="sublang" type="string" label="30220" help="">
-					<level>1</level>
+					<level>0</level>
 					<control type="list" format="string">
 						<heading>30220</heading>
 					</control>
@@ -48,7 +58,52 @@
 						</options>
 					</constraints>
 				</setting>
+				<setting id="cutsubfn" type="boolean" label="30230">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="useyear" type="boolean" label="30240">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 		</category>
+		<category id="proxy" label="30300" help="">
+			<group id="1" label="">
+				<setting id="proxy_follow_kodi" type="boolean" label="30310" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="proxy_use" type="boolean" label="30311" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" setting="proxy_follow_kodi">false</dependency>
+					</dependencies>
+				</setting>
+                <setting id="proxy_server" type="string" label="30312" help="">
+                	<level>0</level>
+					<control type="edit" format="string">
+						<heading>30312</heading>
+					</control>
+                	<default>protocol://[user:pass@]host:port</default>
+                	<constraints>
+                		<allowempty>true</allowempty>
+                	</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<and>
+								<condition setting="proxy_follow_kodi">false</condition>
+								<condition setting="proxy_use">true</condition>
+							</and>
+						</dependency>
+					</dependencies>
+                </setting>
+			</group>
+		</category>		
 	</section>
 </settings>

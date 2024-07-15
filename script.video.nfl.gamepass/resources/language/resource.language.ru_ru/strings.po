@@ -86,8 +86,8 @@ msgid "Display/Video"
 msgstr "Воспроизведение/Видео"
 
 msgctxt "#30031"
-msgid "Advanced"
-msgstr "Продвинутые"
+msgid "Load and display games of current week"
+msgstr ""
 
 msgctxt "#30032"
 msgid "Coaches Film"
@@ -155,4 +155,8 @@ msgstr ""
 
 msgctxt "#30051"
 msgid "Inputstream Adaptive is not installed or is disabled."
+msgstr ""
+
+msgctxt "#30052"
+msgid "Display date and time of kickoff"
 msgstr ""

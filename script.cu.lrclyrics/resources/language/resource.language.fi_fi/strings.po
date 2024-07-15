@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-09-10 20:14+0000\n"
+"PO-Revision-Date: 2024-04-22 10:13+0000\n"
 "Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fi_fi/>\n"
 "Language: fi_fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 5.4.3\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -148,6 +148,14 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr "Käytä txt-sanoitusten tallennukseen ja etsintään kappaleiden kansioita"
 
+msgctxt "#32120"
+msgid "%N. %A - %T"
+msgstr ""
+
+msgctxt "#32121"
+msgid "%A - %B - %N - %T"
+msgstr ""
+
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
@@ -196,7 +204,7 @@ msgstr "Siivoa kappaleiden nimet (poista suluissa olevat tiedot)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
-msgstr "Skripti on jo käynnissä!"
+msgstr "Komentosarja on jo käynnissä!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"
@@ -238,18 +246,26 @@ msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
 msgstr "Jos piilotat musiikin kuvaruutuvalikon ja \"Toistetaan parhaillaan\" -tiedot, piilotetaan myös sanoitusikkunan tausta."
 
+msgctxt "#32169"
+msgid "Sources"
+msgstr "Lähteet"
+
+msgctxt "#32170"
+msgid "Get lyrics when listening to internet radio stations"
+msgstr "Nouda sanoituksia kuunneltaessa nettiradioasemia"
+
 # Scrapers - do not translate!
 msgctxt "#32901"
-msgid "MiniLyrics"
-msgstr "MiniLyrics"
+msgid "Lrclib"
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
 msgctxt "#32903"
-msgid "GomAudio"
-msgstr "GomAudio"
+msgid "Megalobiz"
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
@@ -278,6 +294,19 @@ msgstr "Lyrics.com"
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Dark Lyrics"
+
+msgctxt "#32917"
+msgid "Super Music"
+msgstr "Super Music"
+
+# Scrapers - do not translate!
+#~ msgctxt "#32901"
+#~ msgid "MiniLyrics"
+#~ msgstr "MiniLyrics"
+
+#~ msgctxt "#32903"
+#~ msgid "GomAudio"
+#~ msgstr "GomAudio"
 
 #~ msgctxt "#32905"
 #~ msgid "Syair"

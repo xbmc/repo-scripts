@@ -1,9 +1,9 @@
-import xbmcplugin
-
+# noinspection PyPackages
 from .abc.abc_video import *
+# noinspection PyPackages
 from .bom.bom_radar import *
+# noinspection PyPackages
 from .bom.bom_forecast import *
-from pathlib import Path
 
 
 def clear_properties():
@@ -27,6 +27,8 @@ def clear_properties():
 
         set_property(WEATHER_WINDOW, 'Forecast.City')
         set_property(WEATHER_WINDOW, 'Forecast.Country')
+        set_property(WEATHER_WINDOW, 'Forecast.Latitude')
+        set_property(WEATHER_WINDOW, 'Forecast.Longitude')
         set_property(WEATHER_WINDOW, 'Forecast.Updated')
 
         set_property(WEATHER_WINDOW, 'ForecastUpdated')
@@ -118,6 +120,7 @@ def clear_properties():
         log("********** Oz Weather Couldn't clear all the properties, sorry!!", inst)
 
 
+# noinspection PyShadowingNames
 def forecast(geohash, radar_code):
     """
     The main weather data retrieval function
@@ -162,19 +165,17 @@ def forecast(geohash, radar_code):
             time_oldest = utc_str_to_local_str(utc_oldest, "%Y%m%d%H%M")
             time_newest = utc_str_to_local_str(utc_newest, "%Y%m%d%H%M")
 
-            oldest_dt = datetime.datetime.fromtimestamp(os.path.getctime(oldest_file))
-            newest_dt = datetime.datetime.fromtimestamp(os.path.getctime(newest_file))
             set_property(WEATHER_WINDOW, 'RadarOldest', time_oldest)
             set_property(WEATHER_WINDOW, 'RadarNewest', time_newest)
 
     # Get all the weather & forecast data from the BOM API
-    weather_data = False
+    weather_data = None
 
     if geohash:
         log(f'Using the BOM API.  Getting weather data for {geohash}')
         weather_data = bom_forecast(geohash)
 
-    # At this point, we should have _something_ - if not, log the issue and we're done...
+    # At this point, we should have _something_ - if not, log the issue, and we're done...
     if not weather_data:
         log("Unable to get weather_data from BOM - internet connection issue or addon not configured?", level=xbmc.LOGINFO)
         return
@@ -186,7 +187,7 @@ def forecast(geohash, radar_code):
     # Get the ABC 90-second weather video link if extended features is enabled
     if extended_features:
         log("Getting the ABC weather video link")
-        url = get_abc_weather_video_link(ADDON.getSetting("ABCQuality"))
+        url = get_abc_weather_video_link()
         if url:
             set_property(WEATHER_WINDOW, 'Video.1', url)
 
@@ -197,6 +198,7 @@ def forecast(geohash, radar_code):
     set_property(WEATHER_WINDOW, 'Forecast.Updated', time.strftime("%d/%m/%Y %H:%M"))
 
 
+# noinspection PyShadowingNames
 def get_weather():
     """
     Gets the latest observations, forecast and radar images for the currently chosen location
@@ -210,6 +212,7 @@ def get_weather():
     # This is/was an attempt to use conditions in skins to basically auto-adapt the MyWeather.xml and all OzWeather
     # components to the currently-in-use skin.  However, no matter what I try I can't get the conditions to work
     # in the skin files.
+    # noinspection PyBroadException
     try:
         skin_in_use = xbmc.getSkinDir().split('.')[1]
         set_property(WEATHER_WINDOW, 'SkinInUse', skin_in_use)
@@ -247,6 +250,8 @@ def get_weather():
 
     # Set the location we updated
     location_in_use = ADDON.getSetting(f'Location{sys.argv[1]}BOM')
+    latitude = ADDON.getSetting(f'Location{sys.argv[1]}Lat')
+    longitude = ADDON.getSetting(f'Location{sys.argv[1]}Lon')
     try:
         location_in_use = location_in_use[0:location_in_use.index(' (')]
     except ValueError:
@@ -257,5 +262,7 @@ def get_weather():
     set_property(WEATHER_WINDOW, 'Current.Location', location_in_use)
     set_property(WEATHER_WINDOW, 'Forecast.City', location_in_use)
     set_property(WEATHER_WINDOW, 'Forecast.Country', "Australia")
+    set_property(WEATHER_WINDOW, 'Forecast.Latitude', latitude)
+    set_property(WEATHER_WINDOW, 'Forecast.Longitude', longitude)
     set_property(WEATHER_WINDOW, 'Forecast.Updated', time.strftime("%d/%m @ %H:%M").lower())
 

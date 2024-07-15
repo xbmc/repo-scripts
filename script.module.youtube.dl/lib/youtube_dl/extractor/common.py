@@ -17,7 +17,7 @@ import math
 
 from ..compat import (
     compat_cookiejar_Cookie,
-    compat_cookies,
+    compat_cookies_SimpleCookie,
     compat_etree_Element,
     compat_etree_fromstring,
     compat_getpass,
@@ -70,6 +70,7 @@ from ..utils import (
     str_or_none,
     str_to_int,
     strip_or_none,
+    try_get,
     unescapeHTML,
     unified_strdate,
     unified_timestamp,
@@ -230,8 +231,10 @@ class InfoExtractor(object):
     uploader:       Full name of the video uploader.
     license:        License name the video is licensed under.
     creator:        The creator of the video.
+    release_timestamp: UNIX timestamp of the moment the video was released.
     release_date:   The date (YYYYMMDD) when the video was released.
-    timestamp:      UNIX timestamp of the moment the video became available.
+    timestamp:      UNIX timestamp of the moment the video became available
+                    (uploaded).
     upload_date:    Video upload date (YYYYMMDD).
                     If not explicitly set, calculated from timestamp.
     uploader_id:    Nickname or id of the video uploader.
@@ -1084,7 +1087,7 @@ class InfoExtractor(object):
     # Helper functions for extracting OpenGraph info
     @staticmethod
     def _og_regexes(prop):
-        content_re = r'content=(?:"([^"]+?)"|\'([^\']+?)\'|\s*([^\s"\'=<>`]+?))'
+        content_re = r'content=(?:"([^"]+?)"|\'([^\']+?)\'|\s*([^\s"\'=<>`]+?)(?=\s|/?>))'
         property_re = (r'(?:name|property)=(?:\'og[:-]%(prop)s\'|"og[:-]%(prop)s"|\s*og[:-]%(prop)s\b)'
                        % {'prop': re.escape(prop)})
         template = r'<meta[^>]+?%s[^>]+?%s'
@@ -1273,6 +1276,7 @@ class InfoExtractor(object):
 
         def extract_video_object(e):
             assert e['@type'] == 'VideoObject'
+            author = e.get('author')
             info.update({
                 'url': url_or_none(e.get('contentUrl')),
                 'title': unescapeHTML(e.get('name')),
@@ -1280,7 +1284,11 @@ class InfoExtractor(object):
                 'thumbnail': url_or_none(e.get('thumbnailUrl') or e.get('thumbnailURL')),
                 'duration': parse_duration(e.get('duration')),
                 'timestamp': unified_timestamp(e.get('uploadDate')),
-                'uploader': str_or_none(e.get('author')),
+                # author can be an instance of 'Organization' or 'Person' types.
+                # both types can have 'name' property(inherited from 'Thing' type). [1]
+                # however some websites are using 'Text' type instead.
+                # 1. https://schema.org/VideoObject
+                'uploader': author.get('name') if isinstance(author, dict) else author if isinstance(author, compat_str) else None,
                 'filesize': float_or_none(e.get('contentSize')),
                 'tbr': int_or_none(e.get('bitrate')),
                 'width': int_or_none(e.get('width')),
@@ -2706,7 +2714,7 @@ class InfoExtractor(object):
 
     def _find_jwplayer_data(self, webpage, video_id=None, transform_source=js_to_json):
         mobj = re.search(
-            r'(?s)jwplayer\((?P<quote>[\'"])[^\'" ]+(?P=quote)\)(?!</script>).*?\.setup\s*\((?P<options>[^)]+)\)',
+            r'''(?s)jwplayer\s*\(\s*(?P<q>'|")(?!(?P=q)).+(?P=q)\s*\)(?!</script>).*?\.\s*setup\s*\(\s*(?P<options>(?:\([^)]*\)|[^)])+)\s*\)''',
             webpage)
         if mobj:
             try:
@@ -2727,9 +2735,14 @@ class InfoExtractor(object):
 
     def _parse_jwplayer_data(self, jwplayer_data, video_id=None, require_title=True,
                              m3u8_id=None, mpd_id=None, rtmp_params=None, base_url=None):
+        flat_pl = try_get(jwplayer_data, lambda x: x.get('playlist') or True)
+        if flat_pl is None:
+            # not even a dict
+            return []
+
         # JWPlayer backward compatibility: flattened playlists
         # https://github.com/jwplayer/jwplayer/blob/v7.4.3/src/js/api/config.js#L81-L96
-        if 'playlist' not in jwplayer_data:
+        if flat_pl is True:
             jwplayer_data = {'playlist': [jwplayer_data]}
 
         entries = []
@@ -2777,6 +2790,13 @@ class InfoExtractor(object):
                 'timestamp': int_or_none(video_data.get('pubdate')),
                 'duration': float_or_none(jwplayer_data.get('duration') or video_data.get('duration')),
                 'subtitles': subtitles,
+                'alt_title': clean_html(video_data.get('subtitle')),  # attributes used e.g. by Tele5 ...
+                'genre': clean_html(video_data.get('genre')),
+                'channel': clean_html(dict_get(video_data, ('category', 'channel'))),
+                'season_number': int_or_none(video_data.get('season')),
+                'episode_number': int_or_none(video_data.get('episode')),
+                'release_year': int_or_none(video_data.get('releasedate')),
+                'age_limit': int_or_none(video_data.get('age_restriction')),
             }
             # https://github.com/jwplayer/jwplayer/blob/master/src/js/utils/validator.js#L32
             if len(formats) == 1 and re.search(r'^(?:http|//).*(?:youtube\.com|youtu\.be)/.+', formats[0]['url']):
@@ -2785,7 +2805,9 @@ class InfoExtractor(object):
                     'url': formats[0]['url'],
                 })
             else:
-                self._sort_formats(formats)
+                # avoid exception in case of only sttls
+                if formats:
+                    self._sort_formats(formats)
                 entry['formats'] = formats
             entries.append(entry)
         if len(entries) == 1:
@@ -2795,7 +2817,7 @@ class InfoExtractor(object):
 
     def _parse_jwplayer_formats(self, jwplayer_sources_data, video_id=None,
                                 m3u8_id=None, mpd_id=None, rtmp_params=None, base_url=None):
-        urls = []
+        urls = set()
         formats = []
         for source in jwplayer_sources_data:
             if not isinstance(source, dict):
@@ -2804,14 +2826,14 @@ class InfoExtractor(object):
                 base_url, self._proto_relative_url(source.get('file')))
             if not source_url or source_url in urls:
                 continue
-            urls.append(source_url)
+            urls.add(source_url)
             source_type = source.get('type') or ''
             ext = mimetype2ext(source_type) or determine_ext(source_url)
-            if source_type == 'hls' or ext == 'm3u8':
+            if source_type == 'hls' or ext == 'm3u8' or 'format=m3u8-aapl' in source_url:
                 formats.extend(self._extract_m3u8_formats(
                     source_url, video_id, 'mp4', entry_protocol='m3u8_native',
                     m3u8_id=m3u8_id, fatal=False))
-            elif source_type == 'dash' or ext == 'mpd':
+            elif source_type == 'dash' or ext == 'mpd' or 'format=mpd-time-csf' in source_url:
                 formats.extend(self._extract_mpd_formats(
                     source_url, video_id, mpd_id=mpd_id, fatal=False))
             elif ext == 'smil':
@@ -2826,20 +2848,23 @@ class InfoExtractor(object):
                     'ext': ext,
                 })
             else:
+                format_id = str_or_none(source.get('label'))
                 height = int_or_none(source.get('height'))
-                if height is None:
+                if height is None and format_id:
                     # Often no height is provided but there is a label in
                     # format like "1080p", "720p SD", or 1080.
-                    height = int_or_none(self._search_regex(
-                        r'^(\d{3,4})[pP]?(?:\b|$)', compat_str(source.get('label') or ''),
-                        'height', default=None))
+                    height = parse_resolution(format_id).get('height')
                 a_format = {
                     'url': source_url,
                     'width': int_or_none(source.get('width')),
                     'height': height,
-                    'tbr': int_or_none(source.get('bitrate')),
+                    'tbr': int_or_none(source.get('bitrate'), scale=1000),
+                    'filesize': int_or_none(source.get('filesize')),
                     'ext': ext,
                 }
+                if format_id:
+                    a_format['format_id'] = format_id
+
                 if source_url.startswith('rtmp'):
                     a_format['ext'] = 'flv'
                     # See com/longtailvideo/jwplayer/media/RTMPMediaProvider.as
@@ -2894,10 +2919,10 @@ class InfoExtractor(object):
         self._downloader.cookiejar.set_cookie(cookie)
 
     def _get_cookies(self, url):
-        """ Return a compat_cookies.SimpleCookie with the cookies for the url """
+        """ Return a compat_cookies_SimpleCookie with the cookies for the url """
         req = sanitized_Request(url)
         self._downloader.cookiejar.add_cookie_header(req)
-        return compat_cookies.SimpleCookie(req.get_header('Cookie'))
+        return compat_cookies_SimpleCookie(req.get_header('Cookie'))
 
     def _apply_first_set_cookie_header(self, url_handle, cookie):
         """

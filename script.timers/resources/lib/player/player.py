@@ -5,6 +5,7 @@ from resources.lib.player import player_utils
 from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
 from resources.lib.player.playerstatus import PlayerStatus
 from resources.lib.player.playlist import PlayList
+from resources.lib.timer.notification import showNotification
 from resources.lib.timer.timer import Timer
 from resources.lib.utils import datetime_utils
 from resources.lib.utils.vfs_utils import (convert_to_playlist,
@@ -32,6 +33,8 @@ class Player(xbmc.Player):
         self._skip_next_stop_event_until_started = False
 
         self._resume_status: 'dict[PlayerStatus]' = dict()
+
+        self._running_stop_at_end_timer: 'tuple[Timer, bool]' = (None, False)
 
     def playTimer(self, timer: Timer, dtd: datetime_utils.DateTimeDelta) -> None:
 
@@ -81,10 +84,18 @@ class Player(xbmc.Player):
             seektime = _get_delay_for_seektime(timer, dtd)
 
         if type == PICTURE:
-            beginSlide = files[(seektime // self._getSlideshowStaytime()) %
+            stayTime = self._getSlideshowStaytime()
+            beginSlide = files[(seektime // stayTime) %
                                len(files)] if seektime else None
+
+            if timer.is_stop_at_end_timer():
+                amountOfSlides = datetime_utils.abs_time_diff(
+                    timer.current_period.end, dtd.td) // stayTime + 1
+            else:
+                amountOfSlides = 0
+
             self._playSlideShow(path=path,
-                                shuffle=timer.shuffle, beginSlide=beginSlide)
+                                shuffle=timer.shuffle, beginSlide=beginSlide, amount=amountOfSlides)
 
         else:
             playlist = self._buildPlaylist(
@@ -98,6 +109,9 @@ class Player(xbmc.Player):
                          seektime=seektime,
                          repeat=player_utils.REPEAT_ALL if timer.repeat else player_utils.REPEAT_OFF,
                          shuffled=timer.shuffle)
+
+            if timer.is_stop_at_end_timer():
+                self._running_stop_at_end_timer = (timer, False)
 
     def _playAV(self, playlist: PlayList, startpos=0, seektime=None, repeat=player_utils.REPEAT_OFF, shuffled=False, speed=1.0) -> None:
 
@@ -114,10 +128,10 @@ class Player(xbmc.Player):
         xbmc.executebuiltin("CECActivateSource")
         self.play(playlist.directUrl or playlist, startpos=startpos)
 
-    def _playSlideShow(self, path: str, beginSlide=None, shuffle=False) -> None:
+    def _playSlideShow(self, path: str, beginSlide=None, shuffle=False, amount=0) -> None:
 
         player_utils.play_slideshow(
-            path=path, beginSlide=beginSlide, shuffle=shuffle)
+            path=path, beginSlide=beginSlide, shuffle=shuffle, amount=amount)
 
     def _isPlaying(self, files, type, repeat=player_utils.REPEAT_OFF) -> bool:
 
@@ -155,7 +169,12 @@ class Player(xbmc.Player):
             self._skip_next_stop_event_until_started = False
 
         else:
+            _rst = self._running_stop_at_end_timer
             self._reset()
+            if _rst[0] and not _rst[1]:
+                xbmc.log("set timer to be already stopped: %s" % str(_rst[0]), xbmc.LOGINFO)
+                self._running_stop_at_end_timer = (_rst[0], True)
+                showNotification(_rst[0], msg_id=32289)
 
     def onPlayBackEnded(self) -> None:
 
@@ -165,6 +184,9 @@ class Player(xbmc.Player):
 
         elif AUDIO in self._resume_status:
             self._resumeFormer(type=AUDIO, keep=True)
+
+        else:
+            self._reset()
 
     def onPlayBackError(self) -> None:
 
@@ -187,8 +209,10 @@ class Player(xbmc.Player):
         if not timer.is_resuming_timer() or not self._resumeFormer(type=timer.media_type, keep=False):
             if timer.media_type == PICTURE:
                 self.stopPlayer(PICTURE)
-            else:
+            elif timer != self._running_stop_at_end_timer[0] or not self._running_stop_at_end_timer[1]:
                 self.stop()
+            else:
+                xbmc.log("Skip timer's stop action since timer's playback has already been stopped by user: %s" % str(self._running_stop_at_end_timer[0]), xbmc.LOGINFO)
 
             self._reset(type=timer.media_type)
             xbmc.sleep(self._RESPITE)
@@ -198,7 +222,6 @@ class Player(xbmc.Player):
     def _resumeFormer(self, type: str, keep=False) -> bool:
 
         resuming = False
-
         for _type in player_utils.get_types_replaced_by_type(type):
 
             resumeState = self._getResumeStatus(_type)
@@ -279,7 +302,7 @@ class Player(xbmc.Player):
 
             _totalTime = self.getTotalTime()
             self._playlist_timeline.append(_totalTime)
-            if self._playlist and self._playlist.getposition() < self._playlist.size() - 1:
+            if self._playlist.getposition() < self._playlist.size() - 1:
                 self._seektime -= _totalTime
                 self._skip_next_stop_event_until_started = True
                 self.playnext()
@@ -315,10 +338,10 @@ class Player(xbmc.Player):
             tries += 1
 
         _totalTime = self.getTotalTime()
-        if tries == self._MAX_TRIES or _totalTime < 1:
+        if tries == self._MAX_TRIES or _totalTime < 10:
             self._resetSeek()
 
-        elif self._seektime >= _totalTime:
+        elif self._playlist.size() and self._seektime >= _totalTime:
             _seekTimeInPlaylist()
 
         else:
@@ -348,6 +371,7 @@ class Player(xbmc.Player):
 
         self.setRepeat(player_utils.REPEAT_OFF)
         self.setShuffled(False)
+        self._running_stop_at_end_timer = (None, False)
 
     def getVolume(self) -> int:
 
@@ -382,9 +406,11 @@ class Player(xbmc.Player):
         return player_utils.get_slideshow_staytime()
 
     def __str__(self) -> str:
-        return "Player[_seek_delayed_timer=%s, _default_volume=%i, _recent_volume=%i, _paused=%s, _seektime=%f, _resume_status=[%s]]" % (self._seek_delayed_timer,
-                                                                                                                                         self._default_volume or -1,
-                                                                                                                                         self._recent_volume or -1,
-                                                                                                                                         self._paused,
-                                                                                                                                         self._seektime or 0,
-                                                                                                                                         ", ".join(["%s=%s" % (k, self._resume_status[k]) for k in self._resume_status]))
+        return "Player[_seek_delayed_timer=%s, _default_volume=%i, _recent_volume=%i, _paused=%s, _seektime=%f, _running_stop_at_end_timer=%s, _resume_status=[%s]]" % (self._seek_delayed_timer,
+                                                                                                                                                                        self._default_volume or -1,
+                                                                                                                                                                        self._recent_volume or -1,
+                                                                                                                                                                        self._paused,
+                                                                                                                                                                        self._seektime or 0,
+                                                                                                                                                                        str(
+                                                                                                                                                                            self._running_stop_at_end_timer),
+                                                                                                                                                                        ", ".join(["%s=%s" % (k, self._resume_status[k]) for k in self._resume_status]))

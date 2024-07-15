@@ -23,30 +23,62 @@ THE SOFTWARE.
 """
 import sys
 
-from ._compat import PY2
 from .constants import FIELD_TYPE
-from .converters import escape_dict, escape_sequence, escape_string
 from .err import (
-    Warning, Error, InterfaceError, DataError,
-    DatabaseError, OperationalError, IntegrityError, InternalError,
-    NotSupportedError, ProgrammingError, MySQLError)
+    Warning,
+    Error,
+    InterfaceError,
+    DataError,
+    DatabaseError,
+    OperationalError,
+    IntegrityError,
+    InternalError,
+    NotSupportedError,
+    ProgrammingError,
+    MySQLError,
+)
 from .times import (
-    Date, Time, Timestamp,
-    DateFromTicks, TimeFromTicks, TimestampFromTicks)
+    Date,
+    Time,
+    Timestamp,
+    DateFromTicks,
+    TimeFromTicks,
+    TimestampFromTicks,
+)
+
+# PyMySQL version.
+# Used by setuptools and connection_attrs
+VERSION = (1, 1, 0, "final", 1)
+VERSION_STRING = "1.1.0"
+
+### for mysqlclient compatibility
+### Django checks mysqlclient version.
+version_info = (1, 4, 6, "final", 1)
+__version__ = "1.4.6"
 
 
-VERSION = (0, 9, 3, None)
-if VERSION[3] is not None:
-    VERSION_STRING = "%d.%d.%d_%s" % VERSION
-else:
-    VERSION_STRING = "%d.%d.%d" % VERSION[:3]
+def get_client_info():  # for MySQLdb compatibility
+    return __version__
+
+
+def install_as_MySQLdb():
+    """
+    After this function is called, any application that imports MySQLdb
+    will unwittingly actually use pymysql.
+    """
+    sys.modules["MySQLdb"] = sys.modules["pymysql"]
+
+
+# end of mysqlclient compatibility code
+
 threadsafety = 1
 apilevel = "2.0"
 paramstyle = "pyformat"
 
+from . import connections  # noqa: E402
+
 
 class DBAPISet(frozenset):
-
     def __ne__(self, other):
         if isinstance(other, set):
             return frozenset.__ne__(self, other)
@@ -63,79 +95,88 @@ class DBAPISet(frozenset):
         return frozenset.__hash__(self)
 
 
-STRING    = DBAPISet([FIELD_TYPE.ENUM, FIELD_TYPE.STRING,
-                     FIELD_TYPE.VAR_STRING])
-BINARY    = DBAPISet([FIELD_TYPE.BLOB, FIELD_TYPE.LONG_BLOB,
-                     FIELD_TYPE.MEDIUM_BLOB, FIELD_TYPE.TINY_BLOB])
-NUMBER    = DBAPISet([FIELD_TYPE.DECIMAL, FIELD_TYPE.DOUBLE, FIELD_TYPE.FLOAT,
-                     FIELD_TYPE.INT24, FIELD_TYPE.LONG, FIELD_TYPE.LONGLONG,
-                     FIELD_TYPE.TINY, FIELD_TYPE.YEAR])
-DATE      = DBAPISet([FIELD_TYPE.DATE, FIELD_TYPE.NEWDATE])
-TIME      = DBAPISet([FIELD_TYPE.TIME])
+STRING = DBAPISet([FIELD_TYPE.ENUM, FIELD_TYPE.STRING, FIELD_TYPE.VAR_STRING])
+BINARY = DBAPISet(
+    [
+        FIELD_TYPE.BLOB,
+        FIELD_TYPE.LONG_BLOB,
+        FIELD_TYPE.MEDIUM_BLOB,
+        FIELD_TYPE.TINY_BLOB,
+    ]
+)
+NUMBER = DBAPISet(
+    [
+        FIELD_TYPE.DECIMAL,
+        FIELD_TYPE.DOUBLE,
+        FIELD_TYPE.FLOAT,
+        FIELD_TYPE.INT24,
+        FIELD_TYPE.LONG,
+        FIELD_TYPE.LONGLONG,
+        FIELD_TYPE.TINY,
+        FIELD_TYPE.YEAR,
+    ]
+)
+DATE = DBAPISet([FIELD_TYPE.DATE, FIELD_TYPE.NEWDATE])
+TIME = DBAPISet([FIELD_TYPE.TIME])
 TIMESTAMP = DBAPISet([FIELD_TYPE.TIMESTAMP, FIELD_TYPE.DATETIME])
-DATETIME  = TIMESTAMP
-ROWID     = DBAPISet()
+DATETIME = TIMESTAMP
+ROWID = DBAPISet()
 
 
 def Binary(x):
     """Return x as a binary type."""
-    if PY2:
-        return bytearray(x)
-    else:
-        return bytes(x)
+    return bytes(x)
 
-
-def Connect(*args, **kwargs):
-    """
-    Connect to the database; see connections.Connection.__init__() for
-    more information.
-    """
-    from .connections import Connection
-    return Connection(*args, **kwargs)
-
-from . import connections as _orig_conn
-if _orig_conn.Connection.__init__.__doc__ is not None:
-    Connect.__doc__ = _orig_conn.Connection.__init__.__doc__
-del _orig_conn
-
-
-def get_client_info():  # for MySQLdb compatibility
-    version = VERSION
-    if VERSION[3] is None:
-        version = VERSION[:3]
-    return '.'.join(map(str, version))
-
-connect = Connection = Connect
-
-# we include a doctored version_info here for MySQLdb compatibility
-version_info = (1, 3, 12, "final", 0)
-
-NULL = "NULL"
-
-__version__ = get_client_info()
 
 def thread_safe():
     return True  # match MySQLdb.thread_safe()
 
-def install_as_MySQLdb():
-    """
-    After this function is called, any application that imports MySQLdb or
-    _mysql will unwittingly actually use pymysql.
-    """
-    sys.modules["MySQLdb"] = sys.modules["_mysql"] = sys.modules["pymysql"]
+
+Connect = connect = Connection = connections.Connection
+NULL = "NULL"
 
 
 __all__ = [
-    'BINARY', 'Binary', 'Connect', 'Connection', 'DATE', 'Date',
-    'Time', 'Timestamp', 'DateFromTicks', 'TimeFromTicks', 'TimestampFromTicks',
-    'DataError', 'DatabaseError', 'Error', 'FIELD_TYPE', 'IntegrityError',
-    'InterfaceError', 'InternalError', 'MySQLError', 'NULL', 'NUMBER',
-    'NotSupportedError', 'DBAPISet', 'OperationalError', 'ProgrammingError',
-    'ROWID', 'STRING', 'TIME', 'TIMESTAMP', 'Warning', 'apilevel', 'connect',
-    'connections', 'constants', 'converters', 'cursors',
-    'escape_dict', 'escape_sequence', 'escape_string', 'get_client_info',
-    'paramstyle', 'threadsafety', 'version_info',
-
+    "BINARY",
+    "Binary",
+    "Connect",
+    "Connection",
+    "DATE",
+    "Date",
+    "Time",
+    "Timestamp",
+    "DateFromTicks",
+    "TimeFromTicks",
+    "TimestampFromTicks",
+    "DataError",
+    "DatabaseError",
+    "Error",
+    "FIELD_TYPE",
+    "IntegrityError",
+    "InterfaceError",
+    "InternalError",
+    "MySQLError",
+    "NULL",
+    "NUMBER",
+    "NotSupportedError",
+    "DBAPISet",
+    "OperationalError",
+    "ProgrammingError",
+    "ROWID",
+    "STRING",
+    "TIME",
+    "TIMESTAMP",
+    "Warning",
+    "apilevel",
+    "connect",
+    "connections",
+    "constants",
+    "converters",
+    "cursors",
+    "get_client_info",
+    "paramstyle",
+    "threadsafety",
+    "version_info",
     "install_as_MySQLdb",
-    "NULL", "__version__",
+    "__version__",
 ]
