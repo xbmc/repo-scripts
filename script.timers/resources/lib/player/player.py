@@ -35,6 +35,8 @@ class Player(xbmc.Player):
         self._resume_status: 'dict[PlayerStatus]' = dict()
 
         self._running_stop_at_end_timer: 'tuple[Timer, bool]' = (None, False)
+        
+        self.__is_unit_test__: bool = False
 
     def playTimer(self, timer: Timer, dtd: datetime_utils.DateTimeDelta) -> None:
 
@@ -122,11 +124,15 @@ class Player(xbmc.Player):
         if playlist.getPlayListId() == TYPES.index(VIDEO):
             self.stopPlayer(PICTURE)
 
+        xbmc.executebuiltin("CECActivateSource")
+
+        if self.__is_unit_test__:
+            self.setRepeat(repeat)
+            
+        self.play(playlist.directUrl or playlist, startpos=startpos)
         self.setRepeat(repeat)
         self.setShuffled(shuffled)
         self.setSpeed(speed)
-        xbmc.executebuiltin("CECActivateSource")
-        self.play(playlist.directUrl or playlist, startpos=startpos)
 
     def _playSlideShow(self, path: str, beginSlide=None, shuffle=False, amount=0) -> None:
 
@@ -172,7 +178,8 @@ class Player(xbmc.Player):
             _rst = self._running_stop_at_end_timer
             self._reset()
             if _rst[0] and not _rst[1]:
-                xbmc.log("set timer to be already stopped: %s" % str(_rst[0]), xbmc.LOGINFO)
+                xbmc.log("set timer to be already stopped: %s" %
+                         str(_rst[0]), xbmc.LOGINFO)
                 self._running_stop_at_end_timer = (_rst[0], True)
                 showNotification(_rst[0], msg_id=32289)
 
@@ -212,7 +219,8 @@ class Player(xbmc.Player):
             elif timer != self._running_stop_at_end_timer[0] or not self._running_stop_at_end_timer[1]:
                 self.stop()
             else:
-                xbmc.log("Skip timer's stop action since timer's playback has already been stopped by user: %s" % str(self._running_stop_at_end_timer[0]), xbmc.LOGINFO)
+                xbmc.log("Skip timer's stop action since timer's playback has already been stopped by user: %s" % str(
+                    self._running_stop_at_end_timer[0]), xbmc.LOGINFO)
 
             self._reset(type=timer.media_type)
             xbmc.sleep(self._RESPITE)
