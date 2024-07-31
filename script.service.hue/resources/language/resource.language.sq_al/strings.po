@@ -21,7 +21,7 @@ msgid "Automate Hue lights with Kodi playback"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
+msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
 msgstr ""
 
 msgctxt "Addon Disclaimer"
@@ -29,12 +29,12 @@ msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardwar
 msgstr ""
 
 msgctxt "#32100"
-msgid "Video Actions"
-msgstr ""
+msgid "Video Scenes"
+msgstr "Video Scenes"
 
 msgctxt "#32102"
-msgid "Audio Actions"
-msgstr ""
+msgid "Audio Scenes"
+msgstr "Audio Scenes"
 
 msgctxt "#32201"
 msgid "Start/Resume"
@@ -48,9 +48,9 @@ msgctxt "#32203"
 msgid "Stop"
 msgstr ""
 
-msgctxt "#32510"
-msgid "Scene Name:"
-msgstr ""
+msgctxt "#30036"
+msgid "Scene:"
+msgstr "Scene:"
 
 msgctxt "#32511"
 msgid "Scene ID"
@@ -89,9 +89,10 @@ msgid "End time:"
 msgstr ""
 
 msgctxt "#30508"
-msgid "Disable during daylight"
-msgstr ""
+msgid "Disable during daytime"
+msgstr "Disable during daytime"
 
+#. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
 msgstr ""
@@ -120,10 +121,12 @@ msgctxt "#30515"
 msgid "Stop Scene Enabled"
 msgstr ""
 
+#. If any light in the selected scene is on, ignore the schedule restrictions
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
 msgstr ""
 
+#. If any of the lights in the scene are off, don't activate the related scene
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
 msgstr ""
@@ -145,8 +148,8 @@ msgid "Advanced"
 msgstr ""
 
 msgctxt "#32106"
-msgid "Video Activation"
-msgstr ""
+msgid "Video Activation Rules"
+msgstr "Video Activation Rules"
 
 msgctxt "#6101"
 msgid "Select Lights"
@@ -158,14 +161,6 @@ msgstr ""
 
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
-msgstr ""
-
-msgctxt "#9007"
-msgid "Create Scene"
-msgstr ""
-
-msgctxt "#9008"
-msgid "Delete Scene"
 msgstr ""
 
 msgctxt "#30000"
@@ -224,26 +219,6 @@ msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
 msgstr ""
 
-msgctxt "#30025"
-msgid "ERROR: Scene not deleted"
-msgstr ""
-
-msgctxt "#30026"
-msgid "Scene Created"
-msgstr ""
-
-msgctxt "#30028"
-msgid "Delete Hue Scene"
-msgstr ""
-
-msgctxt "#30030"
-msgid "Enter Scene Name"
-msgstr ""
-
-msgctxt "#30031"
-msgid "Transition Time:"
-msgstr ""
-
 msgctxt "#30034"
 msgid "Cancel"
 msgstr ""
@@ -252,72 +227,20 @@ msgctxt "#30035"
 msgid "Lights:"
 msgstr ""
 
-msgctxt "#30036"
-msgid "Scene Name:"
-msgstr ""
-
 msgctxt "#30037"
 msgid "Save"
-msgstr ""
-
-msgctxt "#30038"
-msgid "Create Hue Scene"
-msgstr ""
-
-msgctxt "#30002"
-msgid "ERROR: Scene not created"
-msgstr "ERROR: Scene not created"
-
-msgctxt "#30039"
-msgid "Set a fade time in seconds, or 0 for an instant transition."
-msgstr ""
-
-msgctxt "#30040"
-msgid "Scene deleted"
-msgstr ""
-
-msgctxt "#30041"
-msgid "You may now assign your Scene to player actions."
-msgstr ""
-
-msgctxt "#30042"
-msgid "Fade Time (Seconds)"
 msgstr ""
 
 msgctxt "#30043"
 msgid "Error"
 msgstr "Gabim"
 
-msgctxt "#30044"
-msgid "Create New Scene"
-msgstr ""
-
-msgctxt "#30045"
-msgid "Scene successfully created!"
-msgstr ""
-
-msgctxt "#30046"
-msgid "Adjust lights to desired state in the Hue App to save as new scene."
-msgstr ""
-
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
 msgstr ""
 
-msgctxt "#30048"
-msgid "Connection lost. Trying again in 2 minutes"
-msgstr ""
-
-msgctxt "#30049"
-msgid "Scene Name"
-msgstr ""
-
 msgctxt "#30050"
 msgid "N-UPnP discovery..."
-msgstr ""
-
-msgctxt "#30051"
-msgid "UPnP discovery..."
 msgstr ""
 
 msgctxt "#30005"
@@ -326,14 +249,6 @@ msgstr ""
 
 msgctxt "#30052"
 msgid "Invalid start or end time, schedule disabled"
-msgstr ""
-
-msgctxt "#30056"
-msgid "Set brightness on start"
-msgstr ""
-
-msgctxt "#30057"
-msgid "Force on"
 msgstr ""
 
 msgctxt "#30058"
@@ -356,6 +271,7 @@ msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
 msgstr ""
 
+#. Minimum duration of the media before activating light scene
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
 msgstr ""
@@ -392,10 +308,6 @@ msgctxt "#30811"
 msgid "Maximum Brightness"
 msgstr ""
 
-msgctxt "#30812"
-msgid "Disable connection message"
-msgstr ""
-
 msgctxt "#30813"
 msgid "Average image processing time:"
 msgstr ""
@@ -416,6 +328,7 @@ msgctxt "#30071"
 msgid "Only colour lights are supported"
 msgstr ""
 
+#. Old or deperacted bridge firmware or hardware
 msgctxt "#30072"
 msgid "Unsupported Hue Bridge"
 msgstr ""
@@ -428,6 +341,7 @@ msgctxt "#30060"
 msgid "Play"
 msgstr "Riprodho"
 
+#. Must end with a space, status string is appended
 msgctxt "#30061"
 msgid "Hue Status: "
 msgstr ""
@@ -437,12 +351,12 @@ msgid "Settings"
 msgstr ""
 
 msgctxt "#30063"
-msgid "Disabled by daylight"
-msgstr ""
+msgid "Disabled by daytime"
+msgstr "Disabled by daytime"
 
 msgctxt "#30064"
-msgid "ERROR: Scene not found"
-msgstr ""
+msgid "ERROR: Scene not found, it may have been deleted"
+msgstr "ERROR: Scene not found, it may have been deleted"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
@@ -488,30 +402,19 @@ msgctxt "#30084"
 msgid "User Found![CR]Saving settings..."
 msgstr ""
 
-msgctxt "#30085"
-msgid "Adjust lights to desired state in the Hue App to save as new scene.[CR]Set a fade time in seconds, or 0 for an instant transition."
-msgstr ""
-
 msgctxt "#30086"
 msgid "User not found[CR]Check your bridge and network."
-msgstr ""
-
-msgctxt "#30087"
-msgid "Scene successfully created![CR]You may now assign your scene to player actions."
 msgstr ""
 
 msgctxt "#30073"
 msgid "Do not show again"
 msgstr ""
 
-msgctxt "#30074"
-msgid "Disable Hue Labs during playback"
-msgstr ""
-
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
 msgstr ""
 
+#. For ambilight, different color gamuts are supported. This means the colour gamut could not be fetched and the light is probably not compatible with ambilight.
 msgctxt "#30012"
 msgid "Unknown colour gamut for light:"
 msgstr ""
@@ -544,18 +447,74 @@ msgctxt "#30009"
 msgid "Connecting..."
 msgstr ""
 
-msgctxt "#30027"
-msgid "Are you sure you want to delete this scene:"
-msgstr ""
-
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
-msgstr ""
-
-msgctxt "#30003"
-msgid "ERROR: Scene or Light not found, it may have changed or been deleted. Check your configuration."
 msgstr ""
 
 msgctxt "#30033"
 msgid "Reconnected"
 msgstr ""
+
+#. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
+msgctxt "#31334"
+msgid "Morning disable time:"
+msgstr ""
+
+#. Amount of time for the light scene transition to fade in, in seconds.
+msgctxt "#31335"
+msgid "Transition time (seconds):"
+msgstr ""
+
+#. Number of minutes before or after sunset to consider as sunset
+msgctxt "#31336"
+msgid "Sunset Offset:"
+msgstr ""
+
+#. Help text for sunset offset setting
+msgctxt "#31337"
+msgid "Adjust sunset back or forwards by this many minutes"
+msgstr ""
+
+#. Help text for "morning disable time" setting
+msgctxt "#31338"
+msgid "Time at which to disable the service in the morning"
+msgstr ""
+
+#. Help text for 'Disable during daytime'
+msgctxt "#31339"
+msgid "Disable the service between configured time and sunset"
+msgstr ""
+
+#. Help text for 'activate at sunset'
+msgctxt "#31340"
+msgid "Activate scenes at sunset, during playback"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Bridge overloaded, stopping ambilight"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Bridge unauthorized, please reconfigure."
+msgstr ""
+
+msgctxt "#30026"
+msgid "Connection failed, retrying..."
+msgstr ""
+
+#. Default status in an empty configuration field; eg. scene/lights are not selected
+msgctxt "#30003"
+msgid "Not selected"
+msgstr ""
+
+msgctxt "#30027"
+msgid "ERROR: Light not found, it may have been deleted"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
+msgstr ""
+
+#~ msgctxt "#30002"
+#~ msgid "ERROR: Scene not created"
+#~ msgstr "ERROR: Scene not created"

@@ -13,9 +13,12 @@ import xbmcaddon
 import xbmcvfs
 
 STRDEBUG = False  # Show string ID in UI
-QHUE_TIMEOUT = 1  # passed to requests, in seconds.
+FORCEDEBUGLOG = False # Force output of debug logs regardless of Kodi logging setting
+TIMEOUT = 1 # requests default timeout
+MAX_RETRIES = 7
+NOTIFICATION_THRESHOLD = 2
 MINIMUM_COLOR_DISTANCE = 0.005
-SETTINGS_CHANGED = Event()
+BRIDGE_SETTINGS_CHANGED = Event()
 AMBI_RUNNING = Event()
 PROCESS_TIMES = deque(maxlen=100)
 ROLLBAR_API_KEY = "48f832ef0f3947c9a8443a36b94bcfbd"
