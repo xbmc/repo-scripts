@@ -130,7 +130,7 @@ class SchedulerAction:
 
                 enclosingTimers = [t for t in self._runningTimers if (t.current_period.start < timerToStop.current_period.start
                                                                       and t.current_period.end > timerToStop.current_period.end)
-                                   and t.media_type in _types_replaced_by_type]
+                                   and t.is_play_at_start_timer() and t.media_type in _types_replaced_by_type]
 
                 if enclosingTimers and not [t for t in enclosingTimers if timerToStop.priority >= t.priority]:
                     _reset_stop()
@@ -149,7 +149,7 @@ class SchedulerAction:
                         timer.return_vol = self._player.getVolume()
 
                 higher_prio_runnings = [running for running in self._runningTimers if running.priority > timer.priority
-                                        and running.media_type in get_types_replaced_by_type(timer.media_type)]
+                                        and running.is_play_at_start_timer() and running.media_type in get_types_replaced_by_type(timer.media_type)]
 
                 if not higher_prio_runnings and timer.is_play_at_start_timer():
                     self._setTimerToPlayAny(timer)

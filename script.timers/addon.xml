@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.9.2" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="3.9.3" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -66,6 +66,9 @@
     <website>https://github.com/Heckie75/kodi-addon-timers</website>
     <source>https://github.com/Heckie75/kodi-addon-timers</source>
     <news>
+v3.9.3 (2024-08-02)
+- Bugfix: Fixed that 'running-high-prio-fading-only-timer' prevents starting other media timers within its period
+
 v3.9.2 (2024-07-21)
 - Bugfix: The repeat flag in Timer Addon doesn't work, issue #39
 
@@ -89,11 +92,6 @@ v3.6.0 (2023-04-16)
 - Fixed resuming slideshow at right position
 - Fixed resuming of enclosing timers especially combination of concurrent media types like video, audio or slideshow
 - Improved notifications and competitive behavior (introduced extra low priority)
-
-v3.5.0 (2023-02-07)
-- New feature: priority of timers and competitive behavior
-- New feature: System action to put playing device on standby via a CEC peripheral
-- Fixed issue so that favourites can be scheduled again
 
 Complete changelog see https://github.com/Heckie75/kodi-addon-timers
     </news>
