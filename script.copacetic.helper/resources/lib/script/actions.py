@@ -33,6 +33,39 @@ def dialog_yesno(heading, message, **kwargs):
             log_and_execute(action)
 
 
+def get_collection_status(dbid, **kwargs):
+    window_property('collection_watched_calculating', set='true')
+    watched = 0
+    query = json_call(
+        'VideoLibrary.GetMovieSetDetails',
+        params={'setid': int(dbid)},
+        parent='get_set_movies'
+    )
+    try:
+        total = query['result']['setdetails']['limits']['total']
+        movies = query['result']['setdetails']['movies']
+    except KeyError:
+        return
+    else:
+        for movie in movies:
+            query = json_call(
+                'VideoLibrary.GetMovieDetails',
+                params={'properties': [
+                    'playcount'], 'movieid': movie['movieid']},
+                parent='get_movie_playcounts'
+            )
+            playcount = query['result']['moviedetails'].get('playcount')
+            if playcount:
+                watched += 1
+    finally:
+        # https://stackoverflow.com/a/68118106/21112145
+        percentage = (total and watched / total or 0) * 100
+        unwatched = total - watched
+        window_property('collection_watched_calculating', clear=True)
+        window_property('collection_watched_dbid', set=dbid)
+        window_property('collection_watched_percentage', set=percentage)
+        window_property('collection_unwatched', set=unwatched)
+
 def globalsearch_input(**kwargs):
     kb = xbmc.Keyboard(
         infolabel('$INFO[Skin.String(globalsearch)]'), infolabel('$LOCALIZE[137]'))
