@@ -89,10 +89,9 @@ class ImageEditor():
             log(
                 f'ImageEditor: Error - could not open cached image --> {error}', force=True)
         else:
-            if image.mode == 'LA':  # Convert if mode == 'LA'
-                converted_image = Image.new("RGBA", image.size)
-                converted_image.paste(image)
-                image = converted_image
+            converted_image = Image.new("RGBA", image.size)
+            converted_image.paste(image)
+            image = converted_image
             try:
                 image = image.crop(image.convert('RGBa').getbbox())
             except ValueError as error:
@@ -418,7 +417,7 @@ class SlideshowMonitor:
         clearlogo = art.get('clearlogo-billboard', False)
         if not clearlogo:
             clearlogo = art.get('clearlogo', False)
-        if clearlogo and condition('!Skin.HasSetting(Experiment_Disable_Transitions)'):
+        if clearlogo and condition('!Skin.HasSetting(Quick_Transitions)'):
             clearlogo = url_decode_path(clearlogo)
             clearlogo = self._crop_clearlogo(clearlogo)
         window_property(f'{key}_clearlogo', set=clearlogo)

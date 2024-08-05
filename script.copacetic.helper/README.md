@@ -13,6 +13,25 @@ All code contained in this project is licensed under GPL 3.0.
 * __jurialmunkey__ for all the best-practice code examples from [plugin.video.themoviedb.helper](https://github.com/jurialmunkey/plugin.video.themoviedb.helper) and forum support.
 
 ### Changelog
+---
+**1.1.6**
+- Added missing PVR windows to background monitor expression
+
+**1.1.5**
+- Fixed bug in actor_credits() where the current infoscreen item was not being removed from the 'More from X' actor credits widget if the infoscreen was for an episode, because it was expecting to find the TV show title in ListItem.Label and instead receiving the episode name, which wouldn't ever match.
+
+**1.1.4**
+- Fixed bug with infoscreen widgets not updating when navigating between infoscreens by ensuring director and genre properties update each time the infoscreen is loaded, even if the underlying list hasn't been scrolled
+- Added season info monitoring
+- Added a window property that is set to true while set progress is being calculated in get_collection_status()
+
+**1.1.3**
+- Fixed conditional that was preventing cropped clearlogo paths from being fetched for home widgets
+
+**.1.1.2**
+- Support for more edge case conversions of different image modes in clearlogo_cropper().
+- Added method to service monitor to calculate watched percentage of sets and return as a property
+
 **.1.1.1**
 - Fixed bug in previous version causing dark cropped clearlogos to always be served in certain scenarios
 
