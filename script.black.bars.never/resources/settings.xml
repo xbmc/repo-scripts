@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <section id="script.black.bars.never">
+        <category help="" id="general" label="32001">
+            <group id="1">
+                <setting help="" id="automatically_execute" label="32002" type="boolean">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="toggle_test" type="action" label="32003" help="">
+	                <level>0</level>
+	                <data>RunScript(script.black.bars.never, toggle)</data>
+	                <control type="button" format="action">
+		            <close>true</close>
+	                </control>
+                </setting>
+                <setting help="" id="android_workaround" label="32004" type="boolean">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>

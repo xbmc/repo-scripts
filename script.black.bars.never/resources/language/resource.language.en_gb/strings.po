@@ -1,0 +1,35 @@
+# Black Bars Never language file
+# Addon Name: Black Bars Never
+# Addon id: script.black.bars.never
+# Addon Provider: Clement Osumo
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Black Bars Never\n"
+"Report-Msgid-Bugs-To: Clement Osumo\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-06-18 10:08+0000\n"
+"Last-Translator: Clement Osumo\n"
+"Language-Team: English (United States)\n"
+"Language: en_us\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "#32001"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32002"
+msgid "Automatically remove black bars"
+msgstr "Automatically remove black bars"
+
+msgctxt "#32003"
+msgid "Toggle status"
+msgstr "Toggle status"
+
+msgctxt "#32004"
+msgid "Workaround for Android & Embedded (requires internet)"
+msgstr "Workaround for Android & Embedded (requires internet)"
