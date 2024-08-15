@@ -66,3 +66,7 @@ msgstr "Traduction automatique"
 msgctxt "#32214"
 msgid "Bad username. Make sure you have entered your username and not your email in the username field"
 msgstr "Mauvais nom d'utilisateur. Assurez-vous d'avoir saisi votre nom d'utilisateur et non votre adresse email dans le champ du nom d'utilisateur."
+
+msgctxt "#32215"
+msgid "Traductions AI"
+msgstr ""
