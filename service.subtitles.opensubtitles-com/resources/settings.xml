@@ -74,6 +74,20 @@
                         <heading>32213</heading>
                     </control>
                 </setting>
+                 <setting id="ai_translated" type="string" label="32215">
+                    <level>0</level>
+                    <default>include</default>
+                    <constraints>
+                        <options>
+                            <option label="include">include</option>
+                            <option label="exclude">exclude</option>
+                            <option label="only">only</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32215</heading>
+                    </control>
+                </setting>
             </group>
         </category>
     </section>
