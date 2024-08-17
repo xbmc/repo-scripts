@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="Backup" version="1.7.0" provider-name="robweber">
+    name="Backup" version="1.7.1" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.dateutil" version="2.8.0" />
@@ -24,12 +24,10 @@
 		<screenshot>resources/images/screenshot3.jpg</screenshot>
 		<screenshot>resources/images/screenshot4.jpg</screenshot>
     </assets>
-    <news>Version 1.7.0
-Can add suffix to backup folder names
-translations sync
-Minor UI fixes
-Fixed Dropbox tokens expiring by using refresh tokens
-Always recommend restart after a restore
+    <news>Version 1.7.1
+trim spaces around Dropbox key/secret entry
+fix error with zip file restores
+added additional information when gathering files
 </news>
     <summary lang="ar_SA">إنسخ إحتياطياً قاعده بيانات إكس بى إم سى وملفات اﻹعدادات فى حاله وقوع إنهيار مع إمكانيه اﻹسترجاع</summary>
     <summary lang="bg_BG">Добавката може да създава резервни копия и възстановява базата данни и настройките на Kodi, в случай на срив или повреда на файловете.</summary>
