@@ -629,3 +629,11 @@ msgstr ""
 msgctxt "#30161"
 msgid "Amend a string to the end of each backup folder or ZIP file"
 msgstr ""
+
+msgctxt "#30162"
+msgid "this could take some time"
+msgstr ""
+
+msgctxt "#30163"
+msgid "Current folder"
+msgstr ""

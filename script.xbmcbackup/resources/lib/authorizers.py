@@ -44,8 +44,8 @@ class DropboxAuthorizer:
     APP_SECRET = ""
 
     def __init__(self):
-        self.APP_KEY = utils.getSetting('dropbox_key')
-        self.APP_SECRET = utils.getSetting('dropbox_secret')
+        self.APP_KEY = utils.getSettingStringStripped('dropbox_key')
+        self.APP_SECRET = utils.getSettingStringStripped('dropbox_secret')
 
     def setup(self):
         result = True
