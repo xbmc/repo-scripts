@@ -125,6 +125,14 @@ msgctxt "#32042"
 msgid "from"
 msgstr ""
 
+msgctxt "#32043"
+msgid "specific date"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Date"
+msgstr ""
+
 msgctxt "#32050"
 msgid "This timer interrupts other timers"
 msgstr ""
@@ -526,11 +534,11 @@ msgid "Pause from"
 msgstr ""
 
 msgctxt "#32170"
-msgid "Offset"
+msgid "Real-time clock"
 msgstr ""
 
 msgctxt "#32171"
-msgid "Offset for timers in seconds"
+msgid "Offset for real-time clock in seconds"
 msgstr ""
 
 msgctxt "#32180"
@@ -547,6 +555,22 @@ msgstr ""
 
 msgctxt "#32183"
 msgid "always ask"
+msgstr ""
+
+msgctxt "#32190"
+msgid "Housekeeping"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Cleanup missed timers at startup"
+msgstr ""
+
+msgctxt "#32192"
+msgid "Cleanup missed timers when Kodi starts. This can happen if Kodi was not running when timer has been scheduled."
+msgstr ""
+
+msgctxt "#32193"
+msgid ""
 msgstr ""
 
 msgctxt "#32200"
@@ -851,4 +875,8 @@ msgstr ""
 
 msgctxt "#32387"
 msgid "Mediatype is normally determined automatically. Set type manually e.g. if resuming doesn't work as expected."
+msgstr ""
+
+msgctxt "#32388"
+msgid "Schedule this timer with full date and not only by day within one week."
 msgstr ""

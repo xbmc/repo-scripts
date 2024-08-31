@@ -2,7 +2,7 @@ import xbmc
 import xbmcgui
 from resources.lib.contextmenu.abstract_set_timer import AbstractSetTimer
 from resources.lib.timer.timer import MEDIA_ACTION_STOP_AT_END, Timer
-from resources.lib.utils.datetime_utils import DEFAULT_TIME
+from resources.lib.utils import datetime_utils
 
 
 class SetSleep(AbstractSetTimer):
@@ -31,7 +31,7 @@ class SetSleep(AbstractSetTimer):
         else:
             _default_duration = self.addon.getSetting("sleep_default_duration")
             _current = timer.get_duration()
-            _current = _default_duration if DEFAULT_TIME else _current
+            _current = _default_duration if datetime_utils.DEFAULT_TIME else _current
 
         duration = xbmcgui.Dialog().numeric(
             2, self.addon.getLocalizedString(32106), _current)

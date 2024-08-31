@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.timers" name="Timers" version="3.9.3" provider-name="Heckie">
+<addon id="script.timers" name="Timers" version="4.0.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
-  <extension point="xbmc.service" library="addon.py" />
+  <extension point="xbmc.service" library="addon.py" />                                                                               
   <extension point="xbmc.python.script" library="script.py" />
   <extension point="kodi.context.item">
     <menu id="kodi.core.main">
@@ -66,6 +66,12 @@
     <website>https://github.com/Heckie75/kodi-addon-timers</website>
     <source>https://github.com/Heckie75/kodi-addon-timers</source>
     <news>
+v4.0.0 (2024-08-31)
+- New Feature: programming timers with full date (not only day within upcoming 7 days, feature request #34)
+- Improved stop behavior of overlapping media timers acc. its priority
+- Bugfix / Workaround: [Kodi v21] Settings dialog is broken, issue #43
+- Bugfix: [Kodi v21] Addon can't play PVR items anymore, issue #42
+
 v3.9.3 (2024-08-02)
 - Bugfix: Fixed that 'running-high-prio-fading-only-timer' prevents starting other media timers within its period
 
@@ -86,12 +92,6 @@ v3.8.0 (2023-08-06)
 v3.7.0 (2023-06-30)
 - If you stop explicitly playback while a start-stop-timer is running there won't be another stop action anymore when this timer runs out.
 - Added workaround that streamed video (probably mpeg-dash) immediately stops after timer has started (only happened if 'seek to correct time if timer starts belatedly' is activated)
-
-v3.6.0 (2023-04-16)
-- Smart shuffle mode for slideshows (try randomly to find folder that fits into timeframe)
-- Fixed resuming slideshow at right position
-- Fixed resuming of enclosing timers especially combination of concurrent media types like video, audio or slideshow
-- Improved notifications and competitive behavior (introduced extra low priority)
 
 Complete changelog see https://github.com/Heckie75/kodi-addon-timers
     </news>

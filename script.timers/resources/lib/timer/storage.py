@@ -123,6 +123,7 @@ class Storage():
         item["days"].sort()
         timer.days = item["days"]
 
+        timer.date = item["date"]
         timer.start = item["start"]
         timer.start_offset = item["start_offset"]
         timer.end_type = item["end_type"]
@@ -150,41 +151,21 @@ class Storage():
 
         return -1
 
+    def replace_storage(self, timers: 'list[Timer]') -> None:
+
+        storage = [timer.to_dict() for timer in timers]
+        self._save_to_storage(storage)
+
     def save_timer(self, timer: Timer) -> None:
 
-        timer.init()
-
-        item = {
-            "days": timer.days,
-            "duration": timer.duration,
-            "duration_offset": timer.duration_offset,
-            "end": timer.end,
-            "end_offset": timer.end_offset,
-            "end_type": timer.end_type,
-            "fade": timer.fade,
-            "id": timer.id,
-            "label": timer.label,
-            "media_action": timer.media_action,
-            "media_type": timer.media_type,
-            "notify": timer.notify,
-            "path": timer.path,
-            "priority": timer.priority,
-            "repeat": timer.repeat,
-            "resume": timer.resume,
-            "shuffle": timer.shuffle,
-            "start": timer.start,
-            "start_offset": timer.start_offset,
-            "system_action": timer.system_action,
-            "vol_min": timer.vol_min,
-            "vol_max": timer.vol_max
-        }
-
         storage = self._load_from_storage()
+
+        timer.init()
         idx = self._find_item_index(storage, timer.id)
         if idx == -1:
-            storage.append(item)
+            storage.append(timer.to_dict())
         else:
-            storage[idx] = item
+            storage[idx] = timer.to_dict()
 
         self._save_to_storage(storage)
 
@@ -200,7 +181,7 @@ class Storage():
 
         timers = self.load_timers_from_storage()
         scheduled_timers = [timer for timer in timers if timer.days]
-        scheduled_timers.sort(key=lambda timer: (timer.days, timer.start,
+        scheduled_timers.sort(key=lambda timer: (timer.days, timer.date, timer.start,
                                                  timer.media_action, timer.system_action))
         return scheduled_timers
 

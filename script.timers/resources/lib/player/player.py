@@ -35,7 +35,7 @@ class Player(xbmc.Player):
         self._resume_status: 'dict[PlayerStatus]' = dict()
 
         self._running_stop_at_end_timer: 'tuple[Timer, bool]' = (None, False)
-        
+
         self.__is_unit_test__: bool = False
 
     def playTimer(self, timer: Timer, dtd: datetime_utils.DateTimeDelta) -> None:
@@ -63,8 +63,8 @@ class Player(xbmc.Player):
             seektime = None
             if self._seek_delayed_timer and _timer.is_play_at_start_timer():
                 if timer.current_period:
-                    seektime = datetime_utils.abs_time_diff(
-                        _dtd.td, timer.current_period.start)
+                    seektime = datetime_utils.datetime_diff(
+                        timer.current_period.start, _dtd.dt)
                     seektime = None if seektime * 1000 <= self._RESPITE else seektime
 
             return seektime
@@ -91,8 +91,8 @@ class Player(xbmc.Player):
                                len(files)] if seektime else None
 
             if timer.is_stop_at_end_timer():
-                amountOfSlides = datetime_utils.abs_time_diff(
-                    timer.current_period.end, dtd.td) // stayTime + 1
+                amountOfSlides = datetime_utils.datetime_diff(
+                    dtd.dt, timer.current_period.end) // stayTime + 1
             else:
                 amountOfSlides = 0
 
@@ -128,7 +128,7 @@ class Player(xbmc.Player):
 
         if self.__is_unit_test__:
             self.setRepeat(repeat)
-            
+
         self.play(playlist.directUrl or playlist, startpos=startpos)
         self.setRepeat(repeat)
         self.setShuffled(shuffled)

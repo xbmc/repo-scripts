@@ -4,6 +4,7 @@ from resources.lib.timer.concurrency import DEFAULT_PRIO
 from resources.lib.timer.storage import Storage
 from resources.lib.utils.settings_utils import (
     activate_on_settings_changed_events, deactivate_on_settings_changed_events)
+from resources.lib.utils.system_utils import get_kodi_version
 
 
 def migrate_from_1_to_2(addon: xbmcaddon.Addon) -> int:
@@ -220,6 +221,18 @@ def migrate_from_6_to_7(addon: xbmcaddon.Addon) -> int:
     return 7
 
 
+def migrate_from_7_to_8(addon: xbmcaddon.Addon) -> int:
+
+    storage = Storage()
+    items = storage._load_from_storage()
+    for item in items:
+        item["date"] = ""
+
+    storage._save_to_storage(items)
+
+    return 8
+
+
 def migrate() -> None:
 
     addon = xbmcaddon.Addon()
@@ -246,6 +259,10 @@ def migrate() -> None:
     if settingsVersion == 6:
         settingsVersion = migrate_from_6_to_7(addon)
 
+    if settingsVersion == 7:
+        settingsVersion = migrate_from_7_to_8(addon)
+
     addon.setSettingInt("settingsVersion", settingsVersion)
+    addon.setSettingInt("kodiVersion", int(get_kodi_version() * 100))
 
     activate_on_settings_changed_events()
