@@ -5,7 +5,7 @@ import time
 import requests
 
 
-NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list?chan={}'
+NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list_v2022?chan={}&list_num=10'
 COVER_URL = 'https://img.radioparadise.com/{}'
 SLIDESHOW_URL = 'https://img.radioparadise.com/slideshow/720/{}.jpg'
 
@@ -87,7 +87,7 @@ class NowPlaying():
     def update(self):
         """Update song information from the API, if necessary.
 
-        Calls the API only if the "refresh" timer has expired.
+        Calls the API only when the "current" song ends.
 
         Raises an exception on error responses or timeouts.
         """
@@ -105,8 +105,7 @@ class NowPlaying():
 
         next_key = None
         data = res.json()
-        song_items = sorted(list(data['song'].items()), key=lambda s: int(s[0]))
-        for index, song in song_items:
+        for index, song in enumerate(data['song']):
             if song['artist'] is None:
                 song['artist'] = 'Unknown Artist'
             if song['title'] is None:
@@ -119,7 +118,7 @@ class NowPlaying():
             key = build_key((song['artist'], song['title']))
             self.songs[key] = song
             next_key = key
-            if index == '0':
+            if index == 0:
                 self.current = song
         if (break_key := build_key(BREAK_SONG)) not in self.songs:
             self.songs[break_key] = {
@@ -128,7 +127,14 @@ class NowPlaying():
                 'cover': BREAK_COVER_URL,
                 'duration': '30000',
             }
-        self.next_update = time.time() + data['refresh']
+
+        now = time.time()
+        next_update = (self.current['play_time'] + int(self.current['duration'])) / 1000
+        if next_update > now:
+            self.next_update = next_update
+        else:
+            self.next_update = now + UPDATE_WAIT
+
         while len(self.songs) > MAX_SONGS:
             self.songs.popitem(last=False)
 

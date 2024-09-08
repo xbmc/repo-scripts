@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.radioparadise" name="Radio Paradise" version="2.0.0" provider-name="Alexander Dietrich">
+<addon id="script.radioparadise" name="Radio Paradise" version="2.0.1" provider-name="Alexander Dietrich">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
         <import addon="script.module.requests" version="2.0.0"/>
@@ -12,7 +12,7 @@
         <summary lang="en_GB">Radio Paradise addon for Kodi</summary>
         <description lang="en_GB">An eclectic DJ-mixed blend of rock, indie, electronica, world music, and more. Listener supported &amp; always 100% commercial free.</description>
         <website>https://radioparadise.com/</website>
-        <source>https://github.com/alxndr42/script.radioparadise</source>
+        <source>https://codeberg.org/alxndr42/script.radioparadise</source>
         <license>GPL-3.0-or-later</license>
         <platform>all</platform>
         <assets>

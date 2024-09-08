@@ -113,7 +113,7 @@ class Player(xbmc.Player):
             tag.setTitle(song.data['title'])
             tag.setGenres([])
             tag.setAlbum(song.data.get('album', ''))
-            rating = float(song.data.get('rating', 0))
+            rating = song.data.get('listener_rating', 0)
             tag.setRating(rating)
             tag.setUserRating(int(round(rating)))
             tag.setYear(int(song.data.get('year', 0)))
@@ -164,11 +164,14 @@ class Player(xbmc.Player):
         start_time = None
         song_data = None
         # Try to match API metadata on song changes
-        if song and song.key != player_key and not song.expired():
+        if song is None:
+            start_time = 0
+            song_data = self.now_playing.get_song_data(player_key)
+        elif song.key != player_key and not song.expired():
             start_time = self.tracked_time
             song_data = self.now_playing.get_song_data(player_key)
         # Show "next" song if the song change was missed
-        elif song and song.expired():
+        elif song.expired():
             start_time = song.start_time + song.duration
             song_data = self.now_playing.get_next_song(player_key)
             # Without API metadata, show the stream metadata
@@ -176,9 +179,6 @@ class Player(xbmc.Player):
                 song.start_time = 0
                 self.slideshow.set_slides(None)
                 self.clear_player()
-        # Show "current" song after starting playback
-        elif song is None:
-            song_data = self.now_playing.current
         # API metadata may not be available yet
         if song_data is None:
             return
@@ -193,6 +193,7 @@ class Player(xbmc.Player):
         else:
             self.slideshow.set_slides(None)
             fanart = None
+
         song_key = build_key((song_data['artist'], song_data['title']))
         self.song = Song(song_key, song_data, fanart, start_time)
         log(f'Song: {self.song}')
