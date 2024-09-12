@@ -2,7 +2,7 @@
 
 from resources.lib.plugin.json_map import JSON_MAP
 from resources.lib.plugin.library import *
-from resources.lib.utilities import (ADDON, infolabel, json_call, log,
+from resources.lib.utilities import (ADDON, condition, infolabel, json_call, log,
                                      set_plugincontent)
 
 
@@ -224,8 +224,12 @@ class PluginContent(object):
 
     def actor_credits(self):
         filters = [self.filter_actor]
-        current_item = infolabel('ListItem.Label')
-
+        # grab current movie or tvshow name
+        if condition('String.IsEqual(ListItem.DBType,episode)'):
+            current_item = infolabel('ListItem.TVShowTitle')
+        else:
+            current_item = infolabel('ListItem.Label')
+        # json lookup for movies and tvshows by given actor
         movies_json_query = json_call('VideoLibrary.GetMovies',
                                       properties=JSON_MAP['movie_properties'],
                                       sort=self.sort_year,
@@ -239,10 +243,11 @@ class PluginContent(object):
                                        query_filter={'and': filters},
                                        parent='actor_credits'
                                        )
-
+        # work out combined number of movie/tvshow credits
         total_items = int(movies_json_query['result']['limits']['total']) + int(
             tvshows_json_query['result']['limits']['total'])
 
+        # if there are movie results, remove the current item if it is in the list, then add the remaining to the plugin directory
         try:
             movies_json_query = movies_json_query['result']['movies']
         except Exception:
@@ -253,7 +258,7 @@ class PluginContent(object):
             movies_json_query.remove(
                 dict_to_remove) if dict_to_remove is not None and total_items > 1 else None
             add_items(self.li, movies_json_query, type='movie')
-
+        # if there are tvshow results, remove the current item if it is in the list, then add the remaining to the plugin directory
         try:
             tvshows_json_query = tvshows_json_query['result']['tvshows']
         except Exception:
