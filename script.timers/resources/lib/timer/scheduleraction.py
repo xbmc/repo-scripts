@@ -16,12 +16,11 @@ from resources.lib.timer.timer import (FADE_IN_FROM_MIN, FADE_OUT_FROM_CURRENT,
                                        SYSTEM_ACTION_HIBERNATE,
                                        SYSTEM_ACTION_POWEROFF,
                                        SYSTEM_ACTION_QUIT_KODI,
-                                       SYSTEM_ACTION_RESTART_KODI,
                                        SYSTEM_ACTION_REBOOT_SYSTEM,
+                                       SYSTEM_ACTION_RESTART_KODI,
                                        SYSTEM_ACTION_SHUTDOWN_KODI,
-                                       SYSTEM_ACTION_STANDBY, TIMER_WEEKLY,
-                                       Timer)
-from resources.lib.utils.datetime_utils import DateTimeDelta, abs_time_diff
+                                       SYSTEM_ACTION_STANDBY, Timer)
+from resources.lib.utils import datetime_utils
 
 
 class SchedulerAction:
@@ -54,7 +53,7 @@ class SchedulerAction:
 
         self.reset()
 
-    def calculate(self, timers: 'list[Timer]', now: DateTimeDelta) -> None:
+    def calculate(self, timers: 'list[Timer]', now: datetime_utils.DateTimeDelta) -> None:
 
         def _collectEndingTimer(timer: Timer) -> None:
 
@@ -76,7 +75,7 @@ class SchedulerAction:
             elif timer.is_pause_timer():
                 self.timerToUnpauseAV = timer
 
-        def _collectTimers(timers: 'list[Timer]', now: DateTimeDelta) -> None:
+        def _collectTimers(timers: 'list[Timer]', now: datetime_utils.DateTimeDelta) -> None:
 
             for timer in timers:
                 timer.apply(now)
@@ -123,16 +122,18 @@ class SchedulerAction:
                         self._forceResumeResetTypes.extend(
                             _types_replaced_by_type if not timerToStop.is_resuming_timer() else list())
 
-                        if overlappingTimer.priority < timerToStop.priority and timerToStop.is_playing_media_timer() and overlappingTimer.media_type in _types_replaced_by_type:
+                        if overlappingTimer.priority < timerToStop.priority and timerToStop.is_resuming_timer() and timerToStop.is_playing_media_timer() and overlappingTimer.media_type in _types_replaced_by_type:
                             self._beginningTimers.append(overlappingTimer)
 
-                        _reset_stop()
+                        if overlappingTimer.priority >= timerToStop.priority:
+                            _reset_stop()
 
                 enclosingTimers = [t for t in self._runningTimers if (t.current_period.start < timerToStop.current_period.start
                                                                       and t.current_period.end > timerToStop.current_period.end)
-                                   and t.is_play_at_start_timer() and t.media_type in _types_replaced_by_type]
+                                   and t.is_play_at_start_timer()
+                                   and t.media_type in _types_replaced_by_type]
 
-                if enclosingTimers and not [t for t in enclosingTimers if timerToStop.priority >= t.priority]:
+                if enclosingTimers and [t for t in enclosingTimers if timerToStop.priority < t.priority]:
                     _reset_stop()
 
                 elif timerToStop.is_resuming_timer():
@@ -243,7 +244,7 @@ class SchedulerAction:
         if not self.fader:
             return None
 
-        delta_end_start = abs_time_diff(
+        delta_end_start = datetime_utils.datetime_diff(
             self.fader.current_period.end, self.fader.current_period.start)
 
         vol_max = self.fader.return_vol if self.fader.fade == FADE_OUT_FROM_CURRENT else self.fader.vol_max
@@ -262,14 +263,14 @@ class SchedulerAction:
         else:
             self.timerToPlayAV = timer if self.timerToPlayAV is None or self.timerToPlayAV.priority < timer.priority else self.timerToPlayAV
 
-    def fade(self, dtd: DateTimeDelta) -> None:
+    def fade(self, dtd: datetime_utils.DateTimeDelta) -> None:
 
         if not self.fader:
             return
 
-        delta_now_start = abs_time_diff(
-            dtd.td, self.fader.current_period.start)
-        delta_end_start = abs_time_diff(
+        delta_now_start = datetime_utils.datetime_diff(
+            dtd.dt, self.fader.current_period.start)
+        delta_end_start = datetime_utils.time_diff(
             self.fader.current_period.end, self.fader.current_period.start)
         delta_percent = delta_now_start / delta_end_start
 
@@ -284,9 +285,9 @@ class SchedulerAction:
 
         self._player.setVolume(_volume)
 
-    def perform(self, now: DateTimeDelta) -> None:
+    def perform(self, now: datetime_utils.DateTimeDelta) -> None:
 
-        def _performPlayerAction(_now: DateTimeDelta) -> None:
+        def _performPlayerAction(_now: datetime_utils.DateTimeDelta) -> None:
 
             if self.timerToPlayAV:
                 showNotification(self.timerToPlayAV, msg_id=32280)
@@ -319,7 +320,7 @@ class SchedulerAction:
                     showNotification(self.timerToStopSlideshow, msg_id=32287)
                     self._player.resumeFormerOrStop(self.timerToStopSlideshow)
 
-        def _setVolume(dtd: DateTimeDelta) -> None:
+        def _setVolume(dtd: datetime_utils.DateTimeDelta) -> None:
 
             if self.timerWithSystemAction:
                 self._player.setVolume(self._player.getDefaultVolume())
@@ -339,13 +340,15 @@ class SchedulerAction:
             def _reset(timers: 'list[Timer]') -> None:
 
                 for timer in timers:
-                    if TIMER_WEEKLY not in timer.days:
-                        if timer.current_period.start.days in timer.days:
-                            timer.days.remove(timer.current_period.start.days)
+                    if not timer.is_weekly_timer():
+                        if timer.current_period.start.weekday() in timer.days:
+                            timer.days.remove(
+                                timer.current_period.start.weekday())
 
-                        if not timer.days:
+                        if timer.is_timer_by_date() or not timer.days:
                             self.storage.delete_timer(timer.id)
                         else:
+                            timer.to_timer_by_date(base=now.dt)
                             self.storage.save_timer(timer=timer)
 
             _reset(self._endingTimers)

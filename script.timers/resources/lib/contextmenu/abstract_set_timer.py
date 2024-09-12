@@ -1,11 +1,11 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import xbmc
 import xbmcaddon
 import xbmcgui
 from resources.lib.contextmenu import pvr_utils
-from resources.lib.player.mediatype import VIDEO, SCRIPT
+from resources.lib.player.mediatype import SCRIPT, VIDEO
 from resources.lib.timer.concurrency import determine_overlappings
 from resources.lib.timer.storage import Storage
 from resources.lib.timer.timer import (END_TYPE_DURATION, END_TYPE_NO,
@@ -58,6 +58,13 @@ class AbstractSetTimer:
         else:
             timer.days = days
 
+        if timer.is_timer_by_date():
+            date = self.ask_date(timer.label, path, is_epg, timer)
+            if date == None:
+                return
+            else:
+                timer.set_timer_by_date(date)
+
         starttime = self.ask_starttime(timer.label, path, is_epg, timer)
         if starttime == None:
             return
@@ -70,7 +77,7 @@ class AbstractSetTimer:
         else:
             timer.duration = duration
             timer.end = datetime_utils.format_from_seconds(
-                (datetime_utils.parse_time(starttime) + datetime_utils.parse_time(duration)).seconds)
+                (datetime_utils.parse_time(starttime) + datetime_utils.parse_time(duration)).total_seconds())
 
             if is_epg:
                 timer.end_type = END_TYPE_TIME
@@ -103,8 +110,10 @@ class AbstractSetTimer:
             timer.vol_max = vol_max
 
         timer.init()
+        now = datetime.today()
+        timer.to_timer_by_date(base=now)
         overlappings = determine_overlappings(
-            timer, self.storage.load_timers_from_storage(), ignore_extra_prio=True)
+            timer, self.storage.load_timers_from_storage(), ignore_extra_prio=True, to_display=True, base=now)
         if overlappings:
             answer = self.handle_overlapping_timers(
                 timer, overlapping_timers=overlappings)
@@ -131,7 +140,7 @@ class AbstractSetTimer:
         elif vfs_utils.is_pvr(path):
             return vfs_utils.is_pvr_channel(path) or vfs_utils.is_pvr_recording(path) or xbmc.getCondVisibility("Window.IsVisible(tvguide)|Window.IsVisible(radioguide)")
         else:
-            return vfs_utils.is_script(path) or vfs_utils.is_external(path) or not vfs_utils.is_folder(path) or vfs_utils.has_items_in_path(path)
+            return vfs_utils.is_script(path) or vfs_utils.is_audio_plugin(path) or vfs_utils.is_video_plugin(path) or vfs_utils.is_external(path) or not vfs_utils.is_folder(path) or vfs_utils.has_items_in_path(path)
 
     def perform_ahead(self, timer: Timer) -> bool:
 
@@ -152,6 +161,14 @@ class AbstractSetTimer:
 
         else:
             return [datetime.today().weekday()]
+
+    def ask_date(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
+
+        if is_epg:
+            return timer.date
+
+        else:
+            return datetime_utils.to_date_str(datetime.today())
 
     def ask_starttime(self, label: str, path: str, is_epg: bool, timer: Timer) -> str:
 
@@ -218,25 +235,38 @@ class AbstractSetTimer:
                 timer.path = pvr_channel_path
                 startDate = datetime_utils.parse_xbmc_shortdate(
                     xbmc.getInfoLabel("ListItem.Date").split(" ")[0])
-                timer.days = [startDate.weekday()]
-                timer.start = xbmc.getInfoLabel("ListItem.StartTime")
-                duration = xbmc.getInfoLabel("ListItem.Duration")
-                if len(duration) == 5:
-                    timer.duration = "00:%s" % duration[:2]
 
-                elif len(duration) == 9:
+                timer.set_timer_by_date(
+                    date=datetime_utils.to_date_str(startDate))
+                start = datetime_utils.parse_time(
+                    xbmc.getInfoLabel("ListItem.StartTime"))
+                timer.start, timer.start_offset = datetime_utils.format_from_timedelta(
+                    start)
+
+                s_duration = xbmc.getInfoLabel("ListItem.Duration")
+                if len(s_duration) == 5:
+                    s_duration = "00:%s" % s_duration[:2]
+
+                elif len(s_duration) == 9:
                     return None, False
 
                 else:
-                    timer.duration = duration[:5]
+                    s_duration = s_duration[:5]
 
-        td_start = datetime_utils.parse_time(timer.start)
+                td_duration = datetime_utils.parse_time(s_duration)
+                timer.duration, timer.duration_offset = datetime_utils.format_from_timedelta(
+                    td_duration)
+
+        td_start = datetime_utils.parse_time(
+            timer.start) + timedelta(seconds=timer.start_offset)
         if not is_epg:
 
             if not timer.days or timer.days == [datetime_utils.WEEKLY]:
                 now = datetime_utils.DateTimeDelta.now()
                 timer.days.append(now.dt.weekday() if not td_start.seconds or td_start.seconds >
                                   now.td.seconds else (now.dt.weekday() + 1) % 7)
+
+                timer.date = datetime_utils.to_date_str(now.dt)
 
             if vfs_utils.is_favourites(path):
                 timer.path = vfs_utils.get_favourites_target(path)
@@ -245,8 +275,8 @@ class AbstractSetTimer:
 
             timer.duration = timer.get_duration()
 
-        timer.end = datetime_utils.format_from_seconds(
-            (td_start + datetime_utils.parse_time(timer.duration)).seconds)
+        timer.end, timer.end_offset = datetime_utils.format_from_timedelta(
+            td_start + datetime_utils.parse_time(timer.duration) + timedelta(seconds=timer.duration_offset))
 
         if vfs_utils.is_script(timer.path):
             timer.media_type = SCRIPT
