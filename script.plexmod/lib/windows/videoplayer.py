@@ -1,26 +1,25 @@
 from __future__ import absolute_import
-import time
-import threading
+
 import math
+import threading
+import time
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 
-from . import kodigui
-from . import windowutils
-from . import opener
-from . import busy
-from . import search
-from . import dropdown
-from . import pagination
-
-from lib import util
-from lib import player
 from lib import colors
 from lib import kodijsonrpc
-
+from lib import player
+from lib import util
 from lib.util import T
-
+from . import busy
+from . import dropdown
+from . import kodigui
+from . import opener
+from . import pagination
+from . import search
+from . import windowutils
+from .mixins import SpoilersMixin
 
 PASSOUT_PROTECTION_DURATION_SECONDS = 7200
 PASSOUT_LAST_VIDEO_DURATION_MILLIS = 1200000
@@ -44,17 +43,20 @@ class OnDeckPaginator(pagination.MCLPaginator):
     def prepareListItem(self, data, mli):
         mli.setProperty('progress', util.getProgressImage(mli.dataSource))
         mli.setProperty('unwatched', not mli.dataSource.isWatched and '1' or '')
+        mli.setProperty('watched', mli.dataSource.isFullyWatched and '1' or '')
 
         if data.type in 'episode':
             mli.setLabel2(
-                u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), data.parentIndex, T(32311, 'E'), data.index))
+                u'{0} \u2022 {1}'.format(T(32310, 'S').format(data.parentIndex), T(32311, 'E').format(data.index)))
         else:
             mli.setLabel2(data.year)
 
     def createListItem(self, ondeck):
         title = ondeck.grandparentTitle or ondeck.title
         if ondeck.type == 'episode':
-            thumb = ondeck.thumb.asTranscodedImageURL(*self.parentWindow.ONDECK_DIM)
+            hide_spoilers = self.parentWindow.hideSpoilers(ondeck, use_cache=False)
+            thumb_opts = self.parentWindow.getThumbnailOpts(ondeck, hide_spoilers=hide_spoilers)
+            thumb = ondeck.thumb.asTranscodedImageURL(*self.parentWindow.ONDECK_DIM, **thumb_opts)
         else:
             thumb = ondeck.defaultArt.asTranscodedImageURL(*self.parentWindow.ONDECK_DIM)
 
@@ -63,10 +65,13 @@ class OnDeckPaginator(pagination.MCLPaginator):
             return mli
 
     def getData(self, offset, amount):
-        return (self.parentWindow.prev or self.parentWindow.next).sectionOnDeck(offset=offset, limit=amount)
+        data = (self.parentWindow.prev or self.parentWindow.next).sectionOnDeck(offset=offset, limit=amount)
+        if self.parentWindow.next:
+            return list(filter(lambda x: x.ratingKey != self.parentWindow.next.ratingKey, data))
+        return data
 
 
-class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
+class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SpoilersMixin):
     xmlFile = 'script-plex-video_player.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -97,6 +102,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def __init__(self, *args, **kwargs):
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
         windowutils.UtilMixin.__init__(self)
+        SpoilersMixin.__init__(self, *args, **kwargs)
         self.playQueue = kwargs.get('play_queue')
         self.video = kwargs.get('video')
         self.resume = bool(kwargs.get('resume'))
@@ -117,6 +123,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.lastFocusID = None
         self.lastNonOptionsFocusID = None
         self.playBackStarted = False
+        self.handleBGM = kwargs.get('bgm')
 
     def doClose(self):
         util.DEBUG_LOG('VideoPlayerWindow: Closing')
@@ -129,6 +136,9 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def onFirstInit(self):
         player.PLAYER.on('session.ended', self.sessionEnded)
         player.PLAYER.on('av.started', self.playerPlaybackStarted)
+        player.PLAYER.on('starting.video', self.onVideoStarting)
+        player.PLAYER.on('started.video', self.onVideoStarted)
+        player.PLAYER.on('changed.video', self.onVideoChanged)
         player.PLAYER.on('post.play', self.postPlay)
         player.PLAYER.on('change.background', self.changeBackground)
 
@@ -136,9 +146,19 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.relatedListControl = kodigui.ManagedControlList(self, self.RELATED_LIST_ID, 5)
         self.rolesListControl = kodigui.ManagedControlList(self, self.ROLES_LIST_ID, 5)
 
-        util.DEBUG_LOG('VideoPlayerWindow: Starting session (ID: {0})'.format(id(self)))
+        util.DEBUG_LOG('VideoPlayerWindow: Starting session (ID: {0})', id(self))
         self.resetPassoutProtection()
         self.play(resume=self.resume)
+
+    def onVideoStarting(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '1')
+
+    def onVideoStarted(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '')
+
+    def onVideoChanged(self, *args, **kwargs):
+        #util.setGlobalProperty('ignore_spinner', '')
+        pass
 
     def onReInit(self):
         self.setBackground()
@@ -152,7 +172,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 self.resetPassoutProtection()
                 if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                     if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
-                        if not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU:
+                        if not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU:
                             self.lastNonOptionsFocusID = self.lastFocusID
                             self.setFocusId(self.OPTIONS_GROUP_ID)
                             return
@@ -195,7 +215,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             return
 
         timeoutCanceled = False
-        if util.advancedSettings.postplayCancel:
+        if util.addonSettings.postplayCancel:
             timeoutCanceled = bool(self.timeout)
             self.cancelTimer()
 
@@ -275,7 +295,14 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),1) + Control.IsVisible(501)'):
             y -= 500
 
-        focus = int(xbmc.getInfoLabel('Container(403).Position'))
+        tries = 0
+        focus = xbmc.getInfoLabel('Container(403).Position')
+        while tries < 2 and focus == '':
+            focus = xbmc.getInfoLabel('Container(403).Position')
+            xbmc.sleep(250)
+            tries += 1
+
+        focus = int(focus)
 
         x = ((focus + 1) * 304) - 100
         return x, y
@@ -290,10 +317,10 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def sessionEnded(self, session_id=None, **kwargs):
         if session_id != id(self):
-            util.DEBUG_LOG('VideoPlayerWindow: Ignoring session end (ID: {0} - SessionID: {1})'.format(id(self), session_id))
+            util.DEBUG_LOG('VideoPlayerWindow: Ignoring session end (ID: {0} - SessionID: {1})', id(self), session_id)
             return
 
-        util.DEBUG_LOG('VideoPlayerWindow: Session ended - closing (ID: {0})'.format(id(self)))
+        util.DEBUG_LOG('VideoPlayerWindow: Session ended - closing (ID: {0})', id(self))
         self.doClose()
 
     def play(self, resume=False, handler=None):
@@ -305,7 +332,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         if player.PLAYER.isPlayingVideo():
             activePlayers = anyOtherVPlayer()
             if activePlayers:
-                util.DEBUG_LOG("Stopping other active players: {}".format(activePlayers))
+                util.DEBUG_LOG("Stopping other active players: {}", activePlayers)
                 xbmc.executebuiltin('PlayerControl(Stop)')
                 ct = 0
                 while player.PLAYER.isPlayingVideo() or anyOtherVPlayer():
@@ -320,11 +347,26 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     return
                 util.MONITOR.waitForAbort(0.5)
 
+        # wait for BGM to end if it's playing or queued
+        if self.handleBGM:
+            while not player.PLAYER.bgmPlaying and player.PLAYER.bgmStarting:
+                util.DEBUG_LOG("Waiting for BGM to start as it has been queued")
+                util.MONITOR.waitForAbort(0.1)
+
+            if player.PLAYER.bgmPlaying:
+                util.DEBUG_LOG("Stopping BGM before starting playback")
+                player.PLAYER.stopAndWait()
+
+            while player.PLAYER.bgmPlaying:
+                util.MONITOR.waitForAbort(0.1)
+
         self.setBackground()
         if self.playQueue:
-            player.PLAYER.playVideoPlaylist(self.playQueue, resume=self.resume, session_id=id(self), handler=handler)
+            player.PLAYER.playVideoPlaylist(self.playQueue, resume=resume or self.resume, session_id=id(self),
+                                            handler=handler)
         elif self.video:
-            player.PLAYER.playVideo(self.video, resume=self.resume, force_update=True, session_id=id(self), handler=handler)
+            player.PLAYER.playVideo(self.video, resume=resume or self.resume, force_update=True, session_id=id(self),
+                                    handler=handler)
 
     def openItem(self, control=None, item=None):
         if not item:
@@ -333,7 +375,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 return
             item = mli.dataSource
 
-        self.processCommand(opener.open(item))
+        self.processCommand(opener.open(item, came_from="postplay"))
 
     def showPostPlay(self):
         self.postPlayMode = True
@@ -420,9 +462,10 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             return
         else:
             millis = (self.passoutProtection - time.time()) * 1000
-            util.DEBUG_LOG('Post play auto-play: Passout protection in {0}'.format(util.durationToShortText(millis)))
+            util.DEBUG_LOG('Post play auto-play: Passout protection in {0}',
+                           lambda: util.durationToShortText(millis))
 
-        self.timeout = time.time() + abs(util.advancedSettings.postplayTimeout)
+        self.timeout = time.time() + abs(util.addonSettings.postplayTimeout)
         util.DEBUG_LOG('Starting post-play timer until: %i' % self.timeout)
         threading.Thread(target=self.countdown).start()
 
@@ -447,8 +490,8 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 # self.playVideo()
                 break
             elif self.timeout is not None:
-                cd = min(abs(util.advancedSettings.postplayTimeout-1), int((self.timeout or now) - now))
-                base = 15 / float(util.advancedSettings.postplayTimeout-1)
+                cd = min(abs(util.addonSettings.postplayTimeout - 1), int((self.timeout or now) - now))
+                base = 15 / float(util.addonSettings.postplayTimeout - 1)
                 self.setProperty('countdown', str(int(math.ceil(base*cd))))
 
     def getHubs(self):
@@ -472,14 +515,26 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             self.setProperty('has.next', '1')
 
     def setInfo(self):
+        hide_spoilers = False
+        if self.next and self.next.type == "episode":
+            hide_spoilers = self.hideSpoilers(self.next, use_cache=False)
         if self.next:
             self.setProperty(
                 'post.play.background',
                 util.backgroundFromArt(self.next.art, width=self.width, height=self.height)
             )
-            self.setProperty('info.title', self.next.title)
+            if self.next.type == "episode" and hide_spoilers:
+                if self.noTitles:
+                    self.setProperty('info.title',
+                                     u'{0} \u2022 {1}'.format(T(32310, 'S').format(self.next.parentIndex),
+                                                              T(32311, 'E').format(self.next.index)))
+                else:
+                    self.setProperty('info.title', self.next.title)
+                self.setProperty('info.summary', T(33008, ''))
+            else:
+                self.setProperty('info.title', self.next.title)
+                self.setProperty('info.summary', self.next.summary)
             self.setProperty('info.duration', util.durationToText(self.next.duration.asInt()))
-            self.setProperty('info.summary', self.next.summary)
 
         if self.prev:
             self.setProperty(
@@ -493,18 +548,25 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         if self.prev.type == 'episode':
             self.setProperty('related.header', T(32306, 'Related Shows'))
             if self.next:
-                self.setProperty('next.thumb', self.next.thumb.asTranscodedImageURL(*self.NEXT_DIM))
-                self.setProperty('info.date', util.cleanLeadingZeros(self.next.originallyAvailableAt.asDatetime('%B %d, %Y')))
+                thumb_opts = {}
+                if hide_spoilers:
+                    thumb_opts = self.getThumbnailOpts(self.next, hide_spoilers=hide_spoilers)
+                self.setProperty('next.thumb', self.next.thumb.asTranscodedImageURL(*self.NEXT_DIM, **thumb_opts))
+                self.setProperty('info.date',
+                                 util.cleanLeadingZeros(self.next.originallyAvailableAt.asDatetime('%B %d, %Y')))
 
                 self.setProperty('next.title', self.next.grandparentTitle)
                 self.setProperty(
-                    'next.subtitle', u'{0} {1} \u2022 {2} {3}'.format(T(32303, 'Season'), self.next.parentIndex, T(32304, 'Episode'), self.next.index)
+                    'next.subtitle',
+                    u'{0} \u2022 {1}'.format(T(32303, 'Season').format(self.next.parentIndex),
+                                             T(32304, 'Episode').format(self.next.index))
                 )
             if self.prev:
                 self.setProperty('prev.thumb', self.prev.thumb.asTranscodedImageURL(*self.PREV_DIM))
                 self.setProperty('prev.title', self.prev.grandparentTitle)
                 self.setProperty(
-                    'prev.subtitle', u'{0} {1} \u2022 {2} {3}'.format(T(32303, 'Season'), self.prev.parentIndex, T(32304, 'Episode'), self.prev.index)
+                    'prev.subtitle', u'{0} \u2022 {1}'.format(T(32303, 'Season').format(self.prev.parentIndex),
+                                                              T(32304, 'Episode').format(self.prev.index))
                 )
                 self.setProperty('prev.info.date', util.cleanLeadingZeros(self.prev.originallyAvailableAt.asDatetime('%B %d, %Y')))
         elif self.prev.type == 'movie':
@@ -576,6 +638,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def playVideo(self, prev=False):
         self.cancelTimer()
+        resume = False
         try:
             if not self.next and self.playlist:
                 if prev:
@@ -583,7 +646,6 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 self.aborted = False
                 self.playQueue = self.playlist
                 self.video = None
-                self.play(handler=self.handler)
             else:
                 video = self.next
                 if prev:
@@ -594,22 +656,46 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     self.video = None
                     return
 
+                if not prev:
+                    if video.viewOffset.asInt():
+                        choice = dropdown.showDropdown(
+                            options=[
+                                {'key': 'resume', 'display': T(32429, 'Resume from {0}').format(
+                                    util.timeDisplay(video.viewOffset.asInt()).lstrip('0').lstrip(':'))},
+                                {'key': 'play', 'display': T(32317, 'Play from beginning')}
+                            ],
+                            pos=(660, "middle"),
+                            close_direction='none',
+                            set_dropdown_prop=False,
+                            header=T(32314, 'In Progress'),
+                        )
+
+                        if not choice:
+                            return
+
+                        if choice['key'] == 'resume':
+                            resume = True
+
                 self.playQueue = None
                 self.video = video
-                self.play(handler=self.handler)
+
+            self.play(handler=self.handler, resume=resume)
         except:
             util.ERROR()
 
 
-def play(video=None, play_queue=None, resume=False):
+def play(video=None, play_queue=None, resume=False, bgm=False, **kwargs):
     try:
-        w = VideoPlayerWindow.open(video=video, play_queue=play_queue, resume=resume)
+        w = VideoPlayerWindow.open(video=video, play_queue=play_queue, resume=resume, bgm=bgm)
     except util.NoDataException:
         raise
     finally:
         player.PLAYER.off('session.ended', w.sessionEnded)
         player.PLAYER.off('post.play', w.postPlay)
         player.PLAYER.off('av.started', w.playerPlaybackStarted)
+        player.PLAYER.off('starting.video', w.onVideoStarting)
+        player.PLAYER.off('started.video', w.onVideoStarted)
+        player.PLAYER.off('changed.video', w.onVideoChanged)
         player.PLAYER.off('change.background', w.changeBackground)
         player.PLAYER.reset()
         command = w.exitCommand

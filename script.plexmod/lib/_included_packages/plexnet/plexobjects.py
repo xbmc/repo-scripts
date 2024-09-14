@@ -34,6 +34,8 @@ def registerLibFactory(ftype):
 
 
 class PlexValue(six.text_type):
+    __slots__ = ("parent", "NA")
+
     def __new__(cls, value, parent=None):
         self = super(PlexValue, cls).__new__(cls, value)
         self.parent = parent
@@ -153,6 +155,8 @@ class Checks(object):
 
 
 class PlexObject(Checks):
+    __slots__ = ("initpath", "key", "server", "container", "mediaChoice", "titleSort", "deleted", "_reloaded", "data")
+
     def __init__(self, data, initpath=None, server=None, container=None):
         self.initpath = initpath
         self.key = None
@@ -189,7 +193,7 @@ class PlexObject(Checks):
         try:
             setattr(self, attr, a)
         except AttributeError:
-            util.LOG('Failed to set attribute: {0} ({1})'.format(attr, self.__class__))
+            util.LOG('Failed to set attribute: {0} ({1})', attr, self.__class__)
 
         return a
 
@@ -198,7 +202,7 @@ class PlexObject(Checks):
         return True
 
     def get(self, attr, default=''):
-        ret = self.__dict__.get(attr)
+        ret = self.__dict__.get(attr, getattr(self, attr) if attr in self.__slots__ else None)
         return ret is not None and ret or PlexValue(default, self)
 
     def set(self, attr, value):
@@ -234,8 +238,6 @@ class PlexObject(Checks):
         if _soft and self._reloaded:
             return self
 
-        kwargs["includeMarkers"] = 1
-
         try:
             if self.get('ratingKey'):
                 data = self.server.query('/library/metadata/{0}'.format(self.ratingKey), params=kwargs)
@@ -254,7 +256,7 @@ class PlexObject(Checks):
         try:
             self._setData(data[0])
         except (IndexError, TypeError, AttributeError):
-            util.DEBUG_LOG('No data on reload: {0}'.format(self))
+            util.DEBUG_LOG('No data on reload: {0}', self)
             return self
 
         return self
@@ -422,6 +424,8 @@ class PlexObject(Checks):
 
 
 class PlexContainer(PlexObject):
+    __slots__ = ("address",)
+
     def __init__(self, data, initpath=None, server=None, address=None):
         PlexObject.__init__(self, data, initpath, server)
         self.setAddress(address)
@@ -433,7 +437,7 @@ class PlexContainer(PlexObject):
             self.address = address
 
         # TODO(schuyler): Do we need to make sure that we only hang onto the path here and not a full URL?
-        if not self.address.startswith("/") and "node.plexapp.com" not in self.address:
+        if not self.address.startswith("/") and not self.upNext.asBool() and "node.plexapp.com" not in self.address:
             util.FATAL("Container address is not an expected path: {0}".format(address))
 
     def getAbsolutePath(self, path):
@@ -446,6 +450,8 @@ class PlexContainer(PlexObject):
 
 
 class PlexServerContainer(PlexContainer):
+    __slots__ = ("resources",)
+
     def __init__(self, data, initpath=None, server=None, address=None):
         PlexContainer.__init__(self, data, initpath, server, address)
         from . import plexserver
@@ -463,6 +469,8 @@ class PlexServerContainer(PlexContainer):
 
 
 class PlexItemList(object):
+    __slots__ = ("_data", "_itemClass", "_itemTag", "_server", "_container", "_items")
+
     def __init__(self, data, item_cls, tag, server=None, container=None):
         self._data = data
         self._itemClass = item_cls
@@ -502,6 +510,8 @@ class PlexItemList(object):
 
 
 class PlexMediaItemList(PlexItemList):
+    __slots__ = ("_initpath", "_media", "_items")
+
     def __init__(self, data, item_cls, tag, initpath=None, server=None, media=None):
         PlexItemList.__init__(self, data, item_cls, tag, server)
         self._initpath = initpath
@@ -538,6 +548,8 @@ def buildItem(server, elem, initpath, bytag=False, container=None, tag_fallback=
 
 
 class ItemContainer(list):
+    __slots__ = ("container", "totalSize")
+
     def __getattr__(self, attr):
         return getattr(self.container, attr)
 

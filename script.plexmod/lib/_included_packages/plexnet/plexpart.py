@@ -1,8 +1,12 @@
 from __future__ import absolute_import
+from kodi_six import xbmcvfs
 from . import plexobjects
 from . import plexstream
 from . import plexrequest
 from . import util
+
+from lib.util import addonSettings
+from lib.path_mapping import pmm, norm_sep
 
 
 class PlexPart(plexobjects.PlexObject):
@@ -101,7 +105,7 @@ class PlexPart(plexobjects.PlexObject):
 
         return default
 
-    def setSelectedStream(self, streamType, streamId, _async):
+    def setSelectedStream(self, streamType, streamId, _async, from_session=False, video=None):
         if streamType == plexstream.PlexStream.TYPE_AUDIO:
             typeString = "audio"
         elif streamType == plexstream.PlexStream.TYPE_SUBTITLE:
@@ -115,12 +119,14 @@ class PlexPart(plexobjects.PlexObject):
 
         if self.getServer().supportsFeature("allPartsStreamSelection"):
             path = path + "&allParts=1"
+#
+        if from_session:
+            path = path + "&X-Plex-Session-Id=%s" % video.settings.getGlobal("clientIdentifier")
 
         request = plexrequest.PlexRequest(self.getServer(), path, "PUT")
 
         if _async:
             context = request.createRequestContext("ignored")
-            from . import plexapp
             util.APP.startRequest(request, context, "")
         else:
             request.postToStringWithTimeout()
@@ -156,6 +162,40 @@ class PlexPart(plexobjects.PlexObject):
 
     def hasStreams(self):
         return bool(self.streams)
+
+    def getPathMappedUrl(self, return_only_folder=False):
+        verify = addonSettings.verifyMappedFiles
+
+        map_path, pms_path = pmm.getMappedPathFor(self.file, self.getServer())
+        if map_path and pms_path:
+            if return_only_folder:
+                return map_path
+
+            sep = norm_sep(map_path)
+
+            # replace match and normalize path separator to separator style of map_path
+            url = self.file.replace(pms_path, map_path, 1).replace(sep == "/" and "\\" or "/", sep)
+
+            if (verify and xbmcvfs.exists(url)) or not verify:
+                util.DEBUG_LOG("File {} found in path map, mapping to {}", self.file, pms_path)
+                return url
+            util.LOG("Mapped file {} doesn't exist", url)
+        return ""
+
+    @property
+    def isPathMapped(self):
+        return bool(self.getPathMappedUrl())
+
+    def getPathMappedProto(self):
+        url = self.getPathMappedUrl()
+        if url:
+            prot = url.split("://")[0]
+            if prot == url:
+                ret = "mnt://"
+            else:
+                ret = "{}://".format(prot)
+            return ret
+        return ""
 
     def __str__(self):
         return "PlexPart {0} {1}".format(self.id("NaN"), self.key)

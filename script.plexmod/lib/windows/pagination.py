@@ -1,7 +1,9 @@
 from __future__ import absolute_import
-from . import kodigui
+
 from kodi_six import xbmcgui
+
 from lib import util
+from . import kodigui
 
 
 class MCLPaginator(object):
@@ -268,7 +270,10 @@ class BaseRelatedPaginator(MCLPaginator):
     def prepareListItem(self, data, mli):
         if data.type in ('season', 'show'):
             if not mli.dataSource.isWatched:
-                mli.setProperty('unwatched.count', str(mli.dataSource.unViewedLeafCount))
+                mli.setProperty('unwatched.count', str(mli.dataSource.unViewedLeafCount) or '')
+            else:
+                mli.setBoolProperty('watched', mli.dataSource.isWatched)
         else:
             mli.setProperty('unwatched', not mli.dataSource.isWatched and '1' or '')
+            mli.setBoolProperty('watched', mli.dataSource.isFullyWatched)
             mli.setProperty('progress', util.getProgressImage(mli.dataSource))

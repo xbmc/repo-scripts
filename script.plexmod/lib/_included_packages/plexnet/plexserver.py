@@ -65,6 +65,8 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         self.versionNorm = None
         self.rawVersion = None
         self.transcodeSupport = False
+        self.currentHubs = None
+        self.dnsRebindingProtection = False
 
         if data is None:
             return
@@ -79,6 +81,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         self.rawVersion = data.attrib.get('productVersion')
         self.versionNorm = util.normalizedVersion(self.rawVersion)
         self.transcodeSupport = data.attrib.get('transcodeSupport') == '1'
+        self.dnsRebindingProtection = data.attrib.get('dnsRebindingProtection') == '1'
 
     def __eq__(self, other):
         if not other:
@@ -114,11 +117,15 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         if self.activeConnection:
             return self.activeConnection.isLocal
 
+    @property
+    def anyLANConnection(self):
+        return any(c.localVerified for c in self.connections)
+
     def getObject(self, key):
         data = self.query(key)
         return plexobjects.buildItem(self, data[0], key, container=self)
 
-    def hubs(self, section=None, count=None, search_query=None):
+    def hubs(self, section=None, count=None, search_query=None, section_ids=None, ignore_hubs=None):
         hubs = []
 
         params = {"includeMarkers": 1}
@@ -143,6 +150,10 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
                     return hubs
                 else:
                     q = '/hubs/sections/%s' % section
+            else:
+                # home hub
+                if section_ids:
+                    params['pinnedContentDirectoryID'] = ",".join(section_ids)
 
             if count is not None:
                 params['count'] = count
@@ -150,8 +161,42 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         data = self.query(q, params=params)
         container = plexobjects.PlexContainer(data, initpath=q, server=self, address=q)
 
+        self.currentHubs = {} if self.currentHubs is None else self.currentHubs
+
+        newCW = util.INTERFACE.getPreference('hubs_use_new_continue_watching', False) and not search_query \
+            and not section
+
+        if newCW:
+            # home, add continueWatching
+            cq = '/hubs/continueWatching'
+            if section_ids:
+                cq += util.joinArgs(params)
+
+            cdata = self.query(cq, params=params)
+            ccontainer = plexobjects.PlexContainer(cdata, initpath=cq, server=self, address=cq)
+            self.currentHubs[cdata[0].attrib.get('hubIdentifier')] = cdata[0].attrib.get('title')
+            hubs.append(plexlibrary.Hub(cdata[0], server=self, container=ccontainer))
+
         for elem in data:
+            hubIdent = elem.attrib.get('hubIdentifier')
+            self.currentHubs["{}:{}".format(section, hubIdent)] = elem.attrib.get('title')
+
+            # if we've added continueWatching, which combines continue and ondeck, skip those two hubs
+            if newCW and hubIdent and \
+                    (hubIdent.startswith('home.continue') or hubIdent.startswith('home.ondeck')):
+                continue
+
+            if ignore_hubs and "{}:{}".format(section, hubIdent) in ignore_hubs:
+                continue
+
             hubs.append(plexlibrary.Hub(elem, server=self, container=container))
+
+        if section_ids:
+            # when we have hidden sections, apply the filter to the hubs keys for subsequent queries
+            for hub in hubs:
+                if "pinnedContentDirectoryID" not in hub.key:
+                    hub.key += util.joinArgs(params, '?' not in hub.key)
+
         return hubs
 
     def playlists(self, start=0, size=10, hub=None):
@@ -215,7 +260,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
             url = http.addUrlParam(url, "X-Plex-Container-Start=%s" % offset)
             url = http.addUrlParam(url, "X-Plex-Container-Size=%s" % limit)
 
-        util.LOG('{0} {1}'.format(method.__name__.upper(), re.sub('X-Plex-Token=[^&]+', 'X-Plex-Token=****', url)))
+        util.LOG('{0} {1}', method.__name__.upper(), re.sub('X-Plex-Token=[^&]+', 'X-Plex-Token=****', url))
         try:
             response = method(url, **kwargs)
             if response.status_code not in (200, 201):
@@ -347,7 +392,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         appMinVer = util.INTERFACE.getGlobal('minServerVersionArr', '0.0.0.0')
         self.isSupported = self.isSecondary() or util.normalizedVersion(appMinVer) <= self.versionNorm
 
-        util.DEBUG_LOG("Server information updated from reachability check: {0}".format(self))
+        util.DEBUG_LOG("Server information updated from reachability check: {0}", self)
 
         return True
 
@@ -355,7 +400,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         if not force and self.activeConnection and self.activeConnection.state != plexresource.ResourceConnection.STATE_UNKNOWN:
             return
 
-        util.LOG('Updating reachability for {0}: conns={1}, allowFallback={2}'.format(repr(self.name), len(self.connections), allowFallback))
+        util.LOG('Updating reachability for {0}: conns={1}, allowFallback={2}', repr(self.name), len(self.connections), allowFallback)
 
         epoch = time.time()
         retrySeconds = 60
@@ -364,10 +409,10 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
             conn = self.connections[i]
             diff = epoch - (conn.lastTestedAt or 0)
             if conn.hasPendingRequest:
-                util.DEBUG_LOG("Skip reachability test for {0} (has pending request)".format(conn))
+                util.DEBUG_LOG("Skip reachability test for {0} (has pending request)", conn)
             elif (diff < minSeconds or (not self.isSecondary() and self.isReachable() and diff < retrySeconds)) and \
                     not conn.state == "unauthorized":
-                util.DEBUG_LOG("Skip reachability test for {0} (checked {1} secs ago)".format(conn, diff))
+                util.DEBUG_LOG("Skip reachability test for {0} (checked {1} secs ago)", conn, diff)
             elif conn.testReachability(self, allowFallback):
                 self.pendingReachabilityRequests += 1
                 if conn.isSecure:
@@ -391,7 +436,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
         if connection.isSecure:
             self.pendingSecureRequests -= 1
 
-        util.DEBUG_LOG("Reachability result for {0}: {1} is {2}".format(repr(self.name), connection.address, connection.state))
+        util.DEBUG_LOG("Reachability result for {0}: {1} is {2}", repr(self.name), connection.address, connection.state)
 
         # Noneate active connection if the state is unreachable
         if self.activeConnection and self.activeConnection.state != plexresource.ResourceConnection.STATE_REACHABLE:
@@ -407,17 +452,17 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
             except IndexError:
                 continue
 
-            util.DEBUG_LOG("Connection score: {0}, {1}".format(conn.address, conn.getScore(True)))
+            util.DEBUG_LOG("Connection score: {0}, {1}", conn.address, lambda: conn.getScore(True))
 
             if not best or conn.getScore() > best.getScore():
                 best = conn
 
         if best and best.state == best.STATE_REACHABLE:
             if (best.isSecure or util.LOCAL_OVER_SECURE) or self.pendingSecureRequests <= 0:
-                util.DEBUG_LOG("Using connection for {0} for now: {1}".format(repr(self.name), best.address))
+                util.DEBUG_LOG("Using connection for {0} for now: {1}", repr(self.name), best.address)
                 self.activeConnection = best
             else:
-                util.DEBUG_LOG("Found a good connection for {0}, but holding out for better".format(repr(self.name)))
+                util.DEBUG_LOG("Found a good connection for {0}, but holding out for better", repr(self.name))
 
         if self.pendingReachabilityRequests <= 0:
             # Retest the server with fallback enabled. hasFallback will only
@@ -429,7 +474,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
             else:
                 self.trigger("completed:reachability")
 
-        util.LOG("Active connection for {0} is {1}".format(repr(self.name), self.activeConnection))
+        util.LOG("Active connection for {0} is {1}", repr(self.name), self.activeConnection)
 
         from . import plexservermanager
         plexservermanager.MANAGER.updateReachabilityResult(self, bool(self.activeConnection))
@@ -463,7 +508,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
                     hasSecureConn = True
                 toKeep.append(conn)
             else:
-                util.DEBUG_LOG("Removed connection {0} for {1} after updating connections for {2}".format(conn, repr(self.name), source))
+                util.DEBUG_LOG("Removed connection {0} for {1} after updating connections for {2}", conn, repr(self.name), source)
                 if conn == self.activeConnection:
                     util.DEBUG_LOG("Active connection lost")
                     self.activeConnection = None

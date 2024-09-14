@@ -2,8 +2,6 @@
 
 from __future__ import absolute_import
 
-from copy import copy
-
 from . import simpleobjects
 import re
 import sys
@@ -12,6 +10,8 @@ import platform
 import uuid
 import threading
 import six
+import math
+from copy import copy
 from kodi_six import xbmcaddon
 
 from . import verlib
@@ -22,10 +22,17 @@ if six.PY2:
 else:
     Event = threading.Event
 
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
+
 BASE_HEADERS = ''
 
 # to maintain py2 compatibility, duplicate ADDON from lib.util to avoid circular import
 ADDON = xbmcaddon.Addon()
+
+translatePath = None
 
 
 def resetBaseHeaders():
@@ -47,7 +54,12 @@ def resetBaseHeaders():
 PROJECT = 'PlexNet'                                 # name provided to plex server
 VERSION = '0.0.0a1'                                 # version of this api
 TIMEOUT = 10                                        # request timeout
-LONG_TIMEOUT = 20                                   # s
+TIMEOUT_CONNECT = 5                                 # connect timeout
+DEFAULT_TIMEOUT = 10
+LONG_TIMEOUT = 20
+PLEXTV_TIMEOUT = None                               # set me later
+PLEXTV_TIMEOUT_READ = 20                                   # s
+PLEXTV_TIMEOUT_CONNECT = 5
 CONN_CHECK_TIMEOUT = 2.5                            # s
 LAN_REACHABILITY_TIMEOUT = 0.01                     # s
 CHECK_LOCAL = False
@@ -64,10 +76,14 @@ X_PLEX_PRODUCT = PROJECT                       # Plex application name, eg Laika
 X_PLEX_VERSION = VERSION                       # Plex application version number
 USER_AGENT = '{0}/{1}'.format(PROJECT, VERSION)
 
+USE_CERT_BUNDLE = False
+
 INTERFACE = None
 TIMER = None
 APP = None
 MANAGER = None
+ACCOUNT = None
+SERVERMANAGER = None
 
 try:
     _platform = platform.system()
@@ -78,7 +94,10 @@ except:
         _platform = sys.platform
 
 X_PLEX_DEVICE = _platform                     # Device name and model number, eg iPhone3,2, Motorola XOOM, LG5200TV
-X_PLEX_IDENTIFIER = str(hex(uuid.getnode()))  # UUID, serial number, or other number unique per device
+X_PLEX_IDENTIFIER = ADDON.getSetting('client.ID')
+if not X_PLEX_IDENTIFIER:
+    X_PLEX_IDENTIFIER = str(uuid.uuid4())
+    ADDON.setSetting('client.ID', X_PLEX_IDENTIFIER)
 
 BASE_HEADERS = resetBaseHeaders()
 
@@ -105,20 +124,20 @@ def setApp(app):
     APP = app
 
 
-def LOG(msg):
-    INTERFACE.LOG(msg)
+def LOG(msg, *args, **kwargs):
+    INTERFACE.LOG(msg, *args, **kwargs)
 
 
-def DEBUG_LOG(msg):
-    INTERFACE.DEBUG_LOG(msg)
+def DEBUG_LOG(msg, *args, **kwargs):
+    INTERFACE.DEBUG_LOG(msg, *args, **kwargs)
 
 
-def ERROR_LOG(msg):
-    INTERFACE.ERROR_LOG(msg)
+def ERROR_LOG(msg, *args, **kwargs):
+    INTERFACE.ERROR_LOG(msg, *args, **kwargs)
 
 
-def WARN_LOG(msg):
-    INTERFACE.WARN_LOG(msg)
+def WARN_LOG(msg, *args, **kwargs):
+    INTERFACE.WARN_LOG(msg, *args, **kwargs)
 
 
 def ERROR(msg=None, err=None):
@@ -159,24 +178,50 @@ def cleanToken(url):
     return re.sub(r'X-Plex-Token=[^&]+', 'X-Plex-Token=****', url)
 
 
-def cleanObjTokens(dorig, flistkeys=("streamUrls",), fstrkeys=("url", "token")):
-    d = {}
+def mask(v):
+    vlen = len(v)
+    return (v[:int(math.floor(vlen / 2))] + int(math.ceil(vlen / 2)) * "*") if vlen > 4 else "****"
+
+
+def cleanObjTokens(dorig,
+                   flistkeys=("streamUrls", "streams",),
+                   mask_keys=("token", "authToken"),
+                   dict_cls=dict):
     dcopy = copy(dorig)
+    if not isinstance(dcopy, dict):
+        if isinstance(dcopy, Iterable) and not isinstance(dcopy, six.string_types):
+            return [cleanObjTokens(a, flistkeys=flistkeys, mask_keys=mask_keys) for a in dcopy]
+        elif isinstance(dcopy, six.string_types):
+            return cleanToken(dcopy)
+        return dcopy
 
-    # filter lists
-    for k in flistkeys:
-        if k not in d:
-            continue
-        d[k] = list(map(lambda x: cleanToken(x), d[k][:]))
+    d = dict_cls()
+    for k, v in dcopy.items():
+        if isinstance(v, six.string_types):
+            if v:
+                d[k] = mask(v) if k in mask_keys else cleanToken(v)
+                continue
+            d[k] = v
 
-    # filter strings
-    for k in fstrkeys:
-        if k not in d:
-            continue
-        d[k] = "****" if k == "token" else cleanToken(d[k])
+        elif isinstance(v, dict):
+            d[k] = cleanObjTokens(v, flistkeys=flistkeys, mask_keys=mask_keys)
 
-    dcopy.update(d)
-    return dcopy
+        elif isinstance(v, Iterable):
+            fv = []
+            for iv in v:
+                if isinstance(iv, six.string_types):
+                    if k in flistkeys:
+                        fv.append(cleanToken(iv))
+                        continue
+                    fv.append(iv)
+                else:
+                    fv.append(cleanObjTokens(iv, flistkeys=flistkeys, mask_keys=mask_keys))
+            d[k] = fv
+
+        else:
+            d[k] = v
+
+    return d
 
 
 def now(local=False):
@@ -198,17 +243,24 @@ def joinArgs(args, includeQuestion=True):
     return '{0}{1}'.format(includeQuestion and '?' or '&', '&'.join(arglist))
 
 
+def getPlexHeaders():
+    return {"X-Plex-Platform": INTERFACE.getGlobal("platform"),
+            "X-Plex-Version": INTERFACE.getGlobal("appVersionStr"),
+            "X-Plex-Client-Identifier": INTERFACE.getGlobal("clientIdentifier"),
+            "X-Plex-Platform-Version": INTERFACE.getGlobal("platformVersion", "unknown"),
+            "X-Plex-Product": INTERFACE.getGlobal("product"),
+            "X-Plex-Provides": not INTERFACE.getPreference("remotecontrol", False) and 'player' or '',
+            "X-Plex-Device": INTERFACE.getGlobal("device"),
+            "X-Plex-Model": INTERFACE.getGlobal("model"),
+            "X-Plex-Device-Name": INTERFACE.getGlobal("friendlyName"),
+            'Accept-Encoding': 'gzip,deflate',
+            'Accept-Language': ACCEPT_LANGUAGE,
+            'User-Agent': '{0}/{1}'.format("PM4K", ADDON.getAddonInfo('version'))
+            }
+
+
 def addPlexHeaders(transferObj, token=None):
-    headers = {"X-Plex-Platform": INTERFACE.getGlobal("platform"),
-               "X-Plex-Version": INTERFACE.getGlobal("appVersionStr"),
-               "X-Plex-Client-Identifier": INTERFACE.getGlobal("clientIdentifier"),
-               "X-Plex-Platform-Version": INTERFACE.getGlobal("platformVersion", "unknown"),
-               "X-Plex-Product": INTERFACE.getGlobal("product"),
-               "X-Plex-Provides": not INTERFACE.getPreference("remotecontrol", False) and 'player' or '',
-               "X-Plex-Device": INTERFACE.getGlobal("device"),
-               "X-Plex-Model": INTERFACE.getGlobal("model"),
-               "X-Plex-Device-Name": INTERFACE.getGlobal("friendlyName"),
-               }
+    headers = getPlexHeaders()
 
     transferObj.session.headers.update(headers)
 
@@ -253,6 +305,12 @@ def normalizedVersion(ver):
         if ver:
             ERROR()
         return verlib.NormalizedVersion(verlib.suggest_normalized_version('0.0.0'))
+
+
+def parsePlexDirectHost(hostname):
+    v6 = hostname.count("-") > 3
+    base = hostname.split(".", 1)[0]
+    return v6 and base.replace("-", ":") or base.replace("-", ".")
 
 
 class CompatEvent(Event):
@@ -315,9 +373,9 @@ class Timer(object):
     def shouldAbort(self):
         return False
 
-    def join(self):
+    def join(self, timeout=None):
         if self.thread.is_alive():
-            self.thread.join()
+            self.thread.join(timeout=timeout)
 
     def isExpired(self):
         return self.event.isSet()

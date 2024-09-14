@@ -1,18 +1,17 @@
 from __future__ import absolute_import
+
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
 
-from . import busy
-from . import windowutils
-from . import dropdown
-from . import opener
-
-from lib import util
-from lib import player
 from lib import kodijsonrpc
-
+from lib import player
+from lib import util
 from lib.util import T
+from . import busy
+from . import dropdown
+from . import kodigui
+from . import opener
+from . import windowutils
 
 
 class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
@@ -61,11 +60,22 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.musicPlayerWinID = kwargs.get('winID')
 
     def doClose(self, **kwargs):
-        player.PLAYER.off('playback.started', self.onPlayBackStarted)
+        player.PLAYER.off('av.started', self.onPlayBackStarted)
         player.PLAYER.off('playlist.changed', self.playQueueCallback)
         if player.PLAYER.handler.playQueue and player.PLAYER.handler.playQueue.isRemote:
             player.PLAYER.handler.playQueue.off('change', self.updateProperties)
+        self.commonDeinit()
         kodigui.ControlledWindow.doClose(self)
+
+    def commonInit(self):
+        player.PLAYER.on('starting.audio', self.onAudioStarting)
+        player.PLAYER.on('started.audio', self.onAudioStarted)
+        player.PLAYER.on('changed.audio', self.onAudioChanged)
+
+    def commonDeinit(self):
+        player.PLAYER.off('starting.audio', self.onAudioStarting)
+        player.PLAYER.off('started.audio', self.onAudioStarted)
+        player.PLAYER.off('changed.audio', self.onAudioChanged)
 
     def onFirstInit(self):
         self.playlistListControl = kodigui.ManagedControlList(self, self.PLAYLIST_LIST_ID, 9)
@@ -74,7 +84,7 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.fillPlaylist()
         self.selectPlayingItem()
         self.setFocusId(self.PLAYLIST_LIST_ID)
-
+        self.commonInit()
         self.updateProperties()
         if player.PLAYER.handler.playQueue and player.PLAYER.handler.playQueue.isRemote:
             player.PLAYER.handler.playQueue.on('change', self.updateProperties)
@@ -83,6 +93,9 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def onAction(self, action):
         try:
             controlID = self.getFocusId()
+            if action in (xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK):
+                self.doClose()
+                return
             if self.checkSeekActions(action, controlID):
                 return
         except:
@@ -123,7 +136,20 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             self.updateSelectedProgress()
 
     def onPlayBackStarted(self, **kwargs):
-        xbmc.sleep(2000)
+        self.setDuration()
+
+    def onAudioStarting(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '1')
+        self.ignoreStopCommands = True
+
+    def onAudioStarted(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '')
+        self.ignoreStopCommands = False
+        self.setDuration()
+
+    def onAudioChanged(self, *args, **kwargs):
+        util.setGlobalProperty('ignore_spinner', '')
+        self.ignoreStopCommands = False
         self.setDuration()
 
     def repeatButtonClicked(self):
@@ -180,11 +206,13 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def stopButtonClicked(self):
         xbmc.executebuiltin('Action(Back, {})'.format(self.musicPlayerWinID))
-        xbmc.sleep(500)
+        util.MONITOR.waitForAbort(0.5)
+        player.PLAYER.stopAndWait()
+        self.exitCommand = "STOP"
         self.doClose()
 
     def selectPlayingItem(self):
-        for mli in self.playlistListControl:
+        for mli in reversed(self.playlistListControl):
             if xbmc.getCondVisibility('String.StartsWith(MusicPlayer.Comment,{0})'.format(mli.dataSource['comment'].split(':', 1)[0])):
                 self.playlistListControl.selectItem(mli.pos())
                 break
@@ -217,6 +245,7 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         mli = self.playlistListControl.getSelectedItem()
         if not mli:
             return
+        self.onAudioStarting()
         player.PLAYER.playselected(mli.pos())
 
     def createListItem(self, pi, idx):
@@ -257,7 +286,7 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.selectionBox = self.getControl(self.SELECTION_BOX)
         self.selectionBoxHalf = self.SELECTION_BOX_WIDTH // 2
         self.selectionBoxMax = self.SEEK_IMAGE_WIDTH
-        player.PLAYER.on('playback.started', self.onPlayBackStarted)
+        player.PLAYER.on('av.started', self.onPlayBackStarted)
 
     def checkSeekActions(self, action, controlID):
         if controlID == self.SEEK_BUTTON_ID:
@@ -280,9 +309,10 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def setDuration(self):
         try:
-            self.duration = player.PLAYER.getTotalTime() * 1000
+            duration = player.PLAYER.getTotalTime() * 1000
+            self.duration = duration if duration > 0 else self.duration
         except RuntimeError:  # Not playing
-            self.duration = 0
+            pass
 
     def seekForward(self, offset):
         self.selectedOffset += offset
@@ -311,6 +341,9 @@ class CurrentPlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.updateSelectedProgress()
 
     def updateSelectedProgress(self):
+        if not self.duration:
+            return
+
         ratio = self.selectedOffset / float(self.duration)
         w = int(ratio * self.SEEK_IMAGE_WIDTH)
         self.seekbarControl.setWidth(w or 1)

@@ -10,6 +10,8 @@ from . import media
 from . import exceptions
 from . import util
 from . import signalsmixin
+from lib.path_mapping import pmm, norm_sep
+from lib.exceptions import NoDataException
 from six.moves import map
 
 
@@ -34,7 +36,7 @@ class Library(plexobjects.PlexObject):
                 return item
         raise exceptions.NotFound('Invalid library section: %s' % title)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return plexobjects.listItems(self.server, '/library/all')
 
     def onDeck(self):
@@ -90,9 +92,20 @@ class LibrarySection(plexobjects.PlexObject):
 
     isLibraryPQ = True
 
+    def __init__(self, data, initpath=None, server=None, container=None):
+        self.locations = []
+        self._isMapped = None
+        super(LibrarySection, self).__init__(data, initpath=initpath, server=server, container=container)
+
     def __repr__(self):
         title = self.title.replace(' ', '.')[0:20]
         return '<%s:%s>' % (self.__class__.__name__, title.encode('utf8'))
+
+    def _setData(self, data):
+        super(LibrarySection, self)._setData(data)
+        for loc in plexobjects.PlexItemList(data, media.Location, media.Location.TYPE, server=self.server):
+            sep = norm_sep(loc.path)
+            self.locations.append(loc.path if loc.path.endswith(sep) else loc.path + sep)
 
     @staticmethod
     def fromFilter(filter_):
@@ -126,6 +139,30 @@ class LibrarySection(plexobjects.PlexObject):
 
     def isLibraryItem(self):
         return True
+
+    def getMappedPath(self, loc=None):
+        if not self.locations:
+            return None, None
+
+        return pmm.getMappedPathFor(loc or self.locations[0], self.server)
+
+    def deleteMapping(self, target):
+        pmm.deletePathMapping(target, server=self.getServer())
+        self._isMapped = None
+
+    @property
+    def isMapped(self):
+        if self._isMapped is not None:
+            return self._isMapped
+        elif self._isMapped is False:
+            return False
+
+        for loc in self.locations:
+            if all(self.getMappedPath(loc)):
+                self._isMapped = True
+                return True
+        self._isMapped = False
+        return self._isMapped
 
     def getAbsolutePath(self, key):
         if key == 'key':
@@ -215,10 +252,10 @@ class LibrarySection(plexobjects.PlexObject):
         return plexobjects.listItems(self.server, '/library/sections/%s/onDeck' % self.key)
 
     def analyze(self):
-        self.server.query('/library/sections/%s/analyze' % self.key)
+        self.server.query('/library/sections/%s/analyze' % self.key, method=self.server.session.put)
 
     def emptyTrash(self):
-        self.server.query('/library/sections/%s/emptyTrash' % self.key)
+        self.server.query('/library/sections/%s/emptyTrash' % self.key, method=self.server.session.put)
 
     def refresh(self):
         self.server.query('/library/sections/%s/refresh' % self.key)
@@ -317,7 +354,7 @@ class LibrarySection(plexobjects.PlexObject):
                 list(map(result.add, matches))
                 continue
             # nothing matched; use raw item value
-            util.LOG('Filter value not listed, using raw item value: {0}'.format(item))
+            util.LOG('Filter value not listed, using raw item value: {0}', item)
             result.add(item)
         return ','.join(result)
 
@@ -518,15 +555,19 @@ class BaseHub(plexobjects.PlexObject):
         self.set('offset', 0)
         self.set('size', len(self.items))
         totalSize = self.items[0].container.totalSize.asInt()
-        if totalSize:  # Hubs from a list of hubs don't have this, so it it's not here this is intital and we can leave as is
+        if totalSize:
+            # Hubs from a list of hubs don't have this, so if it's not here this is intital,
+            # and we can leave as is
             self.set(
                 'more',
                 (self.items[0].container.offset.asInt() + self.items[0].container.size.asInt() < totalSize) and '1' or ''
             )
 
-    def getCleanHubIdentifier(self):
+    def getCleanHubIdentifier(self, is_home=False):
         if not self._identifier:
             self._identifier = re.sub(r'\.\d+$', '', re.sub(r'\.\d+$', '', self.hubIdentifier))
+            if is_home and self._identifier == 'movie.recentlyreleased':
+                self._identifier = 'home.VIRTUAL.movies.recentlyreleased'
         return self._identifier
 
 
@@ -535,8 +576,12 @@ class Hub(BaseHub):
 
     def init(self, data):
         self.items = []
+        self._totalSize = None
 
         container = plexobjects.PlexContainer(data, self.key, self.server, self.key or '')
+
+        if container.totalSize:
+            self._totalSize = container.totalSize.asInt()
 
         if self.type == 'genre':
             self.items = [media.Genre(elem, initpath='/hubs', server=self.server, container=container) for elem in data]
@@ -549,7 +594,7 @@ class Hub(BaseHub):
                 try:
                     self.items.append(plexobjects.buildItem(self.server, elem, '/hubs', container=container, tag_fallback=True))
                 except exceptions.UnknownType:
-                    util.DEBUG_LOG('Unkown hub item type({1}): {0}'.format(elem, elem.attrib.get('type')))
+                    util.DEBUG_LOG('Unkown hub item type({1}): {0}', elem, elem.attrib.get('type'))
 
     def __repr__(self):
         return '<{0}:{1}>'.format(self.__class__.__name__, self.hubIdentifier)
@@ -566,10 +611,32 @@ class Hub(BaseHub):
             return
 
         self.initpath = self.key
-        self._setData(data)
+        try:
+            self._setData(data)
+        except:
+            raise NoDataException
         self.init(data)
 
-    def extend(self, start=None, size=None):
+    @property
+    def totalSize(self):
+        """
+        If we don't have seen the totalSize of the hub before, to a query on the hub's path with a limit of 0 items,
+        and cache the value for future access.
+        """
+        if self._totalSize is None:
+            try:
+                data = self.server.query(self.key, limit=0)
+            except Exception as e:
+                return
+            ts = data.attrib.get('totalSize', None)
+            self._totalSize = int(ts) if ts is not None else None
+        return self._totalSize
+
+    @totalSize.setter
+    def totalSize(self, value):
+        self._totalSize = value.asInt()
+
+    def extend(self, start=None, size=None, **kwargs):
         path = self.key
 
         args = {}
@@ -577,6 +644,9 @@ class Hub(BaseHub):
         if size is not None:
             args['X-Plex-Container-Start'] = start
             args['X-Plex-Container-Size'] = size
+
+        if kwargs:
+            args.update(kwargs)
 
         if args:
             path += util.joinArgs(args) if '?' not in path else '&' + util.joinArgs(args).lstrip('?')
@@ -601,7 +671,7 @@ class PlaylistHub(BaseHub):
         try:
             self.items = self.extend(0, 10)
         except exceptions.BadRequest:
-            util.DEBUG_LOG('AudioPlaylistHub: Bad request: {0}'.format(self))
+            util.DEBUG_LOG('AudioPlaylistHub: Bad request: {0}', self)
             self.items = []
 
     def extend(self, start=None, size=None):

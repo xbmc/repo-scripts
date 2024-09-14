@@ -138,7 +138,7 @@ class ResourceConnection(plexobjects.PlexObject):
             return self.http_url
 
     def connect(self):
-        util.LOG('Connecting: {0}'.format(util.cleanToken(self.URL)))
+        util.LOG('Connecting: {0}', util.cleanToken(self.URL))
         try:
             self.data = self.query('/')
             self.reachable = True
@@ -167,8 +167,8 @@ class ResourceConnection(plexobjects.PlexObject):
     def query(self, path, method=None, token=None, **kwargs):
         method = method or http.requests.get
         url = self.getURL(path)
-        util.LOG('{0} {1}'.format(method.__name__.upper(), url))
-        response = method(url, headers=self.headers(token), timeout=util.TIMEOUT, **kwargs)
+        util.LOG('{0} {1}', method.__name__.upper(), url)
+        response = method(url, headers=self.headers(token), timeout=util.DEFAULT_TIMEOUT, **kwargs)
         if response.status_code not in (200, 201):
             codename = http.status_codes.get(response.status_code)[0]
             raise exceptions.BadRequest('({0}) {1}'.format(response.status_code, codename))
@@ -201,34 +201,37 @@ class PlexResourceList(plexobjects.PlexItemList):
         return self._items
 
 
+# fixme: never called
 def fetchResources(token):
     headers = util.BASE_HEADERS.copy()
     headers['X-Plex-Token'] = token
-    util.LOG('GET {0}?X-Plex-Token={1}'.format(RESOURCES, util.hideToken(token)))
+    util.LOG('GET {0}?X-Plex-Token={1}', RESOURCES, util.hideToken(token))
     response = http.GET(RESOURCES)
     data = ElementTree.fromstring(response.text.encode('utf8'))
     from . import plexserver
     return [plexserver.PlexServer(elem) for elem in data]
 
 
+# fixme: never called
 def findResource(resources, search, port=32400):
     """ Searches server.name """
     search = search.lower()
-    util.LOG('Looking for server: {0}'.format(search))
+    util.LOG('Looking for server: {0}', search)
     for server in resources:
         if search == server.name.lower():
-            util.LOG('Server found: {0}'.format(server))
+            util.LOG('Server found: {0}', server)
             return server
-    util.LOG('Unable to find server: {0}'.format(search))
+    util.LOG('Unable to find server: {0}', search)
     raise exceptions.NotFound('Unable to find server: {0}'.format(search))
 
 
+# fixme: never called
 def findResourceByID(resources, ID):
     """ Searches server.clientIdentifier """
-    util.LOG('Looking for server by ID: {0}'.format(ID))
+    util.LOG('Looking for server by ID: {0}', ID)
     for server in resources:
         if ID == server.clientIdentifier:
-            util.LOG('Server found by ID: {0}'.format(server))
+            util.LOG('Server found by ID: {0}', server)
             return server
-    util.LOG('Unable to find server by ID: {0}'.format(ID))
+    util.LOG('Unable to find server by ID: {0}', ID)
     raise exceptions.NotFound('Unable to find server by ID: {0}'.format(ID))

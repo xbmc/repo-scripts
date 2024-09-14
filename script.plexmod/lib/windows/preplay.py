@@ -2,28 +2,23 @@ from __future__ import absolute_import
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
-
-from . import busy
-from . import opener
-from . import info
-from . import videoplayer
-from . import playersettings
-from . import search
-from . import dropdown
-from . import windowutils
-from . import optionsdialog
-from . import preplayutils
-from . import pagination
-from .mixins import RatingsMixin
-
 from plexnet import plexplayer, media
 
-from lib import util
 from lib import metadata
-
+from lib import util
 from lib.util import T
-
+from . import busy
+from . import dropdown
+from . import info
+from . import kodigui
+from . import opener
+from . import optionsdialog
+from . import pagination
+from . import playersettings
+from . import search
+from . import videoplayer
+from . import windowutils
+from .mixins import RatingsMixin, PlaybackBtnMixin
 
 VIDEO_RELOAD_KW = dict(includeExtras=1, includeExtrasCount=10, includeChapters=1, includeReviews=1)
 
@@ -33,7 +28,7 @@ class RelatedPaginator(pagination.BaseRelatedPaginator):
         return self.parentWindow.video.getRelated(offset=offset, limit=amount)
 
 
-class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixin):
+class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixin, PlaybackBtnMixin):
     xmlFile = 'script-plex-pre_play.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -69,6 +64,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
 
     def __init__(self, *args, **kwargs):
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
+        PlaybackBtnMixin.__init__(self)
         self.video = kwargs.get('video')
         self.parentList = kwargs.get('parent_list')
         self.videos = None
@@ -100,6 +96,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
 
     @busy.dialog()
     def onReInit(self):
+        PlaybackBtnMixin.onReInit(self)
         self.initialized = False
         if util.getSetting("slow_connection", False):
             self.progressImageControl.setWidth(1)
@@ -141,7 +138,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
             elif action == xbmcgui.ACTION_NAV_BACK:
                 if (not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(
                         self.OPTIONS_GROUP_ID)) or not controlID) and \
-                        not util.advancedSettings.fastBack:
+                        not util.addonSettings.fastBack:
                     if self.getProperty('on.extras'):
                         self.setFocusId(self.OPTIONS_GROUP_ID)
                         return
@@ -310,7 +307,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
     def delete(self):
         button = optionsdialog.show(
             T(32326, 'Really delete?'),
-            T(32327, 'Are you sure you really want to delete this media?'),
+            T(33035, "Delete {}: {}?").format(type(self.video).__name__, self.video.defaultTitle),
             T(32328, 'Yes'),
             T(32329, 'No')
         )
@@ -326,7 +323,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
     @busy.dialog()
     def _delete(self):
         success = self.video.delete()
-        util.LOG('Media DELETE: {0} - {1}'.format(self.video, success and 'SUCCESS' or 'FAILED'))
+        util.LOG('Media DELETE: {0} - {1}', self.video, success and 'SUCCESS' or 'FAILED')
         return success
 
     def roleClicked(self):
@@ -448,12 +445,22 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
         if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),2) + Control.IsVisible(502)'):
             y -= 500
 
-        focus = int(xbmc.getInfoLabel('Container(400).Position'))
+        tries = 0
+        focus = xbmc.getInfoLabel('Container(400).Position')
+        while tries < 2 and focus == '':
+            focus = xbmc.getInfoLabel('Container(400).Position')
+            xbmc.sleep(250)
+            tries += 1
+
+        focus = int(focus)
 
         x = ((focus + 1) * 304) - 100
         return x, y
 
     def playVideo(self, from_auto_play=False):
+        if self.playBtnClicked:
+            return
+
         if not self.video.available():
             util.messageDialog(T(32312, 'Unavailable'), T(32313, 'This item is currently unavailable.'))
             return
@@ -478,6 +485,9 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
             if choice['key'] == 'resume':
                 resume = True
 
+        if not from_auto_play:
+            self.playBtnClicked = True
+
         self.processCommand(videoplayer.play(video=self.video, resume=resume))
         return True
 
@@ -501,7 +511,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
     def setup(self):
         self.focusPlayButton()
 
-        util.DEBUG_LOG('PrePlay: Showing video info: {0}'.format(self.video))
+        util.DEBUG_LOG('PrePlay: Showing video info: {0}', self.video)
         if self.video.type == 'episode':
             self.setProperty('preview.yes', '1')
         elif self.video.type == 'movie':
@@ -528,6 +538,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
         self.setProperty('duration', util.durationToText(self.video.duration.asInt()))
         self.setProperty('summary', self.video.summary.strip().replace('\t', ' '))
         self.setProperty('unwatched', not self.video.isWatched and '1' or '')
+        self.setBoolProperty('watched', self.video.isFullyWatched)
 
         directors = u' / '.join([d.tag for d in self.video.directors()][:3])
         directorsLabel = len(self.video.directors) > 1 and T(32401, u'DIRECTORS').upper() or T(32383, u'DIRECTOR').upper()
@@ -542,7 +553,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin, RatingsMixi
             self.setProperty('content.rating', '')
             self.setProperty('thumb', self.video.defaultThumb.asTranscodedImageURL(*self.THUMB_POSTER_DIM))
             self.setProperty('preview', self.video.thumb.asTranscodedImageURL(*self.PREVIEW_DIM))
-            self.setProperty('info', u'{0} {1} {2} {3}'.format(T(32303, 'Season'), self.video.parentIndex, T(32304, 'Episode'), self.video.index))
+            self.setProperty('info', u'{0} {1}'.format(T(32303, 'Season').format(self.video.parentIndex), T(32304, 'Episode').format(self.video.index)))
             self.setProperty('date', util.cleanLeadingZeros(self.video.originallyAvailableAt.asDatetime('%B %d, %Y')))
             self.setProperty('related.header', T(32306, 'Related Shows'))
         elif self.video.type == 'movie':

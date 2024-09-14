@@ -1,12 +1,13 @@
 from __future__ import absolute_import
+
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
-from . import currentplaylist
-from . import opener
 
 from lib import player
 from lib import util
+from . import currentplaylist
+from . import kodigui
+from . import opener
 
 
 def timeDisplay(ms):
@@ -49,6 +50,7 @@ class MusicPlayerWindow(currentplaylist.CurrentPlaylistWindow):
         self.album = kwargs.get('album')
         self.selectedOffset = 0
         self.exitCommand = None
+        self.ignoreStopCommands = False
 
         if self.track:
             self.duration = self.track.duration.asInt()
@@ -61,17 +63,33 @@ class MusicPlayerWindow(currentplaylist.CurrentPlaylistWindow):
         self.setupSeekbar()
         self.selectionBoxMax = self.SEEK_IMAGE_WIDTH - (self.selectionBoxHalf - 3)
 
+        self.commonInit()
         self.updateProperties()
         self.play()
         self.setFocusId(406)
 
     def doClose(self, **kwargs):
-        player.PLAYER.off('playback.started', self.onPlayBackStarted)
+        player.PLAYER.off('av.started', self.onPlayBackStarted)
         if self.playlist and self.playlist.isRemote:
             self.playlist.off('change', self.updateProperties)
+
+        self.commonDeinit()
         kodigui.ControlledWindow.doClose(self)
 
+    def processCommand(self, command):
+        if command == "STOP":
+            self.doClose()
+            return
+        super(MusicPlayerWindow, self).processCommand(command)
+
     def onAction(self, action):
+        if self.ignoreStopCommands and action in (xbmcgui.ACTION_PREVIOUS_MENU,
+                                                  xbmcgui.ACTION_NAV_BACK):
+            if not self.is_current_window:
+                return
+        elif not self.ignoreStopCommands:
+            if not self.is_current_window and action != xbmcgui.ACTION_STOP:
+                return
         try:
             if action == xbmcgui.ACTION_STOP:
                 self.stopButtonClicked()
@@ -79,7 +97,7 @@ class MusicPlayerWindow(currentplaylist.CurrentPlaylistWindow):
         except:
             util.ERROR()
 
-        super().onAction(action)
+        super(MusicPlayerWindow, self).onAction(action)
 
     def onClick(self, controlID):
         if controlID == self.PLAYLIST_BUTTON_ID:
@@ -119,6 +137,7 @@ class MusicPlayerWindow(currentplaylist.CurrentPlaylistWindow):
             if not self.playlist.refresh(force=True, wait=True):
                 return
 
+        self.onAudioStarting()
         xbmc.executebuiltin('PlayerControl(Previous)')
 
     def skipNextButtonClicked(self):
@@ -127,12 +146,14 @@ class MusicPlayerWindow(currentplaylist.CurrentPlaylistWindow):
             if not self.playlist.refresh(force=True, wait=True):
                 return
 
+        self.onAudioStarting()
         xbmc.executebuiltin('PlayerControl(Next)')
 
     def showPlaylist(self):
         self.processCommand(opener.handleOpen(currentplaylist.CurrentPlaylistWindow, winID=xbmcgui.getCurrentWindowId()))
 
     def stopButtonClicked(self):
+        player.PLAYER.stopAndWait()
         self.doClose()
 
     def updateProperties(self, **kwargs):
@@ -152,6 +173,8 @@ class MusicPlayerWindow(currentplaylist.CurrentPlaylistWindow):
 
         if util.trackIsPlaying(self.track):
             return
+
+        self.onAudioStarting()
 
         fanart = None
         if self.playlist:

@@ -1,13 +1,13 @@
 from __future__ import absolute_import
-from kodi_six import xbmc
-from kodi_six import xbmcgui
-from . import kodigui
-
-from lib import util
-from lib import metadata
-from lib.util import T
 
 import plexnet
+from kodi_six import xbmc
+from kodi_six import xbmcgui
+
+from lib import metadata
+from lib import util
+from lib.util import T
+from . import kodigui
 
 
 class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
@@ -135,6 +135,10 @@ class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
             self.settingsList.addItems(items)
         else:
             self.settingsList.replaceItems(items)
+
+        if self.nonPlayback:
+            # we don't have enough items for a scrollbar, increase width
+            self.settingsList.setWidth(1000)
 
         self.setFocusId(self.SETTINGS_LIST_ID)
 
@@ -321,7 +325,7 @@ def showAudioDialog(video, non_playback=False):
     if choice is None:
         return
 
-    video.selectStream(choice)
+    video.selectStream(choice, from_session=not non_playback)
 
 
 def showSubtitlesDialog(video, non_playback=False):
@@ -336,7 +340,7 @@ def showSubtitlesDialog(video, non_playback=False):
     if choice is None:
         return
 
-    video.selectStream(choice)
+    video.selectStream(choice, from_session=not non_playback)
     video.manually_selected_sub_stream = choice.id
 
 

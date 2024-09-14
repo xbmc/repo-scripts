@@ -8,16 +8,18 @@ from . import util
 
 
 class Locks(object):
+    __slots__ = ("locks", "oneTimeLocks")
+
     def __init__(self):
         self.locks = {}
         self.oneTimeLocks = {}
 
     def lock(self, name):
         self.locks[name] = (self.locks.get(name) or 0) + 1
-        util.DEBUG_LOG("Lock {0}, total={0}".format(name, self.locks[name]))
+        util.DEBUG_LOG("Lock {0}, total={0}", name, self.locks[name])
 
     def lockOnce(self, name):
-        util.DEBUG_LOG("Locking once {0}".format(name))
+        util.DEBUG_LOG("Locking once {0}", name)
         self.oneTimeLocks[name] = True
 
     def unlock(self, name, forceUnlock=False):
@@ -39,7 +41,7 @@ class Locks(object):
                 normal = False
 
         unlocked = (normal or oneTime)
-        util.DEBUG_LOG("Unlock {0}, total={1}, unlocked={2}".format(name, self.locks.get(name) or 0, unlocked))
+        util.DEBUG_LOG("Unlock {0}, total={1}, unlocked={2}", name, self.locks.get(name) or 0, unlocked)
 
         return unlocked
 

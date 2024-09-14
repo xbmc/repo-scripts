@@ -42,6 +42,10 @@ class PlexServerManager(signalsmixin.SignalsMixin):
     def getSelectedServer(self):
         return self.selectedServer
 
+    @property
+    def allConnections(self):
+        return [c.address for s in list(self.serversByUuid.values()) for c in s.connections if s.connections]
+
     def setSelectedServer(self, server, force=False):
         # Don't do anything if the server is already selected.
         if self.selectedServer and self.selectedServer == server:
@@ -57,7 +61,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
                 return False
 
         if not self.selectedServer or force:
-            util.LOG("Setting selected server to {0}".format(server))
+            util.LOG("Setting selected server to {0}", server)
             self.selectedServer = server
 
             # Update our saved state.
@@ -143,11 +147,11 @@ class PlexServerManager(signalsmixin.SignalsMixin):
         if server.uuid in self.serversByUuid:
             existing = self.serversByUuid[server.uuid]
             existing.merge(server)
-            util.DEBUG_LOG("Merged {0}".format(repr(server.name)))
+            util.DEBUG_LOG("Merged {0}", repr(server.name))
             return existing
         else:
             self.serversByUuid[server.uuid] = server
-            util.DEBUG_LOG("Added new server {0}".format(repr(server.name)))
+            util.DEBUG_LOG("Added new server {0}", repr(server.name))
             self.trigger("new:server", server=server)
             return server
 
@@ -159,12 +163,12 @@ class PlexServerManager(signalsmixin.SignalsMixin):
 
         for uuid in toRemove:
             if uuid not in self.serversByUuid:
-                util.DEBUG_LOG("Server {} lost - removing".format(uuid))
+                util.DEBUG_LOG("Server {} lost - removing", uuid)
                 continue
 
             server = self.serversByUuid[uuid]
 
-            util.DEBUG_LOG("Server {0} has no more connections - removing".format(repr(server.name)))
+            util.DEBUG_LOG("Server {0} has no more connections - removing", repr(server.name))
             # self.notifyAboutDevice(server, False)
             self.removeServer(server)
 
@@ -184,7 +188,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
 
         if preferSearch and hasPreferredServer and preferredServerExists:
             # Update the preferred server immediately if requested and exits
-            util.LOG("Updating reachability for preferred server: force={0}".format(force))
+            util.LOG("Updating reachability for preferred server: force={0}", force)
             self.serversByUuid[self.searchContext.preferredServer].updateReachability(force)
             self.deferUpdateReachability()
         elif defer:
@@ -200,7 +204,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
                 self.deferReachabilityTimer.cancel()
                 self.deferReachabilityTimer = None
 
-            util.LOG("Updating reachability for all devices: force={0}".format(force))
+            util.LOG("Updating reachability for all devices: force={0}", force)
             for uuid in list(self.serversByUuid.keys()):
                 self.serversByUuid[uuid].updateReachability(force)
 
@@ -295,7 +299,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
             elif waitingForOwned and (not self.searchContext.bestServer or not self.searchContext.bestServer.owned):
                 util.LOG("Still waiting for an owned server: " + pendingString)
             elif waitingForAnything and not self.searchContext.bestServer:
-                util.LOG("Still waiting for any server: {0}".format(pendingString))
+                util.LOG("Still waiting for any server: {0}", pendingString)
             else:
                 # No hope for anything better, let's select what we found
                 util.LOG("Settling for the best server we found")
@@ -333,6 +337,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
             server = plexserver.createPlexServerForName(serverObj['uuid'], serverObj['name'])
             server.owned = bool(serverObj.get('owned'))
             server.sameNetwork = serverObj.get('sameNetwork')
+            server.dnsRebindingProtection = serverObj.get('dnsRebindingProtection')
 
             hasSecureConn = False
             for i in range(len(serverObj.get('connections', []))):
@@ -357,7 +362,8 @@ class PlexServerManager(signalsmixin.SignalsMixin):
 
             self.serversByUuid[server.uuid] = server
 
-        util.LOG("Loaded {0} servers from registry".format(len(obj['servers'])))
+        util.LOG("Loaded {0} servers from registry", len(obj['servers']))
+        util.APP.trigger("loaded:server_connections", servers=self.serversByUuid.values(), source="stored")
         self.updateReachability(False, True)
 
     def saveState(self, setPreferred=False):
@@ -370,6 +376,8 @@ class PlexServerManager(signalsmixin.SignalsMixin):
         servers = self.getServers()
         obj['servers'] = []
 
+        hosts = []
+
         for server in servers:
             # Don't save secondary servers. They should be discovered through GDM or myPlex.
             if not server.isSecondary():
@@ -378,11 +386,13 @@ class PlexServerManager(signalsmixin.SignalsMixin):
                     'uuid': server.uuid,
                     'owned': server.owned,
                     'sameNetwork': server.sameNetwork,
+                    'dnsRebindingProtection': server.dnsRebindingProtection,
                     'connections': []
                 }
 
                 for i in range(len(server.connections)):
                     conn = server.connections[i]
+                    hosts.append(conn.address)
                     serverObj['connections'].append({
                         'sources': conn.sources,
                         'address': conn.address,
@@ -397,6 +407,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
                 and setPreferred:
             util.INTERFACE.setPreference("lastServerId.{}".format(plexapp.ACCOUNT.ID), self.selectedServer.uuid)
 
+        util.APP.trigger("loaded:server_connections", servers=servers, source="myplex")
         util.INTERFACE.setRegistry("PlexServerManager", json.dumps(obj))
 
     def clearState(self):
@@ -421,7 +432,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
                         self.channelServer = s
 
             if self.channelServer:
-                util.LOG("Setting channel server to {0}".format(self.channelServer))
+                util.LOG("Setting channel server to {0}", self.channelServer)
 
         return self.channelServer
 
@@ -449,7 +460,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
 
             if self.transcodeServer:
                 transcodeTypeString = transcodeType or ''
-                util.LOG("Found a better {0} transcode server than {1}, using: {2}".format(transcodeTypeString, self.selectedserver, self.transcodeServer))
+                util.LOG("Found a better {0} transcode server than {1}, using: {2}", transcodeTypeString, self.selectedserver, self.transcodeServer)
                 return self.transcodeServer
 
         return self.selectedServer
@@ -462,7 +473,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
 
         ID = ID is not None and ID or plexapp.ACCOUNT.ID
         pServ = util.INTERFACE.getPreference("lastServerId.{}".format(ID), '')
-        util.DEBUG_LOG("Preferred server for {0} is: {1}".format(ID, pServ))
+        util.DEBUG_LOG("Preferred server for {0} is: {1}", ID, pServ)
         # Keep track of some information during our search
 
         waitFor = []
@@ -478,7 +489,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
             'waitingForResources': waitFor
         })
 
-        util.LOG("Starting selected server search, hoping for {0}".format(self.searchContext.preferredServer))
+        util.LOG("Starting selected server search, hoping for {0}", self.searchContext.preferredServer)
         if util.LOCAL_OVER_SECURE:
             util.WARN_LOG("Preferring local server connections over secure ones!")
 
@@ -530,7 +541,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
                 self.deferReachabilityTimer.reset()
 
         if self.deferReachabilityTimer and logInfo:
-            util.LOG('Defer update reachability for all devices a few seconds: GDMactive={0}'.format(gdm.DISCOVERY.isActive()))
+            util.LOG('Defer update reachability for all devices a few seconds: GDMactive={0}', gdm.DISCOVERY.isActive())
 
     def onDeferUpdateReachabilityTimer(self):
         if not self.selectedServer and self.searchContext:
@@ -592,7 +603,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
             util.DEBUG_LOG("No manual connections.")
             return
 
-        util.LOG("Refreshing {0} manual connections".format(len(manualConnections)))
+        util.LOG("Refreshing {0} manual connections", len(manualConnections))
 
         for conn in manualConnections:
             # Default to http, as the server will need to be signed in for https to work,
@@ -618,7 +629,7 @@ class PlexServerManager(signalsmixin.SignalsMixin):
         data = response.getBodyXml()
         if data is not None:
             serverAddress = context.serverAddress
-            util.DEBUG_LOG("Received manual connection response for {0}".format(serverAddress))
+            util.DEBUG_LOG("Received manual connection response for {0}", serverAddress)
 
             machineID = data.attrib.get('machineIdentifier')
             name = context.address

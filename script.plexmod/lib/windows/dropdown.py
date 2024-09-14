@@ -1,8 +1,9 @@
 from __future__ import absolute_import
-from kodi_six import xbmc, xbmcgui
-from . import kodigui
+
+from kodi_six import xbmcgui
 
 from lib import util
+from . import kodigui
 
 SEPARATOR = None
 
@@ -14,6 +15,7 @@ class DropdownDialog(kodigui.BaseDialog):
     res = '1080i'
     width = 1920
     height = 1080
+    optionHeight = util.vscalei(66)
     dropWidth = 360
     borderOff = -20
 
@@ -49,23 +51,39 @@ class DropdownDialog(kodigui.BaseDialog):
     def y(self):
         y = self.pos[1]
         if self.posIsBottom:
-            y -= (len(self.options) * 66) + 80
+            y -= (len(self.options) * self.optionHeight) + 80
         return y
 
     def onFirstInit(self):
         self.setProperty('dropdown', self.setDropdownProp and '1' or '')
         self.setProperty('header', self.header)
-        self.optionsList = kodigui.ManagedControlList(self, self.OPTIONS_LIST_ID, 8)
+        self.optionsList = kodigui.ManagedControlList(self, self.OPTIONS_LIST_ID, 14)
         self.showOptions()
-        height = min(66 * 14, (len(self.options) * 66)) + 80
-        self.getControl(100).setPosition(self.x, self.y)
+        height = min(self.optionHeight * 14, len(self.options) * self.optionHeight) + 80
+        ol_height = height - 80
+        y = self.y
+
+        if isinstance(y, int) and y + height > self.height:
+            while y + height > self.height and y > 0:
+                y -= self.optionHeight
+            y = max(0, y)
+
+            ol_height = height - 80
+            if self.header:
+                ol_height -= util.vscalei(86)
 
         shadowControl = self.getControl(110)
         if self.header:
-            shadowControl.setHeight(height + 86)
+            shadowControl.setHeight(height + util.vscalei(86))
             self.getControl(111).setHeight(height + 6)
         else:
             shadowControl.setHeight(height)
+        self.optionsList.setHeight(ol_height)
+
+        if y == "middle":
+            y = util.vperci(util.vscale(ol_height))
+
+        self.getControl(100).setPosition(self.x, y)
 
         self.setProperty('show', '1')
         self.setProperty('close.direction', self.closeDirection)

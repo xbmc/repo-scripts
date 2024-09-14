@@ -1,6 +1,7 @@
 from __future__ import absolute_import
-from . import kodigui
+
 from lib import util
+from . import kodigui
 
 util.setGlobalProperty('background.busy', '')
 util.setGlobalProperty('background.shutdown', '')
@@ -20,6 +21,7 @@ class BackgroundWindow(kodigui.BaseWindow):
         self.function = kwargs.get('function')
 
     def onFirstInit(self):
+        # try accessing our dummy control to trigger an error if our XML is broken
         self.function()
         self.doClose()
 

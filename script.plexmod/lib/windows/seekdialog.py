@@ -1,28 +1,27 @@
 from __future__ import absolute_import
+
 import re
-import time
 import threading
-import math
+import time
+from collections import OrderedDict
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from collections import OrderedDict
+from plexnet import plexapp
+from plexnet.util import AttributeDict
+from plexnet.exceptions import ServerNotOwned, NotFound
+from plexnet.videosession import VideoSessionInfo, ATTRIBUTE_TYPES as SESSION_ATTRIBUTE_TYPES
+from six.moves import range
 
+import lib.cache
+from lib import util
+from lib.kodijsonrpc import builtin
+from lib.util import T
+from . import busy
+from . import dropdown
 from . import kodigui
 from . import playersettings
-from . import dropdown
-from . import busy
-from plexnet import plexapp
-
-from lib import util
-from plexnet.videosession import VideoSessionInfo, ATTRIBUTE_TYPES as SESSION_ATTRIBUTE_TYPES
-from plexnet.exceptions import ServerNotOwned, NotFound
-from plexnet.signalsmixin import SignalsMixin
-
-from lib.kodijsonrpc import builtin
-
-from lib.util import T
-from six.moves import range
+from .mixins import SpoilersMixin
 
 KEY_MOVE_SET = frozenset(
     (
@@ -73,6 +72,11 @@ MARKERS = OrderedDict([
         "markerSkipBtnTimeout": "skipCreditsButtonTimeout"
     })
 ])
+
+
+class Marker(AttributeDict):
+    pass
+
 
 FINAL_MARKER_NEGOFF = 3000
 MARKER_SHOW_NEGOFF = 3000
@@ -135,7 +139,7 @@ class SeekDialog(kodigui.BaseDialog):
     SKIP_STEPS = {"negative": [-10000], "positive": [30000]}
 
     def __init__(self, *args, **kwargs):
-        kodigui.BaseDialog.__init__(self, *args, **kwargs)
+        super(SeekDialog, self).__init__(*args, **kwargs)
 
         # fixme: heyo, there's a lot of disorder in here.
         self.handler = kwargs.get('handler')
@@ -171,7 +175,7 @@ class SeekDialog(kodigui.BaseDialog):
         self._delayedSeekTimeout = 0
         self._osdHideAnimationTimeout = 0
         self._hideDelay = self.HIDE_DELAY
-        self._autoSeekDelay = util.advancedSettings.autoSeek and util.advancedSettings.autoSeekDelay or 0
+        self._autoSeekDelay = util.addonSettings.autoSeek and util.addonSettings.autoSeekDelay or 0
         self._atSkipStep = -1
         self._lastSkipDirection = None
         self._forcedLastSkipAmount = None
@@ -181,6 +185,9 @@ class SeekDialog(kodigui.BaseDialog):
         self._ignoreInput = False
         self._ignoreTick = False
         self._abortBufferWait = False
+        self.no_spoilers = util.getSetting('no_episode_spoilers3', ["unwatched"])
+        self.no_time_no_osd_spoilers = util.getSetting('no_osd_time_spoilers', False)
+        self.clientLikePlex = util.getSetting('player_official', True)
 
         self._videoBelowOneHour = False
         self.timeFmtKodi = util.timeFormatKN
@@ -192,6 +199,11 @@ class SeekDialog(kodigui.BaseDialog):
         self.timeKeeperTime = None
         self.idleTime = None
         self.stopPlaybackOnIdle = util.getSetting('player_stop_on_idle', 0)
+        self.resumeSeekBehind = util.getSetting('resume_seek_behind', 0)
+        self.resumeSeekBehindPause = util.getSetting('resume_seek_behind_pause', False)
+        self.resumeSeekBehindAfter = util.getSetting('resume_seek_behind_after', 0) / 1000.0
+        self.resumeSeekBehindOnlyDP = util.getSetting('resume_seek_behind_onlydp', True)
+        self.pausedAt = None
         self.isDirectPlay = True
         self.isTranscoded = False
 
@@ -203,23 +215,26 @@ class SeekDialog(kodigui.BaseDialog):
         self._creditsSkipShownStarted = None
         self._currentMarker = None
         self.skipSteps = self.SKIP_STEPS
-        self.useAutoSeek = util.advancedSettings.autoSeek
-        self.useDynamicStepsForTimeline = util.advancedSettings.dynamicTimelineSeek
+        self.useAutoSeek = util.addonSettings.autoSeek
+        self.useDynamicStepsForTimeline = util.addonSettings.dynamicTimelineSeek
 
+        self.showSkipIntro = False
+        self.showSkipCredits = False
         self.bingeMode = False
         self.autoSkipIntro = False
         self.autoSkipCredits = False
         self.showIntroSkipEarly = False
         self.skipPostPlay = False
+        self.videoPausedForAudioStreamChange = False
 
-        self.skipIntroButtonTimeout = util.advancedSettings.skipIntroButtonTimeout
-        self.skipCreditsButtonTimeout = util.advancedSettings.skipCreditsButtonTimeout
-        self.showItemEndsInfo = util.advancedSettings.showMediaEndsInfo
-        self.showItemEndsLabel = util.advancedSettings.showMediaEndsLabel
+        self.skipIntroButtonTimeout = util.addonSettings.skipIntroButtonTimeout
+        self.skipCreditsButtonTimeout = util.addonSettings.skipCreditsButtonTimeout
+        self.showItemEndsInfo = util.addonSettings.showMediaEndsInfo
+        self.showItemEndsLabel = util.addonSettings.showMediaEndsLabel
 
         self.player.video.server.on("np:timelineResponse", self.timelineResponseCallback)
 
-        if util.kodiSkipSteps and util.advancedSettings.kodiSkipStepping:
+        if util.kodiSkipSteps and util.addonSettings.kodiSkipStepping:
             self.skipSteps = {"negative": [], "positive": []}
             for step in util.kodiSkipSteps:
                 key = "negative" if step < 0 else "positive"
@@ -290,27 +305,87 @@ class SeekDialog(kodigui.BaseDialog):
 
     @property
     def markers(self):
-        # fixme: fix transcoded marker skip
         if not self._enableMarkerSkip:
             return None
 
-        if not self._markers and hasattr(self.handler.player.video, "markers"):
+        if self._markers is None and hasattr(self.handler.player.video, "markers"):
             markers = []
 
-            for marker in self.handler.player.video.markers:
-                if marker.type in MARKERS:
+            for m in self.handler.player.video.markers:
+                if m.type in MARKERS:
+                    # normalize markers and properties as we modify them later on
+                    final = m.final.asBool()
+                    sto = m.startTimeOffset.asInt()
+                    marker = Marker({
+                        "id": m.id.asInt(),
+                        "final": final,
+                        "type": str(m.type),
+                        "title": "{}@{}{}".format(m.type, m.startTimeOffset.asInt(), final and ",final" or ""),
+                        "startTimeOffset": sto,
+                        "endTimeOffset": m.endTimeOffset.asInt()
+                    })
+
+                    # skip completely bad markers
+                    if marker.startTimeOffset > self.duration:
+                        continue
+
+                    # skip intro markers that are too late
+                    if (marker.type == "intro"
+                            and marker.startTimeOffset > util.addonSettings.introMarkerMaxOffset * 1000):
+                        util.DEBUG_LOG("Throwing away intro marker {}, as its start time offset is bigger than the"
+                                       " configured maximum", marker)
+                        continue
+
                     m = MARKERS[marker.type].copy()
                     m["marker"] = marker
                     m["marker_type"] = marker.type
                     markers.append(m)
 
             self._markers = markers
+            util.DEBUG_LOG("Got markers: {}", lambda: list(_m["marker"] for _m in markers))
 
         return self._markers
 
     @markers.setter
     def markers(self, val):
         self._markers = val
+
+    def getCurrentMarkerDef(self, offset=None):
+        """
+        Show intro/credits skip button at current time
+        """
+
+        if not self.markers:
+            return
+
+        off = offset if offset is not None else self.trueOffset()
+
+        for markerDef in self.markers:
+            marker = markerDef["marker"]
+            if marker:
+                startTimeOffset = marker.startTimeOffset
+
+                # marker display wanted?
+                if (not self.showSkipIntro and markerDef["marker_type"] == "intro") or \
+                        (not self.showSkipCredits and markerDef["marker_type"] == "credits"):
+                    continue
+
+                # show intro skip early? (only if intro is during the first X minutes)
+                if self.showIntroSkipEarly and markerDef["marker_type"] == "intro" and \
+                        startTimeOffset <= util.addonSettings.skipIntroButtonShowEarlyThreshold1 * 1000:
+                    startTimeOffset = 0
+                    markerDef["overrideStartOff"] = 0
+
+                # fix markers with a bad endTimeOffset
+                if marker.endTimeOffset > self.duration:
+                    marker.endTimeOffset = self.duration
+                    util.DEBUG_LOG("Fixing marker endTimeOffset for: {}", marker)
+
+                markerEndNegoff = FINAL_MARKER_NEGOFF if getattr(markerDef["marker"], "final", False) else 0
+
+                if startTimeOffset - MARKER_SHOW_NEGOFF <= off < marker.endTimeOffset - markerEndNegoff:
+
+                    return markerDef
 
     def onFirstInit(self):
         try:
@@ -341,14 +416,29 @@ class SeekDialog(kodigui.BaseDialog):
         self.bigSeekGroupControl = self.getControl(self.BIG_SEEK_GROUP_ID)
         self.initialized = True
 
-        showQuickSubs = util.getSetting('subtitle_downloads', False)
-        showRepeat = util.getSetting('video_show_repeat', False)
-        showFfwdRwd = util.getSetting('video_show_ffwdrwd', False)
-        showShuffle = util.getSetting('video_show_shuffle', False)
+        button_settings = util.getUserSetting('player_show_buttons', ['subtitle_downloads', 'skip_intro', 'skip_credits'])
+        showQuickSubs = 'subtitle_downloads' in button_settings
+        showRepeat = 'video_show_repeat' in button_settings
+        showFfwdRwd = 'video_show_ffwdrwd' in button_settings
+        showShuffle = 'video_show_shuffle' in button_settings
+        self.showSkipIntro = 'skip_intro' in button_settings
+        self.showSkipCredits = 'skip_credits' in button_settings
         self.setBoolProperty('nav.quick_subtitles', showQuickSubs)
         self.setBoolProperty('nav.repeat', showRepeat)
         self.setBoolProperty('nav.ffwdrwd', showFfwdRwd)
         self.setBoolProperty('nav.shuffle', showShuffle)
+        navPlaylist = util.getSetting('video_show_playlist', 'eponly')
+        self.setBoolProperty('nav.playlist', (navPlaylist == "eponly" and
+                                              (self.player.video.type == 'episode' or self.handler.playlist)) or
+                             navPlaylist == "always")
+
+        if not self.getProperty('nav.playlist'):
+            self.subtitleButtonLeft += self.NAVBAR_BTN_SIZE
+
+        navPrevNext = util.getSetting('video_show_prevnext', 'eponly')
+        self.setBoolProperty('nav.prevnext', (navPrevNext == "eponly" and
+                                              (self.player.video.type == 'episode' or self.handler.playlist)) or
+                             navPrevNext == "always")
 
         if showQuickSubs:
             self.subtitleButtonLeft += self.NAVBAR_BTN_SIZE * len(
@@ -378,34 +468,25 @@ class SeekDialog(kodigui.BaseDialog):
         """
         this is called by our handler and occurs earlier than onFirstInit.
         """
-        util.DEBUG_LOG("SeekDialog: setup, keepMarkerDef={}".format(keepMarkerDef))
+        util.DEBUG_LOG("SeekDialog: setup, keepMarkerDef={}", keepMarkerDef)
+        self._duration = duration
         self.title = title
         self.title2 = title2
         self.chapters = chapters or []
         self.isDirectPlay = not meta.isTranscoded
         self.isTranscoded = not self.isDirectPlay
-        self.showChapters = util.getUserSetting('show_chapters', True) and (
-                bool(chapters) or (util.getUserSetting('virtual_chapters', True) and bool(self.markers)))
         self.setProperty('video.title', title)
         self.setProperty('is.show', (self.player.video.type == 'episode') and '1' or '')
         self.setProperty('ep.year', (self.player.video.type == 'episode') and self.player.video.year or '')
         self.setProperty('has.playlist', self.handler.playlist and '1' or '')
         self.setProperty('shuffled', (self.handler.playlist and self.handler.playlist.isShuffled) and '1' or '')
-        self.setProperty('has.chapters', self.showChapters and '1' or '')
-        self.setProperty('show.buffer', (util.advancedSettings.playerShowBuffer and self.isDirectPlay) and '1' or '')
+        self.setProperty('show.buffer', (util.addonSettings.playerShowBuffer and self.isDirectPlay) and '1' or '')
+        self.setProperty('theme', 'modern')
 
         self.killTimeKeeper()
 
-        navPlaylist = util.getSetting('video_show_playlist', 'eponly')
-        self.setBoolProperty('nav.playlist', (navPlaylist == "eponly" and self.player.video.type == 'episode') or
-                             navPlaylist == "always")
-
         if not self.getProperty('nav.playlist'):
             self.subtitleButtonLeft += self.NAVBAR_BTN_SIZE
-
-        navPrevNext = util.getSetting('video_show_prevnext', 'eponly')
-        self.setBoolProperty('nav.prevnext', (navPrevNext == "eponly" and self.player.video.type == 'episode') or
-                             navPrevNext == "always")
 
         if not self.getProperty('nav.prevnext'):
             self.subtitleButtonLeft += self.NAVBAR_BTN_SIZE
@@ -413,7 +494,7 @@ class SeekDialog(kodigui.BaseDialog):
         try:
             if self.player.video.type == 'episode':
                 pbs = self.player.video.playbackSettings
-                util.DEBUG_LOG("Playback settings for {}: {}".format(self.player.video.ratingKey, pbs))
+                util.DEBUG_LOG("Playback settings for {}: {}", self.player.video.ratingKey, pbs)
 
                 self.bingeMode = pbs.binge_mode
                 self.handler.inBingeMode = self.bingeMode
@@ -434,11 +515,15 @@ class SeekDialog(kodigui.BaseDialog):
         except IndexError:
             self.doClose(delete=True)
             raise util.NoDataException
+
+        self.showChapters = util.getUserSetting('show_chapters', True) and (
+                bool(chapters) or (util.getUserSetting('virtual_chapters', True) and bool(self.markers)))
+        self.setProperty('has.chapters', self.showChapters and '1' or '')
+
         self.baseOffset = offset
         self.offset = 0
         self.idleTime = None
         self.lastSubtitleNavAction = "forward"
-        self._duration = duration
         self._videoBelowOneHour = duration / 3600000 < 1
         if self._videoBelowOneHour:
             self.timeFmtKodi = self.timeFmtKodi.replace("hh:", "")
@@ -513,13 +598,15 @@ class SeekDialog(kodigui.BaseDialog):
                         if markerDef["marker"]:
                             marker = markerDef["marker"]
                             final = getattr(marker, "final", False)
-                            markerOff = 0 if final else MARKER_END_JUMP_OFF
+                            markerOff = -FINAL_MARKER_NEGOFF if final else MARKER_END_JUMP_OFF
 
-                            util.DEBUG_LOG('MarkerSkip: Skipping marker {}'.format(markerDef["marker"]))
+                            util.DEBUG_LOG('MarkerSkip: Skipping marker'
+                                           ' {} (final: {}, to: {}, offset: {})'.format(markerDef["marker"],
+                                                                            final, marker.endTimeOffset, markerOff))
                             self.setProperty('show.markerSkip', '')
                             self.setProperty('show.markerSkip_OSDOnly', '')
                             markerDef["skipped"] = True
-                            self.doSeek(math.ceil(float(marker.endTimeOffset)) + markerOff)
+                            self.doSeek(marker.endTimeOffset + markerOff)
                             self.hideOSD(skipMarkerFocus=True)
 
                             if marker.type == "credits" and not final:
@@ -568,7 +655,13 @@ class SeekDialog(kodigui.BaseDialog):
                             self.setProperty('show.chapters', '1')
 
                     elif action == xbmcgui.ACTION_MOVE_DOWN:
-                        if self.previousFocusID == self.BIG_SEEK_LIST_ID and (
+                        # pressing down with the OSD open and chapters available
+                        if (self.showChapters and self.clientLikePlex and
+                                (self.previousFocusID not in (controlID, self.MAIN_BUTTON_ID, self.BIG_SEEK_LIST_ID))):
+                            self.setProperty('show.chapters', '1')
+                            self.setFocusId(self.BIG_SEEK_LIST_ID)
+
+                        elif self.previousFocusID == self.BIG_SEEK_LIST_ID and (
                                 self.getProperty('show.markerSkip') or self.getProperty('show.markerSkip_OSDOnly')):
                             self.setFocusId(self.SKIP_MARKER_BUTTON_ID)
                             self.setProperty('show.chapters', '')
@@ -596,13 +689,21 @@ class SeekDialog(kodigui.BaseDialog):
 
                         else:
                             self.skipBack(without_osd=True)
-                    if action in (xbmcgui.ACTION_MOVE_UP, xbmcgui.ACTION_MOVE_DOWN):
-                        # we're seeking from the timeline, with the OSD closed; act as we're skipping
-                        if not self._seeking:
-                            self.selectedOffset = self.trueOffset()
-
-                        if self.skipChapter(forward=(action == xbmcgui.ACTION_MOVE_UP), without_osd=True):
+                    elif action in (xbmcgui.ACTION_MOVE_UP,
+                                    xbmcgui.ACTION_MOVE_DOWN,
+                                    xbmcgui.ACTION_PAGE_UP,
+                                    xbmcgui.ACTION_PAGE_DOWN):
+                        if self.clientLikePlex:
+                            self.showOSD()
                             return
+
+                        if action in (xbmcgui.ACTION_MOVE_UP, xbmcgui.ACTION_MOVE_DOWN):
+                            # we're seeking from the timeline, with the OSD closed; act as we're skipping
+                            if not self._seeking:
+                                self.selectedOffset = self.trueOffset()
+
+                            if self.skipChapter(forward=(action == xbmcgui.ACTION_MOVE_UP), without_osd=True):
+                                return
 
                     if action in (
                             xbmcgui.ACTION_MOVE_UP,
@@ -663,16 +764,16 @@ class SeekDialog(kodigui.BaseDialog):
                     # immediate marker timer actions
                     if self.countingDownMarker:
                         if controlID != self.BIG_SEEK_LIST_ID and \
-                                (util.advancedSettings.skipMarkerTimerCancel
-                                 or util.advancedSettings.skipMarkerTimerImmediate):
-                            if util.advancedSettings.skipMarkerTimerCancel and \
+                                (util.addonSettings.skipMarkerTimerCancel
+                                 or util.addonSettings.skipMarkerTimerImmediate):
+                            if util.addonSettings.skipMarkerTimerCancel and \
                                     action in (xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK):
                                 self.displayMarkers(cancelTimer=True)
                                 return
 
                             # skip the first second of a marker shown with countdown to avoid unexpected OK/SELECT
                             # behaviour
-                            elif util.advancedSettings.skipMarkerTimerImmediate \
+                            elif util.addonSettings.skipMarkerTimerImmediate \
                                     and action == xbmcgui.ACTION_SELECT_ITEM and \
                                     self._currentMarker["countdown"] is not None and \
                                     self._currentMarker["countdown_initial"] is not None and \
@@ -695,17 +796,18 @@ class SeekDialog(kodigui.BaseDialog):
                                 self.hideOSD()
                             return
 
-                        if action in (xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK):
-                            if self._osdHideAnimationTimeout:
+                        if action in (xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_STOP):
+                            if action != xbmcgui.ACTION_STOP and self._osdHideAnimationTimeout:
                                 if self._osdHideAnimationTimeout >= time.time():
                                     return
                                 else:
                                     self._osdHideAnimationTimeout = None
 
-                            if self.osdVisible():
-                                self.hideOSD()
+                            if action != xbmcgui.ACTION_STOP and self.osdVisible():
+                                if not self.playlistDialogVisible:
+                                    self.hideOSD()
                             else:
-                                self.sendTimeline(state=self.player.STATE_STOPPED)
+                                self.sendTimeline(state=self.player.STATE_STOPPED, ensureFinalTimelineEvent=True)
                                 self.stop()
                             return
         except:
@@ -779,7 +881,7 @@ class SeekDialog(kodigui.BaseDialog):
                     if not self._seeking:
                         # we might be reacting to an immediate marker skip while showing a marker with timeout;
                         # in that case, don't show the OSD
-                        if not self._currentMarker or not util.advancedSettings.skipMarkerTimerImmediate or \
+                        if not self._currentMarker or not util.addonSettings.skipMarkerTimerImmediate or \
                                 self._currentMarker["countdown"] is None:
                             self.showOSD()
                     else:
@@ -972,10 +1074,11 @@ class SeekDialog(kodigui.BaseDialog):
 
     def skipChapter(self, forward=True, without_osd=False):
         lastSelectedOffset = self.selectedOffset
-        util.DEBUG_LOG('chapter skipping from {0} with forward {1}'.format(lastSelectedOffset, forward))
+        util.DEBUG_LOG('chapter skipping from {0} with forward {1}', lastSelectedOffset, forward)
         if forward:
             nextChapters = [c for c in self.chapters if c.startTime() > lastSelectedOffset]
-            util.DEBUG_LOG('Found {0} chapters among {1}'.format(len(nextChapters), len(self.chapters)))
+            util.DEBUG_LOG('Found {0} chapters among {1}', lambda: len(nextChapters),
+                           lambda: len(self.chapters))
             if len(nextChapters) == 0:
                 return False
             chapter = nextChapters[0]
@@ -984,16 +1087,17 @@ class SeekDialog(kodigui.BaseDialog):
             if startTimeLimit < 0:
                 startTimeLimit = 0
             lastChapters = [c for c in self.chapters if c.startTime() <= startTimeLimit]
-            util.DEBUG_LOG('Found {0} chapters among {1}'.format(len(lastChapters), len(self.chapters)))
+            util.DEBUG_LOG('Found {0} chapters among {1}', lambda: len(lastChapters),
+                           lambda: len(self.chapters))
             if len(lastChapters) == 0:
                 return False
             chapter = lastChapters[-1]
 
         if chapter.tag:
-            util.DEBUG_LOG('Skipping to chapter: {}'.format(chapter.tag))
+            util.DEBUG_LOG('Skipping to chapter: {}', chapter.tag)
             self.forceNextTimeAsChapter = chapter.tag
 
-        util.DEBUG_LOG('New start time is {0}'.format(chapter.startTime()))
+        util.DEBUG_LOG('New start time is {0}', lambda: chapter.startTime())
         self.skipByOffset(chapter.startTime() - lastSelectedOffset, without_osd=without_osd)
         return True
 
@@ -1064,22 +1168,25 @@ class SeekDialog(kodigui.BaseDialog):
             self.hasDialog = False
 
     def videoSettingsHaveChanged(self):
-        changed = False
-        if (
-                self.player.video.settings.prefOverrides != self.initialVideoSettings or
-                self.player.video.selectedAudioStream() != self.initialAudioStream
-        ):
+        changed = AttributeDict(video=False, audio=False, subtitle=False, reload=False)
+        if self.player.video.settings.prefOverrides != self.initialVideoSettings:
+            changed.video = True
+            changed.reload = True
+        if self.player.video.selectedAudioStream() != self.initialAudioStream:
+            changed.audio = True
+            if not self.isDirectPlay:
+                changed.reload = True
+
+        if changed.video or changed.audio:
             self.initialVideoSettings = dict(self.player.video.settings.prefOverrides)
             self.initialAudioStream = self.player.video.selectedAudioStream()
-            changed = True
 
         sss = self.player.video.selectedSubtitleStream()
         if sss != self.initialSubtitleStream:
             self.initialSubtitleStream = sss
-            if changed or self.isTranscoded:
-                return True
-            else:
-                return 'SUBTITLE'
+            changed.subtitle = True
+            if self.isTranscoded:
+                changed.reload = True
 
         return changed
 
@@ -1123,7 +1230,8 @@ class SeekDialog(kodigui.BaseDialog):
     def subtitleButtonClicked(self):
         options = []
 
-        options.append({'key': 'download', 'display': T(32405, 'Download Subtitles')})
+        if self.isDirectPlay:
+            options.append({'key': 'download', 'display': T(32405, 'Download Subtitles')})
 
         # select "enable" by default
         selectIndex = 1
@@ -1177,14 +1285,42 @@ class SeekDialog(kodigui.BaseDialog):
             if self.handler and self.handler.player and self.handler.player.playerObject \
                     and util.getSetting('calculate_oshash', False):
                 meta = self.handler.player.playerObject.metadata
-                oss_hash = util.getOpenSubtitlesHash(meta.size, meta.streamUrls[0])
-                if oss_hash:
-                    util.DEBUG_LOG("OpenSubtitles hash: %s" % oss_hash)
-                    util.setGlobalProperty("current_oshash", oss_hash, base='videoinfo.{0}')
+                if not meta.size:
+                    util.LOG("Can't calculate OpenSubtitles hash because we're transcoding")
+
+                else:
+                    oss_hash = util.getOpenSubtitlesHash(meta.size, meta.streamUrls[0])
+                    if oss_hash:
+                        util.DEBUG_LOG("OpenSubtitles hash: {}", oss_hash)
+                        util.setGlobalProperty("current_oshash", oss_hash, base='videoinfo.{0}')
             else:
                 util.setGlobalProperty("current_oshash", '', base='videoinfo.{0}')
             self.lastSubtitleNavAction = "download"
+
+            # remove the Year info from the current video info tag for better OSS search results
+            t = self.player.getVideoInfoTag()
+            changed_info_tag = False
+            item = xbmcgui.ListItem()
+            item.setPath(self.player.getPlayingFile())
+            if t:
+                year = t.getYear()
+                if year:
+                    item.setInfo("video", {"year": 0})
+                    self.player.updateInfoTag(item)
+                    changed_info_tag = year
+
             builtin.ActivateWindow('SubtitleSearch')
+            # wait for the window to activate
+            while not xbmc.getCondVisibility('Window.IsActive(SubtitleSearch)'):
+                util.MONITOR.waitForAbort(0.1)
+            # wait for the window to close
+            while xbmc.getCondVisibility('Window.IsActive(SubtitleSearch)'):
+                util.MONITOR.waitForAbort(0.1)
+
+            if changed_info_tag:
+                item.setInfo("video", {"year": changed_info_tag})
+                self.player.updateInfoTag(item)
+
         elif choice['key'] == 'delay':
             self.hideOSD()
             self.lastSubtitleNavAction = "delay"
@@ -1213,6 +1349,8 @@ class SeekDialog(kodigui.BaseDialog):
     def disableSubtitles(self):
         self.player.video.disableSubtitles()
         self.setSubtitles()
+        if self.isTranscoded:
+            self.doSeek(self.trueOffset(), settings_changed=True)
 
     def cycleSubtitles(self, forward=True):
         """
@@ -1221,6 +1359,8 @@ class SeekDialog(kodigui.BaseDialog):
         stream = self.player.video.cycleSubtitles(forward=forward)
         self.setSubtitles(honor_forced_subtitles_override=False)
         util.showNotification(str(stream), time_ms=1500, header=util.T(32396, "Subtitles"))
+        if self.isTranscoded:
+            self.doSeek(self.trueOffset(), settings_changed=True)
 
     def setSubtitles(self, do_sleep=False, honor_forced_subtitles_override=False):
         self.handler.setSubtitles(do_sleep=do_sleep, honor_forced_subtitles_override=honor_forced_subtitles_override)
@@ -1230,23 +1370,59 @@ class SeekDialog(kodigui.BaseDialog):
             util.DEBUG_LOG("Switching embedded subtitle stream, seeking due to Kodi issue #21086")
 
             # true offset can be 0, which might lead to an infinite loop, seek to 100ms at least.
-            self.doSeek(max(self.trueOffset() - 100, 100))
+            if self.handler.seekOnStart:
+                util.DEBUG_LOG("Waiting for seekOnStart to apply: {}", self.handler.seekOnStart)
+
+            waited = 0
+            while self.handler.seekOnStart and waited < 20:
+                xbmc.sleep(100)
+                waited += 1
+
+            if waited < 20:
+                self.doSeek(max(self.trueOffset() - 100, 100))
+                return
+            util.LOG("Tried switching embedded subtitle stream to the correct one, but we've waited too long for "
+                      "seekOnStart.")
 
     def showSettings(self):
         with self.propertyContext('settings.visible'):
             playersettings.showDialog(self.player.video, via_osd=True, parent=self)
 
         changed = self.videoSettingsHaveChanged()
+        any_changes = any(changed.values())
 
-        if changed == 'SUBTITLE':
-            self.setSubtitles(do_sleep=False)
-            self.lastSubtitleNavAction = "forward"
-            return True
+        if any_changes:
+            if not changed.reload:
+                if changed.subtitle:
+                    self.setSubtitles(do_sleep=False)
+                    self.lastSubtitleNavAction = "forward"
 
-        elif changed:
+                if changed.audio:
+                    self.handler.setAudioTrack()
+
+                oldTranscoded = self.player.playerObject.metadata.isTranscoded
+
+                # check if we need to restart
+                self.player.playerObject.rebuild(self.player.video)
+
+                # ping server to update activity/session
+                self.player.playerObject.getServerDecision()
+
+                if oldTranscoded == self.player.playerObject.metadata.isTranscoded:
+                    # On CoreELEC changing the audio stream causes the audio to stutter or delay
+                    # so this small seek helps sync things back up.  But we also need to pause the
+                    # video for a short time if it's playing or the seek doesn't work
+                    if util.isCoreELEC and changed.audio:
+                        if not xbmc.getCondVisibility('Player.Paused'):
+                            self.videoPausedForAudioStreamChange = True
+                            self.handler.player.control('pause')
+                        self.doSeek(offset=((self.handler.player.getTime() * 1000) - 1000))
+                    return True
+
+            util.LOG("Media settings have changed and are not directly applicable, restarting video: {}", changed)
             self.doSeek(self.trueOffset(), settings_changed=True)
-        else:
-            return True
+            return False
+        return True
 
     def setBigSeekShift(self):
         closest = None
@@ -1309,12 +1485,22 @@ class SeekDialog(kodigui.BaseDialog):
             self.setFocusId(self.MAIN_BUTTON_ID)
             self.fromSeek = 0
 
+        v = self.player.video
+        is_show = v.type == 'episode'
+
         self.setProperty('has.bif', self.bifURL and '1' or '')
         self.setProperty('video.title', self.title)
         self.setProperty('video.title2', self.title2)
-        self.setProperty('is.show', (self.player.video.type == 'episode') and '1' or '')
+        self.setProperty('is.show', is_show and '1' or '')
         self.setProperty('media.show_ends', self.showItemEndsInfo and '1' or '')
         self.setProperty('time.ends_label', self.showItemEndsLabel and (util.T(32543, 'Ends at')) or '')
+        self.setBoolProperty('no.osd.hide_info', self.no_time_no_osd_spoilers)
+
+        hide_title = False
+        if is_show and 'no_unwatched_episode_titles' in self.no_spoilers:
+            hide_title = True
+
+        self.setBoolProperty('hide.title', hide_title)
 
         if self.isDirectPlay:
             self.setProperty('time.fmt', self.timeFmtKodi)
@@ -1367,11 +1553,13 @@ class SeekDialog(kodigui.BaseDialog):
         if self.showChapters:
             chaps = []
             chapOffsets = []
+            thumb_opts = ("blur_chapters" in self.no_spoilers
+                          and {"blur": util.addonSettings.episodeNoSpoilerBlur} or {})
             if self.chapters:
                 self.setProperty('chapters.label', T(33605, 'Video Chapters').upper())
                 for index, chapter in enumerate(self.chapters):
                     thumb = chapter.thumb and chapter.thumb.asTranscodedImageURL(
-                        *PlaylistDialog.LI_AR16X9_THUMB_DIM) or None
+                        *PlaylistDialog.LI_AR16X9_THUMB_DIM, **thumb_opts) or None
                     # mli = kodigui.ManagedListItem(data_source=chapter.startTime(),
                     #                               thumbnailImage=thumb,
                     #                               label=chapter.tag or T(33607, 'Chapter {}').format(index + 1))
@@ -1392,8 +1580,8 @@ class SeekDialog(kodigui.BaseDialog):
                     marker = markerDef["marker"]
                     if marker:
                         if markerDef["marker_type"] == "intro":
-                            preparedMarkers.append((int(marker.startTimeOffset), T(33608, "Intro"), False))
-                            preparedMarkers.append((int(marker.endTimeOffset), T(33610, "Main"), False))
+                            preparedMarkers.append((marker.startTimeOffset, T(33608, "Intro"), False))
+                            preparedMarkers.append((marker.endTimeOffset, T(33610, "Main"), False))
 
                         elif markerDef["marker_type"] == "credits":
                             creditsCounter += 1
@@ -1401,7 +1589,7 @@ class SeekDialog(kodigui.BaseDialog):
                                 label = T(33635, "Final Credits")
                             else:
                                 label = T(33609, "Credits") + "{}"
-                            preparedMarkers.append((int(marker.startTimeOffset), label, True))
+                            preparedMarkers.append((marker.startTimeOffset, label, True))
 
                 # add staggered virtual markers
                 preparedMarkers.append((int(self.duration * 0.25), "25 %", False))
@@ -1421,7 +1609,12 @@ class SeekDialog(kodigui.BaseDialog):
                     if skipMarker:
                         continue
 
-                    chaps.append((offset, self.handler.player.playerObject.getBifUrl(offset),
+                    bifUrl = self.handler.player.playerObject.getBifUrl(offset)
+                    if "blur_chapters" in self.no_spoilers:
+                        bifUrl = self.player.video.server.getImageTranscodeURL(bifUrl,
+                                                                               *PlaylistDialog.LI_AR16X9_THUMB_DIM,
+                                                                               **thumb_opts)
+                    chaps.append((offset, bifUrl,
                                   label.format(" #{}".format(credCnt) if credits and creditsCounter > 1 else "")))
 
                     if credits:
@@ -1458,7 +1651,7 @@ class SeekDialog(kodigui.BaseDialog):
             self.positionControl.setWidth(w)
 
         # update cache/buffer bar
-        if util.advancedSettings.playerShowBuffer and self.isDirectPlay and util.KODI_VERSION_MAJOR > 18:
+        if util.addonSettings.playerShowBuffer and self.isDirectPlay and util.KODI_VERSION_MAJOR > 18:
             cache_w = int(xbmc.getInfoLabel("Player.ProgressCache")) * self.SEEK_IMAGE_WIDTH // 100
             self.cacheControl.setWidth(cache_w)
 
@@ -1554,33 +1747,6 @@ class SeekDialog(kodigui.BaseDialog):
             self.updateProgress(set_to_current=False)
             self.setProperty('button.seek', '1')
 
-    def getCurrentMarkerDef(self, offset=None):
-        """
-        Show intro/credits skip button at current time
-        """
-
-        if not self.markers:
-            return
-
-        off = offset if offset is not None else self.trueOffset()
-
-        for markerDef in self.markers:
-            marker = markerDef["marker"]
-            if marker:
-                startTimeOffset = int(marker.startTimeOffset)
-
-                # show intro skip early? (only if intro is during the first X minutes)
-                if self.showIntroSkipEarly and markerDef["marker_type"] == "intro" and \
-                        startTimeOffset <= util.advancedSettings.skipIntroButtonShowEarlyThreshold1 * 1000:
-                    startTimeOffset = 0
-                    markerDef["overrideStartOff"] = 0
-
-                markerEndNegoff = FINAL_MARKER_NEGOFF if getattr(markerDef["marker"], "final", False) else 0
-
-                if startTimeOffset - MARKER_SHOW_NEGOFF <= off < int(marker.endTimeOffset) - markerEndNegoff:
-
-                    return markerDef
-
 
     @property
     def duration(self):
@@ -1672,7 +1838,7 @@ class SeekDialog(kodigui.BaseDialog):
         currentBufferPerc = int(xbmc.getInfoLabel("Player.ProgressCache")) - int(xbmc.getInfoLabel("Player.Progress"))
 
         # configured buffer size
-        bufferBytes = util.kcm.memorySize * 1024 * 1024
+        bufferBytes = lib.cache.kcm.memorySize * 1024 * 1024
 
         # wait for the full buffer or for 10% of the file at max
         # a full buffer is typically 30% of the configured cache value
@@ -1693,7 +1859,7 @@ class SeekDialog(kodigui.BaseDialog):
                     wasPlaying = True
 
                 waitedFor = 0
-                waitMax = util.advancedSettings.bufferWaitMax
+                waitMax = util.addonSettings.bufferWaitMax
                 waitExceeded = False
                 self.waitingForBuffer = True
                 self.showOSD(focusButton=False)
@@ -1744,8 +1910,8 @@ class SeekDialog(kodigui.BaseDialog):
                 util.DEBUG_LOG("SeekDialog.buffer: Buffer already filled, not waiting for buffer")
 
         else:
-            wait = util.advancedSettings.bufferInsufficientWait
-            util.DEBUG_LOG("SeekDialog.buffer: Buffer is too small for us to see, waiting {} seconds".format(wait))
+            wait = util.addonSettings.bufferInsufficientWait
+            util.DEBUG_LOG("SeekDialog.buffer: Buffer is too small for us to see, waiting {} seconds", wait)
             self.waitingForBuffer = True
 
             wasPlaying = False
@@ -1761,6 +1927,13 @@ class SeekDialog(kodigui.BaseDialog):
                     self.player.pause()
                 return True
 
+    def seekBehind(self):
+        to = self.trueOffset()
+        if ((not self.resumeSeekBehindOnlyDP or self.isDirectPlay)
+                and self.resumeSeekBehind and to > self.resumeSeekBehind):
+            util.DEBUG_LOG("SeekDialog: Seeking back from {} to {}", to, to - self.resumeSeekBehind)
+            self.doSeek(to - self.resumeSeekBehind)
+
     def onPlayBackResumed(self):
         util.DEBUG_LOG("SeekDialog: OnPlaybackResumed")
         if self._ignoreInput:
@@ -1769,8 +1942,15 @@ class SeekDialog(kodigui.BaseDialog):
         self.idleTime = None
         self.ldTimer and self.syncTimeKeeper()
 
+        if self.resumeSeekBehind and not self.resumeSeekBehindPause and (
+                not self.resumeSeekBehindAfter or
+                self.pausedAt and time.time() - self.pausedAt >= self.resumeSeekBehindAfter):
+            self.seekBehind()
+
+        self.pausedAt = None
+
     def onAVChange(self):
-        util.DEBUG_LOG("SeekDialog: OnAVChange: DPO: {0}, offset: {1}".format(self.DPPlayerOffset, self.offset))
+        util.DEBUG_LOG("SeekDialog: OnAVChange: DPO: {0}, offset: {1}", self.DPPlayerOffset, self.offset)
 
         # wait for buffer if we're not expecting a seek
         if not self.handler.seekOnStart and util.getSetting("slow_connection", False) and not self.waitingForBuffer:
@@ -1781,7 +1961,7 @@ class SeekDialog(kodigui.BaseDialog):
             return
 
     def onAVStarted(self):
-        util.DEBUG_LOG("SeekDialog: OnAVStarted: DPO: {0}, offset: {1}".format(self.DPPlayerOffset, self.offset))
+        util.DEBUG_LOG("SeekDialog: OnAVStarted: DPO: {0}, offset: {1}", self.DPPlayerOffset, self.offset)
         if self._ignoreInput:
             self._ignoreInput = False
 
@@ -1796,10 +1976,22 @@ class SeekDialog(kodigui.BaseDialog):
 
     def onPlayBackPaused(self):
         util.DEBUG_LOG("SeekDialog: OnPlaybackPaused")
+
+        # Need to resume the video when changing streams on CoreELEC
+        if util.isCoreELEC and self.videoPausedForAudioStreamChange:
+            self.videoPausedForAudioStreamChange = False
+            self.handler.player.control('play')
+            return
+
         self.idleTime = time.time()
+        if self.resumeSeekBehindPause and not self.resumeSeekBehindAfter:
+            self.seekBehind()
+            return
+
+        self.pausedAt = time.time()
 
     def onPlayBackSeek(self, stime, offset):
-        util.DEBUG_LOG("SeekDialog: OnPlaybackSeek: {0}, {1}".format(stime, offset))
+        util.DEBUG_LOG("SeekDialog: OnPlaybackSeek: {0}, {1}", stime, offset)
         self.idleTime = None
         self.ldTimer and self.syncTimeKeeper()
 
@@ -1816,7 +2008,7 @@ class SeekDialog(kodigui.BaseDialog):
         self.killTimeKeeper()
 
     def syncTimeKeeper(self):
-        if not not self.handler.player.playerObject:
+        if not self.handler.player.playerObject:
             return
 
         self.timeKeeperTime = self.trueOffset()#int(self.handler.player.getTime() * 1000)
@@ -1844,7 +2036,7 @@ class SeekDialog(kodigui.BaseDialog):
 
         if self.stopPlaybackOnIdle:
             if self.idleTime and time.time() - self.idleTime >= self.stopPlaybackOnIdle:
-                util.LOG("Player has been idle for {}s, stopping.".format(int(time.time() - self.idleTime)))
+                util.LOG("Player has been idle for {}s, stopping.", int(time.time() - self.idleTime))
                 self.handler.player.stopAndWait()
                 return
 
@@ -1882,8 +2074,8 @@ class SeekDialog(kodigui.BaseDialog):
             self._currentMarker["countdown"] = None
             self.setProperty('marker.countdown', '')
 
-    def sendTimeline(self, state=None, t=None, force=True, ensureFinalTimelineEvent=True):
-        self.handler.updateNowPlaying(force=force, state=state, t=t, overrideChecks=True)
+    def sendTimeline(self, state=None, t=None, ensureFinalTimelineEvent=True):
+        self.handler.updateNowPlaying(state=state, t=t, overrideChecks=True)
         if ensureFinalTimelineEvent:
             self.handler.ignoreTimelines = True
 
@@ -1905,7 +2097,7 @@ class SeekDialog(kodigui.BaseDialog):
 
         # getCurrentMarkerDef might have overridden the startTimeOffset, use that
         startTimeOff = markerDef["overrideStartOff"] if markerDef["overrideStartOff"] is not None else \
-            int(markerDef["marker"].startTimeOffset)
+            markerDef["marker"].startTimeOffset
 
         markerAutoSkip = getattr(self, markerDef["markerAutoSkip"])
 
@@ -1916,14 +2108,14 @@ class SeekDialog(kodigui.BaseDialog):
 
         markerAutoSkipped = markerDef["markerAutoSkipped"]
 
-        sTOffWThres = startTimeOff + util.advancedSettings.autoSkipOffset * 1000
+        sTOffWThres = startTimeOff + util.addonSettings.autoSkipOffset * 1000
 
         # we just want to return an early marker if we want to autoSkip it, so we can tell the handler to seekOnStart
         if onlyReturnIntroMD and markerDef["marker_type"] == "intro" and markerAutoSkip:
             if startTimeOff == 0 and not markerDef["markerAutoSkipped"]:
                 if setSkipped:
                     markerDef["markerAutoSkipped"] = True
-                return int(markerDef["marker"].endTimeOffset) + MARKER_END_JUMP_OFF
+                return markerDef["marker"].endTimeOffset + MARKER_END_JUMP_OFF
             return False
 
         if cancelTimer and self.countingDownMarker:
@@ -1953,8 +2145,8 @@ class SeekDialog(kodigui.BaseDialog):
 
             if getattr(markerDef["marker"], "final", False):
                 # final marker is _not_ at the end of video, seek and do nothing
-                if int(markerDef["marker"].endTimeOffset) < self.duration - FINAL_MARKER_NEGOFF:
-                    target = int(markerDef["marker"].endTimeOffset)
+                if markerDef["marker"].endTimeOffset < self.duration - FINAL_MARKER_NEGOFF:
+                    target = markerDef["marker"].endTimeOffset
                     util.DEBUG_LOG(
                         "MarkerAutoSkip: Skipping final marker, its endTime is too early, "
                         "though, seeking and playing back")
@@ -1981,8 +2173,8 @@ class SeekDialog(kodigui.BaseDialog):
                     self.stop()
                 return False
 
-            util.DEBUG_LOG('MarkerAutoSkip: Skipping marker {}'.format(markerDef["marker"]))
-            self.doSeek(int(markerDef["marker"].endTimeOffset) + MARKER_END_JUMP_OFF)
+            util.DEBUG_LOG('MarkerAutoSkip: Skipping marker {}', markerDef["marker"])
+            self.doSeek(markerDef["marker"].endTimeOffset + MARKER_END_JUMP_OFF)
             return True
 
         # got a marker, display logic
@@ -2014,20 +2206,29 @@ class SeekDialog(kodigui.BaseDialog):
                 # reset countdown on new marker
                 if not self._currentMarker or self._currentMarker != markerDef or markerDef["countdown"] is None:
                     # fixme: round might not be right here, but who cares
-                    markerDef["countdown"] = int(max(round((sTOffWThres - self.trueOffset()) / 1000.0) + 1, 1))
+                    to = self.trueOffset()
+                    # set the countdown to either the auto skip offset, or, if we're already "inside" the marker time
+                    # area through seeking, at max the difference between the current offset and the end of the
+                    # video
+                    markerDef["countdown"] = int(
+                        max(
+                            round((sTOffWThres - to) / 1000.0) + 1,
+                            min(util.addonSettings.autoSkipOffset, int((self.duration - to) / 1000.0))
+                        )
+                    )
                     isNew = True
 
             if self.player.playState == self.player.STATE_PLAYING and not self.osdVisible():
                 markerDef["countdown"] -= 1
-                if isNew:
-                    markerDef["countdown_initial"] = markerDef["countdown"]
+            if isNew:
+                markerDef["countdown_initial"] = markerDef["countdown"]
 
             self.setProperty('marker.countdown', '1')
 
             if markerDef["countdown"] > 0:
                 markerName = "{} ({})".format(markerDef["autoSkipName"], markerDef["countdown"])
             else:
-                markerName = markerDef["autoSkipName"]
+                markerName = "  {}   ".format(markerDef["autoSkipName"])
         else:
             markerName = markerDef["name"]
         self.setProperty('skipMarkerName', markerName)
@@ -2056,6 +2257,12 @@ class SeekDialog(kodigui.BaseDialog):
                 cont = self.waitForBuffer()
                 if not cont:
                     return
+
+            if (self.pausedAt and self.resumeSeekBehindPause and
+                    time.time() - self.pausedAt >= self.resumeSeekBehindAfter):
+                self.seekBehind()
+                self.pausedAt = None
+                return
 
             # invisibly sync low-drift timer to current playback every X seconds, as Player.getTime() can be wildly off
             if self.ldTimer and not self.osdVisible() and self.timeKeeper and self.timeKeeper.ticks >= 60:
@@ -2115,6 +2322,7 @@ class SeekDialog(kodigui.BaseDialog):
         self.playlistDialog.doModal()
         self.resetTimeout()
         self.playlistDialogVisible = False
+        self.setFocusId(self.PLAYLIST_BUTTON_ID)
 
     def osdVisible(self):
         return xbmc.getCondVisibility('Control.IsVisible(801)')
@@ -2146,7 +2354,7 @@ class SeekDialog(kodigui.BaseDialog):
             self.playlistDialogVisible = False
 
 
-class PlaylistDialog(kodigui.BaseDialog):
+class PlaylistDialog(kodigui.BaseDialog, SpoilersMixin):
     xmlFile = 'script-plex-video_current_playlist.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -2161,6 +2369,7 @@ class PlaylistDialog(kodigui.BaseDialog):
 
     def __init__(self, *args, **kwargs):
         kodigui.BaseDialog.__init__(self, *args, **kwargs)
+        SpoilersMixin.__init__(self, *args, **kwargs)
         self.handler = kwargs.get('handler')
         self.playlist = self.handler.playlist
 
@@ -2169,6 +2378,10 @@ class PlaylistDialog(kodigui.BaseDialog):
         self.handler.player.on('session.ended', self.sessionEnded)
         self.playlistListControl = kodigui.ManagedControlList(self, self.PLAYLIST_LIST_ID, 6)
         self.fillPlaylist()
+        self.updatePlayingItem()
+        self.setFocusId(self.PLAYLIST_LIST_ID)
+
+    def onReInit(self):
         self.updatePlayingItem()
         self.setFocusId(self.PLAYLIST_LIST_ID)
 
@@ -2196,14 +2409,26 @@ class PlaylistDialog(kodigui.BaseDialog):
     def createEpisodeListItem(self, episode):
         label2 = u'{0} \u2022 {1}'.format(
             episode.grandparentTitle,
-            u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), episode.parentIndex, T(32311, 'E'), episode.index)
+            u'{0} \u2022 {1}'.format(T(32310, 'S').format(episode.parentIndex), T(32311, 'E').format(episode.index))
         )
-        mli = kodigui.ManagedListItem(episode.title, label2,
-                                      thumbnailImage=episode.thumb.asTranscodedImageURL(*self.LI_AR16X9_THUMB_DIM),
+        title = episode.title
+        thumbnail_opts = {}
+        no_spoilers = self.getNoSpoilers(episode)
+        if no_spoilers != "off":
+            hide_spoilers = self.hideSpoilers(episode)
+            if hide_spoilers:
+                if self.noTitles:
+                    title = T(33008, '')
+                thumbnail_opts = self.getThumbnailOpts(episode, hide_spoilers=hide_spoilers)
+
+        mli = kodigui.ManagedListItem(title, label2,
+                                      thumbnailImage=episode.thumb.asTranscodedImageURL(*self.LI_AR16X9_THUMB_DIM,
+                                                                                        **thumbnail_opts),
                                       data_source=episode)
         mli.setProperty('track.duration', util.durationToShortText(episode.duration.asInt()))
         mli.setProperty('video', '1')
-        mli.setProperty('watched', episode.isWatched and '1' or '')
+        mli.setProperty('unwatched', not episode.isWatched and '1' or '')
+        mli.setProperty('watched', episode.isFullyWatched and '1' or '')
         return mli
 
     def createMovieListItem(self, movie):
@@ -2212,7 +2437,8 @@ class PlaylistDialog(kodigui.BaseDialog):
                                       data_source=movie)
         mli.setProperty('track.duration', util.durationToShortText(movie.duration.asInt()))
         mli.setProperty('video', '1')
-        mli.setProperty('watched', movie.isWatched and '1' or '')
+        mli.setProperty('unwatched', not movie.isWatched and '1' or '')
+        mli.setProperty('watched', movie.isFullyWatched and '1' or '')
         return mli
 
     def playQueueCallback(self, **kwargs):
@@ -2245,7 +2471,7 @@ class PlaylistDialog(kodigui.BaseDialog):
                 selectIndex = index
 
         if selectIndex is not None:
-            xbmc.executebuiltin('Control.SetFocus({0}, {1})'.format(self.PLAYLIST_LIST_ID, selectIndex))
+            self.playlistListControl.setSelectedItemByPos(selectIndex)
 
     def fillPlaylist(self):
         items = []
