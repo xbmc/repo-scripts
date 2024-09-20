@@ -16,8 +16,6 @@
 import json
 import logging
 import os
-import re
-from collections import namedtuple
 
 import xbmc
 

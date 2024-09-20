@@ -159,13 +159,13 @@ def parse_episode(sub_cells, languages):
                     download_cell = lang_cell.find_next('td', {'colspan': '3'})
                     download_button = download_cell.find(
                         'a',
-                        class_='buttonDownload',
+                        class_='face-button',
                         href=updated_download_re
                     )
                     if download_button is None:
                         download_button = download_cell.find(
                             'a',
-                            class_='buttonDownload',
+                            class_='face-button',
                             href=original_download_re
                         )
                     download_row = download_button.parent.parent
