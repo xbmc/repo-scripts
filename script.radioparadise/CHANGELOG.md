@@ -1,3 +1,7 @@
+## v2.0.1
+
+- Use new metadata API
+
 ## v2.0.0
 
 - Updates for Kodi v20
