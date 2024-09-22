@@ -1,0 +1,257 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="service.projcontrol">
+		<category id="projector details" label="32001" help="">
+			<group id="1">
+				<setting id="device" type="string" label="32002" help="">
+					<level>0</level>
+					<default>/dev/ttyUSB0</default>
+					<control type="edit" format="string">
+						<heading>32002</heading>
+					</control>
+				</setting>
+				<setting id="timeout" type="integer" label="32003" help="">
+					<level>1</level>
+					<default>5</default>
+					<control type="edit" format="integer">
+						<heading>32003</heading>
+					</control>
+				</setting>
+				<setting id="manufacturer" type="string" label="32004" help="">
+					<level>0</level>
+					<default>Epson</default>
+					<constraints>
+						<options>
+							<option>Epson</option>
+							<option>InFocus</option>
+							<option>BenQ</option>
+							<option>Acer</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>32004</heading>
+					</control>
+				</setting>
+				<setting id="epson_model" type="string" label="32005" help="" parent="manufacturer">
+					<level>0</level>
+					<default>TW3200</default>
+					<constraints>
+						<options>
+							<option>TW3200</option>
+							<option>PowerLite 820p</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="manufacturer">Epson</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>32005</heading>
+					</control>
+				</setting>
+				<setting id="infocus_model" type="string" label="32005" help="" parent="manufacturer">
+					<level>0</level>
+					<default>IN72/IN74/IN76</default>
+					<constraints>
+						<options>
+							<option>IN72/IN74/IN76</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="manufacturer">InFocus</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>32005</heading>
+					</control>
+				</setting>
+				<setting id="benq_model" type="string" label="32005" help="" parent="manufacturer">
+					<level>0</level>
+					<default>M535 series</default>
+					<constraints>
+						<options>
+							<option>M535 series</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="manufacturer">BenQ</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>32005</heading>
+					</control>
+				</setting>
+				<setting id="acer_model" type="string" label="32005" help="" parent="manufacturer">
+					<level>0</level>
+					<default>generic/X1373WH</default>
+					<constraints>
+						<options>
+							<option>generic/X1373WH</option>
+							<option>V7500</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="manufacturer">Acer</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>32005</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="projector control" label="32010" help="">
+			<group id="1">
+				<setting id="at_start" type="boolean" label="32011" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="at_shutdown" type="boolean" label="32012" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="at_ss_start" type="boolean" label="32013" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="at_ss_start_delay" type="integer" label="32014" help="" parent="at_ss_start">
+					<level>1</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="at_ss_start">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>32014</heading>
+					</control>
+				</setting>
+				<setting id="at_ss_shutdown" type="boolean" label="32015" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="min_turnaround" type="integer" label="32016" help="" parent="at_ss_shutdown">
+					<level>1</level>
+					<default>90</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="at_ss_shutdown">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>32016</heading>
+					</control>
+				</setting>
+				<setting id="set_input" type="boolean" label="32017" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="input_source" type="string" label="32018" help="" parent="set_input">
+					<level>0</level>
+					<default>HDMI1</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="set_input">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32018</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="library updates" label="32020" help="">
+			<group id="1">
+				<setting id="lib_update" type="boolean" label="32021" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="update_music" type="boolean" label="32022" help="" parent="lib_update">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="lib_update">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="update_video" type="boolean" label="32023" help="" parent="lib_update">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="lib_update">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="update_again" type="boolean" label="32024" help="" parent="lib_update">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="lib_update">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="update_again_at" type="integer" label="32025" help="" parent="lib_update">
+					<level>0</level>
+					<default>60</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="update_again">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>32025</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="rest api" label="32030" help="">
+			<group id="1">
+				<setting id="enabled" type="boolean" label="32031" help="">
+					<level>2</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="address" type="string" label="32032" help="">
+					<level>2</level>
+					<default>0.0.0.0</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="ip">
+						<heading>32032</heading>
+					</control>
+				</setting>
+				<setting id="port" type="integer" label="32033" help="">
+					<level>2</level>
+					<default>6661</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>32033</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
