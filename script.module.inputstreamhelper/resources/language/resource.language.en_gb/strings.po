@@ -281,6 +281,10 @@ msgctxt "#30071"
 msgid "Could not find the Widevine CDM by a quick scan. Now doing a proper search, but this might take very long..."
 msgstr ""
 
+msgctxt "#30072"
+msgid "Downloading the image..."
+msgstr ""
+
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
@@ -313,6 +317,10 @@ msgstr ""
 
 msgctxt "#30824"
 msgid "It is installed at [B]{path}[/B]"
+msgstr ""
+
+msgctxt "#30825"
+msgid "It was extracted from {image} image version [B]{version}[/B]"
 msgstr ""
 
 msgctxt "#30830"
