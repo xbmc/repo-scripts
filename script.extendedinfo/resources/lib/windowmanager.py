@@ -87,13 +87,14 @@ class WindowManager:
         elif tvdb_id:
             tmdb_id = tmdb.get_show_tmdb_id(tvdb_id)
         elif imdb_id:
-            tmdb_id = tmdb.get_show_tmdb_id(tvdb_id=imdb_id,
+            tmdb_id = tmdb.get_show_tmdb_id(imdb_id,
                                             source="imdb_id")
         elif dbid:
-            tvdb_id = local_db.get_imdb_id(media_type="tvshow",
-                                           dbid=dbid)
-            if tvdb_id:
-                tmdb_id = tmdb.get_show_tmdb_id(tvdb_id)
+            imdb_id = local_db.get_imdb_id(media_type="tvshow",
+                                           dbid=dbid)[0]
+            if imdb_id:
+                tmdb_id = tmdb.get_show_tmdb_id(imdb_id,
+                                                source="imdb_id")
         elif name:
             tmdb_id = tmdb.search_media(media_name=name,
                                         year="",
@@ -105,7 +106,7 @@ class WindowManager:
         busy.hide_busy()
         self.open_infodialog(dialog)
 
-    def open_season_info(self, tvshow_id=None, season: int = None, tvshow=None, dbid=None):
+    def open_season_info(self, tvshow_id=None, season:int=None, tvshow:str=None, dbid:str=None):
         """
         open season info, deal with window stack
         needs *season AND (*tvshow_id OR *tvshow)
@@ -114,7 +115,7 @@ class WindowManager:
         from .dialogs.dialogseasoninfo import DialogSeasonInfo
         if not tvshow_id:
             params = {"query": tvshow,
-                      "language": addon.setting("language")}
+                      "language": addon.setting("LanguageIDv2")}
             response = tmdb.get_data(url="search/tv",
                                      params=params,
                                      cache_days=30)
@@ -122,22 +123,26 @@ class WindowManager:
                 tvshow_id = str(response['results'][0]['id'])
             else:
                 params = {"query": re.sub(r'\(.*?\)', '', tvshow),
-                          "language": addon.setting("language")}
+                          "language": addon.setting("LanguageIDv2")}
                 response = tmdb.get_data(url="search/tv",
                                          params=params,
                                          cache_days=30)
                 if response["results"]:
                     tvshow_id = str(response['results'][0]['id'])
 
-        dialog = DialogSeasonInfo(INFO_XML,
-                                  addon.PATH,
-                                  id=tvshow_id,
-                                  season=max(0, season),
-                                  dbid=int(dbid) if dbid and int(dbid) > 0 else None)
-        busy.hide_busy()
-        self.open_infodialog(dialog)
+        if tvshow_id:
+            dialog = DialogSeasonInfo(INFO_XML,
+                                    addon.PATH,
+                                    id=tvshow_id,
+                                    season=max(0, int(season)),
+                                    dbid=int(dbid) if dbid and int(dbid) > 0 else None)
+            busy.hide_busy()
+            self.open_infodialog(dialog)
+        else:
+            busy.hide_busy()
+            utils.notify(addon.NAME, f"TMDB - {xbmc.getLocalizedString(195)}")
 
-    def open_episode_info(self, tvshow_id=None, season=None, episode=None, tvshow=None, dbid=None):
+    def open_episode_info(self, tvshow_id=None, season:int=None, episode=None, tvshow=None, dbid=None):
         """
         open season info, deal with window stack
         needs (*tvshow_id OR *tvshow) AND *season AND *episode
@@ -297,7 +302,7 @@ class WindowManager:
         if self.active_dialog and self.active_dialog.window_type == "dialog":
             self.active_dialog.close()
         xbmc.executebuiltin("Dialog.Close(movieinformation)")
-        xbmc.executebuiltin("RunPlugin(plugin://plugin.video.youtube/play/?video_id=" +
+        xbmc.executebuiltin("PlayMedia(plugin://plugin.video.youtube/play/?video_id=" +
                             youtube_id + "&screensaver=true&incognito=true)")
         if self.active_dialog and self.active_dialog.window_type == "dialog":
             player.wait_for_video_start() #30 sec timeout

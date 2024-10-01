@@ -1,6 +1,8 @@
 # Copyright (C) 2016 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
+from __future__ import annotations
+
 import itertools
 import json
 
@@ -220,14 +222,19 @@ class LocalDB:
         db_movie.set_cast(movie.get("cast"))
         return db_movie
 
-    def handle_tvshow(self, tvshow):
-        """
-        convert tvshow data to listitems
+    def handle_tvshow(self, tvshow:dict) -> VideoItem:
+        """converts tvshow Kodi db local data to VideoItem
+
+        Args:
+            tvshow (dict of Kodi JSON TVShowDetails): 
+
+        Returns:
+            VideoItem: a kutil131 VideoItem for the Kodi db local info
         """
         if addon.setting("infodialog_onclick") != "false":
-            path = PLUGIN_BASE + 'extendedtvinfo&&dbid=%s' % tvshow['tvshowid']
+            path = PLUGIN_BASE + f'extendedtvinfo&&dbid={tvshow["tvshowid"]}'
         else:
-            path = PLUGIN_BASE + 'action&&id=ActivateWindow(videos,videodb://tvshows/titles/%s/,return)' % tvshow['tvshowid']
+            path = PLUGIN_BASE + f'action&&id=ActivateWindow(videos,videodb://tvshows/titles/{tvshow["tvshowid"]}/,return)'
         db_tvshow = VideoItem(label=tvshow.get("label"),
                               path=path)
         db_tvshow.set_infos({'title': tvshow.get('label'),
@@ -265,9 +272,14 @@ class LocalDB:
             return self.handle_movie(response["result"]["moviedetails"])
         return {}
 
-    def get_tvshow(self, tvshow_id):
-        """
-        get info from db for tvshow with *tvshow_id
+    def get_tvshow(self, tvshow_id:int) -> VideoItem:
+        """gets info from db for tvshow with *tvshow_id
+
+        Args:
+            tvshow_id (int): the Kodi tv show dbid
+
+        Returns:
+            VideoItem: a kutil131 VideoItem for the Kodi local db tv show 
         """
         response = kodijson.get_json(method="VideoLibrary.GetTVShowDetails",
                                      params={"properties": TV_PROPS, "tvshowid": tvshow_id})
@@ -315,10 +327,18 @@ class LocalDB:
 
             self.info[media_type] = dct
 
-    def merge_with_local(self, media_type, items, library_first=True, sortkey=False):
-        """
-        merge *items from online sources with local db info (and sort)
+    def merge_with_local(self, media_type:str, items:list[VideoItem], library_first:bool=True, sortkey:str='') -> ItemList[VideoItem]:
+        """merge *items from online sources with local db info (and sort)
         works for movies and tvshows
+
+        Args:
+            media_type (str): enum movie or tvshow
+            items (list[VideoItem]): list of VideoItems to find Kodi db local info
+            library_first (bool, optional): Should library items be returned before local items in ItemList. Defaults to True.
+            sortkey (str, optional):enum  key for sorting the ItemList Defaults to ''.
+
+        Returns:
+            ItemList[VideoItem]: The ItemList sorted and with Kodi db local items added
         """
         get_list = kodijson.get_movies if media_type == "movie" else kodijson.get_tvshows
         self.get_compare_info(media_type,
@@ -406,7 +426,16 @@ class LocalDB:
         mbid = data['result']['artistdetails'].get('musicbrainzartistid')
         return mbid if mbid else None
 
-    def get_imdb_id(self, media_type, dbid):
+    def get_imdb_id(self, media_type:str, dbid:int) -> tuple[str,str]:
+        """gets the imdb id from unique id and title
+
+        Args:
+            media_type (str): "movie" or "tvshow"
+            dbid (int): The Kodi video db dbid for the item
+
+        Returns:
+            tuple: the imdb and title (if not found return null string)
+        """        
         if not dbid:
             return None
         if media_type == "movie":
@@ -414,17 +443,17 @@ class LocalDB:
                                      params={"properties": ["uniqueid", "title", "year"], "movieid": int(dbid)})
             if "result" in data and "moviedetails" in data["result"]:
                 try:
-                    return data['result']['moviedetails']['uniqueid']['imdb']
+                    return data['result']['moviedetails']['uniqueid']['imdb'], ''
                 except KeyError:
-                    return None
+                    return '', data['result']['moviedetails']['title']
         elif media_type == "tvshow":
             data = kodijson.get_json(method="VideoLibrary.GetTVShowDetails",
                                      params={"properties": ["uniqueid", "title", "year"], "tvshowid": int(dbid)})
             if "result" in data and "tvshowdetails" in data["result"]:
                 try:
-                    return data['result']['tvshowdetails']['uniqueid']['imdb']
+                    return data['result']['tvshowdetails']['uniqueid']['imdb'], ''
                 except KeyError:
-                    return None
+                    return '', data['result']['tvshowdetails']['title']
         return None
 
     def get_tmdb_id(self, media_type, dbid):

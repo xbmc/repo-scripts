@@ -1,5 +1,11 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
+"""_summary_Creates a Busyhandler instance as busyhandler
+
+Returns:
+    Busyhandler: manage display of "busy" dialog
+    Note that kutil131 __init__ imports busyhandler as "busy"
+"""
 
 import traceback
 from functools import wraps
@@ -15,6 +21,9 @@ class BusyHandler:
     Class to deal with busydialog handling
     """
     def __init__(self, *args, **kwargs):
+        """Initializes the handler with no dialog and enabled
+        self.busy is the nember of active busy requests
+        """
         self.busy = 0
         self.enabled = True
 
@@ -41,6 +50,11 @@ class BusyHandler:
         self.busy += 1
 
     def set_progress(self, percent):
+        """Not implemented
+
+        Args:
+            percent (int): 0-99 completion
+        """
         pass
 
     def hide_busy(self):
@@ -66,7 +80,7 @@ class BusyHandler:
                 result = func(cls, *args, **kwargs)
             except Exception:
                 utils.log(traceback.format_exc())
-                utils.notify("Error", "please contact add-on author")
+                utils.notify("Busy Error", "please contact add-on author")
             finally:
                 self.hide_busy()
                 return result

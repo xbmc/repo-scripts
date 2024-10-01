@@ -18,6 +18,9 @@ ID_BUTTON_TOGGLETYPE = 5007
 
 
 class DialogBaseList:
+    """
+    BaseList for MediaBrowsers (handles filtering, sorting)
+    """
     viewid = {
         'WALL 3D' : '67',
         'BANNER' : '52',
@@ -49,12 +52,6 @@ class DialogBaseList:
         'Banner' : '501',
         'Fanart' : '502'
     }
-
-
-
-    """
-    BaseList for MediaBrowsers (handles filtering, sorting)
-    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -180,7 +177,7 @@ class DialogBaseList:
         if addon.bool_setting("classic_search"):
             result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
-            if result and result > -1:
+            if result:
                 self.search(result)
         else:
             T9Search(call=self.search,
@@ -243,12 +240,13 @@ class DialogBaseList:
         build filter label for UI based on active filters
         """
         filters = []
+        self.filter_label = ''
         for item in self.filters:
             filter_label = item["label"].replace("|", " | ").replace(",", " + ")
-            filters.append("[COLOR FFAAAAAA]%s:[/COLOR] %s" % (item["typelabel"], filter_label))
+            filters.append(f"[COLOR FFAAAAAA]{item['typelabel']}:[/COLOR] {filter_label}")
             self.filter_label: str = "  -  ".join(filters)
 
-    def update_content(self, force_update=False):
+    def update_content(self, force_update:bool=False):
         """
         fetch listitems and pagination info based on current state
         """
@@ -333,10 +331,14 @@ class DialogBaseList:
         self.update_content(force_update=force_update)
         self.update_ui()
 
-    def choose_sort_method(self, sort_key):
-        """
-        open dialog and let user choose sortmethod
-        returns True if sorthmethod changed
+    def choose_sort_method(self, sort_key:str) -> bool:
+        """open dialog and let user choose sortmethod
+
+        Args:
+            sort_key (str): enum string for sort options movie/tv/favorites/list/rating
+
+        Returns:
+            bool: True if sorthmethod changed
         """
         listitems = list(self.SORTS[sort_key].values())
         sort_strings = list(self.SORTS[sort_key].keys())
@@ -350,12 +352,13 @@ class DialogBaseList:
         self.sort_label = listitems[index]
         return True
 
-    def choose_filter(self, filter_code, header, options):
+    def choose_filter(self, filter_code:str, header:int, options:list[tuple]):
         """
         open dialog and let user choose filter from *options
         filter gets removed in case value is empty
-        filter_code: filter code from API
-        options: list of tuples with 2 items each: first is value, second is label
+        filter_code(str): filter code from API
+        header(int): strings.po localized index
+        options(list[tuple]): list of tuples with 2 items each: first is value, second is label
         """
         values = [i[0] for i in options]
         labels = [i[1] for i in options]
@@ -379,7 +382,7 @@ class DialogBaseList:
         else:
             pass  # add filter...
 
-    def find_filter_position(self, filter_code):
+    def find_filter_position(self, filter_code:str):
         """
         find position of specific filter in filter list
         """
@@ -388,7 +391,7 @@ class DialogBaseList:
                 return i
         return -1
 
-    def remove_filter(self, filter_code):
+    def remove_filter(self, filter_code:str):
         """
         remove filter with specific filter_code from filter list
         """

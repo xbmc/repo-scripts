@@ -37,22 +37,22 @@ include_adult: bool = addon.setting("include_adults").lower()
 
 
 def get_window(window_type):
-    """Wrapper gets new DialogVideoList instance
+    """Wrapper gets new DialogVideoList class
 
     Args:
         window_type (class instance): xbmc XML dialog window or
             xbmc XML window objects
 
     Returns:
-        [DialogVideoList]: a new XML dialog or window
+        type[DialogVideoList]: a new XML dialog or window class
     """
 
     class DialogVideoList(DialogBaseList, window_type):
         """Dialog Video List class
 
         Args:
-            DialogBaseList: Super class for dialog windows
-            window_type (kutils.windows class): Super class for Kodi xbmc.WindowXML
+            DialogBaseList: DialogXML or WindowXML super class for dialog windows
+            window_type (kutil131.windows class): DialogXML or WindowXML super class for Kodi xbmc.WindowXML
 
         """
 
@@ -103,7 +103,7 @@ def get_window(window_type):
         def __init__(self, *args, **kwargs):
             self.type = kwargs.get('type', "movie")
             self.list_id = kwargs.get("list_id", False)
-            self.logged_in = tmdb.Login.check_login()
+            self.logged_in = tmdb.tmdb_login.check_login()
             super().__init__(*args, **kwargs)
 
         def onClick(self, control_id):
@@ -201,6 +201,10 @@ def get_window(window_type):
 
         @ch.click(ID_BUTTON_SORT)
         def get_sort_type(self, control_id):
+            if self.sort_label and (self.sort_label == "Vote average"):
+                update_filter_vote = True
+            else:
+                update_filter_vote = False
             if not self.choose_sort_method(self.sort_key):
                 return None
             if self.sort == "vote_average":
@@ -208,6 +212,8 @@ def get_window(window_type):
                                 value="10",
                                 label="10",
                                 reset=False)
+            elif update_filter_vote:
+                self.remove_filter(key="vote_count.gte")
             self.update()
 
         def add_filter(self, **kwargs):
@@ -219,6 +225,14 @@ def get_window(window_type):
                 kwargs["label"] = "> %s" % kwargs["label"]
             super().add_filter(force_overwrite=kwargs["key"].endswith((".gte", ".lte")),
                                                     **kwargs)
+
+        def remove_filter(self, **kwargs):
+            """removes the vote_count filter if added by sort method vote_average
+
+            kwargs[key] (str):  the filter key to be removed
+            """
+            if kwargs["key"] == 'vote_count.gte':
+                super().remove_filter(kwargs["key"])
 
         @ch.click(ID_BUTTON_ORDER)
         def toggle_order(self, control_id):
@@ -262,7 +276,7 @@ def get_window(window_type):
 
         @ch.click(ID_BUTTON_GENREFILTER)
         def set_genre_filter(self, control_id):
-            params = {"language": addon.setting("LanguageID")}
+            params = {"language": addon.setting("LanguageIDv2")}
             response = tmdb.get_data(url="genre/%s/list" % (self.type),
                                      params=params,
                                      cache_days=100)
@@ -475,7 +489,7 @@ def get_window(window_type):
             else:  #self.mode == "filter"
                 self.set_filter_label()
                 params = {"sort_by": sort_by,
-                          "language": addon.setting("LanguageID"),
+                          "language": addon.setting("LanguageIDv2"),
                           "page": self.page,
                           "include_adult": include_adult}
                 filters = {item["type"]: item["id"] for item in self.filters}

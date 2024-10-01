@@ -261,7 +261,13 @@ class ListItem:
         return {k: v for k, v in self._properties.items() if v}
 
     def get_listitem(self) -> xbmcgui.ListItem:
-        #listitem: xbmcgui.ListItem
+        """Creates a Kodi listitem from kutil131 ListItem --
+        handles setting listitem for Kodi Matrix and post-Matrix methods
+        (videoInfoTag)
+
+        Returns:
+            xbmcgui.ListItem: the Kodi listitem
+        """
         listitem = xbmcgui.ListItem(label=str(self.label) if self.label else "",
                                     label2=str(self.label2) if self.label2 else "",
                                     path=self.path)
@@ -408,7 +414,7 @@ class VideoItem(ListItem):
 
     def from_listitem(self, listitem: xbmcgui.ListItem):
         """
-        xbmcgui listitem -> kutils131 listitem
+        xbmcgui listitem -> kutil131 listitem
         """
         info = listitem.getVideoInfoTag()
         self.label = listitem.getLabel()
@@ -442,7 +448,15 @@ class VideoItem(ListItem):
                        "imdbnumber": info.getIMDBNumber(),
                        "year": info.getYear()}
 
-    def update_from_listitem(self, listitem: ListItem):
+    def update_from_listitem(self, listitem: ListItem) -> VideoItem:
+        """Updates a VideoItem from Kodi xbmc.ListItem
+
+        Args:
+            listitem (xbmcgui.ListItem): a Kodi ListItem
+
+        Returns:
+            VideoItem: the kutil131 VideoItem with added info
+        """
         if not listitem:
             return None
         super().update_from_listitem(listitem)
@@ -452,6 +466,11 @@ class VideoItem(ListItem):
         self.set_cast(listitem.cast)
 
     def get_listitem(self) -> xbmcgui.ListItem:
+        """Gets Kodi ListItem and adds video-unique data from VideoItem 
+
+        Returns:
+            xbmcgui.ListItem: the Kodi ListItem using new classes for post-Matrix
+        """
         listitem = super().get_listitem()
         #Use listitem for Matrix, Nexus complains so use videoinfo tag setters
         if KODI_MATRIX:

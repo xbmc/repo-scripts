@@ -134,7 +134,7 @@
 					<fadetime>200</fadetime>
 					<bordertexture border="3">common/black.png</bordertexture>
 					<bordersize>3</bordersize>
-					<texture>$INFO[ListItem.Thumb]</texture>
+					<texture>$INFO[ListItem.Art(thumb)]</texture>
 					<visible>Control.IsVisible(50)</visible>
 				</control>
 			</control>
@@ -283,7 +283,19 @@
 								<bordertexture border="20">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 								<aspectratio aligny="top">keep</aspectratio>
-								<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+								<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>
+								<visible>String.IsEmpty(ListItem.DBID)</visible>
+							</control>
+							<control type="image">
+								<left>-15</left>
+								<top>0</top>
+								<width>250</width>
+								<height>350</height>
+								<bordertexture border="20">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+								<aspectratio aligny="top">keep</aspectratio>
+								<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
+								<visible>!String.IsEmpty(ListItem.DBID)</visible>
 							</control>
 							<control type="image">
 								<width>55</width>
@@ -340,7 +352,19 @@
 								<bordertexture border="20">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 								<aspectratio aligny="top">keep</aspectratio>
-								<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+								<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>
+								<visible>String.IsEmpty(ListItem.DBID)</visible>
+							</control>
+							<control type="image">
+								<left>-15</left>
+								<top>0</top>
+								<width>250</width>
+								<height>350</height>
+								<bordertexture border="20">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+								<aspectratio aligny="top">keep</aspectratio>
+								<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
+								<visible>!String.IsEmpty(ListItem.DBID)</visible>
 							</control>
 							<control type="image">
 								<width>55</width>
