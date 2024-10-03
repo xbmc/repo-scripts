@@ -16,6 +16,18 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Create a screensaver from any Kodi video source."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Dynamic screensaver using Local content, SmartPlaylists, Plugins and UPNP Servers."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "Streaming sources not recommend for metered Internet."
+msgstr ""
+
 msgctxt "#32001"
 msgid "Something went wrong, Try again later ..."
 msgstr ""
@@ -37,7 +49,7 @@ msgid "Video Limit"
 msgstr ""
 
 msgctxt "#32006"
-msgid "Randomize"
+msgid "Random Position"
 msgstr ""
 
 msgctxt "#32007"
@@ -57,7 +69,7 @@ msgid "Multiple Videos"
 msgstr ""
 
 msgctxt "#32011"
-msgid "Set ScreenSaver Volume [Restored to Previous Level]"
+msgid "Set ScreenSaver Volume [Restored to Previous Level on Stop]"
 msgstr ""
 
 msgctxt "#32012"
@@ -90,4 +102,16 @@ msgstr ""
 
 msgctxt "#32019"
 msgid "Display Time & Weather"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Path In-Valid, No media found!"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Set Dimmer Level"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Random Seek"
 msgstr ""

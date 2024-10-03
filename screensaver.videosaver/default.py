@@ -1,4 +1,4 @@
-#   Copyright (C) 2021 Lunatixz
+#   Copyright (C) 2024 Lunatixz
 #
 #
 # This file is part of Video ScreenSaver.
@@ -43,6 +43,7 @@ KEYLOCK        = REAL_SETTINGS.getSetting("LockAction") == 'true'
 DISABLE_TRAKT  = REAL_SETTINGS.getSetting("TraktDisable") == 'true'
 VIDEO_FILE     = REAL_SETTINGS.getSetting("VideoFile")
 VIDEO_PATH     = REAL_SETTINGS.getSetting("VideoFolder")
+RANDOM_SEEK    = REAL_SETTINGS.getSetting("RandomSeek") == 'true'
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
@@ -52,78 +53,79 @@ def log(msg, level=xbmc.LOGDEBUG):
 def sendJSON(command):
     log('sendJSON, command = %s'%(command))
     return json.loads(xbmc.executeJSONRPC(command))
-  
+    
+def escapeDirJSON(dir_name):
+    mydir = (dir_name)
+    if (mydir.find(":")): mydir = mydir.replace("\\", "\\\\")
+    return mydir
+
 def isMute():
-    state = False
-    json_query = '{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["muted"]},"id":1}'
-    json_response = (sendJSON(json_query))
-    if json_response and 'result' in json_response: state = json_response['result']['muted']
-    log('isMute, state = ' + str(state))
-    return state
+    json_response = sendJSON('{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["muted"]},"id":1}')
+    mute = json_response.get('result',{}).get('muted','false') == 'true'
+    log('isMute, state = %s'%(mute))
+    return mute
     
 def saveVolume():
-    json_query = '{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["volume"]},"id":1}'
-    json_response = (sendJSON(json_query))
-    xbmcgui.Window(10000).setProperty('%s.RESTORE'%ADDON_ID,str(json_response.get('result',{}).get('volume',0)))
-    if 'OK' in json_response: return True
-    return False
+    json_response = sendJSON('{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["volume"]},"id":1}')
+    if not json_response: return False
+    restoreVolume = json_response.get('result',{}).get('volume',0)
+    log('saveVolume, state = %s'%(restoreVolume))
+    xbmcgui.Window(10000).setProperty('%s.RESTORE'%(ADDON_ID),str(restoreVolume))
+    return True
     
 def setVolume(state):
-    log('setVolume, state = ' + str(state))
-    if isMute() == True: return
-    json_query = '{"jsonrpc":"2.0","method":"Application.SetVolume","params":{"volume":%s},"id":2}'%str(state)
-    json_response = (sendJSON(json_query))
-    if 'OK' in json_response: return True
+    log('setVolume, state = %s'%(state))
+    if not isMute():
+        # if state == 0: json_response = sendJSON('{"jsonrpc":"2.0","method":"Application.SetMute","params":{"mute":true},"id":1}')
+        json_response = sendJSON('{"jsonrpc":"2.0","method":"Application.SetVolume","params":{"volume":%s},"id":1}'%(state))
+        if 'OK' in json_response: return True
     return False
     
 def exeAction(action):
-    log('exeAction, action = ' + action)
-    json_query = '{"jsonrpc":"2.0","method":"Input.ExecuteAction","params":{"action":"%s"},"id":1}'%(action)
-    json_response = (sendJSON(json_query))
+    log('exeAction, action = %s'%(action))
+    json_response = sendJSON('{"jsonrpc":"2.0","method":"Input.ExecuteAction","params":{"action":"%s"},"id":1}'%(action))
     if 'OK' in json_response: return True
     return False
     
 def setRepeat(state='off'):
-    log('setRepeat, state = ' + str(state)) 
-    json_query = '{"jsonrpc":"2.0","method":"Player.SetRepeat","params":{"playerid":%d,"repeat":"%s"},"id":1}'%(getActivePlayer(),state)
-    json_response = (sendJSON(json_query))
+    log('setRepeat, state = %s'%(state))
+    json_response = sendJSON('{"jsonrpc":"2.0","method":"Player.SetRepeat","params":{"playerid":%d,"repeat":"%s"},"id":1}'%(getActivePlayer(),state))
     if 'OK' in json_response: return True
     return False
     
 def getActivePlayer():
-    json_query = ('{"jsonrpc":"2.0","method":"Player.GetActivePlayers","params":{},"id":1}')
-    json_response = sendJSON(json_query)
-    try: id = json_response['result'][0]['playerid']
+    json_response = sendJSON('{"jsonrpc":"2.0","method":"Player.GetActivePlayers","params":{},"id":1}')
+    try:    id = json_response['result'][0]['playerid']
     except: id = 1
-    log("getActivePlayer, id = " + str(id)) 
+    log("getActivePlayer, id = %s"%(id))
     return id
 
 def getFileDetails(path):
     log('getFileDetails')
-    json_query    = ('{"jsonrpc":"2.0","method":"Files.GetFileDetails","params":{"file":"%s","media":"video","properties":["file"]},"id":1}' % (path))
-    json_response = sendJSON(json_query)
-    return (json_response)
+    return sendJSON('{"jsonrpc":"2.0","method":"Files.GetFileDetails","params":{"file":"%s","media":"video","properties":["file"]},"id":1}' %(path))
                
-def progressDialog(percent=0, control=None, string1='', header=ADDON_NAME):
-    if percent == 0 and control is None:
+def progressDialog(percent=0, control=None, message='', header=ADDON_NAME):
+    if control is None and int(percent) == 0:
         control = xbmcgui.DialogProgress()
-        control.create(header, ADDON_NAME)
-        control.update(percent, string1)
-    if control is not None:
-        if control.iscanceled() or percent >= 100: return control.close()
-        else: control.update(percent, string1)
+        control.create(header, message)
+    elif control:
+        if int(percent) == 100 or control.iscanceled(): 
+            if hasattr(control, 'close'): control.close()
+        elif hasattr(control, 'update'):  control.update(int(percent), message)
     return control
+    
+def isBusyDialog():
+    return (xbmc.getCondVisibility('Window.IsActive(busydialognocancel)') | xbmc.getCondVisibility('Window.IsActive(busydialog)'))
 
 @contextmanager
-def busy_dialog(escape=False):
-    if not escape:
-        log('globals: busy_dialog')
+def busy_dialog():
+    if not isBusyDialog():
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        try: yield
-        finally: xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-    else: yield
-
-
+    try: yield
+    finally:
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+         
+         
 class Player(xbmc.Player):
     def __init__(self):
         xbmc.Player.__init__(self, xbmc.Player()) 
@@ -131,39 +133,39 @@ class Player(xbmc.Player):
 
     def onPlayBackError(self):
         log('onPlayBackError')
-        # exeAction('stop')
-
-
-    def onPlayBackEnded(self):
-        log('onPlayBackEnded')
-        # if SINGLE_FLE: exeAction('stop')
-        # self.myPlayer.play(self.playList)
-        
-        
-    def onPlayBackStopped(self):
-        log('onPlayBackStopped')
         self.myBackground.onClose()
         
         
+    def onAVStarted(self):
+        log('onAVStarted')
+        if RANDOM_SEEK: self.seekTime(random.randint(1,int(self.getTotalTime())))
+
+
 class BackgroundWindow(xbmcgui.WindowXMLDialog):
+    random.seed()
+    cache    = SimpleCache()
+    myPlayer = Player()
+    
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
         if DISABLE_TRAKT: xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
-        self.playList  = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)        
+        xbmcgui.Window(10000).setProperty('PseudoTVRunning','True') #disable third-party addons ie. nextup, etc.
+        self.playList  = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        self.startidx  = 0
         self.fileCount = 0
-        self.cache     = SimpleCache()
-        self.myPlayer  = Player()
         self.myPlayer.myBackground = self
-        
-        if saveVolume(): 
-            setVolume(int(REAL_SETTINGS.getSetting('SetVolume')))
-        setRepeat('all')
         
         
     def onInit(self):
         self.winid = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
         self.winid.setProperty('ss_time', 'okay' if REAL_SETTINGS.getSetting("Time") == 'true' else 'nope')
-        self.myPlayer.play(self.buildPlaylist())
+        if saveVolume(): setVolume(REAL_SETTINGS.getSettingInt('SetVolume'))
+        
+        self.dimid = self.getControl(41001)
+        self.dimid.setAnimations([('Conditional', 'effect=fade start=%s end=%s condition=True'%(REAL_SETTINGS.getSettingInt('SetDimmer'),REAL_SETTINGS.getSettingInt('SetDimmer')))])
+        
+        self.myPlayer.play(self.buildPlaylist(), windowed=True, startpos=self.startidx) #todo create listitems?
+        setRepeat('all')
         
         
     def onAction(self, act):
@@ -177,9 +179,10 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
         setRepeat(REAL_SETTINGS.getSetting('RepeatState').lower())
         xbmcgui.Window(10000).clearProperty('script.trakt.paused')
         xbmcgui.Window(10000).clearProperty('%s.Running'%(ADDON_ID))
-        setVolume(int(xbmcgui.Window(10000).getProperty('%s.RESTORE'%ADDON_ID)))
-        self.myPlayer.stop()
+        xbmcgui.Window(10000).clearProperty('PseudoTVRunning')
+        setVolume(int((xbmcgui.Window(10000).getProperty('%s.RESTORE'%ADDON_ID) or '0')))
         self.playList.clear()
+        self.myPlayer.stop()
         self.close()
         
         
@@ -201,7 +204,8 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
         itemLST   = []
         dirLST    = []
         with busy_dialog():
-            response = self.getDirectory(path, end=limit).get('result',{}).get('files',[])
+            try:    response = self.getDirectory(path, end=limit).get('result',{}).get('files',[])
+            except: return xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(32020), ICON, 4000)
             for idx, item in enumerate(response):
                 if self.fileCount > limit: break
                 file     = item.get('file','')
@@ -218,14 +222,14 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
             return itemLST
             
 
-    def buildItem(self, responce):
+    def buildItem(self, response):
         log('buildItem')
-        if 'result' in responce and 'filedetails' in responce['result']: key = 'filedetails'
-        elif 'result' in responce and 'files' in responce['result']: key = 'files'
-        else: xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
-        for item in responce['result'][key]:
+        if   'result' in response and 'filedetails' in response['result']: key = 'filedetails'
+        elif 'result' in response and 'files' in response['result']: key = 'files'
+        else: xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(32001), ICON, 4000)
+        for item in response['result'][key]:
             if key == 'files' and item.get('filetype','') == 'directory': continue
-            yield responce['result'][key]['file']
+            yield response['result'][key]['file']
 
 
     def buildPlaylist(self):
@@ -234,26 +238,29 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
         xbmc.sleep(100)
         
         if not SINGLE_FLE: 
-            playListItem = self.buildDirectory(VIDEO_PATH, VIDEO_LIMIT)
+            playListItem = self.buildDirectory(escapeDirJSON(VIDEO_PATH), VIDEO_LIMIT)
         elif PLAYLIST_FLE: 
-            playListItem = self.buildDirectory(VIDEO_FILE, VIDEO_LIMIT)
+            playListItem = self.buildDirectory(escapeDirJSON(VIDEO_FILE), VIDEO_LIMIT)
         elif not VIDEO_FILE.startswith(('plugin://','upnp://','pvr://')): 
-            playListItem = list(self.buildItem(getFileDetails(VIDEO_FILE)))
-        else: return VIDEO_FILE
-            
-        for idx, playItem in enumerate(playListItem): 
-            self.playList.add(playItem, index=idx)
-            
-        if RANDOM_PLAY: 
-            self.playList.shuffle()
-        else: 
-            self.playList.unshuffle()
-        return self.playList
+            playListItem = list(self.buildItem(getFileDetails(escapeDirJSON(VIDEO_FILE))))
+        else: return escapeDirJSON(VIDEO_FILE)
+        
+        if playListItem:
+            if RANDOM_PLAY and len(playListItem) > 1:
+                random.shuffle(playListItem)
+                self.startidx = random.randint(0, len(playListItem)-1)
+                
+            for idx, playItem in enumerate(playListItem): 
+                self.playList.add(playItem, index=idx)
+                
+            if RANDOM_PLAY: self.playList.shuffle()
+            else:           self.playList.unshuffle()
+            return self.playList
         
         
 class Start():
     def __init__(self):
-        self.myBackground = BackgroundWindow('%s.background.xml'%ADDON_ID, ADDON_PATH, "Default")
+        self.myBackground = BackgroundWindow('%s.background.xml'%ADDON_ID, ADDON_PATH, "default")
         self.myBackground.doModal()
         del self.myBackground
         

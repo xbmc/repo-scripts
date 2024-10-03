@@ -1,0 +1,117 @@
+# XBMC Media Center language file
+# Addon Name: Video ScreenSaver
+# Addon id: screensaver.videosaver
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-04-27 13:21+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-videosaver/da_dk/>\n"
+"Language: da_dk\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.12\n"
+
+msgctxt "Addon Summary"
+msgid "Create a screensaver from any Kodi video source."
+msgstr "Opret en pauseskærm fra enhver Kodi-videokilde."
+
+msgctxt "Addon Description"
+msgid "Dynamic screensaver using Local content, SmartPlaylists, Plugins and UPNP Servers."
+msgstr "Dynamisk pauseskærm der benytter lokalt indhold, smarte playlister, plugins og UPNP-servere."
+
+msgctxt "Addon Disclaimer"
+msgid "Streaming sources not recommend for metered Internet."
+msgstr "Streamingkilder anbefales ikke til forbrugsbetalt internet."
+
+msgctxt "#32001"
+msgid "Something went wrong, Try again later ..."
+msgstr "Noget gik galt. Prøv igen senere..."
+
+msgctxt "#32002"
+msgid "Video Type"
+msgstr "Videotype"
+
+msgctxt "#32003"
+msgid "Video File"
+msgstr "Videofil"
+
+msgctxt "#32004"
+msgid "Video Folder"
+msgstr "Videomappe"
+
+msgctxt "#32005"
+msgid "Video Limit"
+msgstr "Videobegrænsning"
+
+msgctxt "#32006"
+msgid "Randomize"
+msgstr "Gør tilfældig (random)"
+
+msgctxt "#32007"
+msgid "Disable Trakt"
+msgstr "Deaktiver Trakt"
+
+msgctxt "#32008"
+msgid "Ignore Keypress (Stop to end)."
+msgstr "Ignorer tastetryk (stop for at afslutte)."
+
+msgctxt "#32009"
+msgid "Single Video"
+msgstr "Enkelt video"
+
+msgctxt "#32010"
+msgid "Multiple Videos"
+msgstr "Flere videoer"
+
+msgctxt "#32011"
+msgid "Set ScreenSaver Volume [Restored to Previous Level on Stop]"
+msgstr "Indstil pauseskærmens lydstyrke [gendannet til forrige niveau ved stop]"
+
+msgctxt "#32012"
+msgid "Enable Debugging [Log errors]"
+msgstr "Aktiver fejfinding (logfør fejl)"
+
+msgctxt "#32013"
+msgid "Building Playlist"
+msgstr "Bygger playliste"
+
+msgctxt "#32014"
+msgid "Select File"
+msgstr "Vælg fil"
+
+msgctxt "#32015"
+msgid "Select Folder"
+msgstr "Vælg mappe"
+
+msgctxt "#32016"
+msgid "Repeat Return State"
+msgstr "Gentag returtilstand"
+
+msgctxt "#32017"
+msgid "General"
+msgstr "Generel"
+
+msgctxt "#32018"
+msgid "Select Source Type"
+msgstr "Vælg type af kilde"
+
+msgctxt "#32019"
+msgid "Display Time & Weather"
+msgstr "Vis tid og vejr"
+
+msgctxt "#32020"
+msgid "Path In-Valid, No media found!"
+msgstr "Ugyldig sti, ingen medier fundet!"
+
+msgctxt "#32021"
+msgid "Set Dimmer Level"
+msgstr "Indstil niveau på lysdæmpning"
+
+#~ msgctxt "#32011"
+#~ msgid "Set ScreenSaver Volume [Restored to Previous Level]"
+#~ msgstr "Indstil pauseskærmens lydstyrke [gendannet til forrige niveau]"

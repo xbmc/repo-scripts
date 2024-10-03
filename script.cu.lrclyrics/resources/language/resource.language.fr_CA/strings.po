@@ -4,38 +4,38 @@
 # Addon Provider: Taxigps|ronie
 msgid ""
 msgstr ""
-"Project-Id-Version: Kodi add-ons\n"
+"Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
-msgstr ""
+msgstr "Paroles CU LRC"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr ""
+msgstr "Paroles CU LRC est un script de paroles pour Kodi. Il prend en charge les paroles régulières et LRC. Le script peut rechercher des paroles synchronisées/désynchronisées intégrées, d'un fichier ou de récupérateurs. Il peut lire les fichiers de paroles .lrc/.txt enregistrés dans le même chemin et avec le me nom que le .mp3 (ou autres types de musique)."
 
 # Script labels
 msgctxt "#32000"
 msgid "File"
-msgstr ""
+msgstr "Fichier"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr ""
+msgstr "Aucune parole trouvée!"
 
 msgctxt "#32002"
 msgid "Embedded"
-msgstr ""
+msgstr "Intégrées"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
@@ -43,7 +43,7 @@ msgstr ""
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr ""
+msgstr "Recherche de paroles..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
@@ -77,39 +77,39 @@ msgstr ""
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr ""
+msgstr "- Dossier des paroles"
 
 msgctxt "#32103"
 msgid "- Filename format"
-msgstr ""
+msgstr "- Format d'enregistrement"
 
 msgctxt "#32104"
 msgid "%N %A - %T"
-msgstr ""
+msgstr "%N %A - %T"
 
 msgctxt "#32105"
 msgid "%A\\%T"
-msgstr ""
+msgstr "%A\\%T"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr ""
+msgstr "Utiliser seulement le nom du fichier pour la recherche"
 
 msgctxt "#32107"
 msgid "Filename format"
-msgstr ""
+msgstr "Format du nom de fichier"
 
 msgctxt "#32108"
 msgid "%A - %T"
-msgstr ""
+msgstr "%A - %T"
 
 msgctxt "#32109"
 msgid "%A\\%B\\%T"
-msgstr ""
+msgstr "%A\\%B\\%T"
 
 msgctxt "#32110"
 msgid "%A\\%B\\%N (-) %T"
-msgstr ""
+msgstr "%A\\%B\\%N %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
@@ -160,6 +160,7 @@ msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
 msgstr ""
 
+# empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
 msgstr ""
@@ -170,15 +171,15 @@ msgstr ""
 
 msgctxt "#32150"
 msgid "Scrapers"
-msgstr ""
+msgstr "Extracteurs"
 
 msgctxt "#32151"
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 msgctxt "#32152"
 msgid "Search for embedded lyrics"
-msgstr ""
+msgstr "Chercher des paroles intégrées"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
@@ -186,31 +187,31 @@ msgstr ""
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr ""
+msgstr "Extracteurs de paroles synchronisées"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr ""
+msgstr "Extracteurs de paroles régulières"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
-msgstr ""
+msgstr "Afficher les paroles automatiquement"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr ""
+msgstr "Nettoyer les titres de chansons (supprimer ce qui est entre parenthèses)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
-msgstr ""
+msgstr "Le script tourne déjà!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Activer la journalisation de débogage"
 
 msgctxt "#32160"
 msgid "Hide notifications"
-msgstr ""
+msgstr "Cacher les notifications"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
@@ -296,3 +297,25 @@ msgstr ""
 msgctxt "#32917"
 msgid "Super Music"
 msgstr ""
+
+# empty strings from id 32010 to 32100
+# Settings labels
+#~ msgctxt "#32101"
+#~ msgid "Search for and save lyrics in separate lyrics folder"
+#~ msgstr "Enregistrer les paroles dans le dossier des paroles"
+
+#~ msgctxt "#32111"
+#~ msgid "Lyrics are in a subfolder"
+#~ msgstr "Paroles du même nom enregistrées dans un sous-dossier"
+
+#~ msgctxt "#32112"
+#~ msgid "- Subfolder name"
+#~ msgstr "- Nom du sous-dossier"
+
+#~ msgctxt "#32113"
+#~ msgid "Search for and save lyrics in song folder"
+#~ msgstr "Enregistrer les paroles dans le dossier des chansons"
+
+#~ msgctxt "#32153"
+#~ msgid "Search for local lyrics files"
+#~ msgstr "Chercher des fichiers de paroles locaux"
