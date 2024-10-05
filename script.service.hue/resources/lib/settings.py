@@ -114,9 +114,9 @@ class SettingsMonitor(xbmc.Monitor):
         self._validate_ambilight()
 
     def _validate_ambilight(self):
-        log(f"[SCRIPT.SERVICE.HUE] Validate ambilight config. Enabled: {self.group3_enabled}, Lights: {self.group3_lights}")
+        log(f"[SCRIPT.SERVICE.HUE] Validate ambilight config. Enabled: {self.group3_enabled}, Lights: {type(self.group3_lights)} : {self.group3_lights}")
         if self.group3_enabled:
-            if self.group3_lights == '-1':
+            if self.group3_lights == ["-1"]:
                 ADDON.setSettingBool('group3_enabled', False)
                 log('[SCRIPT.SERVICE.HUE] _validate_ambilights: No ambilights selected')
                 notification(_('Hue Service'), _('No lights selected for Ambilight.'), icon=xbmcgui.NOTIFICATION_ERROR)
