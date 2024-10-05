@@ -287,6 +287,8 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
         self.extraListControl = kodigui.ManagedControlList(self, self.EXTRA_LIST_ID, 5)
         self.relatedListControl = kodigui.ManagedControlList(self, self.RELATED_LIST_ID, 5)
 
+        VIDEO_PROGRESS.clear()
+
         if not self.openedWithAutoPlay:
             # we may have set up the hooks before
             self._setup_hooks()
@@ -517,7 +519,7 @@ class EpisodesWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMix
                 # we've probably watched something in the next season
                 key = '/library/metadata/{0}'.format(list(progress_data_left.keys())[-1])
                 ep = plexapp.SERVERMANAGER.selectedServer.getObject(key)
-                if ep.parentIndex != self.season.index:
+                if ep.parentIndex != self.season.index and ep.grandparentRatingKey == self.show_.ratingKey:
                     raise RedirectToEpisode(ep)
             elif was_last_mli and last_mli_seen.dataSource.isFullyWatched and self.getSeasons():
                 # check if we need to go to the next season

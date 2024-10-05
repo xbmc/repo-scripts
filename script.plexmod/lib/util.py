@@ -56,7 +56,7 @@ PROFILE = translatePath(ADDON.getAddonInfo('profile'))
 
 
 DEF_THEME = "modern-colored"
-THEME_VERSION = 24
+THEME_VERSION = 27
 
 xbmc.log('script.plex: Kodi {0}.{1} (build {2})'.format(KODI_VERSION_MAJOR, KODI_VERSION_MINOR, KODI_BUILD_NUMBER),
          xbmc.LOGINFO)
@@ -220,7 +220,7 @@ class AddonSettings(object):
         ("tickrate", 1.0),
         ("honor_plextv_dnsrebind", True),
         ("honor_plextv_pam", True),
-        ("coreelec_resume_seek_wait", 250),
+        ("coreelec_resume_seek_wait", 350),
     )
 
     def __init__(self):

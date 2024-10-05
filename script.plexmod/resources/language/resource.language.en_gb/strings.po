@@ -2259,7 +2259,7 @@ msgid "CoreELEC: Resume-fix wait for seek"
 msgstr ""
 
 msgctxt "#33650"
-msgid "This adjusts the delay between seek-tries on CoreELEC, which fixes resume not always working or double-seeking. When you have resume/double-seek issues, increase this. 100ms should be stable as well. Default: 200ms"
+msgid "This adjusts the delay between seek-tries on CoreELEC, which fixes resume not always working or double-seeking. When you have resume/double-seek issues, increase this. 100ms should be stable as well. Default: 350ms"
 msgstr ""
 
 msgctxt "#33651"

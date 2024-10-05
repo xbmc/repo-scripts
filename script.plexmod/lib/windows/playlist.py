@@ -135,9 +135,9 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         elif controlID == self.PLAYER_STATUS_BUTTON_ID:
             self.showAudioPlayer()
         elif controlID == self.PLAY_BUTTON_ID:
-            self.playlistListClicked(no_item=True, shuffle=False)
+            self.playlistListClicked(no_item=True, shuffle=False, play=True)
         elif controlID == self.SHUFFLE_BUTTON_ID:
-            self.playlistListClicked(no_item=True, shuffle=True)
+            self.playlistListClicked(no_item=True, shuffle=True, play=True)
         elif controlID == self.OPTIONS_BUTTON_ID:
             self.optionsButtonClicked()
         elif controlID == self.SEARCH_BUTTON_ID:
@@ -211,7 +211,7 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     opener.open(pq)
             elif self.playlist.playlistType == 'video':
                 if not util.addonSettings.playlistVisitMedia or play:
-                    if resume is None and bool(mli.dataSource.viewOffset.asInt()):
+                    if resume is None and mli and bool(mli.dataSource.viewOffset.asInt()):
                         return self.plItemPlaybackMenu(select_choice='resume')
 
                     if self.playlist.leafCount.asInt() <= PLAYLIST_INITIAL_SIZE:
