@@ -3,23 +3,48 @@
 """Implements various Helper functions"""
 
 from __future__ import absolute_import, division, unicode_literals
+
 import os
-from time import time
+import re
+import struct
+from functools import total_ordering
 from socket import timeout
 from ssl import SSLError
-import struct
-
-
-try:  # Python 3
-    from urllib.error import HTTPError, URLError
-    from urllib.request import Request, urlopen
-except ImportError:  # Python 2
-    from urllib2 import HTTPError, Request, URLError, urlopen
+from time import time
+from typing import NamedTuple
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 from . import config
-from .kodiutils import (bg_progress_dialog, copy, delete, exists, get_setting, localize, log, mkdirs,
-                        progress_dialog, set_setting, stat_file, translate_path, yesno_dialog)
+from .kodiutils import (bg_progress_dialog, copy, delete, exists, get_setting,
+                        localize, log, mkdirs, progress_dialog, set_setting,
+                        stat_file, translate_path, yesno_dialog)
 from .unicodes import compat_path, from_unicode, to_unicode
+
+
+@total_ordering
+class Version(NamedTuple):
+    """Minimal version class used for parse_version. Should be enough for our purpose."""
+    major: int = 0
+    minor: int = 0
+    micro: int = 0
+    nano: int = 0
+
+    def __str__(self):
+        return f"{self.major}.{self.minor}.{self.micro}.{self.nano}"
+
+    def __lt__(self, other):
+        if self.major != other.major:
+            return self.major < other.major
+        if self.minor != other.minor:
+            return self.minor < other.minor
+        if self.micro != other.micro:
+            return self.micro < other.micro
+
+        return self.nano < other.nano
+
+    def __eq__(self, other):
+        return all((self.major == other.major, self.minor == other.minor, self.micro == other.micro, self.nano == other.nano))
 
 
 def temp_path():
@@ -96,7 +121,7 @@ def http_head(url):
 def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=None, background=False):  # pylint: disable=too-many-statements
     """Makes HTTP request and displays a progress dialog on download."""
     if checksum:
-        from hashlib import sha1, md5
+        from hashlib import md5, sha1
         if hash_alg == 'sha1':
             calc_checksum = sha1()
         elif hash_alg == 'md5':
@@ -184,8 +209,7 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
         else:
             return False
 
-    store('download_path', dl_path)
-    return True
+    return dl_path
 
 
 def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disable=dangerous-default-value
@@ -227,19 +251,6 @@ def system_os():
 
     system_os.cached = sys_name
     return sys_name
-
-
-def store(name, val=None):
-    """Store arbitrary value across functions"""
-
-    if val is not None:
-        setattr(store, name, val)
-        log(0, 'Stored {} in {}'.format(val, name))
-        return val
-
-    if not hasattr(store, name):
-        return None
-    return getattr(store, name)
 
 
 def diskspace():
@@ -311,7 +322,6 @@ def arch():
             sys_arch = 'x86'  # else, sys_arch = AMD64
 
     elif 'armv' in sys_arch:
-        import re
         arm_version = re.search(r'\d+', sys_arch.split('v')[1])
         if arm_version:
             sys_arch = 'armv' + arm_version.group()
@@ -350,11 +360,21 @@ def remove_tree(path):
     rmtree(compat_path(path))
 
 
-def parse_version(version):
-    """Parse a version string and return a comparable version object"""
-    try:
-        from packaging.version import parse
-        return parse(version)
-    except ImportError:
-        from distutils.version import LooseVersion  # pylint: disable=deprecated-module
-        return LooseVersion(version)
+def parse_version(vstring):
+    """Parse a version string and return a comparable version object, properly handling non-numeric prefixes."""
+    vstring = vstring.strip('v').lower()
+    parts = re.split(r'\.', vstring)  # split on periods first
+
+    vnums = []
+    for part in parts:
+        # extract numeric part, ignoring non-numeric prefixes
+        numeric_part = re.search(r'\d+', part)
+        if numeric_part:
+            vnums.append(int(numeric_part.group()))
+        else:
+            vnums.append(0)  # default to 0 if no numeric part found
+
+    # ensure the version tuple always has 4 components
+    vnums = (vnums + [0] * 4)[:4]
+
+    return Version(*vnums)
