@@ -26,7 +26,7 @@ import xbmcgui
 import xbmcplugin
 
 from addic7ed import parser
-from addic7ed.addon import ADDON, PROFILE, ICON, get_ui_string
+from addic7ed.addon import ADDON, PROFILE, ICON, GettextEmulator
 from addic7ed.exceptions import NoSubtitlesReturned, ParseError, SubsSearchError, \
     Add7ConnectionError
 from addic7ed.parser import parse_filename, normalize_showname, get_languages
@@ -35,9 +35,11 @@ from addic7ed.webclient import Session
 
 __all__ = ['router']
 
+_ = GettextEmulator.gettext
+
 logger = logging.getLogger(__name__)
 
-TEMP_DIR = os.path.join(PROFILE, 'temp')
+TEMP_DIR = PROFILE / 'temp'
 HANDLE = int(sys.argv[1])
 
 
@@ -135,24 +137,24 @@ def download_subs(link, referrer, filename):
         label - the download location for subs.
     """
     # Re-create a download location in a temporary folder
-    if not os.path.exists(PROFILE):
-        os.mkdir(PROFILE)
-    if os.path.exists(TEMP_DIR):
-        shutil.rmtree(TEMP_DIR)
-    os.mkdir(TEMP_DIR)
+    if not PROFILE.exists():
+        PROFILE.mkdir()
+    if TEMP_DIR.exists():
+        shutil.rmtree(str(TEMP_DIR))
+    TEMP_DIR.mkdir()
     # Combine a path where to download the subs
     filename = os.path.splitext(filename)[0] + '.srt'
-    subspath = os.path.join(TEMP_DIR, filename)
+    subspath = str(TEMP_DIR / filename)
     # Download the subs from addic7ed.com
     try:
         Session().download_subs(link, referrer, subspath)
     except Add7ConnectionError:
         logger.error('Unable to connect to addic7ed.com')
-        DIALOG.notification(get_ui_string(32002), get_ui_string(32005), 'error')
+        DIALOG.notification(_('Error!'), _('Unable to connect to addic7ed.com.'), 'error')
     except NoSubtitlesReturned:
-        DIALOG.notification(get_ui_string(32002), get_ui_string(32003), 'error',
+        DIALOG.notification(_('Error!'), _('Exceeded daily limit for subs downloads.'), 'error',
                             3000)
-        logger.error('Exceeded daily limit for subs downloads.')
+        logger.error('A HTML page returned instead of subtitles for link: %s', link)
     else:
         # Create a ListItem for downloaded subs and pass it
         # to the Kodi subtitles engine to move the downloaded subs file
@@ -165,8 +167,7 @@ def download_subs(link, referrer, filename):
                                     url=subspath,
                                     listitem=list_item,
                                     isFolder=False)
-        DIALOG.notification(get_ui_string(32000), get_ui_string(32001), ICON,
-                            3000, False)
+        DIALOG.notification(_('Success!'), _('Subtitles downloaded.'), ICON, 3000, False)
         logger.info('Subs downloaded.')
 
 
@@ -197,7 +198,7 @@ def extract_episode_data():
                 showname, season, episode = parse_filename(filename)
             except ParseError:
                 logger.error('Unable to determine episode data for %s', filename)
-                DIALOG.notification(get_ui_string(32002), get_ui_string(32006),
+                DIALOG.notification(_('Error!'), _('Unable to determine episode data.'),
                                     'error', 3000)
                 raise
     else:
@@ -241,24 +242,22 @@ def search_subs(params):
             results = parser.search_episode(query, languages)
         except Add7ConnectionError:
             logger.error('Unable to connect to addic7ed.com')
-            DIALOG.notification(
-                get_ui_string(32002), get_ui_string(32005), 'error'
-            )
+            DIALOG.notification(_('Error!'), _('Unable to connect to addic7ed.com.'), 'error')
         except SubsSearchError:
             logger.info('No subs for "%s" found.', query)
         else:
             if isinstance(results, list):
                 logger.info('Multiple episodes found:\n%s', results)
                 i = DIALOG.select(
-                    get_ui_string(32008), [item.title for item in results]
+                    _('Select episode'), [item.title for item in results]
                 )
                 if i >= 0:
                     try:
                         results = parser.get_episode(results[i].link, languages)
                     except Add7ConnectionError:
                         logger.error('Unable to connect to addic7ed.com')
-                        DIALOG.notification(get_ui_string(32002),
-                                            get_ui_string(32005), 'error')
+                        DIALOG.notification(_('Error!'),
+                                            _('Unable to connect to addic7ed.com.'), 'error')
                         return
                     except SubsSearchError:
                         logger.info('No subs found.')
