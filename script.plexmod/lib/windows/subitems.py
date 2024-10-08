@@ -1,31 +1,29 @@
 from __future__ import absolute_import
+
 import gc
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
-
-from lib import util
-from lib import metadata
-from lib import player
-
 from plexnet import playlist
 
+from lib import metadata
+from lib import player
+from lib import util
+from lib.util import T
 from . import busy
-from . import episodes
-from . import tracks
-from . import opener
-from . import info
-from . import musicplayer
-from . import videoplayer
 from . import dropdown
-from . import windowutils
-from . import search
+from . import episodes
+from . import info
+from . import kodigui
+from . import musicplayer
+from . import opener
 from . import pagination
 from . import playbacksettings
-
-from lib.util import T
-from .mixins import SeasonsMixin, DeleteMediaMixin, RatingsMixin
+from . import search
+from . import tracks
+from . import videoplayer
+from . import windowutils
+from .mixins import SeasonsMixin, DeleteMediaMixin, RatingsMixin, PlaybackBtnMixin
 
 
 class RelatedPaginator(pagination.BaseRelatedPaginator):
@@ -34,7 +32,7 @@ class RelatedPaginator(pagination.BaseRelatedPaginator):
 
 
 class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, DeleteMediaMixin, RatingsMixin,
-                 playbacksettings.PlaybackSettingsMixin):
+                 PlaybackBtnMixin, playbacksettings.PlaybackSettingsMixin):
     xmlFile = 'script-plex-seasons.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -69,6 +67,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
         SeasonsMixin.__init__(*args, **kwargs)
         DeleteMediaMixin.__init__(*args, **kwargs)
+        PlaybackBtnMixin.__init__(self, *args, **kwargs)
         self.mediaItem = kwargs.get('media_item')
         self.parentList = kwargs.get('parent_list')
         self.cameFrom = kwargs.get('came_from')
@@ -76,6 +75,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         self.exitCommand = None
         self.lastFocusID = None
         self.lastNonOptionsFocusID = None
+        self.manuallySelectedSeason = False
         self.initialized = False
         self.relatedPaginator = None
 
@@ -106,6 +106,9 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                 player.PLAYER.playBackgroundMusic(self.mediaItem.theme.asURL(True), volume,
                                                   self.mediaItem.ratingKey)
 
+    def onReInit(self):
+        PlaybackBtnMixin.onReInit(self)
+
     def setup(self):
         self.mediaItem.reload(includeExtras=1, includeExtrasCount=10, includeOnDeck=1)
 
@@ -127,6 +130,10 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         self.setProperty('duration', util.durationToText(self.mediaItem.fixedDuration()))
         self.setProperty('info', '')
         self.setProperty('date', self.mediaItem.year)
+        if not self.mediaItem.isWatched:
+            self.setProperty('unwatched.count', str(self.mediaItem.unViewedLeafCount) or '')
+        else:
+            self.setBoolProperty('watched', self.mediaItem.isWatched)
 
         self.setProperty('extras.header', T(32305, 'Extras'))
         self.setProperty('related.header', T(32306, 'Related Shows'))
@@ -136,7 +143,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         elif self.mediaItem.studio:
             self.setProperty('directors', u'{0}    {1}'.format(T(32386, 'Studio').upper(), self.mediaItem.studio))
 
-        cast = u' / '.join([r.tag for r in self.mediaItem.roles()][:5])
+        cast = self.mediaItem.roles and u' / '.join([r.tag for r in self.mediaItem.roles()][:5]) or ''
         castLabel = T(32419, 'Cast').upper()
         self.setProperty('writers', cast and u'{0}    {1}'.format(castLabel, cast) or '')
 
@@ -171,7 +178,10 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             if not controlID and self.lastFocusID and not action == xbmcgui.ACTION_MOUSE_MOVE:
                 self.setFocusId(self.lastFocusID)
 
-            if action == xbmcgui.ACTION_CONTEXT_MENU:
+            if controlID == self.SUB_ITEM_LIST_ID and action in (xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_MOVE_RIGHT):
+                self.manuallySelectedSeason = True
+
+            elif action == xbmcgui.ACTION_CONTEXT_MENU:
                 if controlID == self.SUB_ITEM_LIST_ID:
                     self.optionsButtonClicked(from_item=True)
                     return
@@ -185,10 +195,10 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                         self.lastNonOptionsFocusID = None
                         return
 
-            elif action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
+            elif action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                 if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(
                         self.OPTIONS_GROUP_ID)) and \
-                        (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
+                        (not util.addonSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                     if self.getProperty('on.extras'):
                         self.setFocusId(self.OPTIONS_GROUP_ID)
                         return
@@ -400,14 +410,18 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         util.garbageCollect()
 
     def playButtonClicked(self, shuffle=False):
+        if self.playBtnClicked:
+            return
+
         items = self.mediaItem.all()
         pl = playlist.LocalPlaylist(items, self.mediaItem.getServer())
         resume = False
         if not shuffle and self.mediaItem.type == 'show':
-            resume = self.getPlaylistResume(pl, items, self.mediaItem.title)
+            resume = self.getNextShowEp(pl, items, self.mediaItem.title)
             if resume is None:
                 return
 
+        self.playBtnClicked = True
         pl.shuffle(shuffle, first=True)
         videoplayer.play(play_queue=pl, resume=resume)
 
@@ -487,7 +501,11 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             if self.delete(item):
                 # cheap way of requesting a home hub refresh because of major deletion
                 util.MONITOR.watchStatusChanged()
-                self.goHome()
+                self.initialized = False
+                self.setBoolProperty("initialized", False)
+                self.setup()
+                self.initialized = True
+                self.setFocusId(self.PLAY_BUTTON_ID)
 
     def roleClicked(self):
         mli = self.rolesListControl.getSelectedItem()
@@ -524,7 +542,14 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),0) + Control.IsVisible(500)'):
             y -= 500
 
-        focus = int(xbmc.getInfoLabel('Container(401).Position'))
+        tries = 0
+        focus = xbmc.getInfoLabel('Container(401).Position')
+        while tries < 2 and focus == '':
+            focus = xbmc.getInfoLabel('Container(401).Position')
+            xbmc.sleep(250)
+            tries += 1
+
+        focus = int(focus)
 
         x = ((focus + 1) * 304) - 100
         return x, y
@@ -542,7 +567,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
     @busy.dialog()
     def fill(self, update=False):
-        self.fillSeasons(self.mediaItem, update=update)
+        self.fillSeasons(self.mediaItem, update=update, do_focus=not self.manuallySelectedSeason)
 
     def fillExtras(self):
         items = []

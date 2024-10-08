@@ -12,6 +12,9 @@ from . import util
 from . import mediachoice
 from .mixins import AudioCodecMixin
 
+from lib.data_cache import dcm
+from lib.util import T
+
 
 class PlexVideoItemList(plexobjects.PlexItemList):
     def __init__(self, data, initpath=None, server=None, container=None):
@@ -45,21 +48,31 @@ def forceMediaChoice(method):
 
 
 class Video(media.MediaItem, AudioCodecMixin):
+    __slots__ = ("_settings",)
+
     TYPE = None
     manually_selected_sub_stream = False
     current_subtitle_is_embedded = False
     _current_subtitle_idx = None
+    _noSpoilers = False
 
     def __init__(self, *args, **kwargs):
         self._settings = None
         media.MediaItem.__init__(self, *args, **kwargs)
         AudioCodecMixin.__init__(self)
+        self._noSpoilers = False
 
     def __eq__(self, other):
         return other and self.ratingKey == other.ratingKey
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __hash__(self):
+        return hash(self.ratingKey)
+
+    def __repr__(self):
+        return '<%s:%s>' % (self.__class__.__name__, self.ratingKey)
 
     @property
     def settings(self):
@@ -127,8 +140,7 @@ class Video(media.MediaItem, AudioCodecMixin):
                                 if not possible_alt:
                                     possible_alt = alt_stream
                         if possible_alt:
-                            util.DEBUG_LOG("Selecting stream %s instead of %s" %
-                                           (possible_alt, stream))
+                            util.DEBUG_LOG("Selecting stream {} instead of {}", possible_alt, stream)
                             stream.setSelected(False)
                             possible_alt.setSelected(True)
                             self.current_subtitle_is_embedded = possible_alt.embedded
@@ -152,8 +164,9 @@ class Video(media.MediaItem, AudioCodecMixin):
         self.mediaChoice = mediachoice.MediaChoice(media, partIndex=partIndex)
 
     @forceMediaChoice
-    def selectStream(self, stream, _async=True):
-        self.mediaChoice.part.setSelectedStream(stream.streamType.asInt(), stream.id, _async)
+    def selectStream(self, stream, _async=True, from_session=False):
+        self.mediaChoice.part.setSelectedStream(stream.streamType.asInt(), stream.id, _async, from_session=from_session,
+                                                video=self)
         # Update any affected streams
         if stream.streamType.asInt() == plexstream.PlexStream.TYPE_AUDIO:
             for audioStream in self.audioStreams:
@@ -194,7 +207,7 @@ class Video(media.MediaItem, AudioCodecMixin):
                 else:
                     stream = self.subtitleStreams[-1]
 
-        util.DEBUG_LOG("Selecting subtitle stream: {} (was: {})".format(stream, cur))
+        util.DEBUG_LOG("Selecting subtitle stream: {} (was: {})", stream, cur)
         self.selectStream(stream)
         return stream
 
@@ -331,15 +344,23 @@ class Video(media.MediaItem, AudioCodecMixin):
 
     @property
     def remainingTime(self):
-        if not self.viewOffset.asInt():
+        return self._remainingTime()
+
+    def _remainingTime(self, view_offset=None):
+        view_offset = view_offset if view_offset is not None else self.viewOffset.asInt()
+        if not view_offset:
             return
-        return (self.duration.asInt() - self.viewOffset.asInt()) // 1000
+        return (self.duration.asInt() - view_offset) // 1000
 
     @property
     def remainingTimeString(self):
-        if not self.remainingTime:
+        return self._remainingTimeString()
+
+    def _remainingTimeString(self, view_offset=None):
+        remt = self._remainingTime(view_offset=view_offset)
+        if not remt:
             return ''
-        seconds = self.remainingTime
+        seconds = remt
         hours = seconds // 3600
         minutes = (seconds - hours * 3600) // 60
         return (hours and "{}h ".format(hours) or '') + (minutes and "{}m".format(minutes) or "0m")
@@ -364,6 +385,7 @@ class SectionOnDeckMixin(object):
 
 
 class PlayableVideo(Video, media.RelatedMixin):
+    __slots__ = ("extras", "guids", "chapters")
     TYPE = None
     _videoStreams = None
     _audioStreams = None
@@ -374,6 +396,7 @@ class PlayableVideo(Video, media.RelatedMixin):
         Video._setData(self, data)
         if self.isFullObject():
             self.extras = PlexVideoItemList(data.find('Extras'), initpath=self.initpath, server=self.server, container=self)
+            self.guids = plexobjects.PlexItemList(data, media.Guid, media.Guid.TYPE, server=self.server)
 
             # the PMS Extras API can return protocol=mp4 when it doesn't make sense, mark this as an extra so the MDE
             # knows what to do
@@ -403,6 +426,8 @@ class PlayableVideo(Video, media.RelatedMixin):
                 del self.viewOffset
 
         fromMediaChoice = kwargs.get("fromMediaChoice", False)
+
+        kwargs["includeMarkers"] = 1
 
         # capture current IDs
         mediaID = None
@@ -461,6 +486,8 @@ class PlayableVideo(Video, media.RelatedMixin):
 
 @plexobjects.registerLibType
 class Movie(PlayableVideo):
+    __slots__ = ("collections", "countries", "directors", "genres", "media", "producers", "roles", "reviews",
+                 "writers", "markers", "sessionKey", "user", "player", "session", "transcodeSession")
     TYPE = 'movie'
 
     def _setData(self, data):
@@ -534,19 +561,25 @@ class Movie(PlayableVideo):
     def isWatched(self):
         return self.get('viewCount').asInt() > 0 or self.get('viewOffset').asInt() > 0
 
+    @property
+    def isFullyWatched(self):
+        return self.get('viewCount').asInt() > 0 and not self.get('viewOffset').asInt()
+
     def getStreamURL(self, **params):
         return self._getStreamURL(**params)
 
 
 @plexobjects.registerLibType
 class Show(Video, media.RelatedMixin, SectionOnDeckMixin):
+    __slots__ = ("_genres", "guids", "onDeck")
     TYPE = 'show'
 
     def _setData(self, data):
         Video._setData(self, data)
         if self.isFullObject():
-            self.genres = plexobjects.PlexItemList(data, media.Genre, media.Genre.TYPE, server=self.server)
+            self._genres = plexobjects.PlexItemList(data, media.Genre, media.Genre.TYPE, server=self.server)
             self.roles = plexobjects.PlexItemList(data, media.Role, media.Role.TYPE, server=self.server, container=self.container)
+            self.guids = plexobjects.PlexItemList(data, media.Guid, media.Guid.TYPE, server=self.server)
             #self.related = plexobjects.PlexItemList(data.find('Related'), plexlibrary.Hub, plexlibrary.Hub.TYPE, server=self.server, container=self)
             self.extras = PlexVideoItemList(data.find('Extras'), initpath=self.initpath, server=self.server, container=self)
             self.onDeck = PlexVideoItemList(data.find('OnDeck'), initpath=self.initpath, server=self.server,
@@ -559,6 +592,10 @@ class Show(Video, media.RelatedMixin, SectionOnDeckMixin):
     @property
     def isWatched(self):
         return self.viewedLeafCount == self.leafCount
+
+    @property
+    def isFullyWatched(self):
+        return self.isWatched
 
     @property
     def playbackSettings(self):
@@ -580,7 +617,7 @@ class Show(Video, media.RelatedMixin, SectionOnDeckMixin):
         path = '/library/metadata/%s/allLeaves' % self.ratingKey
         return plexobjects.findItem(self.server, path, title)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return self.episodes()
 
     def watched(self):
@@ -591,6 +628,17 @@ class Show(Video, media.RelatedMixin, SectionOnDeckMixin):
 
     def refresh(self):
         self.server.query('/library/metadata/%s/refresh' % self.ratingKey)
+
+    def genres(self):
+        genres = dcm.getCacheData("show_genres", self.ratingKey)
+        if genres:
+            return [media.Genre(util.AttributeDict(tag="genre", attrib={"tag": g}, virtual=True)) for g in genres]
+
+        if not self.isFullObject():
+            self.reload(soft=True)
+
+        dcm.setCacheData("show_genres", self.ratingKey, [g.tag for g in self._genres])
+        return self._genres
 
 
 @plexobjects.registerLibType
@@ -604,7 +652,7 @@ class Season(Video):
 
     @property
     def defaultTitle(self):
-        return self.parentTitle or self.title
+        return T(32303, "Season {}").format(self.index)
 
     @property
     def unViewedLeafCount(self):
@@ -614,6 +662,10 @@ class Season(Video):
     def isWatched(self):
         return self.viewedLeafCount == self.leafCount
 
+    @property
+    def isFullyWatched(self):
+        return self.isWatched
+
     def episodes(self, watched=None, offset=None, limit=None):
         path = self.key
         return plexobjects.listItems(self.server, path, watched=watched, offset=offset, limit=limit)
@@ -622,7 +674,7 @@ class Season(Video):
         path = self.key
         return plexobjects.findItem(self.server, path, title)
 
-    def all(self):
+    def all(self, *args, **kwargs):
         return self.episodes()
 
     def show(self):
@@ -637,6 +689,7 @@ class Season(Video):
 
 @plexobjects.registerLibType
 class Episode(PlayableVideo, SectionOnDeckMixin):
+    __slots__ = ("_show", "_season")
     TYPE = 'episode'
 
     def init(self, data):
@@ -693,6 +746,14 @@ class Episode(PlayableVideo, SectionOnDeckMixin):
         return self.get('viewCount').asInt() > 0 or self.get('viewOffset').asInt() > 0
 
     @property
+    def isFullyWatched(self):
+        return self.get('viewCount').asInt() > 0 and not self.get('viewOffset').asInt()
+
+    @property
+    def inProgress(self):
+        return bool(self.get('viewOffset').asInt())
+
+    @property
     def playbackSettings(self):
         return self.show().playbackSettings
 
@@ -741,6 +802,10 @@ class Clip(PlayableVideo):
     @property
     def isWatched(self):
         return self.get('viewCount').asInt() > 0 or self.get('viewOffset').asInt() > 0
+
+    @property
+    def isFullyWatched(self):
+        return self.get('viewCount').asInt() > 0 and not self.get('viewOffset').asInt()
 
     def getStreamURL(self, **params):
         return self._getStreamURL(**params)

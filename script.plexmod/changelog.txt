@@ -1,6 +1,366 @@
-[-0.7.6-rev2 -]
-- Core: Avoid DNS rebind protection issues for plex.direct
+[-0.7.9-rev4-]
+- Episodes: Clear VIDEO_PROGRESS onFirstInit; Only redirect to episode from progress if shows match
+- Collections: Fix shuffle play
+- Core/Playback/CoreELEC: Increase CoreELEC resume seek wait fix to 350ms (was 250ms)
+- Playlists: Fix shuffle/play button behaviour
+- Player: Only send timeline events if playstate has changed or we haven't sent one for 15 seconds; fixes #137
+- AddonSettings: Fix default cert bundle setting
+- Core/plexnet/http: Fix session cert bundle usage by using the correct attribute (verify vs cert); should fix kodi 18 connectivity
+- Core/AddonSettings: Adjust proper defaults for plextv timeouts
+- Core/Networking/MyPlex: Don't use custom certificate for plex.tv connections
+- Core/SSL: Replace default plex.direct certificate with ACME root bundle (Letsencrypt, ZeroSSL), valid until 2035
+- Core/AddonSettings: Adjust default plex.tv timeouts to 1s (connect), 2s (read)
+- Core/KodiGUI: When broken template is detected, make sure to stop current playback as well
+
+- Login/Pinlogin/Prelogin: Fix black screen
+- i18n: Fix duplicate translations (de_de, es_es, zh_cn)
+- Home: Fix hubs not translated
+- Home: Fix double refocus; add logging
+- i18n: Fix bad escapes in translations, update forgotten description
+
+- Episodes: After fully watching the last episode of a season, select the next unwatched episode of the next season, automatically, after returning to the episodes view
+- Episodes: Carry progress data as long as we're visiting (nested) episodes views
+- Episodes: Clear progress data after filling episodes when opened without nesting (episodes or postplay)
+- Episodes: Correctly select next-up-episode even if we had progress data
+- Episodes: Correctly show episode thumbnails at their 16:9 ratio
+- Episodes: Correctly update unwatched counter in seasons list after marking an episode watched
+- Episodes: Don't change focus after selecting a new episode (might need a better fix)
+- Episodes: Don't reselect current season in seasons view after returning from visiting another season
+- Episodes: Fix badly reported resume states
+- Episodes: Fix episodes not playable after returning from playback
+- Episodes: Fix focus handling (don't refocus already focussed elements)
+- Episodes: Fix focussing after playing something in a different season
+- Episodes: Fix no related shows shown; broken for half a year
+- Episodes: Fix rare timing issue (with possible crash/freeze) when play was pressed before theme music started playing (thanks @MikeTeavee for reporting and testing the fix)
+- Episodes: Fix refocus handling after visiting a sub-season
+- Episodes: Fix round robining too early after returning from playback and pressing left after watching the first episode
+- Episodes: Fix wrong top scroll when returning to episodes screen after visiting sub-season
+- Episodes: Harden selectEpisode logic further
+- Episodes: Only redirect to seasons when returning from playback (reinit)
+- Episodes: Properly reselect play button if possible
+- Episodes: Visually fix resume point still showing after rewinding to a non-resume-worthy point (<60s) in a video that had a resume point
+- Episodes: When watching multiple episodes in a row, completely, until the end of the season, select the last episode in the season when returning from playback
+- Episodes/Movies: Fix play button not working after cancelling the resume dialog; fix play button not working after returning to view after direct playing from home
+- Episodes/Movies/Libraries: Don't allow multiple presses of play to avoid issues
+- Episodes/Postplay: Fix behaviour when visiting episodes view from postplay
+- Home: Allow hiding specific hubs via hubitem context menu
+- Home: Avoid mis-selecting a hub item after watching something and returning to the hub, after updating the hub and a different selection has been made in the meantime
+- Home: Avoid section button "jumping" on reInit after visiting a library
+- Home: Bifurcate library dropdowns
+- Home: Correctly re-enable home updates even if we're playing, after coming back from screensaver or sleep
+- Home: Disable updates when screensaver activated
+- Home: Don't refresh stale sections while we're not the active window; might improve UI performance after watching something
+- Home: Fix extremely long/indefinite reload when revisiting home after watching something from another library for longer than 5 minutes
+- Home: Fix setting correct background when round-robining hubs
+- Home: Implement library features "Scan Library Files", "Empty Trash", "Analyze" for admins
+- Home: Properly support cancelling library reordering (reverting to the previous order)
+- Home: SectionHider: After hiding a section, go to the previous one
+- Home: SectionMover: Stay on current section after moving
+- Home: update On Deck hubs after revisiting home, not before
+- Home: Wait 1 second before continuing (block input) after wake event (default); 5 seconds for CoreELEC (default)
+- Home: When a hub goes missing (e.g. continue watching gets emptied) after reinit, focus next best valid hub, if a hub was focused before
+- Home: When onWake is set to restart PM4K, close all active dialogs and non-home windows before exiting
+- Home/Hubs: Try correctly reselecting the last selected item after item progress has been made and we're revisiting home (hubs update)
+- Home/Hubs: When round-robining is enabled, limit the amount of items fetched to 250 (default); if the hub exceeds this value, the rest of the items are lazy loaded as before
+- Home/Restart-after-wake: Prevent API calls when we're closing all windows and returning home to restart the app
+- Home/Settings: Fix description for EZ mapping
+- Home/Settings: Set home dirty when changing the option to show/hide path mapping indicators
+- Home/Settings/Theming: When setting a theme-relevant setting, restart home
+- Photos: Correctly focus play button on OSD open
+- Player: Properly honor previous paused state when switching streams during transcode session (now pausing onAVStarted instead of onPlayBackStarted)
+- Player/Audio: Fix zero-duration error; fix seeking impossible
+- Player/Episodes/Seekdialog: Always correctly select the currently playing item in the current playlist
+- Player/Episodes/Videoplayer: Avoid blocking play button based on wonky BGM state
+- Player/Episodes/Videoplayer: Before starting playback, wait for BGM to finish being handled
+- Player/Music: Fix broken shuffle handling (hopefully)
+- Player/PlaybackState: Allow forcing a timestamp
+- Player/PlaybackState: Avoid using the player's current time when reporting a stopped state via the tick() method; might fix resume issues on CoreELEC when switching audio streams that need transcoding; add logging
+- Player/PlaybackState: Only store progress for episode view if updatePlaybackState has accepted and sent our new timestamp
+- Player/SeekDialog: Show chapters when pressing down with OSD
+- Player/SeekPlayerHandler: Possibly harden further against bad timeline events
+- Player/Settings/Player UI: Add option to show OSD instead of skipping chapters when pressing up/down without OSD (Default: On) (called "Behave like official Plex clients")
+- PlexPlayer: Music: Allow directplay of high resolution audio (e.g. FLAC >= 192 kHz)
+- PlexPlayer: Music: When transcoding is necessary, use http/mp3/mp3 for compatibility and seeking reasons
+- Postplay: Allow resuming in-progress episodes
+- Postplay: Fix cosmetic "API: ERROR: FATAL: Container address is not an expected path: "
+- SeasonsMixin: Don't auto-select unplayed specials/season 00
+- SeasonsMixin: Select the first unwatched season by default
+- SeekDialog: Allow ACTION_PAGE_DOWN and ACTION_PAGE_UP to bring up the OSD when Behave like official Plex clients is active
+- SeekDialog: Allow for seek-back on resume after pause (only Direct Play)
+- SeekDialog: Blur chapter preview images if wanted
+- SeekDialog: Fix issue with time fields not updating in OSD when transcoding video (thanks @bowlingbeeg)
+- SeekDialog: Fix Kodi UI shining through when pressing INFO
+- SeekDialog: Fix player settings scrollbar visible between native Kodi settings dialog fades (returning from subtitle offset adjust for example)
+- SeekDialog: Normalize marker data before modifying it
+- Seekdialog: Only react to DOWN with OSD shown if we should behave like official Plex clients and we want/have (virtual) chapters
+- SeekDialog: Postplay: Fix replay error/issue
+- SeekDialog: Re-evaluate MediaDecisionEngine decision when changing selected streams during playback; this allows switching between DirectPlay/DirectStream/Transcode, on the fly, based on the selected streams
+- SeekDialog: Reduce skip-button "jumping" just before auto skipping a marker
+- SeekDialog: Refocus playlist button after closing playlist dialog, after opening it more than once
+- SeekDialog/CurrentPlaylist: Honor no TV spoilers setting as well
+- SeekDialog/Player: Don't restart the video when changing audio or subtitles (possibly even video, not tested), if not necessary
+- SeekDialog/Player: Fix resume-on-start sometimes not working when an embedded subtitle stream was selected
+- SeekDialog/Player: Report selected streams correctly to PMS when switching streams in DirectPlay mode (activity/sessions tab in PlexWeb)
+- SeekDialog/PPI: Correctly position CPUUsage when scaled
+- SeekDialog/VideoSettings: Hide fade backdrop when we're using skin.plextuary
+- SeekDialog/VideoSettingsDialog: Don't fade background when OSDBackgroundPause isn't activated in plextuary; never fade background when SliderDialog is active (audio/subtitle offset adjustments), regardless of the skin used
+- Audio: Fix transcoding not working
+- Audio: Support direct play of high-res audio (<= 384 kHz)
+- Audio/CurrentPlayList: Allow round-robining
+- Audio/CurrentPlaylist: Close current playlist view when pressing back/previous menu with current playlist view open instead of closing the music player
+- Audio/Playqueues: Fix issue were track would skip back to the previous one
+- Audio/Playqueues: Generic fixes
+- Boot: Force home before starting via plugin mode (Program Addons, My Addons, Shortcuts)
+- Core: Add customized templating engine
+- Core: Add info to splash in log whether we need scaling or not, and the current aspect ratio
+- Core: Add our own ibis-3.3.0 fork as a library
+- Core: Add singleton from tendo library; add LICENSE; make singleton py2 compatible (hopefully)
+- Core: Add the ability to use an addon-supplied CA-certificate bundle for plex.direct connections (might be slightly less resource-intensive; new default; non-plex.direct connections will use the system bundle), the system bundle (old default), or a custom bundle
+- Core: Allow going home using a mapped button (thanks @Rick_Williams for testing)
+- Core: Change the way we use onAction introduced with the goHome button
+- Core: Detect whether we're using skin.plextuary
+- Core: Dropdown with header: Limit vertical size, enable scrolling
+- Core: Dump all user settings into the DEBUG log if requested (private information masked)
+- Core: Fix certain network related issues
+- Core: Fix hang after sleep/wake when network isn't immediately available on CoreELEC
+- Core: Fix No data error upon startup when "Use new Continue Watching hub" is enabled
+- Core: Fix usage of collections.Iterable with Kodi python > 3.9
+- Core: Make DEBUG_LOG calls cheaper in case DEBUG isn't enabled
+- Core: Revert 2023 change to tick every 100ms; tick every 1 second
+- Core: Separate version info and global property handling from util.py into kodi_util.py
+- Core: Store active state in global property for skin.plextuary to detect whether we're the active window and not minimized
+- Core: Support new JSON based settings (we had something similar before for lists)
+- Core/AddonSettings: change stepping for non-local-check timeouts from 0.1 to 0.5
+- Core/AddonSettings: Correctly honor dynamic backgrounds setting
+- Core/AddonSettings: Increase skip_intro_button_show_early_threshold1 from 60 to 70 seconds (by default)
+- Core/AddonSettings: Set max_retries=3 (default) for HTTP/HTTPS adapters, possibly fixing section refresh failing after power states (hibernation) (thanks @stigger)
+- Core/AddonSettings: Split connect and read timeouts for Plex and Plex.tv connections; correctly set default max_retries to 3; New defaults: Plex (connect: 5s, read: 10s), Plex.tv (connect: 5s, read: 20s)
+- Core/Boot/Entrypoint: Make entrypoint leaner by only importing what's necessary
+- Core/Boot/Entrypoint: Use both tenga.singleton and global "started" property on Window(10000) to determine whether we're already running
+- Core/Boot/Kiosk: Allow delaying autostart/kiosk-mode; allow manual immediate start when requested
+- Core/Cache/Settings: Disallow writing (and showing) cache settings from within the plugin when installed from the official Kodi repository and we don't have the modern API
+- Core/GUI/Templating: Smaller aspect ratio support (16:10, 4:3, …)
+- Core/Main: Make absolutely sure we never run more than one instance at a time (via tendo.singleton locks)
+- Core/Mainloop: Clean up global properties
+- Core/MyPlex/UserSettings: Use cached user/account while waiting for plex.tv response; fixes episode playback errors with bingeMode setting
+- Core/Networking: Fix certain queries not timing out (thanks @evertonmdz for testing)
+- Core/Networking/MyPlex: Adhere to max_retries when querying myplex; adhere to PLEXTV_TIMEOUT_READ (default: 20s) when doing so (used LONG_TIMEOUT=20 as a fixed value before)
+- Core/Networking/MyPlex: Retry myplex query on account initialization 4 times; use util.LONG_TIMEOUT (default: 20s) for data and util.TIMEOUT (default: 5s) for connecting
+- Core/PlaybackManager: Allow ACCOUNT.ID to be None to not fail on pbs.bingeMode in certain (rare) situations
+- Core/Plugin: Make plugin entrypoint much leaner; remove old directory based play() feature; move ensureHome() to kodi_utll.py
+- Core/Reactivate/Maximize: If unable to reactivate plugin, exit cleanly
+- Core/SeekDialog: Workaround for seek issue on Ugoos am6b+ (On the Ugoos am6b+ after seeking it can take 2-15 seconds for audio to start while the video is playing. Playing the same file using the default kodi player does not exhibit this issue. Changing to use the executebuiltin(Seek) solves this issue.) thanks @bowlingbeeg
+- Core/Settings: Add setting to System tab to dump all user settings
+- Core/Settings: Allow setting DEBUG on the fly, without restarting the addon
+- Core/Settings: Backport old separated boolean settings to multioptions
+- Core/Settings: Implement MultiOptionsSetting
+- Core/Settings: Implement theme-relevant settings flag; reapply theme if necessary after exiting settings and revisiting home
+- Core/Templating: Allow full context overriding by using addon_data/script.plexmod/context_overrides.json (see lib/templating/context.py for structure)
+- Core/Templating: Recompile templates if we're missing XMLs; fixes addon not starting after upgrade without theme version change
+- Core/Theming: Allow overriding theme definition/defaults by supplying theme_overrides.json in userdata/addon_data/script.plexmod; see /lib/templating/context.py for the data structure
+- Core/Theming: When rendering templates, show kodi progress dialog
+- Core/Windows: Fix "Go to Home to {library}"; properly select and focus library in section list
+- Dropdown/Libraries: Fix visual scrolling issues on dropdowns with many items (e.g.: Genres)
+- Dropdowns: Be smarter when we're trying to display a dropdown that's out of bounds
+- FireTV: Fix timeFormat (at least in InfoView)
+- Fix seek issue with CoreELEC devices (thanks @bowlingbeeg)
+- GUI: Clean up interface by removing most button focus zoom animations
+- i18n/Chinese: Fix broken translation (incomplete)
+- i18n: Update Chinese translations (thanks liquidion, wabisabi, x1ao4)
+- i18n: Update German translations (thanks fuchs21, Martin)
+- i18n: Update Spanish translations (thanks Deci8belios, Donovan_000)
+- Indicators: Improve indicators resolution; add missing image
+- Kodigui: Support dialog and window close signals
+- Libraries: Fix play all and shuffle all buttons
+- Library: Add "Episode Date Added" sort; rename "Name" sort to "Title"
+- Library/Music: Support Tracks as type on Music libraries; partially fixes #133; should fix #132
+- Main/EventLoop: Allow setting a tickrate different than 1 Hz
+- Movies/Episodes: Auto-scroll long summaries
+- Music Libraries: Fix filters erroring
+- Music: When stopping playback with open current playlist, close audio player window as well
+- MyPlexAccount: Fix isAdmin based on homeUser (when caching home users)
+- Settings: Add CONTEXT_MENU to clear bound home button to description
+- Settings: Add MultiUAOptionsSetting (a user aware variant of MultiOptionsSetting)
+- Settings: Add setting "Action on Wake event" (none, restart pm4k, wait Xs)
+- Settings: Add setting for Hi-Res Music (default: on)
+- Settings: Add setting to allow a delay for the autostart/kiosk-mode
+- Settings: Add setting to enable or disable factor based scaling of modern watched indicators based on poster size (default: on)
+- Settings: Add setting to only allow seek-back on Direct Play
+- Settings: Add setting to only seek-back after a certain amount of time in paused state
+- Settings: Add setting to seek-back on pause instead of resume
+- Settings: Add setting to set seek-back on resume after pause (100ms, 250ms, 500ms, 750ms, 1-60s)
+- Settings: Add user-setting to never show Post Play (default: off)
+- Settings: Allow clearing home button mapping using CONTEXT_MENU/long press
+- Settings: Disable "Stop video playback on screensaver" by default
+- Settings: Focus setting categories when pressing back while inside a category instead of immediately backing out
+- Settings: Implement new watched/unwatched status setting (default: Modern (2024))
+- Settings: Move "Behave like official Plex clients" further up
+- Settings: Move "Player Theme" setting to Main section and rename it to "Theme"
+- Settings: Move "Stop video playback on idle after" and "Stop video playback on screensaver" settings to Video Player tab
+- Settings: Move autostart/kiosk-mode to Main (was in: System)
+- Settings: Move Theme selection above Indicators
+- Settings: Post play Auto Play: Honor postplay timeout in setting description (addonSetting; default: 16s)
+- Settings: Re-arrange settings; add "User Interface" tab; move a lot of settings from Main to User Interface
+- Settings: Remove visually "annoying" last main section item bottom border
+- Settings: Rename "Hide black backdrop in inverted watched states" to "Hide background in modern indicators"
+- Settings: Rename Player UI to Video Player
+- Settings: TV Spoiler settings: Add setting to hide chapter preview images
+- Settings: Unify TV spoiler settings further
+- Settings: Update hubs round robin description, add warning
+- Settings: Use unicode literals
+- Settings/Audio/AC3/DTS: Change setting options from 2.1+ and 5.1+ to >2.0, >2.1, >5.0, >5.1 to allow for more fine-grained control
+- Settings/Home-Map-Key: Show proper dialog while remapping; make use of skin.plextuary-pm4k-1.1's no-icon-dialog
+- Settings/MultiOptionsSetting: Keep original options order when displaying currently selected options
+- Settings/Player UI: Test new MultiOptionsSetting for a couple of Player UI button visibility settings (should auto-migrate over from old boolean settings)
+- Settings/Player: Add "Skip intro" and "Skip credits" to button options, allowing per-user control of whether marker action buttons should be shown or not (default: On)
+- Settings/Player: Make "Show buttons" setting user aware
+- Settings/TV/Spoilers: Make allowed TV spoilers for specific genres configurable
+- Settings/Video: Streamline playback features and video codecs to reduce the amount of settings available
+- AddonSettings: Add setting for tickrate (default: 1 Hz, min: 0.5 Hz, max: 10 Hz)
+- AddonSettings: Add setting to Cache Templates (default: on); Add setting to always recompile templates on start (default: off)
+- AddonSettings: Add setting to choose the CA-certificate bundle (system, plex.direct (default), custom (userdata/addon_data/script.plexmod/custom_bundle.crt)
+- AddonSettings: Add setting to specify the limit for round-robining hubs (default: 250, safe tested on SHIELD: 1000)
+- AddonSettings: Increase CoreELEC resume seek wait to 250ms by default (was: 200ms); thanks @panaitwebbos for testing
+- AddonSettings: Reset default Plex Requests timeout to 5s (was 10s); increase maximum to 60s (was 30s)
+- Signals: Check whether we've actually registered a signal before trying to disconnect it
+- Templating: Retry writing a template to disk once
+- Templating: Try making sure the XMLs actually have been written (sadly xbmcvfs.File doesn't allow flush/sync())
+- Templating/Kodigui: Harden against corrupted XML files; recompile templates if encountered in any window/dialog
+- Templating/Postplay: move hubs up a little (scaled)
+- Templating/Watched_indicators: Implement factor based scaling of modern watched indicators based on poster size
+- Theming: Apply button themes to all views
+- Theming: Cache templates by default, making subsequent theme-related changes blazing fast (cache clears after restarting PM4K and is filled again when recompiling templates)
+- Theming: Implement new 2024 watch status
+- Theming: Make watch status indicator handling fully dynamic (templated)
+- Theming/Playlists: Use different watched indicator location
+- Tracks: Select last played track on window reinit
+- TV Shows: Fix play button not working after returning from playback on TV Shows/Seasons screen
+- Videoplayer/External: When using external player handle Ended events as always stopped manually
+- VideoPlayer/Postplay: Fix vertical positioning of hubs to be about the same as in Movie/Preplay view
+- Videoplayer/Postplay/Episodes/Movies: Try fixing rare timing error when clicking a role/actor
+- VideoPlaylists: Fix returning to playlist after manually stopping a video
+- VideoPlaylists: Properly select first unwatched item if possible; correctly set current item after returning from watching more than one
+
+
+[-0.7.8-]
+- Global: Use watched markers instead of unwatched markers (green checkmark vs. yellow triangle)
+- Home: Blur in-progress episode thumbnails if Addon Setting "Use episode thumbnails in continue hub" is enabled and titles if requested
+- Home: Refresh hubs when no episode spoiler setting changed
+- Home/Settings: After changing home-relevant settings, reload Home on revisit, not immediately
+- Home: Dynamically reload home when relevant settings have changed
+- Home/Sections: Improve handling for sections that errored out once, and retry loading them just like any stale section every 5 minutes
+- Home: Fix hubs not coming back after disconnect
+- Home: Harden disconnect handling in general; PM4K should be able to "live" forever now
+- Home: Refresh last section on: screensaver deactivated, DPMS deactivated, system wakeup after sleep
+- Home/PowerEvents: Disable updates when system goes to sleep, enable them when it wakes up; force a hubs update when waking up
+- Home: Probably fix long-running section change issue (partially reverting a previous change and being a little smarter about the current selection state); add debug logging for when we detect the "anomaly"
+- Home: Don't let any tasks remain in a crashed state
+- Core/Home: Add easy path mapping
+- Core/Home: Add library context option to hide them for current user/server; Add context option for "Home" to unhide hidden libraries
+- Home: Hide hidden library content from home hubs as well
+- Home: Add library reordering functionality
+- Home: Remove Hub round-robining altogether
+- Home: Use ACTION_NAV_BACK/ACTION_PREVIOUS_MENU in home hubs to select the first item when any item other than the first item is selected
+- Home: After refreshing stale section hubs (every 5m), re-select the last selected position in every hub, possibly re-extending the hubs to match the last position
+- Episodes: Blur unwatched/in-progress episode thumbnails and redact spoiler texts, and episode titles if requested
+- Episodes: Possibly use correct episode when playing TV Show from TV Show overview; always play latest in progress, unwatched, deprioritize specials
+- Episodes: after watching an episode, remove chevron immediately
+- Episodes: After watching multiple episodes in a row that span more than one season (e.g. watched S01E10, S02E01), properly redirect to the latest correct season view of the just watched episodes
+- Episodes: Inject watched/progress state into listitem datasource (fixes wrong "Mark as (Un) Played" menu item behaviour immediately after watching an episode)
+- Episodes: Don't play theme music when coming back from Home-Direct-Play (pressed P or ACTION_PLAYER_PLAY)
+- Episodes: Select the correct episode after returning from direct playback from home (P/PLAY pressed)
+- SeekDialog: Hide episode title if wanted
+- SeekDialog: Properly update VideoPlaylist when using next/prev
+- SeekDialog: Improve chapter visibility (selected and deselected (current))
+- SeekDialog: Throw away intro markers with an unreasonably late start offset (>10m)
+- SeekDialog: Throw invalid markers away once, not every tick
+- SeekDialog/Settings/Video Playlists: change the setting options for showing the prev/next and playlist buttons from "Only for Episodes" to "Only for Episodes/Playlists"; Show next/prev/playlist buttons in player for video playlists if wanted
+- Core/Players: Remove all Kodi media-loading spinners when using Plextuary skin
+- Core/Player: Always set infolabel "year" and remove it when downloading subtitles; don't set infolabels "episode" and "season" at all for non-TV-shows (fixes scrobbling issues with trakt plugin)
+- Core/Player: Report all known Guids to script.trakt if it's installed; generate slug for movies
+- Player/SeekDialog: Properly handle a manual stop action on episodes when OSD was visible (possibly other occasions)
+- Player/PostPlay: Hide spoilers as well, if configured
+- Postplay: Don't show the same episode on deck which is going to be played next
+- TV Shows/Seasons: Try reloading instead of exiting to home when deleting a season if possible
+- Libraries: Add movie/show year to label (thanks @bowlingbeeg)
+- Libraries: Fix year display, fix Art display in listview 16x9; make small posters view a little less cramped
+- VideoPlaylists: Show playback menu when an item can be resumed
+- VideoPlaylists: Show playback menu when CONTEXT_MENU action is detected
+- VideoPlaylists: Allow resuming, or, if possible, Start from Beginning
+- Core: Ignore local IPv4 docker plex.direct hosts when checking for host mapping
+- Core: Unify spoiler handling across multiple windows
+- Core: API requests: Don't generally include markers, only for PlayableVideos
+- Core: Open up translations to everyone, using POEditor
+- Core/AddonSettings: Remove old compatibility profile code and setting
+- Core/AddonSettings: Make caching home users optional; add setting (default: on)
+- Core/Home: When home user caching is disabled, refresh home users when opening the user dropdown (once)
+- Core: Add support for Guids in new library agents
+- Core/Episodes/Player: Inject Show reference into episodes to speed up playback start and avoid additional API hits; Don't initiate a playlist if only one episode is being played
+- Core: Compatibility with script.trakt
+- Core: Add automated generic JSON data cache, stored as addon_data/script.plexmod/data_cache.json
+- Core/TV: Store and use "once seen" genres for a show in the data cache to speed up certain views (such as postplay and continue watching, with no spoiler mode active)
+- Core: Automatically clean up old unused data cache entries which haven't been accessed for 30 days
+- Core/Settings: Add option to use watched markers instead of unwatched markers (default: on)
+- Core/Settings: Add option to hide the black background on inverted watched markers (default: off)
+- Core: Fix dialogs reverting the underlying window's watched marker setting temporarily
+- Core: Memory usage and performance optimizations (possibly >10% in py3 and >30% in py2 by using __slots__ on massively used classes)
+- Core: Allow for custom watched.png, unwatched.png, unwatched-rounded.png in addon_data/script.plexmod/media/
+- Core: Improve delete media clarity
+- Core/Playlists: Fix context menu "play" action on playlist items when addonSetting playlist visit media is on
+- Core/Windows: Optimize Imports
+- Settings: Add setting to show indicators for libraries with active path mapping (default: on)
+- Settings: Add setting to blur episode thumbnails and preview images, as well as redact spoilers for unwatched or unwatched+in progress episodes
+- Settings: Add setting to also hide episode titles based on the above
+- AddonSettings: Add setting to configure the blur amount for unwatched episodes (default: 16/255)
+- AddonSettings: Add setting for ignoring local docker IPv4 hosts when checking for host mapping (default: enabled)
+- AddonSettings: Change default of "Visit media in video playlist instead of playing it" to False
+- AddonSettings: Add setting to define the maximum start offset of an intro marker to consider it (default: 600s/10m)
+- Theme: Bump theme version to 3
+
+
+[-0.7.7-rev2-]
+- UserSelect: When not switching user (startup), close the addon on cancel actions
+- Libraries/Photos: Do autoplay when Play or Shuffle buttons are pressed in photo library view
+- Libraries/Photos: Fix wonky thumbnail display on photodirectories
+- SeekDialog: Fix final credits marker skipping wrongly on manual marker skip
+- SeekDialog: Fix several marker issues (over-jumping, invalid markers)
+- SeekDialog: Show stream transport type in video session info (smb, nfs, path mapped, http(s))
+- SeekDialog: Fix empty chapters list shown when watching an episode without markers via NEXT after watching one with markers
+- SeekDialog/Settings: Add option to hide all time-related information from the user when the OSD isn't open
+- SeekDialog: Transcode Session Only: Don't show subtitle download option in subtitle quick actions; properly show subtitles when toggling them via subtitle quick actions
+- Core: Advanced/Addon settings: Set default Plex requests timeout to 10 (was 5)
+- Core/Mainloop: Make sure we were able to open the Home/UserSelect window after our BACKGROUND successfully opened, even if another modal dialog opened in the meantime
 - Core: Firstrun: Refresh resources after signin and/or home user switch, otherwise the first time the addon's run the user sees no servers
+- Core: UI: Fall back to black background image when we have backgrounds set but they didn't load
+- Core: Finally fix and handle plex.direct mappings via advancedsettings.xml
+- Core: Fix issues resulting in new devices being registered with plex.tv on every plugin start
+- Core: Only use mapped file path if mapped file exists or verification is off
+- Core: Backgrounds: More concise fallback handling
+- Core/Player: Add optional DirectPlay path mapping via addon_data/script.plexmod/path_mapping.json (path_mapping.example.json included in addon directory). Allows for arbitrary replacements of HTTP playback with SMB, NFS, local mounts etc.
+- Home: Rework and simplify section/library change logic
+- Home: Never update hubs while playing a video to avoid hickups in high bitrate scenarios
+- Home: Properly cache user thumbnail (by removing the ?c timestamp from the URL), increasing performance
+- Home: Fix round robining on hubs (going left once before the last item, then right falsely round-robined to the start, early)
+- Home: Add virtual hub 'home.VIRTUAL.movies.recentlyreleased' on index 3 if we encounter 'movie.recentlyreleased' on the home hubs
+- Home/Settings: Add setting to use the modern Continue Watching hub on Home instead of the separated In Progress/On Deck hubs
+- Episodes: Complete rework of the watch-state handler for TV; instantly update progress while watching
+- Theme: Update assets, icon, splash
+- Music: Rework music player and handler; remove plugin:// path and handle tracks directly; fixed all stability issues; massively improve performance
+- Player: Add button theme support, use new modern colored theme; support custom themes
+- Player: Improve handling when postplay screen is not wanted and we're at the end of a show; harden progressEvent handler
+- Player: Remove all /file.xxx instances instead of just .mkv and .mp4 from non mapped stream URLs
+- Musicplayer: Partially fix "dangling" playing tracks in Plex Dashboard after stopping playback
+- Music: Hide spinner on prev/next button clicks as well (only with Plextuary skin 4.0.0-pm4k0.9 (omega), 3.0.10-pm4k0.8 (nexus and older))
+- Settings: Add setting to toggle path mapping dynamically
+- Settings: Adjust cache recommendations down from 100MB to 50MB
+- AddonSettings: Add advanced setting to verify mapped files before playing them (default: on)
+- Account/HomeUsers: Use new API to determine the PlexPass subscription status of the Plex Home
+- Account/HomeUsers: Refresh home users once a week if we've never seen a plex home
+- Home/RefreshUsers/UserSelect: Refresh subscription state
+
+
+[-0.7.6-]
+- Core: Avoid DNS rebind protection issues for plex.direct
 - Core: Support ipv6 plex.direct hosts when checking for locality/LAN
 - Core: Network: Massively speed up local connection checks
 - Core: Network: Skip local connection checks for plex.tv
@@ -25,7 +385,6 @@
 - SeekDialog: Autoscroll episode/movie title lines for too long titles
 - SeekDialog: Hide non-autoskipping marker into the OSD using NAV_BACK/PREVIOUS_MENU
 - SeekDialog: Apply positive marker endtime offset to manually skipping markers as well (unifying with the autoskip handling), to avoid re-showing the marker occasionally after seeking
-- SeekDialog: Fix final credits marker skipping wrongly on manual marker skip
 - Library: Show current total item count in title
 - Settings: Add description for Direct Stream
 
@@ -35,7 +394,7 @@
 - Fix: transcoding is broken due to deepcopy usage
 - Add IMDB ID to video info
 - Fix: Libraries: Missing items when filters applied and collections exist (thanks @bowlingbeeg )
-- Fix: Libraries: Removed most filters from collections view as they don’t work (thanks @bowlingbeeg)
+- Fix: Libraries: Removed most filters from collections view as they don't work (thanks @bowlingbeeg)
 - Fix: Chapters not available in episodes during playback after manually changing watch status
 - Fix: next episode receives resume state from previously resumed episode when pressing NEXT
 - Fix: Items with non-existant files get removed from the home hubs when visited
@@ -48,9 +407,9 @@
 - TV Shows: Allow deleting seasons if possible
 - TV Shows: Add CONTEXT_MENU handler on seasons, allowing changing watched status and deletion
 - TV Shows: More accurately show progress bar including in progress episodes
-- Player: Don’t use old resume info when going to next video in playlist
+- Player: Don't use old resume info when going to next video in playlist
 - Player: Simplify and optimize stop/end/next logic
-- Core: Fall back properly when Kodi version string couldn’t be parsed
+- Core: Fall back properly when Kodi version string couldn't be parsed
 - Core: Correctly reload addon settings on maximize from minimized state (so yes, you can minimize the addon, change addon settings, then maximize it again and the settings will be applied)
 - Core: Edge-case: Ensure TV background music isn't recognized as audio
 - Core: Logging: Clean Plex tokens from constructed item for playback dict
@@ -58,7 +417,7 @@
 - Core: Home: Store last BG on minimize and on home select as well; don't store the same background URL if it hasn't changed
 - Core: VideoPlayer: Make sure we're the only active player, try to stop all other active players for 5 seconds
 - Core: Instead of using Action(back) before running addon, navigate to Home and try to guarantee that
-- Home: Don’t round robin while loading the next hub pagination chunk
+- Home: Don't round robin while loading the next hub pagination chunk
 - Home: Sections: Increase section select timeout from 300 to 500ms
 - Home: Fix autoplay from home on episodes (ACTION_PLAYER_PLAY)
 - Home: Don't fail on empty hub
@@ -80,13 +439,13 @@
 - SeekDialog: Ignore immediate OK/SELECT on auto-skipping marker with countdown during the first second of the marker shown
 - SeekDialog: Make sure we only send the correct timeline request on certain actions
 - SeekDialog: Make sure we send a timeline request on certain actions
-- SeekDialog: Remove now unnecessary negative offset on manual marker skip on final credits marker, as we’ve got much more robust PostPlay handling now
-- SeekDialog: Avoid showing the final credits marker twice (after it’s been manually skipped already)
+- SeekDialog: Remove now unnecessary negative offset on manual marker skip on final credits marker, as we've got much more robust PostPlay handling now
+- SeekDialog: Avoid showing the final credits marker twice (after it's been manually skipped already)
 - SeekDialog: Hide once-manually-skipped markers and move them to the OSD as well
 - SeekDialog: Don't react to SELECT/ENTER on counting down autoskip marker if marker is only visible in OSD
-- SeekDialog: Bingemode: Don’t autoskip the credits of the last available episode of a TV show
+- SeekDialog: Bingemode: Don't autoskip the credits of the last available episode of a TV show
 - Player/SeekDialog: Simplify and harden PostPlay behaviour
-- Libraries: Clean up code, improve performance (memory usage, CPU load) and optimize viewing experience by properly chunking the view’s requests based on the view position (thanks @bowlingbeeg)
+- Libraries: Clean up code, improve performance (memory usage, CPU load) and optimize viewing experience by properly chunking the view's requests based on the view position (thanks @bowlingbeeg)
 - Addon Settings: Add setting for Library view chunk size
 - Settings: Add separate playback setting to skip Post Play in TV shows (separate from binge mode)
 - Settings: Clarify and reorder playback settings

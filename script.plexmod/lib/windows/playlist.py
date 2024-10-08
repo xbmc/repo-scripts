@@ -1,25 +1,23 @@
 from __future__ import absolute_import
+
 import threading
 
+import plexnet
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
+from six.moves import range
 
+from lib import backgroundthread
+from lib import player
+from lib import util
+from lib.util import T
 from . import busy
+from . import dropdown
+from . import kodigui
+from . import opener
+from . import search
 from . import videoplayer
 from . import windowutils
-from . import dropdown
-from . import search
-import plexnet
-from . import opener
-
-from lib import colors
-from lib import util
-from lib import player
-from lib import backgroundthread
-
-from lib.util import T
-from six.moves import range
 
 PLAYLIST_PAGE_SIZE = 500
 PLAYLIST_INITIAL_SIZE = 100
@@ -55,9 +53,9 @@ class ChunkRequestTask(backgroundthread.Task):
 
             self.WINDOW.chunkCallback(items, self.start)
         except AttributeError:
-            util.DEBUG_LOG('Playlist window closed, ignoring chunk at index {0}'.format(self.start))
+            util.DEBUG_LOG('Playlist window closed, ignoring chunk at index {0}', self.start)
         except plexnet.exceptions.BadRequest:
-            util.DEBUG_LOG('404 on playlist: {0}'.format(repr(self.WINDOW.playlist.title)))
+            util.DEBUG_LOG('404 on playlist: {0}', lambda: repr(self.WINDOW.playlist.title))
 
 
 class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
@@ -95,9 +93,13 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def onFirstInit(self):
         self.playlistListControl = kodigui.ManagedControlList(self, self.PLAYLIST_LIST_ID, 5)
         self.setProperties()
+        player.PLAYER.on('new.video', self.onNewVideo)
 
         self.fillPlaylist()
         self.setFocusId(self.PLAYLIST_LIST_ID)
+
+    def onReInit(self):
+        self.playlistListControl.setSelectedItemByDataSource(self.playlist.current())
 
     # def onAction(self, action):
     #     try:
@@ -108,12 +110,18 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     #     except:
     #         util.ERROR()
 
-    #     kodigui.ControlledWindow.onAction(self, action)
+    #     self.defOnAction(action)
+
+    def onNewVideo(self, *args, **kwargs):
+        video = kwargs.get("video")
+        self.playlist.setCurrent(self.playlist.getPosFromItem(video))
 
     def onAction(self, action):
         try:
             if action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
                 self.doClose()
+            elif self.playlist.playlistType == 'video' and action == xbmcgui.ACTION_CONTEXT_MENU:
+                return self.plItemPlaybackMenu()
         except:
             util.ERROR()
 
@@ -127,23 +135,58 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         elif controlID == self.PLAYER_STATUS_BUTTON_ID:
             self.showAudioPlayer()
         elif controlID == self.PLAY_BUTTON_ID:
-            self.playlistListClicked(no_item=True, shuffle=False)
+            self.playlistListClicked(no_item=True, shuffle=False, play=True)
         elif controlID == self.SHUFFLE_BUTTON_ID:
-            self.playlistListClicked(no_item=True, shuffle=True)
+            self.playlistListClicked(no_item=True, shuffle=True, play=True)
         elif controlID == self.OPTIONS_BUTTON_ID:
             self.optionsButtonClicked()
         elif controlID == self.SEARCH_BUTTON_ID:
             self.searchButtonClicked()
 
     def doClose(self):
+        player.PLAYER.off('new.video', self.onNewVideo)
         kodigui.ControlledWindow.doClose(self)
         self.tasks.cancel()
         ChunkRequestTask.reset()
 
+    def plItemPlaybackMenu(self, select_choice='visit'):
+        mli = self.playlistListControl.getSelectedItem()
+        if not mli or not mli.dataSource:
+            return
+
+        can_resume = mli.dataSource.viewOffset.asInt()
+
+        options = [
+            {'key': 'visit', 'display': T(33019, 'Visit Media Item')},
+            {'key': 'play', 'display': T(33020, 'Play') if not can_resume else T(32317, 'Play from beginning')},
+        ]
+        if can_resume:
+            options.append({'key': 'resume', 'display': T(32429, 'Resume from {0}').format(
+                    util.timeDisplay(mli.dataSource.viewOffset.asInt()).lstrip('0').lstrip(':'))})
+
+        choice = dropdown.showDropdown(
+            options,
+            pos=(660, 441),
+            close_direction='none',
+            set_dropdown_prop=False,
+            header=T(33021, 'Choose action'),
+            select_index=2 if select_choice == 'resume' else 1 if util.addonSettings.playlistVisitMedia else 0
+        )
+
+        if not choice:
+            return
+
+        if choice['key'] == 'visit':
+            self.openItem(mli.dataSource)
+        elif choice['key'] == 'play':
+            self.playlistListClicked(resume=False, play=True)
+        elif choice['key'] == 'resume':
+            self.playlistListClicked(resume=True, play=True)
+
     def searchButtonClicked(self):
         self.processCommand(search.dialog(self))
 
-    def playlistListClicked(self, no_item=False, shuffle=False):
+    def playlistListClicked(self, no_item=False, shuffle=False, resume=None, play=False):
         if no_item:
             mli = None
         else:
@@ -167,17 +210,20 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                     pq = plexnet.playqueue.createPlayQueueForItem(self.playlist, options=args)
                     opener.open(pq)
             elif self.playlist.playlistType == 'video':
-                if not util.advancedSettings.playlistVisitMedia:
+                if not util.addonSettings.playlistVisitMedia or play:
+                    if resume is None and mli and bool(mli.dataSource.viewOffset.asInt()):
+                        return self.plItemPlaybackMenu(select_choice='resume')
+
                     if self.playlist.leafCount.asInt() <= PLAYLIST_INITIAL_SIZE:
                         self.playlist.setShuffle(shuffle)
                         self.playlist.setCurrent(mli and mli.pos() or 0)
-                        videoplayer.play(play_queue=self.playlist)
+                        videoplayer.play(play_queue=self.playlist, resume=resume)
                     else:
                         args = {'shuffle': shuffle}
                         if mli:
                             args['key'] = mli.dataSource.key
                         pq = plexnet.playqueue.createPlayQueueForItem(self.playlist, options=args)
-                        opener.open(pq)
+                        opener.open(pq, resume=resume)
                 else:
                     if not mli:
                         firstItem = 0
@@ -272,13 +318,15 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
     def createEpisodeListItem(self, mli, episode):
         label2 = u'{0} \u2022 {1}'.format(
-            episode.grandparentTitle, u'{0}{1} \u2022 {2}{3}'.format(T(32310, 'S'), episode.parentIndex, T(32311, 'E'), episode.index)
+            episode.grandparentTitle, u'{0} \u2022 {1}'.format(T(32310, 'S').format(episode.parentIndex),
+                                                               T(32311, 'E').format(episode.index))
         )
         mli.setLabel2(label2)
         mli.setThumbnailImage(episode.thumb.asTranscodedImageURL(*self.LI_AR16X9_THUMB_DIM))
         mli.setProperty('track.duration', util.durationToShortText(episode.duration.asInt()))
         mli.setProperty('video', '1')
         mli.setProperty('watched', episode.isWatched and '1' or '')
+        mli.setProperty('unwatched', episode.isWatched and '' or '1')
 
     def createMovieListItem(self, mli, movie):
         mli.setLabel(movie.defaultTitle)
@@ -287,6 +335,7 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         mli.setProperty('track.duration', util.durationToShortText(movie.duration.asInt()))
         mli.setProperty('video', '1')
         mli.setProperty('watched', movie.isWatched and '1' or '')
+        mli.setProperty('unwatched', movie.isWatched and '' or '1')
 
     @busy.dialog()
     def fillPlaylist(self):
@@ -305,6 +354,9 @@ class PlaylistWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
         self.playlistListControl.reset()
         self.playlistListControl.addItems(items)
+
+        self.playlist.setCurrent(self.playlist.getPosFromItem(self.playlist.userCurrent()))
+        self.playlistListControl.setSelectedItemByDataSource(self.playlist.current())
 
         if total <= min(PLAYLIST_INITIAL_SIZE, PLAYLIST_PAGE_SIZE):
             return

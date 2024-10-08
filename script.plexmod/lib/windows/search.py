@@ -1,17 +1,17 @@
 from __future__ import absolute_import
-import time
+
 import threading
+import time
 
 from kodi_six import xbmcgui, xbmc
+from plexnet import plexapp
 
+from lib import util
+from lib.kodijsonrpc import rpc
 from . import kodigui
 from . import opener
 from . import windowutils
 
-from lib import util
-from lib.kodijsonrpc import rpc
-
-from plexnet import plexapp
 
 class SearchDialog(kodigui.BaseDialog, windowutils.UtilMixin):
     xmlFile = 'script-plex-search.xml'
@@ -382,10 +382,10 @@ class SearchDialog(kodigui.BaseDialog, windowutils.UtilMixin):
             self.setProperty('no.results', '1')
 
     def showHub(self, hub, idx):
-        util.DEBUG_LOG('Showing search hub: {0} at {1}'.format(hub.type, idx))
+        util.DEBUG_LOG('Showing search hub: {0} at {1}', hub.type, idx)
         info = self.HUBMAP.get(hub.type)
         if not info:
-            util.DEBUG_LOG('Unhandled hub type: {0}'.format(hub.type))
+            util.DEBUG_LOG('Unhandled hub type: {0}', hub.type)
             return
 
         itemListControl = self.hubControls[idx][info['type']]

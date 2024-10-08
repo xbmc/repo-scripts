@@ -1,17 +1,15 @@
 from __future__ import absolute_import
+
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from . import kodigui
-
-from . import busy
-from . import playlist
-from . import windowutils
-from . import search
+from plexnet import plexapp
 
 from lib import util
-from lib import colors
-
-from plexnet import plexapp
+from . import busy
+from . import kodigui
+from . import playlist
+from . import search
+from . import windowutils
 
 
 class PlaylistsWindow(kodigui.ControlledWindow, windowutils.UtilMixin):

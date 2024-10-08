@@ -38,7 +38,7 @@ class ServerDecision(object):
             self.decisionsCodes[key] = self.response.container.get(key + "Code", "-1").asInt()
             self.decisionsTexts[key] = self.response.container.get(key + "Text")
 
-        util.DEBUG_LOG("Decision codes: {0}".format(self.decisionsCodes))
+        util.DEBUG_LOG("Decision codes: {0}", self.decisionsCodes)
 
     def __str__(self):
         if self.isSupported:

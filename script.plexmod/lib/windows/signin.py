@@ -1,7 +1,9 @@
 from __future__ import absolute_import
+
 from kodi_six import xbmcgui
-from . import kodigui
+
 from lib import util
+from . import kodigui
 
 
 class Background(kodigui.BaseWindow):
@@ -80,6 +82,8 @@ class PreSignInWindow(kodigui.BaseWindow):
     def onAction(self, action):
         if action == xbmcgui.ACTION_SELECT_ITEM:
             self.doSignin = True
+            self.doClose()
+        elif action in (xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK):
             self.doClose()
 
     def onClick(self, controlID):

@@ -5,6 +5,7 @@ from . import plexrequest
 
 
 class MyPlexRequest(plexrequest.PlexServerRequest):
+    USE_SYSTEM_CERT_BUNDLE = True
     def __init__(self, path):
         from . import myplexserver
         plexrequest.PlexServerRequest.__init__(self, myplexserver.MyPlexServer(), path)

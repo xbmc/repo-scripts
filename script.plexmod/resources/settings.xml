@@ -13,11 +13,6 @@
                     <default>false</default>
                     <control type="toggle"/>
                 </setting>
-                <setting id="oldprofile" type="boolean" label="33400" help="33401">
-                    <level>0</level>
-                    <default>false</default>
-                    <control type="toggle"/>
-                </setting>
                 <setting id="subtitle_use_extended_title" type="boolean" label="32950" help="32951">
                     <level>0</level>
                     <default>true</default>
@@ -59,6 +54,31 @@
                     </dependencies>
                     <control type="list" format="string"/>
                 </setting>
+                <setting id="hubs_round_robin" type="boolean" label="33043">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="hubs_rr_max" type="integer" label="33047" help="33048">
+                    <level>0</level>
+                    <default>250</default>
+                    <constraints>
+                        <minimum>50</minimum>
+                        <step>50</step>
+                        <maximum>5000</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="hubs_round_robin">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="cache_home_users" type="boolean" label="33018">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
             </group>
         </category>
         <!-- Player -->
@@ -93,6 +113,18 @@
                     <level>0</level>
                     <default>false</default>
                     <control type="toggle"/>
+                </setting>
+                <setting id="coreelec_resume_seek_wait" type="integer" label="33649" help="33650">
+                    <level>0</level>
+                    <default>350</default>
+                    <constraints>
+                        <minimum>100</minimum>
+                        <step>50</step>
+                        <maximum>1000</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
                 </setting>
                 <setting id="show_media_ends_info" type="boolean" label="32540" help="32541">
                     <level>0</level>
@@ -194,9 +226,22 @@
                 </setting>
                 <setting id="skip_intro_button_show_early_threshold1" type="integer" label="33509" help="33510">
                     <level>0</level>
-                    <default>60</default>
+                    <default>70</default>
                     <constraints>
                         <minimum>10</minimum>
+                        <step>10</step>
+                        <maximum>1800</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <heading>33510</heading>
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="intro_marker_max_offset" type="integer" label="33037" help="33038">
+                    <level>0</level>
+                    <default>600</default>
+                    <constraints>
+                        <minimum>1</minimum>
                         <step>10</step>
                         <maximum>1800</maximum>
                     </constraints>
@@ -294,9 +339,21 @@
                     <default>true</default>
                     <control type="toggle"/>
                 </setting>
+                <setting id="episode_no_spoiler_blur" type="integer" label="33009">
+                    <level>0</level>
+                    <default>16</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>256</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
                 <setting id="playlist_visit_media" type="boolean" label="32505">
                     <level>0</level>
-                    <default>true</default>
+                    <default>false</default>
                     <control type="toggle"/>
                 </setting>
                 <setting id="postplay_timeout" type="integer" label="32501" help="32904">
@@ -324,13 +381,92 @@
         </category>
         <category id="system" label="33600">
             <group id="6" label="">
-                <setting id="requests_timeout" type="number" label="33620" help="33621">
+                <setting id="cache_templates" type="boolean" label="33066" help="33067">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="always_compile_templates" type="boolean" label="33068" help="33069">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="verify_mapped_files" type="boolean" label="33002" help="33003">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="ignore_docker_v4" type="boolean" label="33014" help="33015">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="honor_plextv_dnsrebind" type="boolean" label="33645" help="33646">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="honor_plextv_pam" type="boolean" label="33647" help="33648">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="use_cert_bundle" type="string" label="33051" help="33052">
+                    <level>0</level>
+                    <default>acme</default>
+                    <constraints>
+                        <options>
+                            <option label="33053">system</option>
+                            <option label="33054">acme</option>
+                            <option label="33055">custom</option>
+                        </options>
+                        <allowempty>false</allowempty>
+                    </constraints>
+                    <control type="list" format="string"/>
+                </setting>
+                <setting id="requests_timeout_connect" type="number" label="33620" help="33621">
                     <level>0</level>
                     <default>5</default>
                     <constraints>
-                        <minimum>0.1</minimum>
-                        <step>0.1</step>
-                        <maximum>20</maximum>
+                        <minimum>0.5</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="requests_timeout_read" type="number" label="33636" help="33637">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>0.5</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="plextv_timeout_connect" type="number" label="33638" help="33639">
+                    <level>0</level>
+                    <default>1</default>
+                    <constraints>
+                        <minimum>0.5</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="plextv_timeout_read" type="number" label="33640" help="33641">
+                    <level>0</level>
+                    <default>2</default>
+                    <constraints>
+                        <minimum>0.5</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
                     </constraints>
                     <control type="slider" format="number">
                         <popup>false</popup>
@@ -340,8 +476,8 @@
                     <level>0</level>
                     <default>2.5</default>
                     <constraints>
-                        <minimum>0.1</minimum>
-                        <step>0.1</step>
+                        <minimum>0.5</minimum>
+                        <step>0.5</step>
                         <maximum>20</maximum>
                     </constraints>
                     <control type="slider" format="number">
@@ -355,6 +491,42 @@
                         <minimum>1</minimum>
                         <step>1</step>
                         <maximum>1000</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="max_retries1" type="number" label="33049" help="33050">
+                    <level>0</level>
+                    <default>3</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>1</step>
+                        <maximum>20</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="tickrate" type="number" label="33098" help="33099">
+                    <level>0</level>
+                    <default>1.0</default>
+                    <constraints>
+                        <minimum>0.5</minimum>
+                        <step>0.5</step>
+                        <maximum>10</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="worker_count" type="number" label="32981" help="32982">
+                    <level>0</level>
+                    <default>3</default>
+                    <constraints>
+                        <minimum>2</minimum>
+                        <step>1</step>
+                        <maximum>32</maximum>
                     </constraints>
                     <control type="slider" format="number">
                         <popup>false</popup>

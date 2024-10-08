@@ -1,9 +1,8 @@
 # coding=utf-8
-from lib import util
-from lib.util import T
-
 from plexnet.util import INTERFACE
 
+from lib import util
+from lib.util import T
 from . import dropdown
 
 

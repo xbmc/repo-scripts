@@ -150,7 +150,7 @@ class GDMDiscovery(object):
             for s, i in sockets:
                 if self._close:
                     return
-                util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}'.format(i.name, i.broadcast))
+                util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}', i.name, i.broadcast)
                 try:
                     s.sendto(packet, (i.broadcast, DISCOVERY_PORT))
                     success = True
@@ -216,7 +216,7 @@ class GDMDiscovery(object):
         self.close()
 
         if self.servers:
-            util.LOG("Finished GDM discovery, found {0} server(s)".format(len(self.servers)))
+            util.LOG("Finished GDM discovery, found {0} server(s)", len(self.servers))
             from . import plexapp
             plexapp.SERVERMANAGER.updateFromConnectionType(self.servers, plexconnection.PlexConnection.SOURCE_DISCOVERED)
             self.servers = None

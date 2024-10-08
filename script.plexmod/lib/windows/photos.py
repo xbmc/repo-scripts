@@ -1,20 +1,20 @@
 from __future__ import absolute_import
+
+import hashlib
+import os
+import shutil
 import threading
 import time
-import os
-import tempfile
-import shutil
-import hashlib
+
 import requests
-
-from kodi_six import xbmc, xbmcvfs
+from kodi_six import xbmc
 from kodi_six import xbmcgui
-
-from . import kodigui
-from . import busy
+from plexnet import plexapp, plexplayer, playqueue
+from plexnet import util as plexnetUtil
 
 from lib import util, colors
-from plexnet import plexapp, plexplayer, playqueue
+from . import busy
+from . import kodigui
 
 
 class PhotoWindow(kodigui.BaseWindow):
@@ -49,6 +49,7 @@ class PhotoWindow(kodigui.BaseWindow):
     def __init__(self, *args, **kwargs):
         kodigui.BaseWindow.__init__(self, *args, **kwargs)
         self.photo = kwargs.get('photo')
+        self.autoPlay = False
         self.playQueue = kwargs.get('play_queue')
         self.playerObject = None
         self.timelineType = 'photo'
@@ -86,6 +87,13 @@ class PhotoWindow(kodigui.BaseWindow):
         self.start()
         self.osdTimer = kodigui.PropertyTimer(self._winID, 4, 'OSD', '', init_value=False, callback=self.osdTimerCallback)
         self.imageControl = self.getControl(600)
+
+        if self.autoPlay:
+            self.play()
+
+    def doAutoPlay(self):
+        self.autoPlay = True
+        return True
 
     def osdTimerCallback(self):
         self.setFocusId(self.OVERLAY_BUTTON_ID)
@@ -219,9 +227,9 @@ class PhotoWindow(kodigui.BaseWindow):
 
             util.DEBUG_LOG('waiting for playQueue to initialize')
             if busy.widthDialog(self.playQueue.waitForInitialization, None, delay=True):
-                util.DEBUG_LOG('playQueue initialized: {0}'.format(self.playQueue))
+                util.DEBUG_LOG('playQueue initialized: {0}', self.playQueue)
             else:
-                util.DEBUG_LOG('playQueue timed out wating for initialization')
+                util.DEBUG_LOG('playQueue timed out waiting for initialization')
 
         self.showPhoto()
 
@@ -259,7 +267,7 @@ class PhotoWindow(kodigui.BaseWindow):
             # bad temporary fix for videos in photo playqueues
             if photo.type != "photo":
                 self.next()
-                util.DEBUG_LOG("SKIPPING PHOTO: %s" % photo)
+                util.DEBUG_LOG("SKIPPING PHOTO: {}", photo)
                 return
 
             self.updatePqueueListSelection(photo)
@@ -522,7 +530,16 @@ class PhotoWindow(kodigui.BaseWindow):
         if refreshQueue and self.playQueue:
             self.playQueue.refreshOnTimeline = True
 
-        plexapp.util.APP.nowplayingmanager.updatePlaybackState(self.timelineType, self.playerObject, state, time, self.playQueue)
+        data = plexnetUtil.AttributeDict({
+            "key": str(item.key),
+            "ratingKey": str(item.ratingKey),
+            "guid": str(item.guid),
+            "url": str(item.url),
+            "duration": item.duration.asInt(),
+            "containerKey": str(item.container.address)
+        })
+
+        plexapp.util.APP.nowplayingmanager.updatePlaybackState(self.timelineType, data, state, time, self.playQueue)
 
     def showOSD(self):
         self.osdTimer.reset(init=False)

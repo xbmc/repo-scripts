@@ -24,7 +24,8 @@ class MediaDecisionEngine(object):
 
     def chooseMedia(self, item, forceUpdate=False):
         # If we've already evaluated this item, use our previous choice.
-        if not forceUpdate and item.mediaChoice is not None and item.mediaChoice.media is not None and not item.mediaChoice.media.isIndirect():
+        if not forceUpdate and item.mediaChoice is not None and item.mediaChoice.media is not None and \
+                not item.mediaChoice.media.isIndirect():
             return item.mediaChoice
 
         # See if we're missing media/stream details for this item.
@@ -99,7 +100,7 @@ class MediaDecisionEngine(object):
     def evaluateMediaVideo(self, item, media, partIndex=0):
         # Resolve indirects before doing anything else.
         if media.isIndirect():
-            util.LOG("Resolve indirect media for {0}".format(item))
+            util.LOG("Resolve indirect media for {0}", item)
             media = media.resolveIndirect()
 
         choice = mediachoice.MediaChoice(media, partIndex)
@@ -230,10 +231,10 @@ class MediaDecisionEngine(object):
                 allowed.append("dca")
 
             if AC3Cond == 'always' and choice.audioStream.codec not in allowed:
-                util.LOG("MDE: Codec {} can't be direct played due to user settings".format(choice.audioStream.codec))
+                util.LOG("MDE: Codec {} can't be direct played due to user settings", choice.audioStream.codec)
                 choice.isDirectPlayable = False
 
-            elif AC3Cond in ('2', '5'):
+            elif AC3Cond in ('2', '3', '5', '6'):
                 ch = int(AC3Cond)
                 ach = choice.sorts.audioChannels
 
@@ -263,16 +264,18 @@ class MediaDecisionEngine(object):
     def canDirectPlay(self, item, choice):
         maxResolution = item.settings.getMaxResolution(item.getQualityType(), self.isSupported4k(choice.media, choice.videoStream))
         height = choice.media.getVideoResolution()
+        features = item.settings.getPlaybackFeatures()
+        video_codecs = item.settings.getAdditionalCodecs()
         if height > maxResolution:
-            util.LOG("MDE: (DP) Video height is greater than max allowed: {0} > {1}".format(height, maxResolution))
-            if height > 1088 and item.settings.getPreference("allow_4k", True):
+            util.LOG("MDE: (DP) Video height is greater than max allowed: {0} > {1}", height, maxResolution)
+            if height > 1088 and "allow_4k" in features:
                 util.LOG("MDE: (DP) Unsupported 4k media")
             return False
 
         maxBitrate = item.settings.getMaxBitrate(item.getQualityType())
         bitrate = choice.media.bitrate.asInt()
         if bitrate > maxBitrate:
-            util.LOG("MDE: (DP) Video bitrate is greater than the allowed max: {0} > {1}".format(bitrate, maxBitrate))
+            util.LOG("MDE: (DP) Video bitrate is greater than the allowed max: {0} > {1}", bitrate, maxBitrate)
             return False
 
         if choice.videoStream is None:
@@ -282,18 +285,18 @@ class MediaDecisionEngine(object):
         if not item.settings.getGlobal("supports1080p60"):
             videoFrameRate = choice.videoStream.asInt()
             if videoFrameRate > 30 and height >= 1080:
-                util.LOG("MDE: (DP) Frame rate is not supported for resolution: {0}@{1}".format(height, videoFrameRate))
+                util.LOG("MDE: (DP) Frame rate is not supported for resolution: {0}@{1}", height, videoFrameRate)
                 return False
 
-        if choice.videoStream.codec == "hevc" and not item.settings.getPreference("allow_hevc", True):
+        if choice.videoStream.codec == "hevc" and "allow_hevc" not in video_codecs:
             util.LOG("MDE: (DP) Codec is HEVC, which is disabled")
             return False
 
-        if choice.videoStream.codec == "av1" and not item.settings.getPreference("allow_av1", False):
+        if choice.videoStream.codec == "av1" and "allow_av1" not in video_codecs:
             util.LOG("MDE: (DP) Codec is AV1, which is disabled")
             return False
 
-        if choice.videoStream.codec == "vc1" and not item.settings.getPreference("allow_vc1", True):
+        if choice.videoStream.codec == "vc1" and "allow_vc1" not in video_codecs:
             util.LOG("MDE: (DP) Codec is VC1, which is disabled")
             return False
 
@@ -313,29 +316,29 @@ class MediaDecisionEngine(object):
         # Roku 4 only: H.265/HEVC (MKV, MP4, MOV); VP9 (.MKV)
 
         # if True:  # container in ("mp4", "mov", "m4v", "mkv"):
-        #     util.LOG("MDE: {0} container looks OK, checking streams".format(container))
+        #     util.LOG("MDE: {0} container looks OK, checking streams", container)
 
         #     isHEVC = videoCodec == "hevc" and item.settings.getPreference("allow_hevc", False)
         #     isVP9 = videoCodec == "vp9" and container == "mkv" and item.settings.getGlobal("vp9Support")
 
         #     if videoCodec != "h264" and videoCodec != "mpeg4" and not isHEVC and not isVP9:
-        #         util.LOG("MDE: Unsupported video codec: {0}".format(videoCodec))
+        #         util.LOG("MDE: Unsupported video codec: {0}", videoCodec)
         #         return False
 
         #     # TODO(schuyler): Fix ref frames check. It's more nuanced than this.
         #     if choice.videoStream.refFrames.asInt() > 8:
-        #         util.LOG("MDE: Too many ref frames: {0}".format(choice.videoStream.refFrames))
+        #         util.LOG("MDE: Too many ref frames: {0}", choice.videoStream.refFrames)
         #         return False
 
         #     # HEVC supports a bitDepth of 10, otherwise 8 is the limit
         #     if choice.videoStream.bitDepth.asInt() > (isHEVC and 10 or 8):
-        #         util.LOG("MDE: Bit depth too high: {0}".format(choice.videoStream.bitDepth))
+        #         util.LOG("MDE: Bit depth too high: {0}", choice.videoStream.bitDepth)
         #         return False
 
         #     # We shouldn't have to whitelist particular audio codecs, we can just
         #     # check to see if the Roku can decode this codec with the number of channels.
         #     if not item.settings.supportsAudioStream(audioCodec, numChannels):
-        #         util.LOG("MDE: Unsupported audio track: {0} ({1} channels)".format(audioCodec, numChannels))
+        #         util.LOG("MDE: Unsupported audio track: {0} ({1} channels)", audioCodec, numChannels)
         #         return False
 
         #     # # TODO(schuyler): We've reported this to Roku, they may fix it. If/when
@@ -347,7 +350,7 @@ class MediaDecisionEngine(object):
         #     # Those were our problems, everything else should be OK.
         #     return True
         # else:
-        #     util.LOG("MDE: Unsupported container: {0}".format(container))
+        #     util.LOG("MDE: Unsupported container: {0}", container)
 
         # return False
 
@@ -437,7 +440,7 @@ class MediaDecisionEngine(object):
     def evaluateMediaMusic(self, item, media):
         # Resolve indirects before doing anything else.
         if media.isIndirect():
-            util.LOG("Resolve indirect media for {0}".format(item))
+            util.LOG("Resolve indirect media for {0}", item)
             media = media.resolveIndirect()
 
         choice = mediachoice.MediaChoice(media)
@@ -468,7 +471,9 @@ class MediaDecisionEngine(object):
             # Inspect the audio stream attributes if the codec/container can direct
             # play. For now we only need to verify the sample rate.
 
-            if choice.audioStream is not None and choice.audioStream.samplingRate.asInt() >= 192000:
+            maxSR = 384000 if item.settings.getPreference('audio_hires', True) else 191999
+
+            if choice.audioStream is not None and choice.audioStream.samplingRate.asInt() > maxSR:
                 util.LOG("MDE: sampling rate is not compatible")
                 choice.isDirectPlayable = False
         else:
@@ -510,7 +515,7 @@ class MediaDecisionEngine(object):
         return 0
 
     def isSupported4k(self, media, videoStream):
-        if videoStream is None or not util.INTERFACE.getPreference("allow_4k", True):
+        if videoStream is None or "allow_4k" not in util.INTERFACE.getPlaybackFeatures():
             return False
 
         # # Roku 4 only: H.265/HEVC (MKV, MP4, MOV); VP9 (.MKV)

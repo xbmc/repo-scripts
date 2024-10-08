@@ -59,14 +59,21 @@ class PlaybackManager(object):
             plexapp.util.APP.on('change:{}'.format(v), lambda **kwargs: self.setGlob(**kwargs))
 
         plexapp.util.APP.on('change:selectedServer', lambda **kwargs: self.setServerUUID(**kwargs))
+        plexapp.util.APP.on("loaded:cached_user", lambda **kwargs: self.setUserID(**kwargs))
         plexapp.util.APP.on("change:user", lambda **kwargs: self.setUserID(**kwargs))
         plexapp.util.APP.on('init', lambda **kwargs: self.setUserID(**kwargs))
 
+    def deinit(self):
+        plexapp.util.APP.off('change:selectedServer', lambda **kwargs: self.setServerUUID(**kwargs))
+        plexapp.util.APP.off("loaded:cached_user", lambda **kwargs: self.setUserID(**kwargs))
+        plexapp.util.APP.off("change:user", lambda **kwargs: self.setUserID(**kwargs))
+        plexapp.util.APP.off('init', lambda **kwargs: self.setUserID(**kwargs))
+
     def __call__(self, obj, key=None, value=None, kv_dict=None):
         # shouldn't happen
-        if not self._currentServerUUID or not self._currentUserID:
-            util.DEBUG_LOG("APP.PlaybackManager, something's wrong: ServerUUID: %s, UserID: %s" % (
-                self._currentServerUUID, self._currentUserID))
+        if not self._currentServerUUID:
+            util.DEBUG_LOG("APP.PlaybackManager, something's wrong: ServerUUID: {}, UserID: {}",
+                           self._currentServerUUID, self._currentUserID)
             return
 
         csid = self._currentServerUUID
@@ -158,7 +165,7 @@ class PlaybackManager(object):
                     if hasattr(self, migFunc):
                         migResult, data = getattr(self, migFunc)(data)
                         if migResult:
-                            util.DEBUG_LOG("Migrated playback_settings.json to format v{}".format(v))
+                            util.DEBUG_LOG("Migrated playback_settings.json to format v{}", v)
                             migratedAny = True
                 if migratedAny:
                     self.save(data=data)

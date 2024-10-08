@@ -1,10 +1,7 @@
 from __future__ import print_function, absolute_import
-import threading
 import platform
 import uuid
-import sys
 
-from . import callback
 from . import signalsmixin
 from . import simpleobjects
 from . import util
@@ -28,6 +25,8 @@ def init():
     SERVERMANAGER = plexservermanager.MANAGER
     from . import myplexmanager
     util.MANAGER = MANAGER = myplexmanager.MANAGER
+    util.ACCOUNT = ACCOUNT
+    util.SERVERMANAGER = SERVERMANAGER
     util.DEBUG_LOG("Verifying account...")
     ACCOUNT.verifyAccount()
 
@@ -43,6 +42,10 @@ class App(signalsmixin.SignalsMixin):
 
     def addTimer(self, timer):
         self.timers.append(timer)
+
+    @property
+    def serverManager(self):
+        return SERVERMANAGER
 
     def startRequest(self, request, context, body=None, contentType=None):
         context.request = request
@@ -104,7 +107,7 @@ class App(signalsmixin.SignalsMixin):
         from . import http
         http.HttpRequest._cancel = True
         if self.pendingRequests:
-            util.DEBUG_LOG('Closing down {0} App() requests...'.format(len(self.pendingRequests)))
+            util.DEBUG_LOG('Closing down {0} App() requests...', lambda: len(self.pendingRequests))
             for k in list(self.pendingRequests.keys()):
                 p = self.pendingRequests.get(k)
                 if p:
@@ -120,7 +123,7 @@ class App(signalsmixin.SignalsMixin):
 
     def shutdown(self):
         if self.timers:
-            util.DEBUG_LOG('Waiting for {0} App() timers: Started'.format(len(self.timers)))
+            util.DEBUG_LOG('Waiting for {0} App() timers: Started', lambda: len(self.timers))
 
             self.cancelAllTimers()
 
@@ -285,6 +288,12 @@ class PlayerSettingsInterface(object):
             return self.prefOverrides[key]
         else:
             return util.INTERFACE.getPreference(key, default)
+
+    def getPlaybackFeatures(self):
+        return util.INTERFACE.getPlaybackFeatures()
+
+    def getAdditionalCodecs(self):
+        return util.INTERFACE.getAdditionalCodecs()
 
     def getMaxResolution(self, quality_type, allow4k=False):
         qualityIndex = self.getQualityIndex(quality_type)

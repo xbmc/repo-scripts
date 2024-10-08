@@ -40,11 +40,11 @@ class MediaChoice(object):
             else:
                 util.WARN_LOG("Media does not contain a valid part")
 
-            util.LOG("Choice media: {0} part:{1}".format(media, partIndex))
+            util.LOG("Choice media: {0} part:{1}", media, partIndex)
             for streamType in ("videoStream", "audioStream", "subtitleStream"):
                 attr = getattr(self, streamType)
                 if attr:
-                    util.LOG("Choice {0}: {1}".format(streamType, repr(attr)))
+                    util.LOG("Choice {0}: {1}", streamType, repr(attr))
         else:
             util.WARN_LOG("Could not create media choice for invalid media")
 

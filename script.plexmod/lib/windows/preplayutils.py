@@ -1,7 +1,7 @@
 from __future__ import absolute_import
-from . import dropdown
 
 from lib.util import T
+from . import dropdown
 
 
 def chooseVersion(video):
