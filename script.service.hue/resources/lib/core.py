@@ -8,9 +8,8 @@ import sys
 import threading
 from datetime import datetime, timedelta, date
 
-import xbmc
 
-from . import ADDON, AMBI_RUNNING, BRIDGE_SETTINGS_CHANGED
+from . import ADDON, AMBI_RUNNING, BRIDGE_SETTINGS_CHANGED, KODIVERSION, ADDONVERSION
 from . import lightgroup, ambigroup, settings
 from .hue import Hue
 from .kodiutils import notification, cache_set, cache_get, log
@@ -41,7 +40,7 @@ class CommandHandler:
         }
 
     def handle_command(self, command, *args):
-        log(f"[SCRIPT.SERVICE.HUE] Started with {command}, Python: {sys.version}")
+        log(f"[SCRIPT.SERVICE.HUE] Started with {command}, Kodi: {KODIVERSION}, Addon: {ADDONVERSION},  Python: {sys.version}")
         command_func = self.commands.get(command)
 
         if command_func:
@@ -88,7 +87,7 @@ class HueService:
         cache_set("service_enabled", True)
 
     def run(self):
-        log(f"[SCRIPT.SERVICE.HUE] Starting Hue Service, Python: {sys.version}")
+        log(f"[SCRIPT.SERVICE.HUE] Starting Hue Service, Kodi: {KODIVERSION}, Addon: {ADDONVERSION},  Python: {sys.version}")
         self.light_groups = self.initialize_light_groups()
         self.timers = Timers(self.settings_monitor, self.bridge, self)
 

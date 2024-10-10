@@ -39,23 +39,9 @@ class AmbiGroup(lightgroup.LightGroup):
         self.converterC = Converter(GamutC)
         self.helper = ColorHelper(GamutC)  # Gamut doesn't matter for this usage
 
-        if getattr(self.settings_monitor, f"group{self.light_group_id}_enabled", False) and self.bridge.connected:
 
-            index = 0
-            lights = getattr(self.settings_monitor, f"group{self.light_group_id}_lights")
-            if len(lights) > 0:
-                for L in lights:
-                    gamut = self._get_light_gamut(self.bridge, L)
-                    if gamut == 404:
-                        notification(header=_("Hue Service"), message=_(f"ERROR: Light not found, it may have been deleted"), icon=xbmcgui.NOTIFICATION_ERROR)
-                        AMBI_RUNNING.clear()
-                        ADDON.setSettingString(f"group{self.light_group_id}_Lights", "-1")
-                        ADDON.setSettingString(f"group{self.light_group_id}_LightNames", _("Not selected"))
-                    else:
-                        light = {L: {'gamut': gamut, 'prev_xy': (0, 0), "index": index}}
-                        self.ambi_lights.update(light)
-                        index = index + 1
-            log(f"[SCRIPT.SERVICE.HUE] AmbiGroup[{self.light_group_id}] Lights: {self.ambi_lights}")
+
+
         # convert MS to seconds
 
     def onAVStarted(self):
@@ -63,20 +49,23 @@ class AmbiGroup(lightgroup.LightGroup):
         self.last_media_type = self._playback_type()
         enabled = getattr(self.settings_monitor, f"group{self.light_group_id}_enabled", False)
 
+        if getattr(self.settings_monitor, f"group{self.light_group_id}_enabled", False) and self.bridge.connected:
+            self._get_lights()
+        else:
+            return
+
         log(f"[SCRIPT.SERVICE.HUE] AmbiGroup[{self.light_group_id}] onPlaybackStarted. Group enabled: {enabled}, Bridge connected: {self.bridge.connected}, mediaType: {self.media_type}")
 
-        if not enabled or not self.bridge.connected:
-            return
 
         log(f"[SCRIPT.SERVICE.HUE] AmbiGroup[{self.light_group_id}] onPlaybackStarted. media_type: {self.media_type} == playback_type: {self._playback_type()}")
         if self.media_type == self._playback_type() and self._playback_type() == VIDEO:
             try:
-                self.video_info_tag = self.getVideoInfoTag()
+                self.info_tag = self.getVideoInfoTag()
             except (AttributeError, TypeError) as x:
                 log(f"[SCRIPT.SERVICE.HUE] AmbiGroup{self.light_group_id}: OnAV Started: Can't read infoTag")
                 reporting.process_exception(x)
         else:
-            self.video_info_tag = None
+            self.info_tag = None
 
         if self.activation_check.validate():
             log(f"[SCRIPT.SERVICE.HUE] AmbiGroup[{self.light_group_id}] Running Play action")
@@ -281,3 +270,20 @@ class AmbiGroup(lightgroup.LightGroup):
                 log(f"[SCRIPT.SERVICE.HUE] Light[{light_id}] state resumed successfully.")
             else:
                 log(f"[SCRIPT.SERVICE.HUE] Failed to resume Light[{light_id}] state.")
+
+    def _get_lights(self):
+        index = 0
+        lights = getattr(self.settings_monitor, f"group{self.light_group_id}_lights")
+        if len(lights) > 0:
+            for L in lights:
+                gamut = self._get_light_gamut(self.bridge, L)
+                if gamut == 404:
+                    notification(header=_("Hue Service"), message=_(f"ERROR: Light not found, it may have been deleted"), icon=xbmcgui.NOTIFICATION_ERROR)
+                    AMBI_RUNNING.clear()
+                    ADDON.setSettingString(f"group{self.light_group_id}_Lights", "-1")
+                    ADDON.setSettingString(f"group{self.light_group_id}_LightNames", _("Not selected"))
+                else:
+                    light = {L: {'gamut': gamut, 'prev_xy': (0, 0), "index": index}}
+                    self.ambi_lights.update(light)
+                    index = index + 1
+        log(f"[SCRIPT.SERVICE.HUE] AmbiGroup[{self.light_group_id}] Lights: {self.ambi_lights}")

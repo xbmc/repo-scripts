@@ -131,8 +131,8 @@ class Hue(object):
             self.session.headers.update({'hue-application-key': self.settings_monitor.key})
 
             self.devices = self.make_api_request("GET", "device")
-            if self.devices is None:
-                log(f"[SCRIPT.SERVICE.HUE] v2 connect: Connection attempts failed. Setting connected to False")
+            if not isinstance(self.devices, dict):
+                log(f"[SCRIPT.SERVICE.HUE] v2 connect: Connection error. Setting connected to False.  {type(self.devices)} :  {self.devices}")
                 self.connected = False
                 return False
 
@@ -313,7 +313,7 @@ class Hue(object):
         geolocation = self.make_api_request("GET", "geolocation")
         log(f"[SCRIPT.SERVICE.HUE] v2 update_sunset(): geolocation: {geolocation}")
         sunset_str = self.search_dict(geolocation, "sunset_time")
-        if sunset_str is None:
+        if sunset_str is None or sunset_str == "":
             log(f"[SCRIPT.SERVICE.HUE] Sunset not found; configure Hue geolocalisation")
             notification(_("Hue Service"), _("Configure Hue Home location to use Sunset time, defaulting to 19:00"), icon=xbmcgui.NOTIFICATION_ERROR)
             self.sunset = convert_time("19:00")
