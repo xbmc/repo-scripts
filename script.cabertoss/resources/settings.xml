@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <section id="script.cabertoss">
+        <category help="" id="cabertoss" label="32000">
+            <group id="1">
+                <setting id="log_path" type="path" label="32001" help="">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="path">
+                        <heading>32026</heading>
+                    </control>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
+
