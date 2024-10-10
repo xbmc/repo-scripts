@@ -6,7 +6,7 @@
 	<views>500</views>
 	<controls>
 		<control type="image">
-			<texture background="true" fallback="common/white.png" colordiffuse="FFAAAAAA">$INFO[ListItem.Thumb]</texture>
+			<texture background="true" fallback="common/white.png" colordiffuse="FFAAAAAA">$INFO[ListItem.Art(thumb)]</texture>
 			<width>1920</width>
 			<height>1080</height>
 			<fadetime>400</fadetime>

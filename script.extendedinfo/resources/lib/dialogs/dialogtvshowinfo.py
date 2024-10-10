@@ -84,7 +84,7 @@ class DialogTVShowInfo(DialogVideoInfo):
 
     @ch.click(ID_LIST_SEASONS)
     def open_season_dialog(self, control_id):
-        info = self.FocusedItem(control_id).getVideoInfoTag()
+        info:xbmc.InfoTagVideo = self.FocusedItem(control_id).getVideoInfoTag()
         wm.open_season_info(tvshow_id=self.info.get_property("id"),
                             season=info.getSeason(),
                             tvshow=self.info.get_info("title"))

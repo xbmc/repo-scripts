@@ -64,6 +64,8 @@ class Main:
         """
         utils.log(f"version {addon.VERSION} started")
         addon.set_global("extendedinfo_running", "true")
+        if not addon.bool_setting("setting_update_6.0.9"):
+            addon.update_lang_setting()
         self._parse_argv()
         for info in self.infos:
             listitems = process.start_info_actions(info, self.params)

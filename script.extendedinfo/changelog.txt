@@ -1,3 +1,25 @@
+v6.0.9
+- language handling improved for tmdb.  New language settings for 
+			<lang code>-<country code> used by tmdb
+- tmdb art now prioritizes the tmdb language in settings
+- fixed a logic error when displaying tvshow info dialog for seasons
+- fixed caching of query results in local addon_data
+- use "playmedia" instead of "runscript" to launch youtube addon
+- fix handling of trakt "airing episodes" using current api
+- improve design of LoginProvider class to better manage tmdb user logins
+- use f-strings instead of %s or .format() style when modifying code
+- add documentation (docstrings and type annotations) when modifying code
+- make some functions private as needed
+- improve debug level logging- fix handling of JSON responses for various urls
+- improve query of video database uniqueid
+- fix moviedbbrowser
+- fix issue where filters not always removed in Video List dialog
+- fix live Youtube videos exception on parsing duration P0D
+- fix context menu to update local artwork was not available
+- fix skinned dialogs not displaying local poster
+- fix issue where favorite status for tmdb items not correctly set/unset
+- fix classic keyboard (on screen keyboard) input exceptions
+
 v6.0.7
 - reworked tmdb logon / accreditation
 - various code refactoring / pylint items / docstrings (WIP)
@@ -7,7 +29,7 @@ v6.0.5
 - removed support for youtube-dl
 - renamed all files to lowercase
 - various code refactoring to current python 3.8 standards
-- remove dependency on kutils (incorporate mdoules within addon)
+- remove dependency on kutils (incorporate modules within addon)
 - addon.xml bump ver 6.0.5
 - add menucontrol to skin files
 - add dependency on autocompletion (required due to changes in autocompletion library)

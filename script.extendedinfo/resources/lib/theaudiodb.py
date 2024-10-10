@@ -139,7 +139,7 @@ def extended_artist_info(results: dict) -> dict:
     """
     if not results.get('artists'):
         return {}
-    local_bio = 'strBiography' + addon.setting("LanguageID").upper()
+    local_bio = 'strBiography' + addon.setting("LanguageIDv2").upper().split('-', maxsplit=1)[0]
     artist = results['artists'][0]
     description = ""
     if local_bio in artist and artist[local_bio]:
@@ -196,7 +196,7 @@ def get_artist_discography(search_str) -> ItemList:
     return _handle_albums(results)
 
 
-def get_artist_details(search_str) -> ItemList | dict:
+def get_artist_details(search_str:str) -> ItemList | dict:
     """gets artist details from TADB
 
     Args:

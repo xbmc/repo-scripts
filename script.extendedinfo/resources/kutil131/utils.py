@@ -1,5 +1,8 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
+
+from __future__ import annotations
+
 import datetime
 import hashlib
 import json
@@ -198,9 +201,14 @@ def run_async(func):
     return async_func
 
 
-def contextmenu(options):
-    """
-    pass list of tuples (index, label), get index
+def contextmenu(options:list[tuple]) -> str:
+    """pass list of tuples (index, label), get index
+
+    Args:
+        options (list[tuple]): the context menu items with display text
+
+    Returns:
+        str: the selected option  or None if nothing selected
     """
     index = xbmcgui.Dialog().contextmenu(list=[i[1] for i in options])
     if index > -1:
@@ -400,9 +408,16 @@ def get_http(url, headers=False):
     return None
 
 
-def post(url, values, headers):
-    """
-    retuns answer to post request
+def post(url:str, values:dict, headers:str) -> dict:
+    """retuns answer to post request  {'success' : True} if succeeded
+
+    Args:
+        url (str): the api endpoint with query (if any)
+        values (dict): the body content for the post
+        headers (str): the http headers
+
+    Returns:
+        dict: results from server for the post
     """
     try:
         request = requests.post(url=url,
@@ -414,7 +429,7 @@ def post(url, values, headers):
     return json.loads(request.text)
 
 
-def delete(url, values, headers):
+def delete(url:str, values:dict, headers:str) ->dict:
     """
     returns answer to delete request
     """
@@ -428,7 +443,7 @@ def delete(url, values, headers):
     return json.loads(request.text)
 
 
-def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> dict:
+def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> list[dict] | dict:
     """gets JSON response for *url, makes use of prop and file cache.
 
     Args:
@@ -438,7 +453,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> di
         headers (bool, optional): headers to use in https request. Defaults to False.
 
     Returns:
-        dict: a deserialized JSON query response or None
+        list[dict]: a deserialized JSON query response or None
     """
     now = time.time()
     hashed_url = hashlib.md5(url.encode("utf-8", "ignore")).hexdigest()
@@ -448,6 +463,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> di
         addon.clear_global(hashed_url)
         addon.clear_global(hashed_url + "_timestamp")
     prop_time = addon.get_global(hashed_url + "_timestamp")
+    # get data from home window property
     if prop_time and now - float(prop_time) < cache_seconds:
         try:
             prop = json.loads(addon.get_global(hashed_url))
@@ -455,18 +471,27 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> di
                 return prop
         except Exception:
             pass
+    # get data from local disk cache file
     path = os.path.join(cache_path, hashed_url + ".txt")
     if xbmcvfs.exists(path) and ((now - os.path.getmtime(path)) < cache_seconds):
         results = read_from_file(path)
+        #for trakt acticipatedmovies results is list of dict per movie
     else:
+        #log(f'kutil131.utils.get_JSON_response get_http headers {headers}') #debug
+        #  data not cached query online source
         response = get_http(url, headers)
         try:
             results = json.loads(response)
-            # utils.log("download %s. time: %f" % (url, time.time() - now))
-            if "status_code" in results and results.get("status_code") == 1:
+            if folder == 'TheMovieDB':
+                if ("results" in results):
+                    # utils.log("download %s. time: %f" % (url, time.time() - now))
+                    if (("status_code" in results and results.get("status_code") == 1) or
+                        not ("status_code" in results)):
+                        save_to_file(results, hashed_url, cache_path)
+            else:
                 save_to_file(results, hashed_url, cache_path)
         except Exception as err:
-            log(f"Exception: Could not get new JSON data from {url} "
+            log(f"kutil131.utils.get_JSON_response Exception: Could not get new JSON data from {url} "
                 f"with error {err}. Trying to fallback to cache")
             #log(f'kutils131.utils.get_JSON_response {response}')
             results = read_from_file(path) if xbmcvfs.exists(path) else []
@@ -546,7 +571,7 @@ def fetch_musicbrainz_id(artist, artist_id=-1):
                                 cache_days=30,
                                 folder="MusicBrainz")
     if results and len(results["artists"]) > 0:
-        log(f'found artist id for {artist}: {results["artists"][0]["id"]}')
+        #log(f'kutil131.utils.fetch_mbid found artist id for {artist}: {results["artists"][0]["id"]}')
         return results["artists"][0]["id"]
     else:
         return None

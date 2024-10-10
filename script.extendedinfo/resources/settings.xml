@@ -102,7 +102,7 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="LanguageID" label="32159" type="string">
-					<level>0</level>
+					<level>4</level>
 					<default>en</default>
 					<constraints>
 						<options>
@@ -134,6 +134,64 @@
 							<option label="Spanish">es</option>
 							<option label="Swedish">sv</option>
 							<option label="Turkish">tr</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32159</heading>
+					</control>
+				</setting>
+				<setting help="" id="setting_update_6.0.9" label="32159" type="boolean">
+					<level>4</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="LanguageIDv2" label="32159" type="string">
+					<level>0</level>
+					<default>en-GB</default>
+					<constraints>
+						<options>
+							<option label="Arabic-Egy">ar-EG</option>
+							<option label="Arabic-Sau">ar-SA</option>
+							<option label="Bulgarian">bg-BG</option>
+							<option label="Catalan">ca-ES</option>
+							<option label="Croatian">hr-HR</option>
+							<option label="Czech">cs-CZ</option>
+							<option label="Danish">da-DK</option>
+							<option label="Dutch-Bel">nl-BE</option>
+							<option label="Dutch-Nld">nl-NL</option>
+							<option label="English-Aus">en-AU</option>
+							<option label="English-Can">en-CA</option>
+							<option label="English-Gbr">en-GB</option>
+							<option label="English-Usa">en-US</option>
+							<option label="Finnish">fi-FI</option>
+							<option label="French-Can">fr-CA</option>
+							<option label="French-Fra">fr-FR</option>
+							<option label="German">de-DE</option>
+							<option label="Greek">el-GR</option>
+							<option label="Hebrew">he-IL</option>
+							<option label="Hindi">hi-IN</option>
+							<option label="Hungarian">hu-HU</option>
+							<option label="Irish">ga-IE</option>
+							<option label="Italian">it-IT</option>
+							<option label="Japanese">ja-JP</option>
+							<option label="Kannada">kn-IN</option>
+							<option label="Korean">ko-KR</option>
+							<option label="Mandarin-China">zh-CN</option>
+							<option label="Mandarin-Sgp">zh-SG</option>
+							<option label="Mandarin-Twn">zh-TW</option>
+							<option label="Norwegian">no-NO</option>
+							<option label="Persian">fa-IR</option>
+							<option label="Polish">pl-PL</option>
+							<option label="Portuguese-Bra">pt-BR</option>
+							<option label="Portuguese-Por">pt-PT</option>
+							<option label="Russian">ru-RU</option>
+							<option label="Slovenian">sl-SL</option>
+							<option label="Spanish-Arg">es-AR</option>
+							<option label="Spanish-Esp">es-ES</option>
+							<option label="Spanish-Mex">es-MX</option>
+							<option label="Swedish">sv-SE</option>
+							<option label="Thai">th-TH</option>
+							<option label="Turkish">tr-TR</option>
 						</options>
 					</constraints>
 					<control format="string" type="list">

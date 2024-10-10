@@ -78,7 +78,7 @@ class VideoPlayer(xbmc.Player):
                 break
             if timeout == 0:
                 self.stopped = True
-                break
+            break
 
     def wait_for_kodivideo_start(self):
         """Timer called from dialogmovieinfo that checks if Kodi can play selected listitem
