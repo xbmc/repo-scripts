@@ -10,6 +10,7 @@ import xbmcgui
 import xbmcplugin
 import xbmcvfs
 import uuid
+import urllib.request
 
 try:
   from xbmcvfs import translatePath
