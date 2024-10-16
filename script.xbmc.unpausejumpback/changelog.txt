@@ -1,3 +1,6 @@
+v3.0.4
+- Remove old common code, use new module
+
 v3.0.3
 - Minor bugfix for http/s sources
 
