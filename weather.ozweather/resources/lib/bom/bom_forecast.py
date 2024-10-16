@@ -6,12 +6,16 @@ import requests
 import math
 import xbmc
 
-# Small hack to allow for unit testing - see common.py for explanation
+# Allow for unit testing this file
+# This brings this addon's resources, and bossanova808 module stuff into scope
+# (when running this module outside Kodi)
 if not xbmc.getUserAgent():
     sys.path.insert(0, '../../..')
+    sys.path.insert(0, '../../../../script.module.bossanova808/resources/lib')
 
 from resources.lib.store import Store
-from resources.lib.common import *
+from bossanova808.utilities import *
+from bossanova808.logger import Logger
 
 """
 (See bottom of this file for BOM API output examples!)
@@ -137,16 +141,15 @@ def bom_forecast(geohash):
     try:
         r = requests.get(bom_api_area_information_url)
         area_information = r.json()["data"]
-        log(area_information)
+        Logger.debug(area_information)
         if area_information:
             location_timezone_text = area_information['timezone']
-            log(f"Location timezone from BOM is {location_timezone_text}")
+            Logger.debug(f"Location timezone from BOM is {location_timezone_text}")
             location_timezone = pytz.timezone(location_timezone_text)
             # For any date comparisons - this is the localised now...
             now = datetime.datetime.now(location_timezone)
-
     except:
-        log(f'Error retrieving area information from {bom_api_area_information_url}')
+        Logger.error(f'Error retrieving area information from {bom_api_area_information_url}')
 
     # Get CURRENT OBSERVATIONS
     try:
@@ -154,20 +157,19 @@ def bom_forecast(geohash):
         current_observations = r.json()["data"]
         weather_data['ObservationsUpdated'] = utc_str_to_local_str(r.json()["metadata"]["issue_time"], time_zone=location_timezone)
         weather_data['ObservationsStation'] = r.json()["data"]['station']['name']
-        log(current_observations)
-
+        Logger.debug(current_observations)
     except:
-        log(f'Error retrieving current observations from {bom_api_current_observations_url}')
+        Logger.error(f'Error retrieving current observations from {bom_api_current_observations_url}')
         return False
 
     # Get WARNINGS
     try:
         r = requests.get(bom_api_warnings_url)
         warnings = r.json()["data"]
-        log(warnings)
+        Logger.debug(warnings)
 
     except:
-        log(f'Error retrieving warnings from {bom_api_warnings_url}')
+        Logger.error(f'Error retrieving warnings from {bom_api_warnings_url}')
 
     # Get 7-DAY FORECAST
     try:
@@ -176,10 +178,10 @@ def bom_forecast(geohash):
         weather_data['ForecastUpdated'] = utc_str_to_local_str(r.json()["metadata"]["issue_time"], time_zone=location_timezone)
         weather_data['ForecastRegion'] = r.json()["metadata"]["forecast_region"].title()
         weather_data['ForecastType'] = r.json()["metadata"]["forecast_type"].title()
-        log(forecast_seven_days)
+        Logger.debug(forecast_seven_days)
 
     except:
-        log(f'Error retrieving seven day forecast from {bom_api_forecast_seven_days_url}')
+        Logger.error(f'Error retrieving seven day forecast from {bom_api_forecast_seven_days_url}')
         return False
 
     # FUTURE?
@@ -234,15 +236,15 @@ def bom_forecast(geohash):
     # AT = Ta + 0.33•ρ − 0.70•ws − 4.00
     else:
         try:
-            log("Feels Like not provided by BOM.  Attempting to calculate feels like...but will likely fail...")
+            Logger.warning("Feels Like not provided by BOM.  Attempting to calculate feels like...but will likely fail...")
             water_vapour_pressure = current_observations['humidity'] * 6.105 * math.exp((17.27 * current_observations['temp'])/(237.7 + current_observations['temp']))
             calculated_feels_like = current_observations['temp'] + (0.33 * water_vapour_pressure) - (0.70 * current_observations['wind']['speed_kilometre']) - 4.00
             weather_data['Current.FeelsLike'] = calculated_feels_like
             weather_data['Current.Ozw_FeelsLike'] = calculated_feels_like
-            log(f"Success!  Using calculated feels like of {calculated_feels_like}")
+            Logger.info(f"Success!  Using calculated feels like of {calculated_feels_like}")
         # Not provided, could not calculate it, so set it to the current temp (avoids Kodi showing a random '0' value!)
         except:
-            log("Feels like not provided, could not calculate - setting to current temperature to avoid kodi displaying random 0s.")
+            Logger.error("Feels like not provided, and also could not calculate - setting to current temperature to avoid kodi displaying random 0s.")
             weather_data['Current.FeelsLike'] = str(round(current_observations['temp']))
 
     # WARNINGS
@@ -251,7 +253,7 @@ def bom_forecast(geohash):
         for i, warning in enumerate(warnings):
             # Warnings body...only major warnings as we don't need every little message about sheep grazing etc...
             if warning['warning_group_type'] == 'major':
-                # Don't really care when it was issue, if it hasn't expired, it's current, so show it..
+                # Don't really care when it was issue, if it hasn't expired, it's current, so show it...
                 # warning_issued = utc_str_to_local_str(warning['issue_time'], local_format='%d/%m %I:%M%p', time_zone=location_timezone)
                 # Time signature on the expiry is different for some reason?!
                 # Remove the completely unnecessary fractions of a second...
@@ -318,7 +320,7 @@ def bom_forecast(geohash):
                 descriptor_from_short_text = forecast_seven_days[i]['short_text'].lower()
                 descriptor_from_short_text = descriptor_from_short_text.replace(' ', '_').replace('.', '').strip()
                 if descriptor_from_short_text in Store.WEATHER_CODES:
-                    log("Using short text as icon descriptor as this is often more reliable than the actual icon_descriptor")
+                    Logger.debug("Using short text as icon descriptor as this is often more reliable than the actual icon_descriptor")
                     icon_descriptor = descriptor_from_short_text
             # Now we have some sort of icon descriptor, try and get the actual icon_code
             try:
@@ -327,11 +329,11 @@ def bom_forecast(geohash):
                 else:
                     icon_code = Store.WEATHER_CODES[icon_descriptor]
             except KeyError:
-                log(f'Could not find icon code for BOM icon_descriptor: {forecast_seven_days[i]["icon_descriptor"]} and from short text {descriptor_from_short_text}')
+                Logger.error(f'Could not find icon code for BOM icon_descriptor: {forecast_seven_days[i]["icon_descriptor"]} and from short text {descriptor_from_short_text}')
                 # Pop the missing icon descriptor into the outlook to make it easier for people to report in the forum thread
                 set_key(weather_data, i, "Outlook", f"[{forecast_seven_days[i]['icon_descriptor']}] {forecast_seven_days[i]['short_text']}")
 
-            log(f"Icon descriptor is: {icon_descriptor}, icon code is {icon_code}")
+            Logger.debug(f"Icon descriptor is: {icon_descriptor}, icon code is {icon_code}")
             set_keys(weather_data, i, ["OutlookIcon", "ConditionIcon"], f'{icon_code}.png')
             set_keys(weather_data, i, ["FanartCode"], icon_code)
 
@@ -346,20 +348,20 @@ def bom_forecast(geohash):
             temp_max = forecast_seven_days[i]['temp_max']
             if i == 0 and not temp_max:
                 if forecast_seven_days[i]['now']['now_label'] == "Tomorrow's Max":
-                    log("Using now->temp_now as now->now_label is Tomorrow's Max")
+                    Logger.debug("Using now->temp_now as now->now_label is Tomorrow's Max")
                     temp_max = forecast_seven_days[i]['now']['temp_now']
                 elif forecast_seven_days[i]['now']['later_label'] == "Tomorrow's Max":
-                    log("Using now->temp_later as now->later_label is Tomorrow's Max")
+                    Logger.debug("Using now->temp_later as now->later_label is Tomorrow's Max")
                     temp_max = forecast_seven_days[i]['now']['temp_later']
             set_keys(weather_data, i, ["HighTemp", "HighTemperature"], temp_max)
 
             temp_min = forecast_seven_days[i]['temp_min']
             if i == 0 and not temp_min:
                 if forecast_seven_days[i]['now']['now_label'] == 'Overnight Min':
-                    log("Using now->temp_now as now->now_label is Overnight Min")
+                    Logger.debug("Using now->temp_now as now->now_label is Overnight Min")
                     temp_min = forecast_seven_days[i]['now']['temp_now']
                 elif forecast_seven_days[i]['now']['later_label'] == 'Overnight Min':
-                    log("Using now->temp_later as now->later_label is Overnight Min")
+                    Logger.debug("Using now->temp_later as now->later_label is Overnight Min")
                     temp_min = forecast_seven_days[i]['now']['temp_later']
             set_keys(weather_data, i, ["LowTemp", "LowTemperature"], temp_min)
 
@@ -411,19 +413,19 @@ def bom_forecast(geohash):
 
 
 ###########################################################
-# MAIN (only for unit testing outside of Kodi)
+# MAIN (only for unit testing outside Kodi)
 
 if __name__ == "__main__":
 
     geohashes_to_test = ['r1r11df', 'r1f94ew']
     for geohash in geohashes_to_test:
-        log(f'Getting weather data from BOM for geohash "{geohash}"')
+        Logger.info(f'Getting weather data from BOM for geohash "{geohash}"')
         test_data = bom_forecast(geohash)
 
         for key in sorted(test_data):
             if test_data[key] == "?" or test_data[key] == "na":
-                log("**** MISSING: ")
-            log(f'{key}: "{test_data[key]}"')
+                Logger.info("**** MISSING: ")
+            Logger.info(f'{key}: "{test_data[key]}"')
 
 """
 BOM API
