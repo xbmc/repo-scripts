@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.checkpreviousepisode" version="0.4.7" name="Kodi Check Previous Episode" provider-name="bossanova808, Razzeee, Lucleonhart" >
+<addon id="script.service.checkpreviousepisode" version="0.4.8" name="Kodi Check Previous Episode" provider-name="bossanova808, Razzeee, Lucleonhart" >
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="script.module.yaml" version="3.11.0" />
+    <import addon="script.module.bossanova808" version="1.0.0"/>
   </requires>
   <extension library="default.py" point="xbmc.service" />
   <extension point="xbmc.addon.metadata">
@@ -16,7 +17,10 @@
     <forum>https://forum.kodi.tv/showthread.php?tid=355464</forum>
     <website>https://kodi.wiki/view/Add-on:XBMC_Check_Previous_Episode</website>
     <source>https://github.com/bossanova808/script.service.checkpreviousepisode</source>
-    <news>v0.4.7 Add Window Property so skinners can dress up the dialog</news>
+    <news>v0.4.8
+- Remove old common code, use new module
+- Fix bug if last ignored show is removed from ignore list then that show is re-played in same Kodi session
+    </news>
   <assets>
      <icon>icon.png</icon>
   </assets>
