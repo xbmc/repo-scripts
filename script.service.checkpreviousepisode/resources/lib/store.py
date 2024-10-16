@@ -1,7 +1,11 @@
 import os
 import yaml
-from .common import *
+from bossanova808.logger import Logger
+from bossanova808.constants import *
+from bossanova808.utilities import *
 import xbmc
+import xbmcvfs
+
 
 class Store:
     """
@@ -29,7 +33,7 @@ class Store:
         Load in the addon settings, at start or reload them if they have been changed
         :return:
         """
-        log("Loading configuration")
+        Logger.info("Loading configuration")
 
         Store.ignored_shows_file = xbmcvfs.translatePath(os.path.join(PROFILE, 'ignored_shows.yaml'))
         Store.get_ignored_shows_from_config_file()
@@ -47,9 +51,9 @@ class Store:
 
         :return:
         """
-        log(f'Force Kodi to browse to show dir: {Store.force_browse}')
-        log(f'Force Kodi to browse to all seasons view: {Store.force_all_seasons}')
-        log(f'Ignore if episode absent from library: {Store.ignore_if_episode_absent_from_library}')
+        Logger.info(f'Force Kodi to browse to show dir: {Store.force_browse}')
+        Logger.info(f'Force Kodi to browse to all seasons view: {Store.force_all_seasons}')
+        Logger.info(f'Ignore if episode absent from library: {Store.ignore_if_episode_absent_from_library}')
 
     @staticmethod
     def get_ignored_shows_from_config_file():
@@ -60,29 +64,35 @@ class Store:
 
         # Update our internal list of ignored shows if there are any...
         if os.path.exists(Store.ignored_shows_file):
-            log("Loading ignored shows from config file: " + Store.ignored_shows_file)
+            Logger.info("Loading ignored shows from config file: " + Store.ignored_shows_file)
             with open(Store.ignored_shows_file, 'r') as yaml_file:
                 Store.ignored_shows = yaml.load(yaml_file, Loader=yaml.FullLoader)
+        else:
+            Store.ignored_shows = {}
 
-        log(f'Ignored Shows, loaded from yaml file, is: {Store.ignored_shows}')
+        Logger.info(f'Ignored Shows, loaded from yaml file, is: {Store.ignored_shows}')
 
     @staticmethod
-    def write_ignored_shows_to_config(ignored_shows, tv_show_title=None, tv_show_id=None):
-
-        # If no ignores shows yet, make an empty list...
-        if not ignored_shows:
-            ignored_shows = {}
-
-        # Add new show to our dict of ignored shows if there is one...
-        if tv_show_id:
-            log(f'Set show title {tv_show_title}, id [{tv_show_id}], to ignore from now on.')
-            ignored_shows[tv_show_id] = tv_show_title
+    def write_ignored_shows_to_config(new_to_ignore_tv_show_title=None, new_to_ignore_tv_show_id=None):
 
         # Addon settings folder not there yet?  Make it...
         if not xbmcvfs.exists(PROFILE):
             xbmcvfs.mkdirs(PROFILE)
 
-        # ...and dump the whole dict to our yaml file (clobber over any old file)
+        # Add new show, if supplied, to our dict of ignored shows if there is one...
+        if new_to_ignore_tv_show_id:
+            Logger.info(f'Set show title {new_to_ignore_tv_show_title}, id [{new_to_ignore_tv_show_id}], to ignore from now on.')
+            Store.ignored_shows[new_to_ignore_tv_show_id] = new_to_ignore_tv_show_title
+
+        # No ignored shows?  We've been called from settings after removal of the last ignored show
+        # Clean up & delete the empty file...
+        if len(Store.ignored_shows) == 0:
+            Logger.info("No shows left to ignore, removing ignored shows file")
+            if os.path.exists(Store.ignored_shows_file):
+                os.remove(Store.ignored_shows_file)
+            return
+
+        # Shows to ignore, so dump the current dict to our yaml file (clobber over any old file)
         with open(Store.ignored_shows_file, 'w') as yaml_file:
-            log(f'Ignored Shows to write to config is: {ignored_shows}')
-            yaml.dump(ignored_shows, yaml_file, default_flow_style=False)
+            Logger.info(f'Ignored Shows to write to config is: {Store.ignored_shows}')
+            yaml.dump(Store.ignored_shows, yaml_file, default_flow_style=False)

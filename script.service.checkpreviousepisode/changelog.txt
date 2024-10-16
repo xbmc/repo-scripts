@@ -1,3 +1,7 @@
+v0.4.8
+- Remove old common code, use new module
+- Fix bug if last ignored show is removed from ignore list then that show is re-played in same Kodi session
+
 v0.4.7
 - Add Window Property so skinners can dress up the dialog
 
@@ -23,7 +27,7 @@ v0.4.1
 v0.3.5 
 - (N.B. this is the last version for Kodi Leia and below)
 - Fixed error with non ascii chars in show title
-- Better addon profile path handling, create profile directory if doesn't exists
+- Better addon profile path handling, create profile directory if it doesn't exist
 
 v0.3.4
 - Add new option to ignore particular shows
