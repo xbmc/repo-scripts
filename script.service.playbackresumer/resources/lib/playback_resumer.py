@@ -1,8 +1,12 @@
-from .common import *
+from bossanova808.utilities import *
+# noinspection PyPackages
 from .store import Store
 import xbmc
+# noinspection PyPackages
 from .monitor import KodiEventMonitor
+# noinspection PyPackages
 from .player import KodiPlayer
+
 
 def run():
     """
@@ -12,7 +16,7 @@ def run():
     """
     footprints()
     # load settings and create the store for our globals
-    config = Store()
+    Store()
     Store.kodi_event_monitor = KodiEventMonitor(xbmc.Monitor)
     Store.kodi_player = KodiPlayer(xbmc.Player)
 
@@ -26,6 +30,3 @@ def run():
             break
 
     footprints(False)
-
-
-
