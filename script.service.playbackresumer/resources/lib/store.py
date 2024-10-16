@@ -1,4 +1,5 @@
-from .common import *
+from bossanova808.utilities import *
+from bossanova808.logger import Logger
 import os
 import json
 import xml.etree.ElementTree as ElementTree
@@ -59,21 +60,21 @@ class Store:
         root = None
         try:
             root = ElementTree.parse(advancedsettings_file).getroot()
-            log("Found and parsed advancedsettings.xml")
+            Logger.info("Found and parsed advancedsettings.xml")
         except (ElementTree.ParseError, IOError):
-            log("Could not find/parse advancedsettings.xml, will use defaults")
+            Logger.info("Could not find/parse advancedsettings.xml, will use defaults")
 
         if root is not None:
             element = root.find('./video/ignoresecondsatstart')
             if element is not None:
-                log("Found advanced setting ignoresecondsatstart")
+                Logger.info("Found advanced setting ignoresecondsatstart")
                 Store.ignore_seconds_at_start = int(element.text)
             element = root.find('./video/ignorepercentatend')
             if element is not None:
-                log("Found advanced setting ignorepercentatend")
+                Logger.info("Found advanced setting ignorepercentatend")
                 Store.ignore_percent_at_end = int(element.text)
 
-        log(f"Using ignoresecondsatstart: {Store.ignore_seconds_at_start}, ignorepercentatend: {Store.ignore_percent_at_end}")
+        Logger.info(f"Using ignoresecondsatstart: {Store.ignore_seconds_at_start}, ignorepercentatend: {Store.ignore_percent_at_end}")
 
     @staticmethod
     def clear_old_play_details():
@@ -81,7 +82,7 @@ class Store:
         As soon as a new file is played, clear out all old references to anything that was being stored as the currently playing file
         :return:
         """
-        log("New playback - clearing legacy now playing details")
+        Logger.info("New playback - clearing legacy now playing details")
         Store.library_id = None
         Store.currently_playing_file_path = None
         Store.type_of_video = None
@@ -98,7 +99,7 @@ class Store:
         Load in the addon settings, at start or reload them if they have been changed
         :return:
         """
-        log("Loading configuration")
+        Logger.info("Loading configuration")
 
         Store.save_interval_seconds = int(float(ADDON.getSetting("saveintervalsecs")))
         Store.resume_on_startup = get_setting_as_bool("resumeonstartup")
@@ -107,9 +108,9 @@ class Store:
 
     @staticmethod
     def log_configuration():
-        log(f'Will save a resume point every {Store.save_interval_seconds} seconds')
-        log(f'Resume on startup: {Store.resume_on_startup}')
-        log(f'Autoplay random video: {Store.autoplay_random}')
+        Logger.info(f'Will save a resume point every {Store.save_interval_seconds} seconds')
+        Logger.info(f'Resume on startup: {Store.resume_on_startup}')
+        Logger.info(f'Autoplay random video: {Store.autoplay_random}')
 
     @staticmethod
     def is_excluded(full_path):
@@ -123,32 +124,32 @@ class Store:
         if not full_path:
             return True
 
-        log(f'Store.isExcluded(): Checking exclusion settings for [{full_path}]')
+        Logger.info(f'Store.isExcluded(): Checking exclusion settings for [{full_path}]')
 
-        if (full_path.find("pvr://") > -1) and getSettingAsBool('ExcludeLiveTV'):
-            log('Store.isExcluded(): Video is PVR (Live TV), which is currently set as an excluded source.')
+        if (full_path.find("pvr://") > -1) and get_setting_as_bool('ExcludeLiveTV'):
+            Logger.info('Store.isExcluded(): Video is PVR (Live TV), which is currently set as an excluded source.')
             return True
 
         if (full_path.find("http://") > -1 or full_path.find("https://") > -1) and get_setting_as_bool('ExcludeHTTP'):
-            log("Store.isExcluded(): Video is from an HTTP/S source, which is currently set as an excluded source.")
+            Logger.info("Store.isExcluded(): Video is from an HTTP/S source, which is currently set as an excluded source.")
             return True
 
         exclude_path = get_setting('exclude_path')
         if exclude_path and get_setting_as_bool('ExcludePathOption'):
             if full_path.find(exclude_path) > -1:
-                log(f'Store.isExcluded(): Video is playing from [{exclude_path}], which is set as excluded path 1.')
+                Logger.info(f'Store.isExcluded(): Video is playing from [{exclude_path}], which is set as excluded path 1.')
                 return True
 
         exclude_path2 = get_setting('exclude_path2')
         if exclude_path2 and get_setting_as_bool('ExcludePathOption2'):
             if full_path.find(exclude_path2) > -1:
-                log(f'Store.isExcluded(): Video is playing from [{exclude_path2}], which is set as excluded path 2.')
+                Logger.info(f'Store.isExcluded(): Video is playing from [{exclude_path2}], which is set as excluded path 2.')
                 return True
 
         exclude_path3 = get_setting('exclude_path3')
         if exclude_path3 and get_setting_as_bool('ExcludePathOption3'):
             if full_path.find(exclude_path3) > -1:
-                log(f'Store.isExcluded(): Video is playing from [{exclude_path3}], which is set as excluded path 3.')
+                Logger.info(f'Store.isExcluded(): Video is playing from [{exclude_path3}], which is set as excluded path 3.')
                 return True
 
         return False
@@ -163,7 +164,7 @@ class Store:
         """
 
         if Store.is_excluded(filepath):
-            log("Skipping excluded filepath: " + filepath)
+            Logger.info("Skipping excluded filepath: " + filepath)
             Store.currently_playing_file_path = None
             return
 
@@ -173,7 +174,7 @@ class Store:
         with open(Store.file_to_store_last_played, 'w+', encoding='utf8') as f:
             f.write(filepath)
 
-        log(f'Last played file set to: {filepath}')
+        Logger.info(f'Last played file set to: {filepath}')
 
         # check if it is a library video and if so store the library_id and type_of_video
         query = {
@@ -190,19 +191,19 @@ class Store:
             "id": "fileDetailsCheck"
         }
 
-        log(f'Executing JSON-RPC: {json.dumps(query)}')
+        Logger.info(f'Executing JSON-RPC: {json.dumps(query)}')
         json_response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
-        log(f'JSON-RPC Files.GetFileDetails response: {json.dumps(json_response)}')
+        Logger.info(f'JSON-RPC Files.GetFileDetails response: {json.dumps(json_response)}')
 
         try:
             Store.type_of_video = json_response['result']['filedetails']['type']
         except KeyError:
             Store.library_id = -1
-            log(f"ERROR: Kodi did not return even an 'unknown' file type for: {Store.currently_playing_file_path}")
+            Logger.info(f"ERROR: Kodi did not return even an 'unknown' file type for: {Store.currently_playing_file_path}")
 
         if Store.type_of_video in ['episode', 'movie', 'musicvideo']:
             Store.library_id = json_response['result']['filedetails']['id']
         else:
             Store.library_id = None
 
-        log(f'Kodi type: {Store.type_of_video}, library id: {Store.library_id}')
+        Logger.info(f'Kodi type: {Store.type_of_video}, library id: {Store.library_id}')
