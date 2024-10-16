@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-
+from bossanova808 import exception_logger
 from resources.lib import unpause_jumpback
 
 if __name__ == "__main__":
-    unpause_jumpback.run()
+    with exception_logger.log_exception():
+        unpause_jumpback.run()

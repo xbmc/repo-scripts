@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.3" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
+<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.4" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.bossanova808" version="1.0.0"/>
   </requires>
   <extension point="xbmc.service" library="default.py"></extension>
   <extension point="xbmc.addon.metadata">
@@ -24,8 +25,8 @@
     <source>https://github.com/bossanova808/script.xbmc.unpausejumpback/</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=355778</forum>
     <email>bossonav808@gmail.com</email>
-    <news>v3.0.3
-      - Minor bugfix for http/s sources
+    <news>v3.0.4
+- Remove old common code, use new module
     </news>
     <assets>
       <icon>icon.png</icon>
