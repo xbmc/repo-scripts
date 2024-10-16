@@ -1,20 +1,20 @@
-# noinspection PyPackages
-from .common import *
+from bossanova808.utilities import *
+from bossanova808.logger import Logger
 
 
 def refresh_locations():
     """
     Get the user's location and radar code choices from the addon settings, and set them as window properties
     """
-    log("Refreshing locations from settings")
+    Logger.info("Refreshing locations from settings")
 
     location1 = ADDON.getSetting('Location1BOM') or ""
     location2 = ADDON.getSetting('Location2BOM') or ""
     location3 = ADDON.getSetting('Location3BOM') or ""
 
-    log("Location1: " + location1)
-    log("Location2: " + location2)
-    log("Location3: " + location3)
+    Logger.info("Location1: " + location1)
+    Logger.info("Location2: " + location2)
+    Logger.info("Location3: " + location3)
 
     locations = 0
 
@@ -32,18 +32,18 @@ def refresh_locations():
     set_property(WEATHER_WINDOW, 'Location3', location3)
 
     # and set count of locations
-    log(f"Total locations: {locations}")
+    Logger.info(f"Total locations: {locations}")
     set_property(WEATHER_WINDOW, 'Locations', str(locations))
 
-    log("Refreshing radar locations from settings")
+    Logger.info("Refreshing radar locations from settings")
 
     radar1 = ADDON.getSetting('Radar1') or ADDON.getSetting('Location1ClosestRadar') or ""
     radar2 = ADDON.getSetting('Radar2') or ADDON.getSetting('Location2ClosestRadar') or ""
     radar3 = ADDON.getSetting('Radar3') or ADDON.getSetting('Location3ClosestRadar') or ""
 
-    log("Radar1: " + radar1)
-    log("Radar2: " + radar2)
-    log("Radar3: " + radar3)
+    Logger.info("Radar1: " + radar1)
+    Logger.info("Radar2: " + radar2)
+    Logger.info("Radar3: " + radar3)
 
     radars = 0
 
@@ -58,6 +58,5 @@ def refresh_locations():
     set_property(WEATHER_WINDOW, 'Radar3', radar3)
 
     # and set count of radars
-    log(f"Total radars: {radars}")
+    Logger.info(f"Total radars: {radars}")
     set_property(WEATHER_WINDOW, 'Radars', str(radars))
-

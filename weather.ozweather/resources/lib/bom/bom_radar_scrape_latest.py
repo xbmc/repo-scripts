@@ -1,4 +1,6 @@
-# N.B. THIS IS (NOT YET?) DIRECTLY RUN BY XBMC - IS JUST AN AID FOR DEVELOPMENT
+# N.B. THIS IS NOT DIRECTLY RUN BY KODI - IS JUST AN AID FOR DEVELOPMENT
+# Gives python and JS ready lists of BOM radar locations, run by:
+# python3 bom_radar_scrape_latest.py
 
 import re
 import requests

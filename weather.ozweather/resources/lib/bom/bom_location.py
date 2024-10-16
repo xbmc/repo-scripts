@@ -2,11 +2,16 @@ import requests
 import sys
 import xbmc
 
-# Small hack to allow for unit testing - see common.py for explanation
+# Allow for unit testing this file
+# This brings this addon's resources, and bossanova808 module stuff into scope
+# (when running this module outside Kodi)
 if not xbmc.getUserAgent():
     sys.path.insert(0, '../../..')
+    sys.path.insert(0, '../../../../script.module.bossanova808/resources/lib')
 
 from resources.lib.bom.bom_radar import *
+from bossanova808.utilities import *
+from bossanova808.logger import Logger
 
 
 def get_bom_locations_for(text):
@@ -20,17 +25,17 @@ def get_bom_locations_for(text):
     try:
         r = requests.get(Store.BOM_API_LOCATIONS_URL, params={'search': text})
         for result in r.json()['data']:
-            log(result)
+            Logger.debug(result)
             locations.append(f'{result["name"]}, {result["state"]} {result["postcode"]} ({result["geohash"]})')
             location_geohashes.append(result["geohash"])
-        log(locations)
-        log(location_geohashes)
+        Logger.debug(locations)
+        Logger.debug(location_geohashes)
 
         return locations, location_geohashes
 
     except Exception as inst:
-        log(f'Exception getting locations from {Store.BOM_API_LOCATIONS_URL} for search term {text}')
-        log(str(inst))
+        Logger.error(f'Exception getting locations from {Store.BOM_API_LOCATIONS_URL} for search term {text}')
+        Logger.error(str(inst))
         raise
 
 
@@ -46,7 +51,7 @@ def find_bom_location():
     if keyboard.isConfirmed() and keyboard.getText() != '':
         text = keyboard.getText()
 
-        log("Doing locations search for " + text)
+        Logger.info("Doing locations search for " + text)
         locations, location_geohashes = get_bom_locations_for(text)
 
         # Now get them to choose an actual location from the returned matched
@@ -64,9 +69,9 @@ def find_bom_location():
                 location_info_url = f'https://api.weather.bom.gov.au/v1/locations/{location_geohashes[selected]}'
                 try:
                     location_info = requests.get(location_info_url).json()['data']
-                    log(location_info)
+                    Logger.debug(location_info)
                 except:
-                    log("Error retrieving location info for geohash {location_geohashes[selected]}")
+                    Logger.debug("Error retrieving location info for geohash {location_geohashes[selected]}")
                     raise
 
                 # Save the geohash and latitude and longitude of the location
@@ -76,22 +81,22 @@ def find_bom_location():
                 ADDON.setSetting(sys.argv[1] + 'Lon', str(location_info['longitude']))
                 # Use the lat, long to find the closest radar
                 radar = closest_radar_to_lat_lon((location_info['latitude'], location_info['longitude']))
-                log(f'Closest radar found: {radar}')
+                Logger.info(f'Closest radar found: {radar}')
                 ADDON.setSetting('Radar' + sys.argv[1][-1] + 'Lat', str(radar[0]))
                 ADDON.setSetting('Radar' + sys.argv[1][-1] + 'Lon', str(radar[1]))
                 ADDON.setSetting(sys.argv[1] + 'ClosestRadar', f'{radar[2]} - {radar[3]}')
 
+
 ###########################################################
-# MAIN (only for unit testing outside of Kodi)
+# MAIN (only for unit testing outside Kodi)
 
 if __name__ == "__main__":
 
     places_to_test = ['3032', 'ascot vale', 'MYRTLE BANK', 'no_results']
     for place in places_to_test:
-        log(f'Testing location term "{place}"')
+        Logger.info(f'Testing location term "{place}"')
         get_bom_locations_for(place)
-        log('')
-
+        Logger.info('')
 
 """
 {
