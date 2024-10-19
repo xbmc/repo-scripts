@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cabertoss" name="Caber Toss" version="1.0.0" provider-name="bossanova808">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.bossanova808" version="1.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Provides an easy way to save Kodi log files, at a particular moment, to a chosen destination.</summary>
+        <description lang="en_GB">
+A script to quickly toss your Kodi logs from your Kodi client machine to somewhere more handy, for easier review.
+
+When something unexpected or bad happens, just run this add-on to copy the latest Kodi logs to your chosen destination.
+
+Even better, bind this to a remote button (use `Runscript(script.cabertoss)`) - so you can carry on with your relaxing and deal with the issue later (without having to wade through all the stuff you did after the issue happened!).
+        </description>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <website>https://github.com/bossanova808/script.cabertoss</website>
+        <source>https://github.com/bossanova808/script.cabertoss</source>
+        <forum />
+        <email />
+        <news>
+            v1.0.0 Initial release
+        </news>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>
