@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.simple-requests"
+   name="simple-requests"
+   version="1.0.0"
+   provider-name="Roman V.M.">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="libs" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">simple-requests Python library</summary>
+    <description lang="en_GB">simple-requests is a simple library for making HTTP requests with API similar to the popular "requests" library</description>
+    <license>MIT</license>
+    <source>https://github.com/romanvm/kodi.simple-requests</source>
+    <news>1.0.0:
+- Initial public release</news>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
