@@ -1,3 +1,7 @@
+from bossanova808.constants import *
+from bossanova808.utilities import *
+from bossanova808.logger import Logger
+
 # noinspection PyPackages
 from .abc.abc_video import *
 # noinspection PyPackages
@@ -10,7 +14,7 @@ def clear_properties():
     """
     Clear all properties on the weather window in preparation for an update.
     """
-    log("Clearing all weather window properties")
+    Logger.info("Clearing all weather window properties")
     try:
         set_property(WEATHER_WINDOW, 'Weather.IsFetched')
         set_property(WEATHER_WINDOW, 'Daily.IsFetched')
@@ -92,7 +96,7 @@ def clear_properties():
             set_property(WEATHER_WINDOW, 'Day%i.LowTemperature' % count)
             set_property(WEATHER_WINDOW, 'Day%i.Outlook' % count)
             set_property(WEATHER_WINDOW, 'Day%i.LongOutlookDay' % count)
-            set_property(WEATHER_WINDOW, 'Day%i.OutlookIcon' % count )
+            set_property(WEATHER_WINDOW, 'Day%i.OutlookIcon' % count)
             set_property(WEATHER_WINDOW, 'Day%i.ConditionIcon' % count)
             set_property(WEATHER_WINDOW, 'Day%i.FanartCode' % count)
             set_property(WEATHER_WINDOW, 'Day%i.ShortDate' % count)
@@ -116,8 +120,8 @@ def clear_properties():
             set_property(WEATHER_WINDOW, 'Daily.%i.ShortDate' % count)
             set_property(WEATHER_WINDOW, 'Daily.%i.ShortDay' % count)
 
-    except Exception as inst:
-        log("********** Oz Weather Couldn't clear all the properties, sorry!!", inst)
+    except Exception:
+        Logger.error("********** Oz Weather Couldn't clear all the properties, sorry!!")
 
 
 # noinspection PyShadowingNames
@@ -130,18 +134,19 @@ def forecast(geohash, radar_code):
     """
 
     extended_features = ADDON.getSettingBool('ExtendedFeaturesToggle')
-    log(f'Extended features: {extended_features}')
+    Logger.debug(f'Extended features: {extended_features}')
     purge_backgrounds = ADDON.getSettingBool('PurgeRadarBackgroundsOnNextRefresh')
-    log(f'Purge Backgrounds: {purge_backgrounds}')
+    Logger.debug(f'Purge Backgrounds: {purge_backgrounds}')
 
     # Has the user requested we refresh the radar backgrounds on next weather fetch?
     if purge_backgrounds:
+        Logger.info("Purging all radar backgrounds")
         dump_all_radar_backgrounds()
         ADDON.setSetting('PurgeRadarBackgroundsOnNextRefresh', 'false')
 
     # Get the radar images first - because it looks better on refreshes
     if extended_features:
-        log(f'Getting radar images for {radar_code}')
+        Logger.debug(f'Getting radar images for {radar_code}')
         backgrounds_path = xbmcvfs.translatePath(
             "special://profile/addon_data/weather.ozweather/radarbackgrounds/" + radar_code + "/")
         overlay_loop_path = xbmcvfs.translatePath(
@@ -159,8 +164,8 @@ def forecast(geohash, radar_code):
             # utc - get from filename of oldest and newest - it's the last number before the .png
             utc_oldest = oldest_file.split('.')[-2]
             utc_newest = newest_file.split('.')[-2]
-            log(f"utc_oldest {utc_oldest}")
-            log(f"utc_newest {utc_newest}")
+            Logger.debug(f"utc_oldest {utc_oldest}")
+            Logger.debug(f"utc_newest {utc_newest}")
 
             time_oldest = utc_str_to_local_str(utc_oldest, "%Y%m%d%H%M")
             time_newest = utc_str_to_local_str(utc_newest, "%Y%m%d%H%M")
@@ -172,12 +177,12 @@ def forecast(geohash, radar_code):
     weather_data = None
 
     if geohash:
-        log(f'Using the BOM API.  Getting weather data for {geohash}')
+        Logger.info(f'Using the BOM API.  Getting weather data for {geohash}')
         weather_data = bom_forecast(geohash)
 
     # At this point, we should have _something_ - if not, log the issue, and we're done...
     if not weather_data:
-        log("Unable to get weather_data from BOM - internet connection issue or addon not configured?", level=xbmc.LOGINFO)
+        Logger.error("Unable to get weather_data from BOM - internet connection issue or addon not configured?")
         return
 
     # We have weather_data - set all the properties on Kodi's weather window...
@@ -186,12 +191,12 @@ def forecast(geohash, radar_code):
 
     # Get the ABC 90-second weather video link if extended features is enabled
     if extended_features:
-        log("Getting the ABC weather video link")
+        Logger.info("Getting the ABC weather video link")
         url = get_abc_weather_video_link()
         if url:
             set_property(WEATHER_WINDOW, 'Video.1', url)
 
-    # And announce everything is fetched..
+    # And announce everything is fetched...
     set_property(WEATHER_WINDOW, "Weather.IsFetched", "true")
     set_property(WEATHER_WINDOW, "Daily.IsFetched", "true")
     set_property(WEATHER_WINDOW, "Today.IsFetched", "true")
@@ -204,7 +209,7 @@ def get_weather():
     Gets the latest observations, forecast and radar images for the currently chosen location
     """
 
-    log("*** Updating Weather Data ***")
+    Logger.info("*** Updating Weather Data ***")
 
     # Nice neat updates - clear out all set window data first...
     clear_properties()
@@ -216,29 +221,29 @@ def get_weather():
     try:
         skin_in_use = xbmc.getSkinDir().split('.')[1]
         set_property(WEATHER_WINDOW, 'SkinInUse', skin_in_use)
-    except:
+    except IndexError:
         pass
 
     # Retrieve the currently chosen location geohash & radar code
     geohash = ADDON.getSetting(f'Location{sys.argv[1]}BOMGeoHash')
     radar = ADDON.getSetting(f'Radar{sys.argv[1]}') or ADDON.getSetting(f'Location{sys.argv[1]}ClosestRadar')
 
-    # With the new closest radar system, the radar is store as e.g. 'Melbourne - IDR023' so strip the name off...
+    # With the new closest radar system, the radar is stored as e.g. 'Melbourne - IDR023' so strip the name off...
     split_code = radar.split(' - ')
     if len(split_code) > 1:
-        log(f"Radar code: transforming [{radar}] to: [{split_code[-1]}]")
+        Logger.warning(f"Radar code: transforming [{radar}] to: [{split_code[-1]}]")
         radar = split_code[-1]
 
     if not geohash:
-        log("No BOM location geohash - can't retrieve weather data!")
+        Logger.error("No BOM location geohash - can't retrieve weather data!")
         return
 
     # If we don't have a radar code, get the national radar by default
     if not radar:
         radar = 'IDR00004'
-        log(f'Radar code empty for location, so using default radar code {radar} (= national radar)')
+        Logger.warning(f'Radar code empty for location, so using default radar code {radar} (= national radar)')
 
-    log(f'Current location: BOM geohash "{geohash}", radar code {radar}')
+    Logger.info(f'Current location: BOM geohash "{geohash}", radar code {radar}')
 
     # Now scrape the weather data & radar images
     forecast(geohash, radar)
@@ -265,4 +270,3 @@ def get_weather():
     set_property(WEATHER_WINDOW, 'Forecast.Latitude', latitude)
     set_property(WEATHER_WINDOW, 'Forecast.Longitude', longitude)
     set_property(WEATHER_WINDOW, 'Forecast.Updated', time.strftime("%d/%m @ %H:%M").lower())
-

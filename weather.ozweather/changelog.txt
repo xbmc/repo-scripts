@@ -1,3 +1,7 @@
+v2.1.2
+- Remove old common code, instead use new script.module.bossanova808
+- Fix for occasional error with missing national radar background
+
 2.1.1
 - Add Latitude and Longitude to Window data for skins that display 'season' using (arguably dubious) logic
 
