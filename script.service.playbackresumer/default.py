@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-
+from bossanova808 import exception_logger
 from resources.lib import playback_resumer
 
 if __name__ == "__main__":
-    playback_resumer.run()
+    with exception_logger.log_exception():
+        playback_resumer.run()
