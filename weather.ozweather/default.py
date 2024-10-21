@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from bossanova808 import exception_logger
 from resources.lib import ozweather
 
 # This is kept as minimal as possible per @enen92's advice that:
@@ -8,5 +9,5 @@ from resources.lib import ozweather
 #  Hence, you'll see a performance gain if you store your codebase in a "module"
 
 if __name__ == "__main__":
-    ozweather.run(sys.argv)
-
+    with exception_logger.log_exception():
+        ozweather.run(sys.argv)
