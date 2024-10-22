@@ -19,6 +19,7 @@ import httplib2
 try:
     import google.auth
     import google.auth.credentials
+
     HAS_GOOGLE_AUTH = True
 except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH = False
@@ -31,22 +32,44 @@ except ImportError:  # pragma: NO COVER
 try:
     import oauth2client
     import oauth2client.client
+
     HAS_OAUTH2CLIENT = True
 except ImportError:  # pragma: NO COVER
     HAS_OAUTH2CLIENT = False
 
 
-def default_credentials():
+def credentials_from_file(filename, scopes=None, quota_project_id=None):
+    """Returns credentials loaded from a file."""
+    if HAS_GOOGLE_AUTH:
+        credentials, _ = google.auth.load_credentials_from_file(
+            filename, scopes=scopes, quota_project_id=quota_project_id
+        )
+        return credentials
+    else:
+        raise EnvironmentError(
+            "client_options.credentials_file is only supported in google-auth."
+        )
+
+
+def default_credentials(scopes=None, quota_project_id=None):
     """Returns Application Default Credentials."""
     if HAS_GOOGLE_AUTH:
-        credentials, _ = google.auth.default()
+        credentials, _ = google.auth.default(
+            scopes=scopes, quota_project_id=quota_project_id
+        )
         return credentials
     elif HAS_OAUTH2CLIENT:
+        if scopes is not None or quota_project_id is not None:
+            raise EnvironmentError(
+                "client_options.scopes and client_options.quota_project_id are not supported in oauth2client."
+                "Please install google-auth."
+            )
         return oauth2client.client.GoogleCredentials.get_application_default()
     else:
         raise EnvironmentError(
-            'No authentication library is available. Please install either '
-            'google-auth or oauth2client.')
+            "No authentication library is available. Please install either "
+            "google-auth or oauth2client."
+        )
 
 
 def with_scopes(credentials, scopes):
@@ -62,10 +85,8 @@ def with_scopes(credentials, scopes):
         Union[google.auth.credentials.Credentials,
             oauth2client.client.Credentials]: The scoped credentials.
     """
-    if HAS_GOOGLE_AUTH and isinstance(
-            credentials, google.auth.credentials.Credentials):
-        return google.auth.credentials.with_scopes_if_required(
-            credentials, scopes)
+    if HAS_GOOGLE_AUTH and isinstance(credentials, google.auth.credentials.Credentials):
+        return google.auth.credentials.with_scopes_if_required(credentials, scopes)
     else:
         try:
             if credentials.create_scoped_required():
@@ -90,16 +111,15 @@ def authorized_http(credentials):
     """
     from googleapiclient.http import build_http
 
-    if HAS_GOOGLE_AUTH and isinstance(
-            credentials, google.auth.credentials.Credentials):
+    if HAS_GOOGLE_AUTH and isinstance(credentials, google.auth.credentials.Credentials):
         if google_auth_httplib2 is None:
             raise ValueError(
-                'Credentials from google.auth specified, but '
-                'google-api-python-client is unable to use these credentials '
-                'unless google-auth-httplib2 is installed. Please install '
-                'google-auth-httplib2.')
-        return google_auth_httplib2.AuthorizedHttp(credentials,
-                                                   http=build_http())
+                "Credentials from google.auth specified, but "
+                "google-api-python-client is unable to use these credentials "
+                "unless google-auth-httplib2 is installed. Please install "
+                "google-auth-httplib2."
+            )
+        return google_auth_httplib2.AuthorizedHttp(credentials, http=build_http())
     else:
         return credentials.authorize(build_http())
 
@@ -110,8 +130,7 @@ def refresh_credentials(credentials):
     # Http instance which would cause a weird recursive loop of refreshing
     # and likely tear a hole in spacetime.
     refresh_http = httplib2.Http()
-    if HAS_GOOGLE_AUTH and isinstance(
-            credentials, google.auth.credentials.Credentials):
+    if HAS_GOOGLE_AUTH and isinstance(credentials, google.auth.credentials.Credentials):
         request = google_auth_httplib2.Request(refresh_http)
         return credentials.refresh(request)
     else:
@@ -126,22 +145,23 @@ def apply_credentials(credentials, headers):
 
 
 def is_valid(credentials):
-    if HAS_GOOGLE_AUTH and isinstance(
-            credentials, google.auth.credentials.Credentials):
+    if HAS_GOOGLE_AUTH and isinstance(credentials, google.auth.credentials.Credentials):
         return credentials.valid
     else:
         return (
-            credentials.access_token is not None and
-            not credentials.access_token_expired)
+            credentials.access_token is not None
+            and not credentials.access_token_expired
+        )
 
 
 def get_credentials_from_http(http):
     if http is None:
         return None
-    elif hasattr(http.request, 'credentials'):
+    elif hasattr(http.request, "credentials"):
         return http.request.credentials
-    elif (hasattr(http, 'credentials')
-          and not isinstance(http.credentials, httplib2.Credentials)):
+    elif hasattr(http, "credentials") and not isinstance(
+        http.credentials, httplib2.Credentials
+    ):
         return http.credentials
     else:
         return None
