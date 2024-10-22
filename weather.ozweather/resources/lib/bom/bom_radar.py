@@ -3,6 +3,7 @@ import ftplib
 import glob
 import shutil
 import sys
+import os
 import time
 import urllib.error
 import urllib.parse
