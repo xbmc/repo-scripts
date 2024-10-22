@@ -48,3 +48,7 @@ msgstr "
 msgctxt "#32029"
 msgid "Something went wrong, (ironically) check your logs!"
 msgstr "
+
+msgctxt "#32030"
+msgid "Working..."
+msgstr "

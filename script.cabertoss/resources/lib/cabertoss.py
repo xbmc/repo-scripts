@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 from datetime import datetime
-import re
+from time import sleep
+from datetime import datetime, timedelta
+import socket
+
 import xbmc
 import xbmcvfs
 from bossanova808.constants import *
@@ -9,18 +12,7 @@ from bossanova808.utilities import *
 from bossanova808.logger import Logger
 from bossanova808.notify import Notify
 from resources.lib.store import Store
-
-
-def clean_log(content):
-    """
-    Remove username/password details from log file content
-
-    @param content:
-    @return:
-    """
-    for pattern, repl in Store.replaces:
-        sanitised = re.sub(pattern, repl, content)
-        return sanitised
+from resources.lib.clean import *
 
 
 def gather_log_files():
@@ -36,37 +28,57 @@ def gather_log_files():
         log_files.append(['oldlog', os.path.join(LOG_PATH, 'kodi.old.log')])
 
     # Can we find a crashlog?
-    # @TODO - check support for CoreElec & add Android if possible...
+    # @TODO - add Android support if possible..?
     crashlog_path = ''
     items = []
     filematch = None
     if xbmc.getCondVisibility('system.platform.osx'):
+        Logger.info("System is OSX")
         crashlog_path = os.path.join(os.path.expanduser('~'), 'Library/Logs/DiagnosticReports/')
         filematch = 'Kodi'
     elif xbmc.getCondVisibility('system.platform.ios'):
+        Logger.info("System is IOS")
         crashlog_path = '/var/mobile/Library/Logs/CrashReporter/'
         filematch = 'Kodi'
     elif xbmc.getCondVisibility('system.platform.linux'):
+        Logger.info("System is Linux")
         crashlog_path = os.path.expanduser('~')  # not 100% accurate (crashlogs can be created in the dir kodi was started from as well)
         filematch = 'kodi_crashlog'
     elif xbmc.getCondVisibility('system.platform.windows'):
+        Logger.info("System is Windows")
         crashlog_path = LOG_PATH
-        filematch = 'crashlog'
+        filematch = 'kodi_'
     elif xbmc.getCondVisibility('system.platform.android'):
+        Logger.info("System is Android")
         Logger.info(LANGUAGE(32023))
+
+    # If *ELEC, we can be more specific
+    if xbmc.getCondVisibility('System.HasAddon(service.coreelec.settings)') or xbmc.getCondVisibility('System.HasAddon(service.libreelec.settings)'):
+        Logger.info("System is *ELEC")
+        crashlog_path = LOG_PATH
+        filematch = 'kodi_crashlog_'
 
     if crashlog_path and os.path.isdir(crashlog_path):
         lastcrash = None
         dirs, possible_crashlog_files = xbmcvfs.listdir(crashlog_path)
         for item in possible_crashlog_files:
-            if filematch in item and os.path.isfile(os.path.join(crashlog_path, item)):
-                items.append(os.path.join(crashlog_path, item))
-                items.sort(key=lambda f: os.path.getmtime(f))
-                if not xbmc.getCondVisibility('system.platform.windows'):
-                    lastcrash = [items[-1]]
-                else:
-                    lastcrash = items[-2:]
+            item_with_path = os.path.join(crashlog_path, item)
+            if filematch in item and os.path.isfile(item_with_path):
+                if filematch in item:
+                    # Don't bother with older crashlogs
+                    three_days_ago = datetime.now() - timedelta(days=3)
+                    if three_days_ago < datetime.fromtimestamp(os.path.getmtime(item_with_path)):
+                        items.append(os.path.join(crashlog_path, item))
+
+        items.sort(key=lambda f: os.path.getmtime(f))
+        # Windows crashlogs are a dmp and stacktrace combo...
+        if xbmc.getCondVisibility('system.platform.windows'):
+            lastcrash = items[-2:]
+        else:
+            lastcrash = items[-1:]
+
         if lastcrash:
+            # Logger.info(f"lastcrash {lastcrash}")
             for crashfile in lastcrash:
                 log_files.append(['crashlog', crashfile])
 
@@ -88,7 +100,7 @@ def copy_log_files(log_files: []):
         Notify.error(LANGUAGE(32025))
         return
 
-    now_folder_name = 'Kodi_Logs_' + datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    now_folder_name = f"{socket.gethostname()}_Kodi_Logs_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
     now_destination_path = os.path.join(Store.destination_path, now_folder_name)
 
     try:
@@ -100,11 +112,11 @@ def copy_log_files(log_files: []):
                 with open(xbmcvfs.translatePath(file[1]), 'r', encoding='utf-8') as current:
                     content = current.read()
                     sanitised = clean_log(content)
-                with open(xbmcvfs.translatePath(os.path.join(now_destination_path,os.path.basename(file[1]))), 'w+', encoding='utf-8') as output:
+                with xbmcvfs.File(os.path.join(xbmcvfs.translatePath(now_destination_path),os.path.basename(file[1])), 'w') as output:
                     output.write(sanitised)
             else:
                 Logger.info(f'Copying {file[0]} {file[1]}')
-                if not xbmcvfs.copy(file[1], os.path.join(now_destination_path,os.path.basename(file[1]))):
+                if not xbmcvfs.copy(file[1], os.path.join(now_destination_path, os.path.basename(file[1]))):
                     return False
         return True
 
@@ -116,13 +128,13 @@ def copy_log_files(log_files: []):
 
 # This is 'main'...
 def run():
-
     footprints()
     Store.load_config_from_settings()
 
     if not Store.destination_path:
         Notify.error(LANGUAGE(32027))
     else:
+        Notify.info(LANGUAGE(32030))
         log_file_list = gather_log_files()
         result = copy_log_files(log_file_list)
         if result:

@@ -1,4 +1,12 @@
+v1.0.1
+- Improve compatibility with network shares            
+- Improve compatibility with Windows and *ELEC
+- Add hostname to logs folder, helps if using with multiple systems
+- Don't copy crashlogs older than three days
+- Language improvements
+- Add 'Working...' notification to make more responsive (copying larger log files can take a moment)
+
 v1.0.0
-Initial release
+- Initial release
 
 
