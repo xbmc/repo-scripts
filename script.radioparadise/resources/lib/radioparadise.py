@@ -1,8 +1,11 @@
 from collections import OrderedDict
+import json
+from pathlib import Path
 import re
 import time
 
 import requests
+import xbmcaddon
 
 
 NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list_v2022?chan={}&list_num=10'
@@ -21,34 +24,10 @@ UPDATE_TIMEOUT = 3
 # Number of seconds to wait before retrying API updates
 UPDATE_WAIT = 5
 
-STREAMS = [
-    {
-        'channel': 0,
-        'title': 'RP Main Mix',
-        'url_aac': 'http://stream.radioparadise.com/aac-128',
-        'url_flac': 'http://stream.radioparadise.com/flacm',
-    },
-    {
-        'channel': 1,
-        'title': 'RP Mellow Mix',
-        'url_aac': 'http://stream.radioparadise.com/mellow-128',
-        'url_flac': 'http://stream.radioparadise.com/mellow-flacm',
-    },
-    {
-        'channel': 2,
-        'title': 'RP Rock Mix',
-        'url_aac': 'http://stream.radioparadise.com/rock-128',
-        'url_flac': 'http://stream.radioparadise.com/rock-flacm',
-    },
-    {
-        'channel': 3,
-        'title': 'RP Global Mix',
-        'url_aac': 'http://stream.radioparadise.com/global-128',
-        'url_flac': 'http://stream.radioparadise.com/global-flacm',
-    },
-]
-STREAM_INFO = {s['url_aac']: s for s in STREAMS}
-STREAM_INFO.update({s['url_flac']: s for s in STREAMS})
+# List of channel objects from channels.json
+CHANNELS = None
+# Map of stream URL to channel object
+CHANNEL_INFO = None
 
 
 class NowPlaying():
@@ -74,10 +53,10 @@ class NowPlaying():
         next_key = self.songs.get(song_key, {}).get('next_key')
         return self.songs.get(next_key)
 
-    def set_channel(self, channel):
-        """Set the RP channel number, or None."""
-        if channel is not None:
-            self.url = NOWPLAYING_URL.format(channel)
+    def set_channel(self, channel_id):
+        """Set the RP channel ID, or None."""
+        if channel_id is not None:
+            self.url = NOWPLAYING_URL.format(channel_id)
         else:
             self.url = None
         self.current = None
@@ -146,3 +125,16 @@ def build_key(strings):
         words = KEY_FILTER_RE.sub(' ', s).casefold().split()
         result.extend(words)
     return tuple(sorted(result))
+
+
+def init():
+    global CHANNELS, CHANNEL_INFO
+    addon = xbmcaddon.Addon()
+    addon_path = addon.getAddonInfo('path')
+    channels_json = Path(addon_path, 'resources', 'channels.json')
+    CHANNELS = json.loads(channels_json.read_text())
+    CHANNEL_INFO = {s['url_aac']: s for s in CHANNELS}
+    CHANNEL_INFO.update({s['url_flac']: s for s in CHANNELS})
+
+
+init()

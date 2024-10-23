@@ -1,3 +1,7 @@
+## v2.1.0
+
+- Add Serenity channel
+
 ## v2.0.1
 
 - Use new metadata API
