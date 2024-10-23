@@ -7,10 +7,14 @@
                     <level>0</level>
                     <default/>
                     <constraints>
+                        <sources>
+                            <source>files</source>
+                        </sources>
+                        <writable>true</writable>
                         <allowempty>true</allowempty>
                     </constraints>
                     <control type="button" format="path">
-                        <heading>32026</heading>
+                        <heading>32001</heading>
                     </control>
                 </setting>
             </group>

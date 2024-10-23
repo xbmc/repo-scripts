@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cabertoss" name="Caber Toss" version="1.0.0" provider-name="bossanova808">
+<addon id="script.cabertoss" name="Caber Toss" version="1.0.1" provider-name="bossanova808">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.bossanova808" version="1.0.0"/>
@@ -14,7 +14,7 @@ A script to quickly toss your Kodi logs from your Kodi client machine to somewhe
 
 When something unexpected or bad happens, just run this add-on to copy the latest Kodi logs to your chosen destination.
 
-Even better, bind this to a remote button (use `Runscript(script.cabertoss)`) - so you can carry on with your relaxing and deal with the issue later (without having to wade through all the stuff you did after the issue happened!).
+Even better, bind this to a remote button (use `Runscript(script.cabertoss)`) - so you can carry on with your relaxing at the time, and deal with the issue later (without having to wade through all the stuff you did after the issue happened!).
         </description>
         <platform>all</platform>
         <license>GPL-3.0-only</license>
@@ -22,8 +22,13 @@ Even better, bind this to a remote button (use `Runscript(script.cabertoss)`) - 
         <source>https://github.com/bossanova808/script.cabertoss</source>
         <forum />
         <email />
-        <news>
-            v1.0.0 Initial release
+        <news>v1.0.1
+- Improve compatibility with network shares            
+- Improve compatibility with Windows and *ELEC
+- Add hostname to logs folder, helps if using with multiple systems
+- Don't copy crashlogs older than three days
+- Language improvements
+- Add 'Working...' notification to make more responsive (copying larger log files can take a moment)
         </news>
         <assets>
             <icon>resources/icon.png</icon>

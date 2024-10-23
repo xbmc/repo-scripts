@@ -1,5 +1,6 @@
 from bossanova808.constants import *
 from bossanova808.logger import Logger
+from resources.lib.clean import *
 
 
 class Store:
@@ -12,7 +13,6 @@ class Store:
 
     # Static class variables, referred to elsewhere by Store.whatever
     # https://docs.python.org/3/faq/programming.html#how-do-i-create-static-class-data-and-static-class-methods
-    replaces = (('//.+?:.+?@', '//USER:PASSWORD@'), ('<user>.+?</user>', '<user>USER</user>'), ('<pass>.+?</pass>', '<pass>PASSWORD</pass>'),)
     destination_path = None
 
     def __init__(self):
@@ -29,7 +29,8 @@ class Store:
         """
         Logger.info("Loading configuration from settings")
         Store.destination_path = ADDON.getSetting('log_path')
-        Logger.info(f'Logs will be tossed to: {Store.destination_path}')
+
+        Logger.info(f'Logs will be tossed to: {clean_log(Store.destination_path)}')
 
 
 
