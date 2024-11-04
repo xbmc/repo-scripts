@@ -28,7 +28,7 @@ STREAMS = [
         {
         'channel': 3,
         'title': 'Mother Earth Jazz',
-        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz.mp4',
+        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz.aac',
         'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz',
     },
 ]
