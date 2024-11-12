@@ -204,7 +204,8 @@ class LangPrefMan_Player(xbmc.Player) :
             if g_t and (not (self.genres_and_tags & g_t)):
                 continue
 
-            log(LOG_INFO,'Audio: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
+            if g_t:
+                log(LOG_INFO,'Audio: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
             for pref in preferences:
                 name, codes = pref
                 codes = codes.split(r',')
@@ -243,7 +244,8 @@ class LangPrefMan_Player(xbmc.Player) :
             if g_t and (not (self.genres_and_tags & g_t)):
                 continue
 
-            log(LOG_INFO,'Subtitle: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
+            if g_t:
+                log(LOG_INFO,'Subtitle: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
             for pref in preferences:
                 if len(pref) == 2:
                     name, codes = pref
@@ -296,7 +298,8 @@ class LangPrefMan_Player(xbmc.Player) :
             if g_t and (not (self.genres_and_tags & g_t)):
                 continue
 
-            log(LOG_INFO,'Cond Sub: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
+            if g_t:
+                log(LOG_INFO,'Cond Sub: genre/tag preference {0} met with intersection {1}'.format(g_t, (self.genres_and_tags & g_t)))
             for pref in preferences:
                 audio_name, audio_codes, sub_name, sub_codes, forced, ss_tag = pref
                 # manage multiple audio and/or subtitle 3-letters codes if present (ex. German = ger,deu)

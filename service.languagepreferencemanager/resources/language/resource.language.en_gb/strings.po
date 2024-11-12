@@ -333,6 +333,18 @@ msgctxt "#30245"
 msgid "Vietnamese"
 msgstr ""
 
+msgctxt "#30248"
+msgid "English Middle"
+msgstr ""
+
+msgctxt "#30249"
+msgid "Norwegian Bokmal"
+msgstr ""
+
+msgctxt "#30250"
+msgid "New Norwegian"
+msgstr ""
+
 msgctxt "#30200"
 msgid "None"
 msgstr ""

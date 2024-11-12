@@ -2,7 +2,7 @@
 <addon
 	id="service.languagepreferencemanager"
 	name="Language Preference Manager"
-	version="1.0.4"
+	version="1.0.5"
 	provider-name="ace20022/scott967/rockrider69"
 	>
 	<requires>
@@ -27,6 +27,8 @@
             Fix Greek and Serbian language codes according to iso639-2/T. Fix some typos.
             Fix multiple 3 digit codes per language (ex. German ger,deu). Now OK also for Conditional Subtitles preferences.
 1.0.4     : Fix and simplify SignsSongs subtagging (was colliding with language codes subtagging ie. pt-br). Thanks to BrutuZ!
+1.0.5     : Add Norwegian Bokmal (nb,nob), New Nowegian (nn,nno) and English Middle (enm) language codes according to ISO639-2.
+            Clean-up some info/log message.
 			
 		</news>
 		<assets>
