@@ -1,7 +1,7 @@
 Kodi (XBMC) LCDproc Python addon
 =================================
 
-Copyright (C) 2012-2018 Team Kodi, Daniel 'herrnst' Scheller
+Copyright (C) 2012-2024 Team Kodi, Daniel 'herrnst' Scheller
 Based on initial work (C) 2012 Memphiz/Team Kodi (formerly Team XBMC)
 
 LCDproc support for Kodi implemented in Python, direct drop-in replacement for

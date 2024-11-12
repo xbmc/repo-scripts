@@ -1,3 +1,7 @@
+4.1.0
+- Python 3.13 compat: Use raw strings for regex'es everywhere, fixes SyntaxError's (thanks alanswanson!)
+- Python 3.13 compat: Replace long deprecated telnetlib usage with raw sockets (thanks m-wichmann!)
+- Minor housekeepings
 4.0.0
 - fix Python exception when using the HD44780 character encodings/translation maps
 3.90.2
