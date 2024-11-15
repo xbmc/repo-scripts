@@ -135,7 +135,7 @@ class AmbiGroup(lightgroup.LightGroup):
 
             self.settings_monitor.waitForAbort(update_interval)  # seconds
 
-        executor.shutdown(wait=False)
+        executor.shutdown(wait=False) #stop _update_hue_rgb thread(s)
 
         if not self.settings_monitor.abortRequested():  # ignore writing average process time if Kodi is shutting down
             average_process_time = self._perf_average(PROCESS_TIMES)
