@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SubsMangler\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-05-26 20:29+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2024-08-03 20:31+0000\n"
+"Last-Translator: \"Enol P.\" <enolp@softastur.org>\n"
 "Language-Team: Asturian (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-subsmangler/ast_es/>\n"
 "Language: ast_es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6.2\n"
+"X-Generator: Weblate 5.6.2\n"
 
 msgctxt "Addon Summary"
 msgid "A comprehensive subtitle companion"
@@ -47,7 +47,7 @@ msgstr ""
 
 msgctxt "#32007"
 msgid "Background transparency"
-msgstr "Tresparencia del fondu"
+msgstr ""
 
 msgctxt "#32009"
 msgid "Invoke also when playing internet stream"
@@ -91,11 +91,11 @@ msgstr ""
 
 msgctxt "#32022"
 msgid "Debug"
-msgstr "Depuración"
+msgstr ""
 
 msgctxt "#32023"
 msgid "Info"
-msgstr "Info"
+msgstr "Información"
 
 msgctxt "#32025"
 msgid "Warning"
@@ -103,7 +103,7 @@ msgstr "Alvertencia"
 
 msgctxt "#32026"
 msgid "Error"
-msgstr "Fallu"
+msgstr "Error"
 
 msgctxt "#32028"
 msgid "Fatal"
@@ -111,7 +111,7 @@ msgstr ""
 
 msgctxt "#32029"
 msgid "None"
-msgstr "Nada"
+msgstr ""
 
 msgctxt "#32030"
 msgid "Logging destination"
@@ -155,7 +155,7 @@ msgstr ""
 
 msgctxt "#32050"
 msgid "Background color"
-msgstr "Color del fondu"
+msgstr ""
 
 msgctxt "#32051"
 msgid "Black"
@@ -163,7 +163,7 @@ msgstr ""
 
 msgctxt "#32052"
 msgid "Grey"
-msgstr "Buxu"
+msgstr ""
 
 msgctxt "#32053"
 msgid "Dark grey"
@@ -195,7 +195,7 @@ msgstr ""
 
 msgctxt "#32060"
 msgid "Light grey"
-msgstr "Buxu claro"
+msgstr ""
 
 msgctxt "#32061"
 msgid "Bright green"
@@ -231,6 +231,10 @@ msgstr ""
 
 msgctxt "#32075"
 msgid "Try to maintain bigger line spacing"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Hide cleaning progress"
 msgstr ""
 
 msgctxt "#32080"
@@ -379,6 +383,10 @@ msgstr ""
 
 msgctxt "#32132"
 msgid "Behaviour when video file is no longer available"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Hides the cleaning progress bar"
 msgstr ""
 
 msgctxt "#32140"

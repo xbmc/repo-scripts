@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SubsMangler\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2022-03-19 06:50+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
@@ -233,6 +233,10 @@ msgctxt "#32075"
 msgid "Try to maintain bigger line spacing"
 msgstr ""
 
+msgctxt "#32076"
+msgid "Hide cleaning progress"
+msgstr ""
+
 msgctxt "#32080"
 msgid "Conversion"
 msgstr ""
@@ -379,6 +383,10 @@ msgstr ""
 
 msgctxt "#32132"
 msgid "Behaviour when video file is no longer available"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Hides the cleaning progress bar"
 msgstr ""
 
 msgctxt "#32140"

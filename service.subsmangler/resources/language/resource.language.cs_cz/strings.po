@@ -233,6 +233,10 @@ msgctxt "#32075"
 msgid "Try to maintain bigger line spacing"
 msgstr "Zkusit použít vetší mezeru mezi řádky"
 
+msgctxt "#32076"
+msgid "Hide cleaning progress"
+msgstr ""
+
 msgctxt "#32080"
 msgid "Conversion"
 msgstr "Konverze"
@@ -380,6 +384,10 @@ msgstr "Možnosti pro nastavení při převodu"
 msgctxt "#32132"
 msgid "Behaviour when video file is no longer available"
 msgstr "Nastavení když video soubor již není nadále dostupný"
+
+msgctxt "#32133"
+msgid "Hides the cleaning progress bar"
+msgstr ""
 
 msgctxt "#32140"
 msgid "Subtitle appearance"

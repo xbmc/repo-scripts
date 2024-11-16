@@ -1,3 +1,6 @@
+v2.2.0 (2024-02-01)
+- add option to hide progressbar during cleaning orphaned subtitles
+- add possibility of ignoring paths during scanning for orphaned subtitles - requires manual editing of 'cleanexcl.def' file in addon's workdir
 v2.1.0 (2022-11-30)
 - remove handling Kodi's subtitle settings from within the plugin for better compatibility with Kodi 20 (Nexus)
 v2.0.1 (2021-11-08)
