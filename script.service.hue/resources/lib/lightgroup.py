@@ -46,30 +46,37 @@ class LightGroup(xbmc.Player):
 
         log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] onPlaybackStarted. Group enabled: {enabled}, Bridge connected: {self.bridge.connected}, mediaType: {self.media_type}")
 
-        if not enabled or not self.bridge.connected:
+        if not enabled:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] not enabled, doing nothing")
             return
+        elif not play_enabled:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] play action not enabled")
+            return
+        elif not self.bridge.connected:
+            log(f"[SCRIPT.SERVICE.HUE] Bridge not connected")
+            return
+        else:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] onPlaybackStarted. play_behavior: {play_enabled}, media_type: {self.media_type} == playback_type: {self._playback_type()}")
+            if self.media_type == self._playback_type() and self._playback_type() == VIDEO:
+                try:
+                    self.info_tag = self.getVideoInfoTag()
+                except (AttributeError, TypeError) as x:
+                    log(f"[SCRIPT.SERVICE.HUE] LightGroup{self.light_group_id}: OnAV Started: Can't read VideoInfoTag")
+                    reporting.process_exception(x)
+            elif play_enabled and self.media_type == self._playback_type() and self._playback_type() == AUDIO:
+                try:
+                    self.info_tag = self.getMusicInfoTag()
+                except (AttributeError, TypeError) as x:
+                    log(f"[SCRIPT.SERVICE.HUE] LightGroup{self.light_group_id}: OnAV Started: Can't read AudioInfoTag")
+                    reporting.process_exception(x)
 
-        log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] onPlaybackStarted. play_behavior: {play_enabled}, media_type: {self.media_type} == playback_type: {self._playback_type()}")
-        if play_enabled and self.media_type == self._playback_type() and self._playback_type() == VIDEO:
-            try:
-                self.info_tag = self.getVideoInfoTag()
-            except (AttributeError, TypeError) as x:
-                log(f"[SCRIPT.SERVICE.HUE] LightGroup{self.light_group_id}: OnAV Started: Can't read VideoInfoTag")
-                reporting.process_exception(x)
-        elif play_enabled and self.media_type == self._playback_type() and self._playback_type() == AUDIO:
-            try:
-                self.info_tag = self.getMusicInfoTag()
-            except (AttributeError, TypeError) as x:
-                log(f"[SCRIPT.SERVICE.HUE] LightGroup{self.light_group_id}: OnAV Started: Can't read AudioInfoTag")
-                reporting.process_exception(x)
+            if self.activation_check.validate(play_scene):
+                contents = inspect.getmembers(self.info_tag)
+                log(f"[SCRIPT.SERVICE.HUE] Start InfoTag: {contents}")
 
-        if self.activation_check.validate(play_scene):
-            contents = inspect.getmembers(self.info_tag)
-            log(f"[SCRIPT.SERVICE.HUE] Start InfoTag: {contents}")
-
-            #log(f"[SCRIPT.SERVICE.HUE] InfoTag: {self.info_tag}, {self.info_tag.getDuration()}")
-            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Running Play action")
-            self.run_action("play")
+                #log(f"[SCRIPT.SERVICE.HUE] InfoTag: {self.info_tag}, {self.info_tag.getDuration()}")
+                log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Running Play action")
+                self.run_action("play")
 
     def onPlayBackPaused(self):
         self.state = STATE_PAUSED
@@ -79,13 +86,21 @@ class LightGroup(xbmc.Player):
 
         log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] onPlaybackPaused. Group enabled: {enabled}, Bridge connected: {self.bridge.connected}")
 
-        if not enabled or not self.bridge.connected:
+        if not enabled:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] not enabled, doing nothing")
             return
+        elif not pause_enabled:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Pause action not enabled")
+            return
+        elif not self.bridge.connected:
+            log(f"[SCRIPT.SERVICE.HUE] Bridge not connected")
+            return
+        else:
 
-        if pause_enabled and self.media_type == self._playback_type():
-            if self.activation_check.validate(pause_scene):
-                log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Running Pause action")
-                self.run_action("pause")
+            if self.media_type == self._playback_type():
+                if self.activation_check.validate(pause_scene):
+                    log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Running Pause action")
+                    self.run_action("pause")
 
     def onPlayBackStopped(self):
         self.state = STATE_STOPPED
@@ -95,22 +110,21 @@ class LightGroup(xbmc.Player):
 
         log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] onPlaybackStopped. Group enabled: {enabled}, Bridge connected: {self.bridge.connected}")
 
-        if not enabled or not self.bridge.connected:
+        if not enabled:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] not enabled, doing nothing")
             return
+        elif not stop_enabled:
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Pause action not enabled")
+            return
+        elif not self.bridge.connected:
+            log(f"[SCRIPT.SERVICE.HUE] Bridge not connected")
+            return
+        else:
+            if self.media_type == self.last_media_type or self.media_type == self._playback_type():
 
-        if stop_enabled and (self.media_type == self.last_media_type or self.media_type == self._playback_type()):
-            ########### TODO: Remove debug block
-            #xbmc.sleep(5000)
-            contents = inspect.getmembers(self.info_tag)
-            log(f"[SCRIPT.SERVICE.HUE] Stop[{self.light_group_id}] InfoTag Inspect Contents: {contents}")
-
-            duration = self.info_tag.getDuration()
-            log(f"[SCRIPT.SERVICE.HUE] Stop[{self.light_group_id}]: {self.info_tag}, {duration}")
-            ############
-
-            if self.activation_check.validate(stop_scene):
-                log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Running Stop action")
-                self.run_action("stop")
+                if self.activation_check.validate(stop_scene):
+                    log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] Running Stop action")
+                    self.run_action("stop")
 
     def onPlayBackResumed(self):
         # log("[SCRIPT.SERVICE.HUE] In LightGroup[{}], onPlaybackResumed()".format(self.light_group_id))
@@ -346,4 +360,3 @@ class ActivationChecker:
                 return True
             log("[SCRIPT.SERVICE.HUE] Validate Audio: Checks not passed, not activating")
             return False
-

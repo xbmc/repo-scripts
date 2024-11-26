@@ -6,6 +6,6 @@
 from resources.lib import menu, reporting
 
 try:
-    menu.menu()
+    menu.Menu()
 except Exception as exc:
     reporting.process_exception(exc)

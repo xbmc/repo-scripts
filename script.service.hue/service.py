@@ -6,6 +6,6 @@
 from resources.lib import core, reporting
 
 try:
-    core.core()
+    core.core_dispatcher()
 except Exception as exc:
     reporting.process_exception(exc)

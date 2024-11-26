@@ -16,7 +16,7 @@ from .kodiutils import notification, cache_set, cache_get, log
 from .language import get_string as _
 
 
-def core():
+def core_dispatcher():
     settings_monitor = settings.SettingsMonitor()
 
     if len(sys.argv) > 1:
