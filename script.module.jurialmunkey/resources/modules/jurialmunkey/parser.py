@@ -51,14 +51,18 @@ def partition_list(iterable, pred):
 def parse_paramstring(paramstring):
     """ helper to assist to standardise urllib parsing """
     from urllib.parse import unquote_plus
-    from unicodedata import normalize
+    # from unicodedata import normalize
     params = dict()
     paramstring = paramstring.replace('&amp;', '&')  # Just in case xml string
     for param in paramstring.split('&'):
         if '=' not in param:
             continue
         k, v = param.split('=')
-        params[unquote_plus(k)] = normalize('NFKD', unquote_plus(v)).strip('\'').strip('"')  # Normalize and decompose combined utf-8 forms such as Arabic and strip out quotes
+        k = unquote_plus(k)
+        v = unquote_plus(v)
+        v = v.strip('\'').strip('"')  # Strip out quote marks from Kodi string
+        # v = normalize('NFKD', v)  # Normalize and decompose combined utf-8 forms such as Arabic (Unsure if needed anymore for edit control)
+        params[k] = v
     return params
 
 

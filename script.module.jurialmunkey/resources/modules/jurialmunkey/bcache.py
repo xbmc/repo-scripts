@@ -6,6 +6,7 @@ import jurialmunkey.scache
 
 class BasicCache():
     _simplecache = jurialmunkey.scache.SimpleCache
+    _queue_limit = 20
 
     def __init__(self, filename=None):
         self._filename = filename
@@ -23,6 +24,7 @@ class BasicCache():
     @kodi_try_except_internal_traceback('lib.addon.cache ret_cache')
     def ret_cache(self):
         if not self._cache:
+            self._simplecache._queue_limit = self._queue_limit
             self._cache = self._simplecache(filename=self._filename)
         return self._cache
 
