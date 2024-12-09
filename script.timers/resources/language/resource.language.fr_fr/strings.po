@@ -1,0 +1,882 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: https://github.com/xbmc/xbmc/issues/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-01-19 21:45+0000\n"
+"Last-Translator: skypichat <skypichat@hotmail.fr>\n"
+"Language: fr_fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.3\n"
+
+msgctxt "#32000"
+msgid "Timers"
+msgstr "Minuteries"
+
+msgctxt "#32001"
+msgid "Pause"
+msgstr "Pause"
+
+msgctxt "#32002"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32003"
+msgid "Misc"
+msgstr "Divers"
+
+msgctxt "#32004"
+msgid "Sleep timer"
+msgstr "Minuterie de mise en veille"
+
+msgctxt "#32005"
+msgid "Snooze timer"
+msgstr "Minuterie de répétition"
+
+msgctxt "#32021"
+msgid "to"
+msgstr "à"
+
+msgctxt "#32022"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#32023"
+msgid "Apply"
+msgstr "Appliquer"
+
+msgctxt "#32024"
+msgid "until"
+msgstr "jusqu'à"
+
+msgctxt "#32025"
+msgid "%s at %s%s"
+msgstr "%s à %s%s"
+
+msgctxt "#32026"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "#32027"
+msgid "Timers"
+msgstr "Minuteries"
+
+msgctxt "#32028"
+msgid "Priority"
+msgstr "Priorité"
+
+msgctxt "#32029"
+msgid "Timer deleted"
+msgstr "Minuterie supprimée"
+
+msgctxt "#32030"
+msgid "Presets"
+msgstr "Préréglages"
+
+msgctxt "#32031"
+msgid "Don't put display to sleep on audio playback"
+msgstr "Ne pas mettre l'écran en veille lors de la lecture audio"
+
+msgctxt "#32032"
+msgid "Prevent lock screen"
+msgstr "Empêcher l'écran de verrouillage"
+
+msgctxt "#32033"
+msgid "Presets for sleep timer"
+msgstr "Préréglages pour la minuterie de mise en veille"
+
+msgctxt "#32034"
+msgid "off"
+msgstr "désactivé"
+
+msgctxt "#32035"
+msgid "every day"
+msgstr "tous les jours"
+
+msgctxt "#32036"
+msgid "weekly"
+msgstr "hebdomadaire"
+
+msgctxt "#32037"
+msgid "Days"
+msgstr "Jours"
+
+msgctxt "#32038"
+msgid "Presets for snooze timer"
+msgstr "Préréglages pour la minuterie de répétition"
+
+msgctxt "#32039"
+msgid "Deactivate sleep display on audio playback"
+msgstr "Désactiver l'affichage du sommeil sur la lecture audio"
+
+msgctxt "#32040"
+msgid "and"
+msgstr "et"
+
+msgctxt "#32041"
+msgid "at"
+msgstr "à"
+
+msgctxt "#32042"
+msgid "from"
+msgstr "depuis"
+
+msgctxt "#32043"
+msgid "specific date"
+msgstr "date précise"
+
+msgctxt "#32044"
+msgid "Date"
+msgstr "Date"
+
+msgctxt "#32050"
+msgid "This timer interrupts other timers"
+msgstr "Cette minuterie interrompt les autres minuteries"
+
+msgctxt "#32051"
+msgid "Other timers interrupt this timer"
+msgstr "D'autres minuteries interrompent cette minuterie"
+
+msgctxt "#32052"
+msgid "Is %s more important?"
+msgstr "Est-ce que %s est plus important ?"
+
+msgctxt "#32055"
+msgid "Mediatype"
+msgstr "Type de média"
+
+msgctxt "#32056"
+msgid "audio"
+msgstr "audio"
+
+msgctxt "#32057"
+msgid "video"
+msgstr "vidéo"
+
+msgctxt "#32058"
+msgid "picture"
+msgstr "image"
+
+msgctxt "#32059"
+msgid "script"
+msgstr "scénario"
+
+msgctxt "#32060"
+msgid "Schedule"
+msgstr "Calendrier"
+
+msgctxt "#32061"
+msgid "Start time"
+msgstr "Heure de début"
+
+msgctxt "#32062"
+msgid "End after"
+msgstr "Fin après"
+
+msgctxt "#32063"
+msgid "No end"
+msgstr "Sans fin"
+
+msgctxt "#32064"
+msgid "Duration"
+msgstr "Durée"
+
+msgctxt "#32065"
+msgid "Time"
+msgstr "Temps"
+
+msgctxt "#32066"
+msgid "+/- seconds"
+msgstr "+/- secondes"
+
+msgctxt "#32070"
+msgid "Media action"
+msgstr "Action sur les médias"
+
+msgctxt "#32071"
+msgid "none"
+msgstr "aucun"
+
+msgctxt "#32072"
+msgid "play at start and stop at end"
+msgstr "executer au début et s'arrêter à la fin"
+
+msgctxt "#32073"
+msgid "play at start"
+msgstr "executer au début"
+
+msgctxt "#32074"
+msgid "play at end"
+msgstr "executer à la fin"
+
+msgctxt "#32075"
+msgid "stop at start and play at end"
+msgstr "arrêter au début et executer à la fin"
+
+msgctxt "#32076"
+msgid "stop at start"
+msgstr "arrêter au début"
+
+msgctxt "#32077"
+msgid "stop at end"
+msgstr "arrêter à la fin"
+
+msgctxt "#32078"
+msgid "Repeat"
+msgstr "Répéter"
+
+msgctxt "#32079"
+msgid "Resume"
+msgstr "Continuer"
+
+msgctxt "#32080"
+msgid "Media"
+msgstr "Médias"
+
+msgctxt "#32081"
+msgid "System action"
+msgstr "Action du système"
+
+msgctxt "#32082"
+msgid "shutdown Kodi"
+msgstr "Arrêter Kodi"
+
+msgctxt "#32083"
+msgid "quit Kodi"
+msgstr "Quitter Kodi"
+
+msgctxt "#32084"
+msgid "suspend system"
+msgstr "Suspendre le système"
+
+msgctxt "#32085"
+msgid "hibernate system"
+msgstr "Mettre le système en veille prolongée"
+
+msgctxt "#32086"
+msgid "powerdown system"
+msgstr "arrêter le système"
+
+msgctxt "#32087"
+msgid "System action at end"
+msgstr "Action du système à la fin"
+
+msgctxt "#32088"
+msgid "Shuffle"
+msgstr "Mélanger"
+
+msgctxt "#32089"
+msgid "pause at start and resume at end"
+msgstr "mettre en pause au début et reprendre à la fin"
+
+msgctxt "#32090"
+msgid "Volume"
+msgstr "Volume"
+
+msgctxt "#32091"
+msgid "Fading"
+msgstr "Effet de fondu"
+
+msgctxt "#32092"
+msgid "Default volume"
+msgstr "Volume par défaut"
+
+msgctxt "#32093"
+msgid "Standby TV via CEC"
+msgstr "Mise en veille du téléviseur via CEC"
+
+msgctxt "#32094"
+msgid "Restart Kodi"
+msgstr "Redémarrer Kodi"
+
+msgctxt "#32095"
+msgid "Low volume"
+msgstr "Faible volume"
+
+msgctxt "#32096"
+msgid "High volume"
+msgstr "Volume élevé"
+
+msgctxt "#32097"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32098"
+msgid "Timer Notifications"
+msgstr "Notifications de minuterie"
+
+msgctxt "#32099"
+msgid "Reboot system"
+msgstr "Redémarrer le système"
+
+msgctxt "#32100"
+msgid "Timer starts"
+msgstr "Démarrage de la minuterie"
+
+msgctxt "#32101"
+msgid "Timer ended"
+msgstr "Fin de la minuterie"
+
+msgctxt "#32102"
+msgid "Open settings"
+msgstr "Ouvrir les paramètres"
+
+msgctxt "#32103"
+msgid "Select timer"
+msgstr "Sélectionner la minuterie"
+
+msgctxt "#32104"
+msgid "Select days"
+msgstr "Sélectionner les jours"
+
+msgctxt "#32105"
+msgid "Enter start time"
+msgstr "Saisir l'heure de début"
+
+msgctxt "#32106"
+msgid "Enter duration"
+msgstr "Saisir la durée"
+
+msgctxt "#32107"
+msgid "Confirm timer"
+msgstr "Confirmer la minuterie"
+
+msgctxt "#32108"
+msgid "Play now"
+msgstr "Lire maintenant"
+
+msgctxt "#32109"
+msgid "Media not set. Nothing to play."
+msgstr "Aucun média sélectionné. Rien à lire."
+
+msgctxt "#32111"
+msgid "Reset volume"
+msgstr "Réinitialiser le volume"
+
+msgctxt "#32112"
+msgid "Reset volume done"
+msgstr "Réinitialisation du volume terminée"
+
+msgctxt "#32113"
+msgid "Seek to correct time if timer starts belatedly"
+msgstr "Avancer jusqu'au moment correct si la minuterie démarre en retard"
+
+msgctxt "#32114"
+msgid "Select media and set timer via context menu first."
+msgstr "Sélectionnez d'abord le média et réglez la minuterie via le menu contextuel."
+
+msgctxt "#32117"
+msgid "Quick Timer"
+msgstr "Minuterie rapide"
+
+msgctxt "#32118"
+msgid "Selected item is not supported. Would you like to open settings?"
+msgstr "L'élément sélectionné n'est pas pris en charge. Voulez-vous ouvrir les paramètres ?"
+
+msgctxt "#32120"
+msgid "off"
+msgstr "désactivé"
+
+msgctxt "#32121"
+msgid "fade in from low"
+msgstr "monter progressivement le volume à partir d'un niveau bas"
+
+msgctxt "#32122"
+msgid "fade out from high"
+msgstr "baisser progressivement le volume à partir d'un niveau élevé"
+
+msgctxt "#32123"
+msgid "fade out from current"
+msgstr "baisser progressivement le volume à partir du niveau actuel"
+
+msgctxt "#32130"
+msgid "Put display only in fullscreen mode to sleep"
+msgstr "Mettre le mode plein écran en veille"
+
+msgctxt "#32131"
+msgid "acc. system setting"
+msgstr "selon le paramètre système"
+
+msgctxt "#32132"
+msgid "5 min"
+msgstr "5 min"
+
+msgctxt "#32133"
+msgid "10 min"
+msgstr "10 min"
+
+msgctxt "#32134"
+msgid "15 min"
+msgstr "15 min"
+
+msgctxt "#32135"
+msgid "20 min"
+msgstr "20 min"
+
+msgctxt "#32136"
+msgid "25 min"
+msgstr "25 min"
+
+msgctxt "#32137"
+msgid "30 min"
+msgstr "30 min"
+
+msgctxt "#32138"
+msgid "35 min"
+msgstr "35 min"
+
+msgctxt "#32139"
+msgid "40 min"
+msgstr "40 min"
+
+msgctxt "#32140"
+msgid "45 min"
+msgstr "45 min"
+
+msgctxt "#32141"
+msgid "50 min"
+msgstr "50 min"
+
+msgctxt "#32142"
+msgid "55 min"
+msgstr "55 min"
+
+msgctxt "#32143"
+msgid "60 min"
+msgstr "60 min"
+
+msgctxt "#32144"
+msgid "65 min"
+msgstr "65 min"
+
+msgctxt "#32145"
+msgid "70 min"
+msgstr "70 min"
+
+msgctxt "#32146"
+msgid "75 min"
+msgstr "75 min"
+
+msgctxt "#32147"
+msgid "80 min"
+msgstr "80 min"
+
+msgctxt "#32148"
+msgid "85 min"
+msgstr "85 min"
+
+msgctxt "#32149"
+msgid "90 min"
+msgstr "90 min"
+
+msgctxt "#32150"
+msgid "95 min"
+msgstr "95 min"
+
+msgctxt "#32151"
+msgid "100 min"
+msgstr "100 min"
+
+msgctxt "#32152"
+msgid "105 min"
+msgstr "105 min"
+
+msgctxt "#32153"
+msgid "110 min"
+msgstr "110 min"
+
+msgctxt "#32154"
+msgid "115 min"
+msgstr "115 min"
+
+msgctxt "#32155"
+msgid "120 min"
+msgstr "120 min"
+
+msgctxt "#32160"
+msgid "Pause timers"
+msgstr "Mettre les minuteries en pause"
+
+msgctxt "#32161"
+msgid "Date"
+msgstr "Date"
+
+msgctxt "#32162"
+msgid "Time"
+msgstr "Heure"
+
+msgctxt "#32163"
+msgid "Set pause for ..."
+msgstr "Mettre en pause pendant ..."
+
+msgctxt "#32164"
+msgid "Reset Pause"
+msgstr "Réinitialiser la pause"
+
+msgctxt "#32165"
+msgid "Pause until %s"
+msgstr "Pause jusqu'à %s"
+
+msgctxt "#32166"
+msgid "Pause ended"
+msgstr "Fin de la pause"
+
+msgctxt "#32167"
+msgid "Pause until"
+msgstr "Pause jusqu'à"
+
+msgctxt "#32168"
+msgid "Pause from"
+msgstr "Pause à partir de"
+
+msgctxt "#32170"
+msgid "Real-time clock"
+msgstr "Horloge temps réel"
+
+msgctxt "#32171"
+msgid "Offset for real-time clock in seconds"
+msgstr "Décalage de l'horloge temps réel en secondes"
+
+msgctxt "#32180"
+msgid "Presets for epg quick timer"
+msgstr "Préréglages pour la minuterie rapide epg"
+
+msgctxt "#32181"
+msgid "don't interrupt existing timers"
+msgstr "ne pas interrompre les minuteries en cours"
+
+msgctxt "#32182"
+msgid "latest added timer"
+msgstr "dernière minuterie ajoutée"
+
+msgctxt "#32183"
+msgid "always ask"
+msgstr "demander toujours"
+
+msgctxt "#32190"
+msgid "Housekeeping"
+msgstr "Nettoyage"
+
+msgctxt "#32191"
+msgid "Cleanup missed timers at startup"
+msgstr "Nettoyer les minuteries manquées au démarrage"
+
+msgctxt "#32192"
+msgid "Cleanup missed timers when Kodi starts. This can happen if Kodi was not running when timer has been scheduled."
+msgstr "Nettoyer les minuteries manquées au démarrage de Kodi. Cela peut se produire si Kodi n'était pas en cours d'exécution lorsque la minuterie a été programmée."
+
+msgctxt "#32193"
+msgid ""
+msgstr ""
+
+msgctxt "#32200"
+msgid "Monday"
+msgstr "Lundi"
+
+msgctxt "#32201"
+msgid "Tuesday"
+msgstr "Mardi"
+
+msgctxt "#32202"
+msgid "Wednesday"
+msgstr "Mercredi"
+
+msgctxt "#32203"
+msgid "Thursday"
+msgstr "Jeudi"
+
+msgctxt "#32204"
+msgid "Friday"
+msgstr "Vendredi"
+
+msgctxt "#32205"
+msgid "Saturday"
+msgstr "Samedi"
+
+msgctxt "#32206"
+msgid "Sunday"
+msgstr "Dimanche"
+
+msgctxt "#32210"
+msgid "Mondays"
+msgstr "Lundis"
+
+msgctxt "#32211"
+msgid "Tuedays"
+msgstr "Mardis"
+
+msgctxt "#32212"
+msgid "Wednesdays"
+msgstr "Mercredis"
+
+msgctxt "#32213"
+msgid "Thursdays"
+msgstr "Jeudis"
+
+msgctxt "#32214"
+msgid "Fridays"
+msgstr "Vendredis"
+
+msgctxt "#32215"
+msgid "Saturdays"
+msgstr "Samedis"
+
+msgctxt "#32216"
+msgid "Sundays"
+msgstr "Dimanches"
+
+msgctxt "#32250"
+msgid "Add timer"
+msgstr "Ajouter une minuterie"
+
+msgctxt "#32251"
+msgid "View / Edit timer ..."
+msgstr "Voir/Modifier la minuterie ..."
+
+msgctxt "#32252"
+msgid "Remove timer ..."
+msgstr "Supprimer la minuterie ..."
+
+msgctxt "#32253"
+msgid "Save changes"
+msgstr "Enregistrer les modifications"
+
+msgctxt "#32254"
+msgid "Back"
+msgstr "Retour"
+
+msgctxt "#32255"
+msgid "Edit timer"
+msgstr "Modifier la minuterie"
+
+msgctxt "#32256"
+msgid "Timer"
+msgstr "Minuterie"
+
+msgctxt "#32257"
+msgid "New timer"
+msgstr "Nouvelle minuterie"
+
+msgctxt "#32258"
+msgid "No timers to select."
+msgstr "Aucune minuterie à sélectionner."
+
+msgctxt "#32260"
+msgid "This item is already scheduled"
+msgstr "Cet élément est déjà programmé"
+
+msgctxt "#32261"
+msgid "What do you want to do with existing timer?"
+msgstr "Que voulez-vous faire avec la minuterie existante ?"
+
+msgctxt "#32262"
+msgid "Delete"
+msgstr "Supprimer"
+
+msgctxt "#32263"
+msgid "Replace"
+msgstr "Remplacer"
+
+msgctxt "#32270"
+msgid "Timer is ending with system action:"
+msgstr "La minuterie se termine avec l'action système suivante :"
+
+msgctxt "#32271"
+msgid "Do you want to skip system action?"
+msgstr "Voulez-vous ignorer l'action système ?"
+
+msgctxt "#32272"
+msgid "Continue"
+msgstr "Continuer"
+
+msgctxt "#32273"
+msgid "Skip"
+msgstr "Ignorer"
+
+msgctxt "#32280"
+msgid "start playback"
+msgstr "lancer la lecture"
+
+msgctxt "#32281"
+msgid "stop playback"
+msgstr "arrêter la lecture"
+
+msgctxt "#32282"
+msgid "pause playback"
+msgstr "mettre en pause la lecture"
+
+msgctxt "#32283"
+msgid "continue playback"
+msgstr "reprendre la lecture"
+
+msgctxt "#32284"
+msgid "start fader"
+msgstr "démarrer le fondu"
+
+msgctxt "#32285"
+msgid "end fader"
+msgstr "fin du fondu"
+
+msgctxt "#32286"
+msgid "start slideshow"
+msgstr "démarrer le diaporama"
+
+msgctxt "#32287"
+msgid "end slideshow"
+msgstr "fin du diaporama"
+
+msgctxt "#32288"
+msgid "run addon"
+msgstr "exécuter l'addon"
+
+msgctxt "#32289"
+msgid "interrupt running timers"
+msgstr "interrompre les minuteries en cours"
+
+msgctxt "#32300"
+msgid "Opens a dialog where you can enter a duration for pause from now."
+msgstr "Ouvre une boîte de dialogue où vous pouvez entrer une durée pour mettre en pause à partir de maintenant."
+
+msgctxt "#32301"
+msgid "Ends the pause period by setting date and time in the past."
+msgstr "Termine la période de pause en définissant une date et une heure dans le passé."
+
+msgctxt "#32302"
+msgid "Date until the timer is paused."
+msgstr "Date jusqu'à laquelle la minuterie est en pause."
+
+msgctxt "#32303"
+msgid "Time until the timer is paused."
+msgstr "Heure jusqu'à laquelle la minuterie est en pause."
+
+msgctxt "#32310"
+msgid "Default volume that is set after fading timer has endet or by pressing 'reset volume'."
+msgstr "Volume par défaut défini après la fin de la minuterie de fondu ou en appuyant sur 'réinitialiser le volume'."
+
+msgctxt "#32311"
+msgid "Set default volume now."
+msgstr "Définir le volume par défaut maintenant."
+
+msgctxt "#32320"
+msgid "If a media playing timer starts late since Kodi was not running or timers were paused, the scheduler seeks to position of playlist that would have been already played if timer has started in time."
+msgstr "Si une minuterie de lecture de média démarre en retard car Kodi n'était pas en cours d'exécution ou que les minuteries étaient en pause, le planificateur avance jusqu'à la position de la liste de lecture qui aurait déjà été lue si la minuterie avait démarré à temps."
+
+msgctxt "#32325"
+msgid "Set an offset in order to perform timers ahead of time (< 0) or later in time (> 0)."
+msgstr "Définissez un décalage pour exécuter les minuteries en avance (< 0) ou en retard (> 0)."
+
+msgctxt "#32330"
+msgid "Display name of the timer that is displayed in notifications and context menu."
+msgstr "Nom d'affichage de la minuterie qui s'affiche dans les notifications et le menu contextuel."
+
+msgctxt "#32331"
+msgid "Select one or more days in order to scheduler the timer. If you select 'weekly' the timer is repeated every week."
+msgstr "Sélectionnez un ou plusieurs jours pour programmer la minuterie. Si vous sélectionnez 'hebdomadaire', la minuterie est répétée chaque semaine."
+
+msgctxt "#32332"
+msgid "Enter the starting time of the timer."
+msgstr "Saisissez l'heure de début de la minuterie."
+
+msgctxt "#32333"
+msgid "Select if the timer stops after a specific time, after a given duration or has no end."
+msgstr "Sélectionnez si la minuterie s'arrête après une heure spécifique, après une durée donnée ou n'a pas de fin."
+
+msgctxt "#32334"
+msgid "Enter the ending time of the timer."
+msgstr "Saisissez l'heure de fin de la minuterie."
+
+msgctxt "#32335"
+msgid "Enter the duration after the timer ends."
+msgstr "Saisissez la durée après la fin de la minuterie."
+
+msgctxt "#32336"
+msgid "Set value if this timer is more important than other. Higher value means more important. Values starting from 10 always win against new timers."
+msgstr "Définissez une valeur si cette minuterie est plus importante que les autres. Une valeur plus élevée signifie plus importante. Les valeurs à partir de 10 l'emportent toujours sur les nouvelles minuteries."
+
+msgctxt "#32337"
+msgid "This is a overruling timer with high priority."
+msgstr "Il s'agit d'une minuterie prioritaire de haut niveau."
+
+msgctxt "#32338"
+msgid "This is a obsequiously timer with low priority."
+msgstr "Il s'agit d'une minuterie servile de faible priorité."
+
+msgctxt "#32340"
+msgid "Select the media action of the timer. Note that you must add a media to the timer by utilizing the context menu first."
+msgstr "Sélectionnez l'action média de la minuterie. Notez que vous devez d'abord ajouter un média à la minuterie en utilisant le menu contextuel."
+
+msgctxt "#32341"
+msgid "If activated the media item or playlist is repeated by setting the 'repeat all' option of the player."
+msgstr "Si activé, l'élément média ou la liste de lecture est répété en définissant l'option 'répéter tout' du lecteur."
+
+msgctxt "#32342"
+msgid "If activated the playlist is shuffeled by setting the 'shuffle' option of the player."
+msgstr "Si activé, la liste de lecture est mélangée en définissant l'option 'mélanger' du lecteur."
+
+msgctxt "#32343"
+msgid "If activated the timer resumes the media that was interupted when the timer has started."
+msgstr "Si activé, la minuterie reprend le média qui a été interrompu au démarrage de la minuterie."
+
+msgctxt "#32344"
+msgid "Play media of the timer now in order to test it."
+msgstr "Lire le média de la minuterie maintenant pour le tester."
+
+msgctxt "#32350"
+msgid "Fade in or fade out volume in period of timer."
+msgstr "Monter ou baisser progressivement le volume pendant la période de la minuterie."
+
+msgctxt "#32351"
+msgid "Low volume of fading timer."
+msgstr "Faible volume de la minuterie de fondu."
+
+msgctxt "#32352"
+msgid "High volume of fading timer."
+msgstr "Volume élevé de la minuterie de fondu."
+
+msgctxt "#32360"
+msgid "System action that is performed after timer has finished."
+msgstr "Action système exécutée après la fin de la minuterie."
+
+msgctxt "#32370"
+msgid "Display notifications when timer starts and ends."
+msgstr "Afficher les notifications au début et à la fin de la minuterie."
+
+msgctxt "#32380"
+msgid "Click here in order to add a new timer. Note that media timer must be configured via context menu."
+msgstr "Cliquez ici pour ajouter une nouvelle minuterie. Notez que la minuterie média doit être configurée via le menu contextuel."
+
+msgctxt "#32381"
+msgid "Click here in order to display and edit an existing timer."
+msgstr "Cliquez ici pour afficher et modifier une minuterie existante."
+
+msgctxt "#32382"
+msgid "Click here in order to delete an existing timer."
+msgstr "Cliquez ici pour supprimer une minuterie existante."
+
+msgctxt "#32383"
+msgid "Deactivate sleep display in window mode"
+msgstr "Désactiver la mise en veille de l'affichage en mode fenêtre"
+
+msgctxt "#32384"
+msgid "Prevent lookscreen in MS Windows while Kodi is running"
+msgstr "Empêcher l'écran de verrouillage dans MS Windows pendant l'exécution de Kodi"
+
+msgctxt "#32385"
+msgid "Optionally you can set an offset in seconds."
+msgstr "Vous pouvez éventuellement définir un décalage en secondes."
+
+msgctxt "#32386"
+msgid "Determine the strategy for priority of new quicktimers."
+msgstr "Déterminez la stratégie de priorité des nouvelles minuteries rapides."
+
+msgctxt "#32387"
+msgid "Mediatype is normally determined automatically. Set type manually e.g. if resuming doesn't work as expected."
+msgstr "Le type de média est normalement déterminé automatiquement. Définissez le type manuellement, par exemple si la reprise ne fonctionne pas comme prévu."
+
+msgctxt "#32388"
+msgid "Schedule this timer with full date and not only by day within one week."
+msgstr "Planifier cette minuterie avec une date complète et non seulement par jour dans une semaine."

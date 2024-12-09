@@ -373,7 +373,7 @@ class Timer():
         if not base:
             return False
 
-        elif self.is_weekly_timer():
+        elif self.is_off() or self.is_weekly_timer():
             self.date = ""
             return False
 
