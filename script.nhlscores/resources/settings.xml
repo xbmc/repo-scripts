@@ -24,6 +24,18 @@
 						<popup>false</popup>
 					</control>
 				</setting>
+				<setting id="delay_seconds" type="integer" label="30335" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<minimum>0</minimum>
+						<step>5</step>
+						<maximum>180</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
 				<setting id="goal_desc" type="boolean" label="30340" help="">
 					<level>0</level>
 					<default>true</default>

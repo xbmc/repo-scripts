@@ -237,6 +237,8 @@ class Scores:
             if self.addon.getSetting(id="goal_desc") == 'true' and new_item['headshot'] != '': img = new_item['headshot']
 
         if title is not None and message is not None:
+            # Delay displaying notification X seconds
+            self.monitor.waitForAbort(int(self.addon.getSetting(id="delay_seconds")))
             self.notify(title, message, img)
             self.monitor.waitForAbort(self.display_seconds + 5)
 

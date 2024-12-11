@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.nhlscores" name="NHL Scores" version="2023.12.27+matrix.1" provider-name="eracknaphobia">
+<addon id="script.nhlscores" name="NHL Scores" version="2024.12.11+matrix.1" provider-name="eracknaphobia">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.pytz" />
@@ -12,7 +12,7 @@
         <description lang="en_GB">Live scoring and game updates via kodi notifications
         </description>
         <news>
-            - Fixed for upstream api changes
+            - Add ability to set a delay before displaying notifications
         </news>
         <language>en</language>
         <platform>all</platform>
