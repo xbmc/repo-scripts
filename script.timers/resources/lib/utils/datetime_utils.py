@@ -1,4 +1,5 @@
 import locale
+import re
 import time
 from datetime import datetime, timedelta
 
@@ -160,16 +161,23 @@ def parse_time(s_time: str, i_day=0) -> timedelta:
     if s_time == "":
         s_time = DEFAULT_TIME
 
-    if s_time.lower().endswith(" am") or s_time.lower().endswith(" pm"):
-        t_time = time.strptime(s_time, "%I:%M %p")
+    m = re.match("^(\d{1,2}):(\d{1,2})( am)?( pm)?$", s_time.lower())
+    if not m:
+        return None
 
-    else:
-        t_time = time.strptime(s_time, "%H:%M")
+    tm_hour = int(m.groups()[0])
+    if m.groups()[2] and tm_hour >= 12: # am:
+        tm_hour -= 12
+    elif m.groups()[3] and tm_hour < 12: # pm
+        tm_hour += 12
+
+    tm_min = int(m.groups()[1])
+    tm_day = i_day + tm_hour // 24
 
     return timedelta(
-        days=i_day,
-        hours=t_time.tm_hour,
-        minutes=t_time.tm_min)
+        days=tm_day,
+        hours=tm_hour % 24,
+        minutes=tm_min)
 
 
 def datetime_diff(t1: datetime, t2: datetime) -> int:
