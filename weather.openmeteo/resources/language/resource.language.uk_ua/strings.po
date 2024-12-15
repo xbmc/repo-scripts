@@ -1,0 +1,633 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-12-04 14:33+0000\n"
+"Last-Translator: Dan <jonweblin2205@protonmail.com>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/openht/"
+"weather-openmeteo/uk/>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.9-dev\n"
+
+msgctxt "#32200"
+msgid "Sunny"
+msgstr "Сонячно"
+
+msgctxt "#32201"
+msgid "Mainly Sunny"
+msgstr "Переважно сонячно"
+
+msgctxt "#32202"
+msgid "Partly Cloudy"
+msgstr "Мінлива хмарність"
+
+msgctxt "#32203"
+msgid "Cloudy"
+msgstr "Хмарно"
+
+msgctxt "#32204"
+msgid "Foggy"
+msgstr "Туманно"
+
+msgctxt "#32205"
+msgid "Rime Fog"
+msgstr "Туман з інієм"
+
+msgctxt "#32206"
+msgid "Light Drizzle"
+msgstr "Невелика мряка"
+
+msgctxt "#32207"
+msgid "Drizzle"
+msgstr "Мряка"
+
+msgctxt "#32208"
+msgid "Heavy Drizzle"
+msgstr "Сильна мряка"
+
+msgctxt "#32209"
+msgid "Light Freezing Drizzle"
+msgstr "Невелика морозна мряка"
+
+msgctxt "#32210"
+msgid "Freezing Drizzle"
+msgstr "Морозна мряка"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Малий дощ"
+
+msgctxt "#32212"
+msgid "Rain"
+msgstr "Дощ"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Сильний дощ"
+
+msgctxt "#32214"
+msgid "Light Freezing Rain"
+msgstr "Невеликий морозний дощ"
+
+msgctxt "#32215"
+msgid "Freezing Rain"
+msgstr "Морозний дощ"
+
+msgctxt "#32216"
+msgid "Light Snow"
+msgstr "Невеликий сніг"
+
+msgctxt "#32217"
+msgid "Snow"
+msgstr "Сніг"
+
+msgctxt "#32218"
+msgid "Heavy Snow"
+msgstr "Сильний сніг"
+
+msgctxt "#32219"
+msgid "Snow Grains"
+msgstr "Зернистий сніг"
+
+msgctxt "#32220"
+msgid "Light Showers"
+msgstr "Невелика злива"
+
+msgctxt "#32221"
+msgid "Showers"
+msgstr "Злива"
+
+msgctxt "#32222"
+msgid "Heavy Showers"
+msgstr "Сильна злива"
+
+msgctxt "#32223"
+msgid "Light Snow Showers"
+msgstr "Невеликий снігопад"
+
+msgctxt "#32224"
+msgid "Snow Showers"
+msgstr "Снігопад"
+
+msgctxt "#32225"
+msgid "Thunderstorm"
+msgstr "Гроза"
+
+msgctxt "#32226"
+msgid "Light Thunderstorms With Hail"
+msgstr "Невелика гроза з градом"
+
+msgctxt "#32227"
+msgid "Thunderstorm With Hail"
+msgstr "Гроза з градом"
+
+msgctxt "#32250"
+msgid "Clear"
+msgstr "Ясно"
+
+msgctxt "#32251"
+msgid "Mainly Clear"
+msgstr "Мінлива ясність"
+
+msgctxt "#32255"
+msgid "Moonrise"
+msgstr "Схід місяця"
+
+msgctxt "#32256"
+msgid "Moonset"
+msgstr "Захід місяця"
+
+msgctxt "#32257"
+msgid "Moonphase"
+msgstr "Фаза місяця"
+
+msgctxt "#32260"
+msgid "General"
+msgstr "Загально"
+
+msgctxt "#32261"
+msgid "Locations"
+msgstr "Місця"
+
+msgctxt "#32262"
+msgid "Limits"
+msgstr "Обмеження"
+
+msgctxt "#32263"
+msgid "Notifications"
+msgstr "Сповіщення"
+
+msgctxt "#32264"
+msgid "Advanced"
+msgstr "Додатково"
+
+msgctxt "#32265"
+msgid "Weather"
+msgstr "Погода"
+
+msgctxt "#32266"
+msgid "Airquality"
+msgstr "Якість повітря"
+
+msgctxt "#32267"
+msgid "Pollen"
+msgstr "Пилок"
+
+msgctxt "#32268"
+msgid "Alerts"
+msgstr "Оповіщення"
+
+msgctxt "#32269"
+msgid "Select option"
+msgstr "Виберіть параметр"
+
+msgctxt "#32270"
+msgid "Graphs"
+msgstr "Графіки"
+
+msgctxt "#32271"
+msgid "Overview"
+msgstr "Огляд"
+
+msgctxt "#32272"
+msgid "History"
+msgstr "Історія"
+
+msgctxt "#32280"
+msgid "Units"
+msgstr "Одиниці"
+
+msgctxt "#32281"
+msgid "Maps"
+msgstr "Мапи"
+
+msgctxt "#32282"
+msgid "Logging"
+msgstr "Журналювання"
+
+msgctxt "#32283"
+msgid "Experimental (Restart required)"
+msgstr "Експериментально (потрібен перезапуск)"
+
+msgctxt "#32285"
+msgid "Zoom"
+msgstr "Масштаб"
+
+msgctxt "#32286"
+msgid "Debug"
+msgstr "Налагодження"
+
+msgctxt "#32287"
+msgid "Duration"
+msgstr "Тривалість"
+
+msgctxt "#32288"
+msgid "Hours"
+msgstr "Години"
+
+msgctxt "#32289"
+msgid "Decimal places"
+msgstr "Десяткові знаки"
+
+msgctxt "#32290"
+msgid "Icons"
+msgstr "Значки"
+
+msgctxt "#32291"
+msgid "Default"
+msgstr "Типово"
+
+msgctxt "#32292"
+msgid "Weathermap"
+msgstr "Weathermap"
+
+msgctxt "#32293"
+msgid "Met.no"
+msgstr "Met.no"
+
+msgctxt "#32294"
+msgid "WMO"
+msgstr "WMO"
+
+msgctxt "#32296"
+msgid "Background sync"
+msgstr "Фонова синхронізація"
+
+msgctxt "#32300"
+msgid "Distance"
+msgstr "Відстань"
+
+msgctxt "#32301"
+msgid "Index"
+msgstr "Індекс"
+
+msgctxt "#32302"
+msgid "Percent"
+msgstr "Відсоток"
+
+msgctxt "#32303"
+msgid "Unit"
+msgstr "Одиниця"
+
+msgctxt "#32304"
+msgid "Decimal separator"
+msgstr "Десятковий роздільник"
+
+msgctxt "#32306"
+msgid "Particles"
+msgstr "Частинки"
+
+msgctxt "#32307"
+msgid "Interval"
+msgstr "Інтервал"
+
+msgctxt "#32308"
+msgid "Verbose"
+msgstr "Багатослівний"
+
+msgctxt "#32310"
+msgid "Location 1"
+msgstr "Місце 1"
+
+msgctxt "#32311"
+msgid "Location 2"
+msgstr "Місце 2"
+
+msgctxt "#32312"
+msgid "Location 3"
+msgstr "Місце 3"
+
+msgctxt "#32313"
+msgid "Location 4"
+msgstr "Місце 4"
+
+msgctxt "#32314"
+msgid "Location 5"
+msgstr "Місце 5"
+
+msgctxt "#32316"
+msgid "Use location timezone"
+msgstr "Використовувати часовий пояс розташування"
+
+msgctxt "#32320"
+msgid "Temperature"
+msgstr "Температура"
+
+msgctxt "#32321"
+msgid "Precipitation"
+msgstr "Кількість опадів"
+
+msgctxt "#32322"
+msgid "Condition"
+msgstr "Умова"
+
+msgctxt "#32323"
+msgid "Wind"
+msgstr "Вітряно"
+
+msgctxt "#32324"
+msgid "Gust"
+msgstr "Пориви"
+
+msgctxt "#32325"
+msgid "AQI EU"
+msgstr "Індекс якості повітря (ЄС)"
+
+msgctxt "#32326"
+msgid "AQI US"
+msgstr "Індекс якості повітря (США)"
+
+msgctxt "#32327"
+msgid "PM25"
+msgstr "PM25"
+
+msgctxt "#32328"
+msgid "PM10"
+msgstr "PM10"
+
+msgctxt "#32329"
+msgid "UV Index"
+msgstr "Індекс УФ"
+
+msgctxt "#32330"
+msgid "Nitrogen Dioxide"
+msgstr "Діоксид азоту"
+
+msgctxt "#32331"
+msgid "Sulphur Dioxide"
+msgstr "Діоксид сірки"
+
+msgctxt "#32332"
+msgid "Feelslike"
+msgstr "Відчувається"
+
+msgctxt "#32333"
+msgid "Dewpoint"
+msgstr "Точка роси"
+
+msgctxt "#32334"
+msgid "Cloudiness"
+msgstr "Хмарність"
+
+msgctxt "#32335"
+msgid "Time"
+msgstr "Час"
+
+msgctxt "#32336"
+msgid "Speed"
+msgstr "Швидкість"
+
+msgctxt "#32337"
+msgid "Carbon monoxide"
+msgstr "Оксид вуглецю"
+
+msgctxt "#32338"
+msgid "Ozone"
+msgstr "Озон"
+
+msgctxt "#32339"
+msgid "Dust"
+msgstr "Пил"
+
+msgctxt "#32340"
+msgid "Notice"
+msgstr "Попередження"
+
+msgctxt "#32341"
+msgid "Caution"
+msgstr "Застереження"
+
+msgctxt "#32342"
+msgid "Danger"
+msgstr "Небезпека"
+
+msgctxt "#32343"
+msgid "Normal"
+msgstr "Нормально"
+
+msgctxt "#32344"
+msgid "Negative"
+msgstr "Негативно"
+
+msgctxt "#32345"
+msgid "Colours"
+msgstr "Кольори"
+
+msgctxt "#32346"
+msgid "Humidity"
+msgstr "Вологість"
+
+msgctxt "#32347"
+msgid "Pressure"
+msgstr "Тиск"
+
+msgctxt "#32348"
+msgid "Solar radiation"
+msgstr "Сонячне випромінювання"
+
+msgctxt "#32349"
+msgid "Visibility"
+msgstr "Видимість"
+
+msgctxt "#32350"
+msgid "°C"
+msgstr "°C"
+
+msgctxt "#32351"
+msgid "°F"
+msgstr "°F"
+
+msgctxt "#32352"
+msgid "K"
+msgstr "K"
+
+msgctxt "#32353"
+msgid "°Ré"
+msgstr "°Ré"
+
+msgctxt "#32354"
+msgid "°Ra"
+msgstr "°Ra"
+
+msgctxt "#32355"
+msgid "°Rø"
+msgstr "°Rø"
+
+msgctxt "#32356"
+msgid "°D"
+msgstr "°D"
+
+msgctxt "#32357"
+msgid "°N"
+msgstr "°N"
+
+msgctxt "#32360"
+msgid "Application"
+msgstr "Застосунок"
+
+msgctxt "#32361"
+msgid "mph"
+msgstr "миль/год"
+
+msgctxt "#32362"
+msgid "km/h"
+msgstr "км/год"
+
+msgctxt "#32363"
+msgid "m/min"
+msgstr "м/хв"
+
+msgctxt "#32364"
+msgid "m/s"
+msgstr "м/с"
+
+msgctxt "#32365"
+msgid "ft/h"
+msgstr "футів/год"
+
+msgctxt "#32366"
+msgid "ft/min"
+msgstr "футів/хв"
+
+msgctxt "#32367"
+msgid "ft/s"
+msgstr "футів/с"
+
+msgctxt "#32368"
+msgid "kts"
+msgstr "вузлів"
+
+msgctxt "#32369"
+msgid "Beaufort"
+msgstr "Бофорт"
+
+msgctxt "#32370"
+msgid "inch/s"
+msgstr "дюймів/с"
+
+msgctxt "#32371"
+msgid "yard/s"
+msgstr "ярдів/с"
+
+msgctxt "#32372"
+msgid "Furlong/Fortnight"
+msgstr "Фурлонг/Фортнайт"
+
+msgctxt "#32380"
+msgid "mm"
+msgstr "мм"
+
+msgctxt "#32381"
+msgid "inches"
+msgstr "дюймів"
+
+msgctxt "#32390"
+msgid "12h"
+msgstr "12год"
+
+msgctxt "#32391"
+msgid "24h"
+msgstr "24год"
+
+msgctxt "#32400"
+msgid "Radar"
+msgstr "Радар"
+
+msgctxt "#32401"
+msgid "Satellite"
+msgstr "Супутник"
+
+msgctxt "#32410"
+msgid "m"
+msgstr "м"
+
+msgctxt "#32411"
+msgid "km"
+msgstr "км"
+
+msgctxt "#32412"
+msgid "mi"
+msgstr "миля"
+
+msgctxt "#32430"
+msgid "."
+msgstr "."
+
+msgctxt "#32431"
+msgid ","
+msgstr ","
+
+msgctxt "#32440"
+msgid "New Moon"
+msgstr "Новий місяць"
+
+msgctxt "#32441"
+msgid "Waxing Crescent"
+msgstr "Висхідний півмісяць"
+
+msgctxt "#32442"
+msgid "First Quarter"
+msgstr "Перша четверть"
+
+msgctxt "#32443"
+msgid "Waxing Gibbous"
+msgstr "Висхідний місяць"
+
+msgctxt "#32444"
+msgid "Full Moon"
+msgstr "Повний місяць"
+
+msgctxt "#32445"
+msgid "Waning Gibbous"
+msgstr "Низхідний місяць"
+
+msgctxt "#32446"
+msgid "Last Quarter"
+msgstr "Остання четверть"
+
+msgctxt "#32447"
+msgid "Waning Crescent"
+msgstr "Низхідний півмісяць"
+
+msgctxt "#32450"
+msgid "Alder"
+msgstr "Вільха"
+
+msgctxt "#32451"
+msgid "Birch"
+msgstr "Береза"
+
+msgctxt "#32452"
+msgid "Grass"
+msgstr "Трава"
+
+msgctxt "#32453"
+msgid "Mugwort"
+msgstr "Полин"
+
+msgctxt "#32454"
+msgid "Olive"
+msgstr "Олива"
+
+msgctxt "#32455"
+msgid "Ragweed"
+msgstr "Амброзія"
+
+msgctxt "#32456"
+msgid "grains"
+msgstr "зерна"
+
+msgctxt "#32500"
+msgid "Weather forecast from Open-Meteo"
+msgstr "Прогноз погоди від Open-Meteo"
+
+msgctxt "#32501"
+msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
+msgstr ""
+"Прогноз погоди, мап , якість повітря та пилку від open-meteo.com, "
+"rainviewer.com, weather.gc.ca та met.no"

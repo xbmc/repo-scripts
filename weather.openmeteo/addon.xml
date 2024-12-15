@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.openmeteo" name="Open-Meteo" version="1.0.0" provider-name="OpenHT">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.requests" version="2.27.1+matrix.1"/>
+		<import addon="script.module.dateutil" version="2.8.1+matrix.1"/>
+		<import addon="script.module.pytz" version="2023.3.0+matrix.1"/>
+		<import addon="script.module.pil" version="1.1.7"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+        <extension point="xbmc.service" library="service.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Weather forecast from Open-Meteo</summary>
+		<description lang="en_GB">Weather, maps, airquality and pollen data from open-meteo.com, rainviewer.com, weather.gc.ca and met.no</description>
+		<platform>all</platform>
+		<license>GPL-2.0-or-later</license>
+		<forum>https://forum.kodi.tv/forumdisplay.php?fid=155</forum>
+		<website>https://openht.org</website>
+		<email>support@openht.org</email>
+		<source>https://github.com/bkury/weather.openmeteo</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<banner>resources/banner.png</banner>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screenshot1.jpg</screenshot>
+			<screenshot>resources/screenshot2.jpg</screenshot>
+			<screenshot>resources/screenshot3.jpg</screenshot>
+			<screenshot>resources/screenshot4.jpg</screenshot>
+			<screenshot>resources/screenshot5.jpg</screenshot>
+		</assets>
+	</extension>
+</addon>

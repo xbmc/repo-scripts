@@ -1,0 +1,86 @@
+v1.0.0 (15/12/2024)
+-------------------
+* Official KODI repository
+* Translations (Weblate)
+
+v0.9.9 (24/11/2024)
+-------------------
+* Switching locations should be much faster now:
+  Optimized index matching and dynamic settings to improve startup time & performance
+  Added settings caching to further improve startup time & performance
+* Mergemap() now processes all data in memory to improve performance and reduce IO
+* Added weather data refresh on SettingsChanged()
+* Fixed graphs with both negative & positive temperature values
+* Added filesystem check: Send notification if data directory is read-only, full or corrupt
+* Added translation: Dutch (thanks @kuilbop)
+
+v0.9.8 (11/11/2024)
+-------------------
+* Added experimental setting: 5 locations support (use with caution)
+* Adjusted INFO and ERROR logging to prepare for the v1.0 "stable" release
+* Adjusted weather data / current time matching:
+  This fixes an android sleep/wakeup problem if device is set to "disable wifi/network on sleep"
+* Refactored HTTP error handling to fix an issue if there is no network connection available for 24+ hours
+* Fixed "current.[LOCID]" window properties when using local location timezone
+* Minor code cleanup
+
+v0.9.7 (29/10/2024)
+-------------------
+* Changed strftime() parameter to fix LOCALE (LC_TIME) difference on macOS
+* Changed localization mapping to match new strftime() value
+* Revert some addon localization strings to be global again
+
+v0.9.6 (27/10/2024)
+-------------------
+* Moved global localization strings (e.g. Monday, Mon, NNE) from KODI directly to the addon:
+  Workaround for broken labels when changing languages on macOS
+* Fixed "current.[LOCID]" in advanced mode
+* Fixed a rare case of Addon & KODI service running simultaneously on startup
+
+v0.9.5 (26/10/2024)
+-------------------
+* Fixed exception when disabling, uninstalling or upgrading the addon
+
+v0.9.4 (25/10/2024)
+-------------------
+* Added day & night weather icon support for KODIs built-in weather codes
+* Added addon operation modes: Compatibility (default) or Advanced <onload>SetProperty(openmeteo,skin.xyz,weather)</onload>
+* Added "current.location" to fix KODIs built-in "weather.location" infolabel
+* Localization mapping is now dynamic to fix broken labels when changing languages
+* Enforce utf8 with open() to fix exception when changing languages
+* Changed "Decimal places" setting to sliders
+* ImageMagick: Use PNG32 to fix broken graph if value is zero or below threshold
+
+v0.9.3 (22/10/2024)
+-------------------
+* KODI only:
+  * Changed daily & hourly index to start at 1
+  * Changed daily LowTemperature and HighTemperature
+  * Changed the content of precipitation to precipitationprobability
+  * Added new "precip" window property for the actual precipitation
+  * Adapted some window properties and values+units from Multi Weather
+
+* Fixed some graph transparency glitches
+* Workaround for KODI's DayX.OutlookIcon: Add static path "resource://resource.images.weathericons.default"
+* Fixed a rare case of endless geoip lookups if KODI's userdata filesystem is full, read-only or broken
+* Disabled "hour.X" window properties by default to improve performance (hardly used by skins)
+* Added assets: screenshots & banner
+
+v0.9.2 (30/09/2024)
+-------------------
+* Added translation: French (thanks @nic020)
+* Added check if addon is enabled
+* Fixed DayX.LowTemp, DayX.HighTemp
+* Fixed some graphs/autoscaling
+* Fixed exception when changing languages (possibly a KODI bug)
+* Added moonphase image
+* Added map history setting
+
+v0.9.1 (15/09/2024)
+-------------------
+* Public release
+* Some code cleanup
+
+v0.9.0 (06/09/2024)
+-------------------
+* Initial release

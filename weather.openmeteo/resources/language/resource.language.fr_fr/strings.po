@@ -1,0 +1,634 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_gb\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32200"
+msgid "Sunny"
+msgstr "Ensoleillé"
+
+msgctxt "#32201"
+msgid "Mainly Sunny"
+msgstr "Principalement ensoleillé"
+
+msgctxt "#32202"
+msgid "Partly Cloudy"
+msgstr "Partiellement nuageux"
+
+msgctxt "#32203"
+msgid "Cloudy"
+msgstr "Nuageux"
+
+msgctxt "#32204"
+msgid "Foggy"
+msgstr "Brumeux"
+
+msgctxt "#32205"
+msgid "Rime Fog"
+msgstr "Brouillard givré"
+
+msgctxt "#32206"
+msgid "Light Drizzle"
+msgstr "Légère bruine"
+
+msgctxt "#32207"
+msgid "Drizzle"
+msgstr "Bruine"
+
+msgctxt "#32208"
+msgid "Heavy Drizzle"
+msgstr "Forte bruine"
+
+msgctxt "#32209"
+msgid "Light Freezing Drizzle"
+msgstr "Légère bruine verglaçante"
+
+msgctxt "#32210"
+msgid "Freezing Drizzle"
+msgstr "Bruine verglaçante"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Pluie légère"
+
+msgctxt "#32212"
+msgid "Rain"
+msgstr "Pluie"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Fortes pluies"
+
+msgctxt "#32214"
+msgid "Light Freezing Rain"
+msgstr "Légère pluie verglaçante"
+
+msgctxt "#32215"
+msgid "Freezing Rain"
+msgstr "Pluie verglaçante"
+
+msgctxt "#32216"
+msgid "Light Snow"
+msgstr "Faible neige"
+
+msgctxt "#32217"
+msgid "Snow"
+msgstr "Neige"
+
+msgctxt "#32218"
+msgid "Heavy Snow"
+msgstr "Forte neige"
+
+msgctxt "#32219"
+msgid "Snow Grains"
+msgstr "Grains de Neige"
+
+msgctxt "#32220"
+msgid "Light Showers"
+msgstr "Averses légères"
+
+msgctxt "#32221"
+msgid "Showers"
+msgstr "Douches"
+
+msgctxt "#32222"
+msgid "Heavy Showers"
+msgstr "Averses abondantes"
+
+msgctxt "#32223"
+msgid "Light Snow Showers"
+msgstr "Légères averses de neige"
+
+msgctxt "#32224"
+msgid "Snow Showers"
+msgstr "Averses de neige"
+
+msgctxt "#32225"
+msgid "Thunderstorm"
+msgstr "Orage"
+
+msgctxt "#32226"
+msgid "Light Thunderstorms With Hail"
+msgstr "Orages légers avec grêle"
+
+msgctxt "#32227"
+msgid "Thunderstorm With Hail"
+msgstr "Orage avec grêle"
+
+msgctxt "#32250"
+msgid "Clear"
+msgstr "Clair"
+
+msgctxt "#32251"
+msgid "Mainly Clear"
+msgstr "Principalement clair"
+
+msgctxt "#32255"
+msgid "Moonrise"
+msgstr "Lever de lune"
+
+msgctxt "#32256"
+msgid "Moonset"
+msgstr "Coucher de lune"
+
+msgctxt "#32257"
+msgid "Moonphase"
+msgstr "Phase de lune"
+
+msgctxt "#32260"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#32261"
+msgid "Locations"
+msgstr "Emplacements"
+
+msgctxt "#32262"
+msgid "Limits"
+msgstr "Limites"
+
+msgctxt "#32263"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32264"
+msgid "Advanced"
+msgstr "Avancé"
+
+msgctxt "#32265"
+msgid "Weather"
+msgstr "Météo"
+
+msgctxt "#32266"
+msgid "Airquality"
+msgstr "Qualité de l'air"
+
+msgctxt "#32267"
+msgid "Pollen"
+msgstr "Pollen"
+
+msgctxt "#32268"
+msgid "Alerts"
+msgstr "Alertes"
+
+msgctxt "#32269"
+msgid "Select option"
+msgstr "Sélectionner une option"
+
+msgctxt "#32270"
+msgid "Graphs"
+msgstr "Diagramme"
+
+msgctxt "#32271"
+msgid "Overview"
+msgstr "Aperçu"
+
+msgctxt "#32272"
+msgid "History"
+msgstr "Historique"
+
+msgctxt "#32280"
+msgid "Units"
+msgstr "Unités"
+
+msgctxt "#32281"
+msgid "Maps"
+msgstr "Cartes"
+
+msgctxt "#32282"
+msgid "Logging"
+msgstr "Journalisation"
+
+msgctxt "#32283"
+msgid "Experimental (Restart required)"
+msgstr "Expérimental (redémarrage nécessaire)"
+
+msgctxt "#32285"
+msgid "Zoom"
+msgstr "Zoom"
+
+msgctxt "#32286"
+msgid "Debug"
+msgstr "Débogage"
+
+msgctxt "#32287"
+msgid "Duration"
+msgstr "Durée"
+
+msgctxt "#32288"
+msgid "Hours"
+msgstr "Heures"
+
+msgctxt "#32289"
+msgid "Decimal places"
+msgstr "Places décimales"
+
+msgctxt "#32290"
+msgid "Icons"
+msgstr "Icônes"
+
+msgctxt "#32291"
+msgid "Default"
+msgstr "Par défaut"
+
+msgctxt "#32292"
+msgid "Weathermap"
+msgstr "Weathermap"
+
+msgctxt "#32293"
+msgid "Met.no"
+msgstr "Met.no"
+
+msgctxt "#32294"
+msgid "WMO"
+msgstr "WMO"
+
+msgctxt "#32296"
+msgid "Background sync"
+msgstr "Synchronisation en arrière-plan"
+
+msgctxt "#32300"
+msgid "Distance"
+msgstr "Distance"
+
+msgctxt "#32301"
+msgid "Index"
+msgstr "Index"
+
+msgctxt "#32302"
+msgid "Percent"
+msgstr "Pourcentage"
+
+msgctxt "#32303"
+msgid "Unit"
+msgstr "Unité"
+
+msgctxt "#32304"
+msgid "Decimal separator"
+msgstr "Séparateur décimal"
+
+msgctxt "#32306"
+msgid "Particles"
+msgstr "Particules"
+
+msgctxt "#32307"
+msgid "Interval"
+msgstr "intervalle"
+
+msgctxt "#32308"
+msgid "Verbose"
+msgstr "Verbeux"
+
+msgctxt "#32310"
+msgid "Location 1"
+msgstr "Emplacement 1"
+
+msgctxt "#32311"
+msgid "Location 2"
+msgstr "Emplacement 2"
+
+msgctxt "#32312"
+msgid "Location 3"
+msgstr "Emplacement 3"
+
+msgctxt "#32313"
+msgid "Location 4"
+msgstr "Emplacement 4"
+
+msgctxt "#32314"
+msgid "Location 5"
+msgstr "Emplacement 5"
+
+msgctxt "#32316"
+msgid "Use location timezone"
+msgstr "Utiliser le fuseau horaire du lieu"
+
+
+msgctxt "#32320"
+msgid "Temperature"
+msgstr "Température"
+
+msgctxt "#32321"
+msgid "Precipitation"
+msgstr "Précipitations"
+
+msgctxt "#32322"
+msgid "Condition"
+msgstr "Condition"
+
+msgctxt "#32323"
+msgid "Wind"
+msgstr "Vent"
+
+msgctxt "#32324"
+msgid "Gust"
+msgstr "Rafale"
+
+msgctxt "#32325"
+msgid "AQI EU"
+msgstr "AQI EU"
+
+msgctxt "#32326"
+msgid "AQI US"
+msgstr "AQI US"
+
+msgctxt "#32327"
+msgid "PM25"
+msgstr "PM25"
+
+msgctxt "#32328"
+msgid "PM10"
+msgstr "PM10"
+
+msgctxt "#32329"
+msgid "UV Index"
+msgstr "Indice UV"
+
+msgctxt "#32330"
+msgid "Nitrogen Dioxide"
+msgstr "Dioxyde d'azote"
+
+msgctxt "#32331"
+msgid "Sulphur Dioxide"
+msgstr "Dioxyde de Soufre"
+
+msgctxt "#32332"
+msgid "Feelslike"
+msgstr "Ressenti"
+
+msgctxt "#32333"
+msgid "Dewpoint"
+msgstr "Point de rosée"
+
+msgctxt "#32334"
+msgid "Cloudiness"
+msgstr "Couverture nuageuse"
+
+msgctxt "#32335"
+msgid "Time"
+msgstr "Heure"
+
+msgctxt "#32336"
+msgid "Speed"
+msgstr "Vitesse"
+
+msgctxt "#32337"
+msgid "Carbon monoxide"
+msgstr "Monoxyde de carbone"
+
+msgctxt "#32338"
+msgid "Ozone"
+msgstr "Ozon"
+
+msgctxt "#32339"
+msgid "Dust"
+msgstr "Poussière"
+
+msgctxt "#32340"
+msgid "Notice"
+msgstr "Avis"
+
+msgctxt "#32341"
+msgid "Caution"
+msgstr "Attention"
+
+msgctxt "#32342"
+msgid "Danger"
+msgstr "Danger"
+
+msgctxt "#32343"
+msgid "Normal"
+msgstr "Normal"
+
+msgctxt "#32344"
+msgid "Negative"
+msgstr "Négatif"
+
+msgctxt "#32345"
+msgid "Colours"
+msgstr "Couleurs"
+
+msgctxt "#32346"
+msgid "Humidity"
+msgstr "Humidité"
+
+msgctxt "#32347"
+msgid "Pressure"
+msgstr "Pression barométrique"
+
+msgctxt "#32348"
+msgid "Solar radiation"
+msgstr "Rayonnement solaire"
+
+msgctxt "#32349"
+msgid "Visibility"
+msgstr "Visibilité"
+
+msgctxt "#32350"
+msgid "°C"
+msgstr "°C"
+
+msgctxt "#32351"
+msgid "°F"
+msgstr "°F"
+
+msgctxt "#32352"
+msgid "K"
+msgstr "K"
+
+msgctxt "#32353"
+msgid "°Ré"
+msgstr "°Ré"
+
+msgctxt "#32354"
+msgid "°Ra"
+msgstr "°Ra"
+
+msgctxt "#32355"
+msgid "°Rø"
+msgstr "°Rø"
+
+msgctxt "#32356"
+msgid "°D"
+msgstr "°D"
+
+msgctxt "#32357"
+msgid "°N"
+msgstr "°N"
+
+
+msgctxt "#32360"
+msgid "Application"
+msgstr "Application"
+
+msgctxt "#32361"
+msgid "mph"
+msgstr "mph"
+
+msgctxt "#32362"
+msgid "km/h"
+msgstr "km/h"
+
+msgctxt "#32363"
+msgid "m/min"
+msgstr "m/min"
+
+msgctxt "#32364"
+msgid "m/s"
+msgstr "m/s"
+
+msgctxt "#32365"
+msgid "ft/h"
+msgstr "ft/h"
+
+msgctxt "#32366"
+msgid "ft/min"
+msgstr "ft/min"
+
+msgctxt "#32367"
+msgid "ft/s"
+msgstr "ft/s"
+
+msgctxt "#32368"
+msgid "kts"
+msgstr "kts"
+
+msgctxt "#32369"
+msgid "Beaufort"
+msgstr "Beaufort"
+
+msgctxt "#32370"
+msgid "inch/s"
+msgstr "inch/s"
+
+msgctxt "#32371"
+msgid "yard/s"
+msgstr "yard/s"
+
+msgctxt "#32372"
+msgid "Furlong/Fortnight"
+msgstr "Furlong/Fortnight"
+
+
+msgctxt "#32380"
+msgid "mm"
+msgstr "mm"
+
+msgctxt "#32381"
+msgid "inches"
+msgstr "inches"
+
+msgctxt "#32390"
+msgid "12h"
+msgstr "12h"
+
+msgctxt "#32391"
+msgid "24h"
+msgstr "24h"
+
+
+msgctxt "#32400"
+msgid "Radar"
+msgstr "Radar"
+
+msgctxt "#32401"
+msgid "Satellite"
+msgstr "Satellite"
+
+
+msgctxt "#32410"
+msgid "m"
+msgstr "m"
+
+msgctxt "#32411"
+msgid "km"
+msgstr "km"
+
+msgctxt "#32412"
+msgid "mi"
+msgstr "mi"
+
+
+msgctxt "#32430"
+msgid "."
+msgstr "."
+
+msgctxt "#32431"
+msgid ","
+msgstr ","
+
+msgctxt "#32440"
+msgid "New Moon"
+msgstr "Nouvelle Lune"
+
+msgctxt "#32441"
+msgid "Waxing Crescent"
+msgstr "Croissant"
+
+msgctxt "#32442"
+msgid "First Quarter"
+msgstr "Premier quartier de lune"
+
+msgctxt "#32443"
+msgid "Waxing Gibbous"
+msgstr "Gibbeuse"
+
+msgctxt "#32444"
+msgid "Full Moon"
+msgstr "Pleine Lune"
+
+msgctxt "#32445"
+msgid "Waning Gibbous"
+msgstr "Lune gibbeuse décroissante"
+
+msgctxt "#32446"
+msgid "Last Quarter"
+msgstr "Dernier quartier de lune"
+
+msgctxt "#32447"
+msgid "Waning Crescent"
+msgstr "Décroissante"
+
+msgctxt "#32450"
+msgid "Alder"
+msgstr "Aulne"
+
+msgctxt "#32451"
+msgid "Birch"
+msgstr "Bouleau"
+
+msgctxt "#32452"
+msgid "Grass"
+msgstr "Herbe"
+
+msgctxt "#32453"
+msgid "Mugwort"
+msgstr "Armoise"
+
+msgctxt "#32454"
+msgid "Olive"
+msgstr "Olive"
+
+msgctxt "#32455"
+msgid "Ragweed"
+msgstr "Ambroisie"
+
+msgctxt "#32456"
+msgid "grains"
+msgstr "Grains"
+
+msgctxt "#32500"
+msgid "Weather forecast from Open-Meteo"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
+msgstr ""

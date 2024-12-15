@@ -1,0 +1,634 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: Capt.Maverick\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_gb\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32200"
+msgid "Sunny"
+msgstr "Zonnig"
+
+msgctxt "#32201"
+msgid "Mainly Sunny"
+msgstr "Overwegend zonnig"
+
+msgctxt "#32202"
+msgid "Partly Cloudy"
+msgstr "Deels bewolkt"
+
+msgctxt "#32203"
+msgid "Cloudy"
+msgstr "Bewolkt"
+
+msgctxt "#32204"
+msgid "Foggy"
+msgstr "Mistig"
+
+msgctxt "#32205"
+msgid "Rime Fog"
+msgstr "Rijm mist"
+
+msgctxt "#32206"
+msgid "Light Drizzle"
+msgstr "Lichte motregen"
+
+msgctxt "#32207"
+msgid "Drizzle"
+msgstr "Motregen"
+
+msgctxt "#32208"
+msgid "Heavy Drizzle"
+msgstr "Sterke motregen"
+
+msgctxt "#32209"
+msgid "Light Freezing Drizzle"
+msgstr "Lichte bevriezende motregen"
+
+msgctxt "#32210"
+msgid "Freezing Drizzle"
+msgstr "Bevriezende motregen"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Lichte regen"
+
+msgctxt "#32212"
+msgid "Rain"
+msgstr "Regen"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Zware regen"
+
+msgctxt "#32214"
+msgid "Light Freezing Rain"
+msgstr "Lichte bevriezende regen"
+
+msgctxt "#32215"
+msgid "Freezing Rain"
+msgstr "Bevriezende regen"
+
+msgctxt "#32216"
+msgid "Light Snow"
+msgstr "Natte sneeuw"
+
+msgctxt "#32217"
+msgid "Snow"
+msgstr "Sneeuw"
+
+msgctxt "#32218"
+msgid "Heavy Snow"
+msgstr "Hevige sneeuwbui"
+
+msgctxt "#32219"
+msgid "Snow Grains"
+msgstr "Hagel"
+
+msgctxt "#32220"
+msgid "Light Showers"
+msgstr "Lichte regen"
+
+msgctxt "#32221"
+msgid "Showers"
+msgstr "Regenbuien"
+
+msgctxt "#32222"
+msgid "Heavy Showers"
+msgstr "Hevige regenval"
+
+msgctxt "#32223"
+msgid "Light Snow Showers"
+msgstr "Lichte sneeuwbuien"
+
+msgctxt "#32224"
+msgid "Snow Showers"
+msgstr "Sneeuwbuien"
+
+msgctxt "#32225"
+msgid "Thunderstorm"
+msgstr "Onweersbui"
+
+msgctxt "#32226"
+msgid "Light Thunderstorms With Hail"
+msgstr "Lichte onweersbui met hagel"
+
+msgctxt "#32227"
+msgid "Thunderstorm With Hail"
+msgstr "Onweersbui met hagel"
+
+msgctxt "#32250"
+msgid "Clear"
+msgstr "Kalm"
+
+msgctxt "#32251"
+msgid "Mainly Clear"
+msgstr "Overwegend kalm"
+
+msgctxt "#32255"
+msgid "Moonrise"
+msgstr "Maansopgang"
+
+msgctxt "#32256"
+msgid "Moonset"
+msgstr "Maansondergang"
+
+msgctxt "#32257"
+msgid "Moonphase"
+msgstr "Maan fase"
+
+msgctxt "#32260"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#32261"
+msgid "Locations"
+msgstr "Lokaties"
+
+msgctxt "#32262"
+msgid "Limits"
+msgstr "Grenzen"
+
+msgctxt "#32263"
+msgid "Notifications"
+msgstr "Notificaties"
+
+msgctxt "#32264"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#32265"
+msgid "Weather"
+msgstr "Weer"
+
+msgctxt "#32266"
+msgid "Airquality"
+msgstr "Luchtkwaliteit"
+
+msgctxt "#32267"
+msgid "Pollen"
+msgstr "Pollen"
+
+msgctxt "#32268"
+msgid "Alerts"
+msgstr "Meldingen"
+
+msgctxt "#32269"
+msgid "Select option"
+msgstr "Optie selecteren"
+
+msgctxt "#32270"
+msgid "Graphs"
+msgstr "Grafiek"
+
+msgctxt "#32271"
+msgid "Overview"
+msgstr "Overzicht"
+
+msgctxt "#32272"
+msgid "History"
+msgstr "Geschiedenis"
+
+msgctxt "#32280"
+msgid "Units"
+msgstr "Eenheden"
+
+msgctxt "#32281"
+msgid "Maps"
+msgstr "Kaarten"
+
+msgctxt "#32282"
+msgid "Logging"
+msgstr "Loggen"
+
+msgctxt "#32283"
+msgid "Experimental (Restart required)"
+msgstr "Experimenteel (Opstarten vereist)"
+
+msgctxt "#32285"
+msgid "Zoom"
+msgstr "Inzoomen"
+
+msgctxt "#32286"
+msgid "Debug"
+msgstr "Debug"
+
+msgctxt "#32287"
+msgid "Duration"
+msgstr "Duur"
+
+msgctxt "#32288"
+msgid "Hours"
+msgstr "Uren"
+
+msgctxt "#32289"
+msgid "Decimal places"
+msgstr "Decimalen"
+
+msgctxt "#32290"
+msgid "Icons"
+msgstr "Iconen"
+
+msgctxt "#32291"
+msgid "Default"
+msgstr "Standaard"
+
+msgctxt "#32292"
+msgid "Weathermap"
+msgstr "Weathermap"
+
+msgctxt "#32293"
+msgid "Met.no"
+msgstr "Met.no"
+
+msgctxt "#32294"
+msgid "WMO"
+msgstr "WMO"
+
+msgctxt "#32296"
+msgid "Background sync"
+msgstr "Synchroniseren"
+
+msgctxt "#32300"
+msgid "Distance"
+msgstr "Afstand"
+
+msgctxt "#32301"
+msgid "Index"
+msgstr "Index"
+
+msgctxt "#32302"
+msgid "Percent"
+msgstr "Procent"
+
+msgctxt "#32303"
+msgid "Unit"
+msgstr "Eenheid"
+
+msgctxt "#32304"
+msgid "Decimal separator"
+msgstr "Scheidingsteken"
+
+msgctxt "#32306"
+msgid "Particles"
+msgstr "Deeltjes"
+
+msgctxt "#32307"
+msgid "Interval"
+msgstr "Interval"
+
+msgctxt "#32308"
+msgid "Verbose"
+msgstr "Uitgebreid"
+
+msgctxt "#32310"
+msgid "Location 1"
+msgstr "Lokatie 1"
+
+msgctxt "#32311"
+msgid "Location 2"
+msgstr "Lokatie 2"
+
+msgctxt "#32312"
+msgid "Location 3"
+msgstr "Lokatie 3"
+
+msgctxt "#32313"
+msgid "Location 4"
+msgstr "Lokatie 4"
+
+msgctxt "#32314"
+msgid "Location 5"
+msgstr "Lokatie 5"
+
+msgctxt "#32316"
+msgid "Use location timezone"
+msgstr "Standaard tijdzone"
+
+
+msgctxt "#32320"
+msgid "Temperature"
+msgstr "Temperatuur"
+
+msgctxt "#32321"
+msgid "Precipitation"
+msgstr "Neerslag"
+
+msgctxt "#32322"
+msgid "Condition"
+msgstr "Voorwaarde"
+
+msgctxt "#32323"
+msgid "Wind"
+msgstr "Wind"
+
+msgctxt "#32324"
+msgid "Gust"
+msgstr "Windvlaag"
+
+msgctxt "#32325"
+msgid "AQI EU"
+msgstr "AQI EU"
+
+msgctxt "#32326"
+msgid "AQI US"
+msgstr "AQI US"
+
+msgctxt "#32327"
+msgid "PM25"
+msgstr "PM25"
+
+msgctxt "#32328"
+msgid "PM10"
+msgstr "PM10"
+
+msgctxt "#32329"
+msgid "UV Index"
+msgstr "UV Index"
+
+msgctxt "#32330"
+msgid "Nitrogen Dioxide"
+msgstr "Stikstofoxide"
+
+msgctxt "#32331"
+msgid "Sulphur Dioxide"
+msgstr "Zwaveldioxide"
+
+msgctxt "#32332"
+msgid "Feelslike"
+msgstr "Voelt aan als"
+
+msgctxt "#32333"
+msgid "Dewpoint"
+msgstr "Dauwpunt"
+
+msgctxt "#32334"
+msgid "Cloudiness"
+msgstr "Bewolking"
+
+msgctxt "#32335"
+msgid "Time"
+msgstr "Tijd"
+
+msgctxt "#32336"
+msgid "Speed"
+msgstr "Snelheid"
+
+msgctxt "#32337"
+msgid "Carbon monoxide"
+msgstr "Koolmonoxide"
+
+msgctxt "#32338"
+msgid "Ozone"
+msgstr "Ozon"
+
+msgctxt "#32339"
+msgid "Dust"
+msgstr "Stof"
+
+msgctxt "#32340"
+msgid "Notice"
+msgstr "Kennisgeving"
+
+msgctxt "#32341"
+msgid "Caution"
+msgstr "Voorzichtig"
+
+msgctxt "#32342"
+msgid "Danger"
+msgstr "Gevaar"
+
+msgctxt "#32343"
+msgid "Normal"
+msgstr "Normaal"
+
+msgctxt "#32344"
+msgid "Negative"
+msgstr "Negatief"
+
+msgctxt "#32345"
+msgid "Colours"
+msgstr "Kleuren"
+
+msgctxt "#32346"
+msgid "Humidity"
+msgstr "Vochtigheid"
+
+msgctxt "#32347"
+msgid "Pressure"
+msgstr "Luchtdruk"
+
+msgctxt "#32348"
+msgid "Solar radiation"
+msgstr "Zonnestralen"
+
+msgctxt "#32349"
+msgid "Visibility"
+msgstr "Zichtbaarheid"
+
+msgctxt "#32350"
+msgid "°C"
+msgstr "°C"
+
+msgctxt "#32351"
+msgid "°F"
+msgstr "°F"
+
+msgctxt "#32352"
+msgid "K"
+msgstr "K"
+
+msgctxt "#32353"
+msgid "°Ré"
+msgstr "°Ré"
+
+msgctxt "#32354"
+msgid "°Ra"
+msgstr "°Ra"
+
+msgctxt "#32355"
+msgid "°Rø"
+msgstr "°Rø"
+
+msgctxt "#32356"
+msgid "°D"
+msgstr "°D"
+
+msgctxt "#32357"
+msgid "°N"
+msgstr "°N"
+
+
+msgctxt "#32360"
+msgid "Application"
+msgstr "Applicatie"
+
+msgctxt "#32361"
+msgid "mph"
+msgstr "mph"
+
+msgctxt "#32362"
+msgid "km/h"
+msgstr "km/h"
+
+msgctxt "#32363"
+msgid "m/min"
+msgstr "m/min"
+
+msgctxt "#32364"
+msgid "m/s"
+msgstr "m/s"
+
+msgctxt "#32365"
+msgid "ft/h"
+msgstr "ft/h"
+
+msgctxt "#32366"
+msgid "ft/min"
+msgstr "ft/min"
+
+msgctxt "#32367"
+msgid "ft/s"
+msgstr "ft/s"
+
+msgctxt "#32368"
+msgid "kts"
+msgstr "kts"
+
+msgctxt "#32369"
+msgid "Beaufort"
+msgstr "Beaufort"
+
+msgctxt "#32370"
+msgid "inch/s"
+msgstr "inch/s"
+
+msgctxt "#32371"
+msgid "yard/s"
+msgstr "yard/s"
+
+msgctxt "#32372"
+msgid "Furlong/Fortnight"
+msgstr "Furlong/Fortnight"
+
+
+msgctxt "#32380"
+msgid "mm"
+msgstr "mm"
+
+msgctxt "#32381"
+msgid "inches"
+msgstr "inches"
+
+msgctxt "#32390"
+msgid "12h"
+msgstr "12h"
+
+msgctxt "#32391"
+msgid "24h"
+msgstr "24h"
+
+
+msgctxt "#32400"
+msgid "Radar"
+msgstr "Radar"
+
+msgctxt "#32401"
+msgid "Satellite"
+msgstr "Satelliet"
+
+
+msgctxt "#32410"
+msgid "m"
+msgstr "m"
+
+msgctxt "#32411"
+msgid "km"
+msgstr "km"
+
+msgctxt "#32412"
+msgid "mi"
+msgstr "mi"
+
+
+msgctxt "#32430"
+msgid "."
+msgstr "."
+
+msgctxt "#32431"
+msgid ","
+msgstr ","
+
+msgctxt "#32440"
+msgid "New Moon"
+msgstr "Nieuwe maan"
+
+msgctxt "#32441"
+msgid "Waxing Crescent"
+msgstr "Halve maan"
+
+msgctxt "#32442"
+msgid "First Quarter"
+msgstr "Kwart maan"
+
+msgctxt "#32443"
+msgid "Waxing Gibbous"
+msgstr "Toenemende maan"
+
+msgctxt "#32444"
+msgid "Full Moon"
+msgstr "Volle maan"
+
+msgctxt "#32445"
+msgid "Waning Gibbous"
+msgstr "Afnemende maan"
+
+msgctxt "#32446"
+msgid "Last Quarter"
+msgstr "3/4 maan"
+
+msgctxt "#32447"
+msgid "Waning Crescent"
+msgstr "Afnemende halve maan"
+
+msgctxt "#32450"
+msgid "Alder"
+msgstr "Els"
+
+msgctxt "#32451"
+msgid "Birch"
+msgstr "Berk"
+
+msgctxt "#32452"
+msgid "Grass"
+msgstr "Gras"
+
+msgctxt "#32453"
+msgid "Mugwort"
+msgstr "Bijvoet"
+
+msgctxt "#32454"
+msgid "Olive"
+msgstr "Olijf"
+
+msgctxt "#32455"
+msgid "Ragweed"
+msgstr "Ragkruid"
+
+msgctxt "#32456"
+msgid "grains"
+msgstr "Graan"
+
+msgctxt "#32500"
+msgid "Weather forecast from Open-Meteo"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
+msgstr ""
