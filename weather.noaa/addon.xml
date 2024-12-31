@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.noaa" name="NOAA (weather.gov)" version="3.0.1" provider-name="randall">
+	<requires>
+		<import addon="xbmc.python" version="3.0.1"/>
+		<import addon="script.module.dateutil" version="2.8.0"/>
+		<import addon="script.module.future" version="0.18.0"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Weather forecast from weather.gov (NOAA)</summary>
+		<description lang="en_GB">Weather forecast provided by NOAA (http://weather.gov/)</description>
+		<platform>all</platform>
+		<license>GPL-2.0-or-later</license>
+		<website>https://github.com/randallspicher/weather.noaa</website>
+		<source>https://github.com/randallspicher/weather.noaa</source>
+		<assets>
+		    <icon>resources/media/icon.png</icon>
+		    <fanart>resources/media/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
+

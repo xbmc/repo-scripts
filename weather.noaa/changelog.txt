@@ -1,0 +1,96 @@
+v3.0.1
+- refactor to move all logic out of default.py
+- fixes to wind chill
+
+v2.0.13
+- enable location lookup by address via census.gov
+
+v2.0.12
+- handle more forecast.weather.gov icon differences
+- get more data for dewpoint/humidity from api
+
+v2.0.11
+- fix wind-chill calculation
+- if we have a direct windchill or headindex value from the api, use that instead of calculating it
+- refresh the gridpoint and forecast urls from the lattitude/longitude every couple of days to handle grid changes in the api
+- only reset location descriptive name when lat,long is entered
+- retry after a minute if there is an error from the api
+- fixes when using forecast.weather.gov as the source
+
+v2.0.10
+- radar images url path changed
+- cleanup on alerts
+- cleanup on chance of rain logic
+
+v2.0.9
+- separate "day" and "night" weather codes when mapping to kodi built-in icons
+- return current barometer data
+
+v2.0.8
+- send "shortForecast" as Outlook, and "detailedForecast" as DetailedOutlook because other always have short Outlooks
+
+v2.0.7
+- add in regional radar loop composits to map options
+
+v2.0.6
+- handle error in temp conversion function when we did not receive a valid temperature from the api
+- switch alerts api to use grid location instead of picking zone or county
+- pass in "international" units request to api for hourly and daily forcasts if user selected Celcius as their temp unit of choice
+- option to pull radar loop (animated gif) instead of static image
+
+v2.0.5
+- version bump for release
+
+v2.0.4-b8
+- clean up some if/then logic
+- revamp some settings
+- properly return Celsius for users who set their regional temp to that
+
+v2.0.3
+- fix an import
+
+v2.0.2
+- rework settings to new xml structure
+- move satellite map options into function call instead of hard coded in settings (may grab from api in the future)
+- code cleanup for matrix submission
+- abandon/break all Leia compatibility to meet matrix submission requirements.
+
+v2.0.1
+- move some settings labels into strings.po
+
+v2.0.0
+- Version bump for matrix
+
+v1.0.11
+- Fix logger error in Matrix
+
+v1.0.10
+- Fetch various satellite images for maps 2-5, configured via advanced settings
+
+v1.0.9
+- Weather service changed the Radar images.  Only crappy ones available now without tons of front-end browser layering
+
+v1.0.8
+- clean up code
+- add header to http request to avoid proxy complaints
+
+v1.0.7
+- add in a couple weather radar maps
+
+v1.0.6
+- several fixes
+- allow switching between forecast.weather.gov and api.weather.gov as primary source for current and daily data
+
+v1.0.2
+- handle missing data in fallback forecast bettter
+
+v1.0.1
+- updates for python3
+- unset alert var when there are no alerts so that skins can hide them
+- fix missing degree symbol temps 
+
+v0.8.4
+- add in NOAA weather alerts
+
+v0.8.3 
+- initial release
