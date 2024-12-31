@@ -1,3 +1,7 @@
+v3.0.1
+- refactor to move all logic out of default.py
+- fixes to wind chill
+
 v2.0.13
 - enable location lookup by address via census.gov
 
