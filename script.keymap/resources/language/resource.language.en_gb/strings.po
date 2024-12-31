@@ -76,7 +76,23 @@ msgctxt "#30012"
 msgid "Remove"
 msgstr ""
 
-# empty strings from id 30013 to 30099
+msgctxt "#30013"
+msgid "Long Press"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Add mapping as long press?"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Enable long press mapping"
+msgstr ""
+
+msgctxt "#30016"
+msgid "General"
+msgstr ""
+
+# empty strings from id 30017 to 30099
 
 # Window names
 

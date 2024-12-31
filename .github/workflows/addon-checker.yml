@@ -27,12 +27,9 @@ jobs:
       shell: bash
 
       run: |
-        echo "addon=$(git diff --diff-filter=d --name-only HEAD~ | grep / 
-| cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
+        echo "addon=$(git diff --diff-filter=d --name-only HEAD~ | grep / | cut -d / -f1 | sort | uniq)" >> $GITHUB_OUTPUT
       id: extract_vars
 
     - name: Addon-Check
-      run: $HOME/.local/bin/kodi-addon-checker --branch=${{ 
-github.event.pull_request.base.ref }} --PR ${{ 
-steps.extract_vars.outputs.addon }}
+      run: $HOME/.local/bin/kodi-addon-checker --branch=${{ github.event.pull_request.base.ref }} --PR ${{ steps.extract_vars.outputs.addon }}
 

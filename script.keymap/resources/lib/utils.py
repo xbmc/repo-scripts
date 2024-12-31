@@ -22,6 +22,7 @@ import xbmc
 import xbmcaddon
 
 tr = xbmcaddon.Addon().getLocalizedString
+settings = xbmcaddon.Addon().getSetting
 
 
 def rpc(method, **params):
@@ -39,7 +40,9 @@ def read_keymap(filename):
             for context in keymap:
                 for device in context:
                     for mapping in device:
-                        key = mapping.get('id') or mapping.tag
+                        key1 = mapping.get('id') or mapping.tag
+                        key2 = mapping.get('mod')
+                        key = ' + '.join((key1, key2)) if key2 else key1
                         action = mapping.text
                         if action:
                             ret.append(
@@ -57,7 +60,11 @@ def write_keymap(keymap, filename):
         builder.start("keyboard", {})
         for c, a, k in keymap:
             if c == context:
-                builder.start("key", {"id": k})
+                k = k.split(' + ')
+                if len(k) > 1:
+                    builder.start("key", {"id":k[0], "mod":k[1]})
+                else:
+                    builder.start("key", {"id":k[0]})
                 builder.data(a)
                 builder.end("key")
         builder.end("keyboard")

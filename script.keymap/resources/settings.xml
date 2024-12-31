@@ -1,0 +1,5 @@
+<settings>
+    <category label="30016">
+        <setting id="longpress" type="bool" label="30015" default="false" />
+    </category>
+</settings>

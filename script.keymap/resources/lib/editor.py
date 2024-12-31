@@ -21,10 +21,9 @@ from threading import Timer
 from collections import OrderedDict
 from xbmcgui import Dialog, WindowXMLDialog
 from resources.lib.actions import ACTIONS, WINDOWS
-from resources.lib.utils import tr
+from resources.lib.utils import tr, settings
 
 KODIMONITOR = xbmc.Monitor()
-
 
 class Editor(object):
     def __init__(self, defaultkeymap, userkeymap):
@@ -73,6 +72,8 @@ class Editor(object):
                         newkey = KeyListener.record_key()
                         if newkey is None:
                             continue
+                        if self._long_press():
+                            newkey += ' + longpress'
 
                         new_mapping = (window, action, newkey)
                         if old_mapping in self.userkeymap:
@@ -94,6 +95,14 @@ class Editor(object):
                     actions[a] = k
         names = ACTIONS[category]
         return [(action, key, names[action]) for action, key in actions.items()]
+
+    def _long_press(self):
+        if settings('longpress') == 'true':
+            lp = Dialog().yesno(tr(30013), tr(30014))
+            if lp:
+                return True
+        return False
+
 
 
 class KeyListener(WindowXMLDialog):

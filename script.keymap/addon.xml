@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.keymap" name="Keymap Editor" version="1.2.1" provider-name="takoi,pkscout">
+<addon id="script.keymap" name="Keymap Editor" version="1.3.0" provider-name="takoi,pkscout">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.defusedxml" version="0.6.0+matrix.1" />
 	</requires>
 	<extension point="xbmc.python.script" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
-		<news>v.1.2.1
-- added video versions and video extras windows
-- replaced favourites (depreciated) with favouritesbrowser
-- updated translation files
+		<news>v.1.3.0
+- added option to enable long press mapping
 		</news>
 		<assets>
         	<icon>icon.png</icon>
