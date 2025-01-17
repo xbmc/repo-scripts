@@ -25,18 +25,20 @@ This addon streamlines your viewing experience by automating the process of audi
 ## Supported Formats
 
 ### Audio Formats
-- Dolby Atmos / TrueHD
-- Dolby Digital Plus (E-AC-3)
+- Dolby TrueHD*
+- Dolby Digital Plus (E-AC-3)*
 - Dolby Digital (AC-3)
-- DTS:X / DTS-HD MA (8+ channels)
-- DTS-HD MA (6 channels)
+- DTS-HD MA*
+- DTS-HD HRA*
 - DTS (DCA)
 - Other/PCM 
+
+*These formats can also contain spatial audio encoding such as Dolby Atmos or DTS:X on top of the base audio format
 
 ### Video Formats
 - Dolby Vision
 - HDR10
-- HDR10+
+- HDR10+ (platform/build specific)
 - HLG
 - SDR
 
@@ -48,7 +50,7 @@ This addon streamlines your viewing experience by automating the process of audi
 1. Download the addon from the Kodi repository or install it manually.
 2. Enable the addon in Kodi's addon settings.
 3. Open and briefly play any video to fully initialize and enable all addon settings.
-4. Configure your desired audio offsets for different HDR types, audio formats, and FPS types in the addon settings.
+4. Configure your desired audio offsets for different HDR types, audio formats, and FPS types in the addon settings. Enabling FPS based offsets allows different offsets to be applied and saved based on the FPS of the source video, in addition to the HDR type and audio format, allowing for more fine-tuned control.
 5. If you want to perform initial AV calibration, enable the active monitoring mode in the addon settings. This will allow the addon to learn and store your manual audio offset adjustments for future use.
 6. The addon will run as a background service, automatically applying your configured offsets during playback.
 

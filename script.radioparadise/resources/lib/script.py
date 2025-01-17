@@ -4,16 +4,16 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
-from .radioparadise import CHANNELS
+from .radioparadise import STREAMS
 
 
 class Window(xbmcgui.WindowXML):
     def onInit(self):
         xbmc.executebuiltin('Container.SetViewMode(100)')
         listitems = []
-        for idx, channel in enumerate(CHANNELS):
-            item = xbmcgui.ListItem(channel['title'])
-            item.setProperty('channel_index', str(idx))
+        for s in STREAMS:
+            item = xbmcgui.ListItem(s['title'])
+            item.setProperty('channel', str(s['channel']))
             listitems.append(item)
         self.clearList()
         self.addItems(listitems)
@@ -23,20 +23,20 @@ class Window(xbmcgui.WindowXML):
     def onClick(self, controlId):
         if controlId == 100:
             item = self.getListItem(self.getCurrentListPosition())
-            channel_index = int(item.getProperty('channel_index'))
-            play_channel(channel_index)
+            channel = int(item.getProperty('channel'))
+            play_channel(channel)
             self.close()
 
 
-def play_channel(channel_index):
+def play_channel(channel_number):
     """Play the channel, unless it's already playing."""
-    channel = CHANNELS[channel_index]
+    stream = STREAMS[channel_number]
     addon = xbmcaddon.Addon()
     audio_format = addon.getSetting('audio_format')
     if audio_format == 'flac':
-        url = channel['url_flac']
+        url = stream['url_flac']
     else:
-        url = channel['url_aac']
+        url = stream['url_aac']
     player = xbmc.Player()
     if not player.isPlayingAudio() or player.getPlayingFile() != url:
         player.stop()

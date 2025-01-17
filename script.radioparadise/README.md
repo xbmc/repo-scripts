@@ -1,12 +1,12 @@
 # Radio Paradise addon for Kodi
 
-Plays [Radio Paradise][] music streams, accompanied by the HD slideshow.
+Plays [Radio Paradise][] music mixes, accompanied by the HD slideshow.
 
 [radio paradise]: https://radioparadise.com/
 
 ## Features
 
-- Radio Paradise music streams in AAC or FLAC
+- Radio Paradise music mixes in AAC or FLAC
 - HD slideshow (optional)
 - Auto Play (optional)
 
@@ -16,23 +16,24 @@ Plays [Radio Paradise][] music streams, accompanied by the HD slideshow.
 
 [release]: https://kodi.wiki/view/Releases
 
-## Channel Selection by Script Parameter
+## Mix Selection by Script Parameter
 
 In addition to the Auto Play feature, the addon script can be called with a
-parameter to start a particular RP channel:
+parameter to start a particular RP mix:
 
 ```python
 RunScript('script.radioparadise', 1)
 ```
 
-| Value | Channel |
-| --- | --- |
-| 0 | Main Mix |
-| 1 | Mellow Mix |
-| 2 | Rock Mix |
-| 3 | Global Mix |
-| 4 | Serenity |
+Mix parameter:
 
-This can be used to add shortcuts for RP channels in [favourites.xml][].
+| Value | Mix |
+| --- | --- |
+| 0 | RP Main Mix |
+| 1 | RP Mellow Mix |
+| 2 | RP Rock Mix |
+| 3 | RP Global Mix |
+
+This can be used to add shortcuts for RP mixes in [favourites.xml][].
 
 [favourites.xml]: https://kodi.wiki/view/Favourites.xml

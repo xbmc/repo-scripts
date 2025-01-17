@@ -26,11 +26,11 @@ msgid "Offset Controls"
 msgstr ""
 
 msgctxt "#32004"
-msgid "Dolby Atmos/TrueHD (ms)"
+msgid "Dolby TrueHD (ms)"
 msgstr ""
 
 msgctxt "#32005"
-msgid "Adjusts the audio offset for Dolby Atmos/TrueHD in milliseconds. Negative values delay the audio, positive values advance it."
+msgid "Adjusts the audio offset for Dolby TrueHD in milliseconds. Negative values delay the audio, positive values advance it."
 msgstr ""
 
 msgctxt "#32006"
@@ -50,19 +50,19 @@ msgid "Adjusts the audio offset for Dolby Digital (AC-3) in milliseconds. Negati
 msgstr ""
 
 msgctxt "#32010"
-msgid "DTS:X/DTS-HD MA 8+ Channel (ms)"
+msgid "DTS-HD HRA (ms)"
 msgstr ""
 
 msgctxt "#32011"
-msgid "Adjusts the audio offset for DTS:X/DTS-HD MA 8+ Channel in milliseconds. Negative values delay the audio, positive values advance it."
+msgid "Adjusts the audio offset for DTS-HD HRA in milliseconds. Negative values delay the audio, positive values advance it."
 msgstr ""
 
 msgctxt "#32012"
-msgid "DTS-HD MA 6 Channel (ms)"
+msgid "DTS-HD MA (ms)"
 msgstr ""
 
 msgctxt "#32013"
-msgid "Adjusts the audio offset for DTS-HD MA 6 Channel in milliseconds. Negative values delay the audio, positive values advance it."
+msgid "Adjusts the audio offset for DTS-HD MA in milliseconds. Negative values delay the audio, positive values advance it."
 msgstr ""
 
 msgctxt "#32014"
@@ -306,11 +306,11 @@ msgid "60.00"
 msgstr ""
 
 msgctxt "#32074"
-msgid "Enable FPS based offsets"
+msgid "Enable content FPS-based offsets"
 msgstr ""
 
 msgctxt "#32075"
-msgid "Control whether offsets are applied based on source FPS"
+msgid "Control whether offsets are applied based on content FPS"
 msgstr ""
 
 msgctxt "#32076"

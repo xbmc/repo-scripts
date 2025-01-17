@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audiooffsetmanager" version="1.3.2" name="Audio Offset Manager" provider-name="matthane">
+<addon id="script.audiooffsetmanager" version="1.4.0" name="Audio Offset Manager" provider-name="matthane">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
     </requires>
@@ -7,8 +7,10 @@
     <extension point="xbmc.python.script" library="script.py" />
     <extension point="xbmc.addon.metadata">
         <source>https://github.com/matthane/script.audiooffsetmanager</source>
-        <news>v1.3.2 (2024-09-11)
-- Seek back bug fixes
+        <news>v1.4.0 (2025-01-17)
+- Add DTS-HD HRA offset option
+- Consolidate DTS-HD MA offset options for simplicity
+- Clean up audio format detection methods to ignore spatial audio identifiers
         </news>
         <summary lang="en_GB">Dynamically manages audio offsets</summary>
         <description lang="en_GB">This add-on intelligently adjusts the audio offset based on the detected HDR type, audio format, and FPS type according to user-configured settings, along with other helpful features</description>

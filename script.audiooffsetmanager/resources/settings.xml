@@ -68,7 +68,7 @@
                 </setting>
 
                 <!-- ALL FPS TYPES -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_all_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -134,8 +134,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_all_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -156,8 +156,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_all_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -223,7 +223,7 @@
                 </setting>                
 
                 <!-- 23.98 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_23_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -292,8 +292,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_23_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -315,8 +315,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_23_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -385,7 +385,7 @@
                 </setting>
 
                 <!-- 24.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_24_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -454,8 +454,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_24_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -477,8 +477,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_24_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -547,7 +547,7 @@
                 </setting>  
 
                 <!-- 25.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_25_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -616,8 +616,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_25_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -638,9 +638,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_25_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -709,7 +709,7 @@
                 </setting>
 
                 <!-- 29.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_29_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -778,8 +778,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_29_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -800,9 +800,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_29_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -871,7 +871,7 @@
                 </setting>
 
                 <!-- 30.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_30_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -940,8 +940,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_30_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -962,9 +962,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_30_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1033,7 +1033,7 @@
                 </setting>
 
                 <!-- 50.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_50_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -1102,8 +1102,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_50_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1124,9 +1124,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_50_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1195,7 +1195,7 @@
                 </setting>
 
                 <!-- 59.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_59_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -1264,8 +1264,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_59_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1286,9 +1286,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_59_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1357,7 +1357,7 @@
                 </setting>
 
                 <!-- 60.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="dolbyvision_60_truehd" type="integer" label="32004" help="32005" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
@@ -1426,8 +1426,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_60_dtsx" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="dolbyvision_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1448,9 +1448,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="dolbyvision_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_dolbyvision">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="dolbyvision_60_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_dolbyvision">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1566,7 +1566,7 @@
                 </setting>
 
                 <!-- ALL FPS TYPES -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_all_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -1632,8 +1632,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_all_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1653,9 +1653,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_all_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1721,7 +1721,7 @@
                 </setting>                
 
                 <!-- 23.98 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_23_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -1790,8 +1790,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_23_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1812,9 +1812,9 @@
                         <popup>false</popup>
                     </control>
                 </setting>
-
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_23_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1883,7 +1883,7 @@
                 </setting>
 
                 <!-- 24.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_24_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -1952,8 +1952,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_24_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -1975,8 +1975,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_24_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2045,7 +2045,7 @@
                 </setting>  
 
                 <!-- 25.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_25_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -2114,8 +2114,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_25_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2137,8 +2137,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_25_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2207,7 +2207,7 @@
                 </setting>
 
                 <!-- 29.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_29_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -2276,8 +2276,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_29_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2299,8 +2299,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_29_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2369,7 +2369,7 @@
                 </setting>
 
                 <!-- 30.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_30_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -2438,8 +2438,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_30_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2461,8 +2461,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_30_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2531,7 +2531,7 @@
                 </setting>
 
                 <!-- 50.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_50_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -2600,8 +2600,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_50_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2623,8 +2623,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_50_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2693,7 +2693,7 @@
                 </setting>
 
                 <!-- 59.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_59_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -2762,8 +2762,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_59_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2785,8 +2785,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_59_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2855,7 +2855,7 @@
                 </setting>
 
                 <!-- 60.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10_60_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
@@ -2924,8 +2924,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10_60_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -2947,8 +2947,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10_60_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3065,7 +3065,7 @@
                 </setting>
 
                 <!-- ALL FPS TYPES -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_all_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -3131,8 +3131,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_all_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3153,8 +3153,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_all_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3220,7 +3220,7 @@
                 </setting>                
 
                 <!-- 23.98 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_23_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -3289,8 +3289,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_23_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3312,8 +3312,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_23_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3382,7 +3382,7 @@
                 </setting>
 
                 <!-- 24.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_24_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -3451,8 +3451,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_24_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3474,8 +3474,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_24_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3544,7 +3544,7 @@
                 </setting>  
 
                 <!-- 25.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_25_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -3613,8 +3613,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_25_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3636,8 +3636,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_25_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3706,7 +3706,7 @@
                 </setting>
 
                 <!-- 29.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_29_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -3775,8 +3775,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_29_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3798,8 +3798,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_29_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3868,7 +3868,7 @@
                 </setting>
 
                 <!-- 30.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_30_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -3937,8 +3937,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_30_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -3960,8 +3960,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_30_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4030,7 +4030,7 @@
                 </setting>
 
                 <!-- 50.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_50_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -4099,8 +4099,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_50_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4122,8 +4122,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_50_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4192,7 +4192,7 @@
                 </setting>
 
                 <!-- 59.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_59_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -4261,8 +4261,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_59_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4284,8 +4284,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_59_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4354,7 +4354,7 @@
                 </setting>
 
                 <!-- 60.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hdr10plus_60_truehd" type="integer" label="32004" help="32005" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
@@ -4423,8 +4423,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_60_dtsx" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hdr10plus_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4446,8 +4446,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hdr10plus_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hdr10plus">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hdr10plus_60_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hdr10plus">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4563,7 +4563,7 @@
                 </setting>
 
                 <!-- ALL FPS TYPES -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_all_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -4629,8 +4629,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_all_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4651,8 +4651,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_all_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4718,7 +4718,7 @@
                 </setting>
 
                 <!-- 23.98 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_23_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -4787,8 +4787,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_23_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4810,8 +4810,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_23_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4880,7 +4880,7 @@
                 </setting>
 
                 <!-- 24.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_24_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -4949,8 +4949,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_24_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -4972,8 +4972,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_24_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5042,7 +5042,7 @@
                 </setting>  
 
                 <!-- 25.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_25_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -5111,8 +5111,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_25_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5134,8 +5134,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_25_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5204,7 +5204,7 @@
                 </setting>
 
                 <!-- 29.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_29_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -5273,8 +5273,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_29_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5296,8 +5296,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_29_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5366,7 +5366,7 @@
                 </setting>
 
                 <!-- 30.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_30_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -5435,8 +5435,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_30_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5458,8 +5458,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_30_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5528,7 +5528,7 @@
                 </setting>
 
                 <!-- 50.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_50_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -5597,8 +5597,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_50_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5620,8 +5620,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_50_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5690,7 +5690,7 @@
                 </setting>
 
                 <!-- 59.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_59_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -5759,8 +5759,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_59_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5782,8 +5782,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_59_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5852,7 +5852,7 @@
                 </setting>
 
                 <!-- 60.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="hlg_60_truehd" type="integer" label="32004" help="32005" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
@@ -5921,8 +5921,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="hlg_60_dtsx" type="integer" label="32010" help="32011" parent="enable_hlg">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="hlg_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -5944,8 +5944,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="hlg_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_hlg">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="hlg_60_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_hlg">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6061,7 +6061,7 @@
                 </setting>
 
                 <!-- ALL FPS TYPES -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_all_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -6127,8 +6127,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_all_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6149,8 +6149,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_all_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_all_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6216,7 +6216,7 @@
                 </setting>                
 
                 <!-- 23.98 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_23_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -6285,8 +6285,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_23_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6308,8 +6308,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_23_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_23_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6378,7 +6378,7 @@
                 </setting>
 
                 <!-- 24.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_24_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -6447,8 +6447,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_24_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6470,8 +6470,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_24_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_24_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6540,7 +6540,7 @@
                 </setting>  
 
                 <!-- 25.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_25_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -6609,8 +6609,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_25_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6632,8 +6632,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_25_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_25_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6702,7 +6702,7 @@
                 </setting>
 
                 <!-- 29.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_29_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -6771,8 +6771,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_29_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6794,8 +6794,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_29_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_29_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6864,7 +6864,7 @@
                 </setting>
 
                 <!-- 30.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_30_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -6933,8 +6933,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_30_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -6956,8 +6956,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_30_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_30_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -7026,7 +7026,7 @@
                 </setting>
 
                 <!-- 50.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_50_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -7095,8 +7095,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_50_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -7118,8 +7118,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_50_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_50_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -7188,7 +7188,7 @@
                 </setting>
 
                 <!-- 59.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_59_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -7257,8 +7257,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_59_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -7280,8 +7280,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_59_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_59_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -7350,7 +7350,7 @@
                 </setting>
 
                 <!-- 60.00 FPS -->
-                <!-- Dolby Atmos/TrueHD (ms) Delay Setting -->
+                <!-- Dolby TrueHD (ms) Delay Setting -->
                 <setting id="sdr_60_truehd" type="integer" label="32004" help="32005" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
@@ -7419,8 +7419,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS:X/DTS-HD MA 8+ Channel (ms) Delay Setting -->
-                <setting id="sdr_60_dtsx" type="integer" label="32010" help="32011" parent="enable_sdr">
+                <!-- DTS-HD MA (ms) Delay Setting -->
+                <setting id="sdr_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -7442,8 +7442,8 @@
                     </control>
                 </setting>
 
-                <!-- DTS-HD MA 6 Channel (ms) Delay Setting -->
-                <setting id="sdr_60_dtshd_ma" type="integer" label="32012" help="32013" parent="enable_sdr">
+                <!-- DTS-HD HRA (ms) Delay Setting -->
+                <setting id="sdr_60_dtshd_hra" type="integer" label="32010" help="32011" parent="enable_sdr">
                     <dependencies>
                         <dependency type="visible">
                             <and>

@@ -1,16 +1,3 @@
-## v2.1.2
-
-- Add Serenity to Auto Play options
-- Fix metadata handling
-
-## v2.1.1
-
-- Improve metadata handling
-
-## v2.1.0
-
-- Add Serenity channel
-
 ## v2.0.1
 
 - Use new metadata API
