@@ -1,3 +1,6 @@
+v3.0.5
+- fix for more possibles instances of "Kodi is not playing any media file" when skipping beyond end of file
+
 v3.0.4
 - Remove old common code, use new module
 

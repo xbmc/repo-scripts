@@ -134,7 +134,7 @@ class MyPlayer(xbmc.Player):
     # This means the pause position is where the user actually paused...which is usually the desired behaviour
     def onPlayBackResumed(self):
 
-        Logger.info(f'onPlayBackResumed. {self.jump_back_on_resume}')
+        Logger.info(f'onPlayBackResumed with jump_back_on_resume: {self.jump_back_on_resume}')
 
         if self.jump_back_on_resume:
 
@@ -142,7 +142,13 @@ class MyPlayer(xbmc.Player):
                 Logger.info(f'Was paused for {int(time.time() - self.paused_time)} seconds.')
 
             # check for exclusion
-            _filename = self.getPlayingFile()
+            try:
+                _filename = self.getPlayingFile()
+            except RuntimeError:
+                Logger.info('No file is playing, could not getPlayingFile(), stopping UnpauseJumpBack')
+                xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
+                return
+
             if self.is_excluded(_filename):
                 Logger.info(f"Ignored because '{_filename}' is in exclusion settings.")
                 return
@@ -174,7 +180,13 @@ class MyPlayer(xbmc.Player):
         self.paused_time = time.time()
         Logger.info(f'onPlayBackPaused. Time: {self.paused_time}')
 
-        _filename = self.getPlayingFile()
+        try:
+            _filename = self.getPlayingFile()
+        except RuntimeError:
+            Logger.info('No file is playing, could not getPlayingFile(), stopping UnpauseJumpBack')
+            xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
+            return
+        
         if self.is_excluded(_filename):
             Logger.info(f'Playback paused - ignoring because [{_filename}] is in exclusion settings.')
             return
@@ -190,19 +202,28 @@ class MyPlayer(xbmc.Player):
 
     def onAVStarted(self):
 
+        Logger.info(f'onAVStarted.')
+
         # If the addon is set to do a jump back when playback is started from a resume point...
         if self.jump_back_on_playback_started:
+
             try:
                 current_time = self.getTime()
             except RuntimeError:
-                Logger.info('No file is playing, stopping UnpauseJumpBack')
+                Logger.info('No file is playing, could not getTime(), stopping UnpauseJumpBack')
                 xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
-                pass
+                return
 
-            Logger.info(f'onAVStarted at {current_time}')
+            Logger.info(f'Current playback time is {current_time}')
 
             # check for exclusion
-            _filename = self.getPlayingFile()
+            try:
+                _filename = self.getPlayingFile()
+            except RuntimeError:
+                Logger.info('No file is playing, could not getPlayingFile(), stopping UnpauseJumpBack')
+                xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
+                return
+
             if self.is_excluded(_filename):
                 Logger.info(f"Ignored because '{_filename}' is in exclusion settings.")
                 return
@@ -220,13 +241,16 @@ class MyPlayer(xbmc.Player):
             direction = 1
             abs_last_speed = abs(self.last_playback_speed)
             # default value, just in case
+            resume_time = 0
             try:
                 resume_time = self.getTime()
             except RuntimeError:
                 Logger.info('No file is playing, stopping UnpauseJumpBack')
                 xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
                 pass
-                
+
+            Logger.log(f"onPlayBackSpeedChanged with speed {speed} and resume_time {resume_time}")
+
             if self.last_playback_speed < 0:
                 Logger.info('Resuming. Was rewound with speed X%d.' % (abs(self.last_playback_speed)))
             if self.last_playback_speed > 1:
