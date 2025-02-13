@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.6.6" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.6.9" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.8.2+matrix.1"/>

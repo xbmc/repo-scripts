@@ -5,12 +5,13 @@ Scraper for https://www.rclyricsband.com/
 
 import requests
 import re
+import html
 import difflib
 from bs4 import BeautifulSoup
 from lib.utils import *
 
 __title__ = "RCLyricsBand"
-__priority__ = '140'
+__priority__ = '130'
 __lrc__ = True
 
 UserAgent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
@@ -19,7 +20,7 @@ class LyricsFetcher:
     def __init__(self, *args, **kwargs):
         self.DEBUG = kwargs['debug']
         self.settings = kwargs['settings']
-        self.SEARCH_URL = 'https://rclyricsband.com/?search=%s %s'
+        self.SEARCH_URL = 'https://rclyricsband.com/'
         self.LYRIC_URL = 'https://rclyricsband.com/%s'
 
 
@@ -32,8 +33,10 @@ class LyricsFetcher:
         artist = song.artist
         title = song.title
         try:
-            url = self.SEARCH_URL % (artist, title)
-            search = requests.get(url, headers=UserAgent, timeout=10)
+            url = self.SEARCH_URL
+            searchdata = {}
+            searchdata['search'] = '%s %s' % (artist, title)
+            search = requests.post(url, data=searchdata, headers=UserAgent, timeout=10)
             response = search.text
         except:
             return None
@@ -67,5 +70,6 @@ class LyricsFetcher:
         matchcode = re.search("lrc_text_format'>(.*?)</p", response, flags=re.DOTALL)
         if matchcode:
             lyricscode = (matchcode.group(1))
-            cleanlyrics = re.sub('<br>', '', lyricscode)
+            cleanlyrics = re.sub('<br>', '\n', lyricscode)
+            cleanlyrics = html.unescape(cleanlyrics)
             return cleanlyrics

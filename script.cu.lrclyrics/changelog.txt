@@ -1,3 +1,14 @@
+v6.6.9
+- python 3.13 compatibility
+- fixed Genius scraper
+
+v6.6.8
+- remove broken lyricsify scraper
+- cleanup RCLyricsBand lyrics
+
+v6.6.7
+- fixed RCLyricsBand scraper
+
 v6.6.6
 - fixed several scrapers
 

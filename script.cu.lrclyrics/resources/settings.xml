@@ -37,11 +37,6 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="lyricsify" label="32905" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting help="" id="rclyricsband" label="32918" type="boolean">
 					<level>0</level>
 					<default>true</default>

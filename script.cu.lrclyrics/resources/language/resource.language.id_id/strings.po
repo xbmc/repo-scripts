@@ -299,6 +299,10 @@ msgctxt "#32917"
 msgid "Super Music"
 msgstr ""
 
+msgctxt "#32918"
+msgid "RCLyricsBand"
+msgstr ""
+
 # Scrapers - do not translate!
 #~ msgctxt "#32901"
 #~ msgid "MiniLyrics"

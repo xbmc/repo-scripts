@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-04-22 10:13+0000\n"
+"PO-Revision-Date: 2024-06-15 15:21+0000\n"
 "Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fi_fi/>\n"
 "Language: fi_fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.3\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -150,11 +150,11 @@ msgstr "Käytä txt-sanoitusten tallennukseen ja etsintään kappaleiden kansioi
 
 msgctxt "#32120"
 msgid "%N. %A - %T"
-msgstr ""
+msgstr "%N. %A - %T"
 
 msgctxt "#32121"
 msgid "%A - %B - %N - %T"
-msgstr ""
+msgstr "%A - %B - %N - %T"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
@@ -298,6 +298,10 @@ msgstr "Dark Lyrics"
 msgctxt "#32917"
 msgid "Super Music"
 msgstr "Super Music"
+
+msgctxt "#32918"
+msgid "RCLyricsBand"
+msgstr "RCLyricsBand"
 
 # Scrapers - do not translate!
 #~ msgctxt "#32901"

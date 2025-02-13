@@ -299,6 +299,10 @@ msgctxt "#32917"
 msgid "Super Music"
 msgstr ""
 
+msgctxt "#32918"
+msgid "RCLyricsBand"
+msgstr ""
+
 # empty strings from id 32010 to 32100
 # Settings labels
 #~ msgctxt "#32101"

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-17 05:26+0000\n"
+"PO-Revision-Date: 2024-07-12 11:25+0000\n"
 "Last-Translator: Havok Dan <havokdan@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/pt_br/>\n"
 "Language: pt_br\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5.4\n"
+"X-Generator: Weblate 5.6.2\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -124,7 +124,6 @@ msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
 msgstr "Procure e salve as letras lrc na pasta de músicas"
 
-#, fuzzy
 msgctxt "#32114"
 msgid "%N - %A - %T"
 msgstr "%N - %A - %T"
@@ -149,14 +148,13 @@ msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
 msgstr "Procure e salve letras em txt na pasta de músicas"
 
-#, fuzzy
 msgctxt "#32120"
 msgid "%N. %A - %T"
 msgstr "%N. %A - %T"
 
 msgctxt "#32121"
 msgid "%A - %B - %N - %T"
-msgstr ""
+msgstr "%A - %B - %N - %T"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
@@ -257,52 +255,42 @@ msgid "Get lyrics when listening to internet radio stations"
 msgstr "Obtenha letras ao ouvir estações de rádio da Internet"
 
 # Scrapers - do not translate!
-#, fuzzy
 msgctxt "#32901"
 msgid "Lrclib"
 msgstr "Lrclib"
 
-#, fuzzy
 msgctxt "#32902"
 msgid "MusixMatch"
 msgstr "MusixMatch"
 
-#, fuzzy
 msgctxt "#32903"
 msgid "Megalobiz"
 msgstr "Megalobiz"
 
-#, fuzzy
 msgctxt "#32904"
 msgid "Music 163"
 msgstr "Music 163"
 
-#, fuzzy
 msgctxt "#32905"
 msgid "Lyricsify"
 msgstr "Lyricsify"
 
-#, fuzzy
 msgctxt "#32912"
 msgid "Genius"
 msgstr "Genius"
 
-#, fuzzy
 msgctxt "#32913"
 msgid "Lyrics Mode"
 msgstr "Lyrics Mode"
 
-#, fuzzy
 msgctxt "#32914"
 msgid "AZLyrics"
 msgstr "AZLyrics"
 
-#, fuzzy
 msgctxt "#32915"
 msgid "Lyrics.com"
 msgstr "Lyrics.com"
 
-#, fuzzy
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr "Dark Lyrics"
@@ -310,6 +298,10 @@ msgstr "Dark Lyrics"
 msgctxt "#32917"
 msgid "Super Music"
 msgstr "Supermúsica"
+
+msgctxt "#32918"
+msgid "RCLyricsBand"
+msgstr "RCLyricsBand"
 
 # empty strings from id 32010 to 32100
 # Settings labels

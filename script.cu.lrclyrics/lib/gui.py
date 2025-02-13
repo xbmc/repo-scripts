@@ -67,7 +67,7 @@ class MAIN():
         for scraper in os.listdir(LYRIC_SCRAPER_DIR):
             # meh to python3 creating folders
             if os.path.isdir(os.path.join(LYRIC_SCRAPER_DIR, scraper)) and scraper != '__pycache__' and ADDON.getSettingBool(scraper):
-                exec ('from lib.culrcscrapers.%s import lyricsScraper as lyricsScraper_%s' % (scraper, scraper))
+                exec ('from lib.culrcscrapers.%s import lyricsScraper as lyricsScraper_%s' % (scraper, scraper), globals())
                 exec ('self.scrapers.append([lyricsScraper_%s.__priority__,lyricsScraper_%s.LyricsFetcher(debug=self.DEBUG, settings=self.lyricssettings),lyricsScraper_%s.__title__,lyricsScraper_%s.__lrc__])' \
                      % (scraper, scraper, scraper, scraper))
         self.scrapers.sort()
