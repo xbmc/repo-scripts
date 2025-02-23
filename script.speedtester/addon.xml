@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.speedtester" name="Speed Tester" version="1.1.2+matrix.1" provider-name="Dr0idGuy, dagwieers">
+<addon id="script.speedtester" name="Speed Tester" version="1.1.3+matrix.1" provider-name="Dr0idGuy, dagwieers">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -19,7 +19,11 @@ Use this if you are experiencing streaming issues and you suspect your network t
     <website>https://kodi.wiki/view/Add-on:Speed_Tester</website>
     <source>https://github.com/add-ons/script.speedtester</source>
     <news>
-v1.1.1 (2020-10-10)
+v1.1.3 (2022-01-26)
+- Add support for Python 3.9 and later (@dobo90)
+- Add Dutch translations (@dagwieers)
+
+v1.1.2 (2020-10-10)
 - Fix issues for Kodi repo review
 
 v1.1.1 (2020-10-10)

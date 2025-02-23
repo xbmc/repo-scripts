@@ -15,7 +15,11 @@ In Kodi, simply search the add-ons for `Speed` and install the Speedtester add-o
 
 
 ## Releases
-### v1.1.1 (2020-10-10)
+### v1.1.3 (2022-01-26)
+- Add support for Python 3.9 and later (@dobo90)
+- Add Dutch translations (@dagwieers)
+
+### v1.1.2 (2020-10-10)
 - Fix issues for Kodi repo review (@dagwieers)
 
 ### v1.1.1 (2020-10-10)
