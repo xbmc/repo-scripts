@@ -7,15 +7,14 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-03-20 15:56+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
-"Language-Team: Portuguese (Brazil) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-trakt/pt_br/>\n"
-"Language: pt_BR\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5.1\n"
 
 msgctxt "Addon Summary"
 msgid "TV and movie scrobbler for Trakt.tv"
@@ -25,9 +24,10 @@ msgctxt "Addon Description"
 msgid "Automatically scrobble all TV episodes and movies you are watching to Trakt.tv! Keep a comprehensive history of everything you've watched and be part of a global community of TV and movie enthusiasts. Sign up for a free account at http://trakt.tv and get a ton of features:[CR][CR]- Automatically scrobble what you're watching[CR]- Mobile apps for iPhone, iPad, Android, and Windows Phone[CR]- Share what you're watching (in real time) and rating to facebook and twitter[CR]- Personalized calendar so you never miss a TV show[CR]- Follow your friends and people you're interesed in[CR]- Use watchlists so you don't forget to what to watch[CR]- Track your media collections and impress your friends[CR]- Create custom lists around any topics you choose[CR]- Easily track your TV show progress across all seasons and episodes[CR]- Track your progress against industry lists such as the IMDb Top 250[CR]- Discover new shows and movies based on your viewing habits[CR]- Widgets for your forum signature[CR][CR]What can this addon do?[CR][CR]- Automatically scrobble all TV episodes and movies you are watching[CR]- Sync your TV episode and movie collections to Trakt (triggered after a library update)[CR]- Auto clean your Trakt collection so that it matches up with Kodi[CR]- Keep watched statuses synced between Kodi and Trakt[CR]- Rate movies and episode after watching them[CR][CR]Special thanks to all who contributed to this plugin! Check the commit history and changelog to see these talented developers."
 msgstr ""
 
+# General Settings
 msgctxt "#32000"
 msgid "General"
-msgstr "Geral"
+msgstr ""
 
 # empty strings from id 32001 to 32002
 msgctxt "#32003"
@@ -36,587 +36,593 @@ msgstr ""
 
 msgctxt "#32004"
 msgid "Rating"
-msgstr "Classificação"
+msgstr ""
 
 msgctxt "#32005"
 msgid "Rate Movie after watching"
-msgstr "Avaliar Filme após assistir"
+msgstr ""
 
 msgctxt "#32006"
 msgid "Rate TV show Episode after watching"
-msgstr "Avaliar o Episódio de TV após assistir"
+msgstr ""
 
 msgctxt "#32008"
 msgid "Minimum percent watched to display rating dialog"
-msgstr "Percentual mínimo de assistido para apresentar o diálogo de avaliação"
+msgstr ""
 
 msgctxt "#32009"
 msgid "Allow re-rating of media"
-msgstr "Permitir reavaliar a mídia"
+msgstr ""
 
 msgctxt "#32010"
 msgid "Default rating"
-msgstr "Avaliação Padrão"
+msgstr ""
 
+# Scrobbling Settings
 msgctxt "#32011"
 msgid "Scrobbling"
-msgstr "Scrobbling"
+msgstr ""
 
 msgctxt "#32012"
 msgid "Scrobble movies"
-msgstr "Scrobbling de filmes"
+msgstr ""
 
 msgctxt "#32013"
 msgid "Scrobble TV show episodes"
-msgstr "Scrobble de episódios de seriados"
+msgstr ""
 
 msgctxt "#32014"
 msgid "Show notification on scrobble"
-msgstr "Mostrar notificação no scrobble"
+msgstr ""
 
 msgctxt "#32015"
 msgid "Trakt - Scrobbled successfully"
-msgstr "Trakt - Scrobbled com sucesso"
+msgstr ""
 
 msgctxt "#32016"
 msgid "Exclusions"
-msgstr "Exclusões"
+msgstr ""
 
 msgctxt "#32017"
 msgid "Exclude Live TV"
-msgstr "Excluir Tv ao Vivo"
+msgstr ""
 
 msgctxt "#32018"
 msgid "Exclude HTTP sources"
-msgstr "Excluir fontes HTTP"
+msgstr ""
 
 msgctxt "#32019"
 msgid "Exclude path"
-msgstr "Excluir caminho"
+msgstr ""
 
 msgctxt "#32020"
 msgid "Folder's path (including subfolders)"
-msgstr "Caminho das Pastas (incluindo subpastas)"
+msgstr ""
 
+# empty strings from id 32021 to 32022
 msgctxt "#32023"
 msgid "Can not connect to Trakt"
-msgstr "Não pude me conectar ao Trakt"
+msgstr ""
 
 msgctxt "#32024"
 msgid "Error"
-msgstr "Erro"
+msgstr ""
 
+# empty string with id 32025
 msgctxt "#32026"
 msgid "What Did You Think?"
-msgstr "O que você achou?"
+msgstr ""
 
 msgctxt "#32027"
 msgid "Totally Ninja!"
-msgstr "Ninja Total!"
+msgstr ""
 
 msgctxt "#32028"
 msgid "Weak Sauce :("
-msgstr "Sem Sal :("
+msgstr ""
 
 msgctxt "#32029"
 msgid "Terrible"
-msgstr "Terrível"
+msgstr ""
 
 msgctxt "#32030"
 msgid "Bad"
-msgstr "Ruim"
+msgstr ""
 
 msgctxt "#32031"
 msgid "Poor"
-msgstr "Fraco"
+msgstr ""
 
 msgctxt "#32032"
 msgid "Meh"
-msgstr "Meh"
+msgstr ""
 
 msgctxt "#32033"
 msgid "Fair"
-msgstr "Razoável"
+msgstr ""
 
 msgctxt "#32034"
 msgid "Good"
-msgstr "Bom"
+msgstr ""
 
 msgctxt "#32035"
 msgid "Great"
-msgstr "Excelente"
+msgstr ""
 
 msgctxt "#32036"
 msgid "Superb"
-msgstr "Soberbo"
+msgstr ""
 
 msgctxt "#32037"
 msgid "Unrate this movie"
-msgstr "Remover avaliação deste filme"
+msgstr ""
 
 msgctxt "#32038"
 msgid "Unrate this show"
-msgstr "Remover avaliação deste seriado"
+msgstr ""
 
 msgctxt "#32039"
 msgid "Unrate this episode"
-msgstr "Remover avaliação deste episódio"
+msgstr ""
 
 msgctxt "#32040"
 msgid "Trakt - Rating submitted successfully"
-msgstr "Trakt - Avaliação enviada com sucesso"
+msgstr ""
 
 msgctxt "#32041"
 msgid "Trakt - Already rated"
-msgstr "Trakt - Já avaliado"
+msgstr ""
 
 msgctxt "#32042"
 msgid "Trakt - Unrated successfully"
-msgstr "Trakt - Removido avaliação com sucesso"
+msgstr ""
 
 msgctxt "#32043"
 msgid "Trakt - Already has the same rating"
-msgstr "Trakt - Sempre usar a mesma avaliação"
+msgstr ""
 
 msgctxt "#32044"
 msgid "Trakt - Problem submitting rating"
-msgstr "Trakt - Problema submetendo avaliação"
+msgstr ""
 
 msgctxt "#32045"
 msgid "Synchronize"
-msgstr "Sincronize"
+msgstr ""
 
 msgctxt "#32046"
 msgid "Movies"
-msgstr "Filmes"
+msgstr ""
 
 msgctxt "#32047"
 msgid "Add new movies to Trakt collection"
-msgstr "Adicionar novos filmes para coleção no Trakt"
+msgstr ""
 
 msgctxt "#32048"
 msgid "Add watched movies to Trakt history"
-msgstr "Adicionar filmes assistidos no histórico do Trakt"
+msgstr ""
 
 msgctxt "#32049"
 msgid "Mark movies from Trakt history as watched in Kodi"
-msgstr "Marcar filmes como assistido no Kodi, baseado no histórico do Trakt"
+msgstr ""
 
 msgctxt "#32050"
 msgid "TV Episodes"
-msgstr "Episódios de TV"
+msgstr ""
 
 msgctxt "#32051"
 msgid "Add new TV episodes to Trakt collection"
-msgstr "Adicionar novos episódios de TV para a coleção do Trakt"
+msgstr ""
 
 msgctxt "#32052"
 msgid "Add watched TV episodes to Trakt history"
-msgstr "Adicionar episódios de TV assistidos no histórico do Trakt"
+msgstr ""
 
 msgctxt "#32053"
 msgid "Mark TV episodes from Trakt history as watched in Kodi"
-msgstr "Marcar episódios de TV como assistido no Kodi, baseado no histórico do Trakt"
+msgstr ""
 
 msgctxt "#32054"
 msgid "Service"
-msgstr "Serviço"
+msgstr ""
 
 msgctxt "#32055"
 msgid "Sync collection on library update or cleaning"
-msgstr "Sincronizar coleção ao atualizar ou limpar coleção"
+msgstr ""
 
 msgctxt "#32056"
 msgid "Show sync notifications"
-msgstr "Mostrar notificações de sincronização"
+msgstr ""
 
 msgctxt "#32057"
 msgid "Remove deleted movies from Trakt collection"
-msgstr "Remover filmes deletados da coleção no Trakt"
+msgstr ""
 
 msgctxt "#32058"
 msgid "Remove deleted TV episodes from Trakt collection"
-msgstr "Remover episódios de TV da coleção no Trakt"
+msgstr ""
 
+# empty string with id 32059
 msgctxt "#32060"
 msgid "Hide notifications during playback"
-msgstr "Ocultar notificações durante reprodução"
+msgstr ""
 
 msgctxt "#32061"
 msgid "Sync started"
-msgstr "Sincronização iniciada"
+msgstr ""
 
 msgctxt "#32062"
 msgid "Sync complete"
-msgstr "Sincronização completada"
+msgstr ""
 
 msgctxt "#32063"
 msgid "%i movie(s) will be added to Trakt collection"
-msgstr "%i filme(s) serão adicionais em sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32064"
 msgid "%i movie playcount(s) will be updated on Trakt"
-msgstr "%i de reprodução(ões) do filme serão atualizadas no Trakt"
+msgstr ""
 
 msgctxt "#32065"
 msgid "%i movie(s) playcount will be updated in Kodi"
-msgstr "%i de visualização(ões) de filmes serão atualizadas no Kodi"
+msgstr ""
 
 msgctxt "#32066"
 msgid "Movie Sync Complete"
-msgstr "Sincronização de Filmes Completada"
+msgstr ""
 
 msgctxt "#32067"
 msgid "Going to add %i show(s) to Trakt collection"
-msgstr "Indo adicionar %i seriado(s) para sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32068"
 msgid "Checking for episodes missing from Trakt collection"
-msgstr "Verificando por episódios ausentes na coleção do Trakt"
+msgstr ""
 
 msgctxt "#32069"
 msgid "%i of %i show(s) have episodes added to Trakt collection"
-msgstr "%i de %i seriado(s) possuem episódios que foram adicionados a sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32070"
 msgid "Going to update %i show(s) missing watched status"
-msgstr "Indo atualizar %i seriado(s) com estatus de assistido ausente"
+msgstr ""
 
 msgctxt "#32071"
 msgid "Checking watched episodes on Trakt"
-msgstr "Verificando episódios assistidos no Trakt"
+msgstr ""
 
 msgctxt "#32072"
 msgid "%i show(s) had missing watched status"
-msgstr "%i seriado(s) estão com estatus de assistidos ausentes"
+msgstr ""
 
 msgctxt "#32073"
 msgid "%i episodes are being updated"
-msgstr "%i episódios estão sendo atualizados"
+msgstr ""
 
 msgctxt "#32074"
 msgid "Checking watched episodes on Kodi"
-msgstr "Verificando episódios assistidos no Kodi"
+msgstr ""
 
 msgctxt "#32075"
 msgid "Episode Sync Complete"
-msgstr "Sincronização de Episódios Completado"
+msgstr ""
 
 msgctxt "#32076"
 msgid "%i movie(s) will be removed from Trakt collection"
-msgstr "%i filme(s) irão ser removidos da coleção no Trakt"
+msgstr ""
 
 msgctxt "#32077"
 msgid "Cleaning Trakt TV show collection"
-msgstr "Limpando coleção de Seriados no Trakt"
+msgstr ""
 
 msgctxt "#32078"
 msgid "episodes are being removed"
-msgstr "episódios estão sendo removidos"
+msgstr ""
 
 msgctxt "#32079"
 msgid "Loading movies from Kodi"
-msgstr "Carregando filmes do Kodi"
+msgstr ""
 
 msgctxt "#32080"
 msgid "Movies loaded from Kodi"
-msgstr "Filmes carregados do Kodi"
+msgstr ""
 
 msgctxt "#32081"
 msgid "Retrieving movie collection from Trakt"
-msgstr "Recuperando coletâneas de filmes do Trakt"
+msgstr ""
 
 msgctxt "#32082"
 msgid "Retrieving watched movies from Trakt"
-msgstr "Recuperando filmes assistidos do Trakt"
+msgstr ""
 
 msgctxt "#32083"
 msgid "Retrieved movie data from Trakt"
-msgstr "Recuperando dados do filme via Trakt"
+msgstr ""
 
 msgctxt "#32084"
 msgid "Trakt movie collection is up to date, no movies to add"
-msgstr "coleção de filmes no Trakt se encontra atualizada, nenhum filme por adicionar"
+msgstr ""
 
 msgctxt "#32085"
 msgid "%i movie(s) were added to your Trakt collection"
-msgstr "%i filme(s) foram adicionados para sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32086"
 msgid "Trakt movie playcounts are up to date"
-msgstr "Número de visualizações de filmes está atualizada no Trakt"
+msgstr ""
 
 msgctxt "#32087"
 msgid "Playcounts updated for %i movie(s) on Trakt"
-msgstr "Número de visualizações atualizadas para %i filme(s) no Trakt"
+msgstr ""
 
 msgctxt "#32088"
 msgid "Kodi movie playcounts are up to date"
-msgstr "Número de visualizações de filmes está atualizada no Kodi"
+msgstr ""
 
 msgctxt "#32089"
 msgid "Updating %i of %i movie playcount(s) in Kodi"
-msgstr "Atualizando o número de visualizações para %i de %i filme(s) no Kodi"
+msgstr ""
 
 msgctxt "#32090"
 msgid "Playcounts updated for %i movie(s) in Kodi"
-msgstr "Número de visualizações atualizado para %i filme(s) no Kodi"
+msgstr ""
 
 msgctxt "#32091"
 msgid "Trakt movie collection is up to date, no movies removed"
-msgstr "Coleção de filmes no Trakt se encontra atualizada, nenhum filme removido"
+msgstr ""
 
 msgctxt "#32092"
 msgid "%i movie(s) were removed from your Trakt collection"
-msgstr "%i filme(s) foram removidos de sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32093"
 msgid "Updating %i of %i movie playcount(s) on Trakt"
-msgstr "Actualizando visualizações para %i de %i filme(s) no Trakt"
+msgstr ""
 
 msgctxt "#32094"
 msgid "Loading episode data from Kodi"
-msgstr "Carregando dados dos episódios do Kodi"
+msgstr ""
 
 msgctxt "#32095"
 msgid "Loading shows from Kodi"
-msgstr "Carregando shows do Kodi"
+msgstr ""
 
 msgctxt "#32096"
 msgid "Shows loaded from Kodi"
-msgstr "Shows carregados do Kodi"
+msgstr ""
 
 msgctxt "#32097"
 msgid "Parsing %i of %i episode data from Kodi"
-msgstr "Analisando %i de %i dados de episódios via Kodi"
+msgstr ""
 
 msgctxt "#32098"
 msgid "Loaded episode data from Kodi"
-msgstr "Carregando dados do episódio do Kodi"
+msgstr ""
 
 msgctxt "#32099"
 msgid "Loading episode data from Trakt"
-msgstr "Carregando dados do episódio via Trakt"
+msgstr ""
 
 msgctxt "#32100"
 msgid "Retrieving episode collection from Trakt"
-msgstr "Recuperando coleção de episódios via Trakt"
+msgstr ""
 
 msgctxt "#32101"
 msgid "Retrieving watched episodes from Trakt"
-msgstr "Recuperando episódios assistidos via Trakt"
+msgstr ""
 
 msgctxt "#32102"
 msgid "Parsing episode data %i of %i from Trakt"
-msgstr "Analisando dados dos episódios %i de %i via Trakt"
+msgstr ""
 
 msgctxt "#32103"
 msgid "Retrieved episode data from Trakt"
-msgstr "Recuperando dados do episódio via Trakt"
+msgstr ""
 
 msgctxt "#32104"
 msgid "Trakt episode collection is up to date, no episodes to add"
-msgstr "Coleção de episódios no Trakt se encontra atualizado, nenhum episódio por adicionar"
+msgstr ""
 
 msgctxt "#32105"
 msgid "%i episode(s) were added to your Trakt collection"
-msgstr "%i episódio(s) foram adicionados em sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32106"
 msgid "Trakt episode playcounts are up to date"
-msgstr "Número de visualizações de episódios está atualizada no Trakt"
+msgstr ""
 
 msgctxt "#32107"
 msgid "Kodi episode playcounts are up to date"
-msgstr "Número de visualizações de episódios está atualizada no Kodi"
+msgstr ""
 
 msgctxt "#32108"
 msgid "Updating %i of %i episode playcount(s) in Kodi"
-msgstr "Atualizando número de visualizações para %i de %i episódio(s) no Kodi"
+msgstr ""
 
 msgctxt "#32109"
 msgid "Playcounts updated for %i show(s) in Kodi"
-msgstr "Número de visualizações atualizado para %i episódio(s) no Kodi"
+msgstr ""
 
 msgctxt "#32110"
 msgid "Trakt episode collection is clean, no episodes to remove"
-msgstr "Coleção de episódios no Trakt está limpa, nenhum episódio para remover"
+msgstr ""
 
 msgctxt "#32111"
 msgid "%i episode(s) are being removed from your Trakt collection"
-msgstr "%i episódio(s) estão sendo removidos de sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32112"
 msgid "%i episode(s) were removed from your Trakt collection"
-msgstr "%i episódio(s) foram removidos de sua coleção no Trakt"
+msgstr ""
 
 msgctxt "#32113"
 msgid "Trakt - Marked as watched"
-msgstr "Trakt - Marcado como assistido"
+msgstr ""
 
 msgctxt "#32114"
 msgid "Trakt - Failed marking as watched"
-msgstr "Trakt - Falhou marcando como assistido"
+msgstr ""
 
 msgctxt "#32115"
 msgid "%d episode(s) of '%s'"
-msgstr "%d episódio(s) de '%s'"
+msgstr ""
 
 msgctxt "#32116"
 msgid "Enable debug mode"
-msgstr "Ativar Modo Debug"
+msgstr ""
 
 msgctxt "#32117"
 msgid "Sync movie playback progress to Kodi"
-msgstr "Sincronizando progresso de reprodução dos filmes para o Kodi"
+msgstr ""
 
 msgctxt "#32118"
 msgid "Sync episode playback progress to Kodi"
-msgstr "Sincronizando progresso de reprodução dos seriados para o Kodi"
+msgstr ""
 
 msgctxt "#32119"
 msgid "Retrieving episode playback progress from Trakt"
-msgstr "Recebendo progresso da reprodução do episódio do Trakt"
+msgstr ""
 
 msgctxt "#32120"
 msgid "Parsing episode playback progress %i of %i from Trakt"
-msgstr "Analisando progresso da reprodução dos episiodios % i de % i do Trakt"
+msgstr ""
 
 msgctxt "#32121"
 msgid "Retrieved episode playback progress from Trakt"
-msgstr "Recebendo progresso da reprodução dos episódios do Trakt"
+msgstr ""
 
 msgctxt "#32122"
 msgid "Retrieving movie playback progress from Trakt"
-msgstr "Recebendo progresso da reprodução dos filmes do Trakt"
+msgstr ""
 
 msgctxt "#32123"
 msgid "Parsing movie playback progress %i of %i from Trakt"
-msgstr "Analisando progresso da reprodução dos filmes % i de % i do Trakt"
+msgstr ""
 
 msgctxt "#32124"
 msgid "Retrieved movie playback progress from Trakt"
-msgstr "Recebendo progresso da reprodução dos filmes do Trakt"
+msgstr ""
 
 msgctxt "#32125"
 msgid "Kodi movie playback progress is up to date"
-msgstr "O progresso de reprodução dos filmes está atualizado"
+msgstr ""
 
 msgctxt "#32126"
 msgid "%i movie(s) playback progress will be updated in Kodi"
-msgstr "Vão ser atualizados %i progresso(s) da reprodução para os filme(s) no Kodi"
+msgstr ""
 
 msgctxt "#32127"
 msgid "Updating %i of %i movie(s) playback progress in Kodi"
-msgstr "Atualizando progresso de reprodução dos filmes (%i de %i) no Kodi"
+msgstr ""
 
 msgctxt "#32128"
 msgid "Playback progress updated for %i movie(s) in Kodi"
-msgstr "Progresso de reprodução atualizado para %i filme(s) no Kodi"
+msgstr ""
 
 msgctxt "#32129"
 msgid "Kodi episode playback progress is up to date"
-msgstr "O progresso de reprodução dos seriados está atualizado"
+msgstr ""
 
 msgctxt "#32130"
 msgid "Updating %i of %i episode(s) playback progress in Kodi"
-msgstr "Atualizando progresso de reprodução dos seriados (%i de %i) no Kodi"
+msgstr ""
 
 msgctxt "#32131"
 msgid "Playback progress updated for %i episode(s) in Kodi"
-msgstr "Progresso da reprodução atualizado para %i episódio(s) no Kodi"
+msgstr ""
 
 msgctxt "#32132"
 msgid "Unrate this season"
-msgstr "Remover avaliação desta temporada"
+msgstr ""
 
 msgctxt "#32133"
 msgid "Manage Movie's Lists"
-msgstr "Gerencie Listas de Filmes"
+msgstr ""
 
 msgctxt "#32134"
 msgid "Manage Show's Lists"
-msgstr "Gerencie Listas de Seriados"
+msgstr ""
 
 msgctxt "#32135"
 msgid "Remove from Watchlist"
-msgstr "Remover da Watchlist"
+msgstr ""
 
 msgctxt "#32136"
 msgid "Add to watchlist"
-msgstr "Adicionar para lista de por assistir"
+msgstr ""
 
 msgctxt "#32137"
 msgid "Rate this movie"
-msgstr "Avaliar este filme"
+msgstr ""
 
 msgctxt "#32138"
 msgid "Rate this show"
-msgstr "Avaliar este seriado"
+msgstr ""
 
 msgctxt "#32139"
 msgid "Rate this episode"
-msgstr "Avaliar este episódio"
+msgstr ""
 
 msgctxt "#32140"
 msgid "Toggle watched"
-msgstr "Alternar para assistido"
+msgstr ""
 
 msgctxt "#32141"
 msgid "Manage all lists"
-msgstr "Gerenciar todas as listas"
+msgstr ""
 
 msgctxt "#32142"
 msgid "Update all tags"
-msgstr "Atualizar todas as etiquetas"
+msgstr ""
 
 msgctxt "#32143"
 msgid "Synchronize library"
-msgstr "Sincronizar coleção"
+msgstr ""
 
 msgctxt "#32144"
 msgid "How do I authorize the trakt addon to access my trakt.tv account?"
-msgstr "Como posso autorizar o addon trakt para acessar minha conta trakt.tv?"
+msgstr ""
 
+# empty strings from id 32145 to 32146
 msgctxt "#32147"
 msgid "Trakt.tv PIN Authorization Failed"
-msgstr "PIN de Autorização do Trakt.tv Falhou"
+msgstr ""
 
+# empty string with id 32148
 msgctxt "#32149"
 msgid "Rate this Season"
-msgstr "Avaliar esta Temporada"
+msgstr ""
 
 msgctxt "#32150"
 msgid "You will be reminded in 24 hours"
-msgstr "Serás lembrado em 24 horas"
+msgstr ""
 
 msgctxt "#32151"
 msgid "Use Addon Settings later if you change your mind"
-msgstr "Use os Ajustes do Addon mais tarde, se você mudar de idéia"
+msgstr ""
 
 msgctxt "#32152"
 msgid "Trakt Authorization Complete"
-msgstr "Autorização Trakt Completada"
+msgstr ""
 
 msgctxt "#32153"
 msgid "Trakt Account Authorization"
-msgstr "Autorização na Conta Trakt"
+msgstr ""
 
 msgctxt "#32154"
 msgid "Authorize"
-msgstr "Autorizar"
+msgstr ""
 
 msgctxt "#32155"
 msgid "Remind Me Later"
-msgstr "Lembrar-me depois"
+msgstr ""
 
 msgctxt "#32156"
 msgid "No Thanks"
-msgstr "Não Obrigado"
+msgstr ""
 
 msgctxt "#32157"
 msgid "Account Authorization"
-msgstr "Autorização na Conta"
+msgstr ""
 
 # empty string with id 32158
 msgctxt "#32159"
@@ -625,23 +631,23 @@ msgstr ""
 
 msgctxt "#32162"
 msgid "The trakt addon CAN NOT be used without authorizing it to access your trakt.tv account."
-msgstr "O addon do trakt NÃO PODE ser usado sem o procedimento de autorização de acesso a sua conta no trakt.tv."
+msgstr ""
 
 msgctxt "#32163"
 msgid "User"
-msgstr "Usuário"
+msgstr ""
 
 msgctxt "#32164"
 msgid "Fallback to Title/Year matching if necessary"
-msgstr "Retorno para Título/Ano correspondente se necessário"
+msgstr ""
 
 msgctxt "#32165"
 msgid "Trakt - Added to watchlist"
-msgstr "Trakt - Adicionado para lista de por assistir"
+msgstr ""
 
 msgctxt "#32166"
 msgid "Trakt - Failed adding to watchlist"
-msgstr "Trakt - Falhou ao adicionar para lista de por assistir"
+msgstr ""
 
 msgctxt "#32167"
 msgid "Offset scrobble start by X minutes"
@@ -762,19 +768,3 @@ msgstr ""
 msgctxt "#42191"
 msgid "Optional password needed to authenticate with the proxy."
 msgstr ""
-
-#~ msgctxt "#32003"
-#~ msgid "Startup Delay"
-#~ msgstr "Atrasar ao Inicializar"
-
-#~ msgctxt "#32159"
-#~ msgid "Visit {0} or scan the QR Code below."
-#~ msgstr "Visite {0} ou escaneie o código QR abaixo."
-
-#~ msgctxt "#32160"
-#~ msgid "Authorize the trakt addon to access your account."
-#~ msgstr "Autorize o addon do trakt acessar sua conta."
-
-#~ msgctxt "#32161"
-#~ msgid "Enter the PIN provided in the box below."
-#~ msgstr "Entre com o PIN fornecido no campo abaixo."
