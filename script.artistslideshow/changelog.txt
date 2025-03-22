@@ -1,3 +1,6 @@
+v.3.3.8
+- fixes for crashes
+
 v.3.3.7
 - fix to get fourth artwork from theAudioDB
 

@@ -282,7 +282,7 @@ class Main(xbmc.Player):
                     break
             elif not self.DAEMON:
                 break
-        self._clear_properties()
+        self._clear_properties(slideshowstopping=True)
         self._set_property('ArtistSlideshowRunning')
         self._set_property('ArtistSlideshow.CleanupComplete', 'True')
         LW.log(['script version %s stopped' % ADDONVERSION], xbmc.LOGINFO)
@@ -308,7 +308,7 @@ class Main(xbmc.Player):
         text = re.sub('Read more about .* on Last.fm.', '', text)
         return text.strip()
 
-    def _clear_properties(self, fadetoblack=False, clearartists=False):
+    def _clear_properties(self, fadetoblack=False, clearartists=False, slideshowstopping=False):
         LW.log(['main thread is cleaning all the properties'])
         self.MBID = ''
         self.FANARTNUMBER = False
@@ -317,7 +317,7 @@ class Main(xbmc.Player):
         if self._get_infolabel('ArtistSlideshow.Image'):
             self.SLIDESHOW.ClearImages(fadetoblack=fadetoblack)
         self._slideshow_thread_stop()
-        if self._is_playing():
+        if self._is_playing() and ( fadetoblack or clearartists ) and not slideshowstopping:
             self._slideshow_thread_start()
         if self._get_infolabel('ArtistSlideshow.ArtistBiography'):
             self._set_property('ArtistSlideshow.ArtistBiography')
@@ -884,6 +884,7 @@ class Main(xbmc.Player):
         self.LASTARTISTREFRESH = 0
         self.LASTCACHETRIM = 0
         self.PARAMS = {}
+        self.SLIDESHOW = Slideshow(self.WINDOW, self.SLIDEDELAY)
 
     def _init_window(self):
         self.WINDOW = xbmcgui.Window(int(self.WINDOWID))
@@ -1198,7 +1199,8 @@ class Main(xbmc.Player):
             self.SLIDESHOW.StopSlideshow()
         except AttributeError:
             return
-        self.SLIDESHOW.join()
+        if self.SLIDESHOW.is_alive():
+            self.SLIDESHOW.join(self.SLIDESHOW.SLIDESHOWSLEEP + 2)
 
     def _use_correct_artwork(self):
         if self.USEOVERRIDE:

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-02-27 11:31+0000\n"
+"PO-Revision-Date: 2024-04-22 15:04+0000\n"
 "Last-Translator: rimasx <riks_12@hot.ee>\n"
 "Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/et_ee/>\n"
 "Language: et_ee\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.2\n"
+"X-Generator: Weblate 5.4.3\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -32,7 +32,7 @@ msgstr "Slaidiesitlus"
 
 msgctxt "#32001"
 msgid "Storage"
-msgstr ""
+msgstr "Salvestusruum"
 
 msgctxt "#32002"
 msgid "Images"
@@ -336,23 +336,23 @@ msgstr "Hiina"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "Horvaadi"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "Tšehhi"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "Taani"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "Hollandi"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "Inglise"
 
 msgctxt "#32913"
 msgid "Estonian"
@@ -372,56 +372,56 @@ msgstr "Saksa"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "Kreeka"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "Heebrea"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungari"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandi"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
+msgstr "Indoneesia"
 
 # empty string with id 32923
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "Itaalia"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "Jaapani"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "Korea"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "Läti"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Leedu"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "Makedoonia"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
+msgstr "Norra"
 
 # empty string with id 32931
 msgctxt "#32932"
@@ -434,53 +434,53 @@ msgstr "Portugali"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portugali (Brasiilia)"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "Rumeenia"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "Vene"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "Serbia (ladina)"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "Slovaki"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "Sloveenia"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
+msgstr "Hispaania"
 
 # empty string with id 32941
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "Rootsi"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "Tai"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "Türgi"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukraina"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnami"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "Farsi"

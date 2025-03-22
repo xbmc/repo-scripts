@@ -1,4 +1,4 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.7">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.3.8">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
@@ -10,8 +10,8 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.3.3.7
-- fix to get fourth artwork from theAudioDB
+v.3.3.8
+- fixes for crashes
 		</news>
 		<assets>
         	<icon>icon.png</icon>
@@ -33,7 +33,7 @@ v.3.3.7
 		<summary lang="en_US">Download images and additional info of the currently playing artist</summary>
 		<summary lang="en_US">Download images and additional info of the currently playing artist</summary>
 		<summary lang="es_AR">Bajá imágenes e información adicional sobre el artista</summary>
-		<summary lang="es_ES">Descarga imágenes e información adicional del intérprete que esté sonando</summary>
+		<summary lang="es_ES">Descarga imágenes e información adicional del artista que esté sonando</summary>
 		<summary lang="es_MX">Descargar imágenes e información adicional del artista actualmente en reproducción</summary>
 		<summary lang="et_EE">Lae alla pilte ja lisateavet hetkel mängiva esitaja kohta</summary>
 		<summary lang="fi_FI">Noutaa kuvia ja lisätietoja parhaillaan toistettavasta esittäjästä</summary>
@@ -65,7 +65,7 @@ v.3.3.7
 		<description lang="en_NZ">Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists&apos; images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
 		<description lang="en_US">Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists&apos; images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
 		<description lang="en_US">Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists&apos; images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
-		<description lang="es_ES">Addon para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del intérprete que se está reproduciendo. Las imágenes, junto con imágenes de intérpretes locales, y la información puede ser utilizada por la piel para crear una presentación de diapositivas para el intérprete que se está escuchando.</description>
+		<description lang="es_ES">Addon para descargar imágenes e información adicional desde fanart.tv y theaudiodb.com del artista que se está reproduciendo. Las imágenes, junto con imágenes de artistas locales, y la información puede ser utilizada por el skin para crear una presentación de imágenes para el artista que se está escuchando.</description>
 		<description lang="es_MX">Complemento para descargar imágenes e información adicional de fanart.tv y theaudiodb.com del artista actualmente en reproducción. Las imágenes, junto con las imágenes e información locales de los artistas pueden ser utilizados por la máscara para crear una presentación del artista que estés escuchando.</description>
 		<description lang="et_EE">Lisamoodul, millega saab alla laadida pilte ja lisateavet fanart.tv ja theaudiodb.com saitidelt hetkel mängiva esitaja kohta. Koos meediakogus leiduvate esitajate piltide ja teabega saab rüü neid kasutada kuulatava esitaja slaidiseansi loomiseks.</description>
 		<description lang="fi_FI">Lisäosa parhaillaan kuunneltavan esittäjän kuvien ja tietojen noutoon mm. Fanart.tv- ja TheAudioDB.com-palveluista. Ulkoasut voivat luoda kuvaesityksiä kuunneltavasta esittäjästä käyttäen näitä tietoja ja esittäjien paikallisia kuvia.</description>
