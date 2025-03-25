@@ -8,18 +8,18 @@ import xbmcvfs
 from resources.lib.player.mediatype import AUDIO, PICTURE, TYPES, VIDEO
 from resources.lib.player.playlist import PlayList
 
-_PVR_CHANNELS_MATCHER = "^pvr://channels/.*\.pvr$"
-_PVR_TV_CHANNELS_MATCHER = "^pvr://channels/tv/.*\.pvr$"
-_PVR_RADIO_CHANNELS_MATCHER = "^pvr://channels/radio/.*\.pvr$"
-_PVR_RECORDINGS_MATCHER = "^pvr://recordings/.*\.pvr$"
+_PVR_CHANNELS_MATCHER = r"^pvr://channels/.*\.pvr$"
+_PVR_TV_CHANNELS_MATCHER = r"^pvr://channels/tv/.*\.pvr$"
+_PVR_RADIO_CHANNELS_MATCHER = r"^pvr://channels/radio/.*\.pvr$"
+_PVR_RECORDINGS_MATCHER = r"^pvr://recordings/.*\.pvr$"
 _PVR_PREFIX = "pvr://"
 _MUSIC_DB_PREFIX = "musicdb://"
 _VIDEO_DB_PREFIX = "videodb://"
 _AUDIO_PLUGIN_PREFIX = "plugin://plugin.audio."
 _VIDEO_PLUGIN_PREFIX = "plugin://plugin.video."
 _URI_MATCHER = "^[a-z]+://.+$"
-_FAVOURITES_MATCHER = "^favourites://(PlayMedia|RunScript)\(%22(.+)%22\)/?$"
-_SCRIPT_MATCHER = "^((script|plugin)://)?script\..+$"
+_FAVOURITES_MATCHER = r"^favourites://(PlayMedia|RunScript)\(%22(.+)%22\)/?$"
+_SCRIPT_MATCHER = r"^((script|plugin)://)?script\..+$"
 
 _PLAYLIST_TYPES = [".m3u", ".m3u8", ".pls"]
 
@@ -158,7 +158,7 @@ def get_file_name(path: str) -> str:
     if path.endswith("/"):
         return None
 
-    m = re.match("^.*/([^/.]+)(\.[^\.]+)?$", "/%s" % path)
+    m = re.match(r"^.*/([^/.]+)(\.[^\.]+)?$", "/%s" % path)
     if not m:
         return None
 
@@ -168,7 +168,7 @@ def get_file_name(path: str) -> str:
 
 def get_file_extension(path: str) -> str:
 
-    m = re.match("^.+(\.[^\.]+)$", path.lower())
+    m = re.match(r"^.+(\.[^\.]+)$", path.lower())
     if not m:
         return None
 
