@@ -1,4 +1,4 @@
-<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="2.0.15">
+<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="2.0.16">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.31.0"/>
@@ -20,10 +20,8 @@
         </assets>
         <source>https://github.com/zim514/script.service.hue</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=344886</forum>
-        <news>v2.0.15
-- Hide disabled menu action when service is disabled
-- Fix inconsistent activation code
-- Crash fix
+        <news>v2.0.16
+- Fix Video scenes triggering with Audio
 
 </news>
         <summary lang="ca_ES">Automatitza les llums Hue amb la reproducció de Kodi</summary>

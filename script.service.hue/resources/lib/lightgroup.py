@@ -55,6 +55,9 @@ class LightGroup(xbmc.Player):
         elif not self.bridge.connected:
             log(f"[SCRIPT.SERVICE.HUE] Bridge not connected")
             return
+        elif self.media_type != self._playback_type():
+            log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}]: Wrong media type")
+            return
         else:
             log(f"[SCRIPT.SERVICE.HUE] LightGroup[{self.light_group_id}] onPlaybackStarted. play_behavior: {play_enabled}, media_type: {self.media_type} == playback_type: {self._playback_type()}")
             if self.media_type == self._playback_type() and self._playback_type() == VIDEO:
@@ -186,12 +189,12 @@ class LightGroup(xbmc.Player):
 
     def _playback_type(self):
         if self.isPlayingVideo():
-            media_type = VIDEO
+            return VIDEO
         elif self.isPlayingAudio():
-            media_type = AUDIO
+            return AUDIO
         else:
-            media_type = None
-        return media_type
+            return None
+
 
 
 class ActivationChecker:
