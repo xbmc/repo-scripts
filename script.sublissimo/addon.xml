@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="2.0.4" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="2.0.5" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.chardet" version="4.0.0+matrix.1"/>
@@ -28,6 +28,7 @@
         <summary lang="ko_KR">리모컨으로 자막 편집 및 동기화</summary>
         <summary lang="es_ES">Editar y sincronizar subtítulos con el mando a distancia</summary>
         <summary lang="zh_CN">使用遥控器编辑和同步字幕</summary>
+        <summary lang="sv_SE">Redigera och synkronisera undertexter med din fjärrkontroll</summary>
         <description lang="de_DE">Mit diesem Skript lassen sich bestimmte Zeilen bearbeiten, Untertitel verschieben oder strecken und mit anderen Untertiteln synchronisieren. Sie können auch mit einer Videodatei synchronisiert werden.[CR][CR]Um diesen Editor einfach zu verwenden, ihn während der Wiedergabe des Videos und des Untertitels, den bearbeiten werden soll, starten.</description>
         <description lang="en_GB">With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing.</description>
         <description lang="hr_HR">S ovom skriptom možete urediti određene retke, pomaknuti ili raširiti podnaslove, i uskladiti s ostalim podnaslovima. Možete još uskladiti i s video datotekom.[CR][CR]Za lakše korištenje ovog uređivača, pokrenite ga kada se video i podnaslov kojeg želite urediti reproduciraju.</description>
@@ -36,5 +37,6 @@
         <description lang="ko_KR">이 스크립트를 사용하면 특정 줄을 편집하고, 자막을 이동하거나 늘리고, 다른 자막과 동기화할 수 있습니다. 비디오 파일과 동기화할 수도 있습니다.</description>
         <description lang="es_ES">Con este script puedes editar líneas específicas, mover o estirar subtítulos y sincronizarlos con otros subtítulos. También puedes sincronizar con un archivo de vídeo.[CR][CR]Para usar fácilmente este editor, lánzalo cuando se estén reproduciendo el vídeo y el subtítulo que deseas editar.</description>
         <description lang="zh_CN">您可以使用此脚本编辑特定行、移动或拉伸字幕，以及与其他字幕同步。您还可以与视频文件同步。[CR][CR]要轻松使用此编辑器，请在要编辑的字幕与视频播放时启动它。</description>
+         <description lang="sv_SE">Med det här skriptet kan du redigera specifika rader, flytta eller sträcka ut undertexter och synkronisera med andra undertexter. Du kan också synkronisera med en videofil.[CR][CR]För att enkelt kunna använda denna redigerare, starta den när videon och undertexten du vill redigera spelas upp.</description>
     </extension>
 </addon>

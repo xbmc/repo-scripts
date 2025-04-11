@@ -1,0 +1,938 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-04-11 02:06+0000\n"
+"Last-Translator: Daniel Nylander <daniel@danielnylander.se>\n"
+"Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/sv_se/>\n"
+"Language: sv_se\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Redigera och synkronisera undertexter med din fjärrkontroll"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
+msgstr "Med det här skriptet kan du redigera specifika rader, flytta eller sträcka ut undertexter och synkronisera med andra undertexter. Du kan också synkronisera med en videofil.[CR][CR]För att enkelt kunna använda denna redigerare, starta den när videon och undertexten du vill redigera spelas upp."
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "Bläddra i undertexter"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "Redigera eller ta bort rader"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "Flytta undertexter"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "Sträck ut/in undertexter"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "Synkronisera med annan undertext"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "Synkronisera med videofil"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "Sök i undertexter"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "Kontrollera integriteten"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "Spara undertexter"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "Avsluta"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "Synkronisera med bildfrekvens"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "Spela upp video med redigerad undertext"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "Avancerade alternativ"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid ""
+"Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the "
+"beginning to a line as reference[CR]- Select the roughly the same line in "
+"your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "Välj den undertext som du vill synkronisera med. Sedan:[CR]- Välj en tidskod i början till en rad som referens[CR]- Välj ungefär samma rad i din undertext[CR]- Gör sedan samma sak med två rader nära slutet av båda filerna."
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "Redigera rad"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "Ta bort första undertexten"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "Ta bort sista undertexten"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "Bläddra och ta bort manuellt"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "Bakåt"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "Ta bort den här undertexten?"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "Välj undertext att redigera"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "Återgå"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "Ta bort"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "Alla undertexter"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "Hittade:"
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "Ok"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "Mer info"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "Fel"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "Välj undertext att synkronisera med"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr "Välj en .srt- eller en .sub-fil"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "Lyckades"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "Aktuell första undertitel"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "Första undertexten är nu:"
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "Välj en videofil."
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "Aktuell sista undertitel"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "Sista undertexten är nu:"
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "Ange söksträng"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "Nej"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "Denna redigerare fungerar bara med .srt- eller .sub-filer"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "Filen hittades inte: "
+
+msgctxt "#32028"
+msgid ""
+"Write the new timestamp for the end position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Skriv den nya tidsstämpeln för slutpositionen, åtskilda av ett ':'. Till exempel 01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "Till exempel: 01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "Rapport"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "Inga problem upptäcktes"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "Rad:"
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "Rad "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "Möjliga problem: "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "Välj undertext för att fortsätta..."
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "Välj undertext att redigera"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "Din undertext börjar vid "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "Din undertext slutar vid "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "Spara med _edited.srt tillagd"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "Spara med aktuellt filnamn"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "Spara med anpassat filnamn"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "Avsluta utan att spara"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "Ange nytt filnamn: "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "Skrevs till: "
+
+msgctxt "#32044"
+msgid ""
+"To use the file, select it in the Kodi player subtitle menu when playing the "
+"file"
+msgstr "Om du vill använda filen väljer du den i Kodi-spelarens undertextmeny när du spelar upp filen"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "Filen är inte skriven"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "Varning"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "Du kanske har osparade ändringar i din fil"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "Avsluta ändå"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "Spara"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "Undertexter synkroniserades"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "Gå framåt"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "Flytta bakåt"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "Ange ny tid för första undertexten"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Flytta framåt med: HH:MM:SS:MSE"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Flytta framåt med: HH:MM:SS:MSE"
+
+msgctxt "#32056"
+msgid ""
+"Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, "
+"milliseconds. For instance: 01:23:45:000"
+msgstr "Ange giltig tidskod: HH:MM:SS:MSE. Timmar, minuter, sekunder, millisekunder. Till exempel 01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "Så här synkroniserar du två undertexter"
+
+msgctxt "#32058"
+msgid ""
+"In order to synchronize, you will need a subtitle which matches the video "
+"perfectly, but has different subtitles, usually from a different language. "
+"In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked "
+"to select a timecode in this file, which will be used as reference. Ideally, "
+"it is the first spoken line from the video. In the next screen, select the "
+"line from your original subtitle which matches the first.[CR]"
+"[CR]Subsequently, you'll be asked again to select a line from your reference "
+"subtitle and to match this with the same line in your original subtitle. "
+"Usually the best choice is the last spoken line from the video. After this "
+"your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them "
+"and 'Save subtitles' to write them to a file."
+msgstr "För att kunna synkronisera behöver du en undertext som matchar videon perfekt, men som har olika undertexter, vanligtvis från ett annat språk. I nästa bild väljer du först den här undertexten.[CR][CR]Sedan blir du ombedd att välja en tidskod i den här filen, som ska användas som referens. Helst är det den första talade raden från videon. På nästa skärm väljer du den rad från din ursprungliga undertext som matchar den första.[CR][CR]Därefter ombeds du igen att välja en rad från din referensundertext och matcha den med samma rad i din ursprungliga undertext. Vanligtvis är det bästa valet den sista talade raden i videon. Efter detta kommer dina två undertexter att synkroniseras![CR][CR]Markera \"Bläddra i undertexter\" för att visa dem och \"Spara undertexter\" för att skriva dem till en fil."
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "Filen hittades inte"
+
+msgctxt "#32060"
+msgid ""
+"In the next screen, select the video to synchronize with. Go to the point in "
+"the video where the first subtitle starts. When you pause the video, choose "
+"'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "På nästa skärm väljer du den video som du vill synkronisera med. Gå till den punkt i videon där den första undertexten börjar. När du pausar videon väljer du \"Välj som start\" i menyn och gör sedan samma sak med den sista undertexten."
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "Så här synkroniserar du med en videofil"
+
+msgctxt "#32062"
+msgid ""
+"In the next screen, open the videofile from the library which belongs to the "
+"subtitle you have opened. Skip or fast forward to the point where the "
+"subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, "
+"a menu will pop up with several options. Select 'View or edit first "
+"subtitle'. When your first subtitle is not the first line from the video, "
+"select 'Delete' until the first subtitle is also the first line from the "
+"video.[CR][CR]Then finetune the position of the video, possibly by using the "
+"'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position "
+"is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the "
+"video, and repeat the same process.[CR][CR]After this, your file will be "
+"synced to the video."
+msgstr "På nästa skärm öppnar du videofilen från biblioteket som hör till den undertext du har öppnat. Hoppa eller snabbspola till den punkt där undertexten ungefär ska placeras. Pausa[CR][CR]När du pausade videon visas en meny med flera alternativ. Välj \"Visa eller redigera första undertexten\". Om den första undertexten inte är den första raden i videon väljer du \"Ta bort\" tills den första undertexten också är den första raden i videon.[CR][CR]Finjustera sedan videons position, eventuellt med hjälp av knapparna \"Hoppa framåt 1 sekund\" eller \"Hoppa bakåt 1 sekund\". Om positionen är perfekt väljer du \"Välj som start\".[CR]Snabbspola nu fram till slutet av videon och upprepa samma process.[CR][CR]Efter detta synkroniseras din fil med videon."
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "Välj tidskod för den första undertexten som ska synkroniseras med"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "Vald tid"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "Vald tid"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "Välj tidskod för undertexten som är ungefär densamma"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "Välj tid för sista undertexten som ska synkroniseras"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "Välj tid för sista undertexten"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "Ny tidkod"
+
+msgctxt "#32069"
+msgid ""
+"Write the new timestamp for the start position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Skriv den nya tidsstämpeln för startpositionen, åtskilda av ett ':'. Till exempel 01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "Undertexter flyttas framåt med: {}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "Undertexter flyttas bakåt med {}"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "Första undertexten börjar nu på {}"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "Sista undertexten börjar nu på {}"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " Pausad vid: "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "Fortsätt spela"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "Välj som början på första undertexten"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "Hoppa bakåt 1 sekund"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "Hoppa framåt 1 sekund"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "Avsluta till huvudmenyn"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "Visa eller ta bort första undertexten"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "Visa eller ta bort den sista undertexten"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "Välj som början på sista undertexten"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "Ställ in som första undertext?"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "Vill du att din undertext ska börja på: "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "Återställ starttid"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "Vald start: "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "Valda tider:"
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "Din första undertext börjar på: "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "Din sista undertitel börjar på: "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "Välj"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "Återställ tider"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "Vald tid"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "Välj en rad med en tidskod"
+
+msgctxt "#32092"
+msgid ""
+"Please select a line with a timecode, like:[CR]'01:23:45,679 --> "
+"01:23:45,679'"
+msgstr "Välj en rad med en tidskod, t.ex.:[CR]'01:23:45,679 --> 01:23:45,679'"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "Välj film"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "Välj TV-serie"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "Visa hela biblioteket"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "Avsluta till huvudmenyn med ändringar"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "Spara visad undertext"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "Avsluta till huvudmenyn utan ändringar"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "Avsluta helt"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "Återställ till annan bildfrekvens"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "Spara och fortsätt spela"
+
+msgctxt "#32102"
+msgid ""
+"The subtitle is loaded with the new framerate. Pause to reset to another "
+"frame rate or to save."
+msgstr "Undertexten läses in med den nya bildfrekvensen. Pausa för att återställa till en annan bildfrekvens eller för att spara."
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "Ange ett giltigt nummer"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "Hämta bildfrekvens från video"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "Synkroniseringsalternativ efter bildfrekvens"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "Bildfrekvens"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "Ny sluttid"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "Gammal starttid: "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "Starttid: "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "Gammal sluttid: "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "Ny starttid: "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "Ny sluttid: "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "Spara och avsluta"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "Beräkna manuellt"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "Ange summa eller faktor"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "Beräkna faktor eller ange faktor"
+
+msgctxt "#32115"
+msgid ""
+"In the next screen, write a sum with the current framerate divided by the "
+"real frame rate. If the current frame rate is 25 and it should be 24, type "
+"'25/24'. Or type your own factor, like '1.2'"
+msgstr "På nästa skärm skriver du en summa med den aktuella bildfrekvensen dividerad med den verkliga bildfrekvensen. Om den aktuella bildfrekvensen är 25 och den borde vara 24, skriv \"25/24\". Eller skriv din egen faktor, till exempel \"1.2"
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "Spela med filen som du öppnade tidigare"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "Ange faktor"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "Sträck ut med angiven faktor"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "Sträck ut med angiven ny sluttid"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "Bildfrekvensen för den här videon är "
+
+msgctxt "#32121"
+msgid ""
+"The video is playing with the modified subtitle. Pause to save or to return "
+"to the menu."
+msgstr "Videon spelas upp med den modifierade undertexten. Pausa för att spara eller för att återgå till menyn."
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "Undertexter inlästa"
+
+msgctxt "#32123"
+msgid ""
+"The video is playing with the saved subtitle. The filename of the subtitle "
+"is: "
+msgstr "Videon spelas upp med den sparade undertexten. Filnamnet för undertexten är: "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "Hoppa till tiden för den aktuella första undertexten"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "Hoppa till tiden för den sista undertexten"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "Välj en annan"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "Ange bildfrekvens"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "Öppna annan undertext"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "Varför ser jag den här skärmen?"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr "Du har valt en .sub-fil"
+
+msgctxt "#32131"
+msgid ""
+"You have selected a .sub file, which uses frame rates to indicate when "
+"subtitles should be shown. To edit these subtitles, you have to select a "
+"frame rate. You can start a video to see what frame rate it has or just pick "
+"a random one if you want to use a sync option."
+msgstr "Du har valt en .sub-fil, som använder bildfrekvenser för att ange när undertexter ska visas. För att redigera undertexterna måste du välja en bildfrekvens. Du kan starta en video för att se vilken bildfrekvens den har eller bara välja en slumpmässig om du vill använda ett synkroniseringsalternativ."
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "Den här filen kanske inte är en giltig undertext"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "Läs in ändå"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "Välj andra"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr "Inte en giltig .sub-fil"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "Den här filen verkar inte vara en giltig .sub-fil."
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "Alla HTML-färgkoder som hittas återställs till vitt."
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "Återställ färgkod till vit"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "Återställ färg till en anpassad färg"
+
+msgctxt "#32140"
+msgid ""
+"Not a valid code for a color. Use 8 digits in a hexadecimal notation: "
+"'FF00FF00'"
+msgstr "Inte en giltig kod för en färg. Använd 8 siffror i en hexadecimal notation: 'FF00FF00'"
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "Ange färgkodning. Använd 8 siffror. Lämna tomt för att avbryta"
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "Alla hittade HTML-färgkoder återställs till "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "Läs in undertext"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "Manuellt"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "Vill du redigera den här undertexten?"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "Uppspelningen stoppas, men kan återupptas från menyn."
+
+msgctxt "#35005"
+msgid ""
+"A subtitlefile could not be found. Do you want to select one manually and "
+"continue with current video?"
+msgstr "En undertextfil kunde inte hittas. Vill du välja en manuellt och fortsätta med aktuell video?"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "Video:"
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "Undertext:"
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "Spela upp med "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Redigera och synkronisera undertexter med din fjärrkontroll"
+
+msgctxt "#35010"
+msgid ""
+"With this script you can edit specific lines, move or stretch subtitles, and "
+"synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "Med det här skriptet kan du redigera specifika rader, flytta eller sträcka ut undertexter och synkronisera med andra undertexter. Du kan också synkronisera med en videofil."
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "Återgå till menyn"
+
+msgctxt "#35016"
+msgid ""
+"Somewhere in the process of syncing an error occurred. Most of the time this "
+"is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A ."
+"srt file which has a digit missing in one of its timestamps.[CR] - A file "
+"which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> "
+"Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "Någonstans under synkroniseringsprocessen inträffade ett fel. För det mesta orsakas detta av:[CR] - En .srt-fil som använder icke-standardiserade tidsstämplar.[CR] - En .srt-fil som saknar en siffra i en av sina tidsstämplar.[CR] - En fil som inte är en faktisk .srt-fil[CR][CR]Använd huvudmenyn -> Avancerade alternativ -> Kontrollera integritet för att söka efter felaktiga tidsstämplar eller använd en annan .srt-fil."
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "Följande fel har inträffat:"
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "Detaljer om felet"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "Teckenuppsättningen upptäcktes inte"
+
+msgctxt "#35018"
+msgid ""
+"The correct characterset of this file could not be detected. The file is now "
+"loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "Den korrekta teckenuppsättningen för den här filen kunde inte upptäckas. Filen läsas nu in med UTF-8-uppsättningen och fel ersätts med frågetecken."
+
+msgctxt "#35019"
+msgid "Select textline"
+msgstr "Välj textrad"
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr "Välj tid att synkronisera till"
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr "Skifta framåt efter mikrosekunder"
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr "Skifta bakåt efter mikrosekunder"
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr "Skifta framåt efter minuter"
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr "Skifta bakåt efter minuter"
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr "Välj vilken undertext som ska tas bort"
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr "Minuter"
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr "Mikrosekunder"
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr "Se innehåll"
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr "Öppna ändå"
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr "Det är osannolikt att det är en undertext"
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr "Den här filen är ganska stor och är sannolikt inte en undertext"
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr "Undertexten kunde inte läsas in"
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr "Kunde inte hitta några undertexter i filen. Är det en giltig undertext?"
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr "Söker..."
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr "Kontrollerar vilken kodning som ska användas för den här filen."
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr "Detta verkar inte vara en giltig .sub-fil."
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr "Detta verkar inte vara en giltig .srt-fil."
+
+msgctxt "#35038"
+msgid "Results"
+msgstr "Resultat"
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr "Kodningen är: "
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr "Följande rader hoppades över:"
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr "Reparera manuellt"
+
+msgctxt "#35042"
+msgid "Jump to Specific subtitle"
+msgstr "Hoppa till specifik undertext"
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr "Visa eller ta bort undertext som är markerade som första"
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr "Visa eller ta bort undertext som är markerade som sista"
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr "Markera annan undertext som sista att synkronisera med"
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr "Markera annan undertext som den första att synkronisera med"
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr "Ändra starttid"
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr "Ändra sluttid"
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr "Hoppa bakåt 100 millisekunder"
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr "Vill du att: [CR]{}[CR] ska visas på {}?"
