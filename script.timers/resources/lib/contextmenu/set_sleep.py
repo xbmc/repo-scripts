@@ -25,7 +25,8 @@ class SetSleep(AbstractSetTimer):
         if is_epg:
             return timer.duration
 
-        if xbmc.getInfoLabel("PVR.EpgEventSeekTime(hh:mm:ss)") != "00:00:00":
+        seektime = xbmc.getInfoLabel("PVR.EpgEventSeekTime(hh:mm:ss)")
+        if seektime and xbmc.getInfoLabel("PVR.EpgEventSeekTime(hh:mm:ss)") != "00:00:00":
             _current = xbmc.getInfoLabel("PVR.EpgEventRemainingTime(hh:mm)")
 
         else:
