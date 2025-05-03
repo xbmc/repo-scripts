@@ -7,6 +7,7 @@ import json
 from resources.lib.settings_manager import SettingsManager
 from resources.lib.stream_info import StreamInfo
 from resources.lib.active_monitor import ActiveMonitor
+from resources.lib.notification_handler import NotificationHandler
 
 
 class OffsetManager:
@@ -14,6 +15,7 @@ class OffsetManager:
         self.event_manager = event_manager
         self.stream_info = StreamInfo()
         self.settings_manager = SettingsManager()
+        self.notification_handler = NotificationHandler(self.settings_manager)
         self.active_monitor = None
 
     def start(self):
@@ -22,7 +24,8 @@ class OffsetManager:
             'AV_STARTED': self.on_av_started,
             'ON_AV_CHANGE': self.on_av_change,
             'PLAYBACK_STOPPED': self.on_playback_stopped,
-            'PLAYBACK_ENDED': self.on_playback_stopped
+            'PLAYBACK_ENDED': self.on_playback_stopped,
+            'USER_ADJUSTMENT': self.on_user_adjustment
         }
         for event, callback in events.items():
             self.event_manager.subscribe(event, callback)
@@ -33,7 +36,8 @@ class OffsetManager:
             'AV_STARTED': self.on_av_started,
             'ON_AV_CHANGE': self.on_av_change,
             'PLAYBACK_STOPPED': self.on_playback_stopped,
-            'PLAYBACK_ENDED': self.on_playback_stopped
+            'PLAYBACK_ENDED': self.on_playback_stopped,
+            'USER_ADJUSTMENT': self.on_user_adjustment
         }
         for event, callback in events.items():
             self.event_manager.unsubscribe(event, callback)
@@ -51,6 +55,20 @@ class OffsetManager:
         """Handle playback stopped event."""
         self.stream_info.clear_stream_info()
         self.stop_active_monitor()
+        
+    def on_user_adjustment(self):
+        """Handle user adjustment event (manual offset change)."""
+        # Only send notification if active monitor is enabled
+        if self.active_monitor is not None:
+            # Get the current audio delay from settings
+            stream_info = self.stream_info.info
+            setting_id = self._get_setting_id(stream_info)
+            delay_ms = self.settings_manager.get_setting_integer(setting_id)
+            
+            # Send notification about the manual offset change
+            self.notification_handler.notify_manual_offset_saved(delay_ms, self.stream_info)
+            xbmc.log(f"AOM_OffsetManager: Notified user about manual offset change to {delay_ms}ms",
+                     xbmc.LOGDEBUG)
 
     def _handle_av_event(self):
         """Common handler for AV-related events."""
@@ -132,6 +150,13 @@ class OffsetManager:
             else:
                 xbmc.log(f"AOM_OffsetManager: Audio offset set to "
                          f"{delay_seconds} seconds", xbmc.LOGDEBUG)
+                
+                # Convert seconds to milliseconds for notification
+                delay_ms = int(delay_seconds * 1000)
+                
+                # Send notification for automatic offset application
+                # This is only called for automatic offset application (not manual adjustments)
+                self.notification_handler.notify_audio_offset_applied(delay_ms, self.stream_info)
         except Exception as e:
             xbmc.log(f"AOM_OffsetManager: Error setting audio delay: {str(e)}",
                      xbmc.LOGERROR)

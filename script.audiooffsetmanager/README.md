@@ -45,6 +45,8 @@ This addon streamlines your viewing experience by automating the process of audi
 ### FPS Types
 23.98, 24, 25, 29.97, 30, 50, 59.94, 60
 
+<img src="https://raw.githubusercontent.com/matthane/script.audiooffsetmanager/refs/heads/main/resources/screenshot-3.jpg" width="100%" alt="Audio Offset Manager screenshot 3">
+
 ## Installation and Usage
 
 1. Download the addon from the Kodi repository or install it manually.

@@ -78,7 +78,7 @@ msgid "Playback Behavior"
 msgstr ""
 
 msgctxt "#32017"
-msgid ""
+msgid "Settings related to addon playback behavior"
 msgstr ""
 
 msgctxt "#32018"
@@ -323,4 +323,56 @@ msgstr ""
 
 msgctxt "#32078"
 msgid "Offset configurations will save to selected FPS type"
+msgstr ""
+
+msgctxt "#32079"
+msgid "Enable notifications"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Show notifications when audio offset is dynamically applied or when manual offset adjustments are saved"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Notifications"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Skip and unlock settings"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Bypass the test video and unlock settings. Some settings may not be visible until after first video playback."
+msgstr ""
+
+msgctxt "#32088"
+msgid "Offset controls for Dolby Vision sources"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Offset controls for HDR10 sources"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Offset controls for HDR10+ sources"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Offset controls for HLG sources"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Offset controls for SDR sources"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Capabilities of the currently installed Kodi platform"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Notification duration (seconds)"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Control the length of time that notifications appear"
 msgstr ""
