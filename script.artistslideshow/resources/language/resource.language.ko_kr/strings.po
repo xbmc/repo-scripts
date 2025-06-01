@@ -1,0 +1,486 @@
+# Kodi Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: pkscout|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-09-03 07:30+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/ko_kr/>\n"
+"Language: ko_kr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Download images and additional info of the currently playing artist"
+msgstr "현재 재생중인 아티스트의 이미지와 추가 정보 다운로드"
+
+msgctxt "Addon Description"
+msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
+msgstr "현재 재생중인 아티스트의 이미지와 추가정보를 fanart.tv 와 theaudiodb.com 에서 다운로드합니다. 다운로드한 이미지와 정보는 로컬 이미지와 함께 현재 재생중인 음악의 아티스트 슬라이드쇼에 사용할 수 있습니다."
+
+# Section Headings
+msgctxt "#32000"
+msgid "Slideshow"
+msgstr "슬라이드쇼"
+
+msgctxt "#32001"
+msgid "Storage"
+msgstr "저장장치"
+
+msgctxt "#32002"
+msgid "Images"
+msgstr "이미지"
+
+msgctxt "#32003"
+msgid "Album Info"
+msgstr "앨범 정보"
+
+msgctxt "#32004"
+msgid "Artist Bio"
+msgstr "아티스트 약력"
+
+msgctxt "#32005"
+msgid "Similar Artists"
+msgstr "유사한 아티스트"
+
+msgctxt "#32006"
+msgid "Advanced"
+msgstr "고급"
+
+# empty strings from id 32007 to 32099
+# Settings
+msgctxt "#32101"
+msgid "Download images from fanart.tv"
+msgstr "fanart.tv에서 이미지 다운로드"
+
+msgctxt "#32102"
+msgid "Download images from theaudiodb.com"
+msgstr "theaudiodb.com에서 이미지 다운로드"
+
+msgctxt "#32103"
+msgid "Download album info from the audiodb.com"
+msgstr "audiodb.com에서 앨범 정보 다운로드"
+
+msgctxt "#32104"
+msgid "Download album info from the last.fm"
+msgstr "last.fm에서 앨범 정보 다운로드"
+
+msgctxt "#32105"
+msgid "Download artist bio from theaudiodb.com"
+msgstr "theaudiodb.com에서 아티스트 약력 다운로드"
+
+msgctxt "#32106"
+msgid "Download artist bio from last.fm"
+msgstr "last.fm에서 아티스트 약력 다운로드"
+
+msgctxt "#32107"
+msgid "Download similar artists from last.fm"
+msgstr "last.fm에서 유사한 아티스트 다운로드"
+
+msgctxt "#32108"
+msgid "Download all images regardless of resolution"
+msgstr "해상도 상관없이 모든 이미지 다운로드"
+
+msgctxt "#32109"
+msgid "Client API key"
+msgstr "클라이언트 API 키"
+
+msgctxt "#32110"
+msgid "I donate to this service"
+msgstr "이 서비스에 기부합니다"
+
+msgctxt "#32111"
+msgid "Use fallback slideshow"
+msgstr "기본 슬라이드쇼 사용"
+
+msgctxt "#32112"
+msgid "Use override slideshow"
+msgstr "슬라이드쇼 덮어쓰기 사용"
+
+msgctxt "#32113"
+msgid "Custom location"
+msgstr "사용자 지정 위치"
+
+msgctxt "#32114"
+msgid "Include Kodi artist fanart"
+msgstr "Kodi 아티스트 팬아트 포함"
+
+msgctxt "#32115"
+msgid "Include Kodi album fanart"
+msgstr "Kodi 앨범 팬아트 포함"
+
+msgctxt "#32116"
+msgid "Limit size of download cache"
+msgstr "다운로드 캐시 크기 제한"
+
+msgctxt "#32117"
+msgid "Maximum cache size (in megabytes)"
+msgstr "최대 캐시 크기(MB)"
+
+msgctxt "#32118"
+msgid "Alternate name for local fanart folder"
+msgstr "로컬 팬아트 폴더의 대체 이름"
+
+msgctxt "#32119"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용함"
+
+msgctxt "#32120"
+msgid "Disable secondary and featured artist images"
+msgstr "보조 및 추천 아티스트 이미지 사용 안 함"
+
+msgctxt "#32121"
+msgid "Store artist images in"
+msgstr "아티스트 이미지 저장 위치"
+
+msgctxt "#32122"
+msgid "addon_data folder"
+msgstr "addon_data 폴더"
+
+msgctxt "#32123"
+msgid "Kodi artist information folder"
+msgstr "Kodi 아티스트 정보 폴더"
+
+msgctxt "#32124"
+msgid "Priority"
+msgstr "우선 사항"
+
+msgctxt "#32125"
+msgid "Store artist information in"
+msgstr "아티스트 정보 저장 위치"
+
+msgctxt "#32126"
+msgid "Preferred language for artist bio"
+msgstr "아티스트 경력에 선호하는 언어"
+
+msgctxt "#32127"
+msgid "Use extrafanart folder"
+msgstr "extrafanart 폴더 사용"
+
+msgctxt "#32128"
+msgid "Platform for image storage"
+msgstr "이미지 저장을 위한 플랫폼"
+
+msgctxt "#32129"
+msgid "Replace illegal path characters in artist name with"
+msgstr "아티스트 이름의 잘못된 경로 문자를 다음으로 대체"
+
+msgctxt "#32130"
+msgid "Replace trailing period in artist name with"
+msgstr "아티스트 이름 뒤에 오는 마침표를 다음으로 바꿈"
+
+msgctxt "#32131"
+msgid "Windows"
+msgstr "창"
+
+msgctxt "#32132"
+msgid "Other"
+msgstr "기타"
+
+msgctxt "#32133"
+msgid "MacOS"
+msgstr "MacOS"
+
+msgctxt "#32134"
+msgid "Move images to Kodi music artist folder"
+msgstr "이미지를 Kodi 음악 아티스트 폴더로 이동"
+
+msgctxt "#32135"
+msgid "Get artist bio from Kodi"
+msgstr "Kodi에서 아티스트 경력 받기"
+
+msgctxt "#32136"
+msgid "Custom location"
+msgstr "사용자 지정 위치"
+
+msgctxt "#32137"
+msgid "Delay between slide transitions (in seconds)"
+msgstr "슬라이드 전환 간 지연(초)"
+
+msgctxt "#32138"
+msgid "Fade to black during change in artists"
+msgstr "아티스트 변경 시 검은색으로 페이드"
+
+msgctxt "#32139"
+msgid "Main thread sleep time (in seconds)"
+msgstr "메인 스레드 휴면 시간(초)"
+
+msgctxt "#32140"
+msgid "Main thread idle sleep time (in seconds)"
+msgstr "주 스레드 유휴 절전 시간(초)"
+
+msgctxt "#32141"
+msgid "Slideshow thread sleep time (in seconds)"
+msgstr "슬라이드쇼 스레드 절전 시간(초)"
+
+msgctxt "#32142"
+msgid "Show notification during image downloads"
+msgstr "이미지 다운로드 중 알림 표시"
+
+msgctxt "#32143"
+msgid "Only show notification if there are images to download"
+msgstr "다운로드할 이미지가 있는 경우에만 알림 표시"
+
+msgctxt "#32144"
+msgid "Use more agressive artist search for streams"
+msgstr "스트림에 보다 적극적인 아티스트 검색 사용"
+
+msgctxt "#32145"
+msgid "Pause slideshow on playback pause"
+msgstr "재생 일시 중지 시 슬라이드쇼 일시 중지"
+
+# empty strings from id 32145 to 32199
+# Dialog headings
+msgctxt "#32200"
+msgid "Artist Slideshow"
+msgstr "아티스트 슬라이드쇼"
+
+msgctxt "#32201"
+msgid "Warning"
+msgstr "경고"
+
+msgctxt "#32202"
+msgid "Error"
+msgstr "오류"
+
+msgctxt "#32203"
+msgid "Progress"
+msgstr "진행"
+
+msgctxt "#32204"
+msgid "Downloading"
+msgstr "내려받는 중"
+
+msgctxt "#32205"
+msgid "Download Complete"
+msgstr "내려받기 완료"
+
+# empty strings from id 32206 to 32299
+# Dialog texts
+msgctxt "#32300"
+msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
+msgstr "이미지 파일이 이동하고 이름이 변경되며 취소할 수 없습니다. 확실합니까?"
+
+msgctxt "#32301"
+msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
+msgstr "Kodi 음악 아티스트 이미지 저장소에 대한 경로를 검색할 수 없습니다. 설정 > 미디어 > 음악을 확인하고 아티스트 정보 폴더가 설정되어 있는지 확인하세요."
+
+msgctxt "#32302"
+msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
+msgstr "아티스트 슬라이드쇼는 이미 Kodi 아티스트 정보 폴더를 사용하도록 설정되어 있습니다. addon_data 폴더 또는 사용자 지정 위치를 사용하도록 설정하고 다시 시도하십시오."
+
+msgctxt "#32303"
+msgid "Moving and renaming images from custom location..."
+msgstr "사용자 지정 위치에서 이미지 이동 및 이름 바꾸기..."
+
+msgctxt "#32304"
+msgid "Moving and renaming images from addon_data folder..."
+msgstr "addon_data 폴더에서 이미지 이동 및 이름 변경 중..."
+
+msgctxt "#32305"
+msgid "No artist directories found."
+msgstr "아티스트 디렉토리를 찾을 수 없습니다."
+
+msgctxt "#32306"
+msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
+msgstr "이미지를 이동했습니다. 이제 아티스트 슬라이드쇼 저장 위치를 Kodi 아티스트 정보 폴더로 변경할 수 있습니다."
+
+msgctxt "#32307"
+msgid "Downloading new artist images"
+msgstr "새 아티스트 이미지 내려받기"
+
+msgctxt "#32308"
+msgid "artist images downloaded"
+msgstr "아티스트 이미지 내려받기"
+
+msgctxt "#32309"
+msgid "artist image downloaded"
+msgstr "아티스트 이미지 내려받음"
+
+# empty strings from id 32310 to 32900
+# Languages
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "알바니아어"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "아라비아어"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "벨라루스어"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "보스니아어 (라틴 문자)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "불가리아어"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "카탈로니아어"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "중국어"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "크로아티아어"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "체코어"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "덴마크어"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "네덜란드어"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "영어"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "에스토니아어"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "핀란드어"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "프랑스어"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "독일어"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "그리스어"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "히브리어"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "힌디어"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "헝가리어"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "아이슬란드어"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "인도네시아어"
+
+# empty string with id 32923
+msgctxt "#32924"
+msgid "Italian"
+msgstr "이탈리아어"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "일본어"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "한국어"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "라트비아어"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "리투아니아어"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "마케도니아어"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "노르웨이어"
+
+# empty string with id 32931
+msgctxt "#32932"
+msgid "Polish"
+msgstr "폴란드어"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "포르투갈어"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "포르투갈어 (브라질)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "루마니아어"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "러시아어"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "세르비아어라틴어"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "슬로바키아어"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "슬로베니아어"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "스페인어"
+
+# empty string with id 32941
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "스웨덴어"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "태국어"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "터키어"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "우크라이나어"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "베트남어"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "페르시아어"

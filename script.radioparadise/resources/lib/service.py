@@ -100,43 +100,48 @@ class Player(xbmc.Player):
             self.restart()
         elif self.stream_url:
             self.now_playing.update()
-            self.update_slideshow()
             self.update_song()
+            self.update_slideshow()
 
     def update_player(self):
         """Update the Kodi player with song metadata."""
         song = self.song
-        if song and self.isPlayingAudio():
-            item = self.getPlayingItem()
-            tag = item.getMusicInfoTag()
-            tag.setArtist(song.data['artist'])
-            tag.setTitle(song.data['title'])
-            tag.setGenres([])
-            tag.setAlbum(song.data.get('album', ''))
-            rating = song.data.get('listener_rating', 0)
-            tag.setRating(rating)
-            tag.setUserRating(int(round(rating)))
-            tag.setYear(int(song.data.get('year', 0)))
-            item.setArt({'thumb': song.cover})
-            item.setArt({'fanart': song.fanart})
-            self.updateInfoTag(item)
+        player_key = self.get_song_key()
+        if song is None or player_key is None or song.key != player_key:
+            return
+
+        item = self.getPlayingItem()
+        tag = item.getMusicInfoTag()
+        tag.setArtist(song.data['artist'])
+        tag.setTitle(song.data['title'])
+        tag.setGenres([])
+        tag.setAlbum(song.data.get('album', ''))
+        rating = song.data.get('listener_rating', 0)
+        tag.setRating(rating)
+        tag.setUserRating(int(round(rating)))
+        tag.setYear(int(song.data.get('year', 0)))
+        item.setArt({'thumb': song.cover})
+        item.setArt({'fanart': song.fanart})
+        self.updateInfoTag(item)
 
     def clear_player(self):
         """Clear most of the Kodi player's song information."""
-        if self.isPlayingAudio():
-            info = self.getMusicInfoTag()
-            item = self.getPlayingItem()
-            tag = item.getMusicInfoTag()
-            tag.setArtist(info.getArtist())
-            tag.setTitle(info.getTitle())
-            tag.setGenres([])
-            tag.setAlbum('')
-            tag.setRating(0)
-            tag.setUserRating(0)
-            tag.setYear(0)
-            item.setArt({'thumb': None})
-            item.setArt({'fanart': None})
-            self.updateInfoTag(item)
+        if not self.isPlayingAudio():
+            return
+
+        info = self.getMusicInfoTag()
+        item = self.getPlayingItem()
+        tag = item.getMusicInfoTag()
+        tag.setArtist(info.getArtist())
+        tag.setTitle(info.getTitle())
+        tag.setGenres([])
+        tag.setAlbum('')
+        tag.setRating(0)
+        tag.setUserRating(0)
+        tag.setYear(0)
+        item.setArt({'thumb': None})
+        item.setArt({'fanart': None})
+        self.updateInfoTag(item)
 
     def update_slideshow(self):
         """Update the slideshow, if necessary."""
@@ -161,6 +166,7 @@ class Player(xbmc.Player):
             if self.tracked_key is not None:
                 self.tracked_time = time.time()
             self.tracked_key = player_key
+            LOG.log(f'player_key: {player_key}')
 
         start_time = None
         song_data = None
@@ -172,14 +178,12 @@ class Player(xbmc.Player):
             start_time = self.tracked_time
             song_data = self.now_playing.get_song_data(player_key)
             self.slideshow.set_slides(None)
-            if song.start_time == 0:
-                song.start_time = self.tracked_time - song.duration
-        else:
+        elif song.expired():
             start_time = song.start_time + song.duration
             song_data = self.now_playing.get_next_song(player_key)
             # Fall back to stream metadata
             if song_data is None:
-                self.song = None
+                song.start_time = 0
                 self.tracked_time = 0
                 self.slideshow.set_slides(None)
                 self.clear_player()
@@ -199,8 +203,7 @@ class Player(xbmc.Player):
             self.slideshow.set_slides(None)
             fanart = None
 
-        song_key = build_key((song_data['artist'], song_data['title']))
-        self.song = Song(song_key, song_data, fanart, start_time)
+        self.song = Song(player_key, song_data, fanart, start_time)
         LOG.log(f'Song: {self.song}')
         self.update_player()
 

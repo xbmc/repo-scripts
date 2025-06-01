@@ -16,7 +16,6 @@
 		<summary lang="en_GB">Language Preference Manager</summary>
 		<description lang="en_GB">Sets the audio and subtitle track according to your language preferences</description>
 		<disclaimer lang="en_GB">For bugs, requests or general questions visit the Language Preference Manager thread on the Kodi forum.</disclaimer>
-		<platform>all</platform>
 		<news>1.0.6     : - New option to store persistent media preferences on a per TVshow/Movie basis, based on user selection.
 	These override calculated preferences - See README for more (Thanks to SgtJalau!)
 - Consider empty subtitle language code as und/Undefined so it can still be prioritized in rules, not just ignored

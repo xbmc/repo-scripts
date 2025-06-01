@@ -1,0 +1,486 @@
+# Kodi Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: pkscout|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-01-30 13:27+0000\n"
+"Last-Translator: Havok Dan <havokdan@yahoo.com.br>\n"
+"Language-Team: Portuguese (Brazil) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/pt_br/>\n"
+"Language: pt_br\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.9.2\n"
+
+msgctxt "Addon Summary"
+msgid "Download images and additional info of the currently playing artist"
+msgstr "Transferência de imagens e informações adicionais de artistas que estejam sendo reproduzidos"
+
+msgctxt "Addon Description"
+msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
+msgstr "Addon para download de imagens e informações adicionais do artista que está sendo reproduzido provido por fanart.tv e theaudiodb. Tais dados e imagens serão usados pelas skins para criarem um slideshow dos artistas quando estivermos escutando-os."
+
+# Section Headings
+msgctxt "#32000"
+msgid "Slideshow"
+msgstr "Apresentação de slides"
+
+msgctxt "#32001"
+msgid "Storage"
+msgstr "Armazenamento"
+
+msgctxt "#32002"
+msgid "Images"
+msgstr "Imagens"
+
+msgctxt "#32003"
+msgid "Album Info"
+msgstr "Informações do álbum"
+
+msgctxt "#32004"
+msgid "Artist Bio"
+msgstr "Biografia do artista"
+
+msgctxt "#32005"
+msgid "Similar Artists"
+msgstr "Artistas Semelhantes"
+
+msgctxt "#32006"
+msgid "Advanced"
+msgstr "Avançado"
+
+# empty strings from id 32007 to 32099
+# Settings
+msgctxt "#32101"
+msgid "Download images from fanart.tv"
+msgstr "Baixar imagens de fanart.tv"
+
+msgctxt "#32102"
+msgid "Download images from theaudiodb.com"
+msgstr "Baixar imagens de theaudiodb.com"
+
+msgctxt "#32103"
+msgid "Download album info from the audiodb.com"
+msgstr "Baixar informações do álbum em audiodb.com"
+
+msgctxt "#32104"
+msgid "Download album info from the last.fm"
+msgstr "Baixar informações do álbum do last.fm"
+
+msgctxt "#32105"
+msgid "Download artist bio from theaudiodb.com"
+msgstr "Baixar a biografia do artista em theaudiodb.com"
+
+msgctxt "#32106"
+msgid "Download artist bio from last.fm"
+msgstr "Baixar a biografia do artista em last.fm"
+
+msgctxt "#32107"
+msgid "Download similar artists from last.fm"
+msgstr "Baixar artistas semelhantes do last.fm"
+
+msgctxt "#32108"
+msgid "Download all images regardless of resolution"
+msgstr "Baixar todas as imagens independentemente da resolução"
+
+msgctxt "#32109"
+msgid "Client API key"
+msgstr "Chave de API do cliente"
+
+msgctxt "#32110"
+msgid "I donate to this service"
+msgstr "Eu doo para este serviço"
+
+msgctxt "#32111"
+msgid "Use fallback slideshow"
+msgstr "Usar slideshow substituta"
+
+msgctxt "#32112"
+msgid "Use override slideshow"
+msgstr "Usar substituição de slideshow"
+
+msgctxt "#32113"
+msgid "Custom location"
+msgstr "Localização personalizada"
+
+msgctxt "#32114"
+msgid "Include Kodi artist fanart"
+msgstr "Incluir fanart do artista Kodi"
+
+msgctxt "#32115"
+msgid "Include Kodi album fanart"
+msgstr "Incluir fanart do álbum Kodi"
+
+msgctxt "#32116"
+msgid "Limit size of download cache"
+msgstr "Limitar o tamanho do cache de download"
+
+msgctxt "#32117"
+msgid "Maximum cache size (in megabytes)"
+msgstr "Tamanho máximo do cache (em megabytes)"
+
+msgctxt "#32118"
+msgid "Alternate name for local fanart folder"
+msgstr "Nome alternativo para pasta local de fanart"
+
+msgctxt "#32119"
+msgid "Enable debug logging"
+msgstr "Habilitar registro de depuração"
+
+msgctxt "#32120"
+msgid "Disable secondary and featured artist images"
+msgstr "Desativar imagens secundárias e de artistas em destaque"
+
+msgctxt "#32121"
+msgid "Store artist images in"
+msgstr "Armazene imagens de artistas em"
+
+msgctxt "#32122"
+msgid "addon_data folder"
+msgstr "pasta addon_data"
+
+msgctxt "#32123"
+msgid "Kodi artist information folder"
+msgstr "Pasta de informações do artista Kodi"
+
+msgctxt "#32124"
+msgid "Priority"
+msgstr "Prioridade"
+
+msgctxt "#32125"
+msgid "Store artist information in"
+msgstr "Armazene informações do artista em"
+
+msgctxt "#32126"
+msgid "Preferred language for artist bio"
+msgstr "Idioma preferido para a biografia do artista"
+
+msgctxt "#32127"
+msgid "Use extrafanart folder"
+msgstr "Use a pasta extrafanart"
+
+msgctxt "#32128"
+msgid "Platform for image storage"
+msgstr "Plataforma para armazenamento de imagens"
+
+msgctxt "#32129"
+msgid "Replace illegal path characters in artist name with"
+msgstr "Substitua caracteres de caminho ilegais no nome do artista por"
+
+msgctxt "#32130"
+msgid "Replace trailing period in artist name with"
+msgstr "Substitua o ponto final no nome do artista por"
+
+msgctxt "#32131"
+msgid "Windows"
+msgstr "Windows"
+
+msgctxt "#32132"
+msgid "Other"
+msgstr "Outro"
+
+msgctxt "#32133"
+msgid "MacOS"
+msgstr "MacOS"
+
+msgctxt "#32134"
+msgid "Move images to Kodi music artist folder"
+msgstr "Mova as imagens para a pasta do artista musical Kodi"
+
+msgctxt "#32135"
+msgid "Get artist bio from Kodi"
+msgstr "Obtenha a biografia do artista do Kodi"
+
+msgctxt "#32136"
+msgid "Custom location"
+msgstr "Localização personalizada"
+
+msgctxt "#32137"
+msgid "Delay between slide transitions (in seconds)"
+msgstr "Atraso entre transições de slides (em segundos)"
+
+msgctxt "#32138"
+msgid "Fade to black during change in artists"
+msgstr "Fade to black durante a mudança de artistas"
+
+msgctxt "#32139"
+msgid "Main thread sleep time (in seconds)"
+msgstr "Tempo de suspensão do thread principal (em segundos)"
+
+msgctxt "#32140"
+msgid "Main thread idle sleep time (in seconds)"
+msgstr "Tempo de inatividade do thread principal (em segundos)"
+
+msgctxt "#32141"
+msgid "Slideshow thread sleep time (in seconds)"
+msgstr "Tempo de suspensão do segmento do Slideshow (em segundos)"
+
+msgctxt "#32142"
+msgid "Show notification during image downloads"
+msgstr "Mostrar notificação durante downloads de imagens"
+
+msgctxt "#32143"
+msgid "Only show notification if there are images to download"
+msgstr "Mostrar notificação apenas se houver imagens para download"
+
+msgctxt "#32144"
+msgid "Use more agressive artist search for streams"
+msgstr "Use uma pesquisa de artista mais agressiva para streams"
+
+msgctxt "#32145"
+msgid "Pause slideshow on playback pause"
+msgstr "Pausar o slideshow durante a pausa na reprodução"
+
+# empty strings from id 32145 to 32199
+# Dialog headings
+msgctxt "#32200"
+msgid "Artist Slideshow"
+msgstr "Slideshow Artista"
+
+msgctxt "#32201"
+msgid "Warning"
+msgstr "Alerta"
+
+msgctxt "#32202"
+msgid "Error"
+msgstr "Erro"
+
+msgctxt "#32203"
+msgid "Progress"
+msgstr "Progresso"
+
+msgctxt "#32204"
+msgid "Downloading"
+msgstr "Baixando"
+
+msgctxt "#32205"
+msgid "Download Complete"
+msgstr "Download Completo"
+
+# empty strings from id 32206 to 32299
+# Dialog texts
+msgctxt "#32300"
+msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
+msgstr "Isso moverá e renomeará seus arquivos de imagem e não poderá ser desfeito. Você tem certeza de que quer fazer isso?"
+
+msgctxt "#32301"
+msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
+msgstr "Não foi possível recuperar o caminho para o armazenamento de imagens do artista musical Kodi. Verifique Configurações > Mídia > Música e certifique-se de que a pasta de informações do artista esteja definida."
+
+msgctxt "#32302"
+msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
+msgstr "O Slideshow do Artista já está configurado para usar a pasta de informações do artista Kodi. Defina para usar a pasta addon_data ou um local personalizado e tente novamente."
+
+msgctxt "#32303"
+msgid "Moving and renaming images from custom location..."
+msgstr "Movendo e renomeando imagens de um local personalizado..."
+
+msgctxt "#32304"
+msgid "Moving and renaming images from addon_data folder..."
+msgstr "Movendo e renomeando imagens da pasta addon_data..."
+
+msgctxt "#32305"
+msgid "No artist directories found."
+msgstr "Nenhum diretório de artistas encontrado."
+
+msgctxt "#32306"
+msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
+msgstr "Movimentação da imagem concluída. Agora você pode alterar o local de armazenamento do Slideshow do Artista para a pasta de informações do artista Kodi."
+
+msgctxt "#32307"
+msgid "Downloading new artist images"
+msgstr "Baixando novas imagens de artistas"
+
+msgctxt "#32308"
+msgid "artist images downloaded"
+msgstr "imagens do artista baixadas"
+
+msgctxt "#32309"
+msgid "artist image downloaded"
+msgstr "imagem do artista baixada"
+
+# empty strings from id 32310 to 32900
+# Languages
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albanês"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Árabe"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Bielorrusso"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bósnio (Latim)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Búlgaro"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Catalão"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Chinês"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Croata"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Tcheco"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Dinamarquês"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Holandês"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Inglês"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estoniano"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finlandês"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Francês"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Alemão"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Grego"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebraico"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Húngaro"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandês"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonésio"
+
+# empty string with id 32923
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italiano"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonês"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Coreano"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Letão"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Lituano"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Macedônio"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norueguês"
+
+# empty string with id 32931
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Polonês"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Português"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Português (Brasil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Romeno"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Russo"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "SérvioLatim"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Eslovaco"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Esloveno"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Espanhol"
+
+# empty string with id 32941
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Sueco"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Tailandês"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turco"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ucraniano"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Persa"

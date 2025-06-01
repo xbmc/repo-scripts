@@ -1,0 +1,486 @@
+# Kodi Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: pkscout|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-15 13:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/hr_hr/>\n"
+"Language: hr_hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
+
+msgctxt "Addon Summary"
+msgid "Download images and additional info of the currently playing artist"
+msgstr "Preuzimite slike i dodatne informacije o trenutno reproduciranom izvođaču"
+
+msgctxt "Addon Description"
+msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
+msgstr "Dodatak za preuzimanje slika i dodatnih informacije trenutno reproduciranog izvođača s fanart.tv, theaudiodb.com i theaudiodb.com. Slike, zajedno s lokalnim slikama izvođača i informacijama mogu se koristiti s presvlakom za stvaranje slikovne prezentacije izvođača koji se sluša."
+
+# Section Headings
+msgctxt "#32000"
+msgid "Slideshow"
+msgstr "Slikovna prezentacija"
+
+msgctxt "#32001"
+msgid "Storage"
+msgstr "Pohrana"
+
+msgctxt "#32002"
+msgid "Images"
+msgstr "Slike"
+
+msgctxt "#32003"
+msgid "Album Info"
+msgstr "Informacije albuma"
+
+msgctxt "#32004"
+msgid "Artist Bio"
+msgstr "Životopis izvođača"
+
+msgctxt "#32005"
+msgid "Similar Artists"
+msgstr "Srodni izvođači"
+
+msgctxt "#32006"
+msgid "Advanced"
+msgstr "Napredno"
+
+# empty strings from id 32007 to 32099
+# Settings
+msgctxt "#32101"
+msgid "Download images from fanart.tv"
+msgstr "Preuzmi slike s fanart.tv"
+
+msgctxt "#32102"
+msgid "Download images from theaudiodb.com"
+msgstr "Preuzmi slike s theaudiodb.com"
+
+msgctxt "#32103"
+msgid "Download album info from the audiodb.com"
+msgstr "Preuzmi informacije albuma s audiodb.com"
+
+msgctxt "#32104"
+msgid "Download album info from the last.fm"
+msgstr "Preuzmi informacije albuma s last.fm"
+
+msgctxt "#32105"
+msgid "Download artist bio from theaudiodb.com"
+msgstr "Preuzmi informacije životopisa izvođača s theaudiodb.com"
+
+msgctxt "#32106"
+msgid "Download artist bio from last.fm"
+msgstr "Preuzmi informacije životopisa izvođača s last.fm"
+
+msgctxt "#32107"
+msgid "Download similar artists from last.fm"
+msgstr "Preuzmi srodne izvođače s last.fm"
+
+msgctxt "#32108"
+msgid "Download all images regardless of resolution"
+msgstr "Preuzmi sve slike neovisno o razlučivosti"
+
+msgctxt "#32109"
+msgid "Client API key"
+msgstr "API ključ klijenta"
+
+msgctxt "#32110"
+msgid "I donate to this service"
+msgstr "Donirao sam ovoj usluzi"
+
+msgctxt "#32111"
+msgid "Use fallback slideshow"
+msgstr "Koristi pričuvne slike prezentacije"
+
+msgctxt "#32112"
+msgid "Use override slideshow"
+msgstr "Koristi zaobiđene slike prezentacije"
+
+msgctxt "#32113"
+msgid "Custom location"
+msgstr "Prilagođena lokacija"
+
+msgctxt "#32114"
+msgid "Include Kodi artist fanart"
+msgstr "Uključi Kodi slike omota izvođača"
+
+msgctxt "#32115"
+msgid "Include Kodi album fanart"
+msgstr "Uključi Kodi slike omota albuma"
+
+msgctxt "#32116"
+msgid "Limit size of download cache"
+msgstr "Ograničenje veličine predmemorije preuzimanja"
+
+msgctxt "#32117"
+msgid "Maximum cache size (in megabytes)"
+msgstr "Najveća veličina predmemorije (u megabajtima)"
+
+msgctxt "#32118"
+msgid "Alternate name for local fanart folder"
+msgstr "Zamjenski naziv za lokalnu mapu slika omota"
+
+msgctxt "#32119"
+msgid "Enable debug logging"
+msgstr "Omogući zapisivanje otklanjanja grešaka"
+
+msgctxt "#32120"
+msgid "Disable secondary and featured artist images"
+msgstr "Onemogući pomoćne i istaknute slike izvođača"
+
+msgctxt "#32121"
+msgid "Store artist images in"
+msgstr "Spremi slike izvođača u"
+
+msgctxt "#32122"
+msgid "addon_data folder"
+msgstr "addon_data mapa"
+
+msgctxt "#32123"
+msgid "Kodi artist information folder"
+msgstr "Kodi mapa informacija izvođača"
+
+msgctxt "#32124"
+msgid "Priority"
+msgstr "Prioritet"
+
+msgctxt "#32125"
+msgid "Store artist information in"
+msgstr "Spremi informacije izvođača u"
+
+msgctxt "#32126"
+msgid "Preferred language for artist bio"
+msgstr "Željeni jezik životopisa izvođača"
+
+msgctxt "#32127"
+msgid "Use extrafanart folder"
+msgstr "Koristi mapu dodatnih slika omota"
+
+msgctxt "#32128"
+msgid "Platform for image storage"
+msgstr "Platforma za pohranu slika"
+
+msgctxt "#32129"
+msgid "Replace illegal path characters in artist name with"
+msgstr "Zamijeni nevaljanu putanju znakova u nazivu izvođača s"
+
+msgctxt "#32130"
+msgid "Replace trailing period in artist name with"
+msgstr "Zamijenite točku na kraju nazivu izvođača s"
+
+msgctxt "#32131"
+msgid "Windows"
+msgstr "Windows"
+
+msgctxt "#32132"
+msgid "Other"
+msgstr "Ostali"
+
+msgctxt "#32133"
+msgid "MacOS"
+msgstr "MacOS"
+
+msgctxt "#32134"
+msgid "Move images to Kodi music artist folder"
+msgstr "Premjesti slike u Kodi glazbenu mapu izvođača"
+
+msgctxt "#32135"
+msgid "Get artist bio from Kodi"
+msgstr "Nabavi životopis izvođača s Kodija"
+
+msgctxt "#32136"
+msgid "Custom location"
+msgstr "Prilagođena lokacija"
+
+msgctxt "#32137"
+msgid "Delay between slide transitions (in seconds)"
+msgstr "Odgoda između prijelaza prezentacija (u sekundama)"
+
+msgctxt "#32138"
+msgid "Fade to black during change in artists"
+msgstr "Prijeđi u crno tijekom promjene izvođača"
+
+msgctxt "#32139"
+msgid "Main thread sleep time (in seconds)"
+msgstr "Vrijeme spavanja glavnog niza (u sekundama)"
+
+msgctxt "#32140"
+msgid "Main thread idle sleep time (in seconds)"
+msgstr "Vrijeme mirovanja spavanja glavnog niza (u sekundama)"
+
+msgctxt "#32141"
+msgid "Slideshow thread sleep time (in seconds)"
+msgstr "Vrijeme mirovanja niza prezentacije (u sekundama)"
+
+msgctxt "#32142"
+msgid "Show notification during image downloads"
+msgstr "Prikaži obavijesti tijekom preuzimanja slike"
+
+msgctxt "#32143"
+msgid "Only show notification if there are images to download"
+msgstr "Samo prikaži obavijesti ako ima slika za preuzimanje"
+
+msgctxt "#32144"
+msgid "Use more agressive artist search for streams"
+msgstr "Koristi agresivniju pretragu izvođača za strujanja"
+
+msgctxt "#32145"
+msgid "Pause slideshow on playback pause"
+msgstr "Pauziraj prezentaciju pri pauzi repordukcije"
+
+# empty strings from id 32145 to 32199
+# Dialog headings
+msgctxt "#32200"
+msgid "Artist Slideshow"
+msgstr "Prezentacija izvođača"
+
+msgctxt "#32201"
+msgid "Warning"
+msgstr "Upozorenje"
+
+msgctxt "#32202"
+msgid "Error"
+msgstr "Greška"
+
+msgctxt "#32203"
+msgid "Progress"
+msgstr "Napredak"
+
+msgctxt "#32204"
+msgid "Downloading"
+msgstr "Preuzimanje"
+
+msgctxt "#32205"
+msgid "Download Complete"
+msgstr "Preuzimanje završeno"
+
+# empty strings from id 32206 to 32299
+# Dialog texts
+msgctxt "#32300"
+msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
+msgstr "Ovo će premjestiti i preimenovati vaše datoteke slika, i ovo se ne može poništiti. Sigurno želite ovo učiniti?"
+
+msgctxt "#32301"
+msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
+msgstr "Nemoguće preuzimanje putanje u Kodi glazbenu pohranu slika izvođača. Provjerite Postavke > Mediji > Glazba i pobrinite se da je mapa informacija izvođača postavljena."
+
+msgctxt "#32302"
+msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
+msgstr "Prezentacija izvođača je već postavljena da koristi Kodi mapu informacija izvođača. Postavite korištenje ili addon_data mape ili prilagođenu lokaciju i pokušajte ponovno."
+
+msgctxt "#32303"
+msgid "Moving and renaming images from custom location..."
+msgstr "Premještanje i preimenovanje slika iz prilagođene lokacije..."
+
+msgctxt "#32304"
+msgid "Moving and renaming images from addon_data folder..."
+msgstr "Premještanje i preimenovanje slika iz addon_data mape..."
+
+msgctxt "#32305"
+msgid "No artist directories found."
+msgstr "Nema pronađenih direktorija izvođača."
+
+msgctxt "#32306"
+msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
+msgstr "Premještanje slika je završeno. Sada možete promijeniti lokaciju pohrane prezentacije izvođača u Kodi mapu informacija izvođača."
+
+msgctxt "#32307"
+msgid "Downloading new artist images"
+msgstr "Preuzimanje novih slika izvođača"
+
+msgctxt "#32308"
+msgid "artist images downloaded"
+msgstr "slike izvođača preuzete"
+
+msgctxt "#32309"
+msgid "artist image downloaded"
+msgstr "slika izvođača preuzeta"
+
+# empty strings from id 32310 to 32900
+# Languages
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albanski"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arapski"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Bjeloruski"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bosanski (Latinica)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bugarski"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Katalonski"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Kineski"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Hrvatski"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Češki"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Danski"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Nizozemski"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Engleski"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estonski"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finski"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Francuski"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Njemački"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Grčki"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebrejski"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindski"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Mađarski"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandski"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonezijski"
+
+# empty string with id 32923
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Talijanski"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japanski"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Korejski"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Latvijski"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Letonski"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Makedonski"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norveški"
+
+# empty string with id 32931
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Poljski"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugalski"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalski (Brazil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Rumunjski"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Ruski"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Srpski latinica"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Slovački"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slovenski"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Španjolski"
+
+# empty string with id 32941
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Švedski"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Tajlandski"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turski"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrajinski"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vijetnamski"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsi"

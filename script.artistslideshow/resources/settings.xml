@@ -1,0 +1,627 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.artistslideshow">
+		<category id="slideshow" label="32000" help="">
+			<group id="1">
+				<setting id="slide_delay" type="integer" label="32137" help="">
+					<level>0</level>
+					<default>10</default>
+					<control type="edit" format="integer">
+						<heading>32137</heading>
+					</control>
+				</setting>
+				<setting id="pause_slideshow" type="boolean" label="32145" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="slideshow" type="boolean" label="32112" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="slideshow_path" type="path" label="32113" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="slideshow">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="path">
+						<heading>32113</heading>
+					</control>
+				</setting>
+				<setting id="fadetoblack" type="boolean" label="32138" help="">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="slideshow">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="include_artistfanart" type="boolean" label="32114" help="">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="slideshow">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="include_albumfanart" type="boolean" label="32115" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="slideshow">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="disable_multiartist" type="boolean" label="32120" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="slideshow">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="fallback" type="boolean" label="32111" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="slideshow">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="fallback_path" type="path" label="32113" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="fallback">true</condition>
+								<condition operator="is" setting="slideshow">false</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="button" format="path">
+						<heading>32113</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="storage" label="32001" help="">
+			<group id="1">
+				<setting id="artist_image_storage" type="integer" label="32121" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32122">0</option>
+							<option label="32123">1</option>
+							<option label="32136">2</option>
+						</options>
+					</constraints>
+					<control type="list" format="string"/>
+				</setting>
+				<setting id="local_artist_path" type="path" label="32113" parent="artist_image_storage" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="artist_image_storage">2</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="path">
+						<heading>32113</heading>
+					</control>
+				</setting>
+				<setting id="use_extrafanart_folder" type="boolean" label="32127" parent="artist_image_storage" help="">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="artist_image_storage">2</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="fanart_folder" type="string" label="32118" parent="use_extrafanart_folder" help="">
+					<level>0</level>
+					<default>extrafanart</default>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="artist_image_storage">2</condition>
+								<condition operator="is" setting="use_extrafanart_folder">true</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32118</heading>
+					</control>
+				</setting>
+				<setting id="restrict_cache" type="boolean" label="32116" parent="fanart_folder" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="artist_image_storage">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="max_cache_size" type="integer" label="32117" parent="restrict_cache" help="">
+					<level>0</level>
+					<default>1024</default>
+					<control type="edit" format="integer">
+						<heading>32117</heading>
+					</control>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="restrict_cache">true</condition>
+							<condition operator="is" setting="artist_image_storage">0</condition>
+						</dependency>
+					</dependencies>
+				</setting>
+				<setting id="artist_info_storage" type="integer" label="32125" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32122">0</option>
+							<option label="32136">1</option>
+						</options>
+					</constraints>
+					<control type="list" format="string"/>
+				</setting>
+				<setting id="local_info_path" type="path" label="32113" parent="artist_info_storage" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="artist_info_storage">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="path">
+						<heading>32113</heading>
+					</control>
+				</setting>
+				<setting id="localstorageonly" type="boolean" label="depreciated setting 1" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="localinfostorage" type="boolean" label="depreciated setting 2" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="images" label="32002" help="">
+			<group id="1">
+				<setting id="fanarttv" type="boolean" label="32101" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="fanarttv_clientapikey" type="string" label="32109" parent="fanarttv" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="fanarttv">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32109</heading>
+					</control>
+				</setting>
+				<setting id="fanarttv_all" type="boolean" label="32108" parent="fanarttv" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="fanarttv">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="fanarttv_donated" type="boolean" label="32110" parent="fanarttv" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="fanarttv">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="theaudiodb" type="boolean" label="32102" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="theaudiodb_all" type="boolean" label="32108" parent="theaudiodb" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="theaudiodb">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="theaudiodb_donated" type="boolean" label="32110" parent="theaudiodb" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="theaudiodb">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="download_notification" type="boolean" label="32142" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="fanarttv">true</condition>
+								<condition operator="is" setting="theaudiodb">true</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="dn_download_only" type="boolean" label="32143" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="fanarttv">true</condition>
+								<condition operator="is" setting="theaudiodb">true</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="album info" label="32003" help="">
+			<group id="1">
+				<setting id="ai_theaudiodb" type="boolean" label="32103" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="ai_priority_theaudiodb" type="integer" label="32124" parent="ai_theaudiodb" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ai_theaudiodb">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="ai_lastfm" type="boolean" label="32104" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="ai_priority_lastfm" type="integer" label="32124" parent="ai_lastfm" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ai_lastfm">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="artist bio" label="32004" help="">
+			<group id="1">
+				<setting id="language" type="integer" label="32126" help="">
+					<level>0</level>
+					<default>11</default>
+					<constraints>
+						<options>
+							<option label="32901">0</option>
+							<option label="32902">1</option>
+							<option label="32903">2</option>
+							<option label="32904">3</option>
+							<option label="32905">4</option>
+							<option label="32906">5</option>
+							<option label="32907">6</option>
+							<option label="32908">7</option>
+							<option label="32909">8</option>
+							<option label="32910">9</option>
+							<option label="32911">10</option>
+							<option label="32912">11</option>
+							<option label="32913">12</option>
+							<option label="32947">13</option>
+							<option label="32914">14</option>
+							<option label="32915">15</option>
+							<option label="32916">16</option>
+							<option label="32917">17</option>
+							<option label="32918">18</option>
+							<option label="32919">19</option>
+							<option label="32920">20</option>
+							<option label="32921">21</option>
+							<option label="32922">22</option>
+							<option label="32924">23</option>
+							<option label="32925">24</option>
+							<option label="32926">25</option>
+							<option label="32927">26</option>
+							<option label="32928">27</option>
+							<option label="32929">28</option>
+							<option label="32930">29</option>
+							<option label="32932">30</option>
+							<option label="32933">31</option>
+							<option label="32934">32</option>
+							<option label="32935">33</option>
+							<option label="32936">34</option>
+							<option label="32937">35</option>
+							<option label="32938">36</option>
+							<option label="32939">37</option>
+							<option label="32940">38</option>
+							<option label="32942">39</option>
+							<option label="32943">40</option>
+							<option label="32944">41</option>
+							<option label="32945">42</option>
+							<option label="32946">43</option>
+						</options>
+					</constraints>
+					<control type="list" format="string"/>
+				</setting>
+				<setting id="ab_kodi" type="boolean" label="32135" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="ab_priority_kodi" type="integer" label="32124" parent="ab_kodi" help="">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ab_kodi">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="ab_theaudiodb" type="boolean" label="32105" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="ab_priority_theaudiodb" type="integer" label="32124" parent="ab_theaudiodb" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ab_theaudiodb">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="ab_lastfm" type="boolean" label="32106" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="ab_priority_lastfm" type="integer" label="32124" parent="ab_lastfm" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ab_lastfm">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="similar artists" label="32005" help="">
+			<group id="1">
+				<setting id="sa_lastfm" type="boolean" label="32107" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="sa_priority_lastfm" type="integer" label="32124" parent="sa_lastfm" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="sa_lastfm">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="advanced" label="32006" help="">
+			<group id="1">
+				<setting id="storage_target" type="integer" label="32128" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32131">0</option>
+							<option label="32132">1</option>
+							<option label="32133">2</option>
+						</options>
+					</constraints>
+					<control type="list" format="string"/>
+				</setting>
+				<setting id="illegal_replace" type="string" label=" 32129" help="">
+					<level>0</level>
+					<default>_</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading> 32129</heading>
+					</control>
+				</setting>
+				<setting id="end_replace" type="string" label="32130" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="storage_target">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32130</heading>
+					</control>
+				</setting>
+				<setting id="slideshow_sleep" type="integer" label="32141" help="">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>3</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="main_sleep" type="integer" label="32139" help="">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>3</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="main_idle_sleep" type="integer" label="32140" help="">
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<minimum>5</minimum>
+						<step>1</step>
+						<maximum>30</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="agressive_stream_search" type="boolean" label="32144" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="logging" type="boolean" label="32119" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2">
+				<setting id="kvyypjhfktiogwucjhpaaivoltqxyzhy" type="action" label="32134" help="">
+					<level>0</level>
+					<data>RunScript(script.artistslideshow,runfromsettings=True&amp;action=movetokodistorage)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
