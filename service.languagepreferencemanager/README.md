@@ -15,8 +15,9 @@ For example "fre:non>any:fre>any:eng" will disable subtitles if audio is French 
 Rules are re-evaluated and applied whenever you switch audio while watching (from v0.1.5).
 
 It's now also possible to force ignore "Signs and Songs" subtitles in preferences evaluations, based on name, and/or any other subtitle tracks based on predefined keywords.
-
 For example, most dual audio Anime provides english and japanese audio and two english subtitles. Dialogue subtitles with all the dialogue to go with the japanese audio and Song/Sign subtitles which only translate song lyrics and signs you see on screen to be used with the english audio stream. Previously the addon just picked the first subtitles with the correct language which weren't always the correct ones.
+
+An option allows you to store forced preferences per Movie / TVshow (from v1.0.6). When you manually change audio and/or subtitle tracks during play, this will be saved as an overriding preference, taking precedence over all other rules for the next opening of the Movie, or the next episode of the TVshow (Thx a lot to SgtJalau!)
 
 Special Thanks
 ==============
@@ -28,3 +29,5 @@ Special Thanks
 - @fpatrick for fixing an issue with language mapping
 
 - @KnappeGEIL for ideas how to ignore 'Signs and Songs' subtitles
+
+- @SgtJalau for the complete feature to store specific/overriding preferences per Movie / TVshow

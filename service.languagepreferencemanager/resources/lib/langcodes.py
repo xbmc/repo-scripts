@@ -58,7 +58,8 @@ LANGUAGES      = (
     ("Norwegian Bokmal"           , "3",        "nb",            "nob",                 "48",                    30249  ),
     ("New Norwegian"              , "3",        "nn",            "nno",                 "49",                    30250  ),
     ("None"                       , "-1",       "",              "non",                 "45",                    30200  ),
-    ("Any"                        , "-2",       "",              "any",                 "46",                    30300  ) )
+    ("Any"                        , "-2",       "",              "any",                 "46",                    30300  ),
+    ("Undefined"                  , "-3",       "",              "und",                 "50",                    30350  ) )
 
 def languageTranslate(lang, lang_from, lang_to):
   for x in LANGUAGES:

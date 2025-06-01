@@ -2,6 +2,7 @@ import xbmc, xbmcaddon
 import re
 from langcodes import *
 from prefparser import PrefParser
+from resources.lib import kodi_utils
 
 LOG_NONE = 0
 LOG_ERROR = 1
@@ -25,6 +26,7 @@ class settings():
     def init(self):
         addon = xbmcaddon.Addon()
         self.logLevel = addon.getSetting('log_level')
+
         if self.logLevel and len(self.logLevel) > 0:
             self.logLevel = int(self.logLevel)
         else:
@@ -103,10 +105,7 @@ class settings():
           self.reg = re.compile(self.filenameRegex, re.IGNORECASE)
           self.split = re.compile(r'[_|.|-]*', re.IGNORECASE)
 
-      self.at_least_one_pref_on = (self.audio_prefs_on
-                                  or self.sub_prefs_on
-                                  or self.condsub_prefs_on
-                                  or self.useFilename)
+
       
       self.CondSubTag = 'false'
       
@@ -156,6 +155,18 @@ class settings():
           )]
       )]
 
+      # These handle custom user preferences, that should be stored
+      self.movieOverrides = addon.getSetting('movieOverrides') == 'true'
+      self.tvShowOverrides = addon.getSetting('tvShowOverrides') == 'true'
+      self.storeCustomMediaPreferences = self.movieOverrides or self.tvShowOverrides
+
+      self.at_least_one_pref_on = (self.audio_prefs_on
+                                  or self.sub_prefs_on
+                                  or self.condsub_prefs_on
+                                  or self.useFilename or self.storeCustomMediaPreferences)
+
+      self.log(LOG_DEBUG, 'storeCustomMediaPreferences: {0}'.format(self.storeCustomMediaPreferences))
+
     def readCustomPrefs(self):
         addon = xbmcaddon.Addon()
         self.custom_audio = []
@@ -179,3 +190,31 @@ class settings():
             self.custom_sub_prefs_on = True
         if len(self.custom_condsub) >0:
             self.custom_condsub_prefs_on = True
+
+    def is_store_user_preference_for_player(self, player):
+        """
+        Check if the player is playing a video and if the store user preference is enabled for the media type of the video (e.g. movie, tv show).
+        :param player: The player object
+        :return: True if the player is playing a video and the store user preference is enabled for the media type, False otherwise
+        """
+        if not player.isPlayingVideo():
+            return False
+
+        return self.is_store_user_preference(kodi_utils.get_media_type(player))
+
+    def is_store_user_preference(self, media_type):
+        """
+        Check if the user preference is supposed to be stored. That means that the custom preferences are stored for the media type.
+        :param media_type:  The media type string
+        :return: True if the user preference is supposed to be stored, False otherwise
+        """
+        if media_type is None:
+            return False
+
+        if kodi_utils.is_movie(media_type):
+            self.log(LOG_DEBUG, 'Store user preference for movie: {0}'.format(self.movieOverrides))
+            return self.movieOverrides
+        elif kodi_utils.is_tv_show(media_type):
+            self.log(LOG_DEBUG, 'Store user preference for tv show: {0}'.format(self.tvShowOverrides))
+            return self.tvShowOverrides
+        return False

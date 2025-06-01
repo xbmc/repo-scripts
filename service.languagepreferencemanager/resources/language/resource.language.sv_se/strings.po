@@ -1,387 +1,399 @@
-# Kodi Media Center language file
+# Kodi Media Center Swedishlanguage file
 # Addon Name: Language Preference Manager
 # Addon id: service.languagepreferencemanager
 # Addon Provider: ace20022
 # Addon Updater: PP to fix languages codes not correct in string.po and langcodes.py, and not aligned
 msgid ""
 msgstr ""
-"Project-Id-Version: Kodi Addons\n"
+"Project-Id-Version: Kodi Addons Swedish\n"
 "Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
+"PO-Revision-Date: 2025-04-22 07:09+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
 "Language-Team: Team-Kodi\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
 
 msgctxt "#30100"
 msgid "Languages"
-msgstr ""
+msgstr "Språk"
 
 msgctxt "#30101"
 msgid "Primary Language"
-msgstr ""
+msgstr "Primärspråk"
 
 msgctxt "#30102"
 msgid "Secondary Language"
-msgstr ""
+msgstr "Sekundärspråk"
 
 msgctxt "#30103"
 msgid "Third Language"
-msgstr ""
+msgstr "Tredje språket"
 
 msgctxt "#30104"
 msgid "Audio Preferences"
-msgstr ""
+msgstr "Ljudinställningar"
 
 msgctxt "#30105"
 msgid "Subtitle Preferences"
-msgstr ""
+msgstr "Undertextinställningar"
 
 msgctxt "#30106"
 msgid "Conditional Subtitle Preferences"
-msgstr ""
+msgstr "Villkorliga inställningar för undertexter"
 
 msgctxt "#30107"
 msgid "Enable Preference"
-msgstr ""
+msgstr "Aktivera inställning"
 
 msgctxt "#30108"
 msgid "Enable Language Preference Manager"
-msgstr ""
+msgstr "Aktivera språkinställningshanteraren"
 
 msgctxt "#30109"
 msgid "Pause while evaluating preferences"
-msgstr ""
+msgstr "Pausa medan inställningar utvärderas"
 
 msgctxt "#30110"
 msgid "If audio language is "
-msgstr ""
+msgstr "Om ljudspråket är "
 
 msgctxt "#30111"
 msgid "then display subtitles with language"
-msgstr ""
+msgstr "visa sedan undertexter med språk"
 
 msgctxt "#30112"
 msgid "Delay the evaluation by the following value [ms]"
-msgstr ""
+msgstr "Fördröj utvärderingen med följande värde [ms]"
 
 msgctxt "#30113"
 msgid "Turn on subtitles if a subtitle preference matched"
-msgstr ""
+msgstr "Slå på undertexter om en undertextsinställning matchas"
 
 msgctxt "#30114"
 msgid "Turn off subtitles if no subtitle preference matched"
-msgstr ""
+msgstr "Stäng av undertexter om ingen undertextsinställning matchas"
 
 msgctxt "#30115"
 msgid "Advanced/Custom settings"
-msgstr ""
+msgstr "Avancerade/anpassade inställningar"
 
 msgctxt "#30116"
 msgid "Try to set the audio and/or subtitle track from the filename first"
 msgstr ""
+"Försök att ställa in ljud- och/eller undertextspåret från filnamnet först"
 
 msgctxt "#30117"
 msgid "Regular expression for filename based preferences"
-msgstr ""
+msgstr "Reguljärt uttryck för filnamnsbaserade inställningar"
 
 msgctxt "#30118"
 msgid "Use custom pref, e.g. eng>ger>fin :"
-msgstr ""
+msgstr "Använd anpassad inställning, t.ex. eng>swe>fin :"
 
 msgctxt "#30119"
 msgid "Use custom pref, e.g. eng>ger>fin :"
-msgstr ""
+msgstr "Använd anpassad inställning, t.ex. eng>swer>fin :"
 
 msgctxt "#30120"
 msgid "Forced"
-msgstr ""
+msgstr "Tvingad"
 
 msgctxt "#30121"
 msgid "Use custom pref, e.g. jpn:eng>eng:ger :"
-msgstr ""
+msgstr "Använd anpassad inställning, t.ex. jpn:swe>eng:swe :"
 
 msgctxt "#30122"
 msgid "General"
-msgstr ""
+msgstr "Allmänt"
 
 msgctxt "#30123"
 msgid "Ignore all Signs and Songs subtitles tracks"
-msgstr ""
+msgstr "Ignorera alla Signs and Songs-undertextspår"
 
 msgctxt "#30125"
 msgid "Enable Subtitle Keyword Blacklist"
-msgstr ""
+msgstr "Aktivera svartlista för nyckelord för undertexter"
 
 msgctxt "#30126"
 msgid "Enter a comma-separated list of keywords to blacklist in subtitle names"
 msgstr ""
+"Ange en kommaseparerad lista med nyckelord som ska svartlistas i "
+"undertextnamn"
 
 msgctxt "#30127"
 msgid "Subtitle Keyword List:"
-msgstr ""
+msgstr "Lista med nyckelord för undertexter:"
 
 msgctxt "#30128"
 msgid "Enable Audio Keyword Blacklist"
-msgstr ""
+msgstr "Aktivera svartlista för nyckelord för ljud"
 
 msgctxt "#30129"
 msgid "Enter a comma-separated list of keywords to blacklist in audio names"
 msgstr ""
+"Ange en kommaseparerad lista med nyckelord som ska svartlistas i ljudnamn"
 
 msgctxt "#30130"
 msgid "Audio Keyword List:"
-msgstr ""
+msgstr "Sökordslista för ljud:"
 
 msgctxt "#30131"
 msgid "Fast Subtitles Display:"
-msgstr ""
+msgstr "Snabb visning av undertexter:"
 
 msgctxt "#30132"
 msgid "Disabled"
-msgstr ""
+msgstr "Inaktiverad"
 
 msgctxt "#30133"
 msgid "New Start only"
-msgstr ""
+msgstr "Endast Ny start"
 
 msgctxt "#30134"
 msgid "Start & Resume"
-msgstr ""
+msgstr "Starta och återuppta"
 
 msgctxt "#30135"
 msgid "Stored Preferences"
-msgstr ""
+msgstr "Lagrade inställningar"
 
 msgctxt "#30136"
 msgid "Store Pref. Movies"
-msgstr ""
+msgstr "Lagra inställning för filmer"
 
 msgctxt "#30137"
 msgid "Store Pref. TV Shows"
-msgstr ""
+msgstr "Lagra inställning för tv-serier"
 
 msgctxt "#30138"
-msgid "Changed audio/subt. override config pref. next time for the same movie/series?"
+msgid ""
+"Changed audio/subt. override config pref. next time for the same movie/"
+"series?"
 msgstr ""
+"Ändrat ljud/undertext åsidosätter konfigurationsinställning nästa gång för "
+"samma film/serie?"
 
 msgctxt "#30139"
-msgid "If enabled, manually selected audio/subtitle tracks during playback will be stored and restored next time for the same movie/whole series."
+msgid ""
+"If enabled, manually selected audio/subtitle tracks during playback will be "
+"stored and restored next time for the same movie/whole series."
 msgstr ""
+"Om detta är aktiverat kommer manuellt valda ljud-/undertextspår under "
+"uppspelning att sparas och återställas nästa gång för samma film/hela serie."
 
 msgctxt "#30140"
 msgid "Edit Overrides"
-msgstr ""
+msgstr "Redigera åsidosättningar"
 
 msgctxt "#30141"
 msgid "A new label"
-msgstr ""
-
+msgstr "En ny etikett"
 
 msgctxt "#30201"
 msgid "Albanian"
-msgstr ""
+msgstr "Albanska"
 
 msgctxt "#30202"
 msgid "Arabic"
-msgstr ""
+msgstr "Arabiska"
 
 msgctxt "#30203"
 msgid "Belarusian"
-msgstr ""
+msgstr "Vitryska"
 
 msgctxt "#30204"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "Bosniska (latin)"
 
 msgctxt "#30205"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgariska"
 
 msgctxt "#30206"
 msgid "Catalan"
-msgstr ""
+msgstr "Katalanska"
 
 msgctxt "#30207"
 msgid "Chinese"
-msgstr ""
+msgstr "Kinesiska"
 
 msgctxt "#30208"
 msgid "Croatian"
-msgstr ""
+msgstr "Kroatiska"
 
 msgctxt "#30209"
 msgid "Czech"
-msgstr ""
+msgstr "Tjeckiska"
 
 msgctxt "#30210"
 msgid "Danish"
-msgstr ""
+msgstr "Danska"
 
 msgctxt "#30211"
 msgid "Dutch"
-msgstr ""
+msgstr "Nederländska"
 
 msgctxt "#30212"
 msgid "English"
-msgstr ""
+msgstr "Engelska"
 
 msgctxt "#30213"
 msgid "Estonian"
-msgstr ""
+msgstr "Estniska"
 
 msgctxt "#30214"
 msgid "Farsi"
-msgstr ""
+msgstr "Farsi"
 
 msgctxt "#30215"
 msgid "Finnish"
-msgstr ""
+msgstr "Finska"
 
 msgctxt "#30216"
 msgid "French"
-msgstr ""
+msgstr "Franska"
 
 msgctxt "#30217"
 msgid "German"
-msgstr ""
+msgstr "Tyska"
 
 msgctxt "#30218"
 msgid "Greek"
-msgstr ""
+msgstr "Grekiska"
 
 msgctxt "#30219"
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebreiska"
 
 msgctxt "#30220"
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 msgctxt "#30221"
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungerska"
 
 msgctxt "#30222"
 msgid "Icelandic"
-msgstr ""
+msgstr "Isländska"
 
 msgctxt "#30223"
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonesiska"
 
 msgctxt "#30224"
 msgid "Italian"
-msgstr ""
+msgstr "Italienska"
 
 msgctxt "#30225"
 msgid "Japanese"
-msgstr ""
+msgstr "Japanska"
 
 msgctxt "#30226"
 msgid "Korean"
-msgstr ""
+msgstr "Koreanska"
 
 msgctxt "#30227"
 msgid "Latvian"
-msgstr ""
+msgstr "Lettiska"
 
 msgctxt "#30228"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Litauiska"
 
 msgctxt "#30229"
 msgid "Macedonian"
-msgstr ""
+msgstr "Makedonska"
 
 msgctxt "#30230"
 msgid "Norwegian"
-msgstr ""
+msgstr "Norska"
 
 msgctxt "#30231"
 msgid "Persian"
-msgstr ""
+msgstr "Persiska"
 
 msgctxt "#30232"
 msgid "Polish"
-msgstr ""
+msgstr "Polska"
 
 msgctxt "#30233"
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugisiska"
 
 msgctxt "#30234"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portugisiska (Brasilien)"
 
 msgctxt "#30235"
 msgid "Romanian"
-msgstr ""
+msgstr "Rumänska"
 
 msgctxt "#30236"
 msgid "Russian"
-msgstr ""
+msgstr "Ryska"
 
 msgctxt "#30237"
 msgid "Serbian"
-msgstr ""
+msgstr "Serbiska"
 
 msgctxt "#30238"
 msgid "Slovak"
-msgstr ""
+msgstr "Slovakiska"
 
 msgctxt "#30239"
 msgid "Slovenian"
-msgstr ""
+msgstr "Slovenska"
 
 msgctxt "#30240"
 msgid "Spanish"
-msgstr ""
+msgstr "Spanska"
 
 msgctxt "#30241"
 msgid "Swedish"
-msgstr ""
+msgstr "Svenska"
 
 msgctxt "#30242"
 msgid "Thai"
-msgstr ""
+msgstr "Thai"
 
 msgctxt "#30243"
 msgid "Turkish"
-msgstr ""
+msgstr "Turkiska"
 
 msgctxt "#30244"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainska"
 
 msgctxt "#30245"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamesiska"
 
 msgctxt "#30248"
 msgid "English Middle"
-msgstr ""
+msgstr "Engelska mellan"
 
 msgctxt "#30249"
 msgid "Norwegian Bokmal"
-msgstr ""
+msgstr "Norska bokmål"
 
 msgctxt "#30250"
 msgid "New Norwegian"
-msgstr ""
+msgstr "Nynorska"
 
 msgctxt "#30200"
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 msgctxt "#30300"
 msgid "Any"
-msgstr ""
+msgstr "Alla"
 
 msgctxt "#30350"
 msgid "Undefined"
-msgstr ""
+msgstr "Odefinierad"
