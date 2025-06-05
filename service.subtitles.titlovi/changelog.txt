@@ -1,0 +1,80 @@
+[COLOR darkgoldenrod]Titlovi.com Addon - Changelog[/COLOR]
+
+[COLOR dodgerblue][B]v2.0.0 (02.06.2025.)[/B][/COLOR]
+[B]Promene:[/B]
+- Finalna verzija spremna za zvaničan Kodi repozitorijum
+  (stara verzija addona v1.2.0 sa drugim ID-jem postaje zastarela (deprecated))
+
+
+[COLOR dodgerblue][B]v1.9.3 (25.05.2025.)[/B][/COLOR]
+[B]Ispravke:[/B]
+- Optimizovana pretraga titlova i sređena detekcija iz imena fajla (potrebno kod Kodi kao externi player)
+- Dodatne korekcije za problem sa datumima
+- Dodat parametar type u settings
+- Debug log sad loguje sve, nije potrebno dodatno setovati u Kodiju
+- Sitne prepravke
+
+
+[COLOR dodgerblue][B]v1.9.2 (20.05.2025.)[/B][/COLOR]
+[B]Ispravke:[/B]
+- Ispravljen bag za datatime, radi pretraga za Kodi kao externi player i problem kod ponovljene pretrage
+- Izmene kod keširanja
+- Sitne izmene
+
+
+[COLOR dodgerblue][B]v1.9.1 (13.05.2025.)[/B][/COLOR]
+[B]Ispravke:[/B]
+- Dorađene i dodate neke opcije sortiranja
+- Ispravljen bag sa upisom u keš, keš trajao 30 dana
+
+
+[COLOR dodgerblue][B]v1.9.0 (28.04.2025. - official)[/B][/COLOR]
+[B]Promene:[/B]
+- Addon je postao oficijalni, izmenjen naziv
+- Potpuno prerađen kod, sređen i optimizovan uz brojne izmene i dodatke
+- Dorađeno logovanje i notifikacije, za logovanje dodat svič u podešavanjima (da bi se videlo podešavanja moraju da budu na Expert)
+- Dodate mnogobrojne opcije u podešavanjima
+- Dorađena normalizacija stringova i pretvaranje ćirilice u latinicu i obrnuto (sad se prebacivanje radi samo u zavisnosti da li je potrebno, engleski titlovi se preskaču)
+- U ručnoj pretrazi dopušten je unos IMDb broja, naziva filma/serije, godine i sezone/epizode u formatu S00E00 ili 01x02 (sezona može da bude do 4 cifre, epizoda do 3)
+- Dodata detekcija IMDb ID, čak i kad nije pušten video, tako da možete proveriti za naslov, sezonu ili epizodu da li postoje titlovi, bez prethodnog pokretanja videa (potrebno je instalirati SubLoader addon iz mog Repa)
+- Prerađeno keširanje koje sad koristi interni modul umesto spoljne zavisnosti
+- Sređena sva vrsta grešaka kod logovanja, dobijanja tokena i sl.
+- Sad možete koristiti interne jezike za pretragu titlova, nezavisno od podešavanja u Kodiju
+- Izmenjen način učitavanja titlova i funkcionisanja sa disk kešom
+- Rezultati pretrage daju konkretne rezultate za traženi pojam
+- i još mnogo, što sitnih što krupnih izmena kojih se i ne sećam :)
+
+
+[COLOR dodgerblue][B]v1.3.0 (28.02.2022. - first release)[/B][/COLOR]
+[B]Promene:[/B]
+- promenjen ID addona
+- prerađen oficijalni addon v1.2.0
+
+[B]Ispravke:[/B]
+- pronalaženje titlova serija koje u imenu fajla imaju naziv epizode
+- pronalaženje i prikaz i ćiriličnih titlova ukoliko je izabran srpski jezik
+- pronalaženje sezonskih titlova (cela sezona u jednom fajlu, Netflix), posledica toga je da za pojedinačne titlove izbacuje u prikazu sve titlove sezone umesto samo za datu epizodu
+- omogućena i jednocifrena pretraga sezona i epizoda (dozvoljen format je 'S##E##', broj ## je ranga 0-99)
+- sređena notifikacija/greška koja izlazi ukoliko ne nađe nikakav rezultat
+- sređen prikaz svih notifikacija/grešaka
+- sređeno da ukoliko nisu uneti podaci za logovanje u podešavanjima, iskoči prozor za unošenje istih
+- sređeno sortiranje titlova iz zip fajla sezone, koji se randomizirao ukoliko je već skinut i čita se iz keša
+- izmenjen prikaz rezultata pretrage, radi lakšeg izbora titla:
+	- ispis naziva serije/filma
+	- dodata godina (naročito korisno kod filmova sa istim nazivom iz različitih godina)
+	- sređen prikaz sezone/epizode
+
+[B]Dodato:[/B]
+- srpski jezik interfejsa
+- prikaz logo-a
+- izmene tektualno-vizuelne i u strukturi fajlova
+
+
+[COLOR dodgerblue][B]v1.2.0 (tturkalj)[/B][/COLOR]
+- Kodi Matrix (v19) nadogradnja (hvala tturkalj na izvornom kodu)
+
+[COLOR dodgerblue][B]v1.1.0 (tturkalj)[/B][/COLOR]
+- Novi oficijalni dodatak
+
+[COLOR dodgerblue][B]v1.1.2 (mikimac, amet)[/B][/COLOR]
+- Prvi Titlovi.com dodatak (vredno pomena)
