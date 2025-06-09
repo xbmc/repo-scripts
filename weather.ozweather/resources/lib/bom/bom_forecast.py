@@ -221,7 +221,8 @@ def bom_forecast(geohash):
         weather_data['Current.WindSpeed'] = current_observations['wind']['speed_kilometre']
         weather_data['Current.OzW_WindSpeed'] = current_observations['wind']['speed_kilometre']
         weather_data['Current.WindDirection'] = current_observations['wind']['direction']
-        weather_data['Current.Wind'] = f'From {current_observations["wind"]["direction"]} at {current_observations["wind"]["speed_kilometre"]} kph'
+        weather_data['Current.Wind'] = current_observations["wind"]["speed_kilometre"]
+        # weather_data['Current.Wind'] = f'From {current_observations["wind"]["direction"]} at {current_observations["wind"]["speed_kilometre"]} kph'
         if current_observations["gust"] is not None:
             weather_data['Current.WindGust'] = f'{current_observations["gust"]["speed_kilometre"]}'
         else:
@@ -237,10 +238,13 @@ def bom_forecast(geohash):
     else:
         try:
             Logger.warning("Feels Like not provided by BOM.  Attempting to calculate feels like...but will likely fail...")
-            water_vapour_pressure = current_observations['humidity'] * 6.105 * math.exp((17.27 * current_observations['temp'])/(237.7 + current_observations['temp']))
-            calculated_feels_like = current_observations['temp'] + (0.33 * water_vapour_pressure) - (0.70 * current_observations['wind']['speed_kilometre']) - 4.00
-            weather_data['Current.FeelsLike'] = calculated_feels_like
-            weather_data['Current.Ozw_FeelsLike'] = calculated_feels_like
+
+            # NB Units: BOM provides humidity as 0-100%, rather than 0-1, whilst Steadman AAT uses 0-1 in calculation
+            # AU BOM data is Km/hr, whilst Steadman AAT calculation uses wind speed in units of m/s, need to convert
+            water_vapour_pressure = (current_observations['humidity'] / 100) * 6.105 * math.exp((17.27 * current_observations['temp']) / (237.7 + current_observations['temp']))
+            calculated_feels_like = current_observations['temp'] + (0.33 * water_vapour_pressure) - (0.70 * current_observations['wind']['speed_kilometre'] / 3.6) - 4.00
+            weather_data['Current.FeelsLike'] = round(calculated_feels_like, 1)
+            weather_data['Current.Ozw_FeelsLike'] = round(calculated_feels_like, 1)
             Logger.info(f"Success!  Using calculated feels like of {calculated_feels_like}")
         # Not provided, could not calculate it, so set it to the current temp (avoids Kodi showing a random '0' value!)
         except:
