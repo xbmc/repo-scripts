@@ -561,7 +561,7 @@ class SimpleCache(object):
 
             if not calc_input: return 0
 
-            return reduce(lambda x, y: x + y, map(ord, calc_input))
+            return reduce(lambda x, y: x + y, list(map(ord, calc_input)))
         except TypeError:
             self._log_msg(f"Checksum TypeError for input: {stringinput}", xbmc.LOGWARNING)
             return 0
