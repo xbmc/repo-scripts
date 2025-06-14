@@ -24,7 +24,7 @@ It depends only on the Python standard library and uses **urllib.request** modul
 
 Supported:
 
-* HTTP methods: GET, POST
+* HTTP methods: GET, POST, PUT, PATCH, DELETE
 * HTTP and HTTPS.
 * Disabling SSL certificates validation.
 * Request payload as form data, JSON and raw binary data.
@@ -79,6 +79,9 @@ __all__ = [
     'RequestsCookieJar',
     'get',
     'post',
+    'put',
+    'patch',
+    'delete',
 ]
 
 
@@ -270,7 +273,13 @@ class Response:
             raise HTTPError(self)
 
 
-def _create_request(url_structure, params=None, data=None, headers=None, auth=None, json=None):
+def _create_request(url_structure,
+                    method=None,
+                    params=None,
+                    data=None,
+                    headers=None,
+                    auth=None,
+                    json=None):
     query = url_structure.query
     if params is not None:
         separator = '&' if query else ''
@@ -301,7 +310,7 @@ def _create_request(url_structure, params=None, data=None, headers=None, auth=No
         prepared_headers['Authorization'] = f'Basic {encoded_credentials}'
     if 'Accept-Encoding' not in prepared_headers:
         prepared_headers['Accept-Encoding'] = 'gzip'
-    return url_request.Request(full_url, body, prepared_headers)
+    return url_request.Request(full_url, body, prepared_headers, method=method)
 
 
 def _get_cookie_jar(cookies):
@@ -313,40 +322,18 @@ def _get_cookie_jar(cookies):
     return cookie_jar
 
 
-def post(url: str,
-         params: Optional[Dict[str, Any]] = None,
-         data: Optional[Union[Dict[str, Any], str, bytes, BinaryIO]] = None,
-         headers: Optional[Dict[str, str]] = None,
-         cookies: Union[Dict[str, str], CookieJar] = None,
-         auth: Optional[Tuple[str, str]] = None,
-         timeout: Optional[float] = None,
-         verify: bool = True,
-         json: Optional[Dict[str, Any]] = None) -> Response:
-    """
-    POST request
-
-    This function assumes that a request body should be encoded with UTF-8
-    and by default sends Accept-Encoding: gzip header to receive response content compressed.
-
-    :param url: URL
-    :param params: URL query params
-    :param data: request payload as dict, str, bytes or a binary file object.
-        If "data" or "json" is passed then a POST request is sent.
-        For str, bytes or file object it's caller's responsibility to provide a proper
-        'Content-Type' header.
-    :param headers: additional headers
-    :param cookies: cookies as a dict or a CookieJar object. If a CookieJar object is provided
-        the same object will be attached to a response object with the updated set of cookies.
-    :param auth: a tuple of (login, password) for Basic authentication
-    :param timeout: request timeout in seconds
-    :param verify: verify SSL certificates
-    :param json: request payload as JSON. This parameter has precedence over "data", that is,
-        if it's present then "data" is ignored.
-    :raises: ConnectionError
-    :return: Response object
-    """
+def _execute_request(url: str,
+                     method: Optional[str] = None,
+                     params: Optional[Dict[str, Any]] = None,
+                     data: Optional[Union[Dict[str, Any], str, bytes, BinaryIO]] = None,
+                     headers: Optional[Dict[str, str]] = None,
+                     cookies: Union[Dict[str, str], CookieJar] = None,
+                     auth: Optional[Tuple[str, str]] = None,
+                     timeout: Optional[float] = None,
+                     verify: bool = True,
+                     json: Optional[Dict[str, Any]] = None) -> Response:
     url_structure = urlparse(url)
-    request = _create_request(url_structure, params, data, headers, auth, json)
+    request = _create_request(url_structure, method, params, data, headers, auth, json)
     context = None
     if url_structure.scheme == 'https':
         context = ssl.SSLContext()
@@ -409,5 +396,188 @@ def get(url: str,
     :raises: ConnectionError
     :return: Response object
     """
-    return post(url=url, params=params, headers=headers, cookies=cookies,
-                auth=auth, timeout=timeout, verify=verify)
+    return _execute_request(
+        url,
+        method='GET',
+        params=params,
+        headers=headers,
+        cookies=cookies,
+        auth=auth,
+        timeout=timeout,
+        verify=verify
+    )
+
+
+def post(url: str,
+         params: Optional[Dict[str, Any]] = None,
+         data: Optional[Union[Dict[str, Any], str, bytes, BinaryIO]] = None,
+         headers: Optional[Dict[str, str]] = None,
+         cookies: Union[Dict[str, str], CookieJar] = None,
+         auth: Optional[Tuple[str, str]] = None,
+         timeout: Optional[float] = None,
+         verify: bool = True,
+         json: Optional[Dict[str, Any]] = None) -> Response:
+    """
+    POST request
+
+    This function assumes that a request body should be encoded with UTF-8
+    and by default sends Accept-Encoding: gzip header to receive response content compressed.
+
+    :param url: URL
+    :param params: URL query params
+    :param data: request payload as dict, str, bytes or a binary file object.
+        For str, bytes or file object it's caller's responsibility to provide a proper
+        'Content-Type' header.
+    :param headers: additional headers
+    :param cookies: cookies as a dict or a CookieJar object. If a CookieJar object is provided
+        the same object will be attached to a response object with the updated set of cookies.
+    :param auth: a tuple of (login, password) for Basic authentication
+    :param timeout: request timeout in seconds
+    :param verify: verify SSL certificates
+    :param json: request payload as JSON. This parameter has precedence over "data", that is,
+        if it's present then "data" is ignored.
+    :raises: ConnectionError
+    :return: Response object
+    """
+    return _execute_request(
+        url,
+        method='POST',
+        params=params,
+        data=data,
+        headers=headers,
+        cookies=cookies,
+        auth=auth,
+        timeout=timeout,
+        verify=verify,
+        json=json
+    )
+
+
+def put(url: str,
+        params: Optional[Dict[str, Any]] = None,
+        data: Optional[Union[Dict[str, Any], str, bytes, BinaryIO]] = None,
+        headers: Optional[Dict[str, str]] = None,
+        cookies: Union[Dict[str, str], CookieJar] = None,
+        auth: Optional[Tuple[str, str]] = None,
+        timeout: Optional[float] = None,
+        verify: bool = True,
+        json: Optional[Dict[str, Any]] = None) -> Response:
+    """
+    PUT request
+
+    This function assumes that a request body should be encoded with UTF-8
+    and by default sends Accept-Encoding: gzip header to receive response content compressed.
+
+    :param url: URL
+    :param params: URL query params
+    :param data: request payload as dict, str, bytes or a binary file object.
+        For str, bytes or file object it's caller's responsibility to provide a proper
+        'Content-Type' header.
+    :param headers: additional headers
+    :param cookies: cookies as a dict or a CookieJar object. If a CookieJar object is provided
+        the same object will be attached to a response object with the updated set of cookies.
+    :param auth: a tuple of (login, password) for Basic authentication
+    :param timeout: request timeout in seconds
+    :param verify: verify SSL certificates
+    :param json: request payload as JSON. This parameter has precedence over "data", that is,
+        if it's present then "data" is ignored.
+    :raises: ConnectionError
+    :return: Response object
+    """
+    return _execute_request(
+        url,
+        method='PUT',
+        params=params,
+        data=data,
+        headers=headers,
+        cookies=cookies,
+        auth=auth,
+        timeout=timeout,
+        verify=verify,
+        json=json
+    )
+
+
+def patch(url: str,
+          params: Optional[Dict[str, Any]] = None,
+          data: Optional[Union[Dict[str, Any], str, bytes, BinaryIO]] = None,
+          headers: Optional[Dict[str, str]] = None,
+          cookies: Union[Dict[str, str], CookieJar] = None,
+          auth: Optional[Tuple[str, str]] = None,
+          timeout: Optional[float] = None,
+          verify: bool = True,
+          json: Optional[Dict[str, Any]] = None) -> Response:
+
+    """
+    PATCH request
+
+    This function assumes that a request body should be encoded with UTF-8
+    and by default sends Accept-Encoding: gzip header to receive response content compressed.
+
+    :param url: URL
+    :param params: URL query params
+    :param data: request payload as dict, str, bytes or a binary file object.
+        For str, bytes or file object it's caller's responsibility to provide a proper
+        'Content-Type' header.
+    :param headers: additional headers
+    :param cookies: cookies as a dict or a CookieJar object. If a CookieJar object is provided
+        the same object will be attached to a response object with the updated set of cookies.
+    :param auth: a tuple of (login, password) for Basic authentication
+    :param timeout: request timeout in seconds
+    :param verify: verify SSL certificates
+    :param json: request payload as JSON. This parameter has precedence over "data", that is,
+        if it's present then "data" is ignored.
+    :raises: ConnectionError
+    :return: Response object
+    """
+    return _execute_request(
+        url,
+        method='PATCH',
+        params=params,
+        data=data,
+        headers=headers,
+        cookies=cookies,
+        auth=auth,
+        timeout=timeout,
+        verify=verify,
+        json=json
+    )
+
+
+def delete(url: str,
+           params: Optional[Dict[str, Any]] = None,
+           data: Optional[Union[Dict[str, Any], str, bytes, BinaryIO]] = None,
+           headers: Optional[Dict[str, str]] = None,
+           cookies: Union[Dict[str, str], CookieJar] = None,
+           auth: Optional[Tuple[str, str]] = None,
+           timeout: Optional[float] = None,
+           verify: bool = True) -> Response:
+
+    """
+    DELETE request
+
+    This function by default sends Accept-Encoding: gzip header
+    to receive response content compressed.
+
+    :param url: URL
+    :param params: URL query params
+    :param headers: additional headers
+    :param cookies: cookies as a dict or a CookieJar object. If a CookieJar object is provided
+        the same object will be attached to a response object with the updated set of cookies.
+    :param auth: a tuple of (login, password) for Basic authentication
+    :param timeout: request timeout in seconds
+    :param verify: verify SSL certificates
+    :raises: ConnectionError
+    :return: Response object
+    """
+    return _execute_request(
+        url,
+        method='DELETE',
+        params=params,
+        data=data,
+        headers=headers,
+        cookies=cookies,
+        auth=auth,
+        timeout=timeout,
+        verify=verify
+    )
