@@ -12,11 +12,13 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="en_GB">Module providing access to youtube-dl video stream extraction</summary>
+        <summary lang="sv_SE">Modul som ger åtkomst till extrahering av videoströmmar från youtube-dl</summary>
         <description lang="en_GB">Module providing access to youtube-dl video stream extraction for hundreds of sites. Version is based on youtube-dl date version: YY.MDD.V where V is the addon specific sub-version. Also provides downloading with the option for background downloading with a queue and queue manager.</description>
         <summary lang="el_EL">Βοηθητική μονάδα πρόσβασης στους επιλυτές youtube-dl για την εξαγωγή ροών βίντεο</summary>
         <description lang="el_EL">Βοηθητική μονάδα πρόσβασης στους επιλυτές youtube-dl για την εξαγωγή ροών βίντεο από εκατοντάδες ιστότοπους. Η έκδοση βασίζεται στην έκδοση ημερομηνίας του youtube-dl: EE.MHH.EK όπου ΕΚ η υπό-έκδοση συγκεκριμένα για το πρόσθετο. Επιπλέον δίνει δυνατότητα μεταφόρτωσης στο παρασκήνιο με ουρά και διαχειριστή αυτής.</description>
         <summary lang="es_ES">Módulo que proporciona acceso a YouTube-dl para la extracción de flujos de video</summary>
         <description lang="es_ES">Módulo que proporciona acceso a YouTube-dl para la extracción de flujos de video de cientos de sitios. La versión está basada en la versión de fecha youtube-dl: YY.MDD.V donde V es la subversión específica del complemento. También permite descargas con la opción de descarga en segundo plano con una cola y un administrador de colas.</description>
+        <description lang="sv_SE">Modul som ger tillgång till youtube-dl-videoströmsextrahering för hundratals webbplatser. Versionen baseras på youtube-dl med datumversion: YY.MDD.V där V är tilläggsspecifik underversion. Ger även möjlighet till hämtningar med alternativ för bakgrundshämtningar med kö och köhanterare.</description>
         <license>LGPL-2.1-only</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=200877</forum>
         <source>https://github.com/xbmc/repo-scripts/tree/matrix/script.module.youtube.dl</source>
