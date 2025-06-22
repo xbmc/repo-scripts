@@ -1,3 +1,5 @@
+4.1.1
+- Swedish translation (thanks yeager!)
 4.1.0
 - Python 3.13 compat: Use raw strings for regex'es everywhere, fixes SyntaxError's (thanks alanswanson!)
 - Python 3.13 compat: Replace long deprecated telnetlib usage with raw sockets (thanks m-wichmann!)

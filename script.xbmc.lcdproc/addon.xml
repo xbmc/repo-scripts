@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="4.1.0" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
+<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="4.1.1" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -11,10 +11,12 @@
     <description lang="de_DE">Zeigt konfigurierbare Informationen z.B. über aktuelle Wiedergabe oder den Kodi Status auf beliebigen von LCDproc angesteuerten LC/VF-Displays, ersetzt die zuvor im Kodi/XBMC-Kern enthaltene LCD/VFD-Funktion. Unterstützt zusätzliche Elemente (Icons, Balken) von SoundGraph iMON LCD und Targa/Futaba mdm166a VFD Hardware. Benötigt einen konfigurierten, laufenden LCDd auf dem lokalen System oder im Netzwerk.</description>
     <description lang="fr_FR">Affiche des informations définies par configuration telles que le média en cours de lecture, l'état de Kodi... et ce sur tout type d'afficheur LC/VF géré par LCDProc. Remplace la fonctionnalité LCD/VFD précédemment disponible par défaut dans Kodi/XBMC. Gère des éléments supplémentaires (icônes, barres) sur les écrans SoundGraph iMON LCD et Targa/Futaba mdm166a VFD. Nécessite un serveur LCDd correctement configuré et disponible localement ou sur le réseau.</description>
     <description lang="pl_PL">Wyświetla konfigurowalne informacje np. o odtwarzanych mediach oraz statusie Kodi na dowolnym wyświetlaczu LCD/VFD sterowanym poprzez LCDproc. Działa jako bezpośredni zamiennik funkcji wyświetlania na  LCD/VFD poprzednio dostępnej w rdzeniu Kodi/XBMC. Wspiera wyświetlanie dodatkowych elementów (np. ikon stanu, linijek diodowych lub pasków postępu) na wyświetlaczach SoundGraph iMON (LCD) oraz Targa/Futaba mdm166a (VFD). Wymaga poprawnie skonfigurowanego i uruchomionego serwera LCDd albo lokalnie, albo gdzieś w sieci.</description>
+    <description lang="sv_SE">Visar konfigurerbar information, t.ex. om uppspelning av media eller Kodi-status på valfri LC/VF-skärm som drivs av LCDproc, och fungerar som direkt ersättning för LCD/VFD-funktionen som tidigare fanns i Kodi/XBMC:s kärna. Stöder ytterligare skärmelement (ikoner, staplar) på SoundGraph iMON LCD och Targa/Futaba mdm166a VFD-hårdvara. Kräver en korrekt konfigurerad och körande LCDd antingen lokalt eller någonstans i nätverket.</description>
     <disclaimer lang="en_GB">Works with LCDproc only. Other LCD services like LCD4Linux or iMON Manager on Win32 are not supported. No liability taken for damaged hardware and/or software caused by this addon.</disclaimer>
     <disclaimer lang="de_DE">Funktioniert ausschliesslich mit LCDproc. Andere LCD-Dienste wie LCD4Linux, iMON Manager unter Win32 u.a. sind nicht unterstützt. Keine Haftung für durch dieses Addon beschädigte Hard-/Software.</disclaimer>
     <disclaimer lang="fr_FR">Fonctionne uniquement avec LCDProc. Les services tels que LCD4Linux ou iMON Manager sur Win32 ne sont pas gérés. Nous déclinons toute responsabilité en cas de dégats survenus suite à l'utilisation de cette extension.</disclaimer>
     <disclaimer lang="pl_PL">Działa wyłącznie z LCDproc. Inne usługi LCD jak LCD4Linux lub iMON Manager dla Win32 nie są obsługiwane. Nie ponosimy żadnej odpowiedzialności za uszkodzony sprzęt i/lub oprogramowanie spowodowane tym dodatkiem.</disclaimer>
+    <disclaimer lang="sv_SE">Fungerar endast med LCDproc. Andra LCD-tjänster som LCD4Linux eller iMON Manager på Win32 stöds inte. Vi tar inget ansvar för skador på hårdvara och/eller programvara som orsakas av detta tillägg.</disclaimer>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <platform>all</platform>
     <website>https://github.com/lcdproc/lcdproc</website>
@@ -24,10 +26,8 @@
     <assets>
       <icon>resources/icon.png</icon>
     </assets>
-    <news>4.1.0
-- Python 3.13 compat: Use raw strings for regex'es everywhere, fixes SyntaxError's (thanks alanswanson!)
-- Python 3.13 compat: Replace long deprecated telnetlib usage with raw sockets (thanks m-wichmann!)
-- Minor housekeepings
+    <news>4.1.1
+- Swedish translation (thanks yeager!)
 </news>
   </extension>
 </addon>

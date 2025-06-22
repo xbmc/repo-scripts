@@ -1,0 +1,184 @@
+# Kodi Media Center Swedish language file
+# Addon Name: XBMC LCDproc
+# Addon id: script.xbmc.lcdproc
+# Addon Provider: Team Kodi: Memphiz, Daniel 'herrnst' Scheller
+msgid ""
+msgstr ""
+"Project-Id-Version: script.xbmc.lcdproc\n"
+"Report-Msgid-Bugs-To: https://github.com/herrnst/script.xbmc.lcdproc\n"
+"POT-Creation-Date: 2018-06-02 15:55+0200\n"
+"PO-Revision-Date: 2025-05-06 07:37+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
+"Language-Team: Swedish\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
+
+# Settings
+# Behaviour
+msgctxt "#32100"
+msgid "Behaviour"
+msgstr "Beteende"
+
+msgctxt "#32101"
+msgid "Delay for scrolling text"
+msgstr "Fördröjning för rullning av text"
+
+msgctxt "#32102"
+msgid "Scroll mode"
+msgstr "Rullningsläge"
+
+msgctxt "#32103"
+msgid "Navigation display duration (s)"
+msgstr "Navigationsskärmens varaktighet (s)"
+
+msgctxt "#32104"
+msgid "Display refresh rate (Hz)"
+msgstr "Skärmens uppdateringsfrekvens (Hz)"
+
+msgctxt "#32105"
+msgid "Use alternate charset"
+msgstr "Använd alternativ teckenuppsättning"
+
+msgctxt "#32106"
+msgid "Charset"
+msgstr "Teckenuppsättning"
+
+msgctxt "#32107"
+msgid "Support for extra display elements (e.g. icons)"
+msgstr "Stöd för extra visningselement (t.ex. ikoner)"
+
+msgctxt "#32108"
+msgid "System time format"
+msgstr "Systemets tidsformat"
+
+# empty strings from id 32109 to 32199
+# Backlight
+msgctxt "#32200"
+msgid "Backlight"
+msgstr "Bakgrundsbelysning"
+
+msgctxt "#32201"
+msgid "on screensaver"
+msgstr "vid skärmsläckare"
+
+msgctxt "#32202"
+msgid "Dim on shutdown"
+msgstr "Dimma vid avstängning"
+
+msgctxt "#32203"
+msgid "on video/LiveTV playback"
+msgstr "vid uppspelning av video/direktsänd TV"
+
+msgctxt "#32204"
+msgid "on music/radio playback"
+msgstr "vid uppspelning av musik/radio"
+
+msgctxt "#32205"
+msgid "Delay (s)"
+msgstr "Fördröjning (s)"
+
+msgctxt "#32206"
+msgid "Dim/turn off..."
+msgstr "Dimma/slå av..."
+
+# empty strings from id 32207 to 32299
+# Connection
+msgctxt "#32300"
+msgid "Connection"
+msgstr "Anslutning"
+
+msgctxt "#32301"
+msgid "Use remote LCDProc"
+msgstr "Använd fjärr-LCDProc"
+
+msgctxt "#32302"
+msgid "LCDd IP"
+msgstr "LCDd IP"
+
+msgctxt "#32303"
+msgid "LCDd port"
+msgstr "LCDd-port"
+
+msgctxt "#32304"
+msgid "Show heartbeat symbol"
+msgstr "Visa symbol för hjärtslag"
+
+msgctxt "#32305"
+msgid "Hide connection error notifications"
+msgstr "Dölj meddelanden om anslutningsfel"
+
+# empty strings from id 32306 to 32400
+# Enum values: Scroll mode
+msgctxt "#32401"
+msgid "Marquee"
+msgstr "Draperi"
+
+msgctxt "#32402"
+msgid "Left/Right"
+msgstr "Vänster/Höger"
+
+# empty strings from id 32403 to 32410
+# Enum values: Charsets
+msgctxt "#32411"
+msgid "ISO8859-1 (default)"
+msgstr "ISO8859-1 (standard)"
+
+msgctxt "#32412"
+msgid "ISO8859-15"
+msgstr "ISO8859-15"
+
+msgctxt "#32413"
+msgid "KOI8-R"
+msgstr "KOI8-R"
+
+msgctxt "#32414"
+msgid "CP1251"
+msgstr "CP1251"
+
+msgctxt "#32415"
+msgid "ISO8859-5"
+msgstr "ISO8859-5"
+
+msgctxt "#32416"
+msgid "HD44780-ROM A00"
+msgstr "HD44780-ROM A00"
+
+msgctxt "#32417"
+msgid "HD44780-ROM A02"
+msgstr "HD44780-ROM A02"
+
+# empty strings from id 32418 to 32420
+# Enum values: System time format
+msgctxt "#32421"
+msgid "H:MM"
+msgstr "H:MM"
+
+msgctxt "#32422"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+msgctxt "#32423"
+msgid "H:MM:SS"
+msgstr "H:MM:SS"
+
+msgctxt "#32424"
+msgid "HH:MM:SS"
+msgstr "HH:MM:SS"
+
+# empty strings from id 32425 to 32499
+# Notifications
+msgctxt "#32500"
+msgid "Failed to connect to LCDProc!"
+msgstr "Misslyckades med att ansluta till LCDProc!"
+
+msgctxt "#32501"
+msgid "Connected to LCDProc!"
+msgstr "Ansluten till LCDProc!"
+
+msgctxt "#32502"
+msgid "Warning! Errors in LCD.xml or LCD.xml not found!"
+msgstr "Varning! Fel i LCD.xml eller LCD.xml hittades inte!"
