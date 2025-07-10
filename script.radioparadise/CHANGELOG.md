@@ -1,3 +1,7 @@
+## v2.2.0
+
+- Add Beyond channel
+
 ## v2.1.2
 
 - Add Serenity to Auto Play options

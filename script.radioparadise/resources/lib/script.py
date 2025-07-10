@@ -11,9 +11,9 @@ class Window(xbmcgui.WindowXML):
     def onInit(self):
         xbmc.executebuiltin('Container.SetViewMode(100)')
         listitems = []
-        for idx, channel in enumerate(CHANNELS):
+        for channel in CHANNELS:
             item = xbmcgui.ListItem(channel['title'])
-            item.setProperty('channel_index', str(idx))
+            item.setProperty('channel_id', str(channel['channel_id']))
             listitems.append(item)
         self.clearList()
         self.addItems(listitems)
@@ -23,14 +23,17 @@ class Window(xbmcgui.WindowXML):
     def onClick(self, controlId):
         if controlId == 100:
             item = self.getListItem(self.getCurrentListPosition())
-            channel_index = int(item.getProperty('channel_index'))
-            play_channel(channel_index)
+            channel_id = int(item.getProperty('channel_id'))
+            play_channel(channel_id)
             self.close()
 
 
-def play_channel(channel_index):
+def play_channel(channel_id):
     """Play the channel, unless it's already playing."""
-    channel = CHANNELS[channel_index]
+    channel = {c['channel_id']: c for c in CHANNELS}.get(channel_id)
+    if channel is None:
+        return
+
     addon = xbmcaddon.Addon()
     audio_format = addon.getSetting('audio_format')
     if audio_format == 'flac':
