@@ -22,7 +22,7 @@ script-wikipedia.xml
 | 9901 | label | Title of the Wikipedia article |
 | 9902 | list | List of sections containing the table of contents. Scrolling the list changes text loaded in the section textbox 9903. Clicking a listitem opens a select dialog for page links in the section |
 | 9903 | textbox | Textbox with the text of the section focused in 9902 |
-| 9904 | label | Creative commons attribution label. REQUIRED! You MUST display this text as per Wikipedia licensing requirements |
+| 9904 | textbox | Creative commons attribution label. REQUIRED! You MUST display this text as per Wikipedia licensing requirements |
 | 9905 | image | Creative commons licence logo. The license logo is optional as long as you display the attribution label |
 | 61 | scrollbar | Page control for section textbox. Clicking the scrollbar will pop-up select dialog for page links in the section |
 
