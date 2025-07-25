@@ -3,347 +3,347 @@ msgstr ""
 "Project-Id-Version: English (OpenHT)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-04 13:09+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: OpenHT <support@openht.org>\n"
-"Language-Team: English <https://hosted.weblate.org/projects/openht/"
-"weather-openmeteo/en/>\n"
-"Language: en\n"
+"PO-Revision-Date: 2025-01-23 15:44+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/openht/"
+"weather-openmeteo/ta/>\n"
+"Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 msgctxt "#32200"
 msgid "Sunny"
-msgstr ""
+msgstr "சன்னி"
 
 msgctxt "#32201"
 msgid "Mainly Sunny"
-msgstr ""
+msgstr "முக்கியமாக வெயில்"
 
 msgctxt "#32202"
 msgid "Partly Cloudy"
-msgstr ""
+msgstr "ஓரளவு மேகமூட்டம்"
 
 msgctxt "#32203"
 msgid "Cloudy"
-msgstr ""
+msgstr "மேகமூட்டமான"
 
 msgctxt "#32204"
 msgid "Foggy"
-msgstr ""
+msgstr "மூடுபனி"
 
 msgctxt "#32205"
 msgid "Rime Fog"
-msgstr ""
+msgstr "ரைம் மூடுபனி"
 
 msgctxt "#32206"
 msgid "Light Drizzle"
-msgstr ""
+msgstr "ஒளி தூறல்"
 
 msgctxt "#32207"
 msgid "Drizzle"
-msgstr ""
+msgstr "தூறல்"
 
 msgctxt "#32208"
 msgid "Heavy Drizzle"
-msgstr ""
+msgstr "கனமான தூறல்"
 
 msgctxt "#32209"
 msgid "Light Freezing Drizzle"
-msgstr ""
+msgstr "ஒளி உறைபனி தூறல்"
 
 msgctxt "#32210"
 msgid "Freezing Drizzle"
-msgstr ""
+msgstr "உறைபனி தூறல்"
 
 msgctxt "#32211"
 msgid "Light Rain"
-msgstr ""
+msgstr "லேசான மழை"
 
 msgctxt "#32212"
 msgid "Rain"
-msgstr ""
+msgstr "மழை"
 
 msgctxt "#32213"
 msgid "Heavy Rain"
-msgstr ""
+msgstr "கனமான மழை"
 
 msgctxt "#32214"
 msgid "Light Freezing Rain"
-msgstr ""
+msgstr "ஒளி உறைபனி மழை"
 
 msgctxt "#32215"
 msgid "Freezing Rain"
-msgstr ""
+msgstr "உறைபனி மழை"
 
 msgctxt "#32216"
 msgid "Light Snow"
-msgstr ""
+msgstr "ஒளி பனி"
 
 msgctxt "#32217"
 msgid "Snow"
-msgstr ""
+msgstr "பனி"
 
 msgctxt "#32218"
 msgid "Heavy Snow"
-msgstr ""
+msgstr "Heavy பனி"
 
 msgctxt "#32219"
 msgid "Snow Grains"
-msgstr ""
+msgstr "பனி Grains"
 
 msgctxt "#32220"
 msgid "Light Showers"
-msgstr ""
+msgstr "ஒளி மழை"
 
 msgctxt "#32221"
 msgid "Showers"
-msgstr ""
+msgstr "மழை"
 
 msgctxt "#32222"
 msgid "Heavy Showers"
-msgstr ""
+msgstr "கனமான மழை"
 
 msgctxt "#32223"
 msgid "Light Snow Showers"
-msgstr ""
+msgstr "Light பனி Showers"
 
 msgctxt "#32224"
 msgid "Snow Showers"
-msgstr ""
+msgstr "பனி Showers"
 
 msgctxt "#32225"
 msgid "Thunderstorm"
-msgstr ""
+msgstr "இடியுடன் கூடிய மழை"
 
 msgctxt "#32226"
 msgid "Light Thunderstorms With Hail"
-msgstr ""
+msgstr "ஆலங்கட்டி மழை இடியுடன் கூடிய மழை"
 
 msgctxt "#32227"
 msgid "Thunderstorm With Hail"
-msgstr ""
+msgstr "ஆலங்கட்டி மழை"
 
 msgctxt "#32250"
 msgid "Clear"
-msgstr ""
+msgstr "தெளிவான"
 
 msgctxt "#32251"
 msgid "Mainly Clear"
-msgstr ""
+msgstr "முக்கியமாக தெளிவாக"
 
 msgctxt "#32255"
 msgid "Moonrise"
-msgstr ""
+msgstr "மூன்ரைச்"
 
 msgctxt "#32256"
 msgid "Moonset"
-msgstr ""
+msgstr "மூன்செட்"
 
 msgctxt "#32257"
 msgid "Moonphase"
-msgstr ""
+msgstr "மூன்ஃபேச்"
 
 msgctxt "#32260"
 msgid "General"
-msgstr ""
+msgstr "பொது"
 
 msgctxt "#32261"
 msgid "Locations"
-msgstr ""
+msgstr "இருப்பிடங்கள்"
 
 msgctxt "#32262"
 msgid "Limits"
-msgstr ""
+msgstr "வரம்புகள்"
 
 msgctxt "#32263"
 msgid "Notifications"
-msgstr ""
+msgstr "அறிவிப்புகள்"
 
 msgctxt "#32264"
 msgid "Advanced"
-msgstr ""
+msgstr "மேம்பட்ட"
 
 msgctxt "#32265"
 msgid "Weather"
-msgstr ""
+msgstr "வானிலை"
 
 msgctxt "#32266"
 msgid "Airquality"
-msgstr ""
+msgstr "காற்று"
 
 msgctxt "#32267"
 msgid "Pollen"
-msgstr ""
+msgstr "மகரந்தப் பை"
 
 msgctxt "#32268"
 msgid "Alerts"
-msgstr ""
+msgstr "விழிப்பூட்டல்கள்"
 
 msgctxt "#32269"
 msgid "Select option"
-msgstr ""
+msgstr "தேர்ந்தெடு சூதம்"
 
 msgctxt "#32270"
 msgid "Graphs"
-msgstr ""
+msgstr "வரைபடங்கள்"
 
 msgctxt "#32271"
 msgid "Overview"
-msgstr ""
+msgstr "கண்ணோட்டம்"
 
 msgctxt "#32272"
 msgid "History"
-msgstr ""
+msgstr "வரலாறு"
 
 msgctxt "#32280"
 msgid "Units"
-msgstr ""
+msgstr "அலகுகள்"
 
 msgctxt "#32281"
 msgid "Maps"
-msgstr ""
+msgstr "வரைபடங்கள்"
 
 msgctxt "#32282"
 msgid "Logging"
-msgstr ""
+msgstr "பதிவு"
 
 msgctxt "#32283"
 msgid "Experimental (Restart required)"
-msgstr ""
+msgstr "சோதனை (மறுதொடக்கம் தேவை)"
 
 msgctxt "#32285"
 msgid "Zoom"
-msgstr ""
+msgstr "பெரிதாக்கு"
 
 msgctxt "#32286"
 msgid "Debug"
-msgstr ""
+msgstr "பிழைத்திருத்தம்"
 
 msgctxt "#32287"
 msgid "Duration"
-msgstr ""
+msgstr "காலம்"
 
 msgctxt "#32288"
 msgid "Hours"
-msgstr ""
+msgstr "மணி"
 
 msgctxt "#32289"
 msgid "Decimal places"
-msgstr ""
+msgstr "தசம இடங்கள்"
 
 msgctxt "#32290"
 msgid "Icons"
-msgstr ""
+msgstr "சின்னங்கள்"
 
 msgctxt "#32291"
 msgid "Default"
-msgstr ""
+msgstr "இயல்புநிலை"
 
 #, read-only
 msgctxt "#32292"
 msgid "Weathermap"
-msgstr "Weathermap"
+msgstr ""
 
 #, read-only
 msgctxt "#32293"
 msgid "Met.no"
-msgstr "Met.no"
+msgstr ""
 
 #, read-only
 msgctxt "#32294"
 msgid "WMO"
-msgstr "WMO"
+msgstr ""
 
 msgctxt "#32296"
 msgid "Background sync"
-msgstr ""
+msgstr "பின்னணி ஒத்திசைவு"
 
 msgctxt "#32300"
 msgid "Distance"
-msgstr ""
+msgstr "தூரம்"
 
 msgctxt "#32301"
 msgid "Index"
-msgstr ""
+msgstr "குறியெண்"
 
 msgctxt "#32302"
 msgid "Percent"
-msgstr ""
+msgstr "விழுக்காடு"
 
 msgctxt "#32303"
 msgid "Unit"
-msgstr ""
+msgstr "அலகு"
 
 msgctxt "#32304"
 msgid "Decimal separator"
-msgstr ""
+msgstr "தசம பிரிப்பான்"
 
 msgctxt "#32306"
 msgid "Particles"
-msgstr ""
+msgstr "துகள்கள்"
 
 msgctxt "#32307"
 msgid "Interval"
-msgstr ""
+msgstr "இடைவேளை"
 
 msgctxt "#32308"
 msgid "Verbose"
-msgstr ""
+msgstr "வாய்மொழி"
 
 msgctxt "#32310"
 msgid "Location 1"
-msgstr ""
+msgstr "இடம் 1"
 
 msgctxt "#32311"
 msgid "Location 2"
-msgstr ""
+msgstr "இடம் 2"
 
 msgctxt "#32312"
 msgid "Location 3"
-msgstr ""
+msgstr "இடம் 3"
 
 msgctxt "#32313"
 msgid "Location 4"
-msgstr ""
+msgstr "இடம் 4"
 
 msgctxt "#32314"
 msgid "Location 5"
-msgstr ""
+msgstr "இடம் 5"
 
 msgctxt "#32316"
 msgid "Use location timezone"
-msgstr ""
+msgstr "இருப்பிட நேர மண்டலத்தைப் பயன்படுத்தவும்"
 
 msgctxt "#32320"
 msgid "Temperature"
-msgstr ""
+msgstr "வெப்பநிலை"
 
 msgctxt "#32321"
 msgid "Precipitation"
-msgstr ""
+msgstr "மழைப்பொழிவு"
 
 msgctxt "#32322"
 msgid "Condition"
-msgstr ""
+msgstr "நிபந்தனை"
 
 msgctxt "#32323"
 msgid "Wind"
-msgstr ""
+msgstr "காற்று"
 
 msgctxt "#32324"
 msgid "Gust"
-msgstr ""
+msgstr "Vust"
 
 msgctxt "#32325"
 msgid "AQI EU"
-msgstr "AQI EU"
+msgstr "AQI இருந்தது"
 
 msgctxt "#32326"
 msgid "AQI US"
-msgstr "AQI US"
+msgstr "AQI எங்களுக்கு"
 
 msgctxt "#32327"
 msgid "PM25"
@@ -355,147 +355,147 @@ msgstr "PM10"
 
 msgctxt "#32329"
 msgid "UV Index"
-msgstr ""
+msgstr "புற ஊதா அட்டவணை"
 
 msgctxt "#32330"
 msgid "Nitrogen Dioxide"
-msgstr ""
+msgstr "நைட்ரசன் டை ஆக்சைடு"
 
 msgctxt "#32331"
 msgid "Sulphur Dioxide"
-msgstr ""
+msgstr "சல்பர் டை ஆக்சைடு"
 
 msgctxt "#32332"
 msgid "Feelslike"
-msgstr ""
+msgstr "உணர்கிறது"
 
 msgctxt "#32333"
 msgid "Dewpoint"
-msgstr ""
+msgstr "டிவாயிண்ட்"
 
 msgctxt "#32334"
 msgid "Cloudiness"
-msgstr ""
+msgstr "மேகமூட்டம்"
 
 msgctxt "#32335"
 msgid "Time"
-msgstr ""
+msgstr "நேரம்"
 
 msgctxt "#32336"
 msgid "Speed"
-msgstr ""
+msgstr "வேகம்"
 
 msgctxt "#32337"
 msgid "Carbon monoxide"
-msgstr ""
+msgstr "கார்பன் மோனாக்சைடு"
 
 msgctxt "#32338"
 msgid "Ozone"
-msgstr ""
+msgstr "சாரலியம்/மிகுவுயிரகம்"
 
 msgctxt "#32339"
 msgid "Dust"
-msgstr ""
+msgstr "தூசு"
 
 msgctxt "#32340"
 msgid "Notice"
-msgstr ""
+msgstr "அறிவிப்பு"
 
 msgctxt "#32341"
 msgid "Caution"
-msgstr ""
+msgstr "எச்சரிக்கை"
 
 msgctxt "#32342"
 msgid "Danger"
-msgstr ""
+msgstr "இடர்"
 
 msgctxt "#32343"
 msgid "Normal"
-msgstr ""
+msgstr "சாதாரண"
 
 msgctxt "#32344"
 msgid "Negative"
-msgstr ""
+msgstr "எதிர்மம்"
 
 msgctxt "#32345"
 msgid "Colours"
-msgstr ""
+msgstr "நிறங்கள்"
 
 msgctxt "#32346"
 msgid "Humidity"
-msgstr ""
+msgstr "ஈரப்பதம்"
 
 msgctxt "#32347"
 msgid "Pressure"
-msgstr ""
+msgstr "அழுத்தம்"
 
 msgctxt "#32348"
 msgid "Solar radiation"
-msgstr ""
+msgstr "சூரிய கதிர்வீச்சு"
 
 msgctxt "#32349"
 msgid "Visibility"
-msgstr ""
+msgstr "விழிமை"
 
 #, read-only
 msgctxt "#32350"
 msgid "°C"
-msgstr "°C"
+msgstr ""
 
 #, read-only
 msgctxt "#32351"
 msgid "°F"
-msgstr "°F"
+msgstr ""
 
 #, read-only
 msgctxt "#32352"
 msgid "K"
-msgstr "K"
+msgstr ""
 
 #, read-only
 msgctxt "#32353"
 msgid "°Ré"
-msgstr "°Ré"
+msgstr ""
 
 #, read-only
 msgctxt "#32354"
 msgid "°Ra"
-msgstr "°Ra"
+msgstr ""
 
 #, read-only
 msgctxt "#32355"
 msgid "°Rø"
-msgstr "°Rø"
+msgstr ""
 
 #, read-only
 msgctxt "#32356"
 msgid "°D"
-msgstr "°D"
+msgstr ""
 
 #, read-only
 msgctxt "#32357"
 msgid "°N"
-msgstr "°N"
+msgstr ""
 
 msgctxt "#32360"
 msgid "Application"
-msgstr ""
+msgstr "பயன்பாடு"
 
 msgctxt "#32361"
 msgid "mph"
-msgstr "mph"
+msgstr "எம்.பி.எச்"
 
 msgctxt "#32362"
 msgid "km/h"
-msgstr "km/h"
+msgstr "கிமீ/மணி"
 
 msgctxt "#32363"
 msgid "m/min"
-msgstr "m/min"
+msgstr "எம்/என்"
 
 msgctxt "#32364"
 msgid "m/s"
-msgstr "m/s"
+msgstr "எம்/கள்"
 
 msgctxt "#32365"
 msgid "ft/h"
@@ -511,155 +511,136 @@ msgstr "ft/s"
 
 msgctxt "#32368"
 msgid "kts"
-msgstr "kts"
+msgstr "கே.டி.எச்"
 
 msgctxt "#32369"
 msgid "Beaufort"
-msgstr "Beaufort"
+msgstr "பீஃபோர்ட்"
 
 msgctxt "#32370"
 msgid "inch/s"
-msgstr "inch/s"
+msgstr "அங்குல/கள்"
 
 msgctxt "#32371"
 msgid "yard/s"
-msgstr "yard/s"
+msgstr "முற்றத்தில்/கள்"
 
 msgctxt "#32372"
 msgid "Furlong/Fortnight"
-msgstr "Furlong/Fortnight"
+msgstr "ஃபர்லாங்/பதினைந்து"
 
 msgctxt "#32380"
 msgid "mm"
-msgstr "mm"
+msgstr "மிமீ"
 
 msgctxt "#32381"
 msgid "inches"
-msgstr "inches"
-
-msgctxt "#32382"
-msgid "hPa"
-msgstr "hPa"
-
-msgctxt "#32383"
-msgid "kPa"
-msgstr "kPa"
-
-msgctxt "#32384"
-msgid "mm Hg"
-msgstr "mm Hg"
-
-msgctxt "#32385"
-msgid "in Hg"
-msgstr "in Hg"
-
-msgctxt "#32386"
-msgid "psi"
-msgstr "psi"
+msgstr "அங்குலங்கள்"
 
 msgctxt "#32390"
 msgid "12h"
-msgstr "12h"
+msgstr "12 ம"
 
 msgctxt "#32391"
 msgid "24h"
-msgstr "24h"
+msgstr "24 எச்"
 
 msgctxt "#32400"
 msgid "Radar"
-msgstr ""
+msgstr "கதிரலைக் கும்பா"
 
 msgctxt "#32401"
 msgid "Satellite"
-msgstr ""
+msgstr "செயற்கைக் கோள்"
 
 msgctxt "#32410"
 msgid "m"
-msgstr "m"
+msgstr "மீ"
 
 msgctxt "#32411"
 msgid "km"
-msgstr "km"
+msgstr "கி.மீ."
 
 msgctxt "#32412"
 msgid "mi"
-msgstr "mi"
+msgstr "மி"
 
 #, read-only
 msgctxt "#32430"
 msgid "."
-msgstr "."
+msgstr ""
 
 #, read-only
 msgctxt "#32431"
 msgid ","
-msgstr ","
+msgstr ""
 
 msgctxt "#32440"
 msgid "New Moon"
-msgstr ""
+msgstr "இல்மதி"
 
 msgctxt "#32441"
 msgid "Waxing Crescent"
-msgstr ""
+msgstr "மெழுகு பிறை"
 
 msgctxt "#32442"
 msgid "First Quarter"
-msgstr ""
+msgstr "முதல் காலாண்டு"
 
 msgctxt "#32443"
 msgid "Waxing Gibbous"
-msgstr ""
+msgstr "மெழுகு கிப்பச்"
 
 msgctxt "#32444"
 msgid "Full Moon"
-msgstr ""
+msgstr "முழு நிலவு"
 
 msgctxt "#32445"
 msgid "Waning Gibbous"
-msgstr ""
+msgstr "கிப்பச் குறைந்து"
 
 msgctxt "#32446"
 msgid "Last Quarter"
-msgstr ""
+msgstr "கடந்த காலாண்டு"
 
 msgctxt "#32447"
 msgid "Waning Crescent"
-msgstr ""
+msgstr "பிறை குறைதல்"
 
 msgctxt "#32450"
 msgid "Alder"
-msgstr ""
+msgstr "ஆல்டர்"
 
 msgctxt "#32451"
 msgid "Birch"
-msgstr ""
+msgstr "பிர்ச்"
 
 msgctxt "#32452"
 msgid "Grass"
-msgstr ""
+msgstr "புல்"
 
 msgctxt "#32453"
 msgid "Mugwort"
-msgstr ""
+msgstr "முக்வார்ட்"
 
 msgctxt "#32454"
 msgid "Olive"
-msgstr ""
+msgstr "ஆலிவ்"
 
 msgctxt "#32455"
 msgid "Ragweed"
-msgstr ""
+msgstr "ராக்வீட்"
 
 msgctxt "#32456"
 msgid "grains"
-msgstr ""
+msgstr "தானியங்கள்"
 
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
-msgstr ""
+msgstr "திறந்த-மெட்டியோவிலிருந்து வானிலை முன்னறிவிப்பு"
 
 msgctxt "#32501"
 msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
 msgstr ""
-
+"திறந்த-மெட்டியோ.காம், ரெயின்வியூவர்.காம், வானிலை. GC.CA மற்றும் MET.NO இலிருந்து "
+"வானிலை, வரைபடங்கள், காற்றோட்டம் மற்றும் மகரந்த முன்னறிவிப்பு"

@@ -526,6 +526,26 @@ msgctxt "#32381"
 msgid "inches"
 msgstr "inches"
 
+msgctxt "#32382"
+msgid "hPa"
+msgstr "hPa"
+
+msgctxt "#32383"
+msgid "kPa"
+msgstr "kPa"
+
+msgctxt "#32384"
+msgid "mm Hg"
+msgstr "mm Hg"
+
+msgctxt "#32385"
+msgid "in Hg"
+msgstr "in Hg"
+
+msgctxt "#32386"
+msgid "psi"
+msgstr "psi"
+
 msgctxt "#32390"
 msgid "12h"
 msgstr "12h"

@@ -3,347 +3,347 @@ msgstr ""
 "Project-Id-Version: English (OpenHT)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-04 13:09+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: OpenHT <support@openht.org>\n"
-"Language-Team: English <https://hosted.weblate.org/projects/openht/"
-"weather-openmeteo/en/>\n"
-"Language: en\n"
+"PO-Revision-Date: 2025-03-23 13:21+0000\n"
+"Last-Translator: Nao3Line Prez <n.yazawa6932@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/openht/"
+"weather-openmeteo/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgctxt "#32200"
 msgid "Sunny"
-msgstr ""
+msgstr "Cerah"
 
 msgctxt "#32201"
 msgid "Mainly Sunny"
-msgstr ""
+msgstr "Sebagian Besar Cerah"
 
 msgctxt "#32202"
 msgid "Partly Cloudy"
-msgstr ""
+msgstr "Sebagian Berawan"
 
 msgctxt "#32203"
 msgid "Cloudy"
-msgstr ""
+msgstr "Berawan"
 
 msgctxt "#32204"
 msgid "Foggy"
-msgstr ""
+msgstr "Berkabut"
 
 msgctxt "#32205"
 msgid "Rime Fog"
-msgstr ""
+msgstr "Kabut Beku"
 
 msgctxt "#32206"
 msgid "Light Drizzle"
-msgstr ""
+msgstr "Gerimis Ringan"
 
 msgctxt "#32207"
 msgid "Drizzle"
-msgstr ""
+msgstr "Gerimis"
 
 msgctxt "#32208"
 msgid "Heavy Drizzle"
-msgstr ""
+msgstr "Gerimis Deras"
 
 msgctxt "#32209"
 msgid "Light Freezing Drizzle"
-msgstr ""
+msgstr "Gerimis Beku Ringan"
 
 msgctxt "#32210"
 msgid "Freezing Drizzle"
-msgstr ""
+msgstr "Gerimis Beku"
 
 msgctxt "#32211"
 msgid "Light Rain"
-msgstr ""
+msgstr "Hujan Ringan"
 
 msgctxt "#32212"
 msgid "Rain"
-msgstr ""
+msgstr "Hujan"
 
 msgctxt "#32213"
 msgid "Heavy Rain"
-msgstr ""
+msgstr "Hujan Deras"
 
 msgctxt "#32214"
 msgid "Light Freezing Rain"
-msgstr ""
+msgstr "Hujan Beku Ringan"
 
 msgctxt "#32215"
 msgid "Freezing Rain"
-msgstr ""
+msgstr "Hujan Beku"
 
 msgctxt "#32216"
 msgid "Light Snow"
-msgstr ""
+msgstr "Salju Ringan"
 
 msgctxt "#32217"
 msgid "Snow"
-msgstr ""
+msgstr "Salju"
 
 msgctxt "#32218"
 msgid "Heavy Snow"
-msgstr ""
+msgstr "Salju Lebat"
 
 msgctxt "#32219"
 msgid "Snow Grains"
-msgstr ""
+msgstr "Butir Salju"
 
 msgctxt "#32220"
 msgid "Light Showers"
-msgstr ""
+msgstr "Hujan Ringan"
 
 msgctxt "#32221"
 msgid "Showers"
-msgstr ""
+msgstr "Hujan"
 
 msgctxt "#32222"
 msgid "Heavy Showers"
-msgstr ""
+msgstr "Hujan Lebat"
 
 msgctxt "#32223"
 msgid "Light Snow Showers"
-msgstr ""
+msgstr "Hujan Salju Ringan"
 
 msgctxt "#32224"
 msgid "Snow Showers"
-msgstr ""
+msgstr "Hujan Salju"
 
 msgctxt "#32225"
 msgid "Thunderstorm"
-msgstr ""
+msgstr "Badai Petir"
 
 msgctxt "#32226"
 msgid "Light Thunderstorms With Hail"
-msgstr ""
+msgstr "Badai Petir Ringan Disertai Hujan Es"
 
 msgctxt "#32227"
 msgid "Thunderstorm With Hail"
-msgstr ""
+msgstr "Badai Petir Disertai Hujan Es"
 
 msgctxt "#32250"
 msgid "Clear"
-msgstr ""
+msgstr "Cerah"
 
 msgctxt "#32251"
 msgid "Mainly Clear"
-msgstr ""
+msgstr "Sebagian Besar Cerah"
 
 msgctxt "#32255"
 msgid "Moonrise"
-msgstr ""
+msgstr "Bulan Terbit"
 
 msgctxt "#32256"
 msgid "Moonset"
-msgstr ""
+msgstr "Bulan Tenggelam"
 
 msgctxt "#32257"
 msgid "Moonphase"
-msgstr ""
+msgstr "Fase Bulan"
 
 msgctxt "#32260"
 msgid "General"
-msgstr ""
+msgstr "Umum"
 
 msgctxt "#32261"
 msgid "Locations"
-msgstr ""
+msgstr "Lokasi"
 
 msgctxt "#32262"
 msgid "Limits"
-msgstr ""
+msgstr "Batas"
 
 msgctxt "#32263"
 msgid "Notifications"
-msgstr ""
+msgstr "Notifikasi"
 
 msgctxt "#32264"
 msgid "Advanced"
-msgstr ""
+msgstr "Lanjutan"
 
 msgctxt "#32265"
 msgid "Weather"
-msgstr ""
+msgstr "Cuaca"
 
 msgctxt "#32266"
 msgid "Airquality"
-msgstr ""
+msgstr "Kualitas Udara"
 
 msgctxt "#32267"
 msgid "Pollen"
-msgstr ""
+msgstr "Serbuk Sari"
 
 msgctxt "#32268"
 msgid "Alerts"
-msgstr ""
+msgstr "Peringatan"
 
 msgctxt "#32269"
 msgid "Select option"
-msgstr ""
+msgstr "Pilih Opsi"
 
 msgctxt "#32270"
 msgid "Graphs"
-msgstr ""
+msgstr "Grafik"
 
 msgctxt "#32271"
 msgid "Overview"
-msgstr ""
+msgstr "Ringkasan"
 
 msgctxt "#32272"
 msgid "History"
-msgstr ""
+msgstr "Riwayat"
 
 msgctxt "#32280"
 msgid "Units"
-msgstr ""
+msgstr "Satuan"
 
 msgctxt "#32281"
 msgid "Maps"
-msgstr ""
+msgstr "Peta"
 
 msgctxt "#32282"
 msgid "Logging"
-msgstr ""
+msgstr "Catatan"
 
 msgctxt "#32283"
 msgid "Experimental (Restart required)"
-msgstr ""
+msgstr "Eksperimental (Butuh mulai ulang)"
 
 msgctxt "#32285"
 msgid "Zoom"
-msgstr ""
+msgstr "Perbesar"
 
 msgctxt "#32286"
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
 msgctxt "#32287"
 msgid "Duration"
-msgstr ""
+msgstr "Durasi"
 
 msgctxt "#32288"
 msgid "Hours"
-msgstr ""
+msgstr "Jam"
 
 msgctxt "#32289"
 msgid "Decimal places"
-msgstr ""
+msgstr "Tempat desimal"
 
 msgctxt "#32290"
 msgid "Icons"
-msgstr ""
+msgstr "Ikon"
 
 msgctxt "#32291"
 msgid "Default"
-msgstr ""
+msgstr "Bawaan"
 
 #, read-only
 msgctxt "#32292"
 msgid "Weathermap"
-msgstr "Weathermap"
+msgstr ""
 
 #, read-only
 msgctxt "#32293"
 msgid "Met.no"
-msgstr "Met.no"
+msgstr ""
 
 #, read-only
 msgctxt "#32294"
 msgid "WMO"
-msgstr "WMO"
+msgstr ""
 
 msgctxt "#32296"
 msgid "Background sync"
-msgstr ""
+msgstr "Sinkron latarbelakang"
 
 msgctxt "#32300"
 msgid "Distance"
-msgstr ""
+msgstr "Jarak"
 
 msgctxt "#32301"
 msgid "Index"
-msgstr ""
+msgstr "Indeks"
 
 msgctxt "#32302"
 msgid "Percent"
-msgstr ""
+msgstr "Persen"
 
 msgctxt "#32303"
 msgid "Unit"
-msgstr ""
+msgstr "Satuan"
 
 msgctxt "#32304"
 msgid "Decimal separator"
-msgstr ""
+msgstr "Pemisah desimal"
 
 msgctxt "#32306"
 msgid "Particles"
-msgstr ""
+msgstr "Partikel"
 
 msgctxt "#32307"
 msgid "Interval"
-msgstr ""
+msgstr "Selang"
 
 msgctxt "#32308"
 msgid "Verbose"
-msgstr ""
+msgstr "Banyak kata"
 
 msgctxt "#32310"
 msgid "Location 1"
-msgstr ""
+msgstr "Lokasi 1"
 
 msgctxt "#32311"
 msgid "Location 2"
-msgstr ""
+msgstr "Lokasi 2"
 
 msgctxt "#32312"
 msgid "Location 3"
-msgstr ""
+msgstr "Lokasi 3"
 
 msgctxt "#32313"
 msgid "Location 4"
-msgstr ""
+msgstr "Lokasi 4"
 
 msgctxt "#32314"
 msgid "Location 5"
-msgstr ""
+msgstr "Lokasi 5"
 
 msgctxt "#32316"
 msgid "Use location timezone"
-msgstr ""
+msgstr "Gunakan zona waktu lokasi"
 
 msgctxt "#32320"
 msgid "Temperature"
-msgstr ""
+msgstr "Suhu"
 
 msgctxt "#32321"
 msgid "Precipitation"
-msgstr ""
+msgstr "Pengendapan"
 
 msgctxt "#32322"
 msgid "Condition"
-msgstr ""
+msgstr "Kondisi"
 
 msgctxt "#32323"
 msgid "Wind"
-msgstr ""
+msgstr "Angin"
 
 msgctxt "#32324"
 msgid "Gust"
-msgstr ""
+msgstr "Tiupan"
 
 msgctxt "#32325"
 msgid "AQI EU"
-msgstr "AQI EU"
+msgstr "IKU UE"
 
 msgctxt "#32326"
 msgid "AQI US"
-msgstr "AQI US"
+msgstr "IKU AS"
 
 msgctxt "#32327"
 msgid "PM25"
@@ -355,139 +355,139 @@ msgstr "PM10"
 
 msgctxt "#32329"
 msgid "UV Index"
-msgstr ""
+msgstr "Indeks UV"
 
 msgctxt "#32330"
 msgid "Nitrogen Dioxide"
-msgstr ""
+msgstr "Nitrogen Dioksida"
 
 msgctxt "#32331"
 msgid "Sulphur Dioxide"
-msgstr ""
+msgstr "Sulfur Dioksida"
 
 msgctxt "#32332"
 msgid "Feelslike"
-msgstr ""
+msgstr "Terasa seperti"
 
 msgctxt "#32333"
 msgid "Dewpoint"
-msgstr ""
+msgstr "Titik embun"
 
 msgctxt "#32334"
 msgid "Cloudiness"
-msgstr ""
+msgstr "Keadaan mendung"
 
 msgctxt "#32335"
 msgid "Time"
-msgstr ""
+msgstr "Waktu"
 
 msgctxt "#32336"
 msgid "Speed"
-msgstr ""
+msgstr "Kecepatan"
 
 msgctxt "#32337"
 msgid "Carbon monoxide"
-msgstr ""
+msgstr "Karbon monoksida"
 
 msgctxt "#32338"
 msgid "Ozone"
-msgstr ""
+msgstr "Ozon"
 
 msgctxt "#32339"
 msgid "Dust"
-msgstr ""
+msgstr "Debu"
 
 msgctxt "#32340"
 msgid "Notice"
-msgstr ""
+msgstr "Melihat"
 
 msgctxt "#32341"
 msgid "Caution"
-msgstr ""
+msgstr "Peringatan"
 
 msgctxt "#32342"
 msgid "Danger"
-msgstr ""
+msgstr "Bahaya"
 
 msgctxt "#32343"
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 msgctxt "#32344"
 msgid "Negative"
-msgstr ""
+msgstr "Negatif"
 
 msgctxt "#32345"
 msgid "Colours"
-msgstr ""
+msgstr "Warna"
 
 msgctxt "#32346"
 msgid "Humidity"
-msgstr ""
+msgstr "Kelembapan"
 
 msgctxt "#32347"
 msgid "Pressure"
-msgstr ""
+msgstr "Tekanan"
 
 msgctxt "#32348"
 msgid "Solar radiation"
-msgstr ""
+msgstr "Radiasi matahari"
 
 msgctxt "#32349"
 msgid "Visibility"
-msgstr ""
+msgstr "Visibilitas"
 
 #, read-only
 msgctxt "#32350"
 msgid "°C"
-msgstr "°C"
+msgstr ""
 
 #, read-only
 msgctxt "#32351"
 msgid "°F"
-msgstr "°F"
+msgstr ""
 
 #, read-only
 msgctxt "#32352"
 msgid "K"
-msgstr "K"
+msgstr ""
 
 #, read-only
 msgctxt "#32353"
 msgid "°Ré"
-msgstr "°Ré"
+msgstr ""
 
 #, read-only
 msgctxt "#32354"
 msgid "°Ra"
-msgstr "°Ra"
+msgstr ""
 
 #, read-only
 msgctxt "#32355"
 msgid "°Rø"
-msgstr "°Rø"
+msgstr ""
 
 #, read-only
 msgctxt "#32356"
 msgid "°D"
-msgstr "°D"
+msgstr ""
 
 #, read-only
 msgctxt "#32357"
 msgid "°N"
-msgstr "°N"
+msgstr ""
 
 msgctxt "#32360"
 msgid "Application"
-msgstr ""
+msgstr "Aplikasi"
 
 msgctxt "#32361"
 msgid "mph"
-msgstr "mph"
+msgstr "mpj"
 
 msgctxt "#32362"
 msgid "km/h"
-msgstr "km/h"
+msgstr "km/j"
 
 msgctxt "#32363"
 msgid "m/min"
@@ -495,23 +495,23 @@ msgstr "m/min"
 
 msgctxt "#32364"
 msgid "m/s"
-msgstr "m/s"
+msgstr "m/d"
 
 msgctxt "#32365"
 msgid "ft/h"
-msgstr "ft/h"
+msgstr "kk/j"
 
 msgctxt "#32366"
 msgid "ft/min"
-msgstr "ft/min"
+msgstr "kk/min"
 
 msgctxt "#32367"
 msgid "ft/s"
-msgstr "ft/s"
+msgstr "kk/d"
 
 msgctxt "#32368"
 msgid "kts"
-msgstr "kts"
+msgstr "knt"
 
 msgctxt "#32369"
 msgid "Beaufort"
@@ -519,11 +519,11 @@ msgstr "Beaufort"
 
 msgctxt "#32370"
 msgid "inch/s"
-msgstr "inch/s"
+msgstr "inci/d"
 
 msgctxt "#32371"
 msgid "yard/s"
-msgstr "yard/s"
+msgstr "yard/d"
 
 msgctxt "#32372"
 msgid "Furlong/Fortnight"
@@ -535,43 +535,23 @@ msgstr "mm"
 
 msgctxt "#32381"
 msgid "inches"
-msgstr "inches"
-
-msgctxt "#32382"
-msgid "hPa"
-msgstr "hPa"
-
-msgctxt "#32383"
-msgid "kPa"
-msgstr "kPa"
-
-msgctxt "#32384"
-msgid "mm Hg"
-msgstr "mm Hg"
-
-msgctxt "#32385"
-msgid "in Hg"
-msgstr "in Hg"
-
-msgctxt "#32386"
-msgid "psi"
-msgstr "psi"
+msgstr "inci"
 
 msgctxt "#32390"
 msgid "12h"
-msgstr "12h"
+msgstr "12j"
 
 msgctxt "#32391"
 msgid "24h"
-msgstr "24h"
+msgstr "24j"
 
 msgctxt "#32400"
 msgid "Radar"
-msgstr ""
+msgstr "Radar"
 
 msgctxt "#32401"
 msgid "Satellite"
-msgstr ""
+msgstr "Satelit"
 
 msgctxt "#32410"
 msgid "m"
@@ -588,78 +568,79 @@ msgstr "mi"
 #, read-only
 msgctxt "#32430"
 msgid "."
-msgstr "."
+msgstr ""
 
 #, read-only
 msgctxt "#32431"
 msgid ","
-msgstr ","
+msgstr ""
 
 msgctxt "#32440"
 msgid "New Moon"
-msgstr ""
+msgstr "Bulan Baru"
 
 msgctxt "#32441"
 msgid "Waxing Crescent"
-msgstr ""
+msgstr "Bulan Sabit Muda"
 
 msgctxt "#32442"
 msgid "First Quarter"
-msgstr ""
+msgstr "Kuartal Pertama"
 
 msgctxt "#32443"
 msgid "Waxing Gibbous"
-msgstr ""
+msgstr "Bulan Cembung Awal"
 
 msgctxt "#32444"
 msgid "Full Moon"
-msgstr ""
+msgstr "Bulan Purnama"
 
 msgctxt "#32445"
 msgid "Waning Gibbous"
-msgstr ""
+msgstr "Bulan Cembung Akhir"
 
 msgctxt "#32446"
 msgid "Last Quarter"
-msgstr ""
+msgstr "Kuartal Akhir"
 
 msgctxt "#32447"
 msgid "Waning Crescent"
-msgstr ""
+msgstr "Bulan Sabit Tua"
 
 msgctxt "#32450"
 msgid "Alder"
-msgstr ""
+msgstr "Usia"
 
 msgctxt "#32451"
 msgid "Birch"
-msgstr ""
+msgstr "Lahir"
 
 msgctxt "#32452"
 msgid "Grass"
-msgstr ""
+msgstr "Rumput"
 
 msgctxt "#32453"
 msgid "Mugwort"
-msgstr ""
+msgstr "Baru cina"
 
 msgctxt "#32454"
 msgid "Olive"
-msgstr ""
+msgstr "Zaitun"
 
 msgctxt "#32455"
 msgid "Ragweed"
-msgstr ""
+msgstr "Rumput liar"
 
 msgctxt "#32456"
 msgid "grains"
-msgstr ""
+msgstr "biji-bijian"
 
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
-msgstr ""
+msgstr "Prakiraan cuaca oleh Open-Meteo"
 
 msgctxt "#32501"
 msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
 msgstr ""
-
+"Ramalan cuaca, peta, kualitas udara, dan serbuk sari dari open-meteo.com, "
+"rainviewer.com, weather.gc.ca dan met.no"

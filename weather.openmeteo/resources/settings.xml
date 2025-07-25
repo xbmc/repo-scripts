@@ -7,6 +7,7 @@
 
 			<group id="1">
 				<setting help="" id="loc1" label="32310" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data></control></setting>
+				<setting help="" id="loc1user" label="551" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc1alert" label="32263" type="boolean"><level>0</level><default>true</default><control type="toggle"/></setting>
 				<setting help="" id="loc1utz" label="32316" type="boolean"><level>0</level><default>false</default><control type="toggle"/></setting>
 				<setting help="" id="loc1tz" type="string"><level>0</level><default></default><visible>false</visible><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data>	</control></setting>
@@ -15,6 +16,7 @@
 			</group>
 			<group id="2">
 				<setting help="" id="loc2" label="32311" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><condition operator="!is" setting="loc1"/></dependency></dependencies><control format="action" type="button"><data>RunScript(weather.openmeteo,loc2)</data></control></setting>
+				<setting help="" id="loc2user" label="551" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><condition operator="!is" setting="loc1"/></dependency></dependencies><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc2alert" label="32263" type="boolean"><level>0</level><default>true</default><dependencies><dependency type="enable"><condition operator="!is" setting="loc1"/></dependency></dependencies><control type="toggle"/></setting>
 				<setting help="" id="loc2utz" label="32316" type="boolean"><level>0</level><default>false</default><dependencies><dependency type="enable"><condition operator="!is" setting="loc1"/></dependency></dependencies><control type="toggle"/></setting>
 				<setting help="" id="loc2tz" type="string"><level>0</level><default></default><visible>false</visible><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data>	</control></setting>
@@ -23,6 +25,7 @@
 			</group>
 			<group id="3">
 				<setting help="" id="loc3" label="32312" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><condition operator="!is" setting="loc2"/></dependency></dependencies><control format="action" type="button"><data>RunScript(weather.openmeteo,loc3)</data></control></setting>
+				<setting help="" id="loc3user" label="551" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><condition operator="!is" setting="loc2"/></dependency></dependencies><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc3alert" label="32263" type="boolean"><level>0</level><default>true</default><dependencies><dependency type="enable"><condition operator="!is" setting="loc2"/></dependency></dependencies><control type="toggle"/></setting>
 				<setting help="" id="loc3utz" label="32316" type="boolean"><level>0</level><default>false</default><dependencies><dependency type="enable"><condition operator="!is" setting="loc2"/></dependency></dependencies><control type="toggle"/></setting>
 				<setting help="" id="loc3tz" type="string"><level>0</level><default></default><visible>false</visible><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data>	</control></setting>
@@ -30,17 +33,19 @@
 				<setting help="" id="loc3lon" type="number"><default>0</default><visible>false</visible><control format="number" type="edit"/></setting>
 			</group>
 			<group id="4">
-				<setting help="" id="loc4" label="32313" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency></dependencies><control format="action" type="button"><data>RunScript(weather.openmeteo,loc4)</data></control></setting>
-				<setting help="" id="loc4alert" label="32263" type="boolean"><level>0</level><default>true</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency></dependencies><control type="toggle"/></setting>
-				<setting help="" id="loc4utz" label="32316" type="boolean"><level>0</level><default>false</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency></dependencies><control type="toggle"/></setting>
-				<setting help="" id="loc4tz" type="string"><level>0</level><default></default><visible>false</visible><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data>	</control></setting>
+				<setting help="" id="loc4" label="32313" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control format="action" type="button"><data>RunScript(weather.openmeteo,loc4)</data></control></setting>
+				<setting help="" id="loc4user" label="551" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc4alert" label="32263" type="boolean"><level>0</level><default>true</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control type="toggle"/></setting>
+				<setting help="" id="loc4utz" label="32316" type="boolean"><level>0</level><default>false</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc3"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control type="toggle"/></setting>
+				<setting help="" id="loc4tz" type="string"><level>0</level><default></default><visible>false</visible><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data></control></setting>
 				<setting help="" id="loc4lat" type="number"><default>0</default><visible>false</visible><control format="number" type="edit"/></setting>
 				<setting help="" id="loc4lon" type="number"><default>0</default><visible>false</visible><control format="number" type="edit"/></setting>
 			</group>
 			<group id="5">
-				<setting help="" id="loc5" label="32314" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency></dependencies><control format="action" type="button"><data>RunScript(weather.openmeteo,loc5)</data></control></setting>
-				<setting help="" id="loc5alert" label="32263" type="boolean"><level>0</level><default>true</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency></dependencies><control type="toggle"/></setting>
-				<setting help="" id="loc5utz" label="32316" type="boolean"><level>0</level><default>false</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency></dependencies><control type="toggle"/></setting>
+				<setting help="" id="loc5" label="32314" type="string"><level>0</level><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control format="action" type="button"><data>RunScript(weather.openmeteo,loc5)</data></control></setting>
+				<setting help="" id="loc5user" label="551" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc5alert" label="32263" type="boolean"><level>0</level><default>true</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control type="toggle"/></setting>
+				<setting help="" id="loc5utz" label="32316" type="boolean"><level>0</level><default>false</default><dependencies><dependency type="enable"><and><condition operator="is" setting="explocations">true</condition><condition operator="!is" setting="loc4"></condition></and></dependency><dependency type="visible" setting="explocations">true</dependency></dependencies><control type="toggle"/></setting>
 				<setting help="" id="loc5tz" type="string"><level>0</level><default></default><visible>false</visible><constraints><allowempty>true</allowempty></constraints><control format="action" type="button"><data>RunScript(weather.openmeteo,loc1)</data>	</control></setting>
 				<setting help="" id="loc5lat" type="number"><default>0</default><visible>false</visible><control format="number" type="edit"/></setting>
 				<setting help="" id="loc5lon" type="number"><default>0</default><visible>false</visible><control format="number" type="edit"/></setting>
@@ -92,6 +97,7 @@
 			</group>
 
 			<group id="10" label="32347">
+				<setting id="unitpressure" type="string" label="32303" help=""><level>0</level><default>hPa</default><constraints><options><option label="32382">hPa</option><option label="32383">kPa</option><option label="32384">mmHg</option><option label="32385">inHg</option><option label="32386">psi</option></options></constraints><control type="list" format="string"><heading>32269</heading></control></setting>
 				<setting id="unitpressuredp" type="integer" label="32289" help=""><level>0</level><default>0</default><constraints><minimum>0</minimum><step>1</step><maximum>3</maximum></constraints><control type="slider" format="integer"><popup>false</popup></control></setting>
 			</group>
 
@@ -436,19 +442,28 @@
 
 				<setting help="" id="loc1data" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc1map" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
-				<setting help="" id="loc1layer" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc1rv" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc1gc" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+
 				<setting help="" id="loc2data" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc2map" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
-				<setting help="" id="loc2layer" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc2rv" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc2gc" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+
 				<setting help="" id="loc3data" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc3map" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
-				<setting help="" id="loc3layer" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc3rv" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc3gc" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+
 				<setting help="" id="loc4data" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc4map" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
-				<setting help="" id="loc4layer" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc4rv" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc4gc" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+
 				<setting help="" id="loc5data" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
 				<setting help="" id="loc5map" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
-				<setting help="" id="loc5layer" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc5rv" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
+				<setting help="" id="loc5gc" label="32308" type="string"><default></default><constraints><allowempty>true</allowempty></constraints><visible>false</visible><control type="edit" format="string"></control></setting>
 			</group>
 
 			<group id="5" label="32283">

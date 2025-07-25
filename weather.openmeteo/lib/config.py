@@ -323,8 +323,9 @@ map_alert_condition = {
 # Mapping (Rainviewer)
 map_rvradar     = [ 'radar', 'past' ]
 map_rvsatellite = [ 'satellite', 'infrared' ]
-map_layers      = { 'rvradar': map_rvradar, 'rvsatellite': map_rvsatellite, 'gctemp': '', 'gcwind': '' }
-map_maps        = { 'osm': '', **map_layers }
+map_rv          = { 'rvradar': map_rvradar, 'rvsatellite': map_rvsatellite }
+map_gc          = { 'gctemp': '', 'gcwind': '' }
+map_layers      = { **map_rv, **map_gc }
 
 # Mapping WMO to KODI
 map_wmo = {
@@ -736,6 +737,7 @@ def addon(cache=False):
 	addon.particlesdp = utils.setting('unitparticlesdp', 'str', cache)
 	addon.pollendp    = utils.setting('unitpollendp', 'str', cache)
 	addon.uvindexdp   = utils.setting('unituvindexdp', 'str', cache)
+	addon.pressure    = utils.setting('unitpressure', 'str', cache)
 	addon.pressuredp  = utils.setting('unitpressuredp', 'str', cache)
 	addon.radiationdp = utils.setting('unitradiationdp', 'str', cache)
 	addon.cdefault    = utils.setting('colordefault', 'str', cache)
@@ -773,12 +775,13 @@ def kodi():
 	kodi.meri     = utils.region('meridiem')
 	kodi.speed    = utils.region('speedunit')
 	kodi.temp     = utils.region('tempunit')
-	kodi.height   = map_height.get(utils.xbmcgui.getScreenHeight(), 1080)
+	kodi.height   = 1080
 
 def loc(locid, cache=False):
 	loc.id   = locid
 	loc.cid  = str(utils.settingrpc("weather.currentlocation"))
 	loc.name = utils.setting(f'loc{locid}', 'str')
+	loc.user = utils.setting(f'loc{locid}user', 'str')
 	loc.lat  = utils.setting(f'loc{locid}lat', 'float')
 	loc.lon  = utils.setting(f'loc{locid}lon', 'float')
 	loc.utz  = utils.setting(f'loc{locid}utz', 'bool')

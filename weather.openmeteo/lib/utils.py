@@ -300,9 +300,9 @@ def getprop(data, map, idx, count):
 
 	# Pressure
 	elif unit == 'pressure':
-		content = conv.dp(content, config.addon.pressuredp)
+		content = conv.pressure(content)
 	elif unit == 'unitpressure':
-		content = 'hPa'
+		content = conv.pressure()
 
 	# Direction
 	elif unit == 'direction':
@@ -521,7 +521,7 @@ def setalert(data, map, idx, locid, curid, loc, mode):
 					if content >= limit:
 						code  = int(alert[-1])
 						value = content
-						time  = data[map[1][0]]['time'][index]
+						stamp = data[map[1][0]]['time'][index]
 
 			elif 'low' in alert:
 				if content <= limit:
@@ -530,20 +530,22 @@ def setalert(data, map, idx, locid, curid, loc, mode):
 					if content <= limit:
 						code  = int(alert[-1])
 						value = content
-						time  = data[map[1][0]]['time'][index]
+						stamp = data[map[1][0]]['time'][index]
 
 			elif 'wmo' in alert:
 				for wmo in limit:
 					if content == int(wmo):
 						hours[f'{alert[-1]}'] += 1
-						code  = int(alert[-1])
-						value = content
-						time  = data[map[1][0]]['time'][index]
+
+						if content > value:
+							code  = int(alert[-1])
+							value = content
+							stamp = data[map[1][0]]['time'][index]
 
 	# Check alert code
 	if code != 0:
 		icon = f'{prop}{code}'
-		time = dt('stamploc', time).strftime('%H:%M')
+		time = conv.time('time', stamp)
 
 		if prop == 'temperature':
 			value = conv.temp(value)

@@ -1,3 +1,23 @@
+v1.0.14 (22/07/2025)
+--------------------
+* Added pressure units: hPa, kPa, mmHg, inHg, psi
+* Adjust map download timers
+* Fix geolocation loop on broken KODI devices
+* Added translation: Chinese (thanks @wabisabi926)
+
+v1.0.10 (22/05/2025)
+--------------------
+* Custom location names
+* Use highest weather code for condition alert
+* Re-download maps & layers when changing mapzoom level
+* Removing locations should now work properly
+* Fix 12h/24h time for weather alerts
+* Added translation: Slovak (thanks @frederik877)
+* Added translation: Tamil (thanks @தமிழ்நேரம்)
+* Added translation: Czech (thanks @Tomas)
+* Added translation: Indonesian (thanks @Nao3Line)
+* Added translation: Hungarian (thanks @frodo19)
+
 v1.0.0 (15/12/2024)
 -------------------
 * Official KODI repository

@@ -291,6 +291,48 @@ def precipconv(value, unit):
 def precip(value=False):
 	return precipconv(value, config.addon.precip)
 
+# Pressure
+def pressureconv(value, unit):
+	if value is not False:
+		value = float(value)
+
+		if unit == 'kPa':
+			v = value * 0.1
+		elif unit == 'mmHg':
+			v = value * 0.7500637554
+		elif unit == 'inHg':
+			v = value * 0.02953
+		elif unit == 'psi':
+			v = value * 0.0145037738
+		else:
+			v = value
+
+		if config.addon.pressuredp == '0':
+			return round(v)
+		else:
+			if config.addon.unitsep == ',':
+				return str(round(v,int(config.addon.pressuredp))).replace('.',',')
+			else:
+				return round(v,int(config.addon.pressuredp))
+
+	else:
+
+		if unit == 'kPa':
+			v = 'kPa'
+		elif unit == 'mmHg':
+			v = 'mmHg'
+		elif unit == 'inHg':
+			v = 'inHg'
+		elif unit == 'psi':
+			v = 'psi'
+		else:
+			v = 'hPa'
+
+		return v
+
+def pressure(value=False):
+	return pressureconv(value, config.addon.pressure)
+
 # Decimal places
 def dp(value, setting):
 	value = float(value)

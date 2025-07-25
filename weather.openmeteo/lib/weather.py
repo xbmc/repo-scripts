@@ -56,14 +56,21 @@ class Main():
 				if api.network():
 					utils.setupdate(f'loc{locid}map')
 
-
-			# Layers
-			if utils.lastupdate(f'loc{locid}layer') >= 1800:
+			# Rv
+			if utils.lastupdate(f'loc{locid}rv') >= 3600:
 				with ThreadPoolExecutor(2) as pool:
-					pool.map(self.getmap, config.map_layers)
+					pool.map(self.getmap, config.map_rv)
 
 				if api.network():
-					utils.setupdate(f'loc{locid}layer')
+					utils.setupdate(f'loc{locid}rv')
+
+			# Gc
+			if utils.lastupdate(f'loc{locid}gc') >= 10800:
+				with ThreadPoolExecutor(2) as pool:
+					pool.map(self.getmap, config.map_gc)
+
+				if api.network():
+					utils.setupdate(f'loc{locid}gc')
 
 		# Update
 		elif self.mode == 'update' or self.mode == 'kodi':
@@ -209,7 +216,9 @@ class Main():
 	def setlocs(self):
 		locs = 0
 		for locid in range(1, config.addon.maxlocs):
-			loc = utils.setting(f'loc{locid}')
+			loc     = utils.setting(f'loc{locid}')
+			locuser = utils.setting(f'loc{locid}user')
+
 			if loc:
 				locs += 1
 
@@ -219,7 +228,10 @@ class Main():
 					for map in config.map:
 						self.setcurrent(map, locid)
 
-				utils.setprop(f'location{locid}', loc)
+				if locuser:
+					utils.setprop(f'location{locid}', locuser)
+				else:
+					utils.setprop(f'location{locid}', loc)
 			else:
 				utils.setprop(f'location{locid}', '')
 
@@ -413,8 +425,13 @@ class Main():
 			index += 1
 
 		# Locations
-		utils.setprop('current.location', utils.setting(f'loc{config.loc.id}').split(',')[0])
-		utils.setprop('location', utils.setting(f'loc{config.loc.id}'))
+		if config.loc.user:
+			utils.setprop('current.location', config.loc.user)
+			utils.setprop('location', config.loc.user)
+		else:
+			utils.setprop('current.location', config.loc.name.split(',')[0])
+			utils.setprop('location', config.loc.name)
+
 		self.setlocs()
 
 		# Fetched
