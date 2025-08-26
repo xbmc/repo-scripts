@@ -73,7 +73,7 @@ class OpenSubtitlesProvider:
             logging(f"Username: {self.username}, Password: {self.password}")
 
 
-        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.5" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.7" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
 
         self.session = Session()
         self.session.headers = self.request_headers

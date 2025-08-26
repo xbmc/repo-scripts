@@ -4,6 +4,7 @@ import struct
 
 import xbmcvfs, xbmc
 
+from urllib.parse import unquote
 from resources.lib.utilities import log
 
 
@@ -53,7 +54,9 @@ def hash_file(file_path, rar):
     log(__name__, f"Processing file: {file_path} - Is RAR: {rar}")
 
     if rar:
-        return hash_rar(file_path)
+        # The rar VFS uses the following scheme: rar://urlencoded_rar_path/archive_content
+        # file_path is thus urlencoded at this point and must be unquoted
+        return hash_rar(unquote(file_path))
 
     log(__name__, "Hash Standard file")
     long_long_format = "q"  # long long

@@ -1,6 +1,8 @@
 
 from urllib.parse import unquote
 from difflib import SequenceMatcher
+import json
+import xml.etree.ElementTree as ET
 
 import xbmc
 import xbmcaddon
@@ -29,21 +31,111 @@ def get_media_data():
             "season_number": str(xbmc.getInfoLabel("VideoPlayer.Season")),
             "episode_number": str(xbmc.getInfoLabel("VideoPlayer.Episode")),
             "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
-            "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))}
+            "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
+            "parent_tmdb_id": None,
+            "parent_imdb_id": None,
+            "imdb_id": None,
+            "tmdb_id": None}
 
 
 
 
     if item["tv_show_title"]:
+        item["tvshowid"] = xbmc.getInfoLabel("VideoPlayer.TvShowDBID")
         item["query"] = item["tv_show_title"]
         item["year"] = None  # Kodi gives episode year, OS searches by series year. Without year safer.
-        item["imdb_id"] = None  # Kodi gives strange id. Without id safer.
+        # Reset movie-specific IDs for TV shows
         # TODO if no season and episode numbers use guessit
+        
+        # Extract TMDB and IMDB IDs for TV shows to improve search results
+        if len(item["tvshowid"]) != 0:
+            try:
+                TVShowDetails = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id":"1", "method": "VideoLibrary.GetTVShowDetails", "params":{"tvshowid":'+item["tvshowid"]+', "properties": ["episodeguide", "imdbnumber"]} }')
+                TVShowDetails_dict = json.loads(TVShowDetails)
+                if "result" in TVShowDetails_dict and "tvshowdetails" in TVShowDetails_dict["result"]:
+                    tvshow_details = TVShowDetails_dict["result"]["tvshowdetails"]
+                    
+                    # Extract parent IMDB ID from imdbnumber field
+                    if "imdbnumber" in tvshow_details and tvshow_details["imdbnumber"]:
+                        imdb_raw = str(tvshow_details["imdbnumber"])
+                        # Extract numeric part from IMDB ID (remove 'tt' prefix if present)
+                        if imdb_raw.startswith('tt'):
+                            imdb_number = imdb_raw[2:]
+                        else:
+                            imdb_number = imdb_raw
+                        # Validate it's numeric and reasonable length (IMDB IDs are typically 6-8 digits)
+                        if imdb_number.isdigit() and 6 <= len(imdb_number) <= 8:
+                            item["parent_imdb_id"] = int(imdb_number)
+                            log(__name__, f"Found parent IMDB ID for TV show: {item['parent_imdb_id']}")
+                    
+                    # Extract parent TMDB ID from episodeguide
+                    if "episodeguide" in tvshow_details and tvshow_details["episodeguide"]:
+                        episodeguideXML = tvshow_details["episodeguide"]
+                        episodeguide = ET.fromstring(episodeguideXML)
+                        if episodeguide.text:
+                            episodeguideJSON = json.loads(episodeguide.text)
+                            if "tmdb" in episodeguideJSON and episodeguideJSON["tmdb"]:
+                                tmdb_id = int(episodeguideJSON["tmdb"])
+                                if tmdb_id > 0:
+                                    item["parent_tmdb_id"] = tmdb_id
+                                    log(__name__, f"Found parent TMDB ID for TV show: {item['parent_tmdb_id']}")
+            except (json.JSONDecodeError, ET.ParseError, ValueError, KeyError) as e:
+                log(__name__, f"Failed to extract TV show IDs: {e}")
+                item["parent_tmdb_id"] = None
+                item["parent_imdb_id"] = None
 
     elif item["original_title"]:
         item["query"] = item["original_title"]
+        
+        # For movies, try to extract IMDB and TMDB IDs
+        try:
+            # Get IMDB ID from VideoPlayer
+            imdb_raw = xbmc.getInfoLabel("VideoPlayer.IMDBNumber")
+            if imdb_raw:
+                # Extract numeric part from IMDB ID (remove 'tt' prefix if present)
+                if imdb_raw.startswith('tt'):
+                    imdb_number = imdb_raw[2:]
+                else:
+                    imdb_number = imdb_raw
+                # Validate it's numeric and reasonable length (IMDB IDs are typically 6-8 digits)
+                if imdb_number.isdigit() and 6 <= len(imdb_number) <= 8:
+                    item["imdb_id"] = int(imdb_number)
+                    log(__name__, f"Found IMDB ID for movie: {item['imdb_id']}")
+            
+            # Try to get TMDB ID (might be available in some library setups)
+            # This is less common but worth trying
+            tmdb_raw = xbmc.getInfoLabel("VideoPlayer.DBID")
+            if tmdb_raw and tmdb_raw.isdigit():
+                tmdb_id = int(tmdb_raw)
+                if tmdb_id > 0:
+                    item["tmdb_id"] = tmdb_id
+                    log(__name__, f"Found TMDB ID for movie: {item['tmdb_id']}")
+        except (ValueError, KeyError) as e:
+            log(__name__, f"Failed to extract movie IDs: {e}")
 
 
+    # Clean up and apply fallback logic for IDs
+    # Remove zero or invalid IDs
+    if item.get("parent_tmdb_id") == 0:
+        item["parent_tmdb_id"] = None
+    if item.get("parent_imdb_id") == 0:
+        item["parent_imdb_id"] = None
+    if item.get("tmdb_id") == 0:
+        item["tmdb_id"] = None
+    if item.get("imdb_id") == 0:
+        item["imdb_id"] = None
+        
+    # Apply fallback strategy: prefer one ID type to avoid conflicts
+    # For TV shows: prefer parent_tmdb_id over parent_imdb_id
+    if item.get("parent_tmdb_id") and item.get("parent_imdb_id"):
+        log(__name__, f"Both parent TMDB and IMDB IDs found, preferring TMDB ID: {item['parent_tmdb_id']}")
+        item["parent_imdb_id"] = None
+        
+    # For movies: prefer tmdb_id over imdb_id
+    if item.get("tmdb_id") and item.get("imdb_id"):
+        log(__name__, f"Both TMDB and IMDB IDs found for movie, preferring TMDB ID: {item['tmdb_id']}")
+        item["imdb_id"] = None
+        
     if not item["query"]:
         log(__name__, "query still blank, fallback to title")
         item["query"] = normalize_string(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
@@ -52,6 +144,10 @@ def get_media_data():
     if item["episode_number"].lower().find("s") > -1:  # Check if season is "Special"
         item["season_number"] = "0"  #
         item["episode_number"] = item["episode_number"][-1:]
+
+    # Remove tvshowid since it's only used internally and not needed by API
+    if "tvshowid" in item:
+        del item["tvshowid"]
 
     return item
 
@@ -134,6 +230,7 @@ def convert_language(language, reverse=False):
         "English": "en",
         "Portuguese (Brazil)": "pt-br",
         "Portuguese": "pt-pt",
+        "Chinese": "zh-cn",
         "Chinese (simplified)": "zh-cn",
         "Chinese (traditional)": "zh-tw"}
 

@@ -4,6 +4,13 @@ Search and download subtitles for movies and TV-Series from OpenSubtitles.com. S
 
 REST API implementation based on tomburke25 [python-opensubtitles-rest-api](https://github.com/tomburke25/python-opensubtitles-rest-api)                            
 
+v1.0.7 (2025-08-26)
+- added IMDB and TMDB collection on files for more accurate search to the API
+
+v1.0.6 (2024-11-29)
+- fixed issue with RAR archives (thanks ninjacarr)
+- handles default chinese language to zh-cn  (thanks ninjacarr)
+
 v1.0.5 (2024-07-30)
 - fixed issue with portuguese file names
 - added AI translated filter (thanks Kate6)
