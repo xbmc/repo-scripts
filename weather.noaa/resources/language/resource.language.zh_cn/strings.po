@@ -8,429 +8,429 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Last-Translator: wabisabi926\n"
+"Language-Team: Chinese"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: zh_cn\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#empty strings from id 32001 to 32100
+# empty strings from id 32001 to 32100
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr ""
+msgstr "位置设置"
 
 msgctxt "#32102"
 msgid "Advanced"
-msgstr ""
+msgstr "高级"
 
 msgctxt "#32103"
 msgid "Expert"
-msgstr ""
+msgstr "专家"
 
 msgctxt "#32104"
 msgid "Maps"
-msgstr ""
+msgstr "地图"
 
-#empty strings from id 32104 to 32109
+# empty strings from id 32104 to 32109
 
 msgctxt "#32110"
 msgid "API key"
-msgstr ""
+msgstr "API 密钥"
 
 msgctxt "#32111"
 msgid "Location 1"
-msgstr ""
+msgstr "位置 1"
 
 msgctxt "#32112"
 msgid "Location 2"
-msgstr ""
+msgstr "位置 2"
 
 msgctxt "#32113"
 msgid "Location 3"
-msgstr ""
+msgstr "位置 3"
 
 msgctxt "#32114"
 msgid "Location 4"
-msgstr ""
+msgstr "位置 4"
 
 msgctxt "#32115"
 msgid "Location 5"
-msgstr ""
+msgstr "位置 5"
 
 msgctxt "#32116"
 msgid "Location 1 ID"
-msgstr ""
+msgstr "位置 1 ID"
 
 msgctxt "#32117"
 msgid "Location 2 ID"
-msgstr ""
+msgstr "位置 2 ID"
 
 msgctxt "#32118"
 msgid "Location 3 ID"
-msgstr ""
+msgstr "位置 3 ID"
 
 msgctxt "#32119"
 msgid "Location 4 ID"
-msgstr ""
+msgstr "位置 4 ID"
 
 msgctxt "#32120"
 msgid "Location 5 ID"
-msgstr ""
+msgstr "位置 5 ID"
 
 msgctxt "#32121"
 msgid "Show lat/lon when searching locations"
-msgstr ""
+msgstr "搜索位置时显示纬度/经度"
 
 msgctxt "#32122"
 msgid "Weekend"
-msgstr ""
+msgstr "周末"
 
 msgctxt "#32123"
 msgid "Saturday/Sunday"
-msgstr ""
+msgstr "周六/周日"
 
 msgctxt "#32124"
 msgid "Friday/Saturday"
-msgstr ""
+msgstr "周五/周六"
 
 msgctxt "#32125"
 msgid "Thursday/Friday"
-msgstr ""
+msgstr "周四/周五"
 
 msgctxt "#32126"
 msgid "Use personal weather station"
-msgstr ""
+msgstr "使用个人气象站"
 
 msgctxt "#32127"
 msgid "Station ID"
-msgstr ""
+msgstr "气象站 ID"
 
 msgctxt "#32128"
 msgid "Map zoom level"
-msgstr ""
+msgstr "地图缩放级别"
 
 msgctxt "#32129"
 msgid "Enable logging"
-msgstr ""
+msgstr "启用日志记录"
 
 msgctxt "#32130"
 msgid "Download weather maps"
-msgstr ""
+msgstr "下载天气地图"
 
 msgctxt "#32201"
 msgid "Thunderstorm with light rain"
-msgstr ""
+msgstr "雷暴伴小雨"
 
 msgctxt "#32202"
 msgid "Thunderstorm with rain"
-msgstr ""
+msgstr "雷暴伴降雨"
 
 msgctxt "#32203"
 msgid "Thunderstorm with heavy rain"
-msgstr ""
+msgstr "雷暴伴暴雨"
 
 msgctxt "#32204"
 msgid "Light thunderstorm"
-msgstr ""
+msgstr "轻微雷暴"
 
 msgctxt "#32205"
 msgid "Thunderstorm"
-msgstr ""
+msgstr "雷暴"
 
 msgctxt "#32206"
 msgid "Heavy thunderstorm"
-msgstr ""
+msgstr "强雷暴"
 
 msgctxt "#32207"
 msgid "Ragged thunderstorm"
-msgstr ""
+msgstr "不规则雷暴"
 
 msgctxt "#32208"
 msgid "Thunderstorm with light drizzle"
-msgstr ""
+msgstr "雷暴伴轻微毛毛雨"
 
 msgctxt "#32209"
 msgid "Thunderstorm with drizzle"
-msgstr ""
+msgstr "雷暴伴毛毛雨"
 
 msgctxt "#32210"
 msgid "Thunderstorm with heavy drizzle"
-msgstr ""
+msgstr "雷暴伴强毛毛雨"
 
 msgctxt "#32211"
 msgid "Light intensity drizzle"
-msgstr ""
+msgstr "轻微毛毛雨"
 
 msgctxt "#32212"
 msgid "Drizzle"
-msgstr ""
+msgstr "毛毛雨"
 
 msgctxt "#32213"
 msgid "Heavy intensity drizzle"
-msgstr ""
+msgstr "强毛毛雨"
 
 msgctxt "#32214"
 msgid "Light intensity drizzle rain"
-msgstr ""
+msgstr "轻微毛毛雨转降雨"
 
 msgctxt "#32215"
 msgid "Drizzle rain"
-msgstr ""
+msgstr "毛毛雨转降雨"
 
 msgctxt "#32216"
 msgid "Heavy intensity drizzle rain"
-msgstr ""
+msgstr "强毛毛雨转降雨"
 
 msgctxt "#32217"
 msgid "Shower rain and drizzle"
-msgstr ""
+msgstr "阵雨和毛毛雨"
 
 msgctxt "#32218"
 msgid "Heavy shower rain and drizzle"
-msgstr ""
+msgstr "强阵雨和毛毛雨"
 
 msgctxt "#32219"
 msgid "Shower drizzle"
-msgstr ""
+msgstr "阵性毛毛雨"
 
 msgctxt "#32220"
 msgid "Light rain"
-msgstr ""
+msgstr "小雨"
 
 msgctxt "#32221"
 msgid "Moderate rain"
-msgstr ""
+msgstr "中雨"
 
 msgctxt "#32222"
 msgid "Heavy intensity rain"
-msgstr ""
+msgstr "大雨"
 
 msgctxt "#32223"
 msgid "Very heavy rain"
-msgstr ""
+msgstr "特大暴雨"
 
 msgctxt "#32224"
 msgid "Extreme rain"
-msgstr ""
+msgstr "极端降雨"
 
 msgctxt "#32225"
 msgid "Freezing rain"
-msgstr ""
+msgstr "冻雨"
 
 msgctxt "#32226"
 msgid "Light intensity shower rain"
-msgstr ""
+msgstr "轻微阵雨"
 
 msgctxt "#32227"
 msgid "Shower rain"
-msgstr ""
+msgstr "阵雨"
 
 msgctxt "#32228"
 msgid "Heavy intensity shower rain"
-msgstr ""
+msgstr "强阵雨"
 
 msgctxt "#32229"
 msgid "Ragged shower rain"
-msgstr ""
+msgstr "不规则阵雨"
 
 msgctxt "#32230"
 msgid "Light snow"
-msgstr ""
+msgstr "小雪"
 
 msgctxt "#32231"
 msgid "Snow"
-msgstr ""
+msgstr "雪"
 
 msgctxt "#32232"
 msgid "Heavy snow"
-msgstr ""
+msgstr "大雪"
 
 msgctxt "#32233"
 msgid "Sleet"
-msgstr ""
+msgstr "雨夹雪"
 
 msgctxt "#32234"
 msgid "Shower sleet"
-msgstr ""
+msgstr "阵性雨夹雪"
 
 msgctxt "#32235"
 msgid "Light rain and snow"
-msgstr ""
+msgstr "小雨夹雪"
 
 msgctxt "#32236"
 msgid "Rain and snow"
-msgstr ""
+msgstr "雨夹雪"
 
 msgctxt "#32237"
 msgid "Light shower snow"
-msgstr ""
+msgstr "轻微阵雪"
 
 msgctxt "#32238"
 msgid "Shower snow"
-msgstr ""
+msgstr "阵雪"
 
 msgctxt "#32239"
 msgid "Heavy shower snow"
-msgstr ""
+msgstr "强阵雪"
 
 msgctxt "#32240"
 msgid "Mist"
-msgstr ""
+msgstr "薄雾"
 
 msgctxt "#32241"
 msgid "Smoke"
-msgstr ""
+msgstr "烟雾"
 
 msgctxt "#32242"
 msgid "Haze"
-msgstr ""
+msgstr "霾"
 
 msgctxt "#32243"
 msgid "Sand, dust whirls"
-msgstr ""
+msgstr "沙尘漩涡"
 
 msgctxt "#32244"
 msgid "Fog"
-msgstr ""
+msgstr "雾"
 
 msgctxt "#32245"
 msgid "Sand"
-msgstr ""
+msgstr "沙尘"
 
 msgctxt "#32246"
 msgid "Dust"
-msgstr ""
+msgstr "灰尘"
 
 msgctxt "#32247"
 msgid "Volcanic ash"
-msgstr ""
+msgstr "火山灰"
 
 msgctxt "#32248"
 msgid "Squalls"
-msgstr ""
+msgstr "飑"
 
 msgctxt "#32249"
 msgid "Tornado"
-msgstr ""
+msgstr "龙卷风"
 
 msgctxt "#32250"
 msgid "Clear sky"
-msgstr ""
+msgstr "晴空"
 
 msgctxt "#32251"
 msgid "Few clouds"
-msgstr ""
+msgstr "少云"
 
 msgctxt "#32252"
 msgid "Scattered clouds"
-msgstr ""
+msgstr "多云"
 
 msgctxt "#32253"
 msgid "Broken clouds"
-msgstr ""
+msgstr "碎云"
 
 msgctxt "#32254"
 msgid "Overcast clouds"
-msgstr ""
+msgstr "阴天"
 
 msgctxt "#32255"
 msgid "Tornado"
-msgstr ""
+msgstr "龙卷风"
 
 msgctxt "#32256"
 msgid "Tropical storm"
-msgstr ""
+msgstr "热带风暴"
 
 msgctxt "#32257"
 msgid "Hurricane"
-msgstr ""
+msgstr "飓风"
 
 msgctxt "#32258"
 msgid "Cold"
-msgstr ""
+msgstr "寒冷"
 
 msgctxt "#32259"
 msgid "Hot"
-msgstr ""
+msgstr "炎热"
 
 msgctxt "#32260"
 msgid "Windy"
-msgstr ""
+msgstr "有风"
 
 msgctxt "#32261"
 msgid "Hail"
-msgstr ""
+msgstr "冰雹"
 
 msgctxt "#32262"
 msgid "Calm"
-msgstr ""
+msgstr "平静"
 
 msgctxt "#32263"
 msgid "Light breeze"
-msgstr ""
+msgstr "微风"
 
 msgctxt "#32264"
 msgid "Gentle breeze"
-msgstr ""
+msgstr "和风"
 
 msgctxt "#32265"
 msgid "Moderate breeze"
-msgstr ""
+msgstr "清风"
 
 msgctxt "#32266"
 msgid "Fresh breeze"
-msgstr ""
+msgstr "强风"
 
 msgctxt "#32267"
 msgid "Strong breeze"
-msgstr ""
+msgstr "疾风"
 
 msgctxt "#32268"
 msgid "High wind, near gale"
-msgstr ""
+msgstr "大风，接近烈风"
 
 msgctxt "#32269"
 msgid "Gale"
-msgstr ""
+msgstr "烈风"
 
 msgctxt "#32270"
 msgid "Severe gale"
-msgstr ""
+msgstr "狂风"
 
 msgctxt "#32271"
 msgid "Storm"
-msgstr ""
+msgstr "风暴"
 
 msgctxt "#32272"
 msgid "Violent storm"
-msgstr ""
+msgstr "强风暴"
 
 msgctxt "#32273"
 msgid "Hurricane"
-msgstr ""
+msgstr "飓风"
 
 msgctxt "#32274"
 msgid "Clear"
-msgstr ""
+msgstr "晴朗"
 
 msgctxt "#32275"
 msgid "Clouds"
-msgstr ""
+msgstr "云"
 
 msgctxt "#32276"
 msgid "Rain"
-msgstr ""
+msgstr "雨"
 
 msgctxt "#32331"
 msgid "Select Local Weather Station"
-msgstr ""
+msgstr "选择本地气象站"
 
 msgctxt "#32332"
 msgid "Latitude,Longitude (to 4 decimal places)"
-msgstr ""
+msgstr "纬度，经度（精确到4位小数）"
 
 #msgctxt "#32333"
 #msgid "Long Range Radar"
@@ -438,383 +438,350 @@ msgstr ""
 
 msgctxt "#32333"
 msgid "Radar Loop"
-msgstr ""
+msgstr "雷达回波动画"
 
 msgctxt "#32334"
 msgid "Radar"
-msgstr ""
+msgstr "雷达"
 
 msgctxt "#32335"
 msgid "Geographical Location (Latitude,Longitude)"
-msgstr ""
+msgstr "地理位置（纬度，经度）"
 
 msgctxt "#32336"
 msgid "Selected Station"
-msgstr ""
+msgstr "已选气象站"
 
 msgctxt "#32337"
 msgid "Fetch Forcast Zone and Station"
-msgstr ""
+msgstr "获取预报区域和气象站"
 
 msgctxt "#32338"
 msgid "Local Weather Station (Code)"
-msgstr ""
+msgstr "本地气象站（代码）"
 
 msgctxt "#32339"
 msgid "Location Display Name"
-msgstr ""
+msgstr "位置显示名称"
 
 msgctxt "#32340"
 msgid "Preffered Data Source"
-msgstr ""
+msgstr "首选数据源"
 
 msgctxt "#32341"
 msgid "Latitude (example: 45.2123)"
-msgstr ""
+msgstr "纬度（示例：45.2123）"
 
 msgctxt "#32342"
 msgid "Longitude (example: -90.4392)"
-msgstr ""
+msgstr "经度（示例：-90.4392）"
 
 msgctxt "#32343"
 msgid "Enter Location"
-msgstr ""
+msgstr "输入位置"
 
 msgctxt "#32344"
 msgid "Lookup by Address (census.gov)"
-msgstr ""
+msgstr "按地址查询（census.gov）"
 
 msgctxt "#32345"
 msgid "Enter Address (num + street + city or zip)"
-msgstr ""
+msgstr "输入地址（门牌号 + 街道 + 城市或邮政编码）"
 
 msgctxt "#32346"
 msgid "Location not found"
-msgstr ""
+msgstr "未找到位置"
 
 msgctxt "#32347"
 msgid "census.gov did not find that address.  Street, Number, and Zipcode or City + State are usually required"
-msgstr ""
+msgstr "census.gov 未找到该地址。通常需要街道、门牌号和邮政编码，或者城市 + 州"
 
 msgctxt "#32348"
 msgid "census.gov found these addresses, select one if correct"
-msgstr ""
+msgstr "census.gov 找到以下地址，如正确请选择一个"
 
 msgctxt "#32349"
 msgid "Select Map Region"
-msgstr ""
+msgstr "选择地图区域"
 
 msgctxt "#32350"
 msgid "Select Map Color Type"
-msgstr ""
+msgstr "选择地图颜色类型"
 
 msgctxt "#32351"
 msgid "Map 1"
-msgstr ""
+msgstr "地图 1"
 
 msgctxt "#32352"
 msgid "Map 2"
-msgstr ""
+msgstr "地图 2"
 
 msgctxt "#32353"
 msgid "Map 3"
-msgstr ""
+msgstr "地图 3"
 
 msgctxt "#32354"
 msgid "Map 4"
-msgstr ""
+msgstr "地图 4"
 
 msgctxt "#32355"
 msgid "Map 5"
-msgstr ""
+msgstr "地图 5"
 
-## RESERVED
+## 预留
 ## 32356-32359
 
 msgctxt "#32360"
 msgid "US East"
-msgstr ""
+msgstr "美国东部"
 
 msgctxt "#32361"
 msgid "US West"
-msgstr ""
+msgstr "美国西部"
 
 msgctxt "#32362"
-msgid ""
-msgstr ""
+msgid "GLM Fed East"
+msgstr "GLM 联邦东部"
 
 msgctxt "#32363"
-msgid ""
-msgstr ""
+msgid "GLM Fed West"
+msgstr "GLM 联邦西部"
 
 msgctxt "#32364"
 msgid "Alaska"
-msgstr ""
+msgstr "阿拉斯加"
 
 msgctxt "#32365"
 msgid "Central Alaska"
-msgstr ""
+msgstr "阿拉斯加中部"
 
 msgctxt "#32366"
 msgid "Southeastern Alaska"
-msgstr ""
+msgstr "阿拉斯加东南部"
 
 msgctxt "#32367"
 msgid "Northern Pacific"
-msgstr ""
+msgstr "北太平洋"
 
 msgctxt "#32368"
 msgid "US Pacific Coast"
-msgstr ""
+msgstr "美国太平洋海岸"
 
 msgctxt "#32369"
 msgid "Pacific Northwest (w)"
-msgstr ""
+msgstr "太平洋西北地区（西）"
 
 msgctxt "#32370"
 msgid "Pacific Northwest (e)"
-msgstr ""
+msgstr "太平洋西北地区（东）"
 
 msgctxt "#32371"
 msgid "Pacific Southwest (w)"
-msgstr ""
+msgstr "太平洋西南地区（西）"
 
 msgctxt "#32371"
 msgid "Pacific Southwest (e)"
-msgstr ""
+msgstr "太平洋西南地区（东）"
 
 msgctxt "#32373"
 msgid "Northern Rockies"
-msgstr ""
+msgstr "北部落基山脉"
 
 msgctxt "#32374"
 msgid "Southern Rockies"
-msgstr ""
+msgstr "南部落基山脉"
 
 msgctxt "#32375"
 msgid "Southern Plains"
-msgstr ""
+msgstr "南部平原"
 
 msgctxt "#32376"
 msgid "Upper Mississippi Valley"
-msgstr ""
+msgstr "密西西比河谷上游"
 
 msgctxt "#32377"
 msgid "Southern Mississippi Valley"
-msgstr ""
+msgstr "密西西比河谷下游"
 
 msgctxt "#32378"
 msgid "Canada"
-msgstr ""
+msgstr "加拿大"
 
 msgctxt "#32379"
 msgid "Great Lakes"
-msgstr ""
+msgstr "五大湖"
 
 msgctxt "#32380"
 msgid "U.S. Atlantic Coast"
-msgstr ""
+msgstr "美国大西洋海岸"
 
 msgctxt "#32381"
 msgid "Northeast"
-msgstr ""
+msgstr "东北部"
 
 msgctxt "#32382"
 msgid "Northern Atlantic"
-msgstr ""
+msgstr "北大西洋"
 
 msgctxt "#32383"
 msgid "Southeast"
-msgstr ""
+msgstr "东南部"
 
 msgctxt "#32384"
 msgid "Caribbean"
-msgstr ""
+msgstr "加勒比海"
 
 msgctxt "#32385"
 msgid "Puerto Rico"
-msgstr ""
+msgstr "波多黎各"
 
 msgctxt "#32386"
 msgid "Gulf of Mexico"
-msgstr ""
+msgstr "墨西哥湾"
 
 msgctxt "#32387"
 msgid "Tropical Atlantic"
-msgstr ""
+msgstr "热带大西洋"
 
 msgctxt "#32388"
 msgid "Mexico"
-msgstr ""
+msgstr "墨西哥"
 
 msgctxt "#32389"
 msgid "Hawaii"
-msgstr ""
+msgstr "夏威夷"
 
 msgctxt "#32390"
 msgid "Tropical Pacific"
-msgstr ""
+msgstr "热带太平洋"
 
 msgctxt "#32391"
 msgid "South Pacific"
-msgstr ""
+msgstr "南太平洋"
 
 msgctxt "#32392"
 msgid "Eastern East Pacific"
-msgstr ""
+msgstr "东太平洋东部"
 
 msgctxt "#32393"
 msgid "Central America"
-msgstr ""
+msgstr "中美洲"
 
 msgctxt "#32394"
 msgid "South America - Northern"
-msgstr ""
+msgstr "南美洲 - 北部"
 
 msgctxt "#32395"
 msgid "South America - Southern"
-msgstr ""
+msgstr "南美洲 - 南部"
 
 msgctxt "#32396"
 msgid "Contentinental US"
-msgstr ""
+msgstr "美国大陆"
 
 msgctxt "#32397"
 msgid "Guam"
-msgstr ""
+msgstr "关岛"
 
-##RESERVED
+## 预留
 ## 32398-32399
 
 msgctxt "#32400"
 msgid "True Color/IR"
-msgstr ""
+msgstr "真彩色/红外"
 
 msgctxt "#32401"
 msgid "Lightning Mapper"
-msgstr ""
+msgstr "闪电测绘图"
 
 msgctxt "#32402"
 msgid "Sandwich RGB"
-msgstr ""
+msgstr "三明治 RGB"
 
 msgctxt "#32403"
-msgid "True Color/IR Loop"
+msgid ""
 msgstr ""
 
 msgctxt "#32404"
 msgid "Air Mass RBG"
-msgstr ""
+msgstr "气团 RBG"
 
 msgctxt "#32405"
-msgid "Fire Temperature"
-msgstr ""
+msgid "Day Cloud Phase RBG"
+msgstr "日间云相 RBG"
 
 msgctxt "#32406"
-msgid ""
-msgstr ""
+msgid "Nighttime Microphysics"
+msgstr "夜间微物理学"
 
 msgctxt "#32407"
 msgid "Derived Motion Winds"
-msgstr ""
+msgstr "衍生运动风"
 
 msgctxt "#32408"
 msgid "Dust"
-msgstr ""
+msgstr "尘埃"
 
 msgctxt "#32409"
 msgid "Blue"
-msgstr ""
+msgstr "蓝色"
 
 msgctxt "#32410"
 msgid "Red"
-msgstr ""
+msgstr "红色"
 
 msgctxt "#32411"
 msgid "Veggie"
-msgstr ""
+msgstr "植被"
 
 msgctxt "#32412"
 msgid "Cirris"
-msgstr ""
+msgstr "卷云"
 
 msgctxt "#32413"
 msgid "Snow/Ice"
-msgstr ""
+msgstr "雪/冰"
 
 msgctxt "#32414"
 msgid "Cloud Particle"
-msgstr ""
+msgstr "云粒子"
 
 msgctxt "#32415"
 msgid "Shortwave Window"
-msgstr ""
+msgstr "短波窗口"
 
 msgctxt "#32416"
 msgid "Upper-Level Water Vapor"
-msgstr ""
+msgstr "高层水汽"
 
 msgctxt "#32417"
 msgid "Mid-Level Water Vapor"
-msgstr ""
+msgstr "中层水汽"
 
 msgctxt "#32418"
 msgid "Lower-Level Water Vapor"
-msgstr ""
+msgstr "低层水汽"
 
 msgctxt "#32419"
 msgid "Cloud Top"
-msgstr ""
+msgstr "云顶"
 
 msgctxt "#32420"
 msgid "Ozone"
-msgstr ""
+msgstr "臭氧"
 
 msgctxt "#32421"
 msgid "Clean Longwave Window"
-msgstr ""
+msgstr "清洁长波窗口"
 
 msgctxt "#32422"
 msgid "Longwave Window"
-msgstr ""
+msgstr "长波窗口"
 
 msgctxt "#32423"
 msgid "Dirty Longwave Window"
-msgstr ""
+msgstr "混浊长波窗口"
 
 msgctxt "#32424"
 msgid "CO2 Longwave"
-msgstr ""
-
-msgctxt "#32425"
-msgid "Lightning Mapper Loop"
-msgstr ""
-
-msgctxt "#32426"
-msgid "Air Mass RBG Loop"
-msgstr ""
-
-msgctxt "#32427"
-msgid "Day Night Cloud Micro Combo"
-msgstr ""
-
-msgctxt "#32428"
-msgid "Day Night Cloud Micro Combo Loop"
-msgstr ""
-
-msgctxt "#32429"
-msgid "Fire Temperature Loop"
-msgstr ""
-
-msgctxt "#32430"
-msgid "Sandwich RGB Loop"
-msgstr ""
-
-msgctxt "#32431"
-msgid ""
-msgstr ""
-
-msgctxt "#32432"
-msgid ""
-msgstr ""
-
+msgstr "二氧化碳长波"
