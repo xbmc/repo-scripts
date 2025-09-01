@@ -1,0 +1,938 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-08-28 22:31+0000\n"
+"Last-Translator: SecularSteve <fairfull.playing@gmail.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/bs_ba/>\n"
+"Language: bs_ba\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.13\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Uredite i sinhronizujte titlove pomoću daljinskog upravljača"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
+msgstr "Pomoću ovog skripta možete uređivati određene redove, pomicati ili rastezati titlove i sinhronizirati s drugim titlovima. Također možete sinhronizirati s video datotekom.[CR][CR]Da biste jednostavno koristili ovaj editor, pokrenite ga dok se reproduciraju video i titlovi koje želite urediti."
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "Pomicanje titlova"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "Uredite ili izbrišite linije"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "Premjesti titlove"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "Rastegni/skupi titlove"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "Sinhronizacija s drugim titlovima"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "Sinhronizacija sa video datotekom"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "Pretraži u titlu"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "Provjerite integritet"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "Sačuvaj titlove"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "Odustani"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "Sinhronizacija po broju sličica u sekundi"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "Reproduciraj video sa uređenim titlovima"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "Napredne opcije"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid ""
+"Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the "
+"beginning to a line as reference[CR]- Select the roughly the same line in "
+"your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "Odaberite titl za sinhronizaciju. Zatim:[CR] - Odaberite vremenski kod na početku linije kao referencu[CR] - Odaberite približno istu liniju u vašem titlu[CR] - Zatim učinite isto s dvije linije blizu kraja obje datoteke."
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "Uredi liniju"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "Izbriši prvi titl"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "Izbriši posljednji titl"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "Ručno pomicanje i brisanje"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "Nazad"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "Izbrisati ovaj titl?"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "Odaberite titl za uređivanje"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "Povratak"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "Izbriši"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "Svi titlovi"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "Pronađeno:"
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "U redu"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "Više informacija"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "Greška"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "Odaberite titl za sinhronizaciju"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr "Molimo odaberite .srt ili .sub datoteku"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "Uspješno"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "Trenutni prvi titl"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "Prvi titl je sada:"
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "Molimo odaberite video datoteku."
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "Trenutni posljednji titl"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "Posljednji titl je sada:"
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "Unesite riječ za pretragu"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "Da"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "Ne"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "Ovaj editor radi samo sa .srt ili .sub datotekama"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "Datoteka nije pronađena: "
+
+msgctxt "#32028"
+msgid ""
+"Write the new timestamp for the end position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Upišite novu vremensku oznaku za krajnju poziciju, odvojenu znakom ':'. Na primjer: 01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "Na primjer: 01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "Prijavi"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "Nisu otkriveni problemi"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "Linija:"
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "Linija "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "Mogući problemi: "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "Odaberite titl za nastavak..."
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "Odaberite titl za uređivanje"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "Vaš titl počinje na "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "Vaš titl završava na "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "Sačuvaj sa dodatkom _edited.srt"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "Sačuvaj s trenutnim nazivom datoteke"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "Sačuvaj s prilagođenim nazivom datoteke"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "Izlaz bez spremanja"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "Dajte novo ime datoteke: "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "Napisano za: "
+
+msgctxt "#32044"
+msgid ""
+"To use the file, select it in the Kodi player subtitle menu when playing the "
+"file"
+msgstr "Da biste koristili datoteku, odaberite je u meniju titlova Kodi playera prilikom reprodukcije datoteke"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "Datoteka nije zapisana"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "Upozorenje"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "Moguće je da imate nesačuvani napredak u vašoj datoteci"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "Ipak izađi"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "Sačuvaj"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "Titlovi su uspješno sinhronizovani"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "Kreni naprijed"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "Pomakni se unazad"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "Dajte novo vrijeme za prvi titl"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Pomakni se naprijed za: HH:MM:SS:MSE"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Pomakni se naprijed za: HH:MM:SS:MSE"
+
+msgctxt "#32056"
+msgid ""
+"Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, "
+"milliseconds. For instance: 01:23:45:000"
+msgstr "Molimo unesite važeći vremenski kod: HH:MM:SS:MSE. Sati, minute, sekunde, milisekunde. Na primjer: 01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "Kako sinhronizovati dva titla"
+
+msgctxt "#32058"
+msgid ""
+"In order to synchronize, you will need a subtitle which matches the video "
+"perfectly, but has different subtitles, usually from a different language. "
+"In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked "
+"to select a timecode in this file, which will be used as reference. Ideally, "
+"it is the first spoken line from the video. In the next screen, select the "
+"line from your original subtitle which matches the first.[CR]"
+"[CR]Subsequently, you'll be asked again to select a line from your reference "
+"subtitle and to match this with the same line in your original subtitle. "
+"Usually the best choice is the last spoken line from the video. After this "
+"your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them "
+"and 'Save subtitles' to write them to a file."
+msgstr "Da biste sinhronizirali, trebat će vam titl koji savršeno odgovara videozapisu, ali ima različite titlove, obično na drugom jeziku. Na sljedećem slajdu prvo odaberite ovaj titl.[CR][CR]Zatim će se od vas tražiti da odaberete vremenski kod u ovoj datoteci, koji će se koristiti kao referenca. Idealno bi bilo da je to prva izgovorena rečenica iz videozapisa. Na sljedećem ekranu odaberite liniju iz originalnog titla koja se podudara s prvom.[CR][CR]Nakon toga, ponovo će se od vas tražiti da odaberete liniju iz referentnog titla i da je uskladite s istom linijom u originalnom titlu. Obično je najbolji izbor posljednja izgovorena rečenica iz videozapisa. Nakon toga će se vaša dva titla sinhronizirati![CR][CR]Označite 'Pomicanje titlova' da biste ih pregledali i 'Spremanje titlova' da biste ih zapisali u datoteku."
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "Datoteka nije pronađena"
+
+msgctxt "#32060"
+msgid ""
+"In the next screen, select the video to synchronize with. Go to the point in "
+"the video where the first subtitle starts. When you pause the video, choose "
+"'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "Na sljedećem ekranu odaberite video s kojim želite sinhronizirati. Idite na mjesto u videu gdje počinje prvi titl. Kada pauzirate video, u meniju odaberite 'Odaberi kao početak', a zatim učinite isto s posljednjim titlom."
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "Kako sinhronizovati sa video datotekom"
+
+msgctxt "#32062"
+msgid ""
+"In the next screen, open the videofile from the library which belongs to the "
+"subtitle you have opened. Skip or fast forward to the point where the "
+"subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, "
+"a menu will pop up with several options. Select 'View or edit first "
+"subtitle'. When your first subtitle is not the first line from the video, "
+"select 'Delete' until the first subtitle is also the first line from the "
+"video.[CR][CR]Then finetune the position of the video, possibly by using the "
+"'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position "
+"is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the "
+"video, and repeat the same process.[CR][CR]After this, your file will be "
+"synced to the video."
+msgstr "Na sljedećem ekranu otvorite video datoteku iz biblioteke koja pripada titlu koji ste otvorili. Preskočite ili premotajte unaprijed do mjesta gdje bi titl trebao biti otprilike postavljen. Pauzirajte.[CR][CR]Kada pauzirate video, pojavit će se meni s nekoliko opcija. Odaberite 'Prikaži ili uredi prvi titl'. Ako vaš prvi titl nije prvi red iz videa, odaberite 'Izbriši' dok prvi titl ne bude i prvi red iz videa.[CR][CR]Zatim fino podesite položaj videa, moguće korištenjem dugmadi 'Preskoči unaprijed 1 sekundu' ili 'Preskoči unazad 1 sekundu'. Ako je položaj savršen, odaberite 'Odaberi kao početak'.[CR]Sada premotajte unaprijed do kraja videa i ponovite isti postupak.[CR][CR]Nakon ovoga, vaša datoteka će biti sinhronizirana s videom."
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "Odaberite vremenski kod prvog titla za sinhronizaciju"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "Odabrano vrijeme"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "Odabrano vrijeme"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "Odaberite vremenski kod titla koji je približno isti"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "Odaberite vrijeme posljednjeg titla za sinhronizaciju"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "Odaberite vrijeme posljednjeg titla"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "Novi vremenski kod"
+
+msgctxt "#32069"
+msgid ""
+"Write the new timestamp for the start position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Upišite novu vremensku oznaku za početnu poziciju, odvojenu znakom ':'. Na primjer: 01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "Titlovi pomjereni naprijed za: {}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "Titlovi su pomjereni unazad za {}"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "Prvi titl sada počinje na {}"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "Posljednji titl sada počinje na {}"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " Pauzirano na: "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "Nastavi igrati"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "Odaberi kao početak prvog titla"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "Preskoči unazad 1 sekundu"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "Premotavanje unaprijed 1 sekundu"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "Izlaz u glavni meni"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "Prikaži ili izbriši prvi titl"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "Prikaži ili izbriši posljednji titl"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "Odaberi kao početak posljednjeg titla"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "Postavi kao prvi titl?"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "Želite li da vaš titl počinje na: "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "Poništi vrijeme početka"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "Odabrani početak: "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "Odabrana vremena:"
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "Vaš prvi titl počinje na: "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "Vaš posljednji titl počinje na: "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "Odaberite"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "Resetiraj vremena"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "Odabrano vrijeme"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "Odaberite liniju s vremenskim kodom"
+
+msgctxt "#32092"
+msgid ""
+"Please select a line with a timecode, like:[CR]'01:23:45,679 --> "
+"01:23:45,679'"
+msgstr "Molimo odaberite liniju s vremenskim kodom, kao što je: [CR]'01:23:45,679 --> 01:23:45,679'"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "Odaberite film"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "Odaberite TV emisiju"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "Pogledajte cijelu biblioteku"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "Izlaz u glavni meni sa promjenama"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "Sačuvaj prikazani titl"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "Izlaz u glavni meni bez promjena"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "Potpuno izađite"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "Vrati na drugu brzinu kadrova"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "Sačuvaj i nastavi igrati"
+
+msgctxt "#32102"
+msgid ""
+"The subtitle is loaded with the new framerate. Pause to reset to another "
+"frame rate or to save."
+msgstr "Titl se učitava s novom brzinom kadrova. Pauzirajte da biste resetovali na drugu brzinu kadrova ili da biste sačuvali."
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "Molimo unesite važeći broj"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "Dobivanje broja sličica u sekundi iz videa"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "Opcije sinhronizacije prema broju sličica u sekundi"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "Broj sličica u sekundi"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "Novo vrijeme završetka"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "Staro vrijeme početka: "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "Vrijeme početka: "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "Staro vrijeme završetka: "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "Novo vrijeme početka: "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "Novo vrijeme završetka: "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "Sačuvaj i izađi"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "Ručno izračunaj"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "Navedite zbir ili faktor"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "Izračunaj faktor ili navedi faktor"
+
+msgctxt "#32115"
+msgid ""
+"In the next screen, write a sum with the current framerate divided by the "
+"real frame rate. If the current frame rate is 25 and it should be 24, type "
+"'25/24'. Or type your own factor, like '1.2'"
+msgstr "Na sljedećem ekranu, upišite zbir gdje je trenutna brzina kadrova podijeljena sa stvarnom brzinom kadrova. Ako je trenutna brzina kadrova 25, a trebala bi biti 24, upišite '25/24'. Ili upišite vlastiti faktor, kao što je '1.2'"
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "Igrajte se s datotekom koju ste prethodno otvorili"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "Navedite faktor"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "Istezanje pružanjem faktora"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "Produžite davanjem novog vremena završetka"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "Broj sličica u sekundi ovog videa je "
+
+msgctxt "#32121"
+msgid ""
+"The video is playing with the modified subtitle. Pause to save or to return "
+"to the menu."
+msgstr "Video se reproducira s izmijenjenim titlom. Pauzirajte da biste sačuvali ili se vratili u meni."
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "Titlovi su učitani"
+
+msgctxt "#32123"
+msgid ""
+"The video is playing with the saved subtitle. The filename of the subtitle "
+"is: "
+msgstr "Video se reproducira sa sačuvanim titlom. Naziv datoteke titla je: "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "Skoči na vrijeme trenutnog prvog titla"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "Skoči na vrijeme posljednjeg titla"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "Odaberite koje drugo"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "Unesite broj sličica u sekundi"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "Otvori drugi titl"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "Zašto vidim ovaj ekran?"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr "Odabrali ste .sub datoteku"
+
+msgctxt "#32131"
+msgid ""
+"You have selected a .sub file, which uses frame rates to indicate when "
+"subtitles should be shown. To edit these subtitles, you have to select a "
+"frame rate. You can start a video to see what frame rate it has or just pick "
+"a random one if you want to use a sync option."
+msgstr "Odabrali ste .sub datoteku koja koristi brzinu kadrova kako bi naznačila kada bi se titlovi trebali prikazivati. Da biste uredili ove titlove, morate odabrati brzinu kadrova. Možete pokrenuti video da vidite koju brzinu kadrova ima ili jednostavno odabrati nasumičnu ako želite koristiti opciju sinhronizacije."
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "Ova datoteka možda nije važeći titl"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "Učitaj ipak"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "Odaberite drugo"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr "Nije važeća .sub datoteka"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "Izgleda da ova datoteka nije važeća .sub datoteka."
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "Svi pronađeni HTML kodovi boja su resetovani na bijelu."
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "Resetiraj kod boje na bijelu"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "Vrati boju na prilagođenu boju"
+
+msgctxt "#32140"
+msgid ""
+"Not a valid code for a color. Use 8 digits in a hexadecimal notation: "
+"'FF00FF00'"
+msgstr "Nije važeći kod za boju. Koristite 8 cifara u heksadecimalnom zapisu: 'FF00FF00'"
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "Navedite kodiranje bojama. Koristite 8 cifara. Ostavite prazno za otkazivanje"
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "Svi pronađeni HTML kodovi boja su resetovani na "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "Otkaži"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "Učitaj titl"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "Ručno"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "Želite li urediti ovaj titl?"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "Reprodukcija će se zaustaviti, ali se može nastaviti iz menija."
+
+msgctxt "#35005"
+msgid ""
+"A subtitlefile could not be found. Do you want to select one manually and "
+"continue with current video?"
+msgstr "Datoteka titla nije pronađena. Želite li ručno odabrati jednu i nastaviti s trenutnim videom?"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "Videozapis:"
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "Podnaslov:"
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "Pokreni sa "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Uredite i sinhronizujte titlove pomoću daljinskog upravljača"
+
+msgctxt "#35010"
+msgid ""
+"With this script you can edit specific lines, move or stretch subtitles, and "
+"synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "Pomoću ovog skripta možete uređivati određene redove, pomicati ili rastezati titlove i sinhronizirati ih s drugim titlovima. Također možete sinhronizirati i s video datotekom."
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "Povratak na meni"
+
+msgctxt "#35016"
+msgid ""
+"Somewhere in the process of syncing an error occurred. Most of the time this "
+"is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A ."
+"srt file which has a digit missing in one of its timestamps.[CR] - A file "
+"which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> "
+"Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "Negdje tokom procesa sinhronizacije došlo je do greške. Najčešće je ovo uzrokovano:[CR] - .srt datotekom koja koristi nestandardne vremenske oznake.[CR] - .srt datotekom kojoj nedostaje cifra u jednoj od vremenskih oznaka.[CR] - Datotekom koja nije stvarna .srt datoteka[CR][CR]Koristite Glavni meni -> Napredne opcije -> Provjeri integritet da biste skenirali neispravne vremenske oznake ili koristite drugu .srt datoteku."
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "Došlo je do sljedeće greške:"
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "Detalji greške"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "Skup znakova nije otkriven"
+
+msgctxt "#35018"
+msgid ""
+"The correct characterset of this file could not be detected. The file is now "
+"loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "Ispravan skup znakova ove datoteke nije mogao biti otkriven. Datoteka se sada učitava s UTF-8 skupom znakova, a greške su zamijenjene upitnicima."
+
+msgctxt "#35019"
+msgid "Select textline"
+msgstr "Odaberite tekstualni red"
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr "Odaberite vrijeme za sinhronizaciju"
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr "Pomakni unaprijed za mikrosekunde"
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr "Pomakni se unazad za mikrosekunde"
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr "Pomakni unaprijed za minute"
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr "Pomakni se unazad za minute"
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr "Odaberite koji titl želite izbrisati"
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr "Minuta"
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr "Mikrosekunde"
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr "Pogledajte sadržaj"
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr "Svejedno otvori"
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr "Malo je vjerovatno da će biti podnaslov"
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr "Ova datoteka je prilično velika i vjerovatno nije titl"
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr "Nije moguće učitati titl"
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr "Nije moguće pronaći nijedan titl u datoteci. Je li titl važeći?"
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr "Skeniranje..."
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr "Provjeravam koje kodiranje koristiti za ovu datoteku."
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr "Izgleda da ovo nije važeća .sub datoteka."
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr "Izgleda da ovo nije važeća .srt datoteka."
+
+msgctxt "#35038"
+msgid "Results"
+msgstr "Rezultati"
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr "Kodiranje je: "
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr "Sljedeće linije su preskočene:"
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr "Ručna popravka"
+
+msgctxt "#35042"
+msgid "Jump to Specific subtitle"
+msgstr "Idi na određeni podnaslov"
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr "Pregled ili brisanje titla koji je označen kao prvi"
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr "Pregled ili brisanje titla koji je označen kao posljednji"
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr "Označi drugi titl kao posljednji za sinhronizaciju"
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr "Označi drugi titl kao prvi za sinhronizaciju"
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr "Promijeni vrijeme početka"
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr "Promijeni vrijeme završetka"
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr "Preskoči unazad 100 milisekundi"
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr "Želite li: [CR]{}[CR]Da se pojavi na {}?"
