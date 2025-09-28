@@ -1,0 +1,126 @@
+# Kodi Media Center language file
+# Addon Name: Kodi Logfile Uploader
+# Addon id: script.kodi.loguploader
+# Addon Provider: Team Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-07-13 11:29+0000\n"
+"Last-Translator: vdkbsd <valexgus@gmail.com>\n"
+"Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-kodi-loguploader/ru_ru/>\n"
+"Language: ru_ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7.1\n"
+
+msgctxt "Addon Summary"
+msgid "Uploads your kodi.log file."
+msgstr "Загрузка kodi.log."
+
+msgctxt "Addon Description"
+msgid "Uploads your kodi.log file and returns an url you can post on http://forum.kodi.tv/"
+msgstr "Загружает файл журнала Kodi и возвращает ссылку, которую можно опубликовать на форуме – http://forum.kodi.tv/"
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr "Файл не содержит данных"
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr "Не удалось прочитать файл"
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr "Не удалось подключиться к серверу"
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr "Не удалось получить ссылку"
+
+msgctxt "#32005"
+msgid "This file is too large. Max size is 2MB."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi forum: %s"
+msgstr "Опубликуйте эту ссылку или отсканируйте QR-код для вашего %s вместе с описанием проблемы на форуме Kodi: %s"
+
+msgctxt "#32007"
+msgid "Error posting the logfile."
+msgstr "Ошибка публикации лог-файла."
+
+msgctxt "#32011"
+msgid "Error posting the kodi.log file"
+msgstr "Ошибка при публикации файла kodi.log"
+
+msgctxt "#32012"
+msgid "Error posting the old log file"
+msgstr "Ошибка при публикации предыдущего лог-файла"
+
+msgctxt "#32013"
+msgid "Error posting the crashlog file"
+msgstr "Ошибка при публикации аварийного лог-файла"
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr "Предыдущий лог-файл не найден"
+
+msgctxt "#32022"
+msgid "No crashlog file found"
+msgstr "Аварийный лог-файл не найден"
+
+msgctxt "#32023"
+msgid "Windows crashlogs are not supported, please disable this option in the addon settings"
+msgstr "Аварийные журналы Windows не поддерживаются; отключите эту опцию в настройках дополнения"
+
+msgctxt "#32024"
+msgid "Android crashlogs are not supported, please disable this option in the addon settings"
+msgstr "Аварийные журналы Android не поддерживаются; отключите эту опцию в настройках дополнения"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr "лог-файл"
+
+msgctxt "#32032"
+msgid "old log"
+msgstr "предыдущий лог-файл"
+
+msgctxt "#32033"
+msgid "crashlog"
+msgstr "аварийный лог-файл"
+
+msgctxt "#32040"
+msgid "Do you want to view your %s or upload it to http://paste.kodi.tv/?"
+msgstr "Хотите просмотреть свои %s или загрузить их на http://paste.kodi.tv/?"
+
+msgctxt "#32041"
+msgid "view"
+msgstr "просмотреть"
+
+msgctxt "#32042"
+msgid "upload"
+msgstr "загрузить"
+
+msgctxt "#32501"
+msgid "Advanced options"
+msgstr "Дополнительные параметры"
+
+msgctxt "#32502"
+msgid "Additional logfiles to post"
+msgstr "Дополнительные лог-файлы для размещения"
+
+msgctxt "#32503"
+msgid "Post the old logfile, from the last time Kodi ran"
+msgstr "Предоставьте предыдущий лог-файл (с последнего запуска Kodi)"
+
+msgctxt "#32504"
+msgid "Post the crashlog (available on linux/osx/ios only)"
+msgstr "Опубликовать аварийный лог-файл (только для linux/osx/ios)"
+
+#~ msgctxt "#32005"
+#~ msgid "This file is too large. Max size is 1MB."
+#~ msgstr "Слишком большой файл. Максимальный размер - 1 МБ."
