@@ -1,65 +1,99 @@
-# -*- coding: utf-8 -*-
+from pprint import pprint, pformat
+import sys
 
 import xbmc
-from .constants import *
+
+from typing import Any
+# noinspection PyPackages
+from .constants import ADDON_NAME, ADDON_VERSION, KODI_VERSION, KODI_MAJOR_VERSION, ADDON_ARGUMENTS
 
 
 class Logger:
 
     @staticmethod
-    def log(message, level=xbmc.LOGDEBUG):
+    def log(message: Any, level: int = xbmc.LOGDEBUG) -> None:
         """
-        Log a message to the Kodi log file.
-        If we're unit testing a module outside Kodi, print to the console instead.
+        Logs a message using the Kodi logging system. If the user agent is unavailable
+        (e.g. during unit testing), it will print the message to the console using pprint.
 
-        :param message: the message to log
-        :param level: the kodi log level to log at, default xbmc.LOGDEBUG
-        :return:
+        :param message: The message to be logged. If the message is not a string, it will
+            be formatted using `pformat` before logging.
+        :param level: The log level for the message, default `xbmc.LOGDEBUG`.
         """
-        #
+        # (The below test will fail if we're unit testing a module)
         if xbmc.getUserAgent():
-            xbmc.log(f'### {ADDON_NAME} {ADDON_VERSION}: {str(message)}', level)
+            if isinstance(message, str):
+                xbmc.log(f'### {ADDON_NAME.replace("Kodi ","")} {ADDON_VERSION}: {message}', level)
+            else:
+                xbmc.log(pformat(message), level)
         else:
-            print(str(message))
+            # ONLY USED WHEN UNIT TESTING A MODULE!
+            pprint(message)
 
     @staticmethod
-    def info(message):
+    def info(*messages: Any) -> None:
         """
-        Log a message to the Kodi log file at INFO level.
+        Log messages to the Kodi log file at the INFO level.
 
-        :param message: the message to log
-        :return:
+        :param messages: The messages to log
         """
-        Logger.log(message, xbmc.LOGINFO)
-
-    @staticmethod
-    def warning(message):
-        """
-        Log a message to the Kodi log file at WARNING level.
-
-        :param message: the message to log
-        :return:
-        """
-        Logger.log(message, xbmc.LOGWARNING)
+        for message in messages:
+            Logger.log(message, xbmc.LOGINFO)
 
     @staticmethod
-    def error(message):
+    def warning(*messages: Any) -> None:
         """
-        Log a message to the Kodi log file at ERROR level.
+        Log messages to the Kodi log file at the WARNING level.
 
-        :param message: the message to log
-        :return:
+        :param messages: The messages to log
         """
-        Logger.log(message, xbmc.LOGERROR)
+        for message in messages:
+            Logger.log(message, xbmc.LOGWARNING)
 
     @staticmethod
-    def debug(*messages):
+    def error(*messages: Any) -> None:
+        """
+        Log messages to the Kodi log file at the ERROR level.
+
+        :param messages: The messages to log
+        """
+        for message in messages:
+            Logger.log(message, xbmc.LOGERROR)
+
+    @staticmethod
+    def debug(*messages: Any) -> None:
         """
         Log messages to the Kodi log file at DEBUG level.
 
-        :param messages: the message(s) to log
-        :return:
+        :param messages: The message(s) to log
         """
         for message in messages:
             Logger.log(message, xbmc.LOGDEBUG)
 
+    @staticmethod
+    def start(*extra_messages: Any) -> None:
+        """
+        Log key information at the start of an addon run.
+
+        :param extra_messages: Any extra things to log, such as "(Service)" or "(Plugin)" if it helps to identify component elements.
+        """
+        Logger.info(f'Start {ADDON_NAME}')
+        if extra_messages:
+            Logger.info(*extra_messages)
+        Logger.info(f'Kodi {KODI_VERSION} (Major version {KODI_MAJOR_VERSION})')
+        Logger.info(f'Python {sys.version}')
+        if ADDON_ARGUMENTS != "['']":
+            Logger.info(f'Run {ADDON_ARGUMENTS}')
+        else:
+            Logger.info('No arguments supplied to addon')
+
+    @staticmethod
+    def stop(*extra_messages: Any) -> None:
+        """
+        Log key information at the end of an addon run.
+
+        :param extra_messages: Any extra things to log, such as "(Service)" or "(Plugin)" if it helps to identify component elements.
+        """
+        Logger.info(f'Finish {ADDON_NAME}')
+        if extra_messages:
+            Logger.info(*extra_messages)
