@@ -74,20 +74,20 @@ msgstr ""
 
 msgctxt "#32208"
 msgid "Enter postcode, suburb or area."
-msgstr "
+msgstr ""
 
 msgctxt "#32209"
 msgid "Radar backgrounds not showing?  Try forcing a refresh"
-msgstr "
+msgstr ""
 
 msgctxt "#32210"
 msgid "Refresh all radar backgrounds on next weather fetch?"
-msgstr "
+msgstr ""
 
 msgctxt "#32211"
 msgid "Closest Radar "
-msgstr "
+msgstr ""
 
 msgctxt "#32212"
 msgid "If entered, these radar codes overrule the closest found."
-msgstr "
+msgstr ""

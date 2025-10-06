@@ -1,3 +1,8 @@
+v2.1.6 Performance improvements, prep for Piers
+- Improve performance when used with multiple Kodi Profiles by using a shared cache (stored under special://temp/ozweather)
+- A bunch of code improvements and defensive programming to cope with scenarios where things are not at times available
+
+
 v2.1.5 Minor fixes
 - Fix feels like calculation when data not returned by BOM, and Current.Wind
 

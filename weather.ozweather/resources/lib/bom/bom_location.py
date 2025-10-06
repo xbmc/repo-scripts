@@ -1,16 +1,18 @@
 import requests
 import sys
 import xbmc
+import xbmcgui
 
-# Allow for unit testing this file
+# Allow for unit testing this file (remember to install kodistubs!)
 # This brings this addon's resources, and bossanova808 module stuff into scope
-# (when running this module outside Kodi)
+# (only when running this module *outside* of Kodi)
 if not xbmc.getUserAgent():
     sys.path.insert(0, '../../..')
     sys.path.insert(0, '../../../../script.module.bossanova808/resources/lib')
 
-from resources.lib.bom.bom_radar import *
-from bossanova808.utilities import *
+from resources.lib.store import Store
+from resources.lib.bom.bom_radar import closest_radar_to_lat_lon
+from bossanova808.constants import ADDON, ADDON_NAME, TRANSLATE
 from bossanova808.logger import Logger
 
 
@@ -23,7 +25,7 @@ def get_bom_locations_for(text):
     location_geohashes = []
 
     try:
-        r = requests.get(Store.BOM_API_LOCATIONS_URL, params={'search': text})
+        r = requests.get(Store.BOM_API_LOCATIONS_URL, params={'search': text}, timeout=15)
         for result in r.json()['data']:
             Logger.debug(result)
             locations.append(f'{result["name"]}, {result["state"]} {result["postcode"]} ({result["geohash"]})')
@@ -45,7 +47,7 @@ def find_bom_location():
     What we need is actually a geohash we can then use with the BOM API
     Save the chosen result, e.g. Ascot Vale, VIC 3032 and geohash r1r11df
     """
-    keyboard = xbmc.Keyboard('', LANGUAGE(32195), False)
+    keyboard = xbmc.Keyboard('', TRANSLATE(32195), False)
     keyboard.doModal()
 
     if keyboard.isConfirmed() and keyboard.getText() != '':
@@ -68,10 +70,10 @@ def find_bom_location():
                 # Don't save the settings is this goes wrong
                 location_info_url = f'https://api.weather.bom.gov.au/v1/locations/{location_geohashes[selected]}'
                 try:
-                    location_info = requests.get(location_info_url).json()['data']
+                    location_info = requests.get(location_info_url, timeout=15).json()['data']
                     Logger.debug(location_info)
                 except:
-                    Logger.debug("Error retrieving location info for geohash {location_geohashes[selected]}")
+                    Logger.debug(f"Error retrieving location info for geohash {location_geohashes[selected]}")
                     raise
 
                 # Save the geohash and latitude and longitude of the location

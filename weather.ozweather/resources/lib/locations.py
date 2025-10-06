@@ -1,4 +1,5 @@
-from bossanova808.utilities import *
+from bossanova808.constants import ADDON, WEATHER_WINDOW
+from bossanova808.utilities import set_property
 from bossanova808.logger import Logger
 
 
@@ -12,9 +13,9 @@ def refresh_locations():
     location2 = ADDON.getSetting('Location2BOM') or ""
     location3 = ADDON.getSetting('Location3BOM') or ""
 
-    Logger.info("Location1: " + location1)
-    Logger.info("Location2: " + location2)
-    Logger.info("Location3: " + location3)
+    Logger.info(f"Location1: {location1}")
+    Logger.info(f"Location2: {location2}")
+    Logger.info(f"Location3: {location3}")
 
     locations = 0
 
@@ -41,9 +42,9 @@ def refresh_locations():
     radar2 = ADDON.getSetting('Radar2') or ADDON.getSetting('Location2ClosestRadar') or ""
     radar3 = ADDON.getSetting('Radar3') or ADDON.getSetting('Location3ClosestRadar') or ""
 
-    Logger.info("Radar1: " + radar1)
-    Logger.info("Radar2: " + radar2)
-    Logger.info("Radar3: " + radar3)
+    Logger.info(f"Radar1: {radar1}")
+    Logger.info(f"Radar2: {radar2}")
+    Logger.info(f"Radar3: {radar3}")
 
     radars = 0
 
