@@ -1,5 +1,10 @@
-v2.0.6
+v2.0.8
+- Minor changes for Piers
 
+v2.0.7
+- Remove old common code, use new module
+
+v2.0.6
 - Add support for non library videos
 
 v2.0.5

@@ -2,7 +2,7 @@ from random import randint
 
 from bossanova808.logger import Logger
 from bossanova808.notify import Notify
-from bossanova808.utilities import *
+from bossanova808.utilities import send_kodi_json
 
 # noinspection PyPackages
 from .store import Store
@@ -17,7 +17,14 @@ class KodiPlayer(xbmc.Player):
     This class represents/monitors the Kodi video player
     """
 
-    def __init__(self, *args):
+    # noinspection PyUnusedLocal
+    def __init__(self, *_args):
+        """
+        Initialize the KodiPlayer instance and bind it to xbmc.Player.
+        
+        Parameters:
+            *_args: Optional positional arguments accepted for compatibility; any values passed are ignored.
+        """
         xbmc.Player.__init__(self)
         Logger.debug('KodiPlayer __init__')
 
@@ -32,17 +39,32 @@ class KodiPlayer(xbmc.Player):
         self.autoplay_random_if_enabled()
 
     def onPlayBackStopped(self):
+        """
+        Handle the playback-stopped event and mark the current resume point as managed by Kodi.
+        
+        When playback stops, record a sentinel resume value indicating that Kodi should retain or handle the resume point (internal sentinel -2).
+        """
         Logger.info("onPlayBackStopped")
         self.update_resume_point(-2)
 
-    def onPlayBackSeek(self, time, seekOffset):
-        Logger.info(f'onPlayBackSeek time {time}, seekOffset {seekOffset}')
+    def onPlayBackSeek(self, time_to_seek, seek_offset):
+        """
+        Handle a user-initiated seek during playback and update the stored resume point.
+        
+        When a seek occurs, attempt to record the current playback time as the resume point.
+        If reading the current playback time raises a RuntimeError (e.g., seeked past the end),
+        clear the stored resume point.
+        
+        Parameters:
+            time_to_seek (float): The target time position of the seek (seconds).
+            seek_offset (float): The relative offset of the seek from the previous position (seconds).
+        """
+        Logger.info(f'onPlayBackSeek time {time_to_seek}, seekOffset {seek_offset}')
         try:
             self.update_resume_point(self.getTime())
         except RuntimeError:
             Logger.warning("Could not get playing time - seeked past end?  Clearing resume point.")
             self.update_resume_point(0)
-            pass
 
     def onPlayBackSeekChapter(self, chapter):
         Logger.info(f'onPlayBackSeekChapter chapter: {chapter}')
@@ -51,7 +73,6 @@ class KodiPlayer(xbmc.Player):
         except RuntimeError:
             Logger.warning("Could not get playing time - seeked past end?  Clearing resume point.")
             self.update_resume_point(0)
-            pass
 
     def onAVStarted(self):
         Logger.info("onAVStarted")
@@ -86,7 +107,11 @@ class KodiPlayer(xbmc.Player):
         """
         This is where the work is done - stores a new resume point in the Kodi library for the currently playing file
 
-        :param: seconds: the time to update the resume point to.  @todo add notes on -1, -2 etc here!
+        :param seconds: target resume time in seconds.
+                         Special values:
+                           -2 -> stopped normally, let Kodi persist native resume (no-op here)
+                           -1 -> end-of-file, clear resume point (sends 0)
+                            0 -> explicit clear resume point
         :param: Store.library_id: the Kodi library id of the currently playing file
         :return: None
         """
@@ -139,11 +164,13 @@ class KodiPlayer(xbmc.Player):
             seconds = 0
 
         # if current time > Kodi's ignorepercentatend setting
-        percent_played = int((seconds * 100) / Store.length_of_currently_playing_file)
-        if percent_played > (100 - Store.ignore_percent_at_end):
-            Logger.info(f'Not updating resume point as current percent played ({percent_played}) is above Kodi\'s ignorepercentatend'
-                        f' setting of {Store.ignore_percent_at_end}')
-            return
+        # if current time > Kodi's ignorepercentatend setting
+        total = Store.length_of_currently_playing_file
+        if total:
+            percent_played = int((seconds * 100) / total)
+            if percent_played > (100 - Store.ignore_percent_at_end):
+                Logger.info(f"Not updating resume point as current percent played ({percent_played}) is above Kodi's ignorepercentatend setting of {Store.ignore_percent_at_end}")
+                return
 
         # OK, BELOW HERE, we're probably going to set a resume point
 
@@ -228,9 +255,12 @@ class KodiPlayer(xbmc.Player):
 
     def resume_if_was_playing(self):
         """
-        Automatically resume a video after a crash, if one was playing...
-
-        :return:
+        Attempt to resume playback after a previous shutdown if resuming is enabled and saved resume data exist.
+        
+        If configured and valid resume data are present, the player will start the saved file and seek to the stored resume time; on any failure or if no resume data are applicable, no playback is resumed.
+        
+        Returns:
+            True if playback was resumed and seeked to the saved position, False otherwise.
         """
 
         if Store.resume_on_startup \
@@ -242,7 +272,7 @@ class KodiPlayer(xbmc.Player):
                     resume_point = float(f.read())
                 except Exception:
                     Logger.error("Error reading resume point from file, therefore not resuming.")
-                    return
+                    return False
 
             # neg 1 means the video wasn't playing when Kodi ended
             if resume_point < 0:
@@ -252,13 +282,17 @@ class KodiPlayer(xbmc.Player):
             with open(Store.file_to_store_last_played, 'r') as f:
                 full_path = f.read()
 
-            str_timestamp = '%d:%02d' % (resume_point / 60, resume_point % 60)
-            Logger.info(f'Will resume playback at {str_timestamp} of {full_path}')
+            if not full_path:
+                Logger.info("No last-played file found; skipping resume.")
+                return False
+
+            mins, secs = divmod(int(resume_point), 60)
+            str_timestamp = f'{mins}:{secs:02d}'
 
             self.play(full_path)
 
             # wait up to 10 secs for the video to start playing before we try to seek
-            for i in range(0, 1000):
+            for _ in range(100):
                 if not self.isPlayingVideo() and not Store.kodi_event_monitor.abortRequested():
                     xbmc.sleep(100)
                 else:
@@ -270,9 +304,13 @@ class KodiPlayer(xbmc.Player):
 
     def get_random_library_video(self):
         """
-        Get a random video from the library for playback
-
-        :return:
+        Selects a random video file path from the Kodi library.
+        
+        Chooses among episodes, movies, and music videos and returns the file path of a randomly selected item if one exists. Updates Store.video_types_in_library to reflect whether a given type is present. If the library contains no eligible videos, no selection is made.
+        
+        Returns:
+            str: File path of the selected video.
+            False: If no episodes, movies, or music videos exist in the library.
         """
 
         # Short circuit if library is empty
@@ -280,9 +318,11 @@ class KodiPlayer(xbmc.Player):
                 and not Store.video_types_in_library['movies'] \
                 and not Store.video_types_in_library['musicvideos']:
             Logger.warning('No episodes, movies, or music videos exist in the Kodi library. Cannot autoplay a random video.')
-            return
+            return False
 
         random_int = randint(0, 2)
+        result_type = None
+        method = None
         if random_int == 0:
             result_type = 'episodes'
             method = "GetEpisodes"
@@ -347,7 +387,10 @@ class KodiPlayer(xbmc.Player):
             if not self.isPlayingVideo() \
                     and (video_playlist.getposition() == -1 or video_playlist.getposition() == video_playlist.size()):
                 full_path = self.get_random_library_video()
-                Logger.info("Auto-playing next random video because nothing is playing and playlist is empty: " + full_path)
+                if not full_path:
+                    Logger.info("No random video available to autoplay.")
+                    return
+                Logger.info(f"Auto-playing next random video because nothing is playing and playlist is empty: {full_path}")
                 self.play(full_path)
                 Notify.info(f'Auto-playing random video: {full_path}')
             else:

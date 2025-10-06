@@ -1,10 +1,13 @@
-from bossanova808.utilities import *
-from bossanova808.logger import Logger
 import os
 import json
 import xml.etree.ElementTree as ElementTree
 
 import xbmc
+import xbmcvfs
+
+from bossanova808.constants import PROFILE, ADDON
+from bossanova808.logger import Logger
+from bossanova808.utilities import get_setting, get_setting_as_bool
 
 
 class Store:
