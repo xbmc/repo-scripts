@@ -1,10 +1,10 @@
 import os
 import yaml
-from bossanova808.logger import Logger
-from bossanova808.constants import *
-from bossanova808.utilities import *
-import xbmc
 import xbmcvfs
+
+from bossanova808.constants import PROFILE
+from bossanova808.utilities import get_setting_as_bool
+from bossanova808.logger import Logger
 
 
 class Store:
@@ -65,8 +65,9 @@ class Store:
         # Update our internal list of ignored shows if there are any...
         if os.path.exists(Store.ignored_shows_file):
             Logger.info("Loading ignored shows from config file: " + Store.ignored_shows_file)
-            with open(Store.ignored_shows_file, 'r') as yaml_file:
-                Store.ignored_shows = yaml.load(yaml_file, Loader=yaml.FullLoader)
+            with open(Store.ignored_shows_file, 'r', encoding='utf-8') as yaml_file:
+                data = yaml.safe_load(yaml_file)
+                Store.ignored_shows = data if isinstance(data, dict) else {}
         else:
             Store.ignored_shows = {}
 
@@ -93,6 +94,6 @@ class Store:
             return
 
         # Shows to ignore, so dump the current dict to our yaml file (clobber over any old file)
-        with open(Store.ignored_shows_file, 'w') as yaml_file:
+        with open(Store.ignored_shows_file, 'w', encoding='utf-8') as yaml_file:
             Logger.info(f'Ignored Shows to write to config is: {Store.ignored_shows}')
-            yaml.dump(Store.ignored_shows, yaml_file, default_flow_style=False)
+            yaml.safe_dump(Store.ignored_shows, yaml_file, default_flow_style=False, allow_unicode=True)

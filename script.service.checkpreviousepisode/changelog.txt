@@ -1,3 +1,7 @@
+v0.4.9
+- Prep for Piers, use new module Logger
+- Sundry fixes/tightening from CodeRabbit reviews
+
 v0.4.8
 - Remove old common code, use new module
 - Fix bug if last ignored show is removed from ignore list then that show is re-played in same Kodi session
