@@ -1,3 +1,8 @@
+v1.0.2
+- Use updated Logging code
+- Make crashlog days configurable (default still 3)
+- A bunch of fixes and improvements following CodeRabbit review
+
 v1.0.1
 - Improve compatibility with network shares            
 - Improve compatibility with Windows and *ELEC

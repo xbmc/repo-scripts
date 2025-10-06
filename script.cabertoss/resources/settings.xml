@@ -17,6 +17,18 @@
                         <heading>32001</heading>
                     </control>
                 </setting>
+                <setting id="crashlog_max_days" type="integer" label="32032" help="">
+                    <level>0</level>
+                    <default>3</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <maximum>365</maximum>
+                        <step>1</step>
+                    </constraints>
+                    <control type="edit" format="integer">
+                        <heading>32032</heading>
+                    </control>
+                </setting>
             </group>
         </category>
     </section>
