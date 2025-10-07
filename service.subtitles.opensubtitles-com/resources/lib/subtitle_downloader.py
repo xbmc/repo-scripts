@@ -73,8 +73,12 @@ class SubtitleDownloader:
             media_data = {"query": query}
         else:
             media_data = get_media_data()
-            if "basename" in file_data:
+            # Only use basename as fallback if no query was set by media data collection
+            if "basename" in file_data and not media_data.get("query"):
                 media_data["query"] = file_data["basename"]
+                log(__name__, f"Using basename as query fallback: {file_data['basename']}")
+            elif media_data.get("query"):
+                log(__name__, f"Using parsed query from media_data: {media_data['query']}")
             log(__name__, "media_data '%s' " % media_data)
 
         self.query = {**media_data, **file_data, **language_data}

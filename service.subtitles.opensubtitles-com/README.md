@@ -4,6 +4,9 @@ Search and download subtitles for movies and TV-Series from OpenSubtitles.com. S
 
 REST API implementation based on tomburke25 [python-opensubtitles-rest-api](https://github.com/tomburke25/python-opensubtitles-rest-api)                            
 
+v1.0.8 (2025-10-07)
+- performs a query to kodi library if imdb or tmdb ID is missing (thanks you cvanderkam)
+
 v1.0.7 (2025-08-26)
 - added IMDB and TMDB collection on files for more accurate search to the API
 

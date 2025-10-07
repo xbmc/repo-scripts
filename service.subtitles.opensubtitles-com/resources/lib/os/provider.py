@@ -73,7 +73,7 @@ class OpenSubtitlesProvider:
             logging(f"Username: {self.username}, Password: {self.password}")
 
 
-        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.7" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.8" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
 
         self.session = Session()
         self.session.headers = self.request_headers
@@ -88,14 +88,37 @@ class OpenSubtitlesProvider:
         login_url = API_URL + API_LOGIN
         login_body = {"username": self.username, "password": self.password}
 
+        logging(f"Login attempt to: {login_url}")
+        logging(f"Login body: {{'username': '{self.username}', 'password': '***'}}")
+
         try:
             r = self.session.post(login_url, json=login_body, allow_redirects=False, timeout=REQUEST_TIMEOUT)
-            logging(r.url)
+            logging(f"Login response URL: {r.url}")
+            logging(f"Login response status: {r.status_code}")
+            logging(f"Login response headers: {dict(r.headers)}")
+
+            # Log response body for debugging
+            try:
+                response_text = r.text
+                logging(f"Login response body: {response_text}")
+            except:
+                logging("Failed to get response text")
+
             r.raise_for_status()
         except (ConnectionError, Timeout, ReadTimeout) as e:
+            logging(f"Connection error during login: {e}")
             raise ServiceUnavailable(f"Unknown Error: {e.response.status_code}: {e!r}")
         except HTTPError as e:
             status_code = e.response.status_code
+            logging(f"HTTP error during login: {status_code}")
+
+            # Log the error response body for debugging
+            try:
+                error_response = e.response.text
+                logging(f"Login error response body: {error_response}")
+            except:
+                logging("Failed to get error response text")
+
             if status_code == 401:
                 raise AuthenticationError(f"Login failed: {e}")
             elif status_code == 400:
@@ -105,11 +128,15 @@ class OpenSubtitlesProvider:
             elif status_code == 503:
                 raise ProviderError(e)
             else:
-                raise ProviderError(f"Bad status code: {status_code}")
+                raise ProviderError(f"Bad status code on login: {status_code}")
         else:
             try:
-                self.user_token = r.json()["token"]
-            except ValueError:
+                response_json = r.json()
+                logging(f"Login successful response JSON: {response_json}")
+                self.user_token = response_json["token"]
+                logging(f"Token extracted successfully")
+            except ValueError as e:
+                logging(f"Failed to parse login response JSON: {e}")
                 raise ValueError("Invalid JSON returned by provider")
 
     @property
@@ -127,29 +154,61 @@ class OpenSubtitlesProvider:
         if not len(params):
             raise ValueError("Invalid subtitle search data provided. Empty Object built")
 
+        # Check if we have a user token for authentication
+        current_token = self.user_token
+        logging(f"Current user token: {current_token[:20] if current_token else None}...")
+
         try:
             # build query request
             subtitles_url = API_URL + API_SUBTITLES
+            logging(f"Search request URL: {subtitles_url}")
+            logging(f"Search request params: {params}")
+
             r = self.session.get(subtitles_url, params=params, timeout=30)
-            logging(r.url)
-            logging(r.request.headers)
+            logging(f"Search response URL: {r.url}")
+            logging(f"Search response status: {r.status_code}")
+            logging(f"Search request headers sent: {dict(r.request.headers)}")
+            logging(f"Search response headers: {dict(r.headers)}")
+
+            # Log response body for debugging
+            try:
+                response_text = r.text
+                logging(f"Search response body: {response_text}")
+            except:
+                logging("Failed to get search response text")
+
             r.raise_for_status()
         except (ConnectionError, Timeout, ReadTimeout) as e:
+            logging(f"Connection error during search: {e}")
             raise ServiceUnavailable(f"Unknown Error, empty response: {e.status_code}: {e!r}")
         except HTTPError as e:
             status_code = e.response.status_code
-            if status_code == 429:
+            logging(f"HTTP error during subtitle search: {e}")
+
+            # Log the error response body for debugging
+            try:
+                error_response = e.response.text
+                logging(f"Search error response body: {error_response}")
+            except:
+                logging("Failed to get search error response text")
+
+            if status_code == 401:
+                logging("401 error - authentication required. Checking if login was attempted...")
+                raise ProviderError(f"Authentication failed during search: {status_code}")
+            elif status_code == 429:
                 raise TooManyRequests()
             elif status_code == 503:
                 raise ProviderError(e)
             else:
-                raise ProviderError(f"Bad status code: {status_code}")
+                raise ProviderError(f"Bad status code on search: {status_code}")
 
         try:
             result = r.json()
+            logging(f"Search successful response JSON keys: {list(result.keys()) if result else None}")
             if "data" not in result:
                 raise ValueError
-        except ValueError:
+        except ValueError as e:
+            logging(f"Failed to parse search response JSON: {e}")
             raise ProviderError("Invalid JSON returned by provider")
         else:
             logging(f"Query returned {len(result['data'])} subtitles")
@@ -225,7 +284,7 @@ class OpenSubtitlesProvider:
             elif status_code == 503:
                 raise ProviderError(e)
             else:
-                raise ProviderError(f"Bad status code: {status_code}")
+                raise ProviderError(f"Bad status code on download: {status_code}")
 
         try:
             subtitle = r.json()

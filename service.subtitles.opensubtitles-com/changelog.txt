@@ -1,3 +1,10 @@
+
+v1.0.8 (2025-10-07)
+- performs a query to kodi library if imdb or tmdb ID is missing (thanks you cvanderkam)
+
+v1.0.7 (2025-08-26)
+- added IMDB and TMDB collection on files for more accurate search to the API
+
 v1.0.6 (2024-11-29)
 - fixed issue with RAR archives (thanks ninjacarr)
 - handles default chinese language to zh-cn  (thanks ninjacarr)
