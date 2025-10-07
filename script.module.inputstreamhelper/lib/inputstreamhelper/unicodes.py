@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements Unicode Helper functions"""
-from __future__ import absolute_import, division, unicode_literals
 
 
 def to_unicode(text, encoding='utf-8', errors='strict'):

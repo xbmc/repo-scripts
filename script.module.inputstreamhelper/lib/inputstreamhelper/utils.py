@@ -2,8 +2,6 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements various Helper functions"""
 
-from __future__ import absolute_import, division, unicode_literals
-
 import os
 import re
 import struct
@@ -11,7 +9,6 @@ from functools import total_ordering
 from socket import timeout
 from ssl import SSLError
 from time import time
-from typing import NamedTuple
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -23,33 +20,36 @@ from .unicodes import compat_path, from_unicode, to_unicode
 
 
 @total_ordering
-class Version(NamedTuple):
-    """Minimal version class used for parse_version. Should be enough for our purpose."""
-    major: int = 0
-    minor: int = 0
-    micro: int = 0
-    nano: int = 0
+class Version:
+    """Implements Version"""
+    def __init__(self, *components):
+        self.components = list(components)
 
     def __str__(self):
-        return f"{self.major}.{self.minor}.{self.micro}.{self.nano}"
+        return '.'.join(map(str, self.components))
 
     def __lt__(self, other):
-        if self.major != other.major:
-            return self.major < other.major
-        if self.minor != other.minor:
-            return self.minor < other.minor
-        if self.micro != other.micro:
-            return self.micro < other.micro
+        # extended comparison that accounts for different lengths by padding with zeros
+        max_length = max(len(self.components), len(other.components))
+        # extend both lists with zeros up to the maximum length
+        extended_self = self.components + [0] * (max_length - len(self.components))
+        extended_other = other.components + [0] * (max_length - len(other.components))
 
-        return self.nano < other.nano
+        for self_comp, other_comp in zip(extended_self, extended_other):
+            if self_comp < other_comp:
+                return True
+            if self_comp > other_comp:
+                return False
+        return False  # return False if all comparisons are equal
 
     def __eq__(self, other):
-        return all((self.major == other.major, self.minor == other.minor, self.micro == other.micro, self.nano == other.nano))
+        # Uses the same logic for equality
+        return not self < other and not other < self
 
 
 def temp_path():
     """Return temporary path, usually ~/.kodi/userdata/addon_data/script.module.inputstreamhelper/temp/"""
-    tmp_path = translate_path(os.path.join(get_setting('temp_path', 'special://masterprofile/addon_data/script.module.inputstreamhelper'), 'temp', ''))
+    tmp_path = translate_path(os.path.join(get_setting('temp_path', 'special://masterprofile/addon_data/script.module.inputstreamhelper'), 'temp'))
     if not exists(tmp_path):
         mkdirs(tmp_path)
 
@@ -73,26 +73,26 @@ def download_path(url):
     return os.path.join(temp_path(), filename)
 
 
-def _http_request(url, headers=None, time_out=10):
-    """Perform an HTTP request and return request"""
+def _http_request(url, data=None, headers=None, time_out=10):
+    """Perform an HTTP request and return response"""
     log(0, 'Request URL: {url}', url=url)
 
     try:
+        request = Request(url)
         if headers:
-            request = Request(url, headers=headers)
-        else:
-            request = Request(url)
-        req = urlopen(request, timeout=time_out)
-        log(0, 'Response code: {code}', code=req.getcode())
-        if 400 <= req.getcode() < 600:
-            raise HTTPError('HTTP {} Error for url: {}'.format(req.getcode(), url), response=req)
+            request.headers = headers
+        if data:
+            request.data = data
+        response = urlopen(request, timeout=time_out)  # pylint: disable=consider-using-with
+        log(0, 'Response code: {code}', code=response.getcode())
+        if 400 <= response.getcode() < 600:
+            raise HTTPError
     except (HTTPError, URLError) as err:
         log(2, 'Download failed with error {}'.format(err))
         if yesno_dialog(localize(30004), '{line1}\n{line2}'.format(line1=localize(30063), line2=localize(30065))):  # Internet down, try again?
             return _http_request(url, headers, time_out)
         return None
-
-    return req
+    return response
 
 
 def http_get(url):
@@ -112,13 +112,25 @@ def http_head(url):
     req = Request(url)
     req.get_method = lambda: 'HEAD'
     try:
-        resp = urlopen(req)
-        return resp.getcode()
+        with urlopen(req) as response:
+            return response.getcode()
     except HTTPError as exc:
         return exc.getcode()
 
 
-def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=None, background=False):  # pylint: disable=too-many-statements
+def http_post(url, data, headers):
+    """Perform an HTTP POST request and return content"""
+    resp = _http_request(url, data, headers)
+    if resp is None:
+        return None
+
+    content = resp.read()
+    # NOTE: Do not log reponse (as could be large)
+    # log(0, 'Response: {response}', response=content)
+    return content.decode("utf-8")
+
+
+def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=None, background=False):  # pylint: disable=too-many-positional-arguments, too-many-statements
     """Makes HTTP request and displays a progress dialog on download."""
     if checksum:
         from hashlib import md5, sha1
@@ -218,11 +230,19 @@ def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disabl
     if not exists(destination):
         mkdirs(destination)
 
+    from shutil import copyfileobj
     from zipfile import ZipFile
     with ZipFile(compat_path(source)) as zip_obj:
         for filename in zip_obj.namelist():
-            if file_to_unzip and filename != file_to_unzip:
-                continue
+            if file_to_unzip:
+                # normalize to list
+                if isinstance(file_to_unzip, str):
+                    files = [file_to_unzip]
+                else:
+                    files = list(file_to_unzip)
+
+                if os.path.basename(filename) not in files:
+                    continue
 
             # Detect and remove (dangling) symlinks before extraction
             fullname = os.path.join(destination, filename)
@@ -230,7 +250,11 @@ def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disabl
                 log(3, 'Remove (dangling) symlink at {symlink}', symlink=fullname)
                 delete(fullname)
 
-            zip_obj.extract(filename, compat_path(destination))
+            source = zip_obj.open(filename)
+            target = open(os.path.join(compat_path(destination), os.path.basename(filename)), 'wb')
+            with source, target:
+                copyfileobj(source, target)
+
             result.append(True)  # Pass by reference for Thread
 
     return bool(result)
@@ -245,6 +269,8 @@ def system_os():
     from xbmc import getCondVisibility
     if getCondVisibility('system.platform.android'):
         sys_name = 'Android'
+    elif getCondVisibility('system.platform.webos'):
+        sys_name = 'webOS'
     else:
         from platform import system
         sys_name = system()
@@ -340,6 +366,18 @@ def userspace64():
     return struct.calcsize('P') * 8 == 64
 
 
+def elfbinary64(path):
+    """To check if an ELF binary is 64bit or 32bit"""
+    with open(path, 'rb') as f:
+        f.seek(4)          # skip 0x7F 'E' 'L' 'F'
+        b = f.read(1)
+        if b == b'\x01':
+            return False
+        if b == b'\x02':
+            return True
+        raise ValueError('Not a valid ELF class')
+
+
 def hardlink(src, dest):
     """Hardlink a file when possible, copy when needed"""
     if exists(dest):
@@ -357,7 +395,8 @@ def hardlink(src, dest):
 def remove_tree(path):
     """Remove an entire directory tree"""
     from shutil import rmtree
-    rmtree(compat_path(path))
+    if exists(path):
+        rmtree(compat_path(path))
 
 
 def parse_version(vstring):
@@ -373,8 +412,5 @@ def parse_version(vstring):
             vnums.append(int(numeric_part.group()))
         else:
             vnums.append(0)  # default to 0 if no numeric part found
-
-    # ensure the version tuple always has 4 components
-    vnums = (vnums + [0] * 4)[:4]
 
     return Version(*vnums)

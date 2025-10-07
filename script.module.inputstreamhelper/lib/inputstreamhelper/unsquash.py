@@ -26,7 +26,7 @@ from math import log2, ceil
 from .kodiutils import log
 
 
-class ZstdDecompressor: # pylint: disable=too-few-public-methods
+class ZstdDecompressor:  # pylint: disable=too-few-public-methods
     """
     zstdandard decompressor class
 
@@ -39,7 +39,7 @@ class ZstdDecompressor: # pylint: disable=too-few-public-methods
         self.zstddecomp.argtypes = (c_void_p, c_size_t, c_void_p, c_size_t)
         self.iserror = libzstd.ZSTD_isError
 
-    def decompress(self, comp_data, comp_size, outsize=8*2**10):
+    def decompress(self, comp_data, comp_size, outsize=8 * 2 ** 10):
         """main function, decompresses binary string <src>"""
         if len(comp_data) != comp_size:
             raise IOError("Decompression failed! Length of compressed data doesn't match given size.")
@@ -167,6 +167,7 @@ class FragmentBlockEntry:
     start_block: int
     size: int
     unused: int  # This field has no meaning
+
 
 class SquashFs:
     """
@@ -353,7 +354,7 @@ class SquashFs:
             header = self._directory_header(data)
             data = data[12:]
 
-            for _ in range(header.count+1):
+            for _ in range(header.count + 1):
                 dentry = self._directory_entry(data)
                 if dentry.name == bname:
                     log(0, f"found {bname} in dentry {dentry} after dir header {header}")

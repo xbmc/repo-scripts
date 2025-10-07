@@ -1,0 +1,126 @@
+# Kodi Media Center language file
+# Addon Name: Kodi Logfile Uploader
+# Addon id: script.kodi.loguploader
+# Addon Provider: Team Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-27 02:16+0000\n"
+"Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
+"Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-kodi-loguploader/it_it/>\n"
+"Language: it_it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Uploads your kodi.log file."
+msgstr "Carica il tuo file kodi.log."
+
+msgctxt "Addon Description"
+msgid "Uploads your kodi.log file and returns an url you can post on http://forum.kodi.tv/"
+msgstr "Carica il tuo file kodi.log e restituisce un URL che puoi pubblicare su http://forum.kodi.tv/"
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr "Il file è vuoto"
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr "Impossibile leggere il file"
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr "Impossibile connettersi al server"
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr "Impossibile recuperare l'URL incollata"
+
+msgctxt "#32005"
+msgid "This file is too large. Max size is 2MB."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi forum: %s"
+msgstr "Pubblica questo URL o scansiona il codice QR per il tuo %s, insieme a una descrizione del problema, sul forum di Kodi: %s"
+
+msgctxt "#32007"
+msgid "Error posting the logfile."
+msgstr "Errore durante la pubblicazione del file di registro."
+
+msgctxt "#32011"
+msgid "Error posting the kodi.log file"
+msgstr "Errore durante la pubblicazione del file kodi.log"
+
+msgctxt "#32012"
+msgid "Error posting the old log file"
+msgstr "Errore durante la pubblicazione del vecchio file di registro"
+
+msgctxt "#32013"
+msgid "Error posting the crashlog file"
+msgstr "Errore durante la pubblicazione del file di registro degli arresti anomali"
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr "Nessun vecchio file di registro trovato"
+
+msgctxt "#32022"
+msgid "No crashlog file found"
+msgstr "Nessun file di registro degli arresti anomali trovato"
+
+msgctxt "#32023"
+msgid "Windows crashlogs are not supported, please disable this option in the addon settings"
+msgstr "I file di registro degli arresti anomali di Windows non sono supportati, disabilita questa opzione nelle impostazioni dell'add-on"
+
+msgctxt "#32024"
+msgid "Android crashlogs are not supported, please disable this option in the addon settings"
+msgstr "I file di registro degli arresti anomali di Android non sono supportati, disabilita questa opzione nelle impostazioni dell'add-on"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr "file di registro"
+
+msgctxt "#32032"
+msgid "old log"
+msgstr "vecchio registro"
+
+msgctxt "#32033"
+msgid "crashlog"
+msgstr "registro arresti anomali"
+
+msgctxt "#32040"
+msgid "Do you want to view your %s or upload it to http://paste.kodi.tv/?"
+msgstr "Vuoi visualizzare il tuo %s o caricarlo su http://paste.kodi.tv/?"
+
+msgctxt "#32041"
+msgid "view"
+msgstr "visualizza"
+
+msgctxt "#32042"
+msgid "upload"
+msgstr "carica"
+
+msgctxt "#32501"
+msgid "Advanced options"
+msgstr "Opzioni avanzate"
+
+msgctxt "#32502"
+msgid "Additional logfiles to post"
+msgstr "File di registro aggiuntivi da pubblicare"
+
+msgctxt "#32503"
+msgid "Post the old logfile, from the last time Kodi ran"
+msgstr "Pubblica il vecchio file di registro, dall'ultima volta che Kodi è stato eseguito"
+
+msgctxt "#32504"
+msgid "Post the crashlog (available on linux/osx/ios only)"
+msgstr "Pubblica il file di registro degli arresti anomali (disponibile solo su linux/osx/ios)"
+
+#~ msgctxt "#32005"
+#~ msgid "This file is too large. Max size is 1MB."
+#~ msgstr "Questo file è troppo grande. La dimensione massima è 1 MB."

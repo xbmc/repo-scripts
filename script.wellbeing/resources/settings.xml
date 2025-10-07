@@ -13,7 +13,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
       </group>
       <group id="g_limit2" label="32020">
@@ -80,7 +80,7 @@
               <option label="32042">4</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
       </group>
     </category>
@@ -96,7 +96,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_0" type="time" label="32051" help="32104">
           <level>0</level>
@@ -130,7 +130,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_1" type="time" label="32053" help="32104">
           <level>0</level>
@@ -164,7 +164,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_2" type="time" label="32055" help="32104">
           <level>0</level>
@@ -198,7 +198,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_3" type="time" label="32057" help="32104">
           <level>0</level>
@@ -232,7 +232,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_4" type="time" label="32059" help="32104">
           <level>0</level>
@@ -266,7 +266,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_5" type="time" label="32061" help="32104">
           <level>0</level>
@@ -300,7 +300,7 @@
               <option label="32013">2</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
         <setting id="restfrom_6" type="time" label="32063" help="32104">
           <level>0</level>
@@ -336,7 +336,7 @@
               <option label="32042">4</option>
             </options>
           </constraints>
-          <control type="spinner" format="string"/>
+          <control type="spinner" format="string" />
         </setting>
       </group>
     </category>
@@ -382,6 +382,15 @@
           <enable>false</enable>
           <visible>false</visible>
         </setting>
+        <setting id="limit" type="time" label="32000" help="">
+          <level>3</level>
+          <default>24:00</default>
+          <control type="edit" format="string">
+            <heading>32000</heading>
+          </control>
+          <enable>false</enable>
+          <visible>false</visible>
+        </setting>
       </group>
       <group id="g_hint2" label="32002">
         <setting id="hint2" type="string" label="32003" help="">
@@ -394,6 +403,29 @@
             <heading>32003</heading>
           </control>
           <enable>false</enable>
+        </setting>
+      </group>
+      <group id="actions" label="32072">
+        <setting id="status" type="action" label="32073" help="32073">
+          <level>0</level>
+          <data>RunScript($ID,status)</data>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="reset" type="action" label="32074" help="32074">
+          <level>0</level>
+          <data>RunScript($ID,reset)</data>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="setlimit" type="action" label="32075" help="32075">
+          <level>0</level>
+          <data>RunScript($ID,limit)</data>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
         </setting>
       </group>
     </category>

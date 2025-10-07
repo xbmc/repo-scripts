@@ -46,7 +46,6 @@ def extract_widevine_lacros(dl_path, backup_path, img_version):
         log(4, err)
         return False
 
-
     with open_file(os.path.join(bpath, config.WIDEVINE_MANIFEST_FILE), "r") as manifest_file:
         manifest_json = json.load(manifest_file)
 

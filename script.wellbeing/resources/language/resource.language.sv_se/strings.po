@@ -1,0 +1,319 @@
+# Kodi Media Center Swedish language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-09-20 08:21+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
+"Language-Team: sv\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.7\n"
+
+msgctxt "#32000"
+msgid "Wellbeing"
+msgstr "Välbefinnande"
+
+msgctxt "#32001"
+msgid "Default password is 0000"
+msgstr "Standardlösenordet är 0000"
+
+msgctxt "#32002"
+msgid "Note: Also set 'master lock' for add-on manager ..."
+msgstr "Observera: Ställ också in \"huvudlås\" för tilläggshanteraren ..."
+
+msgctxt "#32003"
+msgid "... in order to prevent access to these settings."
+msgstr "... för att förhindra åtkomst till dessa inställningar."
+
+msgctxt "#32004"
+msgid "Auto-stop"
+msgstr "Autostopp"
+
+msgctxt "#32005"
+msgid "every 15 minutes"
+msgstr "var 15:e minut"
+
+msgctxt "#32006"
+msgid "every 20 minutes"
+msgstr "var 20:e minut"
+
+msgctxt "#32007"
+msgid "every 30 minutes"
+msgstr "var 30:e minut"
+
+msgctxt "#32008"
+msgid "Do you want to continue playback despite the rest period?"
+msgstr "Vill du fortsätta uppspelningen trots viloperioden?"
+
+msgctxt "#32009"
+msgid "Ask to stop playback in rest period"
+msgstr "Be att få stoppa uppspelningen under viloperioden"
+
+msgctxt "#32010"
+msgid "Access"
+msgstr "Åtkomst"
+
+msgctxt "#32011"
+msgid "Limit"
+msgstr "Gräns"
+
+msgctxt "#32012"
+msgid "audio and video"
+msgstr "ljud och video"
+
+msgctxt "#32013"
+msgid "video"
+msgstr "video"
+
+msgctxt "#32014"
+msgid "Action"
+msgstr "Åtgärd"
+
+msgctxt "#32015"
+msgid "notification"
+msgstr "avisering"
+
+msgctxt "#32016"
+msgid "stop"
+msgstr "stoppa"
+
+msgctxt "#32017"
+msgid "password"
+msgstr "lösenord"
+
+msgctxt "#32018"
+msgid "date"
+msgstr "datum"
+
+msgctxt "#32020"
+msgid "Playback time"
+msgstr "Uppspelningstid"
+
+msgctxt "#32021"
+msgid "Monday"
+msgstr "Måndag"
+
+msgctxt "#32022"
+msgid "Tuesday"
+msgstr "Tisdag"
+
+msgctxt "#32023"
+msgid "Wednesday"
+msgstr "Onsdag"
+
+msgctxt "#32024"
+msgid "Thursday"
+msgstr "Torsdag"
+
+msgctxt "#32025"
+msgid "Friday"
+msgstr "Fredag"
+
+msgctxt "#32026"
+msgid "Saturday"
+msgstr "Lördag"
+
+msgctxt "#32027"
+msgid "Sunday"
+msgstr "Söndag"
+
+msgctxt "#32030"
+msgid "off"
+msgstr "av"
+
+msgctxt "#32031"
+msgid "15 minutes left"
+msgstr "15 minuter kvar"
+
+msgctxt "#32032"
+msgid "5 minutes left"
+msgstr "5 minuter kvar"
+
+msgctxt "#32033"
+msgid "1 minute left"
+msgstr "1 minut kvar"
+
+msgctxt "#32034"
+msgid "Playback time is over for today"
+msgstr "Uppspelningstiden är slut för idag"
+
+msgctxt "#32035"
+msgid "Enter password to continue"
+msgstr "Ange lösenord för att fortsätta"
+
+msgctxt "#32036"
+msgid "Password is invalid"
+msgstr "Lösenordet är ogiltigt"
+
+msgctxt "#32037"
+msgid "Reactivation for today successful"
+msgstr "Återaktivering för idag framgångsrik"
+
+msgctxt "#32040"
+msgid "%s %s played today"
+msgstr "%s %s spelades idag"
+
+msgctxt "#32041"
+msgid "%s left"
+msgstr "%s kvar"
+
+msgctxt "#32042"
+msgid "hourly"
+msgstr "timmar"
+
+msgctxt "#32043"
+msgid "15 minutes before limit will be reached"
+msgstr "15 minuter innan gränsen kommer att nås"
+
+msgctxt "#32044"
+msgid "5 minutes before limit will be reached"
+msgstr "5 minuter innan gränsen kommer att nås"
+
+msgctxt "#32045"
+msgid "1 minute before limit will be reached"
+msgstr "1 minut innan gränsen kommer att nås"
+
+msgctxt "#32050"
+msgid "Rest period"
+msgstr "Viloperiod"
+
+msgctxt "#32051"
+msgid "from Monday"
+msgstr "från måndag"
+
+msgctxt "#32052"
+msgid "to Tuesday"
+msgstr "till tisdag"
+
+msgctxt "#32053"
+msgid "from Tuesday"
+msgstr "från tisdag"
+
+msgctxt "#32054"
+msgid "to Wednesday"
+msgstr "till onsdag"
+
+msgctxt "#32055"
+msgid "from Wednesday"
+msgstr "från onsdag"
+
+msgctxt "#32056"
+msgid "to Thursday"
+msgstr "till torsdag"
+
+msgctxt "#32057"
+msgid "from Thursday"
+msgstr "från torsdag"
+
+msgctxt "#32058"
+msgid "to Friday"
+msgstr "till fredag"
+
+msgctxt "#32059"
+msgid "from Friday"
+msgstr "från fredag"
+
+msgctxt "#32060"
+msgid "to Saturday"
+msgstr "till lördag"
+
+msgctxt "#32061"
+msgid "from Saturday"
+msgstr "från lördag"
+
+msgctxt "#32062"
+msgid "to Sunday"
+msgstr "till söndag"
+
+msgctxt "#32063"
+msgid "from Sunday"
+msgstr "från söndag"
+
+msgctxt "#32064"
+msgid "to Monday"
+msgstr "till måndag"
+
+msgctxt "#32065"
+msgid "Monday night"
+msgstr "Måndag kväll"
+
+msgctxt "#32066"
+msgid "Tuesday night"
+msgstr "Tisdag kväll"
+
+msgctxt "#32067"
+msgid "Wednesday night"
+msgstr "Onsdag kväll"
+
+msgctxt "#32068"
+msgid "Thursday night"
+msgstr "Torsdag kväll"
+
+msgctxt "#32069"
+msgid "Friday night"
+msgstr "Fredag kväll"
+
+msgctxt "#32070"
+msgid "Saturday night"
+msgstr "Lördag kväll"
+
+msgctxt "#32071"
+msgid "Sunday night"
+msgstr "Söndag kväll"
+
+msgctxt "#32072"
+msgid "Today's time budget"
+msgstr "Dagens tidsbudget"
+
+msgctxt "#32073"
+msgid "Display status"
+msgstr "Visa status"
+
+msgctxt "#32074"
+msgid "Reset today's time budget"
+msgstr "Återställ dagens tidsbudget"
+
+msgctxt "#32075"
+msgid "Set today's time budget"
+msgstr "Ange dagens tidsbudget"
+
+msgctxt "#32080"
+msgid "Playback has been interrupted in rest period"
+msgstr "Uppspelningen har avbrutits under viloperioden"
+
+msgctxt "#32100"
+msgid "Limit the playback time for all media or just for video."
+msgstr "Begränsa uppspelningstiden för alla medier eller bara för video."
+
+msgctxt "#32101"
+msgid "Limit the playback time for this day."
+msgstr "Begränsa uppspelningstiden för denna dag."
+
+msgctxt "#32102"
+msgid "Receive notifications about current playback time and playback time left."
+msgstr "Få meddelanden om aktuell uppspelningstid och återstående uppspelningstid."
+
+msgctxt "#32103"
+msgid "Define which media is banned during rest period that day. All media or just video."
+msgstr "Definiera vilka medier som är förbjudna under viloperioden den dagen. All media eller bara video."
+
+msgctxt "#32104"
+msgid "Time when rest period begins."
+msgstr "Tidpunkt då viloperioden börjar."
+
+msgctxt "#32105"
+msgid "Time when rest period ends."
+msgstr "Tidpunkt då viloperioden avslutas."
+
+msgctxt "#32106"
+msgid "Ask regularly during rest period if playback should be continued."
+msgstr "Fråga regelbundet under viloperioden om uppspelningen ska fortsätta."
+
+msgctxt "#32107"
+msgid "Password to unlock after limit has been reached or rest period has been entered."
+msgstr "Lösenord för att låsa upp efter att gränsen har nåtts eller viloperioden har påbörjats."

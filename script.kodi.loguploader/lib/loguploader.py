@@ -166,7 +166,7 @@ class Main():
     def cleanLog(self, content):
         for pattern, repl in REPLACES:
             content = re.sub(pattern, repl, content)
-            return content
+        return content
 
     def postLog(self, data):
         self.session = requests.Session()

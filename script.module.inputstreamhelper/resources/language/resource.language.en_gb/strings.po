@@ -323,6 +323,10 @@ msgctxt "#30825"
 msgid "It was extracted from {image} image version [B]{version}[/B]"
 msgstr ""
 
+msgctxt "#30826"
+msgid "[B]Widevine CDM[/B] is [B]built into webOS[/B]"
+msgstr ""
+
 msgctxt "#30830"
 msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
 msgstr ""

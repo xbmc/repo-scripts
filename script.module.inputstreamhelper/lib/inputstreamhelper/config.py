@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Configuration variables for inpustreamhelper"""
-from __future__ import absolute_import, division, unicode_literals
 
 
 INPUTSTREAM_PROTOCOLS = {
@@ -20,12 +19,14 @@ WIDEVINE_CDM_FILENAME = {
     'Android': None,
     'Linux': 'libwidevinecdm.so',
     'Windows': 'widevinecdm.dll',
-    'Darwin': 'libwidevinecdm.dylib'
+    'Darwin': 'libwidevinecdm.dylib',
+    'webOS': None
 }
 
 ARCH_MAP = {
     'aarch64': 'arm64',
     'aarch64_be': 'arm64',
+    'ARM64': 'arm64',
     'AMD64': 'x86_64',
     'armv7': 'arm',
     'armv8': 'arm',
@@ -44,12 +45,12 @@ WIDEVINE_SUPPORTED_ARCHS = [
 
 WIDEVINE_ARCH_MAP_REPO = {
     'x86_64': 'x64',
-    'x86': 'ia32',
+    'x86': 'x86',
     'arm64': 'arm64'
 }
 
 WIDEVINE_OS_MAP = {
-    'Linux': 'linux',
+    'Linux': 'Linux',
     'Windows': 'win',
     'Darwin': 'mac'
 }
@@ -58,21 +59,23 @@ WIDEVINE_SUPPORTED_OS = [
     'Android',
     'Linux',
     'Windows',
-    'Darwin'
+    'Darwin',
+    'webOS'
 ]
 
 WIDEVINE_MINIMUM_KODI_VERSION = {
     'Android': '18.0',
     'Windows': '18.0',
     'Linux': '18.0',
-    'Darwin': '18.0'
+    'Darwin': '18.0',
+    'webOS': '22.0'
 }
 
 WIDEVINE_VERSIONS_URL = 'https://dl.google.com/widevine-cdm/versions.txt'
 
 WIDEVINE_DOWNLOAD_URL = 'https://dl.google.com/widevine-cdm/{version}-{os}-{arch}.zip'
 
-WIDEVINE_LICENSE_FILE = 'LICENSE.txt'
+WIDEVINE_LICENSE_FILE = 'LICENSE'
 
 WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
@@ -83,22 +86,25 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 # To keep the Chrome OS ARM(64) hardware ID list up to date, the following resources can be used:
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://chromiumdash.appspot.com/serving-builds?deviceCategory=Chrome%20OS
-# Last updated: 2023-03-24
+# Last updated: 2025-09-21
+# current Chrome OS version: 16328.65.0, Widevine version: 4.10.2662.3
 CHROMEOS_RECOVERY_ARM_BNAMES = [
-    'asurada',
-    'bob',
-    'cherry',
-    'elm',
-    'hana',
-    'jacuzzi',
-    'kevin',
-    'kukui',
-    'scarlet',
-    'strongbad',
+    'bob',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_bob_recovery_stable-channel_mp-v2.bin.zip
+    'elm',  # probably 64bit soon. current: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15886.44.0_elm_recovery_stable-channel_mp-v6.bin.zip
+    'kevin',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_kevin_recovery_stable-channel_mp-v2.bin.zip
+    'scarlet',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_scarlet_recovery_stable-channel_mp-v8.bin.zip
 ]
 
 CHROMEOS_RECOVERY_ARM64_BNAMES = [
+    'asurada',
+    'cherry',
     'corsola',
+    'geralt',
+    'hana',
+    'jacuzzi',
+    'kukui',
+    'staryu',
+    'strongbad',
     'trogdor',
 ]
 

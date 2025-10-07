@@ -265,6 +265,22 @@ msgctxt "#32071"
 msgid "Sunday night"
 msgstr ""
 
+msgctxt "#32072"
+msgid "Today's time budget"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Display status"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Reset today's time budget"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Set today's time budget"
+msgstr ""
+
 msgctxt "#32080"
 msgid "Playback has been interrupted in rest period"
 msgstr ""

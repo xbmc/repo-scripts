@@ -265,6 +265,22 @@ msgctxt "#32071"
 msgid "Sunday night"
 msgstr "Sonntagnacht"
 
+msgctxt "#32072"
+msgid "Today's time budget"
+msgstr "Heutiges Zeitbudget"
+
+msgctxt "#32073"
+msgid "Display status"
+msgstr "Status anzeigen"
+
+msgctxt "#32074"
+msgid "Reset today's time budget"
+msgstr "Heutiges Zeitbudget zurücksetzen"
+
+msgctxt "#32075"
+msgid "Set today's time budget"
+msgstr "Heutiges Zeitbudget setzen"
+
 msgctxt "#32080"
 msgid "Playback has been interrupted in rest period"
 msgstr "Wiedergabe wurde aufgrund der Ruhezeit unterbrochen"

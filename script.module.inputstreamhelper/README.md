@@ -19,7 +19,6 @@
 ```python
 # -*- coding: utf-8 -*-
 """InputStream Helper Demo"""
-from __future__ import absolute_import, division, unicode_literals
 import sys
 import inputstreamhelper
 import xbmc
@@ -91,6 +90,16 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.8.2 (2025-09-25)
+- Fix Widevine CDM installation on 32-bit Windows (@mediaminister)
+
+### v0.8.1 (2025-09-22)
+- Fix Widevine CDM installation on ARM hardware (@mediaminister)
+
+### v0.8.0 (2025-09-19)
+- Fix Widevine CDM installation on Windows, Linux and Macintosh (@mediaminister)
+- Add support for LG webOS (@Uukrull)
+
 ### v0.7.0 (2024-09-24)
 - Get rid of distutils dependency (@horstle, @emilsvennesson)
 - Option to get Widevine from lacros image (@horstle)

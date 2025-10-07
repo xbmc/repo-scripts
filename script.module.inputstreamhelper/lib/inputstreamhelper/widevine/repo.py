@@ -2,17 +2,18 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements functions specific to systems where the widevine library is available from Google's repository"""
 
-from __future__ import absolute_import, division, unicode_literals
+import json
+import random
 
 from .. import config
-from ..kodiutils import localize, log, select_dialog
-from ..utils import arch, http_get, http_head, parse_version, system_os
+from ..kodiutils import log
+from ..utils import arch, http_get, http_head, http_post, system_os
 
 
 def cdm_from_repo():
     """Whether the Widevine CDM is available from Google's library CDM repository"""
     # Based on https://source.chromium.org/chromium/chromium/src/+/master:third_party/widevine/cdm/widevine.gni
-    if 'x86' in arch() or arch() == 'arm64' and system_os() == 'Darwin':
+    if 'x86' in arch() or arch() == 'arm64' and system_os() in ('Darwin', 'Windows'):
         return True
     return False
 
@@ -39,38 +40,42 @@ def widevines_available_from_repo():
     return available_cdms
 
 
-def latest_widevine_available_from_repo(available_cdms=None):
+def latest_widevine_available_from_repo(cdm_os, cdm_arch):
     """Returns the latest available Widevine CDM version and url from Google's library CDM repository"""
-    if not available_cdms:
-        available_cdms = widevines_available_from_repo()
-
-    try:
-        latest = available_cdms[-1]  # That's probably correct, but the following for loop makes sure
-    except IndexError:
-        # widevines_available_from_repo() already logged if there are no available cdms
-        return None
-
-    for cdm in available_cdms:
-        if parse_version(cdm['version']) > parse_version(latest['version']):
-            latest = cdm
-
-    return latest
-
-
-def choose_widevine_from_repo():
-    """Choose from the widevine versions available in Google's library CDM repository"""
-    available_cdms = widevines_available_from_repo()
-    latest = latest_widevine_available_from_repo(available_cdms)
-
-    opts = tuple(cdm['version'] for cdm in available_cdms)
-    preselect = opts.index(latest['version'])
-
-    version_index = select_dialog(localize(30069), opts, preselect=preselect)
-    if version_index == -1:
-        log(1, 'User did not choose a version to install!')
-        return False
-
-    cdm = available_cdms[version_index]
-    log(0, 'User chose to install Widevine version {version} from {url}', version=cdm['version'], url=cdm['url'])
-
+    cdm = {}
+    version = '1.4.9.1088'
+    url = 'https://update.googleapis.com/service/update2/json'
+    headers = {
+        'User-Agent': 'Mozilla/5.0',
+    }
+    payload = {
+        'request': {
+            '@os': '',
+            '@updater': '',
+            'acceptformat': 'crx3,download,puff,run,xz,zucc',
+            'apps': [
+                {
+                    'appid': 'oimompecagnajdejgnnjijobebaeigek',
+                    'installsource': 'ondemand',
+                    'updatecheck': {},
+                    'version': version
+                }
+            ],
+            'dedup': 'cr',
+            'ismachine': False,
+            'arch': cdm_arch,
+            'os': {
+                'arch': cdm_arch,
+                'platform': cdm_os,
+            },
+            'protocol': '4.0',
+            'updaterversion': '140.0.7339.127'
+        }
+    }
+    text = http_post(url, data=json.dumps(payload).encode('utf-8'), headers=headers)
+    text = text.lstrip(')]}\'')
+    cdm_json = json.loads(text)
+    cdm['version'] = cdm_json.get('response').get('apps')[0].get('updatecheck').get('nextversion')
+    cdm_urls = cdm_json.get('response').get('apps')[0].get('updatecheck').get('pipelines')[0].get('operations')[0].get('urls')
+    cdm['url'] = random.choice(cdm_urls).get('url')
     return cdm

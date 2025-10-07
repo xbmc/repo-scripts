@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="2.0.5" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="2.0.6" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.chardet" version="4.0.0+matrix.1"/>
@@ -11,15 +11,15 @@
         <platform>all</platform>
         <license>MIT</license>
         <email>ajvmdev@gmail.com</email>
-        <news>Version 2.0.3
- - New: Croatian and German translations
- - Minor bugfixes
+        <news>Version 2.0.6
+ - New: Bosnian and Swedish translations
         </news>
         <source>https://github.com/Allertj/script.sublissimo</source>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.jpg</fanart>
         </assets>
+        <summary lang="bs_BA">Uredite i sinhronizujte titlove pomoću daljinskog upravljača</summary>
         <summary lang="de_DE">Mit der Fernbedienung Untertitel bearbeiten und synchronisieren</summary>
         <summary lang="en_GB">Edit and synchronize subtitles with your remote</summary>
         <summary lang="hr_HR">Uredite i uskladite podnaslove s vašim daljinskim</summary>
@@ -29,6 +29,7 @@
         <summary lang="es_ES">Editar y sincronizar subtítulos con el mando a distancia</summary>
         <summary lang="zh_CN">使用遥控器编辑和同步字幕</summary>
         <summary lang="sv_SE">Redigera och synkronisera undertexter med din fjärrkontroll</summary>
+        <description lang="bs_BA">Pomoću ovog skripta možete uređivati određene redove, pomicati ili rastezati titlove i sinhronizirati s drugim titlovima. Također možete sinhronizirati s video datotekom.[CR][CR]Da biste jednostavno koristili ovaj editor, pokrenite ga dok se reproduciraju video i titlovi koje želite urediti.</description>
         <description lang="de_DE">Mit diesem Skript lassen sich bestimmte Zeilen bearbeiten, Untertitel verschieben oder strecken und mit anderen Untertiteln synchronisieren. Sie können auch mit einer Videodatei synchronisiert werden.[CR][CR]Um diesen Editor einfach zu verwenden, ihn während der Wiedergabe des Videos und des Untertitels, den bearbeiten werden soll, starten.</description>
         <description lang="en_GB">With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing.</description>
         <description lang="hr_HR">S ovom skriptom možete urediti određene retke, pomaknuti ili raširiti podnaslove, i uskladiti s ostalim podnaslovima. Možete još uskladiti i s video datotekom.[CR][CR]Za lakše korištenje ovog uređivača, pokrenite ga kada se video i podnaslov kojeg želite urediti reproduciraju.</description>

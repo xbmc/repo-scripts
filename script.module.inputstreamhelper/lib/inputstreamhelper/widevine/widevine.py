@@ -2,8 +2,6 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements generic widevine functions used across architectures"""
 
-from __future__ import absolute_import, division, unicode_literals
-
 import os
 from time import time
 
@@ -35,17 +33,16 @@ def install_cdm_from_backup(version):
 def widevine_eula():
     """Displays the Widevine EULA and prompts user to accept it."""
     if cdm_from_repo():
-        cdm_version = latest_widevine_available_from_repo().get('version')
         cdm_os = config.WIDEVINE_OS_MAP[system_os()]
         cdm_arch = config.WIDEVINE_ARCH_MAP_REPO[arch()]
     else:  # Grab the license from the x86 files
         log(0, 'Acquiring Widevine EULA from x86 files.')
-        cdm_version = '4.10.2830.0' # fine to hardcode as it's only used for the EULA
         cdm_os = 'mac'
         cdm_arch = 'x64'
 
-    url = config.WIDEVINE_DOWNLOAD_URL.format(version=cdm_version, os=cdm_os, arch=cdm_arch)
-    dl_path = http_download(url, message=localize(30025), background=True)  # Acquiring EULA
+    cdm = latest_widevine_available_from_repo(cdm_os, cdm_arch)
+
+    dl_path = http_download(cdm.get('url'), message=localize(30025), background=True)  # Acquiring EULA
     if not dl_path:
         return False
 
@@ -96,10 +93,11 @@ def widevinecdm_path():
 
 def has_widevinecdm():
     """Whether a Widevine CDM is installed on the system"""
-    if system_os() == 'Android':  # Widevine CDM is built into Android
+    if system_os() == 'Android' or system_os() == 'webOS':  # Widevine CDM is built into Android and webOS
         return True
 
     widevinecdm = widevinecdm_path()
+    log(3, widevinecdm)
     if widevinecdm is None:
         return False
     if not exists(widevinecdm):
@@ -162,7 +160,7 @@ def missing_widevine_libs():
 def latest_widevine_version():
     """Returns the latest available version of Widevine CDM/Chrome OS/Lacros Image."""
     if cdm_from_repo():
-        return latest_widevine_available_from_repo().get('version')
+        return latest_widevine_available_from_repo(config.WIDEVINE_OS_MAP[system_os()], config.WIDEVINE_ARCH_MAP_REPO[arch()]).get('version')
 
     if cdm_from_lacros():
         return latest_lacros()

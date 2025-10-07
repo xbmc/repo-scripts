@@ -2,7 +2,6 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements Kodi Helper functions"""
 
-from __future__ import absolute_import, division, unicode_literals
 from contextlib import contextmanager
 import xbmc
 import xbmcaddon
@@ -11,7 +10,6 @@ from xbmcgui import DialogProgress, DialogProgressBG
 try:  # Kodi v19 or newer
     from xbmcvfs import translatePath
 except ImportError:  # Kodi v18 and older
-    # pylint: disable=ungrouped-imports
     from xbmc import translatePath
 
 from .unicodes import from_unicode, to_unicode
@@ -105,7 +103,7 @@ def addon_version(addon_name=None):
     return get_addon_info('version', addon)
 
 
-def browsesingle(type, heading, shares='', mask='', useThumbs=False, treatAsFolder=False, defaultt=None):  # pylint: disable=invalid-name,redefined-builtin
+def browsesingle(type, heading, shares='', mask='', useThumbs=False, treatAsFolder=False, defaultt=None):  # pylint: disable=invalid-name,redefined-builtin,too-many-positional-arguments
     """Show a Kodi browseSingle dialog"""
     from xbmcgui import Dialog
     if not heading:
@@ -184,6 +182,7 @@ def get_setting_bool(key, default=None):
     try:
         return ADDON.getSettingBool(key)
     except (AttributeError, TypeError):  # On Krypton or older, or when not a boolean
+        log(3, 'get setting bool')
         value = get_setting(key, default)
         if value not in ('false', 'true'):
             return default

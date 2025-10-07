@@ -1,0 +1,318 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-09-19 16:05+0200\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Slovak\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Wellbeing"
+msgstr "Wellbeing"
+
+msgctxt "#32001"
+msgid "Default password is 0000"
+msgstr "Predvolené heslo je 0000"
+
+msgctxt "#32002"
+msgid "Note: Also set 'master lock' for add-on manager ..."
+msgstr "Poznámka: nastavte aj 'hlavný zámok' pre správcu doplnkov..."
+
+msgctxt "#32003"
+msgid "... in order to prevent access to these settings."
+msgstr "...zabránite tak prístupu k týmto nastaveniam."
+
+msgctxt "#32004"
+msgid "Auto-stop"
+msgstr "Automaticky zastaviť"
+
+msgctxt "#32005"
+msgid "every 15 minutes"
+msgstr "každých 15 minút"
+
+msgctxt "#32006"
+msgid "every 20 minutes"
+msgstr "každých 20 minút"
+
+msgctxt "#32007"
+msgid "every 30 minutes"
+msgstr "každých 30 minút"
+
+msgctxt "#32008"
+msgid "Do you want to continue playback despite the rest period?"
+msgstr "Chcete pokračovať v prehrávaní aj napriek času na odpočinok?"
+
+msgctxt "#32009"
+msgid "Ask to stop playback in rest period"
+msgstr "Spýtať sa na zastavenie prehrávania v čase odpočinku"
+
+msgctxt "#32010"
+msgid "Access"
+msgstr "Prístup"
+
+msgctxt "#32011"
+msgid "Limit"
+msgstr "Obmedziť"
+
+msgctxt "#32012"
+msgid "audio and video"
+msgstr "audio a video"
+
+msgctxt "#32013"
+msgid "video"
+msgstr "video"
+
+msgctxt "#32014"
+msgid "Action"
+msgstr "Akcia"
+
+msgctxt "#32015"
+msgid "notification"
+msgstr "Upozornenia"
+
+msgctxt "#32016"
+msgid "stop"
+msgstr "zastaviť"
+
+msgctxt "#32017"
+msgid "password"
+msgstr "heslo"
+
+msgctxt "#32018"
+msgid "date"
+msgstr "dátum"
+
+msgctxt "#32020"
+msgid "Playback time"
+msgstr "Čas prehrávania"
+
+msgctxt "#32021"
+msgid "Monday"
+msgstr "Pondelok"
+
+msgctxt "#32022"
+msgid "Tuesday"
+msgstr "Utorok"
+
+msgctxt "#32023"
+msgid "Wednesday"
+msgstr "Streda"
+
+msgctxt "#32024"
+msgid "Thursday"
+msgstr "Štvrtok"
+
+msgctxt "#32025"
+msgid "Friday"
+msgstr "Piatok"
+
+msgctxt "#32026"
+msgid "Saturday"
+msgstr "Sobota"
+
+msgctxt "#32027"
+msgid "Sunday"
+msgstr "Nedeľa"
+
+msgctxt "#32030"
+msgid "off"
+msgstr "vypnuté"
+
+msgctxt "#32031"
+msgid "15 minutes left"
+msgstr "zostáva 15 minút"
+
+msgctxt "#32032"
+msgid "5 minutes left"
+msgstr "zostáva 5 minút"
+
+msgctxt "#32033"
+msgid "1 minute left"
+msgstr "zostáva 1 minúta"
+
+msgctxt "#32034"
+msgid "Playback time is over for today"
+msgstr "Čas prehrávania pre dnešok skončil"
+
+msgctxt "#32035"
+msgid "Enter password to continue"
+msgstr "Pre pokračovanie zadajte heslo"
+
+msgctxt "#32036"
+msgid "Password is invalid"
+msgstr "Heslo je neplatné"
+
+msgctxt "#32037"
+msgid "Reactivation for today successful"
+msgstr "Reaktivácia na dnes bola úspešná"
+
+msgctxt "#32040"
+msgid "%s %s played today"
+msgstr "Doba prehrávania %s %s"
+
+msgctxt "#32041"
+msgid "%s left"
+msgstr "%s ostáva"
+
+msgctxt "#32042"
+msgid "hourly"
+msgstr "každú hodinu"
+
+msgctxt "#32043"
+msgid "15 minutes before limit will be reached"
+msgstr "15 minút pred uplynutím limitu"
+
+msgctxt "#32044"
+msgid "5 minutes before limit will be reached"
+msgstr "5 minút pred uplynutím limitu"
+
+msgctxt "#32045"
+msgid "1 minute before limit will be reached"
+msgstr "1 minútu pred uplynutím limitu"
+
+msgctxt "#32050"
+msgid "Rest period"
+msgstr "Čas na odpočinok"
+
+msgctxt "#32051"
+msgid "from Monday"
+msgstr "od pondelka"
+
+msgctxt "#32052"
+msgid "to Tuesday"
+msgstr "do utorka"
+
+msgctxt "#32053"
+msgid "from Tuesday"
+msgstr "od utorka"
+
+msgctxt "#32054"
+msgid "to Wednesday"
+msgstr "do stredy"
+
+msgctxt "#32055"
+msgid "from Wednesday"
+msgstr "od stredy"
+
+msgctxt "#32056"
+msgid "to Thursday"
+msgstr "do štvrtku"
+
+msgctxt "#32057"
+msgid "from Thursday"
+msgstr "od štvrtku"
+
+msgctxt "#32058"
+msgid "to Friday"
+msgstr "do piatka"
+
+msgctxt "#32059"
+msgid "from Friday"
+msgstr "od piatka"
+
+msgctxt "#32060"
+msgid "to Saturday"
+msgstr "do soboty"
+
+msgctxt "#32061"
+msgid "from Saturday"
+msgstr "od soboty"
+
+msgctxt "#32062"
+msgid "to Sunday"
+msgstr "do nedele"
+
+msgctxt "#32063"
+msgid "from Sunday"
+msgstr "od nedele"
+
+msgctxt "#32064"
+msgid "to Monday"
+msgstr "do pondelka"
+
+msgctxt "#32065"
+msgid "Monday night"
+msgstr "Noc z pondelka na utorok"
+
+msgctxt "#32066"
+msgid "Tuesday night"
+msgstr "Noc z utorka na stredu"
+
+msgctxt "#32067"
+msgid "Wednesday night"
+msgstr "Noc zo stredy na štvrtok"
+
+msgctxt "#32068"
+msgid "Thursday night"
+msgstr "Noc zo štvrtka na piatok"
+
+msgctxt "#32069"
+msgid "Friday night"
+msgstr "Noc z piatka na sobotu"
+
+msgctxt "#32070"
+msgid "Saturday night"
+msgstr "Noc zo soboty na nedeľu"
+
+msgctxt "#32071"
+msgid "Sunday night"
+msgstr "Noc z nedele na pondelok"
+
+msgctxt "#32072"
+msgid "Today's time budget"
+msgstr "Dnešný časový rozpočet"
+
+msgctxt "#32073"
+msgid "Display status"
+msgstr "Zobraziť stav"
+
+msgctxt "#32074"
+msgid "Reset today's time budget"
+msgstr "Obnoviť dnešný časový rozpočet"
+
+msgctxt "#32075"
+msgid "Set today's time budget"
+msgstr "Nastaviť dnešný časový rozpočet"
+
+msgctxt "#32080"
+msgid "Playback has been interrupted in rest period"
+msgstr "Prehrávanie bolo prerušené v čase odpočinku"
+
+msgctxt "#32100"
+msgid "Limit the playback time for all media or just for video."
+msgstr "Obmedziť čas prehrávania pre všetky médiá alebo iba pre video."
+
+msgctxt "#32101"
+msgid "Limit the playback time for this day."
+msgstr "Obmedziť čas prehrávania v tento deň."
+
+msgctxt "#32102"
+msgid "Receive notifications about current playback time and playback time left."
+msgstr "Prijímať upozornenia o aktuálnom a zostávajúcom čase prehrávania."
+
+msgctxt "#32103"
+msgid "Define which media is banned during rest period that day. All media or just video."
+msgstr "Určite, ktoré médiá budú v danom dni a v čase odpočinku zakázané. Všetky médiá alebo iba video."
+
+msgctxt "#32104"
+msgid "Time when rest period begins."
+msgstr "Čas, kedy odpočinok začína."
+
+msgctxt "#32105"
+msgid "Time when rest period ends."
+msgstr "Čas, kedy odpočinok končí."
+
+msgctxt "#32106"
+msgid "Ask regularly during rest period if playback should be continued."
+msgstr "Počas času na odpočinok sa pravidelne pýtať, či má prehrávanie pokračovať."
+
+msgctxt "#32107"
+msgid "Password to unlock after limit has been reached or rest period has been entered."
+msgstr "Heslo na odomknutie po prekročení limitu alebo prehrávaní v čase odpočinku."
