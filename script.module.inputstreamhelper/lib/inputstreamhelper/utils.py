@@ -49,7 +49,7 @@ class Version:
 
 def temp_path():
     """Return temporary path, usually ~/.kodi/userdata/addon_data/script.module.inputstreamhelper/temp/"""
-    tmp_path = translate_path(os.path.join(get_setting('temp_path', 'special://masterprofile/addon_data/script.module.inputstreamhelper'), 'temp'))
+    tmp_path = translate_path(os.path.join(get_setting('temp_path', 'special://masterprofile/addon_data/script.module.inputstreamhelper'), 'temp', ''))
     if not exists(tmp_path):
         mkdirs(tmp_path)
 
@@ -388,7 +388,7 @@ def hardlink(src, dest):
         link(compat_path(src), compat_path(dest))
     except (AttributeError, OSError, ImportError):
         return copy(src, dest)
-    log(2, "Hardlink file '{src}' to '{dest}'.", src=src, dest=dest)
+    log(0, "Hardlink file '{src}' to '{dest}'.", src=src, dest=dest)
     return True
 
 

@@ -97,7 +97,6 @@ def has_widevinecdm():
         return True
 
     widevinecdm = widevinecdm_path()
-    log(3, widevinecdm)
     if widevinecdm is None:
         return False
     if not exists(widevinecdm):
@@ -178,6 +177,7 @@ def latest_widevine_version():
 def remove_old_backups(bpath):
     """Removes old Widevine backups, if number of allowed backups is exceeded"""
     max_backups = get_setting_int('backups', 4)
+    to_remove = []
     versions = sorted([parse_version(version) for version in listdir(bpath)])
 
     if len(versions) < 2:
@@ -186,13 +186,16 @@ def remove_old_backups(bpath):
     try:
         installed_version = load_widevine_config()['version']
     except TypeError:
-        log(2, "could not determine installed version. Aborting cleanup of old versions.")
+        log(2, "Could not determine installed version. Aborting cleanup of old versions.")
         return
 
-    while len(versions) > max_backups + 1:
-        remove_version = str(versions[1] if versions[0] == parse_version(installed_version) else versions[0])
-        log(0, 'Removing oldest backup which is not installed: {version}', version=remove_version)
-        remove_tree(os.path.join(bpath, remove_version))
-        versions = sorted([parse_version(version) for version in listdir(bpath)])
+    filtered = [v for v in versions if v != parse_version(installed_version)]
 
+    if len(filtered) > max_backups:
+        to_remove = filtered[: len(filtered) - max_backups]
+
+    for v in to_remove:
+        remove_version = str(v)
+        log(2, 'Removing old backup: {version}', version=remove_version)
+        remove_tree(os.path.join(bpath, remove_version, ''))  # ensure trailing separator
     return

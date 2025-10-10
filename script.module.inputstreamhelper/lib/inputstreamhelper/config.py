@@ -86,8 +86,8 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 # To keep the Chrome OS ARM(64) hardware ID list up to date, the following resources can be used:
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://chromiumdash.appspot.com/serving-builds?deviceCategory=Chrome%20OS
-# Last updated: 2025-09-21
-# current Chrome OS version: 16328.65.0, Widevine version: 4.10.2662.3
+# Last updated: 2025-10-10
+# current Chrome OS version: 16371.61.0, Widevine version: 4.10.2662.3
 CHROMEOS_RECOVERY_ARM_BNAMES = [
     'bob',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_bob_recovery_stable-channel_mp-v2.bin.zip
     'elm',  # probably 64bit soon. current: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15886.44.0_elm_recovery_stable-channel_mp-v6.bin.zip
@@ -103,6 +103,7 @@ CHROMEOS_RECOVERY_ARM64_BNAMES = [
     'hana',
     'jacuzzi',
     'kukui',
+    'rauru',
     'staryu',
     'strongbad',
     'trogdor',

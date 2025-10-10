@@ -435,8 +435,6 @@ class Helper:
         if get_setting_bool('disabled', False):  # blindly return True if helper has been disabled
             log(3, 'InputStreamHelper is disabled in its settings.xml.')
             return True
-        if self.drm == 'widevine' and not self._supports_widevine():
-            return False
         if not self._has_inputstream():
             # Try to install InputStream add-on
             if not self._install_inputstream():
@@ -448,6 +446,8 @@ class Helper:
                 return False
             self._enable_inputstream()
         log(0, '{addon} {version} is installed and enabled.', addon=self.inputstream_addon, version=self._inputstream_version())
+        if self.drm == 'widevine' and not self._supports_widevine():
+            return False
 
         if self.protocol == 'hls' and not self._supports_hls():
             ok_dialog(localize(30004),  # HLS Minimum version is needed
