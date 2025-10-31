@@ -21,7 +21,7 @@ class Player(xbmc.Player):
 
     def onPlayBackStarted(self):
         self._stop_tracker()
-        if self._api.isLoggedIn:
+        if self._api.isLoggedIn and get_setting("autoscrobble").lower() in ['true', '1']:
             self._detect_item()
 
     def onPlayBackStopped(self):
@@ -122,6 +122,9 @@ class Player(xbmc.Player):
             self._run_tracker()
 
     def _run_tracker(self):
+        if get_setting("autoscrobble").lower() not in ['true', '1']:
+            log("Auto-scrobble is disabled, skipping tracker")
+            return
         self._playback_lock.set()
         self._tracker = threading.Thread(target=self._thread_tracker)
         self._tracker.start()
@@ -162,7 +165,7 @@ class Player(xbmc.Player):
                             else:
                                 log("Retrying")
 
-                        elif success and bool(get_setting("bubble")):
+                        elif success and (get_setting("bubble").lower() in ['true', '1']):
                             self._show_bubble(self._item)
                             break
                 except:

@@ -1,3 +1,6 @@
+v 3.2.3
+- fixed bubble popup and autoscrobble settings
+
 v 3.2.1
 - is_live fixed
 

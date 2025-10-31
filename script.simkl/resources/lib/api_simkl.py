@@ -26,7 +26,11 @@ class Simkl:
         self.isLoggedIn = False
         self.loginInProgress = False
 
-        self.headers = {"Content-Type": "application-json", "simkl-api-key": APIKEY}
+        addon_version = __addon__.getAddonInfo("version")
+        kodi_version = xbmc.getInfoLabel("System.BuildVersion")
+        user_agent = "script.simkl/v{} / Kodi/{}".format(addon_version, kodi_version)
+
+        self.headers = {"Content-Type": "application-json", "simkl-api-key": APIKEY, "User-Agent": user_agent}
         # set_setting('token', '')
         token = get_setting('token')
         if token:
