@@ -12,7 +12,6 @@ from ..kodiutils import (addon_profile, exists, get_setting_int, listdir,
 from ..unicodes import compat_path, to_unicode
 from ..utils import (arch, cmd_exists, hardlink, http_download, parse_version,
                      remove_tree, run_cmd, system_os)
-from .arm_lacros import cdm_from_lacros, latest_lacros
 from .repo import cdm_from_repo, latest_widevine_available_from_repo
 
 
@@ -67,7 +66,7 @@ def widevine_config_path():
     iacdm = ia_cdm_path()
     if iacdm is None:
         return None
-    if cdm_from_repo() or cdm_from_lacros():
+    if cdm_from_repo():
         return os.path.join(iacdm, config.WIDEVINE_CONFIG_NAME)
     return os.path.join(iacdm, 'config.json')
 
@@ -126,6 +125,9 @@ def missing_widevine_libs():
     if system_os() != 'Linux':  # this should only be needed for linux
         return None
 
+    if arch() in {'arm', 'arm64'}:  # ldd will fail with missing GLIBC_ABI_DT_RELR error and is useless
+        return None
+
     if cmd_exists('ldd'):
         widevinecdm = widevinecdm_path()
         if not os.access(widevinecdm, os.X_OK):
@@ -157,12 +159,9 @@ def missing_widevine_libs():
 
 
 def latest_widevine_version():
-    """Returns the latest available version of Widevine CDM/Chrome OS/Lacros Image."""
+    """Returns the latest available version of Widevine CDM/Chrome OS"""
     if cdm_from_repo():
         return latest_widevine_available_from_repo(config.WIDEVINE_OS_MAP[system_os()], config.WIDEVINE_ARCH_MAP_REPO[arch()]).get('version')
-
-    if cdm_from_lacros():
-        return latest_lacros()
 
     from .arm import chromeos_config, select_best_chromeos_image
     devices = chromeos_config()
