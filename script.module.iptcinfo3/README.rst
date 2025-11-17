@@ -1,7 +1,7 @@
 ``IPTCINFO 3``
 ==============
 
-`Build Status <https://travis-ci.org/crccheck/iptcinfo3.svg?branch=master>`_
+`Build Status <https://api.travis-ci.org/crccheck/iptcinfo3.png>`_
 
 Like IPTCInfo but finally compatible for Python 3
 -------------------------------------------------
@@ -46,6 +46,9 @@ Create object for file that may not have IPTC data
 Add/change an attribute
 ``info['caption/abstract'] = 'Witty caption here'``
 ``info['supplemental category'] = ['portrait']``
+
+Lists for keywords, so you can just append!
+``info['keywords']).append('cool')``
 
 Save new info to file
 ``info.save()``
