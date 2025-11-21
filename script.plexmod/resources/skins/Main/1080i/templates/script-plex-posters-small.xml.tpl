@@ -1,5 +1,6 @@
 {% extends "library_posters.xml.tpl" %}
-{% block header_animation %}<animation effect="slide" end="0,{{ vscale(-135, negpos=True) }}" time="200" tween="quadratic" easing="out" condition="Integer.IsGreater(Container(101).ListItem.Property(index),9) + !ControlGroup(200).HasFocus(0)">Conditional</animation>{% endblock %}
+{% block header_animation %}<animation effect="slide" end="0,{{ vscale(-135) }}" time="200" tween="quadratic" easing="out" condition="Integer.IsGreater(Container(101).ListItem.Property(index),9) + !ControlGroup(200).HasFocus(0) + String.IsEmpty(Window.Property(content.filling))">Conditional</animation>{% endblock %}
+{% block hide_filter_from_index %}9{% endblock %}
 {% block header_bg %}
 <control type="image">
     <animation effect="fade" start="0" end="100" time="200" tween="quadratic" easing="out" reversible="true">VisibleChange</animation>
@@ -14,7 +15,7 @@
 {% endblock %}
 {% block content %}
 <control type="group" id="50">
-    <animation effect="slide" time="200" end="0,-218" tween="quadratic" easing="out" condition="Integer.IsGreater(Container(101).ListItem.Property(index),9)">Conditional</animation>
+    <animation effect="slide" time="200" end="0,-224" tween="quadratic" easing="out" condition="Integer.IsGreater(Container(101).ListItem.Property(index),9) + String.IsEmpty(Window.Property(content.filling))">Conditional</animation>
     <posx>0</posx>
     <posy>{{ vscale(135) }}</posy>
     <defaultcontrol>101</defaultcontrol>
@@ -30,15 +31,17 @@
             <height>{{ vscale(145) }}</height>
             <onup>200</onup>
             <ondown>101</ondown>
+            <onleft>210</onleft>
+            <onright>600</onright>
             <itemgap>-20</itemgap>
             <orientation>horizontal</orientation>
             <scrolltime tween="quadratic" easing="out">200</scrolltime>
             <usecontrolcoords>true</usecontrolcoords>
 
             {% with attr = {"width": 126, "height": 100} & template = "includes/themed_button.xml.tpl" & hitrect = {"x": 20, "y": 20, "w": 86, "h": 60} %}
-                {% include template with name="play" & id=301 & visible="!String.IsEqual(Window(10000).Property(script.plex.item.type),collection) | String.IsEqual(Window.Property(media),collection)" %}
-                {% include template with name="shuffle" & id=302 & visible="!String.IsEqual(Window(10000).Property(script.plex.item.type),collection) | String.IsEqual(Window.Property(media),collection)" %}
-                {% include template with name="more" & id=303 & visible="String.IsEmpty(Window.Property(no.options)) | Player.HasAudio" %}
+                {% include template with name="play" & id=301 & visible="String.IsEmpty(Window.Property(disable_playback)) + [!String.IsEqual(Window(10000).Property(script.plex.item.type),collection) | String.IsEqual(Window.Property(media),collection)]" %}
+                {% include template with name="shuffle" & id=302 & visible="String.IsEmpty(Window.Property(disable_playback)) + [!String.IsEqual(Window(10000).Property(script.plex.item.type),collection) | String.IsEqual(Window.Property(media),collection)]" %}
+                {% include template with name="more" & id=303 & visible="String.IsEmpty(Window.Property(disable_playback)) + [String.IsEmpty(Window.Property(no.options)) | Player.HasAudio]" %}
                 {% include template with name="chapters" & id=304 %}
             {% endwith %}
 
@@ -57,8 +60,9 @@
             <posx>0</posx>
             <posy>0</posy>
             <width>1800</width>
-            <height>1190</height>
-            <onup>300</onup>
+            <height>1198</height>
+            <onup condition="Integer.IsLess(Container(101).ListItem.Property(index),5)">300</onup>
+            <onup condition="Integer.IsLess(Container(101).ListItem.Property(index),10) + Integer.IsGreaterOrEqual(Container(101).ListItem.Property(index),5)">600</onup>
             <onright>151</onright>
             <scrolltime>200</scrolltime>
             <orientation>vertical</orientation>
@@ -119,7 +123,7 @@
                             <font>font10</font>
                             <align>center</align>
                             <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Label] ($INFO[ListItem.Property(year)])</label>
+                            <label>$INFO[ListItem.Label] [COLOR A0FFFFFF]($INFO[ListItem.Property(year)])[/COLOR]</label>
                         </control>
                         <control type="label">
                             <visible>String.IsEmpty(ListItem.Property(subtitle)) + String.IsEmpty(ListItem.Property(year))</visible>
@@ -155,8 +159,8 @@
                     <posx>55</posx>
                     <posy>{{ vscale(137) }}</posy>
                     <control type="group">
-                        <animation effect="zoom" start="100" end="110" time="100" center="127,{{ vscale(185) }}" reversible="false">Focus</animation>
-                        <animation effect="zoom" start="110" end="100" time="100" center="127,{{ vscale(185) }}" reversible="false">UnFocus</animation>
+                        <animation effect="zoom" start="100" end="105" time="100" center="127,{{ vscale(185) }}" reversible="false">Focus</animation>
+                        <animation effect="zoom" start="105" end="100" time="100" center="127,{{ vscale(185) }}" reversible="false">UnFocus</animation>
                         <posx>0</posx>
                         <posy>0</posy>
                         <control type="image">
@@ -210,6 +214,7 @@
                             <control type="label">
                                 <visible>String.IsEmpty(ListItem.Property(subtitle)) + !String.IsEmpty(ListItem.Property(year))</visible>
                                 <scroll>true</scroll>
+                                <scrollspeed>15</scrollspeed>
                                 <posx>0</posx>
                                 <posy>{{ vscale(218) }}</posy>
                                 <width>144</width>
@@ -217,11 +222,12 @@
                                 <font>font10</font>
                                 <align>center</align>
                                 <textcolor>FFFFFFFF</textcolor>
-                                <label>$INFO[ListItem.Label] ($INFO[ListItem.Property(year)])</label>
+                                <label>$INFO[ListItem.Label] [COLOR A0FFFFFF]($INFO[ListItem.Property(year)])[/COLOR]</label>
                             </control>
                             <control type="label">
                                 <visible>String.IsEmpty(ListItem.Property(subtitle)) + String.IsEmpty(ListItem.Property(year))</visible>
                                 <scroll>true</scroll>
+                                <scrollspeed>15</scrollspeed>
                                 <posx>0</posx>
                                 <posy>{{ vscale(218) }}</posy>
                                 <width>144</width>
@@ -234,6 +240,7 @@
                             <control type="label">
                                 <visible>!String.IsEmpty(ListItem.Property(subtitle))</visible>
                                 <scroll>true</scroll>
+                                <scrollspeed>15</scrollspeed>
                                 <posx>0</posx>
                                 <posy>{{ vscale(218) }}</posy>
                                 <width>144</width>
@@ -272,7 +279,8 @@
         <posy>0</posy>
         <width>34</width>
         <height>1050</height>
-        <onleft>100</onleft>
+        <onleft condition="Integer.IsGreater(Container(101).ListItem.Property(index),9) | !Integer.IsEqual(Container(151).ListItem.Property(index),0)">100</onleft>
+        <onleft condition="!Integer.IsGreater(Container(101).ListItem.Property(index),9) + Integer.IsEqual(Container(151).ListItem.Property(index),0)">600</onleft>
         <onright>152</onright>
         <scrolltime>200</scrolltime>
         <orientation>vertical</orientation>
@@ -372,6 +380,7 @@
     <width>12</width>
     <height>910</height>
     <visible>true</visible>
+    <animation effect="zoom" time="200" start="1860,{{ vscale(150) }},12,910" end="1860,16,12,1055" tween="quadratic" easing="out" condition="Integer.IsGreater(Container(101).ListItem.Property(index),9) + String.IsEmpty(Window.Property(content.filling))">Conditional</animation>
     <texturesliderbackground colordiffuse="40000000" border="5">script.plex/white-square-rounded.png</texturesliderbackground>
     <texturesliderbar colordiffuse="77FFFFFF" border="5">script.plex/white-square-rounded.png</texturesliderbar>
     <texturesliderbarfocus colordiffuse="FFE5A00D" border="5">script.plex/white-square-rounded.png</texturesliderbarfocus>

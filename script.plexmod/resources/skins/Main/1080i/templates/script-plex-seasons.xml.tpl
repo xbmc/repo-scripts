@@ -37,9 +37,11 @@
 
             {% with attr = theme.seasons.buttons & template = "includes/themed_button.xml.tpl" & hitrect = None %} {# fixme: should hitrect be None? #}
                 {% include template with name="info" & id=301 %}
-                {% include template with name="play" & id=302 %}
-                {% include template with name="shuffle" & id=303 %}
-                {% include template with name="more" & id=304 %}
+                {% include template with name="play" & id=302 & visible="String.IsEmpty(Window.Property(disable_playback))" %}
+                {% include "includes/wl_dynamic_buttons.xml.tpl" %}
+                {% include "includes/wl_add_remove_buttons.xml.tpl" %}
+                {% include template with name="shuffle" & id=303 & visible="String.IsEmpty(Window.Property(disable_playback))" %}
+                {% include template with name="more" & id=304 & visible="String.IsEmpty(Window.Property(disable_playback))" %}
             {% endwith %}
 
         </control>
@@ -116,9 +118,9 @@
 
         <control type="grouplist">
             <visible>!String.IsEmpty(Window.Property(rating)) | !String.IsEmpty(Window.Property(rating2))</visible>
-            <posx>1660</posx>
+            <posx>1560</posx>
             <posy>{{ vscale(70) }}</posy>
-            <width>200</width>
+            <width>300</width>
             <height>{{ vscale(32) }}</height>
             <align>right</align>
             <itemgap>15</itemgap>
@@ -144,7 +146,7 @@
             <control type="image">
                 <visible>!String.IsEmpty(Window.Property(rating2))</visible>
                 <posy>2</posy>
-                <width>63</width>
+                <width>40</width>
                 <height>{{ vscale(30) }}</height>
                 <texture fallback="script.plex/ratings/other/image.rating.png">$INFO[Window.Property(rating2.image)]</texture>
                 <aspectratio align="right">keep</aspectratio>
@@ -250,9 +252,10 @@
             <textcolor>FFFFFFFF</textcolor>
             <label>$INFO[Window.Property(summary)]</label>
         </control> -->
+        {% include "includes/wl_availability.xml.tpl" %}
         <control type="textbox">
             <posx>466</posx>
-            <posy>{{ vscale(234) }}</posy>
+            <posy>{{ vscale(274) }}</posy>
             <width>1360</width>
             <height>{{ vscale(179) }}</height>
             <font>font12</font>
@@ -268,15 +271,6 @@
             <height>{{ vscale(8) }}</height>
             <texture>script.plex/white-square.png</texture>
             <colordiffuse>FFCC7B19</colordiffuse>
-        </control>
-        <control type="image">
-            <visible>!Control.IsVisible(500)</visible>
-            <posx>0</posx>
-            <posy>{{ vscale(565) }}</posy>
-            <width>1920</width>
-            <height>{{ vscale(2) }}</height>
-            <texture>script.plex/white-square.png</texture>
-            <colordiffuse>A0000000</colordiffuse>
         </control>
     </control>
 
@@ -766,15 +760,6 @@
             <defaultcontrol>403</defaultcontrol>
             <width>1920</width>
             <height>{{ vscale(520) }}</height>
-            <control type="image">
-                <visible>!String.IsEmpty(Window.Property(divider.403))</visible>
-                <posx>60</posx>
-                <posy>0</posy>
-                <width>1800</width>
-                <height>{{ vscale(2) }}</height>
-                <texture>script.plex/white-square.png</texture>
-                <colordiffuse>A0000000</colordiffuse>
-            </control>
             <control type="label">
                 <posx>60</posx>
                 <posy>0</posy>
@@ -793,8 +778,8 @@
                 <height>{{ vscale(520) }}</height>
                 <onup>402</onup>
                 <ondown>403</ondown>
-                <onleft>false</onleft>
-                <onright>false</onright>
+                <onleft>noop</onleft>
+                <onright>noop</onright>
                 <scrolltime>200</scrolltime>
                 <orientation>horizontal</orientation>
                 <preloaditems>4</preloaditems>

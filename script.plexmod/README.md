@@ -19,7 +19,7 @@ Master branch is based off of the official plex-for-kodi master branch.
 ## Installation
 
 ### Via repository (recommended)
-* Add `https://pm4k.eu` to your Kodi installation as a file source
+* Add `https://pm4k.eu` to your Kodi installation as a file source (Hit Add source in File Manager, click on the selected "`<None>`" in the list, enter `https://pm4k.eu`, OK, down, enter a name, hit OK)
 * Go to Settings->Addons, choose "Install from zip file", choose the file source you added and install the repository
 * Install Plex via Settings->Addons->Install from repository->Don't Panic->Video add-ons->Plex
 * Optional, recommended: Install Plextuary via Settings->Addons->Install from repository->Don't Panic->Look and Feel->Skin->Plextuary
@@ -29,7 +29,10 @@ Master branch is based off of the official plex-for-kodi master branch.
 * Optional, recommended: Install Plextuary skin using the above
 
 ### Manual
-* Checkout any branch of this GitHub repository, rename to `script.plexmod` and use as an addon
+* Checkout any branch of this GitHub repository, rename to `script.plexmod` and use as an addon (for it to work with "Install from zip", the contents of the zip should be the folder `script.plexmod`.
+
+### Installing to a read-only or write-protected location
+Set the environment variable `INSTALLATION_DIR_AVOID_WRITE` to any value before starting Kodi to prevent the addon from trying to write to its installation directory. Useful for package managers.
 
 ## Translation
 You can help! Join the translation effort at [POEditor](https://poeditor.com/join/project/ASOl50YAXg) (thanks for the free open source license, guys).
@@ -39,3 +42,7 @@ https://forums.plex.tv/t/plexmod-for-kodi-18-19-20-21/481208
 
 ## License
 [LICENSE](https://github.com/plexinc/plex-for-kodi/blob/master/LICENSE.txt)
+
+## Powered by
+
+[![JetBrains logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSource)

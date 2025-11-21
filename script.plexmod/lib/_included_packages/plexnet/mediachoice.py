@@ -2,7 +2,6 @@ from __future__ import absolute_import
 from . import plexstream
 from . import util
 
-
 class MediaChoice(object):
     SUBTITLES_DEFAULT = 0
     SUBTITLES_BURN = 1
@@ -12,6 +11,7 @@ class MediaChoice(object):
     def __init__(self, media=None, partIndex=0):
         self.media = media
         self.part = None
+        self.partIndex = partIndex
         self.forceTranscode = False
         self.isDirectPlayable = False
         self.videoStream = None
@@ -37,6 +37,7 @@ class MediaChoice(object):
                 self.videoStream = self.part.getSelectedStreamOfType(plexstream.PlexStream.TYPE_VIDEO)
                 self.audioStream = self.part.getSelectedStreamOfType(plexstream.PlexStream.TYPE_AUDIO)
                 self.subtitleStream = self.part.getSelectedStreamOfType(plexstream.PlexStream.TYPE_SUBTITLE)
+
             else:
                 util.WARN_LOG("Media does not contain a valid part")
 

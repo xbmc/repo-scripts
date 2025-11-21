@@ -5,7 +5,6 @@ import gc
 import os
 import sys
 import re
-import binascii
 import json
 import threading
 import math
@@ -24,41 +23,35 @@ import requests
 import plexnet.util
 
 from .kodijsonrpc import rpc
-# noinspection PyUnresolvedReferences
-from kodi_six import xbmc
-# noinspection PyUnresolvedReferences
-from kodi_six import xbmcgui
-# noinspection PyUnresolvedReferences
-from kodi_six import xbmcaddon
-# noinspection PyUnresolvedReferences
-from kodi_six import xbmcvfs
 
 from . import colors
 # noinspection PyUnresolvedReferences
 from .exceptions import NoDataException
 from .logging import log, log_error
 # noinspection PyUnresolvedReferences
-from .i18n import T
+from .i18n import T, TRANSLATED_ROLES
 from . import aspectratio
-from .kodi_util import *
-from plexnet import signalsmixin
+# noinspection PyUnresolvedReferences
+from .kodi_util import (ADDON, xbmc, xbmcvfs, xbmcaddon, xbmcgui, translatePath, KODI_VERSION_MAJOR, KODI_VERSION_MINOR,
+                        KODI_BUILD_NUMBER, FROM_KODI_REPOSITORY)
+from .properties import setGlobalProperty, setGlobalBoolProperty, waitForGPEmpty, waitForConsumption, getGlobalProperty
+# noinspection PyUnresolvedReferences
+from .addonsettings import addonSettings, AddonSettings
+from .settings_util import getSetting, getUserSetting, setSetting, USER_SETTINGS, JSON_SETTINGS, DEFAULT_SETTINGS
+from .monitor import MONITOR
+
 
 DEBUG = True
 _SHUTDOWN = False
 
-ADDON = xbmcaddon.Addon()
-
-SETTINGS_LOCK = threading.Lock()
-
-SKIN_PLEXTUARY = xbmc.getSkinDir() == "skin.plextuary"
-FROM_KODI_REPOSITORY = ADDON.getAddonInfo('name') == "PM4K for Plex"
+SKIN_PLEXTUARY = "skin.plextuary" in xbmc.getSkinDir()
 PROFILE = translatePath(ADDON.getAddonInfo('profile'))
 
 
 DEF_THEME = "modern-colored"
-THEME_VERSION = 27
+THEME_VERSION = 68
 
-xbmc.log('script.plex: Kodi {0}.{1} (build {2})'.format(KODI_VERSION_MAJOR, KODI_VERSION_MINOR, KODI_BUILD_NUMBER),
+xbmc.log('script.plexmod: Kodi {0}.{1} (build {2})'.format(KODI_VERSION_MAJOR, KODI_VERSION_MINOR, KODI_BUILD_NUMBER),
          xbmc.LOGINFO)
 
 
@@ -81,16 +74,16 @@ def getLanguageCode(add_def=None):
         base, variant = data.split("_")
         lang += "{}-{},{}".format(base, variant.upper(), base)
     else:
-        lang = data
+        lang = base = data
     if add_def and lang not in add_def:
         lang += ",{}".format(add_def)
-    return lang
+    return lang, base
 
 
 try:
-    ACCEPT_LANGUAGE_CODE = getLanguageCode(add_def='en-US,en')
+    ACCEPT_LANGUAGE_CODE, LANGUAGE_CODE = getLanguageCode(add_def='en-US,en')
 except:
-    ACCEPT_LANGUAGE_CODE = 'en-US,en'
+    ACCEPT_LANGUAGE_CODE, LANGUAGE_CODE = ('en-US,en', 'en')
 
 
 try:
@@ -105,49 +98,9 @@ CURRENT_AR = DISPLAY_RESOLUTION[0] / DISPLAY_RESOLUTION[1]
 # we currently only support vertical scaling for smaller ARs; change to != once we know how to scale horizontally
 NEEDS_SCALING = round(CURRENT_AR, 2) < round(1920 / 1080, 2)
 
-
-def getSetting(key, default=None):
-    with SETTINGS_LOCK:
-        setting = ADDON.getSetting(key)
-        is_json = key in JSON_SETTINGS
-        return _processSetting(setting, default, is_json=is_json)
-
-
-def getUserSetting(key, default=None):
-    if not plexnet.util.ACCOUNT:
-        return default
-
-    is_json = key in JSON_SETTINGS
-
-    key = '{}.{}'.format(key, plexnet.util.ACCOUNT.ID)
-    with SETTINGS_LOCK:
-        setting = ADDON.getSetting(key)
-        return _processSetting(setting, default, is_json=is_json)
-
-
-JSON_SETTINGS = []
-USER_SETTINGS = []
-
-
-def _processSetting(setting, default, is_json=False):
-    if not setting:
-        return default
-    if isinstance(default, bool):
-        return setting.lower() == 'true'
-    elif isinstance(default, float):
-        return float(setting)
-    elif isinstance(default, int):
-        return int(float(setting or 0))
-    elif isinstance(default, list) and not is_json:
-        if setting:
-            return json.loads(binascii.unhexlify(setting))
-        else:
-            return default
-
-    return setting
-
-
 HOME_BUTTON_MAPPED = None
+
+HUB_ITEM_STATES = {}
 
 
 def homeButtonMapped(*args, **kwargs):
@@ -158,80 +111,6 @@ def homeButtonMapped(*args, **kwargs):
 
 homeButtonMapped()
 
-
-class AddonSettings(object):
-    """
-    @DynamicAttrs
-    """
-
-    _proxiedSettings = (
-        ("debug", False),
-        ("kodi_skip_stepping", False),
-        ("auto_seek", True),
-        ("auto_seek_delay", 1),
-        ("dynamic_timeline_seek", False),
-        ("fast_back", True),
-        ("dynamic_backgrounds", True),
-        ("background_art_blur_amount2", 0),
-        ("background_art_opacity_amount2", 20),
-        ("screensaver_quiz", False),
-        ("postplay_always", False),
-        ("postplay_timeout", 16),
-        ("skip_intro_button_timeout", 10),
-        ("skip_credits_button_timeout", 10),
-        ("playlist_visit_media", False),
-        ("intro_skip_early", False),
-        ("show_media_ends_info", True),
-        ("show_media_ends_label", True),
-        ("background_colour", None),
-        ("skip_intro_button_show_early_threshold1", 70),
-        ("requests_timeout_connect", 5.0),
-        ("requests_timeout_read", 10.0),
-        ("plextv_timeout_connect", 1.0),
-        ("plextv_timeout_read", 2.0),
-        ("local_reach_timeout", 10),
-        ("auto_skip_offset", 2.5),
-        ("conn_check_timeout", 2.5),
-        ("postplayCancel", True),
-        ("skip_marker_timer_cancel", True),
-        ("skip_marker_timer_immediate", False),
-        ("low_drift_timer", True),
-        ("player_show_buffer", True),
-        ("buffer_wait_max", 120),
-        ("buffer_insufficient_wait", 10),
-        ("continue_use_thumb", True),
-        ("use_bg_fallback", False),
-        ("dbg_crossfade", True),
-        ("subtitle_use_extended_title", True),
-        ("poster_resolution_scale_perc", 100),
-        ("consecutive_video_pb_wait", 0.0),
-        ("retrieve_all_media_up_front", False),
-        ("library_chunk_size", 240),
-        ("verify_mapped_files", True),
-        ("episode_no_spoiler_blur", 16),
-        ("ignore_docker_v4", True),
-        ("cache_home_users", True),
-        ("intro_marker_max_offset", 600),
-        ("hubs_rr_max", 250),
-        ("max_retries1", 3),
-        ("use_cert_bundle", "acme"),
-        ("cache_templates", True),
-        ("always_compile_templates", False),
-        ("tickrate", 1.0),
-        ("honor_plextv_dnsrebind", True),
-        ("honor_plextv_pam", True),
-        ("coreelec_resume_seek_wait", 350),
-    )
-
-    def __init__(self):
-        # register every known setting camelCased as an attribute to this instance
-        for setting, default in self._proxiedSettings:
-            name_split = setting.split("_")
-            setattr(self, name_split[0] + ''.join(x.capitalize() or '_' for x in name_split[1:]),
-                    getSetting(setting, default))
-
-
-addonSettings = AddonSettings()
 
 DEBUG = addonSettings.debug
 
@@ -261,105 +140,6 @@ def TEST(msg):
     xbmc.log('---TEST: {0}'.format(msg), xbmc.LOGINFO)
 
 
-class UtilityMonitor(xbmc.Monitor, signalsmixin.SignalsMixin):
-    def __init__(self, *args, **kwargs):
-        xbmc.Monitor.__init__(self, *args, **kwargs)
-        signalsmixin.SignalsMixin.__init__(self)
-
-    def watchStatusChanged(self):
-        self.trigger('changed.watchstatus')
-
-    def actionStop(self):
-        self.stopPlayback()
-
-    def actionQuit(self):
-        LOG('OnSleep: Exit Kodi')
-        xbmc.executebuiltin('Quit')
-
-    def actionReboot(self):
-        LOG('OnSleep: Reboot')
-        xbmc.restart()
-
-    def actionShutdown(self):
-        LOG('OnSleep: Shutdown')
-        xbmc.shutdown()
-
-    def actionHibernate(self):
-        LOG('OnSleep: Hibernate')
-        xbmc.executebuiltin('Hibernate')
-
-    def actionSuspend(self):
-        LOG('OnSleep: Suspend')
-        xbmc.executebuiltin('Suspend')
-
-    def actionCecstandby(self):
-        LOG('OnSleep: CEC Standby')
-        xbmc.executebuiltin('CECStandby')
-
-    def actionLogoff(self):
-        LOG('OnSleep: Sign Out')
-        xbmc.executebuiltin('System.LogOff')
-
-    def onNotification(self, sender, method, data):
-        LOG("Notification: {} {} {}".format(sender, method, data))
-        if sender == 'script.plexmod' and method.endswith('RESTORE'):
-            from .windows import kodigui, windowutils
-
-            def exit_mainloop():
-                LOG("Addon never properly started, can't reactivate")
-                windowutils.HOME.doClose()
-
-            if not kodigui.BaseFunctions.lastWinID:
-                exit_mainloop()
-                return
-            if kodigui.BaseFunctions.lastWinID > 13000:
-                reInitAddon()
-                setGlobalProperty('is_active', '1')
-                xbmc.executebuiltin('ActivateWindow({0})'.format(kodigui.BaseFunctions.lastWinID))
-            else:
-                exit_mainloop()
-                return
-
-        elif sender == "xbmc" and method == "System.OnSleep":
-            if getSetting('action_on_sleep', "none") != "none":
-                getattr(self, "action{}".format(getSetting('action_on_sleep', "none").capitalize()))()
-            self.trigger('system.sleep')
-
-        elif sender == "xbmc" and method == "System.OnWake":
-            self.trigger('system.wakeup')
-
-    def stopPlayback(self):
-        LOG('Monitor: Stopping media playback')
-        xbmc.Player().stop()
-
-    def onScreensaverActivated(self):
-        DEBUG_LOG("Monitor: OnScreensaverActivated")
-        self.trigger('screensaver.activated')
-        if getSetting('player_stop_on_screensaver', False) and xbmc.Player().isPlayingVideo():
-            self.stopPlayback()
-
-    def onScreensaverDeactivated(self):
-        DEBUG_LOG("Monitor: OnScreensaverDeactivated")
-        self.trigger('screensaver.deactivated')
-
-    def onDPMSActivated(self):
-        DEBUG_LOG("Monitor: OnDPMSActivated")
-        self.trigger('dpms.activated')
-        #self.stopPlayback()
-
-    def onDPMSDeactivated(self):
-        DEBUG_LOG("Monitor: OnDPMSDeactivated")
-        self.trigger('dpms.deactivated')
-        #self.stopPlayback()
-
-    def onSettingsChanged(self):
-        """ unused stub, but works if needed """
-        pass
-
-
-MONITOR = UtilityMonitor()
-
-
 hasCustomBGColour = False
 if KODI_VERSION_MAJOR > 18:
     hasCustomBGColour = not addonSettings.dynamicBackgrounds and addonSettings.backgroundColour and \
@@ -378,20 +158,6 @@ def reInitAddon():
     ADDON = xbmcaddon.Addon()
     getAdvancedSettings()
     populateTimeFormat()
-
-
-def setSetting(key, value):
-    with SETTINGS_LOCK:
-        value = _processSettingForWrite(value)
-        ADDON.setSetting(key, value)
-
-
-def _processSettingForWrite(value):
-    if isinstance(value, list):
-        value = binascii.hexlify(json.dumps(value))
-    elif isinstance(value, bool):
-        value = value and 'true' or 'false'
-    return str(value)
 
 
 def showNotification(message, time_ms=3000, icon_path=None, header=ADDON.getAddonInfo('name')):
@@ -447,33 +213,33 @@ def durationToText(seconds):
     return '0 seconds'
 
 
-def durationToShortText(ms, shortHourMins=False):
+def durationToShortText(ms, shortHourMins=False, shortSeconds=False, noSpaces=False):
     """
     Converts seconds to a short user friendly string
     Example: 143 -> 2m 23s
     """
     days = int(ms / 86400000)
     if days:
-        return '{0} d'.format(days)
+        return '{0}{1}d'.format(days, "" if noSpaces else " ")
     left = ms % 86400000
     hours = int(left / 3600000)
     if hours:
-        hours_s = '{0} h '.format(hours)
+        hours_s = '{0}{1}h '.format(hours, "" if noSpaces else " ")
     else:
         hours_s = ''
     left = left % 3600000
     mins = int(left / 60000)
     if mins:
         if shortHourMins and hours:
-            return '{0}:{1} h'.format(hours, mins)
-        return hours_s + '{0} m'.format(mins)
+            return '{0}:{1}{2}h'.format(hours, mins, "" if noSpaces else " ")
+        return hours_s + '{0}{1}m'.format(mins, "" if noSpaces else " ")
     elif hours_s:
         return hours_s.rstrip()
     secs = int(left % 60000)
     if secs:
         secs /= 1000
-        return '{0} s'.format(secs)
-    return '0 s'
+        return '{0}{1}s'.format(round(secs) if shortSeconds and round(secs) == int(secs) else secs, "" if noSpaces else " ")
+    return noSpaces and '0s' or '0 s'
 
 
 def cleanLeadingZeros(text):
@@ -495,11 +261,12 @@ def simpleSize(size):
     Example: 12345 -> 12.06 KB
     """
     s = 0
+    i = 0
     if size > 0:
         i = int(math.floor(math.log(size, 1024)))
         p = math.pow(1024, i)
         s = round(size / p, 2)
-    if (s > 0):
+    if s > 0:
         return '%s %s' % (s, SIZE_NAMES[i])
     else:
         return '0B'
@@ -844,8 +611,11 @@ timeFormat, timeFormatKN, padHour = getTimeFormat()
 
 def getShortDateFormat():
     try:
-        return (rpc.Settings.GetSettingValue(setting="locale.shortdateformat")["value"]
-                .replace("DD", "%d").replace("MM", "%m").replace("YYYY", "%Y"))
+        fromAPI = rpc.Settings.GetSettingValue(setting="locale.shortdateformat")["value"]
+        if fromAPI == "regional":
+            return xbmc.getRegion('dateshort').replace('%-d', '%d')
+        else:
+            return fromAPI.replace("DD", "%d").replace("MM", "%m").replace("YYYY", "%Y")
     except:
         DEBUG_LOG("Couldn't get locale.shortdateformat setting, falling back to MM/DD/YYYY")
         return "%d/%m/%Y"
@@ -895,21 +665,63 @@ def getPlatform():
 
 
 platform = getPlatform()
+platform_version = None
+device = None
+vendor = None
+model = None
 
 
 def getCoreELEC():
+    global platform, device, platform_version, vendor, model
     try:
         stdout = subprocess.check_output('lsb_release', shell=True).decode()
         match = re.search(r'CoreELEC', stdout)
         if match:
+            platform = "Linux"
+            try:
+                model = subprocess.check_output(['cat', '/proc/device-tree/model']).decode().strip("\0 \n\r")
+                vendor, device = model.split()
+            except:
+                pass
+            try:
+                platform_version = stdout.split(":")[1].strip()
+            except:
+                pass
+
+            if model:
+                #device = ("{} ({})".format(model, stdout.strip("\0 \n\r")).replace("\0", "")
+                #          .replace("\n", "").replace("\r", ""))
+                device = "{} (CoreELEC)".format(model).replace("\0", "").replace("\n", "").replace("\r", "")
             return True
 
-        return False
     except:
-        return False
+        pass
+    return False
+
+def getWebOS():
+    try:
+        stdout = subprocess.check_output('uname -a', shell=True).decode()
+        match = re.search(r'webos', stdout, re.IGNORECASE)
+        if match:
+            return True
+
+    except:
+        pass
+    return False
 
 
-isCoreELEC = getCoreELEC() if platform in ['Linux', 'RaspberryPi'] else False
+def getPlatformFlavor():
+    flavor = 'default'
+    if platform in ['Linux', 'RaspberryPi']:
+        flavor = "CoreELEC" if getCoreELEC() else "LG WebOS" if getWebOS() else 'default'
+
+    if flavor != 'default':
+        LOG("{} detected".format(flavor))
+    return flavor
+
+
+platformFlavor = getPlatformFlavor()
+altSeekRecommended = platformFlavor != 'default'
 
 
 def getRunningAddons():
@@ -953,6 +765,10 @@ def getProgressImage(obj, perc=None, view_offset=None):
             view_offset = obj.get('viewOffset') and obj.viewOffset.asInt()
         if not view_offset or not obj.get('duration'):
             return ''
+        try:
+            view_offset = int(view_offset)
+        except ValueError:
+            return ''
         pct = int((view_offset / obj.duration.asFloat()) * 100)
     else:
         pct = perc
@@ -964,8 +780,10 @@ def getProgressImage(obj, perc=None, view_offset=None):
 def backgroundFromArt(art, width=1920, height=1080, background=colors.noAlpha.Background):
     if not art:
         return
+
+    w, h = scaleResolution(width, height, by=addonSettings.backgroundResolutionScalePerc)
     return art.asTranscodedImageURL(
-        width, height,
+        w, h,
         blur=addonSettings.backgroundArtBlurAmount2,
         opacity=addonSettings.backgroundArtOpacityAmount2,
         background=background
@@ -1033,7 +851,7 @@ def dumpSettings():
         all_settings = SETTING_RE.findall(data)
         f.close()
     except:
-        LOG('script.plex: No settings.xml found')
+        LOG('script.plexmod: No settings.xml found')
         return
 
     final = OrderedDict({"settings": OrderedDict((k, []) for k in sections), "addon_settings": [], "unspecified": []})

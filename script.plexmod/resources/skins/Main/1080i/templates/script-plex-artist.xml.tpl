@@ -244,15 +244,6 @@
         <height>{{ vscale(520) }}</height>
         <posx>0</posx>
         <posy>{{ vscale(945) }}</posy>
-        <control type="image">
-            <visible>!String.IsEmpty(Window.Property(divider.401))</visible>
-            <posx>60</posx>
-            <posy>0</posy>
-            <width>1800</width>
-            <height>{{ vscale(2) }}</height>
-            <texture>script.plex/white-square.png</texture>
-            <colordiffuse>A0000000</colordiffuse>
-        </control>
         <control type="label">
             <posx>60</posx>
             <posy>0</posy>
@@ -271,8 +262,8 @@
             <height>{{ vscale(520) }}</height>
             <onup>400</onup>
             <ondown>false</ondown>
-            <onleft>false</onleft>
-            <onright>false</onright>
+            <onleft>noop</onleft>
+            <onright>noop</onright>
             <scrolltime>200</scrolltime>
             <orientation>horizontal</orientation>
             <preloaditems>4</preloaditems>

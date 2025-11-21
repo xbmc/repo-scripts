@@ -4,10 +4,9 @@ import gc
 
 from kodi_six import xbmc
 from kodi_six import xbmcgui
-from plexnet import playlist
+from plexnet import playlist, util as pnUtil, plexapp, plexlibrary
 
 from lib import metadata
-from lib import player
 from lib import util
 from lib.util import T
 from . import busy
@@ -23,7 +22,14 @@ from . import search
 from . import tracks
 from . import videoplayer
 from . import windowutils
-from .mixins import SeasonsMixin, DeleteMediaMixin, RatingsMixin, PlaybackBtnMixin
+from .mixins.seasons import SeasonsMixin
+from .mixins.delete_media import DeleteMediaMixin
+from .mixins.ratings import RatingsMixin
+from .mixins.playbackbtn import PlaybackBtnMixin
+from .mixins.watchlist import WatchlistUtilsMixin
+from .mixins.thememusic import ThemeMusicMixin
+from .mixins.roles import RolesMixin
+from .mixins.common import CommonMixin
 
 
 class RelatedPaginator(pagination.BaseRelatedPaginator):
@@ -32,7 +38,8 @@ class RelatedPaginator(pagination.BaseRelatedPaginator):
 
 
 class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, DeleteMediaMixin, RatingsMixin,
-                 PlaybackBtnMixin, playbacksettings.PlaybackSettingsMixin):
+                 RolesMixin, PlaybackBtnMixin, WatchlistUtilsMixin, ThemeMusicMixin, CommonMixin,
+                 playbacksettings.PlaybackSettingsMixin):
     xmlFile = 'script-plex-seasons.xml'
     path = util.ADDON.getAddonInfo('path')
     theme = 'Main'
@@ -41,7 +48,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
     height = 1080
 
     EXTRA_DIM = util.scaleResolution(329, 185)
-    RELATED_DIM = util.scaleResolution(268, 397)
+    RELATED_DIM = util.scaleResolution(268, 402)
     ROLES_DIM = util.scaleResolution(334, 334)
 
     SUB_ITEM_LIST_ID = 400
@@ -58,6 +65,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
     PROGRESS_IMAGE_ID = 250
 
+    MAIN_BUTTON_GROUP_ID = 300
     INFO_BUTTON_ID = 301
     PLAY_BUTTON_ID = 302
     SHUFFLE_BUTTON_ID = 303
@@ -68,9 +76,15 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         SeasonsMixin.__init__(*args, **kwargs)
         DeleteMediaMixin.__init__(*args, **kwargs)
         PlaybackBtnMixin.__init__(self, *args, **kwargs)
+        WatchlistUtilsMixin.__init__(self)
+        ThemeMusicMixin.__init__(self)
         self.mediaItem = kwargs.get('media_item')
         self.parentList = kwargs.get('parent_list')
         self.cameFrom = kwargs.get('came_from')
+        self.fromWatchlist = kwargs.get('from_watchlist', False)
+        self.isExternal = kwargs.get('external_item', False)
+        self.directlyFromWatchlist = kwargs.get('directly_from_watchlist')
+        self.is_watchlisted = kwargs.get('is_watchlisted')
         self.mediaItems = None
         self.exitCommand = None
         self.lastFocusID = None
@@ -78,12 +92,14 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         self.manuallySelectedSeason = False
         self.initialized = False
         self.relatedPaginator = None
+        self.useBGM = False
 
-    def doClose(self):
+    def doClose(self, **kw):
         self.relatedPaginator = None
         kodigui.ControlledWindow.doClose(self)
 
     def onFirstInit(self):
+        self.focusPlayButton()
         self.subItemListControl = kodigui.ManagedControlList(self, self.SUB_ITEM_LIST_ID, 5)
         self.rolesListControl = kodigui.ManagedControlList(self, self.ROLES_LIST_ID, 5)
         self.extraListControl = kodigui.ManagedControlList(self, self.EXTRA_LIST_ID, 5)
@@ -93,27 +109,27 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
         self.setup()
         self.initialized = True
-
-        self.setFocusId(self.PLAY_BUTTON_ID)
-
-    def onInit(self):
-        super(ShowWindow, self).onInit()
-        if self.mediaItem.theme and (not self.cameFrom or self.cameFrom != self.mediaItem.ratingKey) \
-                and not util.getSetting("slow_connection", False):
-            self.cameFrom = self.mediaItem.ratingKey
-            volume = self.mediaItem.settings.getThemeMusicValue()
-            if volume > 0:
-                player.PLAYER.playBackgroundMusic(self.mediaItem.theme.asURL(True), volume,
-                                                  self.mediaItem.ratingKey)
+        self.themeMusicInit(self.mediaItem)
 
     def onReInit(self):
         PlaybackBtnMixin.onReInit(self)
+        self.wl_auto_remove(self.mediaItem)
+        self.checkIsWatchlisted(self.mediaItem)
+        self.themeMusicReinit(self.mediaItem)
 
     def setup(self):
+        if self.isExternal:
+            # fixme, multiple? choice?
+            self.mediaItem.related_source = "more-from-credits"
         self.mediaItem.reload(includeExtras=1, includeExtrasCount=10, includeOnDeck=1)
-
         self.relatedPaginator = RelatedPaginator(self.relatedListControl, leaf_count=int(self.mediaItem.relatedCount),
                                                  parent_window=self)
+
+        self.watchlist_setup(self.mediaItem)
+        if self.fromWatchlist:
+            self.watchlistItemAvailable(self.mediaItem, shortcut_watchlisted=self.directlyFromWatchlist)
+        if not self.directlyFromWatchlist:
+            self.checkIsWatchlisted(self.mediaItem)
 
         self.updateProperties()
         self.setBoolProperty("initialized", True)
@@ -130,13 +146,15 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         self.setProperty('duration', util.durationToText(self.mediaItem.fixedDuration()))
         self.setProperty('info', '')
         self.setProperty('date', self.mediaItem.year)
+        self.setBoolProperty('disable_playback', self.fromWatchlist)
         if not self.mediaItem.isWatched:
             self.setProperty('unwatched.count', str(self.mediaItem.unViewedLeafCount) or '')
+            self.setBoolProperty('unwatched.count.large', self.mediaItem.unViewedLeafCount > 999)
         else:
             self.setBoolProperty('watched', self.mediaItem.isWatched)
 
         self.setProperty('extras.header', T(32305, 'Extras'))
-        self.setProperty('related.header', T(32306, 'Related Shows'))
+        self.setProperty('related.header', T(32306, 'Related Shows') if not self.fromWatchlist else T(34018, 'Related Media'))
 
         if self.mediaItem.creator:
             self.setProperty('directors', u'{0}    {1}'.format(T(32418, 'Creator').upper(), self.mediaItem.creator))
@@ -150,13 +168,18 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         genres = self.mediaItem.genres()
         self.setProperty('info', genres and (u' / '.join([g.tag for g in genres][:3])) or '')
 
+        if self.fromWatchlist and not self.wl_availability:
+            self.setProperty('wl_server_availability_verbose',
+                             util.cleanLeadingZeros(self.mediaItem.originallyAvailableAt.asDatetime('%B %d, %Y')))
+
         self.populateRatings(self.mediaItem, self)
 
         sas = self.mediaItem.selectedAudioStream()
         self.setProperty('audio', sas and sas.getTitle() or 'None')
 
         sss = self.mediaItem.selectedSubtitleStream(
-            forced_subtitles_override=util.getSetting("forced_subtitles_override", False))
+            forced_subtitles_override=util.getSetting("forced_subtitles_override") and pnUtil.ACCOUNT.subtitlesForced == 0,
+            deselect_subtitles=util.getSetting("disable_subtitle_languages"))
         self.setProperty('subtitles', sss and sss.getTitle() or 'None')
 
         leafcount = self.mediaItem.leafCount.asFloat()
@@ -171,6 +194,16 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             width = (int(wBase * self.width)) or 1
             self.progressImageControl.setWidth(width)
 
+    def focusPlayButton(self, extended=False):
+        if extended:
+            self.setFocusId(self.wl_play_button_id)
+            return
+        try:
+            if not self.getFocusId() == self.PLAY_BUTTON_ID:
+                self.setFocusId(self.PLAY_BUTTON_ID)
+        except (SystemError, RuntimeError):
+            self.setFocusId(self.PLAY_BUTTON_ID)
+
     def onAction(self, action):
         try:
             controlID = self.getFocusId()
@@ -182,7 +215,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                 self.manuallySelectedSeason = True
 
             elif action == xbmcgui.ACTION_CONTEXT_MENU:
-                if controlID == self.SUB_ITEM_LIST_ID:
+                if controlID == self.SUB_ITEM_LIST_ID and not self.isExternal:
                     self.optionsButtonClicked(from_item=True)
                     return
                 elif not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
@@ -194,6 +227,14 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                         self.setFocusId(self.lastNonOptionsFocusID)
                         self.lastNonOptionsFocusID = None
                         return
+
+            elif controlID == self.SUB_ITEM_LIST_ID and self.isWatchedAction(action):
+                item = self.subItemListControl.getSelectedItem()
+                if not item.dataSource:
+                    return
+
+                self.toggleWatched(item.dataSource)
+                return
 
             elif action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                 if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(
@@ -213,13 +254,16 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             elif action == xbmcgui.ACTION_PREV_ITEM:
                 self.setFocusId(300)
                 self.prev()
+            elif self.isWatchedAction(action) and xbmc.getCondVisibility('ControlGroup({}).HasFocus(0)'.format(self.MAIN_BUTTON_GROUP_ID)):
+                self.toggleWatched(self.mediaItem)
+                return
 
             if action == xbmcgui.ACTION_MOVE_UP and (controlID == self.SUB_ITEM_LIST_ID or
                     self.INFO_BUTTON_ID <= controlID <= self.OPTIONS_BUTTON_ID):
                 self.updateBackgroundFrom(self.mediaItem)
 
             if controlID == self.RELATED_LIST_ID:
-                if self.relatedPaginator.boundaryHit:
+                if self.relatedPaginator and self.relatedPaginator.boundaryHit:
                     self.relatedPaginator.paginate()
                     return
                 elif action in (xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_MOVE_RIGHT):
@@ -234,7 +278,13 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         if controlID == self.HOME_BUTTON_ID:
             self.goHome()
         elif controlID == self.SUB_ITEM_LIST_ID:
-            self.subItemListClicked()
+            if not self.fromWatchlist:
+                self.subItemListClicked()
+            else:
+                mli = self.subItemListControl.getSelectedItem()
+                if not mli:
+                    return
+                self.wl_item_opener(mli.dataSource, self.openItem)
         elif controlID == self.PLAYER_STATUS_BUTTON_ID:
             self.showAudioPlayer()
         elif controlID == self.EXTRA_LIST_ID:
@@ -242,11 +292,18 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         elif controlID == self.RELATED_LIST_ID:
             self.openItem(self.relatedListControl)
         elif controlID == self.ROLES_LIST_ID:
-            self.roleClicked()
+            if not self.fromWatchlist:
+                if not self.roleClicked():
+                    return
         elif controlID == self.INFO_BUTTON_ID:
             self.infoButtonClicked()
         elif controlID == self.PLAY_BUTTON_ID:
             self.playButtonClicked()
+        elif controlID in self.WL_RELEVANT_BTNS and self.fromWatchlist and self.wl_availability:
+            self.wl_item_opener(self.mediaItem, self.openItem)
+        elif controlID in self.WL_BTN_STATE_BTNS:
+            is_watchlisted = self.toggleWatchlist(self.mediaItem)
+            self.waitAndSetFocus(self.WL_BTN_STATE_WATCHLISTED if is_watchlisted else self.WL_BTN_STATE_NOT_WATCHLISTED)
         elif controlID == self.SHUFFLE_BUTTON_ID:
             self.shuffleButtonClicked()
         elif controlID == self.OPTIONS_BUTTON_ID:
@@ -268,8 +325,17 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         elif xbmc.getCondVisibility('ControlGroup(50).HasFocus(0) + !ControlGroup(300).HasFocus(0)'):
             self.setProperty('on.extras', '1')
 
-        if player.PLAYER.bgmPlaying and player.PLAYER.handler.currentlyPlaying != self.mediaItem.ratingKey:
-            player.PLAYER.stopAndWait()
+    def toggleWatched(self, item, state=None, **kw):
+        watched = super(ShowWindow, self).toggleWatched(item, state=state, **kw)
+        if watched is None:
+            return
+
+        if watched:
+            self.wl_auto_remove(self.mediaItem)
+            self.checkIsWatchlisted(self.mediaItem)
+        self.updateItems()
+        self.updateProperties()
+        util.MONITOR.watchStatusChanged()
 
     def getMediaItems(self):
         return False
@@ -345,14 +411,15 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
     def searchButtonClicked(self):
         self.processCommand(search.dialog(self, section_id=self.mediaItem.getLibrarySectionId() or None))
 
-    def openItem(self, control=None, item=None):
+    def openItem(self, control=None, item=None, inherit_from_watchlist=True, server=None, is_watchlisted=False, **kw):
         if not item:
             mli = control.getSelectedItem()
             if not mli:
                 return
             item = mli.dataSource
 
-        self.processCommand(opener.open(item))
+        self.processCommand(opener.open(item, from_watchlist=self.fromWatchlist if inherit_from_watchlist else False,
+                                        server=server, is_watchlisted=is_watchlisted, **kw))
 
     def subItemListClicked(self):
         mli = self.subItemListControl.getSelectedItem()
@@ -363,7 +430,8 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
         w = None
         if self.mediaItem.type == 'show':
-            w = episodes.EpisodesWindow.open(season=mli.dataSource, show=self.mediaItem, parent_list=self.subItemListControl)
+            w = episodes.EpisodesWindow.open(season=mli.dataSource, show=self.mediaItem,
+                                             parent_list=self.subItemListControl, from_watchlist=self.fromWatchlist)
             update = True
         elif self.mediaItem.type == 'artist':
             w = tracks.AlbumWindow.open(album=mli.dataSource, parent_list=self.subItemListControl)
@@ -413,7 +481,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         if self.playBtnClicked:
             return
 
-        items = self.mediaItem.all()
+        items = self.mediaItem.all(unwatched=True)
         pl = playlist.LocalPlaylist(items, self.mediaItem.getServer())
         resume = False
         if not shuffle and self.mediaItem.type == 'show':
@@ -423,7 +491,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
 
         self.playBtnClicked = True
         pl.shuffle(shuffle, first=True)
-        videoplayer.play(play_queue=pl, resume=resume)
+        videoplayer.play(play_queue=pl, resume=resume, bgm=self.useBGM)
 
     def shuffleButtonClicked(self):
         self.playButtonClicked(shuffle=True)
@@ -453,12 +521,16 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                     options.append(dropdown.SEPARATOR)
 
                 options.append({'key': 'playback_settings', 'display': T(32925, 'Playback Settings')})
-                if item.server.allowsMediaDeletion:
+                if plexapp.ACCOUNT.isAdmin and item.server.allowsMediaDeletion:
                     options.append(dropdown.SEPARATOR)
+                    if plexapp.ACCOUNT.isAdmin:
+                        options.append({'key': 'refresh', 'display': T(33719, 'Refresh metadata')})
                     options.append({'key': 'delete', 'display': T(32322, 'Delete')})
             elif item.type == "season":
-                if item.server.allowsMediaDeletion:
+                if plexapp.ACCOUNT.isAdmin and item.server.allowsMediaDeletion:
                     options.append(dropdown.SEPARATOR)
+                    if plexapp.ACCOUNT.isAdmin:
+                        options.append({'key': 'refresh', 'display': T(33719, 'Refresh metadata')})
                     options.append({'key': 'delete', 'display': T(32975, 'Delete Season')})
 
         # if xbmc.getCondVisibility('Player.HasAudio') and self.section.TYPE == 'artist':
@@ -470,6 +542,10 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         options.append(dropdown.SEPARATOR)
 
         options.append({'key': 'to_section', 'display': u'Go to {0}'.format(self.mediaItem.getLibrarySectionTitle())})
+
+        if 'items' in util.getSetting('cache_requests'):
+            options.append({'key': 'cache_reset', 'display': T(33728, "Clear cache for item")})
+
         pos = (880, 618)
         if from_item:
             viewPos = self.subItemListControl.getViewPosition()
@@ -484,17 +560,15 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
         if choice['key'] == 'play_next':
             xbmc.executebuiltin('PlayerControl(Next)')
         elif choice['key'] == 'mark_watched':
-            item.markWatched()
-            self.updateItems()
-            self.updateProperties()
-            util.MONITOR.watchStatusChanged()
+            self.toggleWatched(item, state=True)
         elif choice['key'] == 'mark_unwatched':
-            item.markUnwatched()
-            self.updateItems()
-            self.updateProperties()
-            util.MONITOR.watchStatusChanged()
+            self.toggleWatched(item, state=False)
         elif choice['key'] == 'to_section':
-            self.goHome(self.mediaItem.getLibrarySectionId())
+            self.cameFrom = "library"
+            section = plexlibrary.LibrarySection.fromFilter(self.mediaItem)
+            self.processCommand(opener.sectionClicked(section,
+                                                      came_from=self.mediaItem.ratingKey)
+                                )
         elif choice['key'] == 'playback_settings':
             self.playbackSettings(self.mediaItem, pos, False)
         elif choice['key'] == 'delete':
@@ -506,53 +580,30 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
                 self.setup()
                 self.initialized = True
                 self.setFocusId(self.PLAY_BUTTON_ID)
+        elif choice['key'] == 'refresh':
+            item.refresh()
+            self.updateItems()
+            self.updateProperties()
 
-    def roleClicked(self):
-        mli = self.rolesListControl.getSelectedItem()
-        if not mli:
-            return
+        elif choice["key"] == "cache_reset":
+            try:
+                util.DEBUG_LOG('Clearing requests cache for {}...', item)
+                item.clearCache()
+                self.updateItems()
+                self.updateProperties()
+            except Exception as e:
+                util.DEBUG_LOG("Couldn't clear cache: {}", e)
 
-        sectionRoles = busy.widthDialog(mli.dataSource.sectionRoles, '')
-
-        if not sectionRoles:
-            util.DEBUG_LOG('No sections found for actor')
-            return
-
-        if len(sectionRoles) > 1:
-            x, y = self.getRoleItemDDPosition()
-
-            options = [{'role': r, 'display': r.reasonTitle} for r in sectionRoles]
-            choice = dropdown.showDropdown(options, (x, y), pos_is_bottom=True, close_direction='bottom')
-
-            if not choice:
-                return
-
-            role = choice['role']
-        else:
-            role = sectionRoles[0]
-
-        self.processCommand(opener.open(role))
-
-    def getRoleItemDDPosition(self):
+    def getRoleItemDDPosition(self, *args, **kwargs):
         y = 980
         if xbmc.getCondVisibility('Control.IsVisible(500)'):
             y += 380
         if xbmc.getCondVisibility('!String.IsEmpty(Window.Property(on.extras))'):
             y -= 200
         if xbmc.getCondVisibility('Integer.IsGreater(Window.Property(hub.focus),0) + Control.IsVisible(500)'):
-            y -= 500
+            y -= 650
 
-        tries = 0
-        focus = xbmc.getInfoLabel('Container(401).Position')
-        while tries < 2 and focus == '':
-            focus = xbmc.getInfoLabel('Container(401).Position')
-            xbmc.sleep(250)
-            tries += 1
-
-        focus = int(focus)
-
-        x = ((focus + 1) * 304) - 100
-        return x, y
+        return super(ShowWindow, self).getRoleItemDDPosition(y=y, container_id="401")
 
     def updateItems(self):
         self.fill(update=True)
@@ -605,8 +656,6 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             self.relatedListControl.reset()
             return has_prev
 
-        self.setProperty('divider.{0}'.format(self.RELATED_LIST_ID), has_prev and '1' or '')
-
         items = self.relatedPaginator.paginate()
 
         if not items:
@@ -621,10 +670,10 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin, SeasonsMixin, 
             self.rolesListControl.reset()
             return has_prev
 
-        self.setProperty('divider.{0}'.format(self.ROLES_LIST_ID), has_prev and '1' or '')
-
-        for role in self.mediaItem.roles():
-            mli = kodigui.ManagedListItem(role.tag, role.role, thumbnailImage=role.thumb.asTranscodedImageURL(*self.ROLES_DIM), data_source=role)
+        for role in self.mediaItem.combined_roles:
+            mli = kodigui.ManagedListItem(role.tag, role.role or util.TRANSLATED_ROLES[role.translated_role],
+                                          thumbnailImage=role.thumb.asTranscodedImageURL(*self.ROLES_DIM),
+                                          data_source=role)
             mli.setProperty('index', str(idx))
             items.append(mli)
             idx += 1
@@ -661,8 +710,7 @@ class ArtistWindow(ShowWindow):
     def playButtonClicked(self, shuffle=False):
         pl = playlist.LocalPlaylist(self.mediaItem.all(), self.mediaItem.getServer(), self.mediaItem)
         pl.startShuffled = shuffle
-        w = musicplayer.MusicPlayerWindow.open(track=pl.current(), playlist=pl)
-        del w
+        self.processCommand(opener.handleOpen(musicplayer.MusicPlayerWindow, track=pl.current(), playlist=pl))
 
     def updateProperties(self):
         self.setProperty('summary', self.mediaItem.summary)
