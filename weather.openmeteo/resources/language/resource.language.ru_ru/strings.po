@@ -1,0 +1,659 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: English (OpenHT)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-04 13:09+0200\n"
+"PO-Revision-Date: 2025-09-30 18:27+0000\n"
+"Last-Translator: Владимир Ферук <feruk.v@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/openht/"
+"weather-openmeteo/ru/>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.14-dev\n"
+
+msgctxt "#32200"
+msgid "Sunny"
+msgstr "Солнечно"
+
+msgctxt "#32201"
+msgid "Mainly Sunny"
+msgstr "Преимущественно солнечно"
+
+msgctxt "#32202"
+msgid "Partly Cloudy"
+msgstr "Переменная облачность"
+
+msgctxt "#32203"
+msgid "Cloudy"
+msgstr "Облачно"
+
+msgctxt "#32204"
+msgid "Foggy"
+msgstr "Туманно"
+
+msgctxt "#32205"
+msgid "Rime Fog"
+msgstr "Туман с инеем"
+
+msgctxt "#32206"
+msgid "Light Drizzle"
+msgstr "Небольшая морось"
+
+msgctxt "#32207"
+msgid "Drizzle"
+msgstr "Морось"
+
+msgctxt "#32208"
+msgid "Heavy Drizzle"
+msgstr "Сильная морось"
+
+msgctxt "#32209"
+msgid "Light Freezing Drizzle"
+msgstr "Небольшая замерзающая морось"
+
+msgctxt "#32210"
+msgid "Freezing Drizzle"
+msgstr "Замерзающая морось"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Небольшой дождь"
+
+msgctxt "#32212"
+msgid "Rain"
+msgstr "Дождь"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Сильный дождь"
+
+msgctxt "#32214"
+msgid "Light Freezing Rain"
+msgstr "Небольшой ледяной дождь"
+
+msgctxt "#32215"
+msgid "Freezing Rain"
+msgstr "Ледяной дождь"
+
+msgctxt "#32216"
+msgid "Light Snow"
+msgstr "Небольшой снег"
+
+msgctxt "#32217"
+msgid "Snow"
+msgstr "Снег"
+
+msgctxt "#32218"
+msgid "Heavy Snow"
+msgstr "Сильный снег"
+
+msgctxt "#32219"
+msgid "Snow Grains"
+msgstr "Зернистый снег"
+
+msgctxt "#32220"
+msgid "Light Showers"
+msgstr "Небольшой ливень"
+
+msgctxt "#32221"
+msgid "Showers"
+msgstr "Ливень"
+
+msgctxt "#32222"
+msgid "Heavy Showers"
+msgstr "Сильный ливень"
+
+msgctxt "#32223"
+msgid "Light Snow Showers"
+msgstr "Небольшой снегопад"
+
+msgctxt "#32224"
+msgid "Snow Showers"
+msgstr "Снегопад"
+
+msgctxt "#32225"
+msgid "Thunderstorm"
+msgstr "Гроза"
+
+msgctxt "#32226"
+msgid "Light Thunderstorms With Hail"
+msgstr "Небольшая гроза с градом"
+
+msgctxt "#32227"
+msgid "Thunderstorm With Hail"
+msgstr "Гроза с градом"
+
+msgctxt "#32250"
+msgid "Clear"
+msgstr "Ясно"
+
+msgctxt "#32251"
+msgid "Mainly Clear"
+msgstr "Преимущественно ясно"
+
+msgctxt "#32255"
+msgid "Moonrise"
+msgstr "Восход луны"
+
+msgctxt "#32256"
+msgid "Moonset"
+msgstr "Закат луны"
+
+msgctxt "#32257"
+msgid "Moonphase"
+msgstr "Лунная фаза"
+
+msgctxt "#32260"
+msgid "General"
+msgstr "Общие"
+
+msgctxt "#32261"
+msgid "Locations"
+msgstr "Локации"
+
+msgctxt "#32262"
+msgid "Limits"
+msgstr "Ограничения"
+
+msgctxt "#32263"
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgctxt "#32264"
+msgid "Advanced"
+msgstr "Расширенный"
+
+msgctxt "#32265"
+msgid "Weather"
+msgstr "Погода"
+
+msgctxt "#32266"
+msgid "Airquality"
+msgstr "Качество воздуха"
+
+msgctxt "#32267"
+msgid "Pollen"
+msgstr "Пыльца"
+
+msgctxt "#32268"
+msgid "Alerts"
+msgstr "Оповещения"
+
+msgctxt "#32269"
+msgid "Select option"
+msgstr "Выбрать опцию"
+
+msgctxt "#32270"
+msgid "Graphs"
+msgstr "Графики"
+
+msgctxt "#32271"
+msgid "Overview"
+msgstr "Обзор"
+
+msgctxt "#32272"
+msgid "History"
+msgstr "История"
+
+msgctxt "#32280"
+msgid "Units"
+msgstr "Единицы"
+
+msgctxt "#32281"
+msgid "Maps"
+msgstr "Карты"
+
+msgctxt "#32282"
+msgid "Logging"
+msgstr "Ведение журнала"
+
+msgctxt "#32283"
+msgid "Experimental (Restart required)"
+msgstr "Экспериментальная (Требуется перезапуск)"
+
+msgctxt "#32285"
+msgid "Zoom"
+msgstr "Масштаб"
+
+msgctxt "#32286"
+msgid "Debug"
+msgstr "Отладка"
+
+msgctxt "#32287"
+msgid "Duration"
+msgstr "Продолжительность"
+
+msgctxt "#32288"
+msgid "Hours"
+msgstr "Часы"
+
+msgctxt "#32289"
+msgid "Decimal places"
+msgstr "Десятичные знаки"
+
+msgctxt "#32290"
+msgid "Icons"
+msgstr "Иконки"
+
+msgctxt "#32291"
+msgid "Default"
+msgstr "По умолчанию"
+
+#, read-only
+msgctxt "#32292"
+msgid "Weathermap"
+msgstr ""
+
+#, read-only
+msgctxt "#32293"
+msgid "Met.no"
+msgstr ""
+
+#, read-only
+msgctxt "#32294"
+msgid "WMO"
+msgstr ""
+
+msgctxt "#32296"
+msgid "Background sync"
+msgstr "Фоновая синхронизация"
+
+msgctxt "#32300"
+msgid "Distance"
+msgstr "Расстояние"
+
+msgctxt "#32301"
+msgid "Index"
+msgstr "Индекс"
+
+msgctxt "#32302"
+msgid "Percent"
+msgstr "Процент"
+
+msgctxt "#32303"
+msgid "Unit"
+msgstr "Единица"
+
+msgctxt "#32304"
+msgid "Decimal separator"
+msgstr "Десятичный разделитель"
+
+msgctxt "#32306"
+msgid "Particles"
+msgstr "Частицы"
+
+msgctxt "#32307"
+msgid "Interval"
+msgstr "Интервал"
+
+msgctxt "#32308"
+msgid "Verbose"
+msgstr "Многословный"
+
+msgctxt "#32310"
+msgid "Location 1"
+msgstr "Местоположение 1"
+
+msgctxt "#32311"
+msgid "Location 2"
+msgstr "Местоположение 2"
+
+msgctxt "#32312"
+msgid "Location 3"
+msgstr "Местоположение 3"
+
+msgctxt "#32313"
+msgid "Location 4"
+msgstr "Местоположение 4"
+
+msgctxt "#32314"
+msgid "Location 5"
+msgstr "Местоположение 5"
+
+msgctxt "#32316"
+msgid "Use location timezone"
+msgstr "Использовать часовой пояс местоположения"
+
+msgctxt "#32320"
+msgid "Temperature"
+msgstr "Температура"
+
+msgctxt "#32321"
+msgid "Precipitation"
+msgstr "Осадки"
+
+msgctxt "#32322"
+msgid "Condition"
+msgstr "Условия"
+
+msgctxt "#32323"
+msgid "Wind"
+msgstr "Ветер"
+
+msgctxt "#32324"
+msgid "Gust"
+msgstr "Порыв"
+
+msgctxt "#32325"
+msgid "AQI EU"
+msgstr "Индекс качества воздуха (ЕС)"
+
+msgctxt "#32326"
+msgid "AQI US"
+msgstr "Индекс качества воздуха (США)"
+
+msgctxt "#32327"
+msgid "PM25"
+msgstr "PM25"
+
+msgctxt "#32328"
+msgid "PM10"
+msgstr "PM10"
+
+msgctxt "#32329"
+msgid "UV Index"
+msgstr "УФ-индекс"
+
+msgctxt "#32330"
+msgid "Nitrogen Dioxide"
+msgstr "Диоксид азота"
+
+msgctxt "#32331"
+msgid "Sulphur Dioxide"
+msgstr "Диоксид серы"
+
+msgctxt "#32332"
+msgid "Feelslike"
+msgstr "Ощущается"
+
+msgctxt "#32333"
+msgid "Dewpoint"
+msgstr "Точка росы"
+
+msgctxt "#32334"
+msgid "Cloudiness"
+msgstr "Облачность"
+
+msgctxt "#32335"
+msgid "Time"
+msgstr "Время"
+
+msgctxt "#32336"
+msgid "Speed"
+msgstr "Скорость"
+
+msgctxt "#32337"
+msgid "Carbon monoxide"
+msgstr "Окись углерода"
+
+msgctxt "#32338"
+msgid "Ozone"
+msgstr "Озон"
+
+msgctxt "#32339"
+msgid "Dust"
+msgstr "Пыль"
+
+msgctxt "#32340"
+msgid "Notice"
+msgstr "Уведомление"
+
+msgctxt "#32341"
+msgid "Caution"
+msgstr "Предостережение"
+
+msgctxt "#32342"
+msgid "Danger"
+msgstr "Опасность"
+
+msgctxt "#32343"
+msgid "Normal"
+msgstr "Нормальный"
+
+msgctxt "#32344"
+msgid "Negative"
+msgstr "Отрицательный"
+
+msgctxt "#32345"
+msgid "Colours"
+msgstr "Цвета"
+
+msgctxt "#32346"
+msgid "Humidity"
+msgstr "Влажность"
+
+msgctxt "#32347"
+msgid "Pressure"
+msgstr "Давление"
+
+msgctxt "#32348"
+msgid "Solar radiation"
+msgstr "Солнечное излучение"
+
+msgctxt "#32349"
+msgid "Visibility"
+msgstr "Видимость"
+
+#, read-only
+msgctxt "#32350"
+msgid "°C"
+msgstr ""
+
+#, read-only
+msgctxt "#32351"
+msgid "°F"
+msgstr ""
+
+#, read-only
+msgctxt "#32352"
+msgid "K"
+msgstr ""
+
+#, read-only
+msgctxt "#32353"
+msgid "°Ré"
+msgstr ""
+
+#, read-only
+msgctxt "#32354"
+msgid "°Ra"
+msgstr ""
+
+#, read-only
+msgctxt "#32355"
+msgid "°Rø"
+msgstr ""
+
+#, read-only
+msgctxt "#32356"
+msgid "°D"
+msgstr ""
+
+#, read-only
+msgctxt "#32357"
+msgid "°N"
+msgstr ""
+
+msgctxt "#32360"
+msgid "Application"
+msgstr "Приложение"
+
+msgctxt "#32361"
+msgid "mph"
+msgstr "миль/ч"
+
+msgctxt "#32362"
+msgid "km/h"
+msgstr "км/ч"
+
+msgctxt "#32363"
+msgid "m/min"
+msgstr "м/мин"
+
+msgctxt "#32364"
+msgid "m/s"
+msgstr "м/с"
+
+msgctxt "#32365"
+msgid "ft/h"
+msgstr "фут/ч"
+
+msgctxt "#32366"
+msgid "ft/min"
+msgstr "фут/мин"
+
+msgctxt "#32367"
+msgid "ft/s"
+msgstr "фут/с"
+
+msgctxt "#32368"
+msgid "kts"
+msgstr "узлов"
+
+msgctxt "#32369"
+msgid "Beaufort"
+msgstr "Бофорт"
+
+msgctxt "#32370"
+msgid "inch/s"
+msgstr "дюйм/с"
+
+msgctxt "#32371"
+msgid "yard/s"
+msgstr "ярд/с"
+
+msgctxt "#32372"
+msgid "Furlong/Fortnight"
+msgstr "Фурлонг/Фортнайт"
+
+msgctxt "#32380"
+msgid "mm"
+msgstr "мм"
+
+msgctxt "#32381"
+msgid "inches"
+msgstr "дюймы"
+
+msgctxt "#32390"
+msgid "12h"
+msgstr "12 часов"
+
+msgctxt "#32391"
+msgid "24h"
+msgstr "24 часа"
+
+msgctxt "#32400"
+msgid "Radar"
+msgstr "Радар"
+
+msgctxt "#32401"
+msgid "Satellite"
+msgstr "Спутник"
+
+msgctxt "#32410"
+msgid "m"
+msgstr "м"
+
+msgctxt "#32411"
+msgid "km"
+msgstr "км"
+
+msgctxt "#32412"
+msgid "mi"
+msgstr "миля"
+
+#, read-only
+msgctxt "#32430"
+msgid "."
+msgstr ""
+
+#, read-only
+msgctxt "#32431"
+msgid ","
+msgstr ""
+
+msgctxt "#32440"
+msgid "New Moon"
+msgstr "Новолуние"
+
+msgctxt "#32441"
+msgid "Waxing Crescent"
+msgstr "Молодая луна"
+
+msgctxt "#32442"
+msgid "First Quarter"
+msgstr "Первая четверть"
+
+msgctxt "#32443"
+msgid "Waxing Gibbous"
+msgstr "Прибывающая луна"
+
+msgctxt "#32444"
+msgid "Full Moon"
+msgstr "Полнолуние"
+
+msgctxt "#32445"
+msgid "Waning Gibbous"
+msgstr "Убывающая Луна"
+
+msgctxt "#32446"
+msgid "Last Quarter"
+msgstr "Последняя четверть"
+
+msgctxt "#32447"
+msgid "Waning Crescent"
+msgstr "Старая луна"
+
+msgctxt "#32450"
+msgid "Alder"
+msgstr "Ольха"
+
+msgctxt "#32451"
+msgid "Birch"
+msgstr "Береза"
+
+msgctxt "#32452"
+msgid "Grass"
+msgstr "Трава"
+
+msgctxt "#32453"
+msgid "Mugwort"
+msgstr "Полынь"
+
+msgctxt "#32454"
+msgid "Olive"
+msgstr "Олива"
+
+msgctxt "#32455"
+msgid "Ragweed"
+msgstr "Амброзия"
+
+msgctxt "#32456"
+msgid "grains"
+msgstr "зерна"
+
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]Уведомление[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]Предостережение[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]Опасность[/COLOR]"
+
+msgctxt "#32500"
+msgid "Weather forecast from Open-Meteo"
+msgstr "Прогноз погоды от Open-Meteo"
+
+msgctxt "#32501"
+msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
+msgstr ""
+"Прогноз погоды, карты, качество воздуха и пыльцы от open-meteo.com, "
+"rainviewer.com, weather.gc.ca и met.no"

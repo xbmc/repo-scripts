@@ -9,8 +9,8 @@ from . import utils
 map_api = {
 	'search': 'https://geocoding-api.open-meteo.com/v1/search?name={}&count=10&language=en&format=json',
 	'geoip': 'https://api.openht.org/geoipweather',
-	'weather': 'https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,dew_point_2m,precipitation_probability,visibility,uv_index,direct_radiation&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,pressure_msl,surface_pressure,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,is_day,direct_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_hours&timeformat=unixtime&forecast_days=9&past_days=2',
-	'airquality': 'https://air-quality-api.open-meteo.com/v1/air-quality?latitude={}&longitude={}&current=european_aqi,us_aqi,pm10,pm2_5,carbon_monoxide,ozone,dust,nitrogen_dioxide,sulphur_dioxide,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&hourly=pm10,pm2_5,carbon_monoxide,ozone,dust,european_aqi,us_aqi,nitrogen_dioxide,sulphur_dioxide,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timeformat=unixtime&forecast_days=7&past_days=2',
+	'weather': 'https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,dew_point_2m,precipitation_probability,visibility,uv_index,direct_radiation&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,snowfall,weather_code,pressure_msl,surface_pressure,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,is_day,direct_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_hours&timeformat=unixtime&forecast_days={}&past_days=1',
+	'airquality': 'https://air-quality-api.open-meteo.com/v1/air-quality?latitude={}&longitude={}&current=european_aqi,us_aqi,pm10,pm2_5,carbon_monoxide,ozone,dust,nitrogen_dioxide,sulphur_dioxide,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&hourly=pm10,pm2_5,carbon_monoxide,ozone,dust,european_aqi,us_aqi,nitrogen_dioxide,sulphur_dioxide,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timeformat=unixtime&forecast_days=4&past_days=1',
 	'sun': 'https://api.met.no/weatherapi/sunrise/3.0/sun?lat={}&lon={}&date={}',
 	'moon': 'https://api.met.no/weatherapi/sunrise/3.0/moon?lat={}&lon={}&date={}',
 	'osm': 'https://tile.openstreetmap.org/{}/{}/{}.png',
@@ -22,10 +22,10 @@ map_api = {
 }
 
 # Limits
-maxdays  = 8
-mindays  = 2
-maxhours = 73
-minhours = 25
+maxdays  = utils.setting('fcdays', 'int')
+mindays  = 1
+maxhours = 72
+minhours = 24
 mindata  = 0
 maxdata  = 300
 
@@ -47,240 +47,239 @@ mapcache = {}
 
 # Mapping (Weather)
 map_weather = [
-	[ "current",	[ 'latitude' ],				[ 'current', 'latitude' ],		'round2' ],
-	[ "current",	[ 'longitude' ],			[ 'current', 'longitude' ],		'round2' ],
-	[ "current",	[ 'elevation' ],			[ 'current', 'elevation' ],		'round' ],
 
-	[ "current",	[ 'current_units', 'wind_speed_10m' ],		[ 'unit', 'speed' ], 		'unitspeed' ],
-	[ "current",	[ 'current_units', 'temperature_2m' ],		[ 'unit', 'temperature' ], 	'unittemperature' ],
-	[ "current",	[ 'current_units', 'precipitation' ],		[ 'unit', 'precipitation' ],	'unitprecipitation' ],
-	[ "current",	[ 'current_units', 'pressure_msl' ],		[ 'unit', 'pressure' ],		'unitpressure' ],
-	[ "current",	[ 'current_units', 'relative_humidity_2m' ],	[ 'unit', 'percent' ], 		'unitpercent' ],
-	[ "current",	[ 'hourly_units', 'visibility' ],		[ 'unit', 'distance' ],		'unitdistance' ],
-	[ "current",	[ 'hourly_units', 'direct_radiation' ],		[ 'unit', 'radiation' ],	'unitradiation' ],
-	[ "current",	[ 'hourly_units', 'direct_radiation' ],		[ 'unit', 'solarradiation' ],	'unitradiation' ],
+	# Location
+	[ "current",     [ 'latitude' ],                              [ 'current', 'latitude' ],                             'round2' ],
+	[ "current",     [ 'latitude' ],                              [ 'current', 'season' ],                               'season' ],
+	[ "current",     [ 'longitude' ],                             [ 'current', 'longitude' ],                            'round2' ],
+	[ "current",     [ 'elevation' ],                             [ 'current', 'elevation' ],                            'round' ],
 
-	[ "current",	[ 'current', "time" ],			[ 'current', "date" ],			"date" ],
-	[ "hourly",	[ 'hourly', "time" ],			[ 'hourly', "date" ],			"date" ],
-	[ "hourly",	[ 'hourly', "time" ],			[ 'hourly', "shortdate" ],		"date" ],
+	# Units
+	[ "current",     [ 'current_units', 'wind_speed_10m' ],       [ 'unit', 'speed' ],                                   'unitspeed' ],
+	[ "current",     [ 'current_units', 'temperature_2m' ],       [ 'unit', 'temperature' ],                             'unittemperature' ],
+	[ "current",     [ 'current_units', 'precipitation' ],        [ 'unit', 'precipitation' ],                           'unitprecipitation' ],
+	[ "current",     [ 'current_units', 'snowfall' ],             [ 'unit', 'snow' ],                                    'unitsnow' ],
+	[ "current",     [ 'current_units', 'pressure_msl' ],         [ 'unit', 'pressure' ],                                'unitpressure' ],
+	[ "current",     [ 'current_units', 'relative_humidity_2m' ], [ 'unit', 'percent' ],                                 'unitpercent' ],
+	[ "current",     [ 'hourly_units', 'visibility' ],            [ 'unit', 'distance' ],                                'unitdistance' ],
+	[ "current",     [ 'hourly_units', 'direct_radiation' ],      [ 'unit', 'radiation' ],                               'unitradiation' ],
+	[ "current",     [ 'hourly_units', 'direct_radiation' ],      [ 'unit', 'solarradiation' ],                          'unitradiation' ],
 
-	[ "current",	[ 'current', "time" ],			[ 'current', "time" ],			"time" ],
-	[ "hourly",	[ 'hourly', "time" ],			[ 'hourly', "time" ],			"time" ],
+	# Current
+	[ "current",     [ 'current', "time" ],                       [ 'current', "date" ],                                 "date" ],
+	[ "current",     [ 'current', "time" ],                       [ 'current', "time" ],                                 "time" ],
+	[ "current",     [ 'current', "time" ],                       [ 'current', "hour" ],                                 "hour" ],
+	[ "current",     [ 'current', "temperature_2m" ],             [ 'current', "temperature" ],                          "temperaturekodi" ],
+	[ "current",     [ 'current', "temperature_2m" ],             [ 'current', "temperatureaddon" ],                     "temperature" ],
+	[ "currentkodi", [ 'current', "temperature_2m" ],             [ 'current', "temperature" ],                          "round" ],
+	[ "currentskin", [ 'current', "temperature_2m" ],             [ 'current', "temperature" ],                          "temperature" ],
+	[ "current",     [ 'current', "apparent_temperature" ],       [ 'current', "feelslike" ],                            "temperaturekodi" ],
+	[ "current",     [ 'current', "apparent_temperature" ],       [ 'current', "feelslikeaddon" ],                       "temperature" ],
+	[ "currentkodi", [ 'current', "apparent_temperature" ],       [ 'current', "feelslike" ],                            "round" ],
+	[ "currentskin", [ 'current', "apparent_temperature" ],       [ 'current', "feelslike" ],                            "temperature" ],
+	[ "current",     [ 'current', "dew_point_2m" ],               [ 'current', "dewpoint" ],                             "temperaturekodi" ],
+	[ "current",     [ 'current', "dew_point_2m" ],               [ 'current', "dewpointaddon" ],                        "temperature" ],
+	[ "currentkodi", [ 'current', "dew_point_2m" ],               [ 'current', "dewpoint" ],                             "round" ],
+	[ "currentskin", [ 'current', "dew_point_2m" ],               [ 'current', "dewpoint" ],                             "temperature" ],
+	[ "current",     [ 'current', "relative_humidity_2m" ],       [ 'current', "humidity" ],                             "%" ],
+	[ "current",     [ 'current', "relative_humidity_2m" ],       [ 'current', "humidityaddon" ],                        "round" ],
+	[ "currentkodi", [ 'current', "relative_humidity_2m" ],       [ 'current', "humidity" ],                             "round" ],
+	[ "current",     [ 'current', "precipitation_probability" ],  [ 'current', "precipitation" ],                        "roundpercent" ],
+	[ "currentskin", [ 'current', "precipitation" ],              [ 'current', "precipitation" ],                        "precipitation" ],
+	[ "current",     [ 'current', "precipitation" ],              [ 'current', "precipitationaddon" ],                   "precipitation" ],
+	[ "current",     [ 'current', "precipitation_probability" ],  [ 'current', "precipitationprobability" ],             "round" ],
+	[ "current",     [ 'current', "snowfall" ],                   [ 'current', "snow" ],                                 "snow" ],
+	[ "current",     [ 'current', "pressure_msl" ],               [ 'current', "pressure" ],                             "pressure" ],
+	[ "current",     [ 'current', "surface_pressure" ],           [ 'current', "pressuresurface" ],                      "pressure" ],
+	[ "current",     [ 'current', "wind_speed_10m" ],             [ 'current', "wind" ],                                 "windkodi" ],
+	[ "currentkodi", [ 'current', "wind_speed_10m" ],             [ 'current', "wind" ],                                 "round" ],
+	[ "currentskin", [ 'current', "wind_speed_10m" ],             [ 'current', "wind" ],                                 "windkodi" ],
+	[ "current",     [ 'current', "wind_speed_10m" ],             [ 'current', "windspeed" ],                            "speed" ],
+	[ "current",     [ 'current', "wind_direction_10m" ],         [ 'current', "winddirection" ],                        "direction" ],
+	[ "current",     [ 'current', "wind_direction_10m" ],         [ 'current', "winddirectiondegree" ],                  "round" ],
+	[ "current",     [ 'current', "wind_gusts_10m" ],             [ 'current', "windgust" ],                             "speed" ],
+	[ "current",     [ 'current', "weather_code" ],               [ 'current', "condition" ],                            "wmocond" ],
+	[ "current",     [ 'current', "weather_code" ],               [ 'current', "outlookicon" ],                          "image" ],
+	[ "currentskin", [ 'current', "weather_code" ],               [ 'current', "outlookicon" ],                          "wmoimage" ],
+	[ "current",     [ 'current', "weather_code" ],               [ 'current', "outlookiconwmo" ],                       "wmoimage" ],
+	[ "current",     [ 'current', "weather_code" ],               [ 'current', "fanartcode" ],                           "code" ],
+	[ "currentskin", [ 'current', "weather_code" ],               [ 'current', "fanartcode" ],                           "wmocode" ],
+	[ "current",     [ 'current', "weather_code" ],               [ 'current', "fanartcodewmo" ],                        "wmocode" ],
+	[ "current",     [ 'current', "cloud_cover" ],                [ 'current', "cloudiness" ],                           "roundpercent" ],
+	[ "current",     [ 'current', "cloud_cover" ],                [ 'current', "cloudinessaddon" ],                      "round" ],
+	[ "currentskin", [ 'current', "cloud_cover" ],                [ 'current', "cloudiness" ],                           "round" ],
+	[ "current",     [ 'current', "is_day" ],                     [ 'current', "isday" ],                                "bool" ],
+	[ "current",     [ 'current', "visibility" ],                 [ 'current', "visibility" ],                           "distance" ],
+	[ "current",     [ 'current', "uv_index" ],                   [ 'current', "uvindex" ],                              "uvindex" ],
+	[ "current",     [ 'current', "direct_radiation" ],           [ 'current', "solarradiation" ],                       "radiation" ],
 
-	[ "current",	[ 'current', "time" ],			[ 'current', "hour" ],			"hour" ],
-	[ "hourly",	[ 'hourly', "time" ],			[ 'hourly', "hour" ],			"hour" ],
+	# Hourly
+	[ "hourly",      [ 'hourly', "time" ],                        [ 'hourly', "date" ],                                  "date" ],
+	[ "hourly",      [ 'hourly', "time" ],                        [ 'hourly', "shortdate" ],                             "date" ],
+	[ "hourly",      [ 'hourly', "time" ],                        [ 'hourly', "time" ],                                  "time" ],
+	[ "hourly",      [ 'hourly', "time" ],                        [ 'hourly', "hour" ],                                  "hour" ],
+	[ "hourly",      [ 'hourly', "temperature_2m" ],              [ 'hourly', "temperature" ],                           "temperatureunit" ],
+	[ "hourlyskin",  [ 'hourly', "temperature_2m" ],              [ 'hourly', "temperature" ],                           "temperature" ],
+	[ "hourly",      [ 'hourly', "apparent_temperature" ],        [ 'hourly', "feelslike" ],                             "temperatureunit" ],
+	[ "hourlyskin",  [ 'hourly', "apparent_temperature" ],        [ 'hourly', "feelslike" ],                             "temperature" ],
+	[ "hourly",      [ 'hourly', "dew_point_2m" ],                [ 'hourly', "dewpoint" ],                              "temperatureunit" ],
+	[ "hourlyskin",  [ 'hourly', "dew_point_2m" ],                [ 'hourly', "dewpoint" ],                              "temperature" ],
+	[ "hourly",      [ 'hourly', "relative_humidity_2m" ],        [ 'hourly', "humidity" ],                              "roundpercent" ],
+	[ "hourlyskin",  [ 'hourly', "relative_humidity_2m" ],        [ 'hourly', "humidity" ],                              "round" ],
+	[ "hourly",      [ 'hourly', "precipitation_probability" ],   [ 'hourly', "precipitation" ],                         "roundpercent" ],
+	[ "hourlyskin",  [ 'hourly', "precipitation" ],               [ 'hourly', "precipitation" ],                         "precipitation" ],
+	[ "hourly",      [ 'hourly', "precipitation" ],               [ 'hourly', "precipitationaddon" ],                    "precipitation" ],
+	[ "hourly",      [ 'hourly', "precipitation_probability" ],   [ 'hourly', "precipitationprobability" ],              "round" ],
+	[ "hourly",      [ 'hourly', "snowfall" ],                    [ 'hourly', "snow" ],                                  "snow" ],
+	[ "hourly",      [ 'hourly', "pressure_msl" ],                [ 'hourly', "pressure" ],                              "pressure" ],
+	[ "hourly",      [ 'hourly', "surface_pressure" ],            [ 'hourly', "pressuresurface" ],                       "pressure" ],
+	[ "hourly",      [ 'hourly', "wind_speed_10m" ],              [ 'hourly', "windspeed" ],                             "speed" ],
+	[ "hourly",      [ 'hourly', "wind_direction_10m" ],          [ 'hourly', "winddirection" ],                         "direction" ],
+	[ "hourly",      [ 'hourly', "wind_direction_10m" ],          [ 'hourly', "winddirectiondegree" ],                   "round" ],
+	[ "hourly",      [ 'hourly', "wind_gusts_10m" ],              [ 'hourly', "windgust" ],                              "speed" ],
+	[ "hourly",      [ 'hourly', "weather_code" ],                [ 'hourly', "outlook" ],                               "wmocond" ],
+	[ "hourly",      [ 'hourly', "weather_code" ],                [ 'hourly', "outlookicon" ],                           "image" ],
+	[ "hourlyskin",  [ 'hourly', "weather_code" ],                [ 'hourly', "outlookicon" ],                           "wmoimage" ],
+	[ "hourly",      [ 'hourly', "weather_code" ],                [ 'hourly', "outlookiconwmo" ],                        "wmoimage" ],
+	[ "hourly",      [ 'hourly', "weather_code" ],                [ 'hourly', "fanartcode" ],                            "code" ],
+	[ "hourlyskin",  [ 'hourly', "weather_code" ],                [ 'hourly', "fanartcode" ],                            "wmocode" ],
+	[ "hourly",      [ 'hourly', "weather_code" ],                [ 'hourly', "fanartcodewmo" ],                         "wmocode" ],
+	[ "hourly",      [ 'hourly', "weather_code" ],                [ 'hourly', "condition" ],                             "wmocond" ],
+	[ "hourly",      [ 'hourly', "cloud_cover" ],                 [ 'hourly', "cloudiness" ],                            "roundpercent" ],
+	[ "hourlyskin",  [ 'hourly', "cloud_cover" ],                 [ 'hourly', "cloudiness" ],                            "round" ],
+	[ "hourly",      [ 'hourly', "is_day" ],                      [ 'hourly', "isday" ],                                 "bool" ],
+	[ "hourly",      [ 'hourly', "visibility" ],                  [ 'hourly', "visibility" ],                            "distance" ],
+	[ "hourly",      [ 'hourly', "uv_index" ],                    [ 'hourly', "uvindex" ],                               "uvindex" ],
+	[ "hourly",      [ 'hourly', "direct_radiation" ],            [ 'hourly', "solarradiation" ],                        "radiation" ],
 
-	[ "current",	[ 'current', "temperature_2m" ],	[ 'current', "temperatureaddon" ],	"temperature" ],
-	[ "current",	[ 'current', "apparent_temperature" ],	[ 'current', "feelslikeaddon" ],	"temperature" ],
-	[ "current",	[ 'current', "dew_point_2m" ],		[ 'current', "dewpointaddon" ],		"temperature" ],
+	# Graphs
+	[ "graph",      [ 'hourly', "temperature_2m" ],              [ 'hourly', "temperature.graph" ],                     "graph", "temperature" ],
+	[ "graph",      [ 'hourly', "apparent_temperature" ],        [ 'hourly', "feelslike.graph" ],                       "graph", "temperature" ],
+	[ "graph",      [ 'hourly', "dew_point_2m" ],                [ 'hourly', "dewpoint.graph" ],                        "graph", "temperature" ],
+	[ "graph",      [ 'hourly', "relative_humidity_2m" ],        [ 'hourly', "humidity.graph" ],                        "graph", "round" ],
+	[ "graph",      [ 'hourly', "precipitation" ],               [ 'hourly', "precipitation.graph" ],                   "graph", "precipitation" ],
+	[ "graph",      [ 'hourly', "precipitation_probability" ],   [ 'hourly', "precipitationprobability.graph" ],        "graph", "round" ],
+	[ "graph",      [ 'hourly', "snowfall" ],                    [ 'hourly', "snow.graph" ],                            "graph", "snow" ],
+	[ "graph",      [ 'hourly', "pressure_msl" ],                [ 'hourly', "pressure.graph" ],                        "graph", "pressure" ],
+	[ "graph",      [ 'hourly', "surface_pressure" ],            [ 'hourly', "pressuresurface.graph" ],                 "graph", "pressure" ],
+	[ "graph",      [ 'hourly', "wind_speed_10m" ],              [ 'hourly', "windspeed.graph" ],                       "graph", "speed" ],
+	[ "graph",      [ 'hourly', "wind_gusts_10m" ],              [ 'hourly', "windgust.graph" ],                        "graph", "speed" ],
+	[ "graph",      [ 'hourly', "weather_code" ],                [ 'hourly', "condition.graph" ],                       "graph", "round" ],
+	[ "graph",      [ 'hourly', "cloud_cover" ],                 [ 'hourly', "cloudiness.graph" ],                      "graph", "round" ],
+	[ "graph",      [ 'hourly', "visibility" ],                  [ 'hourly', "visibility.graph" ],                      "graph", "distance" ],
+	[ "graph",      [ 'hourly', "uv_index" ],                    [ 'hourly', "uvindex.graph" ],                         "graph", "uvindex" ],
+	[ "graph",      [ 'hourly', "direct_radiation" ],            [ 'hourly', "solarradiation.graph" ],                  "graph", "radiation" ],
 
-	[ "current",	[ 'current', "temperature_2m" ],	[ 'current', "temperature" ],		"temperaturekodi" ],
-	[ "currentkodi",[ 'current', "temperature_2m" ],	[ 'current', "temperature" ],		"round" ],
-	[ "current",	[ 'current', "apparent_temperature" ],	[ 'current', "feelslike" ],		"temperaturekodi" ],
-	[ "currentkodi",[ 'current', "apparent_temperature" ],	[ 'current', "feelslike" ],		"round" ],
-	[ "current",	[ 'current', "dew_point_2m" ],		[ 'current', "dewpoint" ],		"temperaturekodi" ],
-	[ "currentkodi",[ 'current', "dew_point_2m" ],		[ 'current', "dewpoint" ],		"round" ],
+	# Daily
+	[ "daily",       [ 'daily', "time" ],                         [ 'day', "title" ],                                    "weekday" ],
+	[ "daily",       [ 'daily', "time" ],                         [ 'day', "date" ],                                     "date" ],
+	[ "daily",       [ 'daily', "time" ],                         [ 'day', "shortdate" ],                                "date" ],
+	[ "daily",       [ 'daily', "time" ],                         [ 'day', "shortday" ],                                 "weekdayshort" ],
+	[ "daily",       [ 'daily', "time" ],                         [ 'day', "longday" ],                                  "weekday" ],
+	[ "daily",       [ 'daily', "weather_code" ],                 [ 'day', "condition" ],                                "wmocond" ],
+	[ "daily",       [ 'daily', "weather_code" ],                 [ 'day', "outlook" ],                                  "wmocond" ],
+	[ "daily",       [ 'daily', "weather_code" ],                 [ 'day', "outlookicon" ],                              "image" ],
+	[ "dailyskin",   [ 'daily', "weather_code" ],                 [ 'day', "outlookicon" ],                              "wmoimage" ],
+	[ "daily",       [ 'daily', "weather_code" ],                 [ 'day', "outlookiconwmo" ],                           "wmoimage" ],
+	[ "daily",       [ 'daily', "weather_code" ],                 [ 'day', "fanartcode" ],                               "code" ],
+	[ "dailyskin",   [ 'daily', "weather_code" ],                 [ 'day', "fanartcode" ],                               "wmocode" ],
+	[ "daily",       [ 'daily', "weather_code" ],                 [ 'day', "fanartcodewmo" ],                            "wmocode" ],
+	[ "daily",       [ 'daily', "temperature_2m_max" ],           [ 'day', "hightemp" ],                                 "temperaturekodi" ],
+	[ "dailykodi",   [ 'daily', "temperature_2m_max" ],           [ 'day', "hightemp" ],                                 "round" ],
+	[ "dailyskin",   [ 'daily', "temperature_2m_max" ],           [ 'day', "hightemp" ],                                 "temperature" ],
+	[ "daily",       [ 'daily', "temperature_2m_min" ],           [ 'day', "lowtemp" ],                                  "temperaturekodi" ],
+	[ "dailykodi",   [ 'daily', "temperature_2m_min" ],           [ 'day', "lowtemp" ],                                  "round" ],
+	[ "dailyskin",   [ 'daily', "temperature_2m_min" ],           [ 'day', "lowtemp" ],                                  "temperature" ],
+	[ "daily",       [ 'daily', "temperature_2m_max" ],           [ 'day', "hightemperature" ],                          "temperatureunit" ],
+	[ "dailyskin",   [ 'daily', "temperature_2m_max" ],           [ 'day', "hightemperature" ],                          "temperature" ],
+	[ "daily",       [ 'daily', "temperature_2m_min" ],           [ 'day', "lowtemperature" ],                           "temperatureunit" ],
+	[ "dailyskin",   [ 'daily', "temperature_2m_min" ],           [ 'day', "lowtemperature" ],                           "temperature" ],
+	[ "daily",       [ 'daily', "sunrise" ],                      [ 'day', "sunrise" ],                                  "time" ],
+	[ "daily",       [ 'daily', "sunset" ],                       [ 'day', "sunset" ],                                   "time" ],
+	[ "daily",       [ 'daily', "daylight_duration" ],            [ 'day', "daylight" ],                                 "seconds" ],
+	[ "daily",       [ 'daily', "sunshine_duration" ],            [ 'day', "sunshine" ],                                 "seconds" ],
+	[ "daily",       [ 'daily', "precipitation_hours" ],          [ 'day', "precipitationhours" ],                       "round" ],
+	[ "daily",       [ 'daily', "uv_index_max" ],                 [ 'day', "uvindex" ],                                  "uvindex" ],
 
-	[ "hourly",	[ 'hourly', "temperature_2m" ],		[ 'hourly', "temperature" ],			"temperatureunit" ],
-	[ "hourlyskin",	[ 'hourly', "temperature_2m" ],		[ 'hourly', "temperature" ],			"temperature" ],
-	[ "hourly",	[ 'hourly', "temperature_2m" ],		[ 'hourly', "temperaturegraph" ],		"graph", "50", "temperature" ],
+	# Today
+	[ "current",     [ 'daily', "sunrise", 3 ],                   [ 'today', "sunrise" ],                                "time" ],
+	[ "current",     [ 'daily', "sunset", 3 ],                    [ 'today', "sunset" ],                                 "time" ],
+	[ "current",     [ 'daily', "daylight_duration", 3 ],         [ 'today', "daylight" ],                               "seconds" ],
+	[ "current",     [ 'daily', "sunshine_duration", 3 ],         [ 'today', "sunshine" ],                               "seconds" ],
 
-	[ "hourly",	[ 'hourly', "apparent_temperature" ],	[ 'hourly', "feelslike" ],			"temperatureunit" ],
-	[ "hourlyskin",	[ 'hourly', "apparent_temperature" ],	[ 'hourly', "feelslike" ],			"temperature" ],
-	[ "hourly",	[ 'hourly', "apparent_temperature" ],	[ 'hourly', "feelslikegraph" ],			"graph", "50", "temperature" ],
-
-	[ "hourly",	[ 'hourly', "dew_point_2m" ],		[ 'hourly', "dewpoint" ],			"temperatureunit" ],
-	[ "hourlyskin",	[ 'hourly', "dew_point_2m" ],		[ 'hourly', "dewpoint" ],			"temperature" ],
-	[ "hourly",	[ 'hourly', "dew_point_2m" ],		[ 'hourly', "dewpointgraph" ],			"graph", "50", "temperature" ],
-
-	[ "current",	[ 'current', "relative_humidity_2m" ],	[ 'current', "humidity" ],			"%" ],
-	[ "currentkodi",[ 'current', "relative_humidity_2m" ],	[ 'current', "humidity" ],			"round" ],
-	[ "hourly",	[ 'hourly', "relative_humidity_2m" ],	[ 'hourly', "humidity" ],			"roundpercent" ],
-	[ "hourlyskin",	[ 'hourly', "relative_humidity_2m" ],	[ 'hourly', "humidity" ],			"round" ],
-	[ "hourly",	[ 'hourly', "relative_humidity_2m" ],	[ 'hourly', "humiditygraph" ],			"graph", "100" ],
-
-	[ "current",	[ 'current', "precipitation" ],			[ 'current', "precip" ],			"precipitation" ],
-	[ "hourly",	[ 'hourly', "precipitation" ],			[ 'hourly', "precip" ],				"precipitation" ],
-	[ "hourly",	[ 'hourly', "precipitation" ],			[ 'hourly', "precipitationgraph" ],		"graph", "100" ],
-	[ "current",	[ 'current', "precipitation_probability" ],	[ 'current', "precipitation" ],			"roundpercent" ],
-	[ "hourly",	[ 'hourly', "precipitation_probability" ],	[ 'hourly', "precipitation" ],			"roundpercent" ],
-	[ "hourly",	[ 'hourly', "precipitation_probability" ],	[ 'hourly', "precipitationprobabilitygraph" ],	"graph", "100" ],
-
-	[ "currentskin",[ 'current', "precipitation" ],			[ 'current', "precipitation" ],			"precipitation" ],
-	[ "hourlyskin",	[ 'hourly', "precipitation" ],			[ 'hourly', "precipitation" ],			"precipitation" ],
-	[ "currentskin",[ 'current', "precipitation_probability" ],	[ 'current', "precipitationprobability" ],	"round" ],
-	[ "hourlyskin",	[ 'hourly', "precipitation_probability" ],	[ 'hourly', "precipitationprobability" ],	"round" ],
-
-	[ "current",	[ 'current', "pressure_msl" ],		[ 'current', "pressure" ],		"pressure" ],
-	[ "hourly",	[ 'hourly', "pressure_msl" ],		[ 'hourly', "pressure" ],		"pressure" ],
-	[ "hourly",	[ 'hourly', "pressure_msl" ],		[ 'hourly', "pressuregraph" ],		"graph", "100", "pressure" ],
-
-	[ "current",	[ 'current', "surface_pressure" ],	[ 'current', "pressuresurface" ],	"pressure" ],
-	[ "hourly",	[ 'hourly', "surface_pressure" ],	[ 'hourly', "pressuresurface" ],	"pressure" ],
-	[ "hourly",	[ 'hourly', "surface_pressure" ],	[ 'hourly', "pressuresurfacegraph" ],	"graph", "100", "pressure" ],
-
-	[ "current",	[ 'current', "wind_speed_10m" ],	[ 'current', "wind" ],			"windkodi" ],
-	[ "currentkodi",[ 'current', "wind_speed_10m" ],	[ 'current', "wind" ],			"round" ],
-
-	[ "current",	[ 'current', "wind_speed_10m" ],	[ 'current', "windaddon" ],		"windaddon" ],
-	[ "current",	[ 'current', "wind_speed_10m" ],	[ 'current', "windspeed" ],		"speed" ],
-	[ "hourly",	[ 'hourly', "wind_speed_10m" ],		[ 'hourly', "windspeed" ],		"speed" ],
-	[ "hourly",	[ 'hourly', "wind_speed_10m" ],		[ 'hourly', "windspeedgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "wind_direction_10m" ],	[ 'current', "winddirection" ],		"direction" ],
-	[ "current",	[ 'current', "wind_direction_10m" ],	[ 'current', "winddirectiondegree" ],	"round" ],
-	[ "hourly",	[ 'hourly', "wind_direction_10m" ],	[ 'hourly', "winddirection" ],		"direction" ],
-	[ "hourly",	[ 'hourly', "wind_direction_10m" ],	[ 'hourly', "winddirectiondegree" ],	"round" ],
-
-	[ "current",	[ 'current', "wind_gusts_10m" ],	[ 'current', "windgust" ],		"speed" ],
-	[ "hourly",	[ 'hourly', "wind_gusts_10m" ],		[ 'hourly', "windgust" ],		"speed" ],
-	[ "hourly",	[ 'hourly', "wind_gusts_10m" ],		[ 'hourly', "windgustgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "weather_code" ],		[ 'current', "condition" ],		"wmocond" ],
-	[ "current",	[ 'current', "weather_code" ],		[ 'current', "outlookicon" ],		"image" ],
-	[ "current",	[ 'current', "weather_code" ],		[ 'current', "outlookiconwmo" ],	"wmoimage" ],
-	[ "current",	[ 'current', "weather_code" ],		[ 'current', "fanartcode" ],		"code" ],
-	[ "current",	[ 'current', "weather_code" ],		[ 'current', "fanartcodewmo" ],		"wmocode" ],
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "outlook" ],		"wmocond" ],
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "outlookicon" ],		"image" ],
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "outlookiconwmo" ],		"wmoimage" ],
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "fanartcode" ],		"code" ],
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "fanartcodewmo" ],		"wmocode" ],
-
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "condition" ],		"wmocond" ],
-	[ "hourly",	[ 'hourly', "weather_code" ],		[ 'hourly', "conditiongraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "cloud_cover" ],		[ 'current', "cloudiness" ],		"roundpercent" ],
-	[ "currentskin",[ 'current', "cloud_cover" ],		[ 'current', "cloudiness" ],		"round" ],
-	[ "hourly",	[ 'hourly', "cloud_cover" ],		[ 'hourly', "cloudiness" ],		"roundpercent" ],
-	[ "hourlyskin",	[ 'hourly', "cloud_cover" ],		[ 'hourly', "cloudiness" ],		"round" ],
-	[ "hourly",	[ 'hourly', "cloud_cover" ],		[ 'hourly', "cloudinessgraph" ],	"graph", "100" ],
-
-	[ "current",	[ 'current', "is_day" ],		[ 'current', "isday" ],			"bool" ],
-	[ "hourly",	[ 'hourly', "is_day" ],			[ 'hourly', "isday" ],			"bool" ],
-
-	[ "current",	[ 'current', "visibility" ],		[ 'current', "visibility" ],		"distance" ],
-	[ "hourly",	[ 'hourly', "visibility" ],		[ 'hourly', "visibility" ],		"distance" ],
-	[ "hourly",	[ 'hourly', "visibility" ],		[ 'hourly', "visibilitygraph" ],	"graph", "100", "divide1000" ],
-
-	[ "current",	[ 'current', "uv_index" ],		[ 'current', "uvindex" ],		"uvindex" ],
-	[ "hourly",	[ 'hourly', "uv_index" ],		[ 'hourly', "uvindex" ],		"uvindex" ],
-	[ "hourly",	[ 'hourly', "uv_index" ],		[ 'hourly', "uvindexgraph" ],		"graph", "10" ],
-
-	[ "current",	[ 'current', "direct_radiation" ],	[ 'current', "solarradiation" ],	"radiation" ],
-	[ "hourly",	[ 'hourly', "direct_radiation" ],	[ 'hourly', "solarradiation" ],		"radiation" ],
-	[ "hourly",	[ 'hourly', "direct_radiation" ],	[ 'hourly', "solarradiationgraph" ],	"graph", "100", "divide10" ],
-
-	[ "daily",	[ 'daily', "time" ],			[ 'day', "title" ],			"weekday" ],
-	[ "daily",	[ 'daily', "time" ],			[ 'day', "date" ],			"date" ],
-	[ "daily",	[ 'daily', "time" ],			[ 'day', "shortdate" ],			"date" ],
-	[ "daily",	[ 'daily', "time" ],			[ 'day', "shortday" ],			"weekdayshort" ],
-	[ "daily",	[ 'daily', "time" ],			[ 'day', "longday" ],			"weekday" ],
-	[ "daily",	[ 'daily', "weather_code" ],		[ 'day', "condition" ],			"wmocond" ],
-	[ "daily",	[ 'daily', "weather_code" ],		[ 'day', "outlook" ],			"wmocond" ],
-	[ "daily",	[ 'daily', "weather_code" ],		[ 'day', "outlookicon" ],		"image" ],
-	[ "daily",	[ 'daily', "weather_code" ],		[ 'day', "outlookiconwmo" ],		"wmoimage" ],
-	[ "daily",	[ 'daily', "weather_code" ],		[ 'day', "fanartcode" ],		"code" ],
-	[ "daily",	[ 'daily', "weather_code" ],		[ 'day', "fanartcodewmo" ],		"wmocode" ],
-
-	[ "daily",	[ 'daily', "temperature_2m_max" ],	[ 'day', "hightemp" ],			"temperaturekodi" ],
-	[ "daily",	[ 'daily', "temperature_2m_min" ],	[ 'day', "lowtemp" ],			"temperaturekodi" ],
-	[ "dailykodi",	[ 'daily', "temperature_2m_max" ],	[ 'day', "hightemp" ],			"round" ],
-	[ "dailykodi",	[ 'daily', "temperature_2m_min" ],	[ 'day', "lowtemp" ],			"round" ],
-
-	[ "daily",	[ 'daily', "temperature_2m_max" ],	[ 'day', "hightemperature" ],		"temperatureunit" ],
-	[ "daily",	[ 'daily', "temperature_2m_min" ],	[ 'day', "lowtemperature" ],		"temperatureunit" ],
-	[ "dailyskin",	[ 'daily', "temperature_2m_max" ],	[ 'day', "hightemperature" ],		"temperature" ],
-	[ "dailyskin",	[ 'daily', "temperature_2m_min" ],	[ 'day', "lowtemperature" ],		"temperature" ],
-
-	[ "daily",	[ 'daily', "sunrise" ],			[ 'day', "sunrise" ],			"time" ],
-	[ "daily",	[ 'daily', "sunset" ],			[ 'day', "sunset" ],			"time" ],
-	[ "current",	[ 'daily', "sunrise", 1 ],		[ 'today', "sunrise" ],			"time" ],
-	[ "current",	[ 'daily', "sunset", 1 ],		[ 'today', "sunset" ],			"time" ],
-
-	[ "daily",	[ 'daily', "daylight_duration" ],	[ 'day', "daylight" ],			"time" ],
-	[ "daily",	[ 'daily', "sunshine_duration" ],	[ 'day', "sunshine" ],			"time" ],
-	[ "daily",	[ 'daily', "precipitation_hours" ],	[ 'day', "precipitationhours" ],	"time" ],
-	[ "daily",	[ 'daily', "uv_index_max" ],		[ 'day', "uvindex" ],			"uvindex" ],
+	# TimeOfDay
+	[ "timeofday",   [ 'hourly', "weather_code" ],                [ 'timeofday', "isfetched" ],                          "timeofday" ],
 ]
 
 map_airquality = [
-	[ "current",	[ 'current_units', "pm10" ],		[ 'unit', "particles" ],		"unitparticles" ],
-	[ "current",	[ 'current_units', "alder_pollen" ],	[ 'unit', "pollen" ],			"unitpollen" ],
 
-	[ "current",	[ 'current', "time" ],			[ 'current', "aqdate" ],		"date" ],
-	[ "current",	[ 'current', "time" ],			[ 'current', "aqtime" ],		"time" ],
-	[ "current",	[ 'current', "time" ],			[ 'current', "aqhour" ],		"hour" ],
+	# Units
+	[ "current",    [ 'current_units', "pm10" ],          [ 'unit', "particles" ],                 "unitparticles" ],
+	[ "current",    [ 'current_units', "alder_pollen" ],  [ 'unit', "pollen" ],                    "unitpollen" ],
 
-	[ "current",	[ 'current', "pm2_5" ],			[ 'current', "pm25" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "pm2_5" ],			[ 'hourly', "pm25" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "pm2_5" ],			[ 'hourly', "pm25graph" ],		"graph", "100" ],
+	# Current
+	[ "current",    [ 'current', "time" ],                [ 'current', "aqdate" ],                 "date" ],
+	[ "current",    [ 'current', "time" ],                [ 'current', "aqtime" ],                 "time" ],
+	[ "current",    [ 'current', "time" ],                [ 'current', "aqhour" ],                 "hour" ],
+	[ "current",    [ 'current', "pm2_5" ],               [ 'current', "pm25" ],                   "particles" ],
+	[ "current",    [ 'current', "pm10" ],                [ 'current', "pm10" ],                   "particles" ],
+	[ "current",    [ 'current', "carbon_monoxide" ],     [ 'current', "co" ],                     "particles" ],
+	[ "current",    [ 'current', "ozone" ],               [ 'current', "ozone" ],                  "particles" ],
+	[ "current",    [ 'current', "dust" ],                [ 'current', "dust" ],                   "particles" ],
+	[ "current",    [ 'current', "nitrogen_dioxide" ],    [ 'current', "no2" ],                    "particles" ],
+	[ "current",    [ 'current', "sulphur_dioxide" ],     [ 'current', "so2" ],                    "particles" ],
+	[ "current",    [ 'current', "european_aqi" ],        [ 'current', "aqieu" ],                  "round" ],
+	[ "current",    [ 'current', "us_aqi" ],              [ 'current', "aqius" ],                  "round" ],
+	[ "current",    [ 'current', "alder_pollen" ],        [ 'current', "alder" ],                  "pollen" ],
+	[ "current",    [ 'current', "birch_pollen" ],        [ 'current', "birch" ],                  "pollen" ],
+	[ "current",    [ 'current', "grass_pollen" ],        [ 'current', "grass" ],                  "pollen" ],
+	[ "current",    [ 'current', "mugwort_pollen" ],      [ 'current', "mugwort" ],                "pollen" ],
+	[ "current",    [ 'current', "olive_pollen" ],        [ 'current', "olive" ],                  "pollen" ],
+	[ "current",    [ 'current', "ragweed_pollen" ],      [ 'current', "ragweed" ],                "pollen" ],
 
-	[ "current",	[ 'current', "pm10" ],			[ 'current', "pm10" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "pm10" ],			[ 'hourly', "pm10" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "pm10" ],			[ 'hourly', "pm10graph" ],		"graph", "100" ],
+	# Hourly
+	[ "hourly",     [ 'hourly', "pm2_5" ],                [ 'hourly', "pm25" ],                    "particles" ],
+	[ "hourly",     [ 'hourly', "pm10" ],                 [ 'hourly', "pm10" ],                    "particles" ],
+	[ "hourly",     [ 'hourly', "carbon_monoxide" ],      [ 'hourly', "co" ],                      "particles" ],
+	[ "hourly",     [ 'hourly', "ozone" ],                [ 'hourly', "ozone" ],                   "particles" ],
+	[ "hourly",     [ 'hourly', "dust" ],                 [ 'hourly', "dust" ],                    "particles" ],
+	[ "hourly",     [ 'hourly', "nitrogen_dioxide" ],     [ 'hourly', "no2" ],                     "particles" ],
+	[ "hourly",     [ 'hourly', "sulphur_dioxide" ],      [ 'hourly', "so2" ],                     "particles" ],
+	[ "hourly",     [ 'hourly', "european_aqi" ],         [ 'hourly', "aqieu" ],                   "round" ],
+	[ "hourly",     [ 'hourly', "us_aqi" ],               [ 'hourly', "aqius" ],                   "round" ],
+	[ "hourly",     [ 'hourly', "alder_pollen" ],         [ 'hourly', "alder" ],                   "pollen" ],
+	[ "hourly",     [ 'hourly', "birch_pollen" ],         [ 'hourly', "birch" ],                   "pollen" ],
+	[ "hourly",     [ 'hourly', "grass_pollen" ],         [ 'hourly', "grass" ],                   "pollen" ],
+	[ "hourly",     [ 'hourly', "mugwort_pollen" ],       [ 'hourly', "mugwort" ],                 "pollen" ],
+	[ "hourly",     [ 'hourly', "olive_pollen" ],         [ 'hourly', "olive" ],                   "pollen" ],
+	[ "hourly",     [ 'hourly', "ragweed_pollen" ],       [ 'hourly', "ragweed" ],                 "pollen" ],
 
-	[ "current",	[ 'current', "carbon_monoxide" ],	[ 'current', "co" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "carbon_monoxide" ],	[ 'hourly', "co" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "carbon_monoxide" ],	[ 'hourly', "cograph" ],		"graph", "100", "divide10" ],
-
-	[ "current",	[ 'current', "ozone" ],			[ 'current', "ozone" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "ozone" ],			[ 'hourly', "ozone" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "ozone" ],			[ 'hourly', "ozonegraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "dust" ],			[ 'current', "dust" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "dust" ],			[ 'hourly', "dust" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "dust" ],			[ 'hourly', "dustgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "nitrogen_dioxide" ],	[ 'current', "no2" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "nitrogen_dioxide" ],	[ 'hourly', "no2" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "nitrogen_dioxide" ],	[ 'hourly', "no2graph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "sulphur_dioxide" ],	[ 'current', "so2" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "sulphur_dioxide" ],	[ 'hourly', "so2" ],			"particles" ],
-	[ "hourly",	[ 'hourly', "sulphur_dioxide" ],	[ 'hourly', "so2graph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "european_aqi" ],		[ 'current', "aqieu" ],			"round" ],
-	[ "hourly",	[ 'hourly', "european_aqi" ],		[ 'hourly', "aqieu" ],			"round" ],
-	[ "hourly",	[ 'hourly', "european_aqi" ],		[ 'hourly', "aqieugraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "us_aqi" ],		[ 'current', "aqius" ],			"round" ],
-	[ "hourly",	[ 'hourly', "us_aqi" ],			[ 'hourly', "aqius" ],			"round" ],
-	[ "hourly",	[ 'hourly', "us_aqi" ],			[ 'hourly', "aqiusgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "alder_pollen" ],		[ 'current', "alder" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "alder_pollen" ],		[ 'hourly', "alder" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "alder_pollen" ],		[ 'hourly', "aldergraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "birch_pollen" ],		[ 'current', "birch" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "birch_pollen" ],		[ 'hourly', "birch" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "birch_pollen" ],		[ 'hourly', "birchgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "grass_pollen" ],		[ 'current', "grass" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "grass_pollen" ],		[ 'hourly', "grass" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "grass_pollen" ],		[ 'hourly', "grassgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "mugwort_pollen" ],	[ 'current', "mugwort" ],		"pollen" ],
-	[ "hourly",	[ 'hourly', "mugwort_pollen" ],		[ 'hourly', "mugwort" ],		"pollen" ],
-	[ "hourly",	[ 'hourly', "mugwort_pollen" ],		[ 'hourly', "mugwortgraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "olive_pollen" ],		[ 'current', "olive" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "olive_pollen" ],		[ 'hourly', "olive" ],			"pollen" ],
-	[ "hourly",	[ 'hourly', "olive_pollen" ],		[ 'hourly', "olivegraph" ],		"graph", "100" ],
-
-	[ "current",	[ 'current', "ragweed_pollen" ],	[ 'current', "ragweed" ],		"pollen" ],
-	[ "hourly",	[ 'hourly', "ragweed_pollen" ],		[ 'hourly', "ragweed" ],		"pollen" ],
-	[ "hourly",	[ 'hourly', "ragweed_pollen" ],		[ 'hourly', "ragweedgraph" ],		"graph", "100" ],
+	# Graphs
+	[ "graph",     [ 'hourly', "pm2_5" ],                [ 'hourly', "pm25.graph" ],              "graph", "particles" ],
+	[ "graph",     [ 'hourly', "pm10" ],                 [ 'hourly', "pm10.graph" ],              "graph", "particles" ],
+	[ "graph",     [ 'hourly', "carbon_monoxide" ],      [ 'hourly', "co.graph" ],                "graph", "particles" ],
+	[ "graph",     [ 'hourly', "ozone" ],                [ 'hourly', "ozone.graph" ],             "graph", "particles" ],
+	[ "graph",     [ 'hourly', "dust" ],                 [ 'hourly', "dust.graph" ],              "graph", "particles" ],
+	[ "graph",     [ 'hourly', "nitrogen_dioxide" ],     [ 'hourly', "no2.graph" ],               "graph", "particles" ],
+	[ "graph",     [ 'hourly', "sulphur_dioxide" ],      [ 'hourly', "so2.graph" ],               "graph", "round" ],
+	[ "graph",     [ 'hourly', "european_aqi" ],         [ 'hourly', "aqieu.graph" ],             "graph", "round" ],
+	[ "graph",     [ 'hourly', "us_aqi" ],               [ 'hourly', "aqius.graph" ],             "graph", "pollen" ],
+	[ "graph",     [ 'hourly', "alder_pollen" ],         [ 'hourly', "alder.graph" ],             "graph", "pollen" ],
+	[ "graph",     [ 'hourly', "birch_pollen" ],         [ 'hourly', "birch.graph" ],             "graph", "pollen" ],
+	[ "graph",     [ 'hourly', "grass_pollen" ],         [ 'hourly', "grass.graph" ],             "graph", "pollen" ],
+	[ "graph",     [ 'hourly', "mugwort_pollen" ],       [ 'hourly', "mugwort.graph" ],           "graph", "pollen" ],
+	[ "graph",     [ 'hourly', "olive_pollen" ],         [ 'hourly', "olive.graph" ],             "graph", "pollen" ],
+	[ "graph",     [ 'hourly', "ragweed_pollen" ],       [ 'hourly', "ragweed.graph" ],           "graph", "pollen" ],
 ]
 
 map_moon = [
-	[ "current",	[ 'properties', 'moonrise', 'time' ],		[ 'today', "moonrise" ],	"timeiso" ],
-	[ "current",	[ 'properties', 'moonrise', 'azimuth' ],	[ 'today', "moonriseazimuth" ],	"round" ],
-	[ "current",	[ 'properties', 'moonset', 'time' ],		[ 'today', "moonset" ],		"timeiso" ],
-	[ "current",	[ 'properties', 'moonset', 'azimuth' ],		[ 'today', "moonsetazimuth" ],	"round" ],
-	[ "current",	[ 'properties', 'moonphase' ],			[ 'today', "moonphase" ],	"moonphase" ],
-	[ "current",	[ 'properties', 'moonphase' ],			[ 'today', "moonphaseimage" ],	"moonphaseimage" ],
-	[ "current",	[ 'properties', 'moonphase' ],			[ 'today', "moonphasedegree" ],	"round" ],
+	[ "current",    [ 'properties', 'moonrise', 'time' ],        [ 'today', "moonrise" ],              "timeiso" ],
+	[ "current",    [ 'properties', 'moonrise', 'azimuth' ],     [ 'today', "moonriseazimuth" ],       "round" ],
+	[ "current",    [ 'properties', 'moonset', 'time' ],         [ 'today', "moonset" ],               "timeiso" ],
+	[ "current",    [ 'properties', 'moonset', 'azimuth' ],      [ 'today', "moonsetazimuth" ],        "round" ],
+	[ "current",    [ 'properties', 'moonphase' ],               [ 'today', "moonphase" ],             "moonphase" ],
+	[ "current",    [ 'properties', 'moonphase' ],               [ 'today', "moonphaseimage" ],        "moonphaseimage" ],
+	[ "current",    [ 'properties', 'moonphase' ],               [ 'today', "moonphasedegree" ],       "round" ],
 ]
 
 map = {
@@ -399,8 +398,37 @@ map_height = {
 	2400: 2160
 }
 
-# Pressure
-map_pressure = { 950: 0, 951: 1, 952: 2, 953: 3, 954: 4, 955: 5, 956: 6, 957: 7, 958: 8, 959: 9, 960: 10, 961: 11, 962: 12, 963: 13, 964: 14, 965: 15, 966: 16, 967: 17, 968: 18, 969: 19, 970: 20, 971: 21, 972: 22, 973: 23, 974: 24, 975: 25, 976: 26, 977: 27, 978: 28, 979: 29, 980: 30, 981: 31, 982: 32, 983: 33, 984: 34, 985: 35, 986: 36, 987: 37, 988: 38, 989: 39, 990: 40, 991: 41, 992: 42, 993: 43, 994: 44, 995: 45, 996: 46, 997: 47, 998: 48, 999: 49, 1000: 50, 1001: 51, 1002: 52, 1003: 53, 1004: 54, 1005: 55, 1006: 56, 1007: 57, 1008: 58, 1009: 59, 1010: 60, 1011: 61, 1012: 62, 1013: 63, 1014: 64, 1015: 65, 1016: 66, 1017: 67, 1018: 68, 1019: 69, 1020: 70, 1021: 71, 1022: 72, 1023: 73, 1024: 74, 1025: 75, 1026: 76, 1027: 77, 1028: 78, 1029: 79, 1030: 80, 1031: 81, 1032: 82, 1033: 83, 1034: 84, 1035: 85, 1036: 86, 1037: 87, 1038: 88, 1039: 89, 1040: 90, 1041: 91, 1042: 92, 1043: 93, 1044: 94, 1045: 95, 1046: 96, 1047: 97, 1048: 98, 1049: 99, 1050: 100 }
+# Personalized forecast
+map_fcstart = {
+	0: None,
+	1: 1,
+	2: 2,
+	3: 3,
+	4: 4,
+	5: 5,
+	6: 6,
+	7: 7,
+	8: 8,
+	9: 9,
+	10: 10,
+	11: 11,
+	12: 12,
+}
+map_fcend = {
+	24: None,
+	23: -1,
+	22: -2,
+	21: -3,
+	20: -4,
+	19: -5,
+	18: -6,
+	17: -7,
+	16: -8,
+	15: -9,
+	14: -10,
+	13: -11,
+	14: -12,
+}
 
 # Dynamic localization mapping
 def localization():
@@ -484,6 +512,13 @@ def localization():
 		'7': utils.loc(47)
 	}
 
+	localization.timeofday = {
+		0: utils.locaddon(32480),
+		1: utils.locaddon(32481),
+		2: utils.locaddon(32482),
+		3: utils.locaddon(32483),
+	}
+
 	localization.layers = {
 		'rvradar': utils.locaddon(32400),
 		'rvsatellite': utils.locaddon(32401),
@@ -495,8 +530,10 @@ def localization():
 def alert(cache=False):
 
 	alert.map = {
-	        'temperaturegraph': {
+	        'temperature.graph': {
 			'type': 'temperature',
+			'unit': 'temperature',
+			'icon': 'temperature',
 			'loc': 32320,
 			'alert_temperature_high_1': utils.setting('alert_temperature_high_1', 'str', cache),
 			'alert_temperature_high_2': utils.setting('alert_temperature_high_2', 'str', cache),
@@ -505,204 +542,283 @@ def alert(cache=False):
 			'alert_temperature_low_2': utils.setting('alert_temperature_low_2', 'str', cache),
 			'alert_temperature_low_3': utils.setting('alert_temperature_low_3', 'str', cache),
 		},
-	        'precipitationgraph': {
+	        'precipitation.graph': {
 			'type': 'precipitation',
+			'unit': 'precipitation',
+			'icon': 'precipitation',
 			'loc': 32321,
 			'alert_precipitation_high_1': utils.setting('alert_precipitation_high_1', 'str', cache),
 			'alert_precipitation_high_2': utils.setting('alert_precipitation_high_2', 'str', cache),
 			'alert_precipitation_high_3': utils.setting('alert_precipitation_high_3', 'str', cache),
 		},
-	        'conditiongraph': {
+	        'snow.graph': {
+			'type': 'snow',
+			'unit': 'snow',
+			'icon': 'snow',
+			'loc': 32217,
+			'alert_snow_high_1': utils.setting('alert_snow_high_1', 'str', cache),
+			'alert_snow_high_2': utils.setting('alert_snow_high_2', 'str', cache),
+			'alert_snow_high_3': utils.setting('alert_snow_high_3', 'str', cache),
+		},
+	        'condition.graph': {
 			'type': 'condition',
+			'unit': '',
+			'icon': 'condition',
 			'loc': 32322,
 			'alert_condition_wmo_1': utils.setting('alert_condition_wmo_1', 'str', cache),
 			'alert_condition_wmo_2': utils.setting('alert_condition_wmo_2', 'str', cache),
 			'alert_condition_wmo_3': utils.setting('alert_condition_wmo_3', 'str', cache),
 		},
-	        'windspeedgraph': {
+	        'windspeed.graph': {
 			'type': 'windspeed',
+			'unit': 'speed',
+			'icon': 'wind',
 			'loc': 32323,
 			'alert_windspeed_high_1': utils.setting('alert_windspeed_high_1', 'str', cache),
 			'alert_windspeed_high_2': utils.setting('alert_windspeed_high_2', 'str', cache),
 			'alert_windspeed_high_3': utils.setting('alert_windspeed_high_3', 'str', cache),
 		},
-	        'windgustgraph': {
+	        'windgust.graph': {
 			'type': 'windgust',
+			'unit': 'speed',
+			'icon': 'wind',
 			'loc': 32324,
 			'alert_windgust_high_1': utils.setting('alert_windgust_high_1', 'str', cache),
 			'alert_windgust_high_2': utils.setting('alert_windgust_high_2', 'str', cache),
 			'alert_windgust_high_3': utils.setting('alert_windgust_high_3', 'str', cache),
 		},
-	        'feelslikegraph': {
+	        'feelslike.graph': {
 			'type': 'feelslike',
+			'unit': 'temperature',
+			'icon': 'temperature',
 			'loc': 32332,
 			'alert_feelslike_high_1': utils.setting('alert_feelslike_high_1', 'str', cache),
 			'alert_feelslike_high_2': utils.setting('alert_feelslike_high_2', 'str', cache),
 			'alert_feelslike_high_3': utils.setting('alert_feelslike_high_3', 'str', cache),
+			'alert_feelslike_low_1': utils.setting('alert_feelslike_low_1', 'str', cache),
+			'alert_feelslike_low_2': utils.setting('alert_feelslike_low_2', 'str', cache),
+			'alert_feelslike_low_3': utils.setting('alert_feelslike_low_3', 'str', cache),
 		},
-	        'dewpointgraph': {
+	        'dewpoint.graph': {
 			'type': 'dewpoint',
+			'unit': 'temperature',
+			'icon': 'temperature',
 			'loc': 32333,
 			'alert_dewpoint_high_1': utils.setting('alert_dewpoint_high_1', 'str', cache),
 			'alert_dewpoint_high_2': utils.setting('alert_dewpoint_high_2', 'str', cache),
 			'alert_dewpoint_high_3': utils.setting('alert_dewpoint_high_3', 'str', cache),
+			'alert_dewpoint_low_1': utils.setting('alert_dewpoint_low_1', 'str', cache),
+			'alert_dewpoint_low_2': utils.setting('alert_dewpoint_low_2', 'str', cache),
+			'alert_dewpoint_low_3': utils.setting('alert_dewpoint_low_3', 'str', cache),
 		},
-	        'cloudinessgraph': {
+	        'cloudiness.graph': {
 			'type': 'cloudiness',
+			'unit': '%',
+			'icon': 'cloud',
 			'loc': 32334,
 			'alert_cloudiness_high_1': utils.setting('alert_cloudiness_high_1', 'str', cache),
 			'alert_cloudiness_high_2': utils.setting('alert_cloudiness_high_2', 'str', cache),
 			'alert_cloudiness_high_3': utils.setting('alert_cloudiness_high_3', 'str', cache),
 		},
-	        'humiditygraph': {
+	        'humidity.graph': {
 			'type': 'humidity',
+			'unit': '%',
+			'icon': 'humidity',
 			'loc': 32346,
 			'alert_humidity_high_1': utils.setting('alert_humidity_high_1', 'str', cache),
 			'alert_humidity_high_2': utils.setting('alert_humidity_high_2', 'str', cache),
 			'alert_humidity_high_3': utils.setting('alert_humidity_high_3', 'str', cache),
 		},
-	        'precipitationprobabilitygraph': {
+	        'precipitationprobability.graph': {
 			'type': 'precipitationprobability',
+			'unit': '%',
+			'icon': 'precipitation',
 			'loc': 32321,
 			'alert_precipitationprobability_high_1': utils.setting('alert_precipitationprobability_high_1', 'str', cache),
 			'alert_precipitationprobability_high_2': utils.setting('alert_precipitationprobability_high_2', 'str', cache),
 			'alert_precipitationprobability_high_3': utils.setting('alert_precipitationprobability_high_3', 'str', cache),
 		},
-	        'pressuregraph': {
+	        'pressure.graph': {
 			'type': 'pressure',
+			'unit': 'pressure',
+			'icon': 'pressure',
 			'loc': 32347,
 			'alert_pressure_high_1': utils.setting('alert_pressure_high_1', 'str', cache),
 			'alert_pressure_high_2': utils.setting('alert_pressure_high_2', 'str', cache),
 			'alert_pressure_high_3': utils.setting('alert_pressure_high_3', 'str', cache),
+			'alert_pressure_low_1': utils.setting('alert_pressure_low_1', 'str', cache),
+			'alert_pressure_low_2': utils.setting('alert_pressure_low_2', 'str', cache),
+			'alert_pressure_low_3': utils.setting('alert_pressure_low_3', 'str', cache),
 		},
-	        'pressuresurfacegraph': {
+	        'pressuresurface.graph': {
 			'type': 'pressuresurface',
+			'unit': 'pressure',
+			'icon': 'pressure',
 			'loc': 32347,
 			'alert_pressuresurface_high_1': utils.setting('alert_pressuresurface_high_1', 'str', cache),
 			'alert_pressuresurface_high_2': utils.setting('alert_pressuresurface_high_2', 'str', cache),
 			'alert_pressuresurface_high_3': utils.setting('alert_pressuresurface_high_3', 'str', cache),
+			'alert_pressuresurface_low_1': utils.setting('alert_pressuresurface_low_1', 'str', cache),
+			'alert_pressuresurface_low_2': utils.setting('alert_pressuresurface_low_2', 'str', cache),
+			'alert_pressuresurface_low_3': utils.setting('alert_pressuresurface_low_3', 'str', cache),
 		},
-	        'solarradiationgraph': {
+	        'solarradiation.graph': {
 			'type': 'solarradiation',
+			'unit': 'solarradiation',
+			'icon': 'solarradiation',
 			'loc': 32348,
 			'alert_solarradiation_high_1': utils.setting('alert_solarradiation_high_1', 'str', cache),
 			'alert_solarradiation_high_2': utils.setting('alert_solarradiation_high_2', 'str', cache),
 			'alert_solarradiation_high_3': utils.setting('alert_solarradiation_high_3', 'str', cache),
 		},
-	        'visibilitygraph': {
+	        'visibility.graph': {
 			'type': 'visibility',
+			'unit': 'distance',
+			'icon': 'visibility',
 			'loc': 32349,
 			'alert_visibility_low_1': utils.setting('alert_visibility_low_1', 'str', cache),
 			'alert_visibility_low_2': utils.setting('alert_visibility_low_2', 'str', cache),
 			'alert_visibility_low_3': utils.setting('alert_visibility_low_3', 'str', cache),
 		},
-	        'aqieugraph': {
-			'type': 'aqieu',
-			'loc': 32325,
-			'alert_aqieu_high_1': utils.setting('alert_aqieu_high_1', 'str', cache),
-			'alert_aqieu_high_2': utils.setting('alert_aqieu_high_2', 'str', cache),
-			'alert_aqieu_high_3': utils.setting('alert_aqieu_high_3', 'str', cache),
-		},
-	        'aqiusgraph': {
-			'type': 'aqius',
-			'loc': 32326,
-			'alert_aqius_high_1': utils.setting('alert_aqius_high_1', 'str', cache),
-			'alert_aqius_high_2': utils.setting('alert_aqius_high_2', 'str', cache),
-			'alert_aqius_high_3': utils.setting('alert_aqius_high_3', 'str', cache),
-		},
-	        'pm25graph': {
-			'type': 'pm25',
-			'loc': 32327,
-			'alert_pm25_high_1': utils.setting('alert_pm25_high_1', 'str', cache),
-			'alert_pm25_high_2': utils.setting('alert_pm25_high_2', 'str', cache),
-			'alert_pm25_high_3': utils.setting('alert_pm25_high_3', 'str', cache),
-		},
-	        'pm10graph': {
-			'type': 'pm10',
-			'loc': 32328,
-			'alert_pm10_high_1': utils.setting('alert_pm10_high_1', 'str', cache),
-			'alert_pm10_high_2': utils.setting('alert_pm10_high_2', 'str', cache),
-			'alert_pm10_high_3': utils.setting('alert_pm10_high_3', 'str', cache),
-		},
-	        'cograph': {
-			'type': 'co',
-			'loc': 32337,
-			'alert_co_high_1': utils.setting('alert_co_high_1', 'str', cache),
-			'alert_co_high_2': utils.setting('alert_co_high_2', 'str', cache),
-			'alert_co_high_3': utils.setting('alert_co_high_3', 'str', cache),
-		},
-        	'ozonegraph': {
-			'type': 'ozone',
-			'loc': 32338,
-			'alert_ozone_high_1': utils.setting('alert_ozone_high_1', 'str', cache),
-			'alert_ozone_high_2': utils.setting('alert_ozone_high_2', 'str', cache),
-			'alert_ozone_high_3': utils.setting('alert_ozone_high_3', 'str', cache),
-		},
-	        'dustgraph': {
-			'type': 'dust',
-			'loc': 32339,
-			'alert_dust_high_1': utils.setting('alert_dust_high_1', 'str', cache),
-			'alert_dust_high_2': utils.setting('alert_dust_high_2', 'str', cache),
-			'alert_dust_high_3': utils.setting('alert_dust_high_3', 'str', cache),
-		},
-	        'no2graph': {
-			'type': 'no2',
-			'loc': 32330,
-			'alert_no2_high_1': utils.setting('alert_no2_high_1', 'str', cache),
-			'alert_no2_high_2': utils.setting('alert_no2_high_2', 'str', cache),
-			'alert_no2_high_3': utils.setting('alert_no2_high_3', 'str', cache),
-		},
-	        'so2graph': {
-			'type': 'so2',
-			'loc': 32331,
-			'alert_so2_high_1': utils.setting('alert_so2_high_1', 'str', cache),
-			'alert_so2_high_2': utils.setting('alert_so2_high_2', 'str', cache),
-			'alert_so2_high_3': utils.setting('alert_so2_high_3', 'str', cache),
-		},
-	        'uvindexgraph': {
+	        'uvindex.graph': {
 			'type': 'uvindex',
+			'unit': 'uvindex',
+			'icon': 'uvindex',
 			'loc': 32329,
 			'alert_uvindex_high_1': utils.setting('alert_uvindex_high_1', 'str', cache),
 			'alert_uvindex_high_2': utils.setting('alert_uvindex_high_2', 'str', cache),
 			'alert_uvindex_high_3': utils.setting('alert_uvindex_high_3', 'str', cache),
 		},
-	        'aldergraph': {
+	        'aqieu.graph': {
+			'type': 'aqieu',
+			'unit': 'index',
+			'icon': 'health',
+			'loc': 32325,
+			'alert_aqieu_high_1': utils.setting('alert_aqieu_high_1', 'str', cache),
+			'alert_aqieu_high_2': utils.setting('alert_aqieu_high_2', 'str', cache),
+			'alert_aqieu_high_3': utils.setting('alert_aqieu_high_3', 'str', cache),
+		},
+	        'aqius.graph': {
+			'type': 'aqius',
+			'unit': 'index',
+			'icon': 'health',
+			'loc': 32326,
+			'alert_aqius_high_1': utils.setting('alert_aqius_high_1', 'str', cache),
+			'alert_aqius_high_2': utils.setting('alert_aqius_high_2', 'str', cache),
+			'alert_aqius_high_3': utils.setting('alert_aqius_high_3', 'str', cache),
+		},
+	        'pm25.graph': {
+			'type': 'pm25',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32327,
+			'alert_pm25_high_1': utils.setting('alert_pm25_high_1', 'str', cache),
+			'alert_pm25_high_2': utils.setting('alert_pm25_high_2', 'str', cache),
+			'alert_pm25_high_3': utils.setting('alert_pm25_high_3', 'str', cache),
+		},
+	        'pm10.graph': {
+			'type': 'pm10',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32328,
+			'alert_pm10_high_1': utils.setting('alert_pm10_high_1', 'str', cache),
+			'alert_pm10_high_2': utils.setting('alert_pm10_high_2', 'str', cache),
+			'alert_pm10_high_3': utils.setting('alert_pm10_high_3', 'str', cache),
+		},
+	        'co.graph': {
+			'type': 'co',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32337,
+			'alert_co_high_1': utils.setting('alert_co_high_1', 'str', cache),
+			'alert_co_high_2': utils.setting('alert_co_high_2', 'str', cache),
+			'alert_co_high_3': utils.setting('alert_co_high_3', 'str', cache),
+		},
+		'ozone.graph': {
+			'type': 'ozone',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32338,
+			'alert_ozone_high_1': utils.setting('alert_ozone_high_1', 'str', cache),
+			'alert_ozone_high_2': utils.setting('alert_ozone_high_2', 'str', cache),
+			'alert_ozone_high_3': utils.setting('alert_ozone_high_3', 'str', cache),
+		},
+	        'dust.graph': {
+			'type': 'dust',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32339,
+			'alert_dust_high_1': utils.setting('alert_dust_high_1', 'str', cache),
+			'alert_dust_high_2': utils.setting('alert_dust_high_2', 'str', cache),
+			'alert_dust_high_3': utils.setting('alert_dust_high_3', 'str', cache),
+		},
+	        'no2.graph': {
+			'type': 'no2',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32330,
+			'alert_no2_high_1': utils.setting('alert_no2_high_1', 'str', cache),
+			'alert_no2_high_2': utils.setting('alert_no2_high_2', 'str', cache),
+			'alert_no2_high_3': utils.setting('alert_no2_high_3', 'str', cache),
+		},
+	        'so2.graph': {
+			'type': 'so2',
+			'unit': 'particles',
+			'icon': 'particles',
+			'loc': 32331,
+			'alert_so2_high_1': utils.setting('alert_so2_high_1', 'str', cache),
+			'alert_so2_high_2': utils.setting('alert_so2_high_2', 'str', cache),
+			'alert_so2_high_3': utils.setting('alert_so2_high_3', 'str', cache),
+		},
+	        'alder.graph': {
 			'type': 'alder',
+			'unit': 'pollen',
+			'icon': 'pollen',
 			'loc': 32450,
 			'alert_alder_high_1': utils.setting('alert_alder_high_1', 'str', cache),
 			'alert_alder_high_2': utils.setting('alert_alder_high_2', 'str', cache),
 			'alert_alder_high_3': utils.setting('alert_alder_high_3', 'str', cache),
 		},
-	        'birchgraph': {
+	        'birch.graph': {
 			'type': 'birch',
+			'unit': 'pollen',
+			'icon': 'pollen',
 			'loc': 32451,
 			'alert_birch_high_1': utils.setting('alert_birch_high_1', 'str', cache),
 			'alert_birch_high_2': utils.setting('alert_birch_high_2', 'str', cache),
 			'alert_birch_high_3': utils.setting('alert_birch_high_3', 'str', cache),
 		},
-	        'grassgraph': {
+	        'grass.graph': {
 			'type': 'grass',
+			'unit': 'pollen',
+			'icon': 'pollen',
 			'loc': 32452,
 			'alert_grass_high_1': utils.setting('alert_grass_high_1', 'str', cache),
 			'alert_grass_high_2': utils.setting('alert_grass_high_2', 'str', cache),
 			'alert_grass_high_3': utils.setting('alert_grass_high_3', 'str', cache),
 		},
-	        'mugwortgraph': {
+	        'mugwort.graph': {
 			'type': 'mugwort',
+			'unit': 'pollen',
+			'icon': 'pollen',
 			'loc': 32453,
 			'alert_mugwort_high_1': utils.setting('alert_mugwort_high_1', 'str', cache),
 			'alert_mugwort_high_2': utils.setting('alert_mugwort_high_2', 'str', cache),
 			'alert_mugwort_high_3': utils.setting('alert_mugwort_high_3', 'str', cache),
 		},
-	        'olivegraph': {
+	        'olive.graph': {
 			'type': 'olive',
+			'unit': 'pollen',
+			'icon': 'pollen',
 			'loc': 32454,
 			'alert_olive_high_1': utils.setting('alert_olive_high_1', 'str', cache),
 			'alert_olive_high_2': utils.setting('alert_olive_high_2', 'str', cache),
 			'alert_olive_high_3': utils.setting('alert_olive_high_3', 'str', cache),
 		},
-	        'ragweedgraph': {
+	        'ragweed.graph': {
 			'type': 'ragweed',
+			'unit': 'pollen',
+			'icon': 'pollen',
 			'loc': 32455,
 			'alert_ragweed_high_1': utils.setting('alert_ragweed_high_1', 'str', cache),
 			'alert_ragweed_high_2': utils.setting('alert_ragweed_high_2', 'str', cache),
@@ -716,7 +832,6 @@ def addon(cache=False):
 	addon.settings   = utils.settings()
 	addon.alerts     = 0
 	addon.msgqueue   = []
-	addon.scalecache = {}
 
 	# Bool
 	addon.debug       = utils.setting('debug', 'bool', cache)
@@ -732,6 +847,8 @@ def addon(cache=False):
 	addon.speeddp     = utils.setting('unitspeeddp', 'str', cache)
 	addon.precip      = utils.setting('unitprecip', 'str', cache)
 	addon.precipdp    = utils.setting('unitprecipdp', 'str', cache)
+	addon.snow        = utils.setting('unitsnow', 'str', cache)
+	addon.snowdp      = utils.setting('unitsnowdp', 'str', cache)
 	addon.distance    = utils.setting('unitdistance', 'str', cache)
 	addon.distancedp  = utils.setting('unitdistancedp', 'str', cache)
 	addon.particlesdp = utils.setting('unitparticlesdp', 'str', cache)
@@ -751,6 +868,8 @@ def addon(cache=False):
 	addon.mapzoom     = utils.setting('mapzoom', 'int', cache)
 	addon.maphistory  = utils.setting('maphistory', 'int', cache)
 	addon.alerthours  = utils.setting('alert_hours', 'int', cache)
+	addon.fcstart     = utils.setting('fcstart', 'int', cache)
+	addon.fcend       = utils.setting('fcend', 'int', cache)
 
 	# Maxlocs
 	if utils.setting('explocations', 'bool', cache):
@@ -759,14 +878,19 @@ def addon(cache=False):
 		addon.maxlocs = 4
 
 	# Addon mode
-	# Note (v0.9.4): Remove "skin.estuary.openht" in a future update
-	skin = utils.settingrpc('lookandfeel.skin')
+	addon.api  = False
+	addon.mode = { 'locations', 'location1', 'location2', 'location3', 'location4', 'location5' }
+	mode = utils.winprop('openmeteo')
 
-	if skin == utils.winprop('openmeteo') or skin == 'skin.estuary.openht':
+	if mode == 'full':
 		addon.skin = True
+		addon.full = True
+	elif mode:
+		addon.skin = True
+		addon.full = False
 	else:
 		addon.skin = False
-
+		addon.full = False
 
 def kodi():
 	kodi.long     = utils.region('datelong')
@@ -778,14 +902,25 @@ def kodi():
 	kodi.height   = 1080
 
 def loc(locid, cache=False):
+	loc.prop = {}
 	loc.id   = locid
 	loc.cid  = str(utils.settingrpc("weather.currentlocation"))
-	loc.name = utils.setting(f'loc{locid}', 'str')
-	loc.user = utils.setting(f'loc{locid}user', 'str')
 	loc.lat  = utils.setting(f'loc{locid}lat', 'float')
 	loc.lon  = utils.setting(f'loc{locid}lon', 'float')
 	loc.utz  = utils.setting(f'loc{locid}utz', 'bool')
 
+	# Name
+	name = utils.setting(f'loc{locid}', 'str')
+	user = utils.setting(f'loc{locid}user', 'str')
+
+	if user:
+		loc.name  = user
+		loc.short = user
+	else:
+		loc.name  = name
+		loc.short = name.split(',')[0]
+
+	# Timezone
 	try:
 		loc.tz = utils.timezone(utils.setting(f'loc{locid}tz'))
 	except:

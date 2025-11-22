@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.openmeteo" name="Open-Meteo" version="1.0.14" provider-name="OpenHT">
+<addon id="weather.openmeteo" name="Open-Meteo" version="1.0.29" provider-name="OpenHT">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests" version="2.27.1+matrix.1"/>
@@ -20,6 +20,10 @@
 		<description lang="hu_HU">Időjárás, térképek, levegőminőség és pollenelőrejelzés az open-meteo.com, a rainviewer.com, a weather.gc.ca és a met.no oldalakról</description>
 		<summary lang="id_ID">Prakiraan cuaca oleh Open-Meteo</summary>
 		<description lang="id_ID">Ramalan cuaca, peta, kualitas udara, dan serbuk sari dari open-meteo.com, rainviewer.com, weather.gc.ca dan met.no</description>
+		<summary lang="it_IT">Previsioni meteo di Open-Meteo</summary>
+		<description lang="it_IT">Meteo, mappe, qualità dell'aria e previsioni del polline da open-meteo.com, rainviewer.com, weather.gc.ca e met.no</description>
+		<summary lang="ru_RU">Прогноз погоды от Open-Meteo</summary>
+		<description lang="ru_RU">Прогноз погоды, карты, качество воздуха и пыльцы от open-meteo.com, rainviewer.com, weather.gc.ca и met.no</description>
 		<summary lang="sk_SK">Predpoveď počasia z Open-Meteo</summary>
 		<description lang="sk_SK">Počasie, mapy, kvalita vzduchu a peľové údaje z open-meteo.com, rainviewer.com, weather.gc.ca a met.no</description>
 		<summary lang="ta_IN">திறந்த-மெட்டியோவிலிருந்து வானிலை முன்னறிவிப்பு</summary>

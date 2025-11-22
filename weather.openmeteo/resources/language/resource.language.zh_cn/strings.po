@@ -623,6 +623,18 @@ msgctxt "#32456"
 msgid "grains"
 msgstr "颗粒"
 
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]通知[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]警告[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]危险[/COLOR]"
+
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
 msgstr "Open-Meteo 提供的天气预报"

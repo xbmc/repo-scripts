@@ -635,6 +635,18 @@ msgctxt "#32456"
 msgid "grains"
 msgstr "தானியங்கள்"
 
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]அறிவிப்பு[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]எச்சரிக்கை[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]இடர்[/COLOR]"
+
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
 msgstr "திறந்த-மெட்டியோவிலிருந்து வானிலை முன்னறிவிப்பு"

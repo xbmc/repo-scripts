@@ -126,7 +126,7 @@ def speedconv(value, unit):
 		if unit == 'mph':
 			v = value / 1.609344
 		elif unit == 'm/min':
-			v = value * 16,667
+			v = value * 16.667
 		elif unit == 'm/s':
 			v = value / 3.6
 		elif unit == 'ft/h':
@@ -291,6 +291,36 @@ def precipconv(value, unit):
 def precip(value=False):
 	return precipconv(value, config.addon.precip)
 
+# Snow
+def snowconv(value, unit):
+	if value is not False:
+		value = float(value)
+
+		if unit == 'in':
+			v = value / 2.54
+		else:
+			v = value
+
+		if config.addon.snowdp == '0':
+			return round(v)
+		else:
+			if config.addon.unitsep == ',':
+				return str(round(v,int(config.addon.snowdp))).replace('.',',')
+			else:
+				return round(v,int(config.addon.snowdp))
+
+	else:
+
+		if unit == 'in':
+			v = 'in'
+		else:
+			v = 'cm'
+
+		return v
+
+def snow(value=False):
+	return snowconv(value, config.addon.snow)
+
 # Pressure
 def pressureconv(value, unit):
 	if value is not False:
@@ -382,3 +412,65 @@ def moonphaseimage(deg):
 	elif deg >= 273 and deg <= 357:
 		return '7.png'
 
+# Season
+def season(lat):
+	d = utils.dt('dayofyear')
+
+	if lat >= 0:
+		n = True
+	else:
+		n = False
+
+	if d >= 80 and d <= 172:
+		return utils.locaddon(32471) if n else utils.locaddon(32473)
+	elif d >= 172 and d <= 264:
+		return utils.locaddon(32472) if n else utils.locaddon(32474)
+	elif d >= 264 and d <= 355:
+		return utils.locaddon(32473) if n else utils.locaddon(32471)
+	else:
+		return utils.locaddon(32474) if n else utils.locaddon(32472)
+
+# Item
+def item(value, type, unit=True):
+
+	if type == 'temperature':
+		v = temp(value)
+		u = temp()
+	elif type == 'precipitation':
+		v = precip(value)
+		u = precip()
+	elif type == 'snow':
+		v = snow(value)
+		u = snow()
+	elif type == 'speed':
+		v = speed(value)
+		u = speed()
+	elif type == 'distance':
+		v = distance(value)
+		u = distance()
+	elif type == 'pressure':
+		v = pressure(value)
+		u = pressure()
+	elif type == 'uvindex':
+		v = temp(value, config.addon.uvindexdp)
+		u = ''
+	elif type == 'solarradiation':
+		v = dp(value, config.addon.radiationdp)
+		u = 'W/m²'
+	elif type == 'particles':
+		v = dp(value, config.addon.particlesdp)
+		u = 'μg/m³'
+	elif type == 'pollen':
+		v = dp(value, config.addon.pollendp)
+		u = f'{utils.locaddon(32456)}/m³'
+	else:
+		v = round(value)
+		u = ''
+
+	if value is False:
+		return u
+	else:
+		if unit:
+			return v, u
+		else:
+			return v
