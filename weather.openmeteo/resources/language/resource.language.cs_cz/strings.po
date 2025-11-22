@@ -635,6 +635,18 @@ msgctxt "#32456"
 msgid "grains"
 msgstr "Obilniny"
 
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]Upozornění[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]Opatrnost[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]Nebezpečí[/COLOR]"
+
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
 msgstr "Predpoveď počasia z Open-Meteo"

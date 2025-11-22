@@ -622,6 +622,18 @@ msgctxt "#32456"
 msgid "grains"
 msgstr "зерна"
 
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]Попередження[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]Застереження[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]Небезпека[/COLOR]"
+
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
 msgstr "Прогноз погоди від Open-Meteo"

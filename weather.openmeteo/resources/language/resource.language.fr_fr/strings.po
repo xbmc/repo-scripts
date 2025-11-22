@@ -625,6 +625,18 @@ msgctxt "#32456"
 msgid "grains"
 msgstr "Grains"
 
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]Avis[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]Attention[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]Danger[/COLOR]"
+
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
 msgstr ""
