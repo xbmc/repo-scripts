@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.requests_oauthlib" name="requests_oauthlib" version="1.3.0+matrix.2" provider-name="Ib Lundgren">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0"/>
-		<import addon="script.module.oauthlib" version="3.1.0+matrix.1"/>
-		<import addon="script.module.requests" version="2.22.0+matrix.1"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en_GB">This project provides first-class OAuth library support for Requests.</summary>
-		<description lang="en_GB">This project provides first-class OAuth library support for Requests.</description>
-		<disclaimer lang="en_GB">This project provides first-class OAuth library support for Requests.</disclaimer>
-		<license>ISC</license>
-		<website>https://pypi.org/project/requests-oauthlib</website>
-		<source>https://github.com/requests/requests-oauthlib</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-	</extension>
+<addon id="script.module.requests_oauthlib" name="requests-oauthlib" version="1.3.1+matrix.1" provider-name="requests">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.oauthlib" version="3.2.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">OAuthlib authentication support for Requests</summary>
+    <description lang="en_GB">OAuthlib authentication support for Requests</description>
+    <license>ISC</license>
+    <platform>all</platform>
+    <website>https://github.com/requests/requests-oauthlib</website>
+    <source>https://github.com/requests/requests-oauthlib</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
 </addon>

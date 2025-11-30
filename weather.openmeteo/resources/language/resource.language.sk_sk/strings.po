@@ -1,0 +1,646 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: English (OpenHT)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-04 13:09+0200\n"
+"PO-Revision-Date: 2025-01-19 14:00+0000\n"
+"Last-Translator: frederik877 <samotjarina@gmail.com>\n"
+"Language-Team: Slovak <https://hosted.weblate.org/projects/openht/"
+"weather-openmeteo/sk/>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Generator: Weblate 5.10-dev\n"
+
+msgctxt "#32200"
+msgid "Sunny"
+msgstr "Slnečno"
+
+msgctxt "#32201"
+msgid "Mainly Sunny"
+msgstr "Väčšinou slnečno"
+
+msgctxt "#32202"
+msgid "Partly Cloudy"
+msgstr "Čiastočne oblačno"
+
+msgctxt "#32203"
+msgid "Cloudy"
+msgstr "Zamračené"
+
+msgctxt "#32204"
+msgid "Foggy"
+msgstr "Hmlisto"
+
+msgctxt "#32205"
+msgid "Rime Fog"
+msgstr "Mrznúca hmla"
+
+msgctxt "#32206"
+msgid "Light Drizzle"
+msgstr "Mierne Mrholenie"
+
+msgctxt "#32207"
+msgid "Drizzle"
+msgstr "Mrholenie"
+
+msgctxt "#32208"
+msgid "Heavy Drizzle"
+msgstr "Silné mrholenie"
+
+msgctxt "#32209"
+msgid "Light Freezing Drizzle"
+msgstr "Mierne mrznúce mrholenie"
+
+msgctxt "#32210"
+msgid "Freezing Drizzle"
+msgstr "Mrznúce mrholenie"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "Slabý Dážď"
+
+msgctxt "#32212"
+msgid "Rain"
+msgstr "Dážď"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "Silný Dážď"
+
+msgctxt "#32214"
+msgid "Light Freezing Rain"
+msgstr "Mierne mrznúci dážď"
+
+msgctxt "#32215"
+msgid "Freezing Rain"
+msgstr "Mrznúci dážď"
+
+msgctxt "#32216"
+msgid "Light Snow"
+msgstr "Mierne sneženie"
+
+msgctxt "#32217"
+msgid "Snow"
+msgstr "Sneženie"
+
+msgctxt "#32218"
+msgid "Heavy Snow"
+msgstr "Silné sneženie"
+
+msgctxt "#32219"
+msgid "Snow Grains"
+msgstr "Husté sneženie"
+
+msgctxt "#32220"
+msgid "Light Showers"
+msgstr "Mierne prehánky"
+
+msgctxt "#32221"
+msgid "Showers"
+msgstr "Prehánky"
+
+msgctxt "#32222"
+msgid "Heavy Showers"
+msgstr "Silné prehánky"
+
+msgctxt "#32223"
+msgid "Light Snow Showers"
+msgstr "Ľahké Snehové Prehánky"
+
+msgctxt "#32224"
+msgid "Snow Showers"
+msgstr "Snehové Prehánky"
+
+msgctxt "#32225"
+msgid "Thunderstorm"
+msgstr "Búrky"
+
+msgctxt "#32226"
+msgid "Light Thunderstorms With Hail"
+msgstr "Mierna Búrka s Krupobitím"
+
+msgctxt "#32227"
+msgid "Thunderstorm With Hail"
+msgstr "Búrka s Krupobitím"
+
+msgctxt "#32250"
+msgid "Clear"
+msgstr "Jasno"
+
+msgctxt "#32251"
+msgid "Mainly Clear"
+msgstr "Väčšinou Jasno"
+
+msgctxt "#32255"
+msgid "Moonrise"
+msgstr "Východ mesiaca"
+
+msgctxt "#32256"
+msgid "Moonset"
+msgstr "Západ mesiaca"
+
+msgctxt "#32257"
+msgid "Moonphase"
+msgstr "Fáza Mesiaca"
+
+msgctxt "#32260"
+msgid "General"
+msgstr "Všeobecne"
+
+msgctxt "#32261"
+msgid "Locations"
+msgstr "Lokality"
+
+msgctxt "#32262"
+msgid "Limits"
+msgstr "Limity"
+
+msgctxt "#32263"
+msgid "Notifications"
+msgstr "Upozornenia"
+
+msgctxt "#32264"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32265"
+msgid "Weather"
+msgstr "Počasie"
+
+msgctxt "#32266"
+msgid "Airquality"
+msgstr "Kvalita ovzdušia"
+
+msgctxt "#32267"
+msgid "Pollen"
+msgstr "Peľ"
+
+msgctxt "#32268"
+msgid "Alerts"
+msgstr "Varovania"
+
+msgctxt "#32269"
+msgid "Select option"
+msgstr "Vyberte možnosť"
+
+msgctxt "#32270"
+msgid "Graphs"
+msgstr "Grafy"
+
+msgctxt "#32271"
+msgid "Overview"
+msgstr "Prehľad"
+
+msgctxt "#32272"
+msgid "History"
+msgstr "História"
+
+msgctxt "#32280"
+msgid "Units"
+msgstr "Jednotky"
+
+msgctxt "#32281"
+msgid "Maps"
+msgstr "Mapa"
+
+msgctxt "#32282"
+msgid "Logging"
+msgstr "Logovanie"
+
+msgctxt "#32283"
+msgid "Experimental (Restart required)"
+msgstr "Experimentálne (vyžaduje sa reštart)"
+
+msgctxt "#32285"
+msgid "Zoom"
+msgstr "Zoom"
+
+msgctxt "#32286"
+msgid "Debug"
+msgstr "Debug"
+
+msgctxt "#32287"
+msgid "Duration"
+msgstr "Trvanie"
+
+msgctxt "#32288"
+msgid "Hours"
+msgstr "Hodiny"
+
+msgctxt "#32289"
+msgid "Decimal places"
+msgstr "Desatinné miesta"
+
+msgctxt "#32290"
+msgid "Icons"
+msgstr "Ikony"
+
+msgctxt "#32291"
+msgid "Default"
+msgstr "Predvolené"
+
+#, read-only
+msgctxt "#32292"
+msgid "Weathermap"
+msgstr ""
+
+#, read-only
+msgctxt "#32293"
+msgid "Met.no"
+msgstr ""
+
+#, read-only
+msgctxt "#32294"
+msgid "WMO"
+msgstr ""
+
+msgctxt "#32296"
+msgid "Background sync"
+msgstr "Synchronizácia na pozadí"
+
+msgctxt "#32300"
+msgid "Distance"
+msgstr "Vzdialenosť"
+
+msgctxt "#32301"
+msgid "Index"
+msgstr "Index"
+
+msgctxt "#32302"
+msgid "Percent"
+msgstr "Percentá"
+
+msgctxt "#32303"
+msgid "Unit"
+msgstr "Jednotky"
+
+msgctxt "#32304"
+msgid "Decimal separator"
+msgstr "Oddeľovač desatinných miest"
+
+msgctxt "#32306"
+msgid "Particles"
+msgstr "Častice"
+
+msgctxt "#32307"
+msgid "Interval"
+msgstr "Interval"
+
+msgctxt "#32308"
+msgid "Verbose"
+msgstr "Úplné"
+
+msgctxt "#32310"
+msgid "Location 1"
+msgstr "Poloha 1"
+
+msgctxt "#32311"
+msgid "Location 2"
+msgstr "Poloha 2"
+
+msgctxt "#32312"
+msgid "Location 3"
+msgstr "Poloha 3"
+
+msgctxt "#32313"
+msgid "Location 4"
+msgstr "Poloha 4"
+
+msgctxt "#32314"
+msgid "Location 5"
+msgstr "Poloha 5"
+
+msgctxt "#32316"
+msgid "Use location timezone"
+msgstr "Použiť časové pásmo polohy"
+
+msgctxt "#32320"
+msgid "Temperature"
+msgstr "Teplota"
+
+msgctxt "#32321"
+msgid "Precipitation"
+msgstr "Zrážky"
+
+msgctxt "#32322"
+msgid "Condition"
+msgstr "Podmienky"
+
+msgctxt "#32323"
+msgid "Wind"
+msgstr "Vietor"
+
+msgctxt "#32324"
+msgid "Gust"
+msgstr "Poryvy"
+
+msgctxt "#32325"
+msgid "AQI EU"
+msgstr "AQI EU"
+
+msgctxt "#32326"
+msgid "AQI US"
+msgstr "AQI US"
+
+msgctxt "#32327"
+msgid "PM25"
+msgstr "PM25"
+
+msgctxt "#32328"
+msgid "PM10"
+msgstr "PM10"
+
+msgctxt "#32329"
+msgid "UV Index"
+msgstr "UV Index"
+
+msgctxt "#32330"
+msgid "Nitrogen Dioxide"
+msgstr "Oxid dusičitý"
+
+msgctxt "#32331"
+msgid "Sulphur Dioxide"
+msgstr "Oxid siričitý"
+
+msgctxt "#32332"
+msgid "Feelslike"
+msgstr "Pocitová"
+
+msgctxt "#32333"
+msgid "Dewpoint"
+msgstr "Rosný bod"
+
+msgctxt "#32334"
+msgid "Cloudiness"
+msgstr "Oblačnosť"
+
+msgctxt "#32335"
+msgid "Time"
+msgstr "Čas"
+
+msgctxt "#32336"
+msgid "Speed"
+msgstr "Rýchlosť"
+
+msgctxt "#32337"
+msgid "Carbon monoxide"
+msgstr "Oxid uhoľnatý"
+
+msgctxt "#32338"
+msgid "Ozone"
+msgstr "Ozón"
+
+msgctxt "#32339"
+msgid "Dust"
+msgstr "Prach"
+
+msgctxt "#32340"
+msgid "Notice"
+msgstr "Všimnite si"
+
+msgctxt "#32341"
+msgid "Caution"
+msgstr "Pozor"
+
+msgctxt "#32342"
+msgid "Danger"
+msgstr "Nebezpečenstvo"
+
+msgctxt "#32343"
+msgid "Normal"
+msgstr "Normálne"
+
+msgctxt "#32344"
+msgid "Negative"
+msgstr "Negatívne"
+
+msgctxt "#32345"
+msgid "Colours"
+msgstr "Farby"
+
+msgctxt "#32346"
+msgid "Humidity"
+msgstr "Vlhkosť"
+
+msgctxt "#32347"
+msgid "Pressure"
+msgstr "Tlak"
+
+msgctxt "#32348"
+msgid "Solar radiation"
+msgstr "Slnečné žiarenie"
+
+msgctxt "#32349"
+msgid "Visibility"
+msgstr "Viditeľnosť"
+
+#, read-only
+msgctxt "#32350"
+msgid "°C"
+msgstr ""
+
+#, read-only
+msgctxt "#32351"
+msgid "°F"
+msgstr ""
+
+#, read-only
+msgctxt "#32352"
+msgid "K"
+msgstr ""
+
+#, read-only
+msgctxt "#32353"
+msgid "°Ré"
+msgstr ""
+
+#, read-only
+msgctxt "#32354"
+msgid "°Ra"
+msgstr ""
+
+#, read-only
+msgctxt "#32355"
+msgid "°Rø"
+msgstr ""
+
+#, read-only
+msgctxt "#32356"
+msgid "°D"
+msgstr ""
+
+#, read-only
+msgctxt "#32357"
+msgid "°N"
+msgstr ""
+
+msgctxt "#32360"
+msgid "Application"
+msgstr "Aplikácia"
+
+msgctxt "#32361"
+msgid "mph"
+msgstr "mph"
+
+msgctxt "#32362"
+msgid "km/h"
+msgstr "km/h"
+
+msgctxt "#32363"
+msgid "m/min"
+msgstr "m/min"
+
+msgctxt "#32364"
+msgid "m/s"
+msgstr "m/s"
+
+msgctxt "#32365"
+msgid "ft/h"
+msgstr "ft/h"
+
+msgctxt "#32366"
+msgid "ft/min"
+msgstr "ft/min"
+
+msgctxt "#32367"
+msgid "ft/s"
+msgstr "ft/s"
+
+msgctxt "#32368"
+msgid "kts"
+msgstr "kts"
+
+msgctxt "#32369"
+msgid "Beaufort"
+msgstr "Beaufort"
+
+msgctxt "#32370"
+msgid "inch/s"
+msgstr "inch/s"
+
+msgctxt "#32371"
+msgid "yard/s"
+msgstr "yard/s"
+
+msgctxt "#32372"
+msgid "Furlong/Fortnight"
+msgstr "Furlong/Fortnight"
+
+msgctxt "#32380"
+msgid "mm"
+msgstr "mm"
+
+msgctxt "#32381"
+msgid "inches"
+msgstr "inches"
+
+msgctxt "#32390"
+msgid "12h"
+msgstr "12h"
+
+msgctxt "#32391"
+msgid "24h"
+msgstr "24h"
+
+msgctxt "#32400"
+msgid "Radar"
+msgstr "Radar"
+
+msgctxt "#32401"
+msgid "Satellite"
+msgstr "Satelit"
+
+msgctxt "#32410"
+msgid "m"
+msgstr "m"
+
+msgctxt "#32411"
+msgid "km"
+msgstr "km"
+
+msgctxt "#32412"
+msgid "mi"
+msgstr "mi"
+
+#, read-only
+msgctxt "#32430"
+msgid "."
+msgstr ""
+
+#, read-only
+msgctxt "#32431"
+msgid ","
+msgstr ""
+
+msgctxt "#32440"
+msgid "New Moon"
+msgstr "Nový Mesiac"
+
+msgctxt "#32441"
+msgid "Waxing Crescent"
+msgstr "Rastúci polmesiac"
+
+msgctxt "#32442"
+msgid "First Quarter"
+msgstr "Prvý štvrťrok"
+
+msgctxt "#32443"
+msgid "Waxing Gibbous"
+msgstr "Rastúci mesiac"
+
+msgctxt "#32444"
+msgid "Full Moon"
+msgstr "Spln mesiaca"
+
+msgctxt "#32445"
+msgid "Waning Gibbous"
+msgstr "Ubúdajúci mesiac"
+
+msgctxt "#32446"
+msgid "Last Quarter"
+msgstr "Posledný štvrťrok"
+
+msgctxt "#32447"
+msgid "Waning Crescent"
+msgstr "Ubúdajúci polmesiac"
+
+msgctxt "#32450"
+msgid "Alder"
+msgstr "Jelša"
+
+msgctxt "#32451"
+msgid "Birch"
+msgstr "Breza"
+
+msgctxt "#32452"
+msgid "Grass"
+msgstr "Tráva"
+
+msgctxt "#32453"
+msgid "Mugwort"
+msgstr "Estragón"
+
+msgctxt "#32454"
+msgid "Olive"
+msgstr "Oliva"
+
+msgctxt "#32455"
+msgid "Ragweed"
+msgstr "Ambrózia"
+
+msgctxt "#32456"
+msgid "grains"
+msgstr "Obilniny"
+
+msgctxt "#32500"
+msgid "Weather forecast from Open-Meteo"
+msgstr "Predpoveď počasia z Open-Meteo"
+
+msgctxt "#32501"
+msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
+msgstr ""
+"Počasie, mapy, kvalita vzduchu a peľové údaje z open-meteo.com, "
+"rainviewer.com, weather.gc.ca a met.no"

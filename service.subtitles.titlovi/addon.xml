@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.titlovi" name="Titlovi.com" version="2.0.1" provider-name="dEXE">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+	</requires>
+	<extension point="xbmc.subtitle.module" library="service.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Titlovi.com Official Subtitles Addon</summary>
+		<summary lang="sr_RS">Titlovi.com званични додатак за титлове</summary>
+		<summary lang="sr_RS@latin">Titlovi.com zvanični dodatak za titlove</summary>
+		<summary lang="hr_HR">Titlovi.com službeni dodatak za titlove</summary>
+		<summary lang="bs_BA">Titlovi.com službeni dodatak za titlove</summary>
+		<summary lang="mk_MK">Titlovi.com официјален додаток за преводи</summary>
+		<summary lang="sl_SI">Titlovi.com uradni dodatek za podnapise</summary>
+		<description lang="en_GB">[CR]Search and download subtitles for Movies, Documentaries and TV Series from [B]Titlovi.com[/B].[CR][CR]Supported languages: English, Serbian, Croatian, Bosnian, Macedonian and Slovenian.</description>
+		<description lang="sr_RS">[CR]Претражите и преузмите титлове за филмове, документарце и ТВ серије са [B]Titlovi.com[/B].[CR][CR]Подржани језици: енглески, српски, хрватски, босански, македонски и словеначки.</description>
+		<description lang="sr_RS@latin">[CR]Pretražite i preuzmite titlove za filmove, dokumentarce i TV serije sa [B]Titlovi.com[/B].[CR][CR]Podržani jezici: engleski, srpski, hrvatski, bosanski, makedonski i slovenački.</description>
+		<description lang="hr_HR">[CR]Pretražite i preuzmite titlove za filmove, dokumentarce i TV serije s [B]Titlovi.com[/B].[CR][CR]Podržani jezici: engleski, srpski, hrvatski, bosanski, makedonski i slovenski.</description>
+		<description lang="bs_BA">[CR]Pretražite i preuzmite titlove za filmove, dokumentarce i TV serije sa [B]Titlovi.com[/B].[CR][CR]Podržani jezici: engleski, srpski, hrvatski, bosanski, makedonski i slovenski.</description>
+		<description lang="mk_MK">[CR]Пребарувајте и преземајте преводи за филмови, документарни филмови и ТВ серии од [B]Titlovi.com[/B].[CR][CR]Поддржани јазици: англиски, српски, хрватски, босански, македонски и словенечки.</description>
+		<description lang="sl_SI">[CR]Iščite in prenesite podnapise za filme, dokumentarne filme in TV serije s [B]Titlovi.com[/B].[CR][CR]Podprti jeziki: angleščina, srbščina, hrvaščina, bosanščina, makedonščina in slovenščina.</description>
+		<disclaimer lang="en_GB">Users need to provide [B]Titlovi.com[/B] username and password in add-on configuration,[CR]and ensure that API access is enabled for their account on the server.</disclaimer>
+		<disclaimer lang="sr_RS">Корисници морају да унесу [B]Titlovi.com[/B] корисничко име и лозинку у подешавањима додатка,[CR]и да провере да ли је API приступ омогућен за њихов налог од стране сервера.</disclaimer>
+		<disclaimer lang="sr_RS@latin">Korisnici moraju da unesu [B]Titlovi.com[/B] korisničko ime i lozinku u podešavanjima dodatka,[CR]i da provere da li je API pristup omogućen za njihov nalog od strane servera.</disclaimer>
+		<disclaimer lang="hr_HR">Korisnici moraju upisati [B]Titlovi.com[/B] korisničko ime i lozinku u postavke dodatka,[CR]te osigurati da je API pristup omogućen za njihov račun na poslužitelju.</disclaimer>
+		<disclaimer lang="bs_BA">Korisnici moraju unijeti [B]Titlovi.com[/B] korisničko ime i lozinku u postavkama dodatka,[CR]i osigurati da je API pristup omogućen za njihov račun od strane servera.</disclaimer>
+		<disclaimer lang="mk_MK">Корисниците треба да внесат корисничко име и лозинка за [B]Titlovi.com[/B] во конфигурацијата на додатокот,[CR]и да се осигураат дека АПИ пристапот е овозможен за нивната сметка од страна на серверот.</disclaimer>
+		<disclaimer lang="sl_SI">Uporabniki morajo vnesti uporabniško ime in geslo za [B]Titlovi.com[/B] v nastavitvah dodatka ter zagotoviti,[CR]da je dostop do API-ja omogočen za njihov račun na strežniku.</disclaimer>
+		<language>en sr hr bs mk sl</language>
+		<platform>all</platform>
+		<license>GPL-2.0-only</license>
+		<forum>https://kodi.titlovi.com</forum>
+		<website>https://titlovi.com</website>
+		<email>info [at] titlovi {dot} com</email>
+		<source>https://github.com/deklica/service.subtitles.titlovi</source>
+		<news>[COLOR darkgoldenrod]All changes on GitHub:[/COLOR] [COLOR dodgerblue]github.com/deklica/service.subtitles.titlovi[/COLOR]</news>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+			<screenshot>resources/media/screenshot-1.jpg</screenshot>
+			<screenshot>resources/media/screenshot-2.jpg</screenshot>
+			<screenshot>resources/media/screenshot-3.jpg</screenshot>
+			<screenshot>resources/media/screenshot-4.jpg</screenshot>
+			<screenshot>resources/media/screenshot-5.jpg</screenshot>
+		</assets>
+	</extension>
+</addon>

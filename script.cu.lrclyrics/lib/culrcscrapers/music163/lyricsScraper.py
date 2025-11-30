@@ -45,8 +45,9 @@ class LyricsFetcher:
         links = []
         if 'result' in result and 'songs' in result['result']:
             for item in result['result']['songs']:
-                if (difflib.SequenceMatcher(None, artist.lower(), item['artists'][0]['name'].lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, title.lower(), item['name'].lower()).ratio() > 0.8):
-                    links.append((item['artists'][0]['name'] + ' - ' + item['name'], self.LYRIC_URL + '?id=' + str(item['id']) + '&lv=-1&kv=-1&tv=-1', item['artists'][0]['name'], item['name']))
+                artists = "+&+".join([a["name"] for a in item["artists"]])
+                if (difflib.SequenceMatcher(None, artist.lower(), artists.lower()).ratio() > 0.6) and (difflib.SequenceMatcher(None, title.lower(), item['name'].lower()).ratio() > 0.8):
+                    links.append((artists + ' - ' + item['name'], self.LYRIC_URL + '?id=' + str(item['id']) + '&lv=-1&kv=-1&tv=-1', artists, item['name']))
         if len(links) == 0:
             return None
         elif len(links) > 1:

@@ -2,24 +2,49 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements various Helper functions"""
 
-from __future__ import absolute_import, division, unicode_literals
 import os
-from time import time
+import re
+import struct
+from functools import total_ordering
 from socket import timeout
 from ssl import SSLError
-import struct
-
-
-try:  # Python 3
-    from urllib.error import HTTPError, URLError
-    from urllib.request import Request, urlopen
-except ImportError:  # Python 2
-    from urllib2 import HTTPError, Request, URLError, urlopen
+from time import time
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 from . import config
-from .kodiutils import (bg_progress_dialog, copy, delete, exists, get_setting, localize, log, mkdirs,
-                        progress_dialog, set_setting, stat_file, translate_path, yesno_dialog)
+from .kodiutils import (bg_progress_dialog, copy, delete, exists, get_setting,
+                        localize, log, mkdirs, progress_dialog, set_setting,
+                        stat_file, translate_path, yesno_dialog)
 from .unicodes import compat_path, from_unicode, to_unicode
+
+
+@total_ordering
+class Version:
+    """Implements Version"""
+    def __init__(self, *components):
+        self.components = list(components)
+
+    def __str__(self):
+        return '.'.join(map(str, self.components))
+
+    def __lt__(self, other):
+        # extended comparison that accounts for different lengths by padding with zeros
+        max_length = max(len(self.components), len(other.components))
+        # extend both lists with zeros up to the maximum length
+        extended_self = self.components + [0] * (max_length - len(self.components))
+        extended_other = other.components + [0] * (max_length - len(other.components))
+
+        for self_comp, other_comp in zip(extended_self, extended_other):
+            if self_comp < other_comp:
+                return True
+            if self_comp > other_comp:
+                return False
+        return False  # return False if all comparisons are equal
+
+    def __eq__(self, other):
+        # Uses the same logic for equality
+        return not self < other and not other < self
 
 
 def temp_path():
@@ -48,26 +73,26 @@ def download_path(url):
     return os.path.join(temp_path(), filename)
 
 
-def _http_request(url, headers=None, time_out=10):
-    """Perform an HTTP request and return request"""
+def _http_request(url, data=None, headers=None, time_out=10):
+    """Perform an HTTP request and return response"""
     log(0, 'Request URL: {url}', url=url)
 
     try:
+        request = Request(url)
         if headers:
-            request = Request(url, headers=headers)
-        else:
-            request = Request(url)
-        req = urlopen(request, timeout=time_out)
-        log(0, 'Response code: {code}', code=req.getcode())
-        if 400 <= req.getcode() < 600:
-            raise HTTPError('HTTP {} Error for url: {}'.format(req.getcode(), url), response=req)
+            request.headers = headers
+        if data:
+            request.data = data
+        response = urlopen(request, timeout=time_out)  # pylint: disable=consider-using-with
+        log(0, 'Response code: {code}', code=response.getcode())
+        if 400 <= response.getcode() < 600:
+            raise HTTPError
     except (HTTPError, URLError) as err:
         log(2, 'Download failed with error {}'.format(err))
         if yesno_dialog(localize(30004), '{line1}\n{line2}'.format(line1=localize(30063), line2=localize(30065))):  # Internet down, try again?
             return _http_request(url, headers, time_out)
         return None
-
-    return req
+    return response
 
 
 def http_get(url):
@@ -87,16 +112,28 @@ def http_head(url):
     req = Request(url)
     req.get_method = lambda: 'HEAD'
     try:
-        resp = urlopen(req)
-        return resp.getcode()
+        with urlopen(req) as response:
+            return response.getcode()
     except HTTPError as exc:
         return exc.getcode()
 
 
-def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=None, background=False):  # pylint: disable=too-many-statements
+def http_post(url, data, headers):
+    """Perform an HTTP POST request and return content"""
+    resp = _http_request(url, data, headers)
+    if resp is None:
+        return None
+
+    content = resp.read()
+    # NOTE: Do not log reponse (as could be large)
+    # log(0, 'Response: {response}', response=content)
+    return content.decode("utf-8")
+
+
+def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=None, background=False):  # pylint: disable=too-many-positional-arguments, too-many-statements
     """Makes HTTP request and displays a progress dialog on download."""
     if checksum:
-        from hashlib import sha1, md5
+        from hashlib import md5, sha1
         if hash_alg == 'sha1':
             calc_checksum = sha1()
         elif hash_alg == 'md5':
@@ -184,8 +221,7 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
         else:
             return False
 
-    store('download_path', dl_path)
-    return True
+    return dl_path
 
 
 def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disable=dangerous-default-value
@@ -194,11 +230,19 @@ def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disabl
     if not exists(destination):
         mkdirs(destination)
 
+    from shutil import copyfileobj
     from zipfile import ZipFile
     with ZipFile(compat_path(source)) as zip_obj:
         for filename in zip_obj.namelist():
-            if file_to_unzip and filename != file_to_unzip:
-                continue
+            if file_to_unzip:
+                # normalize to list
+                if isinstance(file_to_unzip, str):
+                    files = [file_to_unzip]
+                else:
+                    files = list(file_to_unzip)
+
+                if os.path.basename(filename) not in files:
+                    continue
 
             # Detect and remove (dangling) symlinks before extraction
             fullname = os.path.join(destination, filename)
@@ -206,7 +250,11 @@ def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disabl
                 log(3, 'Remove (dangling) symlink at {symlink}', symlink=fullname)
                 delete(fullname)
 
-            zip_obj.extract(filename, compat_path(destination))
+            source = zip_obj.open(filename)
+            target = open(os.path.join(compat_path(destination), os.path.basename(filename)), 'wb')
+            with source, target:
+                copyfileobj(source, target)
+
             result.append(True)  # Pass by reference for Thread
 
     return bool(result)
@@ -221,25 +269,14 @@ def system_os():
     from xbmc import getCondVisibility
     if getCondVisibility('system.platform.android'):
         sys_name = 'Android'
+    elif getCondVisibility('system.platform.webos'):
+        sys_name = 'webOS'
     else:
         from platform import system
         sys_name = system()
 
     system_os.cached = sys_name
     return sys_name
-
-
-def store(name, val=None):
-    """Store arbitrary value across functions"""
-
-    if val is not None:
-        setattr(store, name, val)
-        log(0, 'Stored {} in {}'.format(val, name))
-        return val
-
-    if not hasattr(store, name):
-        return None
-    return getattr(store, name)
 
 
 def diskspace():
@@ -311,7 +348,6 @@ def arch():
             sys_arch = 'x86'  # else, sys_arch = AMD64
 
     elif 'armv' in sys_arch:
-        import re
         arm_version = re.search(r'\d+', sys_arch.split('v')[1])
         if arm_version:
             sys_arch = 'armv' + arm_version.group()
@@ -330,6 +366,18 @@ def userspace64():
     return struct.calcsize('P') * 8 == 64
 
 
+def elfbinary64(path):
+    """To check if an ELF binary is 64bit or 32bit"""
+    with open(path, 'rb') as f:
+        f.seek(4)          # skip 0x7F 'E' 'L' 'F'
+        b = f.read(1)
+        if b == b'\x01':
+            return False
+        if b == b'\x02':
+            return True
+        raise ValueError('Not a valid ELF class')
+
+
 def hardlink(src, dest):
     """Hardlink a file when possible, copy when needed"""
     if exists(dest):
@@ -340,21 +388,29 @@ def hardlink(src, dest):
         link(compat_path(src), compat_path(dest))
     except (AttributeError, OSError, ImportError):
         return copy(src, dest)
-    log(2, "Hardlink file '{src}' to '{dest}'.", src=src, dest=dest)
+    log(0, "Hardlink file '{src}' to '{dest}'.", src=src, dest=dest)
     return True
 
 
 def remove_tree(path):
     """Remove an entire directory tree"""
     from shutil import rmtree
-    rmtree(compat_path(path))
+    if exists(path):
+        rmtree(compat_path(path))
 
 
-def parse_version(version):
-    """Parse a version string and return a comparable version object"""
-    try:
-        from packaging.version import parse
-        return parse(version)
-    except ImportError:
-        from distutils.version import LooseVersion  # pylint: disable=deprecated-module
-        return LooseVersion(version)
+def parse_version(vstring):
+    """Parse a version string and return a comparable version object, properly handling non-numeric prefixes."""
+    vstring = vstring.strip('v').lower()
+    parts = re.split(r'\.', vstring)  # split on periods first
+
+    vnums = []
+    for part in parts:
+        # extract numeric part, ignoring non-numeric prefixes
+        numeric_part = re.search(r'\d+', part)
+        if numeric_part:
+            vnums.append(int(numeric_part.group()))
+        else:
+            vnums.append(0)  # default to 0 if no numeric part found
+
+    return Version(*vnums)

@@ -63,3 +63,7 @@ msgstr "Csak külföldi"
 msgctxt "#32213"
 msgid "Machine Translated"
 msgstr "Gépi fordítás"
+
+msgctxt "#32214"
+msgid "Bad username. Make sure you have entered your username and not your email in the username field"
+msgstr "Rossz felhasználónév. Győződjön meg róla, hogy a felhasználónév mezőbe a felhasználónevét írta be, nem pedig az e-mail címét."

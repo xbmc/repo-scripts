@@ -1,12 +1,10 @@
 import xbmcgui
-from resources.lib.contextmenu.abstract_set_timer import (CONFIRM_YES,
-                                                          AbstractSetTimer)
+from resources.lib.contextmenu.abstract_set_timer import AbstractSetTimer
 from resources.lib.timer.concurrency import (ask_overlapping_timers,
                                              get_next_higher_prio,
                                              get_next_lower_prio)
 from resources.lib.timer.timer import Timer
-from resources.lib.utils.settings_utils import (CONFIRM_CUSTOM, CONFIRM_ESCAPE,
-                                                CONFIRM_NO, CONFIRM_YES,
+from resources.lib.utils.settings_utils import (CONFIRM_CUSTOM, CONFIRM_YES,
                                                 trigger_settings_changed_event)
 
 
@@ -20,6 +18,7 @@ class SetQuickEpgTimer(AbstractSetTimer):
         for i, t in enumerate(timers):
             if (found == -1
                     and timer.days == t.days
+                    and timer.date == t.date
                     and timer.start == t.start
                     and timer.path == t.path):
 

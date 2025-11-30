@@ -125,6 +125,14 @@ msgctxt "#32042"
 msgid "from"
 msgstr "von"
 
+msgctxt "#32043"
+msgid "specific date"
+msgstr "spezifisches Datum"
+
+msgctxt "#32044"
+msgid "Date"
+msgstr "Datum"
+
 msgctxt "#32050"
 msgid "This timer interrupts other timers"
 msgstr "Dieser Timer unterbricht andere Timer"
@@ -526,12 +534,12 @@ msgid "Pause from"
 msgstr "Pausiere von"
 
 msgctxt "#32170"
-msgid "Offset"
-msgstr "Versatz"
+msgid "Real-time clock"
+msgstr "Zeitgeber"
 
 msgctxt "#32171"
-msgid "Offset for timers in seconds"
-msgstr "Versatz für Timer in Sekunden"
+msgid "Offset for real-time clock in seconds"
+msgstr "Versatz für Zeitgeber in Sekunden"
 
 msgctxt "#32180"
 msgid "Presets for epg quick timer"
@@ -548,6 +556,22 @@ msgstr "zuletzt hinzugefügter Timer"
 msgctxt "#32183"
 msgid "always ask"
 msgstr "jedes mal fragen"
+
+msgctxt "#32190"
+msgid "Housekeeping"
+msgstr "Haushaltung"
+
+msgctxt "#32191"
+msgid "Cleanup missed timers at startup"
+msgstr "Räume verpasste Timer beim Starten auf"
+
+msgctxt "#32192"
+msgid "Cleanup missed timers when Kodi starts. This can happen if Kodi was not running when timer has been scheduled."
+msgstr "Räume verpasste Timer auf wenn Kodi gestartet wird. Das passiert, wenn Kodi nicht lief während ein Timer geplant war."
+
+msgctxt "#32193"
+msgid ""
+msgstr ""
 
 msgctxt "#32200"
 msgid "Monday"
@@ -852,3 +876,7 @@ msgstr "Bestimme die Strategie für die Priorität neuer Quicktimer."
 msgctxt "#32387"
 msgid "Mediatype is normally determined automatically. Set type manually e.g. if resuming doesn't work as expected."
 msgstr "Die Medienart wird automatisch ermittelt. Setze die Art manuell, z.B. wenn die Fortsetzung nicht richtig funktioniert."
+
+msgctxt "#32388"
+msgid "Schedule this timer with full date and not only by day within one week."
+msgstr "Programmiere diesen Timer zu einem Datum und nicht nur an einem Tag innerhalb einer Woche."

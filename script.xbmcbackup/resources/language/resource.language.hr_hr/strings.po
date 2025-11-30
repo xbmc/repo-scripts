@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-09-23 18:37+0000\n"
-"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
-"Language-Team: Croatian (http://www.transifex.com/teamxbmc/xbmc-addons/language/hr/)\n"
-"Language: hr\n"
+"PO-Revision-Date: 2023-01-07 18:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/hr_hr/>\n"
+"Language: hr_hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
 msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
@@ -24,7 +25,7 @@ msgstr "Sigurnosno kopirajte i obnovite vašu Kodi bazu podataka i datoteke pode
 
 msgctxt "Addon Description"
 msgid "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
-msgstr "Jeste li ikada oštetili vaša Kodi podešavanja i poželjeli ste ih obnoviti iz sigurnosne kopije? Sada to možete jednim klikom. Možete izvesti vašu bazu podataka, popis izvođenja, minijature, dodatke i ostale pojedinosti podešavanja na svaki izvor dostupan Kodiju ili izravno na Dropbox oblak pohrane. Sigurnosno kopiranje se može pokrenuti na zahtjev ili u planiranom vremenu."
+msgstr "Jeste li ikada poremetili vaše Kodi postavke i poželjeli da barem imate sigurnosnu kopiju? Sada to i možete jednim klikom. Možete izvesti vašu bazu podataka, popis izvođenja, minijature, dodatke i ostale pojedinosti podešavanja na bilo koji izvor na koji Kodi može pisati ili izravno u Dropbox pohranu u oblaku. Sigurnosno kopiranje može se pokrenuti na zahtjev ili pomoću planera. "
 
 msgctxt "#30010"
 msgid "Backup"
@@ -44,11 +45,11 @@ msgstr "Planirano vrijeme"
 
 msgctxt "#30014"
 msgid "Simple"
-msgstr ""
+msgstr "Jednostavno"
 
 msgctxt "#30015"
 msgid "Advanced"
-msgstr ""
+msgstr "Napredno"
 
 msgctxt "#30016"
 msgid "Backup"
@@ -132,11 +133,11 @@ msgstr "Datoteke podešavanja"
 
 msgctxt "#30036"
 msgid "Disclaimer"
-msgstr ""
+msgstr "Odricanje od odgovornosti"
 
 msgctxt "#30037"
 msgid "Canceling this menu will close and save changes"
-msgstr ""
+msgstr "Prekidanje ovog izbornika će zatvoriti i spremiti promjene"
 
 msgctxt "#30038"
 msgid "Advanced Settings Detected"
@@ -160,7 +161,7 @@ msgstr "Nastavi obnovu"
 
 msgctxt "#30043"
 msgid "The Backup addon has detected an unfinished restore"
-msgstr "Dodatak sigurnosnog kopiranja je otkrilo nezavršenu obnovu"
+msgstr "Dodatak sigurnosnog kopiranja je otkrio nezavršenu obnovu"
 
 msgctxt "#30044"
 msgid "Would you like to continue?"
@@ -168,7 +169,7 @@ msgstr "Želite li nastaviti?"
 
 msgctxt "#30045"
 msgid "Error: Remote or zip file path doesn't exist"
-msgstr ""
+msgstr "Greška: Udaljena ili zip putanja datoteke ne postoji"
 
 msgctxt "#30046"
 msgid "Starting"
@@ -208,15 +209,15 @@ msgstr "Uklanjanje sigurnosnog kopiranja"
 
 msgctxt "#30056"
 msgid "Scan or click this URL to authorize, click OK AFTER completion"
-msgstr ""
+msgstr "Pretraži ili klikni ovaj URL za ovjeru, kliknite U REDU NAKON završetka"
 
 msgctxt "#30057"
 msgid "Click OK AFTER completion"
-msgstr ""
+msgstr "Kliknite na U REDU NAKON završetka"
 
 msgctxt "#30058"
 msgid "Developer Code Needed"
-msgstr ""
+msgstr "Potreban je kôd razvijatelja"
 
 msgctxt "#30059"
 msgid "Visit https://www.dropbox.com/developers"
@@ -392,234 +393,242 @@ msgstr "Greška raspakiravanja zip arhive"
 
 msgctxt "#30102"
 msgid "Click OK to enter code"
-msgstr ""
+msgstr "Kliknite U REDU za upisivanje kôda"
 
 msgctxt "#30103"
 msgid "Validation Code"
-msgstr ""
+msgstr "Kôd provjere valjanosti"
 
 msgctxt "#30104"
 msgid "Authorize Now"
-msgstr ""
+msgstr "Ovjeri odmah"
 
 msgctxt "#30105"
 msgid "Authorize this remote service in the settings first"
-msgstr ""
+msgstr "Ovjeri ovu udaljenu uslugu prvo u postavkama"
 
 msgctxt "#30106"
 msgid "is authorized"
-msgstr ""
+msgstr "je ovjereno"
 
 msgctxt "#30107"
 msgid "error authorizing"
-msgstr ""
+msgstr "greška ovjere"
 
 msgctxt "#30108"
 msgid "Visit https://console.developers.google.com/"
-msgstr ""
+msgstr "Posjetite https://console.developers.google.com/"
 
 msgctxt "#30109"
 msgid "Run on startup if missed"
-msgstr ""
+msgstr "Pokreni pri pokretanju ako je propušteno"
 
 msgctxt "#30110"
 msgid "Set Name"
-msgstr ""
+msgstr "Postavi naziv"
 
 msgctxt "#30111"
 msgid "Root folder selection"
-msgstr ""
+msgstr "Odabir korijenske mape"
 
 msgctxt "#30112"
 msgid "Browse Folder"
-msgstr ""
+msgstr "Pregledaj mapu"
 
 msgctxt "#30113"
 msgid "Enter Own"
-msgstr ""
+msgstr "Unesite vlastitu"
 
 msgctxt "#30114"
 msgid "starts in Kodi home"
-msgstr ""
+msgstr "Pokreni u Kodi naslovnici"
 
 msgctxt "#30115"
 msgid "enter path to start there"
-msgstr ""
+msgstr "unesite putanju kako bi započeli ovdje"
 
 msgctxt "#30116"
 msgid "Enter root path"
-msgstr ""
+msgstr "Unesite korijensku putanju"
 
 msgctxt "#30117"
 msgid "Path Error"
-msgstr ""
+msgstr "Greška putanje"
 
 msgctxt "#30118"
 msgid "Path does not exist"
-msgstr ""
+msgstr "Putanja ne postoji"
 
 msgctxt "#30119"
 msgid "Select root"
-msgstr ""
+msgstr "Odaberi korijen"
 
 msgctxt "#30120"
 msgid "Add Exclude Folder"
-msgstr ""
+msgstr "Dodaj izuzetu mapu"
 
 msgctxt "#30121"
 msgid "Root Folder"
-msgstr ""
+msgstr "Korijenska mapa"
 
 msgctxt "#30122"
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 msgctxt "#30123"
 msgid "Delete"
-msgstr ""
+msgstr "Obriši"
 
 msgctxt "#30124"
 msgid "Choose Action"
-msgstr ""
+msgstr "Odaberi radnju"
 
 msgctxt "#30125"
 msgid "Advanced Editor"
-msgstr ""
+msgstr "Napredni uređivač"
 
 msgctxt "#30126"
 msgid "Add Set"
-msgstr ""
+msgstr "Dodaj skup"
 
 msgctxt "#30127"
 msgid "Delete Set"
-msgstr ""
+msgstr "Obriši skup"
 
 msgctxt "#30128"
 msgid "Are you sure you want to delete?"
-msgstr ""
+msgstr "Sigurno želite obrisati?"
 
 msgctxt "#30129"
 msgid "Exclude"
-msgstr ""
+msgstr "Izuzmi"
 
 msgctxt "#30130"
 msgid "The root folder cannot be changed"
-msgstr ""
+msgstr "Korijenska mapa se ne može promijeniti"
 
 msgctxt "#30131"
 msgid "Choose Sets to Restore"
-msgstr ""
+msgstr "Obnovi skup za obnovu"
 
 msgctxt "#30132"
 msgid "Version 1.5.0 requires you to setup your file selections again - this is a breaking change"
-msgstr ""
+msgstr "Inačica 1.5.0 zahtijeva ponovno postavljanje vaših datoteka - ova promjena slama"
 
 msgctxt "#30133"
 msgid "Game Saves"
-msgstr ""
+msgstr "Spremanja igre"
 
 msgctxt "#30134"
 msgid "Include"
-msgstr ""
+msgstr "Obuhvati"
 
 msgctxt "#30135"
 msgid "Add Include Folder"
-msgstr ""
+msgstr "Dodaj mapu obuhvaćanja"
 
 msgctxt "#30136"
 msgid "Path must be within root folder"
-msgstr ""
+msgstr "Putanja mora biti u korijenskoj mapi"
 
 msgctxt "#30137"
 msgid "This path is part of a rule already"
-msgstr ""
+msgstr "Putanja je već dio pravila"
 
 msgctxt "#30138"
 msgid "Set Name exists already"
-msgstr ""
+msgstr "Postavljeni naziv već postoji"
 
 msgctxt "#30139"
 msgid "Copy Simple Config"
-msgstr ""
+msgstr "Kopiraj jednostavno podešavanje"
 
 msgctxt "#30140"
 msgid "This will copy the default Simple file selection to the Advanced Editor"
-msgstr ""
+msgstr "Ovo će kopirati zadani odabir jednostavne datoteke u Napredni uređivač"
 
 msgctxt "#30141"
 msgid "This will erase any current Advanced Editor settings"
-msgstr ""
+msgstr "Ovo će obrisati svake trenutne postavke Naprednog uređivača"
 
 msgctxt "#30142"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "Omogući opširnije zapisivanje"
 
 msgctxt "#30143"
 msgid "Exclude a specific folder from this backup set"
-msgstr ""
+msgstr "Izuzmi određenu mapu iz ovog skupa sigurnosnog kopiranja"
 
 msgctxt "#30144"
 msgid "Include a specific folder to this backup set"
-msgstr ""
+msgstr "Obuhvati određenu mapu u ovaj skup sigrnosnog kopiranja"
 
 msgctxt "#30145"
 msgid "Type"
-msgstr ""
+msgstr "Vrsta"
 
 msgctxt "#30146"
 msgid "Include Sub Folders"
-msgstr ""
+msgstr "Obuhvati podmape"
 
 msgctxt "#30147"
 msgid "Toggle Sub Folders"
-msgstr ""
+msgstr "Uklj/Isklj podmape"
 
 msgctxt "#30148"
 msgid "Ask before restoring Kodi UI settings"
-msgstr ""
+msgstr "Upitaj prije obnove postavki Kodi korisničkog sučelja"
 
 msgctxt "#30149"
 msgid "Restore Kodi UI Settings"
-msgstr ""
+msgstr "Obnovi postavke Kodi korisničkog sučelja"
 
 msgctxt "#30150"
 msgid "Restore saved Kodi system settings from backup?"
-msgstr ""
+msgstr "Obnovi spremljene postavke Kodi sustava iz sigurnosne kopije?"
 
 msgctxt "#30151"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "Omogući opširnije zapisivanje"
 
 msgctxt "#30152"
 msgid "Set Zip File Location"
-msgstr ""
+msgstr "Postavi lokaciju Zip datoteke"
 
 msgctxt "#30153"
 msgid "Full path to where the zip file will be staged during backup or restore - must be local to this device"
-msgstr ""
+msgstr "Potpuna putanja do gdje će se zip datoteka postaviti tijekom sigurnosnog kopiranja ili obnove - mora biti lokalna za ovaj uređaj"
 
 msgctxt "#30154"
 msgid "Always prompt if Kodi settings should be restored - no by default"
-msgstr ""
+msgstr "Uvijek upitaj treba li Kodi postavke obnoviti- nije zadano"
 
 msgctxt "#30155"
 msgid "Adds additional information to the log file"
-msgstr ""
+msgstr "Dodaj dodatne informacije u datoteku zapisa"
 
 msgctxt "#30156"
 msgid "Must save key/secret first, then return to settings to authorize"
-msgstr ""
+msgstr "Mora prvo spremiti ključ/tajnu, zatim se vratiti u postavke za ovjeru"
 
 msgctxt "#30157"
 msgid "Simple uses pre-defined folder locations, use Advanced Editor to define custom paths"
-msgstr ""
+msgstr "Primjerak koristi preodređene lokacije mape, koristite Napredni uređivač za određivanje prilagođenih putanja"
 
 msgctxt "#30158"
 msgid "Run backup on daily, weekly, monthly, or custom schedule"
-msgstr ""
+msgstr "Pokreni sigurnosno kopiranje na dnevnom, tjednom, mjesečnom ili prilagođenom rasporedu"
 
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
+msgstr "Sigurnosno kopiranje je pokrenuto u nepoznatom načinu"
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
 msgstr ""
 
 #~ msgctxt "#30036"

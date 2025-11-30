@@ -1,0 +1,112 @@
+# XBMC Media Center language file
+# Addon Name: Video ScreenSaver
+# Addon id: screensaver.videosaver
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ms_my\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Create a screensaver from any Kodi video source."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Dynamic screensaver using Local content, SmartPlaylists, Plugins and UPNP Servers."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "Streaming sources not recommend for metered Internet."
+msgstr ""
+
+msgctxt "#32001"
+msgid "Something went wrong, Try again later ..."
+msgstr ""
+
+msgctxt "#32002"
+msgid "Video Type"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Video File"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Video Folder"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Video Limit"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Randomize"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Disable Trakt"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Ignore Keypress (Stop to end)."
+msgstr ""
+
+msgctxt "#32009"
+msgid "Single Video"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Multiple Videos"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Set ScreenSaver Volume [Restored to Previous Level on Stop]"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Enable Debugging [Log errors]"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Building Playlist"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Select File"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Select Folder"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Repeat Return State"
+msgstr ""
+
+msgctxt "#32017"
+msgid "General"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Select Source Type"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Display Time & Weather"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Path In-Valid, No media found!"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Set Dimmer Level"
+msgstr ""

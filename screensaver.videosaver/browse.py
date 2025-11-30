@@ -1,4 +1,4 @@
-#   Copyright (C) 2021 Lunatixz
+#   Copyright (C) 2024 Lunatixz
 #
 #
 # This file is part of Video ScreenSaver.
@@ -17,7 +17,6 @@
 # along with Video ScreenSaver.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys, traceback
-
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs, py2_encode, py2_decode
 
 # Plugin Info
@@ -48,12 +47,9 @@ def buildMenuListItem(label1="", label2="", path="", art={'thumb':ICON,'fanart':
 def browseDialog(type=0, heading=ADDON_NAME, default='', shares='', mask='', options=None, useThumbs=True, treatAsFolder=False, prompt=True, multi=False):
     if prompt and not default:
         if options is None:
-            options  = [{"label":"Video"           , "label2":"Video Sources"                 , "default":"library://video/"                   , "mask":VIDEO_EXTS , "type":type, "multi":False},
-                        {"label":"Files"           , "label2":"File Sources"                  , "default":""                                   , "mask":""         , "type":type, "multi":False},
-                        {"label":"Local"           , "label2":"Local Drives"                  , "default":""                                   , "mask":""         , "type":type, "multi":False},
-                        {"label":"Network"         , "label2":"Local Drives and Network Share", "default":""                                   , "mask":""         , "type":type, "multi":False}]
-        if type == 0: 
-            options.insert(0,{"label":"Video Playlists" , "label2":"Video Playlists"               , "default":"special://profile/playlists/video/" , "mask":'.xsp'     , "type":1, "multi":False})
+            options = [{"label":"Video", "label2":"Video Sources", "default":"library://video/", "mask":VIDEO_EXTS , "type":type, "multi":False}]
+            if type == 0: options.insert(0,{"label":"Video Playlists", "label2":"Video Playlists", "default":"special://profile/playlists/video/", "mask":'.xsp', "type":1, "multi":False})
+
         listitems = [buildMenuListItem(option['label'],option['label2']) for option in options]
         select    = selectDialog(listitems, LANGUAGE(32018), multi=False)
         if select is not None:
@@ -62,6 +58,7 @@ def browseDialog(type=0, heading=ADDON_NAME, default='', shares='', mask='', opt
             type      = options[select]['type']
             multi     = options[select]['multi']
             default   = options[select]['default']
+        else: return
             
     if multi == True:
         # https://codedocs.xyz/xbmc/xbmc/group__python___dialog.html#ga856f475ecd92b1afa37357deabe4b9e4
@@ -77,10 +74,8 @@ def browseDialog(type=0, heading=ADDON_NAME, default='', shares='', mask='', opt
         # 2	ShowAndGetImage
         # 3	ShowAndGetWriteableDirectory
         retval = xbmcgui.Dialog().browseSingle(type, heading, shares, mask, useThumbs, treatAsFolder, default)
-    if retval:
-        if prompt and retval == default: return None
-        return retval
-    return None
+    if options is not None and default == retval: return
+    return retval
       
 if __name__ == '__main__':
     if not xbmcgui.Window(10000).getProperty("%s.Running"%(ADDON_ID)) == "True":

@@ -1,17 +1,28 @@
-# coding: utf-8
-# Created on: 17.03.2016
-# Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
-# License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
+# (c) Roman Miroshnychenko, 2023
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, unicode_literals
 import json
-from kodi_six import xbmc
-from kodi_six.xbmcgui import Dialog
-from . import logger
-from .addon import ADDON
-from .utils import sync_library, sync_new_items, login, update_single_item
-from .medialibrary import get_item_details
-from .gui import ui_string
+import logging
+
+import xbmc
+from xbmcgui import Dialog
+
+from libs.addon import ADDON
+from libs.gui import ui_string
+from libs.medialibrary import get_item_details
+from libs.utils import sync_library, sync_new_items, login, update_single_item
 
 # Here ``addon`` is imported from another module to prevent a bug
 # when username and hash are not stored in the addon settings.
@@ -29,7 +40,7 @@ class UpdateMonitor(xbmc.Monitor):
     def onScanFinished(self, library):
         if library == 'video':
             sync_new_items()
-            logger.log_debug('New items updated')
+            logging.debug('New items updated')
 
     def onNotification(self, sender, method, data):
         """

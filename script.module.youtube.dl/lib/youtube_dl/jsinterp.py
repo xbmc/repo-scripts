@@ -1,74 +1,215 @@
+# coding: utf-8
 from __future__ import unicode_literals
 
+import calendar
 import itertools
 import json
-import math
 import operator
 import re
+import time
+
+from functools import update_wrapper, wraps
 
 from .utils import (
     error_to_compat_str,
     ExtractorError,
+    float_or_none,
+    int_or_none,
     js_to_json,
     remove_quotes,
+    str_or_none,
     unified_timestamp,
     variadic,
+    write_string,
 )
 from .compat import (
     compat_basestring,
     compat_chr,
     compat_collections_chain_map as ChainMap,
+    compat_contextlib_suppress,
+    compat_filter as filter,
+    compat_int,
+    compat_integer_types,
     compat_itertools_zip_longest as zip_longest,
+    compat_map as map,
+    compat_numeric_types,
     compat_str,
 )
 
 
-def _js_bit_op(op):
+# name JS functions
+class function_with_repr(object):
+    # from yt_dlp/utils.py, but in this module
+    # repr_ is always set
+    def __init__(self, func, repr_):
+        update_wrapper(self, func)
+        self.func, self.__repr = func, repr_
 
-    def zeroise(x):
-        return 0 if x in (None, JS_Undefined) else x
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
 
+    def __repr__(self):
+        return self.__repr
+
+
+# name JS operators
+def wraps_op(op):
+
+    def update_and_rename_wrapper(w):
+        f = update_wrapper(w, op)
+        # fn names are str in both Py 2/3
+        f.__name__ = str('JS_') + f.__name__
+        return f
+
+    return update_and_rename_wrapper
+
+
+# NB In principle NaN cannot be checked by membership.
+# Here all NaN values are actually this one, so _NaN is _NaN,
+# although _NaN != _NaN. Ditto Infinity.
+
+_NaN = float('nan')
+_Infinity = float('inf')
+
+
+class JS_Undefined(object):
+    pass
+
+
+def _js_bit_op(op, is_shift=False):
+
+    def zeroise(x, is_shift_arg=False):
+        if isinstance(x, compat_integer_types):
+            return (x % 32) if is_shift_arg else (x & 0xffffffff)
+        try:
+            x = float(x)
+            if is_shift_arg:
+                x = int(x % 32)
+            elif x < 0:
+                x = -compat_int(-x % 0xffffffff)
+            else:
+                x = compat_int(x % 0xffffffff)
+        except (ValueError, TypeError):
+            # also here for int(NaN), including float('inf') % 32
+            x = 0
+        return x
+
+    @wraps_op(op)
     def wrapped(a, b):
-        return op(zeroise(a), zeroise(b)) & 0xffffffff
+        return op(zeroise(a), zeroise(b, is_shift)) & 0xffffffff
 
     return wrapped
 
 
-def _js_arith_op(op):
+def _js_arith_op(op, div=False):
 
+    @wraps_op(op)
     def wrapped(a, b):
         if JS_Undefined in (a, b):
-            return float('nan')
-        return op(a or 0, b or 0)
+            return _NaN
+        # null, "" --> 0
+        a, b = (float_or_none(
+            (x.strip() if isinstance(x, compat_basestring) else x) or 0,
+            default=_NaN) for x in (a, b))
+        if _NaN in (a, b):
+            return _NaN
+        try:
+            return op(a, b)
+        except ZeroDivisionError:
+            return _NaN if not (div and (a or b)) else _Infinity
 
     return wrapped
 
 
-def _js_div(a, b):
-    if JS_Undefined in (a, b) or not (a and b):
-        return float('nan')
-    return operator.truediv(a or 0, b) if b else float('inf')
+_js_arith_add = _js_arith_op(operator.add)
 
 
-def _js_mod(a, b):
-    if JS_Undefined in (a, b) or not b:
-        return float('nan')
-    return (a or 0) % b
+def _js_add(a, b):
+    if not (isinstance(a, compat_basestring) or isinstance(b, compat_basestring)):
+        return _js_arith_add(a, b)
+    if not isinstance(a, compat_basestring):
+        a = _js_toString(a)
+    elif not isinstance(b, compat_basestring):
+        b = _js_toString(b)
+    return operator.concat(a, b)
+
+
+_js_mod = _js_arith_op(operator.mod)
+__js_exp = _js_arith_op(operator.pow)
 
 
 def _js_exp(a, b):
     if not b:
         return 1  # even 0 ** 0 !!
-    elif JS_Undefined in (a, b):
-        return float('nan')
-    return (a or 0) ** b
+    return __js_exp(a, b)
 
 
-def _js_eq_op(op):
+def _js_to_primitive(v):
+    return (
+        ','.join(map(_js_toString, v)) if isinstance(v, list)
+        else '[object Object]' if isinstance(v, dict)
+        else compat_str(v) if not isinstance(v, (
+            compat_numeric_types, compat_basestring))
+        else v
+    )
 
+
+# more exact: yt-dlp/yt-dlp#12110
+def _js_toString(v):
+    return (
+        'undefined' if v is JS_Undefined
+        else 'Infinity' if v == _Infinity
+        else 'NaN' if v is _NaN
+        else 'null' if v is None
+        # bool <= int: do this first
+        else ('false', 'true')[v] if isinstance(v, bool)
+        else re.sub(r'(?<=\d)\.?0*$', '', '{0:.7f}'.format(v)) if isinstance(v, compat_numeric_types)
+        else _js_to_primitive(v))
+
+
+_nullish = frozenset((None, JS_Undefined))
+
+
+def _js_eq(a, b):
+    # NaN != any
+    if _NaN in (a, b):
+        return False
+    # Object is Object
+    if isinstance(a, type(b)) and isinstance(b, (dict, list)):
+        return operator.is_(a, b)
+    # general case
+    if a == b:
+        return True
+    # null == undefined
+    a_b = set((a, b))
+    if a_b & _nullish:
+        return a_b <= _nullish
+    a, b = _js_to_primitive(a), _js_to_primitive(b)
+    if not isinstance(a, compat_basestring):
+        a, b = b, a
+    # Number to String: convert the string to a number
+    # Conversion failure results in ... false
+    if isinstance(a, compat_basestring):
+        return float_or_none(a) == b
+    return a == b
+
+
+def _js_neq(a, b):
+    return not _js_eq(a, b)
+
+
+def _js_id_op(op):
+
+    @wraps_op(op)
     def wrapped(a, b):
-        if set((a, b)) <= set((None, JS_Undefined)):
-            return op(a, a)
+        if _NaN in (a, b):
+            return op(_NaN, None)
+        if not isinstance(a, (compat_basestring, compat_numeric_types)):
+            a, b = b, a
+        # strings are === if ==
+        # why 'a' is not 'a': https://stackoverflow.com/a/1504848
+        if isinstance(a, (compat_basestring, compat_numeric_types)):
+            return a == b if op(0, 0) else a != b
         return op(a, b)
 
     return wrapped
@@ -76,6 +217,7 @@ def _js_eq_op(op):
 
 def _js_comp_op(op):
 
+    @wraps_op(op)
     def wrapped(a, b):
         if JS_Undefined in (a, b):
             return False
@@ -90,39 +232,55 @@ def _js_comp_op(op):
 
 def _js_ternary(cndn, if_true=True, if_false=False):
     """Simulate JS's ternary operator (cndn?if_true:if_false)"""
-    if cndn in (False, None, 0, '', JS_Undefined):
+    if cndn in (False, None, 0, '', JS_Undefined, _NaN):
         return if_false
-    try:
-        if math.isnan(cndn):  # NB: NaN cannot be checked by membership
-            return if_false
-    except TypeError:
-        pass
     return if_true
+
+
+def _js_unary_op(op):
+
+    @wraps_op(op)
+    def wrapped(a, _):
+        return op(a)
+
+    return wrapped
+
+
+# https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
+def _js_typeof(expr):
+    with compat_contextlib_suppress(TypeError, KeyError):
+        return {
+            JS_Undefined: 'undefined',
+            _NaN: 'number',
+            _Infinity: 'number',
+            True: 'boolean',
+            False: 'boolean',
+            None: 'object',
+        }[expr]
+    for t, n in (
+        (compat_basestring, 'string'),
+        (compat_numeric_types, 'number'),
+    ):
+        if isinstance(expr, t):
+            return n
+    if callable(expr):
+        return 'function'
+    # TODO: Symbol, BigInt
+    return 'object'
 
 
 # (op, definition) in order of binding priority, tightest first
 # avoid dict to maintain order
 # definition None => Defined in JSInterpreter._operator
 _OPERATORS = (
-    ('>>', _js_bit_op(operator.rshift)),
-    ('<<', _js_bit_op(operator.lshift)),
-    ('+', _js_arith_op(operator.add)),
+    ('>>', _js_bit_op(operator.rshift, True)),
+    ('<<', _js_bit_op(operator.lshift, True)),
+    ('+', _js_add),
     ('-', _js_arith_op(operator.sub)),
     ('*', _js_arith_op(operator.mul)),
     ('%', _js_mod),
-    ('/', _js_div),
+    ('/', _js_arith_op(operator.truediv, div=True)),
     ('**', _js_exp),
-)
-
-_COMP_OPERATORS = (
-    ('===', operator.is_),
-    ('!==', operator.is_not),
-    ('==', _js_eq_op(operator.eq)),
-    ('!=', _js_eq_op(operator.ne)),
-    ('<=', _js_comp_op(operator.le)),
-    ('>=', _js_comp_op(operator.ge)),
-    ('<', _js_comp_op(operator.lt)),
-    ('>', _js_comp_op(operator.gt)),
 )
 
 _LOG_OPERATORS = (
@@ -138,15 +296,30 @@ _SC_OPERATORS = (
     ('&&', None),
 )
 
-_OPERATOR_RE = '|'.join(map(lambda x: re.escape(x[0]), _OPERATORS + _LOG_OPERATORS))
+_UNARY_OPERATORS_X = (
+    ('void', _js_unary_op(lambda _: JS_Undefined)),
+    ('typeof', _js_unary_op(_js_typeof)),
+    # avoid functools.partial here since Py2 update_wrapper(partial) -> no __module__
+    ('!', _js_unary_op(lambda x: _js_ternary(x, if_true=False, if_false=True))),
+)
+
+_COMP_OPERATORS = (
+    ('===', _js_id_op(operator.is_)),
+    ('!==', _js_id_op(operator.is_not)),
+    ('==', _js_eq),
+    ('!=', _js_neq),
+    ('<=', _js_comp_op(operator.le)),
+    ('>=', _js_comp_op(operator.ge)),
+    ('<', _js_comp_op(operator.lt)),
+    ('>', _js_comp_op(operator.gt)),
+)
+
+_OPERATOR_RE = '|'.join(map(lambda x: re.escape(x[0]), _OPERATORS + _LOG_OPERATORS + _SC_OPERATORS))
 
 _NAME_RE = r'[a-zA-Z_$][\w$]*'
 _MATCHING_PARENS = dict(zip(*zip('()', '{}', '[]')))
 _QUOTES = '\'"/'
-
-
-class JS_Undefined(object):
-    pass
+_NESTED_BRACKETS = r'[^[\]]+(?:\[[^[\]]+(?:\[[^\]]+\])?\])?'
 
 
 class JS_Break(ExtractorError):
@@ -183,7 +356,47 @@ class LocalNameSpace(ChainMap):
         raise NotImplementedError('Deleting is not supported')
 
     def __repr__(self):
-        return 'LocalNameSpace%s' % (self.maps, )
+        return 'LocalNameSpace({0!r})'.format(self.maps)
+
+
+class Debugger(object):
+    ENABLED = False
+
+    @staticmethod
+    def write(*args, **kwargs):
+        level = kwargs.get('level', 100)
+
+        def truncate_string(s, left, right=0):
+            if s is None or len(s) <= left + right:
+                return s
+            return '...'.join((s[:left - 3], s[-right:] if right else ''))
+
+        write_string('[debug] JS: {0}{1}\n'.format(
+            '  ' * (100 - level),
+            ' '.join(truncate_string(compat_str(x), 50, 50) for x in args)))
+
+    @classmethod
+    def wrap_interpreter(cls, f):
+        if not cls.ENABLED:
+            return f
+
+        @wraps(f)
+        def interpret_statement(self, stmt, local_vars, allow_recursion, *args, **kwargs):
+            if cls.ENABLED and stmt.strip():
+                cls.write(stmt, level=allow_recursion)
+            try:
+                ret, should_ret = f(self, stmt, local_vars, allow_recursion, *args, **kwargs)
+            except Exception as e:
+                if cls.ENABLED:
+                    if isinstance(e, ExtractorError):
+                        e = e.orig_msg
+                    cls.write('=> Raises:', e, '<-|', stmt, level=allow_recursion)
+                raise
+            if cls.ENABLED and stmt.strip():
+                if should_ret or repr(ret) != stmt:
+                    cls.write(['->', '=>'][bool(should_ret)], repr(ret), '<-|', stmt, level=allow_recursion)
+            return ret, should_ret
+        return interpret_statement
 
 
 class JSInterpreter(object):
@@ -202,14 +415,28 @@ class JSInterpreter(object):
     class Exception(ExtractorError):
         def __init__(self, msg, *args, **kwargs):
             expr = kwargs.pop('expr', None)
+            msg = str_or_none(msg, default='"None"')
             if expr is not None:
                 msg = '{0} in: {1!r:.100}'.format(msg.rstrip(), expr)
             super(JSInterpreter.Exception, self).__init__(msg, *args, **kwargs)
 
-    class JS_RegExp(object):
+    class JS_Object(object):
+        def __getitem__(self, key):
+            if hasattr(self, key):
+                return getattr(self, key)
+            raise KeyError(key)
+
+        def dump(self):
+            """Serialise the instance"""
+            raise NotImplementedError
+
+    class JS_RegExp(JS_Object):
         RE_FLAGS = {
             # special knowledge: Python's re flags are bitmask values, current max 128
             # invent new bitmask values well above that for literal parsing
+            # JS 'u' flag is effectively always set (surrogate pairs aren't seen),
+            # but \u{...} and \p{...} escapes aren't handled); no additional JS 'v'
+            # features are supported
             # TODO: execute matches with these flags (remaining: d, y)
             'd': 1024,  # Generate indices for substring matches
             'g': 2048,  # Global search
@@ -217,21 +444,31 @@ class JSInterpreter(object):
             'm': re.M,  # Multi-line search
             's': re.S,  # Allows . to match newline characters
             'u': re.U,  # Treat a pattern as a sequence of unicode code points
+            'v': re.U,  # Like 'u' with extended character class and \p{} syntax
             'y': 4096,  # Perform a "sticky" search that matches starting at the current position in the target string
         }
 
         def __init__(self, pattern_txt, flags=0):
             if isinstance(flags, compat_str):
                 flags, _ = self.regex_flags(flags)
-            # First, avoid https://github.com/python/cpython/issues/74534
             self.__self = None
-            self.__pattern_txt = pattern_txt.replace('[[', r'[\[')
+            pattern_txt = str_or_none(pattern_txt) or '(?:)'
+            # escape unintended embedded flags
+            pattern_txt = re.sub(
+                r'(\(\?)([aiLmsux]*)(-[imsx]+:|(?<!\?)\))',
+                lambda m: ''.join(
+                    (re.escape(m.group(1)), m.group(2), re.escape(m.group(3)))
+                    if m.group(3) == ')'
+                    else ('(?:', m.group(2), m.group(3))),
+                pattern_txt)
+            # Avoid https://github.com/python/cpython/issues/74534
+            self.source = pattern_txt.replace('[[', r'[\[')
             self.__flags = flags
 
         def __instantiate(self):
             if self.__self:
                 return
-            self.__self = re.compile(self.__pattern_txt, self.__flags)
+            self.__self = re.compile(self.source, self.__flags)
             # Thx: https://stackoverflow.com/questions/44773522/setattr-on-python2-sre-sre-pattern
             for name in dir(self.__self):
                 # Only these? Obviously __class__, __init__.
@@ -239,13 +476,43 @@ class JSInterpreter(object):
                 # that can't be setattr'd but also can't need to be copied.
                 if name in ('__class__', '__init__', '__weakref__'):
                     continue
-                setattr(self, name, getattr(self.__self, name))
+                if name == 'flags':
+                    setattr(self, name, getattr(self.__self, name, self.__flags))
+                else:
+                    setattr(self, name, getattr(self.__self, name))
 
         def __getattr__(self, name):
             self.__instantiate()
-            if hasattr(self, name):
-                return getattr(self, name)
-            return super(JSInterpreter.JS_RegExp, self).__getattr__(name)
+            if name == 'pattern':
+                self.pattern = self.source
+                return self.pattern
+            elif hasattr(self.__self, name):
+                v = getattr(self.__self, name)
+                setattr(self, name, v)
+                return v
+            elif name in ('groupindex', 'groups'):
+                return 0 if name == 'groupindex' else {}
+            else:
+                flag_attrs = (  # order by 2nd elt
+                    ('hasIndices', 'd'),
+                    ('global', 'g'),
+                    ('ignoreCase', 'i'),
+                    ('multiline', 'm'),
+                    ('dotAll', 's'),
+                    ('unicode', 'u'),
+                    ('unicodeSets', 'v'),
+                    ('sticky', 'y'),
+                )
+                for k, c in flag_attrs:
+                    if name == k:
+                        return bool(self.RE_FLAGS[c] & self.__flags)
+                else:
+                    if name == 'flags':
+                        return ''.join(
+                            (c if self.RE_FLAGS[c] & self.__flags else '')
+                            for _, c in flag_attrs)
+
+            raise AttributeError('{0} has no attribute named {1}'.format(self, name))
 
         @classmethod
         def regex_flags(cls, expr):
@@ -258,17 +525,99 @@ class JSInterpreter(object):
                 flags |= cls.RE_FLAGS[ch]
             return flags, expr[idx + 1:]
 
+        def dump(self):
+            return '(/{0}/{1})'.format(
+                re.sub(r'(?<!\\)/', r'\/', self.source),
+                self.flags)
+
+        @staticmethod
+        def escape(string_):
+            return re.escape(string_)
+
+    class JS_Date(JS_Object):
+        _t = None
+
+        @staticmethod
+        def __ymd_etc(*args, **kw_is_utc):
+            # args: year, monthIndex, day, hours, minutes, seconds, milliseconds
+            is_utc = kw_is_utc.get('is_utc', False)
+
+            args = list(args[:7])
+            args += [0] * (9 - len(args))
+            args[1] += 1  # month 0..11 -> 1..12
+            ms = args[6]
+            for i in range(6, 9):
+                args[i] = -1  # don't know
+            if is_utc:
+                args[-1] = 1
+            # TODO: [MDN] When a segment overflows or underflows its expected
+            # range, it usually "carries over to" or "borrows from" the higher segment.
+            try:
+                mktime = calendar.timegm if is_utc else time.mktime
+                return mktime(time.struct_time(args)) * 1000 + ms
+            except (OverflowError, ValueError):
+                return None
+
+        @classmethod
+        def UTC(cls, *args):
+            t = cls.__ymd_etc(*args, is_utc=True)
+            return _NaN if t is None else t
+
+        @staticmethod
+        def parse(date_str, **kw_is_raw):
+            is_raw = kw_is_raw.get('is_raw', False)
+
+            t = unified_timestamp(str_or_none(date_str), False)
+            return int(t * 1000) if t is not None else t if is_raw else _NaN
+
+        @staticmethod
+        def now(**kw_is_raw):
+            is_raw = kw_is_raw.get('is_raw', False)
+
+            t = time.time()
+            return int(t * 1000) if t is not None else t if is_raw else _NaN
+
+        def __init__(self, *args):
+            if not args:
+                args = [self.now(is_raw=True)]
+            if len(args) == 1:
+                if isinstance(args[0], JSInterpreter.JS_Date):
+                    self._t = int_or_none(args[0].valueOf(), default=None)
+                else:
+                    arg_type = _js_typeof(args[0])
+                    if arg_type == 'string':
+                        self._t = self.parse(args[0], is_raw=True)
+                    elif arg_type == 'number':
+                        self._t = int(args[0])
+            else:
+                self._t = self.__ymd_etc(*args)
+
+        def toString(self):
+            try:
+                return time.strftime('%a %b %0d %Y %H:%M:%S %Z%z', self._t).rstrip()
+            except TypeError:
+                return "Invalid Date"
+
+        def valueOf(self):
+            return _NaN if self._t is None else self._t
+
+        def dump(self):
+            return '(new Date({0}))'.format(self.toString())
+
     @classmethod
     def __op_chars(cls):
         op_chars = set(';,[')
         for op in cls._all_operators():
-            for c in op[0]:
-                op_chars.add(c)
+            if op[0].isalpha():
+                continue
+            op_chars.update(op[0])
         return op_chars
 
     def _named_object(self, namespace, obj):
         self.__named_object_counter += 1
         name = '%s%d' % (self._OBJ_NAME, self.__named_object_counter)
+        if callable(obj) and not isinstance(obj, function_with_repr):
+            obj = function_with_repr(obj, 'F<%s>' % (self.__named_object_counter, ))
         namespace[name] = obj
         return name
 
@@ -279,12 +628,22 @@ class JSInterpreter(object):
         # collections.Counter() is ~10% slower in both 2.7 and 3.9
         counters = dict((k, 0) for k in _MATCHING_PARENS.values())
         start, splits, pos, delim_len = 0, 0, 0, len(delim) - 1
-        in_quote, escaping, skipping = None, False, 0
-        after_op, in_regex_char_group = True, False
-
+        in_quote, escaping, after_op, in_regex_char_group = None, False, True, False
+        skipping = 0
+        if skip_delims:
+            skip_delims = variadic(skip_delims)
+        skip_txt = None
         for idx, char in enumerate(expr):
+            if skip_txt and idx <= skip_txt[1]:
+                continue
             paren_delta = 0
             if not in_quote:
+                if char == '/' and expr[idx:idx + 2] == '/*':
+                    # skip a comment
+                    skip_txt = expr[idx:].find('*/', 2)
+                    skip_txt = [idx, idx + skip_txt + 1] if skip_txt >= 2 else None
+                    if skip_txt:
+                        continue
                 if char in _MATCHING_PARENS:
                     counters[_MATCHING_PARENS[char]] += 1
                     paren_delta = 1
@@ -308,7 +667,7 @@ class JSInterpreter(object):
                 continue
             elif pos == 0 and skip_delims:
                 here = expr[idx:]
-                for s in variadic(skip_delims):
+                for s in skip_delims:
                     if here.startswith(s) and s:
                         skipping = len(s) - 1
                         break
@@ -317,28 +676,98 @@ class JSInterpreter(object):
             if pos < delim_len:
                 pos += 1
                 continue
-            yield expr[start: idx - delim_len]
+            if skip_txt and skip_txt[0] >= start and skip_txt[1] <= idx - delim_len:
+                yield expr[start:skip_txt[0]] + expr[skip_txt[1] + 1: idx - delim_len]
+            else:
+                yield expr[start: idx - delim_len]
+            skip_txt = None
             start, pos = idx + 1, 0
             splits += 1
             if max_split and splits >= max_split:
                 break
-        yield expr[start:]
+        if skip_txt and skip_txt[0] >= start:
+            yield expr[start:skip_txt[0]] + expr[skip_txt[1] + 1:]
+        else:
+            yield expr[start:]
 
     @classmethod
     def _separate_at_paren(cls, expr, delim=None):
         if delim is None:
             delim = expr and _MATCHING_PARENS[expr[0]]
         separated = list(cls._separate(expr, delim, 1))
-
         if len(separated) < 2:
             raise cls.Exception('No terminating paren {delim} in {expr!r:.5500}'.format(**locals()))
         return separated[0][1:].strip(), separated[1].strip()
 
     @staticmethod
-    def _all_operators():
-        return itertools.chain(
-            # Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
-            _SC_OPERATORS, _LOG_OPERATORS, _COMP_OPERATORS, _OPERATORS)
+    def _all_operators(_cached=[]):
+        if not _cached:
+            _cached.extend(itertools.chain(
+                # Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+                _SC_OPERATORS, _LOG_OPERATORS, _COMP_OPERATORS, _OPERATORS, _UNARY_OPERATORS_X))
+        return _cached
+
+    def _separate_at_op(self, expr, max_split=None):
+
+        for op, _ in self._all_operators():
+            # hackety: </> have higher priority than <</>>, but don't confuse them
+            skip_delim = (op + op) if op in '<>*?' else None
+            if op == '?':
+                skip_delim = (skip_delim, '?.')
+            separated = list(self._separate(expr, op, skip_delims=skip_delim))
+            if len(separated) < 2:
+                continue
+
+            right_expr = separated.pop()
+            # handle operators that are both unary and binary, minimal BODMAS
+            if op in ('+', '-'):
+                # simplify/adjust consecutive instances of these operators
+                undone = 0
+                separated = [s.strip() for s in separated]
+                while len(separated) > 1 and not separated[-1]:
+                    undone += 1
+                    separated.pop()
+                if op == '-' and undone % 2 != 0:
+                    right_expr = op + right_expr
+                elif op == '+':
+                    while len(separated) > 1 and set(separated[-1]) <= self.OP_CHARS:
+                        right_expr = separated.pop() + right_expr
+                    if separated[-1][-1:] in self.OP_CHARS:
+                        right_expr = separated.pop() + right_expr
+                # hanging op at end of left => unary + (strip) or - (push right)
+                separated.append(right_expr)
+                dm_ops = ('*', '%', '/', '**')
+                dm_chars = set(''.join(dm_ops))
+
+                def yield_terms(s):
+                    skip = False
+                    for i, term in enumerate(s[:-1]):
+                        if skip:
+                            skip = False
+                            continue
+                        if not (dm_chars & set(term)):
+                            yield term
+                            continue
+                        for dm_op in dm_ops:
+                            bodmas = list(self._separate(term, dm_op, skip_delims=skip_delim))
+                            if len(bodmas) > 1 and not bodmas[-1].strip():
+                                bodmas[-1] = (op if op == '-' else '') + s[i + 1]
+                                yield dm_op.join(bodmas)
+                                skip = True
+                                break
+                        else:
+                            if term:
+                                yield term
+
+                    if not skip and s[-1]:
+                        yield s[-1]
+
+                separated = list(yield_terms(separated))
+                right_expr = separated.pop() if len(separated) > 1 else None
+                expr = op.join(separated)
+            if right_expr is None:
+                continue
+            return op, separated, right_expr
 
     def _operator(self, op, left_val, right_expr, expr, local_vars, allow_recursion):
         if op in ('||', '&&'):
@@ -350,27 +779,32 @@ class JSInterpreter(object):
         elif op == '?':
             right_expr = _js_ternary(left_val, *self._separate(right_expr, ':', 1))
 
-        right_val = self.interpret_expression(right_expr, local_vars, allow_recursion)
+        right_val = self.interpret_expression(right_expr, local_vars, allow_recursion) if right_expr else left_val
         opfunc = op and next((v for k, v in self._all_operators() if k == op), None)
         if not opfunc:
             return right_val
 
         try:
+            # print('Eval:', opfunc.__name__, left_val, right_val)
             return opfunc(left_val, right_val)
         except Exception as e:
             raise self.Exception('Failed to evaluate {left_val!r:.50} {op} {right_val!r:.50}'.format(**locals()), expr, cause=e)
 
-    def _index(self, obj, idx, allow_undefined=False):
-        if idx == 'length':
+    def _index(self, obj, idx, allow_undefined=None):
+        if idx == 'length' and isinstance(obj, list):
             return len(obj)
         try:
-            return obj[int(idx)] if isinstance(obj, list) else obj[idx]
-        except Exception as e:
-            if allow_undefined:
+            return obj[int(idx)] if isinstance(obj, list) else obj[compat_str(idx)]
+        except (TypeError, KeyError, IndexError, ValueError) as e:
+            # allow_undefined is None gives correct behaviour
+            if allow_undefined or (
+                    allow_undefined is None and not isinstance(e, TypeError)):
                 return JS_Undefined
-            raise self.Exception('Cannot get index {idx:.100}'.format(**locals()), expr=repr(obj), cause=e)
+            raise self.Exception('Cannot get index {idx!r:.100}'.format(**locals()), expr=repr(obj), cause=e)
 
     def _dump(self, obj, namespace):
+        if obj is JS_Undefined:
+            return 'undefined'
         try:
             return json.dumps(obj)
         except TypeError:
@@ -378,7 +812,7 @@ class JSInterpreter(object):
 
     # used below
     _VAR_RET_THROW_RE = re.compile(r'''(?x)
-        (?P<var>(?:var|const|let)\s)|return(?:\s+|(?=["'])|$)|(?P<throw>throw\s+)
+        (?:(?P<var>var|const|let)\s+|(?P<ret>return)(?:\s+|(?=["'])|$)|(?P<throw>throw)\s+)
         ''')
     _COMPOUND_RE = re.compile(r'''(?x)
         (?P<try>try)\s*\{|
@@ -390,15 +824,22 @@ class JSInterpreter(object):
     _FINALLY_RE = re.compile(r'finally\s*\{')
     _SWITCH_RE = re.compile(r'switch\s*\(')
 
+    def _eval_operator(self, op, left_expr, right_expr, expr, local_vars, allow_recursion):
+        left_val = self.interpret_expression(left_expr, local_vars, allow_recursion)
+        return self._operator(op, left_val, right_expr, expr, local_vars, allow_recursion)
+
+    @Debugger.wrap_interpreter
     def interpret_statement(self, stmt, local_vars, allow_recursion=100):
         if allow_recursion < 0:
             raise self.Exception('Recursion limit reached')
         allow_recursion -= 1
 
+        # print('At: ' + stmt[:60])
         should_return = False
         # fails on (eg) if (...) stmt1; else stmt2;
         sub_statements = list(self._separate(stmt, ';')) or ['']
         expr = stmt = sub_statements.pop().strip()
+
         for sub_stmt in sub_statements:
             ret, should_return = self.interpret_statement(sub_stmt, local_vars, allow_recursion)
             if should_return:
@@ -409,7 +850,7 @@ class JSInterpreter(object):
             expr = stmt[len(m.group(0)):].strip()
             if m.group('throw'):
                 raise JS_Throw(self.interpret_expression(expr, local_vars, allow_recursion))
-            should_return = not m.group('var')
+            should_return = 'return' if m.group('ret') else False
         if not expr:
             return None, should_return
 
@@ -426,7 +867,7 @@ class JSInterpreter(object):
 
         new_kw, _, obj = expr.partition('new ')
         if not new_kw:
-            for klass, konstr in (('Date', lambda x: int(unified_timestamp(x, False) * 1000)),
+            for klass, konstr in (('Date', lambda *x: self.JS_Date(*x).valueOf()),
                                   ('RegExp', self.JS_RegExp),
                                   ('Error', self.Exception)):
                 if not obj.startswith(klass + '('):
@@ -441,9 +882,19 @@ class JSInterpreter(object):
             else:
                 raise self.Exception('Unsupported object {obj:.100}'.format(**locals()), expr=expr)
 
-        if expr.startswith('void '):
-            left = self.interpret_expression(expr[5:], local_vars, allow_recursion)
-            return None, should_return
+        # apply unary operators (see new above)
+        for op, _ in _UNARY_OPERATORS_X:
+            if not expr.startswith(op):
+                continue
+            operand = expr[len(op):]
+            if not operand or (op.isalpha() and operand[0] != ' '):
+                continue
+            separated = self._separate_at_op(operand, max_split=1)
+            if separated:
+                next_op, separated, right_expr = separated
+                separated.append(right_expr)
+                operand = next_op.join(separated)
+            return self._eval_operator(op, operand, '', expr, local_vars, allow_recursion), should_return
 
         if expr.startswith('{'):
             inner, outer = self._separate_at_paren(expr)
@@ -462,8 +913,14 @@ class JSInterpreter(object):
                 expr = self._dump(inner, local_vars) + outer
 
         if expr.startswith('('):
-            inner, outer = self._separate_at_paren(expr)
-            inner, should_abort = self.interpret_statement(inner, local_vars, allow_recursion)
+            m = re.match(r'\((?P<d>[a-z])%(?P<e>[a-z])\.length\+(?P=e)\.length\)%(?P=e)\.length', expr)
+            if m:
+                # short-cut eval of frequently used `(d%e.length+e.length)%e.length`, worth ~6% on `pytest -k test_nsig`
+                outer = None
+                inner, should_abort = self._offset_e_by_d(m.group('d'), m.group('e'), local_vars)
+            else:
+                inner, outer = self._separate_at_paren(expr)
+                inner, should_abort = self.interpret_statement(inner, local_vars, allow_recursion)
             if not outer or should_abort:
                 return inner, should_abort or should_return
             else:
@@ -484,7 +941,7 @@ class JSInterpreter(object):
                 if_expr, expr = self._separate_at_paren(expr)
             else:
                 # may lose ... else ... because of ll.368-374
-                if_expr, expr = self._separate_at_paren(expr, delim=';')
+                if_expr, expr = self._separate_at_paren(' %s;' % (expr,), delim=';')
             else_expr = None
             m = re.match(r'else\s*(?P<block>\{)?', expr)
             if m:
@@ -532,8 +989,7 @@ class JSInterpreter(object):
                     if m.group('err'):
                         catch_vars[m.group('err')] = err.error if isinstance(err, JS_Throw) else err
                     catch_vars = local_vars.new_child(m=catch_vars)
-                    err = None
-                    pending = self.interpret_statement(sub_expr, catch_vars, allow_recursion)
+                    err, pending = None, self.interpret_statement(sub_expr, catch_vars, allow_recursion)
 
             m = self._FINALLY_RE.match(expr)
             if m:
@@ -623,7 +1079,7 @@ class JSInterpreter(object):
             start, end = m.span()
             sign = m.group('pre_sign') or m.group('post_sign')
             ret = local_vars[var]
-            local_vars[var] += 1 if sign[0] == '+' else -1
+            local_vars[var] = _js_add(ret, 1 if sign[0] == '+' else -1)
             if m.group('pre_sign'):
                 ret = local_vars[var]
             expr = expr[:start] + self._dump(ret, local_vars) + expr[end:]
@@ -633,15 +1089,18 @@ class JSInterpreter(object):
 
         m = re.match(r'''(?x)
             (?P<assign>
-                (?P<out>{_NAME_RE})(?:\[(?P<index>[^\]]+?)\])?\s*
+                (?P<out>{_NAME_RE})(?P<out_idx>(?:\[{_NESTED_BRACKETS}\])+)?\s*
                 (?P<op>{_OPERATOR_RE})?
                 =(?!=)(?P<expr>.*)$
             )|(?P<return>
-                (?!if|return|true|false|null|undefined)(?P<name>{_NAME_RE})$
-            )|(?P<indexing>
-                (?P<in>{_NAME_RE})\[(?P<idx>.+)\]$
+                (?!if|return|true|false|null|undefined|NaN|Infinity)(?P<name>{_NAME_RE})$
             )|(?P<attribute>
-                (?P<var>{_NAME_RE})(?:(?P<nullish>\?)?\.(?P<member>[^(]+)|\[(?P<member2>[^\]]+)\])\s*
+                (?P<var>{_NAME_RE})(?:
+                    (?P<nullish>\?)?\.(?P<member>[^(]+)|
+                    \[(?P<member2>{_NESTED_BRACKETS})\]
+                )\s*
+            )|(?P<indexing>
+                (?P<in>{_NAME_RE})(?P<in_idx>\[.+\])$
             )|(?P<function>
                 (?P<fname>{_NAME_RE})\((?P<args>.*)\)$
             )'''.format(**globals()), expr)
@@ -649,19 +1108,28 @@ class JSInterpreter(object):
         if md.get('assign'):
             left_val = local_vars.get(m.group('out'))
 
-            if not m.group('index'):
+            if not m.group('out_idx'):
                 local_vars[m.group('out')] = self._operator(
                     m.group('op'), left_val, m.group('expr'), expr, local_vars, allow_recursion)
                 return local_vars[m.group('out')], should_return
             elif left_val in (None, JS_Undefined):
                 raise self.Exception('Cannot index undefined variable ' + m.group('out'), expr=expr)
 
-            idx = self.interpret_expression(m.group('index'), local_vars, allow_recursion)
-            if not isinstance(idx, (int, float)):
-                raise self.Exception('List index %s must be integer' % (idx, ), expr=expr)
-            idx = int(idx)
+            indexes = md['out_idx']
+            while indexes:
+                idx, indexes = self._separate_at_paren(indexes)
+                idx = self.interpret_expression(idx, local_vars, allow_recursion)
+                if indexes:
+                    left_val = self._index(left_val, idx)
+            if isinstance(idx, float):
+                idx = int(idx)
+            if isinstance(left_val, list) and len(left_val) <= int_or_none(idx, default=-1):
+                # JS Array is a sparsely assignable list
+                # TODO: handle extreme sparsity without memory bloat, eg using auxiliary dict
+                left_val.extend((idx - len(left_val) + 1) * [JS_Undefined])
             left_val[idx] = self._operator(
-                m.group('op'), self._index(left_val, idx), m.group('expr'), expr, local_vars, allow_recursion)
+                m.group('op'), self._index(left_val, idx) if m.group('op') else None,
+                m.group('expr'), expr, local_vars, allow_recursion)
             return left_val[idx], should_return
 
         elif expr.isdigit():
@@ -671,42 +1139,42 @@ class JSInterpreter(object):
             raise JS_Break()
         elif expr == 'continue':
             raise JS_Continue()
-
         elif expr == 'undefined':
             return JS_Undefined, should_return
         elif expr == 'NaN':
-            return float('NaN'), should_return
+            return _NaN, should_return
+        elif expr == 'Infinity':
+            return _Infinity, should_return
 
         elif md.get('return'):
-            return local_vars[m.group('name')], should_return
+            ret = local_vars[m.group('name')]
+            # challenge may try to force returning the original value
+            # use an optional internal var to block this
+            if should_return == 'return':
+                if '_ytdl_do_not_return' not in local_vars:
+                    return ret, True
+                return (ret, True) if ret != local_vars['_ytdl_do_not_return'] else (ret, False)
+            else:
+                return ret, should_return
 
-        try:
+        with compat_contextlib_suppress(ValueError):
             ret = json.loads(js_to_json(expr))  # strict=True)
             if not md.get('attribute'):
                 return ret, should_return
-        except ValueError:
-            pass
 
         if md.get('indexing'):
             val = local_vars[m.group('in')]
-            idx = self.interpret_expression(m.group('idx'), local_vars, allow_recursion)
-            return self._index(val, idx), should_return
+            indexes = m.group('in_idx')
+            while indexes:
+                idx, indexes = self._separate_at_paren(indexes)
+                idx = self.interpret_expression(idx, local_vars, allow_recursion)
+                val = self._index(val, idx)
+            return val, should_return
 
-        for op, _ in self._all_operators():
-            # hackety: </> have higher priority than <</>>, but don't confuse them
-            skip_delim = (op + op) if op in '<>*?' else None
-            if op == '?':
-                skip_delim = (skip_delim, '?.')
-            separated = list(self._separate(expr, op, skip_delims=skip_delim))
-            if len(separated) < 2:
-                continue
-
-            right_expr = separated.pop()
-            while op == '-' and len(separated) > 1 and not separated[-1].strip():
-                right_expr = '-' + right_expr
-                separated.pop()
-            left_val = self.interpret_expression(op.join(separated), local_vars, allow_recursion)
-            return self._operator(op, left_val, right_expr, expr, local_vars, allow_recursion), should_return
+        separated = self._separate_at_op(expr)
+        if separated:
+            op, separated, right_expr = separated
+            return self._eval_operator(op, op.join(separated), right_expr, expr, local_vars, allow_recursion), should_return
 
         if md.get('attribute'):
             variable, member, nullish = m.group('var', 'member', 'nullish')
@@ -724,12 +1192,18 @@ class JSInterpreter(object):
                     memb = member
                     raise self.Exception('{memb} {msg}'.format(**locals()), expr=expr)
 
-            def eval_method():
+            def eval_method(variable, member):
                 if (variable, member) == ('console', 'debug'):
+                    if Debugger.ENABLED:
+                        Debugger.write(self.interpret_expression('[{0}]'.format(arg_str), local_vars, allow_recursion))
                     return
                 types = {
                     'String': compat_str,
                     'Math': float,
+                    'Array': list,
+                    'Date': self.JS_Date,
+                    'RegExp': self.JS_RegExp,
+                    # 'Error': self.Exception,  # has no std static methods
                 }
                 obj = local_vars.get(variable)
                 if obj in (JS_Undefined, None):
@@ -737,7 +1211,7 @@ class JSInterpreter(object):
                 if obj is JS_Undefined:
                     try:
                         if variable not in self._objects:
-                            self._objects[variable] = self.extract_object(variable)
+                            self._objects[variable] = self.extract_object(variable, local_vars)
                         obj = self._objects[variable]
                     except self.Exception:
                         if not nullish:
@@ -755,70 +1229,125 @@ class JSInterpreter(object):
                     self.interpret_expression(v, local_vars, allow_recursion)
                     for v in self._separate(arg_str)]
 
-                if obj == compat_str:
+                # Fixup prototype call
+                if isinstance(obj, type):
+                    new_member, rest = member.partition('.')[0::2]
+                    if new_member == 'prototype':
+                        new_member, func_prototype = rest.partition('.')[0::2]
+                        assertion(argvals, 'takes one or more arguments')
+                        assertion(isinstance(argvals[0], obj), 'must bind to type {0}'.format(obj))
+                        if func_prototype == 'call':
+                            obj = argvals.pop(0)
+                        elif func_prototype == 'apply':
+                            assertion(len(argvals) == 2, 'takes two arguments')
+                            obj, argvals = argvals
+                            assertion(isinstance(argvals, list), 'second argument must be a list')
+                        else:
+                            raise self.Exception('Unsupported Function method ' + func_prototype, expr)
+                        member = new_member
+
+                if obj is compat_str:
                     if member == 'fromCharCode':
                         assertion(argvals, 'takes one or more arguments')
-                        return ''.join(map(compat_chr, argvals))
+                        return ''.join(compat_chr(int(n)) for n in argvals)
                     raise self.Exception('Unsupported string method ' + member, expr=expr)
-                elif obj == float:
+                elif obj is float:
                     if member == 'pow':
                         assertion(len(argvals) == 2, 'takes two arguments')
                         return argvals[0] ** argvals[1]
                     raise self.Exception('Unsupported Math method ' + member, expr=expr)
+                elif obj is self.JS_Date:
+                    return getattr(obj, member)(*argvals)
 
                 if member == 'split':
-                    assertion(argvals, 'takes one or more arguments')
-                    assertion(len(argvals) == 1, 'with limit argument is not implemented')
-                    return obj.split(argvals[0]) if argvals[0] else list(obj)
+                    assertion(len(argvals) <= 2, 'takes at most two arguments')
+                    if len(argvals) > 1:
+                        limit = argvals[1]
+                        assertion(isinstance(limit, int) and limit >= 0, 'integer limit >= 0')
+                        if limit == 0:
+                            return []
+                    else:
+                        limit = 0
+                    if len(argvals) == 0:
+                        argvals = [JS_Undefined]
+                    elif isinstance(argvals[0], self.JS_RegExp):
+                        # avoid re.split(), similar but not enough
+
+                        def where():
+                            for m in argvals[0].finditer(obj):
+                                yield m.span(0)
+                            yield (None, None)
+
+                        def splits(limit=limit):
+                            i = 0
+                            for j, jj in where():
+                                if j == jj == 0:
+                                    continue
+                                if j is None and i >= len(obj):
+                                    break
+                                yield obj[i:j]
+                                if jj is None or limit == 1:
+                                    break
+                                limit -= 1
+                                i = jj
+
+                        return list(splits())
+                    return (
+                        obj.split(argvals[0], limit - 1) if argvals[0] and argvals[0] != JS_Undefined
+                        else list(obj)[:limit or None])
                 elif member == 'join':
                     assertion(isinstance(obj, list), 'must be applied on a list')
-                    assertion(len(argvals) == 1, 'takes exactly one argument')
-                    return argvals[0].join(obj)
+                    assertion(len(argvals) <= 1, 'takes at most one argument')
+                    return (',' if len(argvals) == 0 or argvals[0] in (None, JS_Undefined)
+                            else argvals[0]).join(
+                                ('' if x in (None, JS_Undefined) else _js_toString(x))
+                                for x in obj)
                 elif member == 'reverse':
                     assertion(not argvals, 'does not take any arguments')
                     obj.reverse()
                     return obj
                 elif member == 'slice':
-                    assertion(isinstance(obj, list), 'must be applied on a list')
-                    assertion(len(argvals) == 1, 'takes exactly one argument')
-                    return obj[argvals[0]:]
+                    assertion(isinstance(obj, (list, compat_str)), 'must be applied on a list or string')
+                    # From [1]:
+                    # .slice() - like [:]
+                    # .slice(n) - like [n:] (not [slice(n)]
+                    # .slice(m, n) - like [m:n] or [slice(m, n)]
+                    # [1] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+                    assertion(len(argvals) <= 2, 'takes between 0 and 2 arguments')
+                    if len(argvals) < 2:
+                        argvals += (None,)
+                    return obj[slice(*argvals)]
                 elif member == 'splice':
                     assertion(isinstance(obj, list), 'must be applied on a list')
                     assertion(argvals, 'takes one or more arguments')
-                    index, howMany = map(int, (argvals + [len(obj)])[:2])
+                    index, how_many = map(int, (argvals + [len(obj)])[:2])
                     if index < 0:
                         index += len(obj)
-                    add_items = argvals[2:]
-                    res = []
-                    for i in range(index, min(index + howMany, len(obj))):
-                        res.append(obj.pop(index))
-                    for i, item in enumerate(add_items):
-                        obj.insert(index + i, item)
+                    res = [obj.pop(index)
+                           for _ in range(index, min(index + how_many, len(obj)))]
+                    obj[index:index] = argvals[2:]
                     return res
-                elif member == 'unshift':
-                    assertion(isinstance(obj, list), 'must be applied on a list')
-                    assertion(argvals, 'takes one or more arguments')
-                    for item in reversed(argvals):
-                        obj.insert(0, item)
-                    return obj
-                elif member == 'pop':
+                elif member in ('shift', 'pop'):
                     assertion(isinstance(obj, list), 'must be applied on a list')
                     assertion(not argvals, 'does not take any arguments')
-                    if not obj:
-                        return
-                    return obj.pop()
+                    return obj.pop(0 if member == 'shift' else -1) if len(obj) > 0 else JS_Undefined
+                elif member == 'unshift':
+                    assertion(isinstance(obj, list), 'must be applied on a list')
+                    # not enforced: assertion(argvals, 'takes one or more arguments')
+                    obj[0:0] = argvals
+                    return len(obj)
                 elif member == 'push':
-                    assertion(argvals, 'takes one or more arguments')
+                    # not enforced: assertion(argvals, 'takes one or more arguments')
                     obj.extend(argvals)
-                    return obj
+                    return len(obj)
                 elif member == 'forEach':
                     assertion(argvals, 'takes one or more arguments')
-                    assertion(len(argvals) <= 2, 'takes at-most 2 arguments')
+                    assertion(len(argvals) <= 2, 'takes at most 2 arguments')
                     f, this = (argvals + [''])[:2]
                     return [f((item, idx, obj), {'this': this}, allow_recursion) for idx, item in enumerate(obj)]
                 elif member == 'indexOf':
                     assertion(argvals, 'takes one or more arguments')
-                    assertion(len(argvals) <= 2, 'takes at-most 2 arguments')
+                    assertion(len(argvals) <= 2, 'takes at most 2 arguments')
                     idx, start = (argvals + [0])[:2]
                     try:
                         return obj.index(idx, start)
@@ -827,7 +1356,7 @@ class JSInterpreter(object):
                 elif member == 'charCodeAt':
                     assertion(isinstance(obj, compat_str), 'must be applied on a string')
                     # assertion(len(argvals) == 1, 'takes exactly one argument') # but not enforced
-                    idx = argvals[0] if isinstance(argvals[0], int) else 0
+                    idx = argvals[0] if len(argvals) > 0 and isinstance(argvals[0], int) else 0
                     if idx >= len(obj):
                         return None
                     return ord(obj[idx])
@@ -836,7 +1365,8 @@ class JSInterpreter(object):
                     assertion(len(argvals) == 2, 'takes exactly two arguments')
                     # TODO: argvals[1] callable, other Py vs JS edge cases
                     if isinstance(argvals[0], self.JS_RegExp):
-                        count = 0 if argvals[0].flags & self.JS_RegExp.RE_FLAGS['g'] else 1
+                        # access JS member with Py reserved name
+                        count = 0 if self._index(argvals[0], 'global') else 1
                         assertion(member != 'replaceAll' or count == 0,
                                   'replaceAll must be called with a global RegExp')
                         return argvals[0].sub(argvals[1], obj, count=count)
@@ -848,11 +1378,11 @@ class JSInterpreter(object):
 
             if remaining:
                 ret, should_abort = self.interpret_statement(
-                    self._named_object(local_vars, eval_method()) + remaining,
+                    self._named_object(local_vars, eval_method(variable, member)) + remaining,
                     local_vars, allow_recursion)
                 return ret, should_return or should_abort
             else:
-                return eval_method(), should_return
+                return eval_method(variable, member), should_return
 
         elif md.get('function'):
             fname = m.group('fname')
@@ -877,30 +1407,42 @@ class JSInterpreter(object):
         for v in self._separate(list_txt):
             yield self.interpret_expression(v, local_vars, allow_recursion)
 
-    def extract_object(self, objname):
-        _FUNC_NAME_RE = r'''(?:[a-zA-Z$0-9]+|"[a-zA-Z$0-9]+"|'[a-zA-Z$0-9]+')'''
+    def extract_object(self, objname, *global_stack):
+        _FUNC_NAME_RE = r'''(?:{n}|"{n}"|'{n}')'''.format(n=_NAME_RE)
         obj = {}
-        obj_m = re.search(
-            r'''(?x)
-                (?<!this\.)%s\s*=\s*{\s*
-                    (?P<fields>(%s\s*:\s*function\s*\(.*?\)\s*{.*?}(?:,\s*)?)*)
-                }\s*;
-            ''' % (re.escape(objname), _FUNC_NAME_RE),
-            self.code)
-        if not obj_m:
+        fields = next(filter(None, (
+            obj_m.group('fields') for obj_m in re.finditer(
+                r'''(?xs)
+                    {0}\s*\.\s*{1}|{1}\s*=\s*\{{\s*
+                        (?P<fields>({2}\s*:\s*function\s*\(.*?\)\s*\{{.*?}}(?:,\s*)?)*)
+                    }}\s*;
+                '''.format(_NAME_RE, re.escape(objname), _FUNC_NAME_RE),
+                self.code))), None)
+        if not fields:
             raise self.Exception('Could not find object ' + objname)
-        fields = obj_m.group('fields')
         # Currently, it only supports function definitions
-        fields_m = re.finditer(
-            r'''(?x)
-                (?P<key>%s)\s*:\s*function\s*\((?P<args>(?:%s|,)*)\){(?P<code>[^}]+)}
-            ''' % (_FUNC_NAME_RE, _NAME_RE),
-            fields)
-        for f in fields_m:
+        for f in re.finditer(
+                r'''(?x)
+                    (?P<key>%s)\s*:\s*function\s*\((?P<args>(?:%s|,)*)\){(?P<code>[^}]+)}
+                ''' % (_FUNC_NAME_RE, _NAME_RE),
+                fields):
             argnames = self.build_arglist(f.group('args'))
-            obj[remove_quotes(f.group('key'))] = self.build_function(argnames, f.group('code'))
+            name = remove_quotes(f.group('key'))
+            obj[name] = function_with_repr(
+                self.build_function(argnames, f.group('code'), *global_stack), 'F<{0}>'.format(name))
 
         return obj
+
+    @staticmethod
+    def _offset_e_by_d(d, e, local_vars):
+        """ Short-cut eval: (d%e.length+e.length)%e.length """
+        try:
+            d = local_vars[d]
+            e = local_vars[e]
+            e = len(e)
+            return _js_mod(_js_mod(d, e) + e, e), False
+        except Exception:
+            return None, True
 
     def extract_function_code(self, funcname):
         """ @returns argnames, code """
@@ -914,30 +1456,36 @@ class JSInterpreter(object):
                 \((?P<args>[^)]*)\)\s*
                 (?P<code>{.+})''' % {'name': re.escape(funcname)},
             self.code)
-        code, _ = self._separate_at_paren(func_m.group('code'))  # refine the match
         if func_m is None:
             raise self.Exception('Could not find JS function "{funcname}"'.format(**locals()))
+        code, _ = self._separate_at_paren(func_m.group('code'))  # refine the match
         return self.build_arglist(func_m.group('args')), code
 
-    def extract_function(self, funcname):
-        return self.extract_function_from_code(*self.extract_function_code(funcname))
+    def extract_function(self, funcname, *global_stack):
+        return function_with_repr(
+            self.extract_function_from_code(*itertools.chain(
+                self.extract_function_code(funcname), global_stack)),
+            'F<%s>' % (funcname,))
 
     def extract_function_from_code(self, argnames, code, *global_stack):
         local_vars = {}
+
+        start = None
         while True:
-            mobj = re.search(r'function\((?P<args>[^)]*)\)\s*{', code)
+            mobj = re.search(r'function\((?P<args>[^)]*)\)\s*{', code[start:])
             if mobj is None:
                 break
-            start, body_start = mobj.span()
-            body, remaining = self._separate_at_paren(code[body_start - 1:], '}')
+            start, body_start = ((start or 0) + x for x in mobj.span())
+            body, remaining = self._separate_at_paren(code[body_start - 1:])
             name = self._named_object(local_vars, self.extract_function_from_code(
                 [x.strip() for x in mobj.group('args').split(',')],
                 body, local_vars, *global_stack))
             code = code[:start] + name + remaining
+
         return self.build_function(argnames, code, local_vars, *global_stack)
 
-    def call_function(self, funcname, *args):
-        return self.extract_function(funcname)(args)
+    def call_function(self, funcname, *args, **kw_global_vars):
+        return self.extract_function(funcname)(args, kw_global_vars)
 
     @classmethod
     def build_arglist(cls, arg_text):
@@ -956,9 +1504,9 @@ class JSInterpreter(object):
         global_stack = list(global_stack) or [{}]
         argnames = tuple(argnames)
 
-        def resf(args, kwargs={}, allow_recursion=100):
-            global_stack[0].update(
-                zip_longest(argnames, args, fillvalue=None))
+        def resf(args, kwargs=None, allow_recursion=100):
+            kwargs = kwargs or {}
+            global_stack[0].update(zip_longest(argnames, args, fillvalue=JS_Undefined))
             global_stack[0].update(kwargs)
             var_stack = LocalNameSpace(*global_stack)
             ret, should_abort = self.interpret_statement(code.replace('\n', ' '), var_stack, allow_recursion - 1)

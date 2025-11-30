@@ -2,7 +2,6 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements a class with methods related to the Chrome OS image"""
 
-from __future__ import absolute_import, division, unicode_literals
 import os
 from struct import calcsize, unpack
 from zipfile import ZipFile
@@ -126,7 +125,7 @@ class ChromeOSImage:
 
         return file_entry
 
-    def _find_file_properly(self, filename, path_to_file=("opt", "google", "chrome", "WidevineCdm", "_platform_specific", "cros_arm")):
+    def _find_file_properly(self, filename, path_to_file=("opt", "google", "chrome", "WidevineCdm", "_platform_specific", "cros_arm64")):
         """
         Finds a file at a given path, or searches upwards if not found.
 

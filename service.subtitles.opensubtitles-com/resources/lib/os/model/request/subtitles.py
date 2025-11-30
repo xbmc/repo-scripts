@@ -21,7 +21,7 @@ LANGUAGE_LIST = ["af", "sq", "ar", "an", "hy", "at", "eu", "be", "bn", "bs", "br
 class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
     def __init__(self, id_: int = None, imdb_id: int = None, tmdb_id: int = None, type_="all", query="", languages="",
                  moviehash="", user_id: int = None, hearing_impaired="include", foreign_parts_only="include",
-                 trusted_sources="include", machine_translated="exclude", ai_translated="exclude", order_by="",
+                 trusted_sources="include", machine_translated="exclude", ai_translated="include", order_by="",
                  order_direction="", parent_feature_id: int = None, parent_imdb_id: int = None,
                  parent_tmdb_id: int = None, season_number: int = None, episode_number: int = None, year: int = None,
                  moviehash_match="include", page: int = None, **catch_overflow):
@@ -52,7 +52,7 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
         super().__init__()
 
         # ordered request params with defaults
-        self.DEFAULT_LIST = dict(ai_translated="exclude", episode_number=None, foreign_parts_only="include",
+        self.DEFAULT_LIST = dict(ai_translated="include", episode_number=None, foreign_parts_only="include",
                                  hearing_impaired="include", id=None, imdb_id=None, languages="",
                                  machine_translated="exclude", moviehash="", moviehash_match="include", order_by="",
                                  order_direction="desc", page=None, parent_feature_id=None, parent_imdb_id=None,

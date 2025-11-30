@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings version="1">
+	<section id="service.subtitles.titlovi">
+
+		<category id="account" label="32100">	<!-- Account -->
+			<group id="1" label="32101">	<!-- Login Details -->
+				<setting id="titlovi-username" type="string" label="32102" help="32103">	<!-- Username -->
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string"/>
+				</setting>
+				<setting id="titlovi-password" type="string" label="32104" help="32105">	<!-- Password -->
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<hidden>true</hidden>
+					</control>
+				</setting>
+			</group>
+			<group id="2">
+				<setting id="info_api_req1" type="string" label="32110">	<!-- API requirement line 1 -->
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32110</heading>
+					</control>
+				</setting>
+				<setting id="info_api_req2" type="string" label="32111">	<!-- API requirement line 2 -->
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32111</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+
+		<category id="general" label="32200">	<!-- General -->
+			<group id="1" label="32201">	<!-- Subtitle Languages -->
+				<setting id="override_kodi_languages" type="boolean" label="32202" help="32203">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_eng" type="boolean" label="32210" parent="override_kodi_languages">	<!-- English -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_srp_lat" type="boolean" label="32211" parent="override_kodi_languages">	<!-- Serbian (Latin) -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_srp_cyr" type="boolean" label="32212" parent="override_kodi_languages">	<!-- Serbian (Cyrillic) -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_hrv" type="boolean" label="32213" parent="override_kodi_languages">	<!-- Croatian -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_bos" type="boolean" label="32214" parent="override_kodi_languages">	<!-- Bosnian -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_slv" type="boolean" label="32215" parent="override_kodi_languages">	<!-- Slovenian -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="lang_mkd" type="boolean" label="32216" parent="override_kodi_languages">	<!-- Macedonian -->
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="override_kodi_languages">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2">
+				<setting id="request_timeout" type="integer" label="32220" help="32221">	<!-- Request Timeout -->
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<minimum>5</minimum>
+						<step>1</step>
+						<maximum>20</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="dialog_delay" type="number" label="32222" help="32223">	<!-- Subtitle Dialog Delay -->
+					<level>0</level>
+					<default>0.3</default>
+					<constraints>
+						<minimum>0.0</minimum>
+						<step>0.1</step>
+						<maximum>1.0</maximum>
+					</constraints>
+					<control type="slider" format="number">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="results_limit" type="integer" label="32224" help="32225">	<!-- Results Limit -->
+					<level>0</level>
+					<default>50</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>50</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+
+		<category id="features" label="32300">	<!-- Features -->
+			<group id="1" label="32301">	<!-- Subtitle Conversion -->
+				<setting id="titlovi-lat-cyr-conversion" type="integer" label="32302" help="32303">	<!-- Convert latin/cyrillic alphabet -->
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32304">0</option>	<!-- Don't convert -->
+							<option label="32305">1</option>	<!-- Latin to Cyrillic -->
+							<option label="32306">2</option>	<!-- Cyrillic to Latin -->
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+			</group>
+			<group id="2" label="32310">	<!-- Search Options -->
+				<setting id="sort_order" type="integer" label="32311" help="32312">	<!-- Search results are sorted by -->
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32313">0</option>
+							<option label="32314">1</option>
+							<option label="32315">2</option>
+							<option label="32316">3</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>32311</heading>
+					</control>
+				</setting>
+				<setting id="sort_series_episodes" type="boolean" label="32318" help="32319">	<!-- Sort series -->
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="3">
+				<setting id="include_imdb_id_in_search" type="boolean" label="32320" help="32321">	<!-- Search using IMDb ID -->
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="include_type_in_search" type="boolean" label="32322" help="32323">	<!-- Include type in search (Movie/Series detection) -->
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="include_year_in_search" type="boolean" label="32324" help="32325">	<!-- Include release year in search -->
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="include_pilot_episodes" type="boolean" label="32326">	<!-- For series, include Pilot episodes -->
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="include_specials" type="boolean" label="32327">	<!-- For series, include Special episodes -->
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+
+		<category id="tools" label="32400">	<!-- Tools -->
+			<group id="1" label="32401">	<!-- Cache -->
+				<setting id="cache_info_display" type="string" label="32402" help="32403">	<!-- Cache Status: -->
+					<level>0</level>
+					<default>...</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string"/>
+					<enable>false</enable>
+				</setting>
+				<setting id="profile_directory_path" type="string" label="32420">	<!-- Profile Path: -->
+					<level>3</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string"/>
+					<enable>false</enable>
+				</setting>
+			</group>
+			<group id="2" label="32410">	<!-- Developer -->
+				<setting id="enable_debug_log" type="boolean" label="32411" help="32412">	<!-- Enable Debug Logging -->
+					<level>3</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="kodi_logfile_path" type="string" label="32421">	<!-- Log File: -->
+					<level>3</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible" operator="is" setting="enable_debug_log">true</dependency>
+					</dependencies>
+					<control type="edit" format="string"/>
+					<enable>false</enable>
+				</setting>
+			</group>
+		</category>
+
+	</section>
+</settings>

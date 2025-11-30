@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2021-12-10 15:13+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
@@ -629,6 +629,14 @@ msgstr "Draai de backup dagelijks, wekelijks, maandelijks, of op maat"
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
 msgstr "Backup is gestart met onbekende modus"
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
+msgstr ""
 
 #~ msgctxt "#30036"
 #~ msgid "Custom Directory 1"

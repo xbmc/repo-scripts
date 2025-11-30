@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.latestrating" name="Latest Rating Service" version="1.0.2" provider-name="pizzamx">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="xbmc.addon" version="19.1.0"/>
+        <import addon="script.module.requests" version="2.22.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py"/>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Latest Rating Service</summary>
+        <description lang="en_GB">Automatically updates ratings for movies and TV shows in your library. Enalbe in settings first after install.</description>
+        <platform>all</platform>
+        <license>GPL-3.0</license>
+        <source>https://github.com/pizzamx/script.service.latestrating</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon> 

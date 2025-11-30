@@ -10,7 +10,7 @@ Example:
 - keep Attention to the parameter separators ("&amp;&amp;")
 
 
-### Rotten Tomatoes
+### Rotten Tomatoes (No longer available for Kodi users)
 
 ```
 RunScript(script.extendedinfo,info=intheatermovies)

@@ -13,6 +13,49 @@ import xbmcvfs
 
 HOME = xbmcgui.Window(10000)
 
+TMDB_ISO_639 = {"ar-EG": "Arabic-Egy",
+"ar-SA": "Arabic-Sau",
+"bg-BG": "Bulgarian",
+"ca-ES": "Catalan",
+"hr-HR": "Croatian",
+"cs-CZ": "Czech",
+"da-DK": "Danish",
+"nl-BE": "Dutch-Bel",
+"nl-NL": "Dutch-Nld",
+"en-AU": "English-Aus",
+"en-CA": "English-Can",
+"en-GB": "English-Gbr",
+"en-US": "English-Usa",
+"fi-FI": "Finnish",
+"fr-CA": "French-Can",
+"fr-FR": "French-Fra",
+"de-DE": "German",
+"el-GR": "Greek",
+"he-IL": "Hebrew",
+"hi-IN": "Hindi",
+"hu-HU": "Hungarian",
+"ga-IE": "Irish",
+"it-IT": "Italian",
+"ja-JP": "Japanese",
+"kn-IN": "Kannada",
+"ko-KR": "Korean",
+"zh-CN": "Mandarin-China",
+"zh-SG": "Mandarin-Sgp",
+"zh-TW": "Mandarin-Twn",
+"no-NO": "Norwegian",
+"fa-IR": "Persian",
+"pl-PL": "Polish",
+"pt-BR": "Portuguese-Bra",
+"pt-PT": "Portuguese-Por",
+"ru-RU": "Russian",
+"sl-SL": "Slovenian",
+"es-AR": "Spanish-Arg",
+"es-ES": "Spanish-Esp",
+"es-MX": "Spanish-Mex",
+"sv-SE": "Swedish",
+"th-TH": "Thai",
+"tr-TR": "Turkish"}
+
 
 class Addon:
     """
@@ -91,6 +134,16 @@ class Addon:
         """
         HOME.setProperty(setting_name, setting_value)
 
+    def update_lang_setting(self) -> None:
+        """updates user settings from old ISO 639-1 to ISO 639-1-ISO 3166 
+        """
+        old_lang = self.addon.getSetting("LanguageID")
+        for lang_key in TMDB_ISO_639:
+            if lang_key.startswith(old_lang):
+                self.addon.setSetting("LanguageIDv2", lang_key)
+                self.addon.setSettingBool("setting_update_6.0.9", True)
+                break
+
     def get_global(self, setting_name):
         return HOME.getProperty(setting_name)
 
@@ -113,14 +166,14 @@ def encode_string(clear: str) -> str:
     enc = []
     key = str(uuid.getnode())
     clear_enc = clear.encode()
-    for i in range(len(clear_enc)):
+    for i, ele in enumerate(clear_enc):
         key_c = key[i % len(key)]
-        enc_c = chr((clear_enc[i] + ord(key_c)) % 256)
+        enc_c = chr((ele + ord(key_c)) % 256)
         enc.append(enc_c)
     return base64.urlsafe_b64encode("".join(enc).encode()).decode()
 
 
-def decode_string(enc: str) -> str:
+def decode_string(enc: str, uuick: str='') -> str:
     """return decoded string (encoded with uuid)
 
     Args:
@@ -130,10 +183,10 @@ def decode_string(enc: str) -> str:
         str:  the decoded string
     """
     dec = []
-    key = str(uuid.getnode())
+    key = str(uuid.getnode()) if not uuick else uuick
     enc = base64.urlsafe_b64decode(enc.encode()).decode()
-    for i in range(len(enc)):
+    for i, ele in enumerate(enc):
         key_c = key[i % len(key)]
-        dec_c = ((256 + ord(enc[i]) - ord(key_c)) % 256).to_bytes(1, 'little')
+        dec_c = ((256 + ord(ele) - ord(key_c)) % 256).to_bytes(1, 'little')
         dec.append(dec_c)
     return bytes.join(b'', dec).decode()

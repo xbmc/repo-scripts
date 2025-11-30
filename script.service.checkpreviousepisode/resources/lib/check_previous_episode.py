@@ -1,52 +1,50 @@
-from .common import *
+import xbmcgui
+
+from bossanova808.constants import TRANSLATE
+from bossanova808.logger import Logger
+from bossanova808.notify import Notify
+# noinspection PyPackages
 from .store import Store
+# noinspection PyPackages
 from .monitor import KodiEventMonitor
+# noinspection PyPackages
 from .player import KodiPlayer
-import xbmc
-import os
 
 
 def manage_ignored():
     """
-    Manage ignored shows in settings..
+    Manage ignored shows in settings...
 
     :return:
     """
 
-    log("Managing ignored shows...")
+    Logger.info("Managing ignored shows...")
     dialog = xbmcgui.Dialog()
     Store.get_ignored_shows_from_config_file()
 
     # Short circuit if no ignored shows, so nothing to manage...
     if len(Store.ignored_shows) < 1:
-        notify(LANGUAGE(32060), xbmcgui.NOTIFICATION_INFO, 5000)
+        Notify.info(TRANSLATE(32060), 5000)
         return
 
-    # Ok, there are ignored shows in the list...
+    # OK, there are ignored shows in the list...
 
-    # Convert our dict to a list for the dialog...
-    ignored_list = []
-    for key, value in list(Store.ignored_shows.items()):
-        ignored_list.append(value)
+    # Build a sorted (id, title) list for stable mapping and to handle duplicate titles
+    sorted_pairs = sorted(
+            Store.ignored_shows.items(),
+            key=lambda kv:((kv[1] or '').casefold(), str(kv[0]))
+    )
+    labels = [title for (_, title) in sorted_pairs]
 
-    if ignored_list:
-        selected = dialog.select(LANGUAGE(32062), ignored_list)
+    if labels:
+        selected = dialog.select(TRANSLATE(32062), labels)
         if selected != -1:
-            show_title = ignored_list[selected]
-            log("User has requested we stop ignoring: " + show_title)
-            log("Ignored shows before removal is: " + str(Store.ignored_shows))
-            # find the key (tv_show_id) for this show& remove from dict
-            key = list(Store.ignored_shows.keys())[list(Store.ignored_shows.values()).index(show_title)]
-            Store.ignored_shows.pop(key, None)
-            log("Ignored shows  after removal is: " + str(Store.ignored_shows))
-
-            # No ignored shows?  Clean up & delete the empty file..
-            if len(Store.ignored_shows) == 0:
-                if os.path.exists(Store.ignored_shows_file):
-                    os.remove(Store.ignored_shows_file)
-            else:
-                # write the ignored list back out
-                Store.write_ignored_shows_to_config(Store.ignored_shows)
+            tvshow_id, show_title = sorted_pairs[selected]
+            Logger.info("User has requested we stop ignoring: " + show_title)
+            Logger.debug("Ignored shows before removal is: " + str(Store.ignored_shows))
+            Store.ignored_shows.pop(tvshow_id, None)
+            Logger.debug("Ignored shows after removal is: " + str(Store.ignored_shows))
+            Store.write_ignored_shows_to_config()
 
 
 def run(args):
@@ -55,47 +53,26 @@ def run(args):
 
     :return:
     """
-    footprints()
-    # Initialise the global store and load the addon settings
-    config = Store()
+    try:
+        Logger.start()
+        # Initialise the global store and load the addon settings
+        Store()
 
-    # TWO RUN-MODES - we're either running as a service, or we're running the tool to manage ignored shows..
+        # TWO RUN-MODES - we're either running as a service, or we're running the tool to manage ignored shows...
 
-    # MANAGE IGNORED SHOWS
-    if len(args) > 1:
-        try:
-            if args[1].startswith('ManageIgnored'):
-                manage_ignored()
-        # if not, carry on, nothing to see here...
-        except Exception as inst:
-            log("Exception in manage_ignored " + format_exc(inst))
+        # MANAGE IGNORED SHOWS
+        if len(args) > 1 and args[1].startswith('ManageIgnored'):
+            manage_ignored()
+        # DEFAULT - RUN AS A SERVICE & WATCH PLAYBACK EVENTS
+        else:
+            Logger.info("Listening to onAVStarted for episode playback.")
+            kodi_event_monitor = KodiEventMonitor()
+            # Keep instance alive to receive Kodi player events
+            _kodi_player = KodiPlayer()
 
-    # DEFAULT - RUN AS A SERVICE & WATCH PLAYBACK EVENTS
-    else:
-        log("Listening to onAvStarted for episode playback.")
-        Store.kodi_event_monitor = KodiEventMonitor(xbmc.Monitor)
-        Store.kodi_player = KodiPlayer(xbmc.Player)
+            while not kodi_event_monitor.waitForAbort(1):
+                pass
+            Logger.debug('Abort Requested')
 
-        while not Store.kodi_event_monitor.abortRequested():
-            # Sleep/wait for abort for 10 seconds
-            if Store.kodi_event_monitor.waitForAbort(1):
-                # Abort was requested while waiting. We should exit
-                break
-
-    footprints(False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    finally:
+        Logger.stop()

@@ -1,28 +1,32 @@
-# coding: utf-8
-# Created on: 17.03.2016
-# Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
-# License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
+# (c) Roman Miroshnychenko, 2023
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, unicode_literals
-
+import logging
 from copy import deepcopy
 from pprint import pformat
 
+from xbmcgui import Dialog
+
 import pyxbmct
-from future.builtins import str
-from kodi_six.xbmcgui import Dialog
-
-from . import logger
-from .addon import ADDON, ICON, KODI_VERSION
-from .gui import NextEpDialog, ui_string, busy_spinner
-from .medialibrary import (get_movies, get_tvshows, get_episodes,
-                           get_recent_movies, get_recent_episodes, get_tvdb_id,
-                           NoDataError)
-from .nextepisode import (prepare_movies_list, prepare_episodes_list, update_data,
-                          get_password_hash, LoginError, DataUpdateError)
-
-__all__ = ['LoginDialog', 'sync_library', 'sync_new_items', 'login',
-           'update_single_item']
+from libs.addon import ADDON, ICON, KODI_VERSION
+from libs.gui import NextEpDialog, ui_string, busy_spinner
+from libs.medialibrary import (get_movies, get_tvshows, get_episodes,
+                               get_recent_movies, get_recent_episodes, get_tvdb_id,
+                               NoDataError)
+from libs.nextepisode import (prepare_movies_list, prepare_episodes_list, update_data,
+                              get_password_hash, LoginError, DataUpdateError)
 
 DIALOG = Dialog()
 
@@ -98,10 +102,10 @@ def send_data(data):
     try:
         update_data(data)
     except LoginError:
-        logger.log_error('Login failed! Re-enter your username and password.')
+        logging.error('Login failed! Re-enter your username and password.')
         DIALOG.notification('next-episode.net', ui_string(32007), icon='error')
     except DataUpdateError as ex:
-        logger.log_error(str(ex))
+        logging.exception(str(ex))
         if ADDON.getSetting('disable_error_dialogs') != 'true':
             DIALOG.ok('next-epsisode.net',
                       '[CR]'.join((
@@ -126,7 +130,7 @@ def log_data_sent(data):
     """
     logged_data = deepcopy(data)
     logged_data['user']['username'] = logged_data['user']['hash'] = '*****'
-    logger.log_debug('Data sent:\n{0}'.format(pformat(logged_data)))
+    logging.debug('Data sent:\n%s', pformat(logged_data))
 
 
 def sync_library():
@@ -162,7 +166,7 @@ def sync_library():
             log_data_sent(data)
             send_data(data)
         else:
-            logger.log_warning(
+            logging.warning(
                 'Kodi video library has no movies and TV episodes.'
             )
 
@@ -188,7 +192,7 @@ def sync_new_items():
         log_data_sent(data)
         send_data(data)
     else:
-        logger.log_warning(
+        logging.warning(
             'Kodi video library has no recent movies and episodes.'
         )
 
@@ -254,11 +258,11 @@ def login():
                               ui_string(32007),
                               ui_string(32010)
                           )))
-                logger.log_error('Login failed!')
+                logging.error('Login failed!')
             else:
                 ADDON.setSetting('username', username)
                 ADDON.setSetting('hash', hash_)
-                logger.log_debug('Successful login')
+                logging.debug('Successful login')
                 DIALOG.notification('next-episode.net', ui_string(32011),
                                     time=3000, sound=False)
                 result = True

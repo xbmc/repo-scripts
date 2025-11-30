@@ -36,6 +36,8 @@ class Player(xbmc.Player):
 
         self._running_stop_at_end_timer: 'tuple[Timer, bool]' = (None, False)
 
+        self.__is_unit_test__: bool = False
+
     def playTimer(self, timer: Timer, dtd: datetime_utils.DateTimeDelta) -> None:
 
         def _save_resume(_timer: Timer) -> None:
@@ -61,8 +63,8 @@ class Player(xbmc.Player):
             seektime = None
             if self._seek_delayed_timer and _timer.is_play_at_start_timer():
                 if timer.current_period:
-                    seektime = datetime_utils.abs_time_diff(
-                        _dtd.td, timer.current_period.start)
+                    seektime = datetime_utils.datetime_diff(
+                        timer.current_period.start, _dtd.dt)
                     seektime = None if seektime * 1000 <= self._RESPITE else seektime
 
             return seektime
@@ -89,8 +91,8 @@ class Player(xbmc.Player):
                                len(files)] if seektime else None
 
             if timer.is_stop_at_end_timer():
-                amountOfSlides = datetime_utils.abs_time_diff(
-                    timer.current_period.end, dtd.td) // stayTime + 1
+                amountOfSlides = datetime_utils.datetime_diff(
+                    dtd.dt, timer.current_period.end) // stayTime + 1
             else:
                 amountOfSlides = 0
 
@@ -119,14 +121,24 @@ class Player(xbmc.Player):
         self._seektime = seektime
         self._skip_next_stop_event_until_started = True
 
-        if playlist.getPlayListId() == TYPES.index(VIDEO):
+        playListId = playlist.getPlayListId()
+        if playListId == TYPES.index(VIDEO):
             self.stopPlayer(PICTURE)
+
+        xbmc.executebuiltin("CECActivateSource")
+
+        if self.__is_unit_test__:
+            self.setRepeat(repeat)
+
+        if player_utils.is_smart_playlist(playlist.directUrl):
+            player_utils.play_directory(playlist.directUrl)
+
+        else:
+            self.play(playlist.directUrl or playlist, startpos=startpos)
 
         self.setRepeat(repeat)
         self.setShuffled(shuffled)
         self.setSpeed(speed)
-        xbmc.executebuiltin("CECActivateSource")
-        self.play(playlist.directUrl or playlist, startpos=startpos)
 
     def _playSlideShow(self, path: str, beginSlide=None, shuffle=False, amount=0) -> None:
 
@@ -172,6 +184,8 @@ class Player(xbmc.Player):
             _rst = self._running_stop_at_end_timer
             self._reset()
             if _rst[0] and not _rst[1]:
+                xbmc.log("set timer to be already stopped: %s" %
+                         str(_rst[0]), xbmc.LOGINFO)
                 self._running_stop_at_end_timer = (_rst[0], True)
                 showNotification(_rst[0], msg_id=32289)
 
@@ -210,6 +224,9 @@ class Player(xbmc.Player):
                 self.stopPlayer(PICTURE)
             elif timer != self._running_stop_at_end_timer[0] or not self._running_stop_at_end_timer[1]:
                 self.stop()
+            else:
+                xbmc.log("Skip timer's stop action since timer's playback has already been stopped by user: %s" % str(
+                    self._running_stop_at_end_timer[0]), xbmc.LOGINFO)
 
             self._reset(type=timer.media_type)
             xbmc.sleep(self._RESPITE)

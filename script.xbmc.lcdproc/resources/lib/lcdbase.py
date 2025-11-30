@@ -1,25 +1,9 @@
-'''
-    XBMC LCDproc addon
-    Copyright (C) 2012-2018 Team Kodi
-    Copyright (C) 2012-2018 Daniel 'herrnst' Scheller
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# XBMC LCDproc addon
+# Copyright (C) 2012-2024 Team Kodi
+# Copyright (C) 2012-2024 Daniel 'herrnst' Scheller
+#
 
 import os
 import re
@@ -382,7 +366,7 @@ class LcdBase():
       return
 
     # regex to determine any of $INFO[LCD.Time(Wide)21-44]
-    timeregex = r'' + re.escape('$INFO[LCD.') + 'Time((Wide)?\d?\d?)' + re.escape(']')
+    timeregex = r'' + re.escape('$INFO[LCD.') + r'Time((Wide)?\d?\d?)' + re.escape(']')
 
     for line in node.findall("line"):
       # initialize line with empty descriptor
@@ -430,7 +414,7 @@ class LcdBase():
       elif linetext.lower().find("$info[lcd.playicon]") >= 0:
         linedescriptor['type'] = LCD_LINETYPE.LCD_LINETYPE_ICONTEXT
         linedescriptor['startx'] = int(1 + self.m_iIconTextOffset) # icon widgets take 2 chars, so shift text offset (default: 2)
-        linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.PlayIcon]") + '\s?', ' ', linetext, flags=re.IGNORECASE).strip()
+        linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.PlayIcon]") + r'\s?', ' ', linetext, flags=re.IGNORECASE).strip()
 
       # standard (scrolling) text line
       else:
@@ -443,8 +427,8 @@ class LcdBase():
       if linetext.lower().find("$info[lcd.alignright]") >= 0:
         linedescriptor['align'] = LCD_LINEALIGN.LCD_LINEALIGN_RIGHT
 
-      linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignCenter]") + '\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE).strip()
-      linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignRight]") + '\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE).strip()
+      linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignCenter]") + r'\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE).strip()
+      linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignRight]") + r'\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE).strip()
 
       self.m_lcdMode[mode].append(linedescriptor)
 
@@ -491,7 +475,7 @@ class LcdBase():
     return ret
 
   def StripBBCode(self, strtext):
-    regexbbcode = "\[(?P<tagname>[0-9a-zA-Z_\-]+?)[0-9a-zA-Z_\- ]*?\](?P<content>.*?)\[\/(?P=tagname)\]"
+    regexbbcode = r"\[(?P<tagname>[0-9a-zA-Z_\-]+?)[0-9a-zA-Z_\- ]*?\](?P<content>.*?)\[\/(?P=tagname)\]"
     # precompile and remember regex to make sure re's caching won't cause accidential recompilation
     if not self.m_reBBCode:
       self.m_reBBCode = re.compile(regexbbcode)
@@ -510,7 +494,7 @@ class LcdBase():
     while True:
       loopcount = loopcount - 1
       try:
-        mangledline, replacements = re.subn(self.m_reBBCode, "\g<content>", mangledline)
+        mangledline, replacements = re.subn(self.m_reBBCode, r"\g<content>", mangledline)
       except:
         return mangledline
 

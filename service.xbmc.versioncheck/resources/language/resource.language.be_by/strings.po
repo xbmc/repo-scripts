@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2022-09-05 17:37+0000\n"
 "Last-Translator: Antikruk <zmicerturok@gmail.com>\n"
@@ -89,17 +89,6 @@ msgctxt "#32024"
 msgid "Linux: Upgrade using apt"
 msgstr "Linux: абнаўленне з дапамогай apt"
 
-# empty strings from id 32025 to 32029
-#. Used in OK dialog
-msgctxt "#32030"
-msgid "A new stable version of Kodi is available."
-msgstr "Даступна новая стабільная версія Kodi."
-
-#. Direct people to the website. Used in OK dialog
-msgctxt "#32031"
-msgid "Visit http://kodi.tv for more information."
-msgstr "Каб даведацца больш падрабязна, наведайце http://kodi.tv."
-
 #. Used in OK dialog
 msgctxt "#32032"
 msgid "A new stable version of Kodi is available."
@@ -132,3 +121,12 @@ msgstr "Калі ласка, абнавіце аперацыйную сістэ�
 msgctxt "#32042"
 msgid "For more information, see https://kodi.wiki/view/Linux"
 msgstr "Каб даведацца больш падрабязна, наведайце https://kodi.wiki/view/Linux"
+
+# empty strings from id 32025 to 32029
+#~ msgctxt "#32030"
+#~ msgid "A new stable version of Kodi is available."
+#~ msgstr "Даступна новая стабільная версія Kodi."
+
+#~ msgctxt "#32031"
+#~ msgid "Visit http://kodi.tv for more information."
+#~ msgstr "Каб даведацца больш падрабязна, наведайце http://kodi.tv."

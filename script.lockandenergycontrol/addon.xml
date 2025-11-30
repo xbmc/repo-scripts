@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.lockandenergycontrol" name="Screen lock and energy control" version="1.0.0" provider-name="Heckie">
+<addon id="script.lockandenergycontrol" name="Screen lock and energy control" version="1.1.0" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -21,6 +21,9 @@
     <website>https://github.com/Heckie75/kodi-addon-prevent-sleep-and-lock</website>
     <source>https://github.com/Heckie75/kodi-addon-prevent-sleep-and-lock</source>
     <news>
+v1.1.0 (2023-11-30)
+- New feature to prevent display off when audio is playing
+
 v1.0.0 (2022-06-10)
 - Initial version
     </news>

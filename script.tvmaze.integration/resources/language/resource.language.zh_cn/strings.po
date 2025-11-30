@@ -5,148 +5,159 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-11-11 05:30+0000\n"
+"Last-Translator: 撷星芒 <mofa2020@qq.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tvmaze-integration/zh_cn/>\n"
 "Language: zh_cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8.1\n"
+
+msgctxt "Addon Summary"
+msgid "Integration between Kodi and TV Maze."
+msgstr "Kodi与TV Maze的集成。"
+
+msgctxt "Addon Description"
+msgid "This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows."
+msgstr "这种集成允许您在TV Maze上获取节目（并在当需要时将其添加到您的关注）当您将其添加到您的库中，观看后会将其标记在TV Maze。  您还可以手动关注、取消关注、标记和取消标记放映。"
 
 # Section Headings
 msgctxt "#32000"
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 msgctxt "#32001"
 msgid "Advanced"
-msgstr ""
+msgstr "进阶"
 
 msgctxt "#32002"
 msgid "TV Maze action"
-msgstr ""
+msgstr "TV Maze动作"
 
 # empty strings from id 32001 to 32099
 # Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "启用调试日志"
 
 msgctxt "#32101"
 msgid "TV Maze User"
-msgstr ""
+msgstr "TV Maze用户"
 
 msgctxt "#32102"
 msgid "TV Maze API Key"
-msgstr ""
+msgstr "TV Maze API密钥"
 
 msgctxt "#32103"
 msgid "Add new Kodi shows to followed list"
-msgstr ""
+msgstr "将Kodi中新的节目添加到关注列表"
 
 msgctxt "#32104"
 msgid "Mark new Kodi episodes as acquired"
-msgstr ""
+msgstr "将新的Kodi剧集标记为已获得"
 
 msgctxt "#32105"
 msgid "Mark watched Kodi episodes as watched"
-msgstr ""
+msgstr "将已观看的Kodi剧集标记为已观看"
 
 msgctxt "#32106"
 msgid "Mark watched after"
-msgstr ""
+msgstr "在此之后标记已观看"
 
 msgctxt "#32107"
 msgid "Mark watched when removing from Kodi"
-msgstr ""
+msgstr "从Kodi删除时，标记已观看"
 
 msgctxt "#32108"
 msgid "Hide context menu items"
-msgstr ""
+msgstr "隐藏上下文菜单项"
 
 # empty strings from id 32108 to 32199
 # Dialog Headings
 msgctxt "#32200"
 msgid "API Credentials Needed"
-msgstr ""
+msgstr "需要API凭据"
 
 msgctxt "#32201"
 msgid "Select action"
-msgstr ""
+msgstr "选择动作"
 
 msgctxt "#32202"
 msgid "Select shows to follow"
-msgstr ""
+msgstr "选择要关注的节目"
 
 msgctxt "#32203"
 msgid "Select shows to unfollow"
-msgstr ""
+msgstr "选择要取消关注的节目"
 
 msgctxt "#32204"
 msgid "Select tag"
-msgstr ""
+msgstr "选择"
 
 msgctxt "#32205"
 msgid "Select shows to tag"
-msgstr ""
+msgstr "选择要打标签的节目"
 
 msgctxt "#32206"
 msgid "Select shows to untag"
-msgstr ""
+msgstr "选择要取消标签的节目"
 
 # empty strings from id 32207 to 32300
 # Dialog Messages
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
-msgstr ""
+msgstr "TV Maze在继续之前，必须提供API凭据。"
 
 msgctxt "#32302"
 msgid "Open settings"
-msgstr ""
+msgstr "打开设置"
 
 msgctxt "#32303"
 msgid "Select All (Click OK to reload list)"
-msgstr ""
+msgstr "全选（单击“确定”重新加载列表）"
 
 msgctxt "#32304"
 msgid "Deselect All (Click OK to reload list)"
-msgstr ""
+msgstr "取消选择所有（单击“确定”重新加载列表）"
 
 # empty strings from 32305 to 32400
 # Context Menu
 msgctxt "#32401"
 msgid "TV Maze"
-msgstr ""
+msgstr "TV MAZE"
 
 msgctxt "#32402"
 msgid "Follow show"
-msgstr ""
+msgstr "关注节目"
 
 msgctxt "#32403"
 msgid "Unfollow show"
-msgstr ""
+msgstr "取消关注节目"
 
 msgctxt "#32404"
 msgid "Tag show"
-msgstr ""
+msgstr "打标签节目"
 
 msgctxt "#32405"
 msgid "Untag show"
-msgstr ""
+msgstr "去标签节目"
 
 msgctxt "#32406"
 msgid "Mark episode acquired"
-msgstr ""
+msgstr "标记已获取的剧集"
 
 msgctxt "#32407"
 msgid "Mark episode watched"
-msgstr ""
+msgstr "标记已观看的剧集"
 
 msgctxt "#32408"
 msgid "Mark episode skipped"
-msgstr ""
+msgstr "标记已跳过的剧集"
 
 msgctxt "#32409"
 msgid "Unmark episode"
-msgstr ""
+msgstr "取消标记剧集"

@@ -99,13 +99,16 @@ class Scheduler(xbmc.Monitor):
             if former_timer.is_fading_timer():
                 changed |= (former_timer.vol_min != timer_from_storage.vol_min)
                 changed |= (former_timer.vol_max != timer_from_storage.vol_max)
+            elif timer_from_storage.is_fading_timer():
+                changed = True
+                restart = True
 
             return changed, restart
 
         def _reset_overlappings(timer: Timer) -> None:
 
             overlappings = determine_overlappings(
-                timer, scheduled_timers)
+                timer, scheduled_timers, base=datetime.today())
             for overlap in overlappings:
                 overlap.state = STATE_WAITING
 
@@ -165,7 +168,8 @@ class Scheduler(xbmc.Monitor):
         self._windows_unlock = addon.getSettingBool("windows_unlock")
         self._powermanagement_displaysoff = addon.getSettingInt(
             "powermanagement_displaysoff")
-        self._disable_displayoff_on_audio = addon.getSettingBool("audio_displaysoff")
+        self._disable_displayoff_on_audio = addon.getSettingBool(
+            "audio_displaysoff")
         self.reset_powermanagement_displaysoff()
 
     def start(self) -> None:
@@ -215,15 +219,15 @@ class Scheduler(xbmc.Monitor):
         fullscreen = is_fullscreen()
         audio = self._player.isPlayingAudio()
 
-        if self._disabled_powermanagement_displaysoff and ((fullscreen and not audio) \
-                or (not self._powermanagement_displaysoff and (not self._disable_displayoff_on_audio or not audio)) \
-                or (not self._powermanagement_displaysoff and not fullscreen and self._disable_displayoff_on_audio and not audio) \
-                or (not self._disable_displayoff_on_audio and fullscreen)):
+        if self._disabled_powermanagement_displaysoff and ((fullscreen and not audio)
+                                                           or (not self._powermanagement_displaysoff and (not self._disable_displayoff_on_audio or not audio))
+                                                           or (not self._powermanagement_displaysoff and not fullscreen and self._disable_displayoff_on_audio and not audio)
+                                                           or (not self._disable_displayoff_on_audio and fullscreen)):
             self.reset_powermanagement_displaysoff()
-            
+
         elif not self._disabled_powermanagement_displaysoff and \
-                ((self._powermanagement_displaysoff and not fullscreen) \
-                or (self._disable_displayoff_on_audio and audio)):
+                ((self._powermanagement_displaysoff and not fullscreen)
+                 or (self._disable_displayoff_on_audio and audio)):
             self._disabled_powermanagement_displaysoff = True
             set_powermanagement_displaysoff(0)
 

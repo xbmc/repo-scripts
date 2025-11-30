@@ -1,0 +1,1 @@
+{% if core.needs_scaling %}<aspectratio align="center" aligny="top">scale</aspectratio>{% endif %}

@@ -1,0 +1,8 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+This program is derived in part from the Kodi TV Show Scraper
+(https://github.com/xbmc/metadata.tvshows.themoviedb.org.python)
+which is licensed under GPL-3.0.
+
+For the full license text, see https://www.gnu.org/licenses/gpl-3.0.txt 

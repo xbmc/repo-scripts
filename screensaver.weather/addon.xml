@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.weather" name="Show weather" version="1.0.0" provider-name="Heckie">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.ui.screensaver" library="default.py"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">just display the weather dialog</summary>
+    <summary lang="de_DE">zeige einfach das Wetter an</summary>
+    <description lang="en_GB">just display the weather dialog
+    </description>
+    <description lang="de_DE">zeige einfach das Wetter an
+    </description>
+    <language>en</language>
+    <language>de</language>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://github.com/Heckie75/kodi-addon-screensaver-weather</website>
+    <source>https://github.com/Heckie75/kodi-addon-screensaver-weather</source>
+    <news>
+v1.0.0 (2024-02-25)
+- initial version
+    </news>
+    <assets>
+      <icon>resources/assets/icon.png</icon>
+    </assets>
+  </extension>
+</addon>

@@ -1,5 +1,4 @@
-# coding: utf-8
-# (c) Roman Miroshnychenko <roman1972@gmail.com> 2020
+# (c) Roman Miroshnychenko <roman1972@gmail.com> 2023
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,44 +19,39 @@ import sys
 from contextlib import contextmanager
 from platform import uname
 from pprint import pformat
+from typing import Any, Dict, Callable, Generator, Iterable, Optional
 
-import six
-from kodi_six import xbmc
-
-from .logger import log_error
-
-try:
-    from typing import Text, Dict, Callable, Generator  # pylint: disable=unused-import
-except ImportError:
-    pass
+import xbmc
 
 
-def _format_vars(variables):
-    # type: (dict) -> Text
+def _log_error(message: str) -> None:
+    xbmc.log(message, level=xbmc.LOGERROR)
+
+
+def _format_vars(variables: Dict[str, Any]) -> str:
     """
     Format variables dictionary
 
     :param variables: variables dict
     :return: formatted string with sorted ``var = val`` pairs
     """
-    var_list = [(var, val) for var, val in six.iteritems(variables)
+    var_list = [(var, val) for var, val in variables.items()
                 if not (var.startswith('__') or var.endswith('__'))]
     var_list.sort(key=lambda i: i[0])
     lines = []
     for var, val in var_list:
-        lines.append('{} = {}'.format(var, pformat(val)))
+        lines.append(f'{var} = {pformat(val)}')
     return '\n'.join(lines)
 
 
-def _format_code_context(frame_info):
-    # type: (tuple) -> Text
+def _format_code_context(frame_info: inspect.FrameInfo) -> str:
     context = ''
-    if frame_info[4] is not None:
-        for i, line in enumerate(frame_info[4], frame_info[2] - frame_info[5]):
-            if i == frame_info[2]:
-                context += '{}:>{}'.format(six.text_type(i).rjust(5), line)
+    if frame_info.code_context is not None:
+        for i, line in enumerate(frame_info.code_context, frame_info.lineno - frame_info.index):
+            if i == frame_info.lineno:
+                context += f'{str(i).rjust(5)}:>{line}'
             else:
-                context += '{}: {}'.format(six.text_type(i).rjust(5), line)
+                context += f'{str(i).rjust(5)}: {line}'
     return context
 
 
@@ -73,30 +67,16 @@ Local variables:
 """
 
 
-def _format_frame_info(frame_info):
-    # type: (tuple) -> Text
+def _format_frame_info(frame_info: inspect.FrameInfo) -> str:
     return FRAME_INFO_TEMPLATE.format(
-        file_path=frame_info[1],
-        lineno=frame_info[2],
+        file_path=frame_info.filename,
+        lineno=frame_info.lineno,
         code_context=_format_code_context(frame_info),
-        local_vars=_format_vars(frame_info[0].f_locals)
+        local_vars=_format_vars(frame_info.frame.f_locals)
     )
 
 
-EXCEPTION_TEMPLATE = """
-*********************************** Unhandled exception detected ***********************************
-####################################################################################################
-                                           Diagnostic info
-----------------------------------------------------------------------------------------------------
-Exception type  : {exc_type}
-Exception value : {exc}
-System info     : {system_info}
-Python version  : {python_version}
-Kodi version    : {kodi_version}
-sys.argv        : {sys_argv}
-----------------------------------------------------------------------------------------------------
-sys.path:
-{sys_path}
+STACK_TRACE_TEMPLATE = """
 ####################################################################################################
                                             Stack Trace
 ====================================================================================================
@@ -105,9 +85,78 @@ sys.path:
 """
 
 
+def _format_stack_trace(frames: Iterable[inspect.FrameInfo]) -> str:
+    stack_trace = ''
+    for frame_info in frames:
+        stack_trace += _format_frame_info(frame_info)
+    return STACK_TRACE_TEMPLATE.format(stack_trace=stack_trace)
+
+
+EXCEPTION_TEMPLATE = """
+####################################################################################################
+                                     Exception Diagnostic Info
+----------------------------------------------------------------------------------------------------
+Exception type    : {exc_type}
+Exception message : {exc}
+System info       : {system_info}
+Python version    : {python_version}
+Kodi version      : {kodi_version}
+sys.argv          : {sys_argv}
+----------------------------------------------------------------------------------------------------
+sys.path:
+{sys_path}
+{stack_trace_info}
+"""
+
+
+def format_trace(frames_to_exclude: int = 1) -> str:
+    """
+    Returns a pretty stack trace with code context and local variables
+
+    Stack trace info includes the following:
+
+    * File path and line number
+    * Code fragment
+    * Local variables
+
+    It allows to inspect execution state at the point of this function call
+
+    :param frames_to_exclude: How many top frames are excluded from the trace
+        to skip unnecessary info. Since each function call creates a stack frame
+        you need to exclude at least this function frame.
+    """
+    frames = inspect.stack(5)[frames_to_exclude:]
+    return _format_stack_trace(reversed(frames))
+
+
+def format_exception(exc_obj: Optional[Exception] = None) -> str:
+    """
+    Returns a pretty exception stack trace with code context and local variables
+
+    :param exc_obj: exception object (optional)
+    :raises ValueError: if no exception is being handled
+    """
+    if exc_obj is None:
+        _, exc_obj, _ = sys.exc_info()
+    if exc_obj is None:
+        raise ValueError('No exception is currently being handled')
+    stack_trace = inspect.getinnerframes(exc_obj.__traceback__, context=5)
+    stack_trace_info = _format_stack_trace(stack_trace)
+    message = EXCEPTION_TEMPLATE.format(
+        exc_type=exc_obj.__class__.__name__,
+        exc=exc_obj,
+        system_info=uname(),
+        python_version=sys.version.replace('\n', ' '),
+        kodi_version=xbmc.getInfoLabel('System.BuildVersion'),
+        sys_argv=pformat(sys.argv),
+        sys_path=pformat(sys.path),
+        stack_trace_info=stack_trace_info
+    )
+    return message
+
+
 @contextmanager
-def log_exception(logger_func=log_error):
-    # type: (Callable[[Text], None]) -> Generator[None, None, None]
+def catch_exception(logger_func: Callable[[str], None] = _log_error) -> Generator[None, None, None]:
     """
     Diagnostic helper context manager
 
@@ -128,7 +177,7 @@ def log_exception(logger_func=log_error):
 
     Example::
 
-        with debug_exception():
+        with catch_exception():
             # Some risky code
             raise RuntimeError('Fatal error!')
 
@@ -138,18 +187,8 @@ def log_exception(logger_func=log_error):
     try:
         yield
     except Exception as exc:
-        stack_trace = ''
-        for frame_info in inspect.trace(5):
-            stack_trace += _format_frame_info(frame_info)
-        message = EXCEPTION_TEMPLATE.format(
-            exc_type=exc.__class__.__name__,
-            exc=exc,
-            system_info=uname(),
-            python_version=sys.version.replace('\n', ' '),
-            kodi_version=xbmc.getInfoLabel('System.BuildVersion'),
-            sys_argv=pformat(sys.argv),
-            sys_path=pformat(sys.path),
-            stack_trace=stack_trace
-        )
-        logger_func(message)
-        raise exc
+        message = format_exception(exc)
+        # pylint: disable=line-too-long
+        logger_func('\n*********************************** Unhandled exception detected ***********************************\n'
+                    + message)
+        raise

@@ -10,21 +10,23 @@ __title__ = 'lyricscom'
 __priority__ = '240'
 __lrc__ = False
 
+UserAgent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
 
 class LyricsFetcher:
     def __init__(self, *args, **kwargs):
         self.DEBUG = kwargs['debug']
         self.settings = kwargs['settings']
-        self.url = 'http://www.lyrics.com/serp.php?st=%s&qtype=2'
+        self.url = 'https://www.lyrics.com/serp.php?st=%s&qtype=2'
 
     def get_lyrics(self, song):
+        sess = requests.Session()
         log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title), debug=self.DEBUG)
         lyrics = Lyrics(settings=self.settings)
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
         try:
-            request = requests.get(self.url % urllib.parse.quote_plus(song.artist), timeout=10)
+            request = sess.get(self.url % urllib.parse.quote_plus(song.artist), headers=UserAgent, timeout=10)
             response = request.text
         except:
             return
@@ -32,11 +34,11 @@ class LyricsFetcher:
         url = ''
         for link in soup.find_all('a'):
             if link.string and link.get('href').startswith('artist/'):
-                url = 'http://www.lyrics.com/' + link.get('href')
+                url = 'https://www.lyrics.com/' + link.get('href')
                 break
         if url:
             try:
-                req = requests.get(url, timeout=10)
+                req = sess.get(url, headers=UserAgent, timeout=10)
                 resp = req.text
             except:
                 return
@@ -44,11 +46,11 @@ class LyricsFetcher:
             url = ''
             for link in soup.find_all('a'):
                 if link.string and (difflib.SequenceMatcher(None, link.string.lower(), song.title.lower()).ratio() > 0.8):
-                    url = 'http://www.lyrics.com' + link.get('href')
+                    url = 'https://www.lyrics.com' + link.get('href')
                     break
             if url:
                 try:
-                    req2 = requests.get(url, timeout=10)
+                    req2 = sess.get(url, headers=UserAgent, timeout=10)
                     resp2 = req2.text
                 except:
                     return

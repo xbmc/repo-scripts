@@ -24,7 +24,7 @@ def pass_list_to_skin(name: str, data, prefix: str = "", limit: int = False) -> 
         name (str): Type of data being returned derived from runscript info
             parameter.  Used to construct the skin window property key
             eg. topratedmovies from invocation parameter info=
-        data (kutils.itemlist.ItemList): collection of ListItems
+        data (kutils131.itemlist.ItemList): collection of ListItems
             (Video or Audio)
         prefix (str, optional):  Optional prefix for the name.  May be set
             as a param in runscript.  Defaults to "".
@@ -64,6 +64,8 @@ class Main:
         """
         utils.log(f"version {addon.VERSION} started")
         addon.set_global("extendedinfo_running", "true")
+        if not addon.bool_setting("setting_update_6.0.9"):
+            addon.update_lang_setting()
         self._parse_argv()
         for info in self.infos:
             listitems = process.start_info_actions(info, self.params)

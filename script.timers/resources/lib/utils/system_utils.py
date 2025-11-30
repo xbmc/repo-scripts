@@ -1,3 +1,5 @@
+import re
+
 import xbmc
 from resources.lib.utils.jsonrpc_utils import json_rpc
 
@@ -22,3 +24,10 @@ def set_windows_unlock(value: bool) -> bool:
         )
 
     return value
+
+
+def get_kodi_version() -> float:
+
+    build_version = re.match(
+        r"^([0-9]+\.[0-9]+).*$", xbmc.getInfoLabel('System.BuildVersion')).groups()[0]
+    return float(build_version)

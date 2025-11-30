@@ -1,3 +1,4 @@
+1.0.3 Improve usability by accelerating skip when user overshoots target.
 
 1.0.2 Fixed a race condition when skip is incomplete before querying current position.
       Fixed a race condition when skip button is pressed multip[le times in quick succession.

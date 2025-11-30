@@ -26,7 +26,7 @@ def reset_pause() -> None:
     _set(from_=None, until=None)
 
 
-def _set(from_: datetime, until: datetime) -> None:
+def _set(from_: datetime, until: 'datetime | None') -> None:
 
     if not until:
         date_from = "2001-01-01"

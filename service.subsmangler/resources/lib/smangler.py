@@ -375,6 +375,22 @@ def GetIsoCode(lang):
     return outlang
 
 
+def TruncateComment(line):
+    """Returns line without any comment"""
+
+    # truncate any comment at the end of line
+    # https://stackoverflow.com/questions/509211/understanding-pythons-slice-notation
+    pos = line.find("#")
+    # if there is no comment, pos==-1
+    if pos >= 0:
+        # take only part before comment
+        line = line[:pos]
+    # remove whitespaces at the beginning and end
+    line = line.strip()
+
+    return line
+
+
 # parse a list of definitions from file
 # load only a particular section
 def GetDefinitions(section):
@@ -395,15 +411,7 @@ def GetDefinitions(section):
         with open(globals.deffilename, "rt", encoding='utf-8') as f:
             thissection = False
             for line in f:
-                # truncate any comment at the end of line
-                # https://stackoverflow.com/questions/509211/understanding-pythons-slice-notation
-                pos = line.find("#")
-                # if there is no comment, pos==-1
-                if pos >= 0:
-                    # take only part before comment
-                    line = line[:pos]
-                # remove whitespaces at the beginning and end
-                line = line.strip()
+                line = TruncateComment(line)
 
                 # patterns for finding sections
                 thissectionpattern = "\[" + section + "\]"  # matches: [SeCtIoNnAmE]
@@ -1244,6 +1252,50 @@ def UpdateDefFile():
 #        Log("Can not remove temporary definitions file: " + globals.tempdeffilename, xbmc.LOGERROR)
 
 
+def LoadExcludedPaths(file):
+    """Loads paths from file and returns it as a list"""
+
+    excludeList = []
+    if os.path.isfile(file):
+        # open file
+        with open(file, "rt", encoding='utf-8') as f:
+            for line in f:
+                line = TruncateComment(line)
+                if line:
+                    excludeList.append(line)
+
+        Log("Excluded paths file loaded: {filename}".format(filename=file), xbmc.LOGINFO)
+
+        if excludeList:
+            for entry in excludeList:
+                Log("    {line}".format(line=entry), xbmc.LOGDEBUG)
+        else:
+            Log("  --empty list--", xbmc.LOGDEBUG)
+
+    else:
+        # create empty file with comment
+        with open(file, "w", encoding='utf-8') as f:
+            f.write('# This file holds paths that should be excluded from processing\n')
+            f.write('# when cleaning old subtitles files is performed\n')
+            f.write('# Provide one path per line\n')
+
+        Log("Excluded paths file for cleaning process does not exist: {filename}. Creating an empty one.".format(filename=file), xbmc.LOGINFO)
+
+    return excludeList
+
+
+def isIgnored(dir, ignoredlist):
+    """Checks if the directory is within one of the ignored paths"""
+    if ignoredlist:
+        Log("Checking if path should be ignored: {path}".format(path=dir),xbmc.LOGDEBUG)
+        for ignored_path in ignoredlist:
+            if dir.startswith(ignored_path):
+                Log("       path matches: {match}".format(match=ignored_path), xbmc.LOGDEBUG)
+                return True
+
+    return False
+
+
 # walk through video sources and remove any subtitle files that do not acompany its own video any more
 # also remove '.noautosubs' files
 def RemoveOldSubs():
@@ -1267,10 +1319,14 @@ def RemoveOldSubs():
     # record start time
     ClearStartTime = time.time()
 
+    # load list containing paths to ignore
+    ignorePathsList = LoadExcludedPaths(globals.cleaningexclusionsfilename)
+
     # create background dialog
     # http://mirrors.kodi.tv/docs/python-docs/13.0-gotham/xbmcgui.html#DialogProgressBG
-    pDialog = xbmcgui.DialogProgressBG()
-    pDialog.create('Subtitles Mangler', globals.__addonlang__(32090))
+    if not globals.setting_HideOrphanedSubsCleaningProgress:
+        pDialog = xbmcgui.DialogProgressBG()
+        pDialog.create('Subtitles Mangler', globals.__addonlang__(32090))
 
     # initiate empty lists
     videofiles = list()
@@ -1298,7 +1354,9 @@ def RemoveOldSubs():
         # calculate progressbar increase
         progress = source_number // len(sources)
         # update background dialog
-        pDialog.update(progress, message=globals.__addonlang__(32090) + ': ' + source.get('label'))
+        if not globals.setting_HideOrphanedSubsCleaningProgress:
+            pDialog.update(progress, message=globals.__addonlang__(32090) + ': ' + source.get('label'))
+
         source_number += 100
 
         # http://code.activestate.com/recipes/435875-a-simple-non-recursive-directory-walker/
@@ -1306,23 +1364,28 @@ def RemoveOldSubs():
         while len(directories) > 0:
             # take one element from directories list and process it
             directory = directories.pop()
-            dirs, files = xbmcvfs.listdir(directory)
-            # add every subdir to the list for checking
-            for subdir in dirs:
-                Log("Adding subpath: " + os.path.join(directory, subdir), xbmc.LOGDEBUG)
-                directories.append(os.path.join(directory, subdir))
-            # check every file in the current subdir and add it to appropriate list
-            for thisfile in files:
-                fullfilepath = os.path.join(directory, thisfile)
-                _filebase, fileext = os.path.splitext(fullfilepath)
-                if fileext in globals.VideoExtList:
-                    # this file is video - add to video list
-                    Log("Adding to video list: " + fullfilepath, xbmc.LOGDEBUG)
-                    videofiles.append(fullfilepath)
-                elif fileext in extRemovalList:
-                    # this file is subs related - add to subs list
-                    Log("Adding to subs list: " + fullfilepath, xbmc.LOGDEBUG)
-                    subfiles.append(fullfilepath)
+            # if the directory is not within any of the dirs to be ignored
+            if not isIgnored(directory, ignorePathsList):
+                dirs, files = xbmcvfs.listdir(directory)
+                # add every subdir to the list for checking
+                for subdir in dirs:
+                    Log("Adding subpath: " + os.path.join(directory, subdir), xbmc.LOGDEBUG)
+                    directories.append(os.path.join(directory, subdir))
+                # check every file in the current subdir and add it to appropriate list
+                for thisfile in files:
+                    fullfilepath = os.path.join(directory, thisfile)
+                    _filebase, fileext = os.path.splitext(fullfilepath)
+                    if fileext in globals.VideoExtList:
+                        # this file is video - add to video list
+                        Log("Adding to video list: " + fullfilepath, xbmc.LOGDEBUG)
+                        videofiles.append(fullfilepath)
+                    elif fileext in extRemovalList:
+                        # this file is subs related - add to subs list
+                        Log("Adding to subs list: " + fullfilepath, xbmc.LOGDEBUG)
+                        subfiles.append(fullfilepath)
+
+            else:
+                Log("Ignoring path: {path}".format(path=directory), xbmc.LOGINFO)
 
     # process custom subtitle path if it is set in Kodi configuration
     custompath = xbmcvfs.translatePath("special://subtitles")  # path to non-standard dir with subtitles
@@ -1371,7 +1434,9 @@ def RemoveOldSubs():
         # calculate progressbar increase
         progress = subfile_number // len(subfiles)
         # update background dialog
-        pDialog.update(progress, message=globals.__addonlang__(32091))
+        if not globals.setting_HideOrphanedSubsCleaningProgress:
+            pDialog.update(progress, message=globals.__addonlang__(32091))
+
         subfile_number += 100
 
         # split filename from full path
@@ -1412,7 +1477,8 @@ def RemoveOldSubs():
             ClearEndTime - ClearScanTime) + " seconds.", xbmc.LOGINFO)
 
     # close background dialog
-    pDialog.close()
+    if not globals.setting_HideOrphanedSubsCleaningProgress:
+        pDialog.close()
 
 
 # supplementary code to be run periodically from main loop

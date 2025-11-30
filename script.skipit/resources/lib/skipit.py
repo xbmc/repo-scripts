@@ -10,6 +10,9 @@ CWD = ADDON.getAddonInfo('path')
  
 going_forward = False
 going_backward = False
+went_forward = False
+went_backward = False
+overshot = False
 lock = threading.Lock()
 min_skip_secs = 3 
 skip_secs = 180 
@@ -25,15 +28,19 @@ class SkipItWindow(xbmcgui.WindowXMLDialog):
         global my_timer
         global skip_secs
         global min_skip_secs
+        global max_skip_secs
         global slippage
         global timeout
+        global going_forward
 
         self.setFocusId(self.getCurrentContainerId())
         
-        skip_secs = ADDON.getSettingInt('skipsecs')
+        max_skip_secs = ADDON.getSettingInt('skipsecs')
         min_skip_secs = ADDON.getSettingInt('minskipsecs')
         slippage = ADDON.getSettingInt('slippage')
         timeout = ADDON.getSettingNumber('timeout')
+        skip_secs = max_skip_secs
+        going_forward = True
         
         skip_forward()
 
@@ -98,10 +105,14 @@ def skip_forward():
         # Skip forward the required amount
         global addonname
         global skip_secs
+        global went_forward
         global going_forward
-        going_forward = True
+        global went_backward
+        went_forward = True
     
         reset_timer()
+
+        calc_overshot(True)
         calc_next_skip_size()
         set_label(skip_secs, True)
         requested_skip = skip_secs - slippage
@@ -109,6 +120,8 @@ def skip_forward():
         if actual_skip != requested_skip:
             skip_secs = abs(actual_skip)
             xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32135))
+
+        going_forward = True
     return 
 
 
@@ -123,10 +136,13 @@ def skip_backward():
         # Skip forward the required amount
         global addonname
         global skip_secs
-        global going_backward
-        going_backward = True
+        global went_backward
+        global going_forward
+
+        went_backward = True
     
         reset_timer()
+        calc_overshot(False)
         calc_next_skip_size()
         set_label(skip_secs, False)
         # Add a couple of extra seconds as the video is still playing forwards
@@ -136,6 +152,7 @@ def skip_backward():
             skip_secs = abs(actual_skip)
             xbmcgui.Dialog().notification(addonname, ADDON.getLocalizedString(32130))
             
+        going_forward = False
     return 
 
 
@@ -155,25 +172,51 @@ def set_label(seconds, forward):
 
 def reset():
     global skip_secs
-    global going_forward
-    global going_backward
+    global went_forward
+    global went_backward
+    global overshot
+    global max_skip_secs
     
     with lock:
-        going_forward = False
-        going_backward = False
-        skip_secs = ADDON.getSettingInt('skipsecs')
+        went_forward = False
+        went_backward = False
+        overshot = False
+        skip_secs = max_skip_secs
     return
 
         
 def calc_next_skip_size():
-    global going_forward
-    global going_backward
+    global went_forward
+    global went_backward
     global skip_secs
     global min_skip_secs
-    if going_forward & going_backward:
-        skip_secs = round(skip_secs / 2);
+    global overshot
+
+    if went_forward & went_backward:
+        if overshot:
+            skip_secs = skip_secs * 2
+        else:
+            skip_secs = round(skip_secs / 2)
     if skip_secs < min_skip_secs:
         skip_secs = min_skip_secs
+    if skip_secs > max_skip_secs:
+        skip_secs = max_skip_secs
+    return
+
+        
+def calc_overshot(forward):
+    global going_forward
+    global skip_secs
+    global min_skip_secs
+    global overshot
+
+    # If going in the same direction and are at the minimum skip we have overshot
+    if going_forward == forward:
+        if skip_secs <= min_skip_secs:
+            overshot = True
+    # Change of direction turns overshoot off
+    else:
+        overshot = False    
     return
 
         

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.2" provider-name="bossanova808">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="resources/lib" />
+    <extension point="xbmc.addon.metadata">
+        <description lang="en_GB">Common code needed by Bossanova808 addons</description>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <website>https://github.com/bossanova808/script.module.bossanova808</website>
+        <source>https://github.com/bossanova808/script.module.bossanova808</source>
+        <news>v1.0.2
+- Fix for previous, for systems using older Python
+- Add some more helper functions
+</news>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>

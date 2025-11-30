@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Alexander Seiler
 #
 #
@@ -24,7 +22,7 @@ import re
 import sys
 
 
-def try_get(dictionary, keys, data_type=str, default=''):
+def try_get(dictionary, keys, data_type=str, default=""):
     """
     Accesses a nested dictionary in a save way.
 
@@ -60,9 +58,8 @@ def assemble_query_string(query_list):
     query_list -- a list of queries
     """
     if sys.version_info[0] >= 3:
-        return '&'.join(['{}={}'.format(k, v) for (k, v) in query_list])
-    return '&'.join(
-        ['{}={}'.decode('utf-8').format(k, v) for (k, v) in query_list])
+        return "&".join(["{}={}".format(k, v) for (k, v) in query_list])
+    return "&".join(["{}={}".decode("utf-8").format(k, v) for (k, v) in query_list])
 
 
 def str_or_none(inp, default=None):
@@ -77,14 +74,14 @@ def str_or_none(inp, default=None):
     if inp is None:
         return default
     try:
-        return str(inp, 'utf-8')
+        return str(inp, "utf-8")
     except TypeError:
         return inp
 
 
 def get_duration(duration_string):
     """
-    Converts a duration string into an integer respresenting the
+    Converts a duration string into an integer representing the
     total duration in seconds. There are three possible input string
     forms possible, either
     <hours>:<minutes>:<seconds>
@@ -99,12 +96,12 @@ def get_duration(duration_string):
     """
     if not isinstance(duration_string, str):
         return None
-    durrex = r'(((?P<hour>\d+):)?(?P<minute>\d+):)?(?P<second>\d+)'
+    durrex = r"(((?P<hour>\d+):)?(?P<minute>\d+):)?(?P<second>\d+)"
     match = re.match(durrex, duration_string)
     if match:
-        hour = int(match.group('hour')) if match.group('hour') else 0
-        minute = int(match.group('minute')) if match.group('minute') else 0
-        second = int(match.group('second'))
+        hour = int(match.group("hour")) if match.group("hour") else 0
+        minute = int(match.group("minute")) if match.group("minute") else 0
+        second = int(match.group("second"))
         return 60 * 60 * hour + 60 * minute + second
     # log('Cannot convert duration string: &s' % duration_string)
     return None
@@ -142,17 +139,17 @@ def _parse_date_time_tz(input_string):
     Keyword arguments:
     input_string -- a string of the above form
     """
-    dt_regex = r'''(?x)
+    dt_regex = r"""(?x)
                     (?P<dt>
                         \d{4}-\d{2}-\d{2}T\d{2}(:|h)\d{2}:\d{2}
                     )
                     (?P<tz>
                         (?:[-+]\d{2}(:|h)\d{2}|Z)
                     )
-                '''
+                """
     match = re.match(dt_regex, input_string)
     if match:
-        dts = match.group('dt')
+        dts = match.group("dt")
         # We ignore timezone information for now
         try:
             # Strange behavior of strptime in Kodi?
@@ -164,8 +161,7 @@ def _parse_date_time_tz(input_string):
             hour = int(dts[11:13])
             minute = int(dts[14:16])
             second = int(dts[17:19])
-            date_time = datetime.datetime(
-                year, month, day, hour, minute, second)
+            date_time = datetime.datetime(year, month, day, hour, minute, second)
             return date_time
         except ValueError:
             return None
@@ -186,77 +182,77 @@ def _parse_weekday_time(input_string):
     input_string -- a string of the above form
     """
     weekdays_german = (
-        'Montag',
-        'Dienstag',
-        'Mittwoch',
-        'Donnerstag',
-        'Freitag',
-        'Samstag',
-        'Sonntag',
+        "Montag",
+        "Dienstag",
+        "Mittwoch",
+        "Donnerstag",
+        "Freitag",
+        "Samstag",
+        "Sonntag",
     )
     special_weekdays_german = (
-        'gestern',
-        'heute',
-        'morgen',
+        "gestern",
+        "heute",
+        "morgen",
     )
     identifiers_german = weekdays_german + special_weekdays_german
 
     weekdays_french = (
-        'Lundi',
-        'Mardi',
-        'Mercredi',
-        'Jeudi',
-        'Vendredi',
-        'Samedi',
-        'Dimanche',
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+        "Dimanche",
     )
     special_weekdays_french = (
-        'hier',
-        'aujourd\'hui',
-        'demain',
+        "hier",
+        "aujourd'hui",
+        "demain",
     )
     identifiers_french = weekdays_french + special_weekdays_french
 
     weekdays_italian = (
-        'Lunedì',
-        'Martedì',
-        'Mercoledì',
-        'Giovedì',
-        'Venerdì',
-        'Sabato',
-        'Domenica',
+        "Lunedì",
+        "Martedì",
+        "Mercoledì",
+        "Giovedì",
+        "Venerdì",
+        "Sabato",
+        "Domenica",
     )
     special_weekdays_italian = (
-        'ieri',
-        'oggi',
-        'domani',
+        "ieri",
+        "oggi",
+        "domani",
     )
     identifiers_italian = weekdays_italian + special_weekdays_italian
 
     weekdays_english = (
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
     )
     special_weekdays_english = (
-        'yesterday',
-        'today',
-        'tomorrow',
+        "yesterday",
+        "today",
+        "tomorrow",
     )
     identifiers_english = weekdays_english + special_weekdays_english
 
     identifiers = {
-        'german': identifiers_german,
-        'french': identifiers_french,
-        'italian': identifiers_italian,
-        'english': identifiers_english,
+        "german": identifiers_german,
+        "french": identifiers_french,
+        "italian": identifiers_italian,
+        "english": identifiers_english,
     }
 
-    recent_date_regex = r'''(?x)
+    recent_date_regex = r"""(?x)
                             (?P<weekday>[a-zA-z\'ì]+)
                             \s*,\s*
                             (?P<hour>\d{2})(:|h)
@@ -264,15 +260,16 @@ def _parse_weekday_time(input_string):
                             (:
                                 (?P<second>\d{2})
                             )?
-                        '''
+                        """
     recent_date_match = re.match(recent_date_regex, input_string)
     if recent_date_match:
         # This depends on correct date settings in Kodi...
         today = datetime.date.today()
         # wdl = [x for x in weekdays if input_string.startswith(x)]
         for key in list(identifiers.keys()):
-            wdl = [x for x in identifiers[key] if re.match(
-                x, input_string, re.IGNORECASE)]
+            wdl = [
+                x for x in identifiers[key] if re.match(x, input_string, re.IGNORECASE)
+            ]
             lang = key
             if wdl:
                 break
@@ -289,13 +286,13 @@ def _parse_weekday_time(input_string):
             days_off_pos = (today.weekday() - index) % 7
             offset = datetime.timedelta(-days_off_pos)
         try:
-            hour = int(recent_date_match.group('hour'))
-            minute = int(recent_date_match.group('minute'))
+            hour = int(recent_date_match.group("hour"))
+            minute = int(recent_date_match.group("minute"))
             time = datetime.time(hour, minute)
         except ValueError:
             return None
         try:
-            second = int(recent_date_match.group('second'))
+            second = int(recent_date_match.group("second"))
             time = datetime.time(hour, minute, second)
         except (ValueError, TypeError):
             pass
@@ -319,7 +316,7 @@ def _parse_date_time(input_string):
     Keyword arguments:
     input_string -- the date and time in the above form
     """
-    full_date_regex = r'''(?x)
+    full_date_regex = r"""(?x)
                         (?P<day>\d{2})\.
                         (?P<month>\d{2})\.
                         (?P<year>\d{4})
@@ -329,22 +326,21 @@ def _parse_date_time(input_string):
                         (:
                             (?P<second>\d{2})
                         )?
-                    '''
+                    """
     full_date_match = re.match(full_date_regex, input_string)
     if full_date_match:
         try:
-            year = int(full_date_match.group('year'))
-            month = int(full_date_match.group('month'))
-            day = int(full_date_match.group('day'))
-            hour = int(full_date_match.group('hour'))
-            minute = int(full_date_match.group('minute'))
+            year = int(full_date_match.group("year"))
+            month = int(full_date_match.group("month"))
+            day = int(full_date_match.group("day"))
+            hour = int(full_date_match.group("hour"))
+            minute = int(full_date_match.group("minute"))
             date_time = datetime.datetime(year, month, day, hour, minute)
         except ValueError:
             return None
         try:
-            second = int(full_date_match.group('second'))
-            date_time = datetime.datetime(
-                year, month, day, hour, minute, second)
+            second = int(full_date_match.group("second"))
+            date_time = datetime.datetime(year, month, day, hour, minute, second)
             return date_time
         except (ValueError, TypeError):
             return date_time

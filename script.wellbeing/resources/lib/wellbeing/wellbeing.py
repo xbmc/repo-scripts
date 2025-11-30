@@ -9,7 +9,7 @@ import xbmcvfs
 
 from resources.lib.wellbeing.player import Player
 
-CHECK_INTERVAL = 15
+CHECK_INTERVAL = 10
 
 OFF = 0
 AUDIO_VIDEO = 1
@@ -37,6 +37,8 @@ AUTO_STOP_INTERVAL = [None, TIME_15M, TIME_20M, TIME_30M, TIME_1H]
 class Wellbeing(xbmc.Monitor):
 
     def __init__(self) -> None:
+
+        self._changed = .0
 
         self._addon = xbmcaddon.Addon()
         self._player = Player()
@@ -69,6 +71,11 @@ class Wellbeing(xbmc.Monitor):
 
     def onSettingsChanged(self) -> None:
 
+        ts = time.time()
+        if self._changed + 1 > ts:
+            return
+        self._changed = ts
+
         limits = list()
         restperiods = list()
         restfrom = list()
@@ -92,6 +99,16 @@ class Wellbeing(xbmc.Monitor):
         self._wday = time.localtime().tm_wday
         self._ignoreLimit = False
         self._ignoreRestPeriod = -1
+
+        sum = self._addon.getSettingInt("sum")
+        if sum < 0:
+            self._sum = 0
+            self._addon.setSettingInt("sum", 0)
+
+        limit = self._addon.getSetting("limit")
+        if limit:
+            self._limits[self._wday] = self._timeformat_to_seconds(limit)
+            self._addon.setSetting("limit", "")
 
         self._password = self._addon.getSettingString("password")
 

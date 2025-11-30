@@ -67,6 +67,11 @@ class WebClient(requests.Session):
         func = super(WebClient, self).delete
         return self._run(func, url, **kwargs)
 
+    def head(self, url, **kwargs):
+
+        func = super(WebClient, self).head
+        return self._run(func, url, **kwargs)
+
     def _run(self, func, url, **kwargs):
 
         try:

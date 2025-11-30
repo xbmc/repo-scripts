@@ -1,0 +1,7 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "View Update Log"
+msgstr "View Update Log" 

@@ -13,6 +13,12 @@ class GuiSettingsManager:
 
         self.systemSettings = json_response['result']['settings']
 
+    def list_addons(self):
+        # list all currently installed addons
+        addons = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Addons.GetAddons", "params":{"properties":["version","author"]}, "id":2}'))
+
+        return addons['result']['addons']
+
     def backup(self):
         utils.log('Backing up Kodi settings')
 
@@ -33,10 +39,12 @@ class GuiSettingsManager:
 
         restoreCount = 0
         for aSetting in restoreSettings:
+            # Ensure key exists before referencing
+            if(aSetting['id'] in settingsDict.values()):
             # only update a setting if its different than the current (action types have no value)
-            if(aSetting['type'] != 'action' and settingsDict[aSetting['id']] != aSetting['value']):
-                if(utils.getSettingBool('verbose_logging')):
-                    utils.log('%s different than current: %s' % (aSetting['id'], str(aSetting['value'])))
+                if(aSetting['type'] != 'action' and settingsDict[aSetting['id']] != aSetting['value']):
+                    if(utils.getSettingBool('verbose_logging')):
+                        utils.log('%s different than current: %s' % (aSetting['id'], str(aSetting['value'])))
 
                 updateJson['params']['setting'] = aSetting['id']
                 updateJson['params']['value'] = aSetting['value']

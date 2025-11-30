@@ -117,18 +117,31 @@ def get_favourites():
                     params={"type": None, "properties": ["path", "thumbnail", "window", "windowparameter"]})
 
 
-def set_art(media_type, art, dbid):
+def set_art(media_type:str, art:dict, dbid:int) -> dict:
+    """set artwork via json
+
+    Args:
+        media_type (str): enum Kodi media type for JSON
+        art (dict): dict of str arttype : str art URL
+        dbid (int): Kodi media id from dataabase
+
+    Returns:
+        dict: the JSON results from Kodi
     """
-    set artwork via json
-    """
-    return get_json(method="VideoLibrary.Set%sDetails" % media_type,
+    return get_json(method=f"VideoLibrary.Set{media_type}Details",
                     params={"art": art,
-                            "%sid" % media_type.lower(): int(dbid)})
+                            f"{media_type.lower()}id": int(dbid)})
 
 
-def get_json(method, params):
+def get_json(method:str, params) -> dict:
+    """communicate with kodi JSON-RPC
+
+    Args:
+        method (str): the JSON-RPC method
+        params (dict): the JSON_RPC params
+
+    Returns:
+        dict: JSON_RPC results
     """
-    communicate with kodi JSON-RPC
-    """
-    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "%s", "params": %s, "id": 1}' % (method, json.dumps(params)))
+    json_query = xbmc.executeJSONRPC(f'{{"jsonrpc": "2.0", "method": "{method}", "params": {json.dumps(params)}, "id": 1}}')
     return json.loads(json_query)

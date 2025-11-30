@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <!-- 1280 x 720 -->
-    <include>Animation_DialogPopupOpenClose</include>
-    <depth>DepthOSD</depth>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="50%,50%" delay="160" tween="back" time="240"/>
+        <effect type="fade" delay="160" end="100" time="240"/>
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="50%,50%" easing="in" tween="back" time="240"/>
+        <effect type="fade" start="100" end="0" time="240"/>
+    </animation>
+    <depth>0.40</depth>
     <defaultcontrol always="true">32500</defaultcontrol>
     <controls>
         <control type="group">
@@ -21,7 +28,7 @@
                 <top>68</top>
                 <width>32</width>
                 <height>32</height>
-                <texturefocus colordiffuse="button_focus">Button/close.png</texturefocus>
+                <texturefocus colordiffuse="FF12A0C7">Button/close.png</texturefocus>
                 <texturenofocus colordiffuse="EEFFFFFF">Button/close.png</texturenofocus>
                 <ondown>32502</ondown>
             </control>
@@ -46,6 +53,11 @@
                 <top>140</top>
                 <width>10</width>
                 <height>510</height>
+                <texturesliderbackground colordiffuse="29FFFFFF">AddonWindow/white.png</texturesliderbackground>
+                <texturesliderbar colordiffuse="FFAAAAAA">AddonWindow/white.png</texturesliderbar>
+                <texturesliderbarfocus colordiffuse="FF12A0C7">AddonWindow/white.png</texturesliderbarfocus>
+                <textureslidernib/>
+                <textureslidernibfocus/>
                 <onup>32500</onup>
                 <showonepage>false</showonepage>
                 <orientation>vertical</orientation>

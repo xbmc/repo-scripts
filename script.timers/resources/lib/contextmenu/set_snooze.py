@@ -7,7 +7,7 @@ from resources.lib.player import player_utils
 from resources.lib.player.mediatype import AUDIO, VIDEO
 from resources.lib.timer.timer import (MEDIA_ACTION_STOP_START,
                                        SYSTEM_ACTION_NONE, Timer)
-from resources.lib.utils.datetime_utils import DEFAULT_TIME
+from resources.lib.utils import datetime_utils
 
 
 class SetSnooze(AbstractSetTimer):
@@ -38,7 +38,7 @@ class SetSnooze(AbstractSetTimer):
 
         _default_duration = self.addon.getSetting("snooze_default_duration")
         _current = timer.get_duration()
-        _current = _default_duration if DEFAULT_TIME else _current
+        _current = _default_duration if datetime_utils.DEFAULT_TIME else _current
 
         duration = xbmcgui.Dialog().numeric(
             2, self.addon.getLocalizedString(32106), _current)

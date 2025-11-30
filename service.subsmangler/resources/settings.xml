@@ -182,6 +182,16 @@
                     </dependencies>
                 </setting>
             </group>
+            <group id="8">
+                <setting id="HideOrphanedSubsCleaningProgress" type="boolean" label="32076" help="32133">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="AutoRemoveOldSubs">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
         </category>
     </section>
 </settings>

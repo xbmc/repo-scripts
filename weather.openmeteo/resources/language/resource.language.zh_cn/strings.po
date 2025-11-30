@@ -1,0 +1,632 @@
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Chinese (OpenHT)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-04 13:09+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: OpenHT <support@openht.org>\n"
+"Language-Team: Chinese <https://hosted.weblate.org/projects/openht/"
+"weather-openmeteo/zh/>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
+
+msgctxt "#32200"
+msgid "Sunny"
+msgstr "晴朗"
+
+msgctxt "#32201"
+msgid "Mainly Sunny"
+msgstr "以晴为主"
+
+msgctxt "#32202"
+msgid "Partly Cloudy"
+msgstr "局部多云"
+
+msgctxt "#32203"
+msgid "Cloudy"
+msgstr "多云"
+
+msgctxt "#32204"
+msgid "Foggy"
+msgstr "有雾"
+
+msgctxt "#32205"
+msgid "Rime Fog"
+msgstr "雾凇"
+
+msgctxt "#32206"
+msgid "Light Drizzle"
+msgstr "轻微细雨"
+
+msgctxt "#32207"
+msgid "Drizzle"
+msgstr "细雨"
+
+msgctxt "#32208"
+msgid "Heavy Drizzle"
+msgstr "大雨滴"
+
+msgctxt "#32209"
+msgid "Light Freezing Drizzle"
+msgstr "轻微冻雨"
+
+msgctxt "#32210"
+msgid "Freezing Drizzle"
+msgstr "冻雨"
+
+msgctxt "#32211"
+msgid "Light Rain"
+msgstr "小雨"
+
+msgctxt "#32212"
+msgid "Rain"
+msgstr "下雨"
+
+msgctxt "#32213"
+msgid "Heavy Rain"
+msgstr "大雨"
+
+msgctxt "#32214"
+msgid "Light Freezing Rain"
+msgstr "轻微冰雨"
+
+msgctxt "#32215"
+msgid "Freezing Rain"
+msgstr "冰雨"
+
+msgctxt "#32216"
+msgid "Light Snow"
+msgstr "小雪"
+
+msgctxt "#32217"
+msgid "Snow"
+msgstr "下雪"
+
+msgctxt "#32218"
+msgid "Heavy Snow"
+msgstr "大雪"
+
+msgctxt "#32219"
+msgid "Snow Grains"
+msgstr "米雪"
+
+msgctxt "#32220"
+msgid "Light Showers"
+msgstr "小阵雨"
+
+msgctxt "#32221"
+msgid "Showers"
+msgstr "阵雨"
+
+msgctxt "#32222"
+msgid "Heavy Showers"
+msgstr "大阵雨"
+
+msgctxt "#32223"
+msgid "Light Snow Showers"
+msgstr "小阵雪"
+
+msgctxt "#32224"
+msgid "Snow Showers"
+msgstr "阵雪"
+
+msgctxt "#32225"
+msgid "Thunderstorm"
+msgstr "雷暴"
+
+msgctxt "#32226"
+msgid "Light Thunderstorms With Hail"
+msgstr "轻微冰雹雷暴"
+
+msgctxt "#32227"
+msgid "Thunderstorm With Hail"
+msgstr "冰雹雷暴"
+
+msgctxt "#32250"
+msgid "Clear"
+msgstr "晴朗"
+
+msgctxt "#32251"
+msgid "Mainly Clear"
+msgstr "基本晴朗"
+
+msgctxt "#32255"
+msgid "Moonrise"
+msgstr "月出"
+
+msgctxt "#32256"
+msgid "Moonset"
+msgstr "月落"
+
+msgctxt "#32257"
+msgid "Moonphase"
+msgstr "月相"
+
+msgctxt "#32260"
+msgid "General"
+msgstr "常规"
+
+msgctxt "#32261"
+msgid "Locations"
+msgstr "位置"
+
+msgctxt "#32262"
+msgid "Limits"
+msgstr "限制"
+
+msgctxt "#32263"
+msgid "Notifications"
+msgstr "通知"
+
+msgctxt "#32264"
+msgid "Advanced"
+msgstr "高级"
+
+msgctxt "#32265"
+msgid "Weather"
+msgstr "天气"
+
+msgctxt "#32266"
+msgid "Airquality"
+msgstr "空气质量"
+
+msgctxt "#32267"
+msgid "Pollen"
+msgstr "花粉"
+
+msgctxt "#32268"
+msgid "Alerts"
+msgstr "警报"
+
+msgctxt "#32269"
+msgid "Select option"
+msgstr "选择选项"
+
+msgctxt "#32270"
+msgid "Graphs"
+msgstr "图表"
+
+msgctxt "#32271"
+msgid "Overview"
+msgstr "概览"
+
+msgctxt "#32272"
+msgid "History"
+msgstr "历史"
+
+msgctxt "#32280"
+msgid "Units"
+msgstr "单位"
+
+msgctxt "#32281"
+msgid "Maps"
+msgstr "地图"
+
+msgctxt "#32282"
+msgid "Logging"
+msgstr "日志"
+
+msgctxt "#32283"
+msgid "Experimental (Restart required)"
+msgstr "实验性（需重启）"
+
+msgctxt "#32285"
+msgid "Zoom"
+msgstr "缩放"
+
+msgctxt "#32286"
+msgid "Debug"
+msgstr "调试"
+
+msgctxt "#32287"
+msgid "Duration"
+msgstr "持续时间"
+
+msgctxt "#32288"
+msgid "Hours"
+msgstr "小时"
+
+msgctxt "#32289"
+msgid "Decimal places"
+msgstr "小数位数"
+
+msgctxt "#32290"
+msgid "Icons"
+msgstr "图标"
+
+msgctxt "#32291"
+msgid "Default"
+msgstr "默认"
+
+msgctxt "#32292"
+msgid "Weathermap"
+msgstr "天气图"
+
+msgctxt "#32293"
+msgid "Met.no"
+msgstr "挪威气象研究所"
+
+msgctxt "#32294"
+msgid "WMO"
+msgstr "世界气象组织"
+
+msgctxt "#32296"
+msgid "Background sync"
+msgstr "后台同步"
+
+msgctxt "#32300"
+msgid "Distance"
+msgstr "距离"
+
+msgctxt "#32301"
+msgid "Index"
+msgstr "指数"
+
+msgctxt "#32302"
+msgid "Percent"
+msgstr "百分比"
+
+msgctxt "#32303"
+msgid "Unit"
+msgstr "单位"
+
+msgctxt "#32304"
+msgid "Decimal separator"
+msgstr "小数点分隔符"
+
+msgctxt "#32306"
+msgid "Particles"
+msgstr "颗粒物"
+
+msgctxt "#32307"
+msgid "Interval"
+msgstr "间隔"
+
+msgctxt "#32308"
+msgid "Verbose"
+msgstr "详细"
+
+msgctxt "#32310"
+msgid "Location 1"
+msgstr "位置 1"
+
+msgctxt "#32311"
+msgid "Location 2"
+msgstr "位置 2"
+
+msgctxt "#32312"
+msgid "Location 3"
+msgstr "位置 3"
+
+msgctxt "#32313"
+msgid "Location 4"
+msgstr "位置 4"
+
+msgctxt "#32314"
+msgid "Location 5"
+msgstr "位置 5"
+
+msgctxt "#32316"
+msgid "Use location timezone"
+msgstr "使用位置时区"
+
+msgctxt "#32320"
+msgid "Temperature"
+msgstr "温度"
+
+msgctxt "#32321"
+msgid "Precipitation"
+msgstr "降水量"
+
+msgctxt "#32322"
+msgid "Condition"
+msgstr "状况"
+
+msgctxt "#32323"
+msgid "Wind"
+msgstr "风"
+
+msgctxt "#32324"
+msgid "Gust"
+msgstr "阵风"
+
+msgctxt "#32325"
+msgid "AQI EU"
+msgstr "欧盟空气质量指数"
+
+msgctxt "#32326"
+msgid "AQI US"
+msgstr "美国空气质量指数"
+
+msgctxt "#32327"
+msgid "PM25"
+msgstr "细颗粒物 2.5"
+
+msgctxt "#32328"
+msgid "PM10"
+msgstr "可吸入颗粒物 10"
+
+msgctxt "#32329"
+msgid "UV Index"
+msgstr "紫外线指数"
+
+msgctxt "#32330"
+msgid "Nitrogen Dioxide"
+msgstr "二氧化氮"
+
+msgctxt "#32331"
+msgid "Sulphur Dioxide"
+msgstr "二氧化硫"
+
+msgctxt "#32332"
+msgid "Feelslike"
+msgstr "体感"
+
+msgctxt "#32333"
+msgid "Dewpoint"
+msgstr "露点"
+
+msgctxt "#32334"
+msgid "Cloudiness"
+msgstr "云量"
+
+msgctxt "#32335"
+msgid "Time"
+msgstr "时间"
+
+msgctxt "#32336"
+msgid "Speed"
+msgstr "速度"
+
+msgctxt "#32337"
+msgid "Carbon monoxide"
+msgstr "一氧化碳"
+
+msgctxt "#32338"
+msgid "Ozone"
+msgstr "臭氧"
+
+msgctxt "#32339"
+msgid "Dust"
+msgstr "灰尘"
+
+msgctxt "#32340"
+msgid "Notice"
+msgstr "通知"
+
+msgctxt "#32341"
+msgid "Caution"
+msgstr "警告"
+
+msgctxt "#32342"
+msgid "Danger"
+msgstr "危险"
+
+msgctxt "#32343"
+msgid "Normal"
+msgstr "正常"
+
+msgctxt "#32344"
+msgid "Negative"
+msgstr "无"
+
+msgctxt "#32345"
+msgid "Colours"
+msgstr "颜色"
+
+msgctxt "#32346"
+msgid "Humidity"
+msgstr "湿度"
+
+msgctxt "#32347"
+msgid "Pressure"
+msgstr "气压"
+
+msgctxt "#32348"
+msgid "Solar radiation"
+msgstr "太阳辐射"
+
+msgctxt "#32349"
+msgid "Visibility"
+msgstr "能见度"
+
+msgctxt "#32350"
+msgid "°C"
+msgstr "摄氏度"
+
+msgctxt "#32351"
+msgid "°F"
+msgstr "华氏度"
+
+msgctxt "#32352"
+msgid "K"
+msgstr "开尔文"
+
+msgctxt "#32353"
+msgid "°Ré"
+msgstr "列氏度"
+
+msgctxt "#32354"
+msgid "°Ra"
+msgstr "兰金度"
+
+msgctxt "#32355"
+msgid "°Rø"
+msgstr "罗默度"
+
+msgctxt "#32356"
+msgid "°D"
+msgstr "德利尔度"
+
+msgctxt "#32357"
+msgid "°N"
+msgstr "牛顿度"
+
+msgctxt "#32360"
+msgid "Application"
+msgstr "应用"
+
+msgctxt "#32361"
+msgid "mph"
+msgstr "英里/小时"
+
+msgctxt "#32362"
+msgid "km/h"
+msgstr "千米/小时"
+
+msgctxt "#32363"
+msgid "m/min"
+msgstr "米/分钟"
+
+msgctxt "#32364"
+msgid "m/s"
+msgstr "米/秒"
+
+msgctxt "#32365"
+msgid "ft/h"
+msgstr "英尺/小时"
+
+msgctxt "#32366"
+msgid "ft/min"
+msgstr "英尺/分钟"
+
+msgctxt "#32367"
+msgid "ft/s"
+msgstr "英尺/秒"
+
+msgctxt "#32368"
+msgid "kts"
+msgstr "节"
+
+msgctxt "#32369"
+msgid "Beaufort"
+msgstr "蒲福"
+
+msgctxt "#32370"
+msgid "inch/s"
+msgstr "英寸/秒"
+
+msgctxt "#32371"
+msgid "yard/s"
+msgstr "码/秒"
+
+msgctxt "#32372"
+msgid "Furlong/Fortnight"
+msgstr "弗隆/双周"
+
+msgctxt "#32380"
+msgid "mm"
+msgstr "毫米"
+
+msgctxt "#32381"
+msgid "inches"
+msgstr "英寸"
+
+msgctxt "#32390"
+msgid "12h"
+msgstr "12 小时制"
+
+msgctxt "#32391"
+msgid "24h"
+msgstr "24 小时制"
+
+msgctxt "#32400"
+msgid "Radar"
+msgstr "雷达"
+
+msgctxt "#32401"
+msgid "Satellite"
+msgstr "卫星"
+
+msgctxt "#32410"
+msgid "m"
+msgstr "米"
+
+msgctxt "#32411"
+msgid "km"
+msgstr "千米"
+
+msgctxt "#32412"
+msgid "mi"
+msgstr "英里"
+
+msgctxt "#32430"
+msgid "."
+msgstr "."
+
+msgctxt "#32431"
+msgid ","
+msgstr ","
+
+msgctxt "#32440"
+msgid "New Moon"
+msgstr "新月"
+
+msgctxt "#32441"
+msgid "Waxing Crescent"
+msgstr "娥眉月"
+
+msgctxt "#32442"
+msgid "First Quarter"
+msgstr "上弦月"
+
+msgctxt "#32443"
+msgid "Waxing Gibbous"
+msgstr "盈凸月"
+
+msgctxt "#32444"
+msgid "Full Moon"
+msgstr "满月"
+
+msgctxt "#32445"
+msgid "Waning Gibbous"
+msgstr "亏凸月"
+
+msgctxt "#32446"
+msgid "Last Quarter"
+msgstr "下弦月"
+
+msgctxt "#32447"
+msgid "Waning Crescent"
+msgstr "残月"
+
+msgctxt "#32450"
+msgid "Alder"
+msgstr "桤木"
+
+msgctxt "#32451"
+msgid "Birch"
+msgstr "桦树"
+
+msgctxt "#32452"
+msgid "Grass"
+msgstr "草"
+
+msgctxt "#32453"
+msgid "Mugwort"
+msgstr "艾蒿"
+
+msgctxt "#32454"
+msgid "Olive"
+msgstr "橄榄"
+
+msgctxt "#32455"
+msgid "Ragweed"
+msgstr "豚草"
+
+msgctxt "#32456"
+msgid "grains"
+msgstr "颗粒"
+
+msgctxt "#32500"
+msgid "Weather forecast from Open-Meteo"
+msgstr "Open-Meteo 提供的天气预报"
+
+msgctxt "#32501"
+msgid "Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no"
+msgstr "天气、地图、空气质量和花粉预报来自 open-meteo.com、rainviewer.com、weather.gc.ca 和 met.no"

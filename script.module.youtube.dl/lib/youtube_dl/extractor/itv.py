@@ -35,15 +35,6 @@ from ..utils import (
 
 class ITVBaseIE(InfoExtractor):
 
-    def _search_nextjs_data(self, webpage, video_id, **kw):
-        transform_source = kw.pop('transform_source', None)
-        fatal = kw.pop('fatal', True)
-        return self._parse_json(
-            self._search_regex(
-                r'''<script\b[^>]+\bid=('|")__NEXT_DATA__\1[^>]*>(?P<js>[^<]+)</script>''',
-                webpage, 'next.js data', group='js', fatal=fatal, **kw),
-            video_id, transform_source=transform_source, fatal=fatal)
-
     def __handle_request_webpage_error(self, err, video_id=None, errnote=None, fatal=True):
         if errnote is False:
             return False
@@ -59,7 +50,7 @@ class ITVBaseIE(InfoExtractor):
 
     @staticmethod
     def _vanilla_ua_header():
-        return {'User-agent': 'Mozilla/5.0'}
+        return {'User-Agent': 'Mozilla/5.0'}
 
     def _download_webpage_handle(self, url, video_id, *args, **kwargs):
         # specialised to (a) use vanilla UA (b) detect geo-block
@@ -69,7 +60,7 @@ class ITVBaseIE(InfoExtractor):
                 'user_agent' not in params
                 and not any(re.match(r'(?i)user-agent\s*:', h)
                             for h in (params.get('headers') or []))
-                and 'User-agent' not in (kwargs.get('headers') or {})):
+                and 'User-Agent' not in (kwargs.get('headers') or {})):
 
             kwargs.setdefault('headers', {})
             kwargs['headers'] = self._vanilla_ua_header()
@@ -109,7 +100,9 @@ class ITVBaseIE(InfoExtractor):
 
 class ITVIE(ITVBaseIE):
     _VALID_URL = r'https?://(?:www\.)?itv\.com/(?:(?P<w>watch)|hub)/[^/]+/(?(w)[\w-]+/)(?P<id>\w+)'
-    _IE_DESC = 'ITVX'
+    IE_DESC = 'ITVX'
+    _WORKING = False
+
     _TESTS = [{
         'note': 'Hub URLs redirect to ITVX',
         'url': 'https://www.itv.com/hub/liar/2a4547a0012',
@@ -270,7 +263,7 @@ class ITVIE(ITVBaseIE):
                 'ext': determine_ext(href, 'vtt'),
             })
 
-        next_data = self._search_nextjs_data(webpage, video_id, fatal=False, default='{}')
+        next_data = self._search_nextjs_data(webpage, video_id, fatal=False, default={})
         video_data.update(traverse_obj(next_data, ('props', 'pageProps', ('title', 'episode')), expected_type=dict)[0] or {})
         title = traverse_obj(video_data, 'headerTitle', 'episodeTitle')
         info = self._og_extract(webpage, require_title=not title)
@@ -323,7 +316,7 @@ class ITVIE(ITVBaseIE):
 
 class ITVBTCCIE(ITVBaseIE):
     _VALID_URL = r'https?://(?:www\.)?itv\.com/(?!(?:watch|hub)/)(?:[^/]+/)+(?P<id>[^/?#&]+)'
-    _IE_DESC = 'ITV articles: News, British Touring Car Championship'
+    IE_DESC = 'ITV articles: News, British Touring Car Championship'
     _TESTS = [{
         'note': 'British Touring Car Championship',
         'url': 'https://www.itv.com/btcc/articles/btcc-2018-all-the-action-from-brands-hatch',

@@ -1,13 +1,15 @@
 import time
+from datetime import datetime
 
 import xbmcaddon
 import xbmcgui
-from resources.lib.timer.storage import Storage
+from resources.lib.utils import housekeeper
 from resources.lib.player.mediatype import VIDEO
-from resources.lib.timer.timer import (DEFAULT_TIME, END_TYPE_NO, FADE_OFF,
+from resources.lib.timer.storage import Storage
+from resources.lib.timer.timer import (END_TYPE_NO, FADE_OFF,
                                        MEDIA_ACTION_NONE, SYSTEM_ACTION_NONE,
                                        Timer)
-from resources.lib.utils.datetime_utils import WEEKLY
+from resources.lib.utils import datetime_utils
 
 _ON_SETTING_CHANGE_EVENTS = "onSettingChangeEvents"
 _SETTING_CHANGE_EVENTS_MAX_SECS = 5
@@ -58,12 +60,13 @@ def prepare_empty_timer_in_setting(timer_id=None) -> None:
     addon.setSettingString("timer_label", addon.getLocalizedString(32257))
     addon.setSettingInt("timer_priority", 0)
     addon.setSetting("timer_days", "")
-    addon.setSetting("timer_start", DEFAULT_TIME)
+    addon.setSetting("timer_date", "")
+    addon.setSetting("timer_start", datetime_utils.DEFAULT_TIME)
     addon.setSettingInt("timer_start_offset", 0)
     addon.setSettingInt("timer_end_type", END_TYPE_NO)
-    addon.setSetting("timer_duration", DEFAULT_TIME)
+    addon.setSetting("timer_duration", datetime_utils.DEFAULT_TIME)
     addon.setSettingInt("timer_duration_offset", 0)
-    addon.setSetting("timer_end", DEFAULT_TIME)
+    addon.setSetting("timer_end", datetime_utils.DEFAULT_TIME)
     addon.setSettingInt("timer_end_offset", 0)
     addon.setSettingInt("timer_system_action", SYSTEM_ACTION_NONE)
     addon.setSettingInt("timer_media_action", MEDIA_ACTION_NONE)
@@ -95,13 +98,14 @@ def save_timer_from_settings() -> None:
         return
 
     days = addon.getSetting("timer_days")
-    if days not in ["", str(WEEKLY)]:
+    if days not in ["", str(datetime_utils.WEEKLY)]:
         days = [int(d) for d in days.split("|")]
     else:
         days = list()
 
     timer = Timer(timer_id)
     timer.days = days
+    timer.date = addon.getSetting("timer_date")
     timer.duration = addon.getSetting("timer_duration")
     timer.duration_offset = addon.getSettingInt("timer_duration_offset")
     timer.end = addon.getSetting("timer_end")
@@ -123,10 +127,13 @@ def save_timer_from_settings() -> None:
     timer.vol_min = addon.getSettingInt("timer_vol_min")
     timer.vol_max = addon.getSettingInt("timer_vol_max")
 
+    timer.init()
+    timer.to_timer_by_date(base=datetime.today())
+
     Storage().save_timer(timer=timer)
 
 
-def select_timer(multi=False, extra=None) -> 'tuple[list[Timer], list[int]]':
+def select_timer(multi=False, extra: 'list[str]' = None, preselect_strategy=None) -> 'tuple[list[Timer], list[int]]':
 
     addon = xbmcaddon.Addon()
 
@@ -137,7 +144,7 @@ def select_timer(multi=False, extra=None) -> 'tuple[list[Timer], list[int]]':
 
         return None, None
 
-    timers.sort(key=lambda t: (t.days, t.start,
+    timers.sort(key=lambda t: (t.days, t.date, t.start,
                 t.media_action, t.system_action))
 
     options = extra or list()
@@ -147,12 +154,18 @@ def select_timer(multi=False, extra=None) -> 'tuple[list[Timer], list[int]]':
         timer.periods_to_human_readable()
     ) for timer in timers])
 
+    preselect = list()
+    if preselect_strategy is not None:
+        preselect.extend([i + (len(extra) if extra else 0)
+                         for i, timer in enumerate(timers) if preselect_strategy(timer)])
+
     if multi:
         selection = xbmcgui.Dialog().multiselect(
-            addon.getLocalizedString(32103), options)
+            addon.getLocalizedString(32103), options, preselect=preselect)
     else:
+        preselect = preselect[0] if preselect else -1
         selection = [xbmcgui.Dialog().select(
-            addon.getLocalizedString(32103), options)]
+            addon.getLocalizedString(32103), options, preselect=preselect)]
 
     if not selection or -1 in selection:
         return timers, None
@@ -162,7 +175,13 @@ def select_timer(multi=False, extra=None) -> 'tuple[list[Timer], list[int]]':
 
 def delete_timer() -> None:
 
-    timers, idx = select_timer(multi=True)
+    now = datetime.today()
+
+    def outdated_timers(t: Timer) -> bool:
+
+        return housekeeper.check_timer(t, now) == housekeeper.ACTION_DELETE
+
+    timers, idx = select_timer(multi=True, preselect_strategy=outdated_timers)
     if idx is None:
         return
 
@@ -194,6 +213,7 @@ def load_timer_into_settings(timer: Timer) -> None:
     addon.setSettingString("timer_label", timer.label)
     addon.setSettingInt("timer_priority", timer.priority)
     addon.setSetting("timer_days", "|".join([str(d) for d in timer.days]))
+    addon.setSetting("timer_date", timer.date)
     addon.setSetting("timer_start", timer.start)
     addon.setSettingInt("timer_start_offset", timer.start_offset)
     addon.setSettingInt("timer_end_type", timer.end_type)

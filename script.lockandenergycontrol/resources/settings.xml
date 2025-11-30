@@ -68,6 +68,11 @@
           </dependencies>          
           <enable>false</enable>
         </setting>
+        <setting id="audio_displaysoff" type="boolean" label="32031" help="32039">
+          <level>3</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
         <setting id="windows_unlock" type="boolean" label="32032" help="">
           <level>0</level>
           <default>false</default>

@@ -213,11 +213,13 @@ def handle_params(params):
 def run():
     global agent, logger
 
+    # 获取参数
     params = get_params()
 
     logger = Logger()
     logger.log(sys._getframe().f_code.co_name, "HANDLE PARAMS：%s" % params)
 
+    # 获取url
     zimuku_base_url = __addon__.getSetting("ZiMuKuUrl")
     tpe = __addon__.getSetting("subtype")
     lang = __addon__.getSetting("sublang")
@@ -227,6 +229,8 @@ def run():
                  else __addon__.getSetting("proxy_server"))
         os.environ["HTTP_PROXY"] = os.environ["HTTPS_PROXY"] = proxy
 
+
+    # 查询
     agent = zmkagnt.Zimuku_Agent(zimuku_base_url, __temp__, logger, Unpacker(),
                                  {'subtype': tpe, 'sublang': lang})
 

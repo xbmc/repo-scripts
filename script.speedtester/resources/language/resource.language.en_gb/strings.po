@@ -23,6 +23,10 @@ msgctxt "#30951"
 msgid "[B]Close[/B]"
 msgstr ""
 
+msgctxt "#30952"
+msgid "Please wait…"
+msgstr ""
+
 msgctxt "#30960"
 msgid "[B]Running Speed Test add-on[/B]"
 msgstr ""
@@ -68,7 +72,7 @@ msgid "Ping: {latency} ms"
 msgstr ""
 
 msgctxt "#30971"
-msgid "Testing download speed..."
+msgid "Testing download speed…"
 msgstr ""
 
 msgctxt "#30972"
@@ -76,7 +80,7 @@ msgid "Download speed: {speed:0.2f} Mbps"
 msgstr ""
 
 msgctxt "#30973"
-msgid "Testing upload speed..."
+msgid "Testing upload speed…"
 msgstr ""
 
 msgctxt "#30974"

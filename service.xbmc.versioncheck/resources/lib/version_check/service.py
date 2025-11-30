@@ -11,7 +11,7 @@
     See LICENSES/GPL-3.0-or-later.txt for more information.
 
 """
-
+import json
 import platform
 import sys
 
@@ -27,8 +27,8 @@ from .common import log
 from .common import wait_for_abort
 from .common import message_restart
 from .common import message_upgrade_success
-from .common import upgrade_message
-from .common import upgrade_message2
+from .common import linux_upgrade_message
+from .common import non_linux_upgrade_message
 from .json_interface import get_version_file_list
 from .json_interface import get_installed_version
 from .versions import compare_version
@@ -51,6 +51,15 @@ if sys.platform.startswith('linux'):
 
 if not DISTRIBUTION:
     DISTRIBUTION = platform.uname()[0].lower()
+
+# webOS
+try:
+    with open('/var/run/nyx/os_info.json', 'r') as os_info_file:
+        json_info = json.load(os_info_file)
+        if 'webos_name' in json_info.keys():
+            DISTRIBUTION = 'webos'
+except IOError:
+    pass
 
 
 def _version_check():
@@ -96,7 +105,7 @@ def _version_check_linux(packages):
 
         if handler:
             if handler.check_upgrade_available(packages[0]):
-                if upgrade_message(32012):
+                if linux_upgrade_message(32012):
                     if ADDON.getSetting('upgrade_system') == 'false':
                         result = handler.upgrade_package(packages[0])
                     else:
@@ -156,10 +165,10 @@ def run():
         if wait_for_abort(5):
             sys.exit(0)
 
-        if (xbmc.getCondVisibility('System.Platform.Linux') and
+        if (DISTRIBUTION != 'webos' and xbmc.getCondVisibility('System.Platform.Linux') and
                 ADDON.getSetting('upgrade_apt') == 'true'):
             _version_check_linux(['kodi'])
         else:
             old_version, version_installed, version_available, version_stable = _version_check()
             if old_version:
-                upgrade_message2(version_installed, version_available, version_stable, old_version)
+                non_linux_upgrade_message(version_installed, version_available, version_stable, old_version)

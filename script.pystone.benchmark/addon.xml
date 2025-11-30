@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.pystone.benchmark" name="CPU Benchmark" version="1.1.2" provider-name="Lunatixz">
+<addon id="script.pystone.benchmark" name="CPU Benchmark" version="1.1.8" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.kodi-six" version="0.1.3.1"/>
+        <import addon="script.module.requests" version="0.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>executable</provides>
@@ -13,12 +14,12 @@
         <license>MIT</license>
         <platform>all</platform>
         <source>https://github.com/Lunatixz/Kodi_Addons/tree/master/script.pystone.benchmark</source>
-        <news>v.1.1.2-Matrix</news>
+        <news>v.1.1.6-Piers</news>
         <forum>http://forum.kodi.tv/showthread.php?tid=314081</forum>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>
-            <screenshot>resources/images/screenshot01.png</screenshot>
+            <screenshot>resources/images/screenshot01.jpg</screenshot>
         </assets>
     </extension>
 </addon>

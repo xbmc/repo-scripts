@@ -7,7 +7,8 @@ from resources.lib.utils import picture_utils
 from resources.lib.utils.jsonrpc_utils import json_rpc
 from resources.lib.utils.vfs_utils import (build_playlist, convert_to_playlist,
                                            get_asset_path, get_files_and_type,
-                                           get_longest_common_path, is_script)
+                                           get_longest_common_path, is_script,
+                                           is_smart_playlist)
 
 REPEAT_OFF = "off"
 REPEAT_ONE = "one"
@@ -51,6 +52,9 @@ def preview(addon: xbmcaddon.Addon, timerid: int, player: 'xbmc.Player') -> None
         if is_script(timer.path):
             run_addon(timer.path)
 
+        elif is_smart_playlist(timer.path):
+            play_directory(timer.path)
+
         elif timer.media_type == PICTURE:
             if timer.shuffle and timer.is_play_at_start_timer() and timer.is_stop_at_end_timer():
                 amount = 1 + timer.duration_timedelta.total_seconds() // get_slideshow_staytime()
@@ -66,6 +70,11 @@ def preview(addon: xbmcaddon.Addon, timerid: int, player: 'xbmc.Player') -> None
     else:
         xbmcgui.Dialog().notification(addon.getLocalizedString(
             32027), addon.getLocalizedString(32109))
+
+
+def play_directory(url: str) -> None:
+
+    xbmc.executebuiltin('PlayMedia("%s","isdir")' % url)
 
 
 def play_slideshow(path: str, beginSlide: str = None, shuffle=False, amount=0) -> None:

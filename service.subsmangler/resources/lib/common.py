@@ -112,6 +112,7 @@ def GetSettings():
     globals.setting_NoConfirmationInvokeIfDownloadedSubsNotFound = GetBool(
         globals.__addon__.getSetting("NoConfirmationInvokeIfDownloadedSubsNotFound"))
     globals.setting_ShowNoautosubsContextItem = GetBool(globals.__addon__.getSetting("ShowNoautosubsContextItem"))
+    globals.setting_HideOrphanedSubsCleaningProgress = GetBool(globals.__addon__.getSetting("HideOrphanedSubsCleaningProgress"))
     globals.setting_ConversionServiceEnabled = GetBool(globals.__addon__.getSetting("ConversionServiceEnabled"))
     globals.setting_AlsoConvertExistingSubtitles = GetBool(globals.__addon__.getSetting("AlsoConvertExistingSubtitles"))
     globals.setting_RemoveCCmarks = GetBool(globals.__addon__.getSetting("RemoveCCmarks"))
@@ -137,6 +138,8 @@ def GetSettings():
     Log(" NoConfirmationInvokeIfDownloadedSubsNotFound = " + str(
         globals.setting_NoConfirmationInvokeIfDownloadedSubsNotFound), xbmc.LOGINFO)
     Log("                    ShowNoautosubsContextItem = " + str(globals.setting_ShowNoautosubsContextItem),
+        xbmc.LOGINFO)
+    Log("             HideOrphanedSubsCleaningProgress = " + str(globals.setting_HideOrphanedSubsCleaningProgress),
         xbmc.LOGINFO)
     Log("                     ConversionServiceEnabled = " + str(globals.setting_ConversionServiceEnabled),
         xbmc.LOGINFO)

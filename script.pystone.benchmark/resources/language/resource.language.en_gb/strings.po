@@ -25,11 +25,11 @@ msgid "Something went wrong, Try Again..."
 msgstr ""
 
 msgctxt "#30002"
-msgid "Top "
+msgid "Score"
 msgstr ""
 
 msgctxt "#30003"
-msgid "Bottom "
+msgid "View your results here"
 msgstr ""
 
 msgctxt "#30004"
@@ -37,7 +37,7 @@ msgid "[COLOR=%s]%s[/COLOR]"
 msgstr ""
 
 msgctxt "#30005"
-msgid "[I] Back [/I] or [I]Okay [/I] to exit"
+msgid "[I]Back [/I] or [I]Select [/I] to exit!"
 msgstr ""
 
 msgctxt "#30006"

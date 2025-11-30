@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import xbmcaddon
 import xbmcgui
 from resources.lib.player.player_utils import get_types_replaced_by_type
@@ -33,38 +35,45 @@ def get_next_higher_prio(timers: 'list[Timer]') -> int:
     return _max + 1 if _max < HIGH_PRIO_MARK - 1 else _max
 
 
-def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_extra_prio=False) -> 'list[Timer]':
+def determine_overlappings(timer: Timer, timers: 'list[Timer]', base: datetime, ignore_extra_prio=False, to_display=False) -> 'list[Timer]':
 
-    def _disturbs(types: 'list[str]', type2: str, media_action1: int, media_action2: int, period1: Period, period2: Period) -> bool:
+    def _is_exact_match(period1: Period, period2: Period, base: datetime) -> bool:
+
+        if type(period1.start) == type(period2.start):
+            return period1.start == period2.start and period1.end == period2.end
+
+        return _is_exact_match(Period.to_datetime_period(period1, base), Period.to_datetime_period(period2, base), base)
+
+    def _disturbs(types: 'list[str]', type2: str, media_action1: int, media_action2: int, period1: Period, period2: Period, base: datetime) -> bool:
 
         if media_action1 == MEDIA_ACTION_START_STOP:
-            td_play_media1 = period1.start
-            td_stop_media1 = period1.end
+            play_media1 = period1.start
+            stop_media1 = period1.end
             replace = type2 in types
 
         elif media_action1 == MEDIA_ACTION_START:
-            td_play_media1 = period1.start
-            td_stop_media1 = None
+            play_media1 = period1.start
+            stop_media1 = None
             replace = type2 in types
 
         elif media_action1 == MEDIA_ACTION_START_AT_END:
-            td_play_media1 = period1.end
-            td_stop_media1 = None
+            play_media1 = period1.end
+            stop_media1 = None
             replace = type2 in types
 
         elif media_action1 == MEDIA_ACTION_STOP_START:
-            td_play_media1 = period1.end
-            td_stop_media1 = period1.start
+            play_media1 = period1.end
+            stop_media1 = period1.start
             replace = type2 in types
 
         elif media_action1 == MEDIA_ACTION_STOP:
-            td_play_media1 = None
-            td_stop_media1 = period1.start
+            play_media1 = None
+            stop_media1 = period1.start
             replace = True
 
         elif media_action1 == MEDIA_ACTION_STOP_AT_END:
-            td_play_media1 = None
-            td_stop_media1 = period1.end
+            play_media1 = None
+            stop_media1 = period1.end
             replace = True
 
         else:
@@ -73,18 +82,18 @@ def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_extra_pri
         if not replace:
             return False
 
-        if period1.start == period2.start and period1.end == period2.end:
+        if _is_exact_match(period1, period2, base):
             return True
 
         elif media_action2 == MEDIA_ACTION_START_STOP:
 
-            if td_play_media1:
-                s, e, hit = period2.hit(td_play_media1)
+            if play_media1:
+                s, e, hit = period2.hit(play_media1, base)
                 if s and e and hit:
                     return True
 
-            if td_stop_media1:
-                s, e, hit = period2.hit(td_stop_media1)
+            if stop_media1:
+                s, e, hit = period2.hit(stop_media1, base)
                 if s and e and hit:
                     return True
 
@@ -92,8 +101,8 @@ def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_extra_pri
 
         elif media_action2 == MEDIA_ACTION_STOP_START:
 
-            if td_play_media1:
-                s, e, hit = period2.hit(td_play_media1)
+            if play_media1:
+                s, e, hit = period2.hit(play_media1, base)
                 return s and e and hit
 
         return False
@@ -113,18 +122,27 @@ def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_extra_pri
 
             for n in timer.periods:
 
-                if _disturbs(timer_replace_types, t.media_type, timer.media_action, t.media_action, n, p) or _disturbs(t_replace_types, timer.media_type, t.media_action, timer.media_action, p, n):
+                if _disturbs(timer_replace_types, t.media_type, timer.media_action, t.media_action, n, p, base) or _disturbs(t_replace_types, timer.media_type, t.media_action, timer.media_action, p, n, base):
                     overlapping_periods.append(p)
 
         if overlapping_periods:
-            days = [
-                datetime_utils.WEEKLY] if datetime_utils.WEEKLY in t.days else list()
-            days.extend([p.start.days for p in overlapping_periods])
-            t.days = days
-            t.periods = overlapping_periods
+
             overlapping_timers.append(t)
 
-    overlapping_timers.sort(key=lambda t: (t.days, t.start,
+            if to_display:
+
+                if t.is_timer_by_date():
+                    days = [p.start.weekday()]
+
+                else:
+                    days = [
+                        datetime_utils.WEEKLY] if datetime_utils.WEEKLY in t.days else list()
+                    days.extend([p.start.days for p in overlapping_periods])
+
+                t.days = days
+                t.periods = overlapping_periods
+
+    overlapping_timers.sort(key=lambda t: (t.days, t.date, t.start,
                                            t.media_action, t.system_action))
 
     return overlapping_timers
@@ -133,9 +151,10 @@ def determine_overlappings(timer: Timer, timers: 'list[Timer]', ignore_extra_pri
 def ask_overlapping_timers(timer: Timer, overlapping_timers: 'list[Timer]') -> int:
 
     addon = xbmcaddon.Addon()
+    now = datetime.today()
 
     earlier_timers = [
-        t for t in overlapping_timers if t.periods[0].start < timer.periods[0].start]
+        t for t in overlapping_timers if datetime_utils.time_diff(t.periods[0].start, timer.periods[0].start, now) > 0]
 
     lines = list()
     for t in overlapping_timers:

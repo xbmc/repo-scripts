@@ -5,148 +5,159 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-08-30 03:29+0000\n"
+"Last-Translator: Minho Park <parkmino@gmail.com>\n"
+"Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-tvmaze-integration/ko_kr/>\n"
 "Language: ko_kr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Summary"
+msgid "Integration between Kodi and TV Maze."
+msgstr "Kodi와 TV Maze의 통합."
+
+msgctxt "Addon Description"
+msgid "This integration allows you to mark shows as acquired on TV Maze (and add them to your followed shows if needed) when you add them to your library and mark them as watched on TV Maze after you watch them.  You can also manually follow, unfollow, tag, and untag shows."
+msgstr "시청후에 라이브러리에 추가하고 TV Maze에서 시청한 것으로 표시할 때, 이 통합으로 TV Maze에서 얻은 것으로 표시하고 필요한 경우 팔로우하는 프로그램에 추가할 수 있습니다 . 또한 프로그램을 수동으로 팔로우, 팔로우 해제, 태그 지정 및 태그 해제할 수 있습니다."
 
 # Section Headings
 msgctxt "#32000"
 msgid "General"
-msgstr ""
+msgstr "일반"
 
 msgctxt "#32001"
 msgid "Advanced"
-msgstr ""
+msgstr "고급"
 
 msgctxt "#32002"
 msgid "TV Maze action"
-msgstr ""
+msgstr "TV Maze 행동"
 
 # empty strings from id 32001 to 32099
 # Settings
 msgctxt "#32100"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "디버그 로그 사용"
 
 msgctxt "#32101"
 msgid "TV Maze User"
-msgstr ""
+msgstr "TV Maze 사용자"
 
 msgctxt "#32102"
 msgid "TV Maze API Key"
-msgstr ""
+msgstr "TV Maze API 키"
 
 msgctxt "#32103"
 msgid "Add new Kodi shows to followed list"
-msgstr ""
+msgstr "팔로우 목록에 새로운 Kodi 쇼 추가"
 
 msgctxt "#32104"
 msgid "Mark new Kodi episodes as acquired"
-msgstr ""
+msgstr "새로운 Kodi 에피소드를 얻은 것으로 표시"
 
 msgctxt "#32105"
 msgid "Mark watched Kodi episodes as watched"
-msgstr ""
+msgstr "시청한 Kodi 에피소드를 시청한 것으로 표시"
 
 msgctxt "#32106"
 msgid "Mark watched after"
-msgstr ""
+msgstr "이후로 시청한 것으로 표시"
 
 msgctxt "#32107"
 msgid "Mark watched when removing from Kodi"
-msgstr ""
+msgstr "Kodi에서 지울 때 시청한 것으로 표시"
 
 msgctxt "#32108"
 msgid "Hide context menu items"
-msgstr ""
+msgstr "컨텍스트 메뉴 항목 숨기기"
 
 # empty strings from id 32108 to 32199
 # Dialog Headings
 msgctxt "#32200"
 msgid "API Credentials Needed"
-msgstr ""
+msgstr "API 자격 증명 필요함"
 
 msgctxt "#32201"
 msgid "Select action"
-msgstr ""
+msgstr "행동 선택"
 
 msgctxt "#32202"
 msgid "Select shows to follow"
-msgstr ""
+msgstr "팔로우할 프로그램 선택"
 
 msgctxt "#32203"
 msgid "Select shows to unfollow"
-msgstr ""
+msgstr "팔로우 해제할 프로그램 선택"
 
 msgctxt "#32204"
 msgid "Select tag"
-msgstr ""
+msgstr "태그 선택"
 
 msgctxt "#32205"
 msgid "Select shows to tag"
-msgstr ""
+msgstr "태그할 프로그램 선택"
 
 msgctxt "#32206"
 msgid "Select shows to untag"
-msgstr ""
+msgstr "태그를 해제할 프로그램 선택"
 
 # empty strings from id 32207 to 32300
 # Dialog Messages
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
-msgstr ""
+msgstr "계속하기 전에 TV Maze API 자격 증명을 제공해야 합니다."
 
 msgctxt "#32302"
 msgid "Open settings"
-msgstr ""
+msgstr "설정 열기"
 
 msgctxt "#32303"
 msgid "Select All (Click OK to reload list)"
-msgstr ""
+msgstr "모두 선택 (예를 클릭하여 목록을 다시 읽기)"
 
 msgctxt "#32304"
 msgid "Deselect All (Click OK to reload list)"
-msgstr ""
+msgstr "모두 선택 취소(목록을 다시 로드하려면 확인을 클릭)"
 
 # empty strings from 32305 to 32400
 # Context Menu
 msgctxt "#32401"
 msgid "TV Maze"
-msgstr ""
+msgstr "TV Maze"
 
 msgctxt "#32402"
 msgid "Follow show"
-msgstr ""
+msgstr "프로그램 팔로우"
 
 msgctxt "#32403"
 msgid "Unfollow show"
-msgstr ""
+msgstr "프로그램 팔로우 해제"
 
 msgctxt "#32404"
 msgid "Tag show"
-msgstr ""
+msgstr "태그 프로그램"
 
 msgctxt "#32405"
 msgid "Untag show"
-msgstr ""
+msgstr "프로그램 태그 해제"
 
 msgctxt "#32406"
 msgid "Mark episode acquired"
-msgstr ""
+msgstr "에피소드 획득 표시"
 
 msgctxt "#32407"
 msgid "Mark episode watched"
-msgstr ""
+msgstr "시청한 에피소드로 표시"
 
 msgctxt "#32408"
 msgid "Mark episode skipped"
-msgstr ""
+msgstr "건너뛴 에피소드로 표시"
 
 msgctxt "#32409"
 msgid "Unmark episode"
-msgstr ""
+msgstr "에피소드 표시 해제"

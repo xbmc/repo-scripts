@@ -1,0 +1,480 @@
+# English
+# Kodi Media Center language file
+# Addon Name: Titlovi.com
+# Addon id: service.subtitles.titlovi
+# Addon Provider: dEXE
+
+msgid ""
+msgstr ""
+
+"Project-Id-Version: service.subtitles.titlovi\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_gb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#----------------------------------------------------#
+#                   Addon Strings                    #
+#----------------------------------------------------#
+
+msgctxt "#32001"
+msgid "Cache is not available"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Your Titlovi.com username or password is empty or not valid!"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Unknown action"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Invalid server response"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Unauthorized, please check your login information!"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Server error"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Connection error"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Please enter search text..."
+msgstr ""
+
+msgctxt "#32009"
+msgid "Login required or session expired"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Latin/Cyrillic conversion failed, using original subtitle"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Choose subtitle file"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Subtitle download failed"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Subtitle download timed out"
+msgstr ""
+
+msgctxt "#32015"
+msgid "ZIP archive contains no valid subtitles"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Error writing extracted subtitles"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Downloaded file is not a valid ZIP archive"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Error processing downloaded subtitle"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Error: No subtitles found in cache"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Server connection timed out"
+msgstr ""
+
+msgctxt "#32021"
+msgid "[CR][B][COLOR blue]{}[/COLOR][/B], it seems your API access is disabled.[CR][CR]For more information, please visit [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+msgstr ""
+
+msgctxt "#32022"
+msgid "Titlovi.com API Access Required"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Cache status unavailable"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Cache directory missing"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Error calculating status"
+msgstr ""
+
+msgctxt "#32033"
+msgid "release subtitles"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Addon settings have been reset"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Subtitle disk cache has been deleted"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Subtitle database cache has been deleted"
+msgstr ""
+
+
+#----------------------------------------------------#
+#                   Settings: Account                #
+#----------------------------------------------------#
+
+# Category label: Account
+msgctxt "#32100"
+msgid "Account"
+msgstr ""
+
+# Group label: Login Details
+msgctxt "#32101"
+msgid "Login Details"
+msgstr ""
+
+# Setting label: Username
+msgctxt "#32102"
+msgid "Username"
+msgstr ""
+
+# Setting help: Username
+msgctxt "#32103"
+msgid "Enter your titlovi.com username."
+msgstr ""
+
+# Setting label: Password
+msgctxt "#32104"
+msgid "Password"
+msgstr ""
+
+# Setting help: Password
+msgctxt "#32105"
+msgid "Enter your titlovi.com password."
+msgstr ""
+
+# Info text: API requirement line 1
+msgctxt "#32110"
+msgid "API access must be enabled to use the service."
+msgstr ""
+
+# Info text: API requirement line 2
+msgctxt "#32111"
+msgid "More info at [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+msgstr ""
+
+
+#----------------------------------------------------#
+#                  Settings: General                 #
+#----------------------------------------------------#
+
+# Category label: General
+msgctxt "#32200"
+msgid "General"
+msgstr ""
+
+# Group label: Subtitle Languages
+msgctxt "#32201"
+msgid "Subtitle Languages"
+msgstr ""
+
+# Setting label: Override Kodi languages toggle
+msgctxt "#32202"
+msgid "Use addon language settings (ignore Kodi)"
+msgstr ""
+
+# Setting help: Override Kodi languages toggle
+msgctxt "#32203"
+msgid "Enable this to select preferred languages below. If disabled, languages configured in Kodi system settings will be used."
+msgstr ""
+
+# --- Language Selection Toggles (enabled when #32202 is true) ---
+# Setting label: English toggle
+msgctxt "#32210"
+msgid "English"
+msgstr ""
+
+# Setting label: Serbian (Latin) toggle
+msgctxt "#32211"
+msgid "Serbian (Latin)"
+msgstr ""
+
+# Setting label: Serbian (Cyrillic) toggle
+msgctxt "#32212"
+msgid "Serbian (Cyrillic)"
+msgstr ""
+
+# Setting label: Croatian toggle
+msgctxt "#32213"
+msgid "Croatian"
+msgstr ""
+
+# Setting label: Bosnian toggle
+msgctxt "#32214"
+msgid "Bosnian"
+msgstr ""
+
+# Setting label: Slovenian toggle
+msgctxt "#32215"
+msgid "Slovenian"
+msgstr ""
+
+# Setting label: Macedonian toggle
+msgctxt "#32216"
+msgid "Macedonian"
+msgstr ""
+
+# --- Other General Settings ---
+# Setting label: Request Timeout slider
+msgctxt "#32220"
+msgid "Request Timeout (seconds)"
+msgstr ""
+
+# Setting help: Request Timeout slider
+msgctxt "#32221"
+msgid "Maximum time to wait for a response from the server."
+msgstr ""
+
+# Setting label: Subtitle Dialog Delay slider
+msgctxt "#32222"
+msgid "Subtitle Dialog Delay (seconds)"
+msgstr ""
+
+# Setting help: Subtitle Dialog Delay slider
+msgctxt "#32223"
+msgid "Delay before showing subtitle results. Increase if the dialog sometimes gets stuck without displaying results."
+msgstr ""
+
+# Setting label: Results Limit
+msgctxt "#32224"
+msgid "Results Limit"
+msgstr ""
+
+# Setting help: Result Limit
+msgctxt "#32225"
+msgid "Maximum number of results per API request (maximum is currently fixed)."
+msgstr ""
+
+
+#----------------------------------------------------#
+#                  Settings: Features                #
+#----------------------------------------------------#
+
+# Category label: Features
+msgctxt "#32300"
+msgid "Features"
+msgstr ""
+
+# Group label: Subtitle Conversion
+msgctxt "#32301"
+msgid "Subtitle Conversion"
+msgstr ""
+
+# Setting label: Conversion
+msgctxt "#32302"
+msgid "Convert latin/cyrillic alphabet"
+msgstr ""
+
+# Setting help: Conversion
+msgctxt "#32303"
+msgid "Automatically convert between Serbian Latin and Cyrillic subtitles when needed, except for English subtitles."
+msgstr ""
+
+# --- Labels for Conversion Options ---
+# Option label: Don't convert
+msgctxt "#32304"
+msgid "Don't convert"
+msgstr ""
+
+# Option label: Latin to Cyrillic
+msgctxt "#32305"
+msgid "Convert latin to cyrillic"
+msgstr ""
+
+# Option label: Cyrillic to Latin
+msgctxt "#32306"
+msgid "Convert cyrillic to latin"
+msgstr ""
+
+# Group label: Search Options
+msgctxt "#32310"
+msgid "Search Options"
+msgstr ""
+
+# Setting label: Sort results order
+msgctxt "#32311"
+msgid "Search results are sorted by:"
+msgstr ""
+
+# Setting help: Sort results order
+msgctxt "#32312"
+msgid "Results are initially sorted by Type, then Title, and Year. The chosen sorting option is applied on top of this default order."
+msgstr ""
+
+# Option label: Subtitle upload date
+msgctxt "#32313"
+msgid "Subtitle upload date"
+msgstr ""
+
+# Option label: Language
+msgctxt "#32314"
+msgid "Language"
+msgstr ""
+
+# Option label: Download count
+msgctxt "#32315"
+msgid "Download count"
+msgstr ""
+
+# Option label: Rating
+msgctxt "#32316"
+msgid "Rating"
+msgstr ""
+
+# Setting label: Sort Series/Episodes toggle
+msgctxt "#32318"
+msgid "Sort series (Season/Episode desc, Season Packs last)"
+msgstr ""
+
+# Setting help: Sort Series/Episodes toggle
+msgctxt "#32319"
+msgid "For TV series, this overrides other sorts: orders by Season (newest) & Episode (highest). Season packs follow their season; Specials/Pilots are last."
+msgstr ""
+
+# Setting label: Include imdb id toggle
+msgctxt "#32320"
+msgid "Search using IMDb ID (if available)"
+msgstr ""
+
+# Setting help: Include imdb id toggle
+msgctxt "#32321"
+msgid "When enabled and an IMDb ID is found, it will be used as the primary search parameter, potentially ignoring title/year."
+msgstr ""
+
+# Setting label: Include type toggle
+msgctxt "#32322"
+msgid "Include type in search (Movie/Series detection)"
+msgstr ""
+
+# Setting help: Include type toggle
+msgctxt "#32323"
+msgid "Attempts to detect if the item is a Movie or TV Series to refine search results, but has no effect if an IMDb ID is found."
+msgstr ""
+
+# Setting label: Include year toggle
+msgctxt "#32324"
+msgid "Include release year in search"
+msgstr ""
+
+# Setting help: Include year toggle
+msgctxt "#32325"
+msgid "Improves accuracy for movies, may affect series results and can sometimes be incorrect, but has no effect if an IMDb ID is found."
+msgstr ""
+
+# Setting label: Include pilot toggle
+msgctxt "#32326"
+msgid "For series, include Pilot episodes"
+msgstr ""
+
+# Setting label: Include specials toggle
+msgctxt "#32327"
+msgid "For series, include Special episodes"
+msgstr ""
+
+
+#----------------------------------------------------#
+#                   Settings: Tools                  #
+#----------------------------------------------------#
+
+# Category label: Tools
+msgctxt "#32400"
+msgid "Tools"
+msgstr ""
+
+# Group label: Maintenance
+msgctxt "#32401"
+msgid "Cache"
+msgstr ""
+
+# Setting label: Cache info display
+msgctxt "#32402"
+msgid "Disk Cache Size:"
+msgstr ""
+
+# Setting help: Cache info display
+msgctxt "#32403"
+msgid "Information about the current disk cache status."
+msgstr ""
+
+# Setting label: Profile Path
+msgctxt "#32420"
+msgid "Profile Path:"
+msgstr ""
+
+# Setting label: Clean Settings button
+msgctxt "#32404"
+msgid "[COLOR yellow]Reset Addon Settings to Default[/COLOR]"
+msgstr ""
+
+# Setting help: Clean Settings button
+msgctxt "#32405"
+msgid "WARNING: Resets all addon settings to their default values."
+msgstr ""
+
+# Setting label: Delete Disk Cache button
+msgctxt "#32406"
+msgid "[COLOR orange]Delete Subtitle Disk Cache[/COLOR]"
+msgstr ""
+
+# Setting help: Delete Disk Cache button
+msgctxt "#32407"
+msgid "Deletes downloaded subtitle files stored by addon."
+msgstr ""
+
+# Setting label: Delete Cache DB button
+msgctxt "#32408"
+msgid "[COLOR orange]Delete file DB Cache[/COLOR]"
+msgstr ""
+
+# Setting help: Delete Cache DB button
+msgctxt "#32409"
+msgid "Deletes the cached login and search data."
+msgstr ""
+
+# Group label: Developer
+msgctxt "#32410"
+msgid "Developer"
+msgstr ""
+
+# Setting label: Enable Debug Log toggle
+msgctxt "#32411"
+msgid "Enable Debug Logging"
+msgstr ""
+
+# Setting help: Enable Debug Log toggle
+msgctxt "#32412"
+msgid "Enable verbose logging to see errors and debug information in Kodi log."
+msgstr ""
+
+# Setting label: Log File
+msgctxt "#32421"
+msgid "Log File:"
+msgstr ""

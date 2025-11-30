@@ -1,4 +1,4 @@
-#!/usr/bin/python3 -OO
+#! /usr/bin/env python3
 
 """
 "PYSTONE" Benchmark Program
@@ -34,15 +34,16 @@ Version History:
 
 LOOPS = 50000
 
-from time import perf_counter
+from time import time
 
 __version__ = "1.1"
 
 [Ident1, Ident2, Ident3, Ident4, Ident5] = range(1, 6)
 
-
 class Record:
-    def __init__(self, PtrComp=None, Discr=0, EnumComp=0, IntComp=0, StringComp=0):
+
+    def __init__(self, PtrComp = None, Discr = 0, EnumComp = 0,
+                       IntComp = 0, StringComp = 0):
         self.PtrComp = PtrComp
         self.Discr = Discr
         self.EnumComp = EnumComp
@@ -50,24 +51,27 @@ class Record:
         self.StringComp = StringComp
 
     def copy(self):
-        return Record(self.PtrComp, self.Discr, self.EnumComp, self.IntComp, self.StringComp)
-
+        return Record(self.PtrComp, self.Discr, self.EnumComp,
+                      self.IntComp, self.StringComp)
 
 TRUE = 1
 FALSE = 0
+
+def main(loops=LOOPS):
+    benchtime, stones = pystones(loops)
+
 
 def pystones(loops=LOOPS):
     return Proc0(loops)
 
 IntGlob = 0
 BoolGlob = FALSE
-Char1Glob = "\0"
-Char2Glob = "\0"
-Array1Glob = [0] * 51
-Array2Glob = [x[:] for x in [Array1Glob] * 51]
+Char1Glob = '\0'
+Char2Glob = '\0'
+Array1Glob = [0]*51
+Array2Glob = [x[:] for x in [Array1Glob]*51]
 PtrGlb = None
 PtrGlbNext = None
-
 
 def Proc0(loops=LOOPS):
     global IntGlob
@@ -79,10 +83,10 @@ def Proc0(loops=LOOPS):
     global PtrGlb
     global PtrGlbNext
 
-    starttime = perf_counter()
+    starttime = time()
     for i in range(loops):
         pass
-    nulltime = perf_counter() - starttime
+    nulltime = time() - starttime
 
     PtrGlbNext = Record()
     PtrGlb = Record()
@@ -94,7 +98,7 @@ def Proc0(loops=LOOPS):
     String1Loc = "DHRYSTONE PROGRAM, 1'ST STRING"
     Array2Glob[8][7] = 10
 
-    starttime = perf_counter()
+    starttime = time()
 
     for i in range(loops):
         Proc5()
@@ -110,23 +114,22 @@ def Proc0(loops=LOOPS):
             IntLoc1 = IntLoc1 + 1
         Proc8(Array1Glob, Array2Glob, IntLoc1, IntLoc3)
         PtrGlb = Proc1(PtrGlb)
-        CharIndex = "A"
+        CharIndex = 'A'
         while CharIndex <= Char2Glob:
-            if EnumLoc == Func1(CharIndex, "C"):
+            if EnumLoc == Func1(CharIndex, 'C'):
                 EnumLoc = Proc6(Ident1)
-            CharIndex = chr(ord(CharIndex) + 1)
+            CharIndex = chr(ord(CharIndex)+1)
         IntLoc3 = IntLoc2 * IntLoc1
         IntLoc2 = IntLoc3 / IntLoc1
         IntLoc2 = 7 * (IntLoc3 - IntLoc2) - IntLoc1
         IntLoc1 = Proc2(IntLoc1)
 
-    benchtime = perf_counter() - starttime - nulltime
+    benchtime = time() - starttime - nulltime
     if benchtime == 0.0:
         loopsPerBenchtime = 0.0
     else:
-        loopsPerBenchtime = loops / benchtime
+        loopsPerBenchtime = (loops / benchtime)
     return benchtime, loopsPerBenchtime
-
 
 def Proc1(PtrParIn):
     PtrParIn.PtrComp = NextRecord = PtrGlb.copy()
@@ -144,18 +147,16 @@ def Proc1(PtrParIn):
     NextRecord.PtrComp = None
     return PtrParIn
 
-
 def Proc2(IntParIO):
     IntLoc = IntParIO + 10
     while 1:
-        if Char1Glob == "A":
+        if Char1Glob == 'A':
             IntLoc = IntLoc - 1
             IntParIO = IntLoc - IntGlob
             EnumLoc = Ident1
         if EnumLoc == Ident1:
             break
     return IntParIO
-
 
 def Proc3(PtrParOut):
     global IntGlob
@@ -167,22 +168,19 @@ def Proc3(PtrParOut):
     PtrGlb.IntComp = Proc7(10, IntGlob)
     return PtrParOut
 
-
 def Proc4():
     global Char2Glob
 
-    BoolLoc = Char1Glob == "A"
+    BoolLoc = Char1Glob == 'A'
     BoolLoc = BoolLoc or BoolGlob
-    Char2Glob = "B"
-
+    Char2Glob = 'B'
 
 def Proc5():
     global Char1Glob
     global BoolGlob
 
-    Char1Glob = "A"
+    Char1Glob = 'A'
     BoolGlob = FALSE
-
 
 def Proc6(EnumParIn):
     EnumParOut = EnumParIn
@@ -203,26 +201,23 @@ def Proc6(EnumParIn):
         EnumParOut = Ident3
     return EnumParOut
 
-
 def Proc7(IntParI1, IntParI2):
     IntLoc = IntParI1 + 2
     IntParOut = IntParI2 + IntLoc
     return IntParOut
-
 
 def Proc8(Array1Par, Array2Par, IntParI1, IntParI2):
     global IntGlob
 
     IntLoc = IntParI1 + 5
     Array1Par[IntLoc] = IntParI2
-    Array1Par[IntLoc + 1] = Array1Par[IntLoc]
-    Array1Par[IntLoc + 30] = IntLoc
-    for IntIndex in range(IntLoc, IntLoc + 2):
+    Array1Par[IntLoc+1] = Array1Par[IntLoc]
+    Array1Par[IntLoc+30] = IntLoc
+    for IntIndex in range(IntLoc, IntLoc+2):
         Array2Par[IntLoc][IntIndex] = IntLoc
-    Array2Par[IntLoc][IntLoc - 1] = Array2Par[IntLoc][IntLoc - 1] + 1
-    Array2Par[IntLoc + 20][IntLoc] = Array1Par[IntLoc]
+    Array2Par[IntLoc][IntLoc-1] = Array2Par[IntLoc][IntLoc-1] + 1
+    Array2Par[IntLoc+20][IntLoc] = Array1Par[IntLoc]
     IntGlob = 5
-
 
 def Func1(CharPar1, CharPar2):
     CharLoc1 = CharPar1
@@ -232,16 +227,15 @@ def Func1(CharPar1, CharPar2):
     else:
         return Ident2
 
-
 def Func2(StrParI1, StrParI2):
     IntLoc = 1
     while IntLoc <= 1:
-        if Func1(StrParI1[IntLoc], StrParI2[IntLoc + 1]) == Ident1:
-            CharLoc = "A"
+        if Func1(StrParI1[IntLoc], StrParI2[IntLoc+1]) == Ident1:
+            CharLoc = 'A'
             IntLoc = IntLoc + 1
-    if "W" <= CharLoc <= "Z":
+    if CharLoc >= 'W' and CharLoc <= 'Z':
         IntLoc = 7
-    if CharLoc == "X":
+    if CharLoc == 'X':
         return TRUE
     else:
         if StrParI1 > StrParI2:
@@ -250,9 +244,7 @@ def Func2(StrParI1, StrParI2):
         else:
             return FALSE
 
-
 def Func3(EnumParIn):
     EnumLoc = EnumParIn
-    if EnumLoc == Ident3:
-        return TRUE
+    if EnumLoc == Ident3: return TRUE
     return FALSE

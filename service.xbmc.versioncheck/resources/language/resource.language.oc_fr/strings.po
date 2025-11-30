@@ -91,17 +91,6 @@ msgctxt "#32024"
 msgid "Linux: Upgrade using apt"
 msgstr ""
 
-# empty strings from id 32025 to 32029
-#. Used in OK dialog
-msgctxt "#32030"
-msgid "A new stable version of Kodi is available."
-msgstr ""
-
-#. Direct people to the website. Used in OK dialog
-msgctxt "#32031"
-msgid "Visit http://kodi.tv for more information."
-msgstr ""
-
 #. Used in OK dialog
 msgctxt "#32032"
 msgid "A new stable version of Kodi is available."

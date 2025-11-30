@@ -1,0 +1,372 @@
+# Српски (ћирилица)
+
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "Cache is not available"
+msgstr "Кеш није доступан"
+
+msgctxt "#32002"
+msgid "Your Titlovi.com username or password is empty or not valid!"
+msgstr "Ваше Titlovi.com корисничко име или лозинка су празни или неисправни!"
+
+msgctxt "#32003"
+msgid "Unknown action"
+msgstr "Непозната акција"
+
+msgctxt "#32004"
+msgid "Invalid server response"
+msgstr "Неисправан одговор сервера"
+
+msgctxt "#32005"
+msgid "Unauthorized, please check your login information!"
+msgstr "Нисте ауторизовани, молимо проверите Ваше податке за пријаву!"
+
+msgctxt "#32006"
+msgid "Server error"
+msgstr "Грешка сервера"
+
+msgctxt "#32007"
+msgid "Connection error"
+msgstr "Грешка при повезивању"
+
+msgctxt "#32008"
+msgid "Please enter search text..."
+msgstr "Молимо унесите текст за претрагу..."
+
+msgctxt "#32009"
+msgid "Login required or session expired"
+msgstr "Потребна је пријава или је сесија истекла"
+
+msgctxt "#32011"
+msgid "Latin/Cyrillic conversion failed, using original subtitle"
+msgstr "Конверзија латинице/ћирилице није успела, користи се оригинални титл"
+
+msgctxt "#32012"
+msgid "Choose subtitle file"
+msgstr "Изаберите фајл титла"
+
+msgctxt "#32013"
+msgid "Subtitle download failed"
+msgstr "Преузимање титла није успело"
+
+msgctxt "#32014"
+msgid "Subtitle download timed out"
+msgstr "Истекло време за преузимање титла"
+
+msgctxt "#32015"
+msgid "ZIP archive contains no valid subtitles"
+msgstr "ЗИП архива не садржи исправне титлове"
+
+msgctxt "#32016"
+msgid "Error writing extracted subtitles"
+msgstr "Грешка при упису распакованих титлова"
+
+msgctxt "#32017"
+msgid "Downloaded file is not a valid ZIP archive"
+msgstr "Преузети фајл није исправна ЗИП архива"
+
+msgctxt "#32018"
+msgid "Error processing downloaded subtitle"
+msgstr "Грешка при обради преузетог титла"
+
+msgctxt "#32019"
+msgid "Error: No subtitles found in cache"
+msgstr "Грешка: Нема титлова у кешу"
+
+msgctxt "#32020"
+msgid "Server connection timed out"
+msgstr "Време за повезивање са сервером је истекло"
+
+msgctxt "#32021"
+msgid "[CR][B][COLOR blue]{}[/COLOR][/B], it seems your API access is disabled.[CR][CR]For more information, please visit [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+msgstr "[CR][B][COLOR blue]{}[/COLOR][/B], изгледа да вам је API онемогућен.[CR][CR]Више информација потражите на [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+
+msgctxt "#32022"
+msgid "Titlovi.com API Access Required"
+msgstr "Потребан API приступ за Titlovi.com"
+
+msgctxt "#32030"
+msgid "Cache status unavailable"
+msgstr "Статус кеша је недоступан"
+
+msgctxt "#32031"
+msgid "Cache directory missing"
+msgstr "Фолдер кеша недостаје"
+
+msgctxt "#32032"
+msgid "Error calculating status"
+msgstr "Грешка при израчунавању статуса"
+
+msgctxt "#32033"
+msgid "release subtitles"
+msgstr "титлова издања"
+
+msgctxt "#32035"
+msgid "Addon settings have been reset"
+msgstr "Подешавања додатка су ресетована"
+
+msgctxt "#32036"
+msgid "Subtitle disk cache has been deleted"
+msgstr "Кеш титлова са диска је обрисан"
+
+msgctxt "#32037"
+msgid "Subtitle database cache has been deleted"
+msgstr "Кеш података (пријава/претрага) је обрисан"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "Налог"
+
+msgctxt "#32101"
+msgid "Login Details"
+msgstr "Подаци за пријаву"
+
+msgctxt "#32102"
+msgid "Username"
+msgstr "Корисничко име"
+
+msgctxt "#32103"
+msgid "Enter your titlovi.com username."
+msgstr "Унесите Ваше titlovi.com корисничко име."
+
+msgctxt "#32104"
+msgid "Password"
+msgstr "Лозинка"
+
+msgctxt "#32105"
+msgid "Enter your titlovi.com password."
+msgstr "Унесите Вашу titlovi.com лозинку."
+
+msgctxt "#32110"
+msgid "API access must be enabled to use the service."
+msgstr "API приступ мора бити омогућен за коришћење сервиса."
+
+msgctxt "#32111"
+msgid "More info at [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+msgstr "Више информација на [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+
+msgctxt "#32200"
+msgid "General"
+msgstr "Опште"
+
+msgctxt "#32201"
+msgid "Subtitle Languages"
+msgstr "Језици титлова"
+
+msgctxt "#32202"
+msgid "Use addon language settings (ignore Kodi)"
+msgstr "Користи језичка подешавања додатка (игнориши Kodi)"
+
+msgctxt "#32203"
+msgid "Enable this to select preferred languages below. If disabled, languages configured in Kodi system settings will be used."
+msgstr "Омогућите ово да бисте изабрали жељене језике испод. Ако је онемогућено, користиће се језици конфигурисани у системским подешавањима Kodi-ја."
+
+msgctxt "#32210"
+msgid "English"
+msgstr "Енглески"
+
+msgctxt "#32211"
+msgid "Serbian (Latin)"
+msgstr "Српски (латиница)"
+
+msgctxt "#32212"
+msgid "Serbian (Cyrillic)"
+msgstr "Српски (ћирилица)"
+
+msgctxt "#32213"
+msgid "Croatian"
+msgstr "Хрватски"
+
+msgctxt "#32214"
+msgid "Bosnian"
+msgstr "Босански"
+
+msgctxt "#32215"
+msgid "Slovenian"
+msgstr "Словеначки"
+
+msgctxt "#32216"
+msgid "Macedonian"
+msgstr "Македонски"
+
+msgctxt "#32220"
+msgid "Request Timeout (seconds)"
+msgstr "Време чекања захтева (секунде)"
+
+msgctxt "#32221"
+msgid "Maximum time to wait for a response from the server."
+msgstr "Максимално време чекања на одговор од сервера."
+
+msgctxt "#32222"
+msgid "Subtitle Dialog Delay (seconds)"
+msgstr "Кашњење дијалога са титловима (секунде)"
+
+msgctxt "#32223"
+msgid "Delay before showing subtitle results. Increase if the dialog sometimes gets stuck without displaying results."
+msgstr "Кашњење пре приказа резултата титлова. Повећајте ако се дијалог понекад заглави без приказа резултата."
+
+msgctxt "#32224"
+msgid "Results Limit"
+msgstr "Ограничење резултата"
+
+msgctxt "#32225"
+msgid "Maximum number of results per API request (maximum is currently fixed)."
+msgstr "Максималан број резултата по API захтеву (максимална вредност је тренутно фиксна)."
+
+msgctxt "#32300"
+msgid "Features"
+msgstr "Функције"
+
+msgctxt "#32301"
+msgid "Subtitle Conversion"
+msgstr "Конверзија титлова"
+
+msgctxt "#32302"
+msgid "Convert latin/cyrillic alphabet"
+msgstr "Конвертуј латинично/ћирилично писмо"
+
+msgctxt "#32303"
+msgid "Automatically convert between Serbian Latin and Cyrillic subtitles when needed, except for English subtitles."
+msgstr "Аутоматски конвертуј између српских латиничних и ћириличних титлова по потреби, осим за енглеске титлове."
+
+msgctxt "#32304"
+msgid "Don't convert"
+msgstr "Не конвертуј"
+
+msgctxt "#32305"
+msgid "Convert latin to cyrillic"
+msgstr "Конвертуј латиницу у ћирилицу"
+
+msgctxt "#32306"
+msgid "Convert cyrillic to latin"
+msgstr "Конвертуј ћирилицу у латиницу"
+
+msgctxt "#32310"
+msgid "Search Options"
+msgstr "Опције претраге"
+
+msgctxt "#32311"
+msgid "Search results are sorted by:"
+msgstr "Резултати претраге су сортирани по:"
+
+msgctxt "#32312"
+msgid "Results are initially sorted by Type, then Title, and Year. The chosen sorting option is applied on top of this default order."
+msgstr "Резултати су прво сортирани по типу, затим по називу и години. Изабрана опција сортирања се примењује преко овог подразумеваног реда."
+
+msgctxt "#32313"
+msgid "Subtitle upload date"
+msgstr "Датум додавања титла"
+
+msgctxt "#32314"
+msgid "Language"
+msgstr "Језик"
+
+msgctxt "#32315"
+msgid "Download count"
+msgstr "Број преузимања"
+
+msgctxt "#32316"
+msgid "Rating"
+msgstr "Оцена"
+
+msgctxt "#32318"
+msgid "Sort series (Season/Episode desc, Season Packs last)"
+msgstr "Сортирај серије (Сезона/Епизода опадајуће, Пакети сезона на крају)"
+
+msgctxt "#32319"
+msgid "For TV series, this overrides other sorts: orders by Season (newest) & Episode (highest). Season packs follow their season; Specials/Pilots are last."
+msgstr "За ТВ серије, ово прегласава друге начине сортирања: сортира по Сезони (најновија прво) и Епизоди (највећи број прво). Пакети сезона прате епизоде своје сезоне; Специјали/Пилоти су последњи."
+
+msgctxt "#32320"
+msgid "Search using IMDb ID (if available)"
+msgstr "Претражи користећи IMDb ID (ако је доступан)"
+
+msgctxt "#32321"
+msgid "When enabled and an IMDb ID is found, it will be used as the primary search parameter, potentially ignoring title/year."
+msgstr "Када је омогућено и IMDb ID је пронађен, користиће се као примарни параметар претраге, потенцијално игноришући наслов/годину."
+
+msgctxt "#32322"
+msgid "Include type in search (Movie/Series detection)"
+msgstr "Укључи тип у претрагу (детекција Филм/Серија)"
+
+msgctxt "#32323"
+msgid "Attempts to detect if the item is a Movie or TV Series to refine search results, but has no effect if an IMDb ID is found."
+msgstr "Покушава да детектује да ли је ставка филм или ТВ серија како би се прецизирали резултати претраге, али нема ефекта уколико се IMDb ID пронађе."
+
+msgctxt "#32324"
+msgid "Include release year in search"
+msgstr "Укључи годину издања у претрагу"
+
+msgctxt "#32325"
+msgid "Improves accuracy for movies, may affect series results and can sometimes be incorrect, but has no effect if an IMDb ID is found."
+msgstr "Побољшава тачност за филмове, може утицати на резултате за серије и понекад бити нетачна, али нема ефекта ако је пронађен IMDb ID."
+
+msgctxt "#32326"
+msgid "For series, include Pilot episodes"
+msgstr "За серије, укључи Пилот епизоде"
+
+msgctxt "#32327"
+msgid "For series, include Special episodes"
+msgstr "За серије, укључи Специјалне епизоде"
+
+msgctxt "#32400"
+msgid "Tools"
+msgstr "Алати"
+
+msgctxt "#32401"
+msgid "Cache"
+msgstr "Кеш"
+
+msgctxt "#32402"
+msgid "Disk Cache Size:"
+msgstr "Величина кеша на диску:"
+
+msgctxt "#32403"
+msgid "Information about the current disk cache status."
+msgstr "Информације о тренутном статусу кеша на диску."
+
+msgctxt "#32420"
+msgid "Profile Path:"
+msgstr "Путања профила:"
+
+msgctxt "#32404"
+msgid "[COLOR yellow]Reset Addon Settings to Default[/COLOR]"
+msgstr "[COLOR yellow]Ресетуј подешавања додатка на подразумеване вредности[/COLOR]"
+
+msgctxt "#32405"
+msgid "WARNING: Resets all addon settings to their default values."
+msgstr "УПОЗОРЕЊЕ: Ресетује сва подешавања додатка на њихове подразумеване вредности."
+
+msgctxt "#32406"
+msgid "[COLOR orange]Delete Subtitle Disk Cache[/COLOR]"
+msgstr "[COLOR orange]Обриши кеш титлова са диска[/COLOR]"
+
+msgctxt "#32407"
+msgid "Deletes downloaded subtitle files stored by addon."
+msgstr "Брише преузете фајлове титлова сачуване од стране додатка."
+
+msgctxt "#32408"
+msgid "[COLOR orange]Delete file DB Cache[/COLOR]"
+msgstr "[COLOR orange]Обриши кеш података (пријава/претрага)[/COLOR]"
+
+msgctxt "#32409"
+msgid "Deletes the cached login and search data."
+msgstr "Брише кеширане податке о пријави и претрази."
+
+msgctxt "#32410"
+msgid "Developer"
+msgstr "За програмере"
+
+msgctxt "#32411"
+msgid "Enable Debug Logging"
+msgstr "Омогући Дебуг евиденцију"
+
+msgctxt "#32412"
+msgid "Enable verbose logging to see errors and debug information in Kodi log."
+msgstr "Омогући детаљну евиденцију да бисте видели грешке и дебуг информације у Kodi логу."
+
+msgctxt "#32421"
+msgid "Log File:"
+msgstr "Лог фајл:"

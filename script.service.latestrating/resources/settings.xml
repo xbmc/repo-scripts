@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="General">
+        <setting label="Changes will take effect the next time Kodi starts" type="lsep"/>
+        <setting label="Update movie ratings" type="bool" id="update_movies" default="false"/>
+        <setting label="Update TV show ratings" type="bool" id="update_tvshows" default="false"/>
+        <setting label="Run script every X days" type="number" id="update_interval" default="1"/>
+        <setting label="Only update movies from last X years" type="number" id="movie_years_back" default="2"/>
+        <setting label="Only update TV shows aired in last X months" type="number" id="tvshow_months_back" default="6"/>
+        <setting label="Use IMDb to fetch ratings" type="bool" id="use_imdb" default="true"/>
+        <setting label="Use Trakt to fetch ratings" type="bool" id="use_trakt" default="false"/>
+        <setting id="last_completion" type="text" default="" visible="false"/>
+    </category>
+</settings> 

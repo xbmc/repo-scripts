@@ -1,16 +1,24 @@
-# coding: utf-8
-# Created on: 15.03.2016
-# Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
-# License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
+# (c) Roman Miroshnychenko, 2023
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, unicode_literals
-
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 from contextlib import contextmanager
 
 import pyxbmct
-from future.utils import with_metaclass
-from kodi_six.xbmc import executebuiltin
+
+from xbmc import executebuiltin
 from xbmcgui import ACTION_NAV_BACK
 
 from .addon import ADDON
@@ -45,7 +53,7 @@ def busy_spinner():
         executebuiltin('Dialog.Close(10138)')  # Busy spinner off
 
 
-class NextEpDialog(with_metaclass(ABCMeta, pyxbmct.AddonDialogWindow)):
+class NextEpDialog(ABC, pyxbmct.AddonDialogWindow):
     """
     Base class for addon dialogs
     """

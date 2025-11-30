@@ -24,6 +24,10 @@ msgctxt "#30330"
 msgid "Seconds to Display"
 msgstr ""
 
+msgctxt "#30335"
+msgid "Seconds to Delay Notifictaions"
+msgstr ""
+
 msgctxt "#30340"
 msgid "Include Goal Description"
 msgstr ""

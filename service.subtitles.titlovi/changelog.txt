@@ -1,0 +1,14 @@
+Titlovi.com Kodi Addon - Changelog
+
+v2.0.1 (12.06.2025.)
+- Final version, ready for official Kodi repository with minor fixes
+- Removed chardet dependency, simplified encoding detection
+- Replaced requests with built-in simple_requests module
+- Added configurable delay for subtitle dialog display (helps prevent occasional dialog freezing)
+- Various small improvements
+
+v2.0.0 (02.06.2025.)
+- Initial version, forked from 'https://github.com/tturkalj/service.subtitles.titlovi-com-official'
+- Complete code overhaul with major clean-up, optimization and improvements
+- Version prepared for submission to the official Kodi repository
+- Replaces the outdated v1.2.0 addon with a different ID, which is now considered deprecated

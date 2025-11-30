@@ -223,7 +223,7 @@ class AdvancedBackupEditor:
 
     def copySimpleConfig(self):
         # disclaimer in case the user hit this on accident
-        shouldContinue = self.dialog.yesno(utils.getString(30139), utils.getString(30140), utils.getString(30141))
+        shouldContinue = self.dialog.yesno(heading=utils.getString(30139), message=utils.getString(30140) + "\n" + utils.getString(30141))
 
         if(shouldContinue):
             source = xbmcvfs.translatePath(os.path.join(utils.addon_dir(), 'resources', 'data', 'default_files.json'))

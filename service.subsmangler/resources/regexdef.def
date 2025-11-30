@@ -26,7 +26,9 @@
 # sites & tools
 .*netflix.*
 .*open.*subtitles.*
+.*playships.*
 .*podnapisi.net.*
+.*playships.eu.*
 .*SRT Converter.*
 .*subedit.*
 .*subtitletools.com.*
@@ -80,6 +82,8 @@
 .*kinomania.*
 .*korekta:.*
 .*napiprojekt.*
+.*skyteampoland.*
+.*tigerham.*
 .*napisy\..*
 .*napisy24.*
 .*napisy:.*
@@ -100,3 +104,5 @@
 .*Napisy ze słuchu.*
 .*your.*live.*cinema.*
 .*wersja:.*
+.*dopasowanie.*wersji.*
+.*Vodeon\.pl.*

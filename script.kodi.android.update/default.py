@@ -1,4 +1,4 @@
-#  Copyright (C) 2023 Team-Kodi
+#  Copyright (C) 2024 Team-Kodi
 #
 #  This file is part of script.kodi.android.update
 #
@@ -34,14 +34,14 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 VERSION   = REAL_SETTINGS.getSetting("Version") #VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
 BASE_URL  = 'http://mirrors.kodi.tv/'
-BRANCHS   =  {21:'omega',20:'nexus',19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
+BRANCHS   =  {22:'piers',21:'omega',20:'nexus',19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
 BUILD_OPT = {'nightlies':LANGUAGE(30017),'releases':LANGUAGE(30016),'snapshots':LANGUAGE(30015),'test-builds':LANGUAGE(30018)}
 
 try:    
     BUILD  = json.loads(REAL_SETTINGS.getSetting("Build"))
     BRANCH = BRANCHS[int(BUILD.get('major',''))]
 except: 
-    BUILD = ''
+    BUILD  = ''
     BRANCH = 'master'
     
 DROID_URL = BASE_URL + '%s/android/%s/'
@@ -50,10 +50,10 @@ USERAPP   = REAL_SETTINGS.getSetting("USERAPP")
 CUSTOM    = (REAL_SETTINGS.getSetting('Custom_Manager') or 'com.android.documentsui')
 FMANAGER  = {0:'com.android.documentsui',1:CUSTOM}[int(REAL_SETTINGS.getSetting('File_Manager'))]
 
-if DEVICESTR is None: PLATFORM = ""
+if DEVICESTR is None:   PLATFORM = ""
 elif '64' in DEVICESTR: PLATFORM = "arm64-v8a"
 elif '86' in DEVICESTR: PLATFORM = "x86"
-else: PLATFORM = "arm"
+else:                   PLATFORM = "arm"
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
@@ -126,7 +126,7 @@ class Installer(object):
         
     def buildMain(self):
         tmpLST = []
-        for label in sorted(BUILD_OPT.keys()): 
+        for label in sorted(BUILD_OPT.keys()):
             liz = xbmcgui.ListItem(label.title(),BUILD_OPT[label],path=DROID_URL%(label,PLATFORM))
             liz.setArt({'icon':ICON,'thumb':ICON})
             tmpLST.append(liz)
@@ -142,9 +142,10 @@ class Installer(object):
             for item in self.getItems(soup):
                 try: #folders
                     label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
-                    if label == PLATFORM: label2 = LANGUAGE(30014)%PLATFORM
+                    print('buildItems',label,label2)
+                    if   label == PLATFORM:               label2 = LANGUAGE(30014)%PLATFORM
                     elif label.lower() == BRANCH.lower(): label2 = LANGUAGE(30022)%(BUILD.get('major',''),BUILD.get('minor',''),BUILD.get('revision',''))
-                    else: label2 = '' #Don't use time-stamp for folders
+                    else:                                 label2 = '' #Don't use time-stamp for folders
                     liz = xbmcgui.ListItem(label.title(),label2,path=(url + label))
                     liz.setArt({'icon':ICON,'thumb':ICON})
                     yield liz
@@ -166,7 +167,7 @@ class Installer(object):
         newURL = url
         while not self.myMonitor.abortRequested():
             items  = list(self.buildItems(url))
-            if len(items) == 0: break
+            if   len(items) == 0: break
             elif len(items) == 2 and not bypass and items[0].getLabel().lower() == 'parent directory' and not items[1].getLabel().startswith('.apk'): select = 1 #If one folder bypass selection.
             else: select = selectDialog(url.replace(BASE_URL,'./').replace('//','/'), items)
             if select is None: return #return on cancel.

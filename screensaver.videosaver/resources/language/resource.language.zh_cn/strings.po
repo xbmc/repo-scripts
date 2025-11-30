@@ -1,0 +1,117 @@
+# XBMC Media Center language file
+# Addon Name: Video ScreenSaver
+# Addon id: screensaver.videosaver
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-05-09 12:14+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-videosaver/zh_cn/>\n"
+"Language: zh_cn\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.12.1\n"
+
+msgctxt "Addon Summary"
+msgid "Create a screensaver from any Kodi video source."
+msgstr "从任意 Kodi 视频源创建屏幕保护程序。"
+
+msgctxt "Addon Description"
+msgid "Dynamic screensaver using Local content, SmartPlaylists, Plugins and UPNP Servers."
+msgstr "使用本地内容、智能播放列表、插件和 UPNP 服务器的动态屏幕保护程序。"
+
+msgctxt "Addon Disclaimer"
+msgid "Streaming sources not recommend for metered Internet."
+msgstr "流媒体源不建议通过互联网。"
+
+msgctxt "#32001"
+msgid "Something went wrong, Try again later ..."
+msgstr "出现问题，请稍后再试..."
+
+msgctxt "#32002"
+msgid "Video Type"
+msgstr "视频类型"
+
+msgctxt "#32003"
+msgid "Video File"
+msgstr "视频文件"
+
+msgctxt "#32004"
+msgid "Video Folder"
+msgstr "视频文件夹"
+
+msgctxt "#32005"
+msgid "Video Limit"
+msgstr "视频限制"
+
+msgctxt "#32006"
+msgid "Randomize"
+msgstr "随机"
+
+msgctxt "#32007"
+msgid "Disable Trakt"
+msgstr "禁用 Trakt"
+
+msgctxt "#32008"
+msgid "Ignore Keypress (Stop to end)."
+msgstr "忽略按键（从停止到结束）。"
+
+msgctxt "#32009"
+msgid "Single Video"
+msgstr "单视频"
+
+msgctxt "#32010"
+msgid "Multiple Videos"
+msgstr "多视频"
+
+msgctxt "#32011"
+msgid "Set ScreenSaver Volume [Restored to Previous Level on Stop]"
+msgstr "设置屏幕保护程序音量 [停止时恢复到上一级]"
+
+msgctxt "#32012"
+msgid "Enable Debugging [Log errors]"
+msgstr "启用调试 [记录错误]"
+
+msgctxt "#32013"
+msgid "Building Playlist"
+msgstr "创建播放列表"
+
+msgctxt "#32014"
+msgid "Select File"
+msgstr "选择文件"
+
+msgctxt "#32015"
+msgid "Select Folder"
+msgstr "选择文件夹"
+
+msgctxt "#32016"
+msgid "Repeat Return State"
+msgstr "重复返回状态"
+
+msgctxt "#32017"
+msgid "General"
+msgstr "常规"
+
+msgctxt "#32018"
+msgid "Select Source Type"
+msgstr "选择源类型"
+
+msgctxt "#32019"
+msgid "Display Time & Weather"
+msgstr "显示时间和天气"
+
+msgctxt "#32020"
+msgid "Path In-Valid, No media found!"
+msgstr "路径无效，找不到媒体！"
+
+msgctxt "#32021"
+msgid "Set Dimmer Level"
+msgstr "设置亮度级别"
+
+#~ msgctxt "#32011"
+#~ msgid "Set ScreenSaver Volume [Restored to Previous Level]"
+#~ msgstr "设置屏幕保护程序音量 [恢复到上一级别]"

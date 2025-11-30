@@ -2,7 +2,9 @@
 import os
 import shutil
 import sys
-import uuid
+import xbmc
+
+
 
 import xbmcaddon
 import xbmcgui
@@ -12,7 +14,7 @@ import xbmcvfs
 from resources.lib.data_collector import get_language_data, get_media_data, get_file_path, convert_language, \
     clean_feature_release_name, get_flag
 from resources.lib.exceptions import AuthenticationError, ConfigurationError, DownloadLimitExceeded, ProviderError, \
-    ServiceUnavailable, TooManyRequests
+    ServiceUnavailable, TooManyRequests, BadUsernameError
 from resources.lib.file_operations import get_file_data
 from resources.lib.os.provider import OpenSubtitlesProvider
 from resources.lib.utilities import get_params, log, error
@@ -71,8 +73,12 @@ class SubtitleDownloader:
             media_data = {"query": query}
         else:
             media_data = get_media_data()
-            if "basename" in file_data:
+            # Only use basename as fallback if no query was set by media data collection
+            if "basename" in file_data and not media_data.get("query"):
                 media_data["query"] = file_data["basename"]
+                log(__name__, f"Using basename as query fallback: {file_data['basename']}")
+            elif media_data.get("query"):
+                log(__name__, f"Using parsed query from media_data: {media_data['query']}")
             log(__name__, "media_data '%s' " % media_data)
 
         self.query = {**media_data, **file_data, **language_data}
@@ -100,6 +106,9 @@ class SubtitleDownloader:
         except AuthenticationError as e:
             error(__name__, 32003, e)
             valid = 0
+        except BadUsernameError as e:
+            error(__name__, 32214, e)
+            valid = 0
         except DownloadLimitExceeded as e:
             log(__name__, f"XYXYXX limit excedded, username: {self.username}  {e}")
             if self.username=="":
@@ -111,8 +120,29 @@ class SubtitleDownloader:
             error(__name__, 32001, e)
             valid = 0
 
-        subtitle_path = os.path.join(__temp__, f"{str(uuid.uuid4())}.{self.sub_format}")
-       
+        #subtitle_path = os.path.join(__temp__, f"{str(uuid.uuid4())}.{self.sub_format}")
+        try:    # kodi > k19
+            dir_path = xbmcvfs.translatePath('special://temp/oss')       
+        except: # kodi < k19
+            dir_path = xbmc.translatePath('special://temp/oss')
+
+        # Kodi lang-code difference vs OS.com API langcodes return
+        if self.params["language"].lower() == 'pt-pt': self.params["language"] = 'pt'
+        elif self.params["language"].lower() == 'pt-pb': self.params["language"] = 'pb'
+
+        if xbmcvfs.exists(dir_path):    # lets clean files from last usage
+            dirs, files = xbmcvfs.listdir(dir_path)
+            for file in files:
+                xbmcvfs.delete(os.path.join(dir_path, file))
+        
+        if not xbmcvfs.exists(dir_path):  # lets create custom OSS sub directory if not exists
+            xbmcvfs.mkdir(dir_path)
+
+        subtitle_path = os.path.join(dir_path, "{0}.{1}.{2}".format('TempSubtitle', self.params["language"], self.sub_format))   
+        
+        log(__name__, "XYXYXX download subtitle_path: {}".format(subtitle_path))
+
+
         if (valid==1):
             tmp_file = open(subtitle_path, "w" + "b")
             tmp_file.write(self.file["content"])
@@ -132,21 +162,35 @@ class SubtitleDownloader:
 
     def list_subtitles(self):
         """TODO rewrite using new data. do not forget Series/Episodes"""
-        for subtitle in self.subtitles:
-            attributes = subtitle["attributes"]
-            language = convert_language(attributes["language"], True)
-            log(__name__, attributes)
-            clean_name = clean_feature_release_name(attributes["feature_details"]["title"], attributes["release"],
-                                                    attributes["feature_details"]["movie_name"])
-            list_item = xbmcgui.ListItem(label=language,
-                                         label2=clean_name)
-            list_item.setArt({
-                "icon": str(int(round(float(attributes["ratings"]) / 2))),
-                "thumb": get_flag(attributes["language"])})
-            list_item.setProperty("sync", "true" if ("moviehash_match" in attributes and attributes["moviehash_match"]) else "false")
-            list_item.setProperty("hearing_imp", "true" if attributes["hearing_impaired"] else "false")
-            """TODO take care of multiple cds id&id or something"""
-            url = f"plugin://{__scriptid__}/?action=download&id={attributes['files'][0]['file_id']}"
+        if self.subtitles:
+            for subtitle in reversed(sorted(self.subtitles, key=lambda x: (
+                    bool(x["attributes"].get("from_trusted", False)),
+                    x["attributes"].get("votes", 0) or 0,
+                    x["attributes"].get("ratings", 0) or 0,
+                    x["attributes"].get("download_count", 0) or 0))):
+                attributes = subtitle["attributes"]
+                language = convert_language(attributes["language"], True)
+                log(__name__, attributes)
+                clean_name = clean_feature_release_name(attributes["feature_details"]["title"], attributes["release"],
+                                                        attributes["feature_details"]["movie_name"])
+                list_item = xbmcgui.ListItem(label=language,
+                                             label2=clean_name)
+                list_item.setArt({
+                    "icon": str(int(round(float(attributes["ratings"]) / 2))),
+                    "thumb": get_flag(attributes["language"])})
+               # list_item.setArt({
+               #     "icon": str(int(round(float(attributes["ratings"]) / 2))),
+               #     "thumb": get_flag(language)})
+               
+                log(__name__, "XYXYXX download get_flag: language in url {}".format(get_flag(attributes["language"])))
 
-            xbmcplugin.addDirectoryItem(handle=self.handle, url=url, listitem=list_item, isFolder=False)
+                
+                list_item.setProperty("sync", "true" if ("moviehash_match" in attributes and attributes["moviehash_match"]) else "false")
+                list_item.setProperty("hearing_imp", "true" if attributes["hearing_impaired"] else "false")
+                """TODO take care of multiple cds id&id or something"""
+                #url = f"plugin://{__scriptid__}/?action=download&id={attributes['files'][0]['file_id']}"
+                url = f"plugin://{__scriptid__}/?action=download&id={attributes['files'][0]['file_id']}&language={language}"    
+                log(__name__, "XYXYXX download list_subtitles: language in url {url}")
+
+                xbmcplugin.addDirectoryItem(handle=self.handle, url=url, listitem=list_item, isFolder=False)
         xbmcplugin.endOfDirectory(self.handle)

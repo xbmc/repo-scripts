@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.openmeteo" name="Open-Meteo" version="1.0.14" provider-name="OpenHT">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.requests" version="2.27.1+matrix.1"/>
+		<import addon="script.module.dateutil" version="2.8.1+matrix.1"/>
+		<import addon="script.module.pytz" version="2023.3.0+matrix.1"/>
+		<import addon="script.module.pil" version="1.1.7"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+        <extension point="xbmc.service" library="service.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="cs_CZ">Predpoveď počasia z Open-Meteo</summary>
+		<description lang="cs_CZ">Počasie, mapy, kvalita vzduchu a pyľové údaje z open-meteo.com, rainviewer.com, weather.gc.ca a met.no</description>
+		<summary lang="de_DE">Wettervorhersage von Open-Meteo</summary>
+		<description lang="de_DE">Wetter, Karten, Luftqualität und Pollen Vorhersage von open-meteo.com, rainviewer.com, weather.gc.ca und met.no</description>
+		<summary lang="en_GB">Weather forecast from Open-Meteo</summary>
+		<description lang="en_GB">Weather, maps, airquality and pollen forecast from open-meteo.com, rainviewer.com, weather.gc.ca and met.no</description>
+		<summary lang="hu_HU">Időjárás-előrejelzés az Open-Meteo-ból</summary>
+		<description lang="hu_HU">Időjárás, térképek, levegőminőség és pollenelőrejelzés az open-meteo.com, a rainviewer.com, a weather.gc.ca és a met.no oldalakról</description>
+		<summary lang="id_ID">Prakiraan cuaca oleh Open-Meteo</summary>
+		<description lang="id_ID">Ramalan cuaca, peta, kualitas udara, dan serbuk sari dari open-meteo.com, rainviewer.com, weather.gc.ca dan met.no</description>
+		<summary lang="sk_SK">Predpoveď počasia z Open-Meteo</summary>
+		<description lang="sk_SK">Počasie, mapy, kvalita vzduchu a peľové údaje z open-meteo.com, rainviewer.com, weather.gc.ca a met.no</description>
+		<summary lang="ta_IN">திறந்த-மெட்டியோவிலிருந்து வானிலை முன்னறிவிப்பு</summary>
+		<description lang="ta_IN">திறந்த-மெட்டியோ.காம், ரெயின்வியூவர்.காம், வானிலை. GC.CA மற்றும் MET.NO இலிருந்து வானிலை, வரைபடங்கள், காற்றோட்டம் மற்றும் மகரந்த முன்னறிவிப்பு</description>
+		<summary lang="uk_UA">Прогноз погоди від Open-Meteo</summary>
+		<description lang="uk_UA">Прогноз погоди, мап , якість повітря та пилку від open-meteo.com, rainviewer.com, weather.gc.ca та met.no</description>
+		<summary lang="zh_CN">Open-Meteo 提供的天气预报</summary>
+		<description lang="zh_CN">天气、地图、空气质量和花粉预报来自 open-meteo.com、rainviewer.com、weather.gc.ca 和 met.no</description>
+		<platform>all</platform>
+		<license>GPL-2.0-or-later</license>
+		<forum>https://forum.kodi.tv/forumdisplay.php?fid=155</forum>
+		<website>https://openht.org</website>
+		<email>support@openht.org</email>
+		<source>https://github.com/bkury/weather.openmeteo</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<banner>resources/banner.png</banner>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screenshot1.jpg</screenshot>
+			<screenshot>resources/screenshot2.jpg</screenshot>
+			<screenshot>resources/screenshot3.jpg</screenshot>
+			<screenshot>resources/screenshot4.jpg</screenshot>
+			<screenshot>resources/screenshot5.jpg</screenshot>
+		</assets>
+	</extension>
+</addon>

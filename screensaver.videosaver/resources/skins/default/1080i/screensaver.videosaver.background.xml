@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <backgroundcolor>0x00000000</backgroundcolor>
+    <controls>
+      <control type="image"> 
+        <description>Hide Kodi UI</description>
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>auto</width>
+        <height>auto</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texture>white.png</texture>
+        <colordiffuse>black</colordiffuse>
+      </control>
+        <control type="group">
+            <visible>!Player.HasVideo + !Player.Playing</visible>
+            <width>500</width>
+            <height>500</height>
+            <centerleft>50%</centerleft>
+            <centertop>50%</centertop>
+            <control type="image">
+                <aspectratio>keep</aspectratio>
+                <texture>background.gif</texture>
+                <animation type="Conditional" condition="true" loop="true" reversible="false" >
+                    <!-- Total duration of animation 5000ms -->
+                    <effect type="fade" start="100" end="100" time="5000" />
+                    <!-- Change time to change speed of first turn -->
+                    <effect type="rotatey" start="0" end="-90" center="250,0" delay="0" time="2000" />
+                    <!-- Change delay for how long image is facing forward, change time for speed of second turn -->
+                    <effect type="rotatey" start="90" end="0" center="250,0" delay="4000" time="2000" />
+                    <!-- Time here is delay + time of above animation e.g. 4000 + 2000 = 6000 -->
+                    <effect type="fade" start="100" end="0" delay="6000" />
+                </animation>
+            </control>
+            <control type="image">
+                <aspectratio>keep</aspectratio>
+                <texture>background.gif</texture>
+                <animation type="Conditional" condition="true" loop="true" reversible="false" >
+                    <!-- Total time of animation - must match first image animation duration -->
+                    <effect type="fade" start="100" end="100" time="5000" />
+                    <!-- Delay matches fade delay of first animation, time is speed of turn  -->
+                    <effect type="rotatey" start="90" end="0" center="250,0" delay="8000" time="2000" />
+                    <!-- Time is speed of second turn, Second image wait for delay minus the delay and time of above e.g. 10000 - 6000 - 2000 = 2000 -->
+                    <effect type="rotatey" start="0" end="-90" center="250,0" delay="12000" time="2000" />
+                    <!-- delay must match delay two effects above -->
+                    <effect type="fade" start="0" end="100" delay="6000" />
+                </animation>
+            </control>
+        </control>
+      <control type="videowindow" id="41000">
+        <description>Video Overlay</description>
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>auto</width>
+        <height>auto</height>
+        <align>center</align>
+        <aligny>center</aligny>
+      </control>
+      <control type="label" id="30002">
+        <posx>1540</posx>
+        <posy>850</posy>
+        <description>Time</description>
+        <align>left</align>
+        <font>font_clock</font>
+        <shadowcolor>text_shadow</shadowcolor>
+        <height>80</height>
+        <width>auto</width>
+        <label>[B]$INFO[System.Time][/B]</label>
+        <animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+        <visible>String.isEqual(Window.Property(ss_time),okay) + [Control.IsVisible(41000)]</visible>
+      </control>
+      <control type="label">
+        <posx>1755</posx>
+        <posy>930</posy>
+        <description>Time</description>
+        <align>left</align>
+        <font>font10</font>
+        <shadowcolor>text_shadow</shadowcolor>
+        <height>200</height>
+        <width>auto</width>
+        <label>$INFO[Weather.Temperature]</label>
+        <animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+        <visible>[Weather.IsFetched + Control.IsVisible(30002)]</visible>
+      </control>
+      <control type="image" id="41001"> 
+        <description>Video Dim Overlay</description>
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>auto</width>
+        <height>auto</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texture>white.png</texture>
+        <colordiffuse>black</colordiffuse>
+      </control>
+    </controls>
+</window>

@@ -1,0 +1,126 @@
+# Kodi Media Center language file
+# Addon Name: Kodi Logfile Uploader
+# Addon id: script.kodi.loguploader
+# Addon Provider: Team Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-21 16:15+0000\n"
+"Last-Translator: skypichat <skypichat@hotmail.fr>\n"
+"Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-kodi-loguploader/fr_fr/>\n"
+"Language: fr_fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.15.1\n"
+
+msgctxt "Addon Summary"
+msgid "Uploads your kodi.log file."
+msgstr "Téléverse votre fichier kodi.log."
+
+msgctxt "Addon Description"
+msgid "Uploads your kodi.log file and returns an url you can post on http://forum.kodi.tv/"
+msgstr "Téléverse votre fichier kodi.log et renvoie une URL qui peut être publiée sur http://forum.kodi.tv/"
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr "Le fichier est vide"
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr "Échec lors de la lecture du fichier"
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr "Échec lors de la connexion au serveur"
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr "Échec lors de la récupération de l’URL du fichier"
+
+msgctxt "#32005"
+msgid "This file is too large. Max size is 2MB."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi forum: %s"
+msgstr "Publier cette URL ou scanner le QRcode pour votre %s, accompagnée de la description du problème, sur le forum Kodi : %s"
+
+msgctxt "#32007"
+msgid "Error posting the logfile."
+msgstr "Erreur lors de la publication du fichier de journalisation."
+
+msgctxt "#32011"
+msgid "Error posting the kodi.log file"
+msgstr "Erreur lors de la publication du fichier kodi.log"
+
+msgctxt "#32012"
+msgid "Error posting the old log file"
+msgstr "Erreur lors de la publication de l’ancien fichier de journalisation"
+
+msgctxt "#32013"
+msgid "Error posting the crashlog file"
+msgstr "Erreur lors de la publication du rapport de plantage"
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr "Pas d’ancien fichier de journalisation trouvé"
+
+msgctxt "#32022"
+msgid "No crashlog file found"
+msgstr "Pas de rapport de plantage trouvé"
+
+msgctxt "#32023"
+msgid "Windows crashlogs are not supported, please disable this option in the addon settings"
+msgstr "Les rapports de plantage Windows ne sont pas supportés, veuillez désactiver cette option dans les paramètres de l’extension"
+
+msgctxt "#32024"
+msgid "Android crashlogs are not supported, please disable this option in the addon settings"
+msgstr "Les rapports de plantage Android ne sont pas supportés, veuillez désactiver cette option dans les paramètres de l’extension"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr "fichier de journalisation"
+
+msgctxt "#32032"
+msgid "old log"
+msgstr "ancien fichier de journalisation"
+
+msgctxt "#32033"
+msgid "crashlog"
+msgstr "rapport de plantage"
+
+msgctxt "#32040"
+msgid "Do you want to view your %s or upload it to http://paste.kodi.tv/?"
+msgstr "Voulez-vous voir votre %s ou le téléverser sur http://paste.kodi.tv/ ?"
+
+msgctxt "#32041"
+msgid "view"
+msgstr "voir"
+
+msgctxt "#32042"
+msgid "upload"
+msgstr "téléverser"
+
+msgctxt "#32501"
+msgid "Advanced options"
+msgstr "Options avancées"
+
+msgctxt "#32502"
+msgid "Additional logfiles to post"
+msgstr "Fichiers de journalisation supplémentaires à publier"
+
+msgctxt "#32503"
+msgid "Post the old logfile, from the last time Kodi ran"
+msgstr "Publier l’ancien fichier de journalisation, celui de la précédente exécution de Kodi"
+
+msgctxt "#32504"
+msgid "Post the crashlog (available on linux/osx/ios only)"
+msgstr "Publier le rapport de plantage (disponible uniquement sur Linux/macOS/iOS)"
+
+#~ msgctxt "#32005"
+#~ msgid "This file is too large. Max size is 1MB."
+#~ msgstr "Le fichier est trop gros. La taille max est de 1 Mo."

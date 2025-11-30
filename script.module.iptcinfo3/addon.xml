@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.iptcinfo3" name="IPTCInfo3" version="2.1.4+matrix.1" provider-name="Tamas Gulacsi, James Campbell">
+<addon id="script.module.iptcinfo3" name="IPTCInfo3" version="2.1.4+matrix.2" provider-name="Tamas Gulacsi, James Campbell">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>

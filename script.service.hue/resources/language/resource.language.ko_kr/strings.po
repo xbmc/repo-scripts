@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-05 08:15+0000\n"
+"PO-Revision-Date: 2024-04-10 18:53+0000\n"
 "Last-Translator: Minho Park <parkmino@gmail.com>\n"
 "Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/ko_kr/>\n"
 "Language: ko_kr\n"
@@ -14,27 +14,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.15.2\n"
+"X-Generator: Weblate 5.4.3\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
 msgstr "Kodi 재생으로 Hue 조명 자동화"
 
 msgctxt "Addon Description"
-msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr "Kodi로 Hue 조명을 자동화하세요. 미디어 재생을 재생, 일시 중지 또는 중지할 때 실행되는 멀티룸 장면을 만듭니다. 애드온 설정에서 멀티룸 장면을 만들거나 삭제하고 다른 재생 이벤트에 적용할 장면을 선택합니다. Hue의 일출 및 일몰 시간을 사용하여 주간에는 서비스를 자동으로 비활성화하고 재생 중에 일몰 시 조명을 켤 수 있습니다. Ambilight 지원이 포함됩니다."
+msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
+msgstr "Kodi로 Hue 자동 조명을 사용합니다. 공식 Hue 앱에서 구성된 장면을 사용합니다. Hue의 해지는 시간을 사용하여 낮에는 서비스를 사용하지 않고 해진 후 재생에는 조명을 켤 수 있습니다. Ambilight 지원이 포함됩니다."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
 msgstr "Hue Bridge V2(정사각형)가 필요합니다. 모든 하드웨어에서 Ambilight를 사용할 수 있는 것은 아닙니다."
 
 msgctxt "#32100"
-msgid "Video Actions"
-msgstr "비디오 작업"
+msgid "Video Scenes"
+msgstr "비디오 장면"
 
 msgctxt "#32102"
-msgid "Audio Actions"
-msgstr "오디오 작업"
+msgid "Audio Scenes"
+msgstr "오디오 장면"
 
 msgctxt "#32201"
 msgid "Start/Resume"
@@ -48,9 +48,9 @@ msgctxt "#32203"
 msgid "Stop"
 msgstr "중지"
 
-msgctxt "#32510"
-msgid "Scene Name:"
-msgstr "장면 이름:"
+msgctxt "#30036"
+msgid "Scene:"
+msgstr "장면:"
 
 msgctxt "#32511"
 msgid "Scene ID"
@@ -89,9 +89,10 @@ msgid "End time:"
 msgstr "종료 시간:"
 
 msgctxt "#30508"
-msgid "Disable during daylight"
-msgstr "낮 동안 사용 안 함"
+msgid "Disable during daytime"
+msgstr "낮에는 사용 안 함"
 
+#. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
 msgstr "일몰 재생 중 사용함"
@@ -120,10 +121,12 @@ msgctxt "#30515"
 msgid "Stop Scene Enabled"
 msgstr "정지 장면 사용함"
 
+#. If any light in the selected scene is on, ignore the schedule restrictions
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
 msgstr "조명이 이미 켜져 있으면 시간 확인 안 함"
 
+#. If any of the lights in the scene are off, don't activate the related scene
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
 msgstr "조명이 꺼져 있으면 장면 사용 안 함"
@@ -145,8 +148,8 @@ msgid "Advanced"
 msgstr "고급"
 
 msgctxt "#32106"
-msgid "Video Activation"
-msgstr "비디오 활성화"
+msgid "Video Activation Rules"
+msgstr "비디오 사용 규칙"
 
 msgctxt "#6101"
 msgid "Select Lights"
@@ -159,14 +162,6 @@ msgstr "사용함"
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
 msgstr "색조 브릿지에서 연결 버튼 누르기"
-
-msgctxt "#9007"
-msgid "Create Scene"
-msgstr "장면 만들기"
-
-msgctxt "#9008"
-msgid "Delete Scene"
-msgstr "장면 삭제"
 
 msgctxt "#30000"
 msgid "Hue Service"
@@ -224,26 +219,6 @@ msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
 msgstr "색조 브리지 설정 확인"
 
-msgctxt "#30025"
-msgid "ERROR: Scene not deleted"
-msgstr "오류: 장면이 삭제되지 않음"
-
-msgctxt "#30026"
-msgid "Scene Created"
-msgstr "생성된 장면"
-
-msgctxt "#30028"
-msgid "Delete Hue Scene"
-msgstr "색조 장면 삭제"
-
-msgctxt "#30030"
-msgid "Enter Scene Name"
-msgstr "장면 이름 입력"
-
-msgctxt "#30031"
-msgid "Transition Time:"
-msgstr "전환 시간:"
-
 msgctxt "#30034"
 msgid "Cancel"
 msgstr "취소"
@@ -252,73 +227,21 @@ msgctxt "#30035"
 msgid "Lights:"
 msgstr "조명:"
 
-msgctxt "#30036"
-msgid "Scene Name:"
-msgstr "장면 이름:"
-
 msgctxt "#30037"
 msgid "Save"
 msgstr "저장"
-
-msgctxt "#30038"
-msgid "Create Hue Scene"
-msgstr "색조 장면 만들기"
-
-msgctxt "#30002"
-msgid "ERROR: Scene not created"
-msgstr "오류: 장면이 생성되지 않음"
-
-msgctxt "#30039"
-msgid "Set a fade time in seconds, or 0 for an instant transition."
-msgstr "페이드 시간을 초 단위로 설정하거나, 바로 전환하려면 0으로 설정합니다."
-
-msgctxt "#30040"
-msgid "Scene deleted"
-msgstr "장면 삭제됨"
-
-msgctxt "#30041"
-msgid "You may now assign your Scene to player actions."
-msgstr "이제 플레이어 작업에 장면을 할당할 수 있습니다."
-
-msgctxt "#30042"
-msgid "Fade Time (Seconds)"
-msgstr "페이드 타임(초)"
 
 msgctxt "#30043"
 msgid "Error"
 msgstr "오류"
 
-msgctxt "#30044"
-msgid "Create New Scene"
-msgstr "새 장면 만들기"
-
-msgctxt "#30045"
-msgid "Scene successfully created!"
-msgstr "장면이 생성됨!"
-
-msgctxt "#30046"
-msgid "Adjust lights to desired state in the Hue App to save as new scene."
-msgstr "색조 앱에서 조명을 원하는 상태로 조정하여 새 장면으로 저장합니다."
-
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
 msgstr "연결이 끊어짐. 설정을 확인하십시오. 종료"
 
-msgctxt "#30048"
-msgid "Connection lost. Trying again in 2 minutes"
-msgstr "연결이 끊어짐. 2분 후에 다시 시도"
-
-msgctxt "#30049"
-msgid "Scene Name"
-msgstr "장면 이름"
-
 msgctxt "#30050"
 msgid "N-UPnP discovery..."
 msgstr "N-UPnP 검색..."
-
-msgctxt "#30051"
-msgid "UPnP discovery..."
-msgstr "UPnP 검색..."
 
 msgctxt "#30005"
 msgid "Searching for bridge..."
@@ -327,14 +250,6 @@ msgstr "브리지를 찾는 중..."
 msgctxt "#30052"
 msgid "Invalid start or end time, schedule disabled"
 msgstr "잘못된 시작 또는 종료 시간으로 일정 사용 안 함"
-
-msgctxt "#30056"
-msgid "Set brightness on start"
-msgstr "시작할 때 밝기 설정"
-
-msgctxt "#30057"
-msgid "Force on"
-msgstr "강제"
 
 msgctxt "#30058"
 msgid "Light Names:"
@@ -356,6 +271,7 @@ msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
 msgstr "Hue 브리지 용량 오류 표시"
 
+#. Minimum duration of the media before activating light scene
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
 msgstr "최소 기간 (분)"
@@ -392,10 +308,6 @@ msgctxt "#30811"
 msgid "Maximum Brightness"
 msgstr "최대 밝기"
 
-msgctxt "#30812"
-msgid "Disable connection message"
-msgstr "연결 메시지 사용 안 함"
-
 msgctxt "#30813"
 msgid "Average image processing time:"
 msgstr "평균 이미지 처리 시간:"
@@ -416,6 +328,7 @@ msgctxt "#30071"
 msgid "Only colour lights are supported"
 msgstr "색상 조명만 지원됨"
 
+#. Old or deperacted bridge firmware or hardware
 msgctxt "#30072"
 msgid "Unsupported Hue Bridge"
 msgstr "지원되지 않는 색조 브리지"
@@ -428,6 +341,7 @@ msgctxt "#30060"
 msgid "Play"
 msgstr "재생"
 
+#. Must end with a space, status string is appended
 msgctxt "#30061"
 msgid "Hue Status: "
 msgstr "색조 상태: "
@@ -437,12 +351,12 @@ msgid "Settings"
 msgstr "설정"
 
 msgctxt "#30063"
-msgid "Disabled by daylight"
-msgstr "일광으로 사용 안 함"
+msgid "Disabled by daytime"
+msgstr "낮에는 사용 안 함"
 
 msgctxt "#30064"
-msgid "ERROR: Scene not found"
-msgstr "오류: 장면을 찾을 수 없음"
+msgid "ERROR: Scene not found, it may have been deleted"
+msgstr "오류: 장면을 찾을 수 없습니다. 삭제되었을 수 있습니다"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
@@ -488,30 +402,19 @@ msgctxt "#30084"
 msgid "User Found![CR]Saving settings..."
 msgstr "사용자를 찾음![CR]설정 저장 중..."
 
-msgctxt "#30085"
-msgid "Adjust lights to desired state in the Hue App to save as new scene.[CR]Set a fade time in seconds, or 0 for an instant transition."
-msgstr "색조 앱에서 조명을 원하는 상태로 조정하여 새 장면으로 저장합니다.[CR]페이드 시간을 초 단위로 설정하거나 바로 전황하기 위해 0으로 설정합니다."
-
 msgctxt "#30086"
 msgid "User not found[CR]Check your bridge and network."
 msgstr "사용자를 찾을 수 없음[CR]브리지와 네트워크를 확인하십시오."
-
-msgctxt "#30087"
-msgid "Scene successfully created![CR]You may now assign your scene to player actions."
-msgstr "장면이 생성됨![CR]이제 장면을 플레이어 작업에 할당할 수 있습니다."
 
 msgctxt "#30073"
 msgid "Do not show again"
 msgstr "다시 표시하지 않음"
 
-msgctxt "#30074"
-msgid "Disable Hue Labs during playback"
-msgstr "재생 중 색조 Lab 비활성화"
-
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
 msgstr "색조 브리지 V1(원형)은 지원되지 않습니다. 색조 브리지 V2(사각)가 필요합니다."
 
+#. For ambilight, different color gamuts are supported. This means the colour gamut could not be fetched and the light is probably not compatible with ambilight.
 msgctxt "#30012"
 msgid "Unknown colour gamut for light:"
 msgstr "빛에 대해 알 수 없는 색 영역:"
@@ -544,21 +447,225 @@ msgctxt "#30009"
 msgid "Connecting..."
 msgstr "연결 중..."
 
-msgctxt "#30027"
-msgid "Are you sure you want to delete this scene:"
-msgstr "이 장면을 삭제할까요:"
-
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
 msgstr "브리지가 오래되었습니다. 브리지를 업데이트하십시오."
 
-msgctxt "#30003"
-msgid "ERROR: Scene or Light not found, it may have changed or been deleted. Check your configuration."
-msgstr "오류: 장면 또는 조명을 찾을 수 없습니다. 변경되었거나 삭제되었을 수 있습니다. 설정을 확인하십시오."
-
 msgctxt "#30033"
 msgid "Reconnected"
 msgstr "다시 연결됨"
+
+#. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
+msgctxt "#31334"
+msgid "Morning disable time:"
+msgstr "아침 비활성화 시간:"
+
+#. Amount of time for the light scene transition to fade in, in seconds.
+msgctxt "#31335"
+msgid "Transition time (seconds):"
+msgstr "전환 시간 (초):"
+
+#. Number of minutes before or after sunset to consider as sunset
+msgctxt "#31336"
+msgid "Sunset Offset:"
+msgstr ""
+
+#. Help text for sunset offset setting
+msgctxt "#31337"
+msgid "Adjust sunset back or forwards by this many minutes"
+msgstr ""
+
+#. Help text for "morning disable time" setting
+msgctxt "#31338"
+msgid "Time at which to disable the service in the morning"
+msgstr ""
+
+#. Help text for 'Disable during daytime'
+msgctxt "#31339"
+msgid "Disable the service between configured time and sunset"
+msgstr ""
+
+#. Help text for 'activate at sunset'
+msgctxt "#31340"
+msgid "Activate scenes at sunset, during playback"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Bridge overloaded, stopping ambilight"
+msgstr "브리지에 과부하가 걸려 앰비라이트가 멈췄습니다"
+
+msgctxt "#30025"
+msgid "Bridge unauthorized, please reconfigure."
+msgstr "브리지가 승인되지 않았습니다. 다시 설정해야 합니다."
+
+msgctxt "#30026"
+msgid "Connection failed, retrying..."
+msgstr "연결에 실패했습니다. 다시 시도하는 중..."
+
+#. Default status in an empty configuration field; eg. scene/lights are not selected
+msgctxt "#30003"
+msgid "Not selected"
+msgstr "선택되지 않음"
+
+msgctxt "#30027"
+msgid "ERROR: Light not found, it may have been deleted"
+msgstr "오류: 라이트를 찾을 수 없습니다. 지워졌을 수 있습니다"
+
+msgctxt "#30028"
+msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
+msgstr "일몰 시간을 사용하도록 Hue 홈 위치를 설정합니다. 기본값은 19:00입니다"
+
+#~ msgctxt "#30028"
+#~ msgid "configure hue home location to use sunset time, defaulting to 19:00"
+#~ msgstr "일몰 시간을 사용하도록 색조 기본 위치를 설정합니다. 기본값은 19:00입니다"
+
+#~ msgctxt "#30042"
+#~ msgid "Fade Time (Seconds)"
+#~ msgstr "페이드 타임(초)"
+
+#~ msgctxt "#30051"
+#~ msgid "UPnP discovery..."
+#~ msgstr "UPnP 검색..."
+
+#~ msgctxt "#30056"
+#~ msgid "Set brightness on start"
+#~ msgstr "시작할 때 밝기 설정"
+
+#~ msgctxt "#31334"
+#~ msgid "Re-enable time"
+#~ msgstr "시간을 다시 사용"
+
+#~ msgctxt "#30064"
+#~ msgid "ERROR: Scene not found"
+#~ msgstr "오류: 장면을 찾을 수 없음"
+
+#~ msgctxt "#30003"
+#~ msgid "ERROR: Scene or Light not found, it may have changed or been deleted. Check your configuration."
+#~ msgstr "오류: 장면 또는 조명을 찾을 수 없습니다. 변경되었거나 삭제되었을 수 있습니다. 설정을 확인하십시오."
+
+#~ msgctxt "Addon Description"
+#~ msgid "Automate your Hue lights with Kodi. Create multi-room scenes that run when you Play, Pause or Stop media playback. Create and delete multi-room scenes from add-on settings then select which to apply for different Playback events. Can use Hue's sunrise and sunset times to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
+#~ msgstr "Kodi로 Hue 조명을 자동화하세요. 미디어 재생을 재생, 일시 중지 또는 중지할 때 실행되는 멀티룸 장면을 만듭니다. 애드온 설정에서 멀티룸 장면을 만들거나 삭제하고 다른 재생 이벤트에 적용할 장면을 선택합니다. Hue의 일출 및 일몰 시간을 사용하여 주간에는 서비스를 자동으로 비활성화하고 재생 중에 일몰 시 조명을 켤 수 있습니다. Ambilight 지원이 포함됩니다."
+
+#~ msgctxt "#32100"
+#~ msgid "Video Actions"
+#~ msgstr "비디오 작업"
+
+#~ msgctxt "#32102"
+#~ msgid "Audio Actions"
+#~ msgstr "오디오 작업"
+
+#~ msgctxt "#32510"
+#~ msgid "Scene Name:"
+#~ msgstr "장면 이름:"
+
+#~ msgctxt "#30508"
+#~ msgid "Disable during daylight"
+#~ msgstr "낮 동안 사용 안 함"
+
+#~ msgctxt "#32106"
+#~ msgid "Video Activation"
+#~ msgstr "비디오 활성화"
+
+#~ msgctxt "#9007"
+#~ msgid "Create Scene"
+#~ msgstr "장면 만들기"
+
+#~ msgctxt "#9008"
+#~ msgid "Delete Scene"
+#~ msgstr "장면 삭제"
+
+#~ msgctxt "#30025"
+#~ msgid "ERROR: Scene not deleted"
+#~ msgstr "오류: 장면이 삭제되지 않음"
+
+#~ msgctxt "#30026"
+#~ msgid "Scene Created"
+#~ msgstr "생성된 장면"
+
+#~ msgctxt "#30028"
+#~ msgid "Delete Hue Scene"
+#~ msgstr "색조 장면 삭제"
+
+#~ msgctxt "#30030"
+#~ msgid "Enter Scene Name"
+#~ msgstr "장면 이름 입력"
+
+#~ msgctxt "#30031"
+#~ msgid "Transition Time:"
+#~ msgstr "전환 시간:"
+
+#~ msgctxt "#30036"
+#~ msgid "Scene Name:"
+#~ msgstr "장면 이름:"
+
+#~ msgctxt "#30038"
+#~ msgid "Create Hue Scene"
+#~ msgstr "색조 장면 만들기"
+
+#~ msgctxt "#30002"
+#~ msgid "ERROR: Scene not created"
+#~ msgstr "오류: 장면이 생성되지 않음"
+
+#~ msgctxt "#30039"
+#~ msgid "Set a fade time in seconds, or 0 for an instant transition."
+#~ msgstr "페이드 시간을 초 단위로 설정하거나, 바로 전환하려면 0으로 설정합니다."
+
+#~ msgctxt "#30040"
+#~ msgid "Scene deleted"
+#~ msgstr "장면 삭제됨"
+
+#~ msgctxt "#30041"
+#~ msgid "You may now assign your Scene to player actions."
+#~ msgstr "이제 플레이어 작업에 장면을 할당할 수 있습니다."
+
+#~ msgctxt "#30044"
+#~ msgid "Create New Scene"
+#~ msgstr "새 장면 만들기"
+
+#~ msgctxt "#30045"
+#~ msgid "Scene successfully created!"
+#~ msgstr "장면이 생성됨!"
+
+#~ msgctxt "#30046"
+#~ msgid "Adjust lights to desired state in the Hue App to save as new scene."
+#~ msgstr "색조 앱에서 조명을 원하는 상태로 조정하여 새 장면으로 저장합니다."
+
+#~ msgctxt "#30048"
+#~ msgid "Connection lost. Trying again in 2 minutes"
+#~ msgstr "연결이 끊어짐. 2분 후에 다시 시도"
+
+#~ msgctxt "#30049"
+#~ msgid "Scene Name"
+#~ msgstr "장면 이름"
+
+#~ msgctxt "#30057"
+#~ msgid "Force on"
+#~ msgstr "강제"
+
+#~ msgctxt "#30812"
+#~ msgid "Disable connection message"
+#~ msgstr "연결 메시지 사용 안 함"
+
+#~ msgctxt "#30063"
+#~ msgid "Disabled by daylight"
+#~ msgstr "일광으로 사용 안 함"
+
+#~ msgctxt "#30085"
+#~ msgid "Adjust lights to desired state in the Hue App to save as new scene.[CR]Set a fade time in seconds, or 0 for an instant transition."
+#~ msgstr "색조 앱에서 조명을 원하는 상태로 조정하여 새 장면으로 저장합니다.[CR]페이드 시간을 초 단위로 설정하거나 바로 전황하기 위해 0으로 설정합니다."
+
+#~ msgctxt "#30087"
+#~ msgid "Scene successfully created![CR]You may now assign your scene to player actions."
+#~ msgstr "장면이 생성됨![CR]이제 장면을 플레이어 작업에 할당할 수 있습니다."
+
+#~ msgctxt "#30074"
+#~ msgid "Disable Hue Labs during playback"
+#~ msgstr "재생 중 색조 Lab 비활성화"
+
+#~ msgctxt "#30027"
+#~ msgid "Are you sure you want to delete this scene:"
+#~ msgstr "이 장면을 삭제할까요:"
 
 #~ msgctxt "#30501"
 #~ msgid "Discover Hue Bridge"

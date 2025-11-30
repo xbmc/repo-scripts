@@ -186,6 +186,15 @@ msgctxt "#32173"
 msgid "Year: yy(2-digit year) yyyy(4-digit year)"
 msgstr ""
 
+# empty strings from id 32174 to 32179
+msgctxt "#32180"
+msgid "17:14 No hour zero padding Windows"
+msgstr ""
+
+msgctxt "#32181"
+msgid "17:14 No hour zero padding Unix"
+msgstr ""
+
 msgctxt "#32200"
 msgid "Enable additional information"
 msgstr "Omogući dodatne podatke"
@@ -634,6 +643,18 @@ msgstr ""
 
 msgctxt "#32621"
 msgid "RSS needs to be properly configured in Kodi and enabled!"
+msgstr ""
+
+msgctxt "#32630"
+msgid "Turn off screen via CEC"
+msgstr ""
+
+msgctxt "#32631"
+msgid "Stop now playing media"
+msgstr ""
+
+msgctxt "#32632"
+msgid "Turn off screen via CEC after (minutes)"
 msgstr ""
 
 #~ msgctxt "#32010"

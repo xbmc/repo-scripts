@@ -1,0 +1,113 @@
+# XBMC Media Center language file
+# Addon Name: Video ScreenSaver
+# Addon id: screensaver.videosaver
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-08-21 16:24+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-videosaver/fi_fi/>\n"
+"Language: fi_fi\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Summary"
+msgid "Create a screensaver from any Kodi video source."
+msgstr "Luo näytönsäästäjä mistä tahansa Kodin videolähteestä."
+
+msgctxt "Addon Description"
+msgid "Dynamic screensaver using Local content, SmartPlaylists, Plugins and UPNP Servers."
+msgstr "Dynaaminen näytönsäästäjä, joka hyödyntää paikallista sisältöä, älytoistolistoja, lisäosia sekä UPnP-palvelimia."
+
+msgctxt "Addon Disclaimer"
+msgid "Streaming sources not recommend for metered Internet."
+msgstr "Suoratoistolähteitä ei suositella tiedonsiirtomäärän mukaan veloitettavilla yhteyksillä."
+
+msgctxt "#32001"
+msgid "Something went wrong, Try again later ..."
+msgstr "Jotain meni pieleen. Yritä myöhemmin uudelleen..."
+
+msgctxt "#32002"
+msgid "Video Type"
+msgstr "Videotyyppi"
+
+msgctxt "#32003"
+msgid "Video File"
+msgstr "Videotiedosto"
+
+msgctxt "#32004"
+msgid "Video Folder"
+msgstr "Videokansio"
+
+msgctxt "#32005"
+msgid "Video Limit"
+msgstr "Videorajoitus"
+
+msgctxt "#32006"
+msgid "Randomize"
+msgstr "Sekoita"
+
+msgctxt "#32007"
+msgid "Disable Trakt"
+msgstr "Poista Trakt käytöstä"
+
+msgctxt "#32008"
+msgid "Ignore Keypress (Stop to end)."
+msgstr "Älä huomioi näppäinpainalluksia (lopeta pysäyttämällä toisto)."
+
+msgctxt "#32009"
+msgid "Single Video"
+msgstr "Yksittäinen video"
+
+msgctxt "#32010"
+msgid "Multiple Videos"
+msgstr "Useita videoita"
+
+msgctxt "#32011"
+msgid "Set ScreenSaver Volume [Restored to Previous Level on Stop]"
+msgstr "Aseta näytönsäästäjän äänenvoimakkuus (palautuu, kun toisto pysähtyy)"
+
+msgctxt "#32012"
+msgid "Enable Debugging [Log errors]"
+msgstr "Käytä vianselvitystä [kirjaa virheet]"
+
+msgctxt "#32013"
+msgid "Building Playlist"
+msgstr "Rakennetaan toistolistaa"
+
+msgctxt "#32014"
+msgid "Select File"
+msgstr "Valitse tiedosto"
+
+msgctxt "#32015"
+msgid "Select Folder"
+msgstr "Valitse kansio"
+
+msgctxt "#32016"
+msgid "Repeat Return State"
+msgstr "Toista paluutila"
+
+msgctxt "#32017"
+msgid "General"
+msgstr "Yleiset"
+
+msgctxt "#32018"
+msgid "Select Source Type"
+msgstr "Valitse lähteen tyyppi"
+
+msgctxt "#32019"
+msgid "Display Time & Weather"
+msgstr "Näytä aika ja sää"
+
+msgctxt "#32020"
+msgid "Path In-Valid, No media found!"
+msgstr "Sijainti ei kelpaa, mediaa ei löytynyt!"
+
+msgctxt "#32021"
+msgid "Set Dimmer Level"
+msgstr "Aseta himmennystaso"

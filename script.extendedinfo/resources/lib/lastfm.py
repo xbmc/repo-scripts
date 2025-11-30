@@ -40,14 +40,14 @@ def _handle_albums(results: dict) -> ItemList:
                            'mbid': album.get('mbid', ""),
                            'mediatype': "album",
                            'thumb': album['image'][-1]['#text'],
-                           'label': "%s - %s" % (album['artist']['name'], album['name']),
+                           'label': f"{album['artist']['name']} - {album['name']}",
                            'title': album['name']})
             albums.append(album)
     return albums
 
 
 def _handle_artists(results) -> ItemList:
-    """Converts TADB artist query to kutils ItemList
+    """Converts TADB artist query to kutils131 ItemList
 
     Args:
         results (_type_): _description_
@@ -111,7 +111,7 @@ def get_similar_artists(artist_mbid: str) -> ItemList:
         artist_mbid (str): The musicbrainz id for the artist
 
     Returns:
-        ItemList: a kutils object that wraps a list of artists info dicts
+        ItemList: a kutils131 object that wraps a list of artists info dicts
     """
     if not artist_mbid:
         return ItemList(content_type="artists")
@@ -163,8 +163,7 @@ def get_data(method: str, params=None, cache_days=0.5) -> dict:
     params["api_key"] = LAST_FM_API_KEY
     params["format"] = "json"
     params = {k: str(v) for k, v in params.items() if v}
-    url = "{base_url}{params}".format(base_url=BASE_URL,
-                                      params=urllib.parse.urlencode(params))
+    url = f"{BASE_URL}{urllib.parse.urlencode(params)}"
     return utils.get_JSON_response(url=url,
                                    cache_days=cache_days,
                                    folder="LastFM")

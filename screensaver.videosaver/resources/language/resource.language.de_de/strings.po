@@ -1,0 +1,113 @@
+# XBMC Media Center language file
+# Addon Name: Video ScreenSaver
+# Addon id: screensaver.videosaver
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-31 11:54+0000\n"
+"Last-Translator: Demian <Demian@gmx.co.uk>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-videosaver/de_de/>\n"
+"Language: de_de\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Create a screensaver from any Kodi video source."
+msgstr "Einen Bildschirmschoner aus einer beliebigen Kodi-Videoquelle erstellen."
+
+msgctxt "Addon Description"
+msgid "Dynamic screensaver using Local content, SmartPlaylists, Plugins and UPNP Servers."
+msgstr "Dynamischer Bildschirmschoner mit lokalen Inhalten, SmartPlaylists, Plugins und UPnP-Servern."
+
+msgctxt "Addon Disclaimer"
+msgid "Streaming sources not recommend for metered Internet."
+msgstr "Streamingquellen werden bei kostenpflichtigen Internet nicht empfohlen."
+
+msgctxt "#32001"
+msgid "Something went wrong, Try again later ..."
+msgstr "Etwas ist schief gelaufen. Bitte später erneut versuchen …"
+
+msgctxt "#32002"
+msgid "Video Type"
+msgstr "Videotyp"
+
+msgctxt "#32003"
+msgid "Video File"
+msgstr "Videodatei"
+
+msgctxt "#32004"
+msgid "Video Folder"
+msgstr "Videoordner"
+
+msgctxt "#32005"
+msgid "Video Limit"
+msgstr "Videobeschränkung"
+
+msgctxt "#32006"
+msgid "Randomize"
+msgstr "Zufallsauswahl"
+
+msgctxt "#32007"
+msgid "Disable Trakt"
+msgstr "Trakt deaktivieren"
+
+msgctxt "#32008"
+msgid "Ignore Keypress (Stop to end)."
+msgstr "Tastendruck ignorieren (Stopp zum Beenden)."
+
+msgctxt "#32009"
+msgid "Single Video"
+msgstr "Einzelvideo"
+
+msgctxt "#32010"
+msgid "Multiple Videos"
+msgstr "Mehrere Videos"
+
+msgctxt "#32011"
+msgid "Set ScreenSaver Volume [Restored to Previous Level on Stop]"
+msgstr "Bildschirmschonerlautstärke einstellen [Wird bei Stopp auf vorherigen Wert zurückgesetzt]"
+
+msgctxt "#32012"
+msgid "Enable Debugging [Log errors]"
+msgstr "Debugging einschalten [Fehler protokollieren]"
+
+msgctxt "#32013"
+msgid "Building Playlist"
+msgstr "Wiedergabeliste wird anlegen"
+
+msgctxt "#32014"
+msgid "Select File"
+msgstr "Datei auswählen"
+
+msgctxt "#32015"
+msgid "Select Folder"
+msgstr "Ordner auswählen"
+
+msgctxt "#32016"
+msgid "Repeat Return State"
+msgstr ""
+
+msgctxt "#32017"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#32018"
+msgid "Select Source Type"
+msgstr "Quellentyp auswählen"
+
+msgctxt "#32019"
+msgid "Display Time & Weather"
+msgstr "Zeit und Wetter anzeigen"
+
+msgctxt "#32020"
+msgid "Path In-Valid, No media found!"
+msgstr "Pfad ungültig. Keine Medien gefunden!"
+
+msgctxt "#32021"
+msgid "Set Dimmer Level"
+msgstr "Dimmstufe einstellen"

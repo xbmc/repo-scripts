@@ -27,3 +27,8 @@ class DownloadLimitExceeded(ProviderError):
 class TooManyRequests(ProviderError):
     """Exception raised by providers when too many requests are made."""
     pass
+
+
+class BadUsernameError(ProviderError):
+    """Exception raised by providers when user entered the email instead of the username in the username field."""
+    pass

@@ -1,3 +1,6 @@
+## 2.3
+- Mother Earth Jazz channel url changed
+
 ## 2.2
 - added Mother Earth Jazz channel
 

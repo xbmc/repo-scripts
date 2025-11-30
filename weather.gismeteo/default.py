@@ -3,14 +3,14 @@
 
 from __future__ import unicode_literals
 
-from builtins import range
 import os
 import time
+from builtins import range
 
 import xbmc
+from simpleplugin import translate_path
 
 from resources.libs import Gismeteo, GismeteoError, Location, Weather, WebClientError
-from simpleplugin import translate_path
 
 weather = Weather()
 _ = weather.initialize_gettext()
@@ -68,8 +68,8 @@ def set_item_info(props, item, item_type, icon='%s.png', day_temp=None):
     if 'FanartCode' in keys:
         props['FanartCode'] = weather_code
 
-    if 'ProviderIcon' in keys\
-        and weather.use_provider_icon:
+    if 'ProviderIcon' in keys \
+            and weather.use_provider_icon:
         props['ProviderIcon'] = 'resource://resource.images.weatherprovidericons.gismeteo/{0}.png'.format(item['icon'])
 
     # Wind
@@ -126,13 +126,17 @@ def set_item_info(props, item, item_type, icon='%s.png', day_temp=None):
         props['FeelsLike'] = weather.TEMP(item['temperature']['comfort']) + weather.TEMPUNIT
 
     if day_temp is not None:
-        if 'TempMorn' in keys:
+        if 'TempMorn' in keys \
+                and day_temp.get('morn') is not None:
             props['TempMorn'] = weather.TEMP(day_temp['morn']) + weather.TEMPUNIT
-        if 'TempDay' in keys:
+        if 'TempDay' in keys \
+                and day_temp.get('day') is not None:
             props['TempDay'] = weather.TEMP(day_temp['day']) + weather.TEMPUNIT
-        if 'TempEve' in keys:
+        if 'TempEve' in keys \
+                and day_temp.get('eve') is not None:
             props['TempEve'] = weather.TEMP(day_temp['eve']) + weather.TEMPUNIT
-        if 'TempNight' in keys:
+        if 'TempNight' in keys \
+                and day_temp.get('night') is not None:
             props['TempNight'] = weather.TEMP(day_temp['night']) + weather.TEMPUNIT
 
     # Humidity
@@ -154,17 +158,18 @@ def set_item_info(props, item, item_type, icon='%s.png', day_temp=None):
 
     if 'Pressure' in keys:
         pressure = item['pressure']['avg'] if item_type == 'day' else item['pressure']
-        props['Pressure'] = '{0} {1}'.format(weather.PRESSURE(pressure), _(weather.PRESUNIT)) if pressure is not None else _('n/a')
+        props['Pressure'] = '{0} {1}'.format(weather.PRESSURE(pressure),
+                                             _(weather.PRESUNIT)) if pressure is not None else _('n/a')
 
     # Precipitation
 
     if 'Precipitation' in keys:
         precip = item['precipitation']['amount']
-        props['Precipitation'] = '{0} {1}'.format(weather.PRECIPITATION(precip), _(weather.PRECIPUNIT)) if precip is not None else _('n/a')
+        props['Precipitation'] = '{0} {1}'.format(weather.PRECIPITATION(precip),
+                                                  _(weather.PRECIPUNIT)) if precip is not None else _('n/a')
 
 
 def clear():
-
     # Current
     weather.set_properties(weather.prop_current(), 'Current')
 
@@ -279,7 +284,7 @@ def set_location_props(forecast_info):
 
                 # Hourly
                 if count_hourly < MAX_HOURLY \
-                  and hour['date']['unix'] >= CURRENT_TIME['unix']:
+                        and hour['date']['unix'] >= CURRENT_TIME['unix']:
                     hourly_props = weather.prop_hourly()
                     set_item_info(hourly_props, hour, 'hour', WEATHER_ICON)
                     weather.set_properties(hourly_props, 'Hourly', count_hourly + 1)
@@ -288,10 +293,10 @@ def set_location_props(forecast_info):
 
                 # 36Hour
                 if count_36hour < MAX_36HOUR \
-                  and hour['tod'] in [2, 3]:
+                        and hour['tod'] in [2, 3]:
                     if hour['tod'] == 2 \
-                      and hour['date']['unix'] >= CURRENT_TIME['unix'] \
-                      or hour['tod'] == 3:
+                            and hour['date']['unix'] >= CURRENT_TIME['unix'] \
+                            or hour['tod'] == 3:
                         _36hour_props = weather.prop_36hour()
                         set_item_info(_36hour_props, hour, 'hour', WEATHER_ICON)
 
@@ -320,7 +325,7 @@ def set_location_props(forecast_info):
 
         # Weekend
         if weather.is_weekend(day) \
-          and count_weekends <= MAX_WEEKENDS:
+                and count_weekends <= MAX_WEEKENDS:
             weekend_props = weather.prop_daily()
             set_item_info(weekend_props, day, 'day', WEATHER_ICON, day_temp)
             weather.set_properties(weekend_props, 'Weekend', count_weekends + 1)
@@ -356,7 +361,6 @@ def set_location_props(forecast_info):
 
 @weather.action('root')
 def forecast(params):
-
     location = get_location(params.id)
     if location.id:
         try:
@@ -406,7 +410,6 @@ def location(params):
 
 @weather.mem_cached(30)
 def _location_forecast(lang, _id):
-
     gismeteo = Gismeteo(lang)
 
     params = {'city_id': _id,
@@ -415,20 +418,18 @@ def _location_forecast(lang, _id):
     return _call_method(gismeteo.forecast, params)
 
 
-
 @weather.mem_cached(10)
 def _ip_locations(lang):
-
     gismeteo = Gismeteo(lang)
 
     return _call_method(gismeteo.cities_ip)
 
-def get_location(loc_id):
 
+def get_location(loc_id):
     use_current_location = weather.get_setting('CurrentLocation')
 
     if loc_id == '1' \
-      and use_current_location:
+            and use_current_location:
         try:
             lang = weather.gismeteo_lang()
             ip_locations = _ip_locations(lang)
@@ -446,7 +447,7 @@ def get_location(loc_id):
         location_id = weather.get_setting('Location{0}ID'.format(int_loc_id))
 
         if not location_id \
-           and int_loc_id != 1:
+                and int_loc_id != 1:
             int_loc_id = 1
 
             location_id = weather.get_setting('Location{0}ID'.format(int_loc_id))
@@ -479,7 +480,6 @@ def _call_method(func, params=None):
 
 
 if __name__ == '__main__':
-
     description = weather.prop_description()
 
     description['Forecast.IsFetched'] = 'true'

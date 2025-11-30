@@ -1,0 +1,13 @@
+v1.0.2
+- Fix for previous, for systems using older Python
+- Add some more helper functions
+
+v1.0.1
+- Updates for Piers and some defensive programming
+
+v1.0.0 
+- Initial release
+
+v0.0.1
+- Alpha pre-release
+

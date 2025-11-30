@@ -1,0 +1,45 @@
+/*
+This is used to tell the addon to not use the HTTP handler for certain paths.
+The paths are mapped by comparing the file path of a media item with the right-hand-side and then
+replaced with the corresponding left-hand-side.
+
+e.g.
+file path in Plex Server: "/library/path/on/server/data/movies/thisisfun.mkv"
+       left-hand-side            right-hand-side
+"smb://serverip/movies": "/library/path/on/server/data/movies",
+
+or, if all of your libraries are based on the same folder:
+"smb://serverip/data": "/library/path/on/server/data",
+
+To find out how your Plex Server sees the paths of your media items, visit Plex Web, click the three dots on an item,
+"Get Info", "View XML", then take note of the file="..." attribute of the <Part /> element.
+
+Let's say you have a common Movie library path of "/mnt/data/movies" and you've exposed that path via SMB/Samba to the
+share "Movies", you'd do the following ([:port] is optional for SMB):
+- Go to the Kodi file manager and add a new source
+- Add a source with "smb://serverip[:port]/Movies"
+- Copy this file to "userdata/addon_data/script.plexmod/path_mapping.json"
+- Fill in your servername (the name of the server in Plex) in place of your_server_name below
+- Add "smb://serverip[:port]/Movies": "/mnt/data/Movies" below "// add your own mounts here" below
+
+You can leave the examples in there, they don't matter (you can delete them if you want).
+
+Note: For paths containing backslashes ("\"), you need to escape them here, so "\\asdf\bla" becomes "\\\\asdf\\bla".
+
+This is not limited to SMB, though. You can add NFS, local mounts, webdav, whatever, (even http(s):// if you'd like)
+as long as the current video file path starts with the right-hand-side of the mapping, and the left hand side exists
+(you can disable the existence-checks in the addon settings), it will be replaced with the left-hand-side of it.
+*/
+{
+  "your_server_name": {
+    // add your own mounts here
+
+    // standard SMB mounts in Kodi
+    "smb://serverip/mountname": "/library/path/on/server",
+    "smb://serverip/mountname2": "/library2/path/on/server",
+    // NVIDIA SHIELD direct mount
+    "/storage/SERVERNAME/this_is_a_SHIELD_mountpoint": "/library3/path/on/server",
+    // Plex Server running on Windows using network shares for libraries
+    "smb://serverip/share": "\\\\some_server_or_ip\\share"
+  }
+}

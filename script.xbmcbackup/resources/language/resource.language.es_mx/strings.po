@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2021-12-11 22:13+0000\n"
 "Last-Translator: Edson Armando <edsonarmando78@outlook.com>\n"
@@ -622,6 +622,14 @@ msgstr "Ejecutar respaldo diariamente, semanalmente, mensualmente o en programac
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
 msgstr "El respaldo ha iniciado en modo desconocido"
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
+msgstr ""
 
 #~ msgctxt "#30045"
 #~ msgid "Error: Remote path doesn't exist"

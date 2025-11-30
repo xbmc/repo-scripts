@@ -74,6 +74,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.logoutcounter = 0
         self.switch = 0
         self.iconswitch = 0
+        self.turnedoff = 0
+        self.ceccounter = 0
         self.movementtype = int(Addon.getSetting('movementtype'))
         self.movementspeed = int(Addon.getSetting('movementspeed'))
         self.stayinplace = int(Addon.getSetting('stayinplace'))
@@ -134,6 +136,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.logout = Addon.getSetting('logout')
         self.logoutplaying = Addon.getSetting('logoutplaying')
         self.logouttime = int(Addon.getSetting('logouttime'))
+        self.cecoff = Addon.getSetting('cecoff')
+        self.cecoffplaying = Addon.getSetting('cecoffplaying')
+        self.cecofftime = int(Addon.getSetting('cecofftime'))
         self.rss = Addon.getSetting('rss')
         self.monitor = xbmc.Monitor()
 
@@ -335,8 +340,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.icon_control.setImage(os.path.join(path,"resources/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
 
 		#setting up the time format
-        self.timeformat = ['%H','%I','%I','%#I','%#I','%-I','%-I']
-        if self.timef == '2' or self.timef == '4' or self.timef == '6':
+        self.timeformat = ['%H','%I','%I','%#H','%#I','%#I','%-H','%-I','%-I']
+        if self.timef == '2' or self.timef == '5' or self.timef == '8':
            self.ampm_control.setVisible(True)
         self.time = self.timeformat[int(self.timef)]
 
@@ -450,18 +455,25 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             if self.logout == 'true' and xbmc.getCondVisibility('Window.Previous(loginscreen)') == 0:
                 self.logoutcounter +=1
                 if self.logoutcounter >= (self.multiplier*self.logouttime*60):
-                    if xbmc.getCondVisibility('Player.HasMedia') == 1:
-                        if self.logoutplaying == 'true':
-                            xbmc.executebuiltin("PlayerControl(Stop)")
-                            xbmc.log('Digital Clock Screensaver %s: Stopping media' %Addonversion)
-                            xbmc.executebuiltin("System.LogOff")
-                            xbmc.log('Digital Clock Screensaver %s: Logging out' %Addonversion)
-                            self.logoutcounter = 0
-                    else:
-                        xbmc.executebuiltin("System.LogOff")
-                        xbmc.log('Digital Clock Screensaver %s: Logging out' %Addonversion)
-                        self.logoutcounter = 0
-          
+                    if self.logoutplaying == 'true' and xbmc.getCondVisibility('Player.HasMedia') == 1:
+                        xbmc.executebuiltin("PlayerControl(Stop)")
+                        xbmc.log('Digital Clock Screensaver %s: Stopping media' %Addonversion)
+                    xbmc.executebuiltin("System.LogOff")
+                    xbmc.log('Digital Clock Screensaver %s: Logging out' %Addonversion)
+                    self.logoutcounter = 0
+
+			#Turn off screen via CEC
+            if self.cecoff == 'true' and self.turnedoff == 0:
+                self.ceccounter +=1
+                if self.ceccounter >= (self.multiplier*self.cecofftime*60):
+                    if self.cecoffplaying == 'true' and xbmc.getCondVisibility('Player.HasMedia') == 1:
+                        xbmc.executebuiltin("PlayerControl(Stop)")
+                        xbmc.log('Digital Clock Screensaver %s: Stopping media' %Addonversion)
+                    xbmc.executebuiltin("CECStandby")
+                    xbmc.log('Digital Clock Screensaver %s: Turning screen off via CEC' %Addonversion)
+                    self.ceccounter = 0
+                    self.turnedoff = 1
+
             self.monitor.waitForAbort(self.waittimer)
 
     def setCTR(self):
@@ -506,7 +518,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.shadowcolor = self.rtr + self.shadowcolor[2:]
 
     def Display(self):
-        self.hour_control.setLabel(datetime.now().strftime(self.time))
+        if int(self.timef) == 4 or int(self.timef) == 5 or int(self.timef) == 7 or int(self.timef) == 8 or ((int(self.timef) == 3 or int(self.timef) == 6) and int(datetime.now().strftime(self.time))<10):
+            self.hour_control.setLabel('  ' + datetime.now().strftime(self.time))
+        else:
+            self.hour_control.setLabel(datetime.now().strftime(self.time))
         self.colon_control.setLabel(" : ")
         self.minute_control.setLabel(datetime.now().strftime("%M"))
         self.ampm_control.setLabel(datetime.now().strftime("%p"))

@@ -1,0 +1,372 @@
+# Македонски
+
+msgid ""
+msgstr ""
+
+msgctxt "#32001"
+msgid "Cache is not available"
+msgstr "Кешот не е достапен"
+
+msgctxt "#32002"
+msgid "Your Titlovi.com username or password is empty or not valid!"
+msgstr "Вашето Titlovi.com корисничко име или лозинка се празни или невалидни!"
+
+msgctxt "#32003"
+msgid "Unknown action"
+msgstr "Непозната акција"
+
+msgctxt "#32004"
+msgid "Invalid server response"
+msgstr "Невалиден одговор од серверот"
+
+msgctxt "#32005"
+msgid "Unauthorized, please check your login information!"
+msgstr "Не сте авторизирани, ве молиме проверете ги вашите податоци за најава!"
+
+msgctxt "#32006"
+msgid "Server error"
+msgstr "Грешка на серверот"
+
+msgctxt "#32007"
+msgid "Connection error"
+msgstr "Грешка при поврзување"
+
+msgctxt "#32008"
+msgid "Please enter search text..."
+msgstr "Внесете текст за пребарување..."
+
+msgctxt "#32009"
+msgid "Login required or session expired"
+msgstr "Потребна е најава или сесијата е истечена"
+
+msgctxt "#32011"
+msgid "Latin/Cyrillic conversion failed, using original subtitle"
+msgstr "Конверзијата на латиница/кирилица не успеа, се користи оригиналниот превод"
+
+msgctxt "#32012"
+msgid "Choose subtitle file"
+msgstr "Изберете датотека со превод"
+
+msgctxt "#32013"
+msgid "Subtitle download failed"
+msgstr "Преземањето на преводот не успеа"
+
+msgctxt "#32014"
+msgid "Subtitle download timed out"
+msgstr "Истече времето за преземање на преводот"
+
+msgctxt "#32015"
+msgid "ZIP archive contains no valid subtitles"
+msgstr "ZIP архивата не содржи валидни преводи"
+
+msgctxt "#32016"
+msgid "Error writing extracted subtitles"
+msgstr "Грешка при запишување на распакуваните преводи"
+
+msgctxt "#32017"
+msgid "Downloaded file is not a valid ZIP archive"
+msgstr "Преземената датотека не е валидна ZIP архива"
+
+msgctxt "#32018"
+msgid "Error processing downloaded subtitle"
+msgstr "Грешка при обработка на преземениот превод"
+
+msgctxt "#32019"
+msgid "Error: No subtitles found in cache"
+msgstr "Грешка: Нема преводи во кешот"
+
+msgctxt "#32020"
+msgid "Server connection timed out"
+msgstr "Времето за поврзување со серверот истече"
+
+msgctxt "#32021"
+msgid "[CR][B][COLOR blue]{}[/COLOR][/B], it seems your API access is disabled.[CR][CR]For more information, please visit [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+msgstr "[CR][B][COLOR blue]{}[/COLOR][/B], изгледа дека вашиот АПИ пристап е оневозможен.[CR][CR]За повеќе информации, посетете ја [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+
+msgctxt "#32022"
+msgid "Titlovi.com API Access Required"
+msgstr "Потребен е АПИ пристап за Titlovi.com"
+
+msgctxt "#32030"
+msgid "Cache status unavailable"
+msgstr "Статусот на кешот е недостапен"
+
+msgctxt "#32031"
+msgid "Cache directory missing"
+msgstr "Директориумот за кеш недостасува"
+
+msgctxt "#32032"
+msgid "Error calculating status"
+msgstr "Грешка при пресметување на статусот"
+
+msgctxt "#32033"
+msgid "release subtitles"
+msgstr "преводи на изданието"
+
+msgctxt "#32035"
+msgid "Addon settings have been reset"
+msgstr "Поставките на додатокот се ресетирани"
+
+msgctxt "#32036"
+msgid "Subtitle disk cache has been deleted"
+msgstr "Кешот со преводи од дискот е избришан"
+
+msgctxt "#32037"
+msgid "Subtitle database cache has been deleted"
+msgstr "Кешот со податоци (најава/пребарување) е избришан"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "Сметка"
+
+msgctxt "#32101"
+msgid "Login Details"
+msgstr "Податоци за најава"
+
+msgctxt "#32102"
+msgid "Username"
+msgstr "Корисничко име"
+
+msgctxt "#32103"
+msgid "Enter your titlovi.com username."
+msgstr "Внесете го вашето titlovi.com корисничко име."
+
+msgctxt "#32104"
+msgid "Password"
+msgstr "Лозинка"
+
+msgctxt "#32105"
+msgid "Enter your titlovi.com password."
+msgstr "Внесете ја вашата titlovi.com лозинка."
+
+msgctxt "#32110"
+msgid "API access must be enabled to use the service."
+msgstr "АПИ пристапот мора да биде овозможен за користење на услугата."
+
+msgctxt "#32111"
+msgid "More info at [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+msgstr "Повеќе информации на [B][COLOR yellow]titlovi.com/donacije[/COLOR][/B]."
+
+msgctxt "#32200"
+msgid "General"
+msgstr "Општо"
+
+msgctxt "#32201"
+msgid "Subtitle Languages"
+msgstr "Јазици на преводи"
+
+msgctxt "#32202"
+msgid "Use addon language settings (ignore Kodi)"
+msgstr "Користи јазични поставки на додатокот (игнорирај Kodi)"
+
+msgctxt "#32203"
+msgid "Enable this to select preferred languages below. If disabled, languages configured in Kodi system settings will be used."
+msgstr "Овозможете го ова за да ги изберете претпочитаните јазици подолу. Ако е оневозможено, ќе се користат јазиците конфигурирани во системските поставки на Kodi."
+
+msgctxt "#32210"
+msgid "English"
+msgstr "Англиски"
+
+msgctxt "#32211"
+msgid "Serbian (Latin)"
+msgstr "Српски (латиница)"
+
+msgctxt "#32212"
+msgid "Serbian (Cyrillic)"
+msgstr "Српски (кирилица)"
+
+msgctxt "#32213"
+msgid "Croatian"
+msgstr "Хрватски"
+
+msgctxt "#32214"
+msgid "Bosnian"
+msgstr "Босански"
+
+msgctxt "#32215"
+msgid "Slovenian"
+msgstr "Словенечки"
+
+msgctxt "#32216"
+msgid "Macedonian"
+msgstr "Македонски"
+
+msgctxt "#32220"
+msgid "Request Timeout (seconds)"
+msgstr "Време на чекање за барање (секунди)"
+
+msgctxt "#32221"
+msgid "Maximum time to wait for a response from the server."
+msgstr "Максимално време за чекање на одговор од серверот."
+
+msgctxt "#32222"
+msgid "Subtitle Dialog Delay (seconds)"
+msgstr "Кашнење на дијалогот со преводи (секунди)"
+
+msgctxt "#32223"
+msgid "Delay before showing subtitle results. Increase if the dialog sometimes gets stuck without displaying results."
+msgstr "Кашнење пред прикажување на резултатите од преводите. Зголемете ако понекогаш дијалогот се заглавува без да ги прикаже резултатите."
+
+msgctxt "#32224"
+msgid "Results Limit"
+msgstr "Ограничување на резултати"
+
+msgctxt "#32225"
+msgid "Maximum number of results per API request (maximum is currently fixed)."
+msgstr "Максимален број на резултати по API барање (во моментов е фиксна вредност)."
+
+msgctxt "#32300"
+msgid "Features"
+msgstr "Функции"
+
+msgctxt "#32301"
+msgid "Subtitle Conversion"
+msgstr "Конверзија на преводи"
+
+msgctxt "#32302"
+msgid "Convert latin/cyrillic alphabet"
+msgstr "Конвертирај латинично/кирилично писмо"
+
+msgctxt "#32303"
+msgid "Automatically convert between Serbian Latin and Cyrillic subtitles when needed, except for English subtitles."
+msgstr "Автоматски конвертирај помеѓу српски латинични и кирилични преводи по потреба, освен за англиските преводи."
+
+msgctxt "#32304"
+msgid "Don't convert"
+msgstr "Не конвертирај"
+
+msgctxt "#32305"
+msgid "Convert latin to cyrillic"
+msgstr "Конвертирај латиница во кирилица"
+
+msgctxt "#32306"
+msgid "Convert cyrillic to latin"
+msgstr "Конвертирај кирилица во латиница"
+
+msgctxt "#32310"
+msgid "Search Options"
+msgstr "Опции за пребарување"
+
+msgctxt "#32311"
+msgid "Search results are sorted by:"
+msgstr "Резултатите од пребарувањето се подредени по:"
+
+msgctxt "#32312"
+msgid "Results are initially sorted by Type, then Title, and Year. The chosen sorting option is applied on top of this default order."
+msgstr "Резултатите се прво сортирани по тип, потоа по наслов и година. Избраната опција за сортирање се применува врз овој основен редослед."
+
+msgctxt "#32313"
+msgid "Subtitle upload date"
+msgstr "Датум на додавање на преводот"
+
+msgctxt "#32314"
+msgid "Language"
+msgstr "Јазик"
+
+msgctxt "#32315"
+msgid "Download count"
+msgstr "Број на преземања"
+
+msgctxt "#32316"
+msgid "Rating"
+msgstr "Оцена"
+
+msgctxt "#32318"
+msgid "Sort series (Season/Episode desc, Season Packs last)"
+msgstr "Подреди серии (Сезона/Епизода опаѓачки, Пакети сезони на крај)"
+
+msgctxt "#32319"
+msgid "For TV series, this overrides other sorts: orders by Season (newest) & Episode (highest). Season packs follow their season; Specials/Pilots are last."
+msgstr "За ТВ серии, ова ги заменува другите начини на подредување: подредува по Сезона (најнова прво) и Епизода (најголем број прво). Пакетите сезони ги следат епизодите од својата сезона; Специјалните/Пилот епизодите се последни."
+
+msgctxt "#32320"
+msgid "Search using IMDb ID (if available)"
+msgstr "Пребарај користејќи IMDb ID (ако е достапно)"
+
+msgctxt "#32321"
+msgid "When enabled and an IMDb ID is found, it will be used as the primary search parameter, potentially ignoring title/year."
+msgstr "Кога е овозможено и IMDb ID е пронајден, ќе се користи како примарен параметар за пребарување, потенцијално игнорирајќи го насловот/годината."
+
+msgctxt "#32322"
+msgid "Include type in search (Movie/Series detection)"
+msgstr "Вклучи тип во пребарувањето (детекција Филм/Серија)"
+
+msgctxt "#32323"
+msgid "Attempts to detect if the item is a Movie or TV Series to refine search results, but has no effect if an IMDb ID is found."
+msgstr "Се обидува да детектира дали ставката е филм или ТВ серија за да ги подобри резултатите од пребарувањето, но нема ефект доколку IMDb ID е пронајден."
+
+msgctxt "#32324"
+msgid "Include release year in search"
+msgstr "Вклучи година на издавање во пребарувањето"
+
+msgctxt "#32325"
+msgid "Improves accuracy for movies, may affect series results and can sometimes be incorrect, but has no effect if an IMDb ID is found."
+msgstr "Го подобрува прецизноста за филмови, може да влијае на резултатите за серии и понекогаш да биде неточно, но нема ефект ако се најде IMDb ID."
+
+msgctxt "#32326"
+msgid "For series, include Pilot episodes"
+msgstr "За серии, вклучи Пилот епизоди"
+
+msgctxt "#32327"
+msgid "For series, include Special episodes"
+msgstr "За серии, вклучи Специјални епизоди"
+
+msgctxt "#32400"
+msgid "Tools"
+msgstr "Алатки"
+
+msgctxt "#32401"
+msgid "Cache"
+msgstr "Кеш"
+
+msgctxt "#32402"
+msgid "Disk Cache Size:"
+msgstr "Големина на кешот на дискот:"
+
+msgctxt "#32403"
+msgid "Information about the current disk cache status."
+msgstr "Информации за моменталниот статус на кешот на дискот."
+
+msgctxt "#32420"
+msgid "Profile Path:"
+msgstr "Патека на профилот:"
+
+msgctxt "#32404"
+msgid "[COLOR yellow]Reset Addon Settings to Default[/COLOR]"
+msgstr "[COLOR yellow]Ресетирај ги поставките на додатокот на основните вредности[/COLOR]"
+
+msgctxt "#32405"
+msgid "WARNING: Resets all addon settings to their default values."
+msgstr "ПРЕДУПРЕДУВАЊЕ: Ги ресетира сите поставки на додатокот на нивните основни вредности."
+
+msgctxt "#32406"
+msgid "[COLOR orange]Delete Subtitle Disk Cache[/COLOR]"
+msgstr "[COLOR orange]Избриши го кешот со преводи од дискот[/COLOR]"
+
+msgctxt "#32407"
+msgid "Deletes downloaded subtitle files stored by addon."
+msgstr "Ги брише преземените датотеки со преводи зачувани од додатокот."
+
+msgctxt "#32408"
+msgid "[COLOR orange]Delete file DB Cache[/COLOR]"
+msgstr "[COLOR orange]Избриши го кешот со податоци (најава/пребарување)[/COLOR]"
+
+msgctxt "#32409"
+msgid "Deletes the cached login and search data."
+msgstr "Ги брише кешираните податоци за најава и пребарување."
+
+msgctxt "#32410"
+msgid "Developer"
+msgstr "За програмери"
+
+msgctxt "#32411"
+msgid "Enable Debug Logging"
+msgstr "Овозможи Debug евиденција"
+
+msgctxt "#32412"
+msgid "Enable verbose logging to see errors and debug information in Kodi log."
+msgstr "Овозможи детална евиденција за да ги видите грешките и debug информациите во Kodi дневникот (логот)."
+
+msgctxt "#32421"
+msgid "Log File:"
+msgstr "Лог датотека:"

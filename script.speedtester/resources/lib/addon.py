@@ -573,7 +573,7 @@ class SpeedTest(Animation):
             self.img_progress.setVisible(True)
             img_progressx = int((self.screenx / 3) - (200 / 2))
             img_progressy = int((self.screeny / 3) - (50 / 2) + 270)
-            self.please_wait_textbox = ControlLabel(img_progressx, img_progressy, 200, 50, label='Please wait...',
+            self.please_wait_textbox = ControlLabel(img_progressx, img_progressy, 200, 50, label=localize(30952),
                                                     textColor='0xFFFFFFFF', alignment=2 | 4)
             self.addControl(self.please_wait_textbox)
         elif function == 'visible':
@@ -735,7 +735,7 @@ class SpeedTest(Animation):
             speed_dl = 0
             while len(finished) < total_files:
                 thread = queue.get(True)
-                while thread.isAlive():
+                while thread.is_alive():
                     thread.join(timeout=0.1)
                 finished.append(sum(thread.result))
                 speed_f = ((sum(finished) / (timeit.default_timer() - start)) / 1000 / 1000) * 8
@@ -749,9 +749,9 @@ class SpeedTest(Animation):
         start = timeit.default_timer()
         prod_thread.start()
         cons_thread.start()
-        while prod_thread.isAlive():
+        while prod_thread.is_alive():
             prod_thread.join(timeout=0.1)
-        while cons_thread.isAlive():
+        while cons_thread.is_alive():
             cons_thread.join(timeout=0.1)
         return sum(finished) / (timeit.default_timer() - start)
 
@@ -772,7 +772,7 @@ class SpeedTest(Animation):
             speed_dl = 0
             while len(finished) < total_sizes:
                 thread = queue.get(True)
-                while thread.isAlive():
+                while thread.is_alive():
                     thread.join(timeout=0.1)
                 finished.append(thread.result)
                 speed_f = ((sum(finished) / (timeit.default_timer() - start)) / 1000 / 1000) * 8
@@ -786,9 +786,9 @@ class SpeedTest(Animation):
         start = timeit.default_timer()
         prod_thread.start()
         cons_thread.start()
-        while prod_thread.isAlive():
+        while prod_thread.is_alive():
             prod_thread.join(timeout=0.1)
-        while cons_thread.isAlive():
+        while cons_thread.is_alive():
             cons_thread.join(timeout=0.1)
         return sum(finished) / (timeit.default_timer() - start)
 

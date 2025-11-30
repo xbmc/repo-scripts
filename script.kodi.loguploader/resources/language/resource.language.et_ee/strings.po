@@ -1,0 +1,126 @@
+# Kodi Media Center language file
+# Addon Name: Kodi Logfile Uploader
+# Addon id: script.kodi.loguploader
+# Addon Provider: Team Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi add-ons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-06-16 08:42+0000\n"
+"Last-Translator: rimasx <riks_12@hot.ee>\n"
+"Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-kodi-loguploader/et_ee/>\n"
+"Language: et_ee\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+msgctxt "Addon Summary"
+msgid "Uploads your kodi.log file."
+msgstr "Laadib üles kodi.log faili."
+
+msgctxt "Addon Description"
+msgid "Uploads your kodi.log file and returns an url you can post on http://forum.kodi.tv/"
+msgstr "Laadib üles faili kodi.log ja annab URL-i, mille saad postitada saidile http://forum.kodi.tv/"
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr "See fail on tühi"
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr "Faili lugemine nurjus"
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr "Ühendumine serveriga nurjus"
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr "URL-i vastuvõtmine nurjus"
+
+msgctxt "#32005"
+msgid "This file is too large. Max size is 2MB."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi forum: %s"
+msgstr "Postita see URL või skaneeri oma %s QR-kood koos probleemi kirjeldusega Kodi foorumisse: %s"
+
+msgctxt "#32007"
+msgid "Error posting the logfile."
+msgstr "Viga logifaili postitamisel."
+
+msgctxt "#32011"
+msgid "Error posting the kodi.log file"
+msgstr "Viga kodi.log faili postitamisel"
+
+msgctxt "#32012"
+msgid "Error posting the old log file"
+msgstr "Viga vana logifaili postitamisel"
+
+msgctxt "#32013"
+msgid "Error posting the crashlog file"
+msgstr "Viga krahhi logifaili postitamisel"
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr "Vana logifaili ei leitud"
+
+msgctxt "#32022"
+msgid "No crashlog file found"
+msgstr "Krahhi logifaili faili ei leitud"
+
+msgctxt "#32023"
+msgid "Windows crashlogs are not supported, please disable this option in the addon settings"
+msgstr "Windowsi krahhiloge ei toetata, palun keela see valik lisaseadetes"
+
+msgctxt "#32024"
+msgid "Android crashlogs are not supported, please disable this option in the addon settings"
+msgstr "Androidi krahhi logifaile ei toetata, palun keela see valik lisaseadetes"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr "logifail"
+
+msgctxt "#32032"
+msgid "old log"
+msgstr "vana logifail"
+
+msgctxt "#32033"
+msgid "crashlog"
+msgstr "krahhi logifail"
+
+msgctxt "#32040"
+msgid "Do you want to view your %s or upload it to http://paste.kodi.tv/?"
+msgstr "Kas soovid vaadata oma %s või laadida selle üles aadressile http://paste.kodi.tv/?"
+
+msgctxt "#32041"
+msgid "view"
+msgstr "vaata"
+
+msgctxt "#32042"
+msgid "upload"
+msgstr "laadi üles"
+
+msgctxt "#32501"
+msgid "Advanced options"
+msgstr "Lisaseaded"
+
+msgctxt "#32502"
+msgid "Additional logfiles to post"
+msgstr "Veel logifaile üleslaadimiseks"
+
+msgctxt "#32503"
+msgid "Post the old logfile, from the last time Kodi ran"
+msgstr "Postita vana logifail viimasest Kodi käivitusest"
+
+msgctxt "#32504"
+msgid "Post the crashlog (available on linux/osx/ios only)"
+msgstr "Postita krahhi logifail (saadaval ainult linux/osx/ios puhul)"
+
+#~ msgctxt "#32005"
+#~ msgid "This file is too large. Max size is 1MB."
+#~ msgstr "See fail on liiga suur. Maksimaalne suurus on 1 MB."

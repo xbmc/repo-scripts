@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-01-09 15:13+0000\n"
+"PO-Revision-Date: 2023-02-27 18:15+0000\n"
 "Last-Translator: rimasx <riks_12@hot.ee>\n"
 "Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/et_ee/>\n"
 "Language: et_ee\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
@@ -104,7 +104,7 @@ msgstr "Dropbox võti"
 
 msgctxt "#30029"
 msgid "Dropbox Secret"
-msgstr ""
+msgstr "Dropboxi salavõti"
 
 msgctxt "#30030"
 msgid "User Addons"
@@ -208,7 +208,7 @@ msgstr "Varukoopia eemaldamine"
 
 msgctxt "#30056"
 msgid "Scan or click this URL to authorize, click OK AFTER completion"
-msgstr ""
+msgstr "Skaneeri või klõpsa seda URL-i autoriseerimiseks, pärast lõpetamist klõpsa OK"
 
 msgctxt "#30057"
 msgid "Click OK AFTER completion"
@@ -508,7 +508,7 @@ msgstr "Juurkausta ei saa muuta"
 
 msgctxt "#30131"
 msgid "Choose Sets to Restore"
-msgstr ""
+msgstr "Vali taastatavad seadistused"
 
 msgctxt "#30132"
 msgid "Version 1.5.0 requires you to setup your file selections again - this is a breaking change"
@@ -608,7 +608,7 @@ msgstr "Lisab logifaili täiendavat teavet"
 
 msgctxt "#30156"
 msgid "Must save key/secret first, then return to settings to authorize"
-msgstr ""
+msgstr "Esmalt tuleb võti/saladus salvestada ja seejärel volitamiseks naasta seadete juurde"
 
 msgctxt "#30157"
 msgid "Simple uses pre-defined folder locations, use Advanced Editor to define custom paths"
@@ -621,3 +621,11 @@ msgstr "Varunda üks kord päevas, nädalas, kuus või kohandatud ajakava alusel
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
 msgstr "Varundamine algas tundmatus režiimis"
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
+msgstr ""

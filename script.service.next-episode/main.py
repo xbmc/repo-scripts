@@ -1,13 +1,26 @@
-# coding: utf-8
-# Author: Roman Miroshnychenko aka Roman V.M.
-# E-mail: romanvm@yandex.ua
-# License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
+# (c) Roman Miroshnychenko, 2023
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
+import logging
 import sys
+
 import pyxbmct
-from libs.exception_logger import log_exception
+
+from libs.exception_logger import catch_exception
 from libs.gui import NextEpDialog, ui_string
+from libs.logger import initialize_logging
 from libs.utils import sync_library, login
 
 
@@ -40,7 +53,8 @@ class MainDialog(NextEpDialog):
 
 
 if __name__ == '__main__':
-    with log_exception():
+    initialize_logging()
+    with catch_exception(logging.error):
         if 'sync_library' in sys.argv:
             sync_library()
         elif 'login' in sys.argv:

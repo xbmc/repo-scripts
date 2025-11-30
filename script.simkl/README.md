@@ -17,18 +17,8 @@
 ## TODO:
 - [x] Make it work on Android
 
-## Help Translate:
-You can use Crowdin [https://crowdin.com/project/Kodi-add-on-for-Simkl](https://crowdin.com/project/Kodi-add-on-for-Simkl) to help translate this add-on into your language.
-
-## Donations:
-It would be very nice if you invite me for a cup of coffee:
-
-Bitcoin address: 1PcbSQrBddJszsTiRhqHyLntp7Lxfuyaio
-
-Thanks, you can write me an e-mail to david@ddavo.me with your receipt, and I'll send you a photo drinking the cup of coffee you invited me to.
-
 ## Join the conversation:
-- Discuss on Discord https://discord.gg/JRtwsfG
+- Discuss on Discord [https://discord.gg/u89XfYn](https://discord.gg/u89XfYn)
 - Post bugs, feature requests on Github https://github.com/SIMKL/script.simkl/issues
 
 [license]: https://github.com/SIMKL/script.simkl/blob/master/LICENSE.txt

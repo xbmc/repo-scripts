@@ -1,5 +1,8 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
+
+from __future__ import annotations
+
 import datetime
 import hashlib
 import json
@@ -24,7 +27,16 @@ import xbmcvfs
 from resources.kutil131 import addon
 
 
-def youtube_info_by_id(youtube_id):
+def youtube_info_by_id(youtube_id) -> tuple:
+    """Gets youtube video info from YDSStreamExtractor
+    Currently inop due to YDSStreamextractor not maintained.
+
+    Args:
+        youtube_id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     #vid = get_youtube_info(youtube_id)
     vid = None #added
     if not vid:
@@ -164,14 +176,14 @@ def get_skin_string(name):
     """
     get String with name *name
     """
-    return xbmc.getInfoLabel("Skin.String(%s)" % name)
+    return xbmc.getInfoLabel(f"Skin.String({name})")
 
 
 def set_skin_string(name, value):
     """
     Set String *name to value *value
     """
-    xbmc.executebuiltin("Skin.SetString(%s, %s)" % (name, value))
+    xbmc.executebuiltin(f"Skin.SetString({name}, {value})")
 
 
 def run_async(func):
@@ -189,9 +201,14 @@ def run_async(func):
     return async_func
 
 
-def contextmenu(options):
-    """
-    pass list of tuples (index, label), get index
+def contextmenu(options:list[tuple]) -> str:
+    """pass list of tuples (index, label), get index
+
+    Args:
+        options (list[tuple]): the context menu items with display text
+
+    Returns:
+        str: the selected option  or None if nothing selected
     """
     index = xbmcgui.Dialog().contextmenu(list=[i[1] for i in options])
     if index > -1:
@@ -222,14 +239,14 @@ def extract_youtube_id(raw_string):
 #     YDStreamExtractor.handleDownload(vid)
 
 
-def notify(header="", message="", icon=addon.ICON, time=5000, sound=True):
+def notify(header="", message="", icon=addon.ICON, ntime=5000, sound=True):
     """
     show kodi notification dialog
     """
     xbmcgui.Dialog().notification(heading=header,
                                   message=message,
                                   icon=icon,
-                                  time=time,
+                                  time=ntime,
                                   sound=sound)
 
 
@@ -256,19 +273,19 @@ def get_year(year_string):
     return year_string[:4] if year_string else ""
 
 
-def format_time(time:int, time_format=None):
+def format_time(ftime:int, time_format=None):
     """
     get formatted time
     time (int): duration in secs
     time_format = h, m or None
     """
     try:
-        intTime = int(time)
+        intTime = int(ftime)
     except Exception:
-        return time
+        return ftime
     #hour = str(intTime / 60)
     #minute = str(intTime % 60).zfill(2)
-    minute, second = divmod(time, 60)
+    minute, second = divmod(ftime, 60)
     hour, minute = divmod(minute, 60)
     if time_format == "h":
         return str(hour)
@@ -358,56 +375,75 @@ def calculate_age(born, died=False):
     else:
         return ""
     actor_born = born.split("-")
-    base_age = int(ref_day[0]) - int(actor_born[0])
+    try:
+        base_age = int(ref_day[0]) - int(actor_born[0])
+    except ValueError as err:
+        log(f'utils.calculate_age fail for actor_born {actor_born} with error {err}')
+        return ""
     if len(actor_born) > 1:
         diff_months = int(ref_day[1]) - int(actor_born[1])
         diff_days = int(ref_day[2]) - int(actor_born[2])
         if diff_months < 0 or (diff_months == 0 and diff_days < 0):
             base_age -= 1
         elif diff_months == 0 and diff_days == 0 and not died:
-            notify("%s (%i)" % (addon.LANG(32158), base_age))
+            notify(f"{addon.LANG(32158)} ({base_age})")
     return base_age
 
 
 def get_http(url, headers=False):
     """
-    fetches data from *url, returns it as a string
+    fetches data from *url as http GET, returns it as a string
     """
     succeed = 0
     if not headers:
-        headers = {'User-agent': 'Kodi/17.0 ( fbacher@kodi.tv )'}
+        headers = {'User-agent': 'Kodi/19.0 ( fbacher@kodi.tv )'}
     while (succeed < 2) and (not xbmc.Monitor().abortRequested()):
         try:
-            request = requests.get(url, headers=headers)
+            request = requests.get(url, headers=headers, timeout=10)
             return request.text
-        except Exception as err:
+        except requests.exceptions.RequestException as err:
             log(f"get_http: could not get data from {url} exception {err}")
             xbmc.sleep(1000)
             succeed += 1
     return None
 
 
-def post(url, values, headers):
+def post(url:str, values:dict, headers:str) -> dict:
+    """retuns answer to post request  {'success' : True} if succeeded
+
+    Args:
+        url (str): the api endpoint with query (if any)
+        values (dict): the body content for the post
+        headers (str): the http headers
+
+    Returns:
+        dict: results from server for the post
     """
-    retuns answer to post request
-    """
-    request = requests.post(url=url,
-                            data=json.dumps(values),
-                            headers=headers)
+    try:
+        request = requests.post(url=url,
+                                data=json.dumps(values),
+                                headers=headers,
+                                timeout=10)
+    except requests.exceptions.RequestException as err:
+        log(f"get_http: could not get data from {url} exception {err}")
     return json.loads(request.text)
 
 
-def delete(url, values, headers):
+def delete(url:str, values:dict, headers:str) ->dict:
     """
     returns answer to delete request
     """
-    request = requests.delete(url=url,
-                              data=json.dumps(values),
-                              headers=headers)
+    try:
+        request = requests.delete(url=url,
+                                data=json.dumps(values),
+                                headers=headers,
+                                timeout=10)
+    except requests.exceptions.RequestException as err:
+        log(f"get_http: could not get data from {url} exception {err}")
     return json.loads(request.text)
 
 
-def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> dict:
+def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> list[dict] | dict:
     """gets JSON response for *url, makes use of prop and file cache.
 
     Args:
@@ -417,7 +453,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> di
         headers (bool, optional): headers to use in https request. Defaults to False.
 
     Returns:
-        dict: a deserialized JSON query response or None
+        list[dict]: a deserialized JSON query response or None
     """
     now = time.time()
     hashed_url = hashlib.md5(url.encode("utf-8", "ignore")).hexdigest()
@@ -427,26 +463,36 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> di
         addon.clear_global(hashed_url)
         addon.clear_global(hashed_url + "_timestamp")
     prop_time = addon.get_global(hashed_url + "_timestamp")
+    # get data from home window property
     if prop_time and now - float(prop_time) < cache_seconds:
         try:
             prop = json.loads(addon.get_global(hashed_url))
             if prop:
                 return prop
         except Exception:
-            # utils.log("could not load prop data for %s" % url)
             pass
+    # get data from local disk cache file
     path = os.path.join(cache_path, hashed_url + ".txt")
     if xbmcvfs.exists(path) and ((now - os.path.getmtime(path)) < cache_seconds):
         results = read_from_file(path)
-        # utils.log("loaded file for %s. time: %f" % (url, time.time() - now))
+        #for trakt acticipatedmovies results is list of dict per movie
     else:
+        #log(f'kutil131.utils.get_JSON_response get_http headers {headers}') #debug
+        #  data not cached query online source
         response = get_http(url, headers)
         try:
             results = json.loads(response)
-            # utils.log("download %s. time: %f" % (url, time.time() - now))
-            save_to_file(results, hashed_url, cache_path)
+            if folder == 'TheMovieDB':
+                if ("results" in results):
+                    # utils.log("download %s. time: %f" % (url, time.time() - now))
+                    if (("status_code" in results and results.get("status_code") == 1) or
+                        not ("status_code" in results)):
+                        save_to_file(results, hashed_url, cache_path)
+            else:
+                save_to_file(results, hashed_url, cache_path)
         except Exception as err:
-            log(f"Exception: Could not get new JSON data from {url} with error {err}. Trying to fallback to cache")
+            log(f"kutil131.utils.get_JSON_response Exception: Could not get new JSON data from {url} "
+                f"with error {err}. Trying to fallback to cache")
             #log(f'kutils131.utils.get_JSON_response {response}')
             results = read_from_file(path) if xbmcvfs.exists(path) else []
     if not results:
@@ -456,21 +502,32 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False) -> di
     return results
 
 
-def dict_to_windowprops(data=None, prefix="", window_id=10000):
+def dict_to_windowprops(data:dict=None, prefix="", window_id=10000):
+    """Sets window property keys / values from dict
+
+    Args:
+        data (dict optional):  the data to be set as properties Defaults to None.
+        prefix (str, optional): a prefix for the property key Defaults to "".
+        window_id (int, optional): Kodi window id. Defaults to 10000.
+    """
     window = xbmcgui.Window(window_id)
     if not data:
         return None
     for (key, value) in data.items():
         value = str(value)
-        window.setProperty('%s%s' % (prefix, key), value)
+        window.setProperty(f'{prefix}{key}', value)
 
 
 def get_file(url):
     clean_url = translate_path(urllib.parse.unquote(url)).replace("image://", "")
     clean_url = clean_url.rstrip("/")
     cached_thumb = xbmc.getCacheThumbName(clean_url)
-    vid_cache_file = os.path.join("special://profile/Thumbnails/Video", cached_thumb[0], cached_thumb)
-    cache_file_jpg = os.path.join("special://profile/Thumbnails/", cached_thumb[0], cached_thumb[:-4] + ".jpg").replace("\\", "/")
+    vid_cache_file = os.path.join("special://profile/Thumbnails/Video",
+                                  cached_thumb[0],
+                                  cached_thumb)
+    cache_file_jpg = os.path.join("special://profile/Thumbnails/",
+                                  cached_thumb[0],
+                                  cached_thumb[:-4] + ".jpg").replace("\\", "/")
     cache_file_png = cache_file_jpg[:-4] + ".png"
     if xbmcvfs.exists(cache_file_jpg):
         log("cache_file_jpg Image: " + url + "-->" + cache_file_jpg)
@@ -487,9 +544,9 @@ def get_file(url):
         response = urllib.request.urlopen(request, timeout=3)
         data = response.read()
         response.close()
-        log('image downloaded: ' + clean_url)
+        log(f'image downloaded: {clean_url}')
     except Exception:
-        log('image download failed: ' + clean_url)
+        log(f'image download failed: {clean_url}')
         return ""
     if not data:
         return ""
@@ -499,7 +556,7 @@ def get_file(url):
             f.write(data)
         return translate_path(image)
     except Exception:
-        log('failed to save image ' + url)
+        log(f'failed to save image {url}')
         return ""
 
 
@@ -509,12 +566,12 @@ def fetch_musicbrainz_id(artist, artist_id=-1):
     uses musicbrainz.org
     """
     base_url = "http://musicbrainz.org/ws/2/artist/?fmt=json"
-    url = '&query=artist:%s' % urllib.parse.quote_plus(artist.encode('utf-8'))
+    url = f'&query=artist:{urllib.parse.quote_plus(artist.encode("utf-8"))}'
     results = get_JSON_response(url=base_url + url,
                                 cache_days=30,
                                 folder="MusicBrainz")
     if results and len(results["artists"]) > 0:
-        log("found artist id for %s: %s" % (artist, results["artists"][0]["id"]))
+        #log(f'kutil131.utils.fetch_mbid found artist id for {artist}: {results["artists"][0]["id"]}')
         return results["artists"][0]["id"]
     else:
         return None
@@ -545,7 +602,7 @@ def dict_to_listitems(data=None):
         return []
     itemlist = []
     for (count, result) in enumerate(data):
-        listitem = xbmcgui.ListItem('%s' % (str(count)))
+        listitem = xbmcgui.ListItem(f'{str(count)}')
         for (key, value) in result.items():
             if not value:
                 continue
@@ -562,7 +619,7 @@ def dict_to_listitems(data=None):
     return itemlist
 
 
-def pretty_date(time=False):
+def pretty_date(btime=False):
     """
     Get a datetime object or a int() Epoch timestamp and return a
     pretty string like 'an hour ago', 'Yesterday', '3 months ago',
@@ -570,11 +627,11 @@ def pretty_date(time=False):
     # https://stackoverflow.com/questions/1551382/user-friendly-time-format-in-python
     """
     now = datetime.datetime.now()
-    if type(time) is int:
-        diff = now - datetime.datetime.fromtimestamp(time)
-    elif isinstance(time, datetime.datetime):
-        diff = now - time
-    elif not time:
+    if isinstance(btime, int):
+        diff = now - datetime.datetime.fromtimestamp(btime)
+    elif isinstance(btime, datetime.datetime):
+        diff = now - btime
+    elif not btime:
         diff = now - now
     second_diff = diff.seconds
     day_diff = diff.days

@@ -1,22 +1,54 @@
 # -*- coding: utf-8 -*-
 import ftplib
 import glob
-import os
 import shutil
 import sys
+import os
 import time
+import socket
 import urllib.error
 import urllib.parse
 import urllib.request
 from math import sin, cos, sqrt, atan2, radians
 import xbmc
+import xbmcvfs
 
-# Small hack to allow for unit testing - see common.py for explanation
+# Allow for unit testing this file (remember to install kodistubs!)
+# This brings this addon's resources, and bossanova808 module stuff into scope
+# (when running this module outside Kodi)
 if not xbmc.getUserAgent():
     sys.path.insert(0, '../../..')
+    sys.path.insert(0, '../../../../script.module.bossanova808/resources/lib')
 
+from bossanova808.constants import CWD
+from bossanova808.logger import Logger
 from resources.lib.store import Store
-from resources.lib.common import *
+
+
+def _download_to_path(url, dst_path, timeout=15):
+    """
+    Download from URL to destination path atomically with proper cleanup.
+
+    :param url: URL to download from
+    :param dst_path: Destination file path
+    :param timeout: Request timeout in seconds
+    :raises: urllib.error.URLError, socket.timeout, OSError on failure
+    """
+    tmp_path = dst_path + ".tmp"
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as response:
+            data = response.read()
+        with open(tmp_path, "wb") as fh:
+            fh.write(data)
+        os.replace(tmp_path, dst_path)
+    except (urllib.error.URLError, socket.timeout, OSError):
+        # Clean up any partial file
+        try:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        except OSError:
+            pass
+        raise
 
 
 # noinspection PyPep8Naming
@@ -48,26 +80,13 @@ def closest_radar_to_lat_lon(point):
     closest_distance = 10000
     for radar in Store.BOM_RADAR_LOCATIONS:
         distance = get_distance(point, (radar[0], radar[1]))
-        log(f'Point {point}, radar {radar}, distance {distance}')
+        Logger.debug(f'Point {point}, radar {radar}, distance {distance}')
         if distance < closest_distance:
-            log(f'Setting closest radar to {radar}')
+            Logger.debug(f'Setting closest radar to {radar}')
             closest_radar = radar
             closest_distance = distance
 
     return closest_radar
-
-
-def dump_all_radar_backgrounds(all_backgrounds_path=None):
-    """
-    Remove the entire radar backgrounds folder, so that new ones will be pulled on next weather data refresh
-    """
-    if all_backgrounds_path is None:
-        all_backgrounds_path = xbmcvfs.translatePath(
-            "special://profile/addon_data/weather.ozweather/radarbackgrounds/")
-    if os.path.isdir(all_backgrounds_path):
-        shutil.rmtree(all_backgrounds_path)
-        # Little pause to make sure this is complete before any refresh...
-        time.sleep(0.5)
 
 
 def download_background(radar_code, file_name, path):
@@ -91,42 +110,37 @@ def download_background(radar_code, file_name, path):
         # Append the radar code
         file_name = radar_code + "." + file_name
 
-    # No longer do this - as this trips up the BOMs filter
-    # New approach - if file is missing, then try get it
-    # If it is not missing, don't do anything....but user can purge old/stale files manually in the addon settings
-
-    # # Delete backgrounds older than a week old
-    # if os.path.isfile(backgrounds_path + out_file_name) and ADDON.getSetting('BGDownloadToggle'):
-    #     file_creation = os.path.getmtime(backgrounds_path + out_file_name)
-    #     now = time.time()
-    #     week_ago = now - 7 * 60 * 60 * 24  # Number of seconds in a week
-    #     # log ("file creation: " + str(file_creation) + " week_ago " + str(week_ago))
-    #     if file_creation < week_ago:
-    #         log("Backgrounds stale (> one week) - refreshing - " + out_file_name)
-    #         os.remove(backgrounds_path + out_file_name)
-    #     else:
-    #         log("Using cached background - " + out_file_name)
-
     # Download the backgrounds only if we don't have them yet
-    if not os.path.isfile(path + out_file_name):
+    if not os.path.isfile(os.path.join(path, out_file_name)):
+        Logger.debug(f"Downloading missing background image....[{file_name}] as [{out_file_name}]")
 
-        log("Downloading missing background image....[%s] as [%s]" % (file_name, out_file_name))
+        # Try bundled national background first (if available)
+        if file_name == 'IDR00004.background.png' and CWD:
+            src = os.path.join(CWD, "resources", "IDR00004.background.png")
+            if os.path.isfile(src):
+                Logger.debug("Copying bundled national radar background")
+                try:
+                    shutil.copy(src, os.path.join(path, "background.png"))
+                    return
+                except (OSError, shutil.Error) as e:
+                    Logger.warning(f"Local copy of national radar background failed: {e} — will attempt remote fetch")
 
-        if "background.png" in file_name and '00004' in file_name:
-            url_to_get = Store.BOM_RADAR_BACKGROUND_FTPSTUB + 'IDE00035.background.png'
-        else:
-            url_to_get = Store.BOM_RADAR_BACKGROUND_FTPSTUB + file_name
+        # Fallback: fetch from BOM for all backgrounds (FTP first, then HTTP)
+        ftp_url = Store.BOM_RADAR_BACKGROUND_FTPSTUB + file_name
+        dst = os.path.join(path, out_file_name)
 
         try:
-            radar_image = urllib.request.urlopen(url_to_get)
-            with open(path + "/" + out_file_name, "wb") as fh:
-                fh.write(radar_image.read())
-
-        except Exception as e:
-            log(f"Failed to retrieve radar background image: {url_to_get}, exception: {str(e)}")
+            _download_to_path(ftp_url, dst)
+        except (urllib.error.URLError, socket.timeout, OSError) as e:
+            Logger.warning(f"FTP fetch failed for background {ftp_url}: {e} — trying HTTP")
+            http_url = Store.BOM_RADAR_HTTPSTUB + os.path.basename(ftp_url)
+            try:
+                _download_to_path(http_url, dst)
+            except (urllib.error.URLError, socket.timeout, OSError) as e2:
+                Logger.error(f"Failed to retrieve radar background via FTP and HTTP: {ftp_url} | {http_url}, exception: {e2}")
 
     else:
-        log(f"Using cached {out_file_name}")
+        Logger.debug(f"Using cached {out_file_name}")
 
 
 def prepare_backgrounds(radar_code, path):
@@ -134,7 +148,7 @@ def prepare_backgrounds(radar_code, path):
     Download backgrounds for given radar
     """
 
-    log("Calling prepareBackgrounds on [%s]" % radar_code)
+    Logger.debug("Calling prepareBackgrounds on [%s]" % radar_code)
 
     download_background(radar_code, "IDR.legend.0.png", path)
     download_background(radar_code, "background.png", path)
@@ -160,18 +174,18 @@ def build_images(radar_code, path, loop_path):
     # grab the current time as 12 digit 0 padded string
     time_now = format(int(time.time()), '012d')
 
-    log("build_images(%s)" % radar_code)
-    log("Overlay loop path: " + loop_path)
-    log("Backgrounds path: " + path)
+    Logger.debug("build_images(%s)" % radar_code)
+    Logger.debug("Overlay loop path: " + loop_path)
+    Logger.debug("Backgrounds path: " + path)
 
-    log("Deleting any radar overlays older than an hour, that's long enough to see what has passed plus not take too long to loop")
+    Logger.info("Deleting any radar overlays older than an hour, that's long enough to see what has passed plus not take too long to loop")
     current_files = glob.glob(loop_path + "/*.png")
     for count, file in enumerate(current_files):
         filetime = os.path.getmtime(file)
-        two_hours_ago = time.time() - (1 * 60 * 60)
-        if filetime < two_hours_ago:
+        time_ago = time.time() - (1 * 60 * 60)
+        if filetime < time_ago:
             os.remove(file)
-            log("Deleted aged radar image " + str(os.path.basename(file)))
+            Logger.debug("Deleted aged radar image " + str(os.path.basename(file)))
 
     # rename the currently kept radar backgrounds to prevent Kodi caching from displaying stale images
     current_files = glob.glob(loop_path + "/*.png")
@@ -187,12 +201,12 @@ def build_images(radar_code, path, loop_path):
             try:
                 os.makedirs(path)
                 success = True
-                log("Successfully created " + path)
+                Logger.debug("Successfully created " + path)
             except:
                 attempts += 1
                 time.sleep(0.1)
         if not success:
-            log("ERROR: Failed to create directory for radar background images!")
+            Logger.error("ERROR: Failed to create directory for radar background images!")
             return
 
     # ...and create the folder for the radar loop if it does not yet exist
@@ -204,66 +218,50 @@ def build_images(radar_code, path, loop_path):
             try:
                 os.makedirs(loop_path)
                 success = True
-                log("Successfully created " + loop_path)
+                Logger.debug("Successfully created " + loop_path)
             except:
                 attempts += 1
                 time.sleep(0.1)
         if not success:
-            log("ERROR: Failed to create directory for loop images!")
+            Logger.error("ERROR: Failed to create directory for loop images!")
             return
 
     # If for any reason we're missing any background images, this will go get them...
     prepare_backgrounds(radar_code, path)
 
-    # Ok so we should have the backgrounds...now it is time get the current radar loop
+    # OK so we should have the backgrounds...now it is time get the current radar loop
     # first we retrieve a list of the available files via ftp
 
-    log("Download the radar loop")
-    files = []
+    Logger.debug("Download the radar loop")
 
-    log("Log in to BOM FTP")
-    attempts = 0
-    ftp = None
-
-    # Try up to 3 times, with a seconds pause between each, to connect to BOM FTP
-    # (to try and get past very occasional 'too many users' errors)
-    while not ftp and attempts < 3:
-        # noinspection PyBroadException
+    # Try up to 3 times, with an exponential pause between each, to connect to BOM FTP
+    # (to try and get past _very_ occasional 'too many users' errors)
+    last_err = None
+    for attempt in range(3):
         try:
-            ftp = ftplib.FTP("ftp.bom.gov.au")
-        except:
-            attempts += 1
-            time.sleep(1)
-
-    if not ftp:
-        log("Failed after 3 attempt to connect to BOM FTP - can't update radar loop")
+            with ftplib.FTP("ftp.bom.gov.au", timeout=15) as ftp:
+                ftp.login("anonymous", "anonymous@anonymous.org")
+                ftp.cwd("/anon/gen/radar/")
+                files = ftp.nlst(f"{radar_code}*")
+                files.sort(reverse=True)
+                break
+        except ftplib.all_errors as e:
+            last_err = e
+            # 0.5s, 1s, 2s
+            time.sleep(0.5 * (2 ** attempt))
+    else:
+        Logger.error(f"Failed after 3 attempts to connect/list BOM FTP: {last_err}")
         return
 
-    ftp.login("anonymous", "anonymous@anonymous.org")
-    ftp.cwd("/anon/gen/radar/")
-
-    log("Get files list")
-    # connected, so let's get the list
-    try:
-        # BOM FTP still, in 2021, does not support the nicer mdst() operation
-        files = ftp.nlst()
-        files.sort(reverse=True)
-    except ftplib.error_perm as resp:
-        if str(resp) == "550 No files found":
-            log("No files in BOM ftp directory!")
-        else:
-            log("Something wrong in the ftp bit of radar images")
-            log(str(resp))
-
-    log("Download new files, and rename existing files, to avoid Kodi caching issues with the animated radar")
-    # ok now we need just the matching radar files...
-    # Maximum of 25 files (125 minutes, just over 2 hours, at 5 minutes each)
+    Logger.debug("Download new files, and rename existing files, to avoid Kodi caching issues with the animated radar")
+    # OK now we need just the matching radar files...
+    # Maximum of 13 files (65 minutes, just over an hour, at 5 minutes each)
     loop_pic_names = []
     for f in files:
         if radar_code in f:
             loop_pic_names.insert(0, f)
-            if len(loop_pic_names) > 25:
-                log("Retrieved names of latest 25 radar images (2 hours), that's enough.")
+            if len(loop_pic_names) > 13:
+                Logger.debug("Retrieved names of latest 13 radar images (1 hour), that's enough.")
                 break
 
     # Download the actual images
@@ -271,27 +269,29 @@ def build_images(radar_code, path, loop_path):
     #  which is why we can test here with the current time_now to see if we already have the images)
     if loop_pic_names:
         for f in loop_pic_names:
-            if not os.path.isfile(loop_path + time_now + "." + f):
+            candidate = os.path.join(loop_path, f"{time_now}.{f}")
+            if not os.path.isfile(candidate):
                 # ignore the composite gif...
                 if f[-3:] == "png":
                     image_to_retrieve = Store.BOM_RADAR_FTPSTUB + f
                     output_file = time_now + "." + f
-                    log("Retrieving new radar image: " + image_to_retrieve)
-                    log("Output to file: " + output_file)
+                    Logger.debug("Retrieving new radar image: " + image_to_retrieve)
+                    Logger.debug("Output to file: " + output_file)
 
+                    dst = os.path.join(loop_path, output_file)
                     try:
-                        radar_image = urllib.request.urlopen(image_to_retrieve)
-                        with open(loop_path + "/" + output_file, "wb") as fh:
-                            fh.write(radar_image.read())
+                        _download_to_path(image_to_retrieve, dst)
+                        Logger.debug(f"Successfully downloaded radar image: {f}")
+                    except (urllib.error.URLError, socket.timeout, OSError) as e:
+                        Logger.error(f"Failed to retrieve radar loop image via FTP: {image_to_retrieve}, exception: {e}")
+                        continue
 
-                    except Exception as e:
-                        log(f"Failed to retrieve radar image: {image_to_retrieve}, exception: {str(e)}")
             else:
-                log("Using cached radar image: " + time_now + "." + f)
+                Logger.debug("Using cached radar image: " + time_now + "." + f)
 
 
 ###########################################################
-# MAIN - for testing outside of Kodi
+# MAIN - for testing outside Kodi
 
 if __name__ == "__main__":
 
@@ -299,24 +299,24 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "clean":
         # noinspection PyBroadException
         try:
-            log("\n\nCleaning test-outputs folder")
+            Logger.debug("\n\nCleaning test-outputs folder")
             shutil.rmtree(os.getcwd() + "/test-outputs/")
         except:
             pass
 
-    log("\nCurrent files in test-outputs:\n")
+    Logger.debug("\nCurrent files in test-outputs:\n")
     for dir_path, dir_names, filenames in os.walk(os.getcwd() + "/test-outputs/"):
         for name in dir_names:
-            log(os.path.join(dir_path, name))
+            Logger.debug(os.path.join(dir_path, name))
         for name in filenames:
-            log(os.path.join(dir_path, name))
+            Logger.debug(os.path.join(dir_path, name))
 
     test_radars = ["IDR023", "IDR00004"]
     for test_radar in test_radars:
         backgrounds_path = os.getcwd() + "/test-outputs/backgrounds/" + test_radar + "/"
         overlay_loop_path = os.getcwd() + "/test-outputs/loop/" + test_radar + "/"
 
-        log(f'\nTesting getting radar images from the BOM for {test_radar}\n')
+        Logger.debug(f'\nTesting getting radar images from the BOM for {test_radar}\n')
         build_images(test_radar, backgrounds_path, overlay_loop_path)
-        log(os.listdir(backgrounds_path))
-        log(os.listdir(overlay_loop_path))
+        Logger.debug(os.listdir(backgrounds_path))
+        Logger.debug(os.listdir(overlay_loop_path))

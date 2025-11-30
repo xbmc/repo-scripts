@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-06-21 10:59+0000\n"
+"PO-Revision-Date: 2022-03-16 21:13+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Belarusian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-xbmcbackup/be_by/>\n"
 "Language: be_by\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 4.7\n"
+"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
 msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
@@ -32,7 +32,7 @@ msgstr "Kodi Backup"
 
 msgctxt "#30011"
 msgid "General"
-msgstr "General"
+msgstr "Асноўныя"
 
 msgctxt "#30012"
 msgid "File Selection"
@@ -48,11 +48,11 @@ msgstr ""
 
 msgctxt "#30015"
 msgid "Advanced"
-msgstr ""
+msgstr "Пашыраны"
 
 msgctxt "#30016"
 msgid "Backup"
-msgstr "Backup"
+msgstr ""
 
 msgctxt "#30017"
 msgid "Restore"
@@ -108,7 +108,7 @@ msgstr ""
 
 msgctxt "#30030"
 msgid "User Addons"
-msgstr "User Addons"
+msgstr ""
 
 msgctxt "#30031"
 msgid "Addon Data"
@@ -116,7 +116,7 @@ msgstr ""
 
 msgctxt "#30032"
 msgid "Database"
-msgstr "Database"
+msgstr "База даных"
 
 msgctxt "#30033"
 msgid "Playlist"
@@ -160,7 +160,7 @@ msgstr ""
 
 msgctxt "#30043"
 msgid "The Backup addon has detected an unfinished restore"
-msgstr "Kodi Backup has detected an unfinished restore"
+msgstr ""
 
 msgctxt "#30044"
 msgid "Would you like to continue?"
@@ -292,7 +292,7 @@ msgstr ""
 
 msgctxt "#30077"
 msgid "Restart Kodi"
-msgstr "Restart Kodi"
+msgstr ""
 
 msgctxt "#30078"
 msgid "You should restart Kodi to continue"
@@ -476,7 +476,7 @@ msgstr ""
 
 msgctxt "#30123"
 msgid "Delete"
-msgstr ""
+msgstr "Выдаліць"
 
 msgctxt "#30124"
 msgid "Choose Action"
@@ -620,6 +620,14 @@ msgstr ""
 
 msgctxt "#30159"
 msgid "Backup started with unknown mode"
+msgstr ""
+
+msgctxt "#30160"
+msgid "Backup Filename Suffix"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Amend a string to the end of each backup folder or ZIP file"
 msgstr ""
 
 #~ msgctxt "#30036"

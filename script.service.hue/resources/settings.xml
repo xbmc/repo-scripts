@@ -2,25 +2,7 @@
 <settings version="1">
     <section id="script.service.hue">
         <category id="general" label="30510" help="">
-            <group id="1" label="30512">
-                <setting id="createScene" type="action" label="9007" help="">
-                    <level>0</level>
-                    <data>RunScript(script.service.hue,createHueScene)</data>
-                    <constraints>
-                        <allowempty>true</allowempty>
-                    </constraints>
-                    <control type="button" format="action"/>
-                </setting>
-                <setting id="deleteScene" type="action" label="9008" help="">
-                    <level>0</level>
-                    <data>RunScript(script.service.hue,deleteHueScene)</data>
-                    <constraints>
-                        <allowempty>true</allowempty>
-                    </constraints>
-                    <control type="button" format="action"/>
-                </setting>
-            </group>
-            <group id="2" label="30500">
+            <group id="1" label="30500">
                 <setting id="discoverBridge" type="action" label="30501" help="">
                     <level>0</level>
                     <data>RunScript(script.service.hue,discover)</data>
@@ -67,7 +49,7 @@
                 </setting>
             </group>
             <group id="2">
-                <setting id="group0_startBehavior" type="boolean" label="30513" help="">
+                <setting id="group0_playBehavior" type="boolean" label="30513" help="">
                     <level>0</level>
                     <default>false</default>
                     <dependencies>
@@ -78,14 +60,54 @@
                     <control type="toggle"/>
                 </setting>
 
-                <setting id="group0_startSceneName" type="string" label="30036" help="">
+                <setting id="group0_playTransition" type="number" label="31335" help="">
+                    <level>1</level>
+                    <default>15</default>
+                    <dependencies>
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group0_playBehavior">true</condition>
+                                <condition operator="is" setting="group0_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+
+
+                <setting id="group0_playSelectScene" type="action" label="32512" help="">
+                    <level>0</level>
+                    <data>RunScript(script.service.hue,sceneSelect,0,play)</data>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group0_playBehavior">true</condition>
+                                <condition operator="is" setting="group0_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <setting id="group0_playSceneName" type="string" label="30036" help="">
                     <level>0</level>
                     <default>Not selected</default>
                     <enable>false</enable>
                     <dependencies>
                         <dependency type="visible">
                             <and>
-                                <condition operator="is" setting="group0_startBehavior">true</condition>
+                                <condition operator="is" setting="group0_playBehavior">true</condition>
                                 <condition operator="is" setting="group0_enabled">true</condition>
                             </and>
                         </dependency>
@@ -96,26 +118,7 @@
                 </setting>
 
 
-                <setting id="group0_startSelectScene" type="action" label="32512" help="">
-                    <level>0</level>
-                    <data>RunScript(script.service.hue,sceneSelect,0,start)</data>
-                    <constraints>
-                        <allowempty>true</allowempty>
-                    </constraints>
-                    <dependencies>
-                        <dependency type="visible">
-                            <and>
-                                <condition operator="is" setting="group0_startBehavior">true</condition>
-                                <condition operator="is" setting="group0_enabled">true</condition>
-                            </and>
-                        </dependency>
-                    </dependencies>
-                    <control type="button" format="action">
-                        <close>true</close>
-                    </control>
-                </setting>
-
-                <setting id="group0_startSceneID" type="string" label="32511" help="">
+                <setting id="group0_playSceneID" type="string" label="32511" help="">
                     <level>4</level>
                     <default>-1</default>
                     <control type="edit" format="string">
@@ -123,7 +126,6 @@
                     </control>
                 </setting>
             </group>
-
 
 
             <group id="3">
@@ -137,13 +139,9 @@
                     </dependencies>
                     <control type="toggle"/>
                 </setting>
-
-
-
-                <setting id="group0_pauseSceneName" type="string" label="30036" help="">
-                    <level>0</level>
-                    <default>Not selected</default>
-                    <enable>false</enable>
+                <setting id="group0_pauseTransition" type="number" label="31335" help="">
+                    <level>1</level>
+                    <default>5</default>
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -152,12 +150,16 @@
                             </and>
                         </dependency>
                     </dependencies>
-                    <control type="edit" format="string">
-                        <heading>30036</heading>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
                     </control>
+
                 </setting>
-
-
 
                 <setting id="group0_pauseSelectScene" type="action" label="32512" help="">
                     <level>0</level>
@@ -177,6 +179,24 @@
                     </dependencies>
                     <control type="button" format="action">
                         <close>true</close>
+                    </control>
+                </setting>
+
+
+                <setting id="group0_pauseSceneName" type="string" label="30036" help="">
+                    <level>0</level>
+                    <default>Not selected</default>
+                    <enable>false</enable>
+                    <dependencies>
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group0_pauseBehavior">true</condition>
+                                <condition operator="is" setting="group0_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30036</heading>
                     </control>
                 </setting>
 
@@ -203,12 +223,10 @@
                     </dependencies>
                     <control type="toggle"/>
                 </setting>
-                <setting id="group0_stopSceneName" type="string" label="30036" help="">
-                    <level>0</level>
-                    <default>Not selected</default>
-                    <enable>false</enable>
+                <setting id="group0_stopTransition" type="number" label="31335" help="">
+                    <level>1</level>
+                    <default>8</default>
                     <dependencies>
-
                         <dependency type="visible">
                             <and>
                                 <condition operator="is" setting="group0_stopBehavior">true</condition>
@@ -216,12 +234,16 @@
                             </and>
                         </dependency>
                     </dependencies>
-                    <control type="edit" format="string">
-                        <heading>30036</heading>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
                     </control>
+
                 </setting>
-
-
                 <setting id="group0_stopSelectScene" type="action" label="32512" help="">
                     <level>0</level>
                     <data>RunScript(script.service.hue,sceneSelect,0,stop)</data>
@@ -239,6 +261,24 @@
                     </dependencies>
                     <control type="button" format="action">
                         <close>true</close>
+                    </control>
+                </setting>
+
+                <setting id="group0_stopSceneName" type="string" label="30036" help="">
+                    <level>0</level>
+                    <default>Not selected</default>
+                    <enable>false</enable>
+                    <dependencies>
+
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group0_stopBehavior">true</condition>
+                                <condition operator="is" setting="group0_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30036</heading>
                     </control>
                 </setting>
 
@@ -293,7 +333,6 @@
         </category>
 
 
-
         <category id="audio actions" label="32102" help="">
             <group id="1">
                 <setting id="group1_enabled" type="boolean" label="30520" help="">
@@ -303,7 +342,7 @@
                 </setting>
             </group>
             <group id="2">
-                <setting id="group1_startBehavior" type="boolean" label="30513" help="">
+                <setting id="group1_playBehavior" type="boolean" label="30513" help="">
                     <level>0</level>
                     <default>false</default>
                     <dependencies>
@@ -313,36 +352,36 @@
                     </dependencies>
                     <control type="toggle"/>
                 </setting>
-
-
-                <setting id="group1_startSceneName" type="string" label="30036" help="">
-                    <level>0</level>
-                    <default>Not selected</default>
-                    <enable>false</enable>
+                <setting id="group1_playTransition" type="number" label="31335" help="">
+                    <level>1</level>
+                    <default>8</default>
                     <dependencies>
                         <dependency type="visible">
                             <and>
-                                <condition operator="is" setting="group1_startBehavior">true</condition>
+                                <condition operator="is" setting="group1_playBehavior">true</condition>
                                 <condition operator="is" setting="group1_enabled">true</condition>
                             </and>
                         </dependency>
                     </dependencies>
-                    <control type="edit" format="string">
-                        <heading>30036</heading>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
                     </control>
                 </setting>
-
-
-                <setting id="group1_startSelectScene" type="action" label="32512" help="">
+                <setting id="group1_playSelectScene" type="action" label="32512" help="">
                     <level>0</level>
-                    <data>RunScript(script.service.hue,sceneSelect,1,start)</data>
+                    <data>RunScript(script.service.hue,sceneSelect,1,play)</data>
                     <constraints>
                         <allowempty>true</allowempty>
                     </constraints>
                     <dependencies>
                         <dependency type="visible">
                             <and>
-                                <condition operator="is" setting="group1_startBehavior">true</condition>
+                                <condition operator="is" setting="group1_playBehavior">true</condition>
                                 <condition operator="is" setting="group1_enabled">true</condition>
                             </and>
                         </dependency>
@@ -353,7 +392,25 @@
                 </setting>
 
 
-                <setting id="group1_startSceneID" type="string" label="32511" help="">
+                <setting id="group1_playSceneName" type="string" label="30036" help="">
+                    <level>0</level>
+                    <default>Not selected</default>
+                    <enable>false</enable>
+                    <dependencies>
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group1_playBehavior">true</condition>
+                                <condition operator="is" setting="group1_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30036</heading>
+                    </control>
+                </setting>
+
+
+                <setting id="group1_playSceneID" type="string" label="32511" help="">
                     <level>4</level>
                     <default>-1</default>
 
@@ -375,10 +432,10 @@
                     </dependencies>
                     <control type="toggle"/>
                 </setting>
-                <setting id="group1_pauseSceneName" type="string" label="30036" help="">
-                    <level>0</level>
-                    <default>Not selected</default>
-                    <enable>false</enable>
+
+                <setting id="group1_pauseTransition" type="number" label="31335" help="">
+                    <level>1</level>
+                    <default>8</default>
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -387,12 +444,16 @@
                             </and>
                         </dependency>
                     </dependencies>
-                    <control type="edit" format="string">
-                        <heading>30036</heading>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
                     </control>
+
                 </setting>
-
-
                 <setting id="group1_pauseSelectScene" type="action" label="32512" help="">
                     <level>0</level>
                     <data>RunScript(script.service.hue,sceneSelect,1,pause)</data>
@@ -409,6 +470,24 @@
                     </dependencies>
                     <control type="button" format="action">
                         <close>true</close>
+                    </control>
+                </setting>
+
+
+                <setting id="group1_pauseSceneName" type="string" label="30036" help="">
+                    <level>0</level>
+                    <default>Not selected</default>
+                    <enable>false</enable>
+                    <dependencies>
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group1_pauseBehavior">true</condition>
+                                <condition operator="is" setting="group1_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30036</heading>
                     </control>
                 </setting>
 
@@ -435,12 +514,9 @@
                     </dependencies>
                     <control type="toggle"/>
                 </setting>
-
-
-                <setting id="group1_stopSceneName" type="string" label="30036" help="">
-                    <level>0</level>
-                    <default>Not selected</default>
-                    <enable>false</enable>
+                <setting id="group1_stopTransition" type="number" label="31335" help="">
+                    <level>1</level>
+                    <default>8</default>
                     <dependencies>
                         <dependency type="visible">
                             <and>
@@ -449,11 +525,16 @@
                             </and>
                         </dependency>
                     </dependencies>
-                    <control type="edit" format="string">
-                        <heading>30036</heading>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>0.5</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
                     </control>
-                </setting>
 
+                </setting>
                 <setting id="group1_stopSelectScene" type="action" label="32512" help="">
                     <level>0</level>
                     <data>RunScript(script.service.hue,sceneSelect,1,stop)</data>
@@ -473,6 +554,24 @@
                     </control>
                 </setting>
 
+                <setting id="group1_stopSceneName" type="string" label="30036" help="">
+                    <level>0</level>
+                    <default>Not selected</default>
+                    <enable>false</enable>
+                    <dependencies>
+                        <dependency type="visible">
+                            <and>
+                                <condition operator="is" setting="group1_stopBehavior">true</condition>
+                                <condition operator="is" setting="group1_enabled">true</condition>
+                            </and>
+                        </dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30036</heading>
+                    </control>
+                </setting>
+
+
                 <setting id="group1_stopSceneID" type="string" label="32511" help="">
                     <level>4</level>
                     <default>-1</default>
@@ -483,16 +582,109 @@
                 </setting>
             </group>
         </category>
+        <category id="schedule" label="30511" help="">
+            <group id="1">
+                <setting id="forceOnSunset" type="boolean" label="30509" help="31340">
+                    <level>1</level>
+                    <default>True</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="daylightDisable" type="boolean" label="30508" help="31339">
+                    <level>1</level>
+                    <default>False</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="morningTime" type="time" label="31334" help="31338">
+                    <level>2</level>
+                    <default>08:00</default>
+                    <control type="button" format="time">
+                        <heading>31334</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition operator="is" setting="daylightDisable">true</condition>
+                        </dependency>
+                    </dependencies>
 
+                </setting>
+
+
+                <setting id="sunsetOffset" type="number" label="31336" help="31337">
+                    <level>1</level>
+                    <default>-30</default>
+                    <constraints>
+                        <minimum>-120</minimum>
+                        <step>1</step>
+                        <maximum>120</maximum>
+                    </constraints>
+                    <control type="slider" format="number">
+                        <popup>false</popup>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition operator="is" setting="daylightDisable">true</condition>
+                        </dependency>
+                    </dependencies>
+                </setting>
+
+
+            </group>
+
+            <group id="2">
+                <setting id="enableSchedule" type="boolean" label="30505" help="">
+                    <level>1</level>
+                    <default>False</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="startTime" type="time" label="30506" help="">
+                    <level>1</level>
+                    <default>18:00</default>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition operator="is" setting="enableSchedule">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="time">
+                        <heading>30506</heading>
+                    </control>
+                </setting>
+                <setting id="endTime" type="time" label="30507" help="">
+                    <level>1</level>
+                    <default>22:00</default>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition operator="is" setting="enableSchedule">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control type="button" format="time">
+                        <heading>30507</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="3">
+                <setting id="enable_if_already_active" type="boolean" label="30516" help="">
+                    <level>1</level>
+                    <default>False</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="keep_lights_off" type="boolean" label="30517" help="">
+                    <level>1</level>
+                    <default>False</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+
+        </category>
         <category id="ambilight" label="30523" help="30521">
             <group id="1" label="30521">
                 <setting id="group3_enabled" type="boolean" label="30520" help="30521">
-                    <level>0</level>
+                    <level>2</level>
                     <default>false</default>
                     <control type="toggle"/>
                 </setting>
                 <setting id="group3_SelectLights" type="action" label="30015" help="30521">
-                    <level>0</level>
+                    <level>2</level>
                     <data>RunScript(script.service.hue,ambiLightSelect,3)</data>
                     <constraints>
                         <allowempty>true</allowempty>
@@ -507,7 +699,7 @@
                     </control>
                 </setting>
                 <setting id="group3_LightNames" type="string" label="30058" help="30521">
-                    <level>0</level>
+                    <level>2</level>
                     <default>Not configured</default>
                     <dependencies>
                         <dependency type="enable">
@@ -523,26 +715,6 @@
                 </setting>
             </group>
             <group id="2">
-                <setting id="group3_forceOn" type="boolean" label="30057" help="30521">
-                    <level>2</level>
-                    <default>true</default>
-                    <dependencies>
-                        <dependency type="visible">
-                            <condition operator="is" setting="group3_enabled">true</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="group3_disableLabs" type="boolean" label="30074" help="30521">
-                    <level>2</level>
-                    <default>false</default>
-                    <dependencies>
-                        <dependency type="visible">
-                            <condition operator="is" setting="group3_enabled">true</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="toggle"/>
-                </setting>
                 <setting id="group3_MinBrightness" type="integer" label="30810" help="30521">
                     <level>2</level>
                     <default>10</default>
@@ -603,7 +775,7 @@
 
             <group id="3" label="30814">
                 <setting id="group3_ResumeState" type="boolean" label="30815" help="">
-                    <level>1</level>
+                    <level>2</level>
                     <default>true</default>
                     <dependencies>
                         <dependency type="visible">
@@ -613,7 +785,7 @@
                     <control type="toggle"/>
                 </setting>
                 <setting id="group3_ResumeTransition" type="integer" label="30816" help="">
-                    <level>1</level>
+                    <level>2</level>
                     <default>10</default>
                     <constraints>
                         <minimum>0</minimum>
@@ -625,12 +797,12 @@
                             <condition operator="is" setting="group3_enabled">true</condition>
                         </dependency>
                     </dependencies>
-                    <control type="slider" format="integer">
+                    <control type="slider" format="number">
                         <popup>false</popup>
                     </control>
                 </setting>
                 <setting id="group3_Lights" type="string" label="30035" help="">
-                    <level>0</level>
+                    <level>2</level>
                     <default>-1</default>
                     <dependencies>
                         <dependency type="enable">
@@ -659,7 +831,7 @@
                             <condition operator="is" setting="group3_enabled">true</condition>
                         </dependency>
                     </dependencies>
-                    <control type="slider" format="integer">
+                    <control type="slider" format="number">
                         <popup>false</popup>
                     </control>
                 </setting>
@@ -693,7 +865,7 @@
                             <condition operator="is" setting="group3_enabled">true</condition>
                         </dependency>
                     </dependencies>
-                    <control type="slider" format="integer">
+                    <control type="slider" format="number">
                         <popup>false</popup>
                     </control>
                 </setting>
@@ -719,69 +891,9 @@
 
 
         </category>
-        <category id="schedule" label="30511" help="">
-            <group id="1">
-                <setting id="forceOnSunset" type="boolean" label="30509" help="">
-                    <level>1</level>
-                    <default>True</default>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="daylightDisable" type="boolean" label="30508" help="">
-                    <level>1</level>
-                    <default>False</default>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="enable_if_already_active" type="boolean" label="30516" help="">
-                    <level>1</level>
-                    <default>False</default>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="keep_lights_off" type="boolean" label="30517" help="">
-                    <level>1</level>
-                    <default>False</default>
-                    <control type="toggle"/>
-                </setting>
-            </group>
-            <group id="2">
-                <setting id="enableSchedule" type="boolean" label="30505" help="">
-                    <level>1</level>
-                    <default>False</default>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="startTime" type="time" label="30506" help="">
-                    <level>1</level>
-                    <default>18:00</default>
-                    <dependencies>
-                        <dependency type="enable">
-                            <condition operator="is" setting="enableSchedule">true</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="button" format="time">
-                        <heading>30506</heading>
-                    </control>
-                </setting>
-                <setting id="endTime" type="time" label="30507" help="">
-                    <level>1</level>
-                    <default>22:00</default>
-                    <dependencies>
-                        <dependency type="enable">
-                            <condition operator="is" setting="enableSchedule">true</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="button" format="time">
-                        <heading>30507</heading>
-                    </control>
-                </setting>
-            </group>
-        </category>
+
         <category id="advanced" label="32101" help="">
             <group id="1">
-
-                <setting id="disableConnectionMessage" type="boolean" label="30812" help="">
-                    <level>3</level>
-                    <default>False</default>
-                    <control type="toggle"/>
-                </setting>
 
                 <setting id="error_reporting" type="boolean" label="30016" help="">
                     <level>3</level>

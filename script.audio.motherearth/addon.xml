@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audio.motherearth" name="Mother Earth Radio" version="2.2" provider-name="Florian Reiterer">
+<addon id="script.audio.motherearth" name="Mother Earth Radio" version="2.3" provider-name="Florian Reiterer">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.0.0"/>
@@ -16,7 +16,7 @@
         <license>GPL-3.0-or-later</license>
         <platform>all</platform>
         <news>
-         added Mother Earth Jazz channel
+         2.3 Mother Earth Jazz channel url changed
         </news>
         <assets>
             <icon>resources/icon.png</icon>
