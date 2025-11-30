@@ -214,6 +214,7 @@ class InfoExtractor(object):
                                  width : height ratio as float.
                     * no_resume  The server does not support resuming the
                                  (HTTP or RTMP) download. Boolean.
+                    * available_at  Unix timestamp of when a format will be available to download
                     * downloader_options  A dictionary of downloader options as
                                  described in FileDownloader
 
@@ -969,8 +970,6 @@ class InfoExtractor(object):
         else:
             video_id = kwargs.pop('video_id', None)
         idstr = '' if video_id is None else '%s: ' % video_id
-        self._downloader.report_warning(
-            self.__ie_msg(idstr, msg), *args, **kwargs)
 
     def to_screen(self, msg):
         """Print msg to screen, prefixing it with '[ie_name]'"""
