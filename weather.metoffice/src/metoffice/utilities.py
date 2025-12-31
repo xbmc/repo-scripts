@@ -1,14 +1,19 @@
 import math
 import time
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import wraps
 
 import xbmc
 import xbmcgui
 
-from .constants import (ADDON_BROWSER_WINDOW_ID, TEMPERATUREUNITS,
-                        WEATHER_WINDOW_ID, addon, dialog)
+from .constants import (
+    ADDON_BROWSER_WINDOW_ID,
+    SETTINGS_WINDOW_ID,
+    TEMPERATUREUNITS,
+    WEATHER_WINDOW_ID,
+    addon,
+)
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -18,7 +23,7 @@ def log(msg, level=xbmc.LOGINFO):
 
 def strptime(dt, fmt):
     # python datetime.strptime is not thread safe: sometimes causes 'NoneType is not callable' error
-    return datetime.fromtimestamp(time.mktime(time.strptime(dt, fmt)))
+    return datetime.fromtimestamp(time.mktime(time.strptime(dt, fmt)), tz=timezone.utc)
 
 
 def failgracefully(f):
@@ -45,7 +50,8 @@ def failgracefully(f):
                 or xbmcgui.getCurrentWindowId() == ADDON_BROWSER_WINDOW_ID
             ):
                 args = (e.args[0].title(),) + e.args[1:4]
-                dialog().ok(*args)
+                dialog = xbmcgui.Dialog()
+                dialog.ok(*args)
 
     return wrapper
 
@@ -56,6 +62,7 @@ def xbmcbusy(f):
         if (
             xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID
             or xbmcgui.getCurrentWindowId() == ADDON_BROWSER_WINDOW_ID
+            or xbmcgui.getCurrentWindowId() == SETTINGS_WINDOW_ID
         ):
             xbmc.executebuiltin("ActivateWindow(busydialognocancel)")
         try:

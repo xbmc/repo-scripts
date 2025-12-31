@@ -20,35 +20,51 @@ import traceback
 from urllib.error import HTTPError
 
 import xbmc
+import xbmcaddon
+import xbmcgui
 
 import setlocation
 from metoffice import properties, urlcache, utilities
 from metoffice.constants import (
     ADDON_BANNER_PATH,
     ADDON_DATA_PATH,
+    ADDON_ID,
     API_KEY,
-    addon,
-    window,
+    SETTINGS_WINDOW_ID,
+    WEATHER_WINDOW_ID,
 )
-from metoffice.utilities import gettext as _
+
+window = xbmcgui.Window(WEATHER_WINDOW_ID)
+addon = xbmcaddon.Addon(ADDON_ID)
 
 socket.setdefaulttimeout(20)
 
 
 def main():
-    if addon().getSetting("EraseCache") == "true":
+    if sys.argv[1] in ["ObservationLocation", "ForecastLocation"]:
+        setlocation.main(sys.argv[1])
+        return
+
+    if addon.getSetting("EraseCache") == "true":
         try:
             urlcache.URLCache(ADDON_DATA_PATH).erase()
         finally:
-            addon().setSetting("EraseCache", "false")
+            addon.setSetting("EraseCache", "false")
 
     if not API_KEY:
-        raise Exception(
-            _("No API Key."), _("Enter your Met Office API Key under settings.")
-        )
+        window.setProperty("Current.Condition", "[ Check API Key ]")
+        window.setProperty("Current.OutlookIcon", "na.png")
+        window.setProperty("Current.FanartCode", "na")
 
-    if sys.argv[1] in ["ObservationLocation", "ForecastLocation", "RegionalLocation"]:
-        setlocation.main(sys.argv[1])
+        if xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID:
+            dialog = xbmcgui.Dialog()
+            dialog.ok(
+                "No API Key",
+                "Please register for an API Key at https://register.metoffice.gov.uk. "
+                "Then save your API Key under addon settings.",
+            )
+
+        return
 
     try:
         properties.observation()
@@ -59,9 +75,14 @@ def main():
         # Expect KeyErrors to come from parsing JSON responses.
         # This is considered an intermittent error, so exception is eaten.
         utilities.log(traceback.format_exc(), xbmc.LOGERROR)
-    except HTTPError:
-        # HTTPErrors are most likely to occur when the user hasn't set their API
-        # key, so allow the script to raise to produce a parp.
+    except HTTPError as e:
+
+        if e.code != 403:
+            raise
+
+        window.setProperty("Current.Condition", "[ Check API Key ]")
+        window.setProperty("Current.OutlookIcon", "na.png")
+        window.setProperty("Current.FanartCode", "na")
         utilities.log(
             (
                 "Error fetching data.\n"
@@ -71,25 +92,30 @@ def main():
             ),
             xbmc.LOGERROR,
         )
-        raise
+        if (
+            xbmcgui.getCurrentWindowId() == WEATHER_WINDOW_ID
+            or xbmcgui.getCurrentWindowId() == SETTINGS_WINDOW_ID
+        ):
+            dialog = xbmcgui.Dialog()
+            dialog.ok(
+                "Cannot fetch data.",
+                "Ensure the API key in addon configuration is correct and try again.",
+            )
 
-    window().setProperty("WeatherProvider", addon().getAddonInfo("name"))
-    window().setProperty("WeatherProviderLogo", ADDON_BANNER_PATH)
-    window().setProperty(
-        "ObservationLocation", addon().getSetting("ObservationLocation")
-    )
-    window().setProperty("Current.Location", addon().getSetting("ForecastLocation"))
-    window().setProperty("ForecastLocation", addon().getSetting("ForecastLocation"))
-    window().setProperty("RegionalLocation", addon().getSetting("RegionalLocation"))
-    window().setProperty("Location1", addon().getSetting("ForecastLocation"))
-    window().setProperty("Locations", "1")
+    window.setProperty("WeatherProvider", addon.getAddonInfo("name"))
+    window.setProperty("WeatherProviderLogo", ADDON_BANNER_PATH)
+    window.setProperty("ObservationLocation", addon.getSetting("ObservationLocation"))
+    window.setProperty("Current.Location", addon.getSetting("ForecastLocation"))
+    window.setProperty("ForecastLocation", addon.getSetting("ForecastLocation"))
+    window.setProperty("Location1", addon.getSetting("ForecastLocation"))
+    window.setProperty("Locations", "1")
 
     # Explicitly set unused flags to false, so there are no unusual side
     # effects/residual data when moving from another weather provider.
-    window().setProperty("36Hour.IsFetched", "")
-    window().setProperty("Weekend.IsFetched", "")
-    window().setProperty("Map.IsFetched", "")
-    window().setProperty("Weather.CurrentView", "")
+    window.setProperty("36Hour.IsFetched", "")
+    window.setProperty("Weekend.IsFetched", "")
+    window.setProperty("Map.IsFetched", "")
+    window.setProperty("Weather.CurrentView", "")
 
 
 if __name__ == "__main__":
