@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<coordinates>
+		<left>0</left>
+		<top>0</top>
+		<origin x="0" y="0" />
+	</coordinates>
+	<controls>
+		<control type="group" id="10072">
+			<!-- this hides the menu until it's done with setup -->
+		    <left>-10000</left>
+		    <right>-10000</right>
+			<control type="image" id="10073">
+				<top>-68</top>
+				<width>590</width>
+				<height></height>
+				<texture colordiffuse="$VAR[MenuTransperancy]" border="128">img/DialogCE.png</texture>
+			</control>
+			<control type="label" id="10071">
+				<top>-34</top>
+				<width>590</width>
+				<height>64</height>
+				<aligny>center</aligny>
+				<align>center</align>
+				<font>size20</font>
+				<textcolor>White2</textcolor>
+				<shadowcolor>Black</shadowcolor>
+				<label></label>
+			</control>
+			<control type="grouplist" id="10070">
+				<top>30</top>
+				<left>70</left>
+				<width>450</width>
+				<itemgap>3</itemgap>
+				<usecontrolcoords>true</usecontrolcoords>
+				<control type="button" id="10080">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10081">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10082">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10083">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10084">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10085">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10086">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10087">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10088">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+				<control type="button" id="10089">
+					<left>0</left>
+					<top></top>
+					<width>450</width>
+					<height>60</height>
+					<align>center</align>
+					<focusedcolor>HL</focusedcolor>
+					<texturefocus>img/MediaButton2.png</texturefocus>
+					<texturenofocus />
+					<label></label>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

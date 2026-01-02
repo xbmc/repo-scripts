@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audio.profiles" name="Audio Profiles" version="2.2.0" provider-name="pkscout, notoco, Regss">
+	<requires>
+        <import addon="xbmc.python" version="3.0.0" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.service" library="service.py" />
+	<extension point="xbmc.addon.metadata">
+		<news>
+v.2.2.0
+- this update is for Kodi 22 Piers and later
+- added full list of audio codec support
+- rearranged settings
+		</news>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<platform>all</platform>
+		<license>GPL-3.0-only</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=353852</forum>
+		<website>https://kodi.wiki/view/Add-on:Audio_Profiles</website>
+		<source>https://github.com/pkscout/script.audio.profiles</source>
+		<summary lang="af_ZA">Stoor oudio profiel en skakel maklik tussen hulle.</summary>
+		<summary lang="bs_BA">Sačuvajte audio profil i lako se prebacujte između njih.</summary>
+		<summary lang="da_DK">Gem lydprofiler og skift let mellem dem.</summary>
+		<summary lang="de_DE">Audioprofile speichern und einfach zwischen diesen wechseln.</summary>
+		<summary lang="en_GB">Save audio profile and easily switch between them.</summary>
+		<summary lang="es_AR">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
+		<summary lang="es_ES">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
+		<summary lang="es_MX">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
+		<summary lang="et_EE">Salvesta heliseadete profiilid ja vaheta neid hõlpsalt.</summary>
+		<summary lang="fi_FI">Tallenna ääniasetusprofiileita ja vaihda niiden välillä helposti.</summary>
+		<summary lang="fr_FR">Enregistrer les profils audio et basculer facilement entre eux.</summary>
+		<summary lang="ga">Sábháil próifíl fuaime agus aistrigh eatarthu go héasca.</summary>
+		<summary lang="hr_HR">Spremite zvučne profile i jednostavno prebacivajte između njih.</summary>
+		<summary lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</summary>
+		<summary lang="it_IT">Salva il profilo audio e passa facilmente da uno all&apos;altro.</summary>
+		<summary lang="ko_KR">오디오 프로필을 저장하고 쉽게 전환합니다.</summary>
+		<summary lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</summary>
+		<summary lang="pt_BR">Salve o perfil de áudio e alterne facilmente entre eles.</summary>
+		<summary lang="ru_RU">Сохраняйте аудиопрофили и легко переключайтесь между ними.</summary>
+		<summary lang="sv_SE">Spara ljudprofil och växla enkelt mellan dem.</summary>
+		<summary lang="zh_CN">保存音频配置文件并在它们之间轻松切换。</summary>
+		<description lang="af_ZA">Stoor oudio profiel en skakel maklik tussen hulle.</description>
+		<description lang="bs_BA">Sačuvajte audio profil i lako se prebacujte između njih.</description>
+		<description lang="da_DK">Gem lydprofiler og skift let mellem dem.</description>
+		<description lang="de_DE">Audioprofile speichern und einfach zwischen diesen wechseln.</description>
+		<description lang="en_GB">Save audio profile and easily switch between them.</description>
+		<description lang="es_AR">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
+		<description lang="es_ES">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
+		<description lang="es_MX">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
+		<description lang="et_EE">Salvesta heliseadete profiilid ja vaheta neid hõlpsalt.</description>
+		<description lang="fi_FI">Tallenna ääniasetusprofiileita ja vaihda niiden välillä helposti.</description>
+		<description lang="fr_FR">Enregistrer les profils audio et basculer facilement entre eux.</description>
+		<description lang="ga">Sábháil próifíl fuaime agus aistrigh eatarthu go héasca.</description>
+		<description lang="hr_HR">Spremite zvučne profile i jednostavno prebacivajte između njih.</description>
+		<description lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</description>
+		<description lang="it_IT">Salva il profilo audio e passa facilmente da uno all&apos;altro.</description>
+		<description lang="ko_KR">오디오 프로필을 저장하고 쉽게 전환합니다.</description>
+		<description lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</description>
+		<description lang="pt_BR">Salve o perfil de áudio e alterne facilmente entre eles.</description>
+		<description lang="ru_RU">Позволяет сохранять звуковые профили и с лёгкостью переключаться между ними.</description>
+		<description lang="sv_SE">Spara ljudprofil och växla enkelt mellan dem.</description>
+		<description lang="zh_CN">保存音频配置文件并在它们之间轻松切换。</description>
+	</extension>
+</addon>
