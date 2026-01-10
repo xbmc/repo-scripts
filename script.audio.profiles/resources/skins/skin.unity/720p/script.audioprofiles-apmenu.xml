@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+	<controls>
+		<!--all content-->
+		<control type="group">
+			<left>0r</left>
+			<width>405</width>
+			<animation effect="slide" start="0,0" end="-405,0" time="300" tween="quadratic" easing="out">WindowOpen</animation>
+			<animation effect="slide" start="-405,0" end="0,0" time="300" tween="quadratic" easing="out">WindowClose</animation>
+			<animation effect="slide" start="405,0" end="0,0" time="300" tween="quadratic" easing="out">Visible</animation>
+			<animation effect="slide" start="0,0" end="405,0" time="300" tween="quadratic" easing="out">Hidden</animation>
+			<control type="image">
+				<left>30</left>
+				<width>405</width>
+				<height>100%</height>
+				<texture colordiffuse="$INFO[Skin.String(color.tertiary)]">backgrounds/white.png</texture>
+			</control>
+			<!--title bg-->
+			<control type="image">
+				<left>30</left>
+				<width>405</width>
+				<height>90</height>
+				<texture colordiffuse="$INFO[Skin.String(color.500)]">backgrounds/white.png</texture>
+			</control>
+			<control type="image">
+				<left>30</left>
+				<top>90</top>
+				<width>405</width>
+				<height>10</height>
+				<texture>homeshadow.png</texture>
+				<animation effect="fade" start="100" end="75" time="0" condition="true">Conditional</animation>
+			</control>
+			<!--side shadow-->
+			<control type="image">
+				<width>30</width>
+				<height>100%</height>
+				<texture flipx="true">sidebarshadow.png</texture>
+			</control>
+			<!--close window button-->
+			<control type="button">
+				<left>35</left>
+				<top>0</top>
+				<width>50</width>
+				<height>25</height>
+				<label></label>
+				<font></font>
+				<onclick>PreviousMenu</onclick>
+				<texturefocus>DialogCloseButton-focus.png</texturefocus>
+				<texturenofocus>DialogCloseButton.png</texturenofocus>
+				<onleft>2</onleft>
+				<onright>2</onright>
+				<onup>2</onup>
+				<ondown>2</ondown>
+				<visible>system.getbool(input.enablemouse)</visible>
+			</control>
+			<!--title-->
+			<control type="label" id="10071">
+				<left>40</left>
+				<top>15</top>
+				<width>355</width>
+				<height>60</height>
+				<font>menu.title</font>
+				<textcolor>white</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label></label>
+			</control>
+			<!--button appearance-->
+			<control type="panel" id="10070">
+				<top>100</top>
+				<width>405</width>
+				<height>620</height>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<orientation>vertical</orientation>
+				<itemlayout height="60">
+					<control type="label">
+						<left>55</left>
+						<width>325</width>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>$INFO[Skin.String(color.text)]</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60">
+					<control type="image">
+						<left>40</left>
+						<width>355</width>
+						<texture colordiffuse="$INFO[Skin.String(color.500)]">backgrounds/white.png</texture>
+					</control>
+					<control type="label">
+						<left>55</left>
+						<width>325</width>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>

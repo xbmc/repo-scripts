@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="11112">
+    <defaultcontrol>10070</defaultcontrol>
+    <controls>
+        <control type="group" id="10072">
+            <left>880</left>
+            <top>0</top>
+            <animation type="WindowOpen">
+                <effect type="slide" time="300" start="+400, 0" end="0,0" easing="out" tween="cubic" />
+            </animation>
+            <animation type="WindowClose">
+                <effect type="slide" time="300" start="0,0" end="+400,0" easing="in" tween="cubic" />
+            </animation>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>400</width>
+				<height>720</height>
+				<texture>boxBackground.png</texture>
+				<visible>!Skin.HasSetting(ThemeBackgroundColor)</visible>				
+			</control>
+			<control type="group">
+				<visible>Skin.HasSetting(ThemeBackgroundColor)</visible>
+				<control type="image">
+					<left>0</left>
+					<top>0</top>
+					<width>400</width>
+					<height>720</height>
+					<texture>button.png</texture>
+				</control>
+				<control type="image">
+					<left>0</left>
+					<top>0</top>
+					<width>400</width>
+					<height>720</height>
+					<texture>tile.png</texture>
+				</control>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>640</width>
+				<height>720</height>
+				<texture>music_fanart_diffuse.png</texture>
+			</control>		
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>2</width>
+				<height>720</height>
+				<texture>button.png</texture>
+			</control>
+			<control type="label" id="10071">
+                <description>Menu Title</description>
+                <left>20</left>
+                <top>0</top>
+                <width>360</width>
+                <label></label>
+                <font>Panel_Description_Title</font>
+                <align>right</align>
+            </control>
+            <control type="grouplist" id="10070">
+                <left>20</left>
+                <top>70</top>
+                <width>380</width>
+                <height>700</height>
+                <itemgap>2</itemgap>
+                <orientation>vertical</orientation>
+                <control type="grouplist" id="3110">
+                    <height>700</height>
+                    <control type="button" id="10080">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10081">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10082">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10083">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10084">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10085">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10086">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10087">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10088">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                    <control type="button" id="10089">
+                        <width>370</width>
+                        <label></label>
+                        <align>right</align>
+                        <font>Panel_Info</font>
+                        <textoffsetx>20</textoffsetx>
+                    </control>
+                </control>
+            </control>
+			<!-- Close Button for Context Menu	-->
+			<control type="button" id="9876">
+				<animation effect="rotate" end="-90" center="25,20" time="0" condition="true" reversible="false">Conditional</animation>
+				<visible>[System.Platform.IOS | System.Platform.Android | System.getbool(input.enablemouse)]</visible>
+				<top>-5</top>
+				<left>0</left>
+				<width>50</width>
+				<height>50</height>
+				<onclick>back</onclick>
+				<texturefocus>down_arrow.png</texturefocus>
+				<texturenofocus>down_arrow.png</texturenofocus>					
+			</control>			
+        </control>
+	</controls>
+</window>

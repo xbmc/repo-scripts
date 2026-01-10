@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<animation type="WindowOpen">
+		<effect type="slide" start="-60,0" end="0,0" time="500" easing="inout" tween="cubic" />
+		<effect type="fade" start="0" end="100" time="400" />
+	</animation>
+	<animation type="WindowClose">
+		<effect type="slide" start="0,0" end="60,0" time="300" easing="inout" tween="cubic" />
+		<effect type="fade" start="100" end="0" time="300" />
+	</animation>
+	<controls>
+		<control type="group" id="10072">
+			<width>600</width>
+			<control type="group">
+				<height>60</height>
+				<control type="image">
+					<width>600</width>
+					<height>60</height>
+					<texture>dialogs_context_nofocus.png</texture>
+					<colordiffuse>F9FFFFFF</colordiffuse>
+				</control>
+				<control type="image">
+					<top>45</top>
+					<width>600</width>
+				    <height>58</height>
+					<texture>gradient_focus.png</texture>
+					<colordiffuse>$INFO[skin.string(colorheader)]</colordiffuse>
+				</control>				
+				<control type="label" id="10071">
+					<height>60</height>
+					<width>600</width>
+					<align>center</align>
+					<font>font_header</font>
+					<textcolor>$INFO[skin.string(colorheader)]</textcolor>
+					<label></label>
+				</control>
+			</control>
+			<control type="panel" id="10070">
+				<top>75</top>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<orientation>vertical</orientation>
+				<itemlayout height="60">
+					<control type="image">
+						<height>60</height>
+						<width>600</width>
+						<texture>dialogs_context_nofocus.png</texture>
+					</control>
+					<control type="label">
+						<left>15</left>
+						<width>570</width>
+						<height>60</height>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font_button</font>
+						<textcolor>FFF8F8F8</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60">
+					<control type="image">
+						<height>60</height>
+						<width>600</width>
+						<texture>dialogs_context_focus.png</texture>
+					</control>
+					<control type="label">
+						<left>15</left>
+						<width>570</width>
+						<height>60</height>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font_button</font>
+						<textcolor>E0101010</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>

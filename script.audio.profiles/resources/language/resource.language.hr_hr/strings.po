@@ -1,0 +1,340 @@
+# script.audio.profiles language file
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2023-01-14 18:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/hr_hr/>\n"
+"Language: hr_hr\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
+
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them."
+msgstr "Spremite zvučne profile i jednostavno prebacivajte između njih."
+
+msgctxt "Addon Description"
+msgid "Save audio profile and easily switch between them."
+msgstr "Spremite zvučne profile i jednostavno prebacivajte između njih."
+
+msgctxt "#32000"
+msgid "Profiles 1-5"
+msgstr "Profili 1-5"
+
+msgctxt "#32001"
+msgid " Name of profile 1"
+msgstr " Naziv 1. profila"
+
+msgctxt "#32002"
+msgid "Settings"
+msgstr "Postavke"
+
+msgctxt "#32003"
+msgid " Name of profile 2"
+msgstr " Naziv 2. profila"
+
+msgctxt "#32004"
+msgid "Include volume level"
+msgstr "Uključi razinu glasnoće zvuka"
+
+msgctxt "#32005"
+msgid " Name of profile 3"
+msgstr " Naziv 3. profila"
+
+msgctxt "#32006"
+msgid " Name of profile 4"
+msgstr " Naziv 4. profila"
+
+msgctxt "#32007"
+msgid "Profile 1"
+msgstr "Profil 1"
+
+msgctxt "#32008"
+msgid "Profile 2"
+msgstr "Profil 2"
+
+msgctxt "#32009"
+msgid "Profile 3"
+msgstr "Profil 3"
+
+msgctxt "#32010"
+msgid "Profile 4"
+msgstr "Profil 4"
+
+msgctxt "#32011"
+msgid "Include video player settings"
+msgstr "Uključi postavke video reproduktora"
+
+msgctxt "#32012"
+msgid "Include display settings"
+msgstr "Uključi postavke zaslona"
+
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr "Uključi postavke"
+
+msgctxt "#32014"
+msgid "Auto Switch"
+msgstr "Automatsko prebacivanje"
+
+msgctxt "#32015"
+msgid "Show audio profile select menu on media playback"
+msgstr "Prikaži izbornik odabira zvučnog profila pri reprodukciji medija"
+
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr "Automatski sakrij izbornik odabira"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Obavijesti"
+
+msgctxt "#32019"
+msgid "Notifications"
+msgstr "Obavijesti"
+
+msgctxt "#32021"
+msgid "Profile for GUI"
+msgstr "Profil za grafičko sučelje"
+
+msgctxt "#32022"
+msgid "Profile for movies"
+msgstr "Profil za filmove"
+
+msgctxt "#32023"
+msgid "Profile for TV shows"
+msgstr "Profil za TV serije"
+
+msgctxt "#32024"
+msgid "Profile for PVR TV"
+msgstr "Profil za PVR TV"
+
+msgctxt "#32025"
+msgid "Profile for music"
+msgstr "Profil za galzbu"
+
+msgctxt "#32026"
+msgid "None"
+msgstr "Nijedan"
+
+msgctxt "#32027"
+msgid "HDMI-CEC"
+msgstr "HDMI-CEC"
+
+msgctxt "#32028"
+msgid "Wake Up"
+msgstr "Probudi"
+
+msgctxt "#32029"
+msgid "StandBy"
+msgstr "Pripravnost"
+
+msgctxt "#32030"
+msgid "Toggle state"
+msgstr "Uklj/Isklj stanje"
+
+msgctxt "#32031"
+msgid "Profile for videos (not in library)"
+msgstr "Profili za video (nije u zbirci)"
+
+msgctxt "#32032"
+msgid "Profile for music videos"
+msgstr "Profil za glazbene spotove"
+
+msgctxt "#32033"
+msgid "Profile for unknown content type"
+msgstr "Profil za nepoznatu vrstu sadržaja"
+
+msgctxt "#32034"
+msgid "Profile for PVR radio"
+msgstr "Profil za PVR radio"
+
+msgctxt "#32035"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32036"
+msgid "Audio"
+msgstr "Zvuk"
+
+msgctxt "#32037"
+msgid "Other"
+msgstr "Ostalo"
+
+msgctxt "#32038"
+msgid "Profile for KODI Start/Wakeup (Default)"
+msgstr "Profil za KODI Pokretanje/Buđenje (Zadano)"
+
+msgctxt "#32039"
+msgid " Delay before close"
+msgstr " Odgoda prije zatvaranja"
+
+msgctxt "#32040"
+msgid "Enable debug logging"
+msgstr "Omogući zapisivanje otklanjanja grešaka"
+
+msgctxt "#32041"
+msgid " Force load profile at startup"
+msgstr " Prisili učitavanje profila pri pokretanju"
+
+msgctxt "#32042"
+msgid " Auto switch notifications"
+msgstr " Automatski prebaci obavijesti"
+
+msgctxt "#32043"
+msgid " Manual switch notifications"
+msgstr " Ručno prebaci obavijesti"
+
+msgctxt "#32044"
+msgid " Maintenance notifications"
+msgstr " Obavijesti održavanja"
+
+msgctxt "#32045"
+msgid "Select menu"
+msgstr "Odaberi izbornik"
+
+msgctxt "#32046"
+msgid "Use custom select menu"
+msgstr "Koristi prilagođeni izbornik odabira"
+
+msgctxt "#32047"
+msgid "Include skin mods"
+msgstr "Uključi modove presvlake"
+
+msgctxt "#32048"
+msgid "Extras"
+msgstr "Dodatno"
+
+msgctxt "#32049"
+msgid "By number of channels"
+msgstr "Po broju kanala"
+
+msgctxt "#32050"
+msgid "Menu Options"
+msgstr "Mogućnosti izbornika"
+
+msgctxt "#32051"
+msgid "Profile 5"
+msgstr "Profil 5"
+
+msgctxt "#32052"
+msgid "Name of profile 5"
+msgstr "Naziv 5. profila"
+
+msgctxt "#32053"
+msgid "Profile 6"
+msgstr "Profil 6"
+
+msgctxt "#32054"
+msgid "Name of profile 6"
+msgstr "Naziv 6. profila"
+
+msgctxt "#32055"
+msgid "Profile 7"
+msgstr "Profil 7"
+
+msgctxt "#32056"
+msgid "Name of profile 7"
+msgstr "Naziv 7. profila"
+
+msgctxt "#32057"
+msgid "Profile 8"
+msgstr "Profil 8"
+
+msgctxt "#32058"
+msgid "Name of profile 8"
+msgstr "Naziv 8. profila"
+
+msgctxt "#32059"
+msgid "Profile 9"
+msgstr "Profil 9"
+
+msgctxt "#32060"
+msgid "Name of profile 9"
+msgstr "Naziv 9. profila"
+
+msgctxt "#32061"
+msgid "Profile 10"
+msgstr "Profil 10"
+
+msgctxt "#32062"
+msgid "Name of profile 10"
+msgstr "Naziv 10. profila"
+
+msgctxt "#32063"
+msgid "Codec Detection"
+msgstr "Otkrivanje kôdeka"
+
+msgctxt "#32064"
+msgid "Profile for AC3"
+msgstr "Profil za AC3"
+
+msgctxt "#32065"
+msgid "Profile for E-AC3"
+msgstr "Profil za E-AC3"
+
+msgctxt "#32066"
+msgid "Profile for DTS"
+msgstr "Profil za DTS"
+
+msgctxt "#32067"
+msgid "Profile for DTS HD"
+msgstr "Profil za DTS HD"
+
+msgctxt "#32068"
+msgid "Profile for True HD"
+msgstr "Profil za True HD"
+
+msgctxt "#32069"
+msgid "Profile for any other audio codec"
+msgstr "Profil za bilo koji drugi zvučni kôdek"
+
+msgctxt "#32070"
+msgid "Profiles 6-10"
+msgstr "Profili 6-10"
+
+msgctxt "#32071"
+msgid "Stereo audio"
+msgstr "Stereo zvuk"
+
+msgctxt "#32072"
+msgid "Multi channel audio"
+msgstr "Višekanalni zvuk"
+
+msgctxt "#32073"
+msgid "delay before reading codec info"
+msgstr "odgoda prije čitanja informacija kôdeka"
+
+msgctxt "#32074"
+msgid "match streams with no codec details as music"
+msgstr "podudaraj strujanja bez pojedinosti kôdeka kao glazbe"
+
+msgctxt "#32100"
+msgid "Select profile to save settings"
+msgstr "Odaberite profil za spremanje postavki"
+
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr "Podesite profil"
+
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr "Spremljeno kao profil"
+
+msgctxt "#32103"
+msgid "This profile is disabled"
+msgstr "Ovaj profil je onemogućen"
+
+msgctxt "#32104"
+msgid "Invalid file for profile"
+msgstr "Nevaljana datoteka za profil"
+
+msgctxt "#32105"
+msgid "Enable profiles"
+msgstr "Omogući profile"
+
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr "Omogući zvučne profile"

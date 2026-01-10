@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<controls>
+		<control type="group">
+			<top>440</top>
+			<left>100</left>
+			<width>600</width>
+            <control type="image">
+                <description>background image</description>
+                <width>445</width>
+                <height>540</height>
+                <texture>dialogs/shutdown/shutdown.png</texture>
+                <aspectratio>stretch</aspectratio>
+            </control>
+			<control type="label" id="10071">
+				<top>430</top>
+				<left>40</left>
+				<width>365</width>
+				<height>102</height>
+				<aligny>center</aligny>
+				<font>Font-Condensed-S34-B</font>
+        	    <textcolor>eewhite</textcolor>
+    	        <shadowcolor>22000000</shadowcolor>
+				<label></label>
+			</control>
+			<control type="panel" id="10070">
+				<top>50</top>
+				<height>400</height>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<orientation>vertical</orientation>
+				<autoscroll>true</autoscroll>
+				<itemlayout height="57">
+					<control type="label">
+						<left>40</left>
+						<width>365</width>
+						<height>57</height>
+						<aligny>center</aligny>
+						<font>Font-Condensed-S34</font>
+						<textcolor>FF484848</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="57">
+					<control type="image">
+						<left>19</left>
+						<width>407</width>
+						<height>57</height>
+						<texture>dialogs/options/buttons/default-fo.png</texture>
+					</control>
+					<control type="label">
+						<left>40</left>
+						<width>365</width>
+						<height>57</height>
+						<aligny>center</aligny>
+						<font>Font-Condensed-S34</font>
+						<textcolor>DDFFFFFF</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>
