@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-09-21 19:12+0000\n"
+"Last-Translator: Jakub Fabijan <animatorzpolski@gmail.com>\n"
+"Language-Team: Esperanto <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7.2\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -34,35 +35,35 @@ msgstr ""
 
 msgctxt "#32103"
 msgid "Maps"
-msgstr ""
+msgstr "Mapoj"
 
 msgctxt "#32104"
 msgid "Logging"
-msgstr ""
+msgstr "Protokolado"
 
 msgctxt "#32110"
 msgid "API key"
-msgstr ""
+msgstr "API-ŝlosilo"
 
 msgctxt "#32111"
 msgid "Location 1"
-msgstr ""
+msgstr "Loko 1"
 
 msgctxt "#32112"
 msgid "Location 2"
-msgstr ""
+msgstr "Loko 2"
 
 msgctxt "#32113"
 msgid "Location 3"
-msgstr ""
+msgstr "Loko 3"
 
 msgctxt "#32114"
 msgid "Location 4"
-msgstr ""
+msgstr "Loko 4"
 
 msgctxt "#32115"
 msgid "Location 5"
-msgstr ""
+msgstr "Loko 5"
 
 msgctxt "#32121"
 msgid "Show lat/lon when searching locations"
@@ -78,11 +79,11 @@ msgstr ""
 
 msgctxt "#32129"
 msgid "Enable logging"
-msgstr ""
+msgstr "Ŝalti protokoladon"
 
 msgctxt "#32130"
 msgid "Download weather maps"
-msgstr ""
+msgstr "Elŝuti veterajn mapojn"
 
 msgctxt "#32131"
 msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
@@ -166,7 +167,7 @@ msgstr ""
 
 msgctxt "#32219"
 msgid "Snow"
-msgstr ""
+msgstr "Neĝo"
 
 msgctxt "#32220"
 msgid "Heavy snow"
@@ -202,7 +203,7 @@ msgstr ""
 
 msgctxt "#32228"
 msgid "Smoke"
-msgstr ""
+msgstr "Fumo"
 
 msgctxt "#32229"
 msgid "Haze"
@@ -210,11 +211,11 @@ msgstr ""
 
 msgctxt "#32230"
 msgid "Sand/dust"
-msgstr ""
+msgstr "Sablo/polvo"
 
 msgctxt "#32231"
 msgid "Fog"
-msgstr ""
+msgstr "Nebulo"
 
 msgctxt "#32232"
 msgid "Freezing fog"
@@ -222,7 +223,7 @@ msgstr ""
 
 msgctxt "#32233"
 msgid "Clear sky"
-msgstr ""
+msgstr "Klara ĉielo"
 
 msgctxt "#32234"
 msgid "Few clouds"
@@ -244,9 +245,33 @@ msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr ""
 
+msgctxt "#32245"
+msgid "Flurries"
+msgstr ""
+
+msgctxt "#32246"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32247"
+msgid "Mostly Clear"
+msgstr ""
+
+msgctxt "#32248"
+msgid "Rain And Snow"
+msgstr ""
+
+msgctxt "#32249"
+msgid "Fog"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Frigid"
+msgstr ""
+
 msgctxt "#32251"
 msgid "Tornado"
-msgstr ""
+msgstr "Tornado"
 
 msgctxt "#32252"
 msgid "Tropical Storm"
@@ -254,7 +279,7 @@ msgstr ""
 
 msgctxt "#32253"
 msgid "Hurricane"
-msgstr ""
+msgstr "Uragano"
 
 msgctxt "#32254"
 msgid "Severe Thunderstorms"
@@ -262,11 +287,11 @@ msgstr ""
 
 msgctxt "#32255"
 msgid "Thunderstorms"
-msgstr ""
+msgstr "Fulmotondroj"
 
 msgctxt "#32256"
 msgid "Mixed Rain and Snow"
-msgstr ""
+msgstr "Pluvo kun neĝo"
 
 msgctxt "#32257"
 msgid "Mixed Rain and Sleet"
@@ -294,7 +319,7 @@ msgstr ""
 
 msgctxt "#32263"
 msgid "Rain"
-msgstr ""
+msgstr "Pluvo"
 
 msgctxt "#32264"
 msgid "Snow Flurries"
@@ -310,7 +335,7 @@ msgstr ""
 
 msgctxt "#32267"
 msgid "Snow"
-msgstr ""
+msgstr "Neĝo"
 
 msgctxt "#32268"
 msgid "Hail"
@@ -322,7 +347,7 @@ msgstr ""
 
 msgctxt "#32270"
 msgid "Dust"
-msgstr ""
+msgstr "Polvo"
 
 msgctxt "#32271"
 msgid "Foggy"
@@ -334,7 +359,7 @@ msgstr ""
 
 msgctxt "#32273"
 msgid "Smoky"
-msgstr ""
+msgstr "Fume"
 
 msgctxt "#32274"
 msgid "Blustery"
@@ -342,15 +367,15 @@ msgstr ""
 
 msgctxt "#32275"
 msgid "Windy"
-msgstr ""
+msgstr "Vente"
 
 msgctxt "#32276"
 msgid "Cold"
-msgstr ""
+msgstr "Malvarme"
 
 msgctxt "#32277"
 msgid "Cloudy"
-msgstr ""
+msgstr "Nube"
 
 msgctxt "#32278"
 msgid "Mostly Cloudy"
@@ -362,11 +387,11 @@ msgstr ""
 
 msgctxt "#32280"
 msgid "Clear"
-msgstr ""
+msgstr "Klare"
 
 msgctxt "#32281"
 msgid "Sunny"
-msgstr ""
+msgstr "Sune"
 
 msgctxt "#32282"
 msgid "Fair"
@@ -378,7 +403,7 @@ msgstr ""
 
 msgctxt "#32284"
 msgid "Hot"
-msgstr ""
+msgstr "Varme"
 
 msgctxt "#32285"
 msgid "Isolated Thunderstorms"
@@ -394,7 +419,7 @@ msgstr ""
 
 msgctxt "#32288"
 msgid "Heavy Rain"
-msgstr ""
+msgstr "Pluvego"
 
 msgctxt "#32289"
 msgid "Scattered Snow Showers"
@@ -402,7 +427,7 @@ msgstr ""
 
 msgctxt "#32290"
 msgid "Heavy Snow"
-msgstr ""
+msgstr "Neĝego"
 
 msgctxt "#32291"
 msgid "Blizzard"
@@ -410,7 +435,7 @@ msgstr ""
 
 msgctxt "#32292"
 msgid "Not Available"
-msgstr ""
+msgstr "Ne disponebla"
 
 msgctxt "#32293"
 msgid "Scattered Showers"
@@ -424,34 +449,42 @@ msgctxt "#32295"
 msgid "Scattered Thundershowers"
 msgstr ""
 
+msgctxt "#32296"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32297"
+msgid "Mostly Clear"
+msgstr ""
+
 msgctxt "#32300"
 msgid "New Moon"
-msgstr ""
+msgstr "Novluno"
 
 msgctxt "#32301"
 msgid "Waxing Crescent"
-msgstr ""
+msgstr "Unua lunarko"
 
 msgctxt "#32302"
 msgid "First Quarter"
-msgstr ""
+msgstr "Unua lunduono"
 
 msgctxt "#32303"
 msgid "Waxing Gibbous"
-msgstr ""
+msgstr "Unua lunĝibo"
 
 msgctxt "#32304"
 msgid "Full Moon"
-msgstr ""
+msgstr "Plenluno"
 
 msgctxt "#32305"
 msgid "Waning Gibbous"
-msgstr ""
+msgstr "Lasta lunĝibo"
 
 msgctxt "#32306"
 msgid "Last Quarter"
-msgstr ""
+msgstr "Lasta lunduono"
 
 msgctxt "#32307"
 msgid "Waning Crescent"
-msgstr ""
+msgstr "Lasta lunarko"

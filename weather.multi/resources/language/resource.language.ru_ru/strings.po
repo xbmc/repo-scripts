@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-01-10 15:13+0000\n"
+"PO-Revision-Date: 2025-12-22 19:13+0000\n"
 "Last-Translator: Alexey <signfinder@gmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/ru_ru/>\n"
 "Language: ru_ru\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -23,7 +23,7 @@ msgstr "Прогноз погоды от нескольких поставщик
 
 msgctxt "Addon Description"
 msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
-msgstr "Прогноз погоды предоставлен: Yahoo, Weatherbit и Openweathermap"
+msgstr "Прогноз погоды предоставлен Yahoo, Weatherbit и Openweathermap"
 
 msgctxt "#32101"
 msgid "Location setup"
@@ -245,6 +245,30 @@ msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Без осадков"
 
+msgctxt "#32245"
+msgid "Flurries"
+msgstr ""
+
+msgctxt "#32246"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32247"
+msgid "Mostly Clear"
+msgstr ""
+
+msgctxt "#32248"
+msgid "Rain And Snow"
+msgstr ""
+
+msgctxt "#32249"
+msgid "Fog"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Frigid"
+msgstr ""
+
 msgctxt "#32251"
 msgid "Tornado"
 msgstr "Смерч"
@@ -424,6 +448,14 @@ msgstr "Рассеянный снег"
 msgctxt "#32295"
 msgid "Scattered Thundershowers"
 msgstr "Рассеянные грозовые дожди"
+
+msgctxt "#32296"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32297"
+msgid "Mostly Clear"
+msgstr ""
 
 msgctxt "#32300"
 msgid "New Moon"

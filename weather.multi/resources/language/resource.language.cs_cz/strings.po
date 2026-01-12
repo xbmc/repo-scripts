@@ -245,6 +245,30 @@ msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Neznámé srážky"
 
+msgctxt "#32245"
+msgid "Flurries"
+msgstr ""
+
+msgctxt "#32246"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32247"
+msgid "Mostly Clear"
+msgstr ""
+
+msgctxt "#32248"
+msgid "Rain And Snow"
+msgstr ""
+
+msgctxt "#32249"
+msgid "Fog"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Frigid"
+msgstr ""
+
 msgctxt "#32251"
 msgid "Tornado"
 msgstr "Tornádo"
@@ -424,6 +448,14 @@ msgstr "Rozptýlené sněhové přeháňky"
 msgctxt "#32295"
 msgid "Scattered Thundershowers"
 msgstr "Rozptýlené bouřky"
+
+msgctxt "#32296"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32297"
+msgid "Mostly Clear"
+msgstr ""
 
 msgctxt "#32300"
 msgid "New Moon"

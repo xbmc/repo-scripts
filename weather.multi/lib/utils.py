@@ -6,6 +6,8 @@ import time
 import _strptime
 import math
 import re
+import json
+from bs4 import BeautifulSoup
 import codecs
 import xbmc
 import xbmcgui

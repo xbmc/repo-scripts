@@ -245,6 +245,30 @@ msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Curah Hujan Tidak Diketahui"
 
+msgctxt "#32245"
+msgid "Flurries"
+msgstr ""
+
+msgctxt "#32246"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32247"
+msgid "Mostly Clear"
+msgstr ""
+
+msgctxt "#32248"
+msgid "Rain And Snow"
+msgstr ""
+
+msgctxt "#32249"
+msgid "Fog"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Frigid"
+msgstr ""
+
 msgctxt "#32251"
 msgid "Tornado"
 msgstr "Angin topan"
@@ -424,6 +448,14 @@ msgstr "Hujan Salju Merata"
 msgctxt "#32295"
 msgid "Scattered Thundershowers"
 msgstr "Hujan Petir Merata"
+
+msgctxt "#32296"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32297"
+msgid "Mostly Clear"
+msgstr ""
 
 msgctxt "#32300"
 msgid "New Moon"

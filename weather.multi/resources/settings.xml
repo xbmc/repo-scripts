@@ -3,7 +3,7 @@
 	<section id="weather.multi">
 		<category id="1" label="32101">
 			<group id="1">
-				<setting help="" id="loc1" label="32111" type="string">
+				<setting help="" id="loc1_name" label="32111" type="string">
 					<level>0</level>
 					<default></default>
 					<constraints>
@@ -13,7 +13,7 @@
 						<data>RunScript(weather.multi,loc1)</data>
 					</control>
 				</setting>
-				<setting help="" id="loc2" label="32112" type="string">
+				<setting help="" id="loc2_name" label="32112" type="string">
 					<level>0</level>
 					<default></default>
 					<constraints>
@@ -21,14 +21,14 @@
 					</constraints>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="!is" setting="loc1"/>
+							<condition operator="!is" setting="loc1_name"/>
 						</dependency>
 					</dependencies>
 					<control format="action" type="button">
 						<data>RunScript(weather.multi,loc2)</data>
 					</control>
 				</setting>
-				<setting help="" id="loc3" label="32113" type="string">
+				<setting help="" id="loc3_name" label="32113" type="string">
 					<level>0</level>
 					<default></default>
 					<constraints>
@@ -36,14 +36,14 @@
 					</constraints>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="!is" setting="loc2"/>
+							<condition operator="!is" setting="loc2_name"/>
 						</dependency>
 					</dependencies>
 					<control format="action" type="button">
 						<data>RunScript(weather.multi,loc3)</data>
 					</control>
 				</setting>
-				<setting help="" id="loc4" label="32114" type="string">
+				<setting help="" id="loc4_name" label="32114" type="string">
 					<level>0</level>
 					<default></default>
 					<constraints>
@@ -51,14 +51,14 @@
 					</constraints>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="!is" setting="loc3"/>
+							<condition operator="!is" setting="loc3_name"/>
 						</dependency>
 					</dependencies>
 					<control format="action" type="button">
 						<data>RunScript(weather.multi,loc4)</data>
 					</control>
 				</setting>
-				<setting help="" id="loc5" label="32115" type="string">
+				<setting help="" id="loc5_name" label="32115" type="string">
 					<level>0</level>
 					<default></default>
 					<constraints>
@@ -66,111 +66,102 @@
 					</constraints>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="!is" setting="loc4"/>
+							<condition operator="!is" setting="loc4_name"/>
 						</dependency>
 					</dependencies>
 					<control format="action" type="button">
 						<data>RunScript(weather.multi,loc5)</data>
 					</control>
 				</setting>
-				<setting help="" id="loc1id" type="integer">
-					<default>-1</default>
-					<visible>false</visible>
-					<control format="integer" type="edit"/>
-				</setting>
-				<setting help="" id="loc2id" type="integer">
-					<default>-1</default>
-					<visible>false</visible>
-					<control format="integer" type="edit"/>
-				</setting>
-				<setting help="" id="loc3id" type="integer">
-					<default>-1</default>
-					<visible>false</visible>
-					<control format="integer" type="edit"/>
-				</setting>
-				<setting help="" id="loc4id" type="integer">
-					<default>-1</default>
-					<visible>false</visible>
-					<control format="integer" type="edit"/>
-				</setting>
-				<setting help="" id="loc5id" type="integer">
-					<default>-1</default>
-					<visible>false</visible>
-					<control format="integer" type="edit"/>
-				</setting>
-				<setting help="" id="loc1lat" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc2lat" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc3lat" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc4lat" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc5lat" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc1lon" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc2lon" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc3lon" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc4lon" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting help="" id="loc5lon" type="number">
-					<default>0</default>
-					<visible>false</visible>
-					<control format="number" type="edit"/>
-				</setting>
-				<setting id="ycookie" type="string">
-					<default/>
+				<setting help="" id="loc1_url" type="string">
+					<default></default>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<visible>false</visible>
 					<control format="string" type="edit"/>
 				</setting>
-				<setting id="ycrumb" type="string">
-					<default/>
+				<setting help="" id="loc2_url" type="string">
+					<default></default>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<visible>false</visible>
 					<control format="string" type="edit"/>
 				</setting>
-				<setting id="ystamp" type="string">
-					<default/>
+				<setting help="" id="loc3_url" type="string">
+					<default></default>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<visible>false</visible>
 					<control format="string" type="edit"/>
+				</setting>
+				<setting help="" id="loc4_url" type="string">
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit"/>
+				</setting>
+				<setting help="" id="loc5_url" type="string">
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit"/>
+				</setting>
+				<setting help="" id="loc1_lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc2_lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc3_lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc4_lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc5_lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc1_lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc2_lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc3_lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc4_lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc5_lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
 				</setting>
 			</group>
 		</category>

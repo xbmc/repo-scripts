@@ -46,9 +46,9 @@ class Weather():
                 set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'] * 0.04 ,2)) + ' in')
                 set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'] * 0.04 ,2)) + ' in')
                 if item['precip']:
-                    set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
+                    set_property('Daily.%i.PrecipitationAmount' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
                 else:
-                    set_property('Daily.%i.Precipitation' % (count+1), '')
+                    set_property('Daily.%i.PrecipitationAmount' % (count+1), '')
                 set_property('Daily.%i.Visibility'    % (count+1), str(round(item['vis'] * 0.621371 ,2)) + ' mi')
             else:
                 set_property('Daily.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
@@ -56,9 +56,9 @@ class Weather():
                 set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
                 set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
                 if item['precip']:
-                    set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
+                    set_property('Daily.%i.PrecipitationAmount' % (count+1), str(round(item['precip'])) + ' mm')
                 else:
-                    set_property('Daily.%i.Precipitation' % (count+1), '')
+                    set_property('Daily.%i.PrecipitationAmount' % (count+1), '')
                 set_property('Daily.%i.Visibility'    % (count+1), str(item['vis']) + ' km')
             set_property('Daily.%i.WindSpeed'         % (count+1), convert_speed(item['wind_spd'], 'mps') + SPEEDUNIT)
             set_property('Daily.%i.WindGust'          % (count+1), convert_speed(item['wind_gust_spd'], 'mps') + SPEEDUNIT)
@@ -66,7 +66,7 @@ class Weather():
             set_property('Daily.%i.CloudsLow'         % (count+1), str(item['clouds_low']) + '%')
             set_property('Daily.%i.CloudsMid'         % (count+1), str(item['clouds_mid']) + '%')
             set_property('Daily.%i.CloudsHigh'        % (count+1), str(item['clouds_hi']) + '%')
-            set_property('Daily.%i.Probability'       % (count+1), str(item['pop']) + '%')
+            set_property('Daily.%i.Precipitation'     % (count+1), str(item['pop']) + '%')
             if item['uv']:
                 set_property('Daily.%i.UVIndex'       % (count+1), str(int(round(item['uv']))) + '%')
             else:
