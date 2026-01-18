@@ -2,7 +2,7 @@
 <addon
 	id="service.languagepreferencemanager"
 	name="Language Preference Manager"
-	version="1.0.7"
+	version="1.0.8"
 	provider-name="ace20022/scott967/rockrider69"
 	>
 	<requires>
@@ -20,13 +20,9 @@
 		<disclaimer lang="en_GB">For bugs, requests or general questions visit the Language Preference Manager thread on the Kodi forum.</disclaimer>
 		<disclaimer lang="sv_SE">För buggar, önskemål eller allmänna frågor, besök tråden Language Preference Manager på Kodi-forumet.</disclaimer>
 		<platform>all</platform>
-		<news>1.0.7 : - New option to always prefer Original audio tracks if present. Based on a list e.g: eng,ger,fre
-	If one is found we force activate it and skip usual audio preference evaluation. Uses 'isoriginal' tag.
-- Add Swedish translation in Addon.xml (Thanks to Yeager)
-- Custom Conditional Subs preferences : new -ff tag to prioritize Forced flagged subtitles e.g: Jpn:Eng-ff
-- Fix a bug in Custom Conditional Subs : when no preference matched, default subtitles stayed on despite option turn_subs_off
-- Avoid running multiple instances of the LPM addon
-- Use logger.py across all modules. Cleanup. Fix minor bug in settings.xml.
+		<news>1.0.8 : - Fix addon not closing properly when "Store Preferences" is used
+	(Kodi exit : freeze on Piers, thread error message on Omega)
+- Handle exception error in case video player reports no current audiostream activated
 			
 		</news>
 		<assets>
