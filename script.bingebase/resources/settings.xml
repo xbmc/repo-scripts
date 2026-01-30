@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32000">
+    <setting label="32001" type="lsep" id="connection_status"/>
+    <setting label="32002" type="action" id="authorize" action="RunScript(script.bingebase,authorize)"/>
+    <setting label="32003" type="action" id="disconnect" action="RunScript(script.bingebase,disconnect)"/>
+    <setting type="text" id="access_token" visible="false" default=""/>
+    <setting type="text" id="webhook_url" visible="false" default=""/>
+  </category>
+
+  <category label="32010">
+    <setting label="32011" type="bool" id="scrobble_enabled" default="true"/>
+    <setting label="32012" type="bool" id="scrobble_movies" default="true" enable="eq(-1,true)"/>
+    <setting label="32013" type="bool" id="scrobble_episodes" default="true" enable="eq(-2,true)"/>
+    <setting label="32014" type="slider" id="scrobble_threshold" default="80" range="50,5,95" option="percent" enable="eq(-3,true)"/>
+    <setting label="32015" type="bool" id="scrobble_notify" default="true" enable="eq(-4,true)"/>
+  </category>
+
+  <category label="32020">
+    <setting label="32021" type="bool" id="sync_on_startup" default="true"/>
+    <setting label="32022" type="bool" id="sync_on_library_update" default="true"/>
+    <setting label="32023" type="labelenum" id="sync_interval" default="3" values="32030|32031|32032|32033"/>
+    <setting label="32024" type="lsep"/>
+    <setting label="32025" type="bool" id="sync_kodi_to_bingebase" default="true"/>
+    <setting label="32026" type="bool" id="sync_bingebase_to_kodi" default="true"/>
+    <setting label="32027" type="action" id="sync_now" action="RunScript(script.bingebase,sync_now)"/>
+    <setting label="32028" type="lsep" id="last_sync"/>
+  </category>
+</settings>
