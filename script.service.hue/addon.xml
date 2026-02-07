@@ -1,4 +1,4 @@
-<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="2.1.0">
+<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="2.1.1">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.31.0"/>
@@ -29,6 +29,7 @@ v2.0.016
 - Fix Video scenes triggering with Audio
 
 </news>
+        <summary lang="bs_BA">Automatizirajte Hue svjetla pomoću Kodi reprodukcije</summary>
         <summary lang="ca_ES">Automatitza les llums Hue amb la reproducció de Kodi</summary>
         <summary lang="cs_CZ">Automatizace Hue světel s přehráváním Kodi</summary>
         <summary lang="da_DK">Automatiser Hue-lys sammen med afspilning i Kodi</summary>
@@ -45,6 +46,7 @@ v2.0.016
         <summary lang="sk_SK">Automatizácia svetiel Hue s prehrávaním v Kodi</summary>
         <summary lang="sv_SE">Automatisera Hue-lampor med Kodi-uppspelning</summary>
         <summary lang="zh_CN">Kodi 播放时自动调整 Hue 灯光</summary>
+        <description lang="bs_BA">Automatizirajte svoja Hue svjetla pomoću Kodija. Koristite scene konfigurirane u službenoj Hue aplikaciji. Možete koristiti Hue vrijeme zalaska sunca za automatsko onemogućavanje usluge tokom dana i uključivanje svjetala u zalazak sunca tokom reprodukcije. Uključuje podršku za Ambilight.</description>
         <description lang="en_GB">Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue&apos;s sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support.</description>
         <description lang="es_ES">Automatiza tus luces Hue con Kodi. Utiliza escenas configuradas en la app oficial de Hue. Puede utilizar la hora de puesta de sol de Hue para desactivar automáticamente el servicio durante el día y encender las luces al atardecer durante la reproducción. Incluye soporte para Ambilight.</description>
         <description lang="fr_FR">Automatiser vos lumières Hue avec Kodi. Utiliser les scènes configurées dans l’application officielle Hue. Peut utiliser l’heure du coucher du soleil de Hue pour désactiver automatiquement le service pendant la journée et allumer les lumières au coucher du soleil pendant la lecture. Comprend le support Ambilight.</description>
@@ -54,6 +56,7 @@ v2.0.016
         <description lang="ru_RU">Управляйте светом Hue с Kodi. Используйте сцены настроенные в официальном приложении Hue. Может использовать время расцвета из Hue для автоматического отключения света при дневном свете. Включает поддержку Ambilight.</description>
         <description lang="sv_SE">Automatisera dina Hue-lampor med Kodi. Använd scener som konfigurerats i den officiella Hue-appen. Kan använda Hues solnedgångstid för att automatiskt inaktivera tjänsten under dagtid och slå på lamporna vid solnedgången under uppspelning. Inkluderar stöd för Ambilight.</description>
         <description lang="zh_CN">使用 Kodi 自动化您的 Hue 灯。使用官方 Hue 应用程序中配置的场景。可以使用 Hue 的日落时间在白天自动禁用该服务，并在播放期间在日落时打开灯光。包括 Ambilight 支持。</description>
+        <disclaimer lang="bs_BA">Zahtijeva Hue Bridge V2 (Square). Ambilight nije dostupan na svim uređajima.</disclaimer>
         <disclaimer lang="cs_CZ">Vyžaduje Hue Bridge V2 (čtvercový). Ambilight není podporován na všech zařízeních.</disclaimer>
         <disclaimer lang="da_DK">Kræver en Hue Bridge V2 (firkant). Ambilight er ikke tilgængelig på al hardware.</disclaimer>
         <disclaimer lang="de_DE">Erfordert eine Hue Bridge V2 (quadratisch). Ambilight-Unterstützung nicht mit jeder Hardware verfügbar.</disclaimer>
