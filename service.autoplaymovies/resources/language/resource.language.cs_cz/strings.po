@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: service.autoplaymovies\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-13 00:00+0000\n"
+"PO-Revision-Date: 2026-03-13 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs_CZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#32000"
+msgid "Playback"
+msgstr "Přehrávání"
+
+msgctxt "#32001"
+msgid "Video folder"
+msgstr "Složka s videi"
+
+msgctxt "#32002"
+msgid "Show startup overlay text"
+msgstr "Zobrazit text při startu"
+
+msgctxt "#32003"
+msgid "Overlay text"
+msgstr "Text"
+
+msgctxt "#32004"
+msgid "Overlay duration (seconds)"
+msgstr "Doba zobrazení (sekundy)"
+
+msgctxt "#32005"
+msgid "Configured video folder was not found. Please select a valid folder in settings."
+msgstr "Nastavená složka s videi nebyla nalezena. V nastavení prosím vyberte platnou složku."
+
+msgctxt "#32006"
+msgid "No supported video files were found in the selected folder. Please choose a different folder in settings."
+msgstr "Ve vybrané složce nebyla nalezena žádná podporovaná videa. V nastavení prosím vyberte jinou složku."
