@@ -1,3 +1,8 @@
+--- Version 1.0.8
+
+- Fix addon not closing properly when "Store Preferences" is used (Kodi exit : freeze on Piers, thread error message on Omega)
+- Handle exception error in case video player reports no current audiostream activated
+
 --- Version 1.0.7
 
 - New option to always prefer Original audio tracks if present. Based on a list e.g: eng,ger,fre
