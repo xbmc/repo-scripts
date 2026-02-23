@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
-"Language: sv\n"
+"PO-Revision-Date: 2025-12-07 13:13+0000\n"
+"Last-Translator: Daniel Nylander <daniel@danielnylander.se>\n"
+"Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/sv_se/>\n"
+"Language: sv_se\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -22,7 +23,7 @@ msgstr "CU LRC Lyrics"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr "CU LRC Lyrics är ett skript för Kodi. Det stödjer såväl vanliga som LRC texter. Skriptet kan söka synkroniserade/osynkroniserade texter inbäddade från fil eller från skraport. Det kan läsa .lrc/.txt filer sparade med samma sökväg och filnamn som .mp3 (eller annan typ av musik)."
+msgstr "CU LRC Lyrics är ett skript för Kodi som hanterar låttexter. Det har stöd för både vanliga låttexter och LRC-låttexter. Skriptet kan söka efter synkroniserade/osynkroniserade låttexter som är inbäddade, från filer eller med hjälp av skrapare. Det kan läsa .lrc/.txt-låttextfiler som är sparade i samma sökväg med samma filnamn som .mp3 (eller annan typ av musik)."
 
 # Script labels
 msgctxt "#32000"
@@ -31,7 +32,7 @@ msgstr "Fil"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr "Inga texter hittade!"
+msgstr "Inga låttexter hittades!"
 
 msgctxt "#32002"
 msgid "Embedded"
@@ -39,49 +40,49 @@ msgstr "Inbäddade"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr ""
+msgstr "Låttextförskjutning"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr "Söker..."
+msgstr "Söker efter låttexter..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
-msgstr ""
+msgstr "Välj låttexter:"
 
 msgctxt "#32006"
 msgid "Select different lyrics"
-msgstr ""
+msgstr "Välj olika låttexter"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr ""
+msgstr "Synkronisera låttexter manuellt"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
-msgstr ""
+msgstr "Efter med: %ss"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr ""
+msgstr "Före med: %ss"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Sök efter och spara lrc-låttexter i en separat låttextmapp"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Sök efter och spara txt-låttexter i en separat låttextmapp"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr "Spara mapp"
+msgstr "- Låttextmapp"
 
 msgctxt "#32103"
 msgid "- Filename format"
-msgstr "- Spara format"
+msgstr "- Filnamnsformat"
 
 msgctxt "#32104"
 msgid "%N %A - %T"
@@ -109,65 +110,65 @@ msgstr "%A\\%B\\%T"
 
 msgctxt "#32110"
 msgid "%A\\%B\\%N (-) %T"
-msgstr "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N (-) %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- Låttexter finns i en undermapp"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Namn på undermapp"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Sök efter och spara lrc-låttexter i låtmapp"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
-msgstr ""
+msgstr "%N - %A - %T"
 
 msgctxt "#32115"
 msgid "Display options"
-msgstr ""
+msgstr "Visningsalternativ"
 
 msgctxt "#32116"
 msgid "Search options"
-msgstr ""
+msgstr "Sökalternativ"
 
 msgctxt "#32117"
 msgid "Lyrics files"
-msgstr ""
+msgstr "Låttextfiler"
 
 msgctxt "#32118"
 msgid "Debugging"
-msgstr ""
+msgstr "Felsökning"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
-msgstr ""
+msgstr "Sök efter och spara txt-låttexter i låtmapp"
 
 msgctxt "#32120"
 msgid "%N. %A - %T"
-msgstr ""
+msgstr "%N. %A - %T"
 
 msgctxt "#32121"
 msgid "%A - %B - %N - %T"
-msgstr ""
+msgstr "%A - %B - %N - %T"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Sök efter lokala .txt-låttextfiler"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Dölj dialogrutans bakgrund, visa endast låttexten"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr ""
+msgstr "Expert"
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -179,19 +180,19 @@ msgstr "Alternativ"
 
 msgctxt "#32152"
 msgid "Search for embedded lyrics"
-msgstr "Sök efter inbäddade texter"
+msgstr "Sök efter inbäddade låttexter"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
-msgstr ""
+msgstr "Sök efter lokala .lrc-låttextfiler"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Synkroniserad textskrapor"
+msgstr "Synkroniserade låttextskrapare"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "Vanliga textskrapor"
+msgstr "Vanliga skrapor för låttexter"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
@@ -199,108 +200,104 @@ msgstr "Visa låttexter automatiskt"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr "Rensa låttitel (radera text inom parentes)"
+msgstr "Rensa låttiteln (ta bort delen inom parentes)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
-msgstr "Skriptet används redan!"
+msgstr "Skriptet körs redan!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"
-msgstr "Aktivera debugloggning"
+msgstr "Aktivera felsökningsloggning"
 
 msgctxt "#32160"
 msgid "Hide notifications"
-msgstr ""
+msgstr "Dölj notifieringar"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
-msgstr ""
+msgstr "Ta bort kinesisk/koreansk text från låttexter"
 
 msgctxt "#32162"
 msgid "Scraper test"
-msgstr ""
+msgstr "Test av skrapa"
 
 msgctxt "#32163"
 msgid "Testing: %s"
-msgstr ""
+msgstr "Testar: %s"
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr ""
+msgstr "Alla skrapor fungerar som de ska"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
-msgstr ""
+msgstr "Misslyckade skrapor: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr ""
+msgstr "Tidsförskjutning för synkroniserade låttexter"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
-msgstr ""
+msgstr "Ta bort låttexter"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
-msgstr ""
+msgstr "Om du döljer musik-OSD och informationen om vad som spelas just nu, döljs även bakgrunden i dialogrutan för låttexter."
 
 msgctxt "#32169"
 msgid "Sources"
-msgstr ""
+msgstr "Källor"
 
 msgctxt "#32170"
 msgid "Get lyrics when listening to internet radio stations"
-msgstr ""
+msgstr "Få låttexter när du lyssnar på internetradiostationer"
 
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "Lrclib"
-msgstr ""
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
-msgstr ""
+msgstr "MusixMatch"
 
 msgctxt "#32903"
 msgid "Megalobiz"
-msgstr ""
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
-msgstr ""
-
-msgctxt "#32905"
-msgid "Lyricsify"
-msgstr ""
+msgstr "Music 163"
 
 msgctxt "#32912"
 msgid "Genius"
-msgstr ""
+msgstr "Genius"
 
 msgctxt "#32913"
 msgid "Lyrics Mode"
-msgstr ""
+msgstr "Låttextläge"
 
 msgctxt "#32914"
 msgid "AZLyrics"
-msgstr ""
+msgstr "AZLyrics"
 
 msgctxt "#32915"
 msgid "Lyrics.com"
-msgstr ""
+msgstr "Lyrics.com"
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
-msgstr ""
+msgstr "Dark Lyrics"
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
+msgstr "Super Music"
 
 msgctxt "#32918"
 msgid "RCLyricsBand"
-msgstr ""
+msgstr "RCLyricsBand"
 
 # empty strings from id 32010 to 32100
 # Settings labels

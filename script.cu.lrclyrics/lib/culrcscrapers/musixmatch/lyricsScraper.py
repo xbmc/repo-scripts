@@ -45,7 +45,7 @@ class LyricsFetcher:
             response = search.text
         except:
             return None
-        matchcode = re.search('Lyrics of (.*?)Writer\(s\): ', response, flags=re.DOTALL)
+        matchcode = re.search(r'body":"(.*?)"', response, flags=re.DOTALL)
         if matchcode:
             lyricscode = (matchcode.group(1))
             lyr = re.sub('<[^<]+?>', '\n', lyricscode)

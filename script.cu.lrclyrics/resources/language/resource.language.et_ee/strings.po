@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-04-10 14:13+0000\n"
+"PO-Revision-Date: 2026-02-04 12:13+0000\n"
 "Last-Translator: rimasx <riks_12@hot.ee>\n"
 "Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/et_ee/>\n"
 "Language: et_ee\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -40,7 +40,7 @@ msgstr "Manustatud"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr "Laulusõnade ajastus"
+msgstr "Laulusõnade nihe"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
@@ -78,7 +78,7 @@ msgstr "Otsi ja salvesta txt laulusõnad eraldi laulusõnade kausta"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr "- laulusõnade kaust"
+msgstr "- Laulusõnade kaust"
 
 msgctxt "#32103"
 msgid "- Filename format"
@@ -118,11 +118,11 @@ msgstr "- Laulusõnad on alamkaustas"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr "- Alamkausta nimi"
+msgstr "-- Alamkausta nimi"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr "Otsi ja salvesta lrc sõnad laulukausta"
+msgstr "Otsi ja salvesta lrc-laulusõnad laulukausta"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
@@ -180,7 +180,7 @@ msgstr "Valikud"
 
 msgctxt "#32152"
 msgid "Search for embedded lyrics"
-msgstr "Otsi manustaud laulusõnu"
+msgstr "Otsi manustatud laulusõnu"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
@@ -200,7 +200,7 @@ msgstr "Kuva laulusõnad automaatselt"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr "Puhas laulu nimi (eemalda sulgudes osa)"
+msgstr "Puhasta laulu nimi (eemalda sulgudes osa)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
@@ -236,7 +236,7 @@ msgstr "Ebaõnnestunud kaabitsad: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr "Sünkroonitud laulusõnade ajanihe"
+msgstr "Sünkroonitud laulusõnade nihe"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
@@ -271,10 +271,6 @@ msgctxt "#32904"
 msgid "Music 163"
 msgstr "Music 163"
 
-msgctxt "#32905"
-msgid "Lyricsify"
-msgstr "Lyricsify"
-
 msgctxt "#32912"
 msgid "Genius"
 msgstr "Genius"
@@ -302,6 +298,10 @@ msgstr "Super Music"
 msgctxt "#32918"
 msgid "RCLyricsBand"
 msgstr ""
+
+#~ msgctxt "#32905"
+#~ msgid "Lyricsify"
+#~ msgstr "Lyricsify"
 
 # Scrapers - do not translate!
 #~ msgctxt "#32901"

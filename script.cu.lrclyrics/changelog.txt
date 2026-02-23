@@ -1,3 +1,12 @@
+v6.7.1
+- fix genius scraper
+- fix musicmatch scraper
+- fix supermusic scraper
+- remove redundant language files
+
+v6.7.0
+- fixed SyntaxWarning errors
+
 v6.6.9
 - python 3.13 compatibility
 - fixed Genius scraper

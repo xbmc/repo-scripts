@@ -69,8 +69,8 @@ def test_scrapers():
     dialog.update(16, LANGUAGE(32163) % 'genius')
     log('==================== genius ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Maren Morris'
-    song.title = 'My Church'
+    song.artist = 'Michael Jackson'
+    song.title = 'Beat It'
     st = time.time()
     lyrics = lyricsScraper_genius.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
@@ -126,8 +126,8 @@ def test_scrapers():
     dialog.update(40, LANGUAGE(32163) % 'lyricsmode')
     log('==================== lyricsmode ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Maren Morris'
-    song.title = 'My Church'
+    song.artist = 'M83'
+    song.title = 'Kim'
     st = time.time()
     lyrics = lyricsScraper_lyricsmode.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
@@ -240,8 +240,8 @@ def test_scrapers():
     dialog.update(88, LANGUAGE(32163) % 'supermusic')
     log('==================== supermusic ====================', debug=True)
     song = Song(opt=lyricssettings)
-    song.artist = 'Karel Gott'
-    song.title = 'Trezor'
+    song.artist = 'Madonna'
+    song.title = 'Holiday'
     st = time.time()
     lyrics = lyricsScraper_supermusic.LyricsFetcher(settings=lyricssettings, debug=True).get_lyrics(song)
     ft = time.time()
