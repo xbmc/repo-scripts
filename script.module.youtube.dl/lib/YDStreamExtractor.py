@@ -189,7 +189,7 @@ def _getYoutubeDLVideo(url, quality=None, resolve_redirects=False):
         try:
             url = resolve_http_redirect(url)
         except Exception:
-            util.ERROR('_getYoutubeDLVideo(): Failed to resolve URL')
+            util.ERROR('_getYoutubeDLVideo(): Failed to resolve URL'+' '+url)
             return None
     ytdl = YoutubeDLWrapper._getYTDL()
     ytdl.clearDownloadParams()

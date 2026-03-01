@@ -35,11 +35,13 @@
         <onup condition="String.IsEqual(Window.Property(close.direction),top)">Close</onup>
         <onup condition="!String.IsEqual(Window.Property(close.direction),top)">noop</onup>
         <onleft condition="String.IsEqual(Window.Property(close.direction),left)">Close</onleft>
+        <onright condition="!String.IsEmpty(Window.Property(scroll))">1152</onright>
         <onright condition="String.IsEqual(Window.Property(close.direction),right)">Close</onright>
         <ondown condition="String.IsEqual(Window.Property(close.direction),down)">Close</ondown>
         <ondown condition="!String.IsEqual(Window.Property(close.direction),down)">noop</ondown>
         <scrolltime>200</scrolltime>
         <orientation>vertical</orientation>
+        <pagecontrol>1152</pagecontrol>
         <!-- ITEM LAYOUT ########################################## -->
         <itemlayout height="{{ vscale(66) }}">
             <control type="image">
@@ -48,7 +50,7 @@
                 <posy>0</posy>
                 <width>300</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FF323232" border="10">script.plex/white-square-top-rounded.png</texture>
+                <texture colordiffuse="D3111111" border="10">script.plex/white-square-top-rounded.png</texture>
             </control>
             <control type="image">
                 <visible>String.IsEmpty(ListItem.Property(first)) + String.IsEmpty(ListItem.Property(last)) + String.IsEmpty(ListItem.Property(only))</visible>
@@ -56,7 +58,7 @@
                 <posy>0</posy>
                 <width>300</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FF323232">script.plex/white-square.png</texture>
+                <texture colordiffuse="D3111111">script.plex/white-square.png</texture>
             </control>
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.Property(last))</visible>
@@ -64,7 +66,7 @@
                 <posy>0</posy>
                 <width>300</width>
                 <height>{{ vscale(66) }}</height>
-                <texture flipy="true" colordiffuse="FF323232" border="10">script.plex/white-square-top-rounded.png</texture>
+                <texture flipy="true" colordiffuse="D3111111" border="10">script.plex/white-square-top-rounded.png</texture>
             </control>
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.Property(only))</visible>
@@ -72,7 +74,7 @@
                 <posy>0</posy>
                 <width>300</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FF323232" border="10">script.plex/white-square-rounded.png</texture>
+                <texture colordiffuse="D3111111" border="10">script.plex/white-square-rounded.png</texture>
             </control>
             <control type="label">
                 <visible>String.IsEmpty(ListItem.Property(with.indicator))</visible>
@@ -201,6 +203,23 @@
                 <texture colordiffuse="FF000000">script.plex/white-square.png</texture>
             </control>
         </focusedlayout>
+    </control>
+    <control type="scrollbar" id="1152">
+        <visible>!String.IsEmpty(Window.Property(scroll))</visible>
+        <left>300</left>
+        <top>0</top>
+        <width>6</width>
+        <height>{{ vscale(924) }}</height>
+        <visible>true</visible>
+        <texturesliderbackground colordiffuse="40000000">script.plex/white-square.png</texturesliderbackground>
+        <texturesliderbar colordiffuse="FFAAAAAA">script.plex/white-square.png</texturesliderbar>
+        <texturesliderbarfocus colordiffuse="FFE5A00D">script.plex/white-square.png</texturesliderbarfocus>
+        <textureslidernib colordiffuse="FFAAAAAA">script.plex/white-square.png</textureslidernib>
+        <textureslidernibfocus colordiffuse="FFE5A00D">script.plex/white-square.png</textureslidernibfocus>
+        <pulseonselect>true</pulseonselect>
+        <orientation>vertical</orientation>
+        <showonepage>false</showonepage>
+        <onleft>250</onleft>
     </control>
 </control>
 {% endblock controls %}

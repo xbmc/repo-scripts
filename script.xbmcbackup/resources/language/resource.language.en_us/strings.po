@@ -21,11 +21,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
-msgstr "Backup and restore your Kodi database and configuration files in the event of a crash or file corruption."
+msgstr ""
 
 msgctxt "Addon Description"
 msgid "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
-msgstr "Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. "
+msgstr ""
 
 msgctxt "#30010"
 msgid "Backup"
@@ -296,8 +296,8 @@ msgid "Restart Kodi"
 msgstr "Restart Kodi"
 
 msgctxt "#30078"
-msgid "You should restart Kodi to continue"
-msgstr "You should restart Kodi to continue"
+msgid "A restart is recommended, select Yes to close Kodi"
+msgstr ""
 
 msgctxt "#30079"
 msgid "Just Today"
@@ -630,6 +630,18 @@ msgstr ""
 msgctxt "#30161"
 msgid "Amend a string to the end of each backup folder or ZIP file"
 msgstr ""
+
+msgctxt "#30162"
+msgid "this could take some time"
+msgstr ""
+
+msgctxt "#30163"
+msgid "Current folder"
+msgstr ""
+
+#~ msgctxt "#30078"
+#~ msgid "You should restart Kodi to continue"
+#~ msgstr "You should restart Kodi to continue"
 
 #~ msgctxt "#30045"
 #~ msgid "Error: Remote path doesn't exist"

@@ -79,6 +79,28 @@ WEATHER_CODES = { '200d': '4',
                   '804n': '27',
                   '900n': 'na' }
 
+# convert short day name to long localized day name (sun = sunday)
+LONGDAY = { 'Mon' : 11,
+            'Tue' : 12,
+            'Wed' : 13,
+            'Thu' : 14,
+            'Fri' : 15,
+            'Sat' : 16,
+            'Sun' : 17,
+            'Today': 33006,
+            'Tomorrow': 33007}
+
+# convert short day name to shor localized day name (sun = sun)
+SHORTDAY = { 'Mon' : 41,
+             'Tue' : 42,
+             'Wed' : 43,
+             'Thu' : 44,
+             'Fri' : 45,
+             'Sat' : 46,
+             'Sun' : 47,
+             'Today': 33006,
+             'Tomorrow': 33007}
+
 # convert day numbers to names (0 = sunday)
 WEEK_DAY_LONG = { '0' : 17,
                   '1' : 11,
@@ -125,67 +147,125 @@ MONTH_NAME_SHORT = { '01' : 51,
                      '11' : 61,
                      '12' : 62 }
 
-# convert moonphase numbers to names
-MOONPHASE = { 0: LANGUAGE(32300),
-              1: LANGUAGE(32301),
-              2: LANGUAGE(32302),
-              3: LANGUAGE(32303),
-              4: LANGUAGE(32304),
-              5: LANGUAGE(32305),
-              6: LANGUAGE(32306),
-              7: LANGUAGE(32307)}
+# convert moonphase string to localized string
+MOONPHASE = { "new moon": LANGUAGE(32300),
+              "waxing crescent": LANGUAGE(32301),
+              "first quarter": LANGUAGE(32302),
+              "waxing gibbous": LANGUAGE(32303),
+              "full moon": LANGUAGE(32304),
+              "waning gibbous": LANGUAGE(32305),
+              "third quarter": LANGUAGE(32306),
+              "waning crescent": LANGUAGE(32307)}
 
-# convert yahoo forecast codes to strings
-OUTLOOK = {'0': LANGUAGE(32251),
-           '1': LANGUAGE(32252),
-           '2': LANGUAGE(32253),
-           '3': LANGUAGE(32254),
-           '4': LANGUAGE(32255),
-           '5': LANGUAGE(32256),
-           '6': LANGUAGE(32257),
-           '7': LANGUAGE(32258),
-           '8': LANGUAGE(32259),
-           '9': LANGUAGE(32260),
-           '10': LANGUAGE(32261),
-           '11': LANGUAGE(32262),
-           '12': LANGUAGE(32263),
-           '13': LANGUAGE(32264),
-           '14': LANGUAGE(32265),
-           '15': LANGUAGE(32266),
-           '16': LANGUAGE(32267),
-           '17': LANGUAGE(32268),
-           '18': LANGUAGE(32269),
-           '19': LANGUAGE(32270),
-           '20': LANGUAGE(32271),
-           '21': LANGUAGE(32272),
-           '22': LANGUAGE(32273),
-           '23': LANGUAGE(32274),
-           '24': LANGUAGE(32275),
-           '25': LANGUAGE(32276),
-           '26': LANGUAGE(32277),
-           '27': LANGUAGE(32278),
-           '28': LANGUAGE(32278),
-           '29': LANGUAGE(32279),
-           '30': LANGUAGE(32279),
-           '31': LANGUAGE(32280),
-           '32': LANGUAGE(32281),
-           '33': LANGUAGE(32282),
-           '34': LANGUAGE(32282),
-           '35': LANGUAGE(32283),
-           '36': LANGUAGE(32284),
-           '37': LANGUAGE(32285),
-           '38': LANGUAGE(32286),
-           '39': LANGUAGE(32287),
-           '40': LANGUAGE(32288),
-           '41': LANGUAGE(32289),
-           '42': LANGUAGE(32290),
-           '43': LANGUAGE(32291),
-           '44': LANGUAGE(32292),
-           '45': LANGUAGE(32293),
-           '46': LANGUAGE(32294),
-           '47': LANGUAGE(32295)}
+# convert yahoo forecast strings to icon codes
+CONDITION = {"Tornado": LANGUAGE(32251),
+            "Tropical Storm": LANGUAGE(32252),
+            "Hurricane": LANGUAGE(32253),
+            "Severe Thunderstorms": LANGUAGE(32254),
+            "Thunderstorms": LANGUAGE(32255),
+            "Mixed Rain and Snow": LANGUAGE(32256),
+            "Mixed Rain and Sleet": LANGUAGE(32257),
+            "Mixed Snow and Sleet": LANGUAGE(32258),
+            "Freezing Drizzle": LANGUAGE(32259),
+            "Drizzle": LANGUAGE(32260),
+            "Freezing Rain": LANGUAGE(32261),
+            "Showers": LANGUAGE(32262),
+            "Rain": LANGUAGE(32263),
+            "Snow Flurries": LANGUAGE(32264),
+            "Light Snow Showers": LANGUAGE(32265),
+            "Blowing Snow": LANGUAGE(32266),
+            "Snow": LANGUAGE(32267),
+            "Hail": LANGUAGE(32268),
+            "Sleet": LANGUAGE(32269),
+            "Dust": LANGUAGE(32270),
+            "Foggy": LANGUAGE(32271),
+            "Haze": LANGUAGE(32272),
+            "Smoky": LANGUAGE(32273),
+            "Blustery": LANGUAGE(32274),
+            "Windy": LANGUAGE(32275),
+            "Cold": LANGUAGE(32276),
+            "Cloudy": LANGUAGE(32277),
+            "Mostly Cloudy": LANGUAGE(32278),
+            "Partly Cloudy": LANGUAGE(32279),
+            "Clear": LANGUAGE(32280),
+            "Sunny": LANGUAGE(32281),
+            "Fair": LANGUAGE(32282),
+            "Mixed Rain and Hail": LANGUAGE(32283),
+            "Hot": LANGUAGE(32284),
+            "Isolated Thunderstorms": LANGUAGE(32285),
+            "Scattered Thunderstorms": LANGUAGE(32286),
+            "Scattered Showers": LANGUAGE(32287),
+            "Heavy Rain": LANGUAGE(32288),
+            "Scattered Snow Showers": LANGUAGE(32289),
+            "Heavy Snow": LANGUAGE(32290),
+            "Blizzard": LANGUAGE(32291),
+            "Not Available": LANGUAGE(32292),
+            "Scattered Showers": LANGUAGE(32293),
+            "Scattered Snow Showers": LANGUAGE(32294),
+            "Scattered Thundershowers": LANGUAGE(32295),
+            "Flurries": LANGUAGE(32245), # snow flurries
+            "Mostly Sunny": LANGUAGE(32246), # fair day
+            "Mostly Clear": LANGUAGE(32247), # fair night
+            "Rain And Snow": LANGUAGE(32248), # sleet
+            "Fog": LANGUAGE(32249), # foggy
+            "Frigid": LANGUAGE(32250)} # cold
 
-# convert weatherbit.io forecast codes to strings
+OUTLOOK = {"Tornado": "0",
+           "Tropical Storm": "1",
+           "Hurricane": "2",
+           "Severe Thunderstorms": "3",
+           "Thunderstorms": "4",
+           "Mixed Rain and Snow": "5",
+           "Mixed Rain and Sleet": "6",
+           "Mixed Snow and Sleet": "7",
+           "Freezing Drizzle": "8",
+           "Drizzle": "9",
+           "Freezing Rain": "10",
+           "Showers": "11",
+           "Rain": "12",
+           "Snow Flurries": "13",
+           "Light Snow Showers": "14",
+           "Blowing Snow": "15",
+           "Snow": "16",
+           "Hail": "17",
+           "Sleet": "18",
+           "Dust": "19",
+           "Foggy": "20",
+           "Haze": "21",
+           "Smoky": "22",
+           "Blustery": "23",
+           "Windy": "24",
+           "Cold": "25",
+           "Cloudy": "26",
+           "Mostly Cloudy Night": "27",
+           "Mostly Cloudy Day": "28",
+           "Partly Cloudy Night": "29",
+           "Partly Cloudy Day": "30",
+           "Clear": "31",
+           "Sunny": "32",
+           "Fair Night": "33",
+           "Fair Day": "34",
+           "Mixed Rain and Hail": "35",
+           "Hot": "36",
+           "Isolated Thunderstorms": "37",
+           "Scattered Thunderstorms": "38",
+           "Scattered Showers": "39",
+           "Heavy Rain": "40",
+           "Scattered Snow Showers": "41",
+           "Heavy Snow": "42",
+           "Blizzard": "43",
+           "Not Available": "44",
+           "Scattered Showers": "45",
+           "Scattered Snow Showers": "46",
+           "Scattered Thundershowers": "47",
+           "Flurries": "13", # snow flurries
+           "Mostly Sunny": "34", # fair day
+           "Mostly Clear": "33", # fair night
+           "Rain And Snow": "18", # sleet
+           "Fog": "20", # foggy
+           "Frigid": "25"} # cold
+
+# convert weatherbit.io forecast codes to localized strings
 FORECAST = { '200': LANGUAGE(32201),
              '201': LANGUAGE(32202),
              '202': LANGUAGE(32203),
@@ -225,9 +305,20 @@ FORECAST = { '200': LANGUAGE(32201),
              '804': LANGUAGE(32237),
              '900': LANGUAGE(32238) }
 
+# convert winddir string to localized string
+WINDDIR = {"north": 71,
+           "northeast": 73,
+           "east": 75,
+           "southeast": 77,
+           "south": 79,
+           "southwest": 81,
+           "west": 83,
+           "northwest": 85,
+           "variable": 87}
+
 # convert timestamp to localized time and date
-# stamp (input value): either datetime (2020-02-28T22:00:00.000Z), timestamp (1582871381) or daynumber (1)
-# inpt (input format) either 'datetime', 'timestamp', 'seconds' (after midnight) or 'day'
+# stamp (input value): either datetime (2020-02-28T22:00:00.000Z), timestamp (1582871381), daynumber (1) or AM/PM time
+# inpt (input format) either 'datetime', 'timestamp', 'seconds' (after midnight), 'day' or 'ampm'
 # outpt (return value) time+date, month+day, weekday, time
 # form (output format) either long or short names 
 def convert_datetime(stamp, inpt, outpt, form):
@@ -240,6 +331,21 @@ def convert_datetime(stamp, inpt, outpt, form):
         h, m = divmod(m, 60)
         hm = "%02d:%02d" % (h, m)
         timestruct = time.strptime(hm, "%H:%M")
+    elif inpt == 'ampm':
+        if stamp == 'Now':
+            return stamp
+        elif stamp == 'Midnight':
+            stamp = '12:00 AM'
+        elif stamp == 'Noon':
+            stamp = '12:00 PM'
+        if TIMEFORMAT != '/':
+            return stamp
+        else:
+            try:
+                timestruct = time.strptime(stamp, '%I:%M %p')
+            except:
+                timestruct = time.strptime(stamp, '%I %p')
+            return time.strftime('%H:%M', timestruct)
     if outpt == 'timedate':
         if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
             localdate = time.strftime('%d-%m-%Y', timestruct)
@@ -378,7 +484,7 @@ def KPHTOBFT(spd):
         bft = ''
     return bft
 
-# convert winddirection in degrees to a string (eg. NNW)
+# convert weatherbit winddirection in degrees to a string (eg. NNW)
 def WIND_DIR(deg):
     if deg >= 349 or deg <=  11:
         return 71

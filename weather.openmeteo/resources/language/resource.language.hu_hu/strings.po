@@ -635,6 +635,18 @@ msgctxt "#32456"
 msgid "grains"
 msgstr "szemcsék"
 
+msgctxt "#32491"
+msgid "Notice"
+msgstr "[COLOR=yellow]Értesítés[/COLOR]"
+
+msgctxt "#32492"
+msgid "Caution"
+msgstr "[COLOR=orange]Figyelem[/COLOR]"
+
+msgctxt "#32493"
+msgid "Danger"
+msgstr "[COLOR=crimson]Veszély[/COLOR]"
+
 msgctxt "#32500"
 msgid "Weather forecast from Open-Meteo"
 msgstr "Időjárás-előrejelzés az Open-Meteo-ból"

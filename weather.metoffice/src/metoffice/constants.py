@@ -3,33 +3,23 @@ import urllib.parse
 import pytz
 import xbmc
 import xbmcaddon
-import xbmcgui
 import xbmcvfs
 
 # Magic numbers. See https://kodi.wiki/view/Window_IDs
 WEATHER_WINDOW_ID = 12600
 ADDON_BROWSER_WINDOW_ID = 10040
+SETTINGS_WINDOW_ID = 10018
 
 TZ = pytz.timezone(
     "Europe/London"
 )  # TODO: Need to pull the actual timezone out of xbmc. Somehow.
 
 
-def window():
-    return xbmcgui.Window(WEATHER_WINDOW_ID)
-
-
-def dialog():
-    return xbmcgui.Dialog()
-
-
-def keyboard():
-    return xbmc.Keyboard()
-
-
 def addon():
     return xbmcaddon.Addon(id="weather.metoffice")
 
+
+ADDON_ID = "weather.metoffice"
 
 ADDON_BANNER_PATH = xbmcvfs.translatePath(
     "special://home/addons/%s/resources/banner.png" % addon().getAddonInfo("id")
@@ -47,8 +37,6 @@ FORECAST_LOCATION = addon().getSetting("ForecastLocation")
 FORECAST_LOCATION_ID = addon().getSetting("ForecastLocationID")
 OBSERVATION_LOCATION = addon().getSetting("ObservationLocation")
 OBSERVATION_LOCATION_ID = addon().getSetting("ObservationLocationID")
-REGIONAL_LOCATION = addon().getSetting("RegionalLocation")
-REGIONAL_LOCATION_ID = addon().getSetting("RegionalLocationID")
 LATITUDE = addon().getSetting("ForecastLocationLatitude")
 LONGITUDE = addon().getSetting("ForecastLocationLongitude")
 
@@ -104,12 +92,22 @@ WEATHER_CODES = {
 GEOIP_PROVIDERS = [
     {"url": "http://ip-api.com/json/", "latitude": "lat", "longitude": "lon"},
     {
-        "url": "https://api.geoiplookup.net/?json=true",
+        "url": "https://json.geoiplookup.io",
         "latitude": "latitude",
         "longitude": "longitude",
     },
     {
         "url": "https://ipapi.co/json/",
+        "latitude": "latitude",
+        "longitude": "longitude",
+    },
+    {
+        "url": "http://ipwho.is",
+        "latitude": "latitude",
+        "longitude": "longitude",
+    },
+    {
+        "url": "https://free.freeipapi.com/api/json",
         "latitude": "latitude",
         "longitude": "longitude",
     },
@@ -131,15 +129,6 @@ OBSERVATION_SITELIST_URL = URL_TEMPLATE.format(
     format="val",
     resource="wxobs",
     group="all",
-    datatype="json",
-    object="sitelist",
-    get=urllib.parse.unquote(urllib.parse.urlencode((("key", API_KEY),))),
-)
-
-REGIONAL_SITELIST_URL = URL_TEMPLATE.format(
-    format="txt",
-    resource="wxfcs",
-    group="regionalforecast",
     datatype="json",
     object="sitelist",
     get=urllib.parse.unquote(urllib.parse.urlencode((("key", API_KEY),))),
@@ -178,15 +167,6 @@ HOURLY_LOCATION_OBSERVATION_URL = URL_TEMPLATE.format(
     ),
 )
 
-TEXT_FORECAST_URL = URL_TEMPLATE.format(
-    format="txt",
-    resource="wxfcs",
-    group="regionalforecast",
-    datatype="json",
-    object=REGIONAL_LOCATION_ID,
-    get=urllib.parse.unquote(urllib.parse.urlencode((("key", API_KEY),))),
-)
-
 FORECAST_LAYER_CAPABILITIES_URL = URL_TEMPLATE.format(
     format="layer",
     resource="wxfcs",
@@ -204,23 +184,3 @@ OBSERVATION_LAYER_CAPABILITIES_URL = URL_TEMPLATE.format(
     object="capabilities",
     get=urllib.parse.unquote(urllib.parse.urlencode((("key", API_KEY),))),
 )
-
-LONG_REGIONAL_NAMES = {
-    "os": "Orkney and Shetland",
-    "he": "Highland and Eilean Siar",
-    "gr": "Grampian",
-    "ta": "Tayside",
-    "st": "Strathclyde",
-    "dg": "Dumfries, Galloway, Lothian",
-    "ni": "Northern Ireland",
-    "yh": "Yorkshire and the Humber",
-    "ne": "Northeast England",
-    "em": "East Midlands",
-    "ee": "East of England",
-    "se": "London and Southeast England",
-    "nw": "Northwest England",
-    "wm": "West Midlands",
-    "sw": "Southwest England",
-    "wl": "Wales",
-    "uk": "United Kingdom",
-}

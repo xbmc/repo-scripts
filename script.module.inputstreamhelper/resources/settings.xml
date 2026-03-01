@@ -77,7 +77,7 @@
 							<condition operator="is" setting="disabled">false</condition>
 						</dependency>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="slider" format="integer">
@@ -94,7 +94,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="button" format="path">
@@ -111,7 +111,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="slider" format="integer">
@@ -134,7 +134,7 @@
 							</and>
 						</dependency>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="button" format="action"/>
@@ -153,7 +153,7 @@
 							</and>
 						</dependency>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="button" format="action"/>
@@ -172,7 +172,7 @@
 							</and>
 						</dependency>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="button" format="action"/>
@@ -215,7 +215,7 @@
 							</and>
 						</dependency>
 						<dependency type="visible">
-    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.webOS|String.StartsWith(System.BuildVersion,17)]</condition>
+    						<condition on="property" name="InfoBool">![System.Platform.Android|System.Platform.WebOS]</condition>
 						</dependency>
 					</dependencies>
 					<control type="button" format="action"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cabertoss" name="Caber Toss" version="1.0.1" provider-name="bossanova808">
+<addon id="script.cabertoss" name="Caber Toss" version="1.0.2" provider-name="bossanova808">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.bossanova808" version="1.0.0"/>
@@ -22,13 +22,10 @@ Even better, bind this to a remote button (use `Runscript(script.cabertoss)`) - 
         <source>https://github.com/bossanova808/script.cabertoss</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=379304</forum>
         <email>bossanova808@gmail.com</email>
-        <news>v1.0.1
-- Improve compatibility with network shares            
-- Improve compatibility with Windows and *ELEC
-- Add hostname to logs folder, helps if using with multiple systems
-- Don't copy crashlogs older than three days
-- Language improvements
-- Add 'Working...' notification to make more responsive (copying larger log files can take a moment)
+        <news>v1.0.2
+- Use updated Logging code
+- Make crashlog days configurable (default still 3)
+- A bunch of fixes and improvements following CodeRabbit review
         </news>
         <assets>
             <icon>resources/icon.png</icon>

@@ -30,3 +30,7 @@ v4.0.0
 v4.1.0
 - Added feels like calculation.
 - Updated geoip providers.
+
+
+v4.1.1
+- Deprecated. See https://www.metoffice.gov.uk/services/data/datapoint/datapoint-retirement-faqs

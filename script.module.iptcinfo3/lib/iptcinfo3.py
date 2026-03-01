@@ -11,7 +11,8 @@
 # All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the same terms as Python itself.
+# it under the terms of the Artistic License or the GNU General Public
+# License (GPL). You may choose either license.
 #
 # VERSION = '1.9';
 """
@@ -24,8 +25,9 @@ import shutil
 import sys
 import tempfile
 from struct import pack, unpack
+import json
 
-__version__ = '2.1.4'
+__version__ = '2.2.0'
 __author__ = 'Gulácsi, Tamás'
 __updated_by__ = 'Campbell, James'
 
@@ -177,7 +179,7 @@ def jpeg_get_variable_length(fh):
 
     # Length includes itself, so must be at least 2
     if length < 2:
-        logger.warn("jpeg_get_variable_length: erroneous JPEG marker length")
+        logger.warning("jpeg_get_variable_length: erroneous JPEG marker length")
         return 0
     return length - 2
 
@@ -192,7 +194,7 @@ def jpeg_next_marker(fh):
     try:
         byte = read_exactly(fh, 1)
         while ord3(byte) != 0xff:
-            # logger.warn("jpeg_next_marker: bogus stuff in Jpeg file at: ')
+            # logger.warning("jpeg_next_marker: bogus stuff in Jpeg file at: ')
             byte = read_exactly(fh, 1)
 
         # Now skip any extra 0xffs, which are valid padding.
@@ -360,7 +362,7 @@ def jpeg_debug_scan(filename):  # pragma: no cover
                     break
 
                 if ord3(marker) == 0:
-                    logger.warn("Marker scan failed")
+                    logger.warning("Marker scan failed")
                     break
 
                 elif ord3(marker) == 0xd9:
@@ -368,7 +370,7 @@ def jpeg_debug_scan(filename):  # pragma: no cover
                     break
 
                 if not jpeg_skip_variable(fh):
-                    logger.warn("jpeg_skip_variable failed")
+                    logger.warning("jpeg_skip_variable failed")
                     return None
 
 
@@ -480,7 +482,7 @@ c_datasets = {
     101: 'country/primary location name',
     103: 'original transmission reference',
     105: 'headline',
-    110: 'credit',
+    110: 'credit line',  # Updated from 'credit' to 'credit line' per IPTC Core 1.1
     115: 'source',
     116: 'copyright notice',
     118: 'contact',
@@ -536,6 +538,12 @@ class IPTCData(dict):
             return key
         elif isinstance(key, str) and key.lower() in c_datasets_r:
             return c_datasets_r[key.lower()]
+        # Backward compatibility: 'credit' is now 'credit line' per IPTC Core 1.1
+        elif isinstance(key, str) and key.lower() == 'credit':
+            return 110
+        # Alias for compatibility with gThumb/exiftool
+        elif isinstance(key, str) and key.lower() == 'destination':
+            return 103  # Maps to 'original transmission reference'
         elif key.startswith(cls.c_cust_pre) and key[len(cls.c_cust_pre):].isdigit():
             # example: nonstandard_69 -> 69
             return int(key[len(cls.c_cust_pre):])
@@ -552,6 +560,13 @@ class IPTCData(dict):
             return cls.c_cust_pre + str(key)
         else:
             raise KeyError("Key %s is not in %s!" % (key, list(c_datasets.keys())))
+
+    def __contains__(self, name):
+        try:
+            key = self._key_as_int(name)
+        except KeyError:
+            return False
+        return super().__contains__(key)
 
     def __getitem__(self, name):
         return self.get(self._key_as_int(name), None)
@@ -598,6 +613,7 @@ class IPTCInfo:
             'contact': [],
         })
         self._fobj = fobj
+        self._force = force
         if duck_typed(fobj, 'read'):  # DELETEME
             self._filename = None
         else:
@@ -613,7 +629,7 @@ class IPTCInfo:
                 if datafound:
                     self.collectIIMInfo(fh)
             else:
-                logger.warn('No IPTC data found in %s', fobj)
+                logger.warning('No IPTC data found in %s', fobj)
 
     def _filepos(self, fh):
         """For debugging, return what position in the file we are."""
@@ -630,7 +646,7 @@ class IPTCInfo:
         """Saves Jpeg with IPTC data to a given file name."""
         with smart_open(self._fobj, 'rb') as fh:
             if not file_is_jpeg(fh):
-                logger.error('Source file %s is not a Jpeg.' % self._fob)
+                logger.error('Source file %s is not a Jpeg.' % self._fobj)
                 return None
 
             jpeg_parts = jpeg_collect_file_parts(fh)
@@ -686,8 +702,10 @@ class IPTCInfo:
             os.unlink(tmpfn)
         else:
             tmpfh.close()
-            if os.path.exists(newfile):
-                shutil.move(newfile, newfile + '~')
+            if os.path.exists(newfile) and options is not None and 'overwrite' in options:
+                os.unlink(newfile)
+            elif os.path.exists(newfile):
+                shutil.move(newfile, "{file}~".format(file=newfile))
             shutil.move(tmpfn, newfile)
         return True
 
@@ -698,6 +716,9 @@ class IPTCInfo:
 
     def __len__(self):
         return len(self._data)
+
+    def __contains__(self, key):
+        return key in self._data
 
     def __getitem__(self, key):
         return self._data[key]
@@ -716,7 +737,7 @@ class IPTCInfo:
             logger.info("File is JPEG, proceeding with JpegScan")
             return self.jpegScan(fh)
         else:
-            logger.warn("File not a JPEG, trying blindScan")
+            logger.warning("File not a JPEG, trying blindScan")
             return self.blindScan(fh)
 
     c_marker_err = {0: "Marker scan failed",
@@ -752,14 +773,18 @@ class IPTCInfo:
                 err = "jpeg_skip_variable failed"
             if err is not None:
                 self.error = err
-                logger.warn(err)
+                # When force=True, log as INFO instead of WARNING since we expect no IPTC data
+                if self._force:
+                    logger.info(err)
+                else:
+                    logger.warning(err)
                 return None
 
         # If were's here, we must have found the right marker.
         # Now blindScan through the data.
         return self.blindScan(fh, MAX=jpeg_get_variable_length(fh))
 
-    def blindScan(self, fh, MAX=8192):
+    def blindScan(self, fh, MAX=819200):
         """Scans blindly to first IIM Record 2 tag in the file. This
         method may or may not work on any arbitrary file type, but it
         doesn't hurt to check. We expect to see this tag within the first
@@ -767,7 +792,7 @@ class IPTCInfo:
         depending on how other programs choose to store IIM.)"""
 
         offset = 0
-        # keep within first 8192 bytes
+        # keep within first 819200 bytes
         # NOTE: this may need to change
         logger.debug('blindScan: starting scan, max length %d', MAX)
 
@@ -776,7 +801,7 @@ class IPTCInfo:
             try:
                 temp = read_exactly(fh, 1)
             except EOFException:
-                logger.warn("BlindScan: hit EOF while scanning")
+                logger.warning("BlindScan: hit EOF while scanning")
                 return None
             # look for tag identifier 0x1c
             if ord3(temp) == 0x1c:
@@ -787,15 +812,32 @@ class IPTCInfo:
                     # found character set's record!
                     try:
                         temp = read_exactly(fh, jpeg_get_variable_length(fh))
-                        try:
-                            cs = unpack('!H', temp)[0]
-                        except Exception:  # TODO better exception
-                            #logger.warn('WARNING: problems with charset recognition (%r)', temp)
-                            cs = None
-                        if cs in c_charset:
-                            self.inp_charset = c_charset[cs]
-                        logger.info("BlindScan: found character set '%s' at offset %d",
-                                    self.inp_charset, offset)
+                        cs = None
+                        # Check for ISO 2022 escape sequence (starts with ESC 0x1b)
+                        if len(temp) >= 3 and ord3(temp[0]) == 0x1b:
+                            # Parse ISO 2022 escape sequences
+                            # ESC % G = UTF-8
+                            if temp == b'\x1b%G':
+                                self.inp_charset = 'utf_8'
+                            # ESC % / @ = UTF-16 (not commonly used)
+                            elif temp == b'\x1b%/@':
+                                self.inp_charset = 'utf_16'
+                            else:
+                                logger.debug(
+                                    "BlindScan: unknown ISO 2022 charset escape sequence %r",
+                                    temp)
+                        else:
+                            # Try legacy numeric charset encoding
+                            try:
+                                cs = unpack('!H', temp)[0]
+                                if cs in c_charset:
+                                    self.inp_charset = c_charset[cs]
+                            except Exception:
+                                logger.debug('BlindScan: could not parse charset from %r', temp)
+
+                        if self.inp_charset:
+                            logger.info("BlindScan: found character set '%s' at offset %d",
+                                        self.inp_charset, offset)
                     except EOFException:
                         pass
 
@@ -845,7 +887,7 @@ class IPTCInfo:
                 try:
                     value = str(value, encoding=self.inp_charset, errors='strict')
                 except Exception:  # TODO better exception
-                    logger.warn('Data "%r" is not in encoding %s!', value, self.inp_charset)
+                    logger.warning('Data "%r" is not in encoding %s!', value, self.inp_charset)
                     value = str(value, encoding=self.inp_charset, errors='replace')
 
             # try to extract first into _listdata (keywords, categories)
@@ -889,11 +931,22 @@ class IPTCInfo:
         LOGDBG.debug('out=%s', hex_dump(out))
         # Iterate over data sets
         for dataset, value in self._data.items():
-            if len(value) == 0:
+            # Skip None, empty strings, empty lists, and NaN values
+            if value is None:
+                continue
+            # Handle float/int that might be NaN
+            if isinstance(value, (float, int)):
+                import math
+                if isinstance(value, float) and math.isnan(value):
+                    continue
+                # Convert numeric values to strings
+                value = str(value)
+            # Check length for strings and lists
+            if hasattr(value, '__len__') and len(value) == 0:
                 continue
 
             if not (isinstance(dataset, int) and dataset in c_datasets):
-                logger.warn("packedIIMData: illegal dataname '%s' (%d)", dataset, dataset)
+                logger.warning("packedIIMData: illegal dataname '%s' (%d)", dataset, dataset)
                 continue
 
             logger.debug('packedIIMData %02X: %r -> %r', dataset, value, self._enc(value))
@@ -944,7 +997,16 @@ class IPTCInfo:
 
 
 if __name__ == '__main__':  # pragma: no cover
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.ERROR)
     if len(sys.argv) > 1:
         info = IPTCInfo(sys.argv[1])
-        print(info)
+        if info.__dict__ != '':
+            for k, v in info.__dict__.items():
+                if k == '_data':
+                    print(k)
+                    for key, value in v.items():
+                        if type(value) == list:
+                            print(key, [x.decode() for x in value])
+                            [print(x.decode()) for x in value]
+                        print(key, value)
+                print(k, v)

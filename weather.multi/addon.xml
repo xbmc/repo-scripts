@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.multi" name="Multi Weather" version="0.0.27" provider-name="ronie">
+<addon id="weather.multi" name="Multi Weather" version="1.1.0" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.openweathermap.maps" version="1.0.4"/>
 		<import addon="script.module.requests" version="2.22.0+matrix.1"/>
 		<import addon="script.module.dateutil" version="2.8.1+matrix.1"/>
+		<import addon="script.module.beautifulsoup4" version="4.8.2+matrix.1"/>
 	</requires>
 	<extension point="xbmc.python.weather" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
@@ -18,7 +19,6 @@
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
-		<lifecyclestate type="broken" lang="en_GB">Yahoo no longer provides weather data to new users</lifecyclestate>
-		<news>- Yahoo no longer provides weather data to new users</news>
+		<news>- New Version</news>
 	</extension>
 </addon>

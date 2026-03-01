@@ -40,7 +40,7 @@ class GuiSettingsManager:
         restoreCount = 0
         for aSetting in restoreSettings:
             # Ensure key exists before referencing
-            if(aSetting['id'] in settingsDict.values()):
+            if(aSetting['id'] in settingsDict.keys()):
             # only update a setting if its different than the current (action types have no value)
                 if(aSetting['type'] != 'action' and settingsDict[aSetting['id']] != aSetting['value']):
                     if(utils.getSettingBool('verbose_logging')):

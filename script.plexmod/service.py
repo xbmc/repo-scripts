@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from kodi_six import xbmc
-from kodi_six import xbmcgui
-from kodi_six import xbmcaddon
+try:
+    from importlib import reload
+except ImportError:
+    try:
+        from imp import reload
+    except ImportError:
+        pass
+        # python 2.7 has "reload" natively
 
-
-def main():
-    if xbmc.getInfoLabel('Window(10000).Property(script.plex.service.started)'):
-        # Prevent add-on updates from starting a new version of the addon
-        return
-
-    xbmcgui.Window(10000).setProperty('script.plex.service.started', '1')
-
-    if xbmcaddon.Addon().getSetting('kiosk.mode') == 'true':
-        xbmc.log('script.plex: Starting from service (Kiosk Mode)', xbmc.LOGINFO)
-        delay = xbmcaddon.Addon().getSetting('kiosk.delay') or "0"
-        xbmc.executebuiltin('RunScript(script.plexmod{})'.format(",{}".format(delay) if delay != "0" else ""))
+import lib.service_runner as runner
 
 
 if __name__ == '__main__':
-    main()
+    restarting_service = False
+    while 1:
+        if runner.main(restarting_service=restarting_service):
+            reload(runner)
+            restarting_service = True
+        else:
+            break

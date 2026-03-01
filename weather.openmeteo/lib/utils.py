@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from pytz import timezone
 from pathlib import Path
+from statistics import mode, mean
 
 from . import config
 from . import conv
@@ -78,14 +79,16 @@ def settingrpc(setting):
 def settings(changed=False):
 	dict = {}
 	skip = [ 'alert_notification', 'service', 'geoip' ]
+	file = Path(config.addon_data + 'settings.xml')
 
 	try:
-		tree = ET.parse(f'{config.addon_data}settings.xml')
+		with open(file, 'r') as f:
+			data = f.read()
+
+		root = ET.fromstring(data)
 	except:
 		return dict
 	else:
-		root = tree.getroot()
-
 		for item in root:
 			id = item.attrib['id']
 
@@ -99,6 +102,16 @@ def settings(changed=False):
 
 def region(arg):
 	return xbmc.getRegion(arg)
+
+# Geolocation
+def geoip(create=False):
+	f = Path(f'{config.addon_data}/geoip')
+
+	if create:
+		with open(f, mode='w'):
+			pass
+	else:
+		return f.is_file()
 
 # Localization
 def loc(arg):
@@ -140,6 +153,8 @@ def dt(arg, stamp=0):
 			return datetime.fromisoformat(stamp).astimezone(config.loc.tz)
 		else:
 			return datetime.fromisoformat(stamp).astimezone()
+	elif arg == 'dayofyear':
+		return datetime.today().timetuple().tm_yday
 
 # Last update
 def lastupdate(arg):
@@ -155,17 +170,31 @@ def setupdate(arg):
 
 # Window property
 def clrprop(property):
-	log(f'CLR: {property}', 4)
 	xbmcgui.Window(12600).clearProperty(property)
 
 def winprop(property):
-	log(f'GET: {property}', 4)
 	return xbmcgui.Window(12600).getProperty(property)
 
-# Window property (Set)
-def setprop(property, data):
-	log(f'SET: {property} = {data}', 4)
-	xbmcgui.Window(12600).setProperty(property, str(data))
+# Set Window property
+def setprop(property, data, window=12600):
+	xbmcgui.Window(window).setProperty(property, str(data))
+
+# Set properties
+def setprops():
+	if config.addon.api:
+		for i in sorted(config.loc.prop):
+			setprop(f'weather.{i}', config.loc.prop[i], 10000)
+
+			if config.addon.full and i in config.addon.mode:
+				setprop(i, config.loc.prop[i])
+
+	else:
+		for i in sorted(config.loc.prop):
+			setprop(i, config.loc.prop[i])
+
+# Add property
+def addprop(property, content):
+	config.loc.prop[property] = content
 
 # Window property (Get)
 def getprop(data, map, idx, count):
@@ -241,6 +270,10 @@ def getprop(data, map, idx, count):
 		content = conv.time('timeiso', content)
 	elif unit == 'hour':
 		content = conv.time('hour', content)
+	elif unit == 'seconds':
+		m, s = divmod(int(content), 60)
+		h, m = divmod(m, 60)
+		content = f'{h:d}:{m:02d}'
 	elif unit == 'weekday':
 		content = config.localization.weekday.get(dt('stamploc', content).strftime('%u'))
 	elif unit == 'weekdayshort':
@@ -269,6 +302,12 @@ def getprop(data, map, idx, count):
 		content = conv.precip(content)
 	elif unit == 'unitprecipitation':
 		content = conv.precip()
+
+	# Snow
+	elif unit == 'snow':
+		content = conv.snow(content)
+	elif unit == 'unitsnow':
+		content = conv.snow()
 
 	# Distance
 	elif unit == 'distance':
@@ -326,276 +365,363 @@ def getprop(data, map, idx, count):
 	elif unit == 'moonphaseimage':
 		content = f'{config.addon_icons}/moon/{conv.moonphaseimage(int(content))}'
 
+	# Season
+	elif unit == 'season':
+		content = conv.season(float(content))
+
 	# Graphs
 	elif unit == 'graph':
-		property = f'{map[2][0]}.{count}.{map[2][1]}'
-		time     = map[2][0]
-		type     = map[2][1]
-		mscale   = map[4]
-		alert    = 0
-		scale    = 0
-		scaleneg = False
+		idxnow    = index("now", data)
+		type      = map[2][1]
+		unit      = map[4]
+		scaleneg  = False
+		count     = 0 if config.addon.api else 1
+		property  = f'{map[2][0]}.{count}.{map[2][1]}'
+		content   = None
+		alerting  = setting(f'alert_{type.split(".")[0]}_enabled', 'bool', True)
 
-		# Content
-		try:
-			calc = map[5]
-		except:
-			calc = False
-		else:
-			if calc == 'temperature':
+		# Data
+		lv = []
+		lt = []
 
-				if conv.temp() == '°F':
-					mscale = '100'
+		for idx in range(idxnow, idxnow+24):
+			try:
+				v = data[map[1][0]][map[1][1]][idx]
+				t = data[map[1][0]]['time'][idx]
+			except:
+				continue
+			else:
+				lv.append(v)
+				lt.append(t)
 
-			elif calc == 'divide10':
-				content = content/10
+		# Unit
+		lc   = [ conv.item(v, unit, False) for v in lv ]
+		unit = conv.item(False, unit)
 
-			elif calc == 'divide1000':
-				content = content/1000
+		addprop(f'{property}.unit', unit)
 
-			elif calc == 'pressure':
-				content = config.map_pressure.get(int(content),0)
+		# Neg
+		scaleneg = bool([ v for v in lc if v < 0 ])
 
-		# Autoscale
-		try:
-			ascale = config.addon.scalecache[f'{time}{type}']
-			nscale = config.addon.scalecache[f'{time}{type}neg']
-		except:
-			_idx_ = idx
+		# Scale
+		scalemin = min(lc)
+		scalemax = max(lc)
+		scaleabs = max([ abs(v) for v in lc ])
 
-			for _count_ in range(0,25):
+		r = 1 if scalemin < 1 and scalemax < 1 else None
+		a = scalemax/4
+		s = (scalemax-scalemin)/4
 
-				if calc == 'temperature':
-					v = conv.temp(data[map[1][0]][map[1][1]][_idx_+_count_], True)
+		addprop(f'{property}.xaxis0', round(scalemax,r))
+		addprop(f'{property}.xaxis1', round(scalemax-a,r))
+		addprop(f'{property}.xaxis2', round(scalemax-a*2,r))
+		addprop(f'{property}.xaxis3', round(scalemax-a*3,r))
+		addprop(f'{property}.xaxis4', round(scalemax-a*4,r))
 
-					# Negative temperature
-					if v < 0:
-						scaleneg = True
+		addprop(f'{property}.scalexaxis0', round(scalemax,r))
+		addprop(f'{property}.scalexaxis1', round(scalemax-s,r))
+		addprop(f'{property}.scalexaxis2', round(scalemax-s*2,r))
+		addprop(f'{property}.scalexaxis3', round(scalemax-s*3,r))
+		addprop(f'{property}.scalexaxis4', round(scalemax-s*4,r))
 
-					check = abs(v)
+		# Graph
+		for idx in range(0,24):
+			alert     = 0
+			property  = f'{map[2][0]}.{count}.{map[2][1]}'
 
-				elif calc == 'divide10':
-					check = abs(data[map[1][0]][map[1][1]][_idx_+_count_]/10)
-				elif calc == 'divide1000':
-					check = abs(data[map[1][0]][map[1][1]][_idx_+_count_]/1000)
-				elif calc == 'pressure':
-					check = abs(config.map_pressure.get(int(data[map[1][0]][map[1][1]][_idx_+_count_])))
+			try:
+				time   = lt[idx]
+				avalue = lv[idx]
+				value  = lc[idx]
+
+			except:
+				continue
+			else:
+				negative = True if value < 0 else False
+
+				if scalemax-scalemin == 0 or scaleabs == 0:
+					percent = 0
 				else:
-					check = abs(data[map[1][0]][map[1][1]][_idx_+_count_])
+					percent = round((value-scalemin)/(scalemax-scalemin)*100) if not negative else round(abs(value)/scaleabs*100)
 
-				if check > scale:
-					scale = check
+				if scalemax == 0 or scaleabs == 0:
+					percentabs = 0
+				else:
+					percentabs = round((value)/(scalemax)*100) if not negative else round(abs(value)/scaleabs*100)
 
-			if scale < 1:
-				config.addon.scalecache[f'{time}{type}'] = 1
-			elif scale >= 101 and scale <= 150:
-				config.addon.scalecache[f'{time}{type}'] = 150
-			elif scale >= 151 and scale <= 200:
-				config.addon.scalecache[f'{time}{type}'] = 200
+				# Time
+				addprop(f'{property}.time', conv.time('hour', time))
+
+				# Value
+				addprop(f'{property}.value', value)
+
+				# Image
+				if scaleneg:
+					if negative:
+						addprop(f'{property}.image', f'{config.addon_icons}/graph/{config.kodi.height}/bar_n{percent}n.png')
+						addprop(f'{property}.code', f'n{percent}n')
+					else:
+						addprop(f'{property}.image', f'{config.addon_icons}/graph/{config.kodi.height}/bar_n{percent}p.png')
+						addprop(f'{property}.code', f'n{percent}p')
+
+				else:
+					addprop(f'{property}.image', f'{config.addon_icons}/graph/{config.kodi.height}/bar_{percentabs}p.png')
+					addprop(f'{property}.code', f'{percentabs}p')
+					addprop(f'{property}.scaleimage', f'{config.addon_icons}/graph/{config.kodi.height}/bar_{percent}p.png')
+					addprop(f'{property}.scalecode', f'{percent}p')
+
+				# Alert
+				if alerting:
+
+					for c, d in [(x, y) for x in [ 3, 2, 1 ] for y in [ 'high', 'low', 'wmo' ] ]:
+						last =  False
+
+						try:
+							if d == 'wmo':
+								limit = list(config.alert.map[type][f'alert_{type.split(".")[0]}_{d}_{c}'].split(' '))
+							else:
+								limit = int(config.alert.map[type][f'alert_{type.split(".")[0]}_{d}_{c}'])
+						except:
+							continue
+
+						if d == 'high':
+							if avalue >= limit:
+								if last and avalue > last:
+									alert, last = c, avalue
+								elif not last:
+									alert, last = c, avalue
+						elif d == 'low':
+							if avalue <= limit:
+								if last and avalue < last:
+									alert, last = c, avalue
+								elif not last:
+									alert, last = c, avalue
+						elif d == 'wmo':
+							for wmo in limit:
+								if avalue == int(wmo):
+									if last and avalue > last:
+										alert, last = c, avalue
+									elif not last:
+										alert, last = c, avalue
+						if alert:
+							break
+
+				addprop(f'{property}.alert', alert)
+
+				# Alert icon
+				if alert == 0:
+					addprop(f'{property}.alerticon', '')
+				else:
+					if type == 'condition.graph':
+						icon  = f'{config.map_alert_condition.get(last)}{alert}'
+						addprop(f'{property}.alerticon', f'{config.addon_icons}/alert/{icon}.png')
+					else:
+						addprop(f'{property}.alerticon', f'{config.addon_icons}/alert/{config.alert.map[type]["icon"]}{alert}.png')
+
+				# Color
+				if alert == 0:
+					if negative:
+						addprop(f'{property}.color', config.addon.cnegative)
+						addprop(f'{property}.colornormal', config.addon.cnegative)
+					else:
+						addprop(f'{property}.color', config.addon.cdefault)
+						addprop(f'{property}.colornormal', config.addon.cnormal)
+
+				elif alert == 1:
+					addprop(f'{property}.color', config.addon.cnotice)
+					addprop(f'{property}.colornormal', config.addon.cnotice)
+
+				elif alert == 2:
+					addprop(f'{property}.color', config.addon.ccaution)
+					addprop(f'{property}.colornormal', config.addon.ccaution)
+
+				elif alert == 3:
+					addprop(f'{property}.color', config.addon.cdanger)
+					addprop(f'{property}.colornormal', config.addon.cdanger)
+
+				count += 1
+
+	# TimeOfDay
+	elif unit == 'timeofday':
+		idxnow  = index("now", data)
+		idxmid  = index("mid", data)
+		idxday  = index("mid", data)
+		tod     = { 0: 'night', 1: 'morning', 2: 'afternoon', 3: 'evening' }
+		start   = False
+		content = 'true'
+		idxtod  = 0 if config.addon.api else 1
+		idxtod2 = 0 if config.addon.api else 1
+		idxtod3 = 0 if config.addon.api else 1
+
+		for d in range(0, config.maxdays):
+			l   = []
+			ll  = []
+
+			# Daily
+			for c in range(idxday, idxday+24):
+
+				try:
+					v  = data[map[1][0]][map[1][1]][c]
+					vv = data[map[1][0]]['temperature_2m'][c]
+				except:
+					for i in [ 'date', 'shortdate', 'weekday', 'weekdayshort', 'condition', 'outlook', 'outlookicon', 'outlookiconwmo', 'temperature', 'maxoutlook', 'maxoutlookicon', 'maxoutlookiconwmo' ]:
+						addprop(f'daily.{idxtod3}.overview.{i}', '')
+					continue
+				else:
+					l.append(v)
+					ll.append(vv)
+
+			# Personalized forecast
+			fcstart = config.map_fcstart.get(config.addon.fcstart)
+			fcend   = config.map_fcend.get(config.addon.fcend)
+
+			l = l[fcstart:][:fcend]
+
+			# Properties
+			date  = data[map[1][0]]['time'][idxday]
+			code  = mode(sorted(l, reverse=True))
+			mcode = max(l)
+			temp  = conv.temp(mean(ll))
+
+			addprop(f'daily.{idxtod3}.overview.date', dt('stamploc', date).strftime(config.kodi.date))
+			addprop(f'daily.{idxtod3}.overview.shortdate', dt('stamploc', date).strftime(config.kodi.date))
+			addprop(f'daily.{idxtod3}.overview.weekday', config.localization.weekday.get(dt('stamploc', date).strftime('%u')))
+			addprop(f'daily.{idxtod3}.overview.weekdayshort', config.localization.weekdayshort.get(dt('stamploc', date).strftime('%u')))
+			addprop(f'daily.{idxtod3}.overview.temperature', temp)
+			addprop(f'daily.{idxtod3}.overview.outlook', config.localization.wmo.get(f'{code}d'))
+			addprop(f'daily.{idxtod3}.overview.outlookicon', f'{config.map_wmo.get(f"{code}d")}.png')
+			addprop(f'daily.{idxtod3}.overview.outlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{code}d.png')
+			addprop(f'daily.{idxtod3}.overview.fanartcode', config.map_wmo.get(f"{code}d"))
+			addprop(f'daily.{idxtod3}.overview.fanartcodewmo', f'{code}d')
+
+			# Overwrite forecast (personalized)
+			addprop(f'daily.{idxtod3}.condition', config.localization.wmo.get(f'{code}d'))
+			addprop(f'daily.{idxtod3}.outlook', config.localization.wmo.get(f'{code}d'))
+			addprop(f'daily.{idxtod3}.outlookicon', f'{config.map_wmo.get(f"{code}d")}.png')
+			addprop(f'daily.{idxtod3}.outlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{code}d.png')
+			addprop(f'daily.{idxtod3}.fanartcode', config.map_wmo.get(f"{code}d"))
+			addprop(f'daily.{idxtod3}.fanartcodewmo', f'{code}d')
+
+			if not config.addon.api:
+				addprop(f'day{idxtod3-1}.condition', config.localization.wmo.get(f'{code}d'))
+				addprop(f'day{idxtod3-1}.outlook', config.localization.wmo.get(f'{code}d'))
+				addprop(f'day{idxtod3-1}.outlookicon', f'resource://resource.images.weathericons.default/{config.map_wmo.get(f"{code}d")}.png')
+				addprop(f'day{idxtod3-1}.outlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{code}d.png')
+				addprop(f'day{idxtod3-1}.fanartcode', config.map_wmo.get(f"{code}d"))
+				addprop(f'day{idxtod3-1}.fanartcodewmo', f'{code}d')
+
+			# Max outlook
+			if mcode > code:
+				addprop(f'daily.{idxtod3}.overview.maxoutlook', config.localization.wmo.get(f'{mcode}d'))
+				addprop(f'daily.{idxtod3}.overview.maxoutlookicon', f'{config.map_wmo.get(f"{code}d")}.png')
+				addprop(f'daily.{idxtod3}.overview.maxoutlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{mcode}d.png')
+
+				addprop(f'daily.{idxtod3}.maxoutlook', config.localization.wmo.get(f'{mcode}d'))
+				addprop(f'daily.{idxtod3}.maxoutlookicon', f'{config.map_wmo.get(f"{code}d")}.png')
+				addprop(f'daily.{idxtod3}.maxoutlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{mcode}d.png')
+
 			else:
-				config.addon.scalecache[f'{time}{type}'] = math.ceil(scale/10.0)*10
+				addprop(f'daily.{idxtod3}.overview.maxoutlook', '')
+				addprop(f'daily.{idxtod3}.overview.maxoutlookicon', '')
+				addprop(f'daily.{idxtod3}.overview.maxoutlookiconwmo', '')
 
-			# Negative values
-			config.addon.scalecache[f'{time}{type}neg'] = scaleneg
+				addprop(f'daily.{idxtod3}.maxoutlook', '')
+				addprop(f'daily.{idxtod3}.maxoutlookicon', '')
+				addprop(f'daily.{idxtod3}.maxoutlookiconwmo', '')
 
-			# Set cache
-			ascale = config.addon.scalecache[f'{time}{type}']
-			nscale = config.addon.scalecache[f'{time}{type}neg']
+			idxday += 24
+			idxtod3 += 1
 
-			log(f'Scale {type} ({time}) = {ascale}', 4)
+			# Hourly
+			for t in range(0,4):
+				l   = []
+				ll  = []
+				lll = []
+				llll = []
+				now = ''
 
-		# Alert
-		for _alert_ in config.alert.map[type]:
+				for c in range(idxmid, idxmid+6):
 
-			if not 'alert' in _alert_:
-				continue
+					try:
+						v   = data[map[1][0]][map[1][1]][c]
+						vv  = data[map[1][0]]['is_day'][c]
+						vvv = data[map[1][0]]['temperature_2m'][c]
+						vvvv = data[map[1][0]]['time'][c]
+					except:
+						continue
+					else:
+						l.append(v)
+						ll.append(vv)
+						lll.append(vvv)
+						llll.append(vvvv)
 
-			if 'wmo' in _alert_:
-				limit = list(config.alert.map[type][_alert_].split(' '))
-			else:
-				limit = float(config.alert.map[type][_alert_])
+						if idxnow == c:
+							start = True
+							now   = 'true'
 
-			if not limit:
-				continue
+				date  = data[map[1][0]]['time'][idxmid]
+				code  = mode(sorted(l, reverse=True))
+				mcode = max(l)
+				isday = mode(sorted(ll, reverse=False))
+				isday = 'n' if isday == 0 else 'd'
+				temp  = conv.temp(mean(lll))
 
-			if 'high' in _alert_:
-				if content >= int(limit):
-					alert = int(_alert_[-1])
-			elif 'low' in _alert_:
-				if content <= int(limit):
-					alert = int(_alert_[-1])
-			elif 'wmo' in _alert_:
-				for wmo in limit:
-					if content == int(wmo):
-						alert = int(alert[-1])
+				# TimeOfDay (List)
+				if start:
+					addprop(f'timeofday.{idxtod}.date', dt('stamploc', date).strftime(config.kodi.date))
+					addprop(f'timeofday.{idxtod}.shortdate', dt('stamploc', date).strftime(config.kodi.date))
+					addprop(f'timeofday.{idxtod}.weekday', config.localization.weekday.get(dt('stamploc', date).strftime('%u')))
+					addprop(f'timeofday.{idxtod}.weekdayshort', config.localization.weekdayshort.get(dt('stamploc', date).strftime('%u')))
+					addprop(f'timeofday.{idxtod}.time', config.localization.timeofday.get(t))
+					addprop(f'timeofday.{idxtod}.outlook', config.localization.wmo.get(f'{code}{isday}'))
+					addprop(f'timeofday.{idxtod}.outlookicon', f'{config.map_wmo.get(f"{code}{isday}")}.png')
+					addprop(f'timeofday.{idxtod}.outlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{code}{isday}.png')
+					addprop(f'timeofday.{idxtod}.fanartcode', config.map_wmo.get(f"{code}{isday}"))
+					addprop(f'timeofday.{idxtod}.fanartcodewmo', f'{code}{isday}')
+					addprop(f'timeofday.{idxtod}.temperature', temp)
 
-		setprop(f'{property}alert', alert)
+					if mcode > code:
+						addprop(f'timeofday.{idxtod}.maxoutlook', config.localization.wmo.get(f'{mcode}{isday}'))
+						addprop(f'timeofday.{idxtod}.maxoutlookicon', f'{config.map_wmo.get(f"{mcode}{isday}")}.png')
+						addprop(f'timeofday.{idxtod}.maxoutlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{mcode}{isday}.png')
+					else:
+						addprop(f'timeofday.{idxtod}.maxoutlook', '')
+						addprop(f'timeofday.{idxtod}.maxoutlookicon', '')
+						addprop(f'timeofday.{idxtod}.maxoutlookiconwmo', '')
 
-		# Content
-		if calc == 'temperature':
-			content = conv.temp(content, True)
+					idxtod += 1
 
-		if ascale == 1:
-			content = round(content,1)
-		else:
-			content = round(content)
+				# TimeOfDay (Daily)
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.date', dt('stamploc', date).strftime(config.kodi.date))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.shortdate', dt('stamploc', date).strftime(config.kodi.date))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.weekday', config.localization.weekday.get(dt('stamploc', date).strftime('%u')))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.weekdayshort', config.localization.weekdayshort.get(dt('stamploc', date).strftime('%u')))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.time', config.localization.timeofday.get(t))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.outlook', config.localization.wmo.get(f'{code}{isday}'))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.outlookicon', f'{config.map_wmo.get(f"{code}{isday}")}.png')
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.outlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{code}{isday}.png')
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.fanartcode', config.map_wmo.get(f"{code}{isday}"))
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.fanartcodewmo', f'{code}{isday}')
+				addprop(f'daily.{idxtod2}.{tod.get(t)}.temperature', temp)
 
-		# Set properties
-		if nscale:
-			setprop(f'{property}image', f'{config.addon_icons}/graph/{config.kodi.height}/scaleneg{mscale}_{content}.png')
-			setprop(f'{property}imagescale', f'{config.addon_icons}/graph/{config.kodi.height}/scaleneg{ascale}_{content}.png')
-			setprop(f'{property}scale', f'{ascale}n')
-		else:
-			setprop(f'{property}image', f'{config.addon_icons}/graph/{config.kodi.height}/scale{mscale}_{content}.png')
-			setprop(f'{property}imagescale', f'{config.addon_icons}/graph/{config.kodi.height}/scale{ascale}_{content}.png')
-			setprop(f'{property}scale', f'{ascale}')
+				if mcode > code:
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.maxoutlook', config.localization.wmo.get(f'{mcode}{isday}'))
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.maxoutlookicon', f'{config.map_wmo.get(f"{mcode}{isday}")}.png')
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.maxoutlookiconwmo', f'{config.addon_icons}/{config.addon.icons}/{mcode}{isday}.png')
+				else:
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.maxoutlook', '')
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.maxoutlookicon', '')
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.maxoutlookiconwmo', '')
 
-		# Color
-		if alert == 0:
-			if content < 0:
-				setprop(f'{property}color', config.addon.cnegative)
-				setprop(f'{property}colornormal', config.addon.cnegative)
-			else:
-				setprop(f'{property}color', config.addon.cdefault)
-				setprop(f'{property}colornormal', config.addon.cnormal)
+				if d == 0:
+					addprop(f'daily.{idxtod2}.{tod.get(t)}.now', now)
 
-		elif alert == 1:
-			setprop(f'{property}color', config.addon.cnotice)
-			setprop(f'{property}colornormal', config.addon.cnotice)
+				idxmid  += 6
 
-		elif alert == 2:
-			setprop(f'{property}color', config.addon.ccaution)
-			setprop(f'{property}colornormal', config.addon.ccaution)
-
-		elif alert == 3:
-			setprop(f'{property}color', config.addon.cdanger)
-			setprop(f'{property}colornormal', config.addon.cdanger)
+			idxtod2 += 1
 
 	# Return data
 	return content
-
-# Set alert
-def setalert(data, map, idx, locid, curid, loc, mode):
-	winprops = [ 'name', 'value', 'icon', 'unit', 'time', 'hours', 'status' ]
-	type   = map[2][1]
-	prop   = config.alert.map[type]['type']
-	name   = locaddon(config.alert.map[type]['loc'])
-	shours = config.addon.alerthours
-	hours  = { '1': 0, '2': 0, '3': 0 }
-	code   = 0
-	value  = 0
-	unit   = ''
-
-	log(f'[LOC{locid}] Checking alert: {prop}', 3)
-
-	for index in range(idx, idx+shours):
-
-		try:
-			content = int(data[map[1][0]][map[1][1]][index])
-		except:
-			if locid == curid:
-				setprop(f'alert.{prop}', 0)
-				for winprop in winprops:
-					setprop(f'alert.{prop}.{winprop}', '')
-
-			return
-
-		# Alert
-		for alert in config.alert.map[type]:
-
-			if not 'alert' in alert:
-				continue
-
-			if 'wmo' in alert:
-				limit = list(config.alert.map[type][alert].split(' '))
-			else:
-				limit = int(config.alert.map[type][alert])
-
-			if not limit:
-				continue
-
-			if 'high' in alert:
-				if content >= limit:
-					hours[f'{alert[-1]}'] += 1
-				if content >= value:
-					if content >= limit:
-						code  = int(alert[-1])
-						value = content
-						stamp = data[map[1][0]]['time'][index]
-
-			elif 'low' in alert:
-				if content <= limit:
-					hours[f'{alert[-1]}'] += 1
-				if content <= value:
-					if content <= limit:
-						code  = int(alert[-1])
-						value = content
-						stamp = data[map[1][0]]['time'][index]
-
-			elif 'wmo' in alert:
-				for wmo in limit:
-					if content == int(wmo):
-						hours[f'{alert[-1]}'] += 1
-
-						if content > value:
-							code  = int(alert[-1])
-							value = content
-							stamp = data[map[1][0]]['time'][index]
-
-	# Check alert code
-	if code != 0:
-		icon = f'{prop}{code}'
-		time = conv.time('time', stamp)
-
-		if prop == 'temperature':
-			value = conv.temp(value)
-			unit  = conv.temp()
-		elif prop == 'windspeed' or prop == 'windgust':
-			value = conv.speed(value)
-			unit  = conv.speed()
-		elif prop == 'condition':
-			icon  = f'condition{config.map_alert_condition.get(value)}{code}'
-			value = config.localization.wmo.get(f'{value}d')
-
-		# Set alert properties for current location
-		if locid == curid:
-
-			if setting(f'alert_{prop}_enabled', 'bool'):
-				log(f'[LOC{locid}] Updating alert: {prop} = {code}', 3)
-				config.addon.alerts += 1
-
-				setprop(f'alert.{prop}', code)
-				setprop(f'alert.{prop}.name', name)
-				setprop(f'alert.{prop}.time', time)
-				setprop(f'alert.{prop}.hours', hours[str(code)])
-				setprop(f'alert.{prop}.icon', f'{config.addon_icons}/alert/{icon}.png')
-				setprop(f'alert.{prop}.value', value)
-				setprop(f'alert.{prop}.unit', unit)
-				if code == 1:
-					setprop(f'alert.{prop}.status', locaddon(32340))
-				elif code == 2:
-					setprop(f'alert.{prop}.status', locaddon(32341))
-				elif code == 3:
-					setprop(f'alert.{prop}.status', locaddon(32342))
-			else:
-				setprop(f'alert.{prop}', '')
-				for winprop in winprops:
-					setprop(f'alert.{prop}.{winprop}', '')
-
-		# Notification
-		if mode == 'msgqueue':
-			if code == 1 and setting(f'alert_{prop}_notice', 'bool'):
-				config.addon.msgqueue.append([ f'{loc} - {locaddon(32340)} ({hours[str(code)]} {locaddon(32288)})', f'({time}) {name}: {value} {unit}', f'{config.addon_icons}/alert/{icon}.png' ])
-			elif code == 2 and setting(f'alert_{prop}_caution', 'bool'):
-				config.addon.msgqueue.append([ f'{loc} - {locaddon(32341)} ({hours[str(code)]} {locaddon(32288)})', f'({time}) {name}: {value} {unit}', f'{config.addon_icons}/alert/{icon}.png' ])
-			elif code == 3 and setting(f'alert_{prop}_danger', 'bool'):
-				config.addon.msgqueue.append([ f'{loc} - {locaddon(32342)} ({hours[str(code)]} {locaddon(32288)})', f'({time}) {name}: {value} {unit}', f'{config.addon_icons}/alert/{icon}.png' ])
-
-	else:
-		if locid == curid:
-			setprop(f'alert.{prop}', 0)
-			for winprop in winprops:
-				setprop(f'alert.{prop}.{winprop}', '')
 
 # Get file
 def getfile(file):
@@ -635,29 +761,8 @@ def index(arg, data):
 
 # Directory
 def createdir():
-	file = config.addon_data + 'w.txt'
-
-	try:
-		os.makedirs(config.addon_cache, exist_ok=True)
-		with open(file, 'w') as f:
-			f.write('w')
-	except Exception as e:
-		log(f'Addon data directory not writeable: {config.addon_data} {e}', 2)
-		xbmcgui.Dialog().notification('Weather Open-Meteo', 'Weather data directory not writeable, check log ...', xbmcgui.NOTIFICATION_ERROR, 15000)
-		sys.exit(1)
-	else:
-		os.remove(file)
-
-# Locations
-def locations():
-	locs = 0
-	for count in range(1,6):
-		loc = setting(f'loc{count}')
-		if loc:
-			setprop(f'location{count}', loc)
-			locs += 1
-
-	setprop('locations', locs)
+	p = Path(config.addon_data)
+	p.mkdir(parents=True, exist_ok=True)
 
 # LatLon2Coords
 def lat2coords(lat_deg, lon_deg, zoom):

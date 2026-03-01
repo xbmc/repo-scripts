@@ -363,14 +363,14 @@ def open_file(path, flags='r'):
 def copy(src, dest):
     """Copy a file (using xbmcvfs)"""
     from xbmcvfs import copy as vfscopy
-    log(2, "Copy file '{src}' to '{dest}'.", src=src, dest=dest)
+    log(0, "Copy file '{src}' to '{dest}'.", src=src, dest=dest)
     return vfscopy(from_unicode(src), from_unicode(dest))
 
 
 def delete(path):
     """Remove a file (using xbmcvfs)"""
     from xbmcvfs import delete as vfsdelete
-    log(2, "Delete file '{path}'.", path=path)
+    log(0, "Delete file '{path}'.", path=path)
     return vfsdelete(from_unicode(path))
 
 
@@ -378,7 +378,10 @@ def exists(path):
     """Whether the path exists (using xbmcvfs)"""
     # File or folder (folder must end with slash or backslash)
     from xbmcvfs import exists as vfsexists
-    return vfsexists(from_unicode(path))
+    if vfsexists(from_unicode(path)):
+        log(0, "Path '{path}' exists.", path=path)
+        return True
+    return False
 
 
 def listdir(path):
@@ -391,14 +394,14 @@ def listdir(path):
 def mkdir(path):
     """Create a directory (using xbmcvfs)"""
     from xbmcvfs import mkdir as vfsmkdir
-    log(2, "Create directory '{path}'.", path=path)
+    log(0, "Create directory '{path}'.", path=path)
     return vfsmkdir(from_unicode(path))
 
 
 def mkdirs(path):
     """Create directory including parents (using xbmcvfs)"""
     from xbmcvfs import mkdirs as vfsmkdirs
-    log(2, "Recursively create directory '{path}'.", path=path)
+    log(0, "Recursively create directory '{path}'.", path=path)
     return vfsmkdirs(from_unicode(path))
 
 

@@ -2,9 +2,10 @@ import xbmcgui
 import xbmcvfs
 import json
 import pyqrcode
+import time
 import resources.lib.tinyurl as tinyurl
 import resources.lib.utils as utils
-from datetime import datetime
+import datetime
 
 # don't die on import error yet, these might not even get used
 try:
@@ -13,6 +14,14 @@ try:
 except ImportError:
     pass
 
+# fix for datetime.strptime bug https://kodi.wiki/view/Python_Problems#datetime.strptime
+class proxydt(datetime.datetime):
+
+    @classmethod
+    def strptime(cls, date_string, format):
+        return datetime.datetime(*(time.strptime(date_string, format)[:6]))
+
+datetime.datetime = proxydt
 
 class QRCode(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
@@ -145,7 +154,7 @@ class DropboxAuthorizer:
             if(token.strip() != ""):
                 result = json.loads(token)
                 # convert expiration back to a datetime object
-                result['expiration'] = datetime.strptime(result['expiration'], "%Y-%m-%d %H:%M:%S.%f")
+                result['expiration'] = datetime.datetime.strptime(result['expiration'], "%Y-%m-%d %H:%M:%S.%f")
 
             token_file.close()
 

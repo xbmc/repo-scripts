@@ -68,12 +68,8 @@ WIDEVINE_MINIMUM_KODI_VERSION = {
     'Windows': '18.0',
     'Linux': '18.0',
     'Darwin': '18.0',
-    'webOS': '22.0'
+    'webOS': '21.1'
 }
-
-WIDEVINE_VERSIONS_URL = 'https://dl.google.com/widevine-cdm/versions.txt'
-
-WIDEVINE_DOWNLOAD_URL = 'https://dl.google.com/widevine-cdm/{version}-{os}-{arch}.zip'
 
 WIDEVINE_LICENSE_FILE = 'LICENSE'
 
@@ -86,11 +82,10 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 # To keep the Chrome OS ARM(64) hardware ID list up to date, the following resources can be used:
 # https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices
 # https://chromiumdash.appspot.com/serving-builds?deviceCategory=Chrome%20OS
-# Last updated: 2025-09-21
-# current Chrome OS version: 16328.65.0, Widevine version: 4.10.2662.3
+# Last updated: 2025-12-29
+# current Chrome OS version: 16433.65.0, Widevine version: 4.10.2662.3
 CHROMEOS_RECOVERY_ARM_BNAMES = [
     'bob',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_bob_recovery_stable-channel_mp-v2.bin.zip
-    'elm',  # probably 64bit soon. current: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15886.44.0_elm_recovery_stable-channel_mp-v6.bin.zip
     'kevin',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_kevin_recovery_stable-channel_mp-v2.bin.zip
     'scarlet',  # no longer updated, still latest wv. last: https://dl.google.com/dl/edgedl/chromeos/recovery/chromeos_15509.81.0_scarlet_recovery_stable-channel_mp-v8.bin.zip
 ]
@@ -99,20 +94,18 @@ CHROMEOS_RECOVERY_ARM64_BNAMES = [
     'asurada',
     'cherry',
     'corsola',
+    'elm',
     'geralt',
     'hana',
     'jacuzzi',
     'kukui',
+    'rauru',
     'staryu',
     'strongbad',
     'trogdor',
 ]
 
 CHROMEOS_BLOCK_SIZE = 512
-
-LACROS_DOWNLOAD_URL = "https://gsdview.appspot.com/chromeos-localmirror/distfiles/chromeos-lacros-{arch}-squash-zstd-{version}"
-
-LACROS_LATEST = "https://chromiumdash.appspot.com/fetch_releases?channel=Stable&platform=Lacros&num=1"
 
 MINIMUM_INPUTSTREAM_VERSION_ARM64 = {
     'inputstream.adaptive': '20.3.5',

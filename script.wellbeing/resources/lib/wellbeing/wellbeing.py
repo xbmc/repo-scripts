@@ -29,6 +29,7 @@ TIME_30M = 1800
 TIME_1H = 3600
 TIME_2H = 7200
 
+DEFAULT_LIMIT = "24:00"
 SECONDS_PER_DAY = 86400
 
 AUTO_STOP_INTERVAL = [None, TIME_15M, TIME_20M, TIME_30M, TIME_1H]
@@ -106,9 +107,9 @@ class Wellbeing(xbmc.Monitor):
             self._addon.setSettingInt("sum", 0)
 
         limit = self._addon.getSetting("limit")
-        if limit:
+        if limit and limit != DEFAULT_LIMIT:
             self._limits[self._wday] = self._timeformat_to_seconds(limit)
-            self._addon.setSetting("limit", "")
+            self._addon.setSetting("limit", DEFAULT_LIMIT)
 
         self._password = self._addon.getSettingString("password")
 

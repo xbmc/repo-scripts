@@ -637,3 +637,23 @@ msgstr ""
 msgctxt "#30163"
 msgid "Current folder"
 msgstr ""
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "You should restart Kodi to continue"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Error: Remote path doesn't exist"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Check log for Dropbox authorize URL"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Click OK when authorized"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Dropbox Developer Code Needed"

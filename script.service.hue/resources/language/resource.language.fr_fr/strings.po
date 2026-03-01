@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-21 16:13+0000\n"
+"PO-Revision-Date: 2025-04-22 02:59+0000\n"
 "Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/fr_fr/>\n"
 "Language: fr_fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4\n"
+"X-Generator: Weblate 5.11\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
@@ -22,7 +22,7 @@ msgstr "Automatiser les lumières Hue V2 (Philips) avec la lecture Kodi"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "Automatiser vos lumières Hue avec Kodi. Utiliser les scènes configurées dans l’application officielle Hue. Peut utiliser l’heure du coucher du soleil de Hue pour désactiver automatiquement le service pendant la journée et allumer les lumières au coucher du soleil pendant la lecture. Comprend le support Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
@@ -30,11 +30,11 @@ msgstr "Nécessite un bridge Hue V2 (carré). Ambilight n'est pas disponible sur
 
 msgctxt "#32100"
 msgid "Video Scenes"
-msgstr ""
+msgstr "Scènes vidéo"
 
 msgctxt "#32102"
 msgid "Audio Scenes"
-msgstr ""
+msgstr "Scènes audio"
 
 msgctxt "#32201"
 msgid "Start/Resume"
@@ -50,7 +50,7 @@ msgstr "Stop"
 
 msgctxt "#30036"
 msgid "Scene:"
-msgstr ""
+msgstr "Scène :"
 
 msgctxt "#32511"
 msgid "Scene ID"
@@ -90,7 +90,7 @@ msgstr "Heure de fin :"
 
 msgctxt "#30508"
 msgid "Disable during daytime"
-msgstr ""
+msgstr "Désactiver pendant la journée"
 
 #. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
@@ -149,7 +149,7 @@ msgstr "Avancé"
 
 msgctxt "#32106"
 msgid "Video Activation Rules"
-msgstr ""
+msgstr "Règles d’activation des vidéos"
 
 msgctxt "#6101"
 msgid "Select Lights"
@@ -352,11 +352,11 @@ msgstr "Paramètres"
 
 msgctxt "#30063"
 msgid "Disabled by daytime"
-msgstr ""
+msgstr "Désactivé par heure de journée"
 
 msgctxt "#30064"
 msgid "ERROR: Scene not found, it may have been deleted"
-msgstr ""
+msgstr "ERREUR : Scène introuvable, elle a peut-être été supprimée"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
@@ -458,62 +458,62 @@ msgstr "Reconnecté"
 #. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
 msgctxt "#31334"
 msgid "Morning disable time:"
-msgstr ""
+msgstr "Heure de désactivation du matin :"
 
 #. Amount of time for the light scene transition to fade in, in seconds.
 msgctxt "#31335"
 msgid "Transition time (seconds):"
-msgstr ""
+msgstr "Temps de transition (secondes) :"
 
 #. Number of minutes before or after sunset to consider as sunset
 msgctxt "#31336"
 msgid "Sunset Offset:"
-msgstr ""
+msgstr "Décalage au coucher du soleil :"
 
 #. Help text for sunset offset setting
 msgctxt "#31337"
 msgid "Adjust sunset back or forwards by this many minutes"
-msgstr ""
+msgstr "Ajuster le coucher du soleil en avant ou en arrière de ce nombre de minutes"
 
 #. Help text for "morning disable time" setting
 msgctxt "#31338"
 msgid "Time at which to disable the service in the morning"
-msgstr ""
+msgstr "Heure à laquelle désactiver le service le matin"
 
 #. Help text for 'Disable during daytime'
 msgctxt "#31339"
 msgid "Disable the service between configured time and sunset"
-msgstr ""
+msgstr "Désactiver le service entre l’heure configurée et le coucher du soleil"
 
 #. Help text for 'activate at sunset'
 msgctxt "#31340"
 msgid "Activate scenes at sunset, during playback"
-msgstr ""
+msgstr "Activer des scènes au coucher du soleil, pendant la lecture"
 
 msgctxt "#30002"
 msgid "Bridge overloaded, stopping ambilight"
-msgstr ""
+msgstr "Bridge surchargé, arrêt ambilight"
 
 msgctxt "#30025"
 msgid "Bridge unauthorized, please reconfigure."
-msgstr ""
+msgstr "Bridge non autorisé, veuillez reconfigurer."
 
 msgctxt "#30026"
 msgid "Connection failed, retrying..."
-msgstr ""
+msgstr "Échec de la connexion, nouvelle tentative..."
 
 #. Default status in an empty configuration field; eg. scene/lights are not selected
 msgctxt "#30003"
 msgid "Not selected"
-msgstr ""
+msgstr "Non sélectionné"
 
 msgctxt "#30027"
 msgid "ERROR: Light not found, it may have been deleted"
-msgstr ""
+msgstr "ERREUR : Lampe introuvable, elle a peut-être été supprimée"
 
 msgctxt "#30028"
 msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
-msgstr ""
+msgstr "Configurer l’emplacement de Hue Home pour utiliser l’heure du coucher du soleil, par défaut à 19:00"
 
 #~ msgctxt "#30042"
 #~ msgid "Fade Time (Seconds)"

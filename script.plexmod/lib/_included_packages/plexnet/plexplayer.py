@@ -36,10 +36,11 @@ class BasePlayer(object):
 class PlexPlayer(BasePlayer):
     DECISION_ENDPOINT = "/video/:/transcode/universal/decision"
 
-    def __init__(self, item, seekValue=0, forceUpdate=False):
+    def __init__(self, item, seekValue=0, forceUpdate=False, session_id=None):
         self.decision = None
         self.seekValue = seekValue
         self.metadata = None
+        self.sessionID = session_id
         self.init(item, forceUpdate)
 
     def init(self, item, forceUpdate=False):
@@ -81,9 +82,9 @@ class PlexPlayer(BasePlayer):
         else:
             directPlay = directPlayPref == "forced" and True or None
 
-        return self._build(directPlay, "playback_remux" in features)
+        return self._build(directPlay, "playback_remux" in features, features=features)
 
-    def _build(self, directPlay=None, directStream=True, currentPartIndex=None):
+    def _build(self, directPlay=None, directStream=True, currentPartIndex=None, features=None):
         isForced = directPlay is not None
         if isForced:
             util.LOG(directPlay and "Forced Direct Play" or "Forced Transcode; allowDirectStream={0}".format(directStream))
@@ -109,10 +110,14 @@ class PlexPlayer(BasePlayer):
             obj.frameRate = 30
 
         # Add soft subtitle info
-        if self.choice.subtitleDecision == self.choice.SUBTITLES_SOFT_ANY:
-            obj.subtitleUrl = server.buildUrl(self.choice.subtitleStream.getSubtitlePath(), True)
-        elif self.choice.subtitleDecision == self.choice.SUBTITLES_SOFT_DP:
-            obj.subtitleConfig = {'TrackName': "mkv/" + str(self.choice.subtitleStream.index.asInt() + 1)}
+        if not self.choice.audioStream or self.choice.audioStream.languageCode not in self.item.settings.getPreference(
+                "disable_subtitle_languages", []):
+            if self.choice.subtitleDecision == self.choice.SUBTITLES_SOFT_ANY:
+                # add sub autosync settings per item
+                auto_sync = self.item.playbackSettings.auto_sync
+                obj.subtitleUrl = server.buildUrl(self.choice.subtitleStream.getSubtitlePath(auto_sync=auto_sync), True)
+            elif self.choice.subtitleDecision == self.choice.SUBTITLES_SOFT_DP:
+                obj.subtitleConfig = {'TrackName': "mkv/" + str(self.choice.subtitleStream.index.asInt() + 1)}
 
         # Create one content metadata object for each part and store them as a
         # linked list. We probably want a doubly linked list, except that it
@@ -158,7 +163,8 @@ class PlexPlayer(BasePlayer):
                 transcodeServer = self.item.getTranscodeServer(True, "video")
                 if transcodeServer is None:
                     return None
-                partObj = self.buildTranscode(transcodeServer, partObj, partIndex, directStream, isCurrentPart)
+                partObj = self.buildTranscode(transcodeServer, partObj, partIndex, directStream, isCurrentPart,
+                                              features=features)
 
             # Set up our linked list references. If we couldn't build an actual
             # object: fail fast. Otherwise, see if we're at our start offset
@@ -259,6 +265,7 @@ class PlexPlayer(BasePlayer):
                 newDecision = decision.getDecision(False)
             else:
                 util.WARN_LOG("MDE: Server failed to provide a decision")
+                raise DecisionFailure("0", "Can't play back media")
         else:
             util.WARN_LOG("MDE: Server or item does not support decisions")
 
@@ -268,10 +275,16 @@ class PlexPlayer(BasePlayer):
         if not self.item or not self.metadata:
             return None
 
+        features = self.item.settings.getPlaybackFeatures()
+
         decisionPath = self.metadata.decisionPath
         if not decisionPath:
             server = self.metadata.transcodeServer or self.item.getServer()
-            decisionPath = self.buildTranscode(server, util.AttributeDict(), self.metadata.partIndex, True, False).decisionPath
+            decisionPath = self.buildTranscode(server, util.AttributeDict(),
+                                               self.metadata.partIndex,
+                                               True,
+                                               False,
+                                               features=features).decisionPath
 
         # Modify the decision params based on the transcode url
         if decisionPath:
@@ -283,7 +296,12 @@ class PlexPlayer(BasePlayer):
                 # sidecar subs, burn or embed w/ an optional transcode.
                 for key in ("subtitles", "advancedSubtitles"):
                     decisionPath = re.sub(r'([?&]{0}=)\w+'.format(key), '', decisionPath)
+
                 subType = 'sidecar'  # AppSettings().getBoolPreference("custom_video_player"), "embedded", "sidecar")
+                # deselect subtitles if we don't need them
+                if not self.choice.audioStream or self.choice.audioStream.languageCode in self.item.settings.getPreference(
+                        "disable_subtitle_languages", []):
+                    subType = "none"
                 decisionPath = http.addUrlParam(decisionPath, "subtitles=" + subType)
 
             # Global variables for all decisions
@@ -386,14 +404,24 @@ class PlexPlayer(BasePlayer):
 
         if not forceAC3:
             if directStream:
-                audioCodecs = "eac3,ac3,dca,aac,mp3,mp2,pcm,flac,alac,wmav2,wmapro,wmavoice,opus,vorbis,truehd"
+                audioCodecs = util.AUDIO_CODECS
             else:
-                audioCodecs = "mp3,ac3,dca,aac,opus"
+                audioCodecs = util.AUDIO_CODECS_TC
+
+            # filter audio codecs
+            disACodecs = self.item.settings.getPreference("audio_disabled_codecs", [])
+            if disACodecs:
+                audioCodecs = list(set(audioCodecs) - set(disACodecs))
+
+            # force transcode audio codec
+            tcACodec = self.item.settings.getPreference("audio_transcode_codec", "default")
+            if tcACodec != "default":
+                audioCodecs = [tcACodec]
         else:
             if dtsIsAC3:
-                audioCodecs = "ac3,dca"
+                audioCodecs = ["ac3", "dca"]
             else:
-                audioCodecs = "ac3"
+                audioCodecs = ["ac3",]
 
         subtitleCodecs = "srt,ssa,ass,mov_text,tx3g,ttxt,text,pgs,vobsub,smi,subrip,eia_608_embedded," \
                          "eia_708_embedded,dvb_subtitle" + (",webvtt" if KODI_VERSION_MAJOR > 19 else '')
@@ -412,7 +440,7 @@ class PlexPlayer(BasePlayer):
         builder.extras.append(
             "add-transcode-target(type=videoProfile&videoCodec="
             "h264,mpeg1video,mpeg2video,mpeg4,msmpeg4v2,msmpeg4v3,wmv3&container=mkv&"
-            "audioCodec={}&subtitleCodec={}&protocol=http&context=streaming)".format(audioCodecs, subtitleCodecs))
+            "audioCodec={}&subtitleCodec={}&protocol=http&context=streaming)".format(",".join(audioCodecs), subtitleCodecs))
 
         # builder.extras.append(
         #     "append-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=http&audioCodec=" +
@@ -541,6 +569,12 @@ class PlexPlayer(BasePlayer):
                 "append-transcode-target-codec(type=videoProfile&context=streaming&container=mkv&"
                 "protocol=http&videoCodec=vc1)")
 
+        if self.item.settings.getPreference("disable_hdr", False):
+            builder.extras.append(
+                "add-limitation(scope=videoTranscodeTarget&scopeName=*&scopeType=videoCodec&context=streaming&protocol=http&"
+                "type=match&name=video.colorTrc&list=bt709|bt470m|bt470bg|smpte170m|smpte240m|bt2020-10|bt2020-10"
+                "&isRequired=true)")
+
         return builder
 
     def buildDirectPlay(self, obj, partIndex):
@@ -555,7 +589,7 @@ class PlexPlayer(BasePlayer):
         if self.media.protocol == "hls":
             obj.streamFormat = "hls"
             obj.switchingStrategy = "full-adaptation"
-            obj.live = self.isLiveHLS(obj.streamUrls[0], self.media.indirectHeaders)
+            #obj.live = self.isLiveHls(obj.streamUrls[0], self.media.indirectHeaders)
         else:
             obj.streamFormat = self.media.get('container', 'mp4')
             if obj.streamFormat == "mov" or obj.streamFormat == "m4v":
@@ -605,7 +639,7 @@ class PlexPlayer(BasePlayer):
 
         return None
 
-    def buildTranscode(self, server, obj, partIndex, directStream, isCurrentPart):
+    def buildTranscode(self, server, obj, partIndex, directStream, isCurrentPart, features=None):
         util.DEBUG_LOG('buildTranscode()')
         obj.transcodeServer = server
         obj.isTranscoded = True
@@ -622,6 +656,11 @@ class PlexPlayer(BasePlayer):
             path = self.item.getAbsolutePath("key")
 
         builder.addParam("path", path)
+
+        if self.choice.subtitleStream and self.choice.subtitleStream.should_auto_sync:
+            # add sub autosync settings per item
+            auto_sync = self.item.playbackSettings.auto_sync
+            builder.addParam("autoAdjustSubtitle", auto_sync and '1' or '0')
 
         part = self.media.parts[partIndex]
         seekOffset = int(self.seekValue / 1000)
@@ -658,15 +697,25 @@ class PlexPlayer(BasePlayer):
 
             builder.addParam("offset", str(startOffset))
 
-        builder.addParam("session", self.item.settings.getGlobal("clientIdentifier"))
+        builder.addParam("session", self.sessionID)
         builder.addParam("directStream", directStream and "1" or "0")
         #builder.addParam("directStreamAudio", directStream and "1" or "0")
         builder.addParam("directPlay", "0")
 
         qualityIndex = self.item.settings.getQualityIndex(self.item.getQualityType(server))
-        builder.addParam("videoQuality", self.item.settings.getGlobal("transcodeVideoQualities")[qualityIndex])
-        builder.addParam("videoResolution", str(self.item.settings.getGlobal("transcodeVideoResolutions")[qualityIndex]))
+        #builder.addParam("videoQuality", self.item.settings.getGlobal("transcodeVideoQualities")[qualityIndex])
+        maxVideoResolution = "allow_4k" in features and (self.item.settings.maxVerticalDPRes == 99999 and "99999x99999" or "3840x2160") or "1920x1080"
+        builder.addParam("videoResolution", str(maxVideoResolution))
         builder.addParam("maxVideoBitrate", self.item.settings.getGlobal("transcodeVideoBitrates")[qualityIndex])
+
+        builder.addParam("X-Plex-Session-Id", self.sessionID)
+        builder.addParam("X-Plex-Session-Identifier", self.sessionID)
+        builder.addParam('X-Plex-Client-Identifier', self.item.settings.getGlobal('clientIdentifier'))
+
+        builder.extras.append(
+            "add-limitation(scope=videoCodec&scopeName=*&context=streaming&protocol=http&"
+            "type=upperBound&name=video.height&value={}&isRequired=true)".format("allow_4k" in features and str(self.item.settings.maxVerticalDPRes) or
+                                                                                 "1088"))
 
         if self.media.mediaIndex is not None:
             builder.addParam("mediaIndex", str(self.media.mediaIndex))
@@ -702,9 +751,10 @@ class PlexPlayer(BasePlayer):
 
 
 class PlexAudioPlayer(BasePlayer):
-    def __init__(self, item=None):
+    def __init__(self, item=None, session_id=None):
         self.item = item
         self.choice = None
+        self.sessionID = session_id
         self.containerFormats = {
             'aac': "es.aac-adts"
         }
@@ -740,7 +790,7 @@ class PlexAudioPlayer(BasePlayer):
         builder = http.HttpRequest(transcodeServer.buildUrl(obj.transcodeEndpoint, True))
         builder.addParam("protocol", "http")
         builder.addParam("path", item.getAbsolutePath("key"))
-        builder.addParam("session", item.getGlobal("clientIdentifier"))
+        builder.addParam("session", self.sessionID and self.sessionID or item.getGlobal("clientIdentifier"))
         builder.addParam("directPlay", "0")
         builder.addParam("directStream", "0")
 

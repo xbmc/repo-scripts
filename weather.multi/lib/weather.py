@@ -3,10 +3,8 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 
-CURL = ['https://www.yahoo.com/', 'https://www.yahoo.com/?guccounter=1', 'https://www.yahoo.com/?guccounter=2', 'https://www.yahoo.com/?guccounter=', 'https://ca.yahoo.com/']
-YURL = 'https://www.yahoo.com/news/weather/'
-LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
-FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
+LCURL = 'https://weather.yahoo.com/_atmos/api/search-assist/locations?query=%s'
+FCURL = 'https://weather.yahoo.com/%s'
 AURL = 'https://api.weatherbit.io/v2.0/%s'
 
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml'}
@@ -27,25 +25,19 @@ class MAIN():
         if mode.startswith('loc'):
             self.search_location(mode)
         else:
-            location, locationid, locationlat, locationlon = self.get_location(mode)
+            location, locationurl, locationlat, locationlon = self.get_location(mode)
             log('location: %s' % (location))
-            log('location id: %s' % (locationid))
-            if locationid > 0:
-                #ycookie, ycrumb = self.get_ycreds()
-                ycookie = ADDON.getSettingString('ycookie')
-                ycrumb = ADDON.getSettingString('ycrumb')
-                if not ycookie:
-                    log('no cookie')
-                else:
-                    self.get_forecast(location, locationid, locationlat, locationlon, ycookie, ycrumb)
+            log('location id: %s' % (locationurl))
+            if locationurl:
+                self.get_forecast(location, locationurl, locationlat, locationlon)
             else:
-                log('empty location id')
+                log('empty location url')
                 self.clear_props()
             self.refresh_locations()
         log('finished')
     
     def search_location(self, mode):
-        value = ADDON.getSettingString(mode)
+        value = ADDON.getSettingString('%s_name' % mode)
         keyboard = xbmc.Keyboard(value, xbmc.getLocalizedString(14024), False)
         keyboard.doModal()
         if (keyboard.isConfirmed() and keyboard.getText()):
@@ -60,118 +52,114 @@ class MAIN():
             dialog = xbmcgui.Dialog()
             if locs:
                 items = []
-                for item in locs:
-                    listitem = xbmcgui.ListItem(item['qualifiedName'], item['city'] + ' - ' + item['country'] + ' [' + str(item['lat']) + '/' + str(item['lon']) + ']')
+                for item in locs['suggestions']:
+                    if item['location']['region']['code']:
+                        region = item['location']['region']['code']
+                    else:
+                        region = item['location']['region']['name']
+                    listitem = xbmcgui.ListItem(item['location']['town']['name'], region + ' - ' + item['location']['country']['code'] + ' [' + str(item['location']['town']['latitude']) + '/' + str(item['location']['town']['longitude']) + ']')
                     items.append(listitem)
                 selected = dialog.select(xbmc.getLocalizedString(396), items, useDetails=True)
                 if selected != -1:
-                    ADDON.setSettingString(mode, locs[selected]['qualifiedName'])
-                    ADDON.setSettingInt(mode + 'id', locs[selected]['woeid'])
-                    ADDON.setSettingNumber(mode + 'lat', locs[selected]['lat'])
-                    ADDON.setSettingNumber(mode + 'lon', locs[selected]['lon'])
-                    log('selected location: %s' % str(locs[selected]))
+                    if locs['suggestions'][selected]['location']['region']['code']:
+                        region = locs['suggestions'][selected]['location']['region']['code']
+                    else:
+                        region = locs['suggestions'][selected]['location']['region']['name']
+                    name = '%s, %s, %s' % (locs['suggestions'][selected]['location']['town']['name'], region, locs['suggestions'][selected]['location']['country']['code'])
+                    url = '%s/%s/%s' % (locs['suggestions'][selected]['location']['country']['code'].lower().replace(' ', '-'), region.lower().replace(' ', '-'), locs['suggestions'][selected]['location']['town']['name'].lower().replace(' ', '-'))
+                    ADDON.setSettingString(mode + '_name', name)
+                    ADDON.setSettingString(mode + '_url', url)
+                    ADDON.setSettingNumber(mode + '_lat', locs['suggestions'][selected]['location']['town']['latitude'])
+                    ADDON.setSettingNumber(mode + '_lon', locs['suggestions'][selected]['location']['town']['longitude'])
+                    log('selected location: %s' % str(locs['suggestions'][selected]))
             else:
                 log('no locations found')
                 dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
 
     def get_location(self, mode):
-        location = ADDON.getSettingString('loc%s' % mode)
-        locationid = ADDON.getSettingInt('loc%sid' % mode)
-        locationlat = ADDON.getSettingNumber('loc%slat' % mode)
-        locationlon = ADDON.getSettingNumber('loc%slon' % mode)
-        if (locationid == -1) and (mode != '1'):
+        location = ADDON.getSettingString('loc%s_name' % mode)
+        locationurl = ADDON.getSettingString('loc%s_url' % mode)
+        locationlat = ADDON.getSettingNumber('loc%s_lat' % mode)
+        locationlon = ADDON.getSettingNumber('loc%s_lon' % mode)
+        if (locationurl == '') and (mode != '1'):
             log('trying location 1 instead')
-            location = ADDON.getSettingString('loc1')
-            locationid = ADDON.getSettingInt('loc1id')
-            locationlat = ADDON.getSettingNumber('loc1lat')
-            locationlon = ADDON.getSettingNumber('loc1lon')
-        return location, locationid, locationlat, locationlon
+            location = ADDON.getSettingString('loc1_name')
+            locationurl = ADDON.getSettingString('loc1_url')
+            locationlat = ADDON.getSettingNumber('loc1_lat')
+            locationlon = ADDON.getSettingNumber('loc1_lon')
+        return location, locationurl, locationlat, locationlon
 
-    def get_ycreds(self):
-        ycookie = ADDON.getSettingString('ycookie')
-        ycrumb = ADDON.getSettingString('ycrumb')
-        ystamp = ADDON.getSettingString('ystamp')
-        log('cookie from settings: %s' % ycookie)
-        log('crumb from settings: %s' % ycrumb)
-        log('stamp from settings: %s' % ystamp)
-        if ystamp == '' or (int(time.time()) - int(ystamp) > 31536000): # cookie expires after 1 year
-            try:
-                for URL in CURL:
-                    ysess = requests.Session()
-                    retry = 0
-                    while (retry < 6) and (not self.MONITOR.abortRequested()):
-                        response = ysess.get(URL, headers=HEADERS, timeout=10)
-                        if response.status_code == 200:
-                            break
-                        else:
-                            self.MONITOR.waitForAbort(10)
-                            retry += 1
-                            log('getting yahoo website failed')
-                    if 'consent' in response.url: # EU users are asked for cookie consent
-                        log('EU user')
-                        token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                        sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                        redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
-                        log('EU token: %s' % token)
-                        log('EU sessionid: %s' % sessionid)
-                        log('EU redirect %s' % redirect)
-                        DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'reject': 'reject'}
-                        response = ysess.post(response.url, headers=HEADERS, data=DATA)
-                    log('cookies: %s' % str(response.cookies))
-                    if 'A3' in response.cookies:
-                        ycookie = response.cookies['A3']
-                        break
-                    elif 'A1' in response.cookies:
-                        ycookie = response.cookies['A1']
-                        break
-                response = ysess.get(YURL, headers=HEADERS, cookies=dict(A3=ycookie), timeout=10)
-                match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
-                if not match:
-                    match = re.search("win.YAHOO.context.crumb = '(.*?)'", response.text, re.IGNORECASE)
-                if not match:
-                    match = re.search('window.YAHOO.context.*?"crumb": "(.*?)"', response.text, flags=re.DOTALL)
-                ycrumb = codecs.decode(match.group(1), 'unicode-escape')
-                ystamp = time.time()
-                ADDON.setSettingString('ycookie', ycookie)
-                ADDON.setSettingString('ycrumb', ycrumb)
-                ADDON.setSettingString('ystamp', str(int(ystamp)))
-                log('save cookie to settings: %s' % ycookie)
-                log('save crumb to settings: %s' % ycrumb)
-                log('save stamp to settings: %s' % str(int(ystamp)))
-            except:
-                log('exception while getting cookie')
-                return '', ''
-        return ycookie, ycrumb
-
-    def get_data(self, url, cookie=''):
+    def get_data(self, url, json=True):
         try:
-            if cookie:
-                response = requests.get(url, headers=HEADERS, cookies=dict(A3=cookie), timeout=10)
+            wsession = requests.Session()
+            response = wsession.get(url, headers=HEADERS, timeout=10)
+            if 'consent' in response.url: # EU cookie wall: reject
+                token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
+                log('EU token: %s' % token)
+                log('EU sessionid: %s' % sessionid)
+                log('EU redirect %s' % redirect)
+                DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo', 'reject': 'reject'}
+                response = wsession.post(response.url, headers=HEADERS, data=DATA)
+            if json:
+                return response.json()
             else:
-                response = requests.get(url, headers=HEADERS, timeout=10)
-            return response.json()
+                return response.text
         except:
             return
     
-    def get_forecast(self, loc, locid, lat, lon, ycookie='', ycrumb=''):
+    def get_forecast(self, loc, locurl, lat, lon):
         set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
-        log('weather location: %s' % locid)
+        log('weather location: %s' % locurl)
         providers = 'provided by Yahoo'
         if MAPS and MAPID:
             providers = providers + ', Openweathermaps'
             openweathermap.Weather.get_weather(lat, lon, ZOOM, MAPID)
         retry = 0
-        url = FCURL.format(crumb=ycrumb, woeid=locid)
+        url = FCURL % locurl
         while (retry < 6) and (not self.MONITOR.abortRequested()):
-            data = self.get_data(url, ycookie)
+            data = self.get_data(url, False)
             if data:
                 break
             else:
                 self.MONITOR.waitForAbort(10)
                 retry += 1
                 log('weather download failed')
-        log('yahoo forecast data: %s' % data)
-        if not data:
+        data = data.replace('\\','')
+        soup = BeautifulSoup(data, 'html.parser')
+        card = soup.find(id="summary-card")
+        town = card.find('h1').get_text()
+        weatherinfo = card.find_all('p')
+        country = weatherinfo[0].get_text()
+        temperature = weatherinfo[1].get_text().rstrip('°')
+        realfeel = weatherinfo[2].get_text().lstrip('RealFeel® ').rstrip('°')
+        hightemp = weatherinfo[4].get_text().rstrip('°')
+        lowtemp = weatherinfo[5].get_text().rstrip('°')
+        sunrise = weatherinfo[6].get_text()
+        sunset = weatherinfo[7].get_text()
+        outlook = card.find('svg').get('aria-label')
+        weatherdata = {}
+        weatherdata['location'] = {}
+        weatherdata['location']['town'] = town
+        weatherdata['location']['country'] = country
+        weatherdata['location']['temperature'] = int(temperature)
+        weatherdata['location']['realfeel'] = int(realfeel)
+        weatherdata['location']['hightemp'] = int(hightemp)
+        weatherdata['location']['lowtemp'] = int(lowtemp)
+        weatherdata['location']['sunrise'] = sunrise
+        weatherdata['location']['sunset'] = sunset
+        weatherdata['location']['outlook'] = outlook
+        matchcode = re.search('dailyForecasts":(.*?)}]]]}]', data, flags=re.DOTALL)
+        if matchcode:
+            matchdata = matchcode.group(1)
+            weatherdata['forecasts'] = json.loads(matchdata)
+        matchcode = re.search('","humidity",(.*?)],\\["', data, flags=re.DOTALL)
+        if matchcode:
+            matchdata = matchcode.group(1)
+            weatherdata['conditions'] = json.loads(matchdata)
+        log('yahoo forecast data: %s' % weatherdata)
+        if not weatherdata:
             self.clear_props()
             return
         add_weather = ''
@@ -182,12 +170,12 @@ class MAIN():
             log('weatherbit data: %s' % add_weather)
             if not add_weather or (add_weather and 'error' in add_weather):
                 add_weather = ''
-        yahoo.Weather.get_weather(data, loc, locid)
+        yahoo.Weather.get_weather(weatherdata, loc, locurl)
         if add_weather and add_weather != '':
             weatherbit.Weather.get_weather(add_weather)
             providers = providers + ', Weatherbit.io'
         else:
-            yahoo.Weather.get_daily_weather(data)
+            yahoo.Weather.get_daily_weather(weatherdata)
         set_property('WeatherProvider', providers)
         
     def clear_props(self):
@@ -212,7 +200,7 @@ class MAIN():
     def refresh_locations(self):
         locations = 0
         for count in range(1, 6):
-            loc_name = ADDON.getSettingString('loc%s' % count)
+            loc_name = ADDON.getSettingString('loc%s_name' % count)
             if loc_name:
                 locations += 1
             set_property('Location%s' % count, loc_name)

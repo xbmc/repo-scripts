@@ -1,20 +1,26 @@
-from bossanova808.utilities import *
-# noinspection PyPackages
-from .store import Store
 import xbmc
 # noinspection PyPackages
 from .monitor import KodiEventMonitor
 # noinspection PyPackages
 from .player import KodiPlayer
+# noinspection PyPackages
+from .store import Store
+
+from bossanova808.logger import Logger
 
 
 def run():
     """
-    This is 'main'
-
-    :return:
+    Start the addon: initialize logging and global state, configure Kodi monitor and player, attempt to resume or start playback, then run the main event loop until an abort is requested.
+    
+    This function:
+    - Starts the logger and creates the global Store.
+    - Instantiates and stores Kodi event monitor and player objects.
+    - Attempts to resume previous playback; if nothing resumed and no video is playing, triggers autoplay when enabled.
+    - Enters a loop that waits for an abort request and exits when one is detected.
+    - Stops the logger before returning.
     """
-    footprints()
+    Logger.start()
     # load settings and create the store for our globals
     Store()
     Store.kodi_event_monitor = KodiEventMonitor(xbmc.Monitor)
@@ -26,7 +32,8 @@ def run():
 
     while not Store.kodi_event_monitor.abortRequested():
         if Store.kodi_event_monitor.waitForAbort(1):
+            Logger.debug('onAbortRequested')
             # Abort was requested while waiting. We should exit
             break
 
-    footprints(False)
+    Logger.stop()

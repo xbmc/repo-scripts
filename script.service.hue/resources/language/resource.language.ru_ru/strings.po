@@ -6,39 +6,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-01 17:13+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2025-12-13 18:13+0000\n"
+"Last-Translator: Alexey <signfinder@gmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/ru_ru/>\n"
 "Language: ru_ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 5.14.3\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
-msgstr ""
+msgstr "Управляйте светом Hue во время просмотра Kodi"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "Управляйте светом Hue с Kodi. Используйте сцены настроенные в официальном приложении Hue. Может использовать время расцвета из Hue для автоматического отключения света при дневном свете. Включает поддержку Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
-msgstr ""
+msgstr "Для работы требуется блок управления Hue Bridge V2 (квадратный). Ambilight доступен не во всех устройствах."
 
 msgctxt "#32100"
 msgid "Video Scenes"
-msgstr "Video Scenes"
+msgstr "Видео сцены"
 
 msgctxt "#32102"
 msgid "Audio Scenes"
-msgstr "Audio Scenes"
+msgstr "Аудио сцены"
 
 msgctxt "#32201"
 msgid "Start/Resume"
-msgstr ""
+msgstr "Начать/Возобновить"
 
 msgctxt "#32202"
 msgid "Pause"
@@ -50,52 +50,52 @@ msgstr "Стоп"
 
 msgctxt "#30036"
 msgid "Scene:"
-msgstr "Scene:"
+msgstr "Сцена:"
 
 msgctxt "#32511"
 msgid "Scene ID"
-msgstr ""
+msgstr "ID сцены"
 
 msgctxt "#32512"
 msgid "Select..."
-msgstr ""
+msgstr "Выбор..."
 
 msgctxt "#30500"
 msgid "Bridge"
-msgstr ""
+msgstr "Мост"
 
 msgctxt "#30501"
 msgid "Discover Hue Bridge / Enter IP"
-msgstr "Discover Hue Bridge / Enter IP"
+msgstr "Найти Hue Bridge / Ввести IP"
 
 msgctxt "#30502"
 msgid "Bridge IP"
-msgstr ""
+msgstr "IP моста"
 
 msgctxt "#30503"
 msgid "Bridge User"
-msgstr ""
+msgstr "Пользователь моста"
 
 msgctxt "#30505"
 msgid "Enable Schedule (24h format)"
-msgstr ""
+msgstr "Включить планировщик (формат 24ч)"
 
 msgctxt "#30506"
 msgid "Start time:"
-msgstr ""
+msgstr "Время запуска:"
 
 msgctxt "#30507"
 msgid "End time:"
-msgstr ""
+msgstr "Время завершения:"
 
 msgctxt "#30508"
 msgid "Disable during daytime"
-msgstr "Disable during daytime"
+msgstr "Выключить в дневное время"
 
 #. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
-msgstr ""
+msgstr "Включить во время воспроизведения в закате"
 
 msgctxt "#30510"
 msgid "General"
@@ -107,41 +107,41 @@ msgstr "Расписание"
 
 msgctxt "#30512"
 msgid "Scenes"
-msgstr ""
+msgstr "Сцены"
 
 msgctxt "#30513"
 msgid "Play Scene Enabled"
-msgstr ""
+msgstr "Воспроизведение сцены включено"
 
 msgctxt "#30514"
 msgid "Pause Scene Enabled"
-msgstr ""
+msgstr "Пауза сцены включена"
 
 msgctxt "#30515"
 msgid "Stop Scene Enabled"
-msgstr ""
+msgstr "Остановка сцены включена"
 
 #. If any light in the selected scene is on, ignore the schedule restrictions
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
-msgstr ""
+msgstr "Выключить проверку времени если свет уже включен"
 
 #. If any of the lights in the scene are off, don't activate the related scene
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
-msgstr ""
+msgstr "Не включать сцены если любая подсветка выключена"
 
 msgctxt "#30521"
 msgid "[B][I]Warning: Not supported on all hardware[/B][/I]"
-msgstr ""
+msgstr "[B][I]Внимание: Не поддерживается на всех устройствах[/B][/I]"
 
 msgctxt "#30522"
 msgid "CPU & Hue performance"
-msgstr ""
+msgstr "Производительность ЦП и Hue"
 
 msgctxt "#30523"
 msgid "Ambilight"
-msgstr ""
+msgstr "Ambilight"
 
 msgctxt "#32101"
 msgid "Advanced"
@@ -149,83 +149,83 @@ msgstr "Расширенный"
 
 msgctxt "#32106"
 msgid "Video Activation Rules"
-msgstr "Video Activation Rules"
+msgstr "Правила активации видео"
 
 msgctxt "#6101"
 msgid "Select Lights"
-msgstr ""
+msgstr "Выбрать лампы"
 
 msgctxt "#30520"
 msgid "Enabled"
-msgstr ""
+msgstr "Включено"
 
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
-msgstr ""
+msgstr "Пожалуйста подключите кнопку к мосту Hue"
 
 msgctxt "#30000"
 msgid "Hue Service"
-msgstr ""
+msgstr "Служба Hue"
 
 msgctxt "#30004"
 msgid "Check your bridge and network"
-msgstr ""
+msgstr "Проверьте ваш мост и подключение к сети"
 
 msgctxt "#30006"
 msgid "Hue connected"
-msgstr ""
+msgstr "Hue подключен"
 
 msgctxt "#30008"
 msgid "Bridge not found"
-msgstr ""
+msgstr "Мост не найден"
 
 msgctxt "#30010"
 msgid "User not found"
-msgstr ""
+msgstr "Пользователь не найден"
 
 msgctxt "#30011"
 msgid "Complete!"
-msgstr ""
+msgstr "Завершено!"
 
 msgctxt "#30013"
 msgid "Cancelled"
-msgstr ""
+msgstr "Отменено"
 
 msgctxt "#30015"
 msgid "Select Hue Lights..."
-msgstr ""
+msgstr "Выбрать лампы Hue..."
 
 msgctxt "#30017"
 msgid "Found bridge: "
-msgstr ""
+msgstr "Найден мост: "
 
 msgctxt "#30018"
 msgid "Discover bridge..."
-msgstr ""
+msgstr "Обнаружение моста..."
 
 msgctxt "#30021"
 msgid "Bridge connection failed"
-msgstr ""
+msgstr "Не удалось соединится с мостом"
 
 msgctxt "#30022"
 msgid "Discovery started"
-msgstr ""
+msgstr "Обнаружение запущено"
 
 msgctxt "#30023"
 msgid "Bridge not configured"
-msgstr ""
+msgstr "Мост не настроен"
 
 msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
-msgstr ""
+msgstr "Проверьте конфигурацию моста Hue"
 
 msgctxt "#30034"
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 msgctxt "#30035"
 msgid "Lights:"
-msgstr ""
+msgstr "Лампы:"
 
 msgctxt "#30037"
 msgid "Save"
@@ -237,105 +237,105 @@ msgstr "Ошибка"
 
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
-msgstr ""
+msgstr "Потеряно подключение к мосту. Проверьте настройки. Выключение"
 
 msgctxt "#30050"
 msgid "N-UPnP discovery..."
-msgstr ""
+msgstr "N-UPnP обнаружение..."
 
 msgctxt "#30005"
 msgid "Searching for bridge..."
-msgstr ""
+msgstr "Поиск моста..."
 
 msgctxt "#30052"
 msgid "Invalid start or end time, schedule disabled"
-msgstr ""
+msgstr "Неверное время запуска и завершения, планировщик выключен"
 
 msgctxt "#30058"
 msgid "Light Names:"
-msgstr ""
+msgstr "Имена ламп:"
 
 msgctxt "#30065"
 msgid "Update interval (ms)"
-msgstr ""
+msgstr "Интервал обновления (мс)"
 
 msgctxt "#30066"
 msgid "Hue transition time (ms)"
-msgstr ""
+msgstr "Время переключения Hue (мс)"
 
 msgctxt "#30067"
 msgid "Frame capture size"
-msgstr ""
+msgstr "Размер буфера кадров"
 
 msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
-msgstr ""
+msgstr "Показывать ошибки вместимости моста Hue"
 
 #. Minimum duration of the media before activating light scene
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
-msgstr ""
+msgstr "Минимальная длительность медиа (минуты)"
 
 msgctxt "#30801"
 msgid "Enable for Movies"
-msgstr ""
+msgstr "Включить для фильмов"
 
 msgctxt "#30802"
 msgid "Enable for TV episodes"
-msgstr ""
+msgstr "Включить для ТВ сериалов"
 
 msgctxt "#30803"
 msgid "Enable for music videos"
-msgstr ""
+msgstr "Включить для музыкальных видео"
 
 msgctxt "#30804"
 msgid "Enable for other videos (Discs)"
-msgstr ""
+msgstr "Включить для других видео (Диски)"
 
 msgctxt "#30805"
 msgid "Enable for live TV"
-msgstr ""
+msgstr "Включить для ТВ"
 
 msgctxt "#30809"
 msgid "Saturation"
-msgstr ""
+msgstr "Насыщенность"
 
 msgctxt "#30810"
 msgid "Minimum Brightness"
-msgstr ""
+msgstr "Минимальная яркость"
 
 msgctxt "#30811"
 msgid "Maximum Brightness"
-msgstr ""
+msgstr "Максимальная яркость"
 
 msgctxt "#30813"
 msgid "Average image processing time:"
-msgstr ""
+msgstr "Среднее время обработки изображения:"
 
 msgctxt "#30814"
 msgid "On playback stop"
-msgstr ""
+msgstr "При остановке воспроизведения"
 
 msgctxt "#30815"
 msgid "Resume light state"
-msgstr ""
+msgstr "Вернуть прошлое состояние света"
 
 msgctxt "#30816"
 msgid "Resume transition time (secs.)"
-msgstr ""
+msgstr "Время перехода в прошлое состояние (сек.)"
 
 msgctxt "#30071"
 msgid "Only colour lights are supported"
-msgstr ""
+msgstr "Поддерживаются только цветные лампы"
 
 #. Old or deperacted bridge firmware or hardware
 msgctxt "#30072"
 msgid "Unsupported Hue Bridge"
-msgstr ""
+msgstr "Мост Hue не поддерживается"
 
 msgctxt "#30055"
 msgid "Disabled"
-msgstr ""
+msgstr "Выключено"
 
 msgctxt "#30060"
 msgid "Play"
@@ -344,7 +344,7 @@ msgstr "Воспроизвести"
 #. Must end with a space, status string is appended
 msgctxt "#30061"
 msgid "Hue Status: "
-msgstr ""
+msgstr "Cтатус Hue: "
 
 msgctxt "#30062"
 msgid "Settings"
@@ -352,168 +352,168 @@ msgstr "Настройки"
 
 msgctxt "#30063"
 msgid "Disabled by daytime"
-msgstr "Disabled by daytime"
+msgstr "Выключено в дневное время"
 
 msgctxt "#30064"
 msgid "ERROR: Scene not found, it may have been deleted"
-msgstr "ERROR: Scene not found, it may have been deleted"
+msgstr "ERROR: Сцена не найдена, возможно она удалена"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
-msgstr ""
+msgstr "Возникла ошибка:"
 
 msgctxt "#30081"
 msgid "Automatically report this error?"
-msgstr ""
+msgstr "Автоматически сообщить об ошибке?"
 
 msgctxt "#30069"
 msgid "No lights selected for Ambilight."
-msgstr ""
+msgstr "Свет не выбран для Ambilight."
 
 msgctxt "#30070"
 msgid "Ok"
-msgstr ""
+msgstr "ОК"
 
 msgctxt "#30075"
 msgid "Hue Bridge over capacity"
-msgstr ""
+msgstr "Перегрузка Hue Bridge"
 
 msgctxt "#30076"
 msgid "Network not ready"
-msgstr ""
+msgstr "Подключение к сети не готово"
 
 msgctxt "#30077"
 msgid "The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."
-msgstr ""
+msgstr "Hue Bridge перегружен. Увеличьте интервал обновления или уменьшите число Ambilight."
 
 msgctxt "#30078"
 msgid "Bridge not found[CR]Check your bridge and network."
-msgstr ""
+msgstr "Мост не найден[CR]Проверьте мост или подключение к сети."
 
 msgctxt "#30082"
 msgid "Press link button on bridge. Waiting for 90 seconds..."
-msgstr ""
+msgstr "Нажмите на кнопку \"Link\" в мосте. Ожидание 90 секунд..."
 
 msgctxt "#30083"
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестно"
 
 msgctxt "#30084"
 msgid "User Found![CR]Saving settings..."
-msgstr ""
+msgstr "Пользователь найден![CR]Сохранение настроек..."
 
 msgctxt "#30086"
 msgid "User not found[CR]Check your bridge and network."
-msgstr ""
+msgstr "Пользователь не найден[CR]Проверьте мост или подключение к сети."
 
 msgctxt "#30073"
 msgid "Do not show again"
-msgstr ""
+msgstr "Не показывать снова"
 
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
-msgstr ""
+msgstr "Hue Bridge V1 (круглый) не поддерживается. Требуется Hue Bridge V2 (квадратный)."
 
 #. For ambilight, different color gamuts are supported. This means the colour gamut could not be fetched and the light is probably not compatible with ambilight.
 msgctxt "#30012"
 msgid "Unknown colour gamut for light:"
-msgstr ""
+msgstr "Неизвестная цветовая гамма для света:"
 
 msgctxt "#30016"
 msgid "Report errors"
-msgstr ""
+msgstr "Сообщить об ошибках"
 
 msgctxt "#30020"
 msgid "Never report errors"
-msgstr ""
+msgstr "Никогда не сообщать об ошибках"
 
 msgctxt "#30032"
 msgid "Hue Service Error"
-msgstr ""
+msgstr "Ошибка службы Hue"
 
 msgctxt "#30029"
 msgid "Connection Error"
-msgstr ""
+msgstr "Ошибка подключения"
 
 msgctxt "#30014"
 msgid "Error: Lights incompatible with Ambilight"
-msgstr ""
+msgstr "Ошибка: Лампы не совместимы с Ambilight"
 
 msgctxt "#30007"
 msgid "Bridge not found automatically. Please make sure your bridge is up to date and has access to the internet. [CR]Would you like to enter your bridge IP manually?"
-msgstr ""
+msgstr "Мост не обнаружен. Пожалуйста убедитесь что мост в актуальном состоянии и имеет подключение к интернету. [CR]Хотите ввести IP адрес моста вручную?"
 
 msgctxt "#30009"
 msgid "Connecting..."
-msgstr ""
+msgstr "Подключение..."
 
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
-msgstr ""
+msgstr "Мост устарел. Пожалуйста обновите мост."
 
 msgctxt "#30033"
 msgid "Reconnected"
-msgstr ""
+msgstr "Пере-подключено"
 
 #. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
 msgctxt "#31334"
 msgid "Morning disable time:"
-msgstr ""
+msgstr "Время отключения утром:"
 
 #. Amount of time for the light scene transition to fade in, in seconds.
 msgctxt "#31335"
 msgid "Transition time (seconds):"
-msgstr ""
+msgstr "Время перехода (секунды):"
 
 #. Number of minutes before or after sunset to consider as sunset
 msgctxt "#31336"
 msgid "Sunset Offset:"
-msgstr ""
+msgstr "Смещение времени заката:"
 
 #. Help text for sunset offset setting
 msgctxt "#31337"
 msgid "Adjust sunset back or forwards by this many minutes"
-msgstr ""
+msgstr "Настройка смещения заката вперед или назад в минутах"
 
 #. Help text for "morning disable time" setting
 msgctxt "#31338"
 msgid "Time at which to disable the service in the morning"
-msgstr ""
+msgstr "Время в которое служба будет выключена утром"
 
 #. Help text for 'Disable during daytime'
 msgctxt "#31339"
 msgid "Disable the service between configured time and sunset"
-msgstr ""
+msgstr "Выключить службу между заданным временем и закатом"
 
 #. Help text for 'activate at sunset'
 msgctxt "#31340"
 msgid "Activate scenes at sunset, during playback"
-msgstr ""
+msgstr "Включить сцены во время заката, при воспроизведении"
 
 msgctxt "#30002"
 msgid "Bridge overloaded, stopping ambilight"
-msgstr ""
+msgstr "Мост перегружен, выключение"
 
 msgctxt "#30025"
 msgid "Bridge unauthorized, please reconfigure."
-msgstr ""
+msgstr "Мост не авторизован, пожалуйста выполните перенастройку."
 
 msgctxt "#30026"
 msgid "Connection failed, retrying..."
-msgstr ""
+msgstr "Не удалось подключится, повтор..."
 
 #. Default status in an empty configuration field; eg. scene/lights are not selected
 msgctxt "#30003"
 msgid "Not selected"
-msgstr ""
+msgstr "Не выбрано"
 
 msgctxt "#30027"
 msgid "ERROR: Light not found, it may have been deleted"
-msgstr ""
+msgstr "ОШИБКА: Свет не найден, возможно он удалён"
 
 msgctxt "#30028"
 msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
-msgstr ""
+msgstr "Настройте местоположение дома Hue для получения времени заката, по-умолчанию 19:00"
 
 #~ msgctxt "#30002"
 #~ msgid "ERROR: Scene not created"

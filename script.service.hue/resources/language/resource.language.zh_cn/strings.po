@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-09 06:24+0000\n"
-"Last-Translator: taxigps <taxigps@sina.com>\n"
-"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/zh_cn/>\n"
+"PO-Revision-Date: 2025-05-13 10:27+0000\n"
+"Last-Translator: wabisabi926 <liwenliang926@163.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/zh_Hans/>\n"
 "Language: zh_cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.2\n"
+"X-Generator: Weblate 5.11.3\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
@@ -22,7 +22,7 @@ msgstr "Kodi 播放时自动调整 Hue 灯光"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "使用 Kodi 自动化您的 Hue 灯。使用官方 Hue 应用程序中配置的场景。可以使用 Hue 的日落时间在白天自动禁用该服务，并在播放期间在日落时打开灯光。包括 Ambilight 支持。"
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
@@ -458,62 +458,62 @@ msgstr "重新连接"
 #. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
 msgctxt "#31334"
 msgid "Morning disable time:"
-msgstr ""
+msgstr "上午禁用时间："
 
 #. Amount of time for the light scene transition to fade in, in seconds.
 msgctxt "#31335"
 msgid "Transition time (seconds):"
-msgstr ""
+msgstr "过渡时间（秒）："
 
 #. Number of minutes before or after sunset to consider as sunset
 msgctxt "#31336"
 msgid "Sunset Offset:"
-msgstr ""
+msgstr "日落偏移："
 
 #. Help text for sunset offset setting
 msgctxt "#31337"
 msgid "Adjust sunset back or forwards by this many minutes"
-msgstr ""
+msgstr "将日落前后调整这几分钟"
 
 #. Help text for "morning disable time" setting
 msgctxt "#31338"
 msgid "Time at which to disable the service in the morning"
-msgstr ""
+msgstr "早上关闭服务的时间"
 
 #. Help text for 'Disable during daytime'
 msgctxt "#31339"
 msgid "Disable the service between configured time and sunset"
-msgstr ""
+msgstr "在配置的时间和日落之间禁用服务"
 
 #. Help text for 'activate at sunset'
 msgctxt "#31340"
 msgid "Activate scenes at sunset, during playback"
-msgstr ""
+msgstr "在播放期间，在日落时激活场景"
 
 msgctxt "#30002"
 msgid "Bridge overloaded, stopping ambilight"
-msgstr ""
+msgstr "桥接器过载，停止 Ambilight"
 
 msgctxt "#30025"
 msgid "Bridge unauthorized, please reconfigure."
-msgstr ""
+msgstr "桥接器未经授权，请重新配置."
 
 msgctxt "#30026"
 msgid "Connection failed, retrying..."
-msgstr ""
+msgstr "连接失败，正在重试..."
 
 #. Default status in an empty configuration field; eg. scene/lights are not selected
 msgctxt "#30003"
 msgid "Not selected"
-msgstr ""
+msgstr "未选择"
 
 msgctxt "#30027"
 msgid "ERROR: Light not found, it may have been deleted"
-msgstr ""
+msgstr "错误：未找到灯光，它可能已被删除"
 
 msgctxt "#30028"
 msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
-msgstr ""
+msgstr "将 Hue Home 位置配置为使用日落时间，默认为 19：00"
 
 #~ msgctxt "#30042"
 #~ msgid "Fade Time (Seconds)"

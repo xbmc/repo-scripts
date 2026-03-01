@@ -319,10 +319,6 @@ msgctxt "#30824"
 msgid "It is installed at [B]{path}[/B]"
 msgstr ""
 
-msgctxt "#30825"
-msgid "It was extracted from {image} image version [B]{version}[/B]"
-msgstr ""
-
 msgctxt "#30826"
 msgid "[B]Widevine CDM[/B] is [B]built into webOS[/B]"
 msgstr ""

@@ -357,7 +357,7 @@
 					</group>
 					<setting id="Radar1" type="string" label="32155" help="">
 						<level>0</level>
-						<default></default>
+						<default/>
 						<constraints>
 							<allowempty>true</allowempty>
 						</constraints>
@@ -406,7 +406,7 @@
 							<heading>32157</heading>
 						</control>
 					</setting>
-			</group>
+            </group>
 			<group id="2" label="32209">
 				<setting id="PurgeRadarBackgroundsOnNextRefresh" type="boolean" label="32210" help="">
 					<level>0</level>

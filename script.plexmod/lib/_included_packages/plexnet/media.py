@@ -32,7 +32,11 @@ class MediaItem(plexobjects.PlexObject):
         identifier = self.get('identifier') or None
 
         if identifier is None:
-            identifier = self.container.identifier
+            try:
+                identifier = self.container.identifier
+            except AttributeError:
+                util.DEBUG_LOG("Couldn't get media identifier for {}", self)
+                pass
 
         # HACK
         # PMS doesn't return an identifier for playlist items. If we haven't found
@@ -144,12 +148,12 @@ class MediaPartStream(plexstream.PlexStream):
     TYPE = None
     STREAMTYPE = None
 
-    def __init__(self, data, initpath=None, server=None, part=None):
-        plexobjects.PlexObject.__init__(self, data, initpath, server)
+    def __init__(self, data, initpath=None, server=None, part=None, **kwargs):
+        plexobjects.PlexObject.__init__(self, data, initpath, server, **kwargs)
         self.part = part
 
     @staticmethod
-    def parse(data, initpath=None, server=None, part=None):
+    def parse(data, initpath=None, server=None, part=None, **kwargs):
         STREAMCLS = {
             1: VideoStream,
             2: AudioStream,
@@ -157,7 +161,11 @@ class MediaPartStream(plexstream.PlexStream):
         }
         stype = int(data.attrib.get('streamType'))
         cls = STREAMCLS.get(stype, MediaPartStream)
-        return cls(data, initpath=initpath, server=server, part=part)
+        return cls(data, initpath=initpath, server=server, part=part, **kwargs)
+
+    @staticmethod
+    def rebuild(s):
+        return MediaPartStream.parse(s.data, initpath=s.initpath, server=s.server, part=s.part)
 
     def __repr__(self):
         return '<%s:%s>' % (self.__class__.__name__, self.id)
@@ -176,6 +184,29 @@ class AudioStream(MediaPartStream):
 class SubtitleStream(MediaPartStream):
     TYPE = 'subtitlestream'
     STREAMTYPE = plexstream.PlexStream.TYPE_SUBTITLE
+
+    def __init__(self, data, initpath=None, server=None, part=None):
+        super(MediaPartStream, self).__init__(data, initpath=initpath, server=server, part=part)
+        self.force_auto_sync = None
+        self.init_auto_sync(part=part)
+
+    def init_auto_sync(self, part=None, video=None):
+        if not (part or video):
+            return
+        self._should_auto_sync = self.canAutoSync.asBool() and util.INTERFACE.playbackManager(
+            part.media).auto_sync if part and part.media else video.playbackSettings.auto_sync if video else util.INTERFACE.getPreference('auto_sync', user=True)
+
+    @property
+    def should_auto_sync(self):
+        return self.force_auto_sync if self.force_auto_sync is not None else self._should_auto_sync
+
+    @property
+    def should_auto_sync_unforced(self):
+        return self._should_auto_sync
+
+    @should_auto_sync.setter
+    def should_auto_sync(self, value):
+        self._should_auto_sync = value
 
 
 class TranscodeSession(plexobjects.PlexObject):
@@ -216,12 +247,6 @@ class Country(MediaTag):
     FILTER = 'country'
 
 
-class Director(MediaTag):
-    TYPE = 'Director'
-    FILTER = 'director'
-    ID = '4'
-
-
 class Genre(MediaTag):
     TYPE = 'Genre'
     FILTER = 'genre'
@@ -233,20 +258,17 @@ class Mood(MediaTag):
     FILTER = 'mood'
 
 
-class Producer(MediaTag):
-    TYPE = 'Producer'
-    FILTER = 'producer'
-
 
 class Role(MediaTag):
     TYPE = 'Role'
     FILTER = 'actor'
     ID = '6'
+    translated_role = ''
 
     def sectionRoles(self):
         hubs = self.server.hubs(count=10, search_query=self.tag)
         for hub in hubs:
-            if hub.type == 'actor':
+            if hub.type == self.FILTER:
                 break
         else:
             return None
@@ -265,9 +287,23 @@ class Similar(MediaTag):
     FILTER = 'similar'
 
 
-class Writer(MediaTag):
+class Director(Role):
+    TYPE = 'Director'
+    FILTER = 'director'
+    ID = '4'
+    translated_role = 'Director'
+
+
+class Producer(Role):
+    TYPE = 'Producer'
+    FILTER = 'producer'
+    translated_role = 'Producer'
+
+
+class Writer(Role):
     TYPE = 'Writer'
     FILTER = 'writer'
+    translated_role = 'Writer'
 
 
 class Guid(MediaTag):
@@ -307,13 +343,19 @@ class Review(MediaTag):
         return img.split('rottentomatoes://')[1]
 
 
+class Studio(MediaTag):
+    TYPE = 'Studio'
+    FILTER = 'Studio'
+
+
 class RelatedMixin(object):
     _relatedCount = None
+    related_source = "similar"
 
     @property
     def relatedCount(self):
         if self._relatedCount is None:
-            related = self.getRelated(0, 0)
+            related = self.getRelated(0, 0 if self.related_source == "similar" else 36)
             if related is not None:
                 self._relatedCount = related.totalSize
             else:
@@ -326,9 +368,10 @@ class RelatedMixin(object):
         return self.getRelated(0, 8)
 
     def getRelated(self, offset=None, limit=None, _max=36):
-        path = '/library/metadata/%s/similar' % self.ratingKey
+        path = '/library/metadata/{}/{}'.format(self.ratingKey, self.related_source)
         try:
-            return plexobjects.listItems(self.server, path, offset=offset, limit=limit, params={"count": _max})
+            return plexobjects.listItems(self.server, path, offset=offset, limit=limit, params={"count": _max},
+                                         cachable=self.cachable, cache_ref=self.cacheRef, not_cachable=self._not_cachable)
         except exceptions.BadRequest:
             util.DEBUG_LOG("Invalid related items response returned for {}", self)
             return None

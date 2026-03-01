@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 
 import requests
 import urllib3
-import xbmcgui
+import xbmcgui,xbmcvfs
 from requests.exceptions import HTTPError, ConnectionError, Timeout
 
 from . import ADDON, TIMEOUT, NOTIFICATION_THRESHOLD, MAX_RETRIES, reporting
@@ -20,8 +20,8 @@ from .language import get_string as _
 class Hue(object):
     def __init__(self, settings_monitor, discover=False):
         self.scene_data = None
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  # Old hue bridges use insecure https
 
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  # Old hue bridges use insecure https
         self.session = requests.Session()
         self.session.verify = False
 
@@ -44,9 +44,6 @@ class Hue(object):
             log("[SCRIPT.SERVICE.HUE] No bridge IP or user key provided. Bridge not configured.")
             notification(_("Hue Service"), _("Bridge not configured"), icon=xbmcgui.NOTIFICATION_ERROR)
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.session.close()
-
     def make_api_request(self, method, resource, discovery=False, **kwargs):
         # Discovery and account creation not yet supported on API V2. This flag uses a V1 URL and supports new IPs.
         if discovery:
@@ -54,7 +51,8 @@ class Hue(object):
         for attempt in range(MAX_RETRIES):
             # Prepare the URL for the request
             log(f"[SCRIPT.SERVICE.HUE] v2 ip: {self.settings_monitor.ip}, key: {self.settings_monitor.key}")
-            base_url = self.base_url if not discovery else f"http://{self.discoveredIP}/api/"
+            base_url = self.base_url if not discovery else f"https://{self.discoveredIP}/api/"
+            log(f"[SCRIPT.SERVICE.HUE] v2 make_request: base_url: {base_url}")
             url = urljoin(base_url, resource)
             #log(f"[SCRIPT.SERVICE.HUE] v2 make_request: base_url: {base_url}, url: {url}, method: {method}, kwargs: {kwargs}")
             try:
@@ -114,14 +112,14 @@ class Hue(object):
         return None
 
     def _discover_new_ip(self):
-        if self._discover_nupnp():
-            log(f"[SCRIPT.SERVICE.HUE] v2 _discover_and_handle_new_ip: discover_nupnp SUCCESS, bridge IP: {self.settings_monitor.ip}")
-            # TODO:  add new discovery methods here
+        if self._discover_endpoint():
+            log(f"[SCRIPT.SERVICE.HUE] v2 _discover_and_handle_new_ip: discover_endpoint SUCCESS, bridge IP: {self.settings_monitor.ip}")
+            # TODO:  add new discovery methods here, like mDNS, when I can figure out how to make it multiplatform and not binary
             ADDON.setSettingString("bridgeIP", self.discoveredIP)
             if self.connect():
                 log(f"[SCRIPT.SERVICE.HUE] v2 _discover_and_handle_new_ip: connect SUCCESS")
                 return True
-        log(f"[SCRIPT.SERVICE.HUE] v2 _discover_and_handle_new_ip: discover_nupnp FAIL, bridge IP: {self.settings_monitor.ip}")
+        log(f"[SCRIPT.SERVICE.HUE] v2 _discover_and_handle_new_ip: discover_endpoint FAIL, bridge IP: {self.settings_monitor.ip}")
         return False
 
     def connect(self):
@@ -171,7 +169,7 @@ class Hue(object):
 
             progress_bar.update(percent=10, message=_("N-UPnP discovery..."))
             # Try to discover the bridge using N-UPnP
-            ip_discovered = self._discover_nupnp()
+            ip_discovered = self._discover_endpoint()
 
             if not ip_discovered and not progress_bar.iscanceled():
                 # If the bridge was not found, ask the user to enter the IP manually
@@ -291,22 +289,29 @@ class Hue(object):
 
     def _check_version(self):
         try:
-            software_version = self.get_attribute_value(self.devices, self.bridge_id, ['product_data', 'software_version'])
-            api_split = software_version.split(".")
-        except KeyError as error:
+            self.discoveredIP = self.settings_monitor.ip
+            config = self.make_api_request("GET", "config", discovery=True)
+            log(f"[SCRIPT.SERVICE.HUE] v2 _version_check(): config: {config}")
+
+            swversion_raw = self.search_dict(config, "swversion")
+            if swversion_raw is None:
+                raise KeyError("swversion not found in config")
+            swversion = int(swversion_raw)
+            log(f"[SCRIPT.SERVICE.HUE] v2 _version_check(): swversion: {swversion}")
+        except (KeyError, ValueError, TypeError) as error:
+            log(f"[SCRIPT.SERVICE.HUE] v2 _version_check():  Connected! Bridge too old: {swversion}, error: {error}")
             notification(_("Hue Service"), _("Bridge outdated. Please update your bridge."), icon=xbmcgui.NOTIFICATION_ERROR)
-            log(f"[SCRIPT.SERVICE.HUE] v2 _version_check():  Connected! Bridge too old: {software_version}, error: {error}")
             return False
         except Exception as exc:
             reporting.process_exception(exc)
             return False
 
-        if int(api_split[0]) >= 1 and int(api_split[1]) >= 60:  # minimum bridge version 1.60
-            log(f"[SCRIPT.SERVICE.HUE] v2 connect() software version: {software_version}")
+        if swversion >= 1948086000:  # minimum bridge version 1.60
+            log(f"[SCRIPT.SERVICE.HUE] v2 connect() software version: {swversion}")
             return True
 
         notification(_("Hue Service"), _("Bridge outdated. Please update your bridge."), icon=xbmcgui.NOTIFICATION_ERROR)
-        log(f"[SCRIPT.SERVICE.HUE] v2 connect():  Connected! Bridge API too old: {software_version}")
+        log(f"[SCRIPT.SERVICE.HUE] v2 connect():  Connected! Bridge API too old: {swversion}")
         return False
 
     def update_sunset(self):
@@ -422,11 +427,11 @@ class Hue(object):
                 return [hue_lights['data'][i] for i in selected]
         return None
 
-    def _discover_nupnp(self):
-        log("[SCRIPT.SERVICE.HUE] v2 _discover_nupnp:")
-        result: dict = self.make_api_request('GET', 'https://discovery.meethue.com/')
+    def _discover_endpoint(self):
+        log("[SCRIPT.SERVICE.HUE] v2 _discover_endpoint.")
+        result: dict = self.make_api_request('GET', 'https://discovery.meethue.com/', discovery=True)
         if result is None or isinstance(result, int):
-            log(f"[SCRIPT.SERVICE.HUE] v2 _discover_nupnp: make_request failed, result: {result}")
+            log(f"[SCRIPT.SERVICE.HUE] v2 _discover_endpoint: make_request failed, result: {result}")
             return None
 
         bridge_ip = None
@@ -434,7 +439,7 @@ class Hue(object):
             try:
                 bridge_ip = result[0]["internalipaddress"]
             except KeyError:
-                log("[SCRIPT.SERVICE.HUE] v2 _discover_nupnp: No IP found in response")
+                log("[SCRIPT.SERVICE.HUE] v2 _discover_endpoint: No IP found in response")
                 return None
         self.discoveredIP = bridge_ip
         return True

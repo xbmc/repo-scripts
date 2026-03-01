@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 from . import mediachoice
 from . import serverdecision
-from . import plexapp
 from . import util
 import six
 from six.moves import range
@@ -112,7 +111,8 @@ class MediaDecisionEngine(object):
         choice.isSelected = media.isSelected()
         choice.protocol = media.protocol("http")
 
-        maxResolution = item.settings.getMaxResolution(item.getQualityType(), self.isSupported4k(media, choice.videoStream))
+        #maxResolution = item.settings.getMaxResolution(item.getQualityType(), self.isSupported4k(media, choice.videoStream))
+        maxResolution = self.isSupported4k(media, choice.videoStream) and item.settings.maxVerticalDPRes or 1088
         maxBitrate = item.settings.getMaxBitrate(item.getQualityType())
 
         choice.resolution = media.getVideoResolution()
@@ -249,6 +249,13 @@ class MediaDecisionEngine(object):
                              "user settings ({} ch)".format(ach, choice.audioStream.codec, ch))
                     choice.isDirectPlayable = False
 
+        # check for disabled audio codecs
+        if choice.audioStream is not None \
+            and choice.audioStream.codec in item.settings.getPreference("audio_disabled_codecs", []):
+            choice.isDirectPlayable = False
+            util.LOG("MDE: {} can't be direct played due "
+                     "to user settings".format(choice.audioStream.codec))
+
         choice.sorts.videoDS = not (
                     choice.sorts.videoDS is None or choice.forceTranscode is True) and choice.sorts.videoDS or 0
         choice.sorts.resolution = choice.resolution
@@ -299,6 +306,16 @@ class MediaDecisionEngine(object):
         if choice.videoStream.codec == "vc1" and "allow_vc1" not in video_codecs:
             util.LOG("MDE: (DP) Codec is VC1, which is disabled")
             return False
+
+        # HDR
+        if item.settings.getPreference('disable_hdr', False):
+            if choice.videoStream.DOVIProfile == "8" and choice.videoStream.DOVIBLCompatID == "1" or \
+                choice.videoStream.DOVIProfile == "8" and choice.videoStream.DOVIBLCompatID == "4" or \
+                choice.videoStream.DOVIProfile == "7" or \
+                choice.videoStream.colorTrc in ("smpte2084", "arib-std-b67"):
+                choice.forceTranscode = True
+                choice.sorts.videoDS = 0
+                return False
 
         return True
 

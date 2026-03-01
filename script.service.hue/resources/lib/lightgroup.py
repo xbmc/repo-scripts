@@ -352,7 +352,7 @@ class ActivationChecker:
 
         elif self.light_group.media_type == AUDIO and scene:
             # Check audio activation rules
-            if skip_scene_if_all_off and not skip_scene_if_all_off(scene, all_light_states):
+            if skip_scene_if_all_off and not self._check_all_lights_off(scene, all_light_states):
                 log("[SCRIPT.SERVICE.HUE] Validate Audio: All lights are off, not activating scene")
                 return False
             elif (skip_time_check_if_light_on and self._check_any_lights_on(scene, all_light_states)):

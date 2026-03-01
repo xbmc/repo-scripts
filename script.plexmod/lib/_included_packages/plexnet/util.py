@@ -11,6 +11,7 @@ import uuid
 import threading
 import six
 import math
+import socket
 from copy import copy
 from kodi_six import xbmcaddon
 
@@ -44,6 +45,7 @@ def resetBaseHeaders():
         'X-Plex-Version': ADDON.getAddonInfo('version'),
         'X-Plex-Device': X_PLEX_DEVICE,
         'X-Plex-Client-Identifier': X_PLEX_IDENTIFIER,
+        'X-Plex-Language': LANGUAGE_CODE,
         'Accept-Encoding': 'gzip,deflate',
         'Accept-Language': ACCEPT_LANGUAGE,
         'User-Agent': '{0}/{1}'.format("PM4K", ADDON.getAddonInfo('version'))
@@ -51,11 +53,11 @@ def resetBaseHeaders():
 
 
 # Core Settings
-PROJECT = 'PlexNet'                                 # name provided to plex server
+PROJECT = 'PM4K'                                 # name provided to plex server
 VERSION = '0.0.0a1'                                 # version of this api
-TIMEOUT = 10                                        # request timeout
+TIMEOUT = 5                                        # request timeout
 TIMEOUT_CONNECT = 5                                 # connect timeout
-DEFAULT_TIMEOUT = 10
+DEFAULT_TIMEOUT = 5
 LONG_TIMEOUT = 20
 PLEXTV_TIMEOUT = None                               # set me later
 PLEXTV_TIMEOUT_READ = 20                                   # s
@@ -64,9 +66,13 @@ CONN_CHECK_TIMEOUT = 2.5                            # s
 LAN_REACHABILITY_TIMEOUT = 0.01                     # s
 CHECK_LOCAL = False
 LOCAL_OVER_SECURE = False
+DEBUG_REQUESTS = False
+CACHED_PLEX_URLS = {}
+REQUESTS_CACHE_EXPIRY = 168
 X_PLEX_CONTAINER_SIZE = 50                          # max results to return in a single search page
 
 ACCEPT_LANGUAGE = 'en-US,en'
+LANGUAGE_CODE = 'en'
 
 # Plex Header Configuation
 X_PLEX_PROVIDES = 'player,controller'          # one or more of [player, controller, server]
@@ -75,8 +81,12 @@ X_PLEX_PLATFORM_VERSION = platform.uname()[2]  # Operating system version, eg 4.
 X_PLEX_PRODUCT = PROJECT                       # Plex application name, eg Laika, Plex Media Server, Media Link
 X_PLEX_VERSION = VERSION                       # Plex application version number
 USER_AGENT = '{0}/{1}'.format(PROJECT, VERSION)
+TEMP_PATH = None
 
 USE_CERT_BUNDLE = False
+
+SKIP_HOST_CHECK = {}
+NO_HOST_CHECK = False
 
 INTERFACE = None
 TIMER = None
@@ -245,14 +255,16 @@ def joinArgs(args, includeQuestion=True):
 
 def getPlexHeaders():
     return {"X-Plex-Platform": INTERFACE.getGlobal("platform"),
-            "X-Plex-Version": INTERFACE.getGlobal("appVersionStr"),
+            "X-Plex-Version": ADDON.getAddonInfo('version'),
             "X-Plex-Client-Identifier": INTERFACE.getGlobal("clientIdentifier"),
             "X-Plex-Platform-Version": INTERFACE.getGlobal("platformVersion", "unknown"),
-            "X-Plex-Product": INTERFACE.getGlobal("product"),
+            "X-Plex-Product": "PM4K",
             "X-Plex-Provides": not INTERFACE.getPreference("remotecontrol", False) and 'player' or '',
             "X-Plex-Device": INTERFACE.getGlobal("device"),
+            "X-Plex-Device-Vendor": INTERFACE.getGlobal("vendor"),
             "X-Plex-Model": INTERFACE.getGlobal("model"),
             "X-Plex-Device-Name": INTERFACE.getGlobal("friendlyName"),
+            "X-Plex-Language": LANGUAGE_CODE,
             'Accept-Encoding': 'gzip,deflate',
             'Accept-Language': ACCEPT_LANGUAGE,
             'User-Agent': '{0}/{1}'.format("PM4K", ADDON.getAddonInfo('version'))
@@ -285,11 +297,11 @@ def validInt(int_str):
         return 0
 
 
-def bitrateToString(bits):
+def bitrateToString(bits, multiplier=1):
     if not bits:
         return ''
 
-    speed = bits / 1000000.0
+    speed = bits / 1000000.0 * multiplier
     if speed < 1:
         speed = int(round(bits / 1000.0))
         return '{0} Kbps'.format(speed)
@@ -311,6 +323,55 @@ def parsePlexDirectHost(hostname):
     v6 = hostname.count("-") > 3
     base = hostname.split(".", 1)[0]
     return v6 and base.replace("-", ":") or base.replace("-", ".")
+
+
+# stolen from icmplib
+def resolve(name, family=None, use_orig=False):
+    '''
+    Resolve a hostname or FQDN to an IP address. Depending on the name
+    specified in parameters, several IP addresses may be returned.
+
+    This function relies on the DNS name server configured on your
+    operating system.
+
+    :type name: str
+    :param name: A hostname or a Fully Qualified Domain Name (FQDN).
+
+    :type family: int, optional
+    :param family: The address family. Can be set to `4` for IPv4 or `6`
+        for IPv6 addresses. By default, this function searches for IPv4
+        addresses first for compatibility reasons (A DNS lookup) before
+        searching for IPv6 addresses (AAAA DNS lookup).
+
+    :rtype: list[str]
+    :returns: A list of IP addresses corresponding to the name passed as
+        a parameter.
+
+    :raises NameLookupError: If the requested name does not exist or
+        cannot be resolved.
+
+    '''
+    try:
+        if family == 6:
+            _family = socket.AF_INET6
+        else:
+            _family = socket.AF_INET
+
+        func = socket.getaddrinfo if not use_orig else socket.getaddrinfo_orig
+
+        lookup = func(
+            host=name,
+            port=None,
+            family=_family,
+            type=socket.SOCK_DGRAM)
+
+        return [address[4][0] for address in lookup]
+
+    except OSError:
+        if not family:
+            return resolve(name, 6)
+
+    raise Exception(name)
 
 
 class CompatEvent(Event):
@@ -396,6 +457,32 @@ class RepeatingCounterTimer(Timer):
     def reset(self):
         super(RepeatingCounterTimer, self).reset()
         self.ticks = 0
+
+
+AUDIO_CODECS_VERB = {
+    'aac': 'AAC',
+    'ac3': 'AC3',
+    'alac': 'ALAC',
+    'dca': 'DTS',
+    'eac3': 'EAC3',
+    'flac': 'FLAC',
+    'mp2': 'MP2',
+    'mp3': 'MP3',
+    'opus': 'Opus',
+    'pcm': 'PCM',
+    'truehd': 'TrueHD',
+    'vorbis': 'Vorbis',
+    'wmapro': 'WMA Pro',
+    'wmav2': 'Windows Media Audio 2',
+    'wmavoice': 'WMA Voice'
+}
+
+AUDIO_CODECS = list(AUDIO_CODECS_VERB.keys())
+
+AUDIO_CODECS_TC = ['mp3', 'ac3', 'aac', 'opus', 'vorbis', 'eac3', 'flac', 'alac']
+
+AUDIO_CODECS_TC_VERB = {codec: AUDIO_CODECS_VERB[codec] for codec in AUDIO_CODECS_TC}
+
 
 
 TIMER = Timer

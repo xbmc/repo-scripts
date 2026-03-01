@@ -518,6 +518,10 @@ msgctxt "#32372"
 msgid "Furlong/Fortnight"
 msgstr "Furlong/Fortnight"
 
+msgctxt "#32379"
+msgid "cm"
+msgstr "cm"
+
 msgctxt "#32380"
 msgid "mm"
 msgstr "mm"
@@ -640,6 +644,110 @@ msgstr ""
 
 msgctxt "#32456"
 msgid "grains"
+msgstr ""
+
+msgctxt "#32457"
+msgid "{0:d}:00"
+msgstr ""
+
+msgctxt "#32458"
+msgid "{0:d} grains/m³"
+msgstr ""
+
+msgctxt "#32459"
+msgid "{0:d} μg/m³"
+msgstr ""
+
+msgctxt "#32460"
+msgid "{0:d} AQI"
+msgstr ""
+
+msgctxt "#32461"
+msgid "{0:d} °C"
+msgstr ""
+
+msgctxt "#32462"
+msgid "{0:d} mm"
+msgstr ""
+
+msgctxt "#32463"
+msgid "{0:d} cm"
+msgstr ""
+
+msgctxt "#32464"
+msgid "{0:d} hPa"
+msgstr ""
+
+msgctxt "#32465"
+msgid "{0:d} km/h"
+msgstr ""
+
+msgctxt "#32466"
+msgid "{0:d} m"
+msgstr ""
+
+msgctxt "#32467"
+msgid "{0:d} W/m²"
+msgstr ""
+
+msgctxt "#32468"
+msgid "{0:d} %"
+msgstr ""
+
+msgctxt "#32470"
+msgid "Season"
+msgstr ""
+
+msgctxt "#32471"
+msgid "Spring"
+msgstr ""
+
+msgctxt "#32472"
+msgid "Summer"
+msgstr ""
+
+msgctxt "#32473"
+msgid "Fall"
+msgstr ""
+
+msgctxt "#32474"
+msgid "Winter"
+msgstr ""
+
+msgctxt "#32480"
+msgid "Night"
+msgstr ""
+
+msgctxt "#32481"
+msgid "Morning"
+msgstr ""
+
+msgctxt "#32482"
+msgid "Afternoon"
+msgstr ""
+
+msgctxt "#32483"
+msgid "Evening"
+msgstr ""
+
+msgctxt "#32485"
+msgid "Forecast"
+msgstr ""
+
+msgctxt "#32490"
+msgid "Autoscale"
+msgstr ""
+
+msgctxt "#32491"
+msgid "[COLOR=yellow]Notice[/COLOR]"
+msgstr ""
+
+msgctxt "#32492"
+msgid "[COLOR=orange]Caution[/COLOR]"
+msgstr ""
+
+msgctxt "#32493"
+msgid "[COLOR=crimson]Danger[/COLOR]"
 msgstr ""
 
 msgctxt "#32500"

@@ -14,7 +14,7 @@ from . import http
 
 class ServerTimeline(util.AttributeDict):
     def reset(self):
-        self.expires = time.time() + 15
+        self.expires = time.time() + 10
 
     def isExpired(self):
         return time.time() > self.get('expires', 0)
@@ -71,10 +71,6 @@ class NowPlayingManager(object):
         self.TIMELINE_TYPES = ["video", "music", "photo"]
 
         # Members
-        self.serverTimelines = util.AttributeDict()
-        self.subscribers = util.AttributeDict()
-        self.pollReplies = util.AttributeDict()
-        self.timelines = util.AttributeDict()
         self.location = self.NAVIGATION
 
         self.textFieldName = None
@@ -82,12 +78,23 @@ class NowPlayingManager(object):
         self.textFieldSecure = None
 
         # Initialization
+        self.reset()
+
+    def reset(self):
+        self.serverTimelines = util.AttributeDict()
+        self.subscribers = util.AttributeDict()
+        self.pollReplies = util.AttributeDict()
+        self.timelines = util.AttributeDict()
         for timelineType in self.TIMELINE_TYPES:
             self.timelines[timelineType] = TimelineData(timelineType)
 
     def updatePlaybackState(self, timelineType, itemData, state, t, playQueue=None, duration=0, force=False,
-                            force_time=False):
+                            continuing=False, force_time=False, server=None):
         timeline = self.timelines[timelineType]
+        old_item_data = None
+        if timeline.itemData:
+            old_item_data = timeline.itemData.copy()
+
         timeline.itemData = itemData
         timeline.playQueue = playQueue
         old_time = timeline.attrs.get("time")
@@ -96,7 +103,8 @@ class NowPlayingManager(object):
         if state != "stopped" or force_time:
             timeline.attrs["time"] = str(t)
             time_updated = True
-        elif old_time:
+
+        elif old_time and (not old_item_data or old_item_data.ratingKey == itemData.ratingKey): # the second part might be unnecessary, check
             if old_state != "stopped":
                 # use old timeline state's time for stopped states
                 util.DEBUG_LOG("Using previous timeline state as we're stopped now: {}", old_time)
@@ -113,11 +121,11 @@ class NowPlayingManager(object):
         timeline.state = state
         timeline.duration = duration
 
-        self.sendTimelineToServer(timelineType, timeline, t, force=force)
+        self.sendTimelineToServer(timelineType, timeline, t, force=force, continuing=continuing, server=server)
         return time_updated
 
-    def sendTimelineToServer(self, timelineType, timeline, t, force=False):
-        server = util.APP.serverManager.selectedServer
+    def sendTimelineToServer(self, timelineType, timeline, t, force=False, continuing=False, server=None):
+        server = server or util.APP.serverManager.selectedServer
         if not server:
             return
 
@@ -148,6 +156,11 @@ class NowPlayingManager(object):
         params["url"] = timeline.itemData.url
         params["key"] = timeline.itemData.key
         params["containerKey"] = timeline.itemData.containerKey
+        params["playbackTime"] = timeline.itemData.playbackTime
+        params["continuing"] = continuing and "1" or "0"
+        if timeline.itemData.additional_params:
+            params.update(timeline.itemData.additional_params)
+
         if timeline.playQueue:
             params["playQueueItemID"] = timeline.playQueue.selectedId
 

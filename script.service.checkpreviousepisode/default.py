@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from resources.lib import check_previous_episode
 import sys
 from bossanova808 import exception_logger

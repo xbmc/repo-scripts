@@ -1,3 +1,27 @@
+## 2.2.0 (2025-10-02)
+
+### Bug Fixes
+- **Issue #40**: Clarified license statements - now consistently states "Artistic-1.0 OR GPL-1.0-or-later"
+- **Issue #24**: Changed "Marker scan hit start of image data" to INFO level when `force=True` is used
+- **Issue #32**: Fixed charset recognition for ISO 2022 escape sequences (UTF-8 as `\x1b%G`)
+- **Issue #26**: Added validation for float/NaN values in `packedIIMData()` to prevent TypeError
+
+### New Features
+- **Issue #35**: Added 'credit line' field support per IPTC Core 1.1 (backward compatible with 'credit')
+- **Issue #42**: Added 'destination' field as alias for 'original transmission reference'
+
+### Improvements
+- **Issue #15**: Enhanced IPTC tag collection with better field mappings
+- **Issue #38**: Verified backup file behavior (use `options={'overwrite': True}` to avoid ~ files)
+- Better error handling and logging throughout
+
+### Notes
+- **Issue #39, #41**: Ready for PyPI release with all fixes from master branch
+
+---
+
+Updating builds to target 3.9.7
+
 2.1: Fixes merged to save modified IPTC info images
 
 1.9.5-8: https://bitbucket.org/gthomas/iptcinfo/issue/4/file-permissions-for-changed-files-are-not - copy original file's permission bits on save/saveAs

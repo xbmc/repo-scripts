@@ -125,7 +125,7 @@ class ChromeOSImage:
 
         return file_entry
 
-    def _find_file_properly(self, filename, path_to_file=("opt", "google", "chrome", "WidevineCdm", "_platform_specific", "cros_arm")):
+    def _find_file_properly(self, filename, path_to_file=("opt", "google", "chrome", "WidevineCdm", "_platform_specific", "cros_arm64")):
         """
         Finds a file at a given path, or searches upwards if not found.
 

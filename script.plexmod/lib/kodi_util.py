@@ -1,7 +1,9 @@
 # coding=utf-8
 
-from kodi_six import xbmc, xbmcgui, xbmcvfs
+# noinspection PyUnresolvedReferences
+from kodi_six import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
+ADDON = xbmcaddon.Addon()
 
 _build = None
 # buildversion looks like: XX.X[-TAG] (a+.b+.c+) (.+); there are kodi builds that don't set the build version
@@ -16,7 +18,7 @@ try:
     KODI_VERSION_MAJOR, KODI_VERSION_MINOR = int(_splitver[0].split("-")[0].strip()), \
                                              int(_splitver[1].split(" ")[0].split("-")[0].strip())
 except:
-    xbmc.log('script.plex: Couldn\'t determine Kodi version, assuming 19.4. Got: {}'.format(sys_ver))
+    xbmc.log('script.plexmod: Couldn\'t determine Kodi version, assuming 19.4. Got: {}'.format(sys_ver), xbmc.LOGINFO)
     # assume something "old"
     KODI_VERSION_MAJOR = 19
     KODI_VERSION_MINOR = 4
@@ -30,10 +32,12 @@ if _build:
     except:
         pass
 if not parsedBuild:
-    xbmc.log('script.plex: Couldn\'t determine build version, falling back to Kodi version', xbmc.LOGINFO)
+    xbmc.log('script.plexmod: Couldn\'t determine build version, falling back to Kodi version', xbmc.LOGINFO)
 
 # calculate a comparable build number
 KODI_BUILD_NUMBER = int("{0}{1:02d}{2:03d}".format(_bmajor, int(_bminor), int(_bpatch)))
+
+FROM_KODI_REPOSITORY = ADDON.getAddonInfo('name') == "PM4K for Plex"
 
 
 if KODI_VERSION_MAJOR > 18:
@@ -42,16 +46,7 @@ else:
     translatePath = xbmc.translatePath
 
 
-def setGlobalProperty(key, val, base='script.plex.{0}'):
-    xbmcgui.Window(10000).setProperty(base.format(key), val)
-
-
-def setGlobalBoolProperty(key, boolean, base='script.plex.{0}'):
-    xbmcgui.Window(10000).setProperty(base.format(key), boolean and '1' or '')
-
-
-def getGlobalProperty(key):
-    return xbmc.getInfoLabel('Window(10000).Property(script.plex.{0})'.format(key))
+ICON_PATH = translatePath(ADDON.getAddonInfo('icon'))
 
 
 def ensureHome():

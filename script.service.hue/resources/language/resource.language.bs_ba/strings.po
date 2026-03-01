@@ -6,96 +6,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-01 17:13+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2025-08-28 22:31+0000\n"
+"Last-Translator: SecularSteve <fairfull.playing@gmail.com>\n"
 "Language-Team: Bosnian (Bosnia and Herzegovina) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/bs_ba/>\n"
 "Language: bs_ba\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 5.13\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
-msgstr ""
+msgstr "Automatizirajte Hue svjetla pomoću Kodi reprodukcije"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "Automatizirajte svoja Hue svjetla pomoću Kodija. Koristite scene konfigurirane u službenoj Hue aplikaciji. Možete koristiti Hue vrijeme zalaska sunca za automatsko onemogućavanje usluge tokom dana i uključivanje svjetala u zalazak sunca tokom reprodukcije. Uključuje podršku za Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
-msgstr ""
+msgstr "Zahtijeva Hue Bridge V2 (Square). Ambilight nije dostupan na svim uređajima."
 
 msgctxt "#32100"
 msgid "Video Scenes"
-msgstr "Video Scenes"
+msgstr "Video Scene"
 
 msgctxt "#32102"
 msgid "Audio Scenes"
-msgstr "Audio Scenes"
+msgstr "Audio Scene"
 
 msgctxt "#32201"
 msgid "Start/Resume"
-msgstr ""
+msgstr "Početak/Nastavi"
 
 msgctxt "#32202"
 msgid "Pause"
-msgstr ""
+msgstr "Pauziraj"
 
 msgctxt "#32203"
 msgid "Stop"
-msgstr ""
+msgstr "Zaustavi"
 
 msgctxt "#30036"
 msgid "Scene:"
-msgstr "Scene:"
+msgstr "Scena:"
 
 msgctxt "#32511"
 msgid "Scene ID"
-msgstr ""
+msgstr "ID scene"
 
 msgctxt "#32512"
 msgid "Select..."
-msgstr ""
+msgstr "Odaberite..."
 
 msgctxt "#30500"
 msgid "Bridge"
-msgstr ""
+msgstr "Most"
 
 msgctxt "#30501"
 msgid "Discover Hue Bridge / Enter IP"
-msgstr "Discover Hue Bridge / Enter IP"
+msgstr "Otkrijte Hue Bridge / Unesite IP adresu"
 
 msgctxt "#30502"
 msgid "Bridge IP"
-msgstr ""
+msgstr "IP adresa mosta"
 
 msgctxt "#30503"
 msgid "Bridge User"
-msgstr ""
+msgstr "Korisnik mosta"
 
 msgctxt "#30505"
 msgid "Enable Schedule (24h format)"
-msgstr ""
+msgstr "Omogući raspored (24-satni format)"
 
 msgctxt "#30506"
 msgid "Start time:"
-msgstr ""
+msgstr "Vrijeme početka:"
 
 msgctxt "#30507"
 msgid "End time:"
-msgstr ""
+msgstr "Vrijeme završetka:"
 
 msgctxt "#30508"
 msgid "Disable during daytime"
-msgstr "Disable during daytime"
+msgstr "Onemogući tokom dana"
 
 #. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
-msgstr ""
+msgstr "Aktiviraj tokom reprodukcije u zalazak sunca"
 
 msgctxt "#30510"
 msgid "General"
@@ -103,133 +103,133 @@ msgstr "Opšte"
 
 msgctxt "#30511"
 msgid "Schedule"
-msgstr ""
+msgstr "Raspored"
 
 msgctxt "#30512"
 msgid "Scenes"
-msgstr ""
+msgstr "Scene"
 
 msgctxt "#30513"
 msgid "Play Scene Enabled"
-msgstr ""
+msgstr "Reprodukcija scene omogućena"
 
 msgctxt "#30514"
 msgid "Pause Scene Enabled"
-msgstr ""
+msgstr "Pauziranje scene omogućeno"
 
 msgctxt "#30515"
 msgid "Stop Scene Enabled"
-msgstr ""
+msgstr "Zaustavljanje scene omogućeno"
 
 #. If any light in the selected scene is on, ignore the schedule restrictions
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
-msgstr ""
+msgstr "Onemogući provjeru vremena ako je neko svjetlo već upaljeno"
 
 #. If any of the lights in the scene are off, don't activate the related scene
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
-msgstr ""
+msgstr "Ne omogućavaj scenu ako je bilo koje svjetlo isključeno"
 
 msgctxt "#30521"
 msgid "[B][I]Warning: Not supported on all hardware[/B][/I]"
-msgstr ""
+msgstr "[B][I]Upozorenje: Nije podržano na svim hardverskim uređajima[/B][/I]"
 
 msgctxt "#30522"
 msgid "CPU & Hue performance"
-msgstr ""
+msgstr "Izvođenje CPU-a i Hue-a"
 
 msgctxt "#30523"
 msgid "Ambilight"
-msgstr ""
+msgstr "Ambilight"
 
 msgctxt "#32101"
 msgid "Advanced"
-msgstr ""
+msgstr "Napredno"
 
 msgctxt "#32106"
 msgid "Video Activation Rules"
-msgstr "Video Activation Rules"
+msgstr "Pravila za aktivaciju videa"
 
 msgctxt "#6101"
 msgid "Select Lights"
-msgstr ""
+msgstr "Odaberite svjetla"
 
 msgctxt "#30520"
 msgid "Enabled"
-msgstr ""
+msgstr "Omogućeno"
 
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
-msgstr ""
+msgstr "Pritisnite dugme za povezivanje na Hue mostu"
 
 msgctxt "#30000"
 msgid "Hue Service"
-msgstr ""
+msgstr "Hue usluga"
 
 msgctxt "#30004"
 msgid "Check your bridge and network"
-msgstr ""
+msgstr "Provjerite svoj most i mrežu"
 
 msgctxt "#30006"
 msgid "Hue connected"
-msgstr ""
+msgstr "Hue je povezan"
 
 msgctxt "#30008"
 msgid "Bridge not found"
-msgstr ""
+msgstr "Most nije pronađen"
 
 msgctxt "#30010"
 msgid "User not found"
-msgstr ""
+msgstr "Korisnik nije pronađen"
 
 msgctxt "#30011"
 msgid "Complete!"
-msgstr ""
+msgstr "Završeno!"
 
 msgctxt "#30013"
 msgid "Cancelled"
-msgstr ""
+msgstr "Otkazano"
 
 msgctxt "#30015"
 msgid "Select Hue Lights..."
-msgstr ""
+msgstr "Odaberite Hue svjetla..."
 
 msgctxt "#30017"
 msgid "Found bridge: "
-msgstr ""
+msgstr "Pronađen most: "
 
 msgctxt "#30018"
 msgid "Discover bridge..."
-msgstr ""
+msgstr "Otkrijte most..."
 
 msgctxt "#30021"
 msgid "Bridge connection failed"
-msgstr ""
+msgstr "Povezivanje mosta nije uspjelo"
 
 msgctxt "#30022"
 msgid "Discovery started"
-msgstr ""
+msgstr "Otkriće je započeto"
 
 msgctxt "#30023"
 msgid "Bridge not configured"
-msgstr ""
+msgstr "Most nije konfiguriran"
 
 msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
-msgstr ""
+msgstr "Provjerite konfiguraciju Hue Bridgea"
 
 msgctxt "#30034"
 msgid "Cancel"
-msgstr ""
+msgstr "Otkaži"
 
 msgctxt "#30035"
 msgid "Lights:"
-msgstr ""
+msgstr "Svjetla:"
 
 msgctxt "#30037"
 msgid "Save"
-msgstr ""
+msgstr "Sačuvaj"
 
 msgctxt "#30043"
 msgid "Error"
@@ -237,105 +237,105 @@ msgstr "Greška"
 
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
-msgstr ""
+msgstr "Veza je prekinuta. Provjerite postavke. Gašenje"
 
 msgctxt "#30050"
 msgid "N-UPnP discovery..."
-msgstr ""
+msgstr "Otkrivanje N-UPnP-a..."
 
 msgctxt "#30005"
 msgid "Searching for bridge..."
-msgstr ""
+msgstr "Potraga za mostom..."
 
 msgctxt "#30052"
 msgid "Invalid start or end time, schedule disabled"
-msgstr ""
+msgstr "Nevažeće vrijeme početka ili završetka, raspored onemogućen"
 
 msgctxt "#30058"
 msgid "Light Names:"
-msgstr ""
+msgstr "Imena svjetla:"
 
 msgctxt "#30065"
 msgid "Update interval (ms)"
-msgstr ""
+msgstr "Interval ažuriranja (ms)"
 
 msgctxt "#30066"
 msgid "Hue transition time (ms)"
-msgstr ""
+msgstr "Vrijeme prelaza nijanse (ms)"
 
 msgctxt "#30067"
 msgid "Frame capture size"
-msgstr ""
+msgstr "Veličina snimljenog kadra"
 
 msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
-msgstr ""
+msgstr "Prikaži greške kapaciteta Hue mosta"
 
 #. Minimum duration of the media before activating light scene
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
-msgstr ""
+msgstr "Minimalno trajanje (minute)"
 
 msgctxt "#30801"
 msgid "Enable for Movies"
-msgstr ""
+msgstr "Omogući za filmove"
 
 msgctxt "#30802"
 msgid "Enable for TV episodes"
-msgstr ""
+msgstr "Omogući za TV epizode"
 
 msgctxt "#30803"
 msgid "Enable for music videos"
-msgstr ""
+msgstr "Omogući za muzičke spotove"
 
 msgctxt "#30804"
 msgid "Enable for other videos (Discs)"
-msgstr ""
+msgstr "Omogući za ostale videozapise (diskove)"
 
 msgctxt "#30805"
 msgid "Enable for live TV"
-msgstr ""
+msgstr "Omogući za TV uživo"
 
 msgctxt "#30809"
 msgid "Saturation"
-msgstr ""
+msgstr "Zasićenost"
 
 msgctxt "#30810"
 msgid "Minimum Brightness"
-msgstr ""
+msgstr "Minimalna svjetlina"
 
 msgctxt "#30811"
 msgid "Maximum Brightness"
-msgstr ""
+msgstr "Maksimalna svjetlina"
 
 msgctxt "#30813"
 msgid "Average image processing time:"
-msgstr ""
+msgstr "Prosječno vrijeme obrade slike:"
 
 msgctxt "#30814"
 msgid "On playback stop"
-msgstr ""
+msgstr "Pri zaustavljanju reprodukcije"
 
 msgctxt "#30815"
 msgid "Resume light state"
-msgstr ""
+msgstr "Nastavi stanje svjetla"
 
 msgctxt "#30816"
 msgid "Resume transition time (secs.)"
-msgstr ""
+msgstr "Vrijeme prelaska za nastavak (sek.)"
 
 msgctxt "#30071"
 msgid "Only colour lights are supported"
-msgstr ""
+msgstr "Podržana su samo svjetla u boji"
 
 #. Old or deperacted bridge firmware or hardware
 msgctxt "#30072"
 msgid "Unsupported Hue Bridge"
-msgstr ""
+msgstr "Nepodržani Hue Bridge"
 
 msgctxt "#30055"
 msgid "Disabled"
-msgstr ""
+msgstr "Onemogućeno"
 
 msgctxt "#30060"
 msgid "Play"
@@ -344,176 +344,176 @@ msgstr "Reprodukuj"
 #. Must end with a space, status string is appended
 msgctxt "#30061"
 msgid "Hue Status: "
-msgstr ""
+msgstr "Status nijanse: "
 
 msgctxt "#30062"
 msgid "Settings"
-msgstr ""
+msgstr "Podešavanja"
 
 msgctxt "#30063"
 msgid "Disabled by daytime"
-msgstr "Disabled by daytime"
+msgstr "Onemogućeno tokom dana"
 
 msgctxt "#30064"
 msgid "ERROR: Scene not found, it may have been deleted"
-msgstr "ERROR: Scene not found, it may have been deleted"
+msgstr "GREŠKA: Scena nije pronađena, moguće je da je izbrisana"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
-msgstr ""
+msgstr "Došlo je do sljedeće greške:"
 
 msgctxt "#30081"
 msgid "Automatically report this error?"
-msgstr ""
+msgstr "Automatski prijavi ovu grešku?"
 
 msgctxt "#30069"
 msgid "No lights selected for Ambilight."
-msgstr ""
+msgstr "Nije odabrano nijedno svjetlo za Ambilight."
 
 msgctxt "#30070"
 msgid "Ok"
-msgstr ""
+msgstr "U redu"
 
 msgctxt "#30075"
 msgid "Hue Bridge over capacity"
-msgstr ""
+msgstr "Prekoračenje kapaciteta mosta Hue"
 
 msgctxt "#30076"
 msgid "Network not ready"
-msgstr ""
+msgstr "Mreža nije spremna"
 
 msgctxt "#30077"
 msgid "The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."
-msgstr ""
+msgstr "Hue Bridge ima prekoračen kapacitet. Povećajte brzinu osvježavanja ili smanjite broj Ambilight svjetala."
 
 msgctxt "#30078"
 msgid "Bridge not found[CR]Check your bridge and network."
-msgstr ""
+msgstr "Most nije pronađen[CR]Provjerite most i mrežu."
 
 msgctxt "#30082"
 msgid "Press link button on bridge. Waiting for 90 seconds..."
-msgstr ""
+msgstr "Pritisnite dugme za povezivanje na mostu. Čekam 90 sekundi..."
 
 msgctxt "#30083"
 msgid "Unknown"
-msgstr ""
+msgstr "Nepoznato"
 
 msgctxt "#30084"
 msgid "User Found![CR]Saving settings..."
-msgstr ""
+msgstr "Korisnik pronađen![CR]Spremanje postavki..."
 
 msgctxt "#30086"
 msgid "User not found[CR]Check your bridge and network."
-msgstr ""
+msgstr "Korisnik nije pronađen[CR]Provjerite most i mrežu."
 
 msgctxt "#30073"
 msgid "Do not show again"
-msgstr ""
+msgstr "Ne prikazuj ponovo"
 
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
-msgstr ""
+msgstr "Hue Bridge V1 (okrugli) nije podržan. Potreban je Hue Bridge V2 (kvadratni)."
 
 #. For ambilight, different color gamuts are supported. This means the colour gamut could not be fetched and the light is probably not compatible with ambilight.
 msgctxt "#30012"
 msgid "Unknown colour gamut for light:"
-msgstr ""
+msgstr "Nepoznata paleta boja za svjetlost:"
 
 msgctxt "#30016"
 msgid "Report errors"
-msgstr ""
+msgstr "Prijavi greške"
 
 msgctxt "#30020"
 msgid "Never report errors"
-msgstr ""
+msgstr "Nikad ne prijavljivaj greške"
 
 msgctxt "#30032"
 msgid "Hue Service Error"
-msgstr ""
+msgstr "Greška Hue usluge"
 
 msgctxt "#30029"
 msgid "Connection Error"
-msgstr ""
+msgstr "Greška u povezivanju"
 
 msgctxt "#30014"
 msgid "Error: Lights incompatible with Ambilight"
-msgstr ""
+msgstr "Greška: Svjetla nekompatibilna s Ambilightom"
 
 msgctxt "#30007"
 msgid "Bridge not found automatically. Please make sure your bridge is up to date and has access to the internet. [CR]Would you like to enter your bridge IP manually?"
-msgstr ""
+msgstr "Most nije automatski pronađen. Molimo provjerite da li je vaš most ažuriran i da li ima pristup internetu. [CR]Želite li ručno unijeti IP adresu mosta?"
 
 msgctxt "#30009"
 msgid "Connecting..."
-msgstr ""
+msgstr "Povezivanje..."
 
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
-msgstr ""
+msgstr "Most je zastario. Molimo vas da ažurirate svoj most."
 
 msgctxt "#30033"
 msgid "Reconnected"
-msgstr ""
+msgstr "Ponovo povezan/a"
 
 #. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
 msgctxt "#31334"
 msgid "Morning disable time:"
-msgstr ""
+msgstr "Vrijeme onemogućavanja ujutro:"
 
 #. Amount of time for the light scene transition to fade in, in seconds.
 msgctxt "#31335"
 msgid "Transition time (seconds):"
-msgstr ""
+msgstr "Vrijeme tranzicije (sekunde):"
 
 #. Number of minutes before or after sunset to consider as sunset
 msgctxt "#31336"
 msgid "Sunset Offset:"
-msgstr ""
+msgstr "Pomak zalaska sunca:"
 
 #. Help text for sunset offset setting
 msgctxt "#31337"
 msgid "Adjust sunset back or forwards by this many minutes"
-msgstr ""
+msgstr "Podesi zalazak sunca unaprijed ili unazad za ovoliko minuta"
 
 #. Help text for "morning disable time" setting
 msgctxt "#31338"
 msgid "Time at which to disable the service in the morning"
-msgstr ""
+msgstr "Vrijeme kada treba onemogućiti uslugu ujutro"
 
 #. Help text for 'Disable during daytime'
 msgctxt "#31339"
 msgid "Disable the service between configured time and sunset"
-msgstr ""
+msgstr "Onemogući uslugu između konfiguriranog vremena i zalaska sunca"
 
 #. Help text for 'activate at sunset'
 msgctxt "#31340"
 msgid "Activate scenes at sunset, during playback"
-msgstr ""
+msgstr "Aktiviranje scena pri zalasku sunca, tokom reprodukcije"
 
 msgctxt "#30002"
 msgid "Bridge overloaded, stopping ambilight"
-msgstr ""
+msgstr "Most preopterećen, zaustavljanje ambilighta"
 
 msgctxt "#30025"
 msgid "Bridge unauthorized, please reconfigure."
-msgstr ""
+msgstr "Most nije autorizovan, molimo vas da ga ponovo konfigurišete."
 
 msgctxt "#30026"
 msgid "Connection failed, retrying..."
-msgstr ""
+msgstr "Povezivanje nije uspjelo, ponovni pokušaj..."
 
 #. Default status in an empty configuration field; eg. scene/lights are not selected
 msgctxt "#30003"
 msgid "Not selected"
-msgstr ""
+msgstr "Nije odabrano"
 
 msgctxt "#30027"
 msgid "ERROR: Light not found, it may have been deleted"
-msgstr ""
+msgstr "GREŠKA: Svjetlo nije pronađeno, moguće je da je izbrisano"
 
 msgctxt "#30028"
 msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
-msgstr ""
+msgstr "Konfigurirajte lokaciju Hue Home da koristi vrijeme zalaska sunca, s zadanim postavkama na 19:00"
 
 #~ msgctxt "#30002"
 #~ msgid "ERROR: Scene not created"

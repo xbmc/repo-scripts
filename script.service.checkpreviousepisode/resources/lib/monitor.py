@@ -6,13 +6,10 @@ from .store import Store
 
 class KodiEventMonitor(xbmc.Monitor):
 
-    def __init__(self, *args, **kwargs):
-        xbmc.Monitor.__init__(self)
+    def __init__(self):
+        super().__init__()
         Logger.debug('KodiEventMonitor __init__')
 
     def onSettingsChanged(self):
         Logger.info('onSettingsChanged - reload them.')
         Store.load_config_from_settings()
-
-    def onAbortRequested(self):
-        Logger.debug('onAbortRequested')

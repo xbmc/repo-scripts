@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-05-09 10:16+0000\n"
-"Last-Translator: Roman Miroshnychenko <romanvm@kodi.tv>\n"
+"PO-Revision-Date: 2025-12-17 10:13+0000\n"
+"Last-Translator: Pavlo Marianov <acid@jack.kyiv.ua>\n"
 "Language-Team: Ukrainian <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/uk_ua/>\n"
 "Language: uk_ua\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15.2\n"
+"X-Generator: Weblate 5.15\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -27,7 +27,7 @@ msgstr "Прогноз погоди від Yahoo, Weatherbit і Openweathermap"
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr "Розташування"
+msgstr "Вибір розташування"
 
 msgctxt "#32102"
 msgid "Additional"
@@ -87,7 +87,7 @@ msgstr "Завантажити мапи погоди"
 
 msgctxt "#32131"
 msgid "To get additional weather data, get an api key at: https://weatherbit.io/"
-msgstr "Щоб мати додаткові дані про погоду, отримайте ключ API на https://weatherbit.io/"
+msgstr "Для доступу до додаткових даних про погоду, отримайте ключ API на https://weatherbit.io/"
 
 msgctxt "#32135"
 msgid "To use maps, get an api key at: http://openweathermap.org/appid"
@@ -147,7 +147,7 @@ msgstr "Сильний дощ"
 
 msgctxt "#32214"
 msgid "Freezing rain"
-msgstr "Холодний дощ"
+msgstr "Переохолоджений дощ"
 
 msgctxt "#32215"
 msgid "Light shower rain"
@@ -199,7 +199,7 @@ msgstr "Пориви вітру зі снігом"
 
 msgctxt "#32227"
 msgid "Mist"
-msgstr "Туман"
+msgstr "Серпанок"
 
 msgctxt "#32228"
 msgid "Smoke"
@@ -207,252 +207,284 @@ msgstr "Дим"
 
 msgctxt "#32229"
 msgid "Haze"
-msgstr ""
+msgstr "Імла"
 
 msgctxt "#32230"
 msgid "Sand/dust"
-msgstr ""
+msgstr "Пісок/пил"
 
 msgctxt "#32231"
 msgid "Fog"
-msgstr ""
+msgstr "Туман"
 
 msgctxt "#32232"
 msgid "Freezing fog"
-msgstr ""
+msgstr "Переохолоджений туман"
 
 msgctxt "#32233"
 msgid "Clear sky"
-msgstr ""
+msgstr "Ясно"
 
 msgctxt "#32234"
 msgid "Few clouds"
-msgstr ""
+msgstr "Малохмарно"
 
 msgctxt "#32235"
 msgid "Scattered clouds"
-msgstr ""
+msgstr "Місцями хмарно"
 
 msgctxt "#32236"
 msgid "Broken clouds"
-msgstr ""
+msgstr "Хмарно з проясненнями"
 
 msgctxt "#32237"
 msgid "Overcast clouds"
-msgstr ""
+msgstr "Хмарно"
 
 msgctxt "#32238"
 msgid "Unknown Precipitation"
-msgstr ""
+msgstr "Без опадів"
+
+msgctxt "#32245"
+msgid "Flurries"
+msgstr "Шквальний вітер"
+
+msgctxt "#32246"
+msgid "Mostly Sunny"
+msgstr "Переважно сонячно"
+
+msgctxt "#32247"
+msgid "Mostly Clear"
+msgstr "Переважно без опадів"
+
+msgctxt "#32248"
+msgid "Rain And Snow"
+msgstr "Дощ зі снігом"
+
+msgctxt "#32249"
+msgid "Fog"
+msgstr "Туман"
+
+msgctxt "#32250"
+msgid "Frigid"
+msgstr "Прохолодно"
 
 msgctxt "#32251"
 msgid "Tornado"
-msgstr ""
+msgstr "Торнадо"
 
 msgctxt "#32252"
 msgid "Tropical Storm"
-msgstr ""
+msgstr "Тропічний шторм"
 
 msgctxt "#32253"
 msgid "Hurricane"
-msgstr ""
+msgstr "Ураган"
 
 msgctxt "#32254"
 msgid "Severe Thunderstorms"
-msgstr ""
+msgstr "Сильні грози"
 
 msgctxt "#32255"
 msgid "Thunderstorms"
-msgstr ""
+msgstr "Грози"
 
 msgctxt "#32256"
 msgid "Mixed Rain and Snow"
-msgstr ""
+msgstr "Дощ зі снігом"
 
 msgctxt "#32257"
 msgid "Mixed Rain and Sleet"
-msgstr ""
+msgstr "Дощ з мокрим снігом"
 
 msgctxt "#32258"
 msgid "Mixed Snow and Sleet"
-msgstr ""
+msgstr "Сніг з мокрим снігом"
 
 msgctxt "#32259"
 msgid "Freezing Drizzle"
-msgstr ""
+msgstr "Переохолоджена мряка"
 
 msgctxt "#32260"
 msgid "Drizzle"
-msgstr ""
+msgstr "Мряка"
 
 msgctxt "#32261"
 msgid "Freezing Rain"
-msgstr ""
+msgstr "Переохолоджений дощ"
 
 msgctxt "#32262"
 msgid "Showers"
-msgstr ""
+msgstr "Зливи"
 
 msgctxt "#32263"
 msgid "Rain"
-msgstr ""
+msgstr "Дощ"
 
 msgctxt "#32264"
 msgid "Snow Flurries"
-msgstr ""
+msgstr "Снігові шквали"
 
 msgctxt "#32265"
 msgid "Light Snow Showers"
-msgstr ""
+msgstr "Невеликий сніг"
 
 msgctxt "#32266"
 msgid "Blowing Snow"
-msgstr ""
+msgstr "Cніжна низова хуртовина"
 
 msgctxt "#32267"
 msgid "Snow"
-msgstr ""
+msgstr "Сніг"
 
 msgctxt "#32268"
 msgid "Hail"
-msgstr ""
+msgstr "Град"
 
 msgctxt "#32269"
 msgid "Sleet"
-msgstr ""
+msgstr "Мокрий сніг"
 
 msgctxt "#32270"
 msgid "Dust"
-msgstr ""
+msgstr "Пил в повітрі"
 
 msgctxt "#32271"
 msgid "Foggy"
-msgstr ""
+msgstr "Туманно"
 
 msgctxt "#32272"
 msgid "Haze"
-msgstr ""
+msgstr "Імла"
 
 msgctxt "#32273"
 msgid "Smoky"
-msgstr ""
+msgstr "Димно"
 
 msgctxt "#32274"
 msgid "Blustery"
-msgstr ""
+msgstr "Поривчастий вітер"
 
 msgctxt "#32275"
 msgid "Windy"
-msgstr ""
+msgstr "Вітряно,"
 
 msgctxt "#32276"
 msgid "Cold"
-msgstr ""
+msgstr "Холодно"
 
 msgctxt "#32277"
 msgid "Cloudy"
-msgstr ""
+msgstr "Хмарно"
 
 msgctxt "#32278"
 msgid "Mostly Cloudy"
-msgstr ""
+msgstr "Переважно хмарно"
 
 msgctxt "#32279"
 msgid "Partly Cloudy"
-msgstr ""
+msgstr "Мінлива хмарність"
 
 msgctxt "#32280"
 msgid "Clear"
-msgstr ""
+msgstr "Ясно"
 
 msgctxt "#32281"
 msgid "Sunny"
-msgstr ""
+msgstr "Сонячно"
 
 msgctxt "#32282"
 msgid "Fair"
-msgstr ""
+msgstr "Безхмарно"
 
 msgctxt "#32283"
 msgid "Mixed Rain and Hail"
-msgstr ""
+msgstr "Дощ з градом"
 
 msgctxt "#32284"
 msgid "Hot"
-msgstr ""
+msgstr "Спекотно"
 
 msgctxt "#32285"
 msgid "Isolated Thunderstorms"
-msgstr ""
+msgstr "Ізольовані грози"
 
 msgctxt "#32286"
 msgid "Scattered Thunderstorms"
-msgstr ""
+msgstr "Місцями грози"
 
 msgctxt "#32287"
 msgid "Scattered Showers"
-msgstr ""
+msgstr "Короткочасні дощі"
 
 msgctxt "#32288"
 msgid "Heavy Rain"
-msgstr ""
+msgstr "Сильний дощ"
 
 msgctxt "#32289"
 msgid "Scattered Snow Showers"
-msgstr ""
+msgstr "Місцями невеличкий сніг"
 
 msgctxt "#32290"
 msgid "Heavy Snow"
-msgstr ""
+msgstr "Сильний сніг"
 
 msgctxt "#32291"
 msgid "Blizzard"
-msgstr ""
+msgstr "Завірюха"
 
 msgctxt "#32292"
 msgid "Not Available"
-msgstr ""
+msgstr "Дані відсутні"
 
 msgctxt "#32293"
 msgid "Scattered Showers"
-msgstr ""
+msgstr "Короткочасні дощі"
 
 msgctxt "#32294"
 msgid "Scattered Snow Showers"
-msgstr ""
+msgstr "Місцями невеличкий сніг"
 
 msgctxt "#32295"
 msgid "Scattered Thundershowers"
-msgstr ""
+msgstr "Місцями грози"
+
+msgctxt "#32296"
+msgid "Mostly Sunny"
+msgstr "Переважно сонячно"
+
+msgctxt "#32297"
+msgid "Mostly Clear"
+msgstr "Переважно ясно"
 
 msgctxt "#32300"
 msgid "New Moon"
-msgstr ""
+msgstr "Новий Місяць"
 
 msgctxt "#32301"
 msgid "Waxing Crescent"
-msgstr ""
+msgstr "Неоменія"
 
 msgctxt "#32302"
 msgid "First Quarter"
-msgstr ""
+msgstr "Перша чверть"
 
 msgctxt "#32303"
 msgid "Waxing Gibbous"
-msgstr ""
+msgstr "Зростальний Місяць"
 
 msgctxt "#32304"
 msgid "Full Moon"
-msgstr ""
+msgstr "Повний Місяць"
 
 msgctxt "#32305"
 msgid "Waning Gibbous"
-msgstr ""
+msgstr "Спадний Місяць"
 
 msgctxt "#32306"
 msgid "Last Quarter"
-msgstr ""
+msgstr "Остання чверть"
 
 msgctxt "#32307"
 msgid "Waning Crescent"
-msgstr ""
+msgstr "Старий Місяць"

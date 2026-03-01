@@ -22,9 +22,7 @@
             <posy>0</posy>
             <width>1170</width>
             <height>{{ vscale(800) }}</height>
-            <onup>200</onup>
             <onright>152</onright>
-            <onleft>300</onleft>
             <scrolltime>200</scrolltime>
             <orientation>vertical</orientation>
             <preloaditems>4</preloaditems>
@@ -78,6 +76,7 @@
                                 <aligny>center</aligny>
                                 <textcolor>FFFFFFFF</textcolor>
                                 <label>[B]$INFO[ListItem.Label][/B]</label>
+                                <scroll>true</scroll>
                             </control>
                             <control type="label">
                                 <posx>0</posx>
@@ -89,6 +88,7 @@
                                 <aligny>center</aligny>
                                 <textcolor>B8FFFFFF</textcolor>
                                 <label>$INFO[ListItem.Label2]</label>
+                                <scroll>true</scroll>
                             </control>
                         </control>
                     </control>
@@ -101,6 +101,27 @@
                             <height>{{ vscale(74) }}</height>
                             <texture>$INFO[ListItem.Thumb]</texture>
                             <aspectratio>scale</aspectratio>
+                        </control>
+                        <control type="group">
+                            <visible>!String.IsEmpty(ListItem.Property(progress))</visible>
+                            <posx>63</posx>
+                            <posy>{{ vscale(79) }}</posy>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <width>132</width>
+                                <height>{{ vscale(6) }}</height>
+                                <texture>script.plex/white-square.png</texture>
+                                <colordiffuse>C0000000</colordiffuse>
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>1</posy>
+                                <width>132</width>
+                                <height>{{ vscale(4) }}</height>
+                                <texture>$INFO[ListItem.Property(progress)]</texture>
+                                <colordiffuse>FFCC7B19</colordiffuse>
+                            </control>
                         </control>
                         {% include "includes/watched_indicator.xml.tpl" with xoff=132+63 & yoff=11 & uw_posy=11 & uw_size=24 & scale="tiny" %}
                         <control type="group">
@@ -116,6 +137,7 @@
                                 <aligny>center</aligny>
                                 <textcolor>FFFFFFFF</textcolor>
                                 <label>[B]$INFO[ListItem.Label][/B]</label>
+                                <scroll>true</scroll>
                             </control>
                             <control type="label">
                                 <posx>0</posx>
@@ -127,6 +149,7 @@
                                 <aligny>center</aligny>
                                 <textcolor>B8FFFFFF</textcolor>
                                 <label>$INFO[ListItem.Label2]</label>
+                                <scroll>true</scroll>
                             </control>
                         </control>
                     </control>
@@ -204,6 +227,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>[B]$INFO[ListItem.Label][/B]</label>
+                                    <scroll>true</scroll>
                                 </control>
                                 <control type="label">
                                     <posx>0</posx>
@@ -215,6 +239,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>B8FFFFFF</textcolor>
                                     <label>$INFO[ListItem.Label2]</label>
+                                    <scroll>true</scroll>
                                 </control>
                             </control>
                         </control>
@@ -242,6 +267,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>[B]$INFO[ListItem.Label][/B]</label>
+                                    <scroll>true</scroll>
                                 </control>
                                 <control type="label">
                                     <posx>0</posx>
@@ -253,6 +279,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>B8FFFFFF</textcolor>
                                     <label>$INFO[ListItem.Label2]</label>
+                                    <scroll>true</scroll>
                                 </control>
                             </control>
                         </control>
@@ -359,6 +386,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>DF000000</textcolor>
                                     <label>[B]$INFO[ListItem.Label][/B]</label>
+                                    <scroll>true</scroll>
                                 </control>
                                 <control type="label">
                                     <posx>0</posx>
@@ -370,6 +398,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>98000000</textcolor>
                                     <label>$INFO[ListItem.Label2]</label>
+                                    <scroll>true</scroll>
                                 </control>
                             </control>
                         </control>
@@ -382,6 +411,27 @@
                                 <height>{{ vscale(100) }}</height>
                                 <texture>$INFO[ListItem.Thumb]</texture>
                                 <aspectratio>scale</aspectratio>
+                            </control>
+                            <control type="group">
+                                <visible>!String.IsEmpty(ListItem.Property(progress))</visible>
+                                <posx>103</posx>
+                                <posy>{{ vscale(94) }}</posy>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
+                                    <width>178</width>
+                                    <height>{{ vscale(6) }}</height>
+                                    <texture>script.plex/white-square.png</texture>
+                                    <colordiffuse>C0000000</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>1</posy>
+                                    <width>178</width>
+                                    <height>{{ vscale(4) }}</height>
+                                    <texture>$INFO[ListItem.Property(progress)]</texture>
+                                    <colordiffuse>FFCC7B19</colordiffuse>
+                                </control>
                             </control>
                             {% include "includes/watched_indicator.xml.tpl" with xoff=178+103 %}
                             <control type="group">
@@ -397,6 +447,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>DF000000</textcolor>
                                     <label>[B]$INFO[ListItem.Label][/B]</label>
+                                    <scroll>true</scroll>
                                 </control>
                                 <control type="label">
                                     <posx>0</posx>
@@ -408,6 +459,7 @@
                                     <aligny>center</aligny>
                                     <textcolor>98000000</textcolor>
                                     <label>$INFO[ListItem.Label2]</label>
+                                    <scroll>true</scroll>
                                 </control>
                             </control>
                         </control>
@@ -434,7 +486,6 @@
             <top>33</top>
             <width>10</width>
             <height>{{ vscale(734) }}</height>
-            <onleft>101</onleft>
             <visible>true</visible>
             <texturesliderbackground colordiffuse="40000000" border="5">script.plex/white-square-rounded.png</texturesliderbackground>
             <texturesliderbar colordiffuse="77FFFFFF" border="5">script.plex/white-square-rounded.png</texturesliderbar>
@@ -444,7 +495,6 @@
             <pulseonselect>false</pulseonselect>
             <orientation>vertical</orientation>
             <showonepage>false</showonepage>
-            <onleft>151</onleft>
         </control>
     </control>
 </control>

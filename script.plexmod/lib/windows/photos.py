@@ -25,6 +25,8 @@ class PhotoWindow(kodigui.BaseWindow):
     width = 1920
     height = 1080
 
+    supportsAutoPlay = True
+
     OVERLAY_BUTTON_ID = 250
     OSD_GROUP_ID = 200
 
@@ -91,7 +93,7 @@ class PhotoWindow(kodigui.BaseWindow):
         if self.autoPlay:
             self.play()
 
-    def doAutoPlay(self):
+    def doAutoPlay(self, blind=False):
         self.autoPlay = True
         return True
 
@@ -142,6 +144,9 @@ class PhotoWindow(kodigui.BaseWindow):
             util.ERROR()
 
         kodigui.BaseWindow.onAction(self, action)
+
+    def goHome(self, *args, **kwargs):
+        self.doClose()
 
     def checkPqueueListChanged(self):
         item = self.pqueueList.getSelectedItem()
@@ -489,7 +494,7 @@ class PhotoWindow(kodigui.BaseWindow):
     def stop(self):
         self.doClose()
 
-    def doClose(self):
+    def doClose(self, **kw):
         self.pause()
         shutil.rmtree(self.tempFolder, ignore_errors=True)
 

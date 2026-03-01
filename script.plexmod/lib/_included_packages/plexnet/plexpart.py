@@ -4,6 +4,7 @@ from . import plexobjects
 from . import plexstream
 from . import plexrequest
 from . import util
+from .media import MediaPartStream
 
 from lib.util import addonSettings
 from lib.path_mapping import pmm, norm_sep
@@ -21,7 +22,7 @@ class PlexPart(plexobjects.PlexObject):
 
         # If we weren't given any data, this is a synthetic part
         if data is not None:
-            self.streams = [plexstream.PlexStream(e, initpath=self.initpath, server=self.server) for e in data if e.tag == 'Stream']
+            self.streams = [MediaPartStream.parse(e, initpath=self.initpath, server=self.server, part=self) for e in data if e.tag == 'Stream']
             if self.indexes:
                 indexKeys = self.indexes('').split(",")
                 self.indexes = util.AttributeDict()
@@ -105,7 +106,7 @@ class PlexPart(plexobjects.PlexObject):
 
         return default
 
-    def setSelectedStream(self, streamType, streamId, _async, from_session=False, video=None):
+    def setSelectedStream(self, streamType, streamId, _async, from_session=False, session_id=None, video=None):
         if streamType == plexstream.PlexStream.TYPE_AUDIO:
             typeString = "audio"
         elif streamType == plexstream.PlexStream.TYPE_SUBTITLE:
@@ -121,7 +122,7 @@ class PlexPart(plexobjects.PlexObject):
             path = path + "&allParts=1"
 #
         if from_session:
-            path = path + "&X-Plex-Session-Id=%s" % video.settings.getGlobal("clientIdentifier")
+            path = path + "&X-Plex-Session-Identifier={}&X-Plex-Session-Id={}".format(session_id, session_id)
 
         request = plexrequest.PlexRequest(self.getServer(), path, "PUT")
 
@@ -166,7 +167,7 @@ class PlexPart(plexobjects.PlexObject):
     def getPathMappedUrl(self, return_only_folder=False):
         verify = addonSettings.verifyMappedFiles
 
-        map_path, pms_path = pmm.getMappedPathFor(self.file, self.getServer())
+        map_path, pms_path, _ = pmm.getMappedPathFor(self.file, self.getServer())
         if map_path and pms_path:
             if return_only_folder:
                 return map_path
@@ -198,7 +199,8 @@ class PlexPart(plexobjects.PlexObject):
         return ""
 
     def __str__(self):
-        return "PlexPart {0} {1}".format(self.id("NaN"), self.key)
+        return "PlexPart {0}:{1}:{2} {3}".format(self.container.container.ratingKey,
+                                                 self.container.id, self.id("NaN"), self.key)
 
     def __eq__(self, other):
         if other is None:

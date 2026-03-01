@@ -6,7 +6,7 @@ import shutil
 import socket
 import tempfile
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 
 from . import utilities
 
@@ -51,11 +51,9 @@ class URLCache(object):
     def flush(self):
         flushlist = list()
         for url, entry in self._cache.items():
-            if (
-                not os.path.isfile(entry["resource"])
-                or utilities.strptime(entry["expiry"], self.TIME_FORMAT)
-                < datetime.utcnow()
-            ):
+            if not os.path.isfile(entry["resource"]) or utilities.strptime(
+                entry["expiry"], self.TIME_FORMAT
+            ) < datetime.now(timezone.utc):
                 flushlist.append(url)
         for url in flushlist:
             self.remove(url)
@@ -70,11 +68,9 @@ class URLCache(object):
         """
         try:
             entry = self._cache[url]
-            if (
-                not os.path.isfile(entry["resource"])
-                or utilities.strptime(entry["expiry"], self.TIME_FORMAT)
-                < datetime.utcnow()
-            ):
+            if not os.path.isfile(entry["resource"]) or utilities.strptime(
+                entry["expiry"], self.TIME_FORMAT
+            ) < datetime.now(timezone.utc):
                 raise InvalidCacheError
             else:
                 return entry["resource"]

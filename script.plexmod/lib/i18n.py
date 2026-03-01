@@ -1,9 +1,15 @@
 # coding=utf-8
-from kodi_six import xbmcaddon
-
-
-ADDON = xbmcaddon.Addon()
+from .kodi_util import ADDON
 
 
 def T(ID, eng=''):
-    return ADDON.getLocalizedString(ID)
+    s = ADDON.getLocalizedString(ID)
+    return s if s != "" else eng
+
+
+TRANSLATED_ROLES = {
+    'Director': T(32383, 'Director'),
+    'Writer': T(32402, 'Writer'),
+    'Producer': T(34031, 'Producer'),
+    '': T(32441, 'Unknown')
+}

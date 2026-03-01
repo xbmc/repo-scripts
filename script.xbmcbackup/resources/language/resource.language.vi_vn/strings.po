@@ -295,7 +295,7 @@ msgid "Restart Kodi"
 msgstr ""
 
 msgctxt "#30078"
-msgid "You should restart Kodi to continue"
+msgid "A restart is recommended, select Yes to close Kodi"
 msgstr ""
 
 msgctxt "#30079"
@@ -628,4 +628,12 @@ msgstr ""
 
 msgctxt "#30161"
 msgid "Amend a string to the end of each backup folder or ZIP file"
+msgstr ""
+
+msgctxt "#30162"
+msgid "this could take some time"
+msgstr ""
+
+msgctxt "#30163"
+msgid "Current folder"
 msgstr ""

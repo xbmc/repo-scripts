@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.wellbeing" name="Wellbeing" version="1.3.1" provider-name="Heckie">
+<addon id="script.wellbeing" name="Wellbeing" version="1.3.2" provider-name="Heckie">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -9,11 +9,14 @@
     <summary lang="en_GB">Wellbeing</summary>
     <summary lang="de_DE">Wellbeing</summary>
     <summary lang="sv_SE">Välbefinnande</summary>
+    <summary lang="sk_SK">Duševná pohoda</summary>
     <description lang="en_GB">Addon in order to limit playback time per day, e.g. for parental control. After playback time has been reached playback will be stopped automatically.
     </description>
     <description lang="de_DE">Addon um Wiedergabezeit pro Tag zu begrenzen. Nachdem die Wiederabezeit erreicht ist, beendet das Addon die Wiedergabe automatisch.
     </description>
     <description lang="sv_SE">Tillägg för att begränsa uppspelningstiden per dag, t.ex. för föräldrakontroll. När uppspelningstiden har nåtts stoppas uppspelningen automatiskt.
+    </description>
+    <description lang="sk_SK">Doplnok na obmedzenie času prehrávania za deň, napríklad na rodičovskú kontrolu. Po dosiahnutí časového limitu sa prehrávanie automaticky zastaví.
     </description>
     <language>en</language>
     <language>de</language>
@@ -22,6 +25,9 @@
     <website>https://github.com/Heckie75/kodi-addon-wellbeing</website>
     <source>https://github.com/Heckie75/kodi-addon-wellbeing</source>
     <news>
+Version 1.3.2 (2026-01-06)
+- Bugfix issue #8: Video Playback Limit Always 24:00
+
 Version 1.3.1 (2025-09-22)
 - Added translations for Swedish and Slovak language
 

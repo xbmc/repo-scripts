@@ -35,7 +35,7 @@
             <posy>0</posy>
             <width>640</width>
             <height>{{ vscale(132) }}</height>
-            <texture colordiffuse="FF000000" border="10">script.plex/white-square-rounded.png</texture>
+            <texture colordiffuse="D3111111" border="10">script.plex/white-square-rounded.png</texture>
         </control>
         <control type="label">
             <posx>20</posx>
@@ -45,7 +45,9 @@
             <font>font12</font>
             <align>center</align>
             <aligny>center</aligny>
-            <textcolor>FFFFFFFF</textcolor>
+            <textcolor>FFEEEEEE</textcolor>
+            <scroll>true</scroll>
+            <scrollspeed>15</scrollspeed>
             <label>[B]$INFO[Window.Property(header)][/B]</label>
         </control>
     </control>
@@ -70,7 +72,7 @@
                 <posy>0</posy>
                 <width>600</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FF323232" border="10">script.plex/white-square-top-rounded.png</texture>
+                <texture colordiffuse="99111111" border="10">script.plex/white-square-top-rounded.png</texture>
             </control>
             <control type="image">
                 <visible>String.IsEmpty(ListItem.Property(first)) + String.IsEmpty(ListItem.Property(last)) + String.IsEmpty(ListItem.Property(only))</visible>
@@ -78,7 +80,7 @@
                 <posy>0</posy>
                 <width>600</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FF323232">script.plex/white-square.png</texture>
+                <texture colordiffuse="99111111">script.plex/white-square.png</texture>
             </control>
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.Property(last))</visible>
@@ -86,7 +88,7 @@
                 <posy>0</posy>
                 <width>600</width>
                 <height>{{ vscale(66) }}</height>
-                <texture flipy="true" colordiffuse="FF323232" border="10">script.plex/white-square-top-rounded.png</texture>
+                <texture flipy="true" colordiffuse="99111111" border="10">script.plex/white-square-top-rounded.png</texture>
             </control>
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.Property(only))</visible>
@@ -94,34 +96,34 @@
                 <posy>0</posy>
                 <width>600</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FF323232" border="10">script.plex/white-square-rounded.png</texture>
+                <texture colordiffuse="99111111" border="10">script.plex/white-square-rounded.png</texture>
             </control>
             <control type="label">
                 <visible>String.IsEmpty(ListItem.Property(with.indicator)) + String.IsEqual(ListItem.Property(align),center)</visible>
                 <posx>0</posx>
                 <posy>0</posy>
-                <width>600</width>
+                <width>580</width>
                 <height>{{ vscale(66) }}</height>
                 <font>font12</font>
                 <align>center</align>
                 <aligny>center</aligny>
                 <textcolor>FFFFFFFF</textcolor>
                 <scroll>true</scroll>
-                <scrollspeed>60</scrollspeed>
+                <scrollspeed>20</scrollspeed>
                 <label>$INFO[ListItem.Label]</label>
             </control>
             <control type="label">
                 <visible>String.IsEmpty(ListItem.Property(with.indicator)) + String.IsEqual(ListItem.Property(align),left)</visible>
                 <posx>20</posx>
                 <posy>0</posy>
-                <width>600</width>
+                <width>580</width>
                 <height>{{ vscale(66) }}</height>
                 <font>font12</font>
                 <align>left</align>
                 <aligny>center</aligny>
                 <textcolor>FFFFFFFF</textcolor>
                 <scroll>true</scroll>
-                <scrollspeed>60</scrollspeed>
+                <scrollspeed>20</scrollspeed>
                 <label>$INFO[ListItem.Label]</label>
             </control>
             <control type="group">
@@ -136,7 +138,7 @@
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <scroll>true</scroll>
-                    <scrollspeed>60</scrollspeed>
+                    <scrollspeed>20</scrollspeed>
                     <label>$INFO[ListItem.Label]</label>
                 </control>
                 <control type="image">
@@ -164,7 +166,7 @@
                 <posy>0</posy>
                 <width>600</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FFE5A00D" border="10">script.plex/white-square-top-rounded.png</texture>
+                <texture colordiffuse="F3E5A00D" border="10">script.plex/white-square-top-rounded.png</texture>
             </control>
             <control type="image">
                 <visible>String.IsEmpty(ListItem.Property(first)) + String.IsEmpty(ListItem.Property(last)) + String.IsEmpty(ListItem.Property(only))</visible>
@@ -172,7 +174,7 @@
                 <posy>0</posy>
                 <width>600</width>
                 <height>{{ vscale(66) }}</height>
-                <texture colordiffuse="FFE5A00D">script.plex/white-square.png</texture>
+                <texture colordiffuse="F3E5A00D">script.plex/white-square.png</texture>
             </control>
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.Property(last))</visible>
@@ -194,28 +196,28 @@
                 <visible>String.IsEmpty(ListItem.Property(with.indicator)) + String.IsEqual(ListItem.Property(align),center)</visible>
                 <posx>0</posx>
                 <posy>0</posy>
-                <width>600</width>
+                <width>580</width>
                 <height>{{ vscale(66) }}</height>
                 <font>font12</font>
                 <align>center</align>
                 <aligny>center</aligny>
                 <textcolor>FF000000</textcolor>
                 <scroll>true</scroll>
-                <scrollspeed>60</scrollspeed>
+                <scrollspeed>20</scrollspeed>
                 <label>$INFO[ListItem.Label]</label>
             </control>
             <control type="label">
                 <visible>String.IsEmpty(ListItem.Property(with.indicator)) + String.IsEqual(ListItem.Property(align),left)</visible>
                 <posx>20</posx>
                 <posy>0</posy>
-                <width>600</width>
+                <width>580</width>
                 <height>{{ vscale(66) }}</height>
                 <font>font12</font>
                 <align>left</align>
                 <aligny>center</aligny>
                 <textcolor>FF000000</textcolor>
                 <scroll>true</scroll>
-                <scrollspeed>60</scrollspeed>
+                <scrollspeed>20</scrollspeed>
                 <label>$INFO[ListItem.Label]</label>
             </control>
             <control type="group">
@@ -230,7 +232,7 @@
                     <aligny>center</aligny>
                     <textcolor>FF000000</textcolor>
                     <scroll>true</scroll>
-                    <scrollspeed>60</scrollspeed>
+                    <scrollspeed>20</scrollspeed>
                     <label>$INFO[ListItem.Label]</label>
                 </control>
                 <control type="image">
