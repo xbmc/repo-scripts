@@ -1,5 +1,7 @@
 
 from typing import Union
+import json
+import hashlib
 
 from requests import Session, ConnectionError, HTTPError, ReadTimeout, Timeout, RequestException
 
@@ -10,12 +12,13 @@ from resources.lib.os.model.request.download import OpenSubtitlesDownloadRequest
 from resources.lib.exceptions import AuthenticationError, ConfigurationError, DownloadLimitExceeded, ProviderError, \
     ServiceUnavailable, TooManyRequests, BadUsernameError
 from resources.lib.cache import Cache
-from resources.lib.utilities import log
+from resources.lib.utilities import log, __addon__
 
 API_URL = "https://api.opensubtitles.com/api/v1/"
 API_LOGIN = "login"
 API_SUBTITLES = "subtitles"
 API_DOWNLOAD = "download"
+API_USER_INFO = "infos/user"
 
 
 CONTENT_TYPE = "application/json"
@@ -73,7 +76,7 @@ class OpenSubtitlesProvider:
             logging(f"Username: {self.username}, Password: {self.password}")
 
 
-        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.8" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
+        self.request_headers = {"Api-Key": self.api_key, "User-Agent": "Opensubtitles.com Kodi plugin v1.0.9" ,"Content-Type": CONTENT_TYPE, "Accept": CONTENT_TYPE}
 
         self.session = Session()
         self.session.headers = self.request_headers
@@ -139,6 +142,33 @@ class OpenSubtitlesProvider:
                 logging(f"Failed to parse login response JSON: {e}")
                 raise ValueError("Invalid JSON returned by provider")
 
+    def get_user_info(self):
+        user_info_url = API_URL + API_USER_INFO
+        auth_headers = {"Authorization": "Bearer " + self.user_token}
+
+        logging(f"Fetching user info from: {user_info_url}")
+
+        try:
+            r = self.session.get(user_info_url, headers=auth_headers, timeout=REQUEST_TIMEOUT)
+            r.raise_for_status()
+        except (ConnectionError, Timeout, ReadTimeout) as e:
+            raise ServiceUnavailable(f"Connection error: {e!r}")
+        except HTTPError as e:
+            status_code = e.response.status_code
+            if status_code == 401:
+                raise AuthenticationError(f"Authentication failed: {e}")
+            elif status_code == 429:
+                raise TooManyRequests()
+            elif status_code == 503:
+                raise ServiceUnavailable("OpenSubtitles.com is currently unavailable.")
+            else:
+                raise ProviderError(f"Bad status code: {status_code}")
+
+        try:
+            return r.json()["data"]
+        except (ValueError, KeyError):
+            raise ProviderError("Invalid JSON returned by provider")
+
     @property
     def user_token(self):
         return self.cache.get(key="user_token")
@@ -153,6 +183,41 @@ class OpenSubtitlesProvider:
 
         if not len(params):
             raise ValueError("Invalid subtitle search data provided. Empty Object built")
+
+        # --- [START] Cache Config (Added) ---
+        # Get duration from settings (default 5 minutes)
+        try:
+            # We access __addon__ directly since we imported it from utilities
+            cache_setting = __addon__.getSetting("search_cache_duration")
+            
+            # If setting is empty or 0, we treat it as disabled
+            if not cache_setting:
+                cache_ttl = 0 # Default if undefined
+            else:
+                cache_ttl = int(float(cache_setting)) * 60 # Convert minutes to seconds
+        except Exception as e:
+            logging(f"Error reading cache setting: {e}")
+            cache_ttl = 0
+
+        # If user sets duration to 0, we disable caching
+        use_cache = cache_ttl > 0
+        # --- [END] Cache Config ---
+
+        # --- [START] Cache Check (Added) ---
+        cache_key = None
+        if use_cache:
+            try:
+                # Create unique key from params
+                params_str = json.dumps(params, sort_keys=True)
+                cache_key = hashlib.md5(params_str.encode('utf-8')).hexdigest()
+                
+                cached_result = self.cache.get(cache_key)
+                if cached_result:
+                    logging(f"CACHE HIT: Returning cached subtitles for key {cache_key} (TTL: {cache_ttl}s)")
+                    return cached_result
+            except Exception as e:
+                logging(f"Cache check failed: {e}")
+        # --- [END] Cache Check ---
 
         # Check if we have a user token for authentication
         current_token = self.user_token
@@ -214,6 +279,15 @@ class OpenSubtitlesProvider:
             logging(f"Query returned {len(result['data'])} subtitles")
 
         if len(result["data"]):
+            # --- [START] Cache Save (Added) ---
+            if use_cache and cache_key:
+                try:
+                    logging(f"CACHE SAVE: Storing results for {cache_key} (expires in {cache_ttl}s)")
+                    self.cache.set(cache_key, result["data"], expires=cache_ttl)
+                except Exception as e:
+                    logging(f"Cache save failed: {e}")
+            # --- [END] Cache Save ---
+
             return result["data"]
 
         return None

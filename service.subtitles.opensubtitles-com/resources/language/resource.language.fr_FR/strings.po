@@ -70,3 +70,7 @@ msgstr "Mauvais nom d'utilisateur. Assurez-vous d'avoir saisi votre nom d'utilis
 msgctxt "#32215"
 msgid "Traductions AI"
 msgstr ""
+
+msgctxt "#32216"
+msgid "Search cache duration [minutes]"
+msgstr "Durée du cache de recherche [minutes]"

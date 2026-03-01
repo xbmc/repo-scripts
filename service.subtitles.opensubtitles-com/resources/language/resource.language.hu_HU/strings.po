@@ -67,3 +67,7 @@ msgstr "Gépi fordítás"
 msgctxt "#32214"
 msgid "Bad username. Make sure you have entered your username and not your email in the username field"
 msgstr "Rossz felhasználónév. Győződjön meg róla, hogy a felhasználónév mezőbe a felhasználónevét írta be, nem pedig az e-mail címét."
+
+msgctxt "#32216"
+msgid "Search cache duration [minutes]"
+msgstr "Keresési gyorsítótár időtartama [perc]"

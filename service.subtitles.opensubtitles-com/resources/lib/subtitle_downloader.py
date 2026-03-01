@@ -85,9 +85,14 @@ class SubtitleDownloader:
 
         try:
             self.subtitles = self.open_subtitles.search_subtitles(self.query)
-        # TODO handle errors individually. Get clear error messages to the user
-        except (TooManyRequests, ServiceUnavailable, ProviderError, ValueError) as e:
-            error(__name__, 32001, e)
+        except TooManyRequests as e:
+            error(__name__, 32007, e, detail=str(e))
+        except ServiceUnavailable as e:
+            error(__name__, 32008, e, detail=str(e))
+        except ProviderError as e:
+            error(__name__, 32009, e, detail=str(e))
+        except ValueError as e:
+            error(__name__, 32001, e, detail=str(e))
 
         if self.subtitles and len(self.subtitles):
             log(__name__, len(self.subtitles))
@@ -101,7 +106,6 @@ class SubtitleDownloader:
         try:
             self.file = self.open_subtitles.download_subtitle(
                 {"file_id": self.params["id"], "sub_format": self.sub_format})
-        # TODO handle errors individually. Get clear error messages to the user
             log(__name__, "XYXYXX download '%s' " % self.file)
         except AuthenticationError as e:
             error(__name__, 32003, e)
@@ -116,15 +120,24 @@ class SubtitleDownloader:
             else:
                 error(__name__, 32004, e)
             valid = 0
-        except (TooManyRequests, ServiceUnavailable, ProviderError, ValueError) as e:
-            error(__name__, 32001, e)
+        except TooManyRequests as e:
+            error(__name__, 32007, e, detail=str(e))
+            valid = 0
+        except ServiceUnavailable as e:
+            error(__name__, 32008, e, detail=str(e))
+            valid = 0
+        except ProviderError as e:
+            error(__name__, 32009, e, detail=str(e))
+            valid = 0
+        except ValueError as e:
+            error(__name__, 32001, e, detail=str(e))
             valid = 0
 
         #subtitle_path = os.path.join(__temp__, f"{str(uuid.uuid4())}.{self.sub_format}")
         try:    # kodi > k19
-            dir_path = xbmcvfs.translatePath('special://temp/oss')       
+            dir_path = xbmcvfs.translatePath('special://temp/oss/')       
         except: # kodi < k19
-            dir_path = xbmc.translatePath('special://temp/oss')
+            dir_path = xbmc.translatePath('special://temp/oss/')
 
         # Kodi lang-code difference vs OS.com API langcodes return
         if self.params["language"].lower() == 'pt-pt': self.params["language"] = 'pt'
