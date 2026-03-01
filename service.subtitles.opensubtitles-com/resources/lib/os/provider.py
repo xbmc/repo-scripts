@@ -195,7 +195,7 @@ class OpenSubtitlesProvider:
                 cache_ttl = 0 # Default if undefined
             else:
                 cache_ttl = int(float(cache_setting)) * 60 # Convert minutes to seconds
-        except Exception as e:
+        except (ValueError, TypeError) as e:
             logging(f"Error reading cache setting: {e}")
             cache_ttl = 0
 
@@ -207,9 +207,9 @@ class OpenSubtitlesProvider:
         cache_key = None
         if use_cache:
             try:
-                # Create unique key from params
+                # Create unique cache key from params (non-cryptographic, for cache keying only)
                 params_str = json.dumps(params, sort_keys=True)
-                cache_key = hashlib.md5(params_str.encode('utf-8')).hexdigest()
+                cache_key = hashlib.sha256(params_str.encode('utf-8')).hexdigest()
                 
                 cached_result = self.cache.get(cache_key)
                 if cached_result:

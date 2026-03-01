@@ -1,5 +1,6 @@
 import xbmcaddon
 import xbmcgui
+from requests import RequestException
 
 from resources.lib.os.provider import OpenSubtitlesProvider
 from resources.lib.exceptions import (
@@ -41,7 +42,7 @@ def test_connection():
     except ServiceUnavailable:
         xbmcgui.Dialog().ok(__addon_name__, __language__(32008))
         return
-    except (ConfigurationError, ProviderError, Exception) as e:
+    except (ConfigurationError, ProviderError, RequestException) as e:
         xbmcgui.Dialog().ok(__addon_name__, str(e))
         return
 

@@ -136,7 +136,7 @@ class SubtitleDownloader:
         #subtitle_path = os.path.join(__temp__, f"{str(uuid.uuid4())}.{self.sub_format}")
         try:    # kodi > k19
             dir_path = xbmcvfs.translatePath('special://temp/oss/')       
-        except: # kodi < k19
+        except AttributeError: # kodi < k19
             dir_path = xbmc.translatePath('special://temp/oss/')
 
         # Kodi lang-code difference vs OS.com API langcodes return
