@@ -52,3 +52,7 @@ msgstr ""
 msgctxt "#30209"
 msgid "Beyond..."
 msgstr ""
+
+msgctxt "#30210"
+msgid "KFAT"
+msgstr ""

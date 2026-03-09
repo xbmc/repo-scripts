@@ -1,3 +1,8 @@
+## v2.3.0
+
+- Add KFAT channel
+- Remove Serenity channel
+
 ## v2.2.0
 
 - Add Beyond channel

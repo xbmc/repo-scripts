@@ -30,9 +30,9 @@
         "url_flac": "http://stream.radioparadise.com/beyond-flacm"
     },
     {
-        "channel_id": 42,
-        "title": "Serenity",
-        "url_aac": "http://stream.radioparadise.com/serenity",
-        "url_flac": "http://stream.radioparadise.com/serenity"
+        "channel_id": 945,
+        "title": "KFAT",
+        "url_aac": "http://stream.radioparadise.com/kfat-128",
+        "url_flac": "http://stream.radioparadise.com/kfat-flacm"
     }
 ]
