@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import logging
+import os
 import time
 from json import dumps, loads
 
@@ -20,6 +21,7 @@ from resources.lib.utilities import (
     findSeasonMatchInList,
     findShowMatchInList,
 )
+from resources.lib.obfuscation import deobfuscate
 from trakt import Trakt
 from trakt.objects import Movie, Show
 
@@ -31,8 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class traktAPI(object):
-    __client_id = "d4161a7a106424551add171e5470112e4afdaf2438e6ef2fe0548edc75924868"
-    __client_secret = "b5fcd7cb5d9bb963784d11bbf8535bc0d25d46225016191eb48e50792d2155c0"
+    # Placeholders for build-time injection
+    __client_id = [123, 39, 116, 119, 33, 117, 32, 32, 118, 35, 119, 32, 117, 122, 116, 35, 119, 32, 119, 38, 36, 113, 39, 117, 113, 117, 115, 33, 113, 32, 33, 38, 36, 35, 114, 114, 39, 112, 116, 35, 118, 123, 114, 117, 122, 39, 35, 112, 114, 112, 122, 122, 38, 116, 115, 116, 36, 39, 122, 113, 38, 122, 118, 38]
+    __client_secret = [35, 32, 33, 116, 36, 33, 123, 119, 119, 118, 114, 118, 123, 123, 38, 114, 113, 114, 122, 39, 119, 117, 32, 33, 112, 117, 39, 33, 35, 36, 123, 35, 38, 39, 33, 117, 36, 123, 38, 118, 114, 35, 122, 123, 112, 116, 36, 113, 117, 123, 118, 115, 36, 36, 119, 117, 123, 123, 32, 35, 119, 35, 32, 113]
 
     def __init__(self, force=False):
         logger.debug("Initializing.")
@@ -42,9 +45,23 @@ class traktAPI(object):
             Trakt.http.proxies = {"http": proxyURL, "https": proxyURL}
 
         # Configure
+        client_id = os.environ.get("TRAKT_CLIENT_ID")
+        client_secret = os.environ.get("TRAKT_CLIENT_SECRET")
+
+        if not client_id or not client_secret:
+            client_id = deobfuscate(self.__client_id)
+            client_secret = deobfuscate(self.__client_secret)
+
         Trakt.configuration.defaults.client(
-            id=self.__client_id, secret=self.__client_secret
+            id=client_id,
+            secret=client_secret,
         )
+
+        user_agent = "Kodi script.trakt/%s" % __addonversion__
+        if getattr(Trakt.http, "headers", None) is None:
+            Trakt.http.headers = {"User-Agent": user_agent}
+        else:
+            Trakt.http.headers["User-Agent"] = user_agent
 
         # Bind event
         Trakt.on("oauth.token_refreshed", self.on_token_refreshed)
