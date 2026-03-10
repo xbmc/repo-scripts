@@ -4,34 +4,39 @@ import requests
 
 KEY_FILTER_RE = re.compile(r'[^\w\']+')
 
-NOWPLAYING_URL = 'https://motherearth.streamserver24.com/api/nowplaying/{}'
+NOWPLAYING_URL = 'https://stream.motherearthradio.de/api/nowplaying/{}'
 
 STREAMS = [
     {
         'channel': 0,
+        'station': 'motherearth',
         'title': 'Mother Earth Radio',
-        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth/motherearth.aac',
-        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth/motherearth',
+        'url_aac': 'https://stream.motherearthradio.de/listen/motherearth/motherearth.aac',
+        'url_flac': 'https://stream.motherearthradio.de/listen/motherearth/motherearth',
     },
     {
         'channel': 1,
+        'station': 'motherearth_klassik',
         'title': 'Mother Earth Klassik',
-        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_klassik/motherearth.klassik.aac',
-        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_klassik/motherearth.klassik',
+        'url_aac': 'https://stream.motherearthradio.de/listen/motherearth_klassik/motherearth.klassik.aac',
+        'url_flac': 'https://stream.motherearthradio.de/listen/motherearth_klassik/motherearth.klassik',
     },
     {
         'channel': 2,
+        'station': 'motherearth_instrumental',
         'title': 'Mother Earth Instrumental',
-        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental.aac',
-        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental',
+        'url_aac': 'https://stream.motherearthradio.de/listen/motherearth_instrumental/motherearth.instrumental.aac',
+        'url_flac': 'https://stream.motherearthradio.de/listen/motherearth_instrumental/motherearth.instrumental',
     },
-        {
+    {
         'channel': 3,
+        'station': 'motherearth_jazz',
         'title': 'Mother Earth Jazz',
-        'url_aac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz.aac',
-        'url_flac': 'https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz',
+        'url_aac': 'https://stream.motherearthradio.de/listen/motherearth_jazz/motherearth.jazz.aac',
+        'url_flac': 'https://stream.motherearthradio.de/listen/motherearth_jazz/motherearth.jazz',
     },
 ]
+
 STREAM_INFO = {s['url_aac']: s for s in STREAMS}
 STREAM_INFO.update({s['url_flac']: s for s in STREAMS})
 
@@ -45,24 +50,19 @@ class NowPlaying():
 
     @property
     def current(self):
-        """Return a dict for the current "nowplaying" song, or None.
-
-        The "cover" value will be an absolute URL.
-        """
+        """Return a dict for the current "nowplaying" song, or None."""
         return self._current
 
     def get_song_data(self, song_key):
-        """Return a dict for the (artist, title) key, or None.
-
-        The "cover" value will be an absolute URL.
-        """
+        """Return a dict for the (artist, title) key, or None."""
         key = build_key(song_key)
         return self.songs.get(key)
 
     def set_channel(self, channel):
         """Set the channel number, or None."""
-        if channel is not None:
-            self.url = NOWPLAYING_URL.format((channel) + 3)
+        if channel is not None and 0 <= channel < len(STREAMS):
+            station = STREAMS[channel]['station']
+            self.url = NOWPLAYING_URL.format(station)
         else:
             self.url = None
         self._current = None
@@ -70,34 +70,34 @@ class NowPlaying():
         self.songs = {}
 
     def update(self):
-        """Update song information from the API, if necessary.
-
-        Calls the API only if the "refresh" timer has expired.
-
-        """
+        """Update song information from the API, if necessary."""
         if self.url is None:
             return
         now = time.time()
         if now < self.next_update:
             return
-        response = requests.get(self.url, timeout=2)
-        response.raise_for_status()
-        data = response.json()
-        current = None
-        songs = {}
-        key = build_key((data['now_playing']['song']['artist'], data['now_playing']['song']['title']))
-        songs[key] = {
-            'artist': data['now_playing']['song']['artist'],
-            'cover': data['now_playing']['song']['art'],
-            'title': data['now_playing']['song']['title'],
-            'genre': data['now_playing']['song']['genre'],
-            'album': data['now_playing']['song']['album'],
+        try:
+            response = requests.get(self.url, timeout=2)
+            response.raise_for_status()
+            data = response.json()
+            song = data['now_playing']['song']
+            songs = {}
+            key = build_key((song['artist'], song['title']))
+            songs[key] = {
+                'artist': song['artist'],
+                'cover':  song.get('art', ''),
+                'title':  song['title'],
+                'genre':  song.get('genre', ''),
+                'album':  song.get('album', ''),
             }
-        current = songs[key]
-        
-        self._current = current
-        self.songs = songs
-        self.next_update = now + data['now_playing']['remaining']
+            self._current = songs[key]
+            self.songs = songs
+            self.next_update = now + data['now_playing'].get('remaining', 30)
+        except Exception:
+            # Network error, HTTP error, or unexpected API response —
+            # keep existing metadata and retry after 30 seconds
+            self.next_update = now + 30
+
 
 def build_key(strings):
     """Return a normalized tuple of words in the strings."""
