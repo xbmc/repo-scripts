@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    EasyTV Context Menu Window
+    Resolution: 1080i (1920x1080)
+    
+    Control IDs:
+        100 - Button group list
+        110 - Toggle Multiselect
+        120 - Play Selection  
+        130 - Play From Here
+        140 - Export Selection
+        150 - Toggle Watched
+        170 - Update Library
+        180 - Refresh
+-->
+<window>
+    <zorder>100000</zorder>
+    <defaultcontrol always="true">100</defaultcontrol>
+    <animation effect="fade" time="200">WindowOpen</animation>
+    <animation effect="fade" time="150">WindowClose</animation>
+    
+    <controls>
+        <!-- Semi-transparent overlay background -->
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <texture colordiffuse="99000000">OneBlackPixel.png</texture>
+        </control>
+        
+        <!-- Context Menu Container -->
+        <control type="group">
+            <left>810</left>
+            <top>255</top>
+            <width>300</width>
+            <height>470</height>
+            
+            <!-- Menu Background -->
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>300</width>
+                <height>470</height>
+                <texture>ContextBackground3.png</texture>
+            </control>
+            
+            <!-- Menu Buttons -->
+            <control type="grouplist" id="100">
+                <left>0</left>
+                <top>20</top>
+                <width>300</width>
+                <height>430</height>
+                <itemgap>8</itemgap>
+                <orientation>vertical</orientation>
+                <onleft>100</onleft>
+                <onright>100</onright>
+                <onup>100</onup>
+                <ondown>100</ondown>
+                
+                <!-- Toggle Multiselect -->
+                <control type="button" id="110">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+                
+                <!-- Play Selection -->
+                <control type="button" id="120">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+                
+                <!-- Play From Here -->
+                <control type="button" id="130">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+                
+                <!-- Export Selection -->
+                <control type="button" id="140">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+                
+                <!-- Toggle Watched -->
+                <control type="button" id="150">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+                
+                <!-- Update Library -->
+                <control type="button" id="170">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+                
+                <!-- Refresh -->
+                <control type="button" id="180">
+                    <width>300</width>
+                    <height>50</height>
+                    <align>center</align>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF50e0c7</focusedcolor>
+                    <texturefocus>ButtonFO.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>25</textoffsetx>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

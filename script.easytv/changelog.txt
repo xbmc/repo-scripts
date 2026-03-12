@@ -1,0 +1,614 @@
+EasyTV Changelog
+================
+
+v1.4.0 (2026-03-02)
+--------------------------
+New Features:
+  - Multi-instance sync: Share watch progress across multiple Kodi devices via
+    shared MariaDB database. Auto-detects configuration from advancedsettings.xml.
+    Includes automatic recovery after library rebuilds via title+year matching,
+    automatic cleanup of orphaned database entries on startup, and graceful
+    fallback to Kodi video DB if dedicated easytv database is unavailable.
+    Enable in Settings → Advanced → "Multi-instance sync".
+
+  - Positioned specials support: TVDB-positioned specials can now be included in
+    the watch order. Some shows (like SpongeBob) have specials that are
+    plot-relevant and should be watched between specific episodes. Non-positioned
+    specials remain excluded. Enable in Settings → Shows → "Include positioned
+    specials in watch order". Default: OFF.
+
+  - Replaced "Movie ratio" setting (0.0-1.0 slider) with "Movie chance" percentage
+    slider (0-100% in steps of 5). Added budget enforcement to playlist building —
+    both batch mode and lazy queue now track movies vs. shows and defer over-budget
+    items, ensuring the final playlist closely matches the configured percentage.
+
+  - Playlist continuation is now fully configurable. Added "If countdown expires"
+    setting to choose the default action (Stop or Generate new playlist). Countdown
+    timer displayed in prompt heading. Prompt only appears when the playlist finishes
+    naturally — manually stopping no longer triggers it. Countdown sliders now use
+    1-second steps. Works correctly in clones.
+
+Bug Fixes:
+  - Fixed: Clone creation fails on SteamOS and other Arch-based Linux systems where
+    the system locale defaults to ASCII (POSIX/C locale). Replaced all
+    fileinput.input(inplace=True) calls with explicit open(..., encoding='utf-8')
+    read/write pattern.
+
+  - Fixed: Spurious "Show ID shifted, migrated to new ID" log messages on every
+    startup when all show IDs were unchanged. Validation logic now correctly treats
+    same-ID lookups as unchanged rather than migrated.
+
+  - Fixed: Partial prioritization in random playlists — stale resume points on
+    watched episodes (playcount > 0) no longer cause deterministic show ordering.
+    Only genuinely in-progress episodes are now treated as partials.
+
+  - Fixed: When a partial episode is detected and prioritized, the specific episode
+    is now served on first encounter in both batch and lazy queue playlist paths.
+    Previously the system detected the partial but discarded the episode ID.
+
+  - Fixed: Movie playlist filter bypassed the movie weight limit entirely. The limit
+    is now applied after playlist filter intersection.
+
+  - Fixed: Clone addon repeatedly prompting to update on every other launch after
+    main addon update. Clone update script now refreshes Kodi's in-memory addon
+    metadata cache before re-registering.
+
+  - Fixed: DialogProgress.update() called with 3 positional args (broke on Kodi 19+
+    which only accepts percent and message).
+
+Performance:
+  - Batch write operations now use a single database transaction with one COMMIT at
+    the end, instead of committing independently per show. For 399 shows, reduces
+    fsync overhead from ~20s to ~50ms.
+
+Diagnostics:
+  - Kodi video database backend (shared MariaDB vs local SQLite) is now logged at
+    service startup via advancedsettings.xml detection.
+
+Internal:
+  - Resolved all 115 pyright type-checking errors across 12 files (now 0).
+  - Updated json_query() signature to accept batch queries (list of dicts).
+  - Code quality fixes in clone.py and update_clone.py (errorHandle defaults, XML
+    tree.find None checks).
+  - Batch ownership lifted from daemon.py to StorageBackend interface.
+  - Removed non-functional "Watch Order" settings from clone settings template.
+
+v1.4.0~alpha8 (2026-02-28)
+--------------------------
+Bug Fixes:
+  - Fix playlist continuation settings ignored in clones — the per-addon setting
+    for generating a new playlist now works correctly. Previously only the master
+    addon's setting was used.
+
+v1.4.0~alpha7 (2026-02-20)
+--------------------------
+New Features:
+  - Playlist continuation: Added "If countdown expires" setting to choose the default
+    action (Stop or Generate new playlist). When set to "Generate", the button layout
+    swaps so the timeout triggers playlist generation instead of stopping.
+
+  - Playlist continuation prompt now only appears when the playlist finishes naturally.
+    Manually stopping a playlist no longer triggers the continuation dialog.
+
+  - Playlist continuation heading now shows the countdown timer
+    (e.g., "Playlist Finished   (auto-closing in 20 seconds)"), matching the next
+    episode prompt style.
+
+  - Countdown timer sliders now use 1-second steps (was 5) for both next episode prompt
+    and playlist continuation duration.
+
+Bug Fixes:
+  - Fixed: DialogProgress.update() called with 3 positional args (broke on
+    Kodi 19+ which only accepts percent and message).
+
+  - Fixed: clone.py and update_clone.py errorHandle() used False as default
+    for path parameter — now correctly uses None with Optional[str] type.
+
+  - Fixed: XML tree.find('.//summary') result used without None check in
+    both clone.py and update_clone.py.
+
+  - Fixed: Clone addon repeatedly prompting to update on every other launch after main
+    addon update. The clone update script now calls UpdateLocalAddons to refresh Kodi's
+    in-memory addon metadata cache before re-registering (matching what clone creation
+    already did). The update-complete flag also persists for the full Kodi session as a
+    safety net, clearing naturally on restart.
+
+Internal:
+  - Resolved all 115 pyright type-checking errors across 12 files (now 0).
+    Includes proper typing.cast() for Kodi getControl() stubs, assert guards
+    for Optional fields in daemon/service layer, and interface signature fixes
+    for abstract storage methods.
+
+  - Updated json_query() signature to accept batch queries (list of dicts).
+
+v1.4.0~alpha6 (2026-02-19)
+--------------------------
+New Features:
+  - Replaced "Movie ratio" setting (0.0-1.0 slider) with "Movie chance" percentage
+    slider (0-100% in steps of 5). The new setting directly controls what fraction
+    of the playlist should be movies: 0% = no movies, 25% = default, 50% = equal
+    mix, 100% = all movies. New setting ID: movie_chance (old: movieweight).
+
+  - Added budget enforcement to playlist building. Both batch mode and lazy queue
+    now track movies vs. shows added and defer over-budget items, ensuring the
+    final playlist closely matches the configured movie chance percentage.
+
+Bug Fixes:
+  - Fixed: Movie playlist filter bypassed the movie weight limit entirely. When a
+    playlist filter was configured, the limit was ignored during the query phase
+    and never re-applied after intersection, resulting in all matching movies being
+    included regardless of the weight setting. The limit is now applied after
+    playlist filter intersection.
+
+Internal:
+  - Added calculate_movie_target() function for percentage-to-count conversion
+  - Movie target count now logged in playlist.create event for debugging
+
+v1.4.0~alpha5 (2026-02-19)
+--------------------------
+Bug Fixes:
+  - Fixed: Partial prioritization in random playlists — stale resume points on
+    watched episodes (playcount > 0) no longer cause deterministic show ordering
+    in WATCHED and BOTH modes. Only genuinely in-progress episodes (playcount=0
+    with resume point) are now treated as partials.
+
+  - Fixed: When a partial episode is detected and prioritized, the specific
+    episode is now served on first encounter in both batch and lazy queue
+    playlist paths. Previously, the system detected the partial but discarded
+    the episode ID, picking a different episode instead.
+
+v1.4.0~alpha4 (2026-02-15)
+--------------------------
+Bug Fixes:
+  - Fixed: Clone creation fails on SteamOS and other Arch-based Linux systems
+    where the system locale defaults to ASCII (POSIX/C locale). The clone script
+    used Python's fileinput module which inherits the locale encoding, failing on
+    UTF-8 characters (bullet character '•') in skin XML files. Replaced all
+    fileinput.input(inplace=True) calls with explicit open(..., encoding='utf-8')
+    read/write pattern. Affects clone.py at 4 call sites: settings.xml, strings.po,
+    Python scripts, and skin XML files.
+
+  - Fixed: Spurious "Show ID shifted, migrated to new ID" log messages on every
+    startup and library scan when all show IDs were unchanged. The validation
+    logic compared stored show IDs against the unwatched-only show list
+    (current_show_ids), so fully-watched shows in random_order_shows were not
+    found in the set. The title lookup then found the same ID back, logging a
+    false migration with old_id == new_id. Now correctly treats same-ID lookups
+    as unchanged rather than migrated.
+
+Diagnostics:
+  - Added: Kodi video database backend (shared MariaDB vs local SQLite) is now
+    logged at service startup via advancedsettings.xml detection. Helps quickly
+    identify multi-device setups during troubleshooting.
+
+v1.4.0~alpha3 (2026-02-10)
+--------------------------
+Bug Fixes:
+  - Fixed: Toggling "Include positioned specials in watch order" did not take
+    effect until the next Kodi restart or library scan. The setting change handler
+    (_on_settings_changed) reloaded the value but never triggered a refresh of
+    episode tracking data. Now detects the change and triggers bulk_refresh,
+    following the same pattern as the existing smart playlist toggle.
+
+Performance:
+  - Batch write operations now use a single database transaction with one COMMIT
+    at the end, instead of committing independently per show. For 399 shows, this
+    reduces fsync overhead from ~399 × 50ms ≈ 20s to a single ~50ms commit.
+    Applies to service startup, post-scan refresh, and initial migration.
+
+    Root cause: Each set_show_tracking() call within batch_write() executed its
+    own revision UPDATE + conn.commit(), triggering an InnoDB fsync per write.
+
+    Fix: set_show_tracking() now defers the revision UPDATE and commit when
+    _batch_active is True. A new _batch_finalize() method performs a single
+    bulk revision bump (int_value + N) and one commit when the batch exits.
+
+Refactor:
+  - Batch ownership lifted from daemon.py to StorageBackend interface. daemon.py
+    no longer uses isinstance(storage, SharedDatabaseStorage) or accesses
+    storage.db directly for batch operations. Instead, it calls the abstract
+    storage.batch_write(show_ids) which each backend implements appropriately:
+      - WindowPropertyStorage: no-op (inherited default)
+      - SharedDatabaseStorage: preload + deferred commit + revision management
+
+v1.4.0~alpha2 (2026-02-10)
+--------------------------
+Bug Fixes:
+  - Fixed silent service crash during overnight library scans with multi-instance
+    sync enabled. Three layered failures combined to kill the service without any
+    error log, requiring a Kodi restart to recover.
+
+    Root cause: When the MariaDB connection goes idle overnight and is transparently
+    re-established, the new session has no database selected. Queries using
+    unqualified table names fail with error 1046 ("No database selected"). This
+    exception propagated unhandled through the entire call stack, terminating the
+    background service silently.
+
+    Fix 1 — Re-select database after reconnect (shared_db.py):
+      _get_connection() now calls _ensure_db_selected() after ping(reconnect=True)
+      or fallback _connect() to restore the session-level database selection.
+
+    Fix 2 — Graceful degradation for bulk preload (daemon.py):
+      The shareddb preload in refresh_show_episodes() is now wrapped in try/except.
+      On failure, the refresh proceeds without batch optimization rather than
+      crashing. Per-show writes in cache_next_episode() already had their own
+      try/except, so individual writes also degrade gracefully.
+
+    Fix 3 — Top-level exception handler in daemon loop (daemon.py):
+      _process_events() is now wrapped in try/except within the run() loop. Any
+      unhandled exception is logged with full stack trace via log.exception() and
+      the service continues. This prevents any single-cycle failure from killing
+      the service permanently.
+
+v1.4.0~alpha1 (2026-02-04)
+--------------------------
+New Features:
+  - Positioned specials support: Include TVDB-positioned specials in watch order
+    - Some shows (like SpongeBob) have specials that are plot-relevant and should
+      be watched between specific episodes
+    - Kodi stores TVDB positioning data (e.g., "airs before S10E56") in episode
+      metadata (specialsortseason, specialsortepisode fields)
+    - When enabled, positioned specials appear at their designated position
+    - Non-positioned specials (those without TVDB data) remain excluded
+    - Enable in Settings → Shows → "Include positioned specials in watch order"
+    - Default: OFF (preserves existing behavior for current users)
+
+Multi-Instance Note:
+  - The "Include positioned specials" setting affects episode ordering
+  - For consistent "next episode" across devices, configure this setting
+    identically on all Kodi instances sharing the same database
+
+v1.3.0~beta1 (2026-01-29)
+-------------------------
+New Features:
+  - Multi-instance sync: Share watch progress across multiple Kodi devices
+    - When you watch Episode 5 on one device, all other devices know to queue Episode 6
+    - Requires Kodi configured with a shared MySQL/MariaDB video database
+    - Requires script.module.pymysql addon (auto-installed with EasyTV)
+    - Enable in Settings → Advanced → "Multi-instance sync"
+    - Auto-detects database configuration from advancedsettings.xml
+  - Automatic recovery after Kodi library rebuilds via title+year matching
+  - Automatic cleanup of orphaned database entries on startup
+  - Graceful fallback to Kodi video DB if dedicated easytv database unavailable
+
+Known Limitations:
+  - For consistent "next episode" recommendations, configure random_order_shows
+    identically on all Kodi devices sharing the same database
+
+Internal:
+  - Removed non-functional "Watch Order" settings from clone settings template
+
+v1.2.4 (2026-01-25)
+-------------------
+BREAKING CHANGE:
+  - Smart playlist filenames have changed! If you have skin widgets or menu
+    entries pointing to EasyTV playlists, you must update them:
+      Old: "EasyTV - All Shows.xsp"          → New: "EasyTV - Episode - All Shows.xsp"
+      Old: "EasyTV - Continue Watching.xsp"  → New: "EasyTV - Episode - Continue Watching.xsp"
+      Old: "EasyTV - Start Fresh.xsp"        → New: "EasyTV - Episode - Start Fresh.xsp"
+  - Old playlist files are automatically deleted on upgrade
+  - Settings migrate automatically
+
+New Features:
+  - TVShow smart playlists for skin widgets - browse your next episodes by show
+    instead of episode list (great for home screen widgets)
+  - Two new playlist categories:
+    - Show Premieres - shows you haven't started yet (S01E01)
+    - Season Premieres - new seasons of shows you're watching (S02E01, S03E01, etc.)
+  - Apply your show filter to smart playlists (main addon only, since it
+    maintains the playlists) - if you filter random playback to a playlist,
+    your smart playlists can now use the same filter
+
+Bug Fixes:
+  - Fixed clones repeatedly asking to update after each launch
+  - Fixed clone settings changes saving to the wrong addon
+  - Fixed clone updates sometimes failing with errors
+
+Improvements:
+  - Clone updates now show a progress dialog so you know what's happening
+
+Internal:
+  - Major code cleanup and refactoring of smart playlist system
+  - Removed ~285 lines of unused code
+
+v1.2.3 (2026-01-24)
+-------------------
+Improvements:
+  - Added visual feedback during slow operations
+    - Browse mode: "Loading shows..." indicator during data fetch
+    - Random playlist: "Building playlist..." indicator during playlist creation
+    - Clone creation: Modal progress dialog with step-by-step status updates
+    - Particularly helpful on low-powered devices like OSMC Vero V where
+      browse mode can take ~6.5 seconds to open with network-attached databases
+
+Bug Fixes:
+  - Fixed show selections becoming invalid after Kodi library rebuild
+    - When Kodi reassigns show IDs (after delete + rescan), settings now
+      detect the ID shift by comparing stored titles with current titles
+    - Shows are automatically migrated to their new IDs via title matching
+    - Protects both 'random_order_shows' and 'selection' settings
+  - Fixed browse mode buttons triggering unintended episode playback
+    - Cancel and empty buttons in Estuary's DialogSelect skin are now hidden
+    - Clicking any visible button correctly closes the dialog without playback
+  - Fixed smart playlists accumulating orphaned show entries
+    - After library wipe/rescan, deleted shows no longer persist in .xsp files
+    - Batch mode now performs full rebuild instead of merging with existing file
+  - Fixed duration filter being applied twice in browse mode
+  - Fixed version parsing crash with prerelease suffixes (e.g., "1.2.3~beta1")
+
+Internal:
+  - New storage format for show selections: {id: title} instead of [id]
+    - Enables title-based ID shift detection
+    - Existing settings auto-migrate on first load
+  - Refactored browse mode for cleaner architecture
+    - Data fetching moved into build_episode_list()
+    - default.py simplified to routing logic only
+  - New utilities: busy_progress() context manager, parse_version(), compare_versions()
+  - Added constants for DialogSelect button control IDs
+  - Added debug logging for onClick control ID (aids future debugging)
+
+v1.2.2 (2026-01-22)
+------------------------
+Bug Fixes:
+  - Fixed smart playlists not updating when skipping quickly through episodes
+    - Previously, using 10-minute jumps to reach the end of an episode would
+      leave playlists stale because the update was deferred to a processing
+      cycle that never ran after playback ended
+    - Now updates playlists immediately when Kodi marks an episode as watched
+
+Internal:
+  - Removed monitor_override flag mechanism (~48 lines of code removed)
+    - Replaced deferred flag processing with direct refresh calls
+    - Simplifies code path and eliminates race condition
+
+v1.2.1 (2026-01-22)
+-------------------
+New Features:
+  - Two new smart playlists for premiere episodes:
+    - "EasyTV - Show Premieres" — Shows at S01E01 (brand new shows to start)
+    - "EasyTV - Season Premieres" — Shows at S02E01+ (new seasons of existing shows)
+  - Smart playlists now work with Jellyfin and other plugin-based libraries
+    - Plugin URLs (plugin://...) are now preserved in playlist rules
+    - Previously only local file paths worked correctly
+
+Bug Fixes:
+  - Fixed smart playlists breaking with special characters in filenames
+    - Characters like & < > are now properly XML-escaped
+    - Example: "Pam & Tommy" now works correctly
+  - Fixed potential XML parsing issues with show names containing "--"
+    - Playlist entries now use numeric show IDs instead of show names as markers
+
+Internal:
+  - Smart playlist format versioning for safe upgrades
+    - Playlists automatically regenerate when format changes
+    - Version tracked in: special://profile/addon_data/script.easytv/playlist_format.json
+  - Removed unused 'showname' field from internal playlist data structures
+
+v1.2.0 (2026-01-21)
+-------------------
+New Features:
+  - Episode duration filter: Filter shows by typical episode length
+    - Enable filter and set min/max duration in minutes (0-120, step 5)
+    - Works in both Browse Mode and Random Playlist mode
+    - Duration calculated as median from episode file metadata
+    - Shows without duration data are excluded when filter is active
+    - Set filter to "All" to include shows with unknown duration
+    - Warning shown if min > max (filter disabled, all shows included)
+  - Both mode now uses dynamic playlist building ("lazy queue")
+    - Playlist starts with 2-3 items visible instead of full length
+    - Additional items are added automatically as you watch
+    - On-deck episodes now progress naturally when same show appears multiple times
+      (S02E05 → S02E06 → S02E07 as each episode is watched)
+    - Unwatched/Watched modes unchanged (still build full playlist upfront)
+    - Requires "Allow multiple episodes of same TV Show" to be enabled
+  - Fixed LANGUAGE_ARTICLES for proper alphabetical sorting:
+    - Removed languages without articles (Russian, Polish, Turkish)
+    - Added indefinite articles (a/an) for English and other languages
+    - Added missing languages: Italian, Portuguese, Norwegian, Catalan, Romanian, Greek
+    - Example: "A Man in Full" now sorts under M, not A
+
+Bug Fixes:
+  - Fixed library scan not triggering EasyTV refresh
+    - New shows/episodes now appear after library scan completes
+    - Added onScanFinished handler (was missing)
+  - Fixed Poster/BigScreen views showing only numbers without labels
+    - Added missing language strings (32220-32226) for skin labels
+    - Labels like "Season", "Episode", "Unwatched", etc. now display correctly
+    - Affects both main addon and clones
+  - Fixed show selector sorting issues ("Pick shows manually", "Random order shows")
+    - Now case-insensitive ("black-ish" sorts with B's, not after Z)
+    - Now handles articles ("A Man in Full" sorts under M, not A)
+    - Uses same sorting logic as Browse mode for consistency
+  - Fixed show selector missing artwork (showed placeholder icons)
+    - Now uses modern art.poster property instead of legacy thumbnail
+  - Fixed clone Browse mode showing "EasyTV" instead of clone name in title
+  - Fixed clone skin XML files not updated during clone creation/update
+    - Skin XML files now updated to use clone addon ID for language strings
+  - Clone update script now applies all fixes (was missing several updates)
+    - Existing clones can be updated via the update mechanism to get these fixes
+  - Fixed random playlist picking same show repeatedly when "Allow multiple episodes" enabled
+    - Shows are now properly distributed throughout the playlist
+    - After adding an episode, show moves to end of candidate list
+
+Performance:
+  - Duration cache optimization: Significantly reduced startup time
+    - Median episode durations are now cached to disk
+    - Streamdetails only queried for shows with changed episode counts
+    - First startup: one-time full calculation
+    - Subsequent startups: ~81% faster on OSMC Vero V (32s → 6s)
+    - Cache file: special://profile/addon_data/script.easytv/duration_cache.json
+    - Cache now includes show titles for easier debugging
+  - Removed redundant full refresh on every database update
+    - Watch state changes now handled surgically via notifications
+    - Full refresh only triggers on library scan completion
+  - Art now lazy-loaded when Browse mode opens (~1s one-time cost per session)
+    - Reduces data fetched during startup
+
+Default Settings Changed:
+  - "Include series premieres" now enabled by default (was disabled)
+  - "Playlist content" now defaults to "TV episodes only" (was "TV and movies")
+  - "Ask to watch next episode" now disabled by default (was enabled)
+  - "Prompt timeout" now defaults to 5 seconds (was 20)
+  - "Warn about earlier unwatched episodes" now enabled by default (was disabled)
+
+Internal:
+  - Added timing instrumentation for performance monitoring (DEBUG level)
+  - Removed unused episode thumbnail (Art(thumb)) caching
+  - New module: resources/lib/data/duration_cache.py
+  - Reorganized strings.po with documented ID ranges for maintainability:
+    - 32000-32099: UI Elements (sort options, view styles, spinner values)
+    - 32100-32199: Dialogs and Messages
+    - 32200-32299: Context Menu and Skin Labels
+    - 32300-32399: Addon Metadata
+    - 32400-32499: Help Text
+    - 32500-32599: Settings UI (labels, categories, groups)
+    - 32600-32699: Feature-Specific Strings
+  - Removed legacy comments and empty string placeholders from strings.po
+  - Moved misplaced string IDs: 32032→32522, 32037→32523
+
+v1.1.1 (2026-01-20)
+-------------------
+Bug Fixes:
+  - Fixed clone settings showing blank labels (no text visible)
+    - Clone settings.xml section ID now matches clone addon ID
+    - Clone strings.po header now matches clone addon ID
+    - Clone now built in temp folder before moving to addons (helps with caching)
+  - Fixed clone missing v1.1.0 settings (season premieres, unwatched ratio, 
+    movie playlist filter, playlist continuation, random order shows)
+  - Fixed clone version now inherits parent version (was always 1.0.0)
+  - Fixed clone default settings now match parent defaults
+  - Clone startup logs now include addon_id for identification
+  - Clone naming keyboard now pre-fills with "EasyTV - " prefix
+  - Added safeguards to prevent overwriting existing addons during clone creation
+
+Performance Improvements:
+  - Partial prioritization 99% faster (14.6s → 0.2s on test library)
+    - TV partial episode query: 14,200ms → 94ms (99.3% faster)
+    - Movie partial query: 427ms → 109ms (74% faster)
+  - Total random playlist build time reduced from ~18s to ~4s (78% faster)
+  - Uses Kodi's native 'inprogress' filter instead of per-show queries
+  - Test environment: OSMC Vero V with 168 shows, 5646 episodes, 846 movies
+
+Improvements:
+  - Enhanced action logging at INFO level:
+    - Random playlist: logs content type, target length, show/movie counts
+    - Browse mode: logs start/stop with show count
+  - Clone creation now updates ALL language files (future Weblate support)
+  - Added timing instrumentation for partial prioritization queries
+
+Known Issues:
+  - On Windows, clone uninstall may fail due to file locking. Workaround:
+    restart Kodi after uninstalling a clone before creating a new one with
+    the same name.
+  - Clone settings labels require Kodi restart to appear (Kodi caches
+    language strings at startup - this is a Kodi limitation).
+
+v1.1.0 (2026-01-19)
+-------------------
+New Features:
+  - Episode selection: Choose which TV episodes to include in random playlists
+    - Unwatched only (default - matches original behavior)
+    - Watched only (re-watch your favorites)
+    - Both (true channel surfing with any episode)
+  - Movie playlist filtering: Limit which movies appear in random playlists
+    - Use any Kodi smart playlist to filter movies by genre, year, rating, etc.
+    - Works with both "TV and movies" and "Movies only" content modes
+  - Season premieres setting: Control season premiere episodes (S02E01, S03E01, etc.)
+    independently from series premieres (S01E01)
+  - Playlist continuation: Option to prompt when a random playlist ends
+    - Configurable countdown timer (0-60 seconds)
+    - Generate another playlist with same settings or stop
+  - Playlist picker now filters by type (TV playlists for TV filter, movie 
+    playlists for movie filter)
+  - Default launch option changed to "Ask me" for new installs
+  - Separate partial/resume settings for TV and Movies:
+    - "Start playlist with unfinished episodes" - prioritize partial TV episodes
+    - "Start playlist with unfinished movies" - prioritize partial movies
+    - "Seek to resume point for episodes" - auto-resume TV episodes
+    - "Seek to resume point for movies" - auto-resume movies
+  - Enhanced partial prioritization:
+    - ALL partial items now moved to front of playlist (not just one)
+    - Partials sorted by recency (most recently watched first)
+    - Episodes from the same show maintain episode order
+
+Performance Improvements:
+  - Startup time reduced from ~11 seconds to <1 second for large libraries
+  - Replaced per-show episode queries with single bulk query
+  - Batched smart playlist writes: 831 file operations reduced to 3
+  - Server-side random sorting reduces data transfer and processing time
+
+Bug Fixes:
+  - Fixed "Both" mode episode selection when same show appears multiple times
+    - On-deck (next unwatched) episode now appears at most once per show
+    - Watched episodes no longer duplicate within a single playlist
+    - Playlist gracefully shortens when episodes are exhausted
+  - Fixed partial episode resume reliability
+    - Uses Kodi's actual resume data instead of stale window property flags
+    - Respects Kodi's advancedsettings.xml resume thresholds
+    - Deferred seek to onAVStarted when player is ready
+    - Uses absolute time for precise 10-second rewind
+  - Fixed repeated show selection when stopping/starting playlists quickly
+
+Settings Reorganization:
+  - "Episode List" category renamed to "Browse Mode" for clarity
+  - "TV Options" and "Movie Options" merged into "Content Options"
+  - Standardized terminology: "Shuffle-Friendly" → "Random-Order" throughout
+  - New "Playlist Continuation" group in Random Playlist settings
+  - Partial/resume settings split into TV and Movie variants (see Breaking Changes)
+
+Breaking Changes:
+  - Partial/resume settings replaced with separate TV and movie variants:
+    - "start_partials" → "start_partials_tv" + "start_partials_movies"
+    - "resume_partials" → "resume_partials_tv" + "resume_partials_movies"
+  - All partial settings now default to enabled (previously disabled)
+    - Existing users may want to disable if they preferred the old defaults
+
+Developer/Debugging:
+  - Added logging for Kodi's resume point thresholds at startup
+  - Enhanced log_timing utility with phase breakdown support
+  - Detailed timing instrumentation for performance monitoring
+  - Added playlist.continuation and playlist.regenerate events
+
+v1.0.1 (2026-01-16)
+-------------------
+- Updated addon icon
+
+v1.0.0 (2026-01-16)
+-------------------
+Initial release as EasyTV - a fork and complete rewrite of LazyTV by KODeKarnage.
+
+What is EasyTV?
+  No scrolling. No deciding. Just watching.
+  EasyTV tracks your TV shows and always knows your next episode. When you're 
+  ready for something new, it suggests a show you haven't started. Mix in movies
+  if you want. Just sit down, press play, and enjoy.
+
+Major Changes from LazyTV:
+  - Complete rewrite for Kodi 21+ (Python 3.8+)
+  - Modernized settings system (Kodi 19+ format)
+  - Modular architecture for better maintainability
+  - Improved logging system with separate debug log file
+  - Enhanced error handling throughout
+
+Features:
+  - Episode List Mode: Browse next unwatched episodes for all your shows
+  - Random Playlist Mode: Channel-surf through episodes (and optionally movies)
+  - Smart Playlists: Auto-maintained playlists for use with other addons/skins
+    - EasyTV - All Shows
+    - EasyTV - Continue Watching  
+    - EasyTV - Start Fresh
+  - Random Order Shows: Designate shows to play episodes in any order
+  - Next Episode Prompts: Get notified when an episode ends
+  - Previous Episode Check: Warning if you're about to skip episodes
+  - Clone Support: Create multiple configurations for your home screen
+  - Episode Export: Copy episodes to external storage
+
+Credits:
+  Original LazyTV created by KODeKarnage (2013)
+  https://github.com/KODeKarnage/script.lazytv
+
+  Modernized and maintained by Rouzax (2024-2026)
+  https://github.com/Rouzax/script.easytv
+
+License:
+  GPL-3.0-or-later
