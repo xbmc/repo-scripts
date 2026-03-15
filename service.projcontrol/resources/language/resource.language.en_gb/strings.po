@@ -1,0 +1,178 @@
+# Kodi Media Center language file
+# Addon Name: Projector Control
+# Addon id: service.projcontrol
+# Addon Provider: feffe
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+# Configuration options 32001-32099
+
+msgctxt "#32001"
+msgid "Projector Details"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Serial Device"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Response Read Timeout"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Manufacturer"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Model"
+msgstr ""
+
+# empty strings #32006-32009
+
+msgctxt "#32010"
+msgid "Projector Control"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Start projector when Kodi starts"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Shutdown projector when Kodi exits"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Shutdown projector when screensaver activates"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Delay after screensaver activation before projector shutdown"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Start projector when screensaver deactivates"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Minimum interval between projector shutdown and startup"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Set input source on projector after projector starts"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Input source"
+msgstr ""
+
+# empty string #32019
+
+msgctxt "#32020"
+msgid "Library Updates"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Update library when projector shuts down"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Update Music Library"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Update Video Library"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Regular updates"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Update every (Minutes)"
+msgstr ""
+
+# empty strings #32026-32029
+
+msgctxt "#32030"
+msgid "REST API"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Enable REST API"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Listen Address"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Listen Port"
+msgstr ""
+
+
+
+msgctxt "#32100"
+msgid "Projector Command Failed"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Report From Projector"
+msgstr ""
+
+
+# Errors
+
+msgctxt "#32200"
+msgid "REST API not available, see https://github.com/fredrik-eriksson/kodi_projcontrol for possible reasons"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Failed to start API web server, Try to disable and reenable addon"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Failed to start projector web server, Try to disable and reenable addon"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Configuration error: unsupported manufacturer"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Failed to open projector serial device"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Failed to send command to projector"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Error when sending command to projector"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Configuration error: invalid source for this model"
+msgstr ""
+
+
+# Informational
+
+msgctxt "#32300"
+msgid "Started projector API at"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Projector API stopped"
+msgstr ""
