@@ -28,6 +28,13 @@
                     <level>4</level>
                     <default>qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6</default>
                 </setting>
+                <setting id="test_connection" type="action" label="32010">
+                    <level>0</level>
+                    <default/>
+                    <control type="button" format="action">
+                        <data>RunScript(special://home/addons/service.subtitles.opensubtitles-com/test_connection.py)</data>
+                    </control>
+                </setting>
             </group>
         </category>
         <category id="filter" label="32102">
@@ -74,7 +81,7 @@
                         <heading>32213</heading>
                     </control>
                 </setting>
-                 <setting id="ai_translated" type="string" label="32215">
+                <setting id="ai_translated" type="string" label="32215">
                     <level>0</level>
                     <default>include</default>
                     <constraints>
@@ -87,6 +94,16 @@
                     <control type="list" format="string">
                         <heading>32215</heading>
                     </control>
+                </setting>
+                <setting id="search_cache_duration" type="integer" label="32216">
+                    <level>0</level>
+                    <default>5</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <step>5</step>
+                        <maximum>120</maximum>
+                    </constraints>
+                    <control type="spinner" format="string" />
                 </setting>
             </group>
         </category>

@@ -32,6 +32,30 @@ msgctxt "#32006"
 msgid "You have reached OpenSubtitles.com download limit for unauthenticated users. Create an account on opensubtitles.com and enter your credentials in addon settings, or try again tomorrow."
 msgstr ""
 
+msgctxt "#32007"
+msgid "Too many requests to OpenSubtitles.com. Please wait a moment and try again."
+msgstr ""
+
+msgctxt "#32008"
+msgid "OpenSubtitles.com is currently unavailable. Please try again later."
+msgstr ""
+
+msgctxt "#32009"
+msgid "Unexpected error while searching for subtitles."
+msgstr ""
+
+msgctxt "#32010"
+msgid "Test Connection"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Connection Successful"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Please enter your username and password first."
+msgstr ""
+
 msgctxt "#32101"
 msgid "Login Details"
 msgstr ""
@@ -70,4 +94,8 @@ msgstr ""
 
 msgctxt "#32215"
 msgid "AI Translated"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Search cache duration [minutes]"
 msgstr ""

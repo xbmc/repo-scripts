@@ -8,7 +8,7 @@ import xbmcgui
 
 from urllib.parse import parse_qsl
 
-__addon__ = xbmcaddon.Addon()
+__addon__ = xbmcaddon.Addon("service.subtitles.opensubtitles-com")
 __addon_name__ = __addon__.getAddonInfo("name")
 __language__ = __addon__.getLocalizedString
 
@@ -18,7 +18,7 @@ def log(module, msg):
 
 
 # prints out msg to log and gives Kodi message with msg_id to user if msg_id provided
-def error(module, msg_id=None, msg=""):
+def error(module, msg_id=None, msg="", detail=""):
     if msg:
         message = msg
     elif msg_id:
@@ -27,7 +27,10 @@ def error(module, msg_id=None, msg=""):
         message = "Add-on error with empty message"
     log(module, message)
     if msg_id:
-        xbmcgui.Dialog().ok(__addon_name__, f"{__language__(2103)}\n{__language__(msg_id)}")
+        dialog_msg = f"{__language__(2103)}\n{__language__(msg_id)}"
+        if detail:
+            dialog_msg += f"\n\n[I]{detail}[/I]"
+        xbmcgui.Dialog().ok(__addon_name__, dialog_msg)
 
 
 def get_params(string=""):
