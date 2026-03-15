@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    EasyTV Big Screen View
+    Resolution: 1080i (1920x1080)
+    
+    Layout: Large fanart on left with reflection + Episode list on right
+    
+    Control IDs:
+        655 - Main fixed list container
+-->
+<window>
+    <defaultcontrol>655</defaultcontrol>
+    <visible>!System.ScreenSaverActive</visible>
+    
+    <controls>
+        <!-- Full screen background -->
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <texture colordiffuse="FF000000">OneBlackPixel.png</texture>
+        </control>
+        
+        <!-- Info bar at top -->
+        <control type="label">
+            <left>80</left>
+            <top>30</top>
+            <width>1760</width>
+            <height>35</height>
+            <font>font10</font>
+            <textcolor>FFFFFFFF</textcolor>
+            <label>$ADDON[script.easytv 32220]  [COLOR FF50e0c7]$INFO[Container(655).ListItem.Season][/COLOR]  •  $ADDON[script.easytv 32221]  [COLOR FF50e0c7]$INFO[Container(655).ListItem.Episode][/COLOR]  •  $ADDON[script.easytv 32222]  [COLOR FF50e0c7]$INFO[Container(655).ListItem.Property(percentplayed)][/COLOR]  •  $ADDON[script.easytv 32223] [COLOR FF50e0c7]$INFO[Container(655).ListItem.Property(numondeck)][/COLOR]  •  $ADDON[script.easytv 32224] [COLOR FF50e0c7]$INFO[Container(655).ListItem.Property(numwatched)][/COLOR]  •  $ADDON[script.easytv 32225] [COLOR FF50e0c7]$INFO[Container(655).ListItem.Property(numskipped)][/COLOR]</label>
+        </control>
+        
+        <!-- Main content group -->
+        <control type="group">
+            <visible>Control.IsVisible(655)</visible>
+            <animation effect="fade" start="0" end="100" time="400">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+            
+            <!-- ==================== LEFT SIDE: FANART WITH REFLECTION ==================== -->
+            <control type="group">
+                <left>25</left>
+                <top>75</top>
+                <width>1200</width>
+                <height>950</height>
+                
+                <!-- Main Fanart -->
+                <control type="multiimage">
+                    <left>35</left>
+                    <top>8</top>
+                    <width>1125</width>
+                    <height>632</height>
+                    <fadetime>250</fadetime>
+                    <imagepath background="true">$INFO[Container(655).ListItem.Property(Fanart_Image)]</imagepath>
+                    <aspectratio aligny="top">scale</aspectratio>
+                </control>
+                
+                <!-- Reflected Fanart (flipped) -->
+                <control type="multiimage">
+                    <left>-33</left>
+                    <top>585</top>
+                    <width>1215</width>
+                    <height>632</height>
+                    <fadetime>250</fadetime>
+                    <imagepath background="true" flipy="true">$INFO[Container(655).ListItem.Property(Fanart_Image)]</imagepath>
+                    <aspectratio aligny="top">scale</aspectratio>
+                    <animation effect="rotatex" start="85" end="85" time="0" center="668,0" condition="true">Conditional</animation>
+                </control>
+                
+                <!-- Fade gradient over reflection -->
+                <control type="image">
+                    <left>-38</left>
+                    <top>642</top>
+                    <width>1800</width>
+                    <height>450</height>
+                    <texture>imagefade.png</texture>
+                    <aspectratio aligny="top">scale</aspectratio>
+                </control>
+            </control>
+            
+            <!-- ==================== RIGHT SIDE: EPISODE LIST ==================== -->
+            <control type="fixedlist" id="655">
+                <left>1200</left>
+                <top>80</top>
+                <width>680</width>
+                <height>920</height>
+                <orientation>vertical</orientation>
+                <focusposition>4</focusposition>
+                <movement>1</movement>
+                <scrolltime tween="sine" easing="out">200</scrolltime>
+                <onleft>655</onleft>
+                <onright>655</onright>
+                <onup>655</onup>
+                <ondown>655</ondown>
+                <itemgap>8</itemgap>
+                
+                <!-- Unfocused list item -->
+                <itemlayout width="680" height="55">
+                    <!-- Background -->
+                    <control type="image">
+                        <left>0</left>
+                        <top>5</top>
+                        <width>660</width>
+                        <height>45</height>
+                        <texture>itemBGNF.png</texture>
+                    </control>
+                    
+                    <!-- Show title only -->
+                    <control type="label">
+                        <left>15</left>
+                        <top>15</top>
+                        <width>630</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>FFAAAAAA</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                </itemlayout>
+                
+                <!-- Focused list item -->
+                <focusedlayout width="680" height="80">
+                    <!-- Background (focused) -->
+                    <control type="image">
+                        <left>0</left>
+                        <top>0</top>
+                        <width>660</width>
+                        <height>75</height>
+                        <texture>itemBGFO.png</texture>
+                    </control>
+                    
+                    <!-- Show title -->
+                    <control type="label">
+                        <left>15</left>
+                        <top>12</top>
+                        <width>630</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>FF50e0c7</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    
+                    <!-- Episode title -->
+                    <control type="label">
+                        <left>15</left>
+                        <top>42</top>
+                        <width>630</width>
+                        <height>26</height>
+                        <font>font10</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <label>$INFO[ListItem.Label2]</label>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+    </controls>
+</window>

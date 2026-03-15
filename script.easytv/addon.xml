@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="script.easytv"
+       name="EasyTV"
+       version="1.4.0"
+       provider-name="Rouzax, KODeKarnage">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+        <import addon="script.module.pymysql" version="1.1.0"/>
+    </requires>
+
+    <extension point="xbmc.python.script"
+               library="default.py">
+        <provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.service"
+           library="service.py"/>
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">No scrolling. No deciding. Just watching.</summary>
+        <description lang="en_GB">Tired of scrolling through your library wondering what to watch? EasyTV handles it. It tracks your shows and always knows your next episode. When you're ready for something new, it'll suggest a show you haven't started. Throw in some movies if you want. Just sit down, press play, and enjoy. Built for Kodi 21+.</description>
+        <language></language>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=383902</forum>
+        <website>https://github.com/Rouzax/script.easytv</website>
+        <source>https://github.com/Rouzax/script.easytv</source>
+        <news>v1.4.0 (2026-03-02)
+- Multi-instance sync: share watch progress across Kodi devices via shared MariaDB
+- Positioned specials: include TVDB-positioned specials in the watch order
+- Movie chance slider replaces confusing ratio setting with intuitive percentage
+- Playlist continuation now fully configurable with countdown timer display
+- Fixed clone creation on SteamOS and other Arch-based Linux systems
+- Fixed partial episodes not being prioritized correctly in playlists</news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
