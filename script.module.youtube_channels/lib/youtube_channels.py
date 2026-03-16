@@ -26,7 +26,10 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-from youtube_plugin.kodion.utils import datetime_parser
+try:
+    from youtube_plugin.kodion.utils import datetime_parser
+except ImportError:
+    from youtube_plugin.kodion.utils import datetime as datetime_parser
 import youtube_requests
 
 import simplecache
