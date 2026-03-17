@@ -20,16 +20,28 @@ msgctxt "#32101"
 msgid "OzWeather Settings"
 msgstr ""
 
-msgctxt "#32155"
+msgctxt "#32151"
 msgid "Overrule Closest Radar ID for Location 1"
 msgstr ""
 
-msgctxt "#32156"
+msgctxt "#32152"
 msgid "Overrule Closest Radar ID for Location 2"
 msgstr ""
 
-msgctxt "#32157"
+msgctxt "#32153"
 msgid "Overrule Closest Radar ID for Location 3"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Overrule Closest Radar ID for Location 4"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Overrule Closest Radar ID for Location 5"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Overrule Closest Radar ID for Location 6"
 msgstr ""
 
 msgctxt "#32194"
@@ -53,22 +65,30 @@ msgid "BOM Locations"
 msgstr ""
 
 msgctxt "#32201"
-msgid "Fallback Locations"
-msgstr ""
-
-msgctxt "#32202"
 msgid "BOM Location 1"
 msgstr ""
 
-msgctxt "#32203"
+msgctxt "#32202"
 msgid "BOM Location 2"
 msgstr ""
 
-msgctxt "#32204"
+msgctxt "#32203"
 msgid "BOM Location 3"
 msgstr ""
 
+msgctxt "#32204"
+msgid "BOM Location 4"
+msgstr ""
+
 msgctxt "#32205"
+msgid "BOM Location 5"
+msgstr ""
+
+msgctxt "#32206"
+msgid "BOM Location 6"
+msgstr ""
+
+msgctxt "#32207"
 msgid "Extended Features"
 msgstr ""
 
@@ -90,4 +110,8 @@ msgstr ""
 
 msgctxt "#32212"
 msgid "If entered, these radar codes overrule the closest found."
+msgstr ""
+
+msgctxt "#32213"
+msgid "Troubleshooting"
 msgstr ""

@@ -7,15 +7,21 @@ def refresh_locations():
     """
     Get the user's location and radar code choices from the addon settings, and set them as window properties
     """
-    Logger.info("Refreshing locations from settings")
+    Logger.info("Refreshing weather locations from settings")
 
     location1 = ADDON.getSetting('Location1BOM') or ""
     location2 = ADDON.getSetting('Location2BOM') or ""
     location3 = ADDON.getSetting('Location3BOM') or ""
+    location4 = ADDON.getSetting('Location4BOM') or ""
+    location5 = ADDON.getSetting('Location5BOM') or ""
+    location6 = ADDON.getSetting('Location6BOM') or ""	
 
     Logger.info(f"Location1: {location1}")
     Logger.info(f"Location2: {location2}")
     Logger.info(f"Location3: {location3}")
+    Logger.info(f"Location4: {location4}")
+    Logger.info(f"Location5: {location5}")
+    Logger.info(f"Location6: {location6}")	
 
     locations = 0
 
@@ -31,7 +37,16 @@ def refresh_locations():
     if location3 != '':
         locations += 1
     set_property(WEATHER_WINDOW, 'Location3', location3)
-
+    if location4 != '':
+        locations += 1
+    set_property(WEATHER_WINDOW, 'Location4', location4)	
+    if location5 != '':
+        locations += 1
+    set_property(WEATHER_WINDOW, 'Location5', location5)
+    if location6 != '':
+        locations += 1
+    set_property(WEATHER_WINDOW, 'Location6', location6)
+	
     # and set count of locations
     Logger.info(f"Total locations: {locations}")
     set_property(WEATHER_WINDOW, 'Locations', str(locations))
@@ -41,10 +56,16 @@ def refresh_locations():
     radar1 = ADDON.getSetting('Radar1') or ADDON.getSetting('Location1ClosestRadar') or ""
     radar2 = ADDON.getSetting('Radar2') or ADDON.getSetting('Location2ClosestRadar') or ""
     radar3 = ADDON.getSetting('Radar3') or ADDON.getSetting('Location3ClosestRadar') or ""
+    radar4 = ADDON.getSetting('Radar4') or ADDON.getSetting('Location4ClosestRadar') or ""
+    radar5 = ADDON.getSetting('Radar5') or ADDON.getSetting('Location5ClosestRadar') or ""
+    radar6 = ADDON.getSetting('Radar6') or ADDON.getSetting('Location6ClosestRadar') or ""	
 
     Logger.info(f"Radar1: {radar1}")
     Logger.info(f"Radar2: {radar2}")
     Logger.info(f"Radar3: {radar3}")
+    Logger.info(f"Radar4: {radar4}")
+    Logger.info(f"Radar5: {radar5}")
+    Logger.info(f"Radar6: {radar6}")	
 
     radars = 0
 
@@ -57,6 +78,15 @@ def refresh_locations():
     if radar3 != '':
         radars += 1
     set_property(WEATHER_WINDOW, 'Radar3', radar3)
+    if radar4 != '':
+        radars += 1
+    set_property(WEATHER_WINDOW, 'Radar4', radar4)	
+    if radar5 != '':
+        radars += 1
+    set_property(WEATHER_WINDOW, 'Radar5', radar5)	
+    if radar6 != '':
+        radars += 1
+    set_property(WEATHER_WINDOW, 'Radar6', radar6)	
 
     # and set count of radars
     Logger.info(f"Total radars: {radars}")

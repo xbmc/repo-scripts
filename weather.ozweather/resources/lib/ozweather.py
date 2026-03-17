@@ -21,6 +21,10 @@ def run(args):
     """
 
     Logger.start()
+
+    # Make sure we set Location window properties as early as possible and pick up any settings changes ASAP.
+    refresh_locations()
+
     try:
         socket.setdefaulttimeout(100)
 
@@ -42,8 +46,6 @@ def run(args):
         else:
             get_weather()
 
-        # If location settings have changed, this kick-starts an update
-        refresh_locations()
 
     # and close out...
     finally:
