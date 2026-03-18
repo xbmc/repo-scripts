@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+
+  <category label="Connection">
+    <setting id="backend_url"        type="text"   label="Backend URL"                  default="https://punchplay.tv"/>
+    <setting id="login_btn"          type="action" label="Login to PunchPlay"            action="SetProperty(punchplay_login,1,10000)"  option="action"/>
+    <setting id="logout_btn"         type="action" label="Logout"                        action="SetProperty(punchplay_logout,1,10000)" option="action"/>
+  </category>
+
+  <category label="Scrobbling">
+    <setting id="watched_threshold"  type="slider" label="Watched threshold (%)"         default="70"   range="50,5,95" option="int"/>
+    <setting id="min_length"         type="number" label="Minimum file length (minutes)" default="5"/>
+    <setting id="heartbeat_interval" type="number" label="Heartbeat interval (seconds)"  default="30"/>
+    <setting id="scrobble_movies"      type="bool"   label="Scrobble movies"                  default="true"/>
+    <setting id="scrobble_tv"          type="bool"   label="Scrobble TV shows"                default="true"/>
+    <setting id="scrobble_anime"       type="bool"   label="Scrobble anime"                   default="true"/>
+    <setting id="show_notifications"   type="bool"   label="Show scrobble notifications"      default="true"/>
+    <setting id="notify_during_playback" type="bool" label="Show notifications during playback" default="false"/>
+  </category>
+
+</settings>
