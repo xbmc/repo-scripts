@@ -23,11 +23,13 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import random
 from dataclasses import dataclass
 from typing import Callable, Dict, List, Optional, TYPE_CHECKING, Union
 
 import xbmc
+import xbmcaddon
 import xbmcgui
 
 from resources.lib.constants import (
@@ -42,6 +44,9 @@ from resources.lib.constants import (
     RESUME_REWIND_SECONDS,
     PROP_PLAYLIST_CONFIG,
     PROP_PLAYLIST_REGENERATE,
+    PROP_SOURCE_ADDON_ID,
+    PROP_PLAYLIST_RUNNING,
+    PROP_SERVICE_PATH,
 )
 from resources.lib.utils import (
     get_bool_setting,
@@ -114,7 +119,6 @@ class PlaybackMonitor(xbmc.Player):
     
     Args:
         window: The Kodi home window for property access.
-        dialog: The Kodi dialog instance for user prompts.
         get_settings: Callback to get current playback settings.
         get_random_order_shows: Callback to get random order shows list.
         on_refresh_show: Callback to refresh show episode data.
@@ -123,11 +127,10 @@ class PlaybackMonitor(xbmc.Player):
         set_nextprompt_info: Callback to set next prompt episode info.
         logger: Optional logger instance.
     """
-    
+
     def __init__(
         self,
         window: xbmcgui.Window,
-        dialog: xbmcgui.Dialog,
         get_settings: SettingsGetter,
         get_random_order_shows: RandomShowsGetter,
         on_refresh_show: RefreshShowCallback,
@@ -138,9 +141,8 @@ class PlaybackMonitor(xbmc.Player):
     ):
         """Initialize the playback monitor with callbacks."""
         super().__init__()
-        
+
         self._window = window
-        self._dialog = dialog
         self._get_settings = get_settings
         self._get_random_order_shows = get_random_order_shows
         self._on_refresh_show = on_refresh_show
@@ -186,7 +188,7 @@ class PlaybackMonitor(xbmc.Player):
         self._ep_details = json_query(get_playing_item_query(), True)
         self._log.debug("Now playing details", details=self._ep_details)
         
-        self._pl_running_local = self._window.getProperty("EasyTV.playlist_running")
+        self._pl_running_local = self._window.getProperty(PROP_PLAYLIST_RUNNING)
         
         if 'item' not in self._ep_details or 'type' not in self._ep_details['item']:
             self._log.debug("Playback started handler complete (no item)")
@@ -314,10 +316,13 @@ class PlaybackMonitor(xbmc.Player):
         
         # Show playlist notification
         if self._pl_running_local == 'true' and settings.playlist_notifications:
+            source_id = self._window.getProperty(PROP_SOURCE_ADDON_ID) or None
+            source_addon = xbmcaddon.Addon(source_id) if source_id else xbmcaddon.Addon()
+            icon = os.path.join(source_addon.getAddonInfo('path'), 'icon.png')
             xbmc.executebuiltin(
-                'Notification(%s,%s S%sE%s,%i)' % (
+                'Notification(%s,%s S%sE%s,%i,%s)' % (
                     lang(32163), showtitle, season_np, episode_np,
-                    NOTIFICATION_DURATION_MS
+                    NOTIFICATION_DURATION_MS, icon
                 )
             )
         
@@ -378,11 +383,13 @@ class PlaybackMonitor(xbmc.Player):
             )
             
             # Show notification dialog
+            from resources.lib.ui.dialogs import show_confirm
             msg = (lang(32161) % (showtitle, stored_seas, stored_epis)) + '\n' + lang(32162)
-            dialog_result = self._dialog.yesno(lang(32160), msg)
+            source_addon_id = self._window.getProperty(PROP_SOURCE_ADDON_ID) or None
+            dialog_result = show_confirm(lang(32160), msg, addon_id=source_addon_id)
             self._log.debug("User dialog result", result=dialog_result)
-            
-            if dialog_result == 0:
+
+            if not dialog_result:
                 # User chose to continue with current episode - unpause
                 xbmc.executeJSONRPC(
                     '{"jsonrpc":"2.0","method":"Player.PlayPause",'
@@ -426,14 +433,17 @@ class PlaybackMonitor(xbmc.Player):
             settings: Current playback settings.
         """
         if settings.playlist_notifications:
+            source_id = self._window.getProperty(PROP_SOURCE_ADDON_ID) or None
+            source_addon = xbmcaddon.Addon(source_id) if source_id else xbmcaddon.Addon()
+            icon = os.path.join(source_addon.getAddonInfo('path'), 'icon.png')
             xbmc.executebuiltin(
-                'Notification(%s,%s,%i)' % (
+                'Notification(%s,%s,%i,%s)' % (
                     lang(32163),
                     self._ep_details['item']['label'],
-                    NOTIFICATION_DURATION_MS
+                    NOTIFICATION_DURATION_MS, icon
                 )
             )
-        
+
         resume_info = self._ep_details['item'].get('resume', {})
         
         if settings.resume_partials_movies and resume_info.get('position', 0) > 0 and resume_info.get('total', 0) > 0:
@@ -499,7 +509,7 @@ class PlaybackMonitor(xbmc.Player):
 
         # Check if playlist truly ended (nothing playing + was EasyTV playlist)
         if not is_something_playing and self._pl_running_local == 'true':
-            self._window.setProperty("EasyTV.playlist_running", 'false')
+            self._window.setProperty(PROP_PLAYLIST_RUNNING, 'false')
 
             # Clear any active lazy queue session
             PlaylistSession.clear()
@@ -542,6 +552,7 @@ class PlaybackMonitor(xbmc.Player):
         pre_ep = ended_prompt_info.get('episode', None)
         pre_title = ended_prompt_info.get('showtitle', None)
         pre_epid = ended_prompt_info.get('episodeid', None)
+        pre_ep_title = ended_prompt_info.get('title', '')
 
         if any([pre_seas is None, pre_ep is None, pre_title is None, pre_epid is None]):
             self._log.warning(
@@ -567,13 +578,63 @@ class PlaybackMonitor(xbmc.Player):
             if ended_trigger and ended_override:
                 self._show_next_episode_prompt(
                     now_name, pre_seas, pre_ep, pre_title, pre_epid, settings,
-                    ended_showid
+                    ended_showid, pre_ep_title
                 )
 
             self._set_nextprompt_info({})
 
         self._log.debug("Playback ended handler complete")
-    
+
+    def _get_source_addon_info(self):
+        # type: () -> tuple
+        """Get (path, name, addon_id) of the addon that started playback.
+
+        Checks multiple sources in priority order:
+        1. PROP_PLAYLIST_CONFIG — has addon_id for playlist mode (set by
+           random_player.py in the clone's process, works without clone update)
+        2. PROP_SOURCE_ADDON_ID — window property set by default.py entry point
+           (for browse mode, requires clone to have updated code)
+        3. Fallback to main addon
+
+        Returns:
+            Tuple of (addon_path, addon_name, addon_id_or_none).
+        """
+        # Try playlist config first (set by random_player.py in clone's process)
+        stored_config = self._window.getProperty(PROP_PLAYLIST_CONFIG)
+        if stored_config:
+            try:
+                state = json.loads(stored_config)
+                source_id = state.get('addon_id')
+                if source_id:
+                    source_addon = xbmcaddon.Addon(source_id)
+                    return (
+                        str(source_addon.getAddonInfo('path')),
+                        source_addon.getAddonInfo('name'),
+                        source_id
+                    )
+            except Exception:
+                pass
+
+        # Try window property (set by default.py entry point)
+        source_id = self._window.getProperty(PROP_SOURCE_ADDON_ID)
+        if source_id:
+            try:
+                source_addon = xbmcaddon.Addon(source_id)
+                return (
+                    str(source_addon.getAddonInfo('path')),
+                    source_addon.getAddonInfo('name'),
+                    source_id
+                )
+            except Exception:
+                pass
+
+        # Fallback to main addon
+        return (
+            self._window.getProperty(PROP_SERVICE_PATH),
+            xbmcaddon.Addon().getAddonInfo('name'),
+            None
+        )
+
     def _show_next_episode_prompt(
         self,
         now_name: str,
@@ -583,6 +644,7 @@ class PlaybackMonitor(xbmc.Player):
         pre_epid: int,
         settings: PlaybackSettings,
         ended_showid: Union[int, bool] = False,
+        pre_ep_title: str = '',
     ) -> None:
         """
         Show the next episode prompt dialog.
@@ -595,6 +657,7 @@ class PlaybackMonitor(xbmc.Player):
             pre_epid: Episode ID of next episode.
             settings: Current playback settings.
             ended_showid: Show ID of the ended episode (for poster lookup).
+            pre_ep_title: Episode title (e.g., "I See You").
         """
         from resources.lib.ui.dialogs import CountdownDialog
 
@@ -611,7 +674,7 @@ class PlaybackMonitor(xbmc.Player):
 
         self._nextprompt_trigger = False
 
-        SE = str(int(pre_seas)) + 'x' + str(int(pre_ep))
+        SE = 'S%02dE%02d' % (int(pre_seas), int(pre_ep))
 
         self._log.debug("Prompt default action", action=settings.promptdefaultaction)
 
@@ -619,8 +682,13 @@ class PlaybackMonitor(xbmc.Player):
         # default_yes determines what happens on timeout
         default_yes = (settings.promptdefaultaction != 1)
 
-        msg = (lang(32168) % (pre_title, SE)) + '\n' + lang(32162)
-        addon_path = self._window.getProperty("EasyTV.ServicePath")
+        # Primary message: just the show title
+        msg = pre_title
+        # Subtitle: SE code + episode title (shown in smaller, dimmer font)
+        subtitle = SE
+        if pre_ep_title:
+            subtitle += ' \u2014 ' + pre_ep_title
+        addon_path, addon_name, addon_id = self._get_source_addon_info()
 
         # Get show poster from cached window property
         # Use ended_showid (captured before sleep) to avoid reading the NEW episode's show
@@ -633,13 +701,15 @@ class PlaybackMonitor(xbmc.Player):
         dlg = CountdownDialog(
             'script-easytv-nextepisode.xml', addon_path, 'Default',
             message=msg,
+            subtitle=subtitle,
             yes_label=lang(32092),   # "Play"
             no_label=lang(32091),    # "Don't Play"
             duration=settings.promptduration,
-            heading_template=lang(32167),     # "EasyTV   (auto-closing in %s seconds)"
-            heading_no_timer=lang(32167) % 0,
+            heading=addon_name,
+            timer_template=lang(32167),  # "(auto-closing in %s seconds)"
             default_yes=default_yes,
             poster=poster,
+            addon_id=addon_id,
             logger=self._log,
         )
         dlg.doModal()
@@ -653,7 +723,7 @@ class PlaybackMonitor(xbmc.Player):
             # continuation-eligible playlist, so prevent the continuation
             # prompt from showing when it ends.
             self._window.clearProperty(PROP_PLAYLIST_CONFIG)
-            self._window.setProperty("EasyTV.playlist_running", 'false')
+            self._window.setProperty(PROP_PLAYLIST_RUNNING, 'false')
             # User chose to play next episode
             xbmc.executeJSONRPC(
                 '{"jsonrpc": "2.0","id": 1, "method": "Playlist.Clear",'
@@ -778,19 +848,20 @@ class PlaybackMonitor(xbmc.Player):
 
         self._log.debug("Showing playlist continuation prompt",
                         default_action=default_action)
-        addon_path = self._window.getProperty("EasyTV.ServicePath")
+        addon_path, addon_name, addon_id = self._get_source_addon_info()
 
         # Always: Yes="Generate", No="Stop"
         # default_yes = True when Generate is the default on timeout
         dlg = CountdownDialog(
             'script-easytv-countdown.xml', addon_path, 'Default',
-            message=lang(32618),              # "Generate another playlist with the same settings?"
+            message=lang(32618),              # "Playlist finished.\nGenerate another playlist..."
             yes_label=lang(32619),            # "Generate"
             no_label=lang(32620),             # "Stop"
             duration=duration,
-            heading_template=lang(32648),     # "Playlist Finished   (auto-closing in %s seconds)"
-            heading_no_timer=lang(32617),     # "Playlist Finished"
+            heading=addon_name,
+            timer_template=lang(32167),       # "(auto-closing in %s seconds)"
             default_yes=(default_action == 1),
+            addon_id=addon_id,
             logger=self._log,
         )
         dlg.doModal()

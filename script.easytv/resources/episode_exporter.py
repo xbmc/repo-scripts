@@ -33,7 +33,12 @@ from typing import cast
 
 # Import shared utilities
 from resources.lib.utils import lang, json_query, get_logger, get_bool_setting
-from resources.lib.constants import KODI_HOME_WINDOW_ID, EXPORT_COMPLETE_DELAY_MS
+from resources.lib.ui.dialogs import show_confirm, show_select
+from resources.lib.constants import (
+    KODI_HOME_WINDOW_ID,
+    EXPORT_COMPLETE_DELAY_MS,
+    PROP_SHOWS_WITH_NEXT_EPISODES,
+)
 
 
 __addon__        = xbmcaddon.Addon('script.easytv')
@@ -69,7 +74,7 @@ def playlist_selection_window():
 	if playlist_files is not None:
 		plist_files = dict((x['label'], x['file']) for x in playlist_files)
 		playlist_list = sorted(plist_files.keys())
-		inputchoice = xbmcgui.Dialog().select(lang(32104), playlist_list)
+		inputchoice = show_select(lang(32104), playlist_list)
 		if inputchoice >= 0:
 			return plist_files[playlist_list[inputchoice]]
 	return 'empty'
@@ -147,15 +152,18 @@ def convert_pl_to_showlist(pop):
 	playlist_contents = json_query(plf, True)
 
 	if 'files' not in playlist_contents:
+		log.warning("No files found in playlist", event="export.empty_playlist")
 		sys.exit()
 	else:
 		if not playlist_contents['files']:
+			log.warning("Playlist contains no files", event="export.empty_playlist")
 			sys.exit()
 		else:
 			for x in playlist_contents['files']:
 				filtered_showids = [x['id'] for x in playlist_contents['files'] if x['type'] == 'tvshow']
 				log.debug("Shows extracted from playlist", show_ids=filtered_showids)
 				if not filtered_showids:
+					log.warning("No TV shows found in playlist", event="export.no_shows")
 					sys.exit()
 
 	#returns the list of all and filtered shows and episodes
@@ -180,12 +188,13 @@ def get_TVshows():
 		shows_retrieved = {}
 
 
-	shows_from_service = WINDOW.getProperty("EasyTV.shows_with_next_episodes")
+	shows_from_service = WINDOW.getProperty(PROP_SHOWS_WITH_NEXT_EPISODES)
 
 	if shows_from_service:
 		show_id_list = ast.literal_eval(shows_from_service)
 		shows_stored = [int(x) for x in show_id_list]
 	else:
+		log.warning("Service not running during export", event="export.service_missing")
 		dialog.ok('EasyTV', lang(32115) + '\n' + lang(32116))
 		sys.exit()
 
@@ -199,75 +208,79 @@ def get_TVshows():
 
 
 def Main():
+	try:
+		# open location selection window
+		location = cast(str, dialog.browse(3,lang(32180),'files'))
 
-	# open location selection window
-	location = cast(str, dialog.browse(3,lang(32180),'files'))
+		log.info("Export started", event="export.start", location=location)
 
-	log.info("Export started", event="export.start", location=location)
-
-	# get file of selected shows
-	file_list = get_files()
+		# get file of selected shows
+		file_list = get_files()
 
 
-	# load list as normal, but on click, each show is copied over (and remains highlighted)
-	# the top option is to export all
+		# load list as normal, but on click, each show is copied over (and remains highlighted)
+		# the top option is to export all
 
-	progress_dialog = xbmcgui.DialogProgress()
-	progress_dialog.create('EasyTV', lang(32183))
+		progress_dialog = xbmcgui.DialogProgress()
+		progress_dialog.create('EasyTV', lang(32183))
 
-	sizes = []
-	running_size = 0
-	log.debug("Files to export", file_count=len(file_list), files=file_list)
-	for f in file_list:
-		try:
-			sizes.append(os.path.getsize(f))
-		except OSError:
-			sizes.append(0)
+		sizes = []
+		running_size = 0
+		log.debug("Files to export", file_count=len(file_list), files=file_list)
+		for f in file_list:
+			try:
+				sizes.append(os.path.getsize(f))
+			except OSError:
+				sizes.append(0)
 
-	failures = []
+		failures = []
 
-	for i, video_file in enumerate(file_list):
+		for i, video_file in enumerate(file_list):
 
-		if (progress_dialog.iscanceled()): 
-			log.info("Export cancelled by user", event="export.cancel")
-			sys.exit()
+			if (progress_dialog.iscanceled()):
+				log.info("Export cancelled by user", event="export.cancel")
+				sys.exit()
 
-		prog = running_size / float(sum(sizes) or 1)
+			prog = running_size / float(sum(sizes) or 1)
 
-		fn = os.path.basename(video_file)
+			fn = os.path.basename(video_file)
 
-		progress_dialog.update(int(prog * 100.0), '{} {}'.format(lang(32184), fn))
+			progress_dialog.update(int(prog * 100.0), '{} {}'.format(lang(32184), fn))
 
-		try:
-			if not os.path.isfile(os.path.join(location, fn)):
-				shutil.copyfile(video_file, os.path.join(location, fn))
-				log.debug("File exported", filename=fn)
-			else:
-				log.debug("File already exists at destination", filename=fn)
-		except (OSError, IOError, shutil.Error):
-			failures.append(fn)
-			log.warning("File export failed", event="export.file_fail", filename=fn)
+			try:
+				if not os.path.isfile(os.path.join(location, fn)):
+					shutil.copyfile(video_file, os.path.join(location, fn))
+					log.debug("File exported", filename=fn)
+				else:
+					log.debug("File already exists at destination", filename=fn)
+			except (OSError, IOError, shutil.Error):
+				failures.append(fn)
+				log.warning("File export failed", event="export.file_fail", filename=fn)
 
-		running_size += sizes[i]
+			running_size += sizes[i]
 
-	progress_dialog.close()
+		progress_dialog.close()
 
-	if failures:
-		# 32181: "Some files failed to transfer", 32182: "Would you like to see them?"
-		ans = dialog.yesno('EasyTV', lang(32181) + '\n' + lang(32182))
-		
-		if ans:
-			# populate list view with file names in alphabetical order
-			log.debug("Displaying failed files to user", failure_count=len(failures))
+		if failures:
+			# 32181: "Some files failed to transfer", 32182: "Would you like to see them?"
+			ans = show_confirm('EasyTV', lang(32181) + '\n' + lang(32182))
 
-			failures.sort()
+			if ans:
+				# populate list view with file names in alphabetical order
+				log.debug("Displaying failed files to user", failure_count=len(failures))
 
-			dialog.select('EasyTV', failures)
-	else:
-		xbmc.sleep(EXPORT_COMPLETE_DELAY_MS)
-		dialog.ok('EasyTV',lang(32185))
+				failures.sort()
 
-		log.info("Export completed successfully", event="export.complete")
+				show_select('EasyTV', failures)
+		else:
+			xbmc.sleep(EXPORT_COMPLETE_DELAY_MS)
+			dialog.ok('EasyTV',lang(32185))
+
+			log.info("Export completed successfully", event="export.complete")
+	except SystemExit:
+		raise  # Let sys.exit() propagate
+	except Exception:
+		log.exception("Unhandled error in episode exporter", event="export.crash")
 
 
 

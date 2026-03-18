@@ -44,6 +44,8 @@ from resources.lib.constants import (
     CONTEXT_TOGGLE_WATCHED,
     CONTEXT_UPDATE_LIBRARY,
     CONTEXT_REFRESH,
+    THEME_COLORS,
+    SETTING_THEME,
 )
 from resources.lib.utils import get_logger, lang
 
@@ -106,28 +108,49 @@ class ContextMenuWindow(xbmcgui.WindowXMLDialog):
     def onInit(self) -> None:
         """
         Initialize the context menu controls.
-        
+
         Sets up button labels based on current multiselect state.
         """
+        # Set theme color properties for skin XML
+        from resources.lib.ui import apply_theme
+        apply_theme(self)
+
         self.contextoption = ''
-        
+
         self._log.debug("Context window init", multiselect=self._multiselect)
-        
+
+        # Get theme accent color for focused button text ($INFO doesn't
+        # resolve in WindowXMLDialog focusedcolor, so we set it via Python)
+        import xbmcaddon
+        theme = xbmcaddon.Addon().getSetting(SETTING_THEME) or '0'
+        colors = THEME_COLORS.get(theme, THEME_COLORS['0'])
+        focused_color = colors['EasyTV.Accent']
+
         if self._multiselect:
             # Multiselect mode - show options for selection
-            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_MULTISELECT)).setLabel(lang(32200))
-            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_PLAY_SELECTION)).setLabel(lang(32202))
-            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_EXPORT_SELECTION)).setLabel(lang(32203))
+            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_MULTISELECT)).setLabel(
+                lang(32200), focusedColor=focused_color)
+            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_PLAY_SELECTION)).setLabel(
+                lang(32202), focusedColor=focused_color)
+            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_EXPORT_SELECTION)).setLabel(
+                lang(32203), focusedColor=focused_color)
         else:
             # Single select mode
-            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_MULTISELECT)).setLabel(lang(32201))
-            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_PLAY_SELECTION)).setLabel(lang(32204))
-            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_EXPORT_SELECTION)).setLabel(lang(32205))
+            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_MULTISELECT)).setLabel(
+                lang(32201), focusedColor=focused_color)
+            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_PLAY_SELECTION)).setLabel(
+                lang(32204), focusedColor=focused_color)
+            cast(xbmcgui.ControlButton, self.getControl(CONTEXT_EXPORT_SELECTION)).setLabel(
+                lang(32205), focusedColor=focused_color)
 
-        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_PLAY_FROM_HERE)).setLabel(lang(32206))
-        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_WATCHED)).setLabel(lang(32207))
-        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_UPDATE_LIBRARY)).setLabel(lang(32208))
-        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_REFRESH)).setLabel(lang(32209))
+        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_PLAY_FROM_HERE)).setLabel(
+            lang(32206), focusedColor=focused_color)
+        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_WATCHED)).setLabel(
+            lang(32207), focusedColor=focused_color)
+        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_UPDATE_LIBRARY)).setLabel(
+            lang(32208), focusedColor=focused_color)
+        cast(xbmcgui.ControlButton, self.getControl(CONTEXT_REFRESH)).setLabel(
+            lang(32209), focusedColor=focused_color)
 
         self.setFocus(self.getControl(CONTEXT_TOGGLE_MULTISELECT))
     
@@ -144,14 +167,10 @@ class ContextMenuWindow(xbmcgui.WindowXMLDialog):
         self.contextoption = controlID
         
         if controlID == CONTEXT_TOGGLE_MULTISELECT:
-            # Toggle the multiselect label
+            self._multiselect = not self._multiselect
             btn = cast(xbmcgui.ControlButton, self.getControl(CONTEXT_TOGGLE_MULTISELECT))
-            if btn.getLabel() == lang(32200):
-                btn.setLabel(lang(32201))
-                xbmc.sleep(CONTEXT_TOGGLE_DELAY_MS)
-            else:
-                btn.setLabel(lang(32200))
-                xbmc.sleep(CONTEXT_TOGGLE_DELAY_MS)
+            btn.setLabel(lang(32201) if self._multiselect else lang(32200))
+            xbmc.sleep(CONTEXT_TOGGLE_DELAY_MS)
         
         self.close()
     

@@ -61,6 +61,7 @@ from __future__ import annotations
 import ast
 import contextlib
 import json
+import os
 import random
 import time
 from dataclasses import dataclass, field
@@ -88,6 +89,15 @@ from resources.lib.constants import (
     # Playlist continuation
     PROP_PLAYLIST_CONFIG,
     PROP_PLAYLIST_REGENERATE,
+    # Service / system properties
+    PROP_SERVICE_RUNNING,
+    PROP_VERSION,
+    PROP_SERVICE_PATH,
+    PROP_PLAYLIST_RUNNING,
+    PROP_RANDOM_ORDER_SHUFFLE,
+    PROP_SHOWS_WITH_NEXT_EPISODES,
+    PREMIERE_MIX_IN,
+    SETTING_MULTI_INSTANCE_SYNC,
 )
 from resources.lib.utils import (
     get_logger,
@@ -99,6 +109,7 @@ from resources.lib.utils import (
     json_query,
     lang,
     log_timing,
+    restore_custom_icon,
     runtime_converter,
     service_heartbeat,
 )
@@ -141,7 +152,7 @@ from resources.lib.service.settings import (
 )
 from resources.lib.service.library_monitor import LibraryMonitor
 from resources.lib.service.playback_monitor import PlaybackMonitor, PlaybackSettings
-from resources.lib.service.episode_tracker import EpisodeTracker, PROP_DURATION
+from resources.lib.service.episode_tracker import EpisodeTracker, PROP_DURATION, PROP_GENRE
 from resources.lib.data.storage import get_storage, reset_storage, SharedDatabaseStorage
 
 if TYPE_CHECKING:
@@ -170,7 +181,7 @@ class ServiceState:
     on_lib_update: bool = False
     
     # List of show IDs with available next episodes
-    shows_with_next_episodes: list[int] = field(default_factory=list)
+    shows_with_next_episodes: List[int] = field(default_factory=list)
 
 
 # =============================================================================
@@ -209,9 +220,8 @@ class ServiceDaemon:
         self._log = logger or get_logger('daemon')
         self._log.info("Service daemon initializing", event="service.init")
         
-        # Get Kodi window and dialog
+        # Get Kodi window
         self._window = xbmcgui.Window(KODI_HOME_WINDOW_ID)
-        self._dialog = xbmcgui.Dialog()
         
         # Initialize state
         self._state = ServiceState()
@@ -253,9 +263,9 @@ class ServiceDaemon:
         
         # Set initial window properties
         version_str = self._addon.getAddonInfo('version')
-        self._window.setProperty("EasyTV.Version", version_str)
-        self._window.setProperty("EasyTV.ServicePath", str(self._addon.getAddonInfo('path')))
-        self._window.setProperty('EasyTV_service_running', 'starting')
+        self._window.setProperty(PROP_VERSION, version_str)
+        self._window.setProperty(PROP_SERVICE_PATH, str(self._addon.getAddonInfo('path')))
+        self._window.setProperty(PROP_SERVICE_RUNNING, 'starting')
         
         # Create components (done in initialize())
         self._player: Optional[PlaybackMonitor] = None
@@ -263,7 +273,7 @@ class ServiceDaemon:
         self._episode_tracker: Optional[EpisodeTracker] = None
         
         # All show IDs in library
-        self._all_shows_list: list[int] = []
+        self._all_shows_list: List[int] = []
     
     def initialize(self) -> None:
         """
@@ -277,7 +287,6 @@ class ServiceDaemon:
         # Create PlaybackMonitor with callbacks
         self._player = PlaybackMonitor(
             window=self._window,
-            dialog=self._dialog,
             get_settings=self._get_playback_settings,
             get_random_order_shows=lambda: self._settings.random_order_shows,
             on_refresh_show=self.refresh_show_episodes,
@@ -306,7 +315,7 @@ class ServiceDaemon:
         )
         
         # Initialize playlist running property
-        self._window.setProperty("EasyTV.playlist_running", '')
+        self._window.setProperty(PROP_PLAYLIST_RUNNING, '')
         
         # Perform initial library scan with retry logic
         self._initial_library_scan()
@@ -315,7 +324,7 @@ class ServiceDaemon:
         self._initialize_storage()
         
         # Track initial sync setting for change detection
-        self._sync_enabled = get_bool_setting('multi_instance_sync')
+        self._sync_enabled = get_bool_setting(SETTING_MULTI_INSTANCE_SYNC)
         
         # Validate settings after library scan (removes orphaned show IDs)
         if self._all_shows_list:
@@ -336,31 +345,39 @@ class ServiceDaemon:
         at regular intervals to handle state changes.
         
         Lifecycle:
-            1. Sets 'EasyTV_service_running' property to 'true'
+            1. Sets PROP_SERVICE_RUNNING property to 'true'
             2. Optionally shows startup notification (if enabled)
             3. Enters main loop processing events every DAEMON_LOOP_SLEEP_MS
             
         Exit Conditions:
             - Kodi abort requested (shutdown/restart)
-            - 'EasyTV_service_running' property cleared
+            - PROP_SERVICE_RUNNING property cleared
         """
         assert self._monitor is not None
         assert self._player is not None
         assert self._episode_tracker is not None
 
-        self._window.setProperty('EasyTV_service_running', 'true')
+        self._window.setProperty(PROP_SERVICE_RUNNING, 'true')
+
+        # Restore custom icon if one was set before an addon update
+        restore_custom_icon()
 
         # Show startup notification if enabled
         if self._settings.startup:
+            icon = os.path.join(
+                xbmcaddon.Addon().getAddonInfo('path'), 'icon.png'
+            )
             xbmc.executebuiltin(
-                'Notification(%s,%s,%i)' % ('EasyTV', lang(32173), NOTIFICATION_DURATION_MS)
+                'Notification(%s,%s,%i,%s)' % (
+                    'EasyTV', lang(32173), NOTIFICATION_DURATION_MS, icon
+                )
             )
         
         self._log.info("Daemon loop started", event="service.loop_start")
         
         # Main loop
         while (not self._monitor.abortRequested() and 
-               self._window.getProperty('EasyTV_service_running')):
+               self._window.getProperty(PROP_SERVICE_RUNNING)):
             xbmc.sleep(DAEMON_LOOP_SLEEP_MS)
             try:
                 self._process_events()
@@ -414,9 +431,9 @@ class ServiceDaemon:
             )
         
         # Handle random order shuffle request
-        shuffle_request = self._window.getProperty("EasyTV.random_order_shuffle")
+        shuffle_request = self._window.getProperty(PROP_RANDOM_ORDER_SHUFFLE)
         if shuffle_request == 'true':
-            self._window.setProperty("EasyTV.random_order_shuffle", 'false')
+            self._window.setProperty(PROP_RANDOM_ORDER_SHUFFLE, 'false')
             self._log.debug("Reshuffling random order shows")
             self._reshuffle_random_order_shows()
         
@@ -434,7 +451,12 @@ class ServiceDaemon:
         # Check playback position for swap over
         if self._state.target:
             self._check_playback_position()
-        
+
+        # Detect abandoned playback (stopped before watched threshold)
+        if (self._state.target and self._current_show_id and
+                not xbmc.Player().isPlayingVideo()):
+            self._handle_playback_abandoned()
+
         # Reset per-cycle state
         self._player._playing_showid = False
         self._is_random_show = False
@@ -510,8 +532,8 @@ class ServiceDaemon:
     
     def _process_random_show_episode(
         self,
-        ondeck_list: list[int],
-        offdeck_list: list[int],
+        ondeck_list: List[int],
+        offdeck_list: List[int],
         watched_count: int,
         unwatched_count: int,
     ) -> None:
@@ -569,8 +591,8 @@ class ServiceDaemon:
 
     def _process_sequential_show_episode(
         self,
-        ondeck_list: list[int],
-        offdeck_list: list[int],
+        ondeck_list: List[int],
+        offdeck_list: List[int],
         watched_count: int,
         unwatched_count: int,
     ) -> None:
@@ -756,6 +778,28 @@ class ServiceDaemon:
         self._pending_next_episode = False
         self._state.target = False
 
+    def _handle_playback_abandoned(self) -> None:
+        """Handle playback stopped before watched threshold.
+
+        When the user stops an episode mid-playback, the daemon never re-caches
+        the episode data because no playcount change occurs. This leaves
+        PercentPlayed stale (showing the pre-playback value).
+
+        Re-caches the current show's episode to pick up the updated resume
+        bookmark, then cleans up the leaked tracking state.
+        """
+        show_id = self._current_show_id
+        self._log.debug("Playback abandoned, refreshing resume data",
+                        event="playback.abandoned", show_id=show_id)
+
+        # Refresh the show to update PercentPlayed from new resume bookmark
+        self.refresh_show_episodes(showids=show_id)
+
+        # Clean up tracking state
+        self._current_show_id = False
+        self._pending_next_episode = False
+        self._state.target = False
+
     def _on_playing_episode_watched(self, show_id: int, episode_id: int) -> None:
         """Fallback threshold handler — Kodi marked a tracked episode as watched.
 
@@ -797,7 +841,7 @@ class ServiceDaemon:
                 total_tracked=len(self._state.shows_with_next_episodes)
             )
             self._window.setProperty(
-                "EasyTV.shows_with_next_episodes",
+                PROP_SHOWS_WITH_NEXT_EPISODES,
                 str(self._state.shows_with_next_episodes)
             )
         
@@ -818,13 +862,13 @@ class ServiceDaemon:
                 total_tracked=len(self._state.shows_with_next_episodes)
             )
             self._window.setProperty(
-                "EasyTV.shows_with_next_episodes",
+                PROP_SHOWS_WITH_NEXT_EPISODES,
                 str(self._state.shows_with_next_episodes)
             )
     
     def _reshuffle_random_order_shows(
         self,
-        supplied_random_shows: Optional[list[int]] = None,
+        supplied_random_shows: Optional[List[int]] = None,
     ) -> None:
         """
         Reshuffle episodes for random-order shows.
@@ -909,7 +953,7 @@ class ServiceDaemon:
         
         try:
             playlist_state = json.loads(config_json)
-        except (json.JSONDecodeError, ValueError) as e:
+        except ValueError as e:  # Covers json.JSONDecodeError (subclass of ValueError)
             self._log.warning("Failed to parse playlist config", error=str(e))
             self._window.clearProperty(PROP_PLAYLIST_CONFIG)
             return
@@ -935,8 +979,8 @@ class ServiceDaemon:
             movie_chance=config_dict.get('movie_chance', 25),
             start_partials_tv=config_dict.get('start_partials_tv', True),
             start_partials_movies=config_dict.get('start_partials_movies', True),
-            premieres=config_dict.get('premieres', True),
-            season_premieres=config_dict.get('season_premieres', True),
+            premieres=config_dict.get('premieres', PREMIERE_MIX_IN),
+            season_premieres=config_dict.get('season_premieres', PREMIERE_MIX_IN),
             multiple_shows=config_dict.get('multiple_shows', False),
             sort_by=config_dict.get('sort_by', 0),
             sort_reverse=config_dict.get('sort_reverse', False),
@@ -1030,7 +1074,7 @@ class ServiceDaemon:
             # Check for abort
             if self._monitor.abortRequested():
                 self._log.debug("Library scan aborted")
-                self._window.setProperty("EasyTV.shows_with_next_episodes", "[]")
+                self._window.setProperty(PROP_SHOWS_WITH_NEXT_EPISODES, "[]")
                 return
             
             # Query for shows with unwatched episodes
@@ -1067,7 +1111,7 @@ class ServiceDaemon:
             max_retries=DB_STARTUP_MAX_RETRIES
         )
         self._all_shows_list = []
-        self._window.setProperty("EasyTV.shows_with_next_episodes", "[]")
+        self._window.setProperty(PROP_SHOWS_WITH_NEXT_EPISODES, "[]")
     
     def _retrieve_all_show_ids(self) -> None:
         """
@@ -1090,7 +1134,7 @@ class ServiceDaemon:
     
     def refresh_show_episodes(
         self,
-        showids: list[int] | Optional[int] = None,
+        showids: Optional[Union[List[int], int]] = None,
         bulk: bool = False,
     ) -> None:
         """
@@ -1135,6 +1179,7 @@ class ServiceDaemon:
             if 'tvshows' not in lshows_result:
                 show_lw = []
                 show_years: Dict[int, int] = {}
+                show_genres: Dict[int, str] = {}
             else:
                 show_lw = [
                     x['tvshowid'] for x in lshows_result['tvshows']
@@ -1146,10 +1191,20 @@ class ServiceDaemon:
                     for x in lshows_result['tvshows']
                     if x['tvshowid'] in showids
                 }
-            
-            # Store show years in window properties (for write-through to shared DB)
+                # Extract show genres (list of strings → comma-separated)
+                show_genres = {
+                    x['tvshowid']: ', '.join(x.get('genre', []))
+                    for x in lshows_result['tvshows']
+                    if x['tvshowid'] in showids
+                }
+
+            # Store show years and genres in window properties
             for show_id, year in show_years.items():
                 self._window.setProperty(f"EasyTV.{show_id}.Year", str(year) if year else '')
+            for show_id, genre in show_genres.items():
+                self._window.setProperty(
+                    f"EasyTV.{show_id}.{PROP_GENRE}", genre
+                )
             
             # Mark end of show query phase
             if timer is not None:
@@ -1448,7 +1503,7 @@ class ServiceDaemon:
             
             # Update window property with tracked shows
             self._window.setProperty(
-                "EasyTV.shows_with_next_episodes",
+                PROP_SHOWS_WITH_NEXT_EPISODES,
                 str(self._state.shows_with_next_episodes)
             )
         
@@ -1526,7 +1581,8 @@ class ServiceDaemon:
         show_title = show_data['show_title']
         episode_number = show_data['episode_number']
         season_number = show_data['season_number']
-        
+        has_resume = show_data['has_resume']
+
         if remove:
             remove_show_from_all_playlists(
                 show_id,
@@ -1540,8 +1596,8 @@ class ServiceDaemon:
                     show_id=show_id
                 )
         else:
-            category = get_show_category(episode_number)
-            premiere_category = get_premiere_category(season_number, episode_number)
+            category = get_show_category(episode_number, has_resume=has_resume)
+            premiere_category = get_premiere_category(season_number, episode_number, has_resume=has_resume)
             
             update_show_in_playlists(
                 show_id,
@@ -1599,7 +1655,7 @@ class ServiceDaemon:
         old_include_positioned_specials = self._settings.include_positioned_specials
         
         # Check if multi_instance_sync setting changed
-        new_sync_enabled = get_bool_setting('multi_instance_sync')
+        new_sync_enabled = get_bool_setting(SETTING_MULTI_INSTANCE_SYNC)
         sync_changed = new_sync_enabled != self._sync_enabled
         
         if sync_changed:
@@ -1662,9 +1718,9 @@ class ServiceDaemon:
             logger=self._log,
             on_add_random_show=self._add_to_shows_with_next_episodes,
             on_reshuffle_random_shows=self._reshuffle_random_order_shows,
-            on_store_next_ep=lambda *args: None,  # Not ready yet
+            on_store_next_ep=lambda *_args: None,  # Not ready yet
             on_remove_show=self._remove_from_shows_with_next_episodes,
-            on_update_smartplaylist=lambda *args: None,  # Not ready yet
+            on_update_smartplaylist=lambda *_args: None,  # Not ready yet
             shows_with_next_episodes=self._state.shows_with_next_episodes,
         )
         

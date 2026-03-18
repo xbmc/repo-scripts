@@ -31,7 +31,7 @@ from __future__ import annotations
 import ast
 import os
 import random
-from typing import Any, Callable, Dict, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import xbmc
 import xbmcgui
@@ -44,6 +44,7 @@ from resources.lib.constants import (
     CATEGORY_CONTINUE_WATCHING,
     ISTREAM_FIX_MAX_RETRIES,
     SECONDS_PER_MINUTE,
+    PROP_SHOWS_WITH_NEXT_EPISODES,
 )
 from resources.lib.service.episode_tracker import PROP_DURATION
 from resources.lib.data.queries import (
@@ -69,7 +70,7 @@ WINDOW = xbmcgui.Window(KODI_HOME_WINDOW_ID)
 # Includes both definite ("the") and indefinite ("a/an") articles.
 # Example: "The Office" -> "Office", "A Man in Full" -> "Man in Full"
 # Languages without articles (Russian, Polish, Turkish, etc.) are not included.
-LANGUAGE_ARTICLES: dict[str, list[str]] = {
+LANGUAGE_ARTICLES: Dict[str, List[str]] = {
     'English': ['the ', 'a ', 'an '],
     'Spanish': ['el ', 'la ', 'los ', 'las ', 'un ', 'una ', 'unos ', 'unas '],
     'Dutch': ['de ', 'het ', 'een '],
@@ -206,10 +207,10 @@ def get_episode_sort_key(
 
 def find_next_episode(
     showid: int,
-    random_order_shows: list[int],
+    random_order_shows: List[int],
     epid: Optional[int] = None,
-    eps: Optional[list[int]] = None
-) -> tuple[Optional[int], Optional[list]]:
+    eps: Optional[List[int]] = None
+) -> Tuple[Optional[int], Optional[list]]:
     """
     Determine the next episode to play for a given show.
     
@@ -269,19 +270,19 @@ def find_next_episode(
 # =============================================================================
 
 def merge_and_sort_shows(
-    shows_from_query: list[dict[str, Any]],
-    shows_from_service: list[int],
+    shows_from_query: List[Dict[str, Any]],
+    shows_from_service: List[int],
     sort_by: int,
     sort_reverse: bool,
     language: str = 'English'
-) -> list[list]:
+) -> List[list]:
     """
     Merge query results with service data and sort according to user preference.
     
     Args:
         shows_from_query: Raw show data from Kodi's JSON-RPC query.
         shows_from_service: List of show IDs that have next episodes cached.
-        sort_by: Sort method (0=name, 1=lastplayed, 2=unwatched, 3=watched, 4=season).
+        sort_by: Sort method (0=name, 1=lastplayed, 2=unwatched, 3=watched, 4=season, 5=random, 6=duration).
         sort_reverse: If True, reverse the sort order.
         language: User's language for article stripping.
     
@@ -334,7 +335,29 @@ def merge_and_sort_shows(
         ]
         intermediate.sort(reverse=not sort_reverse)
         return [x[1:] for x in intermediate]
-    
+
+    elif sort_by == 5:
+        # Random order
+        intermediate = [
+            [parse_lastplayed_date(x['lastplayed']) if x.get('lastplayed') else 0,
+             x['tvshowid']]
+            for x in shows_from_query if x['tvshowid'] in shows_from_service
+        ]
+        random.shuffle(intermediate)
+        return intermediate
+
+    elif sort_by == 6:
+        # Sort by average episode duration
+        intermediate = [
+            [get_show_duration(x['tvshowid']),
+             parse_lastplayed_date(x['lastplayed']) if x.get('lastplayed') else 0,
+             x['tvshowid']]
+            for x in shows_from_query if x['tvshowid'] in shows_from_service
+        ]
+        # Default is descending (longest first); sort_reverse inverts to ascending
+        intermediate.sort(reverse=not sort_reverse)
+        return [x[1:] for x in intermediate]
+
     else:
         # Default: SORT BY LAST WATCHED (sort_by == 1 or other)
         intermediate = [
@@ -349,11 +372,11 @@ def merge_and_sort_shows(
         
         # Default is descending; sort_reverse inverts to ascending
         watched.sort(reverse=not sort_reverse)
-        
+
         return watched + never_watched
 
 
-def fetch_unwatched_shows(sort_by: int, sort_reverse: bool, language: str = 'English') -> list[list]:
+def fetch_unwatched_shows(sort_by: int, sort_reverse: bool, language: str = 'English') -> List[list]:
     """
     Fetch all TV shows with unwatched episodes, sorted by user preference.
     
@@ -361,7 +384,7 @@ def fetch_unwatched_shows(sort_by: int, sort_reverse: bool, language: str = 'Eng
     cached show data. Returns only shows that have next episodes ready.
     
     Args:
-        sort_by: Sort method (0=name, 1=lastplayed, 2=unwatched, 3=watched, 4=season).
+        sort_by: Sort method (0=name, 1=lastplayed, 2=unwatched, 3=watched, 4=season, 5=random, 6=duration).
         sort_reverse: If True, reverse the sort order.
         language: User's language for article stripping.
     
@@ -402,10 +425,18 @@ def fetch_unwatched_shows(sort_by: int, sort_reverse: bool, language: str = 'Eng
         timer.mark("query")
         
         # Get shows with cached next episodes from service
-        shows_str = WINDOW.getProperty("EasyTV.shows_with_next_episodes")
+        shows_str = WINDOW.getProperty(PROP_SHOWS_WITH_NEXT_EPISODES)
         
         if shows_str:
-            shows_from_service = [int(x) for x in ast.literal_eval(shows_str)]
+            try:
+                shows_from_service = [int(x) for x in ast.literal_eval(shows_str)]
+            except (ValueError, SyntaxError) as e:
+                log.warning("Failed to parse shows_with_next_episodes property",
+                            event="data.parse_error", error=str(e))
+                from resources.lib.utils import lang
+                dialog = xbmcgui.Dialog()
+                dialog.ok('EasyTV', lang(32115) + '\n' + lang(32116))
+                sys.exit()
         else:
             # Service not ready - this is handled by the caller
             from resources.lib.utils import lang
@@ -436,7 +467,7 @@ def fetch_shows_with_watched_episodes(
     sort_by: int, 
     sort_reverse: bool, 
     language: str = 'English'
-) -> list[list]:
+) -> List[list]:
     """
     Fetch all TV shows that have at least one watched episode.
     
@@ -516,7 +547,7 @@ def fetch_shows_with_watched_episodes(
     return stored_data
 
 
-def extract_showids_from_playlist(playlist_path: str, silent: bool = False) -> list[int]:
+def extract_showids_from_playlist(playlist_path: str, silent: bool = False) -> List[int]:
     """
     Extract TV show IDs from a smart playlist file.
     
@@ -565,7 +596,7 @@ def extract_showids_from_playlist(playlist_path: str, silent: bool = False) -> l
     return filtered_showids
 
 
-def extract_movieids_from_playlist(playlist_path: str) -> list[int]:
+def extract_movieids_from_playlist(playlist_path: str) -> List[int]:
     """
     Extract movie IDs from a smart playlist file.
     
@@ -614,49 +645,57 @@ def extract_movieids_from_playlist(playlist_path: str) -> list[int]:
 # Smart Playlist Categorization
 # =============================================================================
 
-def get_show_category(episode_number: int) -> str:
+def get_show_category(episode_number: int, has_resume: bool = False) -> str:
     """
-    Determine which category playlist a show belongs to based on episode number.
-    
-    Episode 1 of any season means the user hasn't started watching that season yet,
-    so it goes in "Start Fresh". Episode 2+ means they're mid-season, so it goes
-    in "Continue Watching".
-    
+    Determine which category playlist a show belongs to based on episode number
+    and resume state.
+
+    Episode 1 of any season with no resume point means the user hasn't started
+    watching that season yet, so it goes in "Start Fresh". Episode 1 with a
+    resume point means the user started but didn't finish, so it goes in
+    "Continue Watching". Episode 2+ always goes in "Continue Watching".
+
     Args:
         episode_number: The episode number (1, 2, 3, etc.)
-    
+        has_resume: Whether the episode has a resume point (partially watched).
+
     Returns:
-        CATEGORY_START_FRESH if episode == 1, CATEGORY_CONTINUE_WATCHING otherwise.
+        CATEGORY_START_FRESH if episode == 1 and no resume point,
+        CATEGORY_CONTINUE_WATCHING otherwise.
     """
-    if episode_number == SEASON_START_EPISODE:
+    if episode_number == SEASON_START_EPISODE and not has_resume:
         return CATEGORY_START_FRESH
     return CATEGORY_CONTINUE_WATCHING
 
 
-def get_premiere_category(season_number: int, episode_number: int) -> str:
+def get_premiere_category(
+    season_number: int, episode_number: int, has_resume: bool = False
+) -> str:
     """
     Determine which premiere playlist a show belongs to, if any.
-    
+
     - S01E01 = Show Premiere (brand new show)
     - S02E01+ = Season Premiere (new season of existing show)
     - Episode > 1 = Not a premiere (empty string)
-    
+    - Episode 1 with resume point = Not a premiere (user already started it)
+
     Args:
         season_number: The season number (1, 2, 3, etc.)
         episode_number: The episode number (1, 2, 3, etc.)
-    
+        has_resume: Whether the episode has a resume point (partially watched).
+
     Returns:
-        CATEGORY_SHOW_PREMIERE if S01E01
-        CATEGORY_SEASON_PREMIERE if S02E01+
-        Empty string if episode > 1 (not a premiere)
+        CATEGORY_SHOW_PREMIERE if S01E01 and no resume point
+        CATEGORY_SEASON_PREMIERE if S02E01+ and no resume point
+        Empty string if episode > 1 or has resume point
     """
     from resources.lib.constants import (
         CATEGORY_SHOW_PREMIERE,
         CATEGORY_SEASON_PREMIERE,
     )
-    
-    # Not a premiere if episode > 1
-    if episode_number != SEASON_START_EPISODE:
+
+    # Not a premiere if episode > 1 or already partially watched
+    if episode_number != SEASON_START_EPISODE or has_resume:
         return ""
     
     # S01E01 = Show Premiere
@@ -692,7 +731,7 @@ def _get_playlist_filename(file_path: str) -> str:
     return os.path.basename(file_path)
 
 
-def fetch_show_episode_data(tvshowid: int) -> Optional[dict[str, Any]]:
+def fetch_show_episode_data(tvshowid: int) -> Optional[Dict[str, Any]]:
     """
     Retrieve show data from Window properties for smart playlist operations.
     
@@ -732,13 +771,18 @@ def fetch_show_episode_data(tvshowid: int) -> Optional[dict[str, Any]]:
         season_number = int(season_str) if season_str else SEASON_START_EPISODE
     except (ValueError, TypeError):
         season_number = SEASON_START_EPISODE
-    
+
+    # Check resume state
+    resume_str = WINDOW.getProperty("EasyTV.%s.Resume" % tvshowid)
+    has_resume = resume_str.lower() == "true"
+
     return {
         'filename': filename,
         'episode_number': episode_number,
         'season_number': season_number,
         'episodeno': episodeno,
-        'show_title': showname
+        'show_title': showname,
+        'has_resume': has_resume
     }
 
 
@@ -751,9 +795,9 @@ def resolve_istream_episode(
     showtitle: str,
     episode_np: str,
     season_np: str,
-    random_order_shows: list[int],
-    refresh_callback: Optional[Callable[[list[int]], None]] = None
-) -> tuple[bool, int, Union[int, bool]]:
+    random_order_shows: List[int],
+    refresh_callback: Optional[Callable[[List[int]], None]] = None
+) -> Tuple[bool, int, Union[int, bool]]:
     """
     Handle streams from iStream that don't provide showid and epid.
     
@@ -813,17 +857,26 @@ def resolve_istream_episode(
                                     )
                                     
                                     if ondeck_str:
-                                        temp_ondeck_list = ast.literal_eval(ondeck_str)
+                                        try:
+                                            temp_ondeck_list = ast.literal_eval(ondeck_str)
+                                        except (ValueError, SyntaxError):
+                                            log.warning("Malformed ondeck_list property",
+                                                        event="data.parse_error", show_id=now_playing_show_id)
+                                            temp_ondeck_list = []
                                     else:
                                         temp_ondeck_list = []
-                                    
+
                                     # Include offdeck episodes for random order shows
                                     if now_playing_show_id in random_order_shows:
                                         offdeck_str = WINDOW.getProperty(
                                             "EasyTV.%s.offdeck_list" % now_playing_show_id
                                         )
                                         if offdeck_str:
-                                            temp_ondeck_list += ast.literal_eval(offdeck_str)
+                                            try:
+                                                temp_ondeck_list += ast.literal_eval(offdeck_str)
+                                            except (ValueError, SyntaxError):
+                                                log.warning("Malformed offdeck_list property",
+                                                            event="data.parse_error", show_id=now_playing_show_id)
                                     
                                     log.debug("On-deck list for iStream", 
                                              ondeck=temp_ondeck_list, 

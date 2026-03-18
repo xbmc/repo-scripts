@@ -37,7 +37,7 @@ Logging:
 from __future__ import annotations
 
 import ast
-from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union
+from typing import Any, Callable, Dict, List, Optional, TYPE_CHECKING, Union
 
 import xbmcgui
 
@@ -80,6 +80,7 @@ PROP_PREMIERED = "Premiered"
 PROP_PLOT = "Plot"
 PROP_IS_SKIPPED = "IsSkipped"
 PROP_DURATION = "Duration"
+PROP_GENRE = "Genre"
 PROP_YEAR = "Year"
 
 # All properties that need to be copied during swap_over
@@ -202,8 +203,8 @@ class EpisodeTracker:
         self,
         episode_id: int,
         show_id: Union[int, str],
-        ondeck_list: list[int],
-        offdeck_list: list[int],
+        ondeck_list: List[int],
+        offdeck_list: List[int],
         unwatched_count: Union[int, str] = 0,
         watched_count: Union[int, str] = 0,
         is_skipped: bool = False,
@@ -265,9 +266,9 @@ class EpisodeTracker:
             ep_details = ep_result['episodedetails']
         
         # Format episode and season numbers (use .get() for defensive access)
-        episode = "%.2d" % float(ep_details.get('episode', 0))
-        season = "%.2d" % float(ep_details.get('season', 0))
-        episode_no = f"s{season}e{episode}"
+        episode = "%02d" % int(ep_details.get('episode', 0))
+        season = "%02d" % int(ep_details.get('season', 0))
+        episode_no = f"S{season}E{episode}"
         
         # Calculate resume state (use .get() for defensive access)
         resume_dict = ep_details.get('resume', {})
@@ -305,10 +306,6 @@ class EpisodeTracker:
         self._set_property(normalized_show_id, PROP_PREMIERED, ep_details.get('firstaired', ''))
         self._set_property(normalized_show_id, PROP_PLOT, ep_details.get('plot', ''))
         self._set_property(normalized_show_id, PROP_IS_SKIPPED, str(is_skipped).lower())
-        
-        # Clean up (only if we queried)
-        if ep_data is None:
-            del ep_details
         
         # Update smart playlists for non-temp show IDs
         if normalized_show_id != TEMP_SHOW_ID and self._on_update_smartplaylist:

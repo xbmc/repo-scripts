@@ -81,7 +81,10 @@ def _parse_show_setting(raw_value: str) -> Tuple[Dict[str, str], bool]:
     
     try:
         parsed = ast.literal_eval(raw_value)
-    except (ValueError, SyntaxError):
+    except (ValueError, SyntaxError) as e:
+        from resources.lib.utils import get_logger
+        get_logger('settings').debug("Failed to parse show setting",
+                                     raw_value=raw_value[:100], error=str(e))
         return {}, False
     
     if isinstance(parsed, dict):
@@ -449,11 +452,14 @@ class ServiceSettings:
     user_playlist_path: str = 'none'
     
     # Random order shows (list of show IDs)
-    random_order_shows: list[int] = field(default_factory=list)
+    random_order_shows: List[int] = field(default_factory=list)
     
     # Manual show selection (list of show IDs for usersel filter)
-    selection: list[int] = field(default_factory=list)
+    selection: List[int] = field(default_factory=list)
     
+    # Appearance
+    theme: int = 0
+
     # Logging
     keep_logs: bool = False
 
@@ -523,11 +529,11 @@ def load_settings(
     logger: Optional[StructuredLogger] = None,
     # Callbacks for Main class interactions
     on_add_random_show: Optional[RandomOrderCallback] = None,
-    on_reshuffle_random_shows: Optional[Callable[[list[int]], None]] = None,
+    on_reshuffle_random_shows: Optional[Callable[[List[int]], None]] = None,
     on_store_next_ep: Optional[StoreNextEpCallback] = None,
     on_remove_show: Optional[RemoveShowCallback] = None,
     on_update_smartplaylist: Optional[UpdatePlaylistCallback] = None,
-    shows_with_next_episodes: Optional[list[int]] = None,
+    shows_with_next_episodes: Optional[List[int]] = None,
 ) -> ServiceSettings:
     """
     Load all settings from the addon configuration.
@@ -579,6 +585,9 @@ def load_settings(
         playlist_continuation_default_action=int(float(setting('playlist_continuation_default_action'))),
     )
     
+    # Theme setting
+    settings.theme = int(float(setting('theme')))
+
     # Handle maintainsmartplaylist setting (legacy)
     # Note: We only parse the setting here. The actual playlist updates
     # are triggered in daemon._on_settings_changed() AFTER self._settings

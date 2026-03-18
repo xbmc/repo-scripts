@@ -43,7 +43,12 @@ from resources.lib.constants import (
     PLAYLIST_ADD_DELAY_MS,
     DIALOG_WAIT_SLEEP_MS,
     DIALOG_WAIT_MAX_TICKS,
+    PREMIERE_MIX_IN,
+    PREMIERE_ONLY,
+    PREMIERE_SKIP,
     PROP_ART_FETCHED,
+    PROP_PLAYLIST_RUNNING,
+    PROP_RANDOM_ORDER_SHUFFLE,
 )
 from resources.lib.data.queries import (
     get_clear_video_playlist_query,
@@ -126,6 +131,7 @@ def _fetch_show_art(logger: 'StructuredLogger') -> None:
     logger.debug("Art fetched and cached", show_count=len(shows))
 
 
+
 @dataclass
 class EpisodeListConfig:
     """
@@ -144,8 +150,8 @@ class EpisodeListConfig:
         sort_by: Sort method for shows (0=name, 1=last played, 2=random)
         sort_reverse: Whether to reverse the sort order
         language: System language for sorting
-        include_series_premieres: Whether to include series premieres (S01E01)
-        include_season_premieres: Whether to include season premieres (SxxE01)
+        series_premieres: Series premiere filter mode (PREMIERE_SKIP=0, PREMIERE_MIX_IN=1, PREMIERE_ONLY=2)
+        season_premieres: Season premiere filter mode (PREMIERE_SKIP=0, PREMIERE_MIX_IN=1, PREMIERE_ONLY=2)
     """
     skin: int = 0
     limit_shows: bool = False
@@ -159,8 +165,8 @@ class EpisodeListConfig:
     sort_by: int = 1
     sort_reverse: bool = False
     language: str = 'English'
-    include_series_premieres: bool = True
-    include_season_premieres: bool = True
+    series_premieres: int = PREMIERE_MIX_IN
+    season_premieres: int = PREMIERE_MIX_IN
 
 
 def build_episode_list(
@@ -212,55 +218,62 @@ def build_episode_list(
     log = logger or _get_log()
     mon = monitor or xbmc.Monitor()
     
-    # Show loading indicator during data fetching operations
-    with busy_progress("Loading shows..."):
-        # Fetch show data based on population filter
-        # Browse mode always uses unwatched episodes (primary use case)
+    # Premiere filter helper (needed by _fetch_data)
+    only_mode = (config.series_premieres == PREMIERE_ONLY
+                 or config.season_premieres == PREMIERE_ONLY)
+    needs_premiere_filter = (only_mode
+                             or config.series_premieres == PREMIERE_SKIP
+                             or config.season_premieres == PREMIERE_SKIP)
+
+    def should_include(show_entry):
+        """Check if episode should be included based on premiere settings."""
+        episode_no = WINDOW.getProperty(f"EasyTV.{show_entry[1]}.EpisodeNo")
+        if not episode_no or len(episode_no) < 6:
+            return not only_mode
+        try:
+            season_num = int(episode_no[1:3])
+            episode_num = int(episode_no[4:6])
+        except (ValueError, IndexError):
+            return not only_mode
+
+        is_premiere = (episode_num == 1)
+
+        if only_mode:
+            if not is_premiere:
+                return False
+            if season_num == 1 and config.series_premieres == PREMIERE_SKIP:
+                return False
+            if season_num > 1 and config.season_premieres == PREMIERE_SKIP:
+                return False
+            return True
+        else:
+            if not is_premiere:
+                return True
+            if season_num == 1:
+                return config.series_premieres != PREMIERE_SKIP
+            return config.season_premieres != PREMIERE_SKIP
+
+    def _fetch_data():
+        """Fetch, filter, and sort show data from Kodi."""
         show_data = filter_shows_by_population(
             population, config.sort_by, config.sort_reverse, config.language, logger=log
         )
-        
-        # Apply duration filter if enabled
         if config.duration_filter_enabled and show_data:
             show_data = filter_shows_by_duration(
                 show_data,
                 min_minutes=config.duration_min,
                 max_minutes=config.duration_max
             )
-        
-        # Apply premiere filter if needed
-        if not config.include_series_premieres or not config.include_season_premieres:
-            def should_include(show_entry):
-                """Check if episode should be included based on premiere settings."""
-                # Episode number is stored in window properties by the service
-                episode_no = WINDOW.getProperty(f"EasyTV.{show_entry[1]}.EpisodeNo")
-                if not episode_no or len(episode_no) < 6:
-                    return True
-                
-                # Check if this is episode 1
-                try:
-                    episode_num = int(episode_no[4:6])
-                    if episode_num != 1:
-                        return True
-                    
-                    season_num = int(episode_no[1:3])
-                    if season_num == 1:
-                        # Series premiere (S01E01)
-                        return config.include_series_premieres
-                    else:
-                        # Season premiere (S02E01, S03E01, etc.)
-                        return config.include_season_premieres
-                except (ValueError, IndexError):
-                    return True
-            
+        if needs_premiere_filter:
             show_data = [x for x in show_data if should_include(x)]
-        
-        # Filter out random-order shows if configured
         if config.excl_random_order_shows and random_order_shows:
-            filtered_data = [x for x in show_data if x[1] not in random_order_shows]
-        else:
-            filtered_data = show_data
-        
+            return [x for x in show_data if x[1] not in random_order_shows]
+        return show_data
+
+    # Show loading indicator during data fetching operations
+    with busy_progress("Loading shows..."):
+        filtered_data = _fetch_data()
+
         # Refresh from shared storage if stale (multi-instance sync)
         # This ensures window properties are up-to-date before displaying
         if filtered_data:
@@ -275,9 +288,9 @@ def build_episode_list(
                 except Exception as e:
                     log.warning("Refresh failed, using cached data",
                                event="browse.refresh_error", error=str(e))
-        
+
         log.info("Browse mode starting", event="browse.start", show_count=len(filtered_data))
-        
+
         # Fetch show art if not already cached this session
         _fetch_show_art(log)
     
@@ -317,7 +330,7 @@ def build_episode_list(
             # Wait for any existing dialogs to close
             # This prevents the window from covering YesNo dialogs from the service
             count = 0
-            while count < DIALOG_WAIT_MAX_TICKS or \
+            while count < DIALOG_WAIT_MAX_TICKS and \
                   xbmc.getInfoLabel('Window.Property(xmlfile)') == 'DialogYesNo.xml':
                 xbmc.sleep(DIALOG_WAIT_SLEEP_MS)
                 count += 1
@@ -331,6 +344,9 @@ def build_episode_list(
             continue
         
         if list_window.needs_refresh:
+            # Re-fetch show data with fresh sort order from Kodi
+            filtered_data = _fetch_data()
+            list_window.update_data(filtered_data)
             open_window = True
             list_window.reset_state()
             continue
@@ -341,7 +357,7 @@ def build_episode_list(
             log.debug("Starting playback from episode list")
             
             # Mark playlist as running in listview mode
-            WINDOW.setProperty("EasyTV.playlist_running", 'listview')
+            WINDOW.setProperty(PROP_PLAYLIST_RUNNING, 'listview')
             
             # Clear and rebuild playlist
             # This approach is needed because .strm files won't start via JSON-RPC
@@ -363,7 +379,7 @@ def build_episode_list(
             list_window.reset_state()
             
             # Notify service to reshuffle random order shows
-            WINDOW.setProperty("EasyTV.random_order_shuffle", 'true')
+            WINDOW.setProperty(PROP_RANDOM_ORDER_SHUFFLE, 'true')
         
         # Check if we should stay open after playback
         if not config.skin_return:
@@ -376,6 +392,6 @@ def build_episode_list(
     del player
     
     # Final notification to service
-    WINDOW.setProperty("EasyTV.random_order_shuffle", 'true')
+    WINDOW.setProperty(PROP_RANDOM_ORDER_SHUFFLE, 'true')
     
     log.info("Browse mode closed", event="browse.stop")

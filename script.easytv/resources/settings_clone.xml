@@ -20,6 +20,38 @@
 					<control type="spinner" format="string" />
 				</setting>
 			</group>
+
+			<group id="appearance" label="32555">
+				<setting id="theme" type="integer" label="32720" help="32721">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32722">0</option>
+							<option label="32723">1</option>
+							<option label="32724">2</option>
+							<option label="32725">3</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="set_icon" type="action" label="32735" help="32736">
+					<level>0</level>
+					<data>RunScript(script.easytv,set_icon)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+
+				<setting id="reset_icon" type="action" label="32737" help="32738">
+					<level>0</level>
+					<data>RunScript(script.easytv,reset_icon)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+			</group>
 		</category>
 
 		<!-- ============================================================== -->
@@ -95,7 +127,7 @@
 						<dependency type="visible" setting="populate_by" operator="is">1</dependency>
 						<dependency type="visible" setting="playlist_source" operator="is">1</dependency>
 					</dependencies>
-					<data>RunScript(script.easytv,playlist)</data>
+					<data>RunScript(script.easytv,playlist,tvshows)</data>
 					<control type="button" format="action">
 						<close>true</close>
 					</control>
@@ -113,16 +145,30 @@
 					<control type="edit" format="string" />
 				</setting>
 
-				<setting id="premieres" type="boolean" label="32514" help="32407">
+				<setting id="premieres" type="integer" label="32514" help="32407">
 					<level>1</level>
-					<default>true</default>
-					<control type="toggle" />
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="32742">0</option>
+							<option label="32743">1</option>
+							<option label="32744">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
 				</setting>
 
-				<setting id="season_premieres" type="boolean" label="32610" help="32611">
+				<setting id="season_premieres" type="integer" label="32610" help="32611">
 					<level>1</level>
-					<default>true</default>
-					<control type="toggle" />
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="32742">0</option>
+							<option label="32743">1</option>
+							<option label="32744">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
 				</setting>
 			</group>
 
@@ -163,31 +209,6 @@
 				</setting>
 			</group>
 
-			<!-- Group 2.4: Sorting -->
-			<!-- Note: "Watch Order" (random_order_shows) is configured in main EasyTV only,
-			     as it's a library-wide behavior setting, not a per-clone preference -->
-			<group id="sorting" label="32556">
-				<setting id="sort_by" type="integer" label="32516" help="32410">
-					<level>0</level>
-					<default>1</default>
-					<constraints>
-						<options>
-							<option label="32064">0</option>
-							<option label="32065">1</option>
-							<option label="32066">2</option>
-							<option label="32067">3</option>
-							<option label="32068">4</option>
-						</options>
-					</constraints>
-					<control type="spinner" format="string" />
-				</setting>
-
-				<setting id="sort_reverse" type="boolean" label="32517" help="32411">
-					<level>1</level>
-					<default>false</default>
-					<control type="toggle" />
-				</setting>
-			</group>
 		</category>
 
 		<!-- ============================================================== -->
@@ -204,6 +225,7 @@
 							<option label="32073">0</option>
 							<option label="32074">1</option>
 							<option label="32075">2</option>
+							<option label="32077">3</option>
 						</options>
 					</constraints>
 					<control type="spinner" format="string" />
@@ -222,7 +244,33 @@
 				</setting>
 			</group>
 
-			<!-- Group 3.2: Performance -->
+			<!-- Group 3.2: Sorting -->
+			<group id="sorting" label="32556">
+				<setting id="sort_by" type="integer" label="32516" help="32410">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="32064">0</option>
+							<option label="32065">1</option>
+							<option label="32066">2</option>
+							<option label="32067">3</option>
+							<option label="32068">4</option>
+							<option label="32069">5</option>
+							<option label="32070">6</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="sort_reverse" type="boolean" label="32517" help="32411">
+					<level>1</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<!-- Group 3.3: Performance -->
 			<group id="performance" label="32557">
 				<setting id="limit_shows" type="boolean" label="32519" help="32413">
 					<level>1</level>

@@ -227,7 +227,7 @@ class LibraryMonitor(xbmc.Monitor):
             )
             self._on_refresh_show([show_id])
     
-    def _get_episode_list(self, show_id: int, list_name: str) -> list[int]:
+    def _get_episode_list(self, show_id: int, list_name: str) -> List[int]:
         """
         Get an episode list from window properties.
         
