@@ -3,7 +3,7 @@
 	<section id="weather.ozweather">
 		<category id="bom locations" label="32200" help="">
 			<group id="1" label="32208">
-				<setting id="Location1BOM" type="string" label="32202" help="">
+				<setting id="Location1BOM" type="string" label="32201" help="">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -28,7 +28,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting id="Location2BOM" type="string" label="32203" help="">
+				<setting id="Location2BOM" type="string" label="32202" help="">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -58,7 +58,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting id="Location3BOM" type="string" label="32204" help="">
+				<setting id="Location3BOM" type="string" label="32203" help="">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -88,6 +88,96 @@
 						<heading/>
 					</control>
 				</setting>
+				<setting id="Location4BOM" type="string" label="32204" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location3BOM"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<data>RunScript(weather.ozweather,Location4)</data>
+					</control>
+				</setting>
+				<setting id="Location4ClosestRadar" type="string" label="32211" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>		
+				<setting id="Location5BOM" type="string" label="32205" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location4BOM"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<data>RunScript(weather.ozweather,Location5)</data>
+					</control>
+				</setting>
+				<setting id="Location5ClosestRadar" type="string" label="32211" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>					
+				<setting id="Location6BOM" type="string" label="32206" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="Location5BOM"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<data>RunScript(weather.ozweather,Location6)</data>
+					</control>
+				</setting>
+				<setting id="Location6ClosestRadar" type="string" label="32211" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>							
 				<setting id="Location1BOMGeoHash" type="string" help="">
 					<level>0</level>
 					<default/>
@@ -133,6 +223,51 @@
 						<heading/>
 					</control>
 				</setting>
+				<setting id="Location4BOMGeoHash" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Location5BOMGeoHash" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>		
+				<setting id="Location6BOMGeoHash" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>				
 				<setting id="Location1Lat" type="string" help="">
 					<level>0</level>
 					<default/>
@@ -223,6 +358,96 @@
 						<heading/>
 					</control>
 				</setting>
+				<setting id="Location4Lat" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Location4Lon" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>		
+				<setting id="Location5Lat" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Location5Lon" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>		
+				<setting id="Location6Lat" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Location6Lon" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>				
 				<setting id="Radar1Lat" type="string" help="">
 					<level>0</level>
 					<default/>
@@ -313,100 +538,215 @@
 						<heading/>
 					</control>
 				</setting>
+				<setting id="Radar4Lat" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Radar4Lon" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>		
+				<setting id="Radar5Lat" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Radar5Lon" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>			
+				<setting id="Radar6Lat" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
+				<setting id="Radar6Lon" type="string" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading/>
+					</control>
+				</setting>
 			</group>
 		</category>
-		<category id="extended features" label="32205" help="">
+		<category id="extended features" label="32207" help="">
 			<group id="1">
-				<setting id="Location1BOMGeoHash" type="string" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading/>
-					</control>
-				</setting>
-				<setting id="Location2BOMGeoHash" type="string" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading/>
-					</control>
-				</setting>
 				<setting id="ExtendedFeaturesToggle" type="boolean" label="32194" help="">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-					<group id="55" label="32212">
-
-					</group>
-					<setting id="Radar1" type="string" label="32155" help="">
-						<level>0</level>
-						<default/>
-						<constraints>
-							<allowempty>true</allowempty>
-						</constraints>
-						<dependencies>
-							<dependency type="enable">
+			</group>	
+			<group id="55" label="32212">
+				<setting id="Radar1" type="string" label="32151" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32151</heading>
+					</control>
+				</setting>
+				<setting id="Radar2" type="string" label="32152" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<and>
+								<condition operator="!is" setting="Location2BOMGeoHash"/>
 								<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
-							</dependency>
-						</dependencies>
-						<control type="edit" format="string">
-							<heading>32155</heading>
-						</control>
-					</setting>
-					<setting id="Radar2" type="string" label="32156" help="">
-						<level>0</level>
-						<default/>
-						<constraints>
-							<allowempty>true</allowempty>
-						</constraints>
-						<dependencies>
-							<dependency type="enable">
-								<and>
-									<condition operator="!is" setting="Location2BOMGeoHash"/>
-									<condition on="property" name="InfoBool"> !eq(-4,false)</condition>
-								</and>
-							</dependency>
-						</dependencies>
-						<control type="edit" format="string">
-							<heading>32156</heading>
-						</control>
-					</setting>
-					<setting id="Radar3" type="string" label="32157" help="">
-						<level>0</level>
-						<default/>
-						<constraints>
-							<allowempty>true</allowempty>
-						</constraints>
-						<dependencies>
-							<dependency type="enable">
-								<and>
-									<condition operator="!is" setting="Location2BOMGeoHash"/>
-									<condition on="property" name="InfoBool"> !eq(-5,false)</condition>
-								</and>
-							</dependency>
-						</dependencies>
-						<control type="edit" format="string">
-							<heading>32157</heading>
-						</control>
-					</setting>
-            </group>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32152</heading>
+					</control>
+				</setting>
+				<setting id="Radar3" type="string" label="32153" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<and>
+								<condition operator="!is" setting="Location3BOMGeoHash"/>
+								<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32153</heading>
+					</control>
+				</setting>
+				<setting id="Radar4" type="string" label="32154" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<and>
+								<condition operator="!is" setting="Location4BOMGeoHash"/>
+								<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32154</heading>
+					</control>
+				</setting>
+				<setting id="Radar5" type="string" label="32155" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<and>
+								<condition operator="!is" setting="Location5BOMGeoHash"/>
+								<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32155</heading>
+					</control>
+				</setting>
+				<setting id="Radar6" type="string" label="32156" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<and>
+								<condition operator="!is" setting="Location6BOMGeoHash"/>
+								<condition operator="!is" setting="ExtendedFeaturesToggle">false</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>32156</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="troubleshooting" label="32213" help="">			
 			<group id="2" label="32209">
 				<setting id="PurgeRadarBackgroundsOnNextRefresh" type="boolean" label="32210" help="">
 					<level>0</level>

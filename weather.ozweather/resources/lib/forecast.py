@@ -10,6 +10,7 @@ import xbmcvfs
 from bossanova808.constants import ADDON, ADDON_NAME, ADDON_VERSION, WEATHER_WINDOW, CWD
 from bossanova808.utilities import set_property, clear_property
 from bossanova808.logger import Logger
+from resources.lib.store import Store
 
 # noinspection PyPackages
 from .abc.abc_video import get_abc_weather_video_link
@@ -279,7 +280,11 @@ def get_weather():
     except ValueError:
         pass
 
+
     set_property(WEATHER_WINDOW, 'Location', location_in_use)
+    set_property(WEATHER_WINDOW, 'LocationIndex', sys.argv[1])
+    set_property(WEATHER_WINDOW, 'RadarLocation', Store.RADAR_LOOKUP.get(radar[:-1]))
+    set_property(WEATHER_WINDOW, 'LocationGeohash', geohash)
     set_property(WEATHER_WINDOW, 'Updated', time.strftime("%d/%m %H:%M").lower())
     set_property(WEATHER_WINDOW, 'Current.Location', location_in_use)
     set_property(WEATHER_WINDOW, 'Forecast.City', location_in_use)

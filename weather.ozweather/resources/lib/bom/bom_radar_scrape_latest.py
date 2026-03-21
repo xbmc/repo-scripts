@@ -9,7 +9,7 @@ from pprint import pprint
 from bs4 import BeautifulSoup
 
 # The master page for the BOM radars
-radar_page = "http://www.bom.gov.au/australia/radar/about/radar_site_info.shtml"
+radar_page = "http://reg.bom.gov.au/australia/radar/about/radar_site_info.shtml"
 # Needed to bypass the BOM's stupid web scraping filter
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0'}
 
