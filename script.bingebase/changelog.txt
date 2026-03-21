@@ -1,0 +1,12 @@
+v1.0.2 (2026-01-30)
+- Add news tag and prepare for Kodi repository submission
+
+v1.0.1 (2026-01-30)
+- Changed license to GPL-2.0-or-later for Kodi repository compatibility
+
+v1.0.0 (2025-01-30)
+- Initial release
+- Scrobbling for movies and TV episodes
+- Two-way sync with Bingebase
+- Device authorization flow
+- Scheduled background sync
