@@ -18,8 +18,10 @@
 import defusedxml.ElementTree as ET
 import xml.etree.ElementTree as UET
 import json
+import os
 import xbmc
 import xbmcaddon
+import xbmcvfs
 
 tr = xbmcaddon.Addon().getLocalizedString
 settings = xbmcaddon.Addon().getSetting
@@ -62,9 +64,9 @@ def write_keymap(keymap, filename):
             if c == context:
                 k = k.split(' + ')
                 if len(k) > 1:
-                    builder.start("key", {"id":k[0], "mod":k[1]})
+                    builder.start("key", {"id": k[0], "mod": k[1]})
                 else:
-                    builder.start("key", {"id":k[0]})
+                    builder.start("key", {"id": k[0]})
                 builder.data(a)
                 builder.end("key")
         builder.end("keyboard")
@@ -72,3 +74,27 @@ def write_keymap(keymap, filename):
     builder.end("keymap")
     element = builder.close()
     UET.ElementTree(element).write(filename, 'utf-8')
+
+
+def rename_keymap(filename):
+    userdata = xbmcvfs.translatePath('special://userdata/keymaps')
+    safe_current = _set_safe_filename(settings('keymap_editor_filename'))
+    safe_filename = _set_safe_filename(filename)
+    current_path = os.path.join(userdata, '%s.xml' % safe_current)
+    new_path = os.path.join(userdata, '%s.xml' % safe_filename)
+    try:
+        xbmcvfs.rename(current_path, new_path)
+    except Exception:
+        return False
+    xbmcaddon.Addon().setSetting('keymap_editor_filename', safe_filename)
+    return True
+
+
+def _set_safe_filename(filename):
+    s_name = ''
+    for c in list(filename):
+        if c in list('.<>:"/\|?*'):
+            s_name = s_name + '_'
+        else:
+            s_name = s_name + c
+    return s_name

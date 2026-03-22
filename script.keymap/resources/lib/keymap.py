@@ -16,20 +16,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import sys
-import shutil
 import traceback
 import xbmc
+import xbmcaddon
 import xbmcvfs
 import resources.lib.utils as utils
 from xbmcgui import Dialog
 from resources.lib.editor import Editor
-from resources.lib.utils import tr
-
+from resources.lib.utils import tr, settings
 
 default = xbmcvfs.translatePath('special://xbmc/system/keymaps/keyboard.xml')
 userdata = xbmcvfs.translatePath('special://userdata/keymaps')
-gen_file = os.path.join(userdata, 'gen.xml')
+gen_file = os.path.join(userdata, '%s.xml' %
+                        settings('keymap_editor_filename'))
 
 KODIMONITOR = xbmc.Monitor()
 
@@ -40,6 +39,12 @@ def setup_keymap_folder():
 
 
 def main():
+    if (settings('first_run') == 'true'):
+        xbmcaddon.Addon().setSetting('first_run', 'false')
+        response = Dialog().yesno(tr(30000), tr(30023), yeslabel=tr(30024), nolabel=tr(30025))
+        if response:
+            xbmcaddon.Addon().openSettings()
+            return
     ## load mappings ##
     try:
         setup_keymap_folder()
@@ -56,41 +61,64 @@ def main():
             userkeymap = utils.read_keymap(gen_file)
         except Exception:
             traceback.print_exc()
-            utils.rpc('GUI.ShowNotification', title="Keymap Editor",
-                      message="Failed to load keymap file", image='error')
+            utils.rpc('GUI.ShowNotification', title=tr(30000),
+                      message=tr(30020), image='error')
             return
 
     ## main loop ##
     confirm_discard = False
     while not KODIMONITOR.abortRequested():
-        idx = Dialog().select(tr(30000), [tr(30003), tr(30004), tr(30005)])
+        if (settings('enable_multifile') == 'true'):
+            idx = Dialog().select(
+                tr(30000), [tr(30003), tr(30005), tr(30004), tr(30021)])
+        else:
+            idx = Dialog().select(tr(30000), [tr(30003), tr(30005), tr(30004)])
         if idx == 0:
             # edit
             editor = Editor(defaultkeymap, userkeymap)
             editor.start()
             confirm_discard = editor.dirty
         elif idx == 1:
-            # reset
-            confirm_discard = bool(userkeymap)
-            userkeymap = []
-        elif idx == 2:
             # backup any user defined keymaps
-            for name in os.listdir(userdata):
-                if name.endswith('.xml') and name != os.path.basename(gen_file):
-                    src = os.path.join(userdata, name)
-                    for i in range(100):
-                        dst = os.path.join(userdata, "%s.bak.%d" % (name, i))
-                        if os.path.exists(dst):
-                            continue
-                        shutil.move(src, dst)
-                        # successfully renamed
-                        break
+            if (settings('enable_multifile') == 'false'):
+                try:
+                    for name in os.listdir(userdata):
+                        if name.endswith('.xml') and name != os.path.basename(gen_file):
+                            src = os.path.join(userdata, name)
+                            for i in range(100):
+                                dst = os.path.join(
+                                    userdata, "%s.bak.%d" % (name, i))
+                                if os.path.exists(dst):
+                                    continue
+                                xbmcvfs.rename(src, dst)
+                                # successfully renamed
+                                break
+                except Exception:
+                    utils.rpc('GUI.ShowNotification', title=tr(30000),
+                              message=tr(30001), image='error')
+                    continue
             # save
             if os.path.exists(gen_file):
-                shutil.copyfile(gen_file, gen_file + ".old")
+                xbmcvfs.copy(gen_file, gen_file + ".old")
             utils.write_keymap(userkeymap, gen_file)
             xbmc.executebuiltin("action(reloadkeymaps)")
             break
+        elif idx == 2:
+            # reset
+            confirm_discard = bool(userkeymap)
+            userkeymap = []
+            break
+        elif idx == 3:
+            # rename the file
+            filename = Dialog().input(tr(30021), defaultt=settings('keymap_editor_filename'))
+            if not filename.strip():
+                utils.rpc('GUI.ShowNotification', title=tr(
+                    30000), message=tr(30001), image='error')
+                continue
+            if not utils.rename_keymap(filename):
+                utils.rpc('GUI.ShowNotification', title=tr(
+                    30000), message=tr(30001), image='error')
+            xbmc.executebuiltin("action(reloadkeymaps)")
         elif idx == -1 and confirm_discard:
             if Dialog().yesno(tr(30000), tr(30006)) == 1:
                 break

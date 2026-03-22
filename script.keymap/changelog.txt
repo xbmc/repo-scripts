@@ -1,4 +1,6 @@
-v.1.3.2
+v.1.4.0
+- added option not disable other keymap files
+- added ability to rename keymap file to control load order
 - updated translations from Weblate
 
 v.1.3.1
