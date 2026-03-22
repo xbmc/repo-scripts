@@ -1,0 +1,67 @@
+# PunchPlay Scrobble
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "PunchPlay — Login"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Could not reach the server:"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Invalid response from server. Try again."
+msgstr ""
+
+msgctxt "#32003"
+msgid "Open your browser and visit:"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Enter this code:"
+msgstr ""
+
+msgctxt "#32005"
+msgid "The code expires in {0} minutes. Press OK — then this dialog will wait for approval."
+msgstr ""
+
+msgctxt "#32006"
+msgid "PunchPlay — Waiting for Login"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Waiting for approval…"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Waiting for approval… ({0}s remaining)"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Login failed ({0}). Please try again."
+msgstr ""
+
+msgctxt "#32010"
+msgid "Login timed out. Please try again."
+msgstr ""
+
+msgctxt "#32011"
+msgid "Login successful!"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Logged out."
+msgstr ""
+
+msgctxt "#32013"
+msgid "{0} scrobbled"
+msgstr ""
+
+msgctxt "#32014"
+msgid "{0} S{1}E{2} scrobbled"
+msgstr ""

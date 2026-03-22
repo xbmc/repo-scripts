@@ -1,0 +1,8 @@
+v1.0.0 (2026-03-16)
+- Initial release
+- Automatic scrobbling of movies and TV episodes
+- Device-code OAuth login flow
+- Heartbeat progress reporting
+- Offline queue with automatic retry
+- Anime detection via genre tags
+- Configurable watched threshold, min length, and heartbeat interval
