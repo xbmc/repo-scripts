@@ -271,10 +271,6 @@ msgctxt "#32904"
 msgid "Music 163"
 msgstr "Music 163"
 
-msgctxt "#32905"
-msgid "Lyricsify"
-msgstr "Lyricsify"
-
 msgctxt "#32912"
 msgid "Genius"
 msgstr "Genius"
@@ -302,6 +298,10 @@ msgstr "Super Music"
 msgctxt "#32918"
 msgid "RCLyricsBand"
 msgstr "RCLyricsBand"
+
+#~ msgctxt "#32905"
+#~ msgid "Lyricsify"
+#~ msgstr "Lyricsify"
 
 # Scrapers - do not translate!
 #~ msgctxt "#32901"

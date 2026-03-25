@@ -29,6 +29,8 @@ def getEmbedLyrics(song, getlrc, lyricssettings):
                 lyrics.source = lyrics.song.source
             lyrics.lyrics = lry
             return lyrics
+    if not song.analyze_safe: # Add embedded lyrics for internet streams
+        return None
     filename = song.filepath
     ext = os.path.splitext(filename)[1].lower()
     sup_ext = ['.mp3', '.flac', '.ogg', '.ape', '.m4a']
@@ -176,7 +178,7 @@ def getAPELyrics(bfile, getlrc):
         return
 
 def isLRC(lyr):
-    match = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
+    match = re.compile(r'\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
     if match:
         return True
     else:

@@ -148,7 +148,7 @@ class MAIN():
 
     def find_lyrics(self, song):
         # search embedded lrc lyrics
-        if self.SETTING_SEARCH_EMBEDDED and song.analyze_safe and self.proceed():
+        if self.SETTING_SEARCH_EMBEDDED and self.proceed(): # Add embedded lyrics for internet streams
             log('searching for embedded lrc lyrics', debug=self.DEBUG)
             try:
                 lyrics = getEmbedLyrics(song, True, self.lyricssettings)
@@ -173,7 +173,7 @@ class MAIN():
                     self.save_lyrics_to_file(lyrics)
                     return lyrics
         # search embedded txt lyrics
-        if self.SETTING_SEARCH_EMBEDDED and song.analyze_safe and self.proceed():
+        if self.SETTING_SEARCH_EMBEDDED and self.proceed(): # Add embedded lyrics for internet streams
             log('searching for embedded txt lyrics', debug=self.DEBUG)
             try:
                 lyrics = getEmbedLyrics(song, False, self.lyricssettings)
@@ -253,7 +253,7 @@ class MAIN():
             # save our manual sync offset to file
             adjust = int(adjust * 1000)
             # check if there's an existing offset tag
-            found = re.search('\[offset:(.*?)\]', lyr, flags=re.DOTALL)
+            found = re.search(r'\[offset:(.*?)\]', lyr, flags=re.DOTALL)
             if found:
                 # get the sum of both values
                 try:
@@ -436,7 +436,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.dialog = xbmcgui.Dialog()
 
     def onInit(self):
-        self.matchlist = ['@', 'www\.(.*?)\.(.*?)', 'QQ(.*?)[1-9]', 'artist ?: ?.', 'album ?: ?.', 'title ?: ?.', 'song ?: ?.', 'by ?: ?.']
+        self.matchlist = ['@', r'www\.(.*?)\.(.*?)', 'QQ(.*?)[1-9]', 'artist ?: ?.', 'album ?: ?.', 'title ?: ?.', 'song ?: ?.', 'by ?: ?.']
         self.text = self.getControl(110)
         self.label = self.getControl(200)
         self.setup_gui()
@@ -619,12 +619,12 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def parser_lyrics(self, lyrics):
         offset = 0.00
-        found = re.search('\[offset:\s?(-?\d+)\]', lyrics)
+        found = re.search(r'\[offset:\s?(-?\d+)\]', lyrics)
         if found:
             offset = float(found.group(1)) / 1000
         self.pOverlay = []
-        tag1 = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
-        tag2 = re.compile('\[(\d+):(\d\d)([\.:]\d+|)\]')
+        tag1 = re.compile(r'\[(\d+):(\d\d)[\.:](\d\d)\]')
+        tag2 = re.compile(r'\[(\d+):(\d\d)([\.:]\d+|)\]')
         lyrics = lyrics.replace('\r\n' , '\n')
         sep = '\n'
         for x in lyrics.split(sep):

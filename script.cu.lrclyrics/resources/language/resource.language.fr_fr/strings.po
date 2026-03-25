@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-02-17 16:13+0000\n"
+"PO-Revision-Date: 2025-12-08 16:13+0000\n"
 "Last-Translator: skypichat <skypichat@hotmail.fr>\n"
 "Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/fr_fr/>\n"
 "Language: fr_fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4\n"
+"X-Generator: Weblate 5.14.3\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
@@ -150,11 +150,11 @@ msgstr "Rechercher et enregistrer les paroles txt dans le dossier de la chanson"
 
 msgctxt "#32120"
 msgid "%N. %A - %T"
-msgstr ""
+msgstr "%N. %A - %T"
 
 msgctxt "#32121"
 msgid "%A - %B - %N - %T"
-msgstr ""
+msgstr "%A - %B - %N - %T"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
@@ -248,11 +248,11 @@ msgstr "Si vous masquez l'OSD Musique et les informations de lecture en cours, l
 
 msgctxt "#32169"
 msgid "Sources"
-msgstr ""
+msgstr "Sources"
 
 msgctxt "#32170"
 msgid "Get lyrics when listening to internet radio stations"
-msgstr ""
+msgstr "Accéder aux paroles en écoutant les stations de radio internet"
 
 # Scrapers - do not translate!
 msgctxt "#32901"
@@ -270,10 +270,6 @@ msgstr "Megalobiz"
 msgctxt "#32904"
 msgid "Music 163"
 msgstr "Music 163"
-
-msgctxt "#32905"
-msgid "Lyricsify"
-msgstr "Lyricsify"
 
 msgctxt "#32912"
 msgid "Genius"
@@ -301,7 +297,11 @@ msgstr "Super Music"
 
 msgctxt "#32918"
 msgid "RCLyricsBand"
-msgstr ""
+msgstr "RCLyricsBand"
+
+#~ msgctxt "#32905"
+#~ msgid "Lyricsify"
+#~ msgstr "Lyricsify"
 
 # Scrapers - do not translate!
 #~ msgctxt "#32901"

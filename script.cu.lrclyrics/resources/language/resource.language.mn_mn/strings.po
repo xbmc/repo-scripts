@@ -270,10 +270,6 @@ msgctxt "#32904"
 msgid "Music 163"
 msgstr ""
 
-msgctxt "#32905"
-msgid "Lyricsify"
-msgstr ""
-
 msgctxt "#32912"
 msgid "Genius"
 msgstr ""

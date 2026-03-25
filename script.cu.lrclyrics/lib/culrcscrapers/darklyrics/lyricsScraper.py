@@ -52,7 +52,7 @@ class LyricsFetcher:
             searchResponse = req.text
         except:
             return None
-        searchResult = re.findall('<h2><a\shref="(.*?#([0-9]+))".*?>(.*?)</a></h2>', searchResponse)
+        searchResult = re.findall(r'<h2><a\shref="(.*?#([0-9]+))".*?>(.*?)</a></h2>', searchResponse)
         if len(searchResult) == 0:
             return None
         links = []
@@ -75,7 +75,7 @@ class LyricsFetcher:
             res = req.text
         except:
             return None
-        pattern = '<a\sname="%index%">(.*?)(?:<h3>|<div)' # require multi line and dot all mode
+        pattern = r'<a\sname="%index%">(.*?)(?:<h3>|<div)' # require multi line and dot all mode
         pattern = pattern.replace('%index%', index)
         match = re.search(pattern, res, re.MULTILINE | re.DOTALL)
         if match:
@@ -96,7 +96,7 @@ class LyricsFetcher:
             res = req.text
         except:
             return ''
-        match = re.search('<h2>(?:album|single|ep|live):?\s?(.*?)</h2>', res, re.IGNORECASE)
+        match = re.search(r'<h2>(?:album|single|ep|live):?\s?(.*?)</h2>', res, re.IGNORECASE)
         if match:
             return ('(' + match.group(1) + ')').replace('\'', '')
         else:
