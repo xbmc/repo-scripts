@@ -103,10 +103,24 @@ class Store:
         (-11.6494, 133.38, "Warruwi", "IDR773"),
     ]
 
+    # RADAR location and range lookups...
     # The -1 here removes the range from the radar (1,2,3,4 at the end of IDR02, for example)
-    RADAR_LOOKUP = {code[:-1]: name for _, _, name, code in BOM_RADAR_LOCATIONS}
+    RADAR_LOCATION = {code[:-1]: name for _, _, name, code in BOM_RADAR_LOCATIONS}
     # Manually add the name for this special radar that is not returned in the scraped list
-    RADAR_LOOKUP["IDR0000"] = "National"
+    RADAR_LOCATION["IDR0000"] = "Australia"
+    # The last digit indicates the range of the radar
+    RADAR_RANGE_MAP = {
+        "1": "512km",
+        "2": "256km",
+        "3": "128km",
+        "4": "64km",
+    }
+    # Convenience method to return the range if known (including a range of 'National' for the whole-country radar)
+    @staticmethod
+    def RADAR_RANGE(radar_code):
+        if radar_code == "IDR00004":
+            return "National"
+        return Store.RADAR_RANGE_MAP.get(radar_code[-1], "?Range")
 
     DAYS = {"Mon": "Monday",
             "Tue": "Tuesday",
@@ -115,6 +129,18 @@ class Store:
             "Fri": "Friday",
             "Sat": "Saturday",
             "Sun": "Sunday"}
+
+    # (Updated 2026-03)
+    # BOM API icon_descriptor → Kodi weather code mapping
+    # BOM source: api.weather.bom.gov.au (modern REST API, icon_descriptor field)
+    # Kodi codes: https://kodi.wiki/view/Weather_addons#Weather_Codes
+    #
+    # Notes:
+    #   - Modern BOM API descriptors use underscores (e.g. partly_cloudy)
+    #   - Legacy FTP/XML descriptors (e.g. cloud_increasing, rain_developing) are
+    #     retained below for backwards compatibility but marked accordingly
+    #   - Day/night split: day uses sun icons (32=sunny, 34=fair/partly sunny),
+    #     night uses moon icons (31=clear night, 33=fair night)
 
     WEATHER_CODES = {'clearing_shower': '39',
                      'clear': '32',
@@ -218,65 +244,66 @@ class Store:
                            'nt_unknown': 'na'}
 
     """
-    These are the weather codes for Kodi it seems
-    N/A Not Available
-    0 Rain/Lightning
-    01 Windy/Rain
-    02 Same as 01
-    03 Same as 00
-    04 Same as 00
-    05 Cloudy/Snow-Rain Mix
-    06 Hail
-    07 Icy/Clouds Rain-Snow
-    08 Icy/Haze Rain
-    09 Haze/Rain
-    10 Icy/Rain
-    11 Light Rain
-    12 Moderate Rain
-    13 Cloudy/Flurries
-    14 Same as 13
-    15 Flurries
-    16 Same as 13
-    17 Same as 00
-    18 Same as 00
-    19 Dust
-    20 Fog
-    21 Haze
-    22 Smoke
-    23 Windy
-    24 Same as 23
-    25 Frigid
-    26 Mostly Cloudy
-    27 Mostly Cloudy/Night
-    28 Mostly Cloudy/Sunny
-    29 Partly Cloudy/Night
-    30 Partly Cloudy/Day
-    31 Clear/Night
-    32 Clear/Day
-    33 Hazy/Night
-    34 Hazy/Day
-    35 Same as 00
-    36 Hot!
-    37 Lightning/Day
-    38 Lightning
-    39 Rain/Day
-    40 Rain
-    41 Snow
-    42 Same as 41
-    43 Windy/Snow
-    44 Same as 30
-    45 Rain/Night
-    46 Snow/Night
-    47 Thunder Showers/Night
+    These are the weather codes for Kodi it seems - https://kodi.wiki/view/Weather_addons#Weather_Codes
+    
+        0 	tornado
+        1 	tropical storm
+        2 	hurricane
+        3 	severe thunderstorms
+        4 	thunderstorms
+        5 	mixed rain and snow
+        6 	mixed rain and sleet
+        7 	mixed snow and sleet
+        8 	freezing drizzle
+        9 	drizzle
+        10 	freezing rain
+        11 	showers
+        12 	showers
+        13 	snow flurries
+        14 	light snow showers
+        15 	blowing snow
+        16 	snow
+        17 	hail
+        18 	sleet
+        19 	dust
+        20 	foggy
+        21 	haze
+        22 	smoky
+        23 	blustery
+        24 	windy
+        25 	cold
+        26 	cloudy
+        27 	mostly cloudy (night)
+        28 	mostly cloudy (day)
+        29 	partly cloudy (night)
+        30 	partly cloudy (day)
+        31 	clear (night)
+        32 	sunny
+        33 	fair (night)
+        34 	fair (day)
+        35 	mixed rain and hail
+        36 	hot
+        37 	isolated thunderstorms
+        38 	scattered thunderstorms
+        39 	scattered thunderstorms
+        40 	scattered showers
+        41 	heavy snow
+        42 	scattered snow showers
+        43 	heavy snow
+        44 	partly cloudy
+        45 	thundershowers
+        46 	snow showers
+        47 	isolated thundershowers
+        na 	not available
 
-    NIGHT SUBSET:
-    27 Mostly Cloudy/Night
-    29 Partly Cloudy/Night
-    31 Clear/Night
-    33 Hazy/Night
-    45 Rain/Night
-    46 Snow/Night
-    47 Thunder Showers/Night
+        NIGHT SUBSET:
+        27 Mostly Cloudy / Night
+        29 Partly Cloudy / Night
+        31 Clear/Night
+        33 Fair / Night
+        45 Rain / Night
+        46 Snow / Night
+        47 Thunder Showers / Night
     """
 
     # Just a store!
