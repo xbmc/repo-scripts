@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import xbmcgui
 
+from resources.lib.ui.dialogs import show_confirm
 from resources.lib.utils import get_logger, lang
 
 log = get_logger('clear_sync')
@@ -38,14 +39,12 @@ def main() -> None:
     Shows confirmation dialog, then clears all EasyTV data from the
     shared database if confirmed. Shows notification with result.
     """
-    dialog = xbmcgui.Dialog()
-    
     log.info("Clear sync data requested", event="sync.clear_requested")
-    
+
     # Confirmation dialog
     # 32705 = "Clear sync data?"
     # 32706 = "This will remove all EasyTV tracking data..."
-    if not dialog.yesno(lang(32705), lang(32706)):
+    if not show_confirm(lang(32705), lang(32706)):
         log.info("Clear sync data cancelled by user", event="sync.clear_cancelled")
         return
     
@@ -57,7 +56,7 @@ def main() -> None:
         
         if not db.is_available():
             # 32709 = "Database is not available..."
-            dialog.notification("EasyTV", lang(32709), xbmcgui.NOTIFICATION_WARNING)
+            xbmcgui.Dialog().notification("EasyTV", lang(32709), xbmcgui.NOTIFICATION_WARNING)
             log.warning("Database unavailable for clear operation",
                        event="sync.clear_failed",
                        reason="database_unavailable")
@@ -75,20 +74,20 @@ def main() -> None:
         
         # Success notification
         # 32707 = "Sync data cleared"
-        dialog.notification("EasyTV", lang(32707), xbmcgui.NOTIFICATION_INFO)
+        xbmcgui.Dialog().notification("EasyTV", lang(32707), xbmcgui.NOTIFICATION_INFO)
         log.info("Sync data cleared successfully", event="sync.clear_success")
         
     except ImportError:
         # pymysql not available
         # 32708 = "Failed to clear sync data"
-        dialog.notification("EasyTV", lang(32708), xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification("EasyTV", lang(32708), xbmcgui.NOTIFICATION_ERROR)
         log.warning("Clear sync data failed - pymysql not available",
                    event="sync.clear_failed",
                    reason="pymysql_missing")
         
     except Exception as e:
         # 32708 = "Failed to clear sync data"
-        dialog.notification("EasyTV", lang(32708), xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification("EasyTV", lang(32708), xbmcgui.NOTIFICATION_ERROR)
         log.exception("Clear sync data failed",
                      event="sync.clear_failed",
                      error=str(e))

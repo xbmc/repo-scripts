@@ -70,9 +70,17 @@ msgctxt "#32068"
 msgid "Season"
 msgstr ""
 
+msgctxt "#32069"
+msgid "Random"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Avg Episode Duration"
+msgstr ""
+
 #. View style options
 msgctxt "#32073"
-msgid "Standard"
+msgid "Card List"
 msgstr ""
 
 msgctxt "#32074"
@@ -86,6 +94,19 @@ msgstr ""
 #. Browse mode option
 msgctxt "#32076"
 msgid "Return to EasyTV after playback"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Split View"
+msgstr ""
+
+#. Default confirm dialog button labels
+msgctxt "#32078"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32079"
+msgid "No"
 msgstr ""
 
 #. Generic action labels (used in dialogs and spinners)
@@ -174,6 +195,11 @@ msgctxt "#32116"
 msgid "Please wait and try again."
 msgstr ""
 
+#. Time display - less than 24 hours ago
+msgctxt "#32120"
+msgid "Today"
+msgstr ""
+
 #. Clone creation dialogs
 msgctxt "#32139"
 msgid "EasyTV - "
@@ -249,13 +275,9 @@ msgctxt "#32163"
 msgid "Now Playing"
 msgstr ""
 
-#. Auto-closing dialog
+#. Auto-closing dialog countdown (used below buttons)
 msgctxt "#32167"
-msgid "EasyTV   (auto-closing in %s seconds)"
-msgstr ""
-
-msgctxt "#32168"
-msgid "%s (%s) is in your library."
+msgid "(auto-closing in %s seconds)"
 msgstr ""
 
 #. Selector buttons
@@ -426,7 +448,7 @@ msgid "Select shows where episode order doesn't matter."
 msgstr ""
 
 msgctxt "#32407"
-msgid "Include S01E01 episodes. Disable to hide shows you haven't started watching yet."
+msgid "Skip: exclude series premieres. Mix in: include normally. Only: show only premieres (filters the list to premiere episodes)."
 msgstr ""
 
 msgctxt "#32408"
@@ -594,7 +616,7 @@ msgid "Select shows for random order..."
 msgstr ""
 
 msgctxt "#32514"
-msgid "Include series premieres"
+msgid "Series premieres"
 msgstr ""
 
 #. Browse mode settings
@@ -923,11 +945,11 @@ msgstr ""
 
 #. Season premieres
 msgctxt "#32610"
-msgid "Include season premieres"
+msgid "Season premieres"
 msgstr ""
 
 msgctxt "#32611"
-msgid "Include first episode of each season (S02E01, S03E01, etc.). Disable if you prefer starting seasons from where you left off."
+msgid "Skip: exclude season premieres (S02E01, S03E01, etc.). Mix in: include normally. Only: show only premieres."
 msgstr ""
 
 #. Playlist continuation
@@ -951,12 +973,8 @@ msgctxt "#32616"
 msgid "Seconds before the continuation prompt auto-dismisses. Set to 0 for no automatic dismissal."
 msgstr ""
 
-msgctxt "#32617"
-msgid "Playlist Finished"
-msgstr ""
-
 msgctxt "#32618"
-msgid "Generate another playlist with the same settings?"
+msgid "Playlist finished.\nGenerate another playlist with the same settings?"
 msgstr ""
 
 msgctxt "#32619"
@@ -1078,10 +1096,6 @@ msgctxt "#32647"
 msgid "Generate new playlist"
 msgstr ""
 
-#. Playlist continuation heading with countdown
-msgctxt "#32648"
-msgid "Playlist Finished   (auto-closing in %s seconds)"
-msgstr ""
 
 
 # =============================================================================
@@ -1152,4 +1166,115 @@ msgstr ""
 #. Positioned specials setting help text
 msgctxt "#32712"
 msgid "When enabled, specials with TVDB positioning data (e.g., 'airs before S10E56') will be included in the watch order at their designated position. Non-positioned specials are always ignored."
+msgstr ""
+
+# =============================================================================
+# 32720-32729: Theme settings
+# =============================================================================
+
+#. Theme setting label
+msgctxt "#32720"
+msgid "Theme"
+msgstr ""
+
+#. Theme setting help text
+msgctxt "#32721"
+msgid "Choose the accent color theme for EasyTV windows and dialogs."
+msgstr ""
+
+#. Theme option: Golden Hour (default)
+msgctxt "#32722"
+msgid "Golden Hour"
+msgstr ""
+
+#. Theme option: Ultraviolet
+msgctxt "#32723"
+msgid "Ultraviolet"
+msgstr ""
+
+#. Theme option: Ember
+msgctxt "#32724"
+msgid "Ember"
+msgstr ""
+
+#. Theme option: Nightfall
+msgctxt "#32725"
+msgid "Nightfall"
+msgstr ""
+
+# =============================================================================
+# 32730-32739: Show Selector dialog strings
+# =============================================================================
+
+#. Show Selector heading: filter mode
+msgctxt "#32730"
+msgid "Select TV Shows"
+msgstr ""
+
+#. Show Selector heading: random order mode
+msgctxt "#32731"
+msgid "Random Order Shows"
+msgstr ""
+
+#. Show Selector button: enable all
+msgctxt "#32732"
+msgid "Enable All"
+msgstr ""
+
+#. Show Selector button: ignore all
+msgctxt "#32733"
+msgid "Ignore All"
+msgstr ""
+
+#. Show Selector button: cancel
+msgctxt "#32734"
+msgid "Cancel"
+msgstr ""
+
+#. Settings: Appearance - Set custom icon button
+msgctxt "#32735"
+msgid "Set custom icon"
+msgstr ""
+
+#. Settings: Appearance - Set custom icon help
+msgctxt "#32736"
+msgid "Choose an icon image for EasyTV. This replaces the addon icon shown in Kodi menus and notifications. A restart may be needed for the change to appear everywhere."
+msgstr ""
+
+#. Settings: Appearance - Reset icon button
+msgctxt "#32737"
+msgid "Reset to default icon"
+msgstr ""
+
+#. Settings: Appearance - Reset icon help
+msgctxt "#32738"
+msgid "Restore the original EasyTV icon."
+msgstr ""
+
+#. Dialog heading: icon file browser
+msgctxt "#32739"
+msgid "Select icon image"
+msgstr ""
+
+#. Notification: icon updated
+msgctxt "#32740"
+msgid "Icon updated"
+msgstr ""
+
+#. Notification: icon reset
+msgctxt "#32741"
+msgid "Icon reset to default"
+msgstr ""
+
+#. Premiere filter mode options
+msgctxt "#32742"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#32743"
+msgid "Mix in"
+msgstr ""
+
+msgctxt "#32744"
+msgid "Only"
 msgstr ""

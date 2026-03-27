@@ -32,7 +32,7 @@ import traceback
 from contextlib import contextmanager
 from datetime import datetime as dt
 import re
-from typing import Any, Dict, Generator, List, Optional, TextIO, Tuple, Union
+from typing import Any, Dict, Generator, List, Optional, TextIO, Tuple, Union, cast
 
 import xbmc
 import xbmcaddon
@@ -42,6 +42,7 @@ import xbmcvfs
 from resources.lib.constants import (
     DEFAULT_ADDON_ID,
     KODI_HOME_WINDOW_ID,
+    PROP_SERVICE_RUNNING,
     LOG_DIR_NAME,
     LOG_FILENAME,
     LOG_MAX_ROTATED_FILES,
@@ -271,8 +272,12 @@ class StructuredLogger:
                     existing_size = 0  # File was rotated, new file is empty
             
             cls._log_file_path = log_path
-            cls._log_file = open(log_path, "a", encoding="utf-8")
-            cls._log_file_size = existing_size  # Track actual size for mid-session rotation
+            try:
+                cls._log_file = open(log_path, "a", encoding="utf-8")
+                cls._log_file_size = existing_size
+            except (OSError, IOError):
+                cls._log_file = None
+                raise  # Re-raise to hit the outer except
         except (OSError, IOError) as e:
             # Log to Kodi if file init fails
             xbmc.log(
@@ -391,7 +396,7 @@ class StructuredLogger:
             except (IOError, OSError):
                 pass  # Don't crash on log write failure
     
-    def _ensure_event(self, level: str, kwargs: dict[str, Any]) -> dict[str, Any]:
+    def _ensure_event(self, level: str, kwargs: Dict[str, Any]) -> Dict[str, Any]:
         """
         Ensure event= is present for INFO/WARNING/ERROR logs.
         
@@ -699,6 +704,30 @@ def runtime_converter(time_string: str) -> int:
         return 0
 
 
+def format_duration(seconds: Union[int, str]) -> str:
+    """
+    Format a duration in seconds to a human-readable string.
+
+    Args:
+        seconds: Duration in seconds (int or string).
+
+    Returns:
+        Formatted string like "43 min" or "1h 30min". Empty string if zero/invalid.
+    """
+    try:
+        total = int(seconds)
+    except (ValueError, TypeError):
+        return ''
+    if total <= 0:
+        return ''
+    minutes = round(total / 60)
+    if minutes < 60:
+        return f"{minutes} min"
+    hours = minutes // 60
+    remaining = minutes % 60
+    if remaining == 0:
+        return f"{hours}h"
+    return f"{hours}h {remaining}min"
 
 
 def get_playcount_minimum_percent() -> int:
@@ -904,6 +933,136 @@ def sanitize_filename(dirty_string: str) -> str:
 
 
 # =============================================================================
+# Icon Management
+# =============================================================================
+
+_icon_log: Optional[StructuredLogger] = None
+
+
+def _get_icon_log() -> StructuredLogger:
+    """Lazy-init logger for icon management functions."""
+    global _icon_log
+    if _icon_log is None:
+        _icon_log = get_logger('icon')
+    return _icon_log
+
+
+def set_custom_icon(addon_id: Optional[str] = None) -> bool:
+    """Open image browser and copy selected image to addon's icon.png.
+
+    Also saves a copy to addon_data for persistence across addon/clone updates.
+
+    Args:
+        addon_id: Addon to set icon for. None for the current addon.
+
+    Returns:
+        True if icon was successfully set, False if cancelled or failed.
+    """
+    log = _get_icon_log()
+    addon = xbmcaddon.Addon(addon_id) if addon_id else xbmcaddon.Addon()
+    addon_path = addon.getAddonInfo('path')
+
+    dialog = xbmcgui.Dialog()
+    image_path = cast(str, dialog.browse(
+        2, lang(32739), 'files', '.png|.jpg|.jpeg', False, False
+    ))
+    if not image_path:
+        log.debug("Icon selection cancelled", event="icon.set_cancelled")
+        return False
+
+    log.debug("Icon selected", event="icon.selected", path=image_path)
+    icon_path = os.path.join(addon_path, 'icon.png')
+
+    # Save to addon_data for persistence across updates
+    addon_data = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
+    os.makedirs(addon_data, exist_ok=True)
+    backup_path = os.path.join(addon_data, 'custom_icon.png')
+    backup_ok = xbmcvfs.copy(image_path, backup_path)
+    if not backup_ok:
+        log.warning("Failed to backup icon to addon_data",
+                    event="icon.backup_fail", path=backup_path)
+
+    # Copy to addon folder
+    result = xbmcvfs.copy(image_path, icon_path)
+    if result:
+        log.info("Custom icon set", event="icon.set",
+                 source=image_path, addon_id=addon.getAddonInfo('id'))
+    else:
+        log.warning("Failed to copy icon to addon folder",
+                    event="icon.set_fail", source=image_path, target=icon_path)
+    return result
+
+
+def reset_icon(addon_id: Optional[str] = None) -> bool:
+    """Restore the default icon and remove custom icon from addon_data.
+
+    Args:
+        addon_id: Addon to reset icon for. None for the current addon.
+
+    Returns:
+        True if icon was successfully reset, False if default icon not found.
+    """
+    log = _get_icon_log()
+    addon = xbmcaddon.Addon(addon_id) if addon_id else xbmcaddon.Addon()
+    addon_path = addon.getAddonInfo('path')
+
+    default_path = os.path.join(addon_path, 'icon_default.png')
+    icon_path = os.path.join(addon_path, 'icon.png')
+
+    # Remove custom icon backup
+    addon_data = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
+    custom_backup = os.path.join(addon_data, 'custom_icon.png')
+    if xbmcvfs.exists(custom_backup):
+        xbmcvfs.delete(custom_backup)
+        log.debug("Removed custom icon backup", event="icon.backup_removed",
+                  path=custom_backup)
+
+    if xbmcvfs.exists(default_path):
+        result = xbmcvfs.copy(default_path, icon_path)
+        if result:
+            log.info("Icon reset to default", event="icon.reset",
+                     addon_id=addon.getAddonInfo('id'))
+        else:
+            log.warning("Failed to restore default icon",
+                        event="icon.reset_fail", source=default_path)
+        return result
+
+    log.warning("Default icon not found", event="icon.default_missing",
+                path=default_path)
+    return False
+
+
+def restore_custom_icon(addon_id: Optional[str] = None) -> bool:
+    """Restore custom icon from addon_data after an addon/clone update.
+
+    No-op if no custom icon was previously set. Called on service startup
+    to handle the case where a Kodi addon update overwrote icon.png.
+
+    Args:
+        addon_id: Addon to restore icon for. None for the current addon.
+
+    Returns:
+        True if custom icon was restored, False if none was set.
+    """
+    log = _get_icon_log()
+    addon = xbmcaddon.Addon(addon_id) if addon_id else xbmcaddon.Addon()
+    addon_data = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
+    custom_backup = os.path.join(addon_data, 'custom_icon.png')
+    if xbmcvfs.exists(custom_backup):
+        icon_path = os.path.join(addon.getAddonInfo('path'), 'icon.png')
+        result = xbmcvfs.copy(custom_backup, icon_path)
+        if result:
+            log.info("Custom icon restored after update", event="icon.restore",
+                     addon_id=addon.getAddonInfo('id'))
+        else:
+            log.warning("Failed to restore custom icon",
+                        event="icon.restore_fail", source=custom_backup)
+        return result
+    log.debug("No custom icon to restore", event="icon.restore_skip")
+    return False
+
+
+# =============================================================================
 # Kodi Interaction Utilities
 # =============================================================================
 
@@ -959,8 +1118,31 @@ def service_heartbeat() -> None:
     
     # Respond to service liveness check from the addon
     # When default.py sends 'marco', respond with 'polo' to confirm service is running
-    if window.getProperty('EasyTV_service_running') == 'marco':
-        window.setProperty('EasyTV_service_running', 'polo')
+    if window.getProperty(PROP_SERVICE_RUNNING) == 'marco':
+        window.setProperty(PROP_SERVICE_RUNNING, 'polo')
+
+
+def restart_addon(addon_id: str, delay_ms: int = 500) -> None:
+    """Disable and re-enable a Kodi addon to force a restart.
+
+    Args:
+        addon_id: The addon ID to restart.
+        delay_ms: Milliseconds to wait between disable and enable.
+    """
+    import json as _json
+    xbmc.executeJSONRPC(_json.dumps({
+        "jsonrpc": "2.0",
+        "method": "Addons.SetAddonEnabled",
+        "id": 1,
+        "params": {"addonid": addon_id, "enabled": False}
+    }))
+    xbmc.sleep(delay_ms)
+    xbmc.executeJSONRPC(_json.dumps({
+        "jsonrpc": "2.0",
+        "method": "Addons.SetAddonEnabled",
+        "id": 1,
+        "params": {"addonid": addon_id, "enabled": True}
+    }))
 
 
 def parse_lastplayed_date(date_string: str) -> float:

@@ -840,6 +840,8 @@ class SharedDatabase:
             try:
                 import pymysql.cursors
             except ImportError:
+                log.warning("pymysql.cursors not available for bulk read",
+                            event="shareddb.import_error")
                 return {}, 0
             
             conn = self._get_connection()
@@ -981,6 +983,9 @@ class SharedDatabase:
                 self._batch_stats['skipped'] += 1
                 return self._batch_current_rev
         
+        if 'ondeck_episode_id' not in data:
+            raise ValueError("set_show_tracking: missing required field 'ondeck_episode_id'")
+
         start_time = time.time()
         conn = self._get_connection()
         cursor = conn.cursor()

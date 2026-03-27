@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    EasyTV Shared Includes
+    Provides constants, defaults, theme variables, animations, and reusable components.
+-->
+<includes>
+    <!-- ================================================================= -->
+    <!-- CONSTANTS                                                          -->
+    <!-- ================================================================= -->
+    <constant name="dialog_pad">30</constant>
+    <constant name="button_h">50</constant>
+    <constant name="separator_h">2</constant>
+
+    <!-- ================================================================= -->
+    <!-- DEFAULTS                                                           -->
+    <!-- ================================================================= -->
+    <default type="label">
+        <align>left</align>
+        <aligny>center</aligny>
+        <font>font13</font>
+        <textcolor>FFCCCCCC</textcolor>
+    </default>
+
+    <default type="textbox">
+        <align>left</align>
+        <font>font13</font>
+        <textcolor>FFCCCCCC</textcolor>
+        <autoscroll delay="6000" time="3000" repeat="10000">true</autoscroll>
+    </default>
+
+    <default type="button">
+        <align>center</align>
+        <aligny>center</aligny>
+        <font>font12</font>
+        <textoffsetx>30</textoffsetx>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>$INFO[Window.Property(EasyTV.ButtonTextFocused)]</focusedcolor>
+        <disabledcolor>4dFFFFFF</disabledcolor>
+        <pulseonselect>false</pulseonselect>
+    </default>
+
+    <default type="grouplist">
+        <scrolltime tween="quadratic">400</scrolltime>
+        <usecontrolcoords>true</usecontrolcoords>
+        <itemgap>0</itemgap>
+    </default>
+
+    <default type="progress">
+        <texturebg colordiffuse="1fFFFFFF" border="12,0,12,0">common/white.png</texturebg>
+        <lefttexture />
+        <midtexture colordiffuse="$INFO[Window.Property(EasyTV.Accent)]" border="12,0,12,0">common/white.png</midtexture>
+        <righttexture />
+        <overlaytexture />
+    </default>
+
+    <!-- ================================================================= -->
+    <!-- ANIMATION INCLUDES                                                 -->
+    <!-- ================================================================= -->
+
+    <!-- Main view open: fade + zoom in -->
+    <include name="EasyTV_ZoomIn">
+        <animation type="WindowOpen" reversible="false">
+            <effect type="fade" start="0" end="100" time="300" tween="sine" easing="in" />
+            <effect type="zoom" start="85" end="100" time="300" center="auto" tween="sine" easing="out" />
+        </animation>
+    </include>
+
+    <!-- Main view close: zoom + fade out -->
+    <include name="EasyTV_ZoomOut">
+        <animation type="WindowClose" reversible="false">
+            <effect type="zoom" start="100" end="85" center="auto" tween="sine" easing="out" time="300" />
+            <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="300" />
+        </animation>
+    </include>
+
+    <!-- Dialog open: fade + slide down with elastic overshoot -->
+    <include name="EasyTV_BounceIn">
+        <animation type="WindowOpen" reversible="false">
+            <effect type="fade" start="0" end="100" time="300" delay="100" />
+            <effect type="slide" start="0,-100" end="0" center="auto" tween="back" easing="out" time="600" delay="100" />
+        </animation>
+    </include>
+
+    <!-- Dialog close: shrink + fade out -->
+    <include name="EasyTV_BounceClose">
+        <animation type="WindowClose" reversible="false">
+            <effect type="zoom" start="100" end="95" center="auto" tween="sine" easing="out" time="300" />
+            <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="300" />
+        </animation>
+    </include>
+
+    <!-- Subtle bounce on focus gain -->
+    <include name="EasyTV_FocusBounce">
+        <animation type="Focus" reversible="false">
+            <effect type="zoom" start="96.5" end="100" time="150" tween="sine" easing="inout" center="auto" />
+            <effect type="fade" start="20" end="100" time="150" tween="back" easing="out" />
+        </animation>
+    </include>
+
+    <!-- ================================================================= -->
+    <!-- COMPONENT INCLUDES                                                 -->
+    <!-- ================================================================= -->
+
+    <!-- Horizontal separator line (parameterized position) -->
+    <include name="EasyTV_Separator">
+        <param name="top" />
+        <param name="left" default="0" />
+        <param name="width" />
+        <control type="image">
+            <left>$PARAM[left]</left>
+            <top>$PARAM[top]</top>
+            <width>$PARAM[width]</width>
+            <height>2</height>
+            <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/white.png</texture>
+        </control>
+    </include>
+</includes>

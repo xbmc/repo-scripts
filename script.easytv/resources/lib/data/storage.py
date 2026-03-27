@@ -48,7 +48,13 @@ from typing import Any, Dict, Generator, List, Optional, Tuple, Union
 import xbmcaddon
 import xbmcgui
 
-from resources.lib.constants import DEFAULT_ADDON_ID, KODI_HOME_WINDOW_ID, PERCENT_MULTIPLIER
+from resources.lib.constants import (
+    DEFAULT_ADDON_ID,
+    KODI_HOME_WINDOW_ID,
+    PERCENT_MULTIPLIER,
+    PROP_SYNC_REV,
+    SETTING_MULTI_INSTANCE_SYNC,
+)
 from resources.lib.utils import get_bool_setting, get_logger, json_query, lang
 from resources.lib.data.queries import build_episode_details_query
 
@@ -56,9 +62,6 @@ log = get_logger('storage')
 
 # Window for storing properties
 WINDOW = xbmcgui.Window(KODI_HOME_WINDOW_ID)
-
-# Property for storing sync revision
-SYNC_REV_PROPERTY = "EasyTV.sync_rev"
 
 # Property prefix for EasyTV window properties
 PROPERTY_PREFIX = "EasyTV"
@@ -455,7 +458,7 @@ class SharedDatabaseStorage(StorageBackend):
         
         # Update local revision (skip in batch mode — handled by batch_write)
         if not self._batch_active:
-            WINDOW.setProperty(SYNC_REV_PROPERTY, str(new_rev))
+            WINDOW.setProperty(PROP_SYNC_REV, str(new_rev))
     
     def needs_refresh(self) -> bool:
         """
@@ -469,7 +472,7 @@ class SharedDatabaseStorage(StorageBackend):
             return False  # Can't refresh, use what we have
         
         remote_rev = self._db.get_global_rev()
-        local_rev_str = WINDOW.getProperty(SYNC_REV_PROPERTY)
+        local_rev_str = WINDOW.getProperty(PROP_SYNC_REV)
         
         # Empty/missing local rev = definitely stale (first run or reset)
         if not local_rev_str:
@@ -483,7 +486,7 @@ class SharedDatabaseStorage(StorageBackend):
     
     def mark_refreshed(self, revision: int) -> None:
         """Store the revision that was current when we read the data."""
-        WINDOW.setProperty(SYNC_REV_PROPERTY, str(revision))
+        WINDOW.setProperty(PROP_SYNC_REV, str(revision))
     
     def is_available(self) -> bool:
         """Check if database is available."""
@@ -528,7 +531,7 @@ class SharedDatabaseStorage(StorageBackend):
             self._batch_active = False
             final_rev = self._db.batch_final_rev
             if final_rev is not None:
-                WINDOW.setProperty(SYNC_REV_PROPERTY, str(final_rev))
+                WINDOW.setProperty(PROP_SYNC_REV, str(final_rev))
     
     def _update_window_properties(self, show_id: int, data: Dict[str, Any]) -> None:
         """
@@ -588,8 +591,8 @@ class SharedDatabaseStorage(StorageBackend):
         ep = ep_result['episodedetails']
         
         # Format episode and season numbers
-        episode_num = "%.2d" % float(ep.get('episode', 0))
-        season_num = "%.2d" % float(ep.get('season', 0))
+        episode_num = "%02d" % int(ep.get('episode', 0))
+        season_num = "%02d" % int(ep.get('season', 0))
         episode_no = f"s{season_num}e{episode_num}"
         
         # Calculate resume state
@@ -686,7 +689,7 @@ def get_storage() -> StorageBackend:
         return _storage_instance
     
     # Check if multi-instance sync is enabled
-    if not get_bool_setting('multi_instance_sync'):
+    if not get_bool_setting(SETTING_MULTI_INSTANCE_SYNC):
         _storage_instance = WindowPropertyStorage()
         log.info("Using window property storage", event="storage.init_local")
         return _storage_instance
@@ -702,7 +705,7 @@ def get_storage() -> StorageBackend:
                    event="storage.pymysql_missing")
         # Notify user and disable the setting
         xbmcgui.Dialog().ok("EasyTV", lang(32710))
-        xbmcaddon.Addon(DEFAULT_ADDON_ID).setSetting('multi_instance_sync', 'false')
+        xbmcaddon.Addon(DEFAULT_ADDON_ID).setSetting(SETTING_MULTI_INSTANCE_SYNC, 'false')
         _storage_instance = WindowPropertyStorage()
         return _storage_instance
     

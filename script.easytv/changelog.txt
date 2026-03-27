@@ -1,6 +1,58 @@
 EasyTV Changelog
 ================
 
+v1.5.0 (2026-03-18)
+--------------------------
+New Features:
+  - Four browse view styles: Card List (default, data-dense rows with poster and
+    stats), Posters (visual poster grid), Big Screen (large artwork for 10-foot
+    viewing), and Split View (two-column layout with show list and detail panel).
+  - Theme selection: Choose from Golden Hour (default), Ultraviolet, Ember, or
+    Nightfall accent color themes. Configurable in Settings > Appearance.
+  - Custom icon selection: Set a custom addon icon for EasyTV or any clone via
+    Settings > Appearance. Reset to default also available.
+  - Redesigned dialogs: Main dialog, next-up prompt, playlist finished dialog,
+    and confirmation dialogs all use the new themed styling.
+  - Show selector redesign: Dedicated centered window with inline search, Enable
+    All/Ignore All bulk actions, and poster preview for the focused show.
+  - In-place browse list updates: The browse list refreshes after playback
+    completes without requiring a full window reload.
+  - Abandoned playback detection: The service detects when playback was stopped
+    early and handles episode tracking appropriately.
+  - Genre and duration info in browse views: All four view styles display the
+    show's genre and average episode duration with compact S01E01 notation.
+  - Duration sort and random sort options in browse mode.
+  - 3-state premiere filter: Series and season premieres settings now offer
+    Skip (exclude), Mix in (default), or Only (show exclusively premieres).
+
+Bug Fixes:
+  - Fixed: Python 3.10+ type hints (X | Y syntax) breaking compatibility with
+    Kodi Windows builds running Python 3.8.
+  - Fixed: File handle leaks in log file initialization and clone updater when
+    exceptions occur during file operations.
+  - Fixed: Median duration calculation incorrect for shows with an even number
+    of episodes (off-by-one in middle element selection).
+  - Fixed: Episode and season numbers displayed as floats (e.g., "2.0") instead
+    of integers in some browse view layouts.
+  - Fixed: Potential infinite loop in browse mode when the dialog window fails
+    to open within the expected timeout.
+  - Fixed: Clone dialogs showing hardcoded "EasyTV" instead of the clone's
+    own addon name.
+
+Improvements:
+  - Added top-level exception handlers to all script entry points, preventing
+    silent crashes from unhandled exceptions.
+  - Calendar-aware "last watched" display (shows "today", "yesterday" instead
+    of "0 days", "1 day").
+
+Internal:
+  - Entry points (service.py, default.py) are now thin stubs delegating to
+    cached library modules for improved startup performance.
+  - Added unit test suite with 208 tests covering pure logic functions.
+  - Consolidated window property names and setting IDs into constants module.
+  - Replaced deprecated setInfo() calls with InfoTagVideo API.
+  - Removed dead code, added database column validation for shared sync storage.
+
 v1.4.0 (2026-03-02)
 --------------------------
 New Features:

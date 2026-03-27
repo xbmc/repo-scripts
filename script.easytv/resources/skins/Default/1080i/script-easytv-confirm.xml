@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    EasyTV Next Episode Dialog
+    EasyTV Confirm Dialog
     Resolution: 1080i (1920x1080)
 
     Control IDs:
-        1  - Heading label (static, addon/clone name)
+        1  - Heading label
         2  - Message label (primary)
-        3  - Timer label (auto-close countdown, below buttons)
-        4  - Subtitle label (secondary — episode title, smaller + dimmer)
         10 - "Yes" button (left)
         11 - "No" button (right)
-        20 - Show poster image
 -->
 <window>
     <zorder>1</zorder>
@@ -32,12 +29,12 @@
             </animation>
         </control>
 
-        <!-- Dialog Container: 800x460 centered -->
+        <!-- Dialog Container: 720x240 centered -->
         <control type="group">
-            <left>560</left>
-            <top>310</top>
-            <width>800</width>
-            <height>460</height>
+            <left>600</left>
+            <top>420</top>
+            <width>720</width>
+            <height>240</height>
             <animation type="WindowOpen" reversible="false">
                 <effect type="fade" start="0" end="100" time="300" delay="100" />
                 <effect type="slide" start="0,-100" end="0" center="auto" tween="back" easing="out" time="600" delay="100" />
@@ -51,8 +48,8 @@
             <control type="image">
                 <left>-2</left>
                 <top>-2</top>
-                <width>804</width>
-                <height>464</height>
+                <width>724</width>
+                <height>244</height>
                 <texture border="12" colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">common/white_rounded.png</texture>
             </control>
 
@@ -60,17 +57,17 @@
             <control type="image">
                 <left>0</left>
                 <top>0</top>
-                <width>800</width>
-                <height>460</height>
+                <width>720</width>
+                <height>240</height>
                 <texture border="12">common/menu.png</texture>
                 <colordiffuse>ffffffff</colordiffuse>
             </control>
 
-            <!-- Heading Label (ID 1) — centered across full dialog -->
+            <!-- Heading Label (ID 1) -->
             <control type="label" id="1">
                 <left>30</left>
                 <top>13</top>
-                <width>740</width>
+                <width>660</width>
                 <height>40</height>
                 <align>center</align>
                 <textcolor>$INFO[Window.Property(EasyTV.Accent)]</textcolor>
@@ -82,59 +79,37 @@
             <control type="image">
                 <left>30</left>
                 <top>66</top>
-                <width>740</width>
+                <width>660</width>
                 <height>2</height>
                 <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/line_fade.png</texture>
             </control>
 
-            <!-- Show Poster (ID 20): 150x225 -->
-            <control type="image" id="20">
-                <left>50</left>
-                <top>82</top>
-                <width>150</width>
-                <height>225</height>
-                <aspectratio>keep</aspectratio>
-                <texture>-</texture>
-            </control>
-
-            <!-- Message Label (ID 2) — show title, right of poster -->
+            <!-- Message Label (ID 2) -->
             <control type="label" id="2">
-                <left>230</left>
-                <top>145</top>
-                <width>540</width>
-                <height>60</height>
-                <align>left</align>
+                <left>30</left>
+                <top>82</top>
+                <width>660</width>
+                <height>70</height>
+                <align>center</align>
                 <aligny>center</aligny>
                 <textcolor>ffFFFFFF</textcolor>
-                <font>font14_title</font>
+                <font>font13</font>
                 <wrapmultiline>true</wrapmultiline>
                 <label>-</label>
             </control>
 
-            <!-- Subtitle Label (ID 4) — episode info, smaller + dimmer -->
-            <control type="label" id="4">
-                <left>230</left>
-                <top>210</top>
-                <width>540</width>
-                <height>25</height>
-                <align>left</align>
-                <font>font10</font>
-                <textcolor>FFAAAAAA</textcolor>
-                <label>-</label>
-            </control>
-
-            <!-- Button Row — below poster area -->
+            <!-- Button Row -->
             <control type="group">
-                <left>150</left>
-                <top>330</top>
-                <width>500</width>
+                <left>145</left>
+                <top>170</top>
+                <width>430</width>
                 <height>50</height>
 
                 <!-- Yes Button (ID 10) -->
                 <control type="button" id="10">
                     <left>0</left>
                     <top>0</top>
-                    <width>235</width>
+                    <width>200</width>
                     <height>50</height>
                     <align>center</align>
                     <aligny>center</aligny>
@@ -150,9 +125,9 @@
 
                 <!-- No Button (ID 11) -->
                 <control type="button" id="11">
-                    <left>265</left>
+                    <left>230</left>
                     <top>0</top>
-                    <width>235</width>
+                    <width>200</width>
                     <height>50</height>
                     <align>center</align>
                     <aligny>center</aligny>
@@ -165,18 +140,6 @@
                     <texturefocus border="12" colordiffuse="$INFO[Window.Property(EasyTV.ButtonFocus)]">common/white_rounded.png</texturefocus>
                     <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
                 </control>
-            </control>
-
-            <!-- Timer Label (ID 3) — auto-close countdown -->
-            <control type="label" id="3">
-                <left>150</left>
-                <top>395</top>
-                <width>500</width>
-                <height>30</height>
-                <align>center</align>
-                <font>font10</font>
-                <textcolor>FFAAAAAA</textcolor>
-                <label>-</label>
             </control>
         </control>
     </controls>

@@ -292,7 +292,7 @@ def build_inprogress_movies_query() -> Dict[str, Any]:
 # Video Playlist Directory
 # =============================================================================
 
-def get_playlist_files_query() -> dict[str, Any]:
+def get_playlist_files_query() -> Dict[str, Any]:
     """
     Get list of video playlist files.
     
@@ -314,7 +314,7 @@ def get_playlist_files_query() -> dict[str, Any]:
 # Playlist Operations
 # =============================================================================
 
-def get_clear_video_playlist_query() -> dict[str, Any]:
+def get_clear_video_playlist_query() -> Dict[str, Any]:
     """
     Clear the video playlist (playlistid=1).
     
@@ -331,7 +331,7 @@ def get_clear_video_playlist_query() -> dict[str, Any]:
     }
 
 
-def build_add_episode_query(episode_id: int) -> dict[str, Any]:
+def build_add_episode_query(episode_id: int) -> Dict[str, Any]:
     """
     Add an episode to the video playlist.
     
@@ -352,7 +352,7 @@ def build_add_episode_query(episode_id: int) -> dict[str, Any]:
     }
 
 
-def build_add_movie_query(movie_id: int) -> dict[str, Any]:
+def build_add_movie_query(movie_id: int) -> Dict[str, Any]:
     """
     Add a movie to the video playlist.
     
@@ -381,7 +381,7 @@ def build_add_movie_query(movie_id: int) -> dict[str, Any]:
 # TV Show Queries
 # =============================================================================
 
-def get_unwatched_shows_query() -> dict[str, Any]:
+def get_unwatched_shows_query() -> Dict[str, Any]:
     """
     Get TV shows with unwatched episodes.
     
@@ -407,7 +407,7 @@ def get_unwatched_shows_query() -> dict[str, Any]:
     }
 
 
-def get_all_shows_query() -> dict[str, Any]:
+def get_all_shows_query() -> Dict[str, Any]:
     """
     Get all TV shows (for title lookup and ID recovery).
     
@@ -424,7 +424,7 @@ def get_all_shows_query() -> dict[str, Any]:
     }
 
 
-def get_shows_by_lastplayed_query() -> dict[str, Any]:
+def get_shows_by_lastplayed_query() -> Dict[str, Any]:
     """
     Get TV shows with unwatched episodes, sorted by last played.
     
@@ -441,7 +441,7 @@ def get_shows_by_lastplayed_query() -> dict[str, Any]:
                 "operator": "is",
                 "value": "0"
             },
-            "properties": ["lastplayed", "year"],
+            "properties": ["lastplayed", "year", "genre"],
             "sort": {
                 "order": "descending",
                 "method": "lastplayed"
@@ -450,7 +450,7 @@ def get_shows_by_lastplayed_query() -> dict[str, Any]:
     }
 
 
-def build_show_details_query(tvshowid: int) -> dict[str, Any]:
+def build_show_details_query(tvshowid: int) -> Dict[str, Any]:
     """
     Get details for a specific TV show.
     
@@ -471,7 +471,7 @@ def build_show_details_query(tvshowid: int) -> dict[str, Any]:
     }
 
 
-def build_shows_art_query() -> dict[str, Any]:
+def build_shows_art_query() -> Dict[str, Any]:
     """
     Get art for all TV shows.
     
@@ -504,7 +504,7 @@ def build_shows_art_query() -> dict[str, Any]:
 # Episode Queries
 # =============================================================================
 
-def build_all_episodes_no_streamdetails_query() -> dict[str, Any]:
+def build_all_episodes_no_streamdetails_query() -> Dict[str, Any]:
     """
     Get all episodes from all TV shows WITHOUT streamdetails.
     
@@ -545,7 +545,7 @@ def build_all_episodes_no_streamdetails_query() -> dict[str, Any]:
     }
 
 
-def build_show_episodes_with_streamdetails_query(tvshowid: int) -> dict[str, Any]:
+def build_show_episodes_with_streamdetails_query(tvshowid: int) -> Dict[str, Any]:
     """
     Get all episodes for a TV show WITH streamdetails.
     
@@ -577,7 +577,7 @@ def build_show_episodes_with_streamdetails_query(tvshowid: int) -> dict[str, Any
     }
 
 
-def build_show_episodes_query(tvshowid: int) -> dict[str, Any]:
+def build_show_episodes_query(tvshowid: int) -> Dict[str, Any]:
     """
     Get all episodes for a TV show.
     
@@ -603,7 +603,7 @@ def build_show_episodes_query(tvshowid: int) -> dict[str, Any]:
     }
 
 
-def build_episode_details_query(episode_id: int) -> dict[str, Any]:
+def build_episode_details_query(episode_id: int) -> Dict[str, Any]:
     """
     Get full details for a specific episode.
     
@@ -628,7 +628,7 @@ def build_episode_details_query(episode_id: int) -> dict[str, Any]:
     }
 
 
-def build_episode_show_id_query(episode_id: int) -> dict[str, Any]:
+def build_episode_show_id_query(episode_id: int) -> Dict[str, Any]:
     """
     Get the TV show ID and last played date for an episode.
     
@@ -651,7 +651,7 @@ def build_episode_show_id_query(episode_id: int) -> dict[str, Any]:
     }
 
 
-def build_episode_prompt_info_query(episode_id: int) -> dict[str, Any]:
+def build_episode_prompt_info_query(episode_id: int) -> Dict[str, Any]:
     """
     Get episode info for the "next episode" prompt dialog.
     
@@ -667,7 +667,7 @@ def build_episode_prompt_info_query(episode_id: int) -> dict[str, Any]:
         "method": "VideoLibrary.GetEpisodeDetails",
         "params": {
             "episodeid": episode_id,
-            "properties": ["season", "episode", "showtitle", "tvshowid"]
+            "properties": ["season", "episode", "showtitle", "tvshowid", "title"]
         }
     }
 
@@ -676,7 +676,7 @@ def build_episode_prompt_info_query(episode_id: int) -> dict[str, Any]:
 # Player Queries
 # =============================================================================
 
-def get_playing_item_query() -> dict[str, Any]:
+def get_playing_item_query() -> Dict[str, Any]:
     """
     Get information about the currently playing video.
     
@@ -697,7 +697,7 @@ def get_playing_item_query() -> dict[str, Any]:
     }
 
 
-def build_player_seek_query(position: float) -> dict[str, Any]:
+def build_player_seek_query(position: float) -> Dict[str, Any]:
     """
     Seek to a position in the current video by percentage.
     
@@ -718,7 +718,7 @@ def build_player_seek_query(position: float) -> dict[str, Any]:
     }
 
 
-def build_player_seek_time_query(seconds: int) -> dict[str, Any]:
+def build_player_seek_time_query(seconds: int) -> Dict[str, Any]:
     """
     Seek to an absolute time position in the current video.
     
@@ -754,7 +754,7 @@ def build_player_seek_time_query(seconds: int) -> dict[str, Any]:
 # Batch Operations
 # =============================================================================
 
-def build_playlist_get_items_query(playlist_path: str) -> dict[str, Any]:
+def build_playlist_get_items_query(playlist_path: str) -> Dict[str, Any]:
     """
     Get contents of a smart playlist file.
     

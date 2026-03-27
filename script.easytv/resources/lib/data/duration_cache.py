@@ -248,10 +248,13 @@ def calculate_median_duration(episodes: List[Dict[str, Any]]) -> int:
     if not durations:
         return 0
     
-    # Calculate median (middle value of sorted list)
+    # Calculate median
     sorted_durations = sorted(durations)
-    mid_index = len(sorted_durations) // 2
-    return sorted_durations[mid_index]
+    n = len(sorted_durations)
+    mid = n // 2
+    if n % 2 == 0:
+        return (sorted_durations[mid - 1] + sorted_durations[mid]) // 2
+    return sorted_durations[mid]
 
 
 def get_shows_needing_calculation(

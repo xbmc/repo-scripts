@@ -12,6 +12,7 @@
 EasyTV Background Service Components.
 
 This package provides the background service functionality:
+- main.py: Service entry point logic (called from service.py)
 - daemon.py: Main service loop and initialization
 - playback_monitor.py: PlaybackMonitor class (tracks playback state)
 - library_monitor.py: LibraryMonitor class (responds to library/settings changes)

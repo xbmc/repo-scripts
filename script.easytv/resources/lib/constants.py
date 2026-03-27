@@ -28,6 +28,13 @@ EPISODE_SELECTION_WATCHED = 1
 EPISODE_SELECTION_BOTH = 2
 
 # =============================================================================
+# Premiere Filter Modes
+# =============================================================================
+PREMIERE_SKIP = 0
+PREMIERE_MIX_IN = 1
+PREMIERE_ONLY = 2
+
+# =============================================================================
 # Countdown Dialog Control IDs
 # =============================================================================
 COUNTDOWN_HEADING = 1
@@ -35,6 +42,34 @@ COUNTDOWN_MESSAGE = 2
 COUNTDOWN_YES_BUTTON = 10
 COUNTDOWN_NO_BUTTON = 11
 COUNTDOWN_POSTER = 20
+COUNTDOWN_TIMER_LABEL = 3
+COUNTDOWN_SUBTITLE = 4
+
+# =============================================================================
+# Confirm Dialog Control IDs
+# =============================================================================
+CONFIRM_HEADING = 1
+CONFIRM_MESSAGE = 2
+CONFIRM_YES_BUTTON = 10
+CONFIRM_NO_BUTTON = 11
+
+# =============================================================================
+# Select Dialog Control IDs
+# =============================================================================
+SELECT_HEADING = 1
+SELECT_LIST = 100
+
+# =============================================================================
+# Show Selector Dialog Control IDs
+# =============================================================================
+SELECTOR_HEADING = 1
+SELECTOR_SEARCH = 2
+SELECTOR_CLEAR_SEARCH = 5
+SELECTOR_ENABLE_ALL = 10
+SELECTOR_IGNORE_ALL = 11
+SELECTOR_LIST = 100
+SELECTOR_CANCEL = 20
+SELECTOR_SAVE = 21
 
 # =============================================================================
 # Kodi Window IDs
@@ -346,18 +381,6 @@ CONTEXT_UPDATE_LIBRARY = 170
 CONTEXT_REFRESH = 180
 
 # =============================================================================
-# Standard Dialog/Window Control IDs
-# =============================================================================
-CONTROL_OK_BUTTON = 5
-CONTROL_HEADING = 1
-CONTROL_LIST = 6
-
-# DialogSelect button control IDs (from Kodi's GUIDialogSelect.cpp)
-# These are additional buttons that may appear in DialogSelect
-CONTROL_CANCEL_BUTTON = 7     # Standard cancel button
-CONTROL_EXTRA_BUTTON2 = 8     # Second extra button
-
-# =============================================================================
 # String Utilities
 # =============================================================================
 # Length of "The " for sorting (to strip leading article)
@@ -393,6 +416,8 @@ DEFAULT_ADDON_ID = "script.easytv"
 PROP_PLAYLIST_CONFIG = "EasyTV.playlist_config"
 # Flag to trigger playlist regeneration from daemon
 PROP_PLAYLIST_REGENERATE = "EasyTV.playlist_regenerate"
+# Addon ID of the instance (main or clone) that started current playback
+PROP_SOURCE_ADDON_ID = "EasyTV.SourceAddonId"
 
 # =============================================================================
 # Browse Mode Window Properties
@@ -414,6 +439,30 @@ SETTING_DURATION_MAX = "duration_max"
 DURATION_CACHE_FILENAME = "duration_cache.json"
 # Schema version for cache file format (increment on breaking changes)
 DURATION_CACHE_VERSION = 1
+
+# =============================================================================
+# Service / System Window Properties
+# =============================================================================
+# Service lifecycle status ('starting', 'true', 'marco', 'polo')
+PROP_SERVICE_RUNNING = "EasyTV_service_running"
+# Addon version string
+PROP_VERSION = "EasyTV.Version"
+# Path to addon directory
+PROP_SERVICE_PATH = "EasyTV.ServicePath"
+# Whether a playlist is currently playing ('true'/'false'/'listview')
+PROP_PLAYLIST_RUNNING = "EasyTV.playlist_running"
+# Signal to reshuffle random order shows
+PROP_RANDOM_ORDER_SHUFFLE = "EasyTV.random_order_shuffle"
+# JSON-encoded list of show IDs with next episodes
+PROP_SHOWS_WITH_NEXT_EPISODES = "EasyTV.shows_with_next_episodes"
+# Sync revision counter for multi-instance coordination
+PROP_SYNC_REV = "EasyTV.sync_rev"
+
+# =============================================================================
+# Setting IDs
+# =============================================================================
+SETTING_THEME = "theme"
+SETTING_MULTI_INSTANCE_SYNC = "multi_instance_sync"
 
 # =============================================================================
 # Lazy Queue (Both Mode) Settings
@@ -447,3 +496,38 @@ EASYTV_DB_BACKOFF_SECONDS = 30
 EASYTV_MIGRATION_LOCK_TTL_MINUTES = 5
 # Default Kodi video database base name
 KODI_DEFAULT_VIDEO_DB_NAME = "MyVideos"
+
+# =============================================================================
+# Theme Colors (set as window properties for skin XML $INFO references)
+# =============================================================================
+# Theme ID → property name → AARRGGBB color value
+THEME_COLORS = {
+    '0': {  # Golden Hour
+        'EasyTV.Accent': 'FFF5A623',
+        'EasyTV.AccentGlow': 'FFF5C564',
+        'EasyTV.AccentBG': '59B4781E',
+        'EasyTV.ButtonTextFocused': 'FF0D1117',
+        'EasyTV.ButtonFocus': 'FFD4912A',
+    },
+    '1': {  # Ultraviolet
+        'EasyTV.Accent': 'FFA78BFA',
+        'EasyTV.AccentGlow': 'FFC4B5FD',
+        'EasyTV.AccentBG': '596432B4',
+        'EasyTV.ButtonTextFocused': 'FFFFFFFF',
+        'EasyTV.ButtonFocus': 'FF7C3AED',
+    },
+    '2': {  # Ember
+        'EasyTV.Accent': 'FFF87171',
+        'EasyTV.AccentGlow': 'FFFCA5A5',
+        'EasyTV.AccentBG': '59B43232',
+        'EasyTV.ButtonTextFocused': 'FFFFFFFF',
+        'EasyTV.ButtonFocus': 'FFEF4444',
+    },
+    '3': {  # Nightfall
+        'EasyTV.Accent': 'FF60A5FA',
+        'EasyTV.AccentGlow': 'FF93C5FD',
+        'EasyTV.AccentBG': '59286AB4',
+        'EasyTV.ButtonTextFocused': 'FFFFFFFF',
+        'EasyTV.ButtonFocus': 'FF3B82F6',
+    },
+}
