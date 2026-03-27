@@ -19,7 +19,7 @@ msgid "An editor for keymap files"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi. Note: existing user defined key mappings will be renamed to .bak."
+msgid "Keymap Editor is a GUI for configuring mappings for remotes, keyboard and other inputs supported by Kodi."
 msgstr ""
 
 # Text Messages
@@ -92,7 +92,44 @@ msgctxt "#30016"
 msgid "General"
 msgstr ""
 
-# empty strings from id 30017 to 30099
+msgctxt "#30017"
+msgid "Enable support for multiple keymap files"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Keymaps are loaded alphabetically, and later loaded files override ones already loaded. DO NOT USE A FILENAME FOR A FILE GENERATED OUTSIDE KEYMAP EDITOR. This will almost certainly result in a crash or unexpected behavior."
+msgstr ""
+
+msgctxt "#30019"
+msgid "Keymap Editor file name"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Failed to load keymap file"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Rename keymap file"
+msgstr ""
+
+msgctxt "#30022"
+msgid "First run"
+msgstr ""
+
+msgctxt "#30023"
+msgid "By default this addon disables all other keymaps. If you want to use multiple keymap files, go to the settings and enable that option."
+msgstr ""
+
+msgctxt "#30024"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Continue"
+msgstr ""
+
+
+# empty strings from id 30026 to 30099
 
 # Window names
 
