@@ -32,6 +32,7 @@ RunScript('script.radioparadise', 1)
 | 2 | Rock Mix |
 | 3 | Global Mix |
 | 5 | Beyond... |
+| 42 | Serenity |
 | 945 | KFAT |
 
 This can be used to add shortcuts for RP channels in [favourites.xml][].

@@ -2,37 +2,43 @@
     {
         "channel_id": 0,
         "title": "Main Mix",
-        "url_aac": "http://stream.radioparadise.com/aac-128",
-        "url_flac": "http://stream.radioparadise.com/flacm"
+        "url_aac": "https://stream.radioparadise.com/aac-128",
+        "url_flac": "https://stream.radioparadise.com/flacm"
     },
     {
         "channel_id": 1,
         "title": "Mellow Mix",
-        "url_aac": "http://stream.radioparadise.com/mellow-128",
-        "url_flac": "http://stream.radioparadise.com/mellow-flacm"
+        "url_aac": "https://stream.radioparadise.com/mellow-128",
+        "url_flac": "https://stream.radioparadise.com/mellow-flacm"
     },
     {
         "channel_id": 2,
         "title": "Rock Mix",
-        "url_aac": "http://stream.radioparadise.com/rock-128",
-        "url_flac": "http://stream.radioparadise.com/rock-flacm"
+        "url_aac": "https://stream.radioparadise.com/rock-128",
+        "url_flac": "https://stream.radioparadise.com/rock-flacm"
     },
     {
         "channel_id": 3,
         "title": "Global Mix",
-        "url_aac": "http://stream.radioparadise.com/global-128",
-        "url_flac": "http://stream.radioparadise.com/global-flacm"
+        "url_aac": "https://stream.radioparadise.com/global-128",
+        "url_flac": "https://stream.radioparadise.com/global-flacm"
     },
     {
         "channel_id": 5,
         "title": "Beyond...",
-        "url_aac": "http://stream.radioparadise.com/beyond-128",
-        "url_flac": "http://stream.radioparadise.com/beyond-flacm"
+        "url_aac": "https://stream.radioparadise.com/beyond-128",
+        "url_flac": "https://stream.radioparadise.com/beyond-flacm"
+    },
+    {
+        "channel_id": 42,
+        "title": "Serenity",
+        "url_aac": "https://stream.radioparadise.com/serenity",
+        "url_flac": "https://stream.radioparadise.com/serenity"
     },
     {
         "channel_id": 945,
         "title": "KFAT",
-        "url_aac": "http://stream.radioparadise.com/kfat-128",
-        "url_flac": "http://stream.radioparadise.com/kfat-flacm"
+        "url_aac": "https://stream.radioparadise.com/kfat-128",
+        "url_flac": "https://stream.radioparadise.com/kfat-flacm"
     }
 ]

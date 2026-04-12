@@ -15,7 +15,7 @@
 			<left>50%</left>
 			<centertop>50%</centertop>
 			<width>140</width>
-			<height>180</height>
+			<height>210</height>
 			<viewtype>list</viewtype>
 			<itemlayout height="30">
 				<control type="label">
