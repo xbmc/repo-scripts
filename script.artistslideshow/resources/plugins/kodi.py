@@ -18,6 +18,6 @@ class objectConfig(object):
         try:
             bio = _json.loads(response).get('result', {}).get(
                 'item', {}).get('description', '')
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, _json.JSONDecodeError):
             bio = ''
         return bio, self.loglines

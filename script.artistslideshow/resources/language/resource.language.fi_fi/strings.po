@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-07-28 09:11+0000\n"
+"PO-Revision-Date: 2025-12-11 16:13+0000\n"
 "Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/fi_fi/>\n"
 "Language: fi_fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -110,7 +110,7 @@ msgstr "Oma sijainti"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr "Sisällytä Kodin esittäjien fanart-kuvat"
+msgstr "Sisällytä Kodin artistien fanart-kuvat"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
@@ -235,6 +235,14 @@ msgstr "Käytä mediavirroille agressiivisempaa esittäjähakua"
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
 msgstr "Tauota kuvaesitys, kun toisto tauotetaan"
+
+msgctxt "#32146"
+msgid "Use Audio Stream Monitor for artist information"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Ignore currently playing song when changing slideshow"
+msgstr ""
 
 # empty strings from id 32145 to 32199
 # Dialog headings

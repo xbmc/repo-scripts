@@ -6,7 +6,7 @@ import requests as _requests
 
 class URL(object):
 
-    def __init__(self, returntype='text', headers='', timeout=10):
+    def __init__(self, returntype='text', headers={}, timeout=10):
         """Creates a Requests wrapper object."""
         self.TIMEOUT = timeout
         self.HEADERS = headers
@@ -42,7 +42,11 @@ class URL(object):
             elif urltype == "delete":
                 urldata = _requests.delete(
                     theurl, auth=auth, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT)
-            loglines.append("the url is: " + urldata.url)
+            try:
+                loglines.append("the url is: " + urldata.url)
+            except AttributeError:
+                loglines.append(
+                    "invalid response object returned from request")
             loglines.append('the params are: ')
             loglines.append(params)
             loglines.append('the data are: ')
@@ -92,7 +96,7 @@ class URL(object):
         try:
             auth = kwargs['auth']
         except KeyError:
-            auth = ()
+            auth = None
         try:
             params = kwargs['params']
         except KeyError:

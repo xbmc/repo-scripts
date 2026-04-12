@@ -245,7 +245,7 @@ def setSafeName(thename, illegalchars='<>:"/\|?*', illegalreplace='_', endreplac
 
 def writeFile(data, filename, wtype='wb'):
     log_lines = []
-    if type(data).__name__ == 'unicode':
+    if isinstance(data, str) and sys.version_info >= (3, 0):
         data = data.encode('utf-8')
     try:
         if sys.version_info >= (3, 0):
@@ -263,5 +263,5 @@ def writeFile(data, filename, wtype='wb'):
         log_lines.append('unknown error while writing data to ' + filename)
         log_lines.append(e)
         return False, log_lines
-    log_lines.append('successfuly wrote data to ' + filename)
+    log_lines.append('successfully wrote data to %s' % filename)
     return True, log_lines

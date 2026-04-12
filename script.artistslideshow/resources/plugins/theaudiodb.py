@@ -34,9 +34,8 @@ class objectConfig(object):
         self.CACHETIMEFILENAME = 'theaudiodbcachetime.nfo'
         self.ALBUMCACHETIMEFILENAME = 'theaudiodbalbumcachetime.nfo'
         self.HASDONATION = False
-        self.CACHEEXPIRE = {}
-        self.CACHEEXPIRE['low'] = int(1 * secsinweek)
-        self.CACHEEXPIRE['high'] = int(2 * secsinweek)
+        self.CACHEEXPIRE = {'low': int(
+            1 * secsinweek), 'high': int(2 * secsinweek)}
         self.CACHEEXPIREWITHDONATION = int(secsinweek / 7)
         self.LOGLINES = []
         self.JSONURL = URL('json')
@@ -131,7 +130,7 @@ class objectConfig(object):
                 'musicbrainz ID found in %s file' % self.ARTISTFILEPATH)
             try:
                 return json_data.get('artists')[0].get('strMusicBrainzID', ''), self.LOGLINES
-            except TypeError:
+            except (TypeError, IndexError):
                 self.LOGLINES.append(
                     'error reading musicbrainz ID from ' + self.ARTISTFILEPATH)
                 return '', self.LOGLINES
@@ -165,7 +164,7 @@ class objectConfig(object):
             self.LOGLINES.append(
                 'no mbid or tadbid found, using artist name to get information from theaudiodb')
             return nameurl, url_params
-        return '', ''
+        return None, None
 
     def _get_audiodbid(self):
         audiodbid = ''
@@ -189,7 +188,8 @@ class objectConfig(object):
                 else:
                     artist = None
                 if artist is not None:
-                    audiodbid = artist[0].get('idArtist', '')
+                    if len(artist) > 0:
+                        audiodbid = artist[0].get('idArtist', '')
                 if audiodbid:
                     success, wloglines = writeFile(audiodbid, self.IDFILEPATH)
                     self.LOGLINES.extend(wloglines)
@@ -217,7 +217,7 @@ class objectConfig(object):
         return cachetime
 
     def _get_data(self, filepath, cachefilepath, url, url_params):
-        json_data = ''
+        json_data = None
         if self._update_cache(filepath, cachefilepath):
             success, uloglines, json_data = self.JSONURL.Get(
                 url, params=url_params)
@@ -246,7 +246,7 @@ class objectConfig(object):
         cachetime = random.randint(
             self.CACHEEXPIRE['low'], self.CACHEEXPIRE['high'])
         success, wloglines = writeFile(str(cachetime), cachefilepath)
-        self.LOGLINES.append(wloglines)
+        self.LOGLINES.extend(wloglines)
         return success
 
     def _set_filepaths(self, params):

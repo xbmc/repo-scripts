@@ -50,8 +50,7 @@ class objectConfig(object):
         cachefilepath = os.path.join(album_params.get(
             'infodir', ''), self.CACHETIMEFILENAME)
         additionalparams = {'artist': album_params.get('artist', '')}
-        url_params = dict(list(self.ALBUMPARAMS.items()) +
-                          list(additionalparams.items()))
+        url_params = {**self.ALBUMPARAMS, **additionalparams}
         self.LOGLINES.append('trying to get artist albums from ' + self.URL)
         try:
             xmldata = _xmltree.fromstring(self._get_data(
@@ -90,8 +89,7 @@ class objectConfig(object):
             'infodir', ''), self.CACHETIMEFILENAME)
         additionalparams = {'artist': bio_params.get(
             'artist', ''), 'lang': bio_params.get('lang', '')}
-        url_params = dict(list(self.ARTISTPARAMS.items()) +
-                          list(additionalparams.items()))
+        url_params = {**self.ARTISTPARAMS, **additionalparams}
         self.LOGLINES.append('trying to get artist bio from ' + self.URL)
         try:
             xmldata = _xmltree.fromstring(
@@ -117,8 +115,7 @@ class objectConfig(object):
         cachefilepath = os.path.join(sim_params.get(
             'infodir', ''), self.CACHETIMEFILENAME)
         additionalparams = {'artist': sim_params.get('artist', '')}
-        url_params = dict(list(self.SIMILARPARAMS.items()) +
-                          list(additionalparams.items()))
+        url_params = {**self.SIMILARPARAMS, **additionalparams}
         self.LOGLINES.append('trying to get similar artists from ' + self.URL)
         try:
             xmldata = _xmltree.fromstring(
@@ -212,7 +209,7 @@ class objectConfig(object):
         cachetime = random.randint(
             self.CACHEEXPIRE['low'], self.CACHEEXPIRE['high'])
         success, wloglines = writeFile(str(cachetime), cachefilepath)
-        self.LOGLINES.append(wloglines)
+        self.LOGLINES.extend(wloglines)
         return success
 
     def _update_cache(self, filepath, cachefilepath):

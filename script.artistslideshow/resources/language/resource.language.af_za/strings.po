@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-03 00:28+0000\n"
+"PO-Revision-Date: 2026-01-08 10:13+0000\n"
 "Last-Translator: Heiko Berner <berner.h@gmail.com>\n"
 "Language-Team: Afrikaans (South Africa) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/af_za/>\n"
 "Language: af_za\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9.2\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -118,11 +118,11 @@ msgstr ""
 
 msgctxt "#32116"
 msgid "Limit size of download cache"
-msgstr ""
+msgstr "Beperk grootte van aflaai kas"
 
 msgctxt "#32117"
 msgid "Maximum cache size (in megabytes)"
-msgstr ""
+msgstr "Maksimum kas grootte (in megagrepe)"
 
 msgctxt "#32118"
 msgid "Alternate name for local fanart folder"
@@ -234,6 +234,14 @@ msgstr ""
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Use Audio Stream Monitor for artist information"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Ignore currently playing song when changing slideshow"
 msgstr ""
 
 # empty strings from id 32145 to 32199

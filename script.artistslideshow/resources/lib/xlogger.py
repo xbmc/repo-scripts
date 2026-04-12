@@ -51,7 +51,7 @@ class Logger(object):
                 loglevel = self.logger.debug
         for line in loglines:
             try:
-                str_line = line.__str__()
+                str_line = str(line)
             except Exception as e:
                 str_line = ''
                 self._output('error parsing logline', loglevel)

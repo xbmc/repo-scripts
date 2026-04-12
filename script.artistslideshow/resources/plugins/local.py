@@ -29,6 +29,8 @@ class objectConfig(object):
             xmldata = _xmltree.fromstring(rawxml)
         else:
             return [], self.loglines
+        name = ''
+        image = ''
         for element in xmldata.iter():
             if element.tag == "name":
                 name = element.text
@@ -93,6 +95,8 @@ class objectConfig(object):
             xmldata = _xmltree.fromstring(rawxml)
         else:
             return [], self.loglines
+        name = ''
+        image = ''
         for element in xmldata.iter():
             if element.tag == "name":
                 name = element.text

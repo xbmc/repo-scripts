@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-04-22 15:04+0000\n"
+"PO-Revision-Date: 2026-02-08 12:13+0000\n"
 "Last-Translator: rimasx <riks_12@hot.ee>\n"
 "Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/et_ee/>\n"
 "Language: et_ee\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -98,11 +98,11 @@ msgstr "Annetan sellele teenusele"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
-msgstr "Kasuta varuslaidiseanssi"
+msgstr "Kasuta varuslaidiesitlust"
 
 msgctxt "#32112"
 msgid "Use override slideshow"
-msgstr "Kasuta asendusslaidiseanssi"
+msgstr "Kasuta asendusslaidiesitlust"
 
 msgctxt "#32113"
 msgid "Custom location"
@@ -110,7 +110,7 @@ msgstr "Kohandatud asukoht"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr "Kaasa Kodi esitaja fännipldid"
+msgstr "Kaasa Kodi esitaja fännipildid"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
@@ -210,15 +210,15 @@ msgstr "Esitajate vahetamisel tuhmub mustaks"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
-msgstr "Pealõnga puhkeaeg (sekundites)"
+msgstr "Põhilõime puhkeaeg (sekundites)"
 
 msgctxt "#32140"
 msgid "Main thread idle sleep time (in seconds)"
-msgstr "Põhilõnga jõudeoleku aeg (sekundites)"
+msgstr "Põhilõime jõudeoleku aeg (sekundites)"
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
-msgstr "Slaidiseansi lõime puhkeaeg (sekundites)"
+msgstr "Slaidiesitluse lõime puhkeaeg (sekundites)"
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
@@ -234,13 +234,21 @@ msgstr "Kasuta meediavoogude jaoks agressiivsemat esineja otsingut"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
-msgstr "Peata slaidiseanss taasesituse pausimisel"
+msgstr "Peata slaidiesitlus taasesituse peatamisel"
+
+msgctxt "#32146"
+msgid "Use Audio Stream Monitor for artist information"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Ignore currently playing song when changing slideshow"
+msgstr ""
 
 # empty strings from id 32145 to 32199
 # Dialog headings
 msgctxt "#32200"
 msgid "Artist Slideshow"
-msgstr "Esitaja slaidiseanss"
+msgstr "Esitaja slaidiesitlus"
 
 msgctxt "#32201"
 msgid "Warning"
@@ -274,7 +282,7 @@ msgstr "Kodi muusika esitajate piltide salvestuskohta ei õnnestunud tuua. Vali 
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr "Esitaja slaidiseanss on juba seadistatud kasutama Kodi esitaja teabekausta. Määra kas addon_data kaust või kohandatud asukoht ja proovi uuesti."
+msgstr "Esitaja slaidiesitlus on juba seadistatud kasutama Kodi esitaja teabekausta. Määra kas addon_data kaust või kohandatud asukoht ja proovi uuesti."
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
