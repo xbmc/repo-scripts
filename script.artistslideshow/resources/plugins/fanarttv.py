@@ -94,7 +94,7 @@ class objectConfig(object):
             return cachetime
 
     def _get_data(self, filepath, cachefilepath, url, url_params):
-        json_data = ''
+        json_data = {}
         if self._update_cache(filepath, cachefilepath):
             success, uloglines, json_data = self.JSONURL.Get(
                 url, params=url_params)
@@ -110,7 +110,7 @@ class objectConfig(object):
             self.LOGLINES.extend(rloglines)
             try:
                 json_data = _json.loads(rawdata)
-            except ValueError:
+            except (ValueError, _json.JSONDecodeError):
                 success, dloglines = deleteFile(filepath)
                 self.LOGLINES.extend(dloglines)
                 self.LOGLINES.append(
@@ -122,7 +122,7 @@ class objectConfig(object):
         cachetime = random.randint(self.CACHEEXPIRE.get(
             'low'), self.CACHEEXPIRE.get('high'))
         success, wloglines = writeFile(str(cachetime), cachefilepath)
-        self.LOGLINES.append(wloglines)
+        self.LOGLINES.extend(wloglines)
         return success
 
     def _update_cache(self, filepath, cachefilepath):

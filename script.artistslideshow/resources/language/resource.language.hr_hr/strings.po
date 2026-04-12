@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2023-01-15 13:15+0000\n"
 "Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
@@ -235,6 +235,14 @@ msgstr "Koristi agresivniju pretragu izvođača za strujanja"
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
 msgstr "Pauziraj prezentaciju pri pauzi repordukcije"
+
+msgctxt "#32146"
+msgid "Use Audio Stream Monitor for artist information"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Ignore currently playing song when changing slideshow"
+msgstr ""
 
 # empty strings from id 32145 to 32199
 # Dialog headings

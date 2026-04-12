@@ -317,7 +317,7 @@ class Main(xbmc.Player):
         if self._get_infolabel('ArtistSlideshow.Image'):
             self.SLIDESHOW.ClearImages(fadetoblack=fadetoblack)
         self._slideshow_thread_stop()
-        if self._is_playing() and ( fadetoblack or clearartists ) and not slideshowstopping:
+        if self._is_playing() and (fadetoblack or clearartists) and not slideshowstopping:
             self._slideshow_thread_start()
         if self._get_infolabel('ArtistSlideshow.ArtistBiography'):
             self._set_property('ArtistSlideshow.ArtistBiography')
@@ -377,7 +377,6 @@ class Main(xbmc.Player):
                         LW.log(loglines)
                     success, loglines, urldata = IMGURL.Get(
                         url, params=self.PARAMS)
-                    LW.log(loglines)
                     if success:
                         success, loglines = writeFile(
                             bytearray(urldata), tmpname)
@@ -583,14 +582,43 @@ class Main(xbmc.Player):
                     ['unexpected error getting playing file/song back from Kodi', e])
                 self.ARTISTS_INFO = []
                 return
-            if playing_file != self.LASTPLAYINGFILE or playing_song != self.LASTPLAYINGSONG:
+            stream_playing = self._get_infolabel(
+                'RadioMonitor.Playing', windowid='Home')
+            if self.USEAUDIOSTREAMMONITOR and (stream_playing or stream_playing.lower() == 'true'):
+                playing_check = playing_song or self.IGNOREPLAYINGSONG
+                if playing_check:
+                    radiomonitorartist = self._get_infolabel(
+                        'RadioMonitor.Artist', windowid='Home')
+                    if self.RADIOMONITORARTISTCACHE != radiomonitorartist:
+                        LW.log(['currently playing song is ' + playing_song])
+                        LW.log(['the cache Radio Monitor artist is ' +
+                                self.RADIOMONITORARTISTCACHE])
+                        LW.log(
+                            ['the current Radio Monitor artist is ' + radiomonitorartist])
+                        if radiomonitorartist and playing_check:
+                            artist_names, featured_artists, mbids = self._get_current_artists_radiomonitor()
+                        else:
+                            self.RADIOMONITORARTISTCACHE = ''
+                            self.ARTISTS_INFO = []
+                            return
+                    else:
+                        return
+                else:
+                    self.RADIOMONITORARTISTCACHE = ''
+                    self.ARTISTS_INFO = []
+                    return
+            elif playing_file != self.LASTPLAYINGFILE or playing_song != self.LASTPLAYINGSONG:
                 self.LASTPLAYINGFILE = playing_file
                 self.LASTPLAYINGSONG = playing_song
+                LW.log(['currently playing song is ' + playing_song])
                 artist_names, mbids = self._get_current_artist_names_mbids(
                     playing_song)
-                featured_artists = self._get_featured_artists(playing_song)
+                featured_artists = self._get_featured_artists(
+                    playing_song)
+                for artist_name in artist_names:
+                    featured_artists.extend(
+                        self._get_featured_artists(artist_name))
             else:
-                LW.log(['same file playing, using cached artists_info'])
                 return
         elif self._get_infolabel(self.SKININFO['artist']):
             artist_names = self._split_artists(
@@ -601,10 +629,41 @@ class Main(xbmc.Player):
         if featured_artists:
             for one_artist in featured_artists:
                 artist_names.append(one_artist.strip(' ()'))
-        if not artist_names:
-            return []
-        self.ARTISTS_INFO = self._get_current_artists_filtered(
-            artist_names, mbids)
+        if artist_names:
+            self.ARTISTS_INFO = self._get_current_artists_filtered(
+                artist_names, mbids)
+        else:
+            self.ARTISTS_INFO = []
+
+    def _get_current_artists_radiomonitor(self):
+        c = 1
+        artist = ''
+        while not artist and c <= 5:
+            artist = self._get_infolabel(
+                'RadioMonitor.Artist', windowid='Home').strip()
+            if artist == self.RADIOMONITORARTISTCACHE:
+                artist = ''
+            if not artist:
+                LW.log(
+                    ['Audio Stream Monitor active but no new artist yet, waiting for metadata loop %s' % str(c)])
+                c += 1
+                if self._waitForAbort(5):
+                    return ([], [], [])
+        if not artist:
+            LW.log(
+                ['Audio Stream Monitor got no artist information, falling back to default logic'])
+            return ([], [], [])
+        self.RADIOMONITORARTISTCACHE = artist
+        mbid = self._get_infolabel(
+            'RadioMonitor.MBID', windowid='Home').strip()
+        title = self._get_infolabel(
+            'RadioMonitor.Title', windowid='Home').strip()
+        artist_names = self._get_featured_artists(artist, all=True)
+        mbids = [mbid] if mbid else []
+        featured_artists = self._get_featured_artists(title)
+        LW.log(
+            ['using artist information from Audio Stream Monitor', artist_names, mbids])
+        return (artist_names, featured_artists, mbids)
 
     def _get_file_list(self, path, do_filter=False):
         LW.log(['checking %s for artist images' % path])
@@ -623,14 +682,28 @@ class Main(xbmc.Player):
             files = filtered_files
         return files
 
-    def _get_featured_artists(self, data):
-        replace_regex = re.compile(r'ft\.', re.IGNORECASE)
-        split_regex = re.compile(r'feat\.', re.IGNORECASE)
-        the_split = split_regex.split(replace_regex.sub('feat.', data))
-        if len(the_split) > 1:
-            return self._split_artists(the_split[-1])
+    def _get_featured_artists(self, data, all=False):
+        LW.log(['checking for featured artists in ' + data])
+        pattern = re.compile(r'(?i)\b(ft\.|feat\.|/f)\b')
+        normalized = pattern.sub('feat.', data)
+        raw_artists = normalized.split('feat.')
+        artists = []
+        for artist in raw_artists:
+            cleaned = artist.strip().strip('()[]{}')
+            if cleaned:
+                subparts = [p.strip() for p in re.split(
+                    r'\s*/\s*', cleaned) if p.strip()]
+                artists.extend(subparts)
+        if len(artists) > 1:
+            if all:
+                return artists
+            else:
+                return artists[1:]
         else:
-            return []
+            if all:
+                return [data]
+            else:
+                return []
 
     def _get_folder_size(self, start_path):
         total_size = 0
@@ -663,11 +736,13 @@ class Main(xbmc.Player):
                 self.NAME, self.MBID)
         return images
 
-    def _get_infolabel(self, item):
+    def _get_infolabel(self, item, windowid='default'):
+        if windowid == 'default':
+            windowid = self.WINDOWID
         if item:
             try:
                 infolabel = xbmc.getInfoLabel(
-                    'Window(%s).Property(%s)' % (self.WINDOWID, item))
+                    'Window(%s).Property(%s)' % (windowid, item))
             except:
                 LW.log(
                     ['problem reading information from %s, returning blank' % item])
@@ -766,7 +841,7 @@ class Main(xbmc.Player):
                     'sa_', module)
                 if sa_active:
                     self.SIMILARPLUGINS['objs'][module] = plugin
-                    self.SIMILARPLUGINS['names'].append([ai_priority, module])
+                    self.SIMILARPLUGINS['names'].append([sa_priority, module])
                     LW.log(['added %s to similar artist plugins' % module])
             if 'mbid' in scrapers:
                 self.MBIDPLUGINS['objs'][module] = plugin
@@ -799,6 +874,9 @@ class Main(xbmc.Player):
         self.MAINSLEEP = getSettingInt('main_sleep', default=1)
         self.MAINIDLESLEEP = getSettingInt('main_idle_sleep', default=10)
         self.AGRESSIVESTREAMSEARCH = getSettingBool('agressive_stream_search')
+        self.USEAUDIOSTREAMMONITOR = getSettingBool('use_audio_stream_monitor') and xbmc.getCondVisibility(
+            'System.AddonIsEnabled(service.audio.stream.monitor)') == 1
+        self.IGNOREPLAYINGSONG = getSettingBool('ignore_playing_song')
         artist_image_storage = getSettingInt('artist_image_storage')
         if artist_image_storage == 1:
             self.KODILOCALSTORAGE = True
@@ -876,6 +954,7 @@ class Main(xbmc.Player):
                self._get_infolabel(self.EXTERNALCALL)])
         self.NAME = ''
         self.ALLARTISTS = []
+        self.RADIOMONITORARTISTCACHE = ''
         self.MBID = ''
         self.VARIOUSARTISTSMBID = '89ad4ac3-39f7-470e-963a-56509c546377'
         self.LASTPLAYINGFILE = ''
@@ -957,7 +1036,7 @@ class Main(xbmc.Player):
             dialog.ok(ADDONLANGUAGE(32200) + ': ' +
                       ADDONLANGUAGE(32203), ADDONLANGUAGE(32306))
             return
-        increment = 100/len(dirs)
+        increment = float(100)/len(dirs)
         progress = 0.0
         for thedir in dirs:
             if (src == self.LOCALARTISTPATH) and self.USEFANARTFOLDER:
@@ -1043,10 +1122,10 @@ class Main(xbmc.Player):
             return False
 
     def _remove_trailing_dot(self, thename):
-        if thename[-1] == '.' and len(thename) > 1 and self.ENDREPLACE != '.':
-            return self._remove_trailing_dot(thename[:-1] + self.ENDREPLACE)
-        else:
-            return thename
+        if len(thename) > 1:
+            if thename[-1] == '.' and self.ENDREPLACE != '.':
+                return self._remove_trailing_dot(thename[:-1] + self.ENDREPLACE)
+        return thename
 
     def _set_artwork_from_dir(self, thedir, files):
         for thefile in files:

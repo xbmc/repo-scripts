@@ -16,24 +16,24 @@ SKINNAME = xbmc.getSkinDir()
 
 
 def _get_setting(setting_name, default, thetype="string"):
+    setting = ADDON.getSetting(setting_name)
     if thetype.lower() == "bool":
-        if ADDON.getSetting(setting_name).lower() == 'true':
+        if setting.lower() == 'true':
             return True
-        if ADDON.getSetting(setting_name).lower() == 'false':
+        if setting.lower() == 'false':
             return False
         return default
     if thetype.lower() == "int":
         try:
-            return int(ADDON.getSetting(setting_name))
-        except ValueError:
+            return int(setting)
+        except (ValueError, TypeError):
             return default
     if thetype.lower() == "number":
         try:
-            return float(ADDON.getSetting(setting_name))
-        except ValueError:
+            return float(setting)
+        except (ValueError, TypeError):
             return default
     else:
-        setting = ADDON.getSetting(setting_name)
         if setting:
             return setting
         else:

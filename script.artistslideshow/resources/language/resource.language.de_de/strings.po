@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2023-02-06 23:15+0000\n"
 "Last-Translator: Kai Sommerfeld <kai.sommerfeld@gmx.com>\n"
@@ -235,6 +235,14 @@ msgstr "Für Streams eine „agressivere“ Interpretensuche verwenden"
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
 msgstr "Diashow pausieren, wenn Wiedergabe pausiert wird"
+
+msgctxt "#32146"
+msgid "Use Audio Stream Monitor for artist information"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Ignore currently playing song when changing slideshow"
+msgstr ""
 
 # empty strings from id 32145 to 32199
 # Dialog headings
