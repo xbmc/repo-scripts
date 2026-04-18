@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="2.1.7" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="OzWeather" version="2.1.8" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
     	<import addon="script.module.requests" version="2.22.0+matrix.1"/>
@@ -23,10 +23,8 @@
        		<icon>icon.png</icon>
        		<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>v2.1.7 
-- Increase locations support from 3 to 6 (implemented by spin35)
-- Update to latest radar list scraped from BOM site
-- Add various new labels for skinning: LocationIndex, LocationGeohash, RadarLocation
+		<news>v2.1.8 
+- Add RadarRange label
     	</news>
 	</extension>
 </addon>

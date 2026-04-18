@@ -269,7 +269,7 @@ def get_weather():
     # Set basic properties/'brand'
     set_property(WEATHER_WINDOW, 'WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
     set_property(WEATHER_WINDOW, 'WeatherProvider', 'Bureau of Meteorology Australia')
-    set_property(WEATHER_WINDOW, 'WeatherVersion', ADDON_NAME + "-" + ADDON_VERSION)
+    set_property(WEATHER_WINDOW, 'WeatherVersion', ADDON_VERSION)
 
     # Set the location we updated
     location_in_use = ADDON.getSetting(f'Location{sys.argv[1]}BOM')
@@ -283,7 +283,8 @@ def get_weather():
 
     set_property(WEATHER_WINDOW, 'Location', location_in_use)
     set_property(WEATHER_WINDOW, 'LocationIndex', sys.argv[1])
-    set_property(WEATHER_WINDOW, 'RadarLocation', Store.RADAR_LOOKUP.get(radar[:-1]))
+    set_property(WEATHER_WINDOW, 'RadarLocation', Store.RADAR_LOCATION.get(radar[:-1]))
+    set_property(WEATHER_WINDOW, 'RadarRange', Store.RADAR_RANGE(radar))
     set_property(WEATHER_WINDOW, 'LocationGeohash', geohash)
     set_property(WEATHER_WINDOW, 'Updated', time.strftime("%d/%m %H:%M").lower())
     set_property(WEATHER_WINDOW, 'Current.Location', location_in_use)
