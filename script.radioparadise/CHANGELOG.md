@@ -1,3 +1,8 @@
+## v2.4.0
+
+- Restore Serenity channel
+- Use https in stream URLs
+
 ## v2.3.0
 
 - Add KFAT channel
