@@ -80,7 +80,7 @@ class PunchPlayService(xbmc.Monitor):
                 try:
                     self._api.flush_queue()
                 except Exception as exc:
-                    xbmc.log(f"[PunchPlay] Queue flush error: {exc}", xbmc.LOGDEBUG)
+                    xbmc.log(f"[PunchPlay] Queue flush error: {exc}", xbmc.LOGWARNING)
                 else:
                     self._last_flush = now
 

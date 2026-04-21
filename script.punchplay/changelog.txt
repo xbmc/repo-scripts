@@ -1,3 +1,15 @@
+v1.0.2 (2026-04-15)
+- Login dialog now shows a scannable QR code alongside the device code.
+  Scan with your phone to open punchplay.tv/link with the code pre-filled.
+- Users without a phone can still read the code and type it on any device.
+
+v1.0.1 (2026-04-15)
+- Login dialog now shows the code at the top so it's visible without scrolling
+- Heartbeat thread now stops cleanly on any unhandled error
+- Offline queue WAL mode set once on DB init (not every connection)
+- Anime detection no longer matches the "animation" genre (too broad)
+- Offline queue retry loop stops on 401 so stale events don't block the queue
+
 v1.0.0 (2026-03-16)
 - Initial release
 - Automatic scrobbling of movies and TV episodes

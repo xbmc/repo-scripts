@@ -21,7 +21,7 @@ import xbmcaddon
 import xbmcgui
 
 _ADDON_ID = "script.punchplay"
-_VERSION = "1.0.0"
+_VERSION = "1.0.2"
 
 
 class PunchPlayPlayer(xbmc.Player):
@@ -169,11 +169,11 @@ class PunchPlayPlayer(xbmc.Player):
 
             except Exception as exc:
                 xbmc.log(f"[PunchPlay] Heartbeat error: {exc}", xbmc.LOGWARNING)
-                # If the player is no longer valid, stop the heartbeat loop
-                # rather than spinning silently.
-                if not self.isPlayingVideo():
-                    xbmc.log("[PunchPlay] Heartbeat stopping — player no longer active", xbmc.LOGINFO)
-                    return
+                # Always stop the heartbeat on any unhandled error — avoids
+                # the thread spinning silently if the player enters a bad state.
+                self._hb_stop.set()
+                xbmc.log("[PunchPlay] Heartbeat stopping due to error", xbmc.LOGINFO)
+                return
 
     # ------------------------------------------------------------------
     # Playback events

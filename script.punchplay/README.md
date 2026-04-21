@@ -8,21 +8,15 @@ Supported Kodi versions: **Nexus (20)** and **Omega (21)**, Python 3 only.
 
 ## Installation
 
-### 1. Zip the addon
+### Option A — Direct download (recommended)
 
-```bash
-# From the parent directory (one level above script.punchplay/):
-zip -r script.punchplay.zip script.punchplay/ \
-  --exclude "*.pyc" --exclude "*/__pycache__/*"
-```
+1. **[Download script.punchplay.zip](https://github.com/PunchPlay/script.punchplay/releases/latest/download/script.punchplay.zip)**
+2. In Kodi: **Settings → Add-ons → Install from zip file**
+3. Navigate to the downloaded zip and confirm — Kodi installs and starts the service immediately.
 
-### 2. Sideload into Kodi
+### Option B — Kodi addon store
 
-1. Copy `script.punchplay.zip` to the device running Kodi (USB, network share, or `adb push`).
-2. In Kodi: **Settings → Add-ons → Install from zip file**.
-3. Navigate to the zip and confirm. Kodi will install and start the service immediately.
-
-> Once the addon is approved on the Kodi addon store, you'll be able to install it directly from **Settings → Add-ons → Install from repository**.
+Once approved, install directly from **Settings → Add-ons → Install from repository → Kodi Add-on repository → Services → PunchPlay Scrobble**.
 
 ---
 
@@ -38,7 +32,9 @@ Open **Settings → Add-ons → My add-ons → Services → PunchPlay Scrobble �
 | **Heartbeat interval (sec)** | 30 | How often progress is reported during playback. |
 | **Scrobble movies** | On | Toggle movie tracking. |
 | **Scrobble TV shows** | On | Toggle TV episode tracking. |
-| **Scrobble anime** | On | Toggle anime tracking (detected by genre tag). |
+| **Scrobble anime** | On | Toggle anime tracking (detected by `"anime"` genre tag). |
+| **Show scrobble notifications** | On | Show a Kodi notification when a watch is successfully scrobbled. |
+| **Show notifications during playback** | Off | If off, scrobble notifications are suppressed while another video is playing. |
 
 ---
 
@@ -143,7 +139,10 @@ script.punchplay/
 ├── changelog.txt           Version history
 ├── LICENSE.txt             GPL-2.0
 └── resources/
-    └── settings.xml        Addon settings UI
+    ├── settings.xml        Addon settings UI
+    └── language/
+        └── resource.language.en_gb/
+            └── strings.po  Localised UI strings
 ```
 
 ---
