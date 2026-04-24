@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.punchplay"
        name="PunchPlay Scrobble"
-       version="1.0.0"
+       version="1.0.2"
        provider-name="PunchPlay">
 
   <requires>
@@ -13,11 +13,7 @@
 
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Automatically scrobble your watches to PunchPlay.tv</summary>
-    <description lang="en_GB">
-      Tracks movies and TV episodes you watch in Kodi and sends them to your
-      PunchPlay.tv account in real time. Supports Plex-style device-code login,
-      offline queuing, and heartbeat progress reporting.
-    </description>
+    <description lang="en_GB">Tracks movies and TV episodes you watch in Kodi and sends them to your PunchPlay.tv account in real time.</description>
     <disclaimer lang="en_GB">
       Requires a PunchPlay.tv account and a running PunchPlay API backend.
     </disclaimer>
@@ -26,7 +22,7 @@
     <forum/>
     <website>https://punchplay.tv</website>
     <source>https://github.com/PunchPlay/script.punchplay</source>
-    <news>1.0.0 - Initial release</news>
+    <news>1.0.2 - Login dialog now shows a scannable QR code alongside the device code</news>
     <assets>
       <icon>icon.png</icon>
       <fanart>fanart.jpg</fanart>

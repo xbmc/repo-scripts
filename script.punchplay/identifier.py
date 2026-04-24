@@ -89,10 +89,14 @@ def _regex_guess(path: str) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def is_anime(info_tag: "xbmc.InfoTagVideo") -> bool:
-    """Return True if the item's genre list includes 'anime' or 'animation'."""
+    """Return True if the item's genre list includes 'anime'.
+
+    Deliberately excludes the broad 'animation' genre to avoid misclassifying
+    Western cartoons and CGI films as anime.
+    """
     try:
         genres = [g.lower() for g in (info_tag.getGenres() or [])]
-        return "anime" in genres or "animation" in genres
+        return "anime" in genres
     except Exception:
         return False
 

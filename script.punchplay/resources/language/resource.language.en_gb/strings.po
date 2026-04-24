@@ -19,15 +19,15 @@ msgid "Invalid response from server. Try again."
 msgstr ""
 
 msgctxt "#32003"
-msgid "Open your browser and visit:"
+msgid "Visit:"
 msgstr ""
 
 msgctxt "#32004"
-msgid "Enter this code:"
+msgid "Your code:"
 msgstr ""
 
 msgctxt "#32005"
-msgid "The code expires in {0} minutes. Press OK — then this dialog will wait for approval."
+msgid "Expires in {0} minutes — press OK to wait for approval."
 msgstr ""
 
 msgctxt "#32006"
@@ -64,4 +64,24 @@ msgstr ""
 
 msgctxt "#32014"
 msgid "{0} S{1}E{2} scrobbled"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Connect Kodi to PunchPlay"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Scan with your phone camera"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Or visit:"
+msgstr ""
+
+msgctxt "#32018"
+msgid "And enter this code:"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Press OK or Back to continue"
 msgstr ""

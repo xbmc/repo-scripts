@@ -36,12 +36,12 @@ class Cache:
     # ------------------------------------------------------------------
 
     def _connect(self) -> sqlite3.Connection:
-        conn = sqlite3.connect(self._db_path, timeout=10)
-        conn.execute("PRAGMA journal_mode=WAL")
-        return conn
+        return sqlite3.connect(self._db_path, timeout=10)
 
     def _init_db(self) -> None:
         with self._connect() as conn:
+            # Enable WAL mode once — it persists across connections.
+            conn.execute("PRAGMA journal_mode=WAL")
             conn.executescript(
                 """
                 CREATE TABLE IF NOT EXISTS identifier_cache (

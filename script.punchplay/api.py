@@ -9,6 +9,7 @@ Responsibilities:
   • Device-code login flow with a Kodi progress dialog.
 """
 
+import base64
 import json
 import os
 import time
@@ -23,7 +24,7 @@ import xbmcgui
 import xbmcvfs
 
 _ADDON_ID = "script.punchplay"
-_VERSION = "1.0.0"
+_VERSION = "1.0.2"
 
 
 class APIClient:
@@ -153,13 +154,13 @@ class APIClient:
     # Scrobble POST (with offline queue fallback)
     # ------------------------------------------------------------------
 
-    def _should_drop_client_error(self, status_code: int) -> bool:
+    def _is_permanent_client_error(self, status_code: int) -> bool:
         """
         Return True when a client error is permanent and retrying will not help.
 
-        401 is handled specially: if a queued replay still gets a 401 after the
-        built-in refresh attempt, keep the event so it can be retried after the
-        user logs in again.
+        401 is excluded: a queued event that still gets a 401 after the built-in
+        refresh attempt should stay in the queue so it can be retried once the
+        user logs in again.  All other 4xx errors are permanent.
         """
         return 400 <= status_code < 500 and status_code != 401
 
@@ -187,7 +188,7 @@ class APIClient:
                 )
                 if self._cache is not None:
                     self._cache.enqueue_scrobble(path, payload)
-            elif not self._should_drop_client_error(exc.code):
+            elif not self._is_permanent_client_error(exc.code):
                 xbmc.log(
                     f"[PunchPlay] HTTP {exc.code} on {path} — preserving for retry",
                     xbmc.LOGWARNING,
@@ -228,7 +229,7 @@ class APIClient:
                 xbmc.log("[PunchPlay] Still offline — stopping queue flush", xbmc.LOGDEBUG)
                 break  # remain offline; try again later
             except urllib.error.HTTPError as exc:
-                if self._should_drop_client_error(exc.code):
+                if self._is_permanent_client_error(exc.code):
                     xbmc.log(
                         f"[PunchPlay] HTTP {exc.code} replaying id={scrobble_id} — dropping",
                         xbmc.LOGWARNING,
@@ -241,6 +242,91 @@ class APIClient:
                     xbmc.LOGWARNING,
                 )
                 break
+
+    # ------------------------------------------------------------------
+    # Device-code login — QR dialog helpers
+    # ------------------------------------------------------------------
+
+    def _write_qr_image(self, data_uri: str) -> str | None:
+        """
+        Decode a `data:image/png;base64,...` payload and write it to
+        addon_data/login_qr.png.  Returns the absolute path on success or
+        None if the payload is malformed / IO fails.
+        """
+        prefix = "data:image/png;base64,"
+        if not data_uri.startswith(prefix):
+            return None
+        try:
+            png_bytes = base64.b64decode(data_uri[len(prefix):], validate=True)
+        except Exception as exc:
+            xbmc.log(f"[PunchPlay] QR decode failed: {exc}", xbmc.LOGWARNING)
+            return None
+
+        # Use a unique filename each time so Kodi's texture cache doesn't
+        # serve a stale QR from a previous login attempt.
+        filename = f"login_qr_{int(time.time())}.png"
+        path = os.path.join(self._data_dir, filename)
+
+        # Clean up old QR images first.
+        try:
+            for old in os.listdir(self._data_dir):
+                if old.startswith("login_qr_") and old.endswith(".png"):
+                    try:
+                        os.remove(os.path.join(self._data_dir, old))
+                    except OSError:
+                        pass
+        except OSError:
+            pass
+
+        try:
+            with open(path, "wb") as f:
+                f.write(png_bytes)
+        except OSError as exc:
+            xbmc.log(f"[PunchPlay] QR write failed: {exc}", xbmc.LOGWARNING)
+            return None
+        return path
+
+    def _show_qr_login_dialog(
+        self,
+        *,
+        qr_path: str,
+        verification_uri: str,
+        user_code: str,
+        expires_in: int,
+    ) -> bool:
+        """
+        Present the custom LoginDialog.  Returns True on success, False
+        if the dialog cannot be shown so the caller can fall back.
+        """
+        try:
+            from login_dialog import LoginDialog
+
+            addon = xbmcaddon.Addon(_ADDON_ID)
+            _s = addon.getLocalizedString
+            bg_path = os.path.join(
+                addon.getAddonInfo("path"),
+                "resources", "media", "background.png",
+            )
+            minutes = max(1, expires_in // 60)
+
+            dialog = LoginDialog(
+                bg_path=bg_path,
+                qr_path=qr_path,
+                title=_s(32015),
+                scan_label=_s(32016),
+                or_visit_label=_s(32017),
+                uri=verification_uri,
+                code_label=_s(32018),
+                code=user_code,
+                expires_label=_s(32005).format(minutes),
+                dismiss_hint=_s(32019),
+            )
+            dialog.doModal()
+            del dialog
+            return True
+        except Exception as exc:
+            xbmc.log(f"[PunchPlay] QR dialog failed: {exc}", xbmc.LOGWARNING)
+            return False
 
     # ------------------------------------------------------------------
     # Device-code login
@@ -266,6 +352,7 @@ class APIClient:
 
         user_code = resp.get("user_code", "")
         verification_uri = resp.get("verification_uri", self._base_url())
+        verification_uri_qr = resp.get("verification_uri_qr", "")
         device_code = resp.get("device_code", "")
         expires_in: int = int(resp.get("expires_in", 600))
 
@@ -273,17 +360,29 @@ class APIClient:
             dialog.ok(_s(32000), _s(32002))
             return False
 
-        # Step 2 — show the code to the user.
-        dialog.ok(
-            _s(32000),
-            (
-                f"{_s(32003)}\n"
-                f"[B]{verification_uri}[/B]\n\n"
-                f"{_s(32004)}\n"
-                f"[B]{user_code}[/B]\n\n"
-                + _s(32005).format(expires_in // 60)
-            ),
-        )
+        # Step 2 — show the code to the user.  Prefer the QR window when
+        # the backend provides one; otherwise fall back to a compact
+        # text-only dialog that still fits on screen without scrolling.
+        shown_qr_dialog = False
+        if verification_uri_qr:
+            qr_path = self._write_qr_image(verification_uri_qr)
+            if qr_path:
+                shown_qr_dialog = self._show_qr_login_dialog(
+                    qr_path=qr_path,
+                    verification_uri=verification_uri,
+                    user_code=user_code,
+                    expires_in=expires_in,
+                )
+
+        if not shown_qr_dialog:
+            dialog.ok(
+                _s(32000),
+                (
+                    f"{_s(32003)} [B]{verification_uri}[/B]\n"
+                    f"{_s(32004)} [B]{user_code}[/B]\n\n"
+                    + _s(32005).format(expires_in // 60)
+                ),
+            )
 
         # Step 3 — poll for the token with a cancellable progress dialog.
         monitor = xbmc.Monitor()
@@ -321,17 +420,40 @@ class APIClient:
                         )
                         return True
 
-                    error = token_resp.get("error", "")
+                except ConnectionError as exc:
+                    xbmc.log(f"[PunchPlay] Poll network error: {exc}", xbmc.LOGDEBUG)
+                except urllib.error.HTTPError as exc:
+                    # The /token endpoint returns 400 for all non-success
+                    # states.  Read the body to distinguish between
+                    # "authorization_pending" (keep polling) and terminal
+                    # errors like "expired" or "access_denied".
+                    error = ""
+                    try:
+                        body = json.loads(exc.read().decode("utf-8"))
+                        error = body.get("error", "")
+                    except Exception:
+                        pass
+                    xbmc.log(
+                        f"[PunchPlay] Poll HTTP {exc.code}: {error or 'unknown'}",
+                        xbmc.LOGDEBUG,
+                    )
                     if error in ("expired", "access_denied"):
                         progress.close()
                         dialog.ok(_s(32000), _s(32009).format(error))
                         return False
-                    # 'authorization_pending' or 'slow_down' → keep polling.
-
-                except ConnectionError as exc:
-                    xbmc.log(f"[PunchPlay] Poll error: {exc}", xbmc.LOGDEBUG)
-                except urllib.error.HTTPError:
-                    pass
+                    if exc.code >= 500:
+                        xbmc.log(
+                            f"[PunchPlay] Server error {exc.code} during poll",
+                            xbmc.LOGWARNING,
+                        )
+                    # authorization_pending or slow_down → keep polling.
+                except Exception as exc:
+                    # Catch-all for unexpected errors (JSON parse, file I/O
+                    # in _save_tokens, etc.) so the loop doesn't crash.
+                    xbmc.log(
+                        f"[PunchPlay] Unexpected poll error: {exc}",
+                        xbmc.LOGWARNING,
+                    )
 
                 monitor.waitForAbort(5)
         finally:
