@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-19 19:13+0000\n"
+"PO-Revision-Date: 2026-04-17 23:13+0000\n"
 "Last-Translator: Marek Adamski <fevbew@wp.pl>\n"
 "Language-Team: Polish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/pl_pl/>\n"
 "Language: pl_pl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 5.17\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -238,11 +238,11 @@ msgstr "Wstrzymaj pokaz slajdów podczas pauzy w odtwarzaniu"
 
 msgctxt "#32146"
 msgid "Use Audio Stream Monitor for artist information"
-msgstr ""
+msgstr "Użyj Audio Stream Monitor, aby uzyskać informacje o wykonawcy"
 
 msgctxt "#32147"
 msgid "Ignore currently playing song when changing slideshow"
-msgstr ""
+msgstr "Ignoruj aktualnie odtwarzany utwór podczas zmiany pokazu slajdów"
 
 # empty strings from id 32145 to 32199
 # Dialog headings

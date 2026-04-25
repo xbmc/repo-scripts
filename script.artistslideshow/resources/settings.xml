@@ -615,10 +615,8 @@
 					<default>false</default>
 					<dependencies>
 					    <dependency type="visible">
-						    <or>
-							    <condition operator="is" setting="use_audio_stream_monitor">true</condition>
-							    <condition operator="!is" on="property" name="infobool">System.AddonIsEnabled(service.audio.stream.monitor)</condition>
-						    </or>
+							<condition operator="is" setting="use_audio_stream_monitor">true</condition>
+							<condition operator="is" on="property" name="infobool">System.AddonIsEnabled(service.audio.stream.monitor)</condition>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>

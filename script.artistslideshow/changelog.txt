@@ -1,3 +1,6 @@
+v.4.1.1
+- fix audio stream monitor settings display logic
+
 v.4.1.0
 - added support for Radio Stream Monitor for artist information
 - updated featured artist logic to look in artist name as well (for streams)
