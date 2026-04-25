@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings version="1">
+  <section id="service.autoplaymovies">
+    <category id="general" label="32000" help="">
+      <group id="1" label="">
+        <setting id="video_dir" type="path" label="32001" help="">
+          <level>0</level>
+          <default>/storage/emulated/0/Movies/</default>
+          <constraints>
+            <sources>
+              <source>videos</source>
+              <source>local</source>
+              <source>files</source>
+            </sources>
+            <allowempty>false</allowempty>
+          </constraints>
+          <control type="button" format="path">
+            <heading>32001</heading>
+          </control>
+        </setting>
+
+        <setting id="show_startup_text" type="boolean" label="32002" help="">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle"/>
+        </setting>
+
+        <setting id="startup_text" type="string" label="32003" help="">
+          <level>1</level>
+          <default/>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32003</heading>
+          </control>
+        </setting>
+
+        <setting id="startup_text_seconds" type="integer" label="32004" help="">
+          <level>1</level>
+          <default>2</default>
+          <constraints>
+            <minimum>1</minimum>
+            <maximum>10</maximum>
+            <step>1</step>
+          </constraints>
+          <control type="slider" format="integer">
+            <popup>true</popup>
+          </control>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>

@@ -1,0 +1,19 @@
+1.0.6
+- Fixed a Python syntax error in service.py.
+- Show a dialog and open add-on settings when the configured folder is missing or contains no supported videos.
+
+1.0.5
+- Add configurable folder selection and optional startup overlay text.
+- Metadata and settings format fixes for official repo submission.
+
+1.0.4
+- Updated description text.
+
+1.0.3
+- Added settings and overlay toggle.
+
+1.0.2
+- Added icon and fanart.
+
+1.0.1
+- Initial public release.

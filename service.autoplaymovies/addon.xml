@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="service.autoplaymovies"
+       name="Autoplay Movies (Folder Loop)"
+       version="1.0.6"
+       provider-name="Michal Kofron">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+
+<extension point="xbmc.service" library="resources/lib/service.py" />
+
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Autoplay videos from a folder on Kodi startup</summary>
+    <summary lang="cs_CZ">Automatické přehrávání videí ze složky po startu Kodi</summary>
+
+    <description lang="en_GB">On Kodi startup, the add-on loads videos from a selected folder and starts an endless playback loop.</description>
+    <description lang="cs_CZ">Po startu Kodi, doplněk načte videa ze zvolené složky a spustí nekonečnou smyčku přehrávání.</description>
+
+    <platform>all</platform>
+    <license>GPL-2.0-or-later</license>
+    <source>https://github.com/internetvpraze-creator/repo-scripts</source>
+
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
+
+    <news>v1.0.6
+- Fixed a Python syntax error in service.py.
+- Added a user dialog and opened settings when the configured video folder is missing or contains no supported videos.
+- Fixed addon metadata for repository validation.
+- Replaced icon with a solid-background version.
+
+v1.0.5
+- Add configurable folder selection and optional startup overlay text.
+- Various metadata and settings-format fixes for official repo submission.</news>
+  </extension>
+</addon>
