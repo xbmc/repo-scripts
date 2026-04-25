@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-30 09:13+0000\n"
+"PO-Revision-Date: 2026-04-17 23:13+0000\n"
 "Last-Translator: wabisabi926 <wabisabi926@foxmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/zh_Hans/>\n"
 "Language: zh_cn\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 5.17\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
@@ -238,11 +238,11 @@ msgstr "播放暂停时幻灯片放映暂停"
 
 msgctxt "#32146"
 msgid "Use Audio Stream Monitor for artist information"
-msgstr ""
+msgstr "使用音频流监视器获取艺术家信息"
 
 msgctxt "#32147"
 msgid "Ignore currently playing song when changing slideshow"
-msgstr ""
+msgstr "切换幻灯片时忽略当前正在播放的歌曲"
 
 # empty strings from id 32145 to 32199
 # Dialog headings
