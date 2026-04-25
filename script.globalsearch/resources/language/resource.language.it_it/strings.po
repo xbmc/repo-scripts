@@ -1,0 +1,147 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-20 04:16+0000\n"
+"Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
+"Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-globalsearch/it_it/>\n"
+"Language: it_it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Search your library."
+msgstr "Cerca nella tua libreria."
+
+msgctxt "Addon Description"
+msgid "This addon can find any item in your video and music library."
+msgstr "Questo add-on può trovare qualsiasi elemento nella tua libreria video e audio."
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Generale"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Cerca film"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Cerca serie TV"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Cerca episodi"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Cerca video musicali"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Cerca artisti"
+
+msgctxt "#32006"
+msgid "Search Albums"
+msgstr "Cerca album"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Cerca brani"
+
+# empty string with id 32008
+msgctxt "#32009"
+msgid "Search Live TV"
+msgstr "Cerca Live TV"
+
+# empty string with id 32010
+msgctxt "#32011"
+msgid "Search Movie Actors"
+msgstr "Cerca attori cinematografici"
+
+msgctxt "#32012"
+msgid "Search Movie Directors"
+msgstr "Cerca registi di film"
+
+msgctxt "#32013"
+msgid "Search TV Show Actors"
+msgstr "Cerca attori di serie TV"
+
+# empty strings from id 32012 to 32100
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Inserisci stringa di ricerca"
+
+msgctxt "#32102"
+msgid "Items"
+msgstr "Elementi"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Sfoglia album"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Informazioni stagione"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Riproduci trailer"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Trova album"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Trova tutte le stagioni"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Trova tutti gli episodi"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Trova tutti gli album"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Trova tutti i brani"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Film con protagonista"
+
+msgctxt "#32212"
+msgid "Resume from %s"
+msgstr "Riprendi da %s"
+
+# empty strings from id 32213 to 32220
+msgctxt "#32221"
+msgid "Movie Actors"
+msgstr "Attori cinematografici"
+
+msgctxt "#32222"
+msgid "TV Show Actors"
+msgstr "Attori serie TV"
+
+# empty strings from id 32223 to 32296
+msgctxt "#32297"
+msgid "Searching:"
+msgstr "Ricerca:"
+
+msgctxt "#32298"
+msgid "Search again?"
+msgstr "Cercare ancora?"
+
+msgctxt "#32299"
+msgid "New search"
+msgstr "Nuova ricerca"
