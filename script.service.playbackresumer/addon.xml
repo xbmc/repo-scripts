@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.8" provider-name="bossanova808, bradvido88">
+<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.9" provider-name="bossanova808, bradvido88">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.bossanova808" version="1.0.0"/>
@@ -8,11 +8,15 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Periodically sets the resume point of videos and can automatically resume last played video if Kodi crashes.</summary>
     <summary lang="sv_SE">Ställer in återuppspelningspunkten för videor med jämna mellanrum och kan automatiskt återuppspela den senast spelade videon om Kodi kraschar.</summary>
+    <summary lang="zh_CN">定期保存视频播放进度，Kodi 崩溃后可自动恢复上次播放内容。</summary>
     <description lang="en_GB">
         Runs as a service and will periodically update the resume point while videos are playing, so you can re-start from where you were in the event of a crash.  It can also automatically resume a video if Kodi was shutdown while playing it. See setting to configure how often the resume point is set, and whether to automatically resume.
     </description>
     <description lang="sv_SE">
         Körs som en tjänst och uppdaterar regelbundet återuppspelningspunkten vid spelning medan videor spelas upp, så att du kan starta om från där du var i händelse av ett krascher. Den kan också automatiskt återuppspela en video om Kodi stängdes av vid spelning. Se inställningarna för att konfigurera hur ofta återuppspelningspunkten ska ställas in och om den ska återuppspelas automatiskt.
+    </description>
+    <description lang="zh_CN">
+        以后台服务形式运行，播放视频时会定期更新播放进度。当程序意外崩溃后，可从上次观看位置继续播放。同时支持在播放期间非正常关闭 Kodi 时自动续播。你可在插件设置中调整进度保存频率，以及开关自动续播功能。
     </description>
     <platform>all</platform>
 	  <license>GPL-3.0-only</license>
@@ -20,14 +24,11 @@
     <source>https://github.com/bossanova808/script.service.playbackresumer</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=355383</forum>
     <email>bossanova808@gmail.com</email>
-    <news>v2.0.8
-- Minor changes for Piers
+    <news>v2.0.9
+- User submitted Chinese language translations (thanks @wabisabi926!)       
     </news>
     <assets>
       <icon>icon.png</icon>
     </assets>
   </extension>
 </addon>
-
-
-
