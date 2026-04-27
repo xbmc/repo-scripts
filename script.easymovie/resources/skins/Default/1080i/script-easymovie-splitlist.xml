@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    EasyMovie Split View
+    Resolution: 1080i (1920x1080)
+    Dialog-style: 1400x800 centered
+
+    Two-column layout: compact movie list on left, detail panel on right.
+    Based on EasyTV Split View dialog structure.
+
+    Control IDs:
+        655 - Main list container (left panel)
+        10  - Surprise Me button
+        11  - Re-roll button
+-->
+<window>
+    <zorder>1</zorder>
+    <visible>!System.ScreenSaverActive</visible>
+
+    <controls>
+        <!-- Dim overlay -->
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <texture colordiffuse="BB000000">common/white.png</texture>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" />
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="fade" start="100" end="0" time="300" />
+            </animation>
+        </control>
+
+        <!-- Dialog Container: 1400x800 centered -->
+        <control type="group">
+            <left>260</left>
+            <top>140</top>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" tween="sine" easing="in" />
+                <effect type="zoom" start="85" end="100" time="300" center="auto" tween="sine" easing="out" />
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="85" center="auto" tween="sine" easing="out" time="300" />
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="300" />
+            </animation>
+
+            <!-- Accent border frame -->
+            <control type="image">
+                <left>-2</left>
+                <top>-2</top>
+                <width>1404</width>
+                <height>804</height>
+                <texture border="12" colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/white_rounded.png</texture>
+            </control>
+
+            <!-- Rounded dark panel background -->
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1400</width>
+                <height>800</height>
+                <texture border="12">common/menu.png</texture>
+                <colordiffuse>ffffffff</colordiffuse>
+            </control>
+
+            <!-- Content (visible when list is populated) -->
+            <control type="group">
+                <visible>Control.IsVisible(655)</visible>
+
+                <!-- ==================== LEFT PANEL: MOVIE LIST ==================== -->
+                <control type="group">
+                    <left>30</left>
+                    <top>13</top>
+                    <width>730</width>
+
+                    <!-- Heading -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>0</top>
+                        <width>730</width>
+                        <height>40</height>
+                        <font>font14_title</font>
+                        <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                        <label>$INFO[Window.Property(EasyMovie.AddonName)]</label>
+                    </control>
+
+                    <!-- Movie count -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>5</top>
+                        <width>1340</width>
+                        <height>30</height>
+                        <align>right</align>
+                        <font>font10</font>
+                        <textcolor>FF888888</textcolor>
+                        <label>$INFO[Container(655).CurrentItem] / $INFO[Container(655).NumItems]</label>
+                    </control>
+
+                </control>
+
+                <!-- Full-width accent line separator (spans both panels) -->
+                <control type="image">
+                    <left>30</left>
+                    <top>66</top>
+                    <width>1340</width>
+                    <height>2</height>
+                    <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentGlow)]">common/line_fade.png</texture>
+                </control>
+
+                <!-- Movie list -->
+                <control type="list" id="655">
+                    <left>30</left>
+                    <top>82</top>
+                    <width>730</width>
+                    <height>648</height>
+                    <orientation>vertical</orientation>
+                    <scrolltime tween="sine" easing="out">200</scrolltime>
+                    <onleft>655</onleft>
+                    <onright>655</onright>
+                    <onup>655</onup>
+                    <ondown>10</ondown>
+
+                    <!-- Unfocused row -->
+                    <itemlayout width="730" height="68">
+                        <!-- Movie title -->
+                        <control type="label">
+                            <left>15</left>
+                            <top>6</top>
+                            <width>530</width>
+                            <height>28</height>
+                            <aligny>center</aligny>
+                            <font>font12</font>
+                            <textcolor>FFCCCCCC</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+
+                        <!-- Year · MPAA · Runtime (when MPAA present) -->
+                        <control type="label">
+                            <left>15</left>
+                            <top>38</top>
+                            <width>530</width>
+                            <height>24</height>
+                            <aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>FF888888</textcolor>
+                            <label>$INFO[ListItem.Year]  ·  $INFO[ListItem.Mpaa]  ·  $INFO[ListItem.Property(runtime_min)]</label>
+                            <visible>!String.IsEmpty(ListItem.Mpaa)</visible>
+                        </control>
+
+                        <!-- Year · Runtime (when no MPAA) -->
+                        <control type="label">
+                            <left>15</left>
+                            <top>38</top>
+                            <width>530</width>
+                            <height>24</height>
+                            <aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>FF888888</textcolor>
+                            <label>$INFO[ListItem.Year]  ·  $INFO[ListItem.Property(runtime_min)]</label>
+                            <visible>String.IsEmpty(ListItem.Mpaa)</visible>
+                        </control>
+
+                        <!-- Watched icon -->
+                        <control type="image">
+                            <left>670</left>
+                            <top>19</top>
+                            <width>24</width>
+                            <height>24</height>
+                            <texture colordiffuse="FFAAAAAA">common/IconWatched.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(watched))</visible>
+                        </control>
+
+                        <!-- Set icon -->
+                        <control type="image">
+                            <left>700</left>
+                            <top>19</top>
+                            <width>24</width>
+                            <height>24</height>
+                            <texture colordiffuse="FFAAAAAA">common/movieset.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(set_name))</visible>
+                        </control>
+                    </itemlayout>
+
+                    <!-- Focused row -->
+                    <focusedlayout width="730" height="68">
+                        <!-- Accent background -->
+                        <control type="image">
+                            <left>0</left>
+                            <top>0</top>
+                            <width>730</width>
+                            <height>68</height>
+                            <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentBG)]">common/white.png</texture>
+                        </control>
+
+                        <!-- Movie title -->
+                        <control type="label">
+                            <left>15</left>
+                            <top>6</top>
+                            <width>530</width>
+                            <height>28</height>
+                            <aligny>center</aligny>
+                            <font>font12</font>
+                            <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+
+                        <!-- Year · MPAA · Runtime (when MPAA present) -->
+                        <control type="label">
+                            <left>15</left>
+                            <top>38</top>
+                            <width>530</width>
+                            <height>24</height>
+                            <aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>ffFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Year]  ·  $INFO[ListItem.Mpaa]  ·  $INFO[ListItem.Property(runtime_min)]</label>
+                            <visible>!String.IsEmpty(ListItem.Mpaa)</visible>
+                        </control>
+
+                        <!-- Year · Runtime (when no MPAA) -->
+                        <control type="label">
+                            <left>15</left>
+                            <top>38</top>
+                            <width>530</width>
+                            <height>24</height>
+                            <aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>ffFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Year]  ·  $INFO[ListItem.Property(runtime_min)]</label>
+                            <visible>String.IsEmpty(ListItem.Mpaa)</visible>
+                        </control>
+
+                        <!-- Watched icon -->
+                        <control type="image">
+                            <left>670</left>
+                            <top>19</top>
+                            <width>24</width>
+                            <height>24</height>
+                            <texture colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/IconWatched.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(watched))</visible>
+                        </control>
+
+                        <!-- Set icon -->
+                        <control type="image">
+                            <left>700</left>
+                            <top>19</top>
+                            <width>24</width>
+                            <height>24</height>
+                            <texture colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/movieset.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(set_name))</visible>
+                        </control>
+                    </focusedlayout>
+                </control>
+
+                <!-- Button Row -->
+                <control type="group">
+                    <left>165</left>
+                    <top>740</top>
+                    <width>570</width>
+                    <height>50</height>
+
+                    <!-- Surprise Me Button (ID 10) -->
+                    <control type="button" id="10">
+                        <left>0</left>
+                        <top>0</top>
+                        <width>200</width>
+                        <height>50</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>font12</font>
+                        <textoffsetx>10</textoffsetx>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>$INFO[Window.Property(EasyMovie.ButtonTextFocused)]</focusedcolor>
+                        <label>$ADDON[script.easymovie 32310]</label>
+                        <onup>655</onup>
+                        <onright>11</onright>
+                        <onleft>11</onleft>
+                        <texturefocus border="12" colordiffuse="$INFO[Window.Property(EasyMovie.ButtonFocus)]">common/white_rounded.png</texturefocus>
+                        <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
+                    </control>
+
+                    <!-- Re-roll Button (ID 11) -->
+                    <control type="button" id="11">
+                        <left>230</left>
+                        <top>0</top>
+                        <width>200</width>
+                        <height>50</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>font12</font>
+                        <textoffsetx>10</textoffsetx>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>$INFO[Window.Property(EasyMovie.ButtonTextFocused)]</focusedcolor>
+                        <label>$ADDON[script.easymovie 32311]</label>
+                        <onup>655</onup>
+                        <onright>10</onright>
+                        <onleft>10</onleft>
+                        <texturefocus border="12" colordiffuse="$INFO[Window.Property(EasyMovie.ButtonFocus)]">common/white_rounded.png</texturefocus>
+                        <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
+                    </control>
+                </control>
+
+                <!-- ==================== RIGHT PANEL: DETAIL VIEW ==================== -->
+                <control type="group">
+                    <left>780</left>
+                    <top>13</top>
+                    <width>590</width>
+
+                    <!-- Movie poster (centered, 220x330) -->
+                    <control type="image">
+                        <left>185</left>
+                        <top>68</top>
+                        <width>220</width>
+                        <height>330</height>
+                        <texture background="true">$INFO[Container(655).ListItem.Art(poster)]</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
+
+                    <!-- Separator -->
+                    <control type="image">
+                        <left>0</left>
+                        <top>413</top>
+                        <width>590</width>
+                        <height>2</height>
+                        <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentGlow)]">common/line_fade.png</texture>
+                    </control>
+
+                    <!-- Movie title -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>421</top>
+                        <width>590</width>
+                        <height>35</height>
+                        <align>center</align>
+                        <font>font13</font>
+                        <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                        <label>$INFO[Container(655).ListItem.Label]</label>
+                    </control>
+
+                    <!-- Year · MPAA · Rating · Runtime (when MPAA present) -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>458</top>
+                        <width>590</width>
+                        <height>28</height>
+                        <align>center</align>
+                        <font>font10</font>
+                        <textcolor>FFCCCCCC</textcolor>
+                        <label>$INFO[Container(655).ListItem.Year]  ·  $INFO[Container(655).ListItem.Mpaa]  ·  ★ $INFO[Container(655).ListItem.Rating]  ·  $INFO[Container(655).ListItem.Property(runtime_min)]</label>
+                        <visible>!String.IsEmpty(Container(655).ListItem.Mpaa)</visible>
+                    </control>
+
+                    <!-- Year · Rating · Runtime (when no MPAA) -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>458</top>
+                        <width>590</width>
+                        <height>28</height>
+                        <align>center</align>
+                        <font>font10</font>
+                        <textcolor>FFCCCCCC</textcolor>
+                        <label>$INFO[Container(655).ListItem.Year]  ·  ★ $INFO[Container(655).ListItem.Rating]  ·  $INFO[Container(655).ListItem.Property(runtime_min)]</label>
+                        <visible>String.IsEmpty(Container(655).ListItem.Mpaa)</visible>
+                    </control>
+
+                    <!-- Genre -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>488</top>
+                        <width>590</width>
+                        <height>28</height>
+                        <align>center</align>
+                        <scroll>true</scroll>
+                        <font>font10</font>
+                        <textcolor>FFAAAAAA</textcolor>
+                        <label>$INFO[Container(655).ListItem.Genre]</label>
+                    </control>
+
+                    <!-- Set info -->
+                    <control type="label">
+                        <left>0</left>
+                        <top>518</top>
+                        <width>590</width>
+                        <height>28</height>
+                        <align>center</align>
+                        <font>font10</font>
+                        <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                        <label>$INFO[Container(655).ListItem.Property(set_name)]</label>
+                        <visible>!String.IsEmpty(Container(655).ListItem.Property(set_name))</visible>
+                    </control>
+
+                    <!-- Separator: after genre when NO collection -->
+                    <control type="image">
+                        <left>0</left>
+                        <top>521</top>
+                        <width>590</width>
+                        <height>2</height>
+                        <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentGlow)]">common/line_fade.png</texture>
+                        <visible>String.IsEmpty(Container(655).ListItem.Property(set_name))</visible>
+                    </control>
+
+                    <!-- Separator: after set info when collection present -->
+                    <control type="image">
+                        <left>0</left>
+                        <top>550</top>
+                        <width>590</width>
+                        <height>2</height>
+                        <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentGlow)]">common/line_fade.png</texture>
+                        <visible>!String.IsEmpty(Container(655).ListItem.Property(set_name))</visible>
+                    </control>
+
+                    <!-- Plot: positioned after separator (no collection) -->
+                    <control type="textbox">
+                        <left>0</left>
+                        <top>533</top>
+                        <width>590</width>
+                        <height>250</height>
+                        <font>font10</font>
+                        <textcolor>FFCCCCCC</textcolor>
+                        <autoscroll delay="6000" time="3000" repeat="10000">true</autoscroll>
+                        <label>$INFO[Container(655).ListItem.Plot]</label>
+                        <visible>String.IsEmpty(Container(655).ListItem.Property(set_name))</visible>
+                    </control>
+
+                    <!-- Plot: positioned after separator (with collection) -->
+                    <control type="textbox">
+                        <left>0</left>
+                        <top>562</top>
+                        <width>590</width>
+                        <height>212</height>
+                        <font>font10</font>
+                        <textcolor>FFCCCCCC</textcolor>
+                        <autoscroll delay="6000" time="3000" repeat="10000">true</autoscroll>
+                        <label>$INFO[Container(655).ListItem.Plot]</label>
+                        <visible>!String.IsEmpty(Container(655).ListItem.Property(set_name))</visible>
+                    </control>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

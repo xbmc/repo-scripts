@@ -1,0 +1,55 @@
+v1.0.1 (2026-04-27)
+--------------------------
+Bug Fixes:
+  - Fixed: Resume from the "Resume Movie?" dialog now actually starts at the
+    saved position. The previous implementation called Player.Open and then
+    issued xbmc.Player().seekTime() after a 500 ms sleep — but the player was
+    rarely ready that quickly, so the seek was silently dropped and playback
+    started from zero. Now uses Kodi's native single-item Player.Open
+    options.resume with a Player.Position.Time object, which sets the file
+    item's start offset before the player initialises. A 10-second rewind is
+    applied for context, matching EasyTV's behavior.
+
+Internal:
+  - build_play_movie_query() in data/queries.py accepts an optional
+    resume_seconds argument and emits options.resume = {hours, minutes,
+    seconds} when set.
+  - Added RESUME_REWIND_SECONDS constant (10 seconds).
+  - Added regression tests covering the resume timecode split, including the
+    exact position from the original report (3266s = 0h54m26s).
+  - Verified live against Kodi 21: requested timecode is honoured, no
+    post-play seek required.
+
+
+v1.0.0 (2026-03-24)
+--------------------------
+New Features:
+  - Filter Wizard: step-by-step filter flow for genre, watched status, age rating,
+    runtime, time period, and score. Each filter configurable as Ask, Pre-set, or Skip.
+    Supports genre ignore/select with OR/AND matching, decade browsing, recency ranges,
+    and cumulative movie counts per option.
+  - Browse Mode: visual results screen with 5 view styles — Showcase (horizontal
+    filmstrip carousel, default), Card List, Posters, Big Screen, and Split View.
+    Includes Re-roll, Surprise Me, Play Full Set, and configurable result count (1–50).
+  - Playlist Mode: automatic movie marathon generation with configurable length (1–20),
+    sort options, partial resume prioritization, and seek-to-resume-point.
+  - Movie Set Awareness: detects Kodi movie collections and suggests the first unwatched
+    entry instead of a random one. Shows set name and position in browse views.
+  - Set Continuation: after finishing a collection movie, prompts to watch the next one
+    with a configurable countdown timer and default action.
+  - Earlier Movie Warning: alerts when about to watch a set movie while an earlier
+    entry is unwatched, via background service monitoring.
+  - Smart Re-suggestion: tracks recently suggested movies and avoids repeating them
+    within a configurable cooldown window (4–72 hours).
+  - Movie Pool Filtering: limit the movie pool to any Kodi smart playlist.
+  - Clone Support: create multiple EasyMovie instances with independent settings.
+    Includes mandatory version check and one-click update on launch.
+  - 4 Color Themes: Golden Hour, Ultraviolet, Ember, Nightfall — applied to all
+    views and dialogs. Live preview cycling via T key / blue remote button.
+  - Custom Icons: set a custom addon icon per instance, persisted across upgrades.
+  - In-progress Check: on launch, offers to resume a partially watched movie.
+  - Wizard Memory: remembers last wizard answers for quick repeat sessions.
+  - Structured Logging: separate log file with rotating backups, structured key=value
+    data, and per-module loggers.
+  - GitHub Pages landing page, wiki documentation, and Kodi forum thread.
+  - CI validation workflow (syntax, pyflakes, pyright, kodi-addon-checker).

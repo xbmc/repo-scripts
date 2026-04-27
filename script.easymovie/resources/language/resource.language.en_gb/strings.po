@@ -1,0 +1,987 @@
+# Kodi Media Center language file
+# Addon Name: EasyMovie
+# Addon id: script.easymovie
+# Addon Provider: Rouzax
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: https://github.com/Rouzax/script.easymovie/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# =============================================================================
+# STRING ID RANGES
+# =============================================================================
+#
+# 32000-32099: Settings categories and group labels
+# 32100-32199: Setting labels
+# 32200-32299: Filter/wizard labels and options
+# 32300-32399: UI labels (dialogs, buttons, browse views)
+# 32400-32499: (reserved for future use)
+# 32500-32599: Settings option values (spinners)
+# 32600-32699: Help text for settings
+# 32700-32799: Clone and update messages
+#
+# =============================================================================
+
+
+# =============================================================================
+# SETTINGS CATEGORIES & GROUPS (32000-32099)
+# =============================================================================
+
+msgctxt "#32000"
+msgid "EasyMovie"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Filters"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Movie Sets"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Browse Mode"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Playlist Mode"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Playback"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Advanced"
+msgstr ""
+
+# Group labels
+msgctxt "#32010"
+msgid "On Launch"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Appearance"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Genre"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Watched"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Age Rating"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Runtime"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Year"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Score"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Set Awareness"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Continuation"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Results"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Basics"
+msgstr ""
+
+msgctxt "#32022"
+msgid "On Launch"
+msgstr ""
+
+msgctxt "#32023"
+msgid "During Playback"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Notifications"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Movie Pool"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Re-suggestion"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Tools"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Warnings"
+msgstr ""
+
+
+# =============================================================================
+# SETTING LABELS (32100-32199)
+# =============================================================================
+
+# Category 1: EasyMovie
+msgctxt "#32100"
+msgid "When I open EasyMovie"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Theme"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Set custom icon"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Reset to default icon"
+msgstr ""
+
+# Category 2: Filters
+msgctxt "#32110"
+msgid "Genre filter"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Genre matching"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Select genres..."
+msgstr ""
+
+msgctxt "#32113"
+msgid "Selected genres"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Watched filter"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Watched status"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Age rating filter"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Select ratings..."
+msgstr ""
+
+msgctxt "#32118"
+msgid "Selected ratings"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Runtime filter"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Minimum runtime (minutes)"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Maximum runtime (minutes)"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Year filter"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Year filter type"
+msgstr ""
+
+msgctxt "#32124"
+msgid "From year"
+msgstr ""
+
+msgctxt "#32125"
+msgid "To year"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Score filter"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Minimum score"
+msgstr ""
+
+# Category 3: Movie Sets
+msgctxt "#32130"
+msgid "Enable movie set awareness"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Show set information"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Enable continuation prompts"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Countdown duration (seconds)"
+msgstr ""
+
+msgctxt "#32134"
+msgid "If countdown expires"
+msgstr ""
+
+# Category 4: Browse Mode
+msgctxt "#32140"
+msgid "View style"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Return to EasyMovie after playback"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Number of movies"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Sort direction"
+msgstr ""
+
+# Category 5: Playlist Mode
+msgctxt "#32150"
+msgid "Number of movies"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Sort direction"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Start playlist with unfinished movies"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Seek to resume point for movies"
+msgstr ""
+
+# Category 6: Playback
+msgctxt "#32160"
+msgid "Check for in-progress movie on launch"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Show info when playing"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Show processing notifications"
+msgstr ""
+
+msgctxt "#32163"
+msgid "Warn about earlier unwatched movies in set"
+msgstr ""
+
+# Category 7: Advanced
+msgctxt "#32170"
+msgid "Limit to smart playlist"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Select playlist..."
+msgstr ""
+
+msgctxt "#32172"
+msgid "Selected playlist"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Avoid re-suggesting recent movies"
+msgstr ""
+
+msgctxt "#32174"
+msgid "Re-suggestion window"
+msgstr ""
+
+msgctxt "#32175"
+msgid "Remember last wizard answers"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32177"
+msgid "Create EasyMovie copy..."
+msgstr ""
+
+msgctxt "#32178"
+msgid "Show movie counts in wizard"
+msgstr ""
+
+msgctxt "#32179"
+msgid "Cumulative counts"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Ignore genre filter"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Ignore genre matching"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Select genres to ignore..."
+msgstr ""
+
+msgctxt "#32183"
+msgid "Ignored genres"
+msgstr ""
+
+
+# =============================================================================
+# FILTER / WIZARD LABELS (32200-32299)
+# =============================================================================
+
+# Wizard dialog headings
+msgctxt "#32200"
+msgid "Select Genres"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Select Age Ratings"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Select Time Period"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Select Playlist"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Ignore Genres"
+msgstr ""
+
+# Wizard option: year filter group header
+msgctxt "#32206"
+msgid "— By decade —"
+msgstr ""
+
+# Wizard option: year recency
+msgctxt "#32210"
+msgid "Last year"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Last 2 years"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Last 5 years"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Last 10 years"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Last 20 years"
+msgstr ""
+
+# Wizard option: year catch-all
+msgctxt "#32220"
+msgid "Any year"
+msgstr ""
+
+
+# =============================================================================
+# UI LABELS (32300-32399)
+# =============================================================================
+
+# Common dialog buttons
+msgctxt "#32300"
+msgid "OK"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Back"
+msgstr ""
+
+# Browse view buttons
+msgctxt "#32310"
+msgid "Surprise Me"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Re-roll"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Play"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Play Full Set"
+msgstr ""
+
+# Mode selection
+msgctxt "#32320"
+msgid "Choose Mode"
+msgstr ""
+
+msgctxt "#32321"
+msgid "Browse"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Playlist"
+msgstr ""
+
+# Continuation prompts
+msgctxt "#32330"
+msgid "Watch Next"
+msgstr ""
+
+msgctxt "#32331"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#32332"
+msgid "Next in"
+msgstr ""
+
+msgctxt "#32333"
+msgid "You just watched"
+msgstr ""
+
+# Set warning dialog
+msgctxt "#32340"
+msgid "from"
+msgstr ""
+
+msgctxt "#32341"
+msgid "is in your library and unwatched."
+msgstr ""
+
+msgctxt "#32342"
+msgid "Would you like to watch it instead?"
+msgstr ""
+
+# Notification toasts
+msgctxt "#32350"
+msgid "Finding movies..."
+msgstr ""
+
+
+# =============================================================================
+# SETTINGS OPTION VALUES / SPINNERS (32500-32599)
+# =============================================================================
+
+# Primary function
+msgctxt "#32500"
+msgid "Browse"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Playlist"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Ask each time"
+msgstr ""
+
+# Filter modes
+msgctxt "#32503"
+msgid "Ask"
+msgstr ""
+
+msgctxt "#32504"
+msgid "Pre-set"
+msgstr ""
+
+msgctxt "#32505"
+msgid "Skip"
+msgstr ""
+
+# Genre matching
+msgctxt "#32506"
+msgid "Any selected genre (OR)"
+msgstr ""
+
+msgctxt "#32507"
+msgid "All selected genres (AND)"
+msgstr ""
+
+# Watched
+msgctxt "#32508"
+msgid "Unwatched"
+msgstr ""
+
+msgctxt "#32509"
+msgid "Watched"
+msgstr ""
+
+msgctxt "#32510"
+msgid "Both"
+msgstr ""
+
+# Year filter type
+msgctxt "#32511"
+msgid "After year"
+msgstr ""
+
+msgctxt "#32512"
+msgid "Before year"
+msgstr ""
+
+msgctxt "#32513"
+msgid "Between years"
+msgstr ""
+
+# Sort options
+msgctxt "#32514"
+msgid "Random"
+msgstr ""
+
+msgctxt "#32515"
+msgid "Title"
+msgstr ""
+
+msgctxt "#32516"
+msgid "Year"
+msgstr ""
+
+msgctxt "#32517"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#32518"
+msgid "Runtime"
+msgstr ""
+
+msgctxt "#32519"
+msgid "Date Added"
+msgstr ""
+
+# Sort direction
+msgctxt "#32520"
+msgid "Ascending"
+msgstr ""
+
+msgctxt "#32521"
+msgid "Descending"
+msgstr ""
+
+# View styles
+msgctxt "#32522"
+msgid "Showcase"
+msgstr ""
+
+msgctxt "#32523"
+msgid "Card List"
+msgstr ""
+
+msgctxt "#32524"
+msgid "Posters"
+msgstr ""
+
+msgctxt "#32525"
+msgid "Big Screen"
+msgstr ""
+
+msgctxt "#32526"
+msgid "Split View"
+msgstr ""
+
+# Themes
+msgctxt "#32527"
+msgid "Golden Hour"
+msgstr ""
+
+msgctxt "#32528"
+msgid "Ultraviolet"
+msgstr ""
+
+msgctxt "#32529"
+msgid "Ember"
+msgstr ""
+
+msgctxt "#32530"
+msgid "Nightfall"
+msgstr ""
+
+# Re-suggestion window
+msgctxt "#32531"
+msgid "4 hours"
+msgstr ""
+
+msgctxt "#32532"
+msgid "8 hours"
+msgstr ""
+
+msgctxt "#32533"
+msgid "12 hours"
+msgstr ""
+
+msgctxt "#32534"
+msgid "24 hours"
+msgstr ""
+
+msgctxt "#32535"
+msgid "48 hours"
+msgstr ""
+
+msgctxt "#32536"
+msgid "72 hours"
+msgstr ""
+
+# Continuation default action
+msgctxt "#32537"
+msgid "Continue set"
+msgstr ""
+
+msgctxt "#32538"
+msgid "Continue playlist"
+msgstr ""
+
+msgctxt "#32539"
+msgid "Less than X years ago"
+msgstr ""
+
+msgctxt "#32540"
+msgid "Maximum age (years)"
+msgstr ""
+
+
+# =============================================================================
+# HELP TEXT (32600-32699)
+# =============================================================================
+
+msgctxt "#32600"
+msgid "Choose what happens when you launch EasyMovie"
+msgstr ""
+
+msgctxt "#32601"
+msgid "Choose the accent color theme for EasyMovie windows and dialogs"
+msgstr ""
+
+msgctxt "#32602"
+msgid "Ask: Show a dialog each time. Pre-set: Use the values below. Skip: Ignore this filter."
+msgstr ""
+
+msgctxt "#32603"
+msgid "OR: Movies matching any selected genre. AND: Movies matching all selected genres."
+msgstr ""
+
+msgctxt "#32604"
+msgid "Filter movies by watched status"
+msgstr ""
+
+msgctxt "#32605"
+msgid "Filter movies by age rating (MPAA/certification)"
+msgstr ""
+
+msgctxt "#32606"
+msgid "Filter movies by runtime in minutes. Set to 0 for no limit."
+msgstr ""
+
+msgctxt "#32607"
+msgid "Filter movies by release year"
+msgstr ""
+
+msgctxt "#32608"
+msgid "Filter movies by minimum score (0-100, where 70 = 7.0 rating)"
+msgstr ""
+
+msgctxt "#32609"
+msgid "When enabled, EasyMovie suggests the first unwatched movie in a collection instead of a random one"
+msgstr ""
+
+msgctxt "#32610"
+msgid "Show a prompt when a collection movie finishes to watch the next one"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Seconds before the continuation prompt auto-dismisses"
+msgstr ""
+
+msgctxt "#32612"
+msgid "What happens when the countdown timer reaches zero without user input"
+msgstr ""
+
+msgctxt "#32613"
+msgid "Visual layout for the browse results screen"
+msgstr ""
+
+msgctxt "#32614"
+msgid "Return to the movie list after a movie finishes playing"
+msgstr ""
+
+msgctxt "#32615"
+msgid "How many movies to show in the results"
+msgstr ""
+
+msgctxt "#32616"
+msgid "How to order the results"
+msgstr ""
+
+msgctxt "#32617"
+msgid "Partially watched movies play first in the playlist"
+msgstr ""
+
+msgctxt "#32618"
+msgid "Automatically skip to where you left off for movies"
+msgstr ""
+
+msgctxt "#32619"
+msgid "Check if you have a partially watched movie when EasyMovie launches"
+msgstr ""
+
+msgctxt "#32620"
+msgid "Limit the movie pool to a Kodi smart playlist"
+msgstr ""
+
+msgctxt "#32621"
+msgid "Avoid suggesting the same movies again within the selected time window"
+msgstr ""
+
+msgctxt "#32622"
+msgid "How long to wait before a movie can be suggested again"
+msgstr ""
+
+msgctxt "#32623"
+msgid "Pre-fill wizard dialogs with your last answers"
+msgstr ""
+
+msgctxt "#32624"
+msgid "Write detailed diagnostic information to a separate log file"
+msgstr ""
+
+msgctxt "#32625"
+msgid "Create a separate copy of EasyMovie with its own settings"
+msgstr ""
+
+msgctxt "#32626"
+msgid "Display how many movies match each option in the filter wizard"
+msgstr ""
+
+msgctxt "#32627"
+msgid "Count against remaining movies after each filter step (slower on low-end hardware)"
+msgstr ""
+
+msgctxt "#32628"
+msgid "Choose from built-in icon themes or browse for a custom image. The addon icon shown in Kodi menus and notifications will update immediately."
+msgstr ""
+
+msgctxt "#32629"
+msgid "Restore the original EasyMovie icon."
+msgstr ""
+
+msgctxt "#32630"
+msgid "Filter by unwatched, watched, or both"
+msgstr ""
+
+msgctxt "#32631"
+msgid "Only include movies at least this long. Set to 0 for no minimum."
+msgstr ""
+
+msgctxt "#32632"
+msgid "Only include movies no longer than this. Set to 0 for no maximum."
+msgstr ""
+
+msgctxt "#32633"
+msgid "Choose how to filter by year: after, before, between, or recent"
+msgstr ""
+
+msgctxt "#32634"
+msgid "The starting year for the filter range"
+msgstr ""
+
+msgctxt "#32635"
+msgid "The ending year for the filter range"
+msgstr ""
+
+msgctxt "#32636"
+msgid "Only include movies released within this many years"
+msgstr ""
+
+msgctxt "#32637"
+msgid "Only include movies rated at or above this score (0–100)"
+msgstr ""
+
+msgctxt "#32638"
+msgid "Display movie set name and position in the browse view"
+msgstr ""
+
+msgctxt "#32639"
+msgid "Choose ascending or descending sort order"
+msgstr ""
+
+msgctxt "#32640"
+msgid "Show a notification with title and details when a movie starts playing"
+msgstr ""
+
+msgctxt "#32641"
+msgid "Show progress notifications while EasyMovie searches and filters your library"
+msgstr ""
+
+msgctxt "#32642"
+msgid "If you start a movie but there's an earlier unwatched one in the same set, ask if you want to watch that instead."
+msgstr ""
+
+msgctxt "#32643"
+msgid "Ask: Show a dialog each time. Pre-set: Use the values below. Skip: Ignore this filter."
+msgstr ""
+
+msgctxt "#32644"
+msgid "OR: Exclude movies matching any ignored genre. AND: Only exclude movies matching all ignored genres."
+msgstr ""
+
+msgctxt "#32645"
+msgid "Open selector to choose genres that will be excluded from results."
+msgstr ""
+
+msgctxt "#32646"
+msgid "Genres currently excluded from results."
+msgstr ""
+
+msgctxt "#32647"
+msgid "Open selector to choose which genres to include in results."
+msgstr ""
+
+msgctxt "#32648"
+msgid "Genres currently included in results."
+msgstr ""
+
+msgctxt "#32649"
+msgid "Open selector to choose which age ratings to include in results."
+msgstr ""
+
+msgctxt "#32650"
+msgid "Age ratings currently included in results."
+msgstr ""
+
+msgctxt "#32651"
+msgid "Select a Kodi smart playlist (.xsp) file to use as the movie pool."
+msgstr ""
+
+msgctxt "#32652"
+msgid "Smart playlist currently used as the movie pool."
+msgstr ""
+
+# =============================================================================
+# CLONE & UPDATE (32700-32799)
+# =============================================================================
+
+msgctxt "#32700"
+msgid "This creates a copy of EasyMovie with its own settings."
+msgstr ""
+
+msgctxt "#32701"
+msgid "It creates a new folder in your addons directory."
+msgstr ""
+
+msgctxt "#32702"
+msgid "Do you wish to continue?"
+msgstr ""
+
+msgctxt "#32703"
+msgid "EasyMovie - "
+msgstr ""
+
+msgctxt "#32704"
+msgid "That name is already in use. Please try another."
+msgstr ""
+
+msgctxt "#32705"
+msgid "Clone created successfully."
+msgstr ""
+
+msgctxt "#32706"
+msgid "Restart Kodi for settings labels to appear."
+msgstr ""
+
+msgctxt "#32707"
+msgid "An error occurred while creating the clone."
+msgstr ""
+
+msgctxt "#32708"
+msgid "Operation cancelled."
+msgstr ""
+
+msgctxt "#32709"
+msgid "A new version of EasyMovie is available."
+msgstr ""
+
+msgctxt "#32710"
+msgid "The clone needs to be updated before it can be used."
+msgstr ""
+
+msgctxt "#32711"
+msgid "Update now?"
+msgstr ""
+
+msgctxt "#32712"
+msgid "Update"
+msgstr ""
+
+msgctxt "#32713"
+msgid "Update successful."
+msgstr ""
+
+msgctxt "#32714"
+msgid "Restart Kodi for all changes to take effect."
+msgstr ""
+
+msgctxt "#32715"
+msgid "An error occurred while updating the clone."
+msgstr ""
+
+msgctxt "#32716"
+msgid "Continue"
+msgstr ""

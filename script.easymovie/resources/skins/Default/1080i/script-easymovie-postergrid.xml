@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    EasyMovie Showcase View
+    Resolution: 1080i (1920x1080)
+
+    Horizontal poster filmstrip with fixed focus position.
+    Focused poster grows to 420x630 with zoom animation, info panel below.
+
+    Layout: Horizontal fixedlist with focusposition=1
+    Header: addon name (left) + buttons (right) + count (right) + accent line
+    Info: title + metadata + genre + collection + plot (no fanart)
+
+    Control IDs:
+        655 - Fixedlist control (poster filmstrip)
+        10  - Surprise Me button
+        11  - Re-roll button
+-->
+<window>
+    <defaultcontrol>655</defaultcontrol>
+    <visible>!System.ScreenSaverActive</visible>
+
+    <controls>
+        <!-- Full-screen dark background -->
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <texture colordiffuse="FF0D1117">common/white.png</texture>
+        </control>
+
+        <!-- Main content group -->
+        <control type="group">
+            <visible>Control.IsVisible(655)</visible>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+                <effect type="zoom" start="85" end="100" time="300" center="auto" tween="sine" easing="out" />
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="85" center="auto" tween="sine" easing="out" time="300" />
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="300" />
+            </animation>
+
+            <!-- ==================== HEADER ==================== -->
+
+            <!-- Addon name heading (left) -->
+            <control type="label">
+                <left>40</left>
+                <top>15</top>
+                <width>800</width>
+                <height>40</height>
+                <font>font14_title</font>
+                <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                <label>$INFO[Window.Property(EasyMovie.AddonName)]</label>
+            </control>
+
+            <!-- Movie count (right) -->
+            <control type="label">
+                <left>40</left>
+                <top>20</top>
+                <width>1840</width>
+                <height>30</height>
+                <align>right</align>
+                <font>font10</font>
+                <textcolor>FF888888</textcolor>
+                <label>$INFO[Container(655).CurrentItem] / $INFO[Container(655).NumItems]</label>
+            </control>
+
+            <!-- Accent line separator -->
+            <control type="image">
+                <left>40</left>
+                <top>60</top>
+                <width>1840</width>
+                <height>2</height>
+                <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentGlow)]">common/line_fade.png</texture>
+            </control>
+
+            <!-- ==================== POSTER FILMSTRIP ==================== -->
+            <control type="fixedlist" id="655">
+                <left>40</left>
+                <top>72</top>
+                <width>1840</width>
+                <height>790</height>
+                <orientation>horizontal</orientation>
+                <focusposition>1</focusposition>
+                <scrolltime tween="sine" easing="out">300</scrolltime>
+                <onup>655</onup>
+                <ondown>10</ondown>
+                <onleft>655</onleft>
+                <onright>655</onright>
+                <preloaditems>6</preloaditems>
+
+                <!-- Unfocused poster cell -->
+                <itemlayout width="210" height="790">
+                    <!-- Poster image -->
+                    <control type="image">
+                        <left>14</left>
+                        <top>258</top>
+                        <width>182</width>
+                        <height>273</height>
+                        <aspectratio aligny="top">scale</aspectratio>
+                        <texture background="true">$INFO[ListItem.Art(poster)]</texture>
+                    </control>
+
+                    <!-- Watched icon -->
+                    <control type="image">
+                        <left>18</left>
+                        <top>262</top>
+                        <width>24</width>
+                        <height>24</height>
+                        <texture colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/IconWatched.png</texture>
+                        <visible>!String.IsEmpty(ListItem.Property(watched))</visible>
+                    </control>
+
+                    <!-- Set badge overlay -->
+                    <control type="image">
+                        <left>168</left>
+                        <top>262</top>
+                        <width>24</width>
+                        <height>24</height>
+                        <texture colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/movieset.png</texture>
+                        <visible>!String.IsEmpty(ListItem.Property(set_name))</visible>
+                    </control>
+                </itemlayout>
+
+                <!-- Focused poster cell -->
+                <focusedlayout width="440" height="790">
+                    <control type="group">
+                        <animation type="Focus" reversible="false">
+                            <effect type="zoom" start="65" end="100" center="220,395" time="300" tween="sine" easing="out" />
+                        </animation>
+                        <animation type="Unfocus" reversible="false">
+                            <effect type="zoom" start="100" end="65" center="220,395" time="250" tween="sine" easing="out" />
+                        </animation>
+
+                        <!-- Accent border -->
+                        <control type="image">
+                            <left>7</left>
+                            <top>77</top>
+                            <width>426</width>
+                            <height>636</height>
+                            <texture border="3" colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/white.png</texture>
+                        </control>
+
+                        <!-- Poster image -->
+                        <control type="image">
+                            <left>10</left>
+                            <top>80</top>
+                            <width>420</width>
+                            <height>630</height>
+                            <aspectratio aligny="top">scale</aspectratio>
+                            <texture background="true">$INFO[ListItem.Art(poster)]</texture>
+                        </control>
+
+                        <!-- Watched icon -->
+                        <control type="image">
+                            <left>14</left>
+                            <top>84</top>
+                            <width>40</width>
+                            <height>40</height>
+                            <texture colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/IconWatched.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(watched))</visible>
+                        </control>
+
+                        <!-- Set badge overlay -->
+                        <control type="image">
+                            <left>386</left>
+                            <top>84</top>
+                            <width>40</width>
+                            <height>40</height>
+                            <texture colordiffuse="$INFO[Window.Property(EasyMovie.Accent)]">common/movieset.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(set_name))</visible>
+                        </control>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <!-- ==================== INFO PANEL ==================== -->
+
+            <!-- Info panel separator -->
+            <control type="image">
+                <left>40</left>
+                <top>870</top>
+                <width>1840</width>
+                <height>2</height>
+                <texture colordiffuse="$INFO[Window.Property(EasyMovie.AccentGlow)]">common/line_fade.png</texture>
+            </control>
+
+            <!-- Movie title -->
+            <control type="label">
+                <left>40</left>
+                <top>882</top>
+                <width>700</width>
+                <height>35</height>
+                <font>font13</font>
+                <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                <label>$INFO[Container(655).ListItem.Label]</label>
+            </control>
+
+            <!-- Year · MPAA · Rating · Runtime (when MPAA present) -->
+            <control type="label">
+                <left>40</left>
+                <top>922</top>
+                <width>700</width>
+                <height>24</height>
+                <font>font10</font>
+                <textcolor>FFCCCCCC</textcolor>
+                <label>$INFO[Container(655).ListItem.Year]  ·  $INFO[Container(655).ListItem.Mpaa]  ·  ★ $INFO[Container(655).ListItem.Rating]  ·  $INFO[Container(655).ListItem.Property(runtime_min)]</label>
+                <visible>!String.IsEmpty(Container(655).ListItem.Mpaa)</visible>
+            </control>
+
+            <!-- Year · Rating · Runtime (when no MPAA) -->
+            <control type="label">
+                <left>40</left>
+                <top>922</top>
+                <width>700</width>
+                <height>24</height>
+                <font>font10</font>
+                <textcolor>FFCCCCCC</textcolor>
+                <label>$INFO[Container(655).ListItem.Year]  ·  ★ $INFO[Container(655).ListItem.Rating]  ·  $INFO[Container(655).ListItem.Property(runtime_min)]</label>
+                <visible>String.IsEmpty(Container(655).ListItem.Mpaa)</visible>
+            </control>
+
+            <!-- Genre -->
+            <control type="label">
+                <left>40</left>
+                <top>952</top>
+                <width>700</width>
+                <height>24</height>
+                <font>font10</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$INFO[Container(655).ListItem.Genre]</label>
+            </control>
+
+            <!-- Collection (when set present) -->
+            <control type="label">
+                <left>40</left>
+                <top>982</top>
+                <width>700</width>
+                <height>24</height>
+                <font>font10</font>
+                <textcolor>$INFO[Window.Property(EasyMovie.Accent)]</textcolor>
+                <label>$INFO[Container(655).ListItem.Property(set_name)]</label>
+                <visible>!String.IsEmpty(Container(655).ListItem.Property(set_name))</visible>
+            </control>
+
+            <!-- Plot -->
+            <control type="textbox">
+                <left>800</left>
+                <top>882</top>
+                <width>1080</width>
+                <height>180</height>
+                <font>font12</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$INFO[Container(655).ListItem.Plot]</label>
+                <autoscroll delay="6000" time="3000" repeat="10000">true</autoscroll>
+            </control>
+
+            <!-- Surprise Me Button (ID 10) — bottom-left -->
+            <control type="button" id="10">
+                <left>40</left>
+                <top>1020</top>
+                <width>200</width>
+                <height>45</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <textcolor>FFFFFFFF</textcolor>
+                <focusedcolor>$INFO[Window.Property(EasyMovie.ButtonTextFocused)]</focusedcolor>
+                <label>$ADDON[script.easymovie 32310]</label>
+                <onup>655</onup>
+                <onright>11</onright>
+                <onleft>11</onleft>
+                <texturefocus border="12" colordiffuse="$INFO[Window.Property(EasyMovie.ButtonFocus)]">common/white_rounded.png</texturefocus>
+                <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
+            </control>
+
+            <!-- Re-roll Button (ID 11) — bottom-left -->
+            <control type="button" id="11">
+                <left>270</left>
+                <top>1020</top>
+                <width>200</width>
+                <height>45</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <textcolor>FFFFFFFF</textcolor>
+                <focusedcolor>$INFO[Window.Property(EasyMovie.ButtonTextFocused)]</focusedcolor>
+                <label>$ADDON[script.easymovie 32311]</label>
+                <onup>655</onup>
+                <onright>10</onright>
+                <onleft>10</onleft>
+                <texturefocus border="12" colordiffuse="$INFO[Window.Property(EasyMovie.ButtonFocus)]">common/white_rounded.png</texturefocus>
+                <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
+            </control>
+        </control>
+    </controls>
+</window>

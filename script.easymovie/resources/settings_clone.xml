@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Clone settings - same as main settings but without clone creation -->
+<settings version="1">
+	<section id="script.easymovie">
+		<!-- ============================================================== -->
+		<!-- Category 1: EasyMovie (main)                                   -->
+		<!-- ============================================================== -->
+		<category id="main" label="32000" help="">
+			<group id="launch" label="32010">
+				<setting id="primary_function" type="integer" label="32100" help="32600">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<options>
+							<option label="32500">0</option>
+							<option label="32501">1</option>
+							<option label="32502">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+			</group>
+
+			<group id="appearance" label="32011">
+				<setting id="theme" type="integer" label="32101" help="32601">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32527">0</option>
+							<option label="32528">1</option>
+							<option label="32529">2</option>
+							<option label="32530">3</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="set_icon" type="action" label="32102" help="32628">
+					<level>0</level>
+					<data>RunScript(script.easymovie,set_icon)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+
+				<setting id="reset_icon" type="action" label="32103" help="32629">
+					<level>0</level>
+					<data>RunScript(script.easymovie,reset_icon)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Category 2: Filters                                            -->
+		<!-- ============================================================== -->
+		<category id="filters" label="32001" help="">
+			<!-- Group: Genre -->
+			<group id="genre" label="32012">
+				<setting id="ignore_genre_mode" type="integer" label="32180" help="32643">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="ignore_genre_match" type="integer" label="32181" help="32644">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="ignore_genre_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32506">0</option>
+							<option label="32507">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="run_ignore_genre_selector" type="action" label="32182" help="">
+					<level>0</level>
+					<dependencies>
+						<dependency type="visible" setting="ignore_genre_mode" operator="is">1</dependency>
+					</dependencies>
+					<data>RunScript(script.easymovie,selector,ignore_genres)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+
+				<setting id="ignore_genres_display" type="string" label="32183" help="">
+					<level>0</level>
+					<default>-</default>
+					<dependencies>
+						<dependency type="visible" setting="ignore_genre_mode" operator="is">1</dependency>
+					</dependencies>
+					<enable>false</enable>
+					<control type="edit" format="string" />
+				</setting>
+
+				<setting id="genre_mode" type="integer" label="32110" help="32602">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="genre_match" type="integer" label="32111" help="32603">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="genre_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32506">0</option>
+							<option label="32507">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="run_genre_selector" type="action" label="32112" help="">
+					<level>0</level>
+					<dependencies>
+						<dependency type="visible" setting="genre_mode" operator="is">1</dependency>
+					</dependencies>
+					<data>RunScript(script.easymovie,selector,genres)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+
+				<setting id="selected_genres_display" type="string" label="32113" help="">
+					<level>0</level>
+					<default>-</default>
+					<dependencies>
+						<dependency type="visible" setting="genre_mode" operator="is">1</dependency>
+					</dependencies>
+					<enable>false</enable>
+					<control type="edit" format="string" />
+				</setting>
+			</group>
+
+			<!-- Group: Watched -->
+			<group id="watched" label="32013">
+				<setting id="watched_mode" type="integer" label="32114" help="32604">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="watched_preset" type="integer" label="32115" help="32630">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="watched_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32508">0</option>
+							<option label="32509">1</option>
+							<option label="32510">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+			</group>
+
+			<!-- Group: Age Rating -->
+			<group id="mpaa" label="32014">
+				<setting id="mpaa_mode" type="integer" label="32116" help="32605">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="run_mpaa_selector" type="action" label="32117" help="">
+					<level>0</level>
+					<dependencies>
+						<dependency type="visible" setting="mpaa_mode" operator="is">1</dependency>
+					</dependencies>
+					<data>RunScript(script.easymovie,selector,mpaa)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+
+				<setting id="selected_mpaa_display" type="string" label="32118" help="">
+					<level>0</level>
+					<default>-</default>
+					<dependencies>
+						<dependency type="visible" setting="mpaa_mode" operator="is">1</dependency>
+					</dependencies>
+					<enable>false</enable>
+					<control type="edit" format="string" />
+				</setting>
+			</group>
+
+			<!-- Group: Runtime -->
+			<group id="runtime" label="32015">
+				<setting id="runtime_mode" type="integer" label="32119" help="32606">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="runtime_min" type="integer" label="32120" help="32631">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="runtime_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>0</minimum>
+						<step>5</step>
+						<maximum>300</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+
+				<setting id="runtime_max" type="integer" label="32121" help="32632">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="runtime_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>0</minimum>
+						<step>5</step>
+						<maximum>300</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+			</group>
+
+			<!-- Group: Year -->
+			<group id="year" label="32016">
+				<setting id="year_mode" type="integer" label="32122" help="32607">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="year_filter_type" type="integer" label="32123" help="32633">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="year_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32511">0</option>
+							<option label="32512">1</option>
+							<option label="32513">2</option>
+							<option label="32539">3</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="year_from" type="integer" label="32124" help="32634">
+					<level>0</level>
+					<default>2000</default>
+					<dependencies>
+						<dependency type="visible" setting="year_mode" operator="is">1</dependency>
+						<dependency type="visible" operator="!is" setting="year_filter_type">3</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>1920</minimum>
+						<step>1</step>
+						<maximum>2030</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+
+				<setting id="year_to" type="integer" label="32125" help="32635">
+					<level>0</level>
+					<default>2026</default>
+					<dependencies>
+						<dependency type="visible" setting="year_mode" operator="is">1</dependency>
+						<dependency type="visible" setting="year_filter_type" operator="is">2</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>1920</minimum>
+						<step>1</step>
+						<maximum>2030</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+
+				<setting id="year_recency" type="integer" label="32540" help="32636">
+					<level>0</level>
+					<default>5</default>
+					<dependencies>
+						<dependency type="visible" setting="year_mode" operator="is">1</dependency>
+						<dependency type="visible" setting="year_filter_type" operator="is">3</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>30</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+			</group>
+
+			<!-- Group: Score -->
+			<group id="score" label="32017">
+				<setting id="score_mode" type="integer" label="32126" help="32608">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<options>
+							<option label="32503">0</option>
+							<option label="32504">1</option>
+							<option label="32505">2</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="min_score" type="integer" label="32127" help="32637">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="score_mode" operator="is">1</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>0</minimum>
+						<step>5</step>
+						<maximum>100</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Category 3: Movie Sets                                         -->
+		<!-- ============================================================== -->
+		<category id="sets" label="32002" help="">
+			<group id="set_awareness" label="32018">
+				<setting id="set_enabled" type="boolean" label="32130" help="32609">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="set_show_info" type="boolean" label="32131" help="32638">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible" setting="set_enabled">true</dependency>
+					</dependencies>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<group id="continuation" label="32019">
+				<setting id="continuation_enabled" type="boolean" label="32132" help="32610">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible" setting="set_enabled">true</dependency>
+					</dependencies>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="continuation_duration" type="integer" label="32133" help="32611">
+					<level>0</level>
+					<default>20</default>
+					<dependencies>
+						<dependency type="visible" setting="set_enabled">true</dependency>
+						<dependency type="visible" setting="continuation_enabled">true</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>5</minimum>
+						<step>5</step>
+						<maximum>60</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+
+				<setting id="continuation_default" type="integer" label="32134" help="32612">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="visible" setting="set_enabled">true</dependency>
+						<dependency type="visible" setting="continuation_enabled">true</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32537">0</option>
+							<option label="32538">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Category 4: Browse Mode                                        -->
+		<!-- ============================================================== -->
+		<category id="browse" label="32003" help="">
+			<group id="browse_appearance" label="32011">
+				<setting id="view_style" type="integer" label="32140" help="32613">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32522">0</option>
+							<option label="32523">1</option>
+							<option label="32524">2</option>
+							<option label="32525">3</option>
+							<option label="32526">4</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="return_to_list" type="boolean" label="32141" help="32614">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<group id="browse_results" label="32020">
+				<setting id="browse_count" type="integer" label="32142" help="32615">
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>50</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+
+				<setting id="browse_sort" type="integer" label="32143" help="32616">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32514">0</option>
+							<option label="32515">1</option>
+							<option label="32516">2</option>
+							<option label="32517">3</option>
+							<option label="32518">4</option>
+							<option label="32519">5</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="browse_sort_dir" type="integer" label="32144" help="32639">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="32520">0</option>
+							<option label="32521">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Category 5: Playlist Mode                                      -->
+		<!-- ============================================================== -->
+		<category id="playlist" label="32004" help="">
+			<group id="playlist_basics" label="32021">
+				<setting id="playlist_count" type="integer" label="32150" help="32615">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>20</maximum>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+
+				<setting id="playlist_sort" type="integer" label="32151" help="32616">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32514">0</option>
+							<option label="32515">1</option>
+							<option label="32516">2</option>
+							<option label="32517">3</option>
+							<option label="32518">4</option>
+							<option label="32519">5</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+
+				<setting id="playlist_sort_dir" type="integer" label="32152" help="32639">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="32520">0</option>
+							<option label="32521">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+			</group>
+
+			<group id="playlist_playback" label="32005">
+				<setting id="prioritize_in_progress" type="boolean" label="32153" help="32617">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="resume_from_position" type="boolean" label="32154" help="32618">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Category 6: Playback                                           -->
+		<!-- ============================================================== -->
+		<category id="playback" label="32005" help="">
+			<group id="on_launch" label="32022">
+				<setting id="check_in_progress" type="boolean" label="32160" help="32619">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<group id="during_playback" label="32023">
+				<setting id="show_info_playing" type="boolean" label="32161" help="32640">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<group id="notifications" label="32024">
+				<setting id="show_notifications" type="boolean" label="32162" help="32641">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<group id="warnings" label="32029">
+				<setting id="previous_movie_check" type="boolean" label="32163" help="32642">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Category 7: Advanced                                           -->
+		<!-- ============================================================== -->
+		<category id="advanced" label="32006" help="">
+			<group id="movie_pool" label="32025">
+				<setting id="pool_enabled" type="boolean" label="32170" help="32620">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="run_pool_selector" type="action" label="32171" help="">
+					<level>0</level>
+					<dependencies>
+						<dependency type="visible" setting="pool_enabled">true</dependency>
+					</dependencies>
+					<data>RunScript(script.easymovie,selector,playlist)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+
+				<setting id="pool_display" type="string" label="32172" help="">
+					<level>0</level>
+					<default>-</default>
+					<dependencies>
+						<dependency type="visible" setting="pool_enabled">true</dependency>
+					</dependencies>
+					<enable>false</enable>
+					<control type="edit" format="string" />
+				</setting>
+			</group>
+
+			<group id="resurface" label="32026">
+				<setting id="avoid_resurface" type="boolean" label="32173" help="32621">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="resurface_window" type="integer" label="32174" help="32622">
+					<level>0</level>
+					<default>3</default>
+					<dependencies>
+						<dependency type="visible" setting="avoid_resurface">true</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32531">0</option>
+							<option label="32532">1</option>
+							<option label="32533">2</option>
+							<option label="32534">3</option>
+							<option label="32535">4</option>
+							<option label="32536">5</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string" />
+				</setting>
+			</group>
+
+			<group id="adv_filters" label="32001">
+				<setting id="remember_filters" type="boolean" label="32175" help="32623">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="show_counts" type="boolean" label="32178" help="32626">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+
+				<setting id="cumulative_counts" type="boolean" label="32179" help="32627">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible" setting="show_counts">true</dependency>
+					</dependencies>
+					<control type="toggle" />
+				</setting>
+			</group>
+
+			<group id="debugging" label="32027">
+				<setting id="logging" type="boolean" label="32176" help="32624">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+		</category>
+
+		<!-- ============================================================== -->
+		<!-- Hidden settings (internal use)                                 -->
+		<!-- ============================================================== -->
+		<category id="hidden" label="" help="">
+			<group id="internal" label="">
+				<setting id="selected_ignore_genres" type="string" visible="false">
+					<level>4</level>
+					<default>none</default>
+					<control type="edit" format="string" />
+				</setting>
+
+				<setting id="selected_genres" type="string" visible="false">
+					<level>4</level>
+					<default>none</default>
+					<control type="edit" format="string" />
+				</setting>
+
+				<setting id="selected_mpaa" type="string" visible="false">
+					<level>4</level>
+					<default>none</default>
+					<control type="edit" format="string" />
+				</setting>
+
+				<setting id="movie_pool_playlist_path" type="string" visible="false">
+					<level>4</level>
+					<default>none</default>
+					<control type="edit" format="string" />
+				</setting>
+
+				<setting id="last_wizard_answers" type="string" visible="false">
+					<level>4</level>
+					<default>none</default>
+					<control type="edit" format="string" />
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
