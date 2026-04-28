@@ -9,9 +9,12 @@ Responsibilities:
   • Device-code login flow with a Kodi progress dialog.
 """
 
+from __future__ import annotations
+
 import base64
 import json
 import os
+import threading
 import time
 import uuid
 import urllib.error
@@ -24,7 +27,7 @@ import xbmcgui
 import xbmcvfs
 
 _ADDON_ID = "script.punchplay"
-_VERSION = "1.0.2"
+_VERSION = "1.1.0"
 
 
 class APIClient:
@@ -203,6 +206,18 @@ class APIClient:
                 )
             return None
 
+    def post_immediate(
+        self,
+        path: str,
+        payload: dict[str, Any],
+        timeout: int = 30,
+    ) -> dict[str, Any]:
+        """
+        POST without offline queue fallback.  Raises on failure.
+        Use for actions like rating where queuing doesn't make sense.
+        """
+        return self._request("POST", path, payload, timeout=timeout)
+
     # ------------------------------------------------------------------
     # Offline queue flush
     # ------------------------------------------------------------------
@@ -292,11 +307,18 @@ class APIClient:
         qr_path: str,
         verification_uri: str,
         user_code: str,
+        device_code: str,
         expires_in: int,
-    ) -> bool:
+    ) -> bool | None:
         """
-        Present the custom LoginDialog.  Returns True on success, False
-        if the dialog cannot be shown so the caller can fall back.
+        Present the QR LoginDialog while polling for approval in the
+        background.
+
+        Returns:
+          True  — login succeeded (dialog auto-closed on approval)
+          False — dialog could not be shown (caller should fall back)
+          None  — user dismissed the dialog manually (caller should
+                  continue with the DialogProgress poll loop)
         """
         try:
             from login_dialog import LoginDialog
@@ -309,7 +331,7 @@ class APIClient:
             )
             minutes = max(1, expires_in // 60)
 
-            dialog = LoginDialog(
+            login_dialog = LoginDialog(
                 bg_path=bg_path,
                 qr_path=qr_path,
                 title=_s(32015),
@@ -321,9 +343,78 @@ class APIClient:
                 expires_label=_s(32005).format(minutes),
                 dismiss_hint=_s(32019),
             )
-            dialog.doModal()
-            del dialog
-            return True
+
+            # Poll for approval in a background thread.  If the user
+            # approves on their phone, the dialog auto-closes.
+            stop_event = threading.Event()
+
+            def poll_loop() -> None:
+                monitor = xbmc.Monitor()
+                deadline = time.monotonic() + expires_in
+                while (
+                    not stop_event.is_set()
+                    and time.monotonic() < deadline
+                    and not monitor.abortRequested()
+                ):
+                    try:
+                        resp = self._request(
+                            "POST",
+                            "/api/auth/device/token",
+                            {
+                                "device_code": device_code,
+                                "device_id": self.device_id,
+                                "device_name": (
+                                    xbmc.getInfoLabel("System.FriendlyName")
+                                    or "Kodi"
+                                ),
+                            },
+                            retry_on_401=False,
+                        )
+                        if resp.get("access_token"):
+                            self._save_tokens(resp)
+                            xbmc.log(
+                                "[PunchPlay] Device-code login succeeded (QR dialog)",
+                                xbmc.LOGINFO,
+                            )
+                            login_dialog.approve()
+                            return
+                    except urllib.error.HTTPError as exc:
+                        xbmc.log(f"[PunchPlay] QR poll: HTTP {exc.code}", xbmc.LOGDEBUG)
+                    except Exception as exc:
+                        xbmc.log(f"[PunchPlay] QR poll error: {exc}", xbmc.LOGWARNING)
+                    # Sleep in short slices so we can react to stop_event.
+                    for _ in range(6):
+                        if stop_event.is_set():
+                            return
+                        time.sleep(0.5)
+
+            thread = threading.Thread(
+                target=poll_loop, name="PunchPlayQRPoll", daemon=True
+            )
+            thread.start()
+
+            login_dialog.doModal()
+
+            # Dialog closed — either by approve() or by the user.
+            stop_event.set()
+            thread.join(timeout=3)
+
+            approved = login_dialog.was_approved
+            del login_dialog
+
+            if approved:
+                xbmcgui.Dialog().notification(
+                    "PunchPlay",
+                    addon.getLocalizedString(32011),
+                    xbmcgui.NOTIFICATION_INFO,
+                    4000,
+                )
+                return True
+
+            # User dismissed manually — caller can fall back to
+            # DialogProgress poll.
+            return None
+
         except Exception as exc:
             xbmc.log(f"[PunchPlay] QR dialog failed: {exc}", xbmc.LOGWARNING)
             return False
@@ -363,18 +454,29 @@ class APIClient:
         # Step 2 — show the code to the user.  Prefer the QR window when
         # the backend provides one; otherwise fall back to a compact
         # text-only dialog that still fits on screen without scrolling.
-        shown_qr_dialog = False
+        #
+        # The QR dialog polls in the background and auto-closes on
+        # approval.  Returns:
+        #   True  → login completed, we're done
+        #   None  → user dismissed manually, fall through to poll loop
+        #   False → dialog failed to show, fall back to text dialog
+        qr_result: bool | None = False
         if verification_uri_qr:
             qr_path = self._write_qr_image(verification_uri_qr)
             if qr_path:
-                shown_qr_dialog = self._show_qr_login_dialog(
+                qr_result = self._show_qr_login_dialog(
                     qr_path=qr_path,
                     verification_uri=verification_uri,
                     user_code=user_code,
+                    device_code=device_code,
                     expires_in=expires_in,
                 )
 
-        if not shown_qr_dialog:
+        if qr_result is True:
+            return True  # Already logged in via QR dialog.
+
+        if qr_result is False:
+            # QR not available or failed — show the compact text dialog.
             dialog.ok(
                 _s(32000),
                 (
@@ -385,6 +487,7 @@ class APIClient:
             )
 
         # Step 3 — poll for the token with a cancellable progress dialog.
+        # (Only reached if QR dialog was dismissed manually or not shown.)
         monitor = xbmc.Monitor()
         deadline = time.monotonic() + expires_in
         progress = xbmcgui.DialogProgress()
