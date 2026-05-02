@@ -1,3 +1,7 @@
+v.4.2.0
+- updated artist split logic to apply in more places
+- added [+] as separator for artist splits
+
 v.4.1.1
 - fix audio stream monitor settings display logic
 
