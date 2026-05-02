@@ -12,6 +12,9 @@ A heartbeat thread fires every N seconds during active playback and POSTs
 /scrobble/progress.
 """
 
+from __future__ import annotations
+
+import os
 import threading
 import time
 from typing import Any
@@ -21,7 +24,7 @@ import xbmcaddon
 import xbmcgui
 
 _ADDON_ID = "script.punchplay"
-_VERSION = "1.0.2"
+_VERSION = "1.1.0"
 
 
 class PunchPlayPlayer(xbmc.Player):
@@ -58,6 +61,7 @@ class PunchPlayPlayer(xbmc.Player):
             "scrobble_anime": addon.getSettingBool("scrobble_anime"),
             "show_notifications": addon.getSettingBool("show_notifications"),
             "notify_during_playback": addon.getSettingBool("notify_during_playback"),
+            "rate_after_watching": addon.getSettingBool("rate_after_watching"),
         }
 
     def _notify(self, message: str, settings: dict[str, Any]) -> None:
@@ -229,6 +233,8 @@ class PunchPlayPlayer(xbmc.Player):
 
             self._metadata = metadata
             self._is_playing = True
+            self._last_position = 0.0
+            self._last_duration = 0.0
 
             position = self.getTime()
             payload = self._build_payload(metadata, position, duration)
@@ -315,7 +321,7 @@ class PunchPlayPlayer(xbmc.Player):
                 f"pos={payload['position_seconds']}s",
                 xbmc.LOGINFO,
             )
-            self._api.post("/api/scrobble/stop", payload)
+            stop_resp = self._api.post("/api/scrobble/stop", payload)
             if watched:
                 _s = xbmcaddon.Addon(_ADDON_ID).getLocalizedString
                 title = self._metadata.get("title", "")
@@ -330,8 +336,91 @@ class PunchPlayPlayer(xbmc.Player):
                 else:
                     msg = _s(32013).format(title)
                 self._notify(msg, settings)
+
+                # Offer the rating dialog if enabled and not already playing
+                # something else (e.g. immediate next episode).
+                if not settings["rate_after_watching"]:
+                    xbmc.log("[PunchPlay] Rating disabled in settings", xbmc.LOGINFO)
+                elif self.isPlayingVideo():
+                    xbmc.log("[PunchPlay] Skipping rating — another video is playing", xbmc.LOGINFO)
+                else:
+                    tmdb_id = (
+                        (stop_resp.get("tmdb_id") if stop_resp else None)
+                        or self._metadata.get("tmdb_id")
+                    )
+                    xbmc.log(f"[PunchPlay] Rating check: tmdb_id={tmdb_id}", xbmc.LOGINFO)
+                    if tmdb_id:
+                        self._show_rating_dialog(tmdb_id, self._metadata)
+                    else:
+                        xbmc.log("[PunchPlay] No tmdb_id — skipping rating", xbmc.LOGINFO)
         except Exception as exc:
             xbmc.log(f"[PunchPlay] Stop emit error: {exc}", xbmc.LOGDEBUG)
+
+    # ------------------------------------------------------------------
+    # Rating dialog
+    # ------------------------------------------------------------------
+
+    def _show_rating_dialog(
+        self,
+        tmdb_id: int,
+        metadata: dict[str, Any],
+    ) -> None:
+        """Show a 1–10 rating dialog after a successful scrobble."""
+        try:
+            _s = xbmcaddon.Addon(_ADDON_ID).getLocalizedString
+            media_type = metadata.get("media_type", "movie")
+            title = metadata.get("title", "")
+
+            # Build heading: "Rate Inception" or "Rate Breaking Bad S01E02"
+            if media_type == "episode":
+                season = metadata.get("season")
+                episode = metadata.get("episode")
+                if isinstance(season, int) and isinstance(episode, int):
+                    heading = _s(32022).format(title, f"{season:02d}", f"{episode:02d}")
+                else:
+                    heading = _s(32021).format(title)
+            else:
+                heading = _s(32021).format(title)
+
+            from rating_dialog import RatingDialog
+
+            addon = xbmcaddon.Addon(_ADDON_ID)
+            bg_path = os.path.join(
+                addon.getAddonInfo("path"),
+                "resources", "media", "background.png",
+            )
+            rate_dlg = RatingDialog(
+                bg_path=bg_path,
+                heading=heading,
+                initial=5,
+            )
+            rate_dlg.doModal()
+
+            if not rate_dlg.confirmed:
+                del rate_dlg
+                return
+
+            rating = rate_dlg.rating
+            del rate_dlg
+
+            rate_payload: dict[str, Any] = {
+                "media_type": media_type,
+                "tmdb_id": tmdb_id,
+                "rating": rating,
+            }
+            if media_type == "episode":
+                if metadata.get("season") is not None:
+                    rate_payload["season"] = metadata["season"]
+                if metadata.get("episode") is not None:
+                    rate_payload["episode"] = metadata["episode"]
+
+            self._api.post_immediate("/api/scrobble/rate", rate_payload)
+            xbmc.log(
+                f"[PunchPlay] Rated {title!r} {rating}/10",
+                xbmc.LOGINFO,
+            )
+        except Exception as exc:
+            xbmc.log(f"[PunchPlay] Rating dialog error: {exc}", xbmc.LOGDEBUG)
 
     def _handle_stop(self) -> None:
         if self._metadata is None:

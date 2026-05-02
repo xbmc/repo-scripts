@@ -8,6 +8,8 @@ Two tables:
                         down, replayed on the next successful connection.
 """
 
+from __future__ import annotations
+
 import json
 import os
 import sqlite3

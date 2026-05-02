@@ -3,9 +3,13 @@ login_dialog.py — Custom Kodi window showing a QR code alongside the
 device-code login details.
 
 Users with a phone can scan the QR; users on a computer can read the URL
-and code.  The dialog closes on any OK/Back key press, after which the
-normal poll loop runs.
+and code.  The dialog auto-closes when the login is approved, or the
+user can dismiss it with OK/Back.
 """
+
+from __future__ import annotations
+
+import threading
 
 import xbmcgui
 
@@ -40,6 +44,8 @@ class LoginDialog(xbmcgui.WindowDialog):
     ):
         # Kodi's WindowDialog.__init__ is implicit — no super() call needed.
         # Layout is authored at 1280x720; Kodi scales automatically.
+
+        self._approved = threading.Event()
 
         # Backdrop (stretches the 32x32 dark PNG across the full screen).
         self.addControl(xbmcgui.ControlImage(0, 0, 1280, 720, bg_path))
@@ -124,6 +130,20 @@ class LoginDialog(xbmcgui.WindowDialog):
                 textColor="0xFF777777",
             )
         )
+
+    @property
+    def was_approved(self) -> bool:
+        """True if the dialog was closed because the login succeeded."""
+        return self._approved.is_set()
+
+    def approve(self) -> None:
+        """Called from the poll thread when tokens are received."""
+        self._approved.set()
+        # Use executebuiltin to close the dialog on the main thread —
+        # calling self.close() directly from a background thread is
+        # unsafe in Kodi's UI framework.
+        import xbmc
+        xbmc.executebuiltin("Action(Back)")
 
     def onAction(self, action) -> None:  # type: ignore[override]
         if action.getId() in _ACTION_CLOSE_IDS:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.punchplay"
        name="PunchPlay Scrobble"
-       version="1.0.2"
+       version="1.1.0"
        provider-name="PunchPlay">
 
   <requires>
@@ -22,7 +22,7 @@
     <forum/>
     <website>https://punchplay.tv</website>
     <source>https://github.com/PunchPlay/script.punchplay</source>
-    <news>1.0.2 - Login dialog now shows a scannable QR code alongside the device code</news>
+    <news>1.1.0 - Rate after watching; one-click Kodi library sync; auto-close login on approval</news>
     <assets>
       <icon>icon.png</icon>
       <fanart>fanart.jpg</fanart>

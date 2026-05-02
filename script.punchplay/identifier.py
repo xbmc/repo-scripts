@@ -9,6 +9,8 @@ Priority order:
 Results are cached in SQLite to avoid re-parsing on every play event.
 """
 
+from __future__ import annotations
+
 import os
 import re
 from typing import TYPE_CHECKING, Any

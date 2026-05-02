@@ -27,7 +27,7 @@ msgid "Your code:"
 msgstr ""
 
 msgctxt "#32005"
-msgid "Expires in {0} minutes — press OK to wait for approval."
+msgid "Expires in {0} minutes."
 msgstr ""
 
 msgctxt "#32006"
@@ -83,5 +83,57 @@ msgid "And enter this code:"
 msgstr ""
 
 msgctxt "#32019"
-msgid "Press OK or Back to continue"
+msgid "This will close automatically when connected."
+msgstr ""
+
+msgctxt "#32020"
+msgid "Rate after watching"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Rate {0}"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Rate {0} S{1}E{2}"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Syncing Kodi Library"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Sync Kodi Library"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Syncing movies… {0}/{1}"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Syncing episodes… {0}/{1}"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Imported {0} movies, {1} episodes."
+msgstr ""
+
+msgctxt "#32028"
+msgid "Sync failed: {0}"
+msgstr ""
+
+msgctxt "#32029"
+msgid "No watched items in library."
+msgstr ""
+
+msgctxt "#32030"
+msgid "Connected to PunchPlay"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Already connected."
+msgstr ""
+
+msgctxt "#32032"
+msgid "Not logged in."
 msgstr ""
