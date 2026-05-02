@@ -1,6 +1,6 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="4.1.1">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="4.2.0">
 	<requires>
-		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="xbmc.python" version="3.0.1" />
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
 		<import addon="script.module.defusedxml" version="0.6.0+matrix.1" />
 		<import addon="script.module.future" version="0.17.1+matrix.2" />
@@ -9,8 +9,9 @@
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>v.4.1.1
-- fix audio stream monitor settings display logic
+		<news>v.4.2.0
+- updated artist split logic to apply in more places
+- added [+] as separator for artist splits
 		</news>
 		<assets>
         	<icon>icon.png</icon>
@@ -38,7 +39,6 @@
 		<summary lang="fi_FI">Noutaa kuvia ja lisätietoja parhaillaan toistettavasta esittäjästä</summary>
 		<summary lang="fr_CA">Télécharger des images et des infos additionnelles sur l&apos;artiste écouté</summary>
 		<summary lang="fr_FR">Télécharger les images et les informations additionnelles de l&apos;artiste en cours de lecture</summary>
-		<summary lang="ga">Íoslódáil íomhánna agus eolas breise faoin ealaíontóir atá ag seinm faoi láthair</summary>
 		<summary lang="gl_ES">Descarga imaxes e info. adicional do artista que está a soar</summary>
 		<summary lang="hr_HR">Preuzimite slike i dodatne informacije o trenutno reproduciranom izvođaču</summary>
 		<summary lang="hu_HU">Képeket és kiegészítő információkat tölt le a jelenleg játszott előadóról</summary>
@@ -70,7 +70,6 @@
 		<description lang="fi_FI">Lisäosa parhaillaan kuunneltavan esittäjän kuvien ja tietojen noutoon mm. Fanart.tv- ja TheAudioDB.com-palveluista. Ulkoasut voivat luoda kuvaesityksiä kuunneltavasta esittäjästä käyttäen näitä tietoja ja esittäjien paikallisia kuvia.</description>
 		<description lang="fr_CA">Addiciel pour télécharger des images et des informations additionnelles sur fanart.tv et theaudiodb.com de l&apos;artiste en cours d&apos;écoute. Les images, ainsi que les images locales de l&apos;artiste, et les infos peuvent être utilisées par l&apos;habillage pour créer un diaporama pour l&apos;artiste en cours d&apos;écoute.</description>
 		<description lang="fr_FR">Extension permettant de télécharger des images et des informations supplémentaires depuis fanart.tv et depuis theaudiodb.com de l&apos;artiste en cours d&apos;écoute. Les images téléchargées, les images locales des artistes et les informations peuvent être utilisées par le skin pour créer un diaporama pour l&apos;artiste écouté.</description>
-		<description lang="ga">Breiseán chun íomhánna agus faisnéis bhreise a íoslódáil ó fanart.tv agus theaudiodb.com den ealaíontóir atá ag seinm faoi láthair. Is féidir leis an gcraiceann na híomhánna, mar aon le híomhánna agus faisnéis na n-ealaíontóirí áitiúla, a úsáid chun sleamhnán a chruthú don ealaíontóir atá á éisteacht.</description>
 		<description lang="gl_ES">Complemento para descargar imaxes e información adicional de fanart.tv e theaudiodb.com do artista que está a soar. Estas imaxes, xunto cas do artista gardadas en local e a información pódeas usar o tema para crear unha presentación.</description>
 		<description lang="hr_HR">Dodatak za preuzimanje slika i dodatnih informacije trenutno reproduciranog izvođača s fanart.tv, theaudiodb.com i theaudiodb.com. Slike, zajedno s lokalnim slikama izvođača i informacijama mogu se koristiti s presvlakom za stvaranje slikovne prezentacije izvođača koji se sluša.</description>
 		<description lang="hu_HU">A Kiegészítő letölt képeket és infromációkat a fanart.tv és theaudiodb.com oldalakról az éppen hallgatott előadóhoz. A képek a helyben tárolt képekkel együtt felhasználhatóak a Felszín által diavetítéshez.</description>
