@@ -76,6 +76,18 @@
                     <label>$INFO[Window.Property(EasyTV.AddonName)]</label>
                 </control>
 
+                <!-- Item count -->
+                <control type="label">
+                    <left>30</left>
+                    <top>18</top>
+                    <width>1340</width>
+                    <height>30</height>
+                    <align>right</align>
+                    <font>font10</font>
+                    <textcolor>FF888888</textcolor>
+                    <label>$INFO[Container(655).CurrentItem] / $INFO[Container(655).NumItems]</label>
+                </control>
+
                 <!-- Accent line separator -->
                 <control type="image">
                     <left>30</left>
@@ -94,7 +106,7 @@
                     <align>center</align>
                     <font>font10</font>
                     <textcolor>FFAAAAAA</textcolor>
-                    <label>$INFO[Container(655).ListItem.Property(genre),[, ]]$INFO[Container(655).ListItem.Property(duration),  •  ~,/ep]  •  $ADDON[script.easytv 32223] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numondeck)][/COLOR]  •  $ADDON[script.easytv 32224] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numwatched)][/COLOR]  •  $ADDON[script.easytv 32225] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numskipped)][/COLOR]</label>
+                    <label>$INFO[Container(655).ListItem.Property(duration)]$INFO[Container(655).ListItem.Genre,  ·  ]  ·  $ADDON[script.easytv 32223] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numondeck)][/COLOR]  ·  $ADDON[script.easytv 32224] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numwatched)][/COLOR]  ·  $ADDON[script.easytv 32225] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numskipped)][/COLOR]</label>
                 </control>
             </control>
 

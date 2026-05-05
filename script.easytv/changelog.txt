@@ -1,6 +1,154 @@
 EasyTV Changelog
 ================
 
+v1.5.2 (2026-05-05)
+-------------------
+UI Improvements:
+  - Next-episode prompt redesigned to mirror EasyMovie's continuation
+    pattern. The dialog now shows a "You just watched [show SxxEyy]"
+    line and an "Up next [SxxEyy title]" line in two distinct blocks,
+    bold-formats both items, and renames the buttons from "Play" /
+    "Don't Play" to "Watch Next" / "Skip" for clearer action verbs.
+    The dialog grew to 800x490 (was 800x460) so the multi-line message
+    and subtitle fit without crowding. Strings 32164-32168 added.
+  - Missed-episode warning rephrased and reformatted. Episode
+    identifier now uses Kodi-standard SxxEyy format instead of the
+    previous (06x02) bracketed form, and the dialog text gained an
+    "instead?" framing so the swap-to-library-version semantics is
+    explicit. String 32161 reduced to the show + S/E identifier;
+    32162 now reads "Would you like to watch it instead?"; new
+    string 32169 carries the suffix sentence "is in your library
+    and unwatched."
+
+Bug Fixes:
+  - Multi-instance sync: Shows that gain new episodes on another Kodi
+    instance now appear in Browse mode and random playlists without
+    requiring a local library scan. Previously, fully-watched shows
+    that received a new episode on another instance were invisible
+    until the local Kodi triggered its own library scan.
+  - Multi-instance sync: Shows fully watched on another instance are
+    now removed from the local Browse mode list, preventing ghost
+    entries with stale data.
+  - Multi-instance sync: Resume progress is now refreshed in Browse
+    mode even when the ondeck episode hasn't changed, fixing stale
+    progress bars when partially watching an episode on one instance
+    and browsing on another.
+  - Multi-instance sync: Clone addons (e.g., "In Progress" clone)
+    now connect to the shared EasyTV database for cross-instance
+    sync. The main service advertises its resolved DB location via
+    window properties, and clones use that to connect read-only.
+  - Multi-instance sync: Clone addons now correctly load pymysql for
+    shared database access. The clone addon template now declares
+    script.module.pymysql as a dependency so Kodi adds it to the
+    clone's Python path. Existing clones must be updated (mandatory
+    clone update will prompt automatically); a Kodi restart may be
+    needed if the clone's Python environment does not pick up the
+    new dependency immediately.
+  - Multi-instance sync: Clones can no longer accidentally clear the
+    main service's advertised database configuration. Previously,
+    when a clone's connection attempt failed, is_available() cleared
+    PROP_SHARED_DB_NAME and PROP_SHARED_DB_TABLE_PREFIX from window
+    properties, permanently disabling shared DB sync until the main
+    service restarted. The clear-on-failure side effect has been
+    removed; legitimate clear paths in service shutdown and
+    setting-disabled handlers are unchanged.
+  - Multi-instance sync: Fixed duplicate primary key error during
+    show ID validation at service startup. When a stale database
+    entry shared the same title and year as an already-valid row,
+    the migration attempted an UPDATE that violated the primary key
+    constraint. Stale duplicates are now correctly identified and
+    removed instead of migrated.
+  - Browse mode premiere filter: Shows with an in-progress episode
+    at E01 (e.g., S02E01 with a resume point from another instance)
+    are no longer excluded by the "Skip premieres" filter. The
+    filter now checks the Resume window property before applying
+    premiere exclusion, consistent with how smart playlists already
+    categorize partially-watched premieres.
+  - Browse view: Show posters and fanart no longer disappear
+    permanently when the first per-Kodi-session art fetch produces
+    an empty or partial JSON-RPC result. Previously _fetch_show_art()
+    set the "EasyTV.ArtFetched" session flag unconditionally; once
+    latched, every subsequent browse open skipped the fetch, leaving
+    the EasyTV.<showid>.Art(tvshow.poster) window properties empty
+    and the list items rendering with no images. Two changes close
+    the trap: the session flag is now set only when at least one
+    show actually had a non-empty poster, and is cleared at the
+    start of every addon UI launch so a stale latch self-heals on
+    the next open without depending on a library scan. Reported in
+    https://github.com/Rouzax/script.easytv/issues/2.
+  - Playback notification: The "Now Playing" toast that fires at
+    the start of each playlist item no longer truncates show titles
+    that contain commas (e.g., "What We Do, In the Shadows"). The
+    notification call switched from xbmc.executebuiltin('Notification(
+    ...)'), which uses comma-separated argument parsing, to the
+    typed xbmcgui.Dialog().notification API, which is immune to
+    comma injection.
+  - Settings help text: The Prompt timeout (seconds) help text
+    (string 32426) no longer claims that the slider's maximum (60)
+    waits indefinitely. The actual code starts a countdown for any
+    duration > 0; the help now correctly says "Set to 0 for no
+    automatic dismissal", matching the equivalent help on the
+    Playlist Continuation timeout (string 32616).
+
+Internal:
+  - Service clears advertised DB config on shutdown, DB failure,
+    and when multi_instance_sync is disabled.
+  - Diagnostic logging added for premiere filter (before/after
+    counts), storage backend selection in clones, and shared DB
+    sync skip reasons.
+  - New tests exercise the real import-pymysql code path via
+    sys.modules manipulation. Previous clone-fallback tests mocked
+    SharedDatabase.is_available() directly, which hid two clone
+    bugs (above) by never executing the failing import or the
+    state-clearing side effect.
+  - Documentation overhaul: the docs site under docs/ was rebuilt
+    page by page, settings paths and labels verified against
+    settings.xml, advanced-features.md split into clones,
+    episode-export, and auto-generated-playlists, migration-guide
+    deleted, all em-dashes stripped, and all view + dialog
+    screenshots refreshed including the previously-missing Showcase
+    capture. Documentation files are excluded from the addon zip;
+    the docs site is published at
+    https://rouzax.github.io/script.easytv/docs/.
+
+v1.5.1 (2026-03-24)
+--------------------------
+New Features:
+  - Showcase browse view: Fifth view style with horizontal poster filmstrip
+    layout. Shows watched badges on poster thumbnails.
+  - Heading areas on all five browse views: Each view now displays the addon
+    name, item count, and accent-line separator at the top.
+  - Icon theme selection: Choose from four bundled icon styles (Golden Hour,
+    Ultraviolet, Ember, Nightfall) or browse for a custom image. Kodi's texture
+    cache is automatically invalidated so icon changes appear immediately.
+    icon_default.png added for reliable icon reset. Custom icon choice persists
+    across addon upgrades.
+  - Dialog preview rewrite: Previews all eight dialog types using real library
+    data. Supports clone addon preview via third argument. Module-level data
+    caching for efficient "All Dialogs" cycling. Theme color picker menu before
+    main dialog menu.
+  - Missed episode warning upgraded to a poster-style dialog with show artwork,
+    matching the visual style of other EasyTV dialogs.
+
+Improvements:
+  - EasyMovie UI parity: Harmonized visual design across both addons. Genre
+    display switched to slash-separated format. Duration format shortened
+    (e.g., "43m" instead of "43 min"). Big Screen view redesigned with show
+    title, episode title, and plot replacing fanart reflection. Split View
+    poster resized to fit between accent lines. Show selector now displays
+    selection count. Synopsis prefix removed from plot display.
+  - Clone updates are now mandatory — version mismatch enforces Update or
+    Cancel with no Skip option.
+  - Settings help text reworded for five settings for improved clarity.
+  - Added year, genres, and duration fields to browse ListItems for richer
+    metadata display in all view styles.
+
+Internal:
+  - Added GitHub Actions CI validation workflow (syntax, pyflakes, pyright,
+    kodi-addon-checker, pytest).
+  - Simplified attribution to single-line historical acknowledgment.
+  - Added _temp to pyrightconfig.json exclude list.
+
 v1.5.0 (2026-03-18)
 --------------------------
 New Features:

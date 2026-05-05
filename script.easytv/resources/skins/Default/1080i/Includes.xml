@@ -111,7 +111,7 @@
             <top>$PARAM[top]</top>
             <width>$PARAM[width]</width>
             <height>2</height>
-            <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/white.png</texture>
+            <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/line_fade.png</texture>
         </control>
     </include>
 </includes>

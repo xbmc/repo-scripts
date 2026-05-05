@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -68,6 +67,7 @@ from resources.lib.data.shows import (
     extract_movieids_from_playlist,
     filter_shows_by_duration,
     validate_duration_settings,
+    sync_show_list_from_shared_db,
 )
 from resources.lib.playback.playlist_session import PlaylistSession, calculate_movie_target
 from resources.lib.data.storage import get_storage
@@ -1125,12 +1125,22 @@ def build_random_playlist(
             if config.playlist_content == CONTENT_MOVIES_ONLY:
                 stored_data_filtered = []
             else:
+                # Sync tracked shows from shared DB before fetching data
+                # This discovers shows added/removed by other instances
+                storage = get_storage()
+                if storage.needs_refresh():
+                    sync_show_list_from_shared_db(storage, log)
+                else:
+                    log.debug("Skipping shared DB sync",
+                              event="playlist.sync_skip",
+                              reason="not_stale" if hasattr(storage, '_db') else "local_storage")
+
                 # Get filtered show data based on episode selection mode
                 stored_data_filtered = filter_shows_by_population(
                     population, config.sort_by, config.sort_reverse, config.language,
                     episode_selection=config.episode_selection, logger=log
                 )
-                
+
                 # Apply duration filter if enabled
                 if config.duration_filter_enabled and stored_data_filtered:
                     if validate_duration_settings(config.duration_min, config.duration_max):
@@ -1139,13 +1149,12 @@ def build_random_playlist(
                             config.duration_min,
                             config.duration_max
                         )
-                
-                # Refresh from shared storage if stale (multi-instance sync)
+
+                # Refresh episode data from shared storage for listed shows
                 if stored_data_filtered:
-                    storage = get_storage()
                     if storage.needs_refresh():
                         show_ids = [show[1] for show in stored_data_filtered]
-                        log.debug("Cache stale, refreshing before playlist build",
+                        log.debug("Refreshing episode data before playlist build",
                                  event="playlist.refresh", show_count=len(show_ids))
                         try:
                             _, revision = storage.get_ondeck_bulk(show_ids, refresh_display=True)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -31,6 +30,8 @@ Logging:
         - service.loop_start (INFO): Main loop started
         - service.loop_stop (INFO): Main loop ended
         - service.event_error (ERROR): Unhandled error in event processing
+        - icon.restored (INFO): Custom icon restored after addon upgrade
+        - icon.restore_failed (WARNING): Custom icon backup missing
         - settings.threshold (INFO): Watched threshold configured
         - settings.database (DEBUG): Kodi video database backend (shared/local)
         - settings.load (INFO): Settings loaded
@@ -60,6 +61,7 @@ from __future__ import annotations
 
 import ast
 import contextlib
+import filecmp
 import json
 import os
 import random
@@ -70,8 +72,10 @@ from typing import Any, Dict, List, Optional, Tuple, TYPE_CHECKING, Union, cast
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 
 from resources.lib.constants import (
+    CUSTOM_ICON_BACKUP,
     KODI_HOME_WINDOW_ID,
     DAEMON_LOOP_SLEEP_MS,
     NOTIFICATION_DURATION_MS,
@@ -105,11 +109,11 @@ from resources.lib.utils import (
     get_ignore_seconds_at_start,
     get_ignore_percent_at_end,
     get_bool_setting,
+    invalidate_icon_cache,
     is_shared_video_database,
     json_query,
     lang,
     log_timing,
-    restore_custom_icon,
     runtime_converter,
     service_heartbeat,
 )
@@ -157,6 +161,67 @@ from resources.lib.data.storage import get_storage, reset_storage, SharedDatabas
 
 if TYPE_CHECKING:
     from resources.lib.utils import StructuredLogger
+
+
+# =============================================================================
+# Icon Persistence
+# =============================================================================
+
+def _restore_icon_if_needed(addon: xbmcaddon.Addon) -> None:
+    """Restore custom icon after an addon upgrade overwrites icon.png.
+
+    Checks if the user had a custom icon choice and whether the current
+    icon.png matches icon_default.png (indicating an upgrade replaced it).
+    If so, restores from the backup in addon_data.
+    """
+    log = get_logger('daemon')
+    addon_id = addon.getAddonInfo('id')
+    icon_choice = addon.getSetting('icon_choice')
+    if not icon_choice:
+        return
+
+    addon_path = addon.getAddonInfo('path')
+    icon_path = os.path.join(addon_path, 'icon.png')
+    default_path = os.path.join(addon_path, 'icon_default.png')
+
+    if not os.path.isfile(icon_path) or not os.path.isfile(default_path):
+        return
+
+    if not filecmp.cmp(icon_path, default_path, shallow=False):
+        return  # Icon is already custom, no restore needed
+
+    # Icon matches default — upgrade wiped it. Try to restore.
+    addon_data = xbmcvfs.translatePath(
+        'special://profile/addon_data/%s/' % addon_id
+    )
+    backup_path = os.path.join(addon_data, CUSTOM_ICON_BACKUP)
+
+    if os.path.isfile(backup_path):
+        xbmcvfs.copy(backup_path, icon_path)
+        invalidate_icon_cache(addon_id)
+        log.info("Custom icon restored after upgrade",
+                 event="icon.restored", source="backup", addon_id=addon_id)
+        return
+
+    # No backup — try built-in fallback
+    if icon_choice.startswith('built-in:'):
+        filename = icon_choice.split(':', 1)[1]
+        builtin_path = os.path.join(addon_path, 'resources', 'icons', filename)
+        if os.path.isfile(builtin_path):
+            xbmcvfs.copy(builtin_path, icon_path)
+            # Re-create the missing backup
+            xbmcvfs.copy(builtin_path, backup_path)
+            invalidate_icon_cache(addon_id)
+            log.info("Custom icon restored after upgrade",
+                     event="icon.restored", source="built-in",
+                     icon=filename, addon_id=addon_id)
+            return
+
+    # Custom image with no backup — can't restore
+    log.warning("Custom icon backup missing, resetting to default",
+                event="icon.restore_failed", choice=icon_choice,
+                addon_id=addon_id)
+    addon.setSetting('icon_choice', '')
 
 
 # =============================================================================
@@ -359,8 +424,8 @@ class ServiceDaemon:
 
         self._window.setProperty(PROP_SERVICE_RUNNING, 'true')
 
-        # Restore custom icon if one was set before an addon update
-        restore_custom_icon()
+        # Restore custom icon if an addon update overwrote it
+        _restore_icon_if_needed(xbmcaddon.Addon())
 
         # Show startup notification if enabled
         if self._settings.startup:
@@ -1664,6 +1729,9 @@ class ServiceDaemon:
                 event="settings.sync_toggle",
                 enabled=new_sync_enabled
             )
+            if not new_sync_enabled:
+                from resources.lib.data.shared_db import SharedDatabase
+                SharedDatabase.clear_advertised_config(reason="setting_disabled")
             reset_storage()
             self._sync_enabled = new_sync_enabled
         

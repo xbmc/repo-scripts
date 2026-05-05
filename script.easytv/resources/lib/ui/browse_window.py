@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -49,6 +48,7 @@ from resources.lib.constants import (
     ACTION_PREVIOUS_MENU,
     ACTION_NAV_BACK,
     ACTION_CONTEXT_MENU,
+    ACTION_TELETEXT_BLUE,
     CONTEXT_TOGGLE_MULTISELECT,
     CONTEXT_PLAY_SELECTION,
     CONTEXT_PLAY_FROM_HERE,
@@ -57,6 +57,8 @@ from resources.lib.constants import (
     CONTEXT_IGNORE_SHOW,
     CONTEXT_UPDATE_LIBRARY,
     CONTEXT_REFRESH,
+    THEME_COLORS,
+    THEME_NAMES,
 )
 from resources.lib.data.storage import get_storage
 from resources.lib.utils import get_logger, lang, json_query, format_duration
@@ -87,7 +89,7 @@ class BrowseWindowConfig:
     Configuration for the BrowseWindow.
 
     Attributes:
-        skin: Skin style (0=CardList, 1=Posters, 2=BigScreen, 3=SplitView)
+        skin: Skin style (0=CardList, 1=Posters, 2=BigScreen, 3=SplitView, 4=Showcase)
         limit_shows: Whether to limit the number of shows displayed
         window_length: Maximum number of shows to display when limit_shows is True
         skin_return: Whether to return to the window after playback
@@ -145,9 +147,16 @@ class BrowseWindow(xbmcgui.WindowXMLDialog):
         self._play_requested: bool = False
         self._should_close: bool = False
         self._needs_refresh: bool = False
+        self._preview_mode: bool = False
+        self._theme_index: int = 0
 
         # Control references (set during onInit)
         self.name_list: Optional[xbmcgui.ControlList] = None
+
+    def set_preview_mode(self, theme_index: int) -> None:
+        """Enable preview mode with live theme cycling via blue button."""
+        self._preview_mode = True
+        self._theme_index = theme_index
 
     def onInit(self) -> None:
         """
@@ -290,7 +299,25 @@ class BrowseWindow(xbmcgui.WindowXMLDialog):
         info_tag.setEpisode(int(episode) if episode else 0)
         info_tag.setPlot(plot)
         info_tag.setTitle(eptitle)
-        
+
+        # Additional InfoTagVideo fields from service window properties
+        year_str = WINDOW.getProperty(f"{prop_prefix}.Year")
+        if year_str:
+            try:
+                info_tag.setYear(int(year_str))
+            except ValueError:
+                pass
+
+        genre_str = WINDOW.getProperty(f"{prop_prefix}.Genre")
+        if genre_str:
+            info_tag.setGenres([g.strip() for g in genre_str.split(',')])
+
+        if duration_secs:
+            try:
+                info_tag.setDuration(int(duration_secs))
+            except ValueError:
+                pass
+
         return list_item
 
     def _update_list_item(self, item: xbmcgui.ListItem, show_id: int) -> None:
@@ -342,6 +369,24 @@ class BrowseWindow(xbmcgui.WindowXMLDialog):
         info_tag.setPlot(plot)
         info_tag.setTitle(eptitle)
 
+        # Additional InfoTagVideo fields from service window properties
+        year_str = WINDOW.getProperty(f"{prop_prefix}.Year")
+        if year_str:
+            try:
+                info_tag.setYear(int(year_str))
+            except ValueError:
+                pass
+
+        genre_str = WINDOW.getProperty(f"{prop_prefix}.Genre")
+        if genre_str:
+            info_tag.setGenres([g.strip() for g in genre_str.split(',')])
+
+        if duration_secs:
+            try:
+                info_tag.setDuration(int(duration_secs))
+            except ValueError:
+                pass
+
     def onAction(self, action: xbmcgui.Action) -> None:
         """
         Handle user actions (key presses, button clicks).
@@ -355,7 +400,17 @@ class BrowseWindow(xbmcgui.WindowXMLDialog):
             self._log.debug("Window closing (back action)")
             self._should_close = True
             self.close()
-            
+
+        elif self._preview_mode and (
+            action_id == ACTION_TELETEXT_BLUE
+            or action.getButtonCode() == 0xF054
+        ):
+            self._theme_index = (self._theme_index + 1) % len(THEME_COLORS)
+            for prop, value in THEME_COLORS[str(self._theme_index)].items():
+                self.setProperty(prop, value)
+            xbmcgui.Dialog().notification(
+                "Theme", THEME_NAMES[self._theme_index], time=1500)
+
         elif action_id == ACTION_CONTEXT_MENU:
             self._handle_context_menu()
     
@@ -602,7 +657,7 @@ def get_skin_xml_file(skin: int) -> str:
     Get the XML file name for the given skin style.
 
     Args:
-        skin: Skin style (0=CardList, 1=Posters, 2=BigScreen, 3=SplitView)
+        skin: Skin style (0=CardList, 1=Posters, 2=BigScreen, 3=SplitView, 4=Showcase)
 
     Returns:
         XML filename for the skin
@@ -611,6 +666,7 @@ def get_skin_xml_file(skin: int) -> str:
         0: "script-easytv-cardlist.xml",
         1: "script-easytv-main.xml",
         2: "script-easytv-BigScreenList.xml",
-        3: "script-easytv-splitlist.xml"
+        3: "script-easytv-splitlist.xml",
+        4: "script-easytv-postergrid.xml",
     }
     return skins.get(skin, "script-easytv-cardlist.xml")

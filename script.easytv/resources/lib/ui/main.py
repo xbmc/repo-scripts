@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -38,6 +37,7 @@ from resources.lib.constants import (
     KODI_HOME_WINDOW_ID, ADDON_RESTART_DELAY_MS,
     SERVICE_POLL_SLEEP_MS, SERVICE_POLL_TIMEOUT_TICKS,
     PROP_SERVICE_RUNNING, PROP_VERSION, PROP_SERVICE_PATH,
+    PROP_ART_FETCHED,
 )
 from resources.lib.utils import (
     lang, get_logger, get_bool_setting, get_int_setting,
@@ -101,6 +101,12 @@ def main_entry(addon, log):
 
     # Track which addon (main or clone) started playback for service dialogs
     window.setProperty('EasyTV.SourceAddonId', addon.getAddonInfo('id'))
+
+    # Clear the art-cache session flag on every UI launch so a stale latch
+    # (e.g. an earlier empty/transient JSON-RPC result) self-heals without
+    # waiting for a video library scan. The actual fetch is gated to ~1s and
+    # only runs once per addon launch.
+    window.clearProperty(PROP_ART_FETCHED)
 
     # Load settings
     primary_function = addon.getSetting('primary_function')
@@ -251,9 +257,10 @@ def _handle_special_modes(mode, addon, log, addon_name='EasyTV'):
 
     elif mode == 'set_icon':
         log.debug("Set custom icon mode")
-        from resources.lib.utils import set_custom_icon
+        from resources.lib.utils import set_custom_icon, invalidate_icon_cache
         addon_id = addon.getAddonInfo('id')
         if set_custom_icon(addon_id):
+            invalidate_icon_cache(addon_id)
             xbmc.executebuiltin(
                 'Notification(%s,%s,%i,%s)' % (
                     addon_name, lang(32740), 3000,
@@ -267,9 +274,10 @@ def _handle_special_modes(mode, addon, log, addon_name='EasyTV'):
 
     elif mode == 'reset_icon':
         log.debug("Reset icon mode")
-        from resources.lib.utils import reset_icon
+        from resources.lib.utils import reset_icon, invalidate_icon_cache
         addon_id = addon.getAddonInfo('id')
         if reset_icon(addon_id):
+            invalidate_icon_cache(addon_id)
             xbmc.executebuiltin(
                 'Notification(%s,%s,%i,%s)' % (
                     addon_name, lang(32741), 3000,
@@ -288,8 +296,14 @@ def _handle_special_modes(mode, addon, log, addon_name='EasyTV'):
 
     elif mode == 'dialog_preview':
         log.debug("Dialog preview mode")
-        from resources import dialog_preview
-        dialog_preview.Main()
+        try:
+            from resources import dialog_preview
+            override = sys.argv[2] if len(sys.argv) > 2 else None
+            dialog_preview.Main(override)
+        except Exception:
+            import traceback
+            xbmc.log("[EasyTV] dialog_preview error: %s" % traceback.format_exc(), xbmc.LOGERROR)
+            raise
 
 
 def _check_service_running(window, log):
@@ -348,8 +362,9 @@ def _handle_version_mismatch(addon_version, addon_version_str, addon_id, script_
 
         log.warning("Clone addon out of date", event="clone.outdated",
                     clone_version=addon_version_str, service_version=service_version_str)
-        if show_confirm(script_name, lang(32110) + '\n' + lang(32111)):
-            import os
+        message = lang(32110) + '\n' + lang(32111) + '\n\n' + lang(32153)
+        if show_confirm(script_name, message,
+                        yes_label=lang(32109), no_label=lang(32734)):
             # Use main addon's update_clone.py, not the clone's old version
             # This ensures clones get the latest update logic (e.g., fixed settings replacement)
             service_path = window.getProperty(PROP_SERVICE_PATH)
@@ -358,7 +373,7 @@ def _handle_version_mismatch(addon_version, addon_version_str, addon_id, script_
                 f'RunScript({update_script},{service_path},'
                 f'{script_path},{addon_id},{script_name})'
             )
-            return False
+        return False
     return True
 
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -374,6 +373,75 @@ def merge_and_sort_shows(
         watched.sort(reverse=not sort_reverse)
 
         return watched + never_watched
+
+
+def sync_show_list_from_shared_db(storage, logger=None):
+    # type: (Any, Optional[Any]) -> None
+    """
+    Sync local tracked show list with shared DB.
+
+    Discovers shows added or removed by other instances and updates
+    the local PROP_SHOWS_WITH_NEXT_EPISODES window property.
+    Called before fetching show data for Browse mode and random playlists.
+
+    Args:
+        storage: The storage backend
+        logger: Optional logger instance
+    """
+    log_inner = logger or log
+
+    # Get current local list
+    shows_str = WINDOW.getProperty(PROP_SHOWS_WITH_NEXT_EPISODES)
+    if not shows_str:
+        return
+    try:
+        local_ids = set(int(x) for x in ast.literal_eval(shows_str))
+    except (ValueError, SyntaxError):
+        return
+
+    try:
+        sync_result = storage.sync_tracked_shows(local_ids)
+    except Exception:
+        log_inner.exception("Show list sync failed",
+                            event="sync.error")
+        return
+
+    if not sync_result.added and not sync_result.removed:
+        return
+
+    updated_ids = local_ids.copy()
+
+    # Handle additions: fetch data and populate window properties
+    if sync_result.added:
+        try:
+            data, _ = storage.get_ondeck_bulk(
+                list(sync_result.added), refresh_display=True
+            )
+            # Only add shows that were successfully fetched
+            for show_id in data:
+                updated_ids.add(show_id)
+            log_inner.info("Shows added from shared DB",
+                           event="sync.added",
+                           show_ids=sorted(data.keys()),
+                           count=len(data))
+        except Exception:
+            log_inner.exception("Failed to fetch added shows",
+                                event="sync.add_error")
+
+    # Handle removals: remove from list and clear key window property
+    if sync_result.removed:
+        for show_id in sync_result.removed:
+            updated_ids.discard(show_id)
+            # Clear the EpisodeID property so the show can't be looked up
+            # (remaining props are harmless and cleared on next full refresh)
+            WINDOW.clearProperty("EasyTV.%s.EpisodeID" % show_id)
+        log_inner.info("Shows removed per shared DB",
+                       event="sync.removed",
+                       show_ids=sorted(sync_result.removed),
+                       count=len(sync_result.removed))
+
+    # Update the window property
+    WINDOW.setProperty(PROP_SHOWS_WITH_NEXT_EPISODES, str(sorted(updated_ids)))
 
 
 def fetch_unwatched_shows(sort_by: int, sort_reverse: bool, language: str = 'English') -> List[list]:

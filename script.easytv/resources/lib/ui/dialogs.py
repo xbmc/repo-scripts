@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -61,6 +60,7 @@ from resources.lib.constants import (
     SELECT_LIST,
     SELECTOR_CANCEL,
     SELECTOR_CLEAR_SEARCH,
+    SELECTOR_COUNT,
     SELECTOR_ENABLE_ALL,
     SELECTOR_HEADING,
     SELECTOR_IGNORE_ALL,
@@ -695,6 +695,7 @@ class ShowSelectorDialog(xbmcgui.WindowXMLDialog):
 
         # Populate list and focus it
         self._populate_list()
+        self._update_count()
         self.setFocus(self.getControl(SELECTOR_LIST))
 
     def _filter_shows(self, search_text: str) -> None:
@@ -724,6 +725,13 @@ class ShowSelectorDialog(xbmcgui.WindowXMLDialog):
             if self._selected.get(show_id, False):
                 name_list.getListItem(name_list.size() - 1).select(True)
 
+    def _update_count(self) -> None:
+        """Update the selection count label."""
+        selected = sum(1 for v in self._selected.values() if v)
+        total = len(self._all_shows_data)
+        cast(xbmcgui.ControlLabel, self.getControl(SELECTOR_COUNT)).setLabel(
+            f"{selected} / {total}")
+
     def onClick(self, controlID: int) -> None:
         """Handle button and list clicks."""
         if self._log:
@@ -750,10 +758,12 @@ class ShowSelectorDialog(xbmcgui.WindowXMLDialog):
             for _, show_id, _ in self._filtered_shows:
                 self._selected[show_id] = True
             self._populate_list()
+            self._update_count()
         elif controlID == SELECTOR_IGNORE_ALL:
             for _, show_id, _ in self._filtered_shows:
                 self._selected[show_id] = False
             self._populate_list()
+            self._update_count()
         elif controlID == SELECTOR_LIST:
             name_list = cast(xbmcgui.ControlList, self.getControl(SELECTOR_LIST))
             pos = name_list.getSelectedPosition()
@@ -763,6 +773,7 @@ class ShowSelectorDialog(xbmcgui.WindowXMLDialog):
                 item = name_list.getSelectedItem()
                 if item is not None:
                     item.select(self._selected[show_id])
+                self._update_count()
 
     def onAction(self, action: xbmcgui.Action) -> None:
         """Handle ESC/back as cancel and live search filtering."""

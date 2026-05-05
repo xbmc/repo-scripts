@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -61,7 +60,7 @@ from resources.lib.ui.browse_window import (
 )
 from resources.lib.playback.browse_player import BrowseModePlayer
 from resources.lib.playback.random_player import filter_shows_by_population
-from resources.lib.data.shows import filter_shows_by_duration
+from resources.lib.data.shows import filter_shows_by_duration, sync_show_list_from_shared_db
 from resources.lib.data.storage import get_storage
 
 if TYPE_CHECKING:
@@ -102,33 +101,47 @@ def _fetch_show_art(logger: 'StructuredLogger') -> None:
     if WINDOW.getProperty(PROP_ART_FETCHED) == 'true':
         logger.debug("Art already fetched this session, skipping")
         return
-    
+
     # Fetch art for all shows
+    populated = 0
     with log_timing(logger, "art_fetch") as timer:
         result = json_query(build_shows_art_query())
         timer.mark("query")
-        
+
         shows = result.get('tvshows', [])
-        
+
         # Cache art to window properties
         for show in shows:
             show_id = show.get('tvshowid')
             if show_id is None:
                 continue
-            
+
             art = show.get('art', {})
+            poster = art.get('poster', '')
+            fanart = art.get('fanart', '')
             prop_prefix = f"EasyTV.{show_id}"
-            
+
             # Map Kodi art keys to window property format
             # poster -> Art(tvshow.poster), fanart -> Art(tvshow.fanart)
-            WINDOW.setProperty(f"{prop_prefix}.Art(tvshow.poster)", art.get('poster', ''))
-            WINDOW.setProperty(f"{prop_prefix}.Art(tvshow.fanart)", art.get('fanart', ''))
-        
+            WINDOW.setProperty(f"{prop_prefix}.Art(tvshow.poster)", poster)
+            WINDOW.setProperty(f"{prop_prefix}.Art(tvshow.fanart)", fanart)
+
+            if poster:
+                populated += 1
+
         timer.mark("cache")
-    
-    # Set session flag
-    WINDOW.setProperty(PROP_ART_FETCHED, 'true')
-    logger.debug("Art fetched and cached", show_count=len(shows))
+
+    # Only latch the session flag if at least one show actually had art.
+    # Otherwise leave it unset so the next browse open retries (e.g. when an
+    # empty/transient JSON-RPC result or an unscraped library would otherwise
+    # poison the cache for the rest of the Kodi session).
+    if populated > 0:
+        WINDOW.setProperty(PROP_ART_FETCHED, 'true')
+        logger.debug("Art fetched and cached",
+                     show_count=len(shows), populated=populated)
+    else:
+        logger.warning("Art fetch produced no posters, will retry on next open",
+                       event="art.fetch_empty", show_count=len(shows))
 
 
 
@@ -238,6 +251,12 @@ def build_episode_list(
 
         is_premiere = (episode_num == 1)
 
+        # In-progress premieres are always included (user is actively watching)
+        if is_premiere:
+            resume = WINDOW.getProperty(f"EasyTV.{show_entry[1]}.Resume")
+            if resume == "true":
+                return True
+
         if only_mode:
             if not is_premiere:
                 return False
@@ -265,22 +284,38 @@ def build_episode_list(
                 max_minutes=config.duration_max
             )
         if needs_premiere_filter:
+            before_count = len(show_data)
             show_data = [x for x in show_data if should_include(x)]
+            excluded = before_count - len(show_data)
+            if excluded:
+                log.debug("Premiere filter applied",
+                          event="browse.premiere_filter",
+                          before=before_count,
+                          after=len(show_data),
+                          excluded=excluded)
         if config.excl_random_order_shows and random_order_shows:
             return [x for x in show_data if x[1] not in random_order_shows]
         return show_data
 
     # Show loading indicator during data fetching operations
     with busy_progress("Loading shows..."):
+        # Sync tracked shows from shared DB before fetching data
+        # This discovers shows added/removed by other instances
+        storage = get_storage()
+        if storage.needs_refresh():
+            sync_show_list_from_shared_db(storage, log)
+        else:
+            log.debug("Skipping shared DB sync",
+                      event="browse.sync_skip",
+                      reason="not_stale" if hasattr(storage, '_db') else "local_storage")
+
         filtered_data = _fetch_data()
 
-        # Refresh from shared storage if stale (multi-instance sync)
-        # This ensures window properties are up-to-date before displaying
+        # Refresh episode data from shared storage for listed shows
         if filtered_data:
-            storage = get_storage()
             if storage.needs_refresh():
                 show_ids = [show[1] for show in filtered_data]
-                log.debug("Cache stale, refreshing before browse",
+                log.debug("Refreshing episode data before browse",
                          event="browse.refresh", show_count=len(show_ids))
                 try:
                     _, revision = storage.get_ondeck_bulk(show_ids, refresh_display=True)

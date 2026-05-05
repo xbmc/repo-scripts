@@ -52,7 +52,7 @@ import re
 import socket
 import time
 import xml.etree.ElementTree as ET
-from typing import Any, Dict, Generator, List, Optional, Tuple, TYPE_CHECKING
+from typing import Any, Dict, Generator, List, Optional, Set, Tuple, TYPE_CHECKING
 
 import xbmcgui
 import xbmcvfs
@@ -65,6 +65,8 @@ from resources.lib.constants import (
     EASYTV_TABLE_PREFIX,
     KODI_DEFAULT_VIDEO_DB_NAME,
     KODI_HOME_WINDOW_ID,
+    PROP_SHARED_DB_NAME,
+    PROP_SHARED_DB_TABLE_PREFIX,
 )
 from resources.lib.utils import get_logger, log_timing
 
@@ -92,7 +94,8 @@ class SharedDatabase:
         - Persistent connection with ping/reconnect
         - 30-second backoff after connection failure
         - One-time notification per backoff cycle
-        - sync_rev cleared on failure to force refresh when DB returns
+        - Staleness on reconnect handled by revision comparison in
+          storage.needs_refresh(), not by clearing sync_rev
     
     Schema Strategy:
         1. Try to create namespaced database `easytv_{kodi_base_name}`
@@ -167,8 +170,6 @@ class SharedDatabase:
             return True
         except Exception as e:
             SharedDatabase._last_failure_time = time.time()
-            # Clear sync_rev so we force refresh when DB returns
-            WINDOW.clearProperty("EasyTV.sync_rev")
             log.warning("Database unavailable, backing off",
                        event="shareddb.backoff",
                        backoff_seconds=EASYTV_DB_BACKOFF_SECONDS,
@@ -424,6 +425,7 @@ class SharedDatabase:
         if not self._schema_initialized:
             self._initialize_schema()
             self._schema_initialized = True
+            self.advertise_config()
             log.debug("Schema initialization complete, returning connection",
                      event="shareddb.connect_complete",
                      use_separate_db=self._use_separate_db,
@@ -637,6 +639,24 @@ class SharedDatabase:
             
             cursor.close()
     
+    def advertise_config(self) -> None:
+        """Advertise DB location via window properties for clone access."""
+        WINDOW.setProperty(PROP_SHARED_DB_NAME, self._easytv_db_name)
+        WINDOW.setProperty(PROP_SHARED_DB_TABLE_PREFIX, self._table_prefix)
+        log.info("Shared DB config advertised",
+                 event="shareddb.advertise",
+                 db_name=self._easytv_db_name,
+                 table_prefix=self._table_prefix or "(none)")
+
+    @staticmethod
+    def clear_advertised_config(reason: str = "unknown") -> None:
+        """Clear advertised DB config from window properties."""
+        WINDOW.clearProperty(PROP_SHARED_DB_NAME)
+        WINDOW.clearProperty(PROP_SHARED_DB_TABLE_PREFIX)
+        log.info("Shared DB config cleared",
+                 event="shareddb.advertise_clear",
+                 reason=reason)
+
     def _create_tables(self, cursor: Any) -> None:
         """
         Create the required tables for sync.
@@ -920,6 +940,47 @@ class SharedDatabase:
         finally:
             cursor.close()
     
+    def get_tracked_show_ids(self) -> Tuple[Set[int], int]:
+        """
+        Get all tracked show IDs with consistent revision snapshot.
+
+        Lightweight query returning only the set of show IDs currently
+        tracked in the shared database. Used by consumers to discover
+        shows added or removed by other instances.
+
+        Returns:
+            Tuple of (show_id_set, revision) where:
+                - show_id_set: Set of all tracked show IDs
+                - revision: The global_rev at time of read
+        """
+        conn = self._get_connection()
+        conn.commit()  # Fresh snapshot
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute(f"""
+                SELECT st.show_id, m.int_value AS current_rev
+                FROM {self._table('show_tracking')} st
+                CROSS JOIN (
+                    SELECT int_value FROM {self._table('sync_metadata')}
+                    WHERE key_name = 'global_rev'
+                ) m
+            """)
+
+            rows = cursor.fetchall()
+
+            if rows:
+                show_ids = {row[0] for row in rows}
+                revision = rows[0][1]
+            else:
+                show_ids = set()
+                revision = self.get_global_rev()
+
+            return show_ids, revision
+
+        finally:
+            cursor.close()
+
     def is_empty(self) -> bool:
         """
         Check if database has no show tracking data.
@@ -1200,31 +1261,44 @@ class SharedDatabase:
                 for show_id, (title, year) in current_shows.items()
             }
             
+            # Build set of stored IDs to detect duplicate-target scenarios
+            stored_ids = set(stored_shows.keys())
+
             valid_count = 0
             migrated_count = 0
             orphaned_ids: List[int] = []
-            
+
             for stored_id, (stored_title, stored_year) in stored_shows.items():
                 # Check if stored ID still exists with same title+year
                 if stored_id in current_shows:
-                    current_title, current_year = current_shows[stored_id]
+                    current_title, _current_year = current_shows[stored_id]
                     # Verify title matches (case-insensitive)
-                    if (current_title and stored_title and 
+                    if (current_title and stored_title and
                         current_title.lower() == stored_title.lower()):
                         # Valid: same ID, same title
                         valid_count += 1
                         continue
-                
+
                 # ID doesn't match - try to find by title+year
                 lookup_key = (
                     stored_title.lower() if stored_title else '',
                     stored_year
                 )
                 new_id = title_year_to_new_id.get(lookup_key)
-                
+
                 if new_id is not None and new_id != stored_id:
-                    # Found match with different ID - migrate
-                    if self.migrate_show_id(stored_id, new_id, clear_episode_lists=True):
+                    # Check if target ID already has a row in the DB
+                    if new_id in stored_ids:
+                        # Target already exists (valid row) - this entry is
+                        # a stale duplicate, treat as orphan
+                        orphaned_ids.append(stored_id)
+                        log.info("Stale duplicate removed",
+                                event="shareddb.stale_duplicate",
+                                stale_id=stored_id,
+                                valid_id=new_id,
+                                title=stored_title)
+                    elif self.migrate_show_id(stored_id, new_id, clear_episode_lists=True):
+                        # Found match with different ID - migrate
                         migrated_count += 1
                         log.info("Show ID migrated via title+year",
                                 event="shareddb.id_recovered",

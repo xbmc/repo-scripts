@@ -12,6 +12,7 @@
         100 - Show list
         20  - Cancel button
         21  - Save button
+        30  - Selection count label
 -->
 <window>
     <zorder>1</zorder>
@@ -288,6 +289,18 @@
                     <bordertexture border="2" colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">common/white.png</bordertexture>
                     <visible>!String.IsEmpty(Container(100).ListItem.Art(thumb))</visible>
                 </control>
+            </control>
+
+            <!-- Selection count (bottom-left) -->
+            <control type="label" id="30">
+                <left>30</left>
+                <top>640</top>
+                <width>400</width>
+                <height>40</height>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FF888888</textcolor>
+                <label>-</label>
             </control>
 
             <!-- Cancel / Save buttons -->

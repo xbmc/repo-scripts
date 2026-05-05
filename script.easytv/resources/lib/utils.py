@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -40,6 +39,7 @@ import xbmcgui
 import xbmcvfs
 
 from resources.lib.constants import (
+    CUSTOM_ICON_BACKUP,
     DEFAULT_ADDON_ID,
     KODI_HOME_WINDOW_ID,
     PROP_SERVICE_RUNNING,
@@ -344,7 +344,7 @@ class StructuredLogger:
             pairs = []
             for k, v in kwargs.items():
                 str_v = str(v)
-                if len(str_v) > LOG_MAX_VALUE_LENGTH:
+                if k != 'trace' and len(str_v) > LOG_MAX_VALUE_LENGTH:
                     str_v = str_v[:LOG_MAX_VALUE_LENGTH] + "..."
                 pairs.append(f"{k}={str_v}")
             return f"{base} | {', '.join(pairs)}"
@@ -712,7 +712,7 @@ def format_duration(seconds: Union[int, str]) -> str:
         seconds: Duration in seconds (int or string).
 
     Returns:
-        Formatted string like "43 min" or "1h 30min". Empty string if zero/invalid.
+        Formatted string like "43m" or "1h 30m". Empty string if zero/invalid.
     """
     try:
         total = int(seconds)
@@ -722,12 +722,12 @@ def format_duration(seconds: Union[int, str]) -> str:
         return ''
     minutes = round(total / 60)
     if minutes < 60:
-        return f"{minutes} min"
+        return f"{minutes}m"
     hours = minutes // 60
     remaining = minutes % 60
     if remaining == 0:
         return f"{hours}h"
-    return f"{hours}h {remaining}min"
+    return f"{hours}h {remaining}m"
 
 
 def get_playcount_minimum_percent() -> int:
@@ -947,9 +947,19 @@ def _get_icon_log() -> StructuredLogger:
     return _icon_log
 
 
-def set_custom_icon(addon_id: Optional[str] = None) -> bool:
-    """Open image browser and copy selected image to addon's icon.png.
+# Icon preset filenames — order matches theme string IDs 32722-32725
+ICON_PRESETS = [
+    "icon-golden-hour.png",
+    "icon-ultraviolet.png",
+    "icon-ember.png",
+    "icon-nightfall.png",
+]
 
+
+def set_custom_icon(addon_id: Optional[str] = None) -> bool:
+    """Show icon selection dialog and copy chosen image to addon's icon.png.
+
+    Presents 4 bundled icon presets plus a Browse option for custom images.
     Also saves a copy to addon_data for persistence across addon/clone updates.
 
     Args:
@@ -962,34 +972,58 @@ def set_custom_icon(addon_id: Optional[str] = None) -> bool:
     addon = xbmcaddon.Addon(addon_id) if addon_id else xbmcaddon.Addon()
     addon_path = addon.getAddonInfo('path')
 
-    dialog = xbmcgui.Dialog()
-    image_path = cast(str, dialog.browse(
-        2, lang(32739), 'files', '.png|.jpg|.jpeg', False, False
-    ))
-    if not image_path:
+    # Build selection list: 4 presets + Browse
+    options: List[str] = [
+        lang(32722),  # Golden Hour
+        lang(32723),  # Ultraviolet
+        lang(32724),  # Ember
+        lang(32725),  # Nightfall
+        lang(32746),  # Browse...
+    ]
+    from resources.lib.ui.dialogs import show_select
+    idx = show_select(lang(32745), options, addon_id=addon_id)
+
+    if idx < 0:
         log.debug("Icon selection cancelled", event="icon.set_cancelled")
         return False
 
-    log.debug("Icon selected", event="icon.selected", path=image_path)
+    # Determine source path
+    if idx < len(ICON_PRESETS):
+        source = os.path.join(addon_path, 'resources', 'icons', ICON_PRESETS[idx])
+    else:
+        image_path = cast(str, xbmcgui.Dialog().browse(
+            2, lang(32739), 'files', '.png|.jpg|.jpeg', False, False
+        ))
+        if not image_path:
+            log.debug("Icon browse cancelled", event="icon.browse_cancelled")
+            return False
+        source = image_path
+
+    log.debug("Icon selected", event="icon.selected", path=source)
     icon_path = os.path.join(addon_path, 'icon.png')
 
     # Save to addon_data for persistence across updates
     addon_data = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
     os.makedirs(addon_data, exist_ok=True)
-    backup_path = os.path.join(addon_data, 'custom_icon.png')
-    backup_ok = xbmcvfs.copy(image_path, backup_path)
+    backup_path = os.path.join(addon_data, CUSTOM_ICON_BACKUP)
+    backup_ok = xbmcvfs.copy(source, backup_path)
     if not backup_ok:
         log.warning("Failed to backup icon to addon_data",
                     event="icon.backup_fail", path=backup_path)
 
     # Copy to addon folder
-    result = xbmcvfs.copy(image_path, icon_path)
+    result = xbmcvfs.copy(source, icon_path)
     if result:
-        log.info("Custom icon set", event="icon.set",
-                 source=image_path, addon_id=addon.getAddonInfo('id'))
+        # Track icon choice for smart restore after upgrades
+        if idx < len(ICON_PRESETS):
+            addon.setSetting('icon_choice', 'built-in:%s' % ICON_PRESETS[idx])
+        else:
+            addon.setSetting('icon_choice', 'custom')
+        log.info("Icon set", event="icon.set",
+                 source=source, addon_id=addon.getAddonInfo('id'))
     else:
         log.warning("Failed to copy icon to addon folder",
-                    event="icon.set_fail", source=image_path, target=icon_path)
+                    event="icon.set_fail", source=source, target=icon_path)
     return result
 
 
@@ -1009,9 +1043,12 @@ def reset_icon(addon_id: Optional[str] = None) -> bool:
     default_path = os.path.join(addon_path, 'icon_default.png')
     icon_path = os.path.join(addon_path, 'icon.png')
 
+    # Clear icon choice setting
+    addon.setSetting('icon_choice', '')
+
     # Remove custom icon backup
     addon_data = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
-    custom_backup = os.path.join(addon_data, 'custom_icon.png')
+    custom_backup = os.path.join(addon_data, CUSTOM_ICON_BACKUP)
     if xbmcvfs.exists(custom_backup):
         xbmcvfs.delete(custom_backup)
         log.debug("Removed custom icon backup", event="icon.backup_removed",
@@ -1032,34 +1069,42 @@ def reset_icon(addon_id: Optional[str] = None) -> bool:
     return False
 
 
-def restore_custom_icon(addon_id: Optional[str] = None) -> bool:
-    """Restore custom icon from addon_data after an addon/clone update.
+def invalidate_icon_cache(addon_id: str) -> None:
+    """Remove addon textures from Kodi's cache so icon changes appear immediately.
 
-    No-op if no custom icon was previously set. Called on service startup
-    to handle the case where a Kodi addon update overwrote icon.png.
+    Kodi caches textures by file path (CRC32). After replacing icon.png,
+    the old cached version persists for ~24h unless removed via JSON-RPC.
 
     Args:
-        addon_id: Addon to restore icon for. None for the current addon.
-
-    Returns:
-        True if custom icon was restored, False if none was set.
+        addon_id: Addon ID to filter textures by (e.g. 'script.easytv').
     """
     log = _get_icon_log()
-    addon = xbmcaddon.Addon(addon_id) if addon_id else xbmcaddon.Addon()
-    addon_data = xbmcvfs.translatePath(addon.getAddonInfo('profile'))
-    custom_backup = os.path.join(addon_data, 'custom_icon.png')
-    if xbmcvfs.exists(custom_backup):
-        icon_path = os.path.join(addon.getAddonInfo('path'), 'icon.png')
-        result = xbmcvfs.copy(custom_backup, icon_path)
-        if result:
-            log.info("Custom icon restored after update", event="icon.restore",
-                     addon_id=addon.getAddonInfo('id'))
-        else:
-            log.warning("Failed to restore custom icon",
-                        event="icon.restore_fail", source=custom_backup)
-        return result
-    log.debug("No custom icon to restore", event="icon.restore_skip")
-    return False
+    result = json_query({
+        "jsonrpc": "2.0",
+        "method": "Textures.GetTextures",
+        "params": {
+            "filter": {
+                "field": "url",
+                "operator": "contains",
+                "value": addon_id,
+            }
+        },
+        "id": 1,
+    })
+    textures = result.get("textures", [])
+    for texture in textures:
+        tid = texture.get("textureid")
+        if tid:
+            json_query({
+                "jsonrpc": "2.0",
+                "method": "Textures.RemoveTexture",
+                "params": {"textureid": tid},
+                "id": 1,
+            }, return_result=False)
+    log.debug("Icon texture cache invalidated", event="icon.cache_clear",
+              addon_id=addon_id, removed=len(textures))
+
+
 
 
 # =============================================================================

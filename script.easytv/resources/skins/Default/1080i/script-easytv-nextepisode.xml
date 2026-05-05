@@ -7,7 +7,7 @@
         1  - Heading label (static, addon/clone name)
         2  - Message label (primary)
         3  - Timer label (auto-close countdown, below buttons)
-        4  - Subtitle label (secondary — episode title, smaller + dimmer)
+        4  - Subtitle label (secondary - episode title, smaller + dimmer)
         10 - "Yes" button (left)
         11 - "No" button (right)
         20 - Show poster image
@@ -32,12 +32,12 @@
             </animation>
         </control>
 
-        <!-- Dialog Container: 800x460 centered -->
+        <!-- Dialog Container: 800x490 centered -->
         <control type="group">
             <left>560</left>
-            <top>310</top>
+            <top>295</top>
             <width>800</width>
-            <height>460</height>
+            <height>490</height>
             <animation type="WindowOpen" reversible="false">
                 <effect type="fade" start="0" end="100" time="300" delay="100" />
                 <effect type="slide" start="0,-100" end="0" center="auto" tween="back" easing="out" time="600" delay="100" />
@@ -52,7 +52,7 @@
                 <left>-2</left>
                 <top>-2</top>
                 <width>804</width>
-                <height>464</height>
+                <height>494</height>
                 <texture border="12" colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">common/white_rounded.png</texture>
             </control>
 
@@ -61,12 +61,12 @@
                 <left>0</left>
                 <top>0</top>
                 <width>800</width>
-                <height>460</height>
+                <height>490</height>
                 <texture border="12">common/menu.png</texture>
                 <colordiffuse>ffffffff</colordiffuse>
             </control>
 
-            <!-- Heading Label (ID 1) — centered across full dialog -->
+            <!-- Heading Label (ID 1) - centered across full dialog -->
             <control type="label" id="1">
                 <left>30</left>
                 <top>13</top>
@@ -87,54 +87,54 @@
                 <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/line_fade.png</texture>
             </control>
 
-            <!-- Show Poster (ID 20): 150x225 -->
+            <!-- Show Poster (ID 20): 160x240 -->
             <control type="image" id="20">
-                <left>50</left>
+                <left>30</left>
                 <top>82</top>
-                <width>150</width>
-                <height>225</height>
+                <width>160</width>
+                <height>240</height>
                 <aspectratio>keep</aspectratio>
                 <texture>-</texture>
             </control>
 
-            <!-- Message Label (ID 2) — show title, right of poster -->
+            <!-- Message (ID 2) - "You just watched[CR][B]Show SxxEyy[/B] Title" -->
             <control type="label" id="2">
-                <left>230</left>
-                <top>145</top>
-                <width>540</width>
-                <height>60</height>
+                <left>210</left>
+                <top>85</top>
+                <width>560</width>
+                <height>95</height>
                 <align>left</align>
-                <aligny>center</aligny>
                 <textcolor>ffFFFFFF</textcolor>
-                <font>font14_title</font>
+                <font>font13</font>
                 <wrapmultiline>true</wrapmultiline>
                 <label>-</label>
             </control>
 
-            <!-- Subtitle Label (ID 4) — episode info, smaller + dimmer -->
+            <!-- Subtitle (ID 4) - "Up next[CR][B]SxxEyy[/B] Episode Title" -->
             <control type="label" id="4">
-                <left>230</left>
-                <top>210</top>
-                <width>540</width>
-                <height>25</height>
+                <left>210</left>
+                <top>195</top>
+                <width>560</width>
+                <height>95</height>
                 <align>left</align>
-                <font>font10</font>
                 <textcolor>FFAAAAAA</textcolor>
+                <font>font12</font>
+                <wrapmultiline>true</wrapmultiline>
                 <label>-</label>
             </control>
 
-            <!-- Button Row — below poster area -->
+            <!-- Button Row -->
             <control type="group">
-                <left>150</left>
-                <top>330</top>
-                <width>500</width>
+                <left>185</left>
+                <top>385</top>
+                <width>430</width>
                 <height>50</height>
 
                 <!-- Yes Button (ID 10) -->
                 <control type="button" id="10">
                     <left>0</left>
                     <top>0</top>
-                    <width>235</width>
+                    <width>200</width>
                     <height>50</height>
                     <align>center</align>
                     <aligny>center</aligny>
@@ -150,9 +150,9 @@
 
                 <!-- No Button (ID 11) -->
                 <control type="button" id="11">
-                    <left>265</left>
+                    <left>230</left>
                     <top>0</top>
-                    <width>235</width>
+                    <width>200</width>
                     <height>50</height>
                     <align>center</align>
                     <aligny>center</aligny>
@@ -167,12 +167,12 @@
                 </control>
             </control>
 
-            <!-- Timer Label (ID 3) — auto-close countdown -->
+            <!-- Timer Label (ID 3): auto-close countdown -->
             <control type="label" id="3">
                 <left>150</left>
-                <top>395</top>
+                <top>445</top>
                 <width>500</width>
-                <height>30</height>
+                <height>25</height>
                 <align>center</align>
                 <font>font10</font>
                 <textcolor>FFAAAAAA</textcolor>

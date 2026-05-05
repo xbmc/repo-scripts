@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: EasyTV
 # Addon id: script.easytv
-# Addon Provider: KODeKarnage, Rouzax
+# Addon Provider: Rouzax
 msgid ""
 msgstr ""
 "Project-Id-Version: Kodi Addons\n"
@@ -165,12 +165,20 @@ msgid "EasyTV Service has updated. Please restart to apply changes."
 msgstr ""
 
 #. Clone update messages
+msgctxt "#32109"
+msgid "Update"
+msgstr ""
+
 msgctxt "#32110"
-msgid "EasyTV has updated and this clone is now out of date."
+msgid "A new version of EasyTV is available."
 msgstr ""
 
 msgctxt "#32111"
-msgid "Would you like to update the clone now?"
+msgid "The clone needs to be updated before it can be used."
+msgstr ""
+
+msgctxt "#32153"
+msgid "Update now?"
 msgstr ""
 
 #. Time display labels
@@ -262,12 +270,14 @@ msgctxt "#32160"
 msgid "EasyTV - there are previous unwatched episodes"
 msgstr ""
 
+#. Missed-episode warning dialog. 32161 is the show + S/E identifier
+#. (rendered bold), 32162 is the question shown beneath the poster.
 msgctxt "#32161"
-msgid "%s (%sx%s) is in your library."
+msgid "%s S%sE%s"
 msgstr ""
 
 msgctxt "#32162"
-msgid "Would you like to watch it now?"
+msgid "Would you like to watch it instead?"
 msgstr ""
 
 #. Now playing notification
@@ -275,9 +285,32 @@ msgctxt "#32163"
 msgid "Now Playing"
 msgstr ""
 
+#. Next episode prompt - dialog body
+msgctxt "#32164"
+msgid "You just watched"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Up next"
+msgstr ""
+
+#. Next episode prompt - button labels
+msgctxt "#32166"
+msgid "Watch Next"
+msgstr ""
+
 #. Auto-closing dialog countdown (used below buttons)
 msgctxt "#32167"
 msgid "(auto-closing in %s seconds)"
+msgstr ""
+
+msgctxt "#32168"
+msgid "Skip"
+msgstr ""
+
+#. Missed-episode warning suffix sentence, shown below the show + S/E line.
+msgctxt "#32169"
+msgid "is in your library and unwatched."
 msgstr ""
 
 #. Selector buttons
@@ -456,7 +489,7 @@ msgid "Visual layout for the episode list."
 msgstr ""
 
 msgctxt "#32409"
-msgid "Return to the episode list after watching, instead of going back to where you were."
+msgid "Return to the episode list after an episode finishes playing."
 msgstr ""
 
 msgctxt "#32410"
@@ -500,7 +533,7 @@ msgid "How much of the playlist should be movies. 0% = no movies, 50% = equal mi
 msgstr ""
 
 msgctxt "#32424"
-msgid "Display a notification when each episode or movie starts in the playlist."
+msgid "Show a notification with title and details when an episode starts playing."
 msgstr ""
 
 msgctxt "#32425"
@@ -508,7 +541,7 @@ msgid "After an episode ends, show a dialog asking if you want to watch the next
 msgstr ""
 
 msgctxt "#32426"
-msgid "How long the prompt stays on screen. Maximum (60) waits indefinitely."
+msgid "How long the prompt stays on screen. Set to 0 for no automatic dismissal."
 msgstr ""
 
 msgctxt "#32427"
@@ -966,7 +999,7 @@ msgid "When a random playlist ends, show a prompt asking whether to generate ano
 msgstr ""
 
 msgctxt "#32615"
-msgid "Countdown duration"
+msgid "Countdown duration (seconds)"
 msgstr ""
 
 msgctxt "#32616"
@@ -991,7 +1024,7 @@ msgid "Start playlist with unfinished episodes"
 msgstr ""
 
 msgctxt "#32622"
-msgid "Prioritize partially watched TV episodes at the start of the playlist."
+msgid "Partially watched episodes play first in the playlist."
 msgstr ""
 
 msgctxt "#32623"
@@ -999,7 +1032,7 @@ msgid "Seek to resume point for episodes"
 msgstr ""
 
 msgctxt "#32624"
-msgid "When playing a partial TV episode, automatically skip to where you left off."
+msgid "Automatically skip to where you left off for episodes."
 msgstr ""
 
 msgctxt "#32625"
@@ -1238,7 +1271,7 @@ msgstr ""
 
 #. Settings: Appearance - Set custom icon help
 msgctxt "#32736"
-msgid "Choose an icon image for EasyTV. This replaces the addon icon shown in Kodi menus and notifications. A restart may be needed for the change to appear everywhere."
+msgid "Choose from built-in icon themes or browse for a custom image. The addon icon shown in Kodi menus and notifications will update immediately."
 msgstr ""
 
 #. Settings: Appearance - Reset icon button
@@ -1277,4 +1310,18 @@ msgstr ""
 
 msgctxt "#32744"
 msgid "Only"
+msgstr ""
+
+#. Dialog heading: choose icon from presets
+msgctxt "#32745"
+msgid "Choose icon"
+msgstr ""
+
+#. Icon selection dialog: browse for custom file
+msgctxt "#32746"
+msgid "Browse..."
+msgstr ""
+
+msgctxt "#32747"
+msgid "Showcase"
 msgstr ""

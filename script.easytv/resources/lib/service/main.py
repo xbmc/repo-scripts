@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -68,6 +67,10 @@ def main() -> None:
         daemon.load_initial_settings()
         daemon.initialize()
         daemon.run()
+
+        # Clear shared DB advertisement so clones fall back gracefully
+        from resources.lib.data.shared_db import SharedDatabase
+        SharedDatabase.clear_advertised_config(reason="shutdown")
 
         log.info(
             "Service stopped",

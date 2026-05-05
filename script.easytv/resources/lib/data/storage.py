@@ -43,6 +43,7 @@ from __future__ import annotations
 import ast
 import contextlib
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import Any, Dict, Generator, List, Optional, Tuple, Union
 
 import xbmcaddon
@@ -52,6 +53,8 @@ from resources.lib.constants import (
     DEFAULT_ADDON_ID,
     KODI_HOME_WINDOW_ID,
     PERCENT_MULTIPLIER,
+    PROP_SHARED_DB_NAME,
+    PROP_SHARED_DB_TABLE_PREFIX,
     PROP_SYNC_REV,
     SETTING_MULTI_INSTANCE_SYNC,
 )
@@ -59,6 +62,15 @@ from resources.lib.utils import get_bool_setting, get_logger, json_query, lang
 from resources.lib.data.queries import build_episode_details_query
 
 log = get_logger('storage')
+
+
+@dataclass
+class SyncResult:
+    """Result of comparing shared DB tracked shows against local state."""
+    added: set      # Show IDs in shared DB but not local
+    removed: set    # Show IDs in local but not shared DB
+    revision: int   # DB revision at time of comparison
+
 
 # Window for storing properties
 WINDOW = xbmcgui.Window(KODI_HOME_WINDOW_ID)
@@ -217,12 +229,41 @@ class StorageBackend(ABC):
     def is_available(self) -> bool:
         """
         Check if storage backend is operational.
-        
+
         Returns:
             True if backend is available and can handle requests.
         """
         ...
-    
+
+    @abstractmethod
+    def get_tracked_show_ids(self) -> Tuple[set, int]:
+        """
+        Get all show IDs tracked in the storage backend.
+
+        Used to discover shows added or removed by other instances.
+
+        Returns:
+            Tuple of (show_id_set, revision) where:
+                - show_id_set: Set of tracked show IDs
+                - revision: Current revision (0 for single-instance)
+        """
+        ...
+
+    @abstractmethod
+    def sync_tracked_shows(self, local_show_ids: set) -> SyncResult:
+        """
+        Compare shared DB tracked shows against local state.
+
+        Returns which shows were added or removed by other instances.
+
+        Args:
+            local_show_ids: Set of show IDs currently in PROP_SHOWS_WITH_NEXT_EPISODES
+
+        Returns:
+            SyncResult with added, removed, and revision.
+        """
+        ...
+
     @contextlib.contextmanager
     def batch_write(
         self, show_ids: List[int]
@@ -328,7 +369,15 @@ class WindowPropertyStorage(StorageBackend):
     def is_available(self) -> bool:
         """Always available."""
         return True
-    
+
+    def get_tracked_show_ids(self) -> Tuple[set, int]:
+        """Single instance: no external tracked shows to discover."""
+        return set(), 0
+
+    def sync_tracked_shows(self, local_show_ids: set) -> SyncResult:
+        """Single instance: no external changes to discover."""
+        return SyncResult(added=set(), removed=set(), revision=0)
+
     def _get_int_property(self, show_id: int, prop_name: str) -> int:
         """Get an integer property, defaulting to 0."""
         value = WINDOW.getProperty(_build_property_key(show_id, prop_name))
@@ -418,11 +467,16 @@ class SharedDatabaseStorage(StorageBackend):
                     current_episode_id = None
                 
                 if db_episode_id and db_episode_id != current_episode_id:
-                    # Episode changed - fetch display properties from Kodi
+                    # Episode changed - full display refresh from Kodi
                     if self._fetch_and_set_display_properties(show_id, db_episode_id, show_data):
                         display_refreshed += 1
                         continue
                     # Kodi query failed - fall back to tracking properties only
+                else:
+                    # Same episode - still refresh resume state from Kodi
+                    # (user may have partially watched on another instance)
+                    if db_episode_id:
+                        self._refresh_resume_state(show_id, db_episode_id)
             
             # Default: just update tracking properties
             self._update_window_properties(show_id, show_data)
@@ -491,7 +545,29 @@ class SharedDatabaseStorage(StorageBackend):
     def is_available(self) -> bool:
         """Check if database is available."""
         return self._db.is_available()
-    
+
+    def get_tracked_show_ids(self) -> Tuple[set, int]:
+        """Get all tracked show IDs from shared database."""
+        return self._db.get_tracked_show_ids()
+
+    def sync_tracked_shows(self, local_show_ids: set) -> SyncResult:
+        """Compare shared DB against local tracked show list."""
+        db_show_ids, revision = self._db.get_tracked_show_ids()
+
+        added = db_show_ids - local_show_ids
+        removed = local_show_ids - db_show_ids
+
+        if added:
+            log.debug("Shows added by other instance",
+                     event="storage.sync_added",
+                     show_ids=sorted(added), count=len(added))
+        if removed:
+            log.debug("Shows removed by other instance",
+                     event="storage.sync_removed",
+                     show_ids=sorted(removed), count=len(removed))
+
+        return SyncResult(added=added, removed=removed, revision=revision)
+
     @contextlib.contextmanager
     def batch_write(
         self, show_ids: List[int]
@@ -644,7 +720,42 @@ class SharedDatabaseStorage(StorageBackend):
             WINDOW.setProperty(_build_property_key(show_id, prop_name), value)
         
         return True
-    
+
+    def _refresh_resume_state(self, show_id: int, episode_id: int) -> None:
+        """
+        Refresh only the resume/progress window properties from Kodi.
+
+        Called when the ondeck episode hasn't changed but the resume point
+        may have been updated by another instance. Uses the shared Kodi
+        database (MariaDB) so the resume state is already current.
+
+        Args:
+            show_id: The TV show ID
+            episode_id: The ondeck episode ID to query resume for
+        """
+        try:
+            ep_result = json_query(build_episode_details_query(episode_id), True)
+        except Exception:
+            return  # Query failed, keep existing values
+
+        if 'episodedetails' not in ep_result:
+            return
+
+        resume_dict = ep_result['episodedetails'].get('resume', {})
+        resume_pos = resume_dict.get('position', 0)
+        resume_total = resume_dict.get('total', 0)
+
+        if resume_pos and resume_total:
+            resume = "true"
+            percent = int((float(resume_pos) / float(resume_total)) * PERCENT_MULTIPLIER)
+            percent_played = f"{percent}%"
+        else:
+            resume = "false"
+            percent_played = "0%"
+
+        WINDOW.setProperty(_build_property_key(show_id, "Resume"), resume)
+        WINDOW.setProperty(_build_property_key(show_id, "PercentPlayed"), percent_played)
+
     def _clear_window_properties(self, show_id: int) -> None:
         """
         Clear window properties for a show deleted on another instance.
@@ -688,10 +799,40 @@ def get_storage() -> StorageBackend:
     if _storage_instance is not None:
         return _storage_instance
     
-    # Check if multi-instance sync is enabled
+    # Check if multi-instance sync is enabled (main addon path)
     if not get_bool_setting(SETTING_MULTI_INSTANCE_SYNC):
+        # Clone fallback: check if main service advertised shared DB config
+        advertised_db = WINDOW.getProperty(PROP_SHARED_DB_NAME)
+        if not advertised_db:
+            _storage_instance = WindowPropertyStorage()
+            log.info("Shared DB not advertised, using window property storage",
+                     event="storage.init_local")
+            return _storage_instance
+
+        # Main service advertised DB config - connect using advancedsettings.xml
+        # credentials with advertised db_name and table_prefix
+        advertised_prefix = WINDOW.getProperty(PROP_SHARED_DB_TABLE_PREFIX)
+        try:
+            from resources.lib.data.shared_db import SharedDatabase
+            db = SharedDatabase()
+            db._easytv_db_name = advertised_db
+            db._table_prefix = advertised_prefix
+            db._use_separate_db = (advertised_prefix == "")
+            db._schema_initialized = True  # Skip schema init (main service owns this)
+            if db.is_available():
+                _storage_instance = SharedDatabaseStorage(db)
+                log.info("Using shared database storage via advertised config",
+                         event="storage.init_shared_clone",
+                         db_name=advertised_db)
+                return _storage_instance
+        except Exception as e:
+            log.warning("Failed to connect to advertised shared DB",
+                        event="storage.clone_connect_error",
+                        error=str(e))
+
         _storage_instance = WindowPropertyStorage()
-        log.info("Using window property storage", event="storage.init_local")
+        log.info("Advertised shared DB unavailable, using window property storage",
+                 event="storage.init_local")
         return _storage_instance
     
     # Try to import pymysql

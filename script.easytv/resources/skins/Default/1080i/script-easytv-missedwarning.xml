@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    EasyTV Countdown Dialog (Playlist Continuation)
+    EasyTV Missed Episode Warning Dialog
     Resolution: 1080i (1920x1080)
 
+    Shown when a user plays a later episode than the stored next episode.
+    No countdown timer.
+
     Control IDs:
-        1  - Heading label (static, addon/clone name)
-        2  - Message label (primary)
-        3  - Timer label (auto-close countdown, below buttons)
-        4  - Subtitle label (secondary, smaller + dimmer)
-        10 - "Yes" button (left)
-        11 - "No" button (right)
+        1  - Heading label
+        2  - Message label (primary - show/episode info, up to 5 lines)
+        4  - Subtitle label (centered question)
+        10 - Yes/primary button (play stored episode)
+        11 - No/secondary button (continue current)
+        20 - Show poster image
 -->
 <window>
     <zorder>1</zorder>
@@ -31,12 +34,12 @@
             </animation>
         </control>
 
-        <!-- Dialog Container: 720x310 centered -->
+        <!-- Dialog Container: 800x480 centered -->
         <control type="group">
-            <left>600</left>
-            <top>385</top>
-            <width>720</width>
-            <height>310</height>
+            <left>560</left>
+            <top>300</top>
+            <width>800</width>
+            <height>480</height>
             <animation type="WindowOpen" reversible="false">
                 <effect type="fade" start="0" end="100" time="300" delay="100" />
                 <effect type="slide" start="0,-100" end="0" center="auto" tween="back" easing="out" time="600" delay="100" />
@@ -50,8 +53,8 @@
             <control type="image">
                 <left>-2</left>
                 <top>-2</top>
-                <width>724</width>
-                <height>314</height>
+                <width>804</width>
+                <height>484</height>
                 <texture border="12" colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">common/white_rounded.png</texture>
             </control>
 
@@ -59,8 +62,8 @@
             <control type="image">
                 <left>0</left>
                 <top>0</top>
-                <width>720</width>
-                <height>310</height>
+                <width>800</width>
+                <height>480</height>
                 <texture border="12">common/menu.png</texture>
                 <colordiffuse>ffffffff</colordiffuse>
             </control>
@@ -69,57 +72,67 @@
             <control type="label" id="1">
                 <left>30</left>
                 <top>13</top>
-                <width>660</width>
+                <width>740</width>
                 <height>40</height>
                 <align>center</align>
                 <textcolor>$INFO[Window.Property(EasyTV.Accent)]</textcolor>
                 <font>font14_title</font>
-                <label>-</label>
+                <label></label>
             </control>
 
             <!-- Accent line separator -->
             <control type="image">
                 <left>30</left>
                 <top>66</top>
-                <width>660</width>
+                <width>740</width>
                 <height>2</height>
                 <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/line_fade.png</texture>
             </control>
 
-            <!-- Message Label (ID 2) — primary -->
-            <control type="label" id="2">
+            <!-- Show Poster (ID 20) -->
+            <control type="image" id="20">
                 <left>30</left>
                 <top>82</top>
-                <width>660</width>
-                <height>80</height>
-                <align>center</align>
-                <aligny>center</aligny>
+                <width>160</width>
+                <height>240</height>
+                <aspectratio>keep</aspectratio>
+                <texture background="true">-</texture>
+            </control>
+
+            <!-- Message (ID 2) - show/episode info, up to 5 lines -->
+            <control type="label" id="2">
+                <left>210</left>
+                <top>85</top>
+                <width>560</width>
+                <height>165</height>
+                <align>left</align>
                 <textcolor>ffFFFFFF</textcolor>
                 <font>font13</font>
                 <wrapmultiline>true</wrapmultiline>
                 <label>-</label>
             </control>
 
-            <!-- Subtitle Label (ID 4) — secondary, smaller + dimmer -->
+            <!-- Subtitle (ID 4) - centered question -->
             <control type="label" id="4">
                 <left>30</left>
-                <top>166</top>
-                <width>660</width>
-                <height>25</height>
+                <top>340</top>
+                <width>740</width>
+                <height>50</height>
                 <align>center</align>
-                <font>font10</font>
                 <textcolor>FFAAAAAA</textcolor>
+                <font>font12</font>
+                <wrapmultiline>true</wrapmultiline>
                 <label>-</label>
             </control>
 
             <!-- Button Row -->
             <control type="group">
-                <left>145</left>
-                <top>196</top>
+                <left>185</left>
+                <top>415</top>
                 <width>430</width>
                 <height>50</height>
 
-                <!-- Yes Button (ID 10) -->
+                <!-- Yes/primary Button (ID 10) -->
                 <control type="button" id="10">
                     <left>0</left>
                     <top>0</top>
@@ -137,7 +150,7 @@
                     <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
                 </control>
 
-                <!-- No Button (ID 11) -->
+                <!-- No/secondary Button (ID 11) -->
                 <control type="button" id="11">
                     <left>230</left>
                     <top>0</top>
@@ -154,18 +167,6 @@
                     <texturefocus border="12" colordiffuse="$INFO[Window.Property(EasyTV.ButtonFocus)]">common/white_rounded.png</texturefocus>
                     <texturenofocus border="12" colordiffuse="1fFFFFFF">common/white_rounded.png</texturenofocus>
                 </control>
-            </control>
-
-            <!-- Timer Label (ID 3) — auto-close countdown -->
-            <control type="label" id="3">
-                <left>30</left>
-                <top>256</top>
-                <width>660</width>
-                <height>25</height>
-                <align>center</align>
-                <font>font10</font>
-                <textcolor>FFAAAAAA</textcolor>
-                <label>-</label>
             </control>
         </control>
     </controls>

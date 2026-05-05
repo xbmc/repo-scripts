@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    EasyTV Showcase View
+    Resolution: 1080i (1920x1080)
+
+    Horizontal poster filmstrip with fixed focus position.
+    Focused poster grows to 420x630 with zoom animation, info panel below.
+
+    Layout: Horizontal fixedlist with focusposition=1
+    Header: addon name (left) + count (right) + accent line
+    Info: show title + episode + metadata + stats + plot (no fanart)
+
+    Control IDs:
+        655 - Fixedlist control (poster filmstrip)
+-->
+<window>
+    <defaultcontrol>655</defaultcontrol>
+    <visible>!System.ScreenSaverActive</visible>
+
+    <controls>
+        <!-- Full-screen dark background -->
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <texture colordiffuse="FF0D1117">common/white.png</texture>
+        </control>
+
+        <!-- Main content group -->
+        <control type="group">
+            <visible>Control.IsVisible(655)</visible>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+                <effect type="zoom" start="85" end="100" time="300" center="auto" tween="sine" easing="out" />
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="85" center="auto" tween="sine" easing="out" time="300" />
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="300" />
+            </animation>
+
+            <!-- ==================== HEADER ==================== -->
+
+            <!-- Addon name heading (left) -->
+            <control type="label">
+                <left>40</left>
+                <top>15</top>
+                <width>800</width>
+                <height>40</height>
+                <font>font14_title</font>
+                <textcolor>$INFO[Window.Property(EasyTV.Accent)]</textcolor>
+                <label>$INFO[Window.Property(EasyTV.AddonName)]</label>
+            </control>
+
+            <!-- Show count (right) -->
+            <control type="label">
+                <left>40</left>
+                <top>20</top>
+                <width>1840</width>
+                <height>30</height>
+                <align>right</align>
+                <font>font10</font>
+                <textcolor>FF888888</textcolor>
+                <label>$INFO[Container(655).CurrentItem] / $INFO[Container(655).NumItems]</label>
+            </control>
+
+            <!-- Accent line separator -->
+            <control type="image">
+                <left>40</left>
+                <top>60</top>
+                <width>1840</width>
+                <height>2</height>
+                <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/line_fade.png</texture>
+            </control>
+
+            <!-- ==================== POSTER FILMSTRIP ==================== -->
+            <control type="fixedlist" id="655">
+                <left>40</left>
+                <top>72</top>
+                <width>1840</width>
+                <height>790</height>
+                <orientation>horizontal</orientation>
+                <focusposition>1</focusposition>
+                <scrolltime tween="sine" easing="out">300</scrolltime>
+                <onup>655</onup>
+                <ondown>655</ondown>
+                <onleft>655</onleft>
+                <onright>655</onright>
+                <preloaditems>6</preloaditems>
+
+                <!-- Unfocused poster cell -->
+                <itemlayout width="210" height="790">
+                    <!-- Poster image -->
+                    <control type="image">
+                        <left>14</left>
+                        <top>258</top>
+                        <width>182</width>
+                        <height>273</height>
+                        <aspectratio aligny="top">scale</aspectratio>
+                        <texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+                    </control>
+
+                    <!-- Watched icon -->
+                    <control type="image">
+                        <left>18</left>
+                        <top>262</top>
+                        <width>24</width>
+                        <height>24</height>
+                        <texture colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">IconWatched.png</texture>
+                        <visible>!String.IsEmpty(ListItem.Property(watched))</visible>
+                    </control>
+
+                    <!-- Multiselect checkmark -->
+                    <control type="image">
+                        <left>14</left>
+                        <top>258</top>
+                        <width>182</width>
+                        <height>273</height>
+                        <texture>IconWatched.png</texture>
+                        <visible>ListItem.IsSelected</visible>
+                    </control>
+                </itemlayout>
+
+                <!-- Focused poster cell -->
+                <focusedlayout width="440" height="790">
+                    <control type="group">
+                        <animation type="Focus" reversible="false">
+                            <effect type="zoom" start="65" end="100" center="220,395" time="300" tween="sine" easing="out" />
+                        </animation>
+                        <animation type="Unfocus" reversible="false">
+                            <effect type="zoom" start="100" end="65" center="220,395" time="250" tween="sine" easing="out" />
+                        </animation>
+
+                        <!-- Accent border -->
+                        <control type="image">
+                            <left>7</left>
+                            <top>77</top>
+                            <width>426</width>
+                            <height>636</height>
+                            <texture border="3" colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">common/white.png</texture>
+                        </control>
+
+                        <!-- Poster image -->
+                        <control type="image">
+                            <left>10</left>
+                            <top>80</top>
+                            <width>420</width>
+                            <height>630</height>
+                            <aspectratio aligny="top">scale</aspectratio>
+                            <texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+                        </control>
+
+                        <!-- Watched icon -->
+                        <control type="image">
+                            <left>14</left>
+                            <top>84</top>
+                            <width>40</width>
+                            <height>40</height>
+                            <texture colordiffuse="$INFO[Window.Property(EasyTV.Accent)]">IconWatched.png</texture>
+                            <visible>!String.IsEmpty(ListItem.Property(watched))</visible>
+                        </control>
+
+                        <!-- Multiselect checkmark -->
+                        <control type="image">
+                            <left>10</left>
+                            <top>80</top>
+                            <width>420</width>
+                            <height>630</height>
+                            <texture>IconWatched.png</texture>
+                            <visible>ListItem.IsSelected</visible>
+                        </control>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <!-- ==================== INFO PANEL ==================== -->
+
+            <!-- Info panel separator -->
+            <control type="image">
+                <left>40</left>
+                <top>870</top>
+                <width>1840</width>
+                <height>2</height>
+                <texture colordiffuse="$INFO[Window.Property(EasyTV.AccentGlow)]">common/line_fade.png</texture>
+            </control>
+
+            <!-- Show title -->
+            <control type="label">
+                <left>40</left>
+                <top>882</top>
+                <width>700</width>
+                <height>35</height>
+                <font>font13</font>
+                <textcolor>$INFO[Window.Property(EasyTV.Accent)]</textcolor>
+                <label>$INFO[Container(655).ListItem.Label]</label>
+            </control>
+
+            <!-- Episode code + episode title -->
+            <control type="label">
+                <left>40</left>
+                <top>921</top>
+                <width>700</width>
+                <height>28</height>
+                <font>font10</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <label>[COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(episodeno)][/COLOR]  $INFO[Container(655).ListItem.Label2]</label>
+            </control>
+
+            <!-- Genre + Duration/ep -->
+            <control type="label">
+                <left>40</left>
+                <top>953</top>
+                <width>700</width>
+                <height>28</height>
+                <font>font10</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$INFO[Container(655).ListItem.Property(duration)]$INFO[Container(655).ListItem.Genre,  ·  ]</label>
+            </control>
+
+            <!-- On Deck / Watched / Skipped counts -->
+            <control type="label">
+                <left>40</left>
+                <top>985</top>
+                <width>700</width>
+                <height>28</height>
+                <font>font10</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$ADDON[script.easytv 32223] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numondeck)][/COLOR]  ·  $ADDON[script.easytv 32224] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numwatched)][/COLOR]  ·  $ADDON[script.easytv 32225] [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(numskipped)][/COLOR]</label>
+            </control>
+
+            <!-- Last Watched -->
+            <control type="label">
+                <left>40</left>
+                <top>1017</top>
+                <width>700</width>
+                <height>28</height>
+                <font>font10</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$ADDON[script.easytv 32065]  [COLOR $INFO[Window.Property(EasyTV.Accent)]]$INFO[Container(655).ListItem.Property(lastwatched)][/COLOR]</label>
+            </control>
+
+            <!-- Plot -->
+            <control type="textbox">
+                <left>800</left>
+                <top>882</top>
+                <width>1080</width>
+                <height>180</height>
+                <font>font12</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$INFO[Container(655).ListItem.Plot]</label>
+                <autoscroll delay="6000" time="3000" repeat="10000">true</autoscroll>
+            </control>
+        </control>
+    </controls>
+</window>

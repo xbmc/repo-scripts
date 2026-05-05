@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  Original work Copyright (C) 2013 KODeKarnage
-#  Modified work Copyright (C) 2024-2026 Rouzax
+#  Copyright (C) 2024-2026 Rouzax
 #
 #  SPDX-License-Identifier: GPL-3.0-or-later
 #  See LICENSE.txt for more information.
@@ -70,6 +69,7 @@ SELECTOR_IGNORE_ALL = 11
 SELECTOR_LIST = 100
 SELECTOR_CANCEL = 20
 SELECTOR_SAVE = 21
+SELECTOR_COUNT = 30
 
 # =============================================================================
 # Kodi Window IDs
@@ -366,6 +366,10 @@ MOVIE_CANDIDATE_PREFIX = 'm'
 ACTION_PREVIOUS_MENU = 10
 ACTION_NAV_BACK = 92
 ACTION_CONTEXT_MENU = 117
+ACTION_TELETEXT_BLUE = 218
+
+# Theme names (for UI display, e.g. preview mode cycling)
+THEME_NAMES = ["Golden Hour", "Ultraviolet", "Ember", "Nightfall"]
 ACTION_SELECT_ITEM = 7
 
 # =============================================================================
@@ -408,6 +412,9 @@ LOG_MAX_VALUE_LENGTH = 200  # Truncate long values in log output
 
 # Default addon ID (fallback when context unavailable)
 DEFAULT_ADDON_ID = "script.easytv"
+
+# Icon persistence
+CUSTOM_ICON_BACKUP = "custom_icon.png"
 
 # =============================================================================
 # Playlist Continuation Window Properties
@@ -496,6 +503,10 @@ EASYTV_DB_BACKOFF_SECONDS = 30
 EASYTV_MIGRATION_LOCK_TTL_MINUTES = 5
 # Default Kodi video database base name
 KODI_DEFAULT_VIDEO_DB_NAME = "MyVideos"
+
+# Advertised shared DB location (set by service, read by clones)
+PROP_SHARED_DB_NAME = "EasyTV.SharedDB.db_name"
+PROP_SHARED_DB_TABLE_PREFIX = "EasyTV.SharedDB.table_prefix"
 
 # =============================================================================
 # Theme Colors (set as window properties for skin XML $INFO references)
