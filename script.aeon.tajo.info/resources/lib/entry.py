@@ -53,6 +53,7 @@ class Main:
 
     def _parse_argv(self):
         args = sys.argv
+        self.params = {}
 
         for arg in args:
             if arg == ADDON_ID:
@@ -63,4 +64,4 @@ class Main:
                 try:
                     self.params[arg.split("=")[0].lower()] = "=".join(arg.split("=")[1:]).strip()
                 except Exception:
-                    self.params = {}
+                    pass
