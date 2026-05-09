@@ -16,7 +16,7 @@
         <platform>all</platform>
         <license>GPL-2.0-only</license>
         <source>https://github.com/manfeed/script.aeon.tajo.helper</source>
-        <news>v1.0.4 - Security hardening: explicit allowlists for action and info dispatch, defensive None handling in set_library_tags.</news>
+		<news>v1.0.4 - Security hardening: explicit allowlists for action and info dispatch, defensive None handling in set_library_tags. KodiAI fixes: validate path in txtfile, sanitize file argument in PlayMedia, guard missing addonid in toggleaddons.</news>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.jpg</fanart>
