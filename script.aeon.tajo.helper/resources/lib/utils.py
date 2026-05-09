@@ -71,7 +71,11 @@ def calc(params):
 
 
 def toggleaddons(params):
-    addonid = params.get('addonid').split('+')
+    addonid = params.get('addonid')
+    if not addonid:
+        log('toggleaddons: addonid parameter is required', ERROR)
+        return
+    addonid = addonid.split('+')
     enable = get_bool(params.get('enable'))
 
     for addon in addonid:
@@ -142,6 +146,10 @@ def playitem(params):
 
     elif file:
         # playmedia() because otherwise resume points get ignored
+        # Validate file path doesn't contain command injection attempts
+        if any(char in file for char in ['|', '&', ';', '\n', '\r']):
+            log('Invalid characters in file path: %s' % file, ERROR)
+            return
         execute('PlayMedia(%s)' % file)
 
 
@@ -195,7 +203,25 @@ def playall(params):
 
 def txtfile(params):
     prop = params.get('prop')
-    path = xbmcvfs.translatePath(remove_quotes(params.get('path')))
+    raw_path = remove_quotes(params.get('path'))
+
+    if not raw_path:
+        log('txtfile: no path provided')
+        winprop(prop, clear=True)
+        return
+
+    path = xbmcvfs.translatePath(raw_path)
+
+    # Validate path is within allowed addon/userdata directories
+    allowed_prefixes = (
+        xbmcvfs.translatePath('special://home/addons/'),
+        xbmcvfs.translatePath('special://profile/addon_data/'),
+    )
+
+    if not any(path.startswith(prefix) for prefix in allowed_prefixes):
+        log('txtfile: path outside allowed directories: %s' % path, ERROR)
+        winprop(prop, clear=True)
+        return
 
     if os.path.isfile(path):
         log('Reading file %s' % path)
