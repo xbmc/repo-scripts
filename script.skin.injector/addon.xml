@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.skin.injector" name="Skin Injector" version="0.0.1" provider-name="Hitcher">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en_GB">A utility to inject a dynamic, filtered Smart Playlist into a list containers.</summary>
+		<description lang="en_GB">Skin Injector allows skinners to populate list containers with highly targeted library content (Movies, Episodes, or Music Videos) on the fly. By passing arguments directly from the skin, the script generates a temporary Smart Playlist in the background, bypassing standard SQL table limitations and providing a stable experience for dynamic widgets.</description>
+		<license>GPL-2.0-only</license>
+		<source>https://github.com/Hitcher/script.skin.injector</source>
+		<disclaimer lang="en_GB">Injector icons created by graphicmall - Flaticon (https://www.flaticon.com/free-icons/injector)</disclaimer>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<news>Initial release</news>
+	</extension>
+</addon>
