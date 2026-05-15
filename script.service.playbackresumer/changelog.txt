@@ -1,3 +1,6 @@
+v2.0.9
+- User submitted Chinese language translations (thanks @wabisabi926!)
+       
 v2.0.8
 - Minor changes for Piers
 
