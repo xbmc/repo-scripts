@@ -94,13 +94,20 @@ def build_payload(event, item, show_item=None, progress=0.0):
     item_type = item.get("type", "unknown")
     ids = extract_ids(item)
 
-    if item_type == "episode" and show_item:
-        show_ids = extract_ids(show_item)
+    if item_type == "episode":
+        # We send the episode payload even when show_item is missing
+        # (e.g. the show isn't in the Kodi library) — the backend can
+        # resolve the show from the episode-level ids as a fallback,
+        # but only if we ship season/episode numbers. Falling back to
+        # the minimal payload here dropped those fields and turned
+        # every "Now Playing"/"Scrobble" event into "Episode not found".
+        show_ids = extract_ids(show_item) if show_item else {}
+        show_title = item.get("showtitle") or (show_item.get("title", "") if show_item else "")
         return {
             "event": event,
             "media_type": "episode",
             "title": item.get("title", ""),
-            "show_title": item.get("showtitle") or show_item.get("title", ""),
+            "show_title": show_title,
             "show_ids": show_ids,
             "season": item.get("season", 0),
             "episode": item.get("episode", 0),

@@ -17,6 +17,12 @@
     <setting id="rate_after_episode" type="bool" label="Rate Episode after watching" default="false" />
   </category>
 
+  <category label="Notifications">
+    <setting id="notify_playing" type="bool" label="Show 'Now Playing' notification" default="true" />
+    <setting id="notify_paused" type="bool" label="Show 'Paused' notification" default="true" />
+    <setting id="notify_scrobble" type="bool" label="Show 'Scrobbled' notification" default="true" />
+  </category>
+
   <category label="Advanced">
     <setting id="debug" type="bool" label="Enable debug logging" default="false" />
   </category>
