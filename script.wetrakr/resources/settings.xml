@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <category label="General">
+    <setting id="username" type="text" label="User" default="" enable="false" />
+    <setting id="api_url" type="text" label="API URL" default="https://api.wetrakr.com" />
+    <setting id="api_token" type="text" label="API Token" default="" visible="false" />
+  </category>
+
+  <category label="Scrobbling">
+    <setting id="track_watched" type="bool" label="Mark as watched" default="true" />
+    <setting id="track_playing" type="bool" label="Send 'now playing' event" default="true" />
+    <setting id="scrobble_threshold" type="number" label="Scrobble threshold (%)" default="80" />
+  </category>
+
+  <category label="Rating">
+    <setting id="rate_after_movie" type="bool" label="Rate Movie after watching" default="true" />
+    <setting id="rate_after_episode" type="bool" label="Rate Episode after watching" default="false" />
+  </category>
+
+  <category label="Advanced">
+    <setting id="debug" type="bool" label="Enable debug logging" default="false" />
+  </category>
+</settings>
