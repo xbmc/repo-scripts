@@ -16,8 +16,15 @@ STRDEBUG = False  # Show string ID in UI
 FORCEDEBUGLOG = False # Force output of debug logs regardless of Kodi logging setting
 TIMEOUT = 1 # requests default timeout
 MAX_RETRIES = 7
-NOTIFICATION_THRESHOLD = 2
+NOTIFICATION_THRESHOLD = 3
 MINIMUM_COLOR_DISTANCE = 0.005
+
+
+class HueApiError(Exception):
+    """Non-retryable HTTP error from the Hue Bridge API."""
+    def __init__(self, status_code, message=""):
+        self.status_code = status_code
+        super().__init__(f"HTTP {status_code}: {message}")
 BRIDGE_SETTINGS_CHANGED = Event()
 AMBI_RUNNING = Event()
 PROCESS_TIMES = deque(maxlen=100)

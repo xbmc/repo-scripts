@@ -4,17 +4,10 @@
 # Addon Provider: zim514
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-09 14:05+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
-"Language-Team: Occitan (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/oc_fr/>\n"
-"Language: oc_fr\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
@@ -30,11 +23,11 @@ msgstr ""
 
 msgctxt "#32100"
 msgid "Video Scenes"
-msgstr "Video Scenes"
+msgstr ""
 
 msgctxt "#32102"
 msgid "Audio Scenes"
-msgstr "Audio Scenes"
+msgstr ""
 
 msgctxt "#32201"
 msgid "Start/Resume"
@@ -50,7 +43,7 @@ msgstr ""
 
 msgctxt "#30036"
 msgid "Scene:"
-msgstr "Scene:"
+msgstr ""
 
 msgctxt "#32511"
 msgid "Scene ID"
@@ -66,7 +59,7 @@ msgstr ""
 
 msgctxt "#30501"
 msgid "Discover Hue Bridge / Enter IP"
-msgstr "Discover Hue Bridge / Enter IP"
+msgstr ""
 
 msgctxt "#30502"
 msgid "Bridge IP"
@@ -90,7 +83,7 @@ msgstr ""
 
 msgctxt "#30508"
 msgid "Disable during daytime"
-msgstr "Disable during daytime"
+msgstr ""
 
 #. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
@@ -99,7 +92,7 @@ msgstr ""
 
 msgctxt "#30510"
 msgid "General"
-msgstr "General"
+msgstr ""
 
 msgctxt "#30511"
 msgid "Schedule"
@@ -145,11 +138,11 @@ msgstr ""
 
 msgctxt "#32101"
 msgid "Advanced"
-msgstr "Avançat"
+msgstr ""
 
 msgctxt "#32106"
 msgid "Video Activation Rules"
-msgstr "Video Activation Rules"
+msgstr ""
 
 msgctxt "#6101"
 msgid "Select Lights"
@@ -352,11 +345,11 @@ msgstr ""
 
 msgctxt "#30063"
 msgid "Disabled by daytime"
-msgstr "Disabled by daytime"
+msgstr ""
 
 msgctxt "#30064"
 msgid "ERROR: Scene not found, it may have been deleted"
-msgstr "ERROR: Scene not found, it may have been deleted"
+msgstr ""
 
 msgctxt "#30080"
 msgid "The following error occurred:"
@@ -514,7 +507,3 @@ msgstr ""
 msgctxt "#30028"
 msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
 msgstr ""
-
-#~ msgctxt "#30002"
-#~ msgid "ERROR: Scene not created"
-#~ msgstr "ERROR: Scene not created"
