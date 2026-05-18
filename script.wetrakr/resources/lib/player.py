@@ -46,6 +46,10 @@ class WeTrakrPlayer(xbmc.Player):
             "track_playing": addon.getSetting("track_playing") == "true",
             "track_watched": addon.getSetting("track_watched") == "true",
             "debug": addon.getSetting("debug") == "true",
+            # Notification toggles — default ON for backwards compatibility.
+            "notify_playing": addon.getSetting("notify_playing") != "false",
+            "notify_paused": addon.getSetting("notify_paused") != "false",
+            "notify_scrobble": addon.getSetting("notify_scrobble") != "false",
         }
 
     def _get_api(self, settings=None):
@@ -129,7 +133,8 @@ class WeTrakrPlayer(xbmc.Player):
                             title_display = "{} S{:02d}E{:02d}".format(
                                 item.get("showtitle", ""), item.get("season", 0), item.get("episode", 0)
                             )
-                        _notify("Now Playing", title_display)
+                        if settings["notify_playing"]:
+                            _notify("Now Playing", title_display)
 
         except Exception as e:
             self._log("onAVStarted error: {}".format(str(e)), xbmc.LOGERROR)
@@ -362,7 +367,8 @@ class WeTrakrPlayer(xbmc.Player):
 
         if api.send_event(payload, debug=settings["debug"]):
             self._log("Paused: {} ({:.0f}%)".format(title, progress))
-            _notify("Paused", "{} ({:.0f}%)".format(title, progress))
+            if settings["notify_paused"]:
+                _notify("Paused", "{} ({:.0f}%)".format(title, progress))
 
     def _send_scrobble(self, progress=0.0):
         """Send a 'scrobble' event to WeTrakr and mark as scrobbled."""
@@ -391,6 +397,7 @@ class WeTrakrPlayer(xbmc.Player):
         if success:
             self.scrobbled = True
             self._log("Scrobbled: {} ({:.0f}%)".format(title, progress))
-            _notify("WeTrakr", "Scrobbled: {}".format(title))
+            if settings["notify_scrobble"]:
+                _notify("WeTrakr", "Scrobbled: {}".format(title))
         else:
             self._log("Scrobble failed: {}".format(title), xbmc.LOGWARNING)

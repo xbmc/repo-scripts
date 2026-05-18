@@ -1,7 +1,11 @@
 """
 rating.py — Custom rating dialog for WeTrakr Kodi addon.
 
-Stars rendered via ControlLabel (font_MainMenu).
+Stars rendered via ControlImage tinted with colorDiffuse, so the
+dialog is independent of which skin/font the user has installed.
+(Previous Unicode-glyph approach failed on skins whose font_MainMenu
+lacks U+2605 — the fallback box made the stars look like dots.)
+
 Mouse hover via ACTION_MOUSE_MOVE with auto-scaled hit-testing.
 Mouse coordinates are auto-calibrated to the layout coordinate space.
 """
@@ -27,8 +31,6 @@ ACTION_PREVIOUS_MENU = 10
 ACTION_NAV_BACK = 92
 ACTION_MOUSE_LEFT_CLICK = 100
 ACTION_MOUSE_MOVE = 107
-
-STAR = u'\u2605'
 
 RATING_COLORS = [
     'FFe74c3c', 'FFe74c3c', 'FFe67e22', 'FFf39c12', 'FFf1c40f',
@@ -210,20 +212,26 @@ class RatingDialog(xbmcgui.WindowDialog):
         ))
         y += int(H * 0.06)
 
-        # ── Stars — ControlLabel only (renders ★ correctly) ──────────
-        ssz = int(dw * 0.08)
-        gap = int(dw * 0.006)
+        # ── Stars — ControlImage tinted with colorDiffuse ────────────
+        # PNGs shipped with the addon, so the look is identical on every
+        # skin (no Unicode font dependency).
+        addon_path = xbmcaddon.Addon('script.wetrakr').getAddonInfo('path')
+        self._star_filled_path = os.path.join(addon_path, 'resources', 'media', 'star_filled.png')
+        self._star_empty_path = os.path.join(addon_path, 'resources', 'media', 'star_empty.png')
+
+        ssz = int(dw * 0.07)
+        gap = int(dw * 0.012)
         tw = ssz * 10 + gap * 9
         sx = dx + (dw - tw) // 2
 
         for i in range(10):
             bx = sx + i * (ssz + gap)
-            lbl = xbmcgui.ControlLabel(
-                bx, y, ssz, ssz, '',
-                alignment=6, textColor='FFffffff', font='font_MainMenu',
+            img = xbmcgui.ControlImage(
+                bx, y, ssz, ssz, self._star_empty_path,
+                aspectRatio=2, colorDiffuse=EMPTY_STAR_COLOR,
             )
-            self.addControl(lbl)
-            self._star_labels.append(lbl)
+            self.addControl(img)
+            self._star_labels.append(img)
             self._star_rects.append((bx, y, ssz, ssz))
 
         y += ssz + int(H * 0.015)
@@ -235,10 +243,10 @@ class RatingDialog(xbmcgui.WindowDialog):
         )
         self.addControl(self._name_label)
 
-        # Hint
+        # Hint \u2014 plain ASCII so it renders on every skin/font.
         self.addControl(xbmcgui.ControlLabel(
             dx, dy + dh - int(H * 0.04), dw, int(H * 0.03),
-            u'\u25C0  Select  \u25B6          OK to confirm',
+            u'Use Left / Right to select   -   OK to confirm',
             alignment=0x00000002, textColor='FF555555', font='font10',
         ))
 
@@ -256,9 +264,10 @@ class RatingDialog(xbmcgui.WindowDialog):
 
     def _update_stars(self):
         color = RATING_COLORS[self.rating - 1]
-        for i, lbl in enumerate(self._star_labels):
-            c = color if (i + 1) <= self.rating else EMPTY_STAR_COLOR
-            lbl.setLabel(u'[COLOR {}]{}[/COLOR]'.format(c, STAR))
+        for i, img in enumerate(self._star_labels):
+            is_filled = (i + 1) <= self.rating
+            img.setImage(self._star_filled_path if is_filled else self._star_empty_path)
+            img.setColorDiffuse(color if is_filled else EMPTY_STAR_COLOR)
 
         nc = RATING_COLORS[self.rating - 1]
         self._name_label.setLabel(

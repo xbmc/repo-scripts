@@ -3,10 +3,16 @@ notification.py — Branded WeTrakr notification popup.
 
 Shows a small notification in the top-right corner with the WeTrakr
 "We" logo, purple accent bar, and dark panel background.
+
+The auto-close runs in a background thread so the caller (usually a
+xbmc.Player callback) returns immediately. Blocking the main thread
+with xbmc.sleep made Kodi unresponsive — among other things, the
+fast-forward keys stopped working while a notification was on screen.
 """
 
 import os
 import struct
+import threading
 
 import xbmc
 import xbmcgui
@@ -99,9 +105,24 @@ class WeTrakrNotification(xbmcgui.WindowDialog):
 
 
 def notify(title, message, duration=3000):
-    """Show a branded WeTrakr notification popup."""
+    """Show a branded WeTrakr notification popup (non-blocking).
+
+    The dialog is shown immediately and a background thread waits for
+    `duration` ms before closing it. The caller returns right away so
+    Kodi's main thread (and player input) keeps flowing.
+    """
     dialog = WeTrakrNotification(title, message)
     dialog.show()
-    xbmc.sleep(duration)
-    dialog.close()
-    del dialog
+
+    def _close_after_delay():
+        try:
+            xbmc.sleep(duration)
+        finally:
+            try:
+                dialog.close()
+            except Exception:
+                pass
+
+    t = threading.Thread(target=_close_after_delay, name='WeTrakrNotifyClose')
+    t.daemon = True
+    t.start()
