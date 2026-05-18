@@ -1,4 +1,4 @@
-<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="2.1.1">
+<addon id="script.service.hue" name="Hue Service" provider-name="zim514" version="2.2.1">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.31.0"/>
@@ -20,7 +20,12 @@
         </assets>
         <source>https://github.com/zim514/script.service.hue</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=344886</forum>
-        <news>v2.1
+        <news>v2.2.0bump
+- Add mDNS bridge discovery, replacing N-UPnP
+- Improve retry/error handling for Hue API requests
+- Fix bridge connection, discovery, and reconnection bugs
+
+v2.1
 - Update Hue connection for new HTTPS requirement
 - Update bridge version check
 - Fix audio trigger (Thanks to @NamelessCoder)
