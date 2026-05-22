@@ -26,8 +26,22 @@ from resources.lib.notification import notify as _notify
 
 
 def _dispatch_async(target, *args, **kwargs):
-    """Run a callable in a daemon thread; never blocks the caller."""
-    t = threading.Thread(target=target, args=args, kwargs=kwargs)
+    """Run a callable in a daemon thread; never blocks the caller.
+
+    Wraps ``target`` so any exception raised inside the thread is logged
+    via ``xbmc.log`` instead of dying silently — caller try/except blocks
+    don't reach into the worker thread.
+    """
+    def _wrapped():
+        try:
+            target(*args, **kwargs)
+        except Exception as e:
+            xbmc.log(
+                "[WeTrakr] Background thread error: {}".format(str(e)),
+                xbmc.LOGERROR,
+            )
+
+    t = threading.Thread(target=_wrapped)
     t.daemon = True
     t.start()
     return t
