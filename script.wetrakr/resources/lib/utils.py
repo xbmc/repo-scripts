@@ -51,6 +51,21 @@ def get_tvshow_details(tvshow_id):
     }).get("tvshowdetails", {})
 
 
+def get_player_uniqueids():
+    """Read uniqueid values from the currently playing video via VideoPlayer
+    infolabels. The only reliable path when an item is played from an add-on
+    source (Jellyfin for Kodi, Plex Kodi Connect, ...) that bypasses Kodi's
+    VideoLibrary — JSON-RPC returns an empty uniqueid dict in that case but
+    the player still knows the IDs.
+    """
+    tmdb = _parse_int(xbmc.getInfoLabel('VideoPlayer.UniqueID(tmdb)'))
+    tvdb = _parse_int(xbmc.getInfoLabel('VideoPlayer.UniqueID(tvdb)'))
+    imdb = xbmc.getInfoLabel('VideoPlayer.UniqueID(imdb)') or None
+    if imdb and not imdb.startswith('tt'):
+        imdb = None
+    return {"tmdb": tmdb, "imdb": imdb, "tvdb": tvdb}
+
+
 def extract_ids(item):
     """
     Extract external IDs (tmdb, imdb, tvdb) from a Kodi item.
@@ -93,6 +108,12 @@ def build_payload(event, item, show_item=None, progress=0.0):
     """
     item_type = item.get("type", "unknown")
     ids = extract_ids(item)
+
+    # Add-on sources (Jellyfin for Kodi, Plex Kodi Connect, ...) bypass Kodi's
+    # VideoLibrary and JSON-RPC returns an empty uniqueid dict for them. Pull
+    # the IDs straight from the running player via infolabels as a fallback.
+    if not ids["tmdb"] and not ids["imdb"] and not ids["tvdb"]:
+        ids = get_player_uniqueids()
 
     if item_type == "episode":
         # We send the episode payload even when show_item is missing

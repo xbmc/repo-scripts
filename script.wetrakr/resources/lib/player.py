@@ -6,7 +6,14 @@ Callbacks:
   onAVStarted()       — media stream ready → send 'playing' event
   onPlayBackEnded()   — file finished naturally → send 'scrobble' event
   onPlayBackStopped() — user stopped playback → send 'scrobble' if threshold met
+
+All outbound HTTP calls are dispatched on a daemon thread so Kodi's player
+callbacks return immediately — otherwise the UI freezes for the duration of
+the HTTP round-trip (visible on low-end devices like Vero 4K+ on the
+'completed' scrobble).
 """
+
+import threading
 
 import xbmc
 import xbmcaddon
@@ -16,6 +23,28 @@ from resources.lib.api import WeTrakrAPI
 from resources.lib import utils
 from resources.lib import rating as rating_mod
 from resources.lib.notification import notify as _notify
+
+
+def _dispatch_async(target, *args, **kwargs):
+    """Run a callable in a daemon thread; never blocks the caller.
+
+    Wraps ``target`` so any exception raised inside the thread is logged
+    via ``xbmc.log`` instead of dying silently — caller try/except blocks
+    don't reach into the worker thread.
+    """
+    def _wrapped():
+        try:
+            target(*args, **kwargs)
+        except Exception as e:
+            xbmc.log(
+                "[WeTrakr] Background thread error: {}".format(str(e)),
+                xbmc.LOGERROR,
+            )
+
+    t = threading.Thread(target=_wrapped)
+    t.daemon = True
+    t.start()
+    return t
 
 
 class WeTrakrPlayer(xbmc.Player):
@@ -119,22 +148,24 @@ class WeTrakrPlayer(xbmc.Player):
                 item_type
             ))
 
-            # Send "playing" event
+            # Send "playing" event (async — don't block player callback)
             if settings["track_playing"]:
                 api = self._get_api(settings)
                 if api:
                     payload = utils.build_payload(
                         "playing", item, self.current_show, progress=0.0
                     )
-                    if api.send_event(payload, debug=settings["debug"]):
-                        self.playing_sent = True
-                        title_display = item.get("title", "")
-                        if item_type == "episode":
-                            title_display = "{} S{:02d}E{:02d}".format(
-                                item.get("showtitle", ""), item.get("season", 0), item.get("episode", 0)
-                            )
-                        if settings["notify_playing"]:
-                            _notify("Now Playing", title_display)
+                    self.playing_sent = True
+                    title_display = item.get("title", "")
+                    if item_type == "episode":
+                        title_display = "{} S{:02d}E{:02d}".format(
+                            item.get("showtitle", ""), item.get("season", 0), item.get("episode", 0)
+                        )
+                    _dispatch_async(
+                        api.send_event, payload, debug=settings["debug"]
+                    )
+                    if settings["notify_playing"]:
+                        _notify("Now Playing", title_display)
 
         except Exception as e:
             self._log("onAVStarted error: {}".format(str(e)), xbmc.LOGERROR)
@@ -178,7 +209,9 @@ class WeTrakrPlayer(xbmc.Player):
                             "playing", self.current_item, self.current_show,
                             progress=progress
                         )
-                        api.send_event(payload, debug=settings["debug"])
+                        _dispatch_async(
+                            api.send_event, payload, debug=settings["debug"]
+                        )
         except Exception as e:
             self._log("onPlayBackResumed error: {}".format(str(e)), xbmc.LOGERROR)
 
@@ -225,7 +258,7 @@ class WeTrakrPlayer(xbmc.Player):
             self.last_progress = progress
             settings = self._get_settings()
 
-            # Send "playing" update with current progress every 30s
+            # Send "playing" update with current progress every 30s (async)
             if settings["track_playing"]:
                 api = self._get_api(settings)
                 if api:
@@ -233,10 +266,10 @@ class WeTrakrPlayer(xbmc.Player):
                         "playing", self.current_item, self.current_show,
                         progress=progress
                     )
-                    ok = api.send_event(payload, debug=settings["debug"])
-                    self._log("Playing update: {:.1f}% → {}".format(
-                        progress, "OK" if ok else "FAIL"
-                    ))
+                    _dispatch_async(
+                        api.send_event, payload, debug=settings["debug"]
+                    )
+                    self._log("Playing update dispatched: {:.1f}%".format(progress))
 
             # Scrobble once threshold is reached
             if progress >= settings["threshold"] and settings["track_watched"]:
@@ -317,10 +350,11 @@ class WeTrakrPlayer(xbmc.Player):
             if rating_value is None:
                 return
 
-            # Send rating to API
+            # Send rating to API (async — keep UI responsive)
             if self.media_type == "episode":
                 show_ids = utils.extract_ids(self.current_show) if self.current_show else {}
-                api.send_rating(
+                _dispatch_async(
+                    api.send_rating,
                     "episode", title, ids, rating_value,
                     show_title=item.get("showtitle", ""),
                     show_ids=show_ids,
@@ -328,7 +362,9 @@ class WeTrakrPlayer(xbmc.Player):
                     episode=item.get("episode", 0)
                 )
             else:
-                api.send_rating("movie", title, ids, rating_value, year=year)
+                _dispatch_async(
+                    api.send_rating, "movie", title, ids, rating_value, year=year
+                )
 
             _notify("WeTrakr", "Rated {}/10".format(rating_value))
         except Exception as e:
@@ -348,7 +384,7 @@ class WeTrakrPlayer(xbmc.Player):
             return 0.0
 
     def _send_paused(self, progress=0.0):
-        """Send a 'paused' event to WeTrakr."""
+        """Send a 'paused' event to WeTrakr (fire-and-forget)."""
         settings = self._get_settings()
         api = self._get_api(settings)
         if not api:
@@ -365,13 +401,20 @@ class WeTrakrPlayer(xbmc.Player):
             episode = self.current_item.get("episode", 0)
             title = "{} S{:02d}E{:02d}".format(show, season, episode)
 
-        if api.send_event(payload, debug=settings["debug"]):
-            self._log("Paused: {} ({:.0f}%)".format(title, progress))
-            if settings["notify_paused"]:
-                _notify("Paused", "{} ({:.0f}%)".format(title, progress))
+        _dispatch_async(api.send_event, payload, debug=settings["debug"])
+        self._log("Paused dispatched: {} ({:.0f}%)".format(title, progress))
+        if settings["notify_paused"]:
+            _notify("Paused", "{} ({:.0f}%)".format(title, progress))
 
     def _send_scrobble(self, progress=0.0):
-        """Send a 'scrobble' event to WeTrakr and mark as scrobbled."""
+        """
+        Send a 'scrobble' event to WeTrakr (fire-and-forget).
+
+        We mark ``self.scrobbled = True`` *before* dispatching so the player
+        callback returns immediately and we never double-scrobble if a second
+        callback fires while the HTTP request is still in flight. If the
+        request ultimately fails, that's logged from the background thread.
+        """
         settings = self._get_settings()
 
         if not settings["track_watched"]:
@@ -393,11 +436,15 @@ class WeTrakrPlayer(xbmc.Player):
             episode = self.current_item.get("episode", 0)
             title = "{} S{:02d}E{:02d}".format(show, season, episode)
 
-        success = api.send_event(payload, debug=settings["debug"])
-        if success:
-            self.scrobbled = True
-            self._log("Scrobbled: {} ({:.0f}%)".format(title, progress))
-            if settings["notify_scrobble"]:
-                _notify("WeTrakr", "Scrobbled: {}".format(title))
-        else:
-            self._log("Scrobble failed: {}".format(title), xbmc.LOGWARNING)
+        self.scrobbled = True
+
+        def _send():
+            ok = api.send_event(payload, debug=settings["debug"])
+            if ok:
+                self._log("Scrobbled: {} ({:.0f}%)".format(title, progress))
+            else:
+                self._log("Scrobble failed: {}".format(title), xbmc.LOGWARNING)
+
+        _dispatch_async(_send)
+        if settings["notify_scrobble"]:
+            _notify("WeTrakr", "Scrobbled: {}".format(title))
