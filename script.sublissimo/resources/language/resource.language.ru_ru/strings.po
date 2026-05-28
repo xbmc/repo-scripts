@@ -1,0 +1,938 @@
+# Kodi Media Center language file
+# Addon Name: Sublissimo
+# Addon id: script.sublissimo
+# Addon Provider: AJVM
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-05-25 05:16+0000\n"
+"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
+"Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-sublissimo/ru_ru/>\n"
+"Language: ru_ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2026.5\n"
+
+msgctxt "Addon Summary"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Редактируйте и синхронизируйте субтитры с вашим пультом"
+
+msgctxt "Addon Description"
+msgid "With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.[CR][CR]To easily use this editor, launch it when the video and subtitle you wish to edit are playing."
+msgstr "С помощью этого скрипта вы можете редактировать отдельные строки, перемещать или растягивать субтитры, а также синхронизировать их с другими субтитрами. Вы также можете синхронизировать с видеофайлом.[CR][CR]Для удобного использования этого редактора запускайте его, когда видео и субтитры, которые вы хотите редактировать, воспроизводятся."
+
+msgctxt "#31000"
+msgid "Scroll subtitles"
+msgstr "Прокрутка субтитров"
+
+msgctxt "#30001"
+msgid "Edit or delete lines"
+msgstr "Редактировать или удалять строки"
+
+msgctxt "#31002"
+msgid "Move subtitles"
+msgstr "Переместить субтитры"
+
+msgctxt "#31003"
+msgid "Stretch/shrink subtitles"
+msgstr "Растянуть/сжать субтитры"
+
+msgctxt "#31004"
+msgid "Synchronize with other subtitle"
+msgstr "Синхронизировать с другими субтитрами"
+
+msgctxt "#31005"
+msgid "Synchronize with video file"
+msgstr "Синхронизировать с видеофайлом"
+
+msgctxt "#31006"
+msgid "Search in subtitle"
+msgstr "Поиск в субтитрах"
+
+msgctxt "#31007"
+msgid "Check integrity"
+msgstr "Проверить целостность"
+
+msgctxt "#31008"
+msgid "Save subtitles"
+msgstr "Сохранить субтитры"
+
+msgctxt "#31009"
+msgid "Quit"
+msgstr "Выход"
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr "Синхронизировать по частоте кадров"
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr "Воспроизвести видео с изменёнными субтитрами"
+
+msgctxt "#31013"
+msgid "Advanced options"
+msgstr "Дополнительные параметры"
+
+msgctxt "#31001"
+msgid "Sublissimo"
+msgstr "Sublissimo"
+
+msgctxt "#33000"
+msgid ""
+"Select the subtitle to synchronize with. Then:[CR]- Select a timecode in the "
+"beginning to a line as reference[CR]- Select the roughly the same line in "
+"your subtitle[CR]- Then do same with two lines near the end of both files."
+msgstr "Выберите субтитры для синхронизации. Затем:[CR]- Выберите временной код в начале для строки в качестве ссылки[CR]- Выберите примерно ту же строку в ваших субтитрах[CR]- Затем сделайте то же самое с двумя строками ближе к концу обоих файлов."
+
+msgctxt "#32001"
+msgid "Edit line"
+msgstr "Изменить строку"
+
+msgctxt "#32002"
+msgid "Delete First Subtitle"
+msgstr "Удалить первый субтитр"
+
+msgctxt "#32003"
+msgid "Delete Last Subtitle"
+msgstr "Удалить последний субтитр"
+
+msgctxt "#32004"
+msgid "Manually Scroll and Delete"
+msgstr "Вручную прокрутить и удалить"
+
+msgctxt "#32005"
+msgid "Back"
+msgstr "Назад"
+
+msgctxt "#32006"
+msgid "Delete this subtitle?"
+msgstr "Удалить этот субтитр?"
+
+msgctxt "#32007"
+msgid "Select subtitle to edit"
+msgstr "Выберите субтитры для изменения"
+
+msgctxt "#32008"
+msgid "Return"
+msgstr "Назад"
+
+msgctxt "#32009"
+msgid "Delete"
+msgstr "Удалить"
+
+msgctxt "#32010"
+msgid "All subtitles"
+msgstr "Все субтитры"
+
+msgctxt "#32011"
+msgid "Found:"
+msgstr "Найдено:"
+
+msgctxt "#32012"
+msgid "OK"
+msgstr "ОК"
+
+msgctxt "#32013"
+msgid "More Info"
+msgstr "Подробнее"
+
+msgctxt "#32014"
+msgid "Error"
+msgstr "Ошибка"
+
+msgctxt "#32015"
+msgid "Select subtitle to synchronize with"
+msgstr "Выберите субтитры для синхронизации"
+
+msgctxt "#32016"
+msgid "Please select a .srt or a .sub file"
+msgstr "Пожалуйста, выберите файл .srt или .sub"
+
+msgctxt "#32017"
+msgid "Success"
+msgstr "Успешно"
+
+msgctxt "#32018"
+msgid "Current first subtitle"
+msgstr "Текущий первый субтитр"
+
+msgctxt "#32019"
+msgid "First subtitle is now:"
+msgstr "Первый субтитр теперь:"
+
+msgctxt "#32020"
+msgid "Please select a video file."
+msgstr "Пожалуйста, выберите видеофайл."
+
+msgctxt "#32021"
+msgid "Current last subtitle"
+msgstr "Текущий последний субтитр"
+
+msgctxt "#32022"
+msgid "Last subtitle is now:"
+msgstr "Последний субтитр теперь:"
+
+msgctxt "#32023"
+msgid "Enter search string"
+msgstr "Строка поиска"
+
+msgctxt "#32024"
+msgid "Yes"
+msgstr "Да"
+
+msgctxt "#32025"
+msgid "No"
+msgstr "Нет"
+
+msgctxt "#32026"
+msgid "This editor only works with .srt or .sub files"
+msgstr "Этот редактор работает только с файлами .srt или .sub"
+
+msgctxt "#32027"
+msgid "File not found: "
+msgstr "Файл не найден: "
+
+msgctxt "#32028"
+msgid ""
+"Write the new timestamp for the end position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Введите новую временную метку для конечной позиции, разделяя символом «:». Например: 01:22:23:000"
+
+msgctxt "#32029"
+msgid "For example: 01:22:23:000"
+msgstr "Например: 01:22:23:000"
+
+msgctxt "#32030"
+msgid "Report"
+msgstr "Отчёт"
+
+msgctxt "#32031"
+msgid "No problems detected"
+msgstr "Проблем не обнаружено"
+
+msgctxt "#32032"
+msgid "Line:"
+msgstr "Строка:"
+
+msgctxt "#33032"
+msgid "Line "
+msgstr "Строка "
+
+msgctxt "#32033"
+msgid "Possible problems: "
+msgstr "Возможные проблемы: "
+
+msgctxt "#32034"
+msgid "Select subtitle to continue..."
+msgstr "Выберите субтитры для продолжения…"
+
+msgctxt "#32035"
+msgid "Select subtitle to edit"
+msgstr "Выберите субтитры для изменения"
+
+msgctxt "#32036"
+msgid "Your subtitle starts at "
+msgstr "Ваши субтитры начинаются в "
+
+msgctxt "#32037"
+msgid "Your subtitle ends at "
+msgstr "Ваши субтитры заканчиваются в "
+
+msgctxt "#32038"
+msgid "Save with _edited.srt added"
+msgstr "Сохранить с добавлением _edited.srt"
+
+msgctxt "#32039"
+msgid "Save with current filename"
+msgstr "Сохранить с текущим именем файла"
+
+msgctxt "#32040"
+msgid "Save with custom filename"
+msgstr "Сохранить с пользовательским именем файла"
+
+msgctxt "#32041"
+msgid "Exit without saving"
+msgstr "Выйти без сохранения"
+
+msgctxt "#32042"
+msgid "Give new filename: "
+msgstr "Укажите новое имя файла: "
+
+msgctxt "#32043"
+msgid "Written to: "
+msgstr "Записано в: "
+
+msgctxt "#32044"
+msgid ""
+"To use the file, select it in the Kodi player subtitle menu when playing the "
+"file"
+msgstr "Чтобы использовать файл, выберите его в меню субтитров плеера Kodi при воспроизведении файла"
+
+msgctxt "#32045"
+msgid "File not written"
+msgstr "Файл не записан"
+
+msgctxt "#32046"
+msgid "Warning"
+msgstr "Внимание"
+
+msgctxt "#32047"
+msgid "You might have unsaved progress on your file"
+msgstr "Возможно, у вас есть несохранённые изменения в файле"
+
+msgctxt "#32048"
+msgid "Exit Anyway"
+msgstr "Всё равно выйти"
+
+msgctxt "#32049"
+msgid "Save"
+msgstr "Сохранить"
+
+msgctxt "#32050"
+msgid "Subtitles succesfully synced"
+msgstr "Субтитры успешно синхронизированы"
+
+msgctxt "#32051"
+msgid "Move forwards"
+msgstr "Переместить вперёд"
+
+msgctxt "#32052"
+msgid "Move backwards"
+msgstr "Переместить назад"
+
+msgctxt "#32053"
+msgid "Give new time for first subtitle"
+msgstr "Укажите новое время для первого субтитра"
+
+msgctxt "#32054"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Переместить вперёд на: ЧЧ:ММ:СС:МС"
+
+msgctxt "#32055"
+msgid "Move forwards by: HH:MM:SS:MSE"
+msgstr "Переместить вперёд на: ЧЧ:ММ:СС:МС"
+
+msgctxt "#32056"
+msgid ""
+"Please enter valid timecode: HH:MM:SS:MSE. Hours, minutes, seconds, "
+"milliseconds. For instance: 01:23:45:000"
+msgstr "Пожалуйста, введите действительный временной код: ЧЧ:ММ:СС:МС. Часы, минуты, секунды, миллисекунды. Например: 01:23:45:000"
+
+msgctxt "#32057"
+msgid "How to sync two subtitles"
+msgstr "Как синхронизировать два субтитра"
+
+msgctxt "#32058"
+msgid ""
+"In order to synchronize, you will need a subtitle which matches the video "
+"perfectly, but has different subtitles, usually from a different language. "
+"In the next slide, first select this subtitle.[CR][CR]Then, you'll be asked "
+"to select a timecode in this file, which will be used as reference. Ideally, "
+"it is the first spoken line from the video. In the next screen, select the "
+"line from your original subtitle which matches the first.[CR]"
+"[CR]Subsequently, you'll be asked again to select a line from your reference "
+"subtitle and to match this with the same line in your original subtitle. "
+"Usually the best choice is the last spoken line from the video. After this "
+"your two subtitles will sync![CR][CR]Check 'Scroll subtitles' to view them "
+"and 'Save subtitles' to write them to a file."
+msgstr "Для синхронизации вам понадобятся субтитры, которые идеально соответствуют видео, но имеют разные субтитры, обычно на другом языке. На следующем слайде сначала выберите эти субтитры.[CR][CR]Затем вам будет предложено выбрать временной код в этом файле, который будет использоваться в качестве ссылки. В идеале это должна быть первая произнесённая строка из видео. На следующем экране выберите строку из ваших исходных субтитров, которая соответствует первой.[CR][CR]Затем вам снова будет предложено выбрать строку из ваших эталонных субтитров и сопоставить её с той же строкой в ваших исходных субтитрах. Обычно лучший выбор — последняя произнесённая строка из видео. После этого ваши два субтитра синхронизируются![CR][CR]Выберите «Прокрутка субтитров» для их просмотра и «Сохранить субтитры» для записи в файл."
+
+msgctxt "#32059"
+msgid "File not found"
+msgstr "Файл не найден"
+
+msgctxt "#32060"
+msgid ""
+"In the next screen, select the video to synchronize with. Go to the point in "
+"the video where the first subtitle starts. When you pause the video, choose "
+"'Select as start' in the menu, then do the same with the last subtitle."
+msgstr "На следующем экране выберите видео для синхронизации. Перейдите к точке в видео, где начинается первый субтитр. Когда поставите видео на паузу, выберите в меню «Выбрать как начало», затем сделайте то же самое с последним субтитром."
+
+msgctxt "#32061"
+msgid "How to sync with a video file"
+msgstr "Как синхронизировать с видеофайлом"
+
+msgctxt "#32062"
+msgid ""
+"In the next screen, open the videofile from the library which belongs to the "
+"subtitle you have opened. Skip or fast forward to the point where the "
+"subtitle should roughly be placed. Pause.[CR][CR]When you paused the video, "
+"a menu will pop up with several options. Select 'View or edit first "
+"subtitle'. When your first subtitle is not the first line from the video, "
+"select 'Delete' until the first subtitle is also the first line from the "
+"video.[CR][CR]Then finetune the position of the video, possibly by using the "
+"'Skip forward 1 second' or 'Skip backward 1 second' buttons. If the position "
+"is perfect, choose 'Select as start'.[CR]Now fast forward to the end of the "
+"video, and repeat the same process.[CR][CR]After this, your file will be "
+"synced to the video."
+msgstr "На следующем экране откройте видеофайл из медиатеки, соответствующий открытым вами субтитрам. Перемотайте или ускорьте перемотку до точки, где примерно должны располагаться субтитры. Поставьте на паузу.[CR][CR]Когда вы поставите видео на паузу, появится меню с несколькими опциями. Выберите «Просмотреть или изменить первый субтитр». Если ваш первый субтитр не является первой строкой из видео, выбирайте «Удалить», пока первый субтитр также не станет первой строкой из видео.[CR][CR]Затем точно настройте позицию видео, возможно, используя кнопки «Перемотать вперёд на 1 секунду» или «Перемотать назад на 1 секунду». Если позиция идеальна, выберите «Выбрать как начало».[CR]Теперь быстро перемотайте в конец видео и повторите тот же процесс.[CR][CR]После этого ваш файл будет синхронизирован с видео."
+
+msgctxt "#32063"
+msgid "Select timecode of first subtitle to sync with"
+msgstr "Выберите временной код первого субтитра для синхронизации"
+
+msgctxt "#32064"
+msgid "Time selected"
+msgstr "Время выбрано"
+
+msgctxt "#33064"
+msgid "Time selected"
+msgstr "Время выбрано"
+
+msgctxt "#32065"
+msgid "Select timecode of subtitle which is roughly the same"
+msgstr "Выберите временной код субтитра, который примерно такой же"
+
+msgctxt "#32066"
+msgid "Select time of last subtitle to sync"
+msgstr "Выберите время последнего субтитра для синхронизации"
+
+msgctxt "#32067"
+msgid "Select time of last subtitle"
+msgstr "Выберите время последнего субтитра"
+
+msgctxt "#32068"
+msgid "New timecode"
+msgstr "Новый временной код"
+
+msgctxt "#32069"
+msgid ""
+"Write the new timestamp for the start position, seperated by a ':'. For "
+"instance: 01:22:23:000"
+msgstr "Введите новую временную метку для начальной позиции, разделяя символом «:». Например: 01:22:23:000"
+
+msgctxt "#32070"
+msgid "Subtitles moved forward by: {}"
+msgstr "Субтитры перемещены вперёд на: {}"
+
+msgctxt "#32071"
+msgid "Subtitles moved backward by {}"
+msgstr "Субтитры перемещены назад на {}"
+
+msgctxt "#32072"
+msgid "First subtitle now starts at {}"
+msgstr "Первый субтитр теперь начинается в {}"
+
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr "Последний субтитр теперь начинается в {}"
+
+msgctxt "#32073"
+msgid " Paused at: "
+msgstr " Пауза в: "
+
+msgctxt "#32074"
+msgid "Continue playing"
+msgstr "Продолжить воспроизведение"
+
+msgctxt "#32075"
+msgid "Select as start of first subtitle"
+msgstr "Выбрать как начало первого субтитра"
+
+msgctxt "#32076"
+msgid "Skip backwards 1 second"
+msgstr "Перемотать назад на 1 секунду"
+
+msgctxt "#32077"
+msgid "Skip forwards 1 second"
+msgstr "Перемотать вперёд на 1 секунду"
+
+msgctxt "#32078"
+msgid "Exit to Main Menu"
+msgstr "Выйти в главное меню"
+
+msgctxt "#32079"
+msgid "View or delete first subtitle"
+msgstr "Просмотреть или удалить первый субтитр"
+
+msgctxt "#32080"
+msgid "View or delete last subtitle"
+msgstr "Просмотреть или удалить последний субтитр"
+
+msgctxt "#32081"
+msgid "Select as start of last subtitle"
+msgstr "Выбрать как начало последнего субтитра"
+
+msgctxt "#32082"
+msgid "Set as first subtitle?"
+msgstr "Установить как первый субтитр?"
+
+msgctxt "#32083"
+msgid "Do you want your subtitle to start at: "
+msgstr "Вы хотите, чтобы ваш субтитр начинался в: "
+
+msgctxt "#32084"
+msgid "Reset start time"
+msgstr "Сбросить время начала"
+
+msgctxt "#32085"
+msgid "Selected start: "
+msgstr "Выбранное начало: "
+
+msgctxt "#32086"
+msgid "Selected times:"
+msgstr "Выбранное время:"
+
+msgctxt "#32087"
+msgid "Your first subtitle starts at: "
+msgstr "Ваш первый субтитр начинается в: "
+
+msgctxt "#32088"
+msgid "Your last subtitle starts at: "
+msgstr "Ваш последний субтитр начинается в: "
+
+msgctxt "#32089"
+msgid "Select"
+msgstr "Выбрать"
+
+msgctxt "#32090"
+msgid "Reset times"
+msgstr "Сбросить время"
+
+msgctxt "#33065"
+msgid "Time selected"
+msgstr "Время выбрано"
+
+msgctxt "#32091"
+msgid "Select a line with a timecode"
+msgstr "Выберите строку с временным кодом"
+
+msgctxt "#32092"
+msgid ""
+"Please select a line with a timecode, like:[CR]'01:23:45,679 --> "
+"01:23:45,679'"
+msgstr "Пожалуйста, выберите строку с временным кодом, например:[CR]'01:23:45,679 --> 01:23:45,679'"
+
+msgctxt "#32093"
+msgid "Choose movie"
+msgstr "Выбрать фильм"
+
+msgctxt "#32094"
+msgid "Choose TV Show"
+msgstr "Выбрать ТВ-передачу"
+
+msgctxt "#32095"
+msgid "View entire library"
+msgstr "Просмотреть всю медиатеку"
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr "Выйти в главное меню с изменениями"
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr "Сохранить показанный субтитр"
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr "Выйти в главное меню без изменений"
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr "Полностью выйти"
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr "Сбросить на другую частоту кадров"
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr "Сохранить и продолжить воспроизведение"
+
+msgctxt "#32102"
+msgid ""
+"The subtitle is loaded with the new framerate. Pause to reset to another "
+"frame rate or to save."
+msgstr "Субтитры загружены с новой частотой кадров. Поставьте на паузу, чтобы сбросить на другую частоту кадров или сохранить."
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr "Пожалуйста, введите допустимое число"
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr "Получить частоту кадров из видео"
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr "Параметры синхронизации по частоте кадров"
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr "Частота кадров"
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr "Новое время окончания"
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr "Старое время начала: "
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr "Время начала: "
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr "Старое время окончания: "
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr "Новое время начала: "
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr "Новое время окончания: "
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr "Сохранить и выйти"
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr "Рассчитать вручную"
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr "Укажите сумму или коэффициент"
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr "Рассчитать коэффициент или указать коэффициент"
+
+msgctxt "#32115"
+msgid ""
+"In the next screen, write a sum with the current framerate divided by the "
+"real frame rate. If the current frame rate is 25 and it should be 24, type "
+"'25/24'. Or type your own factor, like '1.2'"
+msgstr "На следующем экране напишите сумму, где текущая частота кадров делится на реальную частоту кадров. Если текущая частота кадров 25, а должна быть 24, введите «25/24». Или введите свой коэффициент, например «1.2»"
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr "Воспроизвести с файлом, который вы открыли ранее"
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr "Укажите коэффициент"
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr "Растянуть с помощью коэффициента"
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr "Растянуть, указав новое время окончания"
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr "Частота кадров этого видео "
+
+msgctxt "#32121"
+msgid ""
+"The video is playing with the modified subtitle. Pause to save or to return "
+"to the menu."
+msgstr "Видео воспроизводится с изменёнными субтитрами. Поставьте на паузу, чтобы сохранить или вернуться в меню."
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr "Субтитры загружены"
+
+msgctxt "#32123"
+msgid ""
+"The video is playing with the saved subtitle. The filename of the subtitle "
+"is: "
+msgstr "Видео воспроизводится с сохранёнными субтитрами. Имя файла субтитров: "
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr "Перейти ко времени текущего первого субтитра"
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
+msgstr "Перейти ко времени последнего субтитра"
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr "Выбрать другой"
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr "Введите частоту кадров"
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr "Открыть другие субтитры"
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr "Почему я вижу этот экран?"
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr "Вы выбрали файл .sub"
+
+msgctxt "#32131"
+msgid ""
+"You have selected a .sub file, which uses frame rates to indicate when "
+"subtitles should be shown. To edit these subtitles, you have to select a "
+"frame rate. You can start a video to see what frame rate it has or just pick "
+"a random one if you want to use a sync option."
+msgstr "Вы выбрали файл .sub, который использует частоту кадров для указания времени показа субтитров. Чтобы редактировать эти субтитры, вы должны выбрать частоту кадров. Вы можете запустить видео, чтобы увидеть его частоту кадров, или просто выбрать случайную, если хотите использовать параметр синхронизации."
+
+msgctxt "#32132"
+msgid "This file might not be a valid subtitle"
+msgstr "Этот файл может не быть корректным субтитром"
+
+msgctxt "#32133"
+msgid "Load anyway"
+msgstr "Всё равно загрузить"
+
+msgctxt "#32134"
+msgid "Choose other"
+msgstr "Выбрать другой"
+
+msgctxt "#32135"
+msgid "Not a valid .sub file"
+msgstr "Неверный файл .sub"
+
+msgctxt "#32136"
+msgid "This file does not appear to be a valid .sub file."
+msgstr "Этот файл, похоже, не является верным файлом .sub."
+
+msgctxt "#32137"
+msgid "All found HTML colorcodes reset to white."
+msgstr "Все найденные HTML-цвета сброшены на белый."
+
+msgctxt "#32138"
+msgid "Reset color code to white"
+msgstr "Сбросить цвет на белый"
+
+msgctxt "#32139"
+msgid "Reset color to a custom color"
+msgstr "Сбросить цвет на пользовательский"
+
+msgctxt "#32140"
+msgid ""
+"Not a valid code for a color. Use 8 digits in a hexadecimal notation: "
+"'FF00FF00'"
+msgstr "Неверный код цвета. Используйте 8 цифр в шестнадцатеричной записи: «FF00FF00»"
+
+msgctxt "#32141"
+msgid "Provide color coding. Use 8 digits. Leave empty to cancel"
+msgstr "Укажите цветовой код. Используйте 8 цифр. Оставьте пустым для отмены"
+
+msgctxt "#32142"
+msgid "All found HTML colorcodes reset to "
+msgstr "Все найденные HTML-цвета сброшены на "
+
+msgctxt "#35000"
+msgid "Cancel"
+msgstr "Отмена"
+
+msgctxt "#35001"
+msgid "Load subtitle"
+msgstr "Загрузить субтитры"
+
+msgctxt "#35002"
+msgid "Manually"
+msgstr "Вручную"
+
+msgctxt "#35003"
+msgid "Do you want to edit this subtitle?"
+msgstr "Хотите изменить эти субтитры?"
+
+msgctxt "#35004"
+msgid "Playback will stop, but can be resumed from the menu."
+msgstr "Воспроизведение остановится, но его можно будет возобновить из меню."
+
+msgctxt "#35005"
+msgid ""
+"A subtitlefile could not be found. Do you want to select one manually and "
+"continue with current video?"
+msgstr "Не удалось найти файл субтитров. Хотите выбрать его вручную и продолжить с текущим видео?"
+
+msgctxt "#35006"
+msgid "Video:"
+msgstr "Видео:"
+
+msgctxt "#35007"
+msgid "Subtitle:"
+msgstr "Субтитры:"
+
+msgctxt "#35008"
+msgid "Play with "
+msgstr "Воспроизвести с "
+
+msgctxt "#35009"
+msgid "Edit and synchronize subtitles with your remote"
+msgstr "Изменяйте и синхронизируйте субтитры с вашим пультом"
+
+msgctxt "#35010"
+msgid ""
+"With this script you can edit specific lines, move or stretch subtitles, and "
+"synchronize with other subtitles. You can also synchronize with a videofile."
+msgstr "С помощью этого скрипта вы можете изменять отдельные строки, перемещать или растягивать субтитры, а также синхронизировать их с другими субтитрами. Вы также можете синхронизировать с видеофайлом."
+
+msgctxt "#35011"
+msgid "Return to Menu"
+msgstr "Вернуться в меню"
+
+msgctxt "#35016"
+msgid ""
+"Somewhere in the process of syncing an error occurred. Most of the time this "
+"is caused by:[CR] - A .srt file which uses non-standard timestamps.[CR] - A ."
+"srt file which has a digit missing in one of its timestamps.[CR] - A file "
+"which is not an actual .srt file[CR][CR]Use Main Menu -> Advanced Options -> "
+"Check Integrity to scan for faulty timestamps or use a different .srt file."
+msgstr "Где-то в процессе синхронизации произошла ошибка. Чаще всего это вызвано:[CR] - Файлом .srt, который использует нестандартные временные метки.[CR] - Файлом .srt, в котором отсутствует цифра в одной из временных меток.[CR] - Файлом, который не является настоящим файлом .srt[CR][CR]Используйте Главное меню -> Дополнительные параметры -> Проверить целостность для поиска ошибочных временных меток или используйте другой файл .srt."
+
+msgctxt "#35012"
+msgid "The following error has occurred:"
+msgstr "Произошла следующая ошибка:"
+
+msgctxt "#35013"
+msgid "Details of Error"
+msgstr "Подробности ошибки"
+
+msgctxt "#35017"
+msgid "Characterset not detected"
+msgstr "Набор символов не обнаружен"
+
+msgctxt "#35018"
+msgid ""
+"The correct characterset of this file could not be detected. The file is now "
+"loading with the UTF-8 set and errors are replaced with questionmarks."
+msgstr "Не удалось определить корректный набор символов этого файла. Файл загружается с набором UTF-8, а ошибки заменяются вопросительными знаками."
+
+msgctxt "#35019"
+msgid "Select textline"
+msgstr "Выберите текстовую строку"
+
+msgctxt "#35020"
+msgid "Select time to sync to"
+msgstr "Выберите время для синхронизации"
+
+msgctxt "#35021"
+msgid "Shift forwards by microseconds"
+msgstr "Сдвинуть вперёд на микросекунды"
+
+msgctxt "#35022"
+msgid "Shift backwards by microseconds"
+msgstr "Сдвинуть назад на микросекунды"
+
+msgctxt "#35023"
+msgid "Shift forwards by minutes"
+msgstr "Сдвинуть вперёд на минуты"
+
+msgctxt "#35024"
+msgid "Shift backwards by minutes"
+msgstr "Сдвинуть назад на минуты"
+
+msgctxt "#35025"
+msgid "Select which subtitle to delete"
+msgstr "Выберите, какой субтитр удалить"
+
+msgctxt "#35026"
+msgid "Minutes"
+msgstr "Минуты"
+
+msgctxt "#35027"
+msgid "Microseconds"
+msgstr "Микросекунды"
+
+msgctxt "#35028"
+msgid "See contents"
+msgstr "Просмотреть содержимое"
+
+msgctxt "#35029"
+msgid "Open anyway"
+msgstr "Всё равно открыть"
+
+msgctxt "#35030"
+msgid "Unlikely to be a subtitle"
+msgstr "Вероятно, это не субтитры"
+
+msgctxt "#35031"
+msgid "This file is quite large and unlikely to be a subtitle"
+msgstr "Этот файл довольно большой и вряд ли является субтитром"
+
+msgctxt "#35032"
+msgid "Could not load subtitle"
+msgstr "Не удалось загрузить субтитры"
+
+msgctxt "#35033"
+msgid "Could not find any subtitles in the file. Is it a valid subtitle?"
+msgstr "Не удалось найти ни одного субтитра в файле. Это верный субтитр?"
+
+msgctxt "#35034"
+msgid "Scanning..."
+msgstr "Сканирование..."
+
+msgctxt "#35035"
+msgid "Checking which encoding to use for this file."
+msgstr "Проверка, какую кодировку использовать для этого файла."
+
+msgctxt "#35036"
+msgid "This does not seem to be a valid .sub file."
+msgstr "Похоже, это не действительный файл .sub."
+
+msgctxt "#35037"
+msgid "This does not seem to be a valid .srt file."
+msgstr "Похоже, это не действительный файл .srt."
+
+msgctxt "#35038"
+msgid "Results"
+msgstr "Результаты"
+
+msgctxt "#35039"
+msgid "The encoding is: "
+msgstr "Кодировка: "
+
+msgctxt "#35040"
+msgid "The following lines were skipped:"
+msgstr "Следующие строки были пропущены:"
+
+msgctxt "#35041"
+msgid "Repair manually"
+msgstr "Исправить вручную"
+
+msgctxt "#35042"
+msgid "Jump to Specific subtitle"
+msgstr "Перейти к определённому субтитру"
+
+msgctxt "#35043"
+msgid "View or delete subtitle that is marked as first"
+msgstr "Просмотреть или удалить субтитр, отмеченный как первый"
+
+msgctxt "#35044"
+msgid "View or delete subtitle that is marked as last"
+msgstr "Просмотреть или удалить субтитр, отмеченный как последний"
+
+msgctxt "#35045"
+msgid "Mark other subtitle as last to sync with"
+msgstr "Отметить другие субтитры как последние для синхронизации"
+
+msgctxt "#35046"
+msgid "Mark other subtitle as first to sync with"
+msgstr "Отметить другие субтитры как первые для синхронизации"
+
+msgctxt "#35047"
+msgid "Change start time"
+msgstr "Изменить время начала"
+
+msgctxt "#35048"
+msgid "Change end Time"
+msgstr "Изменить время окончания"
+
+msgctxt "#35049"
+msgid "Skip backward 100 milliseconds"
+msgstr "Перемотать назад на 100 миллисекунд"
+
+msgctxt "#35050"
+msgid "Do you want: [CR]{}[CR]To appear at {}?"
+msgstr "Вы хотите, чтобы: [CR]{}[CR]Появилось в {}?"
