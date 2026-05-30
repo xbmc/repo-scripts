@@ -1,0 +1,30 @@
+# WeTrakr Scrobbler language file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgctxt "#32001"
+msgid "API Token"
+msgstr ""
+
+msgctxt "#32002"
+msgid "API URL"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Scrobble threshold (%)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Send 'now playing' event"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Mark as watched"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Enable debug logging"
+msgstr ""
