@@ -1,3 +1,6 @@
+v2.1.9
+- Fix ABC weather video scraping due to upstream changes
+
 v2.1.8 
 - Add RadarRange label
 

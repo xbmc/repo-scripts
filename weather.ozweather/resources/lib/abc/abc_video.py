@@ -1,4 +1,5 @@
 import requests
+import re
 import sys
 import xbmc
 import xbmcgui
@@ -35,7 +36,6 @@ def scrape_and_play_abc_weather_video():
     pass
 
 
-# See bottom of this file for notes on matching the video links (& Store.py for the regex)
 def get_abc_weather_video_link():
     try:
         r = requests.get(Store.ABC_URL, timeout=15)
@@ -45,16 +45,47 @@ def get_abc_weather_video_link():
             error_msg = "ABC __NEXT_DATA__ script not found on page, couldn't extract ABC weather video link"
             Logger.error(error_msg)
             raise ValueError(error_msg)
+
         json_object = json.loads(json_string.string)
+
         # Logger.debug(json_object)
         # Put the json blob into: https://jsonhero.io/j/JU0I9LB4AlLU
         # Gives a path to the needed video as:
         # $.props.pageProps.channelpage.components.0.component.props.list.3.player.config.sources.1.file
         # Rather than grab the URL directly (as place in array might change), grab all the available URLs and get the best quality from it
         # See: https://github.com/bossanova808/weather.ozweather/commit/e6158d704fc160808bf66220da711805860d85c7
-        data = json_object['props']['pageProps']['channelpage']['components'][0]['component']['props']['list'][3]
-        urls = [x for x in data['player']['config']['sources'] if x['type'] == 'video/mp4']
-        return sorted(urls, key=lambda x: x['bitrate'], reverse=True)[0]['file']
+
+        items = json_object['props']['pageProps']['channelpage']['components'][0]['component']['props']['list']
+
+        data = next((item for item in items if item.get('player', {}).get('config', {}).get('sources')), None)
+        if not data:
+            Logger.error("No player sources found in ABC JSON")
+            return ""
+
+        # urls_all = data['player']['config']['sources']
+        # Logger.debug(f"ALL ABC video sources (unfiltered): {urls_all}")
+
+        urls = [x for x in data['player']['config']['sources'] if x.get('type') == 'video/mp4']
+        if not urls:
+            Logger.error("No MP4 sources found in ABC player config")
+            return ""
+
+        Logger.debug(f"ABC video sources available: {[{k: v for k, v in u.items() if k != 'type'} for u in urls]}")
+
+        def quality_key(source):
+            if 'fileSize' in source:
+                return source['fileSize']
+            match = re.search(r'(\d+)p', source.get('label', '0'))
+            return int(match.group(1)) if match else 0
+
+        url = sorted(urls, key=quality_key, reverse=True)[0].get('file', '')
+
+        if not url or not re.match(r'^https?://[^/\s]+', url):
+            Logger.error(f"ABC returned a weird video URL?!: {url}")
+            return ""
+
+        Logger.debug(f"Selected ABC video: {url} (from {len(urls)} sources)")
+        return url
 
     except Exception as inst:
         Logger.error(f"Couldn't get ABC video URL from scraped page: {inst}")
