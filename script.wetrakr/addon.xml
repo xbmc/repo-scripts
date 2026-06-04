@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.wetrakr"
        name="WeTrakr Scrobbler"
-       version="1.1.8"
+       version="1.1.9"
        provider-name="WeTrakr">
   <requires>
     <import addon="xbmc.python" version="3.0.1"/>
@@ -23,6 +23,9 @@
     <website>https://wetrakr.com</website>
     <source>https://github.com/wetrakr/wetrakr-kodi</source>
     <news>
+v1.1.9
+- Defer the "Now Playing" toast until playback crosses the 5% mark — the threshold WeTrakr uses to consider a session active and start scrobbling. The backend "playing" event is still sent at start; only the user-facing notification is deferred.
+
 v1.1.8
 - Use Kodi's native Dialog().notification during playback to avoid the WindowDialog that triggered an audio sink renegotiation under E-AC3 passthrough (Vero 4K+ stream stalls)
 
