@@ -13,7 +13,7 @@
         <description lang="en_GB">Helper script to provide The Movie DB informations for persons, shows and movies to the Aeon Tajo skin. Based on script.embuary.info from sualfred.</description>
         <platform>all</platform>
         <license>Apache-2.0</license>
-        <news>v1.0.4 - TMDB API key obfuscated to avoid plain-text exposure in the repository. Both TMDB and OMDb API keys are now empty by default; users can provide their own. Free keys obtainable at the URLs shown in settings help. v1.0.3 - Refactored entry point: moved Main class to resources/lib/entry.py to comply with Kodi addon-checker complexity guidelines.</news>
+        <news>v1.0.4 - TMDB API key obfuscated to avoid plain-text exposure in the repository. Both TMDB and OMDb API keys are now empty by default; users can provide their own. Free key registration URLs embedded directly in the settings labels. Line endings normalized to LF across the addon. v1.0.3 - Refactored entry point: moved Main class to resources/lib/entry.py to comply with Kodi addon-checker complexity guidelines.</news>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.jpg</fanart>
