@@ -1,0 +1,43 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2025-01-12\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Settings
+msgctxt "#32001"
+msgid "Dialog"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr ""
+
+# Dialog buttons
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr ""

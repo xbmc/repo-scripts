@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+    <defaultcontrol>101</defaultcontrol>
+    <animation effect="fade" time="300" delay="100">WindowOpen</animation>
+    <animation effect="fade" time="50">WindowClose</animation>
+    <controls>
+        <control type="button" id="101">
+            <description>Skip Intro Button</description>
+            <visible>!String.IsEmpty(Window(home).Property(Skiptro.InIntro))</visible>
+            <right>40</right>
+            <bottom>120</bottom>
+            <width>280</width>
+            <height>60</height>
+            <label>[UPPERCASE]$ADDON[service.skiptro 32010][/UPPERCASE]</label>
+            <font>font13</font>
+            <align>center</align>
+            <textcolor>FFFFFFFF</textcolor>
+            <focusedcolor>FFFFFFFF</focusedcolor>
+            <texturefocus colordiffuse="FF3399FF" border="4">white.png</texturefocus>
+            <texturenofocus colordiffuse="99000000" border="4">white.png</texturenofocus>
+        </control>
+        <control type="button" id="102">
+            <description>Skip Credits Button</description>
+            <visible>!String.IsEmpty(Window(home).Property(Skiptro.InCredits))</visible>
+            <right>320</right>
+            <bottom>120</bottom>
+            <width>280</width>
+            <height>60</height>
+            <label>[UPPERCASE]$ADDON[service.skiptro 32011][/UPPERCASE]</label>
+            <font>font13</font>
+            <align>center</align>
+            <textcolor>FFFFFFFF</textcolor>
+            <focusedcolor>FFFFFFFF</focusedcolor>
+            <texturefocus colordiffuse="FF3399FF" border="4">white.png</texturefocus>
+            <texturenofocus colordiffuse="99000000" border="4">white.png</texturenofocus>
+            <onright>103</onright>
+            <animation effect="slide" end="0,320" condition="String.IsEmpty(Window(home).Property(Skiptro.HasStinger))">Conditional</animation>
+        </control>
+        <control type="button" id="103">
+            <description>Skip to Stinger Button</description>
+            <visible>!String.IsEmpty(Window(home).Property(Skiptro.InCredits)) + !String.IsEmpty(Window(home).Property(Skiptro.HasStinger))</visible>
+            <right>40</right>
+            <bottom>120</bottom>
+            <width>280</width>
+            <height>60</height>
+            <label>[UPPERCASE]$ADDON[service.skiptro 32012][/UPPERCASE]</label>
+            <font>font13</font>
+            <align>center</align>
+            <textcolor>FFFFFFFF</textcolor>
+            <focusedcolor>FFFFFFFF</focusedcolor>
+            <texturefocus colordiffuse="FFFF8800" border="4">white.png</texturefocus>
+            <texturenofocus colordiffuse="99000000" border="4">white.png</texturenofocus>
+            <onleft>102</onleft>
+        </control>
+    </controls>
+</window>
