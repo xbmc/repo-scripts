@@ -7,6 +7,7 @@ import xbmc
 import xbmcgui
 import requests
 import datetime
+import base64
 import urllib.request as urllib
 from urllib.parse import urlencode
 
@@ -17,7 +18,21 @@ from resources.lib.localdb import *
 
 ########################
 
-API_KEY = ADDON.getSettingString('tmdb_api_key')
+# Built-in TMDB API key (base64-obfuscated to avoid plain-text exposure in the public repository).
+# This is not security — anyone reading the source can decode it — but it prevents the key from
+# being picked up by automated crawlers and search engines indexing the raw settings.xml.
+# Users are encouraged to provide their own free TMDB API key in the addon settings.
+_TMDB_FALLBACK_KEY = base64.b64decode('ZmMxNjg2NTA2MzJjNjU5NzAzOGNmNzA3MmE3YzIwZGE=').decode('ascii')
+
+
+def _get_tmdb_api_key():
+    user_key = ADDON.getSettingString('tmdb_api_key')
+    if user_key:
+        return user_key
+    return _TMDB_FALLBACK_KEY
+
+
+API_KEY = _get_tmdb_api_key()
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 

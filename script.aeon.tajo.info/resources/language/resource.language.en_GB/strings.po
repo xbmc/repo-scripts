@@ -255,3 +255,11 @@ msgstr ""
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
 msgstr ""
+
+msgctxt "#32060"
+msgid "TMDB API key (free at https://www.themoviedb.org/settings/api)"
+msgstr ""
+
+msgctxt "#32062"
+msgid "OMDb API key (free at https://www.omdbapi.com/apikey.aspx)"
+msgstr ""
