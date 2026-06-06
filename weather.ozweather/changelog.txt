@@ -1,3 +1,6 @@
+v2.2.0
+- More robust fix for ABC weather video scraping due to upstream changes - explicitly find the weather video
+
 v2.1.9
 - Fix ABC weather video scraping due to upstream changes
 

@@ -57,7 +57,14 @@ def get_abc_weather_video_link():
 
         items = json_object['props']['pageProps']['channelpage']['components'][0]['component']['props']['list']
 
-        data = next((item for item in items if item.get('player', {}).get('config', {}).get('sources')), None)
+        # Logger.debug(f"ABC list items: {[{k: v for k, v in item.items() if k != 'player'} for item in items]}")
+
+        data = next(
+            (item for item in items
+             if 'weather' in item.get('card', {}).get('title', {}).get('children', '').lower()
+             and item.get('player', {}).get('config', {}).get('sources')),
+            None
+        )
         if not data:
             Logger.error("No player sources found in ABC JSON")
             return ""
@@ -74,9 +81,9 @@ def get_abc_weather_video_link():
 
         def quality_key(source):
             if 'fileSize' in source:
-                return source['fileSize']
+                return ('fileSize', source['fileSize'])
             match = re.search(r'(\d+)p', source.get('label', '0'))
-            return int(match.group(1)) if match else 0
+            return ('label', int(match.group(1)) if match else 0)
 
         url = sorted(urls, key=quality_key, reverse=True)[0].get('file', '')
 
