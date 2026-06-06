@@ -1,0 +1,550 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-11 15:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
+"Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/hr_hr/>\n"
+"Language: hr_hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr "Dodatak za presvlake koji omogućuje jednostavno upravljanje i prikaz prečaca korisnika (zahtijeva podršku presvlake)"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Dodaj"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Obriši"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Pomakni gore"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Pomakni dolje"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Video popis izvođenja"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Glazbeni popis izvođenja"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Omiljeno"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Dodatak"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Mješoviti popis izvođenja"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Video dodatak"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Glazbeni dodatak"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Slikovni dodatak"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Nepoznato>"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Video"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmovi"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "TV serije"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "TV u živo"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Glazbeni spotovi"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Glazba"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Slike"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programi"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "TV u živo"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Zakazana snimanja"
+
+msgctxt "#32024"
+msgid "Custom item"
+msgstr "Prilagođena stavka"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Postavi naslov"
+
+msgctxt "#32026"
+msgid "Set thumbnail"
+msgstr "Postavi minijaturu"
+
+msgctxt "#32027"
+msgid "Change action"
+msgstr "Promijeni radnju"
+
+msgctxt "#32028"
+msgid "Restore menu items"
+msgstr "Vrati stavke izbornika"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Uobičajeno"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videoteka"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Fonoteka"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Reproduciraj DVD"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Izbaci optički pogon"
+
+msgctxt "#32034"
+msgid "Common menu item"
+msgstr "Uobičajena stavka izbornika"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Odaberi koja će se stavka prikazati na glavnom zaslonu"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for %s"
+msgstr "Odaberi prečac za %s"
+
+msgctxt "#32037"
+msgid "Reset all menu items"
+msgstr "Vrati izvorne sve stavke izbornika"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all menu items back to default?"
+msgstr "Sigurno želite vratiti sve stavke izbornika na izvorno?"
+
+msgctxt "#32039"
+msgid "Pick widget for %s"
+msgstr "Odaberi Widget za %s"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Popis izvođenja"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Radnja"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Nepoznato video čvorište"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Odaberi kategoriju prečaca"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Odaberi widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Odaberi pozadinu"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Nadopuni videoteku"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Nadopuni fonoteku"
+
+msgctxt "#32048"
+msgid "Choose item for menu"
+msgstr "Odaberi stavku za izbornik"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Izgrađivanje izbornika..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Zadano"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Jedna slika"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Više slika"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nijedan"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "Kodi naredba"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Očisti videoteku"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Očisti fonoteku"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "Kodi naredbe"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "Stvori stavku izbornika do ovdje"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Popis izvođenja presvlake"
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "Što želite učiniti s popisom izvođenja?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Zaslon"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Reproduciraj"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Dobivanje sadržaja direktorija..."
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "Nema dostupnih stavki"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "Nema dostupnih stavki za odabir iz kategorije po vašem izboru."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Posljednji TV program"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Posljednji radio program"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Posljednji program"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Video izvor"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Prilagodi glavni izbornik"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Prilagodi podizbornik"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Glazbeni izvor"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Izvori zbirke"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Izvori"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "TV programi"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radio programi"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Prikaz..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Prikaz datoteka"
+
+msgctxt "#32080"
+msgid "Edit %s Submenu"
+msgstr "Uredi %s podizbornik"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Filmovi nisu u ovom izvoru"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "Tv serije nisu u ovom izvoru"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Glazbeni spotovi nisu u ovom izvoru"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Pjesme nisu u ovom izvoru"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Albumi nisu u ovom izvoru"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Mješovit sadržaj nije u ovom izvoru"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Programi"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Slikovni izvor"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Stavka je dodana u izbornik"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Nemoguće dodavanje stavke u izbornik. Provjerite zapis za greške."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Nemoguća izgradnja izbornika."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "Pošalji zapise otklanjanja grešaka?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr "Instaliraj dodatak pošiljatelja Kodi zapisa za lakše pružanje zapisa otklanjanja grešaka."
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "Odaberi zadanu radnju za stavku izbornika"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Pregledaj..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "Nemoguće spremanje izbornika"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "Zapisivanje izbornika..."
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "Widget"
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "Koristi kao widget"
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "Odaberi svojstvo"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "Obnovi ili vrati izvorno?"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr "Obnovi izvornu stavku izbornika"
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "Vrati presvlaku na izvorno"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr "Ne postoje stavke izbornika za vraćanje ne izvorno ovog izbornika"
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr "Instalorajl widget pružatelja"
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr "Omogući zadane widgete"
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr "Party način (glazbeni spotovi)"
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "Nema izbornika iz kompatibilnih presvlaka pronađenih za uvažanje"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "Uvezi izbornik iz presvlake"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "Dijeljeni izbornik"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "Nova stavka na glavnom izborniku"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "Nova stavka na glavnom izborniku (automatski popuni podizbornike)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "Gdje treba stavku izbornika stvoriti"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "Nemoguć prikaz sadržaja direktorija[CR][CR]Pogledajte zapis za pojedinosti"
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "Presvlaka koju koristite ne podržava dodavanje stavki izravno u glavni izbornik"
+
+msgctxt "#32117"
+msgid "Disable shortcut"
+msgstr "Onemogući prečac"
+
+msgctxt "#32118"
+msgid "Smart shortcuts"
+msgstr "Pametni prečaci"
+
+msgctxt "#32119"
+msgid "Default widgets"
+msgstr "Zadani widget"
+
+msgctxt "#32120"
+msgid "Never hide PVR shortcuts"
+msgstr "Nikada ne sakrivaj PVR prečace"
+
+msgctxt "#32121"
+msgid "Share menu between compatible skins"
+msgstr "Dijeli izbornik između kompatibilnih presvlaka"
+
+msgctxt "#32122"
+msgid "Enable debug logging"
+msgstr "Omogući zapisivanje otklanjanja grešaka"
+
+msgctxt "#32123"
+msgid "Games"
+msgstr "Igre"
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
+msgstr "Ovaj dodatak je za razvijatelje presvlaka i zahtijeva podršku presvlake"
+
+#~ msgctxt "#32024"
+#~ msgid "Custom shortcut"
+#~ msgstr "Prilagođeni prečac"
+
+#~ msgctxt "#32028"
+#~ msgid "Reset shortcuts"
+#~ msgstr "Vrati na zadano prečace"
+
+#~ msgctxt "#32034"
+#~ msgid "Common Shortcut"
+#~ msgstr "Uobičajeni prečaci"
+
+#~ msgctxt "#32037"
+#~ msgid "Reset all shortcuts"
+#~ msgstr "Vrati na početno sve prečace"
+
+#~ msgctxt "#32038"
+#~ msgid "Are you sure you want to reset all shortcuts back to default?"
+#~ msgstr "Sigurno želite vratit sve prečace na početno?"
+
+#~ msgctxt "#32048"
+#~ msgid "Choose shortcut"
+#~ msgstr "Odaberi prečac"
+
+#~ msgctxt "#32058"
+#~ msgid "Create shortcut to here"
+#~ msgstr "Stvori prečac ovdje"
+
+#~ msgctxt "#32060"
+#~ msgid "Do you want to play this playlist, or display it?"
+#~ msgstr "Želite li reproducirati popis izvođenja ili ga prikazati?"

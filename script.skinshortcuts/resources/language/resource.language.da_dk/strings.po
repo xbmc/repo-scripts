@@ -1,0 +1,518 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-12-13 20:24+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Danish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/da_dk/>\n"
+"Language: da_dk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9.1\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr "Add-on til skins der giver enkel styring og lister over brugergenveje (kræver skin-understøttelse)"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Tilføj"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Slet"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Flyt op"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Flyt ned"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Videoplayliste"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Musikplayliste"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Favorit"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Add-on"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Blandet playliste"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Video add-on"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Musik add-on"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Billed add-on"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Ingen>"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videoer"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Tv-serier"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "Direkte tv"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Musikvideoer"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Billeder"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programmer"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "Direkte tv"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Timeroptagelser"
+
+msgctxt "#32024"
+msgid "Custom item"
+msgstr "Brugerdefineret emne"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Vælg label"
+
+msgctxt "#32026"
+msgid "Set thumbnail"
+msgstr "Vælg miniaturebillede"
+
+msgctxt "#32027"
+msgid "Change action"
+msgstr "Skift handling"
+
+msgctxt "#32028"
+msgid "Restore menu items"
+msgstr "Gendan menupunkter"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Almindelig"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videobibliotek"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Musikbibliotek"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Afspil DVD"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Skub bakke ud"
+
+msgctxt "#32034"
+msgid "Common menu item"
+msgstr "Almindeligt menupunkt"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Vælg hvilke elementer der skal vises i hovedmenuen"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for %s"
+msgstr "Vælg genveje for %s"
+
+msgctxt "#32037"
+msgid "Reset all menu items"
+msgstr "Nulstil alle menupunkter"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all menu items back to default?"
+msgstr "Er du sikker på, at du vil nulstille alle menupunkter tilbage til standard?"
+
+msgctxt "#32039"
+msgid "Pick widget for %s"
+msgstr "Vælg widget for %s"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Playliste"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Handling"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Ukendt videonode"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Vælg genvejskategori"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Vælg widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Vælg baggrund"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Opdater videobibliotek"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Opdater musikbibliotek"
+
+msgctxt "#32048"
+msgid "Choose item for menu"
+msgstr "Vælg emne til menu"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Bygger menu..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Enkelt billede"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Flere billeder"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ingen"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "Kodi kommando"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Ryd op i videobiblioteket"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Ryd op i musikbiblioteket"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "Kodi kommandoer"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "Opret menupunkt hertil"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Skinnets playliste"
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "Hvad vil du med playlisten?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Skærm"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Afspil"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Henter mappeliste..."
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "Ingen tilgængelige emner"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "Der er ingen tilgængelige emner at vælge imellem for den valgte kategori."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Sidste tv-kanal"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Sidste radiokanal"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Sidste kanal"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Videokilde"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Tilpas hovedmenu"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Tilpas undermenu"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Musikkilde"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Bibliotekskilder"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Kilder"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Tv-kanal"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radiokanal"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Skærm..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Filvisning"
+
+msgctxt "#32080"
+msgid "Edit %s Submenu"
+msgstr "Rediger %s undermenu"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Film ikke i denne kilde"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "Tv-serier ikke i denne kilde"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Musikvideoer ikke i denne kilde"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Sange ikke i denne kilde"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Albummer ikke i denne kilde"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Blandet indhold ikke i denne kilde"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanaler"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Billedkilde"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Emnet er tilføjet menuen"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Kan ikke tilføje emnet til menuen. Se venligst logfilen for fejl."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Kan ikke bygge menuen."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "Upload fejlfindingslogfilen?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr "Installer Kodi Log Uploader-add-on for nemt at levere en fejlfindingslogfil."
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "Vælg standard handling for menupunkt"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Gennemse..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "Kan ikke gemme menu"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "Skriver menu..."
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "Widget"
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "Brug som widget"
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "Vælg egenskab"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "Gendan eller nulstil?"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr "Gendan et oprindeligt menupunkt"
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "Gendan til skinnets standarder"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr "Der er ingen menupunkter at gendanne for denne menu"
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr "Installer leverandør til widget"
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr "Aktiver standard widgets"
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr "Festtilstand (musikvideoer)"
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "Der er ikke fundet nogen menuer fra kompatible skins til import"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "Importer menu fra skin"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "Delt menu"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "Nyt punkt i hovedmenuen"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "Nyt punkt i hovedmenuen (udfyld automatisk undermenupunkter)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "Hvor skal menupunktet oprettes"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "Kan ikke hente mappelister[CR][CR]Se logfilen for detaljer"
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "Det valgte skin understøtter ikke tilføjelse af emner direkte til hovedmenuen"
+
+msgctxt "#32117"
+msgid "Disable shortcut"
+msgstr "Deaktiver genvej"
+
+msgctxt "#32118"
+msgid "Smart shortcuts"
+msgstr "Smarte genveje"
+
+msgctxt "#32119"
+msgid "Default widgets"
+msgstr "Standard widgets"
+
+msgctxt "#32120"
+msgid "Never hide PVR shortcuts"
+msgstr "Skjul aldrig genveje til PVR"
+
+msgctxt "#32121"
+msgid "Share menu between compatible skins"
+msgstr "Del menu mellem kompatible skins"
+
+msgctxt "#32122"
+msgid "Enable debug logging"
+msgstr "Aktivér fejlfindingslogføring"
+
+msgctxt "#32123"
+msgid "Games"
+msgstr "Spil"
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
+msgstr "Dette add-on er til udviklere af skins og kræver understøttelse af skinnet"
