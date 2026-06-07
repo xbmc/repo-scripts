@@ -1,0 +1,518 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-07-21 08:30+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/fi_fi/>\n"
+"Language: fi_fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr "Lisäosa, joka mahdollistaa ulkoasujen valikkokohteiden ja omien pikavalintojen lisäyksen ja niiden muokkauksen (vaatii tuen ulkoasulta)"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Lisää"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Poista"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Siirrä ylemmäs"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Siirrä alemmas"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Videotoistolista"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Musiikkitoistolista"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Suosikki"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Lisäosa"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Sekalainen toistolista"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Ohjelma"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Videolisäosa"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Musiikkilisäosa"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Kuvalisäosa"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Ei mitään>"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videot"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Elokuvat"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Sarjat"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "Televisio"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Musiikkivideot"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Musiikki"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Kuvat"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Ohjelmat"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "Televisio"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Ajastukset"
+
+msgctxt "#32024"
+msgid "Custom item"
+msgstr "Oma kohde"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Syötä nimi"
+
+msgctxt "#32026"
+msgid "Set thumbnail"
+msgstr "Valitse pienoiskuva"
+
+msgctxt "#32027"
+msgid "Change action"
+msgstr "Vaihda toimintoa"
+
+msgctxt "#32028"
+msgid "Restore menu items"
+msgstr "Palauta valikon kohteet"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Yleiset"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videokirjasto"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Musiikkikirjasto"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Toista levy"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Poista levy"
+
+msgctxt "#32034"
+msgid "Common menu item"
+msgstr "Yleinen valikkokohde"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Valitse päävalikossa näytettävät kohteet"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for %s"
+msgstr "Valitse pikavalinnat kohteelle %s"
+
+msgctxt "#32037"
+msgid "Reset all menu items"
+msgstr "Palauta kaikki valikkokohteet"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all menu items back to default?"
+msgstr "Haluatko varmasti palauttaa kaikki valikkokohteet oletuksiin?"
+
+msgctxt "#32039"
+msgid "Pick widget for %s"
+msgstr "Valitse widgetti kohteelle %s"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Toistolista"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Toiminto"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Tuntematon videosolmu"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Valitse pikavalinnan kategoria"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Valitse widgetti"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Valitse tausta"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Päivitä videokirjasto"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Päivitä äänikirjasto"
+
+msgctxt "#32048"
+msgid "Choose item for menu"
+msgstr "Valitse valikon kohde"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Rakennetaan valikkoa..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Oletus"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Yksittäinen kuva"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Monikuva"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ei mitään"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "Kodi-komento"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Siivoa videokirjasto"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Siivoa äänikirjasto"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "Kodi-komennot"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "Luo valikkokohde tänne"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Ulkoasun toistolista"
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "Mikä toiminto toistolistalle suoritetaan?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Näytä"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Toista"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Noudetaan kansiolistausta..."
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "Ei kohteita"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "Valitussa kategoriassa ei ole valittavissa olevia kohteita."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Edellinen televisiokanava"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Edellinen radiokanava"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Edellinen kanava"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Videolähde"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Mukauta päävalikkoa"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Mukauta alivalikkoa"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Musiikkilähde"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Kirjaston lähteet"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Lähteet"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Televisiokanava"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radiokanava"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Näyttö..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Tiedostonäkymä"
+
+msgctxt "#32080"
+msgid "Edit %s Submenu"
+msgstr "Muokkaa valikon %s alivalikkoa"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Elokuvia ei ole tässä lähteessä"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "Sarjoja ei ole tässä lähteessä"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Musiikkivideoita ei ole tässä lähteessä"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Kappaleita ei ole tässä lähteessä"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Albumeita ei ole tässä lähteessä"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Sekasisältöä ei ole tässä lähteessä"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanavat"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Kuvalähde"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Kohde lisättiin valikkoon"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Kohdetta ei voitu lisätä valikkoon. Lokitiedostosta näet lisätietoja."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Valikkoa ei voitu rakentaa."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "Lähetetäänkö vianselvitysloki?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr "Asenna Kodi Log Uploader -lisäosa vianselvityslokin helppoa lähetystä varten."
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "Valitse valikkokohteen oletustoiminto"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Selaa..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "Valikkoa ei voitu tallentaa"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "Tallennetaan valikkoa..."
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "Widgetti"
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "Käytä widgettinä"
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "Valitse tietue"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "Palautetaanko alkuperäinen vai oletus?"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr "Palauta alkuperäinen valikkokohde"
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "Palauta ulkoasun oletus"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr "Tälle valikolle ei ole palautettavia valikkokohteita"
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr "Asenna widgettilähde"
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr "Käytä oletuswidgettejä"
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr "Jukeboksi (musiikkivideot)"
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "Yhteensopivista ulkoasuista tuotavia valikoita ei löytynyt"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "Tuo valikko ulkoasusta"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "Jaettu valikko"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "Uusi kohde päävalikossa"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "Uusi kohde päävalikossa (täytä alivalikon kohteet automaattisesti)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "Mihin valikkokohde tulisi luoda"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "Kansiolistauksen nouto ei onnistunut[CR][CR]Lokitiedostosta näet lisätietoja"
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "Käytössä oleva ulkoasu ei tue kohteiden lisäystä suoraan päävalikkoon"
+
+msgctxt "#32117"
+msgid "Disable shortcut"
+msgstr "Poista pikavalinta käytöstä"
+
+msgctxt "#32118"
+msgid "Smart shortcuts"
+msgstr "Älykkäät pikavalinnat"
+
+msgctxt "#32119"
+msgid "Default widgets"
+msgstr "Oletuswidgetit"
+
+msgctxt "#32120"
+msgid "Never hide PVR shortcuts"
+msgstr "Älä koskaan piilota tallentimen pikavalintoja"
+
+msgctxt "#32121"
+msgid "Share menu between compatible skins"
+msgstr "Jaa valikko yhteensopivien ulkoasujen välillä"
+
+msgctxt "#32122"
+msgid "Enable debug logging"
+msgstr "Käytä vianselvityslokia"
+
+msgctxt "#32123"
+msgid "Games"
+msgstr "Pelit"
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
+msgstr "Tämä lisäosa on ulkoasujen kehittäjille ja vaatii tuen ulkoasulta"

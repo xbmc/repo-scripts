@@ -1,0 +1,558 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-09-05 13:29+0000\n"
+"Last-Translator: Frodo19 <bilbohu@gmail.com>\n"
+"Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/hu_hu/>\n"
+"Language: hu_hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr "Felszín kiegészítő amely könnyen kezelhetővé és listázhatóvá teszi a felhasználói parancsikonokat (Felszín támogatás szükséges)"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Hozzáadás"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Törlés"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Mozgatás fel"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Mozgatás le"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Videó lejátszási lista"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Zene lejátszási lista"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Kedvenc"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Kiegészítő"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Kevert Lejátszási lista"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Film kiegészítő"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Zenei kiegészítő"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Kép kiegészítő"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Nincs>"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videók"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "Élő TV"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Videóklipek"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Zene"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Képek"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programok"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "Élő TV"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Időzítések"
+
+msgctxt "#32024"
+msgid "Custom item"
+msgstr "Saját elemek"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Címke beállítás"
+
+msgctxt "#32026"
+msgid "Set thumbnail"
+msgstr "Bélyegkép beállítás"
+
+msgctxt "#32027"
+msgid "Change action"
+msgstr "Egyéni parancs"
+
+msgctxt "#32028"
+msgid "Restore menu items"
+msgstr "Menü elemek visszaállítása"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Általános"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videó könytár"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Zene könyvtár"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Lemez lejátszása"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Tálca kiadása"
+
+msgctxt "#32034"
+msgid "Common menu item"
+msgstr "Általános menü elem"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Főmenüben megjelenő elem kiválasztása"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for %s"
+msgstr "Parancsikon kiválasztása a %s-hez"
+
+msgctxt "#32037"
+msgid "Reset all menu items"
+msgstr "Minden menü elem visszaállítása"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all menu items back to default?"
+msgstr "Biztosan visszaállítasz minden menü elemet alapállapotba?"
+
+msgctxt "#32039"
+msgid "Pick widget for %s"
+msgstr "Widget kiválasztása a %s-hez"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Lejátszási lista"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Akció"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Ismeretlen videó szál"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Parancsikon kategória kiválasztás"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Widget kiválasztás"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Háttér kiválasztás"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "A videó könyvtár frissítése"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "A zene könyvtár frissítése"
+
+msgctxt "#32048"
+msgid "Choose item for menu"
+msgstr "Menü elem kiválasztása"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Menü felépítése..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Alapérték"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Egy kép"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Több-kép"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nincs"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "Kodi Parancs"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Videó könyvtár tisztítása"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Zene könyvtár tisztítása"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "Kodi Parancsok"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "Menü elem létrehozása ide"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Felszín Lejátszási lista"
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "Mit akarsz tenni a lejátszási listával?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Kijelző"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Lejátszás"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Könyvtár listázása..."
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "Nem hozzáférhető elemek"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "Itt nincsenek hozzáférhető elemek ehhez a kategóriához."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Utolsó TV csatorna"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Utolsó rádió csatorna"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Utolsó csatorna"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Videó forrás"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Főmenü testreszabása"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Almenü testreszabása"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Zene forrás"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Médiatár források"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Források"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "TV csatorna"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Rádió csatorna"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Kijelző..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Fájl nézet"
+
+msgctxt "#32080"
+msgid "Edit %s Submenu"
+msgstr "Almenü %s szerkesztése"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Nincsenek filmek ebben a forrásban"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "Nincsenek sorozatok ebben a forrásban"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Nincsenek zenei videók ebben a forrásban"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Nincsenek dalok ebben a forrásban"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Nincsenek albumok ebben a forrásban"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Nincsenek vegyes elemek ebben a forrásban"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Rádió"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Csatornák"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Kép forrás"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Az elem a menühöz hozzáadva"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Nem adható hozzá az elem a menühöz. Nézd meg a log-ot a hiba miatt."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Nem építhető fel a menü."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "Debug log feltöltése?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr "Telepítsd a Kodi Log Uploader kiegészítőt hogy könnyen bemutathasd a debug logot."
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "Alap akció kiválasztása a menü elemhez"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Tallózás..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "Nem menthető a menü"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "Menü írása..."
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "Widget"
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "Widgetként használ"
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "Tulajdonság kiválasztása"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "Visszaállítás vagy reset?"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr "Eredeti menü elemek visszaállítása"
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "A felszín alapbeállítására visszaállítás"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr "Nincs menü elem itt amit visszaállíthatnánk"
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr "Telepítsen widget szolgáltatót"
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr "Alap widgetek engedélyezése"
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr "Party mód (zenei videók)"
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "Nincs kompatibilis felszín menü az importáláshoz"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "Menü importálás felszínből"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "Megosztott menü"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "Új elem a főmenüben"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "Új elem a főmenüben (almenü auto kitöltéssel)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "Hol kell létrehozni a menüpontot"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "Lehetetlen a könyvtár listázása[CR][CR]Nézd meg a logot a részletekhez"
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "A használt felület nem támogatja az elemek közvetlen hozzáadását a főmenühöz"
+
+msgctxt "#32117"
+msgid "Disable shortcut"
+msgstr "Parancsikon tiltása"
+
+msgctxt "#32118"
+msgid "Smart shortcuts"
+msgstr "Smart parancsikonok"
+
+msgctxt "#32119"
+msgid "Default widgets"
+msgstr "Alap widgetek"
+
+msgctxt "#32120"
+msgid "Never hide PVR shortcuts"
+msgstr "Sose rejtsd el a PVR parancsikonokat"
+
+msgctxt "#32121"
+msgid "Share menu between compatible skins"
+msgstr "Menü megosztása a kompatibilis felszínekkel"
+
+msgctxt "#32122"
+msgid "Enable debug logging"
+msgstr "Debug log engedélyezése"
+
+msgctxt "#32123"
+msgid "Games"
+msgstr "Játékok"
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
+msgstr "Ez a kiegészítő felszín fejlesztőknek készült, és felszín támogatást igényel"
+
+#~ msgctxt "#32024"
+#~ msgid "Custom shortcut"
+#~ msgstr "Egyedi parancsikon használata"
+
+#~ msgctxt "#32028"
+#~ msgid "Reset shortcuts"
+#~ msgstr "Parancsikonok alaphelyzetbe állítása"
+
+#~ msgctxt "#32034"
+#~ msgid "Common Shortcut"
+#~ msgstr "Általános parancsikon"
+
+#~ msgctxt "#32037"
+#~ msgid "Reset all shortcuts"
+#~ msgstr "Parancsikonok Visszaállítása"
+
+#~ msgctxt "#32038"
+#~ msgid "Are you sure you want to reset all shortcuts back to default?"
+#~ msgstr "Biztosan minden parancsikont alaphelyzetbe állít?"
+
+#~ msgctxt "#32048"
+#~ msgid "Choose shortcut"
+#~ msgstr "Parancsikon választása"
+
+#~ msgctxt "#32058"
+#~ msgid "Create shortcut to here"
+#~ msgstr "Parancsikon létrehozása itt"
+
+#~ msgctxt "#32060"
+#~ msgid "Do you want to play this playlist, or display it?"
+#~ msgstr "Lejátszási sor elindítása vagy megjelenítése?"
+
+#~ msgctxt "#32064"
+#~ msgid "No Shortcuts"
+#~ msgstr "Nincsenek parancsikonok"
+
+#~ msgctxt "#32065"
+#~ msgid "There are no shortcuts available for the category that you choose."
+#~ msgstr "Nincsenek elérhető parancsikonok a kiválasztott kategóriához"

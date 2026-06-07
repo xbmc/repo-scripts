@@ -1,0 +1,518 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-11-11 02:30+0000\n"
+"Last-Translator: HansCR <h.vanek@gmail.com>\n"
+"Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/cs_cz/>\n"
+"Language: cs_cz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.8.1\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr "Doplněk pro vzhledy poskytující jednoduchý management a seznamy uživatelských zkratek (vyžaduje podporu vzhledu)"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Přidat"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Smazat"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Přesunout nahoru"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Přesunout dolů"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Video seznam"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Hudební seznam skladeb"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Oblíbené"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Doplněk"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Smíšený seznam stop"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Video doplněk"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Hudební doplněk"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Obrázkový doplněk"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<nic>"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videa"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Seriály"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "Televize"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Hudební videa"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Hudba"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Obrázky"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programy"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "Televize"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Plánovač"
+
+msgctxt "#32024"
+msgid "Custom item"
+msgstr "Vlastní položka"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Nastavit název"
+
+msgctxt "#32026"
+msgid "Set thumbnail"
+msgstr "Nastavit miniaturu"
+
+msgctxt "#32027"
+msgid "Change action"
+msgstr "Změnit akci"
+
+msgctxt "#32028"
+msgid "Restore menu items"
+msgstr "Obnovit položky nabídky"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Základní"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Knihovna videí"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Hudební knihovna"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Přehrát DVD"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Vysunout disk"
+
+msgctxt "#32034"
+msgid "Common menu item"
+msgstr "Položka základní nabídky"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Zvolte položky, které se zobrazí v Hlavní nabídce"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for %s"
+msgstr "Zvolte zkratky pro %s"
+
+msgctxt "#32037"
+msgid "Reset all menu items"
+msgstr "Obnovit všechny položky nabídky"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all menu items back to default?"
+msgstr "Opravdu chcete obnovit všechny položky nabídky na výchozí hodnoty?"
+
+msgctxt "#32039"
+msgid "Pick widget for %s"
+msgstr "Vyberte widget pro %s"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Seznam stop"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Činnost"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Neznámý video uzel"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Vybrat kategorii zkratky"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Vybrat widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Vybrat pozadí"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Aktualizovat video knihovnu"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Aktualizovat hudební knihovnu"
+
+msgctxt "#32048"
+msgid "Choose item for menu"
+msgstr "Zvolit položku nabídky"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Vytvářím nabídku…"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Výchozí"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Jeden obrázek"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Více obrázků"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Žádné"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "Příkaz Kodi"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Vyčistit knihovnu videa"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Vyčistit knihovnu audia"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "Příkazy Kodi"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "Vytvořit zde položku nabídky"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr ""
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "Co si přejete udělat se seznamem stop?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Zobrazení"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Přehrát"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Načítám seznam složek…"
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "Žádné dostupné položky"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "Pro kategorii, kterou jste zvolili, neexistují žádné dostupné položky."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Poslední TV kanál"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Poslední rozhlasový kanál"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Poslední kanál"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Zdroj videí"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Upravit Hlavní nabídku"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Upravit podnabídku"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Zdroj hudby"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Zdroje knihovny"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Zdroje"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Televizní kanál"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Rozhlasový kanál"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Zobrazit..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Zobrazení souborů"
+
+msgctxt "#32080"
+msgid "Edit %s Submenu"
+msgstr "Upravit %s podnabídku"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "V tomto zdroji nejsou filmy"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "V tomto zdroji nejsou seriály"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "V tomto zdroji nejsou videoklipy"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "V tomto zdroji nejsou skladby"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "V tomto zdroji nejsou alba"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "V tomto zdroji není smíšený obsah"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Rádio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanály"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Zdroj obrázků"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Položka byla přidána do nabídky"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Nelze přidat položku do nabídky. Prosím zkontrolujte chyby v logu."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Nelze vytvořit nabídku."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "Nahrát záznam s ladícími informacemi?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr "Pro jednodušší poskytnutí záznamu s ladícími informacemi, nainstalujte doplněk Kodi Log Uploader."
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "Zvolit výchozí akci pro položku nabídky"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Procházet..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "Nelze uložit nabídku"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "Zapisuji nabídku…"
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "Widget"
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "Použít jako widget"
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "Zvolte vlastnost"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "Obnovit nebo resetovat?"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr "Obnovit původní položku nabídky"
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "Resetovat na výchozí hodnoty vzhledu"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr "Tato nabídka nemá žádné položky k obnovení"
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr "Nainstalovat poskytovatele widgetů"
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr "Povolit výchozí widgety"
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr "Párty režim (videoklipy)"
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "Pro import se nenašla žádná nabídka z kompatibilních vzhledů"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "Importovat nabídku ze vzhledu"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "Sdílená nabídka"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "Nová položka v hlavní nabídce"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "Nová položka v hlavní nabídce (automatická tvorba položek podnabídky)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "Kde má být položka nabídky vytvořena"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "Nelze načíst seznam složek[CR][CR]Podrobnosti najdete v logu"
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "Vzhled, který používáte, neumožňuje přidávat položky přímo do hlavní nabídky"
+
+msgctxt "#32117"
+msgid "Disable shortcut"
+msgstr "Zakázat zkratku"
+
+msgctxt "#32118"
+msgid "Smart shortcuts"
+msgstr "Chytré zkratky"
+
+msgctxt "#32119"
+msgid "Default widgets"
+msgstr "Výchozí widgety"
+
+msgctxt "#32120"
+msgid "Never hide PVR shortcuts"
+msgstr "Nikdy neskrývat PVR zkratky"
+
+msgctxt "#32121"
+msgid "Share menu between compatible skins"
+msgstr "Sdílet nabídky mezi kompatibilními vzhledy"
+
+msgctxt "#32122"
+msgid "Enable debug logging"
+msgstr "Povolit zaznamenávání ladících informací"
+
+msgctxt "#32123"
+msgid "Games"
+msgstr "Hry"
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
+msgstr "Tento doplněk je pro vývojáře vzhledů a vyžaduje podporu vzhledu"

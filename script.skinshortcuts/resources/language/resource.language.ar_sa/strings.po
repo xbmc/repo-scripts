@@ -1,0 +1,518 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-07-27 01:19+0000\n"
+"Last-Translator: psp2111-ADSLGATE <psp100000@hotmail.com>\n"
+"Language-Team: Arabic (Saudi Arabia) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/ar_sa/>\n"
+"Language: ar_sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Description"
+msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
+msgstr "إضافة مخصصه للمظهر لتوفير إدارة بسيطة للودجيت \"الأقسام\" و الاختصارات على الشاشة (تتطلب دعم المظهر لها)"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "إضافة"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "حذف"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "تحرك للأعلى"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "تحرك للأسفل"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "قائمة تشغيل الفيديو"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "قائمة تشغيل الموسيقى"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "المفضلة"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "الإضافات"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "قائمة تشغيل مختلطة"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "البرامج"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "إضافات الفيديو"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "إضافات الموسيقة"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "إضافات الصور"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "مقاطع الفيديو"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "الأفلام"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "المسلسلات"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "تي في مباشر"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "مقاطع الفيديو الموسيقية"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "الموسيقى"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "الصور"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "البرامج"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "تي في مباشر"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "المؤقتات"
+
+msgctxt "#32024"
+msgid "Custom item"
+msgstr "عنصر مخصص"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "تعيين التسمية"
+
+msgctxt "#32026"
+msgid "Set thumbnail"
+msgstr "تعيين الصورة المصغرة"
+
+msgctxt "#32027"
+msgid "Change action"
+msgstr "تغيير الإجراء"
+
+msgctxt "#32028"
+msgid "Restore menu items"
+msgstr "استعادة عناصر القائمة"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "الشائع"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "مكتبة الفيديو"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "مكتبة الموسيقى"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "تشغيل القرص"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "إخراج القرص"
+
+msgctxt "#32034"
+msgid "Common menu item"
+msgstr "عنصر قائمة شائع"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "اختر العناصر التي تريد عرضها في القائمة الرئيسية"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for %s"
+msgstr "اختر اختصارات لـ%s"
+
+msgctxt "#32037"
+msgid "Reset all menu items"
+msgstr "إعادة تعيين كافة عناصر القائمة"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all menu items back to default?"
+msgstr "هل أنت متأكد أنك تريد إعادة تعيين كافة عناصر القائمة إلى الوضع الافتراضي؟"
+
+msgctxt "#32039"
+msgid "Pick widget for %s"
+msgstr "اختر ودجيت \"قسم\" لـ%s"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "قائمة التشغيل"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "الإجراء"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "اختر فئة الاختصار"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "اختر الودجيت \"القسم\""
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "اختر الخلفية"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "تحديث مكتبة الفيديو"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "تحديث مكتبة الصوت"
+
+msgctxt "#32048"
+msgid "Choose item for menu"
+msgstr "اختر عنصر لهذه القائمة"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "جار ٍبناء القائمة..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "الافتراضية"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "صورة واحدة"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "صور متعددة"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "بلا"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "أوامر كودي"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "تنظيف مكتبة الفيديو"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "تنظيف مكتبة الصوت"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "أوامر كودي"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "إنشاء عنصر القائمة هنا"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "قائمة تشغيل المظهر"
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "ماذا تريد أن تفعل بقائمة التشغيل؟"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "عرض"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "تشغيل"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "جار ٍ الحصول على قائمة الدليل..."
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "لا توجد عناصر متاحة"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "لا توجد عناصر متاحة للاختيار منها لهذه الفئة."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "آخر قناة تلفزيونية"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "آخر قناة إذاعية"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "آخر قناة"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "مصدر مقاطع الفيديو"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "تخصيص القائمة الرئيسية"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "تخصيص القائمة الفرعية"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "مصدر الموسيقى"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "مصادر المكتبة"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "المصادر"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "قناة تلفزيونية"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "قناة الإذاعة"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "عرض..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "عرض الملفات"
+
+msgctxt "#32080"
+msgid "Edit %s Submenu"
+msgstr "تحرير القائمة الفرعية لـ%s"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "الأفلام غير متوفرة في هذا المصدر"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "المسلسلات غير متوفرة في هذا المصدر"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "مقاطع الفيديو الموسيقية غير متوفرة في هذا المصدر"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "الأغاني غير متوفرة في هذا المصدر"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "الألبومات غير متوفرة في هذا المصدر"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "المحتوى المختلط غير متوفرة في هذا المصدر"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "الإذاعة"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "المحطات"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "مصدر الصور"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "تمت إضافة العنصر إلى القائمة"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "غير قادر على إضافة عنصر إلى القائمة. يرجى التحقق من السجل."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "غير قادر على بناء القائمة."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "رفع سجل الأخطاء؟"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr "قم بتثبيت الإضافة Kodi Log Uploader لتوفير سجل تصحيح الأخطاء بسهولة."
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "اختر الإجراء الافتراضي لعنصر القائمة"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "استعراض..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "تعذر حفظ القائمة"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "جار ٍ كتابة القائمة..."
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "الودجيت \"القسم\""
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "استخدامه كودجيت \"كقسم\""
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "اختر الميزة"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "استعادة أو إعادة تعيين؟"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr "استعادة عناصر القائمة للوضع الأصلي"
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "إعادة التعيين إلى الإعدادات الافتراضية للمظهر"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr "لا توجد عناصر قائمة من الأساس ليتم استعادتها"
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr "تثبيت موفر الودجيت"
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr "تمكين الودجيت \"الأقسام\" الافتراضية"
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr "وضع الحفلة (مقاطع فيديو موسيقية)"
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "لم يتم العثور على قوائم من المظاهر المتوافقة ليتم استيرادها"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "استيراد قائمة من مظهر اخر"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "القوائم المشتركة"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "عنصر جديد في القائمة الرئيسية"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "عنصر جديد في القائمة الرئيسية (مع الملء التلقائي لعناصر القائمة الفرعية)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "أين يجب إنشاء عنصر القائمة هذه"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "تعذر الحصول على قوائم الدليل[CR][CR]انظر الى السجل للمزيد من التفاصيل"
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "لا يدعم المظهر الذي تستخدمه إضافة عناصر مباشرة إلى القائمة الرئيسية"
+
+msgctxt "#32117"
+msgid "Disable shortcut"
+msgstr "تعطيل الاختصار"
+
+msgctxt "#32118"
+msgid "Smart shortcuts"
+msgstr "اختصارات ذكية"
+
+msgctxt "#32119"
+msgid "Default widgets"
+msgstr "الودجيت \"الأقسام\" الافتراضية"
+
+msgctxt "#32120"
+msgid "Never hide PVR shortcuts"
+msgstr "لا تقم بإخفاء اختصارات الـPVR"
+
+msgctxt "#32121"
+msgid "Share menu between compatible skins"
+msgstr "مشاركة القائمة بين المظاهر المتوافقة"
+
+msgctxt "#32122"
+msgid "Enable debug logging"
+msgstr "تمكين تسجيل الأخطاء"
+
+msgctxt "#32123"
+msgid "Games"
+msgstr "الألعاب"
+
+msgctxt "#32124"
+msgid "This addon is for skin developers, and requires skin support"
+msgstr "هذه الإضافة لمطوري المظاهر ، وتتطلب دعم المظهر لها"
