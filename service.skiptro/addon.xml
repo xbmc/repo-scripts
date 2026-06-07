@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="service.skiptro" name="Skiptro" version="0.3.4" provider-name="Skiptro">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Skip intro/credits button</summary>
+        <description lang="en_GB">Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files.</description>
+        <platform>all</platform>
+        <license>GPL-2.0-or-later</license>
+        <source>https://github.com/MikeSiLVO/service.skiptro</source>
+        <forum>https://forum.kodi.tv/showthread.php?tid=384433</forum>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <news>v0.3.4
+- Initial Kodi repo release
+- Skip intro button during playback
+- Reads .skiptro.json files next to video files
+- Configurable auto-dismiss timeout</news>
+    </extension>
+</addon>
