@@ -281,7 +281,7 @@ class TMDBVideos(object):
             '''
             online_videos = []
             for item in videos:
-                request = requests.head('https://img.youtube.com/vi/%s/0.jpg' % str(item['key']), timeout=5)
+                request = requests.head('https://img.youtube.com/vi/%s/0.jpg' % str(item['key']))
                 if request.status_code == requests.codes.ok:
                     online_videos.append(item)
 

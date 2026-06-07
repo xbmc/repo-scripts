@@ -255,3 +255,11 @@ msgstr "未来7天"
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
 msgstr "你的电视节目库中即将播出的剧集"
+
+msgctxt "#32060"
+msgid "TMDB API key (free at https://www.themoviedb.org/settings/api)"
+msgstr "TMDB API 密钥（免费获取 https://www.themoviedb.org/settings/api）"
+
+msgctxt "#32062"
+msgid "OMDb API key (free at https://www.omdbapi.com/apikey.aspx)"
+msgstr "OMDb API 密钥（免费获取 https://www.omdbapi.com/apikey.aspx）"

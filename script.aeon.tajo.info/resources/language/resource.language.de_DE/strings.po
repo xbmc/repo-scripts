@@ -255,3 +255,11 @@ msgstr "Nächste 7 Tage"
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
 msgstr "Kommende Folgen deiner TV-Show-Bibliothek"
+
+msgctxt "#32060"
+msgid "TMDB API key (free at https://www.themoviedb.org/settings/api)"
+msgstr "TMDB-API-Schlüssel (kostenlos unter https://www.themoviedb.org/settings/api)"
+
+msgctxt "#32062"
+msgid "OMDb API key (free at https://www.omdbapi.com/apikey.aspx)"
+msgstr "OMDb-API-Schlüssel (kostenlos unter https://www.omdbapi.com/apikey.aspx)"

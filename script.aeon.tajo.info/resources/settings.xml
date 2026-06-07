@@ -101,23 +101,26 @@
                         <heading>32003</heading>
                     </control>
                 </setting>
-                <setting id="tmdb_api_key" type="string" label="32023">
-                    <level>0</level>
-                    <default>fc168650632c6597038cf7072a7c20da</default>
-                    <control type="edit" format="string">
-                        <heading>32023</heading>
-                    </control>
-                </setting>
-            </group>
-            <group id="2" label="OMDB">
-                <setting id="omdb_api_key" type="string" label="32023">
+                <setting id="tmdb_api_key" type="string" label="32060">
                     <level>0</level>
                     <default/>
                     <constraints>
                         <allowempty>true</allowempty>
                     </constraints>
                     <control type="edit" format="string">
-                        <heading>32023</heading>
+                        <heading>32060</heading>
+                    </control>
+                </setting>
+            </group>
+            <group id="2" label="OMDB">
+                <setting id="omdb_api_key" type="string" label="32062">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32062</heading>
                     </control>
                 </setting>
             </group>

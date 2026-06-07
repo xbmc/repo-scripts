@@ -255,3 +255,11 @@ msgstr "Következő 7 nap"
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
 msgstr "A TV-műsor könyvtárad következő adásba kerülő epizódjai"
+
+msgctxt "#32060"
+msgid "TMDB API key (free at https://www.themoviedb.org/settings/api)"
+msgstr "TMDB API-kulcs (ingyenes itt: https://www.themoviedb.org/settings/api)"
+
+msgctxt "#32062"
+msgid "OMDb API key (free at https://www.omdbapi.com/apikey.aspx)"
+msgstr "OMDb API-kulcs (ingyenes itt: https://www.omdbapi.com/apikey.aspx)"
