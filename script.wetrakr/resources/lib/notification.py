@@ -4,10 +4,19 @@ notification.py — Branded WeTrakr notification popup.
 Shows a small notification in the top-right corner with the WeTrakr
 "We" logo, purple accent bar, and dark panel background.
 
-The auto-close runs in a background thread so the caller (usually a
-xbmc.Player callback) returns immediately. Blocking the main thread
-with xbmc.sleep made Kodi unresponsive — among other things, the
-fast-forward keys stopped working while a notification was on screen.
+Two render paths:
+
+* During video playback we use Kodi's native ``Dialog().notification``.
+  The native toast is drawn inside the current skin overlay, so it
+  does not push a new entry onto the window stack. On bitstream
+  passthrough setups (e.g. Vero 4K+ with E-AC3 passthrough) opening
+  a ``WindowDialog`` mid-playback forces an audio sink renegotiation,
+  which stalls the video stream for several seconds and ultimately
+  ends playback.
+
+* Outside of playback we still use the branded ``WeTrakrNotification``
+  ``WindowDialog`` — built, shown, slept on and closed entirely on a
+  background daemon thread so the caller never blocks.
 """
 
 import os
@@ -104,25 +113,65 @@ class WeTrakrNotification(xbmcgui.WindowDialog):
         self.close()
 
 
-def notify(title, message, duration=3000):
-    """Show a branded WeTrakr notification popup (non-blocking).
+def _native_notify(title, message, duration):
+    """Use Kodi's built-in ``Dialog().notification`` toast.
 
-    The dialog is shown immediately and a background thread waits for
-    `duration` ms before closing it. The caller returns right away so
-    Kodi's main thread (and player input) keeps flowing.
+    Renders inside the active skin overlay (no new window stack entry),
+    so it's safe to call during bitstream-passthrough playback without
+    forcing an audio sink renegotiation.
     """
-    dialog = WeTrakrNotification(title, message)
-    dialog.show()
+    try:
+        icon = os.path.join(
+            xbmcaddon.Addon('script.wetrakr').getAddonInfo('path'),
+            'resources', 'media', 'we.png',
+        )
+        xbmcgui.Dialog().notification(title, message, icon, duration, False)
+    except Exception as e:
+        xbmc.log(
+            "[WeTrakr] native notify error: {}".format(str(e)),
+            xbmc.LOGERROR,
+        )
 
-    def _close_after_delay():
-        try:
-            xbmc.sleep(duration)
-        finally:
-            try:
-                dialog.close()
-            except Exception:
-                pass
 
-    t = threading.Thread(target=_close_after_delay, name='WeTrakrNotifyClose')
+def _branded_notify(title, message, duration):
+    """Show the branded ``WindowDialog`` popup on a background thread."""
+    try:
+        dialog = WeTrakrNotification(title, message)
+        dialog.show()
+        xbmc.sleep(duration)
+        dialog.close()
+    except Exception as e:
+        xbmc.log(
+            "[WeTrakr] notify error: {}".format(str(e)),
+            xbmc.LOGERROR,
+        )
+
+
+def _is_video_playing():
+    try:
+        return xbmc.Player().isPlayingVideo()
+    except Exception:
+        return False
+
+
+def notify(title, message, duration=3000):
+    """Show a WeTrakr notification (fire-and-forget).
+
+    During video playback this delegates to Kodi's native toast to
+    avoid stalling the player on passthrough setups. Outside of
+    playback we render the branded dialog on a background thread.
+    """
+    if _is_video_playing():
+        t = threading.Thread(
+            target=_native_notify,
+            args=(title, message, duration),
+            name='WeTrakrNotifyNative',
+        )
+    else:
+        t = threading.Thread(
+            target=_branded_notify,
+            args=(title, message, duration),
+            name='WeTrakrNotify',
+        )
     t.daemon = True
     t.start()

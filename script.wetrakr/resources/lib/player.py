@@ -61,6 +61,7 @@ class WeTrakrPlayer(xbmc.Player):
         self.total_time = 0
         self.scrobbled = False
         self.playing_sent = False
+        self.scrobble_notified = False
         self.media_type = None
         self.last_progress = 0.0
         self.poster_art = None
@@ -148,7 +149,10 @@ class WeTrakrPlayer(xbmc.Player):
                 item_type
             ))
 
-            # Send "playing" event (async — don't block player callback)
+            # Send "playing" event (async — don't block player callback).
+            # The user-facing toast is deferred to check_progress() once
+            # playback crosses the 5% mark — that's when WeTrakr considers
+            # the session a real "Now Playing" and starts scrobbling.
             if settings["track_playing"]:
                 api = self._get_api(settings)
                 if api:
@@ -156,16 +160,9 @@ class WeTrakrPlayer(xbmc.Player):
                         "playing", item, self.current_show, progress=0.0
                     )
                     self.playing_sent = True
-                    title_display = item.get("title", "")
-                    if item_type == "episode":
-                        title_display = "{} S{:02d}E{:02d}".format(
-                            item.get("showtitle", ""), item.get("season", 0), item.get("episode", 0)
-                        )
                     _dispatch_async(
                         api.send_event, payload, debug=settings["debug"]
                     )
-                    if settings["notify_playing"]:
-                        _notify("Now Playing", title_display)
 
         except Exception as e:
             self._log("onAVStarted error: {}".format(str(e)), xbmc.LOGERROR)
@@ -270,6 +267,19 @@ class WeTrakrPlayer(xbmc.Player):
                         api.send_event, payload, debug=settings["debug"]
                     )
                     self._log("Playing update dispatched: {:.1f}%".format(progress))
+
+            # Show the "started scrobbling" toast once playback crosses 5% —
+            # that's the threshold WeTrakr uses to consider a session active.
+            if (
+                progress >= 5.0
+                and not self.scrobble_notified
+                and settings["notify_playing"]
+            ):
+                self.scrobble_notified = True
+                _notify(
+                    "Scrobbling in WeTrakr",
+                    "Reached 5% of progress. Started scrobbling, check Now Playing in WeTrakr.",
+                )
 
             # Scrobble once threshold is reached
             if progress >= settings["threshold"] and settings["track_watched"]:
