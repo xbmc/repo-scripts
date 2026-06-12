@@ -523,7 +523,7 @@
 				</itemlayout>
 				<focusedlayout height="360" width="285" condition="Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)">
 					<control type="group">
-						<animation effect="slide" start="0,0" end="-40,0" time="300">Focus</animation>
+						<animation effect="slide" start="0,0" end="-40,0" time="300" delay="100">Focus</animation>
 						<animation effect="slide" start="-40,0" end="0,0" time="125">UnFocus</animation>
 						<control type="image">
 							<left>1</left>
@@ -596,7 +596,7 @@
 						<height>330</height>
 						<fadetime>500</fadetime>
 						<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
-						<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
+						<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto" delay="100">Focus</animation>
 						<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 					</control>
 					<control type="group">
@@ -695,7 +695,7 @@
 				</focusedlayout>
 				<focusedlayout height="360" width="470" condition="Container.Content(episodes) | Container.Content(musicvideos)">
 					<control type="group">
-						<animation effect="slide" start="0,0" end="-40,0" time="300">Focus</animation>
+						<animation effect="slide" start="0,0" end="-40,0" time="300" delay="100">Focus</animation>
 						<animation effect="slide" start="-40,0" end="0,0" time="125">UnFocus</animation>
 						<control type="image">
 							<left>1</left>
@@ -789,7 +789,7 @@
 						<height>330</height>
 						<fadetime>500</fadetime>
 						<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
-						<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
+						<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto" delay="100">Focus</animation>
 						<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 					</control>
 					<control type="group">
@@ -888,7 +888,7 @@
 				</focusedlayout>
 				<focusedlayout height="360" width="350" condition="Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(actors) | Container.Content(directors) | Container.Content(livetv)">
 					<control type="group">
-						<animation effect="slide" start="0,0" end="-40,0" time="300">Focus</animation>
+						<animation effect="slide" start="0,0" end="-40,0" time="300" delay="100">Focus</animation>
 						<animation effect="slide" start="-40,0" end="0,0" time="125">UnFocus</animation>
 						<control type="image">
 							<left>1</left>
@@ -1007,7 +1007,7 @@
 						<height>300</height>
 						<fadetime>500</fadetime>
 						<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
-						<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
+						<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto" delay="100">Focus</animation>
 						<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 					</control>
 					<control type="group">
@@ -1551,6 +1551,13 @@
 					<width>1366</width>
 					<align>right</align>
 					<animation effect="slide" start ="0,0" end="-420,85" condition="Control.IsVisible(51)">Conditional</animation>
+					<control type="image">
+						<width>110</width>
+						<height>60</height>
+						<fadetime>200</fadetime>
+						<aspectratio align="center" aligny="top">keep</aspectratio>
+						<texture>$INFO[Container.ListItem.HdrType,globalsearch-flags/hdrtype/,.png]</texture>
+					</control>
 					<control type="image">
 						<width>110</width>
 						<height>60</height>
