@@ -163,6 +163,32 @@
 					<visible>false</visible>
 					<control format="number" type="edit"/>
 				</setting>
+				<setting help="" id="loc1_id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc2_id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc3_id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc4_id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc5_id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+
 			</group>
 		</category>
 		<category id="2" label="32102">

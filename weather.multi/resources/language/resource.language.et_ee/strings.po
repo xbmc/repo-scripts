@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-01-02 04:13+0000\n"
+"PO-Revision-Date: 2026-02-08 11:13+0000\n"
 "Last-Translator: rimasx <riks_12@hot.ee>\n"
 "Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/et_ee/>\n"
 "Language: et_ee\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -131,7 +131,7 @@ msgstr "Uduvihm"
 
 msgctxt "#32210"
 msgid "Heavy Drizzle"
-msgstr "Tugev vihm"
+msgstr "Tugev uduvihm"
 
 msgctxt "#32211"
 msgid "Light Rain"
@@ -183,7 +183,7 @@ msgstr "Lörts"
 
 msgctxt "#32223"
 msgid "Heavy sleet"
-msgstr "Kõva lörtsisadu"
+msgstr "Tugev lörtsisadu"
 
 msgctxt "#32224"
 msgid "Snow shower"
@@ -207,7 +207,7 @@ msgstr "Suits"
 
 msgctxt "#32229"
 msgid "Haze"
-msgstr "Hägune"
+msgstr "Vine"
 
 msgctxt "#32230"
 msgid "Sand/dust"
@@ -239,7 +239,7 @@ msgstr "Pilves selgimistega"
 
 msgctxt "#32237"
 msgid "Overcast clouds"
-msgstr "Enamasti pilves"
+msgstr "Lauspilves"
 
 msgctxt "#32238"
 msgid "Unknown Precipitation"
@@ -247,7 +247,7 @@ msgstr "Teadmata sademed"
 
 msgctxt "#32245"
 msgid "Flurries"
-msgstr "Lumehelbed"
+msgstr "Lumehood"
 
 msgctxt "#32246"
 msgid "Mostly Sunny"
@@ -303,7 +303,7 @@ msgstr "Lumi ja lörts"
 
 msgctxt "#32259"
 msgid "Freezing Drizzle"
-msgstr "Külmavihm"
+msgstr "Jäine uduvihm"
 
 msgctxt "#32260"
 msgid "Drizzle"
@@ -323,7 +323,7 @@ msgstr "Vihm"
 
 msgctxt "#32264"
 msgid "Snow Flurries"
-msgstr "Lomehood"
+msgstr "Lumehood"
 
 msgctxt "#32265"
 msgid "Light Snow Showers"
@@ -331,7 +331,7 @@ msgstr "Kerged lumehood"
 
 msgctxt "#32266"
 msgid "Blowing Snow"
-msgstr "Hootine lumesadu"
+msgstr "Pinnatuisk"
 
 msgctxt "#32267"
 msgid "Snow"
@@ -395,7 +395,7 @@ msgstr "Päikeseline"
 
 msgctxt "#32282"
 msgid "Fair"
-msgstr "Ilus"
+msgstr "Peamiselt selge"
 
 msgctxt "#32283"
 msgid "Mixed Rain and Hail"
@@ -411,11 +411,11 @@ msgstr "Üksikud äikesetormid"
 
 msgctxt "#32286"
 msgid "Scattered Thunderstorms"
-msgstr "Hajutatud äikesetormid"
+msgstr "Hajusad äikesetormid"
 
 msgctxt "#32287"
 msgid "Scattered Showers"
-msgstr "Hajutatud dušid"
+msgstr "Hajusad hoovihmad"
 
 msgctxt "#32288"
 msgid "Heavy Rain"
@@ -423,7 +423,7 @@ msgstr "Tugev vihm"
 
 msgctxt "#32289"
 msgid "Scattered Snow Showers"
-msgstr "Hajutatud lumehood"
+msgstr "Hajusad lumehood"
 
 msgctxt "#32290"
 msgid "Heavy Snow"

@@ -23,7 +23,39 @@ class Weather():
         else:
             set_property('Current.Pollen'              , '')
         if data['location']['outlook'] in ['Mostly Cloudy', 'Partly Cloudy', 'Fair']:
-            condition = '%s Day' % data['location']['outlook']
+            # yahoo does not tell if this current icon refers to day or nighttime, nor does it provide the current local time of the location
+            # so first figure out the current time from the hourly forecasts. the first item is always 'now', which isn't helpful so skip it
+            if len(data['forecasts'][0]['conditionsForecasts']) > 1: # make sure there's at least two items left in the hourly forecast for today
+                for item in data['forecasts'][0]['conditionsForecasts']:
+                    if item['time'] == 'Now' or item['text'] == 'Sunrise' or item['text'] == 'Sunset':
+                        continue
+                    approxtime  = item['time'] # time of the 'next' hour
+                    if approxtime == 'Midnight':
+                        approxtime = '12 AM'
+                    elif approxtime == 'Noon':
+                        approxtime = '12 PM'
+                    break
+            else:
+                for item in data['forecasts'][1]['conditionsForecasts']: # at +/- 11PM we have only 'now' in the hourly forecast, so look at the next day
+                    if item['text'] == 'Sunrise' or item['text'] == 'Sunset':
+                        continue
+                    approxtime  = item['time'] # time of the 'next' hour
+                    if approxtime == 'Midnight':
+                        approxtime = '12 AM'
+                    elif approxtime == 'Noon':
+                        approxtime = '12 PM'
+                    break
+            approxhour = time.strptime(approxtime, '%I %p')
+            currenthour = approxhour.tm_hour - 1 # substract 1 hour to get the 'current' hour
+            # let's define day and night based on sunrise and sunset
+            sunrise = time.strptime(data['location']['sunrise'], '%I:%M %p')
+            sunset = time.strptime(data['location']['sunset'], '%I:%M %p')
+            sunrisehour = sunrise.tm_hour
+            sunsethour = sunset.tm_hour
+            if currenthour < sunrisehour or currenthour >= sunsethour: # current hour is after sunset and before sunrise: it's night
+                condition = '%s Night' % data['location']['outlook']
+            else:
+                condition = '%s Day' % data['location']['outlook'] # current hour is between sunrise and sunset; it's day
         else:
             condition = data['location']['outlook']
         set_property('Current.OutlookIcon'         , '%s.png' % OUTLOOK[condition]) # Kodi translates it to Current.ConditionIcon
@@ -55,6 +87,7 @@ class Weather():
         set_property('Today.Sunrise'               , convert_datetime(data['location']['sunrise'], 'ampm', None, None))
         set_property('Today.Sunset'                , convert_datetime(data['location']['sunset'], 'ampm', None, None))
         set_property('Today.Moonphase'             , MOONPHASE[data['conditions']['conditions']['moon']['title'].lower()])
+        set_property('Today.MoonphaseIcon'         , data['conditions']['conditions']['moon']['icon'])
         set_property('Today.IsFetched'             , 'true')
     #hourly - extended
         skip = []

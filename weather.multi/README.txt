@@ -71,6 +71,7 @@ Today.IsFetched
 Today.Sunrise
 Today.Sunset
 Today.MoonPhase
+Today.MoonPhaseIcon            (eg. 'WaningGibbous')
 
 
 HOURLY [1-24]
