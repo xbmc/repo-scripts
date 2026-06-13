@@ -116,7 +116,11 @@ class GUI(xbmcgui.WindowXML):
             search = search[0], search[1]
             rule = cat['rule'].format(query0 = search[0], query1 = search[1])
         else:
-            rule = cat['rule'].format(query = json.dumps(search)[1:-1]) #used to JSON injection vulnerability
+            if isinstance(search, (int, float)):
+                query_str = str(search)
+            else:
+                query_str = json.dumps(search)[1:-1] # used to mitigate JSON injection vulnerability
+            rule = cat['rule'].format(query = query_str)
         self.getControl(SEARCHCATEGORY).setLabel(xbmc.getLocalizedString(cat['label']))
         self.getControl(SEARCHCATEGORY).setVisible(True)
         json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"%s", "params":{"properties":%s, "sort":{"method":"%s"}, %s}, "id": 1}' % (cat['method'], json.dumps(cat['properties']), cat['sort'], rule))
@@ -160,12 +164,26 @@ class GUI(xbmcgui.WindowXML):
                     listitem = xbmcgui.ListItem(item['label'], offscreen=True)
                     listitem.setArt(self._get_art(item, cat['icon'], cat['media']))
                 if cat['streamdetails']:
+                    videoinfo = listitem.getVideoInfoTag()
                     for stream in item['streamdetails']['video']:
-                        listitem.addStreamInfo('video', stream)
+                        videodetails = xbmc.VideoStreamDetail()
+                        videodetails.setCodec(stream['codec'])
+                        videodetails.setHDRType(stream['hdrtype'])
+                        videodetails.setAspect(stream['aspect'])
+                        videodetails.setDuration(stream['duration'])
+                        videodetails.setWidth(stream['width'])
+                        videodetails.setHeight(stream['height'])
+                        videoinfo.addVideoStream(videodetails)
                     for stream in item['streamdetails']['audio']:
-                        listitem.addStreamInfo('audio', stream)
+                        audiodetails = xbmc.AudioStreamDetail()
+                        audiodetails.setChannels(stream['channels'])
+                        audiodetails.setCodec(stream['codec'])
+                        audiodetails.setLanguage(stream['language'])
+                        videoinfo.addAudioStream(audiodetails)
                     for stream in item['streamdetails']['subtitle']:
-                        listitem.addStreamInfo('subtitle', stream)
+                        subtitledetails = xbmc.SubtitleStreamDetail()
+                        subtitledetails.setLanguage(stream['language'])
+                        videoinfo.addSubtitleStream(subtitledetails)
                 if cat['type'] != 'actors' and cat['type'] != 'directors' and cat['type'] != 'tvactors':
                     listitem.setProperty('content', cat['content'])
                 if cat['content'] == 'tvshows' and cat['type'] != 'tvactors':
@@ -238,7 +256,7 @@ class GUI(xbmcgui.WindowXML):
                         self.setContent('directors')
                     self.addItems(listitems)
                     # wait for items to be added before we can set focus
-                    xbmc.sleep(100)
+                    xbmc.sleep(10)
                     self.setCurrentListPosition(self.history[self.level]['containerposition'])
                     self.menutype = cat['type']
                     self.focusset = 'true'
@@ -251,7 +269,7 @@ class GUI(xbmcgui.WindowXML):
                     self.setContent('directors')
                 self.addItems(listitems)
                 # wait for items to be added before we can set focus
-                xbmc.sleep(100)
+                xbmc.sleep(10)
                 self.setFocusId(self.getCurrentContainerId())
                 self.menutype = cat['type']
                 self.focusset = 'true'
@@ -328,16 +346,16 @@ class GUI(xbmcgui.WindowXML):
                 self.setContent(cat['content'])
                 self.addItems(listitems)
                 # wait for items to be added before we can set focus
-                xbmc.sleep(100)
+                xbmc.sleep(10)
                 self.setFocusId(self.getCurrentContainerId())
                 self.focusset = 'true'
 
     def _update_list(self, item, content):
         self.clearList()
         # we need some sleep, else the correct container layout won't be loaded
-        xbmc.sleep(2)
+        xbmc.sleep(10)
         self.setContent(content)
-        xbmc.sleep(2)
+        xbmc.sleep(10)
         self.addItems(self.content[item])
 
     def _get_info(self, labels, item):
