@@ -71,6 +71,7 @@ class MAIN():
                     ADDON.setSettingString(mode + '_url', url)
                     ADDON.setSettingNumber(mode + '_lat', locs['suggestions'][selected]['location']['town']['latitude'])
                     ADDON.setSettingNumber(mode + '_lon', locs['suggestions'][selected]['location']['town']['longitude'])
+                    ADDON.setSettingInt(mode + '_id', locs['suggestions'][selected]['location']['town']['woeid'])
                     log('selected location: %s' % str(locs['suggestions'][selected]))
             else:
                 log('no locations found')
