@@ -51,6 +51,7 @@ def load_menus(path: str | Path) -> MenuConfig:
     subdialogs = _parse_dialogs(root)
     action_overrides = _parse_overrides(root)
     show_context_menu = _parse_context_menu(root)
+    submenu_path_all = _parse_submenu_path(root)
 
     return MenuConfig(
         menus=menus,
@@ -60,6 +61,7 @@ def load_menus(path: str | Path) -> MenuConfig:
         action_overrides=action_overrides,
         icon_overrides=icon_overrides,
         show_context_menu=show_context_menu,
+        submenu_path_all=submenu_path_all,
     )
 
 
@@ -124,6 +126,18 @@ def _parse_context_menu(root) -> bool:
 
     text = (elem.text or "").strip().lower()
     return text not in ("false", "0", "no", "")
+
+
+def _parse_submenu_path(root) -> bool:
+    """Parse the global submenuPath setting from <submenuPath>.
+
+    Returns True when set to "all": emit the numbered submenuPath.N tail for
+    every widget submenu. Off unless explicitly enabled.
+    """
+    elem = root.find("submenuPath")
+    if elem is None:
+        return False
+    return (elem.text or "").strip().lower() == "all"
 
 
 def _parse_dialogs(root) -> list[SubDialog]:
@@ -297,6 +311,7 @@ def _parse_icon_overrides(root, _picker_sources: list[IconSource]) -> dict[str, 
         replace = get_attr(icon_elem, "replace")
         value = (icon_elem.text or "").strip()
         if not replace or not value:
+            log.warning("Icon override missing 'replace' attribute or value, skipping")
             continue
         if "://" in value or value.startswith("/"):
             overrides[replace] = value
@@ -339,6 +354,7 @@ def _parse_menu(
     build = get_attr(elem, "build") or "true"
     action = get_attr(elem, "action") or ""
     standalone = (get_attr(elem, "standalone") or "true").lower() != "false"
+    submenu_path = get_attr(elem, "submenuPath") or ""
 
     return Menu(
         name=menu_name,
@@ -354,6 +370,7 @@ def _parse_menu(
         build=build,
         action=action,
         standalone=standalone,
+        submenu_path=submenu_path,
     )
 
 
@@ -671,6 +688,7 @@ def _parse_shortcut(
     shortcut_name = get_attr(elem, "name")
     label = get_attr(elem, "label")
     if not shortcut_name or not label:
+        log.warning(f"Shortcut in {_path} missing 'name' or 'label', skipping")
         return None
 
     actions = []
@@ -716,6 +734,7 @@ def _parse_input(elem, icon_overrides: dict[str, str] | None = None) -> Input | 
     overrides = icon_overrides or {}
     label = get_attr(elem, "label")
     if not label:
+        log.warning("Input element missing 'label', skipping")
         return None
 
     return Input(

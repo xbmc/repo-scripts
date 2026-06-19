@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-04-08 00:13+0000\n"
+"PO-Revision-Date: 2026-06-10 07:59+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Thai <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/th_th/>\n"
 "Language: th_th\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 msgctxt "Addon Description"
 msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
@@ -515,4 +515,316 @@ msgstr ""
 
 msgctxt "#32124"
 msgid "This addon is for skin developers, and requires skin support"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Delete item?"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Modify item?"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Are you sure you want to modify this item?"
+msgstr ""
+
+msgctxt "#32129"
+msgid "New Item"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Cannot Delete"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Delete Item"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Modify Action"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Cannot Disable"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Disable Item"
+msgstr ""
+
+msgctxt "#32135"
+msgid "No Deleted Items"
+msgstr ""
+
+msgctxt "#32136"
+msgid "No items to restore"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Restore Deleted Item"
+msgstr ""
+
+msgctxt "#32138"
+msgid "Reset Item"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Edit Submenu"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Select Widget Type"
+msgstr ""
+
+msgctxt "#32141"
+msgid "No Items"
+msgstr ""
+
+msgctxt "#32142"
+msgid "No items available in this group"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Not Allowed"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Widgets not enabled for this menu"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Submenus not enabled for this menu"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Backgrounds not enabled for this menu"
+msgstr ""
+
+msgctxt "#32147"
+msgid "No Widgets"
+msgstr ""
+
+msgctxt "#32148"
+msgid "No widgets defined in skin"
+msgstr ""
+
+msgctxt "#32149"
+msgid "Cannot Browse"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Unable to list directory contents"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Browse"
+msgstr ""
+
+msgctxt "#32152"
+msgid "No Backgrounds"
+msgstr ""
+
+msgctxt "#32153"
+msgid "No backgrounds defined"
+msgstr ""
+
+msgctxt "#32154"
+msgid "No Playlists"
+msgstr ""
+
+msgctxt "#32155"
+msgid "No playlist locations found"
+msgstr ""
+
+msgctxt "#32156"
+msgid "No playlists found in this location"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Select Playlist"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Mixed Playlists"
+msgstr ""
+
+msgctxt "#32159"
+msgid "No Options"
+msgstr ""
+
+msgctxt "#32160"
+msgid "No options available"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Reset Library Views"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Reset Add-on Views"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Add Override"
+msgstr ""
+
+msgctxt "#32167"
+msgid "No Add-ons"
+msgstr ""
+
+msgctxt "#32168"
+msgid "No video add-ons installed"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Select Add-on"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Confirm"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Edit Label"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Edit Action"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Change Icon"
+msgstr ""
+
+msgctxt "#32174"
+msgid "'%s' is required."
+msgstr ""
+
+msgctxt "#32175"
+msgid "Delete '%s'?"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Modify '%s'?"
+msgstr ""
+
+msgctxt "#32177"
+msgid "Disable '%s'?"
+msgstr ""
+
+msgctxt "#32178"
+msgid "Reset '%s' to defaults?"
+msgstr ""
+
+msgctxt "#32179"
+msgid "No Shortcuts"
+msgstr ""
+
+msgctxt "#32180"
+msgid "No shortcut groupings defined in skin"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Select"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Location"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32184"
+msgid "Requires %s to be set first"
+msgstr ""
+
+msgctxt "#32185"
+msgid "View Settings"
+msgstr ""
+
+msgctxt "#32186"
+msgid "Select Content Type"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Reset all library view selections?"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Reset all add-on view selections?"
+msgstr ""
+
+msgctxt "#32189"
+msgid "%s (reset)"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+msgstr ""
+
+msgctxt "#32192"
+msgid "Reset all view selections to skin defaults?"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
+msgstr ""
+
+msgctxt "#32194"
+msgid "Reset '%s' and its submenus to skin defaults?"
+msgstr ""
+
+msgctxt "#32195"
+msgid "Reset '%s' to skin defaults?"
+msgstr ""
+
+msgctxt "#32196"
+msgid "Reset all submenus to skin defaults?"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Enter action"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Reset views for %s?"
+msgstr ""
+
+msgctxt "#32199"
+msgid "%s - Select View"
+msgstr ""
+
+msgctxt "#32200"
+msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
+msgstr ""
+
+msgctxt "#32201"
+msgid "Open settings"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Ignore for this skin"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Sort order"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Episodes not in this source"
+msgstr ""
+
+msgctxt "#32205"
+msgid "This source has no matching items in your library"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Artists not in this source"
 msgstr ""

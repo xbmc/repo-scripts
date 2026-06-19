@@ -47,28 +47,6 @@ def _get_playlists_base_path() -> str:
     return "special://profile/playlists/"
 
 
-def _get_multipath_sources(multipath_url: str) -> list[str]:
-    """Extract real paths from a multipath:// URL.
-
-    Kodi multipaths combine multiple directories into one virtual path.
-    Format: multipath://{URL_encoded_path1}/{URL_encoded_path2}/
-    """
-    try:
-        from urllib.parse import unquote
-    except ImportError:
-        from urllib import unquote  # type: ignore
-
-    if not multipath_url.startswith("multipath://"):
-        return [multipath_url]
-
-    path_part = multipath_url[12:].rstrip("/")
-    if not path_part:
-        return []
-
-    encoded_paths = path_part.split("/")
-    return [unquote(p) for p in encoded_paths if p]
-
-
 def _resolve_playlist_path(filepath: str) -> str | None:
     """Resolve a playlist path to an actual readable file path.
 
@@ -81,7 +59,7 @@ def _resolve_playlist_path(filepath: str) -> str | None:
 
     if translated.startswith("multipath://"):
         filename = filepath.rsplit("/", 1)[-1]
-        source_dirs = _get_multipath_sources(translated)
+        source_dirs = unpack_multipath(translated)
         for source_dir in source_dirs:
             candidate = f"{source_dir.rstrip('/')}/{filename}"
             if xbmcvfs.exists(candidate):
@@ -142,6 +120,7 @@ from ..models import (
     Widget,
     WidgetGroup,
 )
+from ..playlists import unpack_multipath
 from ..providers import scan_playlist_files
 
 if TYPE_CHECKING:

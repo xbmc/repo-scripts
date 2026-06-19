@@ -45,6 +45,7 @@ class SkinConfig:
     property_schema: PropertySchema = field(default_factory=PropertySchema)
     subdialogs: list[SubDialog] = field(default_factory=list)
     icon_overrides: dict[str, str] = field(default_factory=dict)
+    submenu_path_all: bool = False
 
     @property
     def widgets(self) -> list[Widget]:
@@ -176,6 +177,7 @@ class SkinConfig:
             property_schema=property_schema,
             subdialogs=menu_config.subdialogs,
             icon_overrides=menu_config.icon_overrides,
+            submenu_path_all=menu_config.submenu_path_all,
         )
 
     def get_widget(self, widget_name: str) -> Widget | None:
@@ -273,6 +275,8 @@ class SkinConfig:
             property_schema=self.property_schema,
             view_config=self._view_config,
             userdata=self.userdata,
+            subdialogs=self.subdialogs,
+            submenu_path_all=self.submenu_path_all,
         )
         builder.write(output_path)
 

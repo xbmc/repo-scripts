@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-03-01 17:13+0000\n"
+"PO-Revision-Date: 2026-06-10 07:56+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Bosnian (Bosnia and Herzegovina) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/bs_ba/>\n"
 "Language: bs_ba\n"
@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 msgctxt "Addon Description"
 msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
-msgstr ""
+msgstr "Dodatak za skinove koji omogućava jednostavno upravljanje i prikaz korisničkih prečica (potrebna je podrška za skinove)"
 
 msgctxt "#32000"
 msgid "Add"
@@ -27,55 +27,55 @@ msgstr "Izbriši"
 
 msgctxt "#32002"
 msgid "Move Up"
-msgstr ""
+msgstr "Pomakni gore"
 
 msgctxt "#32003"
 msgid "Move Down"
-msgstr ""
+msgstr "Pomakni dolje"
 
 msgctxt "#32004"
 msgid "Video Playlist"
-msgstr ""
+msgstr "Popis videozapisa"
 
 msgctxt "#32005"
 msgid "Music Playlist"
-msgstr ""
+msgstr "Muzička plejlista"
 
 msgctxt "#32006"
 msgid "Favourite"
-msgstr ""
+msgstr "Omiljeno"
 
 msgctxt "#32007"
 msgid "Add-On"
-msgstr ""
+msgstr "Dodatak"
 
 msgctxt "#32008"
 msgid "Mixed Playlist"
-msgstr ""
+msgstr "Miješana plejlista"
 
 msgctxt "#32009"
 msgid "Program"
-msgstr ""
+msgstr "Program"
 
 msgctxt "#32010"
 msgid "Video Add-On"
-msgstr ""
+msgstr "Dodatak za video"
 
 msgctxt "#32011"
 msgid "Music Add-On"
-msgstr ""
+msgstr "Dodatak za muziku"
 
 msgctxt "#32012"
 msgid "Picture Add-On"
-msgstr ""
+msgstr "Dodatak za slike"
 
 msgctxt "#32013"
 msgid "<None>"
-msgstr ""
+msgstr "<None>"
 
 msgctxt "#32014"
 msgid "Videos"
-msgstr "Filmovi"
+msgstr "Videozapisi"
 
 msgctxt "#32015"
 msgid "Movies"
@@ -83,7 +83,7 @@ msgstr "Filmovi"
 
 msgctxt "#32016"
 msgid "TV Shows"
-msgstr ""
+msgstr "TV emisije"
 
 msgctxt "#32017"
 msgid "Live TV"
@@ -91,7 +91,7 @@ msgstr "TV"
 
 msgctxt "#32018"
 msgid "Music Videos"
-msgstr ""
+msgstr "Muzički spotovi"
 
 msgctxt "#32019"
 msgid "Music"
@@ -115,67 +115,67 @@ msgstr "Tajmer"
 
 msgctxt "#32024"
 msgid "Custom item"
-msgstr ""
+msgstr "Prilagođena stavka"
 
 msgctxt "#32025"
 msgid "Set label"
-msgstr ""
+msgstr "Postavi oznaku"
 
 msgctxt "#32026"
 msgid "Set thumbnail"
-msgstr ""
+msgstr "Postavi sličicu"
 
 msgctxt "#32027"
 msgid "Change action"
-msgstr ""
+msgstr "Promijeni radnju"
 
 msgctxt "#32028"
 msgid "Restore menu items"
-msgstr ""
+msgstr "Vrati stavke menija"
 
 msgctxt "#32029"
 msgid "Common"
-msgstr ""
+msgstr "Uobičajeno"
 
 msgctxt "#32030"
 msgid "Video Library"
-msgstr ""
+msgstr "Videoteka"
 
 msgctxt "#32031"
 msgid "Music Library"
-msgstr ""
+msgstr "Muzička biblioteka"
 
 msgctxt "#32032"
 msgid "Play DVD"
-msgstr ""
+msgstr "Reprodukuj DVD"
 
 msgctxt "#32033"
 msgid "Eject tray"
-msgstr ""
+msgstr "Izbacivač papira"
 
 msgctxt "#32034"
 msgid "Common menu item"
-msgstr ""
+msgstr "Uobičajena stavka menija"
 
 msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
-msgstr ""
+msgstr "Odaberite koje stavke želite prikazati u glavnom meniju"
 
 msgctxt "#32036"
 msgid "Choose shortcuts for %s"
-msgstr ""
+msgstr "Odaberite prečice za %s"
 
 msgctxt "#32037"
 msgid "Reset all menu items"
-msgstr ""
+msgstr "Resetuj sve stavke menija"
 
 msgctxt "#32038"
 msgid "Are you sure you want to reset all menu items back to default?"
-msgstr ""
+msgstr "Jeste li sigurni da želite vratiti sve stavke menija na zadane vrijednosti?"
 
 msgctxt "#32039"
 msgid "Pick widget for %s"
-msgstr ""
+msgstr "Odaberite vidžet za %s"
 
 msgctxt "#32040"
 msgid "Playlist"
@@ -183,39 +183,39 @@ msgstr "Spisak za rep"
 
 msgctxt "#32041"
 msgid "Action"
-msgstr ""
+msgstr "Akcija"
 
 msgctxt "#32042"
 msgid "Unknown video node"
-msgstr ""
+msgstr "Nepoznati video čvor"
 
 msgctxt "#32043"
 msgid "Choose shortcut category"
-msgstr ""
+msgstr "Odaberite kategoriju prečica"
 
 msgctxt "#32044"
 msgid "Select widget"
-msgstr ""
+msgstr "Odaberite vidžet"
 
 msgctxt "#32045"
 msgid "Select background"
-msgstr ""
+msgstr "Odaberite pozadinu"
 
 msgctxt "#32046"
 msgid "Update video library"
-msgstr ""
+msgstr "Ažuriraj videoteku"
 
 msgctxt "#32047"
 msgid "Update audio library"
-msgstr ""
+msgstr "Ažuriraj audio biblioteku"
 
 msgctxt "#32048"
 msgid "Choose item for menu"
-msgstr ""
+msgstr "Odaberite stavku za meni"
 
 msgctxt "#32049"
 msgid "Building menu..."
-msgstr ""
+msgstr "Izgradnja menija..."
 
 msgctxt "#32050"
 msgid "Default"
@@ -223,11 +223,11 @@ msgstr "Podrazumjevano"
 
 msgctxt "#32051"
 msgid "Single image"
-msgstr ""
+msgstr "Jedna slika"
 
 msgctxt "#32052"
 msgid "Multi-image"
-msgstr ""
+msgstr "Više slika"
 
 msgctxt "#32053"
 msgid "None"
@@ -235,31 +235,31 @@ msgstr "Ništa"
 
 msgctxt "#32054"
 msgid "Kodi Command"
-msgstr ""
+msgstr "Kodi komanda"
 
 msgctxt "#32055"
 msgid "Clean video library"
-msgstr ""
+msgstr "Očisti videoteku"
 
 msgctxt "#32056"
 msgid "Clean audio library"
-msgstr ""
+msgstr "Očisti audioteku"
 
 msgctxt "#32057"
 msgid "Kodi Commands"
-msgstr ""
+msgstr "Kodi komande"
 
 msgctxt "#32058"
 msgid "Create menu item to here"
-msgstr ""
+msgstr "Kreiraj stavku menija ovdje"
 
 msgctxt "#32059"
 msgid "Skin Playlist"
-msgstr ""
+msgstr "Plejlista za skin"
 
 msgctxt "#32060"
 msgid "What do you want to do with the playlist?"
-msgstr ""
+msgstr "Šta želiš uraditi sa plejlistom?"
 
 msgctxt "#32061"
 msgid "Display"
@@ -271,31 +271,31 @@ msgstr "Reprodukuj"
 
 msgctxt "#32063"
 msgid "Getting directory listing..."
-msgstr ""
+msgstr "Dobijanje popisa direktorija..."
 
 msgctxt "#32064"
 msgid "No available items"
-msgstr ""
+msgstr "Nema dostupnih artikala"
 
 msgctxt "#32065"
 msgid "There are no available items to choose from for the category that you choose."
-msgstr ""
+msgstr "Nema dostupnih artikala za odabir za kategoriju koju ste odabrali."
 
 msgctxt "#32066"
 msgid "Last TV channel"
-msgstr ""
+msgstr "Posljednji TV kanal"
 
 msgctxt "#32067"
 msgid "Last radio channel"
-msgstr ""
+msgstr "Posljednji radio kanal"
 
 msgctxt "#32068"
 msgid "Last channel"
-msgstr ""
+msgstr "Posljednji kanal"
 
 msgctxt "#32069"
 msgid "Video Source"
-msgstr ""
+msgstr "Izvor videa"
 
 msgctxt "#32070"
 msgid "UPnP"
@@ -303,67 +303,67 @@ msgstr "Pravljenje rez. kopije EEPROM-a"
 
 msgctxt "#32071"
 msgid "Customize Main Menu"
-msgstr ""
+msgstr "Prilagodi glavni meni"
 
 msgctxt "#32072"
 msgid "Customize Submenu"
-msgstr ""
+msgstr "Prilagodi podmeni"
 
 msgctxt "#32073"
 msgid "Music Source"
-msgstr ""
+msgstr "Izvor muzike"
 
 msgctxt "#32074"
 msgid "Library Sources"
-msgstr ""
+msgstr "Bibliotečki izvori"
 
 msgctxt "#32075"
 msgid "Sources"
-msgstr ""
+msgstr "Izvori"
 
 msgctxt "#32076"
 msgid "TV Channel"
-msgstr ""
+msgstr "TV kanal"
 
 msgctxt "#32077"
 msgid "Radio Channel"
-msgstr ""
+msgstr "Radio kanal"
 
 msgctxt "#32078"
 msgid "Display..."
-msgstr ""
+msgstr "Prikaz..."
 
 msgctxt "#32079"
 msgid "Files view"
-msgstr ""
+msgstr "Prikaz datoteka"
 
 msgctxt "#32080"
 msgid "Edit %s Submenu"
-msgstr ""
+msgstr "Uredi %s podmeni"
 
 msgctxt "#32081"
 msgid "Movies not in this source"
-msgstr ""
+msgstr "Filmovi koji nisu u ovom izvoru"
 
 msgctxt "#32082"
 msgid "TV Shows not in this source"
-msgstr ""
+msgstr "TV emisije koje nisu u ovom izvoru"
 
 msgctxt "#32083"
 msgid "Music Videos not in this source"
-msgstr ""
+msgstr "Muzički spotovi nisu u ovom izvoru"
 
 msgctxt "#32084"
 msgid "Songs not in this source"
-msgstr ""
+msgstr "Pjesme koje nisu u ovom izvoru"
 
 msgctxt "#32085"
 msgid "Albums not in this source"
-msgstr ""
+msgstr "Albumi koji nisu u ovom izvoru"
 
 msgctxt "#32086"
 msgid "Mixed content not in this source"
-msgstr ""
+msgstr "Mješoviti sadržaj nije u ovom izvoru"
 
 msgctxt "#32087"
 msgid "Radio"
@@ -375,31 +375,31 @@ msgstr "Kanali"
 
 msgctxt "#32089"
 msgid "Picture Source"
-msgstr ""
+msgstr "Izvor slike"
 
 msgctxt "#32090"
 msgid "The item has been added to the menu"
-msgstr ""
+msgstr "Stavka je dodana u meni"
 
 msgctxt "#32091"
 msgid "Unable to add item to the menu. Please check log for errors."
-msgstr ""
+msgstr "Nije moguće dodati stavku u meni. Molimo provjerite zapisnik za greške."
 
 msgctxt "#32092"
 msgid "Unable to build menu."
-msgstr ""
+msgstr "Nije moguće kreirati meni."
 
 msgctxt "#32093"
 msgid "Upload debug log?"
-msgstr ""
+msgstr "Prenijeti zapisnik o debugiranju?"
 
 msgctxt "#32094"
 msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
-msgstr ""
+msgstr "Instalirajte dodatak Kodi Log Uploader kako biste jednostavno omogućili ispis dnevnika otklanjanja grešaka."
 
 msgctxt "#32095"
 msgid "Choose default action for menu item"
-msgstr ""
+msgstr "Odaberite zadanu radnju za stavku menija"
 
 msgctxt "#32096"
 msgid "Browse..."
@@ -407,103 +407,103 @@ msgstr "Potraži..."
 
 msgctxt "#32097"
 msgid "Unable to save menu"
-msgstr ""
+msgstr "Nije moguće sačuvati meni"
 
 msgctxt "#32098"
 msgid "Writing menu..."
-msgstr ""
+msgstr "Meni za pisanje..."
 
 msgctxt "#32099"
 msgid "Widget"
-msgstr ""
+msgstr "Vidžet"
 
 msgctxt "#32100"
 msgid "Use as widget"
-msgstr ""
+msgstr "Koristi kao widget"
 
 msgctxt "#32101"
 msgid "Choose property"
-msgstr ""
+msgstr "Odaberite nekretninu"
 
 msgctxt "#32102"
 msgid "Restore or reset?"
-msgstr ""
+msgstr "Vratiti ili resetovati?"
 
 msgctxt "#32103"
 msgid "Restore an original menu item"
-msgstr ""
+msgstr "Vratite originalnu stavku menija"
 
 msgctxt "#32104"
 msgid "Reset to skin defaults"
-msgstr ""
+msgstr "Vrati na zadane postavke skina"
 
 msgctxt "#32105"
 msgid "There are no menu items to restore for this menu"
-msgstr ""
+msgstr "Nema stavki menija za vraćanje za ovaj meni"
 
 msgctxt "#32106"
 msgid "Install widget provider"
-msgstr ""
+msgstr "Instaliraj dobavljača widgeta"
 
 msgctxt "#32107"
 msgid "Enable default widgets"
-msgstr ""
+msgstr "Omogući zadane widgete"
 
 msgctxt "#32108"
 msgid "Party mode (music videos)"
-msgstr ""
+msgstr "Žurka (muzički spotovi)"
 
 msgctxt "#32109"
 msgid "No menus from compatible skins found to import"
-msgstr ""
+msgstr "Nisu pronađeni meniji iz kompatibilnih skinova za uvoz"
 
 msgctxt "#32110"
 msgid "Import menu from skin"
-msgstr ""
+msgstr "Uvoz menija iz skina"
 
 msgctxt "#32111"
 msgid "Shared menu"
-msgstr ""
+msgstr "Dijeljeni meni"
 
 msgctxt "#32112"
 msgid "New item on the main menu"
-msgstr ""
+msgstr "Nova stavka u glavnom meniju"
 
 msgctxt "#32113"
 msgid "New item on the main menu (autofill submenu items)"
-msgstr ""
+msgstr "Nova stavka u glavnom meniju (stavke podmenija za automatsko popunjavanje)"
 
 msgctxt "#32114"
 msgid "Where should menu item be created"
-msgstr ""
+msgstr "Gdje treba kreirati stavku menija"
 
 msgctxt "#32115"
 msgid "Unable to get directory listings[CR][CR]See log for details"
-msgstr ""
+msgstr "Nije moguće dobiti popise direktorija[CR][CR]Pogledajte zapisnik za detalje"
 
 msgctxt "#32116"
 msgid "The skin you are using does not support adding items directly to the main menu"
-msgstr ""
+msgstr "Skin koji koristite ne podržava dodavanje stavki direktno u glavni meni"
 
 msgctxt "#32117"
 msgid "Disable shortcut"
-msgstr ""
+msgstr "Onemogući prečicu"
 
 msgctxt "#32118"
 msgid "Smart shortcuts"
-msgstr ""
+msgstr "Pametne prečice"
 
 msgctxt "#32119"
 msgid "Default widgets"
-msgstr ""
+msgstr "Zadani widgeti"
 
 msgctxt "#32120"
 msgid "Never hide PVR shortcuts"
-msgstr ""
+msgstr "Nikad ne skrivaj PVR prečice"
 
 msgctxt "#32121"
 msgid "Share menu between compatible skins"
-msgstr ""
+msgstr "Dijeli meni između kompatibilnih skinova"
 
 msgctxt "#32122"
 msgid "Enable debug logging"
@@ -511,8 +511,320 @@ msgstr "Omogući bilježenje grešaka"
 
 msgctxt "#32123"
 msgid "Games"
-msgstr ""
+msgstr "Igre"
 
 msgctxt "#32124"
 msgid "This addon is for skin developers, and requires skin support"
+msgstr "Ovaj dodatak je namijenjen programerima skinova i zahtijeva podršku za kože"
+
+msgctxt "#32125"
+msgid "Delete item?"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Modify item?"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Are you sure you want to modify this item?"
+msgstr ""
+
+msgctxt "#32129"
+msgid "New Item"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Cannot Delete"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Delete Item"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Modify Action"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Cannot Disable"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Disable Item"
+msgstr ""
+
+msgctxt "#32135"
+msgid "No Deleted Items"
+msgstr ""
+
+msgctxt "#32136"
+msgid "No items to restore"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Restore Deleted Item"
+msgstr ""
+
+msgctxt "#32138"
+msgid "Reset Item"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Edit Submenu"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Select Widget Type"
+msgstr ""
+
+msgctxt "#32141"
+msgid "No Items"
+msgstr ""
+
+msgctxt "#32142"
+msgid "No items available in this group"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Not Allowed"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Widgets not enabled for this menu"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Submenus not enabled for this menu"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Backgrounds not enabled for this menu"
+msgstr ""
+
+msgctxt "#32147"
+msgid "No Widgets"
+msgstr ""
+
+msgctxt "#32148"
+msgid "No widgets defined in skin"
+msgstr ""
+
+msgctxt "#32149"
+msgid "Cannot Browse"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Unable to list directory contents"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Browse"
+msgstr ""
+
+msgctxt "#32152"
+msgid "No Backgrounds"
+msgstr ""
+
+msgctxt "#32153"
+msgid "No backgrounds defined"
+msgstr ""
+
+msgctxt "#32154"
+msgid "No Playlists"
+msgstr ""
+
+msgctxt "#32155"
+msgid "No playlist locations found"
+msgstr ""
+
+msgctxt "#32156"
+msgid "No playlists found in this location"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Select Playlist"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Mixed Playlists"
+msgstr ""
+
+msgctxt "#32159"
+msgid "No Options"
+msgstr ""
+
+msgctxt "#32160"
+msgid "No options available"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Reset Library Views"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Reset Add-on Views"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Add Override"
+msgstr ""
+
+msgctxt "#32167"
+msgid "No Add-ons"
+msgstr ""
+
+msgctxt "#32168"
+msgid "No video add-ons installed"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Select Add-on"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Confirm"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Edit Label"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Edit Action"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Change Icon"
+msgstr ""
+
+msgctxt "#32174"
+msgid "'%s' is required."
+msgstr ""
+
+msgctxt "#32175"
+msgid "Delete '%s'?"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Modify '%s'?"
+msgstr ""
+
+msgctxt "#32177"
+msgid "Disable '%s'?"
+msgstr ""
+
+msgctxt "#32178"
+msgid "Reset '%s' to defaults?"
+msgstr ""
+
+msgctxt "#32179"
+msgid "No Shortcuts"
+msgstr ""
+
+msgctxt "#32180"
+msgid "No shortcut groupings defined in skin"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Select"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Location"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32184"
+msgid "Requires %s to be set first"
+msgstr ""
+
+msgctxt "#32185"
+msgid "View Settings"
+msgstr ""
+
+msgctxt "#32186"
+msgid "Select Content Type"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Reset all library view selections?"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Reset all add-on view selections?"
+msgstr ""
+
+msgctxt "#32189"
+msgid "%s (reset)"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+msgstr ""
+
+msgctxt "#32192"
+msgid "Reset all view selections to skin defaults?"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
+msgstr ""
+
+msgctxt "#32194"
+msgid "Reset '%s' and its submenus to skin defaults?"
+msgstr ""
+
+msgctxt "#32195"
+msgid "Reset '%s' to skin defaults?"
+msgstr ""
+
+msgctxt "#32196"
+msgid "Reset all submenus to skin defaults?"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Enter action"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Reset views for %s?"
+msgstr ""
+
+msgctxt "#32199"
+msgid "%s - Select View"
+msgstr ""
+
+msgctxt "#32200"
+msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
+msgstr ""
+
+msgctxt "#32201"
+msgid "Open settings"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Ignore for this skin"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Sort order"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Episodes not in this source"
+msgstr ""
+
+msgctxt "#32205"
+msgid "This source has no matching items in your library"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Artists not in this source"
 msgstr ""

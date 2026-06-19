@@ -255,6 +255,7 @@ def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
             build=default_menu.build,
             action=default_menu.action,
             standalone=default_menu.standalone,
+            submenu_path=default_menu.submenu_path,
         )
 
     items: list[MenuItem] = []
@@ -320,6 +321,7 @@ def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
         build=default_menu.build,
         action=default_menu.action,
         standalone=default_menu.standalone,
+        submenu_path=default_menu.submenu_path,
     )
 
 

@@ -15,6 +15,7 @@ import xbmc
 import xbmcvfs
 
 from ..log import get_logger
+from ..playlists import unpack_multipath
 
 if TYPE_CHECKING:
     from ..models.menu import Content
@@ -82,6 +83,22 @@ class ResolvedShortcut:
     # offers browse-into and constructs ActivateWindow({browse_window},{browse_path},return).
     browse_path: str = ""
     browse_window: str = ""
+    # Media of an originating file source (video/music/pictures/files/programs); marks a
+    # source shortcut. The smart-playlist flow acts on video/music; other media fall back
+    # to Files view. Empty for non-source shortcuts.
+    source_media: str = ""
+
+
+def _expand_playlist_dirs(directory: str) -> list[str]:
+    """Expand a multipath alias to its component dirs; other dirs pass through.
+
+    Appending a filename to the alias itself won't open; on a component dir it
+    stays a resolvable special:// path.
+    """
+    translated = xbmcvfs.translatePath(directory)
+    if not translated.startswith("multipath://"):
+        return [directory]
+    return [d if d.endswith("/") else d + "/" for d in unpack_multipath(translated)]
 
 
 def scan_playlist_files(directory: str) -> list[tuple[str, str]]:
@@ -95,16 +112,16 @@ def scan_playlist_files(directory: str) -> list[tuple[str, str]]:
     """
     playlists = []
 
-    try:
-        _dirs, files = xbmcvfs.listdir(directory)
-    except Exception:
-        return playlists
+    for scan_dir in _expand_playlist_dirs(directory):
+        try:
+            _dirs, files = xbmcvfs.listdir(scan_dir)
+        except Exception:
+            continue
 
-    for filename in files:
-        if filename.endswith(PLAYLIST_EXTENSIONS):
-            filepath = directory + filename
-            label = filename.rsplit(".", 1)[0]
-            playlists.append((label, filepath))
+        for filename in files:
+            if filename.endswith(PLAYLIST_EXTENSIONS):
+                label = filename.rsplit(".", 1)[0]
+                playlists.append((label, scan_dir + filename))
 
     return playlists
 
@@ -215,6 +232,7 @@ class ContentProvider:
                         icon="DefaultFolder.png",
                         browse_path=path,
                         browse_window=window,
+                        source_media=media,
                     )
                 )
 
@@ -392,29 +410,28 @@ class ContentProvider:
             addon_id = addon.get("addonid", "")
             name = addon.get("name", addon_id)
             thumb = addon.get("thumbnail", "")
+            if not addon_id:
+                continue
 
-            if addon_id:
-                if content == "executable":
-                    # Executables fire-and-forget, no browse-into.
-                    shortcuts.append(
-                        ResolvedShortcut(
-                            label=name,
-                            action=f"RunAddon({addon_id})",
-                            icon=thumb or "DefaultAddon.png",
-                        )
+            if addon.get("type") == "xbmc.python.pluginsource":
+                window = window_map.get(content, "videos")
+                shortcuts.append(
+                    ResolvedShortcut(
+                        label=name,
+                        action="",
+                        icon=thumb or "DefaultAddon.png",
+                        browse_path=f"plugin://{addon_id}/",
+                        browse_window=window,
                     )
-                else:
-                    # Plugin-source addons are browsable — picker constructs action at pick time.
-                    window = window_map.get(content, "videos")
-                    shortcuts.append(
-                        ResolvedShortcut(
-                            label=name,
-                            action="",
-                            icon=thumb or "DefaultAddon.png",
-                            browse_path=f"plugin://{addon_id}/",
-                            browse_window=window,
-                        )
+                )
+            else:
+                shortcuts.append(
+                    ResolvedShortcut(
+                        label=name,
+                        action=f"RunAddon({addon_id})",
+                        icon=thumb or "DefaultAddon.png",
                     )
+                )
 
         self._cache[cache_key] = shortcuts
         return shortcuts

@@ -764,10 +764,6 @@ msgctxt "#32189"
 msgid "%s (reset)"
 msgstr ""
 
-msgctxt "#32190"
-msgid "This skin has not been updated; menu editing unavailable"
-msgstr ""
-
 msgctxt "#32191"
 msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
 msgstr ""
@@ -802,4 +798,32 @@ msgstr ""
 
 msgctxt "#32199"
 msgid "%s - Select View"
+msgstr ""
+
+msgctxt "#32200"
+msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
+msgstr ""
+
+msgctxt "#32201"
+msgid "Open settings"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Ignore for this skin"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Sort order"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Episodes not in this source"
+msgstr ""
+
+msgctxt "#32205"
+msgid "This source has no matching items in your library"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Artists not in this source"
 msgstr ""

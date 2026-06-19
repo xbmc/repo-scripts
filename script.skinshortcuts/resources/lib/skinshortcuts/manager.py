@@ -9,6 +9,7 @@ from pathlib import Path
 from .config import SkinConfig
 from .log import get_logger
 from .models import Action, Menu, MenuItem
+from .playlists import cleanup_orphan_playlists
 from .userdata import (
     MenuItemOverride,
     MenuOverride,
@@ -651,7 +652,18 @@ class MenuManager:
         success = save_userdata(userdata, self.userdata_path)
         if success:
             self._changed = False
+            self._cleanup_source_playlists()
         return success
+
+    def _cleanup_source_playlists(self) -> None:
+        """Remove generated source playlists no surviving shortcut points at."""
+        actions = [
+            act.action
+            for menu in self.working.values()
+            for item in menu.items
+            for act in item.actions
+        ]
+        cleanup_orphan_playlists(actions)
 
     def reload(self) -> None:
         """Reload config and userdata from disk, rebuild working copy."""

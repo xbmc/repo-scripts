@@ -680,8 +680,11 @@ class TemplateBuilder:
             output_name = self._substitute_property_refs(raw_name, item, context)
 
         var_elem.set("name", output_name)
+        # output/condition are build-time directives; drop them so they don't leak into Kodi XML
         if "output" in var_elem.attrib:
             del var_elem.attrib["output"]
+        if "condition" in var_elem.attrib:
+            del var_elem.attrib["condition"]
         self._expand_iterate_values(var_elem, item, context)
         self._substitute_variable_content(
             var_elem, context, item, parent_context, parent_item

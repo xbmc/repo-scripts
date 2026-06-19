@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.0" provider-name="MikeSiLVO">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.1" provider-name="MikeSiLVO">
     <requires>
         <import addon="xbmc.python" version="3.0.2"/>
     </requires>
     <extension point="xbmc.python.script" library="default.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-3.0.0
-  - Initial Kodi repo release
-  - Complete rewrite: skins built for Skin Shortcuts v2 or earlier are not compatible
-  - Skins must be updated with v3 support; unsupported skins will get a notification
-  - Menu and widget customizations from v2 do not carry over
+3.0.1
+  - Add: show a source as a library view instead of files (movies, TV shows, episodes, music videos, songs, albums, artists), or everything except it, with a sort order
+  - Add: a global submenuPath element under menus, plus a submenuPath property on menu items for their widget submenu
+  - Add: prompt to switch skins or downgrade the add-on when a skin is built for Skin Shortcuts v2
+  - Add: program add-ons that expose plugin content are browsable in the content picker
+  - Add: skin icon overrides apply to the add-on content placeholder
+  - Fix: Create menu item to here names the menu item after the add-on category
+  - Fix: templateonly now hides a property's numbered slot variants
+  - Fix: a playlist shortcut or background resolves to a valid path
+  - Updated translations
         </news>
         <summary lang="en_GB">Custom menus, properties, and artwork for skins</summary>
         <platform>all</platform>

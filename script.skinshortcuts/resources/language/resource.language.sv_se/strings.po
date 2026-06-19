@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-04-08 00:13+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2026-06-10 07:59+0000\n"
+"Last-Translator: anxdpanic <anxdpanic@gmail.com>\n"
 "Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/sv_se/>\n"
 "Language: sv_se\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 msgctxt "Addon Description"
 msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
@@ -83,7 +83,7 @@ msgstr "Filmer"
 
 msgctxt "#32016"
 msgid "TV Shows"
-msgstr ""
+msgstr "TV-serier"
 
 msgctxt "#32017"
 msgid "Live TV"
@@ -103,7 +103,7 @@ msgstr "BILDER"
 
 msgctxt "#32021"
 msgid "Programs"
-msgstr ""
+msgstr "Program"
 
 msgctxt "#32022"
 msgid "Live TV"
@@ -111,11 +111,11 @@ msgstr "Live-TV"
 
 msgctxt "#32023"
 msgid "Timers"
-msgstr ""
+msgstr "Timers"
 
 msgctxt "#32024"
 msgid "Custom item"
-msgstr ""
+msgstr "Anpassat objekt"
 
 msgctxt "#32025"
 msgid "Set label"
@@ -131,7 +131,7 @@ msgstr "Egen åtgärd"
 
 msgctxt "#32028"
 msgid "Restore menu items"
-msgstr ""
+msgstr "Återställ menyobjekt"
 
 msgctxt "#32029"
 msgid "Common"
@@ -155,7 +155,7 @@ msgstr "Mata ut"
 
 msgctxt "#32034"
 msgid "Common menu item"
-msgstr ""
+msgstr "Vanligt menyobjekt"
 
 msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
@@ -167,11 +167,11 @@ msgstr "Välj genvägar för %s"
 
 msgctxt "#32037"
 msgid "Reset all menu items"
-msgstr ""
+msgstr "Återställ alla menyobjekt"
 
 msgctxt "#32038"
 msgid "Are you sure you want to reset all menu items back to default?"
-msgstr ""
+msgstr "Är du säker på att du vill återställa alla menyobjekt till standardinställningarna?"
 
 msgctxt "#32039"
 msgid "Pick widget for %s"
@@ -211,7 +211,7 @@ msgstr "Uppdatera musikbibliotek"
 
 msgctxt "#32048"
 msgid "Choose item for menu"
-msgstr ""
+msgstr "Välj objekt för meny"
 
 msgctxt "#32049"
 msgid "Building menu..."
@@ -251,7 +251,7 @@ msgstr "Kodi-kommandon"
 
 msgctxt "#32058"
 msgid "Create menu item to here"
-msgstr ""
+msgstr "Skapa menyobjekt här"
 
 msgctxt "#32059"
 msgid "Skin Playlist"
@@ -259,7 +259,7 @@ msgstr "Skalspellista"
 
 msgctxt "#32060"
 msgid "What do you want to do with the playlist?"
-msgstr ""
+msgstr "Vad vill du göra med spellistan?"
 
 msgctxt "#32061"
 msgid "Display"
@@ -275,11 +275,11 @@ msgstr "Hämtar kataloglista..."
 
 msgctxt "#32064"
 msgid "No available items"
-msgstr ""
+msgstr "Inga tillgängliga objekt"
 
 msgctxt "#32065"
 msgid "There are no available items to choose from for the category that you choose."
-msgstr ""
+msgstr "Det finns inga tillgängliga objekt att välja mellan för den kategori som du väljer."
 
 msgctxt "#32066"
 msgid "Last TV channel"
@@ -339,7 +339,7 @@ msgstr "Filvisning"
 
 msgctxt "#32080"
 msgid "Edit %s Submenu"
-msgstr ""
+msgstr "Redigera undermenyn %s"
 
 msgctxt "#32081"
 msgid "Movies not in this source"
@@ -391,15 +391,15 @@ msgstr "Kunde inte skapa meny."
 
 msgctxt "#32093"
 msgid "Upload debug log?"
-msgstr ""
+msgstr "Skicka upp felsökningslogg?"
 
 msgctxt "#32094"
 msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
-msgstr ""
+msgstr "Installera tillägget Kodi Log Uploader för att enkelt tillhandahålla en felsökningslogg."
 
 msgctxt "#32095"
 msgid "Choose default action for menu item"
-msgstr ""
+msgstr "Välj standardåtgärd för menyobjektet"
 
 msgctxt "#32096"
 msgid "Browse..."
@@ -407,103 +407,103 @@ msgstr "Bläddra..."
 
 msgctxt "#32097"
 msgid "Unable to save menu"
-msgstr ""
+msgstr "Kunde inte spara menyn"
 
 msgctxt "#32098"
 msgid "Writing menu..."
-msgstr ""
+msgstr "Skriver meny..."
 
 msgctxt "#32099"
 msgid "Widget"
-msgstr ""
+msgstr "Widget"
 
 msgctxt "#32100"
 msgid "Use as widget"
-msgstr ""
+msgstr "Använd som widget"
 
 msgctxt "#32101"
 msgid "Choose property"
-msgstr ""
+msgstr "Välj egenskap"
 
 msgctxt "#32102"
 msgid "Restore or reset?"
-msgstr ""
+msgstr "Återställ eller nollställ?"
 
 msgctxt "#32103"
 msgid "Restore an original menu item"
-msgstr ""
+msgstr "Återställ ett ursprungligt menyobjekt"
 
 msgctxt "#32104"
 msgid "Reset to skin defaults"
-msgstr ""
+msgstr "Nollställ till skalets standard"
 
 msgctxt "#32105"
 msgid "There are no menu items to restore for this menu"
-msgstr ""
+msgstr "Det finns inga menyobjekt att återställa för den här menyn"
 
 msgctxt "#32106"
 msgid "Install widget provider"
-msgstr ""
+msgstr "Installera widgetleverantör"
 
 msgctxt "#32107"
 msgid "Enable default widgets"
-msgstr ""
+msgstr "Aktivera standardwidgetar"
 
 msgctxt "#32108"
 msgid "Party mode (music videos)"
-msgstr ""
+msgstr "Partyläge (musikvideor)"
 
 msgctxt "#32109"
 msgid "No menus from compatible skins found to import"
-msgstr ""
+msgstr "Inga menyer från kompatibla skal hittades för import"
 
 msgctxt "#32110"
 msgid "Import menu from skin"
-msgstr ""
+msgstr "Importera meny från skal"
 
 msgctxt "#32111"
 msgid "Shared menu"
-msgstr ""
+msgstr "Delad meny"
 
 msgctxt "#32112"
 msgid "New item on the main menu"
-msgstr ""
+msgstr "Nytt objekt på huvudmenyn"
 
 msgctxt "#32113"
 msgid "New item on the main menu (autofill submenu items)"
-msgstr ""
+msgstr "Nytt objekt på huvudmenyn (fyll undermenyobjekt automatiskt)"
 
 msgctxt "#32114"
 msgid "Where should menu item be created"
-msgstr ""
+msgstr "Var ska menyobjekt skapas"
 
 msgctxt "#32115"
 msgid "Unable to get directory listings[CR][CR]See log for details"
-msgstr ""
+msgstr "Det går inte att hämta kataloglistningar[CR][CR]Se logg för mer information"
 
 msgctxt "#32116"
 msgid "The skin you are using does not support adding items directly to the main menu"
-msgstr ""
+msgstr "Den skal du använder stöder inte att lägga till objekt direkt i huvudmenyn"
 
 msgctxt "#32117"
 msgid "Disable shortcut"
-msgstr ""
+msgstr "Inaktivera genväg"
 
 msgctxt "#32118"
 msgid "Smart shortcuts"
-msgstr ""
+msgstr "Smarta genvägar"
 
 msgctxt "#32119"
 msgid "Default widgets"
-msgstr ""
+msgstr "Standardwidgetar"
 
 msgctxt "#32120"
 msgid "Never hide PVR shortcuts"
-msgstr ""
+msgstr "Dölj aldrig PVR-genvägar"
 
 msgctxt "#32121"
 msgid "Share menu between compatible skins"
-msgstr ""
+msgstr "Dela menyn mellan kompatibla skal"
 
 msgctxt "#32122"
 msgid "Enable debug logging"
@@ -511,10 +511,322 @@ msgstr "Aktivera felsökningsloggning"
 
 msgctxt "#32123"
 msgid "Games"
-msgstr ""
+msgstr "Spel"
 
 msgctxt "#32124"
 msgid "This addon is for skin developers, and requires skin support"
+msgstr "Detta tillägg är för skalutvecklare och kräver skalstöd"
+
+msgctxt "#32125"
+msgid "Delete item?"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Modify item?"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Are you sure you want to modify this item?"
+msgstr ""
+
+msgctxt "#32129"
+msgid "New Item"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Cannot Delete"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Delete Item"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Modify Action"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Cannot Disable"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Disable Item"
+msgstr ""
+
+msgctxt "#32135"
+msgid "No Deleted Items"
+msgstr ""
+
+msgctxt "#32136"
+msgid "No items to restore"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Restore Deleted Item"
+msgstr ""
+
+msgctxt "#32138"
+msgid "Reset Item"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Edit Submenu"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Select Widget Type"
+msgstr ""
+
+msgctxt "#32141"
+msgid "No Items"
+msgstr ""
+
+msgctxt "#32142"
+msgid "No items available in this group"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Not Allowed"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Widgets not enabled for this menu"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Submenus not enabled for this menu"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Backgrounds not enabled for this menu"
+msgstr ""
+
+msgctxt "#32147"
+msgid "No Widgets"
+msgstr ""
+
+msgctxt "#32148"
+msgid "No widgets defined in skin"
+msgstr ""
+
+msgctxt "#32149"
+msgid "Cannot Browse"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Unable to list directory contents"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Browse"
+msgstr ""
+
+msgctxt "#32152"
+msgid "No Backgrounds"
+msgstr ""
+
+msgctxt "#32153"
+msgid "No backgrounds defined"
+msgstr ""
+
+msgctxt "#32154"
+msgid "No Playlists"
+msgstr ""
+
+msgctxt "#32155"
+msgid "No playlist locations found"
+msgstr ""
+
+msgctxt "#32156"
+msgid "No playlists found in this location"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Select Playlist"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Mixed Playlists"
+msgstr ""
+
+msgctxt "#32159"
+msgid "No Options"
+msgstr ""
+
+msgctxt "#32160"
+msgid "No options available"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Reset Library Views"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Reset Add-on Views"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Add Override"
+msgstr ""
+
+msgctxt "#32167"
+msgid "No Add-ons"
+msgstr ""
+
+msgctxt "#32168"
+msgid "No video add-ons installed"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Select Add-on"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Confirm"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Edit Label"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Edit Action"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Change Icon"
+msgstr ""
+
+msgctxt "#32174"
+msgid "'%s' is required."
+msgstr ""
+
+msgctxt "#32175"
+msgid "Delete '%s'?"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Modify '%s'?"
+msgstr ""
+
+msgctxt "#32177"
+msgid "Disable '%s'?"
+msgstr ""
+
+msgctxt "#32178"
+msgid "Reset '%s' to defaults?"
+msgstr ""
+
+msgctxt "#32179"
+msgid "No Shortcuts"
+msgstr ""
+
+msgctxt "#32180"
+msgid "No shortcut groupings defined in skin"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Select"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Location"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32184"
+msgid "Requires %s to be set first"
+msgstr ""
+
+msgctxt "#32185"
+msgid "View Settings"
+msgstr ""
+
+msgctxt "#32186"
+msgid "Select Content Type"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Reset all library view selections?"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Reset all add-on view selections?"
+msgstr ""
+
+msgctxt "#32189"
+msgid "%s (reset)"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+msgstr ""
+
+msgctxt "#32192"
+msgid "Reset all view selections to skin defaults?"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
+msgstr ""
+
+msgctxt "#32194"
+msgid "Reset '%s' and its submenus to skin defaults?"
+msgstr ""
+
+msgctxt "#32195"
+msgid "Reset '%s' to skin defaults?"
+msgstr ""
+
+msgctxt "#32196"
+msgid "Reset all submenus to skin defaults?"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Enter action"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Reset views for %s?"
+msgstr ""
+
+msgctxt "#32199"
+msgid "%s - Select View"
+msgstr ""
+
+msgctxt "#32200"
+msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
+msgstr ""
+
+msgctxt "#32201"
+msgid "Open settings"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Ignore for this skin"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Sort order"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Episodes not in this source"
+msgstr ""
+
+msgctxt "#32205"
+msgid "This source has no matching items in your library"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Artists not in this source"
 msgstr ""
 
 #~ msgctxt "#32024"

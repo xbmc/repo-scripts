@@ -192,6 +192,7 @@ class Shortcut:
     item_visible: str = ""
     action_play: str = ""
     action_party: str = ""
+    source_media: str = ""  # originating file source's media; drives the source playlist flow
 
     @property
     def action(self) -> str:
@@ -329,6 +330,7 @@ class Menu:
     action: str = ""
     template_origin: str = ""  # For per-item submenu instances: the template they were seeded from
     standalone: bool = True  # <submenu>: emit skinshortcuts-{name} per-template include
+    submenu_path: str = ""  # submenuPath="all": also emit numbered submenuPath.N on the parent
 
     def get_item(self, item_name: str) -> MenuItem | None:
         """Get item by name."""
@@ -443,3 +445,4 @@ class MenuConfig:
     action_overrides: list[ActionOverride] = field(default_factory=list)
     icon_overrides: dict[str, str] = field(default_factory=dict)  # DefaultX.png -> override path
     show_context_menu: bool = True  # Whether to show context menu on items
+    submenu_path_all: bool = False  # <submenuPath>all</submenuPath>: numbered tail for every widget submenu

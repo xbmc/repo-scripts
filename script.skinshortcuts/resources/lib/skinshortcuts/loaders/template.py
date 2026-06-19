@@ -10,6 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from ..exceptions import TemplateConfigError
+from ..log import get_logger
 from ..models.template import (
     BuildMode,
     Expression,
@@ -36,6 +37,8 @@ from ..models.template import (
     VariableReference,
 )
 from .base import apply_suffix_to_from, apply_suffix_transform, get_bool
+
+log = get_logger("TemplateLoader")
 
 
 class TemplateLoader:
@@ -114,6 +117,7 @@ class TemplateLoader:
         for elem in section.findall("expression"):
             name = (elem.get("name") or "").strip()
             if not name:
+                log.warning(f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping")
                 continue
             value = (elem.text or "").strip()
             nosuffix = get_bool(elem, "nosuffix")
@@ -146,6 +150,7 @@ class TemplateLoader:
         """
         name = (elem.get("name") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
             return None
 
         children = []
@@ -159,6 +164,10 @@ class TemplateLoader:
                             preset_name=preset_name,
                             condition=condition,
                         )
+                    )
+                else:
+                    log.warning(
+                        f"{self.path}: <preset> in <presetGroup> missing 'content' attribute, skipping"
                     )
             elif child.tag == "values":
                 condition = (child.get("condition") or "").strip()
@@ -180,6 +189,7 @@ class TemplateLoader:
         for elem in section.findall("propertyGroup"):
             name = (elem.get("name") or "").strip()
             if not name:
+                log.warning(f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping")
                 continue
 
             properties = []
@@ -220,6 +230,7 @@ class TemplateLoader:
         """Parse a variableGroup element."""
         name = (elem.get("name") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
             return None
 
         references = []
@@ -233,6 +244,10 @@ class TemplateLoader:
             group_name = (group_elem.get("content") or "").strip()
             if group_name:
                 group_refs.append(VariableGroupReference(name=group_name))
+            else:
+                log.warning(
+                    f"{self.path}: nested <variableGroup> missing 'content' attribute, skipping"
+                )
 
         return VariableGroup(name=name, references=references, group_refs=group_refs)
 
@@ -243,6 +258,7 @@ class TemplateLoader:
         """
         name = (elem.get("content") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
             return None
         condition = (elem.get("condition") or "").strip()
         return VariableReference(name=name, condition=condition)
@@ -255,6 +271,7 @@ class TemplateLoader:
         for elem in section.findall("include"):
             name = (elem.get("name") or "").strip()
             if not name:
+                log.warning(f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping")
                 continue
 
             self._includes[name] = IncludeDefinition(
@@ -266,6 +283,7 @@ class TemplateLoader:
         """Parse a param element."""
         name = (elem.get("name") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
             return None
         default = (elem.get("default") or "").strip()
         return TemplateParam(name=name, default=default)
@@ -274,6 +292,7 @@ class TemplateLoader:
         """Parse a property element."""
         name = (elem.get("name") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
             return None
 
         value = (elem.get("value") or elem.text or "").strip()
@@ -297,6 +316,7 @@ class TemplateLoader:
         """Parse a var element for internal template resolution."""
         name = (elem.get("name") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
             return None
 
         values = []
@@ -543,6 +563,7 @@ class TemplateLoader:
         """
         name = (elem.get("content") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -561,6 +582,7 @@ class TemplateLoader:
         """
         name = (elem.get("content") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -579,6 +601,7 @@ class TemplateLoader:
         """
         name = (elem.get("content") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -597,6 +620,7 @@ class TemplateLoader:
         """
         name = (elem.get("content") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -612,6 +636,7 @@ class TemplateLoader:
         """Parse a variable definition inside a template's <variables> section."""
         name = (elem.get("name") or "").strip()
         if not name:
+            log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
             return None
 
         condition = (elem.get("condition") or "").strip()

@@ -20,7 +20,7 @@ from .config import SkinConfig
 from .constants import INCLUDES_FILE, MENUS_FILE, VIEWS_FILE, get_shortcuts_path
 from .hashing import generate_config_hashes, hash_file, needs_rebuild, write_hashes
 from .localize import LANGUAGE
-from .log import get_logger, notify
+from .log import get_logger
 from .userdata import get_userdata_path
 
 log = get_logger("Entry")
@@ -57,15 +57,42 @@ def get_output_paths() -> list[str]:
         return []
 
 
-def _skin_supported(shortcuts_path: str, *, menus_only: bool = False) -> bool:
-    """True if the skin has v3 config; otherwise notify the user and return False.
+def _unsupported_marker() -> Path:
+    """Per-skin marker; present means the user chose to ignore the unsupported-skin warning."""
+    data = xbmcvfs.translatePath("special://profile/addon_data/script.skinshortcuts/")
+    return Path(data) / f"{xbmc.getSkinDir()}.unsupported-ack"
 
+
+def _warn_unsupported(marker: Path) -> None:
+    """Modal once per session: switch skins, ignore (marks the skin so it never warns again), or cancel."""
+    win = xbmcgui.Window(10000)
+    if win.getProperty("skinshortcuts-unsupported-warned"):
+        return
+    win.setProperty("skinshortcuts-unsupported-warned", "1")
+    choice = xbmcgui.Dialog().yesnocustom(
+        "Skin Shortcuts", LANGUAGE(32200),
+        customlabel=LANGUAGE(32202), nolabel=xbmc.getLocalizedString(222), yeslabel=LANGUAGE(32201),
+    )
+    if choice == 1:
+        xbmc.executebuiltin("ActivateWindow(Settings)")
+    elif choice == 2:
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.touch()
+
+
+def _skin_supported(shortcuts_path: str, *, menus_only: bool = False) -> bool:
+    """True if the skin has v3 config; otherwise warn (unless ignored) and return False.
+
+    Clears a stale ignore marker once the skin is supported.
     menus_only: manage edits menus only; views.xml is a separate runscript.
     """
     path = Path(shortcuts_path)
+    marker = _unsupported_marker()
     if (path / MENUS_FILE).exists() or (not menus_only and (path / VIEWS_FILE).exists()):
+        marker.unlink(missing_ok=True)
         return True
-    notify("Skin Shortcuts", LANGUAGE(32190))
+    if not marker.exists():
+        _warn_unsupported(marker)
     return False
 
 

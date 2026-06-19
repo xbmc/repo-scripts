@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from ..exceptions import PropertyConfigError
+from ..log import get_logger
 from ..models.property import (
     ButtonMapping,
     FallbackRule,
@@ -19,6 +20,8 @@ from ..models.property import (
     SchemaProperty,
 )
 from .base import apply_suffix_transform, get_bool
+
+log = get_logger("PropertyLoader")
 
 
 class PropertyLoader:
@@ -96,6 +99,7 @@ class PropertyLoader:
         for include_elem in includes_section.findall("include"):
             name = (include_elem.get("name") or "").strip()
             if not name:
+                log.warning(f"{self.path}: <include> definition missing 'name' attribute, skipping")
                 continue
             self._includes[name] = list(include_elem)
 
@@ -171,6 +175,7 @@ class PropertyLoader:
         """Parse a button element from the buttons section."""
         button_id_str = (elem.get("id") or "").strip()
         if not button_id_str:
+            log.warning(f"{self.path}: <button> mapping missing 'id' attribute, skipping")
             return None
 
         try:
