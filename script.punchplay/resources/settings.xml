@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 
-  <category label="Connection">
-    <setting id="backend_url"        type="text"   label="Backend URL"                  default="https://punchplay.tv" visible="false"/>
-    <setting id="login_btn"          type="action" label="Login to PunchPlay"            action="SetProperty(punchplay_login,1,10000)"  option="action"/>
-    <setting id="logout_btn"         type="action" label="Logout"                        action="SetProperty(punchplay_logout,1,10000)" option="action"/>
+  <category label="32047">
+    <setting id="login_btn"           type="action" label="32035" action="SetProperty(punchplay_login,1,10000)" option="action"/>
+    <setting id="logout_btn"          type="action" label="32036" action="SetProperty(punchplay_logout,1,10000)" option="action"/>
+    <setting id="test_connection_btn" type="action" label="32051" action="SetProperty(punchplay_test_connection,1,10000)" option="action"/>
+    <setting id="show_status_btn"     type="action" label="32052" action="SetProperty(punchplay_show_status,1,10000)" option="action"/>
   </category>
 
-  <category label="Scrobbling">
-    <setting id="scrobble_movies"        type="bool"   label="Scrobble movies"                    default="true"/>
-    <setting id="scrobble_tv"            type="bool"   label="Scrobble TV shows"                  default="true"/>
-    <setting id="scrobble_anime"         type="bool"   label="Scrobble anime"                     default="true"/>
-    <setting id="rate_after_watching"    type="bool"   label="32020"                               default="true"/>
-    <setting id="show_notifications"     type="bool"   label="Show scrobble notifications"        default="true"/>
-    <setting id="notify_during_playback" type="bool"   label="Show notifications during playback" default="false"/>
-    <setting id="watched_threshold"      type="slider" label="Watched threshold (%)"               default="70"  range="50,5,95" option="int"/>
-    <setting id="min_length"             type="number" label="Minimum file length (minutes)"       default="5"/>
-    <setting id="heartbeat_interval"     type="number" label="Heartbeat interval (seconds)"        default="30"/>
+  <category label="32037">
+    <setting id="scrobble_movies"        type="bool"   label="32038"  default="true"/>
+    <setting id="scrobble_tv"            type="bool"   label="32039"  default="true"/>
+    <setting id="scrobble_anime"         type="bool"   label="32040"  default="true"/>
+    <setting id="anime_episode_format"   type="enum" label="32090" lvalues="32091|32111|32112" default="0"/>
+    <setting id="watched_threshold"      type="slider" label="32043"  default="90" range="50,5,95" option="int"/>
+    <setting id="min_length"             type="number" label="32044"  default="5"/>
   </category>
 
-  <category label="Library">
+  <category label="32046">
+    <setting id="preview_library_btn" type="action" label="32109" action="SetProperty(punchplay_preview_library,1,10000)" option="action"/>
     <setting id="sync_library_btn" type="action" label="32024" action="SetProperty(punchplay_sync_library,1,10000)" option="action"/>
+  </category>
+
+  <category label="32048">
+    <setting id="rate_after_watching" type="bool" label="32020" default="true"/>
+    <setting id="rating_prompt_delay" type="number" label="32110" default="2"/>
+  </category>
+
+  <category label="32049">
+    <setting id="show_notifications"     type="bool" label="32041" default="true"/>
+    <setting id="notify_during_playback" type="bool" label="32042" default="false"/>
+  </category>
+
+  <category label="32050">
+    <setting id="export_debug_btn"         type="action" label="32053" action="SetProperty(punchplay_export_debug,1,10000)" option="action"/>
+    <setting id="export_verbose_debug_btn" type="action" label="32113" action="SetProperty(punchplay_export_verbose_debug,1,10000)" option="action"/>
+    <setting id="clear_offline_queue"      type="action" label="32054" action="SetProperty(punchplay_clear_queue,1,10000)" option="action"/>
+    <setting id="developer_mode"               type="bool" label="32114" default="false" visible="false"/>
+    <setting id="allow_insecure_backend_url"   type="bool" label="32115" default="false" visible="false"/>
+    <setting id="backend_url"                  type="text" label="32034" default="" visible="false"/>
   </category>
 
 </settings>

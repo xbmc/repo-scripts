@@ -1,15 +1,14 @@
-"""
-PunchPlay Scrobble — entry point.
+from __future__ import annotations
 
-Kodi runs this file as the background service on startup (no args).
-Login and logout are triggered via home window properties set by settings.xml
-action buttons, and are handled inside the service loop.
-"""
+import os
+import sys
 
-def main() -> None:
-    from service import PunchPlayService
+_ADDON_DIR = os.path.dirname(__file__)
+_LIB_DIR = os.path.join(_ADDON_DIR, "resources", "lib")
 
-    PunchPlayService().run()
+if _LIB_DIR not in sys.path:
+    sys.path.insert(0, _LIB_DIR)
 
+from service import PunchPlayService
 
-main()
+PunchPlayService().run()

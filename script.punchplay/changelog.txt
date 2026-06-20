@@ -1,3 +1,44 @@
+v1.3.0 (2026-05-23)
+- Add backend-assisted `/api/identify` matching for items without reliable
+  Kodi IDs, with confidence thresholds, safe fallback behavior, and local
+  identify-result caching.
+- Improve local filename parsing for movie years, season folders, anime
+  absolute episodes, and multi-episode files such as `S01E01-E02`.
+- Include `episode_end`, `multi_episode`, `absolute_episode`, canonical IDs,
+  and backend identify metadata in later scrobble payloads when available.
+- Add stricter backend URL validation so insecure or malformed backend
+  settings do not receive tokens unless developer mode explicitly allows it.
+- Add library import preview, richer import diagnostics, verbose debug export,
+  rating-prompt delay/suppression options, and a manual Kodi QA checklist.
+- Expand regression coverage for parser logic, backend identify behavior,
+  queue migrations, payload identity fields, and duplicate stop handling.
+
+v1.2.0 (2026-05-23)
+- Rename the user-facing addon to "PunchPlay" while keeping the
+  addon ID `script.punchplay`.
+- Move runtime modules into `resources/lib` and keep `default.py` as a very
+  small Kodi service bootstrap.
+- Centralize addon constants, endpoint paths, default backend URL, and
+  version lookups to reduce duplicated metadata across the runtime.
+- Add per-event `event_id` values alongside stable `playback_session_id`
+  values so queued and replayed events can be deduplicated backend-side.
+- Harden final stop handling with a duplicate-stop guard, explicit
+  `watched: true/false`, and near-end completion handling.
+- Expand the offline queue schema with retry metadata, migration logic,
+  30-day expiry, and higher retention with stop-priority preservation.
+- Warn before logout when unsynced queued events would be deleted.
+- Add settings actions for test connection, status viewing, debug export,
+  and manual offline-queue clearing.
+
+v1.1.1 (2026-05-17)
+- Improve watched-threshold detection by caching playback position between
+  heartbeat events, reducing missed 70% scrobbles when Kodi closes playback
+  before the final position can be read.
+- Add playback session IDs and event timestamps to prevent stale queued
+  progress from reappearing after a completed stop event.
+- Preserve PunchPlay link callback URLs through login so QR/device-code
+  approval returns to the pre-filled connection page.
+
 v1.1.0 (2026-04-28)
 - Rate movies and episodes right in Kodi after the watched threshold is met.
   A 1–10 rating dialog appears after the scrobble notification. Configurable

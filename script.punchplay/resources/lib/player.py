@@ -17,14 +17,67 @@ from __future__ import annotations
 import os
 import threading
 import time
+import uuid
 from typing import Any
 
 import xbmc
-import xbmcaddon
 import xbmcgui
 
-_ADDON_ID = "script.punchplay"
-_VERSION = "1.1.0"
+from constants import (
+    HEARTBEAT_INTERVAL_SECS,
+    NOTIFICATION_TITLE,
+    SCROBBLE_PAUSE_ENDPOINT,
+    SCROBBLE_PROGRESS_ENDPOINT,
+    SCROBBLE_RATE_ENDPOINT,
+    SCROBBLE_RESUME_ENDPOINT,
+    SCROBBLE_START_ENDPOINT,
+    SCROBBLE_STOP_ENDPOINT,
+    STOP_COMPLETE_GRACE_SECS,
+    get_addon,
+    get_addon_path,
+    get_addon_version,
+    localize,
+)
+
+
+def _normalise_key_part(value: Any) -> str:
+    return str(value or "").strip().lower()
+
+
+def build_rating_suppression_keys(metadata: dict[str, Any]) -> dict[str, str]:
+    media_type = metadata.get("media_type", "movie")
+    canonical_id = (
+        metadata.get("punchplay_id")
+        or metadata.get("tmdb_id")
+        or metadata.get("tvdb_id")
+        or metadata.get("imdb_id")
+    )
+    title = _normalise_key_part(metadata.get("title"))
+    year = _normalise_key_part(metadata.get("year"))
+    season = _normalise_key_part(metadata.get("season"))
+    episode = _normalise_key_part(metadata.get("episode"))
+    absolute_episode = _normalise_key_part(metadata.get("absolute_episode"))
+
+    keys = {
+        "title": "title:{0}:{1}:{2}:{3}:{4}".format(
+            media_type,
+            canonical_id or title,
+            year,
+            season,
+            episode or absolute_episode,
+        )
+    }
+    if media_type == "episode":
+        keys["show"] = "show:{0}:{1}:{2}".format(
+            canonical_id or title,
+            title,
+            year,
+        )
+    return keys
+
+
+def has_reliable_rating_identity(metadata: dict[str, Any]) -> bool:
+    return any(metadata.get(key) for key in ("punchplay_id", "tmdb_id", "tvdb_id", "imdb_id"))
 
 
 class PunchPlayPlayer(xbmc.Player):
@@ -32,10 +85,13 @@ class PunchPlayPlayer(xbmc.Player):
         super().__init__()
         self._api = api
         self._cache = cache
+        self._client_version = get_addon_version()
 
         # State for the currently tracked item.
         self._metadata: dict[str, Any] | None = None
         self._is_playing: bool = False
+        self._playback_session_id: str | None = None
+        self._stop_emitted: bool = False
 
         # Last known playback position — used as fallback in _emit_stop when
         # getTime()/getTotalTime() throw because the player has already closed.
@@ -51,17 +107,28 @@ class PunchPlayPlayer(xbmc.Player):
     # ------------------------------------------------------------------
 
     def _settings(self) -> dict[str, Any]:
-        addon = xbmcaddon.Addon(_ADDON_ID)
+        addon = get_addon()
+        anime_setting = addon.getSetting("anime_episode_format") or "0"
+        anime_format_map = {
+            "0": "auto",
+            "1": "season_episode",
+            "2": "absolute",
+            "auto": "auto",
+            "season_episode": "season_episode",
+            "absolute": "absolute",
+        }
         return {
             "watched_threshold": addon.getSettingInt("watched_threshold") / 100.0,
             "min_length_secs": addon.getSettingInt("min_length") * 60,
-            "heartbeat_interval": addon.getSettingInt("heartbeat_interval"),
+            "heartbeat_interval": HEARTBEAT_INTERVAL_SECS,
+            "anime_episode_format": anime_format_map.get(anime_setting, "auto"),
             "scrobble_movies": addon.getSettingBool("scrobble_movies"),
             "scrobble_tv": addon.getSettingBool("scrobble_tv"),
             "scrobble_anime": addon.getSettingBool("scrobble_anime"),
             "show_notifications": addon.getSettingBool("show_notifications"),
             "notify_during_playback": addon.getSettingBool("notify_during_playback"),
             "rate_after_watching": addon.getSettingBool("rate_after_watching"),
+            "rating_prompt_delay": addon.getSettingInt("rating_prompt_delay"),
         }
 
     def _notify(self, message: str, settings: dict[str, Any]) -> None:
@@ -71,7 +138,7 @@ class PunchPlayPlayer(xbmc.Player):
         if not settings["notify_during_playback"] and self.isPlayingVideo():
             return
         xbmcgui.Dialog().notification(
-            "PunchPlay",
+            NOTIFICATION_TITLE,
             message,
             xbmcgui.NOTIFICATION_INFO,
             4000,
@@ -105,19 +172,51 @@ class PunchPlayPlayer(xbmc.Player):
     ) -> dict[str, Any]:
         progress = round(position / duration, 4) if duration > 0 else 0.0
         payload: dict[str, Any] = {
+            "event_id": str(uuid.uuid4()),
             "media_type": metadata.get("media_type", "movie"),
             "title": metadata.get("title", ""),
             "progress": progress,
             "duration_seconds": int(duration),
             "position_seconds": int(position),
             "device_id": self._api.device_id,
-            "client_version": _VERSION,
+            "playback_session_id": self._playback_session_id,
+            "event_created_at": int(time.time() * 1000),
+            "client_version": self._client_version,
         }
-        for field in ("year", "imdb_id", "tmdb_id", "tvdb_id", "season", "episode", "raw_filename"):
+        for field in (
+            "year",
+            "imdb_id",
+            "tmdb_id",
+            "tvdb_id",
+            "punchplay_id",
+            "season",
+            "episode",
+            "episode_end",
+            "absolute_episode",
+            "episode_title",
+            "raw_filename",
+            "identify_source",
+            "identify_confidence",
+        ):
             val = metadata.get(field)
             if val is not None:
                 payload[field] = val
+        if metadata.get("multi_episode"):
+            payload["multi_episode"] = True
+        if metadata.get("anime"):
+            payload["anime"] = True
         return payload
+
+    def _capture_position(self) -> tuple[float, float] | None:
+        """Read and cache the current Kodi playback position."""
+        try:
+            position = self.getTime()
+            duration = self.getTotalTime()
+        except Exception:
+            return None
+        self._last_position = position
+        self._last_duration = duration
+        return position, duration
 
     # ------------------------------------------------------------------
     # Heartbeat thread
@@ -147,6 +246,8 @@ class PunchPlayPlayer(xbmc.Player):
             while slept < interval:
                 if self._hb_stop.is_set():
                     return
+                if self._is_playing and self._metadata is not None:
+                    self._capture_position()
                 time.sleep(0.5)
                 slept += 0.5
 
@@ -154,10 +255,10 @@ class PunchPlayPlayer(xbmc.Player):
                 continue
 
             try:
-                position = self.getTime()
-                duration = self.getTotalTime()
-                self._last_position = position
-                self._last_duration = duration
+                captured = self._capture_position()
+                if captured is None:
+                    continue
+                position, duration = captured
                 settings = self._settings()  # re-read in case changed
 
                 if duration < settings["min_length_secs"]:
@@ -169,7 +270,7 @@ class PunchPlayPlayer(xbmc.Player):
                     f"({payload['position_seconds']}s / {payload['duration_seconds']}s)",
                     xbmc.LOGDEBUG,
                 )
-                self._api.post("/api/scrobble/progress", payload)
+                self._api.post(SCROBBLE_PROGRESS_ENDPOINT, payload)
 
             except Exception as exc:
                 xbmc.log(f"[PunchPlay] Heartbeat error: {exc}", xbmc.LOGWARNING)
@@ -188,15 +289,19 @@ class PunchPlayPlayer(xbmc.Player):
             if not self.isPlayingVideo():
                 return
 
+            if not self._api.is_authenticated():
+                return
+
             settings = self._settings()
 
             # If something was already tracked (e.g. immediate next play),
             # close the previous session cleanly.
             if self._metadata is not None:
-                self._emit_stop(settings)
+                self._handle_stop()
 
             path = self.getPlayingFile()
             info_tag = self.getVideoInfoTag()
+            duration = self.getTotalTime()
 
             # Identify the media.
             from identifier import identify, is_anime
@@ -205,6 +310,9 @@ class PunchPlayPlayer(xbmc.Player):
                 list_item_path=path,
                 info_tag=info_tag,
                 cache=self._cache,
+                api_client=self._api,
+                duration_seconds=int(duration),
+                anime_preference=settings["anime_episode_format"],
             )
 
             if not metadata or not metadata.get("title"):
@@ -212,7 +320,6 @@ class PunchPlayPlayer(xbmc.Player):
                 return
 
             # Duration filter.
-            duration = self.getTotalTime()
             if duration < settings["min_length_secs"]:
                 xbmc.log(
                     f"[PunchPlay] File too short ({duration:.0f}s < "
@@ -222,7 +329,7 @@ class PunchPlayPlayer(xbmc.Player):
                 return
 
             # Content-type filter.
-            anime = is_anime(info_tag)
+            anime = bool(metadata.get("anime")) or is_anime(info_tag, path=path, metadata=metadata)
             if not self._should_track(metadata, settings, anime=anime):
                 xbmc.log(
                     f"[PunchPlay] Scrobbling disabled for "
@@ -233,10 +340,13 @@ class PunchPlayPlayer(xbmc.Player):
 
             self._metadata = metadata
             self._is_playing = True
+            self._playback_session_id = str(uuid.uuid4())
+            self._stop_emitted = False
             self._last_position = 0.0
             self._last_duration = 0.0
 
-            position = self.getTime()
+            captured = self._capture_position()
+            position = captured[0] if captured else 0.0
             payload = self._build_payload(metadata, position, duration)
 
             xbmc.log(
@@ -247,7 +357,7 @@ class PunchPlayPlayer(xbmc.Player):
 
             # Attempt to flush any offline queue before the new event.
             self._api.flush_queue()
-            self._api.post("/api/scrobble/start", payload)
+            self._api.post(SCROBBLE_START_ENDPOINT, payload)
             self._start_heartbeat()
 
         except Exception as exc:
@@ -259,13 +369,15 @@ class PunchPlayPlayer(xbmc.Player):
         try:
             self._is_playing = False
             self._stop_heartbeat()
-            position = self.getTime()
-            duration = self.getTotalTime()
-            self._last_position = position
-            self._last_duration = duration
+            captured = self._capture_position()
+            if captured is None:
+                position = self._last_position
+                duration = self._last_duration
+            else:
+                position, duration = captured
             payload = self._build_payload(self._metadata, position, duration)
             xbmc.log(f"[PunchPlay] Paused at {position:.0f}s", xbmc.LOGDEBUG)
-            self._api.post("/api/scrobble/pause", payload)
+            self._api.post(SCROBBLE_PAUSE_ENDPOINT, payload)
         except Exception as exc:
             xbmc.log(f"[PunchPlay] onPlayBackPaused error: {exc}", xbmc.LOGDEBUG)
 
@@ -274,11 +386,15 @@ class PunchPlayPlayer(xbmc.Player):
             return
         try:
             self._is_playing = True
-            position = self.getTime()
-            duration = self.getTotalTime()
+            captured = self._capture_position()
+            if captured is None:
+                position = self._last_position
+                duration = self._last_duration
+            else:
+                position, duration = captured
             payload = self._build_payload(self._metadata, position, duration)
             xbmc.log(f"[PunchPlay] Resumed at {position:.0f}s", xbmc.LOGDEBUG)
-            self._api.post("/api/scrobble/resume", payload)
+            self._api.post(SCROBBLE_RESUME_ENDPOINT, payload)
             self._start_heartbeat()
         except Exception as exc:
             xbmc.log(f"[PunchPlay] onPlayBackResumed error: {exc}", xbmc.LOGDEBUG)
@@ -298,19 +414,20 @@ class PunchPlayPlayer(xbmc.Player):
         if self._metadata is None:
             return
         try:
-            try:
-                position = self.getTime()
-                duration = self.getTotalTime()
-                self._last_position = position
-                self._last_duration = duration
-            except Exception:
+            captured = self._capture_position()
+            if captured is None:
                 # Player already closed — use last cached values.
                 position = self._last_position
                 duration = self._last_duration
+            else:
+                position, duration = captured
+            if duration > 0 and position + STOP_COMPLETE_GRACE_SECS >= duration:
+                position = duration
             payload = self._build_payload(self._metadata, position, duration)
+            payload["watched_threshold"] = settings["watched_threshold"]
             watched = duration > 0 and payload["progress"] >= settings["watched_threshold"]
+            payload["watched"] = watched
             if watched:
-                payload["watched"] = True
                 xbmc.log(
                     f"[PunchPlay] Watched threshold met "
                     f"({payload['progress']:.0%} >= {settings['watched_threshold']:.0%})",
@@ -321,9 +438,11 @@ class PunchPlayPlayer(xbmc.Player):
                 f"pos={payload['position_seconds']}s",
                 xbmc.LOGINFO,
             )
-            stop_resp = self._api.post("/api/scrobble/stop", payload)
+            if self._playback_session_id and self._cache is not None:
+                self._cache.delete_pending_scrobbles_for_session(self._playback_session_id)
+            stop_resp = self._api.post(SCROBBLE_STOP_ENDPOINT, payload)
             if watched:
-                _s = xbmcaddon.Addon(_ADDON_ID).getLocalizedString
+                _s = localize
                 title = self._metadata.get("title", "")
                 media_type = self._metadata.get("media_type", "movie")
                 if media_type == "episode":
@@ -341,18 +460,13 @@ class PunchPlayPlayer(xbmc.Player):
                 # something else (e.g. immediate next episode).
                 if not settings["rate_after_watching"]:
                     xbmc.log("[PunchPlay] Rating disabled in settings", xbmc.LOGINFO)
-                elif self.isPlayingVideo():
-                    xbmc.log("[PunchPlay] Skipping rating — another video is playing", xbmc.LOGINFO)
                 else:
-                    tmdb_id = (
-                        (stop_resp.get("tmdb_id") if stop_resp else None)
-                        or self._metadata.get("tmdb_id")
-                    )
-                    xbmc.log(f"[PunchPlay] Rating check: tmdb_id={tmdb_id}", xbmc.LOGINFO)
-                    if tmdb_id:
-                        self._show_rating_dialog(tmdb_id, self._metadata)
-                    else:
-                        xbmc.log("[PunchPlay] No tmdb_id — skipping rating", xbmc.LOGINFO)
+                    merged_metadata = dict(self._metadata)
+                    if stop_resp and isinstance(stop_resp, dict):
+                        for key in ("tmdb_id", "tvdb_id", "imdb_id", "punchplay_id"):
+                            if stop_resp.get(key) is not None:
+                                merged_metadata[key] = stop_resp[key]
+                    self._maybe_prompt_for_rating(merged_metadata, settings, stop_resp=stop_resp)
         except Exception as exc:
             xbmc.log(f"[PunchPlay] Stop emit error: {exc}", xbmc.LOGDEBUG)
 
@@ -360,14 +474,84 @@ class PunchPlayPlayer(xbmc.Player):
     # Rating dialog
     # ------------------------------------------------------------------
 
-    def _show_rating_dialog(
+    def _maybe_prompt_for_rating(
         self,
-        tmdb_id: int,
         metadata: dict[str, Any],
+        settings: dict[str, Any],
+        *,
+        stop_resp: dict[str, Any] | None,
     ) -> None:
-        """Show a 1–10 rating dialog after a successful scrobble."""
+        if self.isPlayingVideo():
+            xbmc.log("[PunchPlay] Skipping rating — another video is playing", xbmc.LOGINFO)
+            return
+        if stop_resp is None and not has_reliable_rating_identity(metadata):
+            xbmc.log("[PunchPlay] Skipping rating — no reliable canonical ID", xbmc.LOGINFO)
+            return
+
+        suppression_keys = build_rating_suppression_keys(metadata)
+        if self._cache is not None:
+            if self._cache.has_rating_suppression(suppression_keys["title"]):
+                xbmc.log("[PunchPlay] Rating suppressed for title", xbmc.LOGINFO)
+                return
+            show_key = suppression_keys.get("show")
+            if show_key and self._cache.has_rating_suppression(show_key):
+                xbmc.log("[PunchPlay] Rating suppressed for show", xbmc.LOGINFO)
+                return
+
+        delay_secs = max(0, int(settings.get("rating_prompt_delay") or 0))
+        if delay_secs:
+            monitor = xbmc.Monitor()
+            deadline = time.monotonic() + delay_secs
+            while time.monotonic() < deadline:
+                if monitor.abortRequested():
+                    xbmc.log("[PunchPlay] Skipping rating — Kodi is shutting down", xbmc.LOGINFO)
+                    return
+                if self.isPlayingVideo():
+                    xbmc.log("[PunchPlay] Skipping rating — autoplay resumed", xbmc.LOGINFO)
+                    return
+                monitor.waitForAbort(0.25)
+
+        title = metadata.get("title", "")
+        _s = localize
+        options = [
+            _s(32093),
+            _s(32094),
+            _s(32095),
+        ]
+        option_map = ["rate_now", "later", "never_title"]
+        if metadata.get("media_type") == "episode":
+            options.append(_s(32096))
+            option_map.append("never_show")
+        options.append(_s(32097))
+        option_map.append("disable")
+
+        choice = xbmcgui.Dialog().select(
+            _s(32092).format(title),
+            options,
+        )
+        if choice < 0:
+            return
+        action = option_map[choice]
+        if action == "later":
+            return
+        if action == "never_title":
+            if self._cache is not None:
+                self._cache.set_rating_suppression(suppression_keys["title"], "title")
+            return
+        if action == "never_show":
+            if self._cache is not None and suppression_keys.get("show"):
+                self._cache.set_rating_suppression(suppression_keys["show"], "show")
+            return
+        if action == "disable":
+            get_addon().setSettingBool("rate_after_watching", False)
+            return
+
+        self._show_rating_dialog(metadata)
+
+    def _show_rating_dialog(self, metadata: dict[str, Any]) -> None:
+        """Show a 1–10 rating dialog after a completed scrobble."""
         try:
-            _s = xbmcaddon.Addon(_ADDON_ID).getLocalizedString
+            _s = localize
             media_type = metadata.get("media_type", "movie")
             title = metadata.get("title", "")
 
@@ -380,15 +564,11 @@ class PunchPlayPlayer(xbmc.Player):
                 else:
                     heading = _s(32021).format(title)
             else:
-                heading = _s(32021).format(title)
+                    heading = _s(32021).format(title)
 
             from rating_dialog import RatingDialog
 
-            addon = xbmcaddon.Addon(_ADDON_ID)
-            bg_path = os.path.join(
-                addon.getAddonInfo("path"),
-                "resources", "media", "background.png",
-            )
+            bg_path = os.path.join(get_addon_path(), "resources", "media", "background.png")
             rate_dlg = RatingDialog(
                 bg_path=bg_path,
                 heading=heading,
@@ -405,16 +585,23 @@ class PunchPlayPlayer(xbmc.Player):
 
             rate_payload: dict[str, Any] = {
                 "media_type": media_type,
-                "tmdb_id": tmdb_id,
                 "rating": rating,
+                "event_id": str(uuid.uuid4()),
+                "client_version": self._client_version,
             }
-            if media_type == "episode":
-                if metadata.get("season") is not None:
-                    rate_payload["season"] = metadata["season"]
-                if metadata.get("episode") is not None:
-                    rate_payload["episode"] = metadata["episode"]
+            for key in (
+                "tmdb_id",
+                "tvdb_id",
+                "imdb_id",
+                "punchplay_id",
+                "season",
+                "episode",
+                "absolute_episode",
+            ):
+                if metadata.get(key) is not None:
+                    rate_payload[key] = metadata[key]
 
-            self._api.post_immediate("/api/scrobble/rate", rate_payload)
+            self._api.post_immediate(SCROBBLE_RATE_ENDPOINT, rate_payload)
             xbmc.log(
                 f"[PunchPlay] Rated {title!r} {rating}/10",
                 xbmc.LOGINFO,
@@ -423,14 +610,17 @@ class PunchPlayPlayer(xbmc.Player):
             xbmc.log(f"[PunchPlay] Rating dialog error: {exc}", xbmc.LOGDEBUG)
 
     def _handle_stop(self) -> None:
-        if self._metadata is None:
+        if self._metadata is None or self._stop_emitted:
             return
         try:
+            self._stop_emitted = True
             self._is_playing = False
             self._stop_heartbeat()
             self._emit_stop(self._settings())
         finally:
             self._metadata = None
+            self._playback_session_id = None
+            self._stop_emitted = False
 
     # ------------------------------------------------------------------
     # Cleanup (called on service shutdown)
@@ -440,3 +630,5 @@ class PunchPlayPlayer(xbmc.Player):
         self._is_playing = False
         self._stop_heartbeat()
         self._metadata = None
+        self._playback_session_id = None
+        self._stop_emitted = False

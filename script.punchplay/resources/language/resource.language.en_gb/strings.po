@@ -1,4 +1,4 @@
-# PunchPlay Scrobble
+# PunchPlay
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -115,7 +115,7 @@ msgid "Syncing episodes… {0}/{1}"
 msgstr ""
 
 msgctxt "#32027"
-msgid "Imported {0} movies, {1} episodes."
+msgid "Imported {0}. Skipped {1} already watched. {2} unmatched."
 msgstr ""
 
 msgctxt "#32028"
@@ -136,4 +136,336 @@ msgstr ""
 
 msgctxt "#32032"
 msgid "Not logged in."
+msgstr ""
+
+msgctxt "#32033"
+msgid "Connection"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Backend URL"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Login to PunchPlay"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Logout"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Scrobbling"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Scrobble movies"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Scrobble TV shows"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Scrobble anime"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Show scrobble notifications"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Show notifications during playback"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Watched threshold (%)"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Minimum file length (minutes)"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Heartbeat interval (seconds)"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Library"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Account"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Ratings"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Notifications"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Status & Debug"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Test PunchPlay Connection"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Show Status"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Export Debug Info"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Clear Offline Queue"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Connected as {0}"
+msgstr ""
+
+msgctxt "#32056"
+msgid "PunchPlay is reachable, but you are not logged in."
+msgstr ""
+
+msgctxt "#32057"
+msgid "Could not reach PunchPlay."
+msgstr ""
+
+msgctxt "#32058"
+msgid "Session expired. Please log in again."
+msgstr ""
+
+msgctxt "#32059"
+msgid "PunchPlay Status"
+msgstr ""
+
+msgctxt "#32060"
+msgid "Connection: {0}"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Account: {0}"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Backend URL: {0}"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Device ID: {0}"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Offline queue: {0}"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Oldest queued event: {0}"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Last successful event: {0}"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Last error: {0}"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Addon version: {0}"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Kodi version: {0}"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Never"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Unknown"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Clear {0} queued PunchPlay events?"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Offline queue cleared."
+msgstr ""
+
+msgctxt "#32074"
+msgid "Debug info exported: {0}"
+msgstr ""
+
+msgctxt "#32075"
+msgid "You have {0} unsynced PunchPlay events. Logging out will delete them. Continue?"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Cancelled."
+msgstr ""
+
+msgctxt "#32077"
+msgid "Queue already empty."
+msgstr ""
+
+msgctxt "#32078"
+msgid "Not connected"
+msgstr ""
+
+msgctxt "#32079"
+msgid "Connected"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Just now"
+msgstr ""
+
+msgctxt "#32081"
+msgid "{0} minute(s) ago"
+msgstr ""
+
+msgctxt "#32082"
+msgid "{0} hour(s) ago"
+msgstr ""
+
+msgctxt "#32083"
+msgid "{0} day(s) ago"
+msgstr ""
+
+msgctxt "#32084"
+msgid "No queued events"
+msgstr ""
+
+msgctxt "#32085"
+msgid "No successful events yet"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Could not export debug info: {0}"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Backend URL is invalid or insecure: {0}"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Anime episode format"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Rate {0}?"
+msgstr ""
+
+msgctxt "#32093"
+msgid "Rate now"
+msgstr ""
+
+msgctxt "#32094"
+msgid "Later"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Never for this title"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Never for this show"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Disable rating prompts"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Valid"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Invalid"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Backend config: {0}"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Queued endpoints: {0}"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Identifier cache: {0}"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Last identify: {0}"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Backend error: {0}"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Verbose debug export may include file paths from queued events. Continue?"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Previewing Kodi Library Import"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Would import {0}. Skip {1} duplicates. {2} unmatched."
+msgstr ""
+
+msgctxt "#32108"
+msgid "Preview complete. Import watched history now?"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Preview Library Import"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Rating prompt delay (seconds)"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Season/Episode"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Absolute episodes"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Export Verbose Debug Info"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Developer mode"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Allow insecure HTTP backend URL"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Library import preview failed: {0}"
 msgstr ""

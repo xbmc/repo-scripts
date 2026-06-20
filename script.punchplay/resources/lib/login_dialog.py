@@ -143,6 +143,7 @@ class LoginDialog(xbmcgui.WindowDialog):
         # calling self.close() directly from a background thread is
         # unsafe in Kodi's UI framework.
         import xbmc
+
         xbmc.executebuiltin("Action(Back)")
 
     def onAction(self, action) -> None:  # type: ignore[override]
