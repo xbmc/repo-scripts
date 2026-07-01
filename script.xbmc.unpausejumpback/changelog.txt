@@ -1,3 +1,7 @@
+v3.0.7
+- (User request) jumpback even if pause occurs within jumpback window
+- https://forum.kodi.tv/showthread.php?tid=355778&pid=3294811#pid3294811
+
 v3.0.6
 - Minor updates for Piers (use new module Logger functions)
 

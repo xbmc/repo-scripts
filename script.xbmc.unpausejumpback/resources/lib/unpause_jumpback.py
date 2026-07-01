@@ -6,7 +6,7 @@ when resuming playback after a pause.
 
 The add-on supports multiple jumpback modes, with configurable timing:
 
-- Jump back on resume (default behavior)
+- Jump back on resume (default behaviour)
 - Jump back on pause (for low-power systems)
 - Jump back on playback start from resume points
 - Jump back after fast-forward/rewind operations
@@ -27,7 +27,7 @@ def run():
     """
     Main entry point for the add-on.
 
-    Initializes the logger, creates player and monitor instances, and runs
+    Initialises the logger, creates player and monitor instances, and runs
     the main monitoring loop. Handles cleanup on exit or abort signals.
 
     The function will continue running until Kodi signals an abort request
@@ -204,8 +204,8 @@ class MyPlayer(xbmc.Player):
         Handle playback resume events (default jumpback mode).
 
         Called when playback is resumed after being paused. This is the default
-        behavior where the pause position remains where the user actually paused,
-        which is usually the desired behavior.
+        behaviour where the pause position remains where the user actually paused,
+        which is usually the desired behaviour.
 
         When jump_back_on_resume is enabled:
         - Checks exclusion settings for the current file
@@ -239,12 +239,17 @@ class MyPlayer(xbmc.Player):
                 current_time = self.getTime()
                 if (self.jump_back_secs_after_pause != 0
                         and self.isPlayingVideo()
-                        and current_time > self.jump_back_secs_after_pause
+                        and current_time > 0
                         and self.paused_time > 0
                         and (time.time() - self.paused_time) > self.wait_for_jumpback):
-                    resume_time = current_time - self.jump_back_secs_after_pause
-                    self.seekTime(resume_time)
-                    Logger.info(f'Resumed, with {int(self.jump_back_secs_after_pause)}s jump back')
+                    if current_time > self.jump_back_secs_after_pause:
+                        resume_time = current_time - self.jump_back_secs_after_pause
+                        self.seekTime(resume_time)
+                        Logger.info(f'Resumed, with {int(self.jump_back_secs_after_pause)}s jump back')
+                    else:
+                        # Paused within the jump back window - round off to the very start instead of not seeking at all
+                        self.seekTime(0)
+                        Logger.info('Resumed near the start of the video - jumping back to 0:00 instead')
 
                 self.paused_time = 0
 
@@ -282,13 +287,22 @@ class MyPlayer(xbmc.Player):
             Logger.info(f'Playback paused - ignoring because [{_filename}] is in exclusion settings.')
             return
 
-        # For low power systems, perform jumpback during pause period
-        # Prevents janky resume experience but paused image also jumps back
-        if not self.jump_back_on_resume and self.isPlayingVideo() and 0 < self.jump_back_secs_after_pause < self.getTime():
-            jump_back_point = self.getTime() - self.jump_back_secs_after_pause
-            Logger.info(f'Playback paused - jumping back {self.jump_back_secs_after_pause}s to: {int(jump_back_point)} seconds')
-            xbmc.executebuiltin(
+        # For low-power systems, or simply if preferred by the user, perform jumpback during the paused period
+        # Prevents janky resume experience, but paused image also jumps back so if e.g. you're trying to read something, you'll lose the image
+        if not self.jump_back_on_resume and self.isPlayingVideo() and self.jump_back_secs_after_pause > 0:
+            current_time = self.getTime()
+            if current_time > self.jump_back_secs_after_pause:
+                jump_back_point = current_time - self.jump_back_secs_after_pause
+                Logger.info(f'Playback paused - jumping back {self.jump_back_secs_after_pause}s to: {int(jump_back_point)} seconds')
+                xbmc.executebuiltin(
                     f'AlarmClock(JumpbackPaused, Seek(-{self.jump_back_secs_after_pause}), 00:00:{int(self.wait_for_jumpback):02d}, silent), silent)')
+            elif current_time > 0:
+                # Paused within the jump back window - round off to the very start instead of not seeking at all.
+                # Note: we deliberately seek back by -current_time (relative) rather than an absolute Seek(0),
+                # as Kodi's Seek builtin silently no-ops on a literal 0 argument when used with an AlarmClock, it seems
+                Logger.info('Playback paused near the start of the video - jumping back to 0:00 instead')
+                xbmc.executebuiltin(
+                    f'AlarmClock(JumpbackPaused, Seek(-{int(current_time) + 1}), 00:00:{int(self.wait_for_jumpback):02d}, silent), silent)')
 
     def onAVStarted(self):
         """
@@ -330,12 +344,18 @@ class MyPlayer(xbmc.Player):
                 Logger.info(f"Ignored because '{_filename}' is in exclusion settings.")
                 return
             else:
-                if current_time > 0 and 0 < self.jump_back_secs_after_pause < current_time:
-                    resume_time = current_time - self.jump_back_secs_after_pause
-                    Logger.info(f"Resuming playback from saved time: {int(current_time)} "
-                                f"with jump back seconds: {self.jump_back_secs_after_pause}, "
-                                f"thus resume time: {int(resume_time)}")
-                    self.seekTime(resume_time)
+                if self.jump_back_secs_after_pause > 0 and current_time > 0:
+                    if current_time > self.jump_back_secs_after_pause:
+                        resume_time = current_time - self.jump_back_secs_after_pause
+                        Logger.info(f"Resuming playback from saved time: {int(current_time)} "
+                                    f"with jump back seconds: {self.jump_back_secs_after_pause}, "
+                                    f"thus resume time: {int(resume_time)}")
+                        self.seekTime(resume_time)
+                    else:
+                        # Saved resume point is within the jump back window - round off to the very start instead of not seeking at all
+                        Logger.info(f"Saved resume time ({int(current_time)}) is within the jump back window - "
+                                    f"resuming from 0:00 instead")
+                        self.seekTime(0)
 
     def onPlayBackSpeedChanged(self, speed):
         """
@@ -351,7 +371,7 @@ class MyPlayer(xbmc.Player):
         - Speeds supported: 2x, 4x, 8x, 16x, 32x
 
         Args:
-            speed (int): The new playback speed (1 = normal, >1 = fast-forward, 
+            speed (int): The new playback speed (1 = normal, >1 = fast-forward,
                         <0 = rewind, 0 = paused)
         """
         prev_speed = self.last_playback_speed
@@ -416,7 +436,7 @@ class MyMonitor(xbmc.Monitor):
     """
 
     def __init__(self):
-        """Initialize the MyMonitor instance."""
+        """Initialise the MyMonitor instance."""
         super().__init__()
         Logger.debug('MyMonitor - init')
 
@@ -425,7 +445,7 @@ class MyMonitor(xbmc.Monitor):
         Handle add-on settings change events.
 
         Called when the user changes settings in the add-on configuration.
-        Reloads settings in the player if it's initialized, or defers loading
+        Reloads settings in the player if it's initialised, or defers loading
         until the player is available.
 
         This ensures that configuration changes take effect immediately without

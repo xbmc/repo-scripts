@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.6" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
+<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.7" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.bossanova808" version="1.0.2"/>
@@ -8,6 +8,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Kodi automatic jump back on un-pausing of videos</summary>
     <summary lang="bg_BG">Превърта назад след пауза</summary>
+    <summary lang="sv_SE">Kodi hoppar automatiskt tillbaka när videor återupptas efter paus</summary>
     <description lang="en_GB">
         This addon will jump back a number of seconds whenever a video is un-paused - to make sure you don't miss anything.
         You can set the amount of seconds to jump back, and the minimum duration of the pause before the addon will trigger a jump back.
@@ -19,14 +20,20 @@
         Може да определите колко време назад да ви връща скока както и след колко време в режим "На пауза" да се активира функцията.
         Има и възможност за скок напред / назад след превъртане напред или назад за дефиниран период от време.
     </description>
+    <description lang="sv_SE">
+        Detta tillägg hoppar tillbaka ett antal sekunder varje gång en video spelas upp igen efter paus – så att du inte missar något.
+        Du kan ställa in antalet sekunder som du vill hoppa tillbaka och den minsta pauslängden innan tillägget aktiverar ett hopp tillbaka.
+        Det går också att hoppa tillbaka eller framåt efter att ha spolat tillbaka eller framåt ett visst antal sekunder för att kompensera för överskridande.
+        (Ursprungligen skapat av Memphiz, underhållet övertaget av bossanova808 2020 för Kodi Matrix och senare).
+    </description>
     <platform>all</platform>
     <license>GPL-3.0-only</license>
     <website>https://github.com/bossanova808/script.xbmc.unpausejumpback/</website>
     <source>https://github.com/bossanova808/script.xbmc.unpausejumpback/</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=355778</forum>
     <email>bossonav808@gmail.com</email>
-    <news>v3.0.6
-- Minor updates for Piers (use new module Logger functions)
+    <news>v3.0.7
+- (User request) jumpback even if pause occurs within jumpback window
     </news>
     <assets>
       <icon>icon.png</icon>
