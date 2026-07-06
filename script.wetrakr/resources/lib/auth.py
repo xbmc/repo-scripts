@@ -47,10 +47,22 @@ def _get_api_url():
 
 
 def is_authenticated():
-    """Check if we have a saved access token."""
+    """True only if we have a saved token the server hasn't rejected.
+
+    A present-but-rejected token (auth_invalid == 'true') counts as NOT
+    authenticated, so the service re-runs the device-code flow on next launch
+    instead of trusting a stale/orphaned token forever.
+    """
     addon = xbmcaddon.Addon("script.wetrakr")
+    if addon.getSetting("auth_invalid") == "true":
+        return False
     token = addon.getSetting("api_token")
     return bool(token and token.strip())
+
+
+def token_was_rejected():
+    """True if a scrobble was rejected with HTTP 401/403 (stale token)."""
+    return xbmcaddon.Addon("script.wetrakr").getSetting("auth_invalid") == "true"
 
 
 def get_token():
@@ -60,10 +72,11 @@ def get_token():
 
 
 def logout():
-    """Clear saved token."""
+    """Clear saved token and reset the rejection flag."""
     addon = xbmcaddon.Addon("script.wetrakr")
     addon.setSetting("api_token", "")
     addon.setSetting("username", "")
+    addon.setSetting("auth_invalid", "false")
     _log("Logged out")
 
 
@@ -399,10 +412,11 @@ def run_device_auth_flow():
         xbmc.sleep(2500)
         dialog.close()
 
-        # Save credentials
+        # Save credentials (and clear any previous rejection flag)
         addon = xbmcaddon.Addon("script.wetrakr")
         addon.setSetting("api_token", result['access_token'])
         addon.setSetting("username", username)
+        addon.setSetting("auth_invalid", "false")
 
         _notify("WeTrakr", "Connected as {}".format(username), 5000)
         _log("Device auth completed for user: {}".format(username))

@@ -4,6 +4,9 @@
     <setting id="username" type="text" label="User" default="" enable="false" />
     <setting id="api_url" type="text" label="API URL" default="https://api.wetrakr.com" />
     <setting id="api_token" type="text" label="API Token" default="" visible="false" />
+    <!-- Set to "true" by api.py when the server rejects the token (HTTP 401/403);
+         is_authenticated() then returns False so the service forces a re-login. -->
+    <setting id="auth_invalid" type="bool" label="Auth invalid" default="false" visible="false" />
   </category>
 
   <category label="Scrobbling">

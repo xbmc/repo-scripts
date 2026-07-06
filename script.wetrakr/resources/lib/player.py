@@ -65,6 +65,10 @@ class WeTrakrPlayer(xbmc.Player):
         self.media_type = None
         self.last_progress = 0.0
         self.poster_art = None
+        # Title of a scrobble whose "Scrobbled" toast is deferred until playback
+        # ends (see _send_scrobble / _flush_scrobble_notify). None = nothing
+        # pending. Deferring avoids the mid-playback repaint stutter.
+        self._scrobble_notify_title = None
 
     def _get_settings(self):
         """Read current add-on settings."""
@@ -179,6 +183,7 @@ class WeTrakrPlayer(xbmc.Player):
         except Exception as e:
             self._log("onPlayBackEnded error: {}".format(str(e)), xbmc.LOGERROR)
         finally:
+            self._flush_scrobble_notify()
             self._reset_state()
 
     def onPlayBackPaused(self):
@@ -232,6 +237,7 @@ class WeTrakrPlayer(xbmc.Player):
         except Exception as e:
             self._log("onPlayBackStopped error: {}".format(str(e)), xbmc.LOGERROR)
         finally:
+            self._flush_scrobble_notify()
             self._reset_state()
 
     # -----------------------------------------------------------------
@@ -456,5 +462,22 @@ class WeTrakrPlayer(xbmc.Player):
                 self._log("Scrobble failed: {}".format(title), xbmc.LOGWARNING)
 
         _dispatch_async(_send)
+        # Defer the "Scrobbled" toast: showing it now — mid-playback — stutters
+        # video on most devices (2026-07 survey). Stash the title and flush it
+        # once, with force=True, from onPlayBackEnded/onPlayBackStopped, when the
+        # player has stopped and a repaint is imperceptible.
         if settings["notify_scrobble"]:
-            _notify("WeTrakr", "Scrobbled: {}".format(title))
+            self._scrobble_notify_title = title
+
+    def _flush_scrobble_notify(self):
+        """Emit the deferred 'Scrobbled' toast, if any, now that playback ended.
+
+        Called from onPlayBackEnded/onPlayBackStopped before state is reset. Uses
+        force=True so the toast renders even though isPlayingVideo() may briefly
+        still report True during the stop transition — the video is ending, so
+        the repaint no longer stutters anything.
+        """
+        title = self._scrobble_notify_title
+        if title:
+            self._scrobble_notify_title = None
+            _notify("WeTrakr", "Scrobbled: {}".format(title), force=True)

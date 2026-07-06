@@ -154,24 +154,35 @@ def _is_video_playing():
         return False
 
 
-def notify(title, message, duration=3000):
+def notify(title, message, duration=3000, force=False):
     """Show a WeTrakr notification (fire-and-forget).
 
-    During video playback this delegates to Kodi's native toast to
-    avoid stalling the player on passthrough setups. Outside of
-    playback we render the branded dialog on a background thread.
+    Rendering ANY toast while a video is actively playing forces Kodi's skin
+    overlay/compositor to repaint over the video, which stutters playback for
+    1-2s on a wide range of devices — Android boxes, Nvidia Shield, Xiaomi,
+    Linux Flatpak — regardless of audio passthrough. This was confirmed
+    universal in the 2026-07 user survey (the native toast added in 1.1.8 did
+    NOT eliminate it), and users reported the lag disappears entirely once
+    notifications are disabled.
+
+    So during playback we skip the toast altogether. Callers that must show a
+    confirmation (the deferred "Scrobbled" toast) call again from
+    onPlayBackEnded/onPlayBackStopped with force=True, when the video is already
+    ending and a repaint is imperceptible.
     """
-    if _is_video_playing():
-        t = threading.Thread(
-            target=_native_notify,
-            args=(title, message, duration),
-            name='WeTrakrNotifyNative',
-        )
-    else:
-        t = threading.Thread(
-            target=_branded_notify,
-            args=(title, message, duration),
-            name='WeTrakrNotify',
-        )
+    playing = _is_video_playing()
+    if playing and not force:
+        return
+
+    # Forced during the stop/end transition → use the lightweight native toast
+    # (no window-stack push) to stay safe on passthrough setups. Outside of
+    # playback we render the branded dialog.
+    target = _native_notify if playing else _branded_notify
+
+    t = threading.Thread(
+        target=target,
+        args=(title, message, duration),
+        name='WeTrakrNotify',
+    )
     t.daemon = True
     t.start()

@@ -7,6 +7,7 @@ Uses urllib (available in Kodi Python) to avoid external dependencies.
 
 import json
 import xbmc
+import xbmcaddon
 
 try:
     from urllib.request import Request, urlopen
@@ -14,6 +15,20 @@ try:
 except ImportError:
     # Python 2 fallback (Kodi 18 Leia and earlier)
     from urllib2 import Request, urlopen, URLError, HTTPError
+
+
+def _flag_auth_invalid():
+    """Persist that the saved token was rejected by the server (HTTP 401/403).
+
+    The background service watches this flag and forces a fresh device-code
+    login. Without it, a stale/orphaned token keeps "working" locally (the
+    add-on still fires events and shows the Scrobbling popup) while every event
+    is silently dropped server-side. See Tigerman58, 2026-06-27.
+    """
+    try:
+        xbmcaddon.Addon("script.wetrakr").setSetting("auth_invalid", "true")
+    except Exception:
+        pass
 
 
 class WeTrakrAPI:
@@ -53,6 +68,17 @@ class WeTrakrAPI:
                 xbmc.log("[WeTrakr] Response: {}".format(status), xbmc.LOGINFO)
             return 200 <= status < 300
         except HTTPError as e:
+            if e.code in (401, 403):
+                # The server no longer recognises this token (orphaned/expired).
+                # Flag it so the service triggers a re-login instead of looping
+                # forever sending events that get dropped.
+                xbmc.log(
+                    "[WeTrakr] Auth rejected (HTTP {}): saved token no longer valid "
+                    "— re-login required".format(e.code),
+                    xbmc.LOGWARNING
+                )
+                _flag_auth_invalid()
+                return False
             xbmc.log(
                 "[WeTrakr] HTTP error {}: {}".format(e.code, e.reason),
                 xbmc.LOGWARNING
