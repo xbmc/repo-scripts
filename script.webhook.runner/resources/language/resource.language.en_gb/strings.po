@@ -1,0 +1,46 @@
+# Kodi Media Center language file
+# Addon Name: Webhook Runner
+# Addon id: script.webhook.runner
+# Addon Provider: Breezyslasher
+msgid ""
+msgstr ""
+"Project-Id-Version: script.webhook.runner\n"
+"Report-Msgid-Bugs-To: https://github.com/Breezyslasher/Kodi-Addons\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+# --- Settings ---
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Show notifications"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Enable event triggers (playback / system)"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Default URL prefix"
+msgstr ""
+
+# --- Keymap permission (opt-in gate) ---
+msgctxt "#32004"
+msgid "Keymap Permission"
+msgstr ""
+
+msgctxt "#32005"
+msgid "To map a webhook to a remote button, this add-on needs to write Kodi's keymap file (userdata/keymaps/gen.xml), which is outside the add-on's own folder. Allow this? Event triggers do not require it."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Allow"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Deny"
+msgstr ""
