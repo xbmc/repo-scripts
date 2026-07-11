@@ -1,0 +1,107 @@
+# Kodi Media Center Swedish language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2020-04-26 11:43+0000\n"
+"PO-Revision-Date: 2025-10-22 15:45+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
+"Language-Team: sv\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
+
+msgctxt "#32000"
+msgid "Jump back on un-pause"
+msgstr "Hoppa tillbaka vid avpausning"
+
+msgctxt "#32001"
+msgid "Jump back how many seconds?"
+msgstr "Hur många sekunder tillbaka?"
+
+msgctxt "#32002"
+msgid "Minimum pause time before jumpback"
+msgstr "Minsta paustid före tillbakahopp"
+
+msgctxt "#32010"
+msgid "Jump back after fast forward"
+msgstr "Hoppa tillbaka efter snabbspolning"
+
+msgctxt "#32011"
+msgid "Jump after x2"
+msgstr "Hoppa efter x2"
+
+msgctxt "#32012"
+msgid "Jump after x4"
+msgstr "Hoppa efter x4"
+
+msgctxt "#32013"
+msgid "Jump after x8"
+msgstr "Hoppa efter x8"
+
+msgctxt "#32014"
+msgid "Jump after x16"
+msgstr "Hoppa efter x16"
+
+msgctxt "#32015"
+msgid "Jump after x32"
+msgstr "Hoppa efter x32"
+
+msgctxt "#32020"
+msgid "Jump forward after rewind"
+msgstr "Hoppa framåt efter tillbakaspolning"
+
+msgctxt "#32021"
+msgid "Jump after x2"
+msgstr "Hoppa efter x2"
+
+msgctxt "#32022"
+msgid "Jump after x4"
+msgstr "Hoppa efter x4"
+
+msgctxt "#32023"
+msgid "Jump after x8"
+msgstr "Hoppa efter x8"
+
+msgctxt "#32024"
+msgid "Jump after x16"
+msgstr "Hoppa efter x16"
+
+msgctxt "#32025"
+msgid "Jump after x32"
+msgstr "Hoppa efter x32"
+
+msgctxt "#32030"
+msgid "Exclude"
+msgstr "Exkludera"
+
+msgctxt "#32031"
+msgid "Exclude Live TV"
+msgstr "Exkludera direktsänd TV"
+
+msgctxt "#32032"
+msgid "Exclude HTTP sources"
+msgstr "Exkludera HTTP-källor"
+
+msgctxt "#32033"
+msgid "Exclude Path"
+msgstr "Exkludera sökväg"
+
+msgctxt "#32034"
+msgid "Folder's path (and subfolders)"
+msgstr "Mappens sökväg (och undermappar)"
+
+msgctxt "#32040"
+msgid "Actually do jump back at resume (on), or pause (off)"
+msgstr "Hoppar faktiskt tillbaka vid återuppta (på), eller pausa (av)"
+
+msgctxt "#32042"
+msgid "(For low power systems, jump back on pause may behave more smoothly)"
+msgstr "(För system med låg strömeffekt kan hoppa tillbaka vid paus fungera smidigare)"
+
+msgctxt "#32043"
+msgid "Also jump back on playback started from resume point?"
+msgstr "Hoppa även tillbaka vid uppspelning som startats från återupptagningspunkten?"
