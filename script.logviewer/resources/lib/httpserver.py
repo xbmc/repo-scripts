@@ -35,7 +35,7 @@ def tail_handler(ctx):
         ctx.send_response_and_end(500)
         return
 
-    offset = int(ctx.request.get("offset", 0))
+    offset = int(ctx.query.get("offset", 0))
     reader = LogReader(ctx.log_path)
     reader.set_offset(offset)
     content = encode(reader.tail())
@@ -58,7 +58,7 @@ def favicon_handler(ctx):
         shutil.copyfileobj(f, ctx.wfile)
 
 
-class ServerHandler(BaseHTTPRequestHandler):
+class HTTPRequestHandler(BaseHTTPRequestHandler, object):
     protocol_version = "HTTP/1.1"
     log_path = log_location(False)
 
@@ -68,23 +68,29 @@ class ServerHandler(BaseHTTPRequestHandler):
         "/favicon.ico": favicon_handler,
     }
 
-    # noinspection PyPep8Naming
+    # noinspection PyPep8Naming, PyAttributeOutsideInit
     def do_GET(self):
+        self._response_started = False
         try:
-            # noinspection PyAttributeOutsideInit
             self.url = urlparse.urlsplit(self.path)
-            self.request = dict(urlparse.parse_qsl(self.url.query))
-            if self.url.path in self.get_routes:
-                self.get_routes[self.url.path](self)
+            self.query = dict(urlparse.parse_qsl(self.url.query))
+
+            handler = self.get_routes.get(self.url.path)
+            if handler is None:
+                self.send_response_and_end(404)
             else:
-                self.send_response(404)
-                self.end_headers()
-        except BrokenPipeError as e:
-            raise e
+                handler(self)
         except Exception as e:
-            logging.error(e)
-            self.send_response(500)
-            self.end_headers()
+            if self._response_started:
+                raise e
+            else:
+                logging.error(e, exc_info=True)
+                self.send_response_and_end(500)
+
+    def send_response(self, *args, **kwargs):
+        # noinspection PyAttributeOutsideInit
+        self._response_started = True
+        super(HTTPRequestHandler, self).send_response(*args, **kwargs)
 
     def send_response_and_end(self, code, message=None):
         self.send_response(code, message=message)

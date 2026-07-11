@@ -1,0 +1,103 @@
+# Kodi Media Center language file
+# Addon Name: Log Viewer for Kodi
+# Addon id: scripy.logviewer
+# Addon Provider: i96751414
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-06 12:03+0100\n"
+"PO-Revision-Date: 2025-10-01 11:47+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
+"Language-Team: sv\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.7\n"
+
+msgctxt "#30000"
+msgid "Log Viewer for Kodi"
+msgstr "Loggvisare för Kodi"
+
+msgctxt "#30001"
+msgid "Show Log"
+msgstr "Visa logg"
+
+msgctxt "#30002"
+msgid "Show old Log"
+msgstr "Visa gammal logg"
+
+msgctxt "#30003"
+msgid "Invalid number of lines. Showing full log"
+msgstr "Ogiltigt antal rader. Visar hela loggen"
+
+msgctxt "#30004"
+msgid "Failed to open:"
+msgstr "Misslyckades med att öppna:"
+
+msgctxt "#30005"
+msgid "Invert Log (most recent first)"
+msgstr "Invertera loggen (nyaste först)"
+
+msgctxt "#30006"
+msgid "All"
+msgstr "Alla"
+
+msgctxt "#30007"
+msgid "100"
+msgstr "100"
+
+msgctxt "#30008"
+msgid "50"
+msgstr "50"
+
+msgctxt "#30009"
+msgid "20"
+msgstr "20"
+
+msgctxt "#30010"
+msgid "Number of lines to show"
+msgstr "Antal rader som ska visas"
+
+msgctxt "#30011"
+msgid "Settings"
+msgstr "Inställningar"
+
+msgctxt "#30012"
+msgid "General"
+msgstr "Allmänt"
+
+msgctxt "#30013"
+msgid "Use custom text box"
+msgstr "Använd anpassad textruta"
+
+msgctxt "#30014"
+msgid "Show log when an error occurs"
+msgstr "Visa logg när ett fel inträffar"
+
+msgctxt "#30015"
+msgid "Upload Log file"
+msgstr "Skicka upp loggfil"
+
+msgctxt "#30016"
+msgid "Error"
+msgstr "Fel"
+
+msgctxt "#30017"
+msgid "Unable to locate log file..."
+msgstr "Det går inte att hitta loggfilen..."
+
+msgctxt "#30018"
+msgid "Parse exceptions only"
+msgstr "Tolka endast undantag"
+
+msgctxt "#30019"
+msgid "Enable HTTP server"
+msgstr "Aktivera HTTP-server"
+
+msgctxt "#30020"
+msgid "Port"
+msgstr "Port"

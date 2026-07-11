@@ -7,7 +7,7 @@ import xbmc
 import xbmcgui
 
 from resources.lib import logviewer, utils
-from resources.lib.httpserver import ThreadedHTTPServer, ServerHandler
+from resources.lib.httpserver import ThreadedHTTPServer, HTTPRequestHandler
 from resources.lib.logreader import LogReader
 
 
@@ -80,7 +80,7 @@ class HTTPServerRunner(threading.Thread):
         super(HTTPServerRunner, self).__init__()
 
     def run(self):
-        self._server = server = ThreadedHTTPServer(("", self._port), ServerHandler)
+        self._server = server = ThreadedHTTPServer(("", self._port), HTTPRequestHandler)
         logging.debug("Server started at port %d", self._port)
         logging.debug("Local IP is %s", xbmc.getIPAddress())
         server.serve_forever()
@@ -120,9 +120,9 @@ class ErrorPopupRunner(threading.Thread):
 
         while not self._monitor.waitForAbort(1) and self._running:
             content = reader.tail()
-            parsed_errors = logviewer.parse_errors(content, set_style=True, exceptions_only=exceptions)
-            if parsed_errors:
-                logviewer.window(utils.ADDON_NAME, parsed_errors, default=utils.is_default_window())
+            errors = logviewer.get_errors(content, set_style=True, exceptions_only=exceptions)
+            if errors:
+                logviewer.window(utils.ADDON_NAME, errors, default=utils.is_default_window())
 
     def stop(self):
         self._running = False
