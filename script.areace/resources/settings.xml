@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="Telegram">
+        <setting id="telegram.isEnabled" type="bool" label="Enable" default="false"/>
+        <setting id="telegram.token" type="text" label="Bot Token" option="hidden" enable="!eq(-1,)" default=""/>
+        <setting label="Limit" type="slider" id="telegram.offset" default="10" range="0,5,100" option="int" enable="!eq(-1,)"/>
+    </category>
+</settings>

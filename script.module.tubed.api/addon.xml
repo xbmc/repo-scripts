@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.tubed.api" name="Tubed API" version="2.0.0" provider-name="anxdpanic">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.module" library="resources/lib/src/"/>
+    <extension point="xbmc.service" library="resources/lib/service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <news>
+- removed support for Kodi Matrix v19
+        </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+        </assets>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <source>https://github.com/anxdpanic/script.module.tubed.api</source>
+        <summary lang="cs_CZ">Doplněk pro přístup k YouTube Data API</summary>
+        <summary lang="da_DK">Et modul for adgang til YouTubes data-API</summary>
+        <summary lang="de_DE">Ein Modul für den Zugriff auf die YouTube-Daten-API</summary>
+        <summary lang="el_GR">Μονάδα για προσπέλαση του API δεδομένων του Youtube</summary>
+        <summary lang="en_AU">A module to access YouTube&apos;s Data API</summary>
+        <summary lang="en_GB">A module to access YouTube&apos;s Data API</summary>
+        <summary lang="en_US">A module to access YouTube&apos;s Data API</summary>
+        <summary lang="es_ES">Un módulo para accedee al API de Datos de YouTube</summary>
+        <summary lang="fi_FI">Moduuli YouTube Data -rajapinnan käyttöön</summary>
+        <summary lang="hr_HR">Modul za pristup YouTubovom API-ju</summary>
+        <summary lang="it_IT">Un modulo per accedere ai dati API di YouTube</summary>
+        <summary lang="ko_KR">YouTube의 데이터 API에 액세스하기 위한 모듈</summary>
+        <summary lang="ru_RU">Модуль для доступа к YouTube Data API</summary>
+        <summary lang="sk_SK">Modul na prístup k údajom API služby Youtube</summary>
+        <summary lang="zh_CN">访问 YouTube 数据 API 的模块</summary>
+        <description lang="cs_CZ">Doplněk API Tubed poskytuje pohodlný způsob přístupu k YouTube Data API pro Kodi 19+</description>
+        <description lang="da_DK">Tubed API-modulet giver en praktisk måde at få adgang til YouTubes data-API i Kodi 19+</description>
+        <description lang="de_DE">Das Tubed-API-Modul stellt eine komfortable Möglichkeit zum Zugriff auf die YouTube-Daten-API in Kodi 19+ zur Verfügung</description>
+        <description lang="el_GR">Η μονάδα Tubed API παρέχει έναν βολικό τρόπο προσπέλασης του API δεδομένων του Youtube στο Kodi 19+</description>
+        <description lang="en_AU">The Tubed API module provides a convenient way to access YouTube&apos;s Data API in Kodi 19+</description>
+        <description lang="en_GB">The Tubed API module provides a convenient way to access YouTube&apos;s Data API in Kodi 19+</description>
+        <description lang="es_ES">El módulo API Tubed provee una manera conveniente de acceder al API de Datos de YouTube en Kodi 19+</description>
+        <description lang="fi_FI">Tubed API-moduuli tarjoaa helpon tavan YouTube Data -rajapinnan käyttöön Kodi versioissa 19+</description>
+        <description lang="hr_HR">Tubed API modul omogućuje pouzdan način pristupa YouTubovom API-ju u Kodi 19+</description>
+        <description lang="it_IT">Il modulo Tubed API fornisce un modo conveniente per accedere all&apos;API dei dati di YouTube in Kodi 19+</description>
+        <description lang="ko_KR">Tubed API 모듈은 Kodi 19+에서 YouTube의 Data API에 액세스하는 편리한 방법을 제공합니다</description>
+        <description lang="ru_RU">API модуль Tubed предоставляет удобный доступ к YouTube Data API в Kodi 19+</description>
+        <description lang="zh_CN">Tubed API 模块为 Kodi 19+ 提供了访问 YouTube 数据 API 的便捷方式</description>
+    </extension>
+</addon>

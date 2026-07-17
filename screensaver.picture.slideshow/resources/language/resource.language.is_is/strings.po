@@ -1,0 +1,137 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-09-25 12:11+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/is_is/>\n"
+"Language: is_is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 5.0.2\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that displays an image slideshow"
+msgstr "Skjáhvíla sem sýnir skyggnusýningu mynda"
+
+msgctxt "Addon Description"
+msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
+msgstr "Þessi skjáhvíla sýnir þér skyggnusýningu af myndum með ýmsum myndbrellum. Það er hægt að stilla hana til að sýna aðdáendamyndir úr tónlistar eða myndskeiðasöfnum, eða úr sérsniðinni möppu með myndum"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Veita skyggnumynda"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Mappa"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Aðdáendamyndir myndskeiða"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Aðdáendamyndir tónlistar"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Myndamappa"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Birtustilling"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Myndbrellur"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Skruna"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Krossblanda"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Hliðrun og aðdráttur"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Tími í sekúndum sem á að sýna hverja mynd"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Kvarða myndir á allan skjáinn"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Sýna nafn myndar"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Nota skráarheiti"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Nota möppuheiti"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Birta myndir í handahófskenndri röð"
+
+msgctxt "#30017"
+msgid "Use full path"
+msgstr "Nota fulla slóð"
+
+# empty string with id 30017
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Nota möppu- og skráarnafn"
+
+# empty strings from id 30019 to 30020
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Sýna dagsetningu myndar"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Sýna frekari merkingar myndar"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Sýna tónlistarupplýsingar meðan lag er spilað"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Einfalt"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Meira"
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr "Halda skyggnusýningu áfram úr síðustu stöðu"
+
+# empty strings from id 30027 to 30028
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Sýna bakgrunnsmynd"
+
+msgctxt "#30030"
+msgid "Use vignette overlay"
+msgstr "Nota merki sem yfirlag"

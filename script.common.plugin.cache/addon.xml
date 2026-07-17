@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="anxdpanic, TheCollective" version="3.0.0">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.service" library="resources/lib/entry_point.py"/>
+    <extension point="xbmc.python.module" library="resources/lib/storage_server/"/>
+    <extension point="xbmc.addon.metadata">
+        <news>
+[fix] use xbmcvfs.translatePath when available, xbmc.translatePath deprecated(Matrix) and removed(Nexus) |contrib: Gujal00|
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <source>https://github.com/anxdpanic/script.common.plugin.cache</source>
+        <summary lang="en_GB">A common caching API for Kodi add-ons.</summary>
+        <description lang="en_GB">A common caching API for Kodi add-ons.</description>
+    </extension>
+</addon>

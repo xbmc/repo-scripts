@@ -1,0 +1,536 @@
+# XBMC Media Center language file
+# Addon Name: Skin Variables
+# Addon id: script.skinvariables
+# Addon Provider: jurialmunkey
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2024-04-16 55:MI+ZONE\n"
+"Last-Translator: Havokdan <havokdan@yahoo.com.br>\n"
+"Language-Team: Português do Brasil\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt-br\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: /resources/lib/script.py
+msgctxt "#32000"
+msgid "Constructing Variables..."
+msgstr "Construindo Variáveis"
+
+#: /resources/lib/script.py
+msgctxt "#32001"
+msgid "Skin Variables"
+msgstr "Variáveis da Skin"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32002"
+msgid "Skin Viewtypes"
+msgstr "Tipos de Exibição da Skin"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32003"
+msgid "Constructing Viewtypes..."
+msgstr "Construindo Tipos de Exibição"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32004"
+msgid "Choose viewtype"
+msgstr "Escolher o tipo de exibição"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32005"
+msgid "Building default rules for"
+msgstr "Construindo regras padrão para"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32006"
+msgid "Building definitions for view IDs..."
+msgstr "Criando definições para IDs de exibições..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32007"
+msgid "Building visibility expressions..."
+msgstr "Construindo expressões de visibilidade..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32008"
+msgid "Building XML..."
+msgstr "Construindo XML..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32009"
+msgid "Choose plugin to customise"
+msgstr "Escolher o plugin para personalizar "
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32010"
+msgid "Choose content to customise"
+msgstr "Escolha o conteúdo para personalizar"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32011"
+msgid "Reset all {} views..."
+msgstr "Redefinir todas as {} exibições..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32012"
+msgid "Add plugin view..."
+msgstr "Adicionar exibição do plugin..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32013"
+msgid "Customise viewtypes"
+msgstr "Personalizar tipos de exibição"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32014"
+msgid "Reset {} Views"
+msgstr "Redefiner {} Exibições"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32015"
+msgid "Do you wish to reset all {} views to default"
+msgstr "Você deseja redefinir todas as exibições {} para o padrão"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32016"
+msgid "Choose item to modify"
+msgstr "Escolha o item a ser modificado"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32017"
+msgid "Choose item to delete"
+msgstr "Escolha o item a ser excluído"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32018"
+msgid ""
+"Successfully added\n"
+"[B]{}[/B]\n"
+"to\n"
+"[B]{}[/B]"
+msgstr ""
+"Adicionado com sucesso\n"
+"[B]{}[/B]\n"
+"para\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32019"
+msgid "Import menu"
+msgstr "Importar menu"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32020"
+msgid "Added to menu"
+msgstr "Adicionado ao menu"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32021"
+msgid "Add to menu"
+msgstr "Adicionar ao menu"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32022"
+msgid "No skinshortcuts found to import."
+msgstr "Não foram encontrados atalhos de skin para importar."
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32023"
+msgid "Add as menu"
+msgstr "Adicionar como menu"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32024"
+msgid "Added as menu"
+msgstr "Adicionado como menu"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32025"
+msgid ""
+"Successfully added\n"
+"[B]{}[/B]\n"
+"as\n"
+"[B]{}[/B]"
+msgstr ""
+"Adicionado com sucesso\n"
+"[B]{}[/B]\n"
+"como\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32026"
+msgid "Overwrite menu"
+msgstr "Sobrescrever menu"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32027"
+msgid "Importing will overwrite your current menus and setup. Are you sure?"
+msgstr "A importação substituirá seus menus e configurações atuais. Tem certeza?"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32028"
+msgid ""
+"Successfully imported\n"
+"[B]{}[/B]\n"
+"to\n"
+"[B]{}[/B]"
+msgstr ""
+"Importado com sucesso\n"
+"[B]{}[/B]\n"
+"para\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32029"
+msgid "Choose item"
+msgstr "Escolha o item"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32030"
+msgid "Add another path?"
+msgstr "Adicionar outro caminho?"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32031"
+msgid "Add an additional path to the filter."
+msgstr "Adicionar um caminho adicional ao filtro."
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32032"
+msgid "[CAPITALIZE]{}[/CAPITALIZE] method"
+msgstr "Método [CAPITALIZE]{}[/CAPITALIZE]"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32033"
+msgid "Sort"
+msgstr "Ordenar"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32034"
+msgid "Enter custom [LOWERCASE]{}[/LOWERCASE] infolabel or property name"
+msgstr "Insira o rótulo de info personalizado [LOWERCASE]{}[/LOWERCASE] ou o nome da propriedade"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32035"
+msgid "Enter custom [LOWERCASE]{}[/LOWERCASE] value to match"
+msgstr "Insira o valor [LOWERCASE]{}[/LOWERCASE] personalizado para corresponder"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32036"
+msgid "Less than <"
+msgstr "Menor que <"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32037"
+msgid "Less than or equal <="
+msgstr "Menor ou igual <="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32038"
+msgid "Equal =="
+msgstr "Igual =="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32039"
+msgid "Not equal !="
+msgstr "Não é igual !="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32040"
+msgid "Greater than or equal >="
+msgstr "Maior ou igual >="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32041"
+msgid "Greater than >"
+msgstr "Maior que >"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32042"
+msgid "Delete path"
+msgstr "Excluir caminho"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32043"
+msgid "[COLOR=red][B]WARNING[/B][/COLOR]: This action cannot be undone."
+msgstr "[COLOR=red][B]AVISO[/B][/COLOR]: Esta ação não pode ser desfeita."
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32044"
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32045"
+msgid "Changes will be discarded if you do not save."
+msgstr "As alterações serão descartadas se você não salvar."
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32046"
+msgid "Generating globals"
+msgstr "Gerando globais"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32047"
+msgid "Generating content"
+msgstr "Gerando conteúdo"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32048"
+msgid "Formatting content"
+msgstr "Formatando conteúdo"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32049"
+msgid "Creating XML"
+msgstr "Criando XML"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32050"
+msgid "Add playlist"
+msgstr "Adicionar à lista de reprodução"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32051"
+msgid "Add playlist as playable shortcut or a browseable directory?"
+msgstr "Adicionar lista de reprodução como atalho reproduzível ou diretório navegável?"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32052"
+msgid "Add folder"
+msgstr "Adicionar pasta"
+
+#: /resources/lib/shortcuts/jsonrpc.py
+msgctxt "#32053"
+msgid "Building directory"
+msgstr "Construindo diretório"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32054"
+msgid "Enter profile name"
+msgstr "Digite um nome para o perfil"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32055"
+msgid "Add pin-code lock"
+msgstr "Adicionar bloqueio com código PIN"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32056"
+msgid "Adding a pin-code lock will require users to enter the code before accessing the profile."
+msgstr "Adicionar um bloqueio com código PIN exigirá que os usuários insiram o código antes de acessar o perfil."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32057"
+msgid "Enter pin-code"
+msgstr "Digite o código PIN"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32058"
+msgid "Re-enter pin-code"
+msgstr "Digite novamente o código PIN"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32059"
+msgid "Wrong pin code!"
+msgstr "Código PIN errado!"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32060"
+msgid "Incorrect pin code entered."
+msgstr "Código PIN incorreto inserido."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32061"
+msgid "Default profile"
+msgstr "Perfil padrão"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32062"
+msgid "Never logged in"
+msgstr "Nunca entrou"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32063"
+msgid "Access denied!"
+msgstr "Acesso negado!"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32064"
+msgid "Delete user profile"
+msgstr "Excluir perfil de usuário"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32065"
+msgid "This will delete the skin profile for {}."
+msgstr "Isso excluirá o perfil de skin de {}."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32066"
+msgid "Rename user profile"
+msgstr "Renomear perfil de usuário"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32067"
+msgid "No item path found!"
+msgstr "Nenhum caminho de item encontrado!"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32068"
+msgid "No path found"
+msgstr "Nenhum caminho encontrado"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32069"
+msgid "Choose menu"
+msgstr "Escolha o menu"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32070"
+msgid "Choose mode"
+msgstr "Escolha o modo"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32071"
+msgid "Add here"
+msgstr "Adicionar aqui"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32072"
+msgid "Overwrite {filename} with {content}?"
+msgstr "Substituir {filename} por {content}?"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32073"
+msgid "your {skin} menu files"
+msgstr "seus arquivos de menu {skin}"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32074"
+msgid "the menu files from the [B]{folder}[/B] folder"
+msgstr "os arquivos de menu da pasta [B]{folder}[/B]"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32075"
+msgid "Overwrite files?"
+msgstr "Sobrescrever arquivos?"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32076"
+msgid "No files found!"
+msgstr "Nenhum arquivoe ncontrado!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32077"
+msgid "Icon"
+msgstr "Ícone"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32078"
+msgid "Add item"
+msgstr "Adicionar item"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32079"
+msgid "Rebuild shortcuts"
+msgstr "Reconstruir atalhos"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32080"
+msgid "Rebuild shortcuts template to include recent changes?"
+msgstr "Reconstruir modelo de atalhos para incluir alterações recentes?"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32081"
+msgid "Restore shortcuts"
+msgstr "Restaurar atalhos"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32082"
+msgid "Restoring shortcuts resets all shortcuts to skin defaults."
+msgstr "A restauração de atalhos redefine todos os atalhos para os padrões de skin."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32083"
+msgid "Add list"
+msgstr "Adicionar à lista"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32084"
+msgid "[B][COLOR=red]WARNING[/COLOR][/B]: Adding this list will add {item_count} new items (skipping {skip_count} existing items previously added). This action cannot be undone."
+msgstr "[B][COLOR=red]AVISO[/COLOR][/B]: adicionar esta lista adicionará {item_count} novos itens (ignorando {skip_count} itens existentes adicionados anteriormente). Essa ação não pode ser desfeita."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32085"
+msgid "No new items to add!"
+msgstr "Não há novos itens para adicionar!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32086"
+msgid "This list contains {item_count} items. The current max item limit is {item_limit}. This list will not be added."
+msgstr "Esta lista contém {item_count} itens. O limite máximo de itens atual é {item_limit}. Esta lista não será adicionada."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32087"
+msgid "Delete list"
+msgstr "Excluir lista"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32088"
+msgid "[B][COLOR=red]WARNING[/COLOR][/B]: Deleting this list will remove {item_count} existing items. This action cannot be undone."
+msgstr "[B][COLOR=red]AVISO[/COLOR][/B]: excluir esta lista removerá {item_count} itens existentes. Essa ação não pode ser desfeita."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32089"
+msgid "No items to delete!"
+msgstr "Nenhum item para excluir!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32090"
+msgid "Choose shortcut"
+msgstr "Escolha o atalho"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32091"
+msgid "Refresh shortcuts"
+msgstr "Atualizar atalhos"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32092"
+msgid "Configure submenu"
+msgstr "Configurar submenu"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32093"
+msgid "Configure widgets"
+msgstr "Configurar widgets"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32094"
+msgid "Edit filters"
+msgstr "Editar filtros"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32095"
+msgid "Add new"
+msgstr "Adicionar novo"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32096"
+msgid "Add new user"
+msgstr "Adicionar novo usuário"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32097"
+msgid "Enable default user"
+msgstr "Habilitar usuário padrão"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32098"
+msgid "Disable default user"
+msgstr "Desabilitar usuário padrão"

@@ -1,0 +1,137 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-07-17 10:14+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/fi_fi/>\n"
+"Language: fi_fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that displays an image slideshow"
+msgstr "Näytönsäästäjä, joka näyttää kuvaesitystä"
+
+msgctxt "Addon Description"
+msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
+msgstr "Slideshow-näytönsäästäjä näyttää kuvaesityksen erilaisilla siirtymätehosteilla. Se voidaan määrittää esittämään musiikki- tai videokirjastojen fanart-kuvia tai tai valitun kansion kuvia."
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Esityksen kuvalähde"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Kansio"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Videokirjaston fanart-kuvat"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Musiikkikirjaston fanart-kuvat"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Kuvakansio"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Himmennystaso"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Tehoste"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Liu'utus"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Ristihäivytys"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Panorointi ja zoomaus"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Yksittäisen kuvan näyttöaika sekunteina"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skaalaa kuvat koko ruutuun"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Näytä kuvan nimi"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Ei käytössä"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Käytä tiedoston nimeä"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Käytän kansion nimeä"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Näytä kuvat satunnaisessa järjestyksessä"
+
+msgctxt "#30017"
+msgid "Use full path"
+msgstr "Käytä koko tiedostosijaintia"
+
+# empty string with id 30017
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Käytä kansion ja tiedoston nimeä"
+
+# empty strings from id 30019 to 30020
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Näytä kuvan päiväys"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Näytä lisää kuvatunnisteita"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Näytä musiikin tiedot toistettaessa ääntä"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Perus"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Laaja"
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr "Jatka kuvaesitystä aiemmasta sijainnista"
+
+# empty strings from id 30027 to 30028
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Näytä taustakuva"
+
+msgctxt "#30030"
+msgid "Use vignette overlay"
+msgstr "Käytä vinjetti-peittokuvaa"

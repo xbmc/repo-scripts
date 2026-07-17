@@ -1,0 +1,522 @@
+# XBMC Media Center language file
+# Addon Name: Skin Variables
+# Addon id: script.skinvariables
+# Addon Provider: jurialmunkey
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2024-04-21 13:18+0300\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
+"Language-Team: Finnish\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: /resources/lib/script.py
+msgctxt "#32000"
+msgid "Constructing Variables..."
+msgstr "Rakennetaan muuttujia..."
+
+#: /resources/lib/script.py
+msgctxt "#32001"
+msgid "Skin Variables"
+msgstr "Skin Variables"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32002"
+msgid "Skin Viewtypes"
+msgstr "Ulkoasun näkymätyypit"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32003"
+msgid "Constructing Viewtypes..."
+msgstr "Rakennetaan näkymätyyppejä..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32004"
+msgid "Choose viewtype"
+msgstr "Valitse näkymätyyppi"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32005"
+msgid "Building default rules for"
+msgstr "Rakennetaan oletussääntöjä kohteelle"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32006"
+msgid "Building definitions for view IDs..."
+msgstr "Rakennetaan määrityksiä näkymien tunnisteille..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32007"
+msgid "Building visibility expressions..."
+msgstr "Rakennetaan näkyvyyden ilmaisuja..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32008"
+msgid "Building XML..."
+msgstr "Rakennetaan XML..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32009"
+msgid "Choose plugin to customise"
+msgstr "Valitse mukautettava lisäosa"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32010"
+msgid "Choose content to customise"
+msgstr "Valitse mukautettava sisältö"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32011"
+msgid "Reset all {} views..."
+msgstr "Palauta kaikki {} näkymää..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32012"
+msgid "Add plugin view..."
+msgstr "Lisää lisäosanäkymä..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32013"
+msgid "Customise viewtypes"
+msgstr "Mukauta näkymätyyppejä"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32014"
+msgid "Reset {} Views"
+msgstr "Palauta {} näkymää"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32015"
+msgid "Do you wish to reset all {} views to default"
+msgstr "Haluatko palauttaa kaikkien {} näkymän oletukset"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32016"
+msgid "Choose item to modify"
+msgstr "Valitse muokattava kohde"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32017"
+msgid "Choose item to delete"
+msgstr "Valitse poistettava kohde"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32018"
+msgid ""
+"Successfully added\n"
+"[B]{}[/B]\n"
+"to\n"
+"[B]{}[/B]"
+msgstr ""
+"Lisäys onnistui:\n"
+"[B]{}[/B]\n"
+"kohteeseen\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32019"
+msgid "Import menu"
+msgstr "Tuontivalikko"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32020"
+msgid "Added to menu"
+msgstr "Lisätty valikkoon"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32021"
+msgid "Add to menu"
+msgstr "Lisää valikkoon"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32022"
+msgid "No skinshortcuts found to import."
+msgstr "Tuotavia skinshortcut-valintoja ei löytynyt."
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32023"
+msgid "Add as menu"
+msgstr "Lisää valikkona"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32024"
+msgid "Added as menu"
+msgstr "Lisätty valikkona"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32025"
+msgid ""
+"Successfully added\n"
+"[B]{}[/B]\n"
+"as\n"
+"[B]{}[/B]"
+msgstr ""
+"Lisäys onnistui:\n"
+"[B]{}[/B]\n"
+"tyypillä\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32026"
+msgid "Overwrite menu"
+msgstr "Korvaa valikko"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32027"
+msgid "Importing will overwrite your current menus and setup. Are you sure?"
+msgstr "Tuonti korvaa nykyiset valikot ja määritykset. Haluatko varmasti jatkaa?"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32028"
+msgid ""
+"Successfully imported\n"
+"[B]{}[/B]\n"
+"to\n"
+"[B]{}[/B]"
+msgstr ""
+"Tuonti onnistui:\n"
+"[B]{}[/B]\n"
+"kohteeseen\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32029"
+msgid "Choose item"
+msgstr "Valitse kohde"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32030"
+msgid "Add another path?"
+msgstr "Lisätäänkö sijainti?"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32031"
+msgid "Add an additional path to the filter."
+msgstr "Lisää suodattimeen uusi sijainti."
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32032"
+msgid "[CAPITALIZE]{}[/CAPITALIZE] method"
+msgstr "[CAPITALIZE]{}[/CAPITALIZE] tapa"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32033"
+msgid "Sort"
+msgstr "Järjestä"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32034"
+msgid "Enter custom [LOWERCASE]{}[/LOWERCASE] infolabel or property name"
+msgstr "Syötä mukautettu [LOWERCASE]{}[/LOWERCASE] -infolabel- tai -property-nimi"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32035"
+msgid "Enter custom [LOWERCASE]{}[/LOWERCASE] value to match"
+msgstr "Syötä oma [LOWERCASE]{}[/LOWERCASE] -tavoitearvo"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32036"
+msgid "Less than <"
+msgstr "Pienempi kuin <"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32037"
+msgid "Less than or equal <="
+msgstr "Pienempi tai sama kuin <="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32038"
+msgid "Equal =="
+msgstr "Sama =="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32039"
+msgid "Not equal !="
+msgstr "Ei sama !="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32040"
+msgid "Greater than or equal >="
+msgstr "Suurempi tai sama kuin >="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32041"
+msgid "Greater than >"
+msgstr "Suurempi kuin >"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32042"
+msgid "Delete path"
+msgstr "Poista sijainti"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32043"
+msgid "[COLOR=red][B]WARNING[/B][/COLOR]: This action cannot be undone."
+msgstr "[COLOR=red][B]VAROITUS[/B][/COLOR]: Toiminto on peruuttamaton."
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32044"
+msgid "Save changes"
+msgstr "Tallenna muutokset"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32045"
+msgid "Changes will be discarded if you do not save."
+msgstr "Jos et tallenna niitä, muutokset hylätään."
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32046"
+msgid "Generating globals"
+msgstr "Luodaan globaaleja"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32047"
+msgid "Generating content"
+msgstr "Luodaan sisältöä"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32048"
+msgid "Formatting content"
+msgstr "Muotoillaan sisältöä"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32049"
+msgid "Creating XML"
+msgstr "Luodaan XML:ää"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32050"
+msgid "Add playlist"
+msgstr "Lisää toistolista"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32051"
+msgid "Add playlist as playable shortcut or a browseable directory?"
+msgstr "Lisätäänkö toistolista toistettavana pikavalintana vaiko selattavana hakemistona?"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32052"
+msgid "Add folder"
+msgstr "Lisää kansio"
+
+#: /resources/lib/shortcuts/jsonrpc.py
+msgctxt "#32053"
+msgid "Building directory"
+msgstr "Rakennetaan hakemistoa"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32054"
+msgid "Enter profile name"
+msgstr "Syötä profiilin nimi"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32055"
+msgid "Add pin-code lock"
+msgstr "Lisää PIN-lukitus"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32056"
+msgid "Adding a pin-code lock will require users to enter the code before accessing the profile."
+msgstr "PIN-lukitus vaatii käyttäjiä syöttämään koodin ennen profiilin avausta."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32057"
+msgid "Enter pin-code"
+msgstr "Syötä PIN-koodi"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32058"
+msgid "Re-enter pin-code"
+msgstr "Syötä PIN-koodi uudelleen"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32059"
+msgid "Wrong pin code!"
+msgstr "Väärä PIN-koodi!"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32060"
+msgid "Incorrect pin code entered."
+msgstr "Syötetty PIN-koodi on virheellinen."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32061"
+msgid "Default profile"
+msgstr "Oletusprofiili"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32062"
+msgid "Never logged in"
+msgstr "Ei koskaan kirjautunut"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32063"
+msgid "Access denied!"
+msgstr "Pääsy estetty!"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32064"
+msgid "Delete user profile"
+msgstr "Poista käyttäjäprofiili"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32065"
+msgid "This will delete the skin profile for {}."
+msgstr "Tämä poistaa käyttäjän {} ulkoasuprofiilin."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32066"
+msgid "Rename user profile"
+msgstr "Nimeä käyttäjäprofiili uudelleen"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32067"
+msgid "No item path found!"
+msgstr "KOhteen sijaintia ei löytynhyt!"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32068"
+msgid "No path found"
+msgstr "Sijaintia ei löytynyt"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32069"
+msgid "Choose menu"
+msgstr "Valitse valikko"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32070"
+msgid "Choose mode"
+msgstr "Valitse tila"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32071"
+msgid "Add here"
+msgstr "Lisää tähän"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32072"
+msgid "Overwrite {filename} with {content}?"
+msgstr "Korvataanko {filename} {content}?"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32073"
+msgid "your {skin} menu files"
+msgstr "ulkoasusi {skin} valikkotiedostoilla"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32074"
+msgid "the menu files from the [B]{folder}[/B] folder"
+msgstr "kansion [B]{folder}[/B] valikkotiedostoilla"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32075"
+msgid "Overwrite files?"
+msgstr "Korvataanko tiedostot?"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32076"
+msgid "No files found!"
+msgstr "Tiedostoja ei löytynyt!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32077"
+msgid "Icon"
+msgstr "Kuvake"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32078"
+msgid "Add item"
+msgstr "Lisää kohde"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32079"
+msgid "Rebuild shortcuts"
+msgstr "Rakenna pikavalinnat uudelleen"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32080"
+msgid "Rebuild shortcuts template to include recent changes?"
+msgstr "Rakennetaanko pikavalintamalli uudelleen viimeisimpien muutosten sisällyttämiseksi?"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32081"
+msgid "Restore shortcuts"
+msgstr "Palauta pikavalinnat"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32082"
+msgid "Restoring shortcuts resets all shortcuts to skin defaults."
+msgstr "Pikavalintojen palautus palauttaa kaikki pikavalinnat ulkoasun oletuksiin."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32083"
+msgid "Add list"
+msgstr "Lisää lista"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32084"
+msgid "[B][COLOR=red]WARNING[/COLOR][/B]: Adding this list will add {item_count} new items (skipping {skip_count} existing items previously added). This action cannot be undone."
+msgstr "[B][COLOR=red]VAROITUS[/COLOR][/B]: Tämän listan lisääminen lisää {item_count} uutta kohdetta ({skip_count} nykyistä aiemmin lisättyä kohdetta ohitetaan). Ttoiminto on peruuttamaton."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32085"
+msgid "No new items to add!"
+msgstr "Uusi lisättäviä kohteita ei ole!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32086"
+msgid "This list contains {item_count} items. The current max item limit is {item_limit}. This list will not be added."
+msgstr "Tämä lista sisältää {item_count} kohdetta. Kohteiden enimmäismäärä on tällä hetkellä {item_limit}. Listaa ei lisätä."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32087"
+msgid "Delete list"
+msgstr "Poista lista"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32088"
+msgid "[B][COLOR=red]WARNING[/COLOR][/B]: Deleting this list will remove {item_count} existing items. This action cannot be undone."
+msgstr "[B][COLOR=red]VAROITUS[/COLOR][/B]: Tämän listan poistaminen poistaa {item_count} nykyistä kohdetta. Toiminto on peruuttamaton."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32089"
+msgid "No items to delete!"
+msgstr "Poistettavia kohteita ei ole!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32090"
+msgid "Choose shortcut"
+msgstr "Valitse pikavalinta"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32091"
+msgid "Refresh shortcuts"
+msgstr "Päivitä pikavalinnat"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32092"
+msgid "Configure submenu"
+msgstr "Määritä alivalikko"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32093"
+msgid "Configure widgets"
+msgstr "Määritä widgetit"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32094"
+msgid "Edit filters"
+msgstr "Muokkaa suodattimia"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32095"
+msgid "Add new"
+msgstr "Lisää uusi"

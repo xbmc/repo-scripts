@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+    <allowoverlay>no</allowoverlay>
+    <defaultcontrol always="false">4000</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="group">
+            <!-- row 1 -->
+            <control type="image" id="1000">
+                <posx>-20</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100">WindowOpen</animation>
+            </control>
+            <control type="image" id="1001">
+                <posx>100</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="50">WindowOpen</animation>
+            </control>
+            <control type="image" id="1002">
+                <posx>220</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="100">WindowOpen</animation>
+            </control>
+            <control type="image" id="1003">
+                <posx>340</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="150">WindowOpen</animation>
+            </control>
+            <control type="image" id="1004">
+                <posx>460</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="200">WindowOpen</animation>
+            </control>
+            <control type="image" id="1005">
+                <posx>580</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="250">WindowOpen</animation>
+            </control>
+            <control type="image" id="1006">
+                <posx>700</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="300">WindowOpen</animation>
+            </control>
+            <control type="image" id="1007">
+                <posx>820</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="350">WindowOpen</animation>
+            </control>
+            <control type="image" id="1008">
+                <posx>940</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="400">WindowOpen</animation>
+            </control>
+            <control type="image" id="1009">
+                <posx>1060</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="450">WindowOpen</animation>
+            </control>
+            <control type="image" id="1010">
+                <posx>1180</posx>
+                <posy>0</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="500">WindowOpen</animation>
+            </control>
+
+            <!-- row 2 -->
+            <control type="image" id="1011">
+                <posx>-20</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="50">WindowOpen</animation>
+            </control>
+            <control type="image" id="1012">
+                <posx>100</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="100">WindowOpen</animation>
+            </control>
+            <control type="image" id="1013">
+                <posx>220</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="150">WindowOpen</animation>
+            </control>
+            <control type="image" id="1014">
+                <posx>340</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="200">WindowOpen</animation>
+            </control>
+            <control type="image" id="1015">
+                <posx>460</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="250">WindowOpen</animation>
+            </control>
+            <control type="image" id="1016">
+                <posx>580</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="300">WindowOpen</animation>
+            </control>
+            <control type="image" id="1017">
+                <posx>700</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="350">WindowOpen</animation>
+            </control>
+            <control type="image" id="1018">
+                <posx>820</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="400">WindowOpen</animation>
+            </control>
+            <control type="image" id="1019">
+                <posx>940</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="450">WindowOpen</animation>
+            </control>
+            <control type="image" id="1020">
+                <posx>1060</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="500">WindowOpen</animation>
+            </control>
+            <control type="image" id="1021">
+                <posx>1180</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="550">WindowOpen</animation>
+            </control>
+
+            <!-- row 3 -->
+            <control type="image" id="1022">
+                <posx>-20</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="100">WindowOpen</animation>
+            </control>
+            <control type="image" id="1023">
+                <posx>100</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="150">WindowOpen</animation>
+            </control>
+            <control type="image" id="1024">
+                <posx>220</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="200">WindowOpen</animation>
+            </control>
+            <control type="image" id="1025">
+                <posx>340</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="250">WindowOpen</animation>
+            </control>
+            <control type="image" id="1026">
+                <posx>460</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="300">WindowOpen</animation>
+            </control>
+            <control type="image" id="1027">
+                <posx>580</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="350">WindowOpen</animation>
+            </control>
+            <control type="image" id="1028">
+                <posx>700</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="400">WindowOpen</animation>
+            </control>
+            <control type="image" id="1029">
+                <posx>820</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="450">WindowOpen</animation>
+            </control>
+            <control type="image" id="1030">
+                <posx>940</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="500">WindowOpen</animation>
+            </control>
+            <control type="image" id="1031">
+                <posx>1060</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="550">WindowOpen</animation>
+            </control>
+            <control type="image" id="1032">
+                <posx>1180</posx>
+                <posy>360</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="600">WindowOpen</animation>
+            </control>
+
+            <!-- row 4 -->
+            <control type="image" id="1033">
+                <posx>-20</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="150">WindowOpen</animation>
+            </control>
+            <control type="image" id="1034">
+                <posx>100</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="200">WindowOpen</animation>
+            </control>
+            <control type="image" id="1035">
+                <posx>220</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="250">WindowOpen</animation>
+            </control>
+            <control type="image" id="1036">
+                <posx>340</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="300">WindowOpen</animation>
+            </control>
+            <control type="image" id="1037">
+                <posx>460</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="350">WindowOpen</animation>
+            </control>
+            <control type="image" id="1038">
+                <posx>580</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="400">WindowOpen</animation>
+            </control>
+            <control type="image" id="1039">
+                <posx>700</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="450">WindowOpen</animation>
+            </control>
+            <control type="image" id="1040">
+                <posx>820</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="500">WindowOpen</animation>
+            </control>
+            <control type="image" id="1041">
+                <posx>940</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="550">WindowOpen</animation>
+            </control>
+            <control type="image" id="1042">
+                <posx>1060</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="600">WindowOpen</animation>
+            </control>
+            <control type="image" id="1043">
+                <posx>1180</posx>
+                <posy>540</posy>
+                <width>120</width>
+                <height>180</height>
+                <colordiffuse>ffaaaaaa</colordiffuse>
+                <animation effect="zoom" center="auto" start="0,100" end="100,100" time="100" delay="650">WindowOpen</animation>
+            </control>
+        </control>
+
+        <control type="image">
+            <description>bottom right fade</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>quiz-fade-bottomright.png</texture>
+            <animation effect="fade" start="0" end="100" delay="250" time="500">WindowOpen</animation>
+        </control>
+
+        <control type="image">
+            <description>glasspane for about</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>quiz-background-glass.png</texture>
+            <animation effect="fade" start="0" end="100" time="500">VisibleChange</animation>
+            <visible>Control.IsVisible(6001)</visible>
+        </control>
+
+        <control type="image">
+            <posx>800</posx>
+            <posy>70</posy>
+            <width>296</width>
+            <height>198</height>
+            <texture>quiz-logo.png</texture>
+            <animation type="WindowOpen">
+                <effect type="fade" start="0" end="100" time="500" />
+                <effect type="slide" start="100,0" end="0,0" time="500" />
+            </animation>
+        </control>
+
+        <control type="group" id="4000">
+            <description>main menu</description>
+            <posx>830</posx>
+            <posy>280</posy>
+            <width>480</width>
+            <height>400</height>
+            <animation type="WindowOpen">
+                <effect type="fade" start="0" end="100" time="500" delay="300" />
+                <effect type="slide" start="100,0" end="0,0" time="500" delay="300" />
+            </animation>
+
+            <control type="list" id="4001">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>450</width>
+                <height>350</height>
+                <viewtype label="list">list</viewtype>
+                <orientation>vertical</orientation>
+                <scrolltime>200</scrolltime>
+                <itemlayout width="450" height="50">
+                    <control type="label">
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>410</width>
+                        <height>50</height>
+                        <info>ListItem.Label</info>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>ff888888</textcolor>
+                        <font>font30</font>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="450" height="50">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>10</posy>
+                        <width>30</width>
+                        <height>30</height>
+                        <texture>quiz-moviereel.png</texture>
+                        <animation effect="rotate" center="15,25" start="1080" end="0" time="5000" reversible="false">Focus</animation>
+                    </control>
+                    <control type="label">
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>410</width>
+                        <height>50</height>
+                        <info>ListItem.Label</info>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>ffffffff</textcolor>
+                        <font>font30</font>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+
+        <control type="textbox" id="6001">
+            <description>info</description>
+            <posx>60</posx>
+            <posy>80</posy>
+            <width>660</width>
+            <height>600</height>
+            <textcolor>ffffffff</textcolor>
+            <font>font13</font>
+            <wrapmultiline>true</wrapmultiline>
+            <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
+            <label>$ADDON[script.moviequiz 32010]</label>
+        </control>
+    </controls>
+</window>

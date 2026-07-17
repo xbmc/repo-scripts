@@ -1,0 +1,1160 @@
+{
+    "5": {
+        "container": "flv",
+        "title": "240p",
+        "sort": [
+            240,
+            0
+        ],
+        "video": {
+            "height": 240,
+            "encoding": "h.263"
+        },
+        "audio": {
+            "bitrate": 64,
+            "encoding": "mp3"
+        }
+    },
+    "6": {
+        "container": "flv",
+        "discontinued": true,
+        "video": {
+            "height": 270,
+            "encoding": "h.263"
+        },
+        "audio": {
+            "bitrate": 64,
+            "encoding": "mp3"
+        }
+    },
+    "13": {
+        "container": "3gp",
+        "discontinued": true,
+        "video": {
+            "encoding": "mpeg-4"
+        },
+        "audio": {
+            "encoding": "aac"
+        }
+    },
+    "17": {
+        "container": "3gp",
+        "title": "144p",
+        "sort": [
+            144,
+            -20
+        ],
+        "video": {
+            "height": 144,
+            "encoding": "mpeg-4"
+        },
+        "audio": {
+            "bitrate": 24,
+            "encoding": "aac"
+        }
+    },
+    "18": {
+        "container": "mp4",
+        "title": "360p",
+        "sort": [
+            360,
+            0
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "22": {
+        "container": "mp4",
+        "title": "720p",
+        "sort": [
+            720,
+            0
+        ],
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "aac"
+        }
+    },
+    "34": {
+        "container": "flv",
+        "discontinued": true,
+        "video": {
+            "height": 360,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "35": {
+        "container": "flv",
+        "discontinued": true,
+        "video": {
+            "height": 480,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "36": {
+        "container": "3gp",
+        "title": "240p",
+        "sort": [
+            240,
+            -20
+        ],
+        "video": {
+            "height": 240,
+            "encoding": "mpeg-4"
+        },
+        "audio": {
+            "bitrate": 32,
+            "encoding": "aac"
+        }
+    },
+    "37": {
+        "container": "mp4",
+        "title": "1080p",
+        "sort": [
+            1080,
+            0
+        ],
+        "video": {
+            "height": 1080,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "aac"
+        }
+    },
+    "38": {
+        "container": "mp4",
+        "title": "3072p",
+        "sort": [
+            3072,
+            0
+        ],
+        "video": {
+            "height": 3072,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "aac"
+        }
+    },
+    "43": {
+        "container": "webm",
+        "title": "360p",
+        "sort": [
+            360,
+            -1
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "vorbis"
+        }
+    },
+    "44": {
+        "container": "webm",
+        "discontinued": true,
+        "video": {
+            "height": 480,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "vorbis"
+        }
+    },
+    "45": {
+        "container": "webm",
+        "discontinued": true,
+        "video": {
+            "height": 720,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "vorbis"
+        }
+    },
+    "46": {
+        "container": "webm",
+        "discontinued": true,
+        "video": {
+            "height": 1080,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "vorbis"
+        }
+    },
+    "59": {
+        "container": "mp4",
+        "title": "480p",
+        "sort": [
+            480,
+            0
+        ],
+        "video": {
+            "height": 480,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "78": {
+        "container": "mp4",
+        "title": "360p",
+        "sort": [
+            360,
+            0
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "82": {
+        "container": "mp4",
+        "3D": true,
+        "title": "3D@360p",
+        "sort": [
+            360,
+            0
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "83": {
+        "container": "mp4",
+        "3D": true,
+        "title": "3D@240p",
+        "sort": [
+            240,
+            0
+        ],
+        "video": {
+            "height": 240,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "84": {
+        "container": "mp4",
+        "3D": true,
+        "title": "3D@720p",
+        "sort": [
+            720,
+            0
+        ],
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "aac"
+        }
+    },
+    "85": {
+        "container": "mp4",
+        "3D": true,
+        "title": "3D@1080p",
+        "sort": [
+            1080,
+            0
+        ],
+        "video": {
+            "height": 1080,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "aac"
+        }
+    },
+    "100": {
+        "container": "webm",
+        "3D": true,
+        "title": "3D@360p",
+        "sort": [
+            360,
+            -1
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "vorbis"
+        }
+    },
+    "101": {
+        "container": "webm",
+        "discontinued": true,
+        "3D": true,
+        "title": "3D@360p",
+        "sort": [
+            360,
+            -1
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "vorbis"
+        }
+    },
+    "102": {
+        "container": "webm",
+        "discontinued": true,
+        "3D": true,
+        "video": {
+            "height": 720,
+            "encoding": "vp8"
+        },
+        "audio": {
+            "bitrate": 192,
+            "encoding": "vorbis"
+        }
+    },
+    "91": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@144p",
+        "sort": [
+            144,
+            0
+        ],
+        "video": {
+            "height": 144,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 48,
+            "encoding": "aac"
+        }
+    },
+    "92": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@240p",
+        "sort": [
+            240,
+            0
+        ],
+        "video": {
+            "height": 240,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 48,
+            "encoding": "aac"
+        }
+    },
+    "93": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@360p",
+        "sort": [
+            360,
+            0
+        ],
+        "video": {
+            "height": 360,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "94": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@480p",
+        "sort": [
+            480,
+            0
+        ],
+        "video": {
+            "height": 480,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "95": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@720p",
+        "sort": [
+            720,
+            0
+        ],
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 256,
+            "encoding": "aac"
+        }
+    },
+    "96": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@1080p",
+        "sort": [
+            1080,
+            0
+        ],
+        "video": {
+            "height": 1080,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 256,
+            "encoding": "aac"
+        }
+    },
+    "120": {
+        "container": "flv",
+        "discontinued": true,
+        "Live": true,
+        "title": "Live@720p",
+        "sort": [
+            720,
+            -10
+        ],
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "127": {
+        "container": "ts",
+        "Live": true,
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "128": {
+        "container": "ts",
+        "Live": true,
+        "audio": {
+            "bitrate": 96,
+            "encoding": "aac"
+        }
+    },
+    "132": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@240p",
+        "sort": [
+            240,
+            0
+        ],
+        "video": {
+            "height": 240,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 48,
+            "encoding": "aac"
+        }
+    },
+    "151": {
+        "container": "ts",
+        "Live": true,
+        "unsupported": true,
+        "title": "Live@72p",
+        "sort": [
+            72,
+            0
+        ],
+        "video": {
+            "height": 72,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 24,
+            "encoding": "aac"
+        }
+    },
+    "300": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@720p",
+        "sort": [
+            720,
+            0
+        ],
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "301": {
+        "container": "ts",
+        "Live": true,
+        "title": "Live@1080p",
+        "sort": [
+            1080,
+            0
+        ],
+        "video": {
+            "height": 1080,
+            "encoding": "h.264"
+        },
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "133": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 240,
+            "encoding": "h.264"
+        }
+    },
+    "134": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 360,
+            "encoding": "h.264"
+        }
+    },
+    "135": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 480,
+            "encoding": "h.264"
+        }
+    },
+    "136": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        }
+    },
+    "137": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 1080,
+            "encoding": "h.264"
+        }
+    },
+    "138": {
+        "container": "mp4",
+        "discontinued": true,
+        "dash/video": true,
+        "video": {
+            "height": 2160,
+            "encoding": "h.264"
+        }
+    },
+    "160": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 144,
+            "encoding": "h.264"
+        }
+    },
+    "167": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 360,
+            "encoding": "vp8"
+        }
+    },
+    "168": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 480,
+            "encoding": "vp8"
+        }
+    },
+    "169": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 720,
+            "encoding": "vp8"
+        }
+    },
+    "170": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 1080,
+            "encoding": "vp8"
+        }
+    },
+    "218": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 480,
+            "encoding": "vp8"
+        }
+    },
+    "219": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 480,
+            "encoding": "vp8"
+        }
+    },
+    "242": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 240,
+            "encoding": "vp9"
+        }
+    },
+    "243": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 360,
+            "encoding": "vp9"
+        }
+    },
+    "244": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 480,
+            "encoding": "vp9"
+        }
+    },
+    "247": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 720,
+            "encoding": "vp9"
+        }
+    },
+    "248": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 1080,
+            "encoding": "vp9"
+        }
+    },
+    "264": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 1440,
+            "encoding": "h.264"
+        }
+    },
+    "266": {
+        "container": "mp4",
+        "dash/video": true,
+        "video": {
+            "height": 2160,
+            "encoding": "h.264"
+        }
+    },
+    "271": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 1440,
+            "encoding": "vp9"
+        }
+    },
+    "272": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 2160,
+            "encoding": "vp9"
+        }
+    },
+    "278": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 144,
+            "encoding": "vp9"
+        }
+    },
+    "298": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 60,
+        "video": {
+            "height": 720,
+            "encoding": "h.264"
+        }
+    },
+    "299": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 60,
+        "video": {
+            "height": 1080,
+            "encoding": "h.264"
+        }
+    },
+    "302": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "video": {
+            "height": 720,
+            "encoding": "vp9"
+        }
+    },
+    "303": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "video": {
+            "height": 1080,
+            "encoding": "vp9"
+        }
+    },
+    "308": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "video": {
+            "height": 1440,
+            "encoding": "vp9"
+        }
+    },
+    "313": {
+        "container": "webm",
+        "dash/video": true,
+        "video": {
+            "height": 2160,
+            "encoding": "vp9"
+        }
+    },
+    "315": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "video": {
+            "height": 2160,
+            "encoding": "vp9"
+        }
+    },
+    "330": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 144,
+            "encoding": "vp9.2"
+        }
+    },
+    "331": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 240,
+            "encoding": "vp9.2"
+        }
+    },
+    "332": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 360,
+            "encoding": "vp9.2"
+        }
+    },
+    "333": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 480,
+            "encoding": "vp9.2"
+        }
+    },
+    "334": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 720,
+            "encoding": "vp9.2"
+        }
+    },
+    "335": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 1080,
+            "encoding": "vp9.2"
+        }
+    },
+    "336": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 1440,
+            "encoding": "vp9.2"
+        }
+    },
+    "337": {
+        "container": "webm",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 2160,
+            "encoding": "vp9.2"
+        }
+    },
+    "400": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 1440,
+            "encoding": "av1"
+        }
+    },
+    "401": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 60,
+        "hdr": true,
+        "video": {
+            "height": 2160,
+            "encoding": "av1"
+        }
+    },
+    "394": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 30,
+        "video": {
+            "height": 144,
+            "encoding": "av1"
+        }
+    },
+    "395": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 30,
+        "video": {
+            "height": 240,
+            "encoding": "av1"
+        }
+    },
+    "396": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 30,
+        "video": {
+            "height": 360,
+            "encoding": "av1"
+        }
+    },
+    "397": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 30,
+        "video": {
+            "height": 480,
+            "encoding": "av1"
+        }
+    },
+    "398": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 30,
+        "video": {
+            "height": 720,
+            "encoding": "av1"
+        }
+    },
+    "399": {
+        "container": "mp4",
+        "dash/video": true,
+        "fps": 30,
+        "video": {
+            "height": 1080,
+            "encoding": "av1"
+        }
+    },
+    "139": {
+        "container": "mp4",
+        "sort": [
+            48,
+            0
+        ],
+        "title": "aac@48",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 48,
+            "encoding": "aac"
+        }
+    },
+    "140": {
+        "container": "mp4",
+        "sort": [
+            129,
+            0
+        ],
+        "title": "aac@128",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 128,
+            "encoding": "aac"
+        }
+    },
+    "141": {
+        "container": "mp4",
+        "sort": [
+            143,
+            0
+        ],
+        "title": "aac@256",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 256,
+            "encoding": "aac"
+        }
+    },
+    "256": {
+        "container": "mp4",
+        "title": "aac/itag 256",
+        "dash/audio": true,
+        "unsupported": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": "aac"
+        }
+    },
+    "258": {
+        "container": "mp4",
+        "title": "aac/itag 258",
+        "dash/audio": true,
+        "unsupported": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": "aac"
+        }
+    },
+    "325": {
+        "container": "mp4",
+        "title": "dtse/itag 325",
+        "dash/audio": true,
+        "unsupported": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": "aac"
+        }
+    },
+    "328": {
+        "container": "mp4",
+        "title": "ec-3/itag 328",
+        "dash/audio": true,
+        "unsupported": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": "aac"
+        }
+    },
+    "171": {
+        "container": "webm",
+        "sort": [
+            128,
+            0
+        ],
+        "title": "vorbis@128",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 128,
+            "encoding": "vorbis"
+        }
+    },
+    "172": {
+        "container": "webm",
+        "sort": [
+            142,
+            0
+        ],
+        "title": "vorbis@192",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 192,
+            "encoding": "vorbis"
+        }
+    },
+    "249": {
+        "container": "webm",
+        "sort": [
+            50,
+            0
+        ],
+        "title": "opus@50",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 50,
+            "encoding": "opus"
+        }
+    },
+    "250": {
+        "container": "webm",
+        "sort": [
+            70,
+            0
+        ],
+        "title": "opus@70",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 70,
+            "encoding": "opus"
+        }
+    },
+    "251": {
+        "container": "webm",
+        "sort": [
+            141,
+            0
+        ],
+        "title": "opus@160",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 160,
+            "encoding": "opus"
+        }
+    },
+    "9997": {
+        "container": "mpd",
+        "sort": [
+            -1,
+            0
+        ],
+        "title": "DASH Audio",
+        "dash/audio": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": ""
+        }
+    },
+    "9998": {
+        "container": "mpd",
+        "Live": true,
+        "sort": [
+            1080,
+            1
+        ],
+        "title": "Live DASH",
+        "dash/audio": true,
+        "dash/video": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": ""
+        },
+        "video": {
+            "height": 0,
+            "encoding": ""
+        }
+    },
+    "9999": {
+        "container": "mpd",
+        "sort": [
+            1080,
+            1
+        ],
+        "title": "DASH",
+        "dash/audio": true,
+        "dash/video": true,
+        "audio": {
+            "bitrate": 0,
+            "encoding": ""
+        },
+        "video": {
+            "height": 0,
+            "encoding": ""
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="3.0.2" provider-name="anxdpanic, A Talented Community">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+        <import addon="script.module.six" version="1.11.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.module" library="resources/lib"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <news>
+[fix] Following Channels
+        </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+        </assets>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <source>https://github.com/anxdpanic/script.module.python.twitch</source>
+        <forum>https://twitchaddon.panicked.xyz/forum</forum>
+        <reuselanguageinvoker>true</reuselanguageinvoker>
+        <summary lang="da_DK">Modul til interaktion med Twitch.tv API</summary>
+        <summary lang="de_DE">Modul für die Interaktion mit der Twitch.tv-API</summary>
+        <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
+        <summary lang="es_ES">Módulo para interactuar con la API de Twitch.tv</summary>
+        <summary lang="fi_FI">Moduuli Twitch.tv-rajapinnan käyttöön</summary>
+        <summary lang="fr_FR">Module pour interagir avec l&apos;API de Twitch.tv</summary>
+        <summary lang="hr_HR">Modul za interakciju s Twitch.tv API</summary>
+        <summary lang="hu_HU">Modul a Twitch.tv API -val való interakcióhoz</summary>
+        <summary lang="it_IT">Modulo per l&apos;interazione con l&apos;API di Twitch.tv</summary>
+        <summary lang="ko_KR">Twitch.tv API와의 상호작용을 위한 모듈</summary>
+        <summary lang="pl_PL">Moduł do interakcji z API Twitch.tv</summary>
+        <summary lang="ru_RU">Модуль для взаимодействия с Twitch.tv API</summary>
+        <summary lang="zh_CN">与 Twitch.tv API 交互的模块</summary>
+        <description lang="da_DK">python-twitch til Kodi er et modul til interaktion med Twitch.tv API baseret på python-twitch af ingwinlu.</description>
+        <description lang="de_DE">python-twitch für Kodi ist ein Modul für die Interaktion mit der Twitch.tv-API, basierend auf python-twitch von ingwinlu.</description>
+        <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
+        <description lang="es_ES">python-twitch para Kodi es un módulo para interactuar con la API de Twitch.tv basado en python-twitch de ingwinlu.</description>
+        <description lang="fi_FI">&apos;Python-twitch for Kodi&apos; on Twitch.tv-palvelun rajapinnan hyödyntämisen mahdollistava moduuli, joka perustuu kehittäjän ingwinlu luomaan python-twitch-moduuliin.</description>
+        <description lang="fr_FR">python-twitch pour Kodi est un module pour interagir avec l&apos;API Twitch.tv basé sur python-twitch de ingwinlu.</description>
+        <description lang="hr_HR">python-twitch za Kodi je modul za interakciju s Twitch.tv API-jem temeljenom na python-twitch by ingwinlu.</description>
+        <description lang="hu_HU">A python-twitch a Kodi számára a Twitch.tv API-val való interakció modulja, amely az ingwinlu python-twitch-jén alapul.</description>
+        <description lang="it_IT">python-twitch per Kodi è un modulo per l&apos;interazione con l&apos;API di Twitch.tv basato su python-twitch di ingwinlu.</description>
+        <description lang="ko_KR">Kodi용 python-twitch는 ingwinlu의 python-twitch를 기반으로 하는 Twitch.tv API와 상호 작용하기 위한 모듈입니다.</description>
+        <description lang="pl_PL">python-twitch dla Kodi to moduł do interakcji z API Twitch.tv oparty na python-twitch autorstwa ingwinlu.</description>
+        <description lang="ru_RU">python-twitch это модуль для взаимодействия с Twitch.tv API. Основан на модуле python-twitch от ingwinlu.</description>
+        <description lang="zh_CN">Kodi 的 python-twitch 是从 ingwinlu 开发版本移植的与 twitch.tv API 交互的模块。</description>
+    </extension>
+</addon>

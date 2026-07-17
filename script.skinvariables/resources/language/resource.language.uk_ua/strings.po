@@ -1,0 +1,521 @@
+# XBMC Media Center language file
+# Addon Name: Skin Variables
+# Addon id: script.skinvariables
+# Addon Provider: jurialmunkey
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk_ua\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: /resources/lib/script.py
+msgctxt "#32000"
+msgid "Constructing Variables..."
+msgstr "Створюємо перемінні..."
+
+#: /resources/lib/script.py
+msgctxt "#32001"
+msgid "Skin Variables"
+msgstr ""
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32002"
+msgid "Skin Viewtypes"
+msgstr "Види обкладинки"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32003"
+msgid "Constructing Viewtypes..."
+msgstr "Створюємо види..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32004"
+msgid "Choose viewtype"
+msgstr "Обрати вид"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32005"
+msgid "Building default rules for"
+msgstr "Будуємо правила для"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32006"
+msgid "Building definitions for view IDs..."
+msgstr "Будуємо визначення для ID видів..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32007"
+msgid "Building visibility expressions..."
+msgstr "Будуємо вирази видимості..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32008"
+msgid "Building XML..."
+msgstr "Будуємо XML..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32009"
+msgid "Choose plugin to customise"
+msgstr "Обрати плагін для редагування"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32010"
+msgid "Choose content to customise"
+msgstr "Обрати контент для редагування"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32011"
+msgid "Reset all {} views..."
+msgstr "Скинути всі види {}..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32012"
+msgid "Add plugin view..."
+msgstr "Додати вид плагіну..."
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32013"
+msgid "Customise viewtypes"
+msgstr "Редагувати види"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32014"
+msgid "Reset {} Views"
+msgstr "Скинути види {}"
+
+#: /resources/lib/viewtypes.py
+msgctxt "#32015"
+msgid "Do you wish to reset all {} views to default"
+msgstr "Скинути всі види {} до стандартних?"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32016"
+msgid "Choose item to modify"
+msgstr "Обрати елемент для зміни"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32017"
+msgid "Choose item to delete"
+msgstr "Обрати елемент для видалення"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32018"
+msgid ""
+"Successfully added\n"
+"[B]{}[/B]\n"
+"to\n"
+"[B]{}[/B]"
+msgstr ""
+"Успішно додано\n"
+"[B]{}[/B]\n"
+"до\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32019"
+msgid "Import menu"
+msgstr "Імпортувати меню"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32020"
+msgid "Added to menu"
+msgstr "Додано до меню"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32021"
+msgid "Add to menu"
+msgstr "Додати до меню"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32022"
+msgid "No skinshortcuts found to import."
+msgstr "Не знайдено перемінних обкладинки для імпорту."
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32023"
+msgid "Add as menu"
+msgstr "Додати як меню"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32024"
+msgid "Added as menu"
+msgstr "Додано як меню"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32025"
+msgid ""
+"Successfully added\n"
+"[B]{}[/B]\n"
+"as\n"
+"[B]{}[/B]"
+msgstr ""
+"Успішно додано\n"
+"[B]{}[/B]\n"
+"як\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32026"
+msgid "Overwrite menu"
+msgstr "Перезаписати меню"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32027"
+msgid "Importing will overwrite your current menus and setup. Are you sure?"
+msgstr "Імпорт перезапише поточні меню та налаштування. Ви впевнені?"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32028"
+msgid ""
+"Successfully imported\n"
+"[B]{}[/B]\n"
+"to\n"
+"[B]{}[/B]"
+msgstr ""
+"Успішно імпортовано\n"
+"[B]{}[/B]\n"
+"до\n"
+"[B]{}[/B]"
+
+#: /resources/lib/skinshortcuts.menu.py
+msgctxt "#32029"
+msgid "Choose item"
+msgstr "Обрати елемент"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32030"
+msgid "Add another path?"
+msgstr "Додати інший шлях?"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32031"
+msgid "Add an additional path to the filter."
+msgstr "Додати додатковий шлях до фільтру."
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32032"
+msgid "[CAPITALIZE]{}[/CAPITALIZE] method"
+msgstr "[CAPITALIZE]{}[/CAPITALIZE] метод"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32033"
+msgid "Sort"
+msgstr "Сортувати"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32034"
+msgid "Enter custom [LOWERCASE]{}[/LOWERCASE] infolabel or property name"
+msgstr "Введіть власну [LOWERCASE]{}[/LOWERCASE] інфо-мітку чи ім'я параметру"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32035"
+msgid "Enter custom [LOWERCASE]{}[/LOWERCASE] value to match"
+msgstr "Введіть власне значення [LOWERCASE]{}[/LOWERCASE] для підбору"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32036"
+msgid "Less than <"
+msgstr "Менше чим <"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32037"
+msgid "Less than or equal <="
+msgstr "Менше чи дорівнює <="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32038"
+msgid "Equal =="
+msgstr "Дорівнює =="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32039"
+msgid "Not equal !="
+msgstr "Не дорівнює !="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32040"
+msgid "Greater than or equal >="
+msgstr "Більше чи рівне >="
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32041"
+msgid "Greater than >"
+msgstr "Більше чим"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32042"
+msgid "Delete path"
+msgstr "Видалити шлях"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32043"
+msgid "[COLOR=red][B]WARNING[/B][/COLOR]: This action cannot be undone."
+msgstr "[COLOR=red][B]УВАГА[/B][/COLOR]: Цю дію неможливо відмінити."
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32044"
+msgid "Save changes"
+msgstr "Зберегти зміни"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32045"
+msgid "Changes will be discarded if you do not save."
+msgstr "Зміни буде втрачено без збереження."
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32046"
+msgid "Generating globals"
+msgstr "Генеруємо глобальні перемінні"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32047"
+msgid "Generating content"
+msgstr "Генеруємо контент"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32048"
+msgid "Formatting content"
+msgstr "Форматуємо контент"
+
+#: /resources/lib/shortcuts/template.py
+msgctxt "#32049"
+msgid "Creating XML"
+msgstr "Створюємо XML"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32050"
+msgid "Add playlist"
+msgstr "Додати плейлист"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32051"
+msgid "Add playlist as playable shortcut or a browseable directory?"
+msgstr "Додати плейлист як ярлик чи теку для огляду?"
+
+#: /resources/lib/shortcuts/browser.py
+msgctxt "#32052"
+msgid "Add folder"
+msgstr "Додати теку"
+
+#: /resources/lib/shortcuts/jsonrpc.py
+msgctxt "#32053"
+msgid "Building directory"
+msgstr "Будуємо теку"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32054"
+msgid "Enter profile name"
+msgstr "Введіть ім'я профілю"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32055"
+msgid "Add pin-code lock"
+msgstr "Додати PIN-код блок"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32056"
+msgid "Adding a pin-code lock will require users to enter the code before accessing the profile."
+msgstr "PIN-код блок зобов'яже користувачів вводити код щоб увійти до профілю."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32057"
+msgid "Enter pin-code"
+msgstr "Введіть PIN"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32058"
+msgid "Re-enter pin-code"
+msgstr "Введіть PIN повторно"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32059"
+msgid "Wrong pin code!"
+msgstr "Хибний PIN!"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32060"
+msgid "Incorrect pin code entered."
+msgstr "Введено хибний PIN."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32061"
+msgid "Default profile"
+msgstr "Стандартних профіль"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32062"
+msgid "Never logged in"
+msgstr "Ніколи не входив"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32063"
+msgid "Access denied!"
+msgstr "Доступ відхилено!"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32064"
+msgid "Delete user profile"
+msgstr "Видалити профіль користувача"
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32065"
+msgid "This will delete the skin profile for {}."
+msgstr "Видалить профіль обкладинки для {}."
+
+#: /resources/lib/lists/skinusers.py
+msgctxt "#32066"
+msgid "Rename user profile"
+msgstr "Перейменувати профіль користувача"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32067"
+msgid "No item path found!"
+msgstr "Не знайдено шлях елементу!"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32068"
+msgid "No path found"
+msgstr "Шлях не знайдено"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32069"
+msgid "Choose menu"
+msgstr "Обрати меню"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32070"
+msgid "Choose mode"
+msgstr "Обрати режим"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32071"
+msgid "Add here"
+msgstr "Додати сюди"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32072"
+msgid "Overwrite {filename} with {content}?"
+msgstr "Перезаписати {filename} з {content}?"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32073"
+msgid "your {skin} menu files"
+msgstr "меню файлів {skin} обкладинки"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32074"
+msgid "the menu files from the [B]{folder}[/B] folder"
+msgstr "файли меню з теки [B]{folder}[/B]"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32075"
+msgid "Overwrite files?"
+msgstr "Перезаписати файли?"
+
+#: /resources/lib/shortcuts/method.py
+msgctxt "#32076"
+msgid "No files found!"
+msgstr "Не знайдено файлів!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32077"
+msgid "Icon"
+msgstr "Іконка"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32078"
+msgid "Add item"
+msgstr "Додати елемент"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32079"
+msgid "Rebuild shortcuts"
+msgstr "Перебудувати ярлики"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32080"
+msgid "Rebuild shortcuts template to include recent changes?"
+msgstr "Перебудувати шаблон ярликів для внесення змін?"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32081"
+msgid "Restore shortcuts"
+msgstr "Відновити ярлики"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32082"
+msgid "Restoring shortcuts resets all shortcuts to skin defaults."
+msgstr "Відновлення ярликів скидає всі ярлики до стандартних."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32083"
+msgid "Add list"
+msgstr "Додати список"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32084"
+msgid "[B][COLOR=red]WARNING[/COLOR][/B]: Adding this list will add {item_count} new items (skipping {skip_count} existing items previously added). This action cannot be undone."
+msgstr "[B][COLOR=red]УВАГА[/COLOR][/B]: Додавання цього списку внесе {item_count} нових елементів (не враховуючи {skip_count} вже існуючих елементів). Цю дію неможливо відмінити."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32085"
+msgid "No new items to add!"
+msgstr "Немає нових елементів для додавання!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32086"
+msgid "This list contains {item_count} items. The current max item limit is {item_limit}. This list will not be added."
+msgstr "Цей список містить {item_count} елементів. Максимальна кількість елементів: {item_limit}. Цей список не буде додано."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32087"
+msgid "Delete list"
+msgstr "Видалити список"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32088"
+msgid "[B][COLOR=red]WARNING[/COLOR][/B]: Deleting this list will remove {item_count} existing items. This action cannot be undone."
+msgstr "[B][COLOR=red]УВАГА[/COLOR][/B]: Видалення цього списку видалить {item_count} існуючих елементів. Цю дію неможливо відмінити."
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32089"
+msgid "No items to delete!"
+msgstr "Немає елементів для видалення!"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32090"
+msgid "Choose shortcut"
+msgstr "Оберіть ярлик"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32091"
+msgid "Refresh shortcuts"
+msgstr "Оновити ярлики"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32092"
+msgid "Configure submenu"
+msgstr "Налаштувати підменю"
+
+#: /resources/lib/shortcuts/node.py
+msgctxt "#32093"
+msgid "Configure widgets"
+msgstr "Налаштувати віджети"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32094"
+msgid "Edit filters"
+msgstr "Змінити фільтри"
+
+#: /resources/lib/lists/filterdir.py
+msgctxt "#32095"
+msgid "Add new"
+msgstr "Додати нові"

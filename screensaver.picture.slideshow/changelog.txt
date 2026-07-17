@@ -1,0 +1,286 @@
+v7.0.3
+- bump for release
+
+v7.0.2
+- fix encoding
+
+v7.0.1
+- add support for image types provided by imagedecoder addons
+
+v7.0.0
+- update for kodi nexus
+
+v6.4.2
+- revert some changes due to python/json problem with windows paths
+- make recursive slideshow optional
+
+v6.4.1
+- fix crash when video files are present
+
+v6.4.0
+- add basic support for picture addons
+
+v6.3.6
+- add vignette option
+
+v6.3.5
+- added an option to display full image path
+
+v6.3.4
+- don't require shares to be writable
+
+v6.3.3
+- update for kodi 20
+
+v6.3.2
+- improve xbmcvfs file read handling
+
+v6.3.1
+- use official python libraries
+
+v6.3.0
+- use art table to retrieve fanart
+- use json to read and write cache
+
+v6.2.0
+- convert skin to 1080p
+- add support for more picture extensions
+
+v6.1.0
+- update exif, iptc and xmp data parsers
+- fix: display background setting was not selectable
+- fix: slideshow with no effect was broken
+
+v6.0.2
+- cleanup
+
+v6.0.1
+- bump
+
+v6.0.0
+- changes for python 3
+
+v5.0.9
+- fix splash image kept spinning in the background, eating up cpu
+
+v5.0.8
+- re-add option to disable animations
+
+v5.0.4
+- add option to disable animations
+
+v5.0.3
+- move repo to gitlab
+
+v5.0.2
+-cosmetics
+- skin tweaks
+
+v5.0.1
+- add black background
+
+v4.2.3
+- don't crash when failing to retrieve skinpath
+
+v4.2.2
+- extra logging
+
+v4.2.1
+- cosmetics
+
+v4.2.0
+- add resume from last position option
+
+v4.1.4
+- better handling when picture folder is empty
+
+v4.1.3
+- use image instead of largeimage controls 
+
+v4.1.2
+- don't create empty cache file
+- delete empty cache files
+
+v4.1.1
+- don't crash when advancedsettings.xml is corrupt
+
+v4.1.0
+- option to exclude dirs/files using pictureexcludes in advancedsettings.xml
+
+v4.0.1
+- fix cache creation when an empty cache file is present.
+
+v4.0.0
+- remove simplejson support
+
+v3.0.3
+- language update
+- cosmetics
+
+v3.0.2
+- fix randomizing the list
+
+v3.0.1
+- fix index creation during update
+
+v3.0.0
+- bump for jarvis
+- always use image index
+- remove option to create an index
+
+v2.1.9
+- auto placement of exif info labels
+
+v2.1.8
+- fix background creation of image index
+
+v2.1.7
+- move music info to bottom
+
+v2.1.6
+- cosmetics
+
+v2.1.5
+- use different method to find the addon.xml of the skin
+
+v2.1.4
+- fix missing settings string
+- fix crash on update due to incompatible settings
+
+v2.1.3
+- language update
+
+v2.1.2
+- make background image optional
+
+v2.1.1
+- add background image to reduce black borders
+
+v2.1.0
+- add update thread
+
+v2.0.11
+- add option to show both folder- and filename
+
+v2.0.10
+- updated language files from Transifex
+
+v2.0.9
+- deprecate xbmc.abortRequested
+
+v2.0.8
+- add missing images
+
+v2.0.7
+- fix recursive scan (paths must end with a slash)
+
+v2.0.6
+- fix update index button
+
+v2.0.5
+- fix crash on exit
+
+v2.0.4
+- apply dim value to the whole screen
+
+v2.0.3
+- more screen space for image filename
+- disable caching of images
+
+v2.0.2
+- change name to screensaver.picture.slideshow
+
+v2.0.1
+- deprecate previous version
+
+v2.0.0
+- kodi name change
+
+v1.0.6
+- increase zorder
+
+v1.0.5
+- fixed unicode error
+
+v1.0.4
+- fixed: seekbar dialog would display on top of screensaver
+
+v1.0.3
+- update language files
+
+v1.0.2
+- fix album cover missing when playing music
+
+v1.0.1
+- add xml header
+
+v1.0.0
+- gotham release
+
+v0.1.8
+- update language files
+
+v0.1.7
+- use natural sort order
+
+v0.1.6
+- fix empty tags handling in xmp library
+
+v0.1.5
+- auto update cache
+- only use cache with image folder source
+
+v0.1.4
+- fix crash when checking cached images
+
+v0.1.3
+- add support for xmp tags
+- make music info slightly transparent (prevent burn-in)
+
+v0.1.2
+- added yyyy-mm-dd format
+
+v0.1.1
+- fix potential issues due to missing module imports
+
+v0.1.0
+- added option to disable the randomizing of images
+- added display name for fanart
+- added cache option
+
+v0.0.9
+- silence iptc warnings
+- update code for xbmc 12.1
+
+v0.0.8
+- added music info option
+- localize date format
+- removed iptc info labels
+
+v0.0.7
+- change picture tags code
+
+v0.0.6
+- use largeimage controls in skin
+- add support for exif tags
+
+v0.0.5
+- added dependencies to addon.xml
+
+v0.0.4
+- fixed: previous image would briefly show when switching from the current to the next
+- fixed: adjust animation speeds according to the effectslowdown value of the skin
+- fixed: pre-load images
+- changed: allow images to be displayed up to 60 seonds
+- added: option to scale the image fullscreen
+- added: option to display the image name
+- added: splash screen during startup
+
+v0.0.3
+- added: multipath support
+
+v0.0.2
+- added: fanart image
+
+v0.0.1
+- initial release

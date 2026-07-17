@@ -1,0 +1,422 @@
+# Kodi Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther, seveerekaj
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (https://kodi.weblate.cloud/languages/en_gb/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#empty strings from id 32000 to 32009
+
+#General
+
+msgctxt "#32010"
+msgid "[B]Loading[/B]"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Replay"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Quit"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Warning"
+msgstr ""
+
+msgctxt "#32014"
+msgid "All movie questions types are disabled,"
+msgstr ""
+
+msgctxt "#32015"
+msgid "All TV show questions types are disabled,"
+msgstr ""
+
+msgctxt "#32016"
+msgid "so this quiz type is not available."
+msgstr ""
+
+msgctxt "#32017"
+msgid "Missing requirements!"
+msgstr ""
+
+msgctxt "#32018"
+msgid "To play the Movie Quiz you must have some movies or TV shows in your video library. See the Kodi wiki for information."
+msgstr ""
+
+msgctxt "#32019"
+msgid "None of your movies or TV shows are marked as watched, so the [I]Only use watched movies in the questions[/I] setting will be disabled."
+msgstr ""
+
+msgctxt "#32020"
+msgid "None of your movies has a MPAA rating, so the [I]Limit movie selection based on MPAA rating[/I] setting will be disabled."
+msgstr ""
+
+msgctxt "#32021"
+msgid "None of your TV shows has a content rating, so the [I]Limit TV show selection based on content rating[/I] setting will be disabled."
+msgstr ""
+
+#empty strings from id 32022 to 32099
+
+#Menu
+
+msgctxt "#32100"
+msgid "Play Movie Quiz"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Play TV Quiz"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Play Music Quiz"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32104"
+msgid "About"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Exit"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Download IMDB data..."
+msgstr ""
+
+msgctxt "#32107"
+msgid "Downloading IMDB data..."
+msgstr ""
+
+msgctxt "#32108"
+msgid "Retrieved %d of %d mb."
+msgstr ""
+
+msgctxt "#32109"
+msgid ""
+"Select this option to download IMDB quotes to be used in the following question types:\n\n"
+"[I]%s[/I]\n"
+"[I]%s[/I]\n\n"
+"Quotes will be downloaded from the archive at:\n"
+"The Free University of Berlin: fu-berlin.de\n\n"
+"[B]Note:[/B] this archive contains quotes from movies only up to the year 2018. If you know of a source for better/more recently updated quotes, please let me know! :)"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr ""
+
+msgctxt "#32111"
+msgid "IMDB data downloaded and ready for use. Please reopen addon for quotes to be loaded in game."
+msgstr ""
+
+msgctxt "#32112"
+msgid ""
+"This is a fork of the original (now inactive) addon by twinther. It includes bug fixes and new features. Bug reports and feature requests are welcome! "
+"Although I may not get to them right away because I usually end up in the mountains instead of coding during my free time :)\n\n"
+"[B]github.com/seveerekaj/script.moviequiz[/B]\n"
+"[B]forum.kodi.tv/showthread.php?tid=364172[/B]\n\n"
+"--Jake Reeves\n"
+"2021.08.28\n\n\n"
+"[I]Original summary from twinther:[/I]\n\n"
+"[B]Thanks for trying the Movie Quiz, I hope you are enjoying it.[/B]\n\n"
+"I initially started working on the addon in January 2011, when my girlfriend got the idea for guessing a movie based on a random clip. "
+"Since then it has evolved into many questions for both movies and tv shows as well as features such as online highscores, etc.\n\n"
+"I am continuously improving on it and always glad to get feedback, so please don't hesitate to contact me. "
+"You can use the XBMC forums or if you understand Danish you may want to visit my blog, which also has information on the other Danish addons I am working on.\n\n"
+"Online highscores: [B]http://tommy.winther.nu/moviequiz/[/B]\n"
+"My blog: [B]http://tommy.winther.nu[/B]\n"
+"Movie Quiz thread: [B]http://forum.xbmc.org/showthread.php?t=92540[/B]\n\n"
+"Until next time,\n"
+"Tommy Winther\n"
+"2011.11.13"
+msgstr ""
+
+#empty strings from id 32113 to 32399
+
+#Movie Questions
+
+msgctxt "#32400"
+msgid "What movie is this?"
+msgstr ""
+
+#.%s is actor name
+msgctxt "#32401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#32402"
+msgid "What year was [B]%s[/B] released?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#32403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#32404"
+msgid "Who directed [B]%s[/B]?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#32405"
+msgid "What studio released [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#32406"
+msgid "What actor is this?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is movie title
+msgctxt "#32407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is movie title
+msgctxt "#32408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#32409"
+msgid "What movie is this quote from?"
+msgstr ""
+
+msgctxt "#32410"
+msgid "What movie is newest?"
+msgstr ""
+
+#.%s is director name
+msgctxt "#32411"
+msgid "What movie was not directed by [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#32412"
+msgid "What actor is in these movies?"
+msgstr ""
+
+#empty string with id 32413
+
+msgctxt "#32414"
+msgid "What movie has the longest runtime?"
+msgstr ""
+
+#empty strings from id 32415 to 32449
+
+#TV show Questions
+
+msgctxt "#32450"
+msgid "What TV show is this?"
+msgstr ""
+
+#.%s is tvshow title
+msgctxt "#32451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr ""
+
+#.%s is tvshow title
+msgctxt "#32452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr ""
+
+#empty string with id 32453
+
+#.%s is tvshow title
+msgctxt "#32454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is tvshow title
+msgctxt "#32455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is tvshow title
+msgctxt "#32456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#32457"
+msgid "What TV show is this quote from?"
+msgstr ""
+
+#empty strings from id 32458 to 32474
+
+#Music Questions
+
+msgctxt "#32475"
+msgid "What song by [B]%s[/B] is this?"
+msgstr ""
+
+msgctxt "#32476"
+msgid "Who made the song [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#32477"
+msgid "Who made the album [B]%s[/B]?"
+msgstr ""
+
+#empty strings from id 32478 to 32499
+
+#Settings strings
+
+msgctxt "#32500"
+msgid "General"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Content Limits"
+msgstr ""
+
+#empty string with id 32502
+
+msgctxt "#32503"
+msgid "Questions"
+msgstr ""
+
+msgctxt "#32504"
+msgid "Limit movie selection based on MPAA rating"
+msgstr ""
+
+msgctxt "#32505"
+msgid "MPAA ratings to include"
+msgstr ""
+
+msgctxt "#32506"
+msgid "Display the correct answer when you answer incorrectly"
+msgstr ""
+
+msgctxt "#32507"
+msgid "Only use watched movies in the questions"
+msgstr ""
+
+msgctxt "#32508"
+msgid "Limit TV show selection based on content rating"
+msgstr ""
+
+msgctxt "#32509"
+msgid "Content ratings to include"
+msgstr ""
+
+#empty strings from id 32510 to 32549
+
+msgctxt "#32550"
+msgid "Use these question types for movies"
+msgstr ""
+
+msgctxt "#32551"
+msgid "Use these question types for TV shows"
+msgstr ""
+
+#empty string with id 32552
+
+msgctxt "#32553"
+msgid "What movie is this actor not in?"
+msgstr ""
+
+msgctxt "#32554"
+msgid "What year was this movie released?"
+msgstr ""
+
+msgctxt "#32555"
+msgid "What tagline belongs to this movie?"
+msgstr ""
+
+msgctxt "#32556"
+msgid "Who directed this movie?"
+msgstr ""
+
+msgctxt "#32557"
+msgid "What studio relased this movie?"
+msgstr ""
+
+#empty string with id 32558
+
+msgctxt "#32559"
+msgid "Who played this role in this movie?"
+msgstr ""
+
+#empty strings from id 32560 to 32561
+
+msgctxt "#32562"
+msgid "What movie was not directed by this director?"
+msgstr ""
+
+#empty strings from id 32563 to 32569
+
+msgctxt "#32570"
+msgid "Use these question types for music"
+msgstr ""
+
+msgctxt "#32571"
+msgid "What song is this?"
+msgstr ""
+
+msgctxt "#32572"
+msgid "Who made this song?"
+msgstr ""
+
+msgctxt "#32573"
+msgid "Who made this album?"
+msgstr ""
+
+#empty strings from id 32574 to 32580
+
+msgctxt "#32581"
+msgid "What season is this?"
+msgstr ""
+
+msgctxt "#32582"
+msgid "What episode is this?"
+msgstr ""
+
+msgctxt "#32583"
+msgid "When was this TV show first aired?"
+msgstr ""
+
+msgctxt "#32584"
+msgid "Who played this role in this TV show?"
+msgstr ""
+
+#empty strings from id 32585 to 32599
+
+msgctxt "#32600"
+msgid "Video Player"
+msgstr ""
+
+msgctxt "#32601"
+msgid "Play videos full screen"
+msgstr ""
+
+msgctxt "#32602"
+msgid "Minimum start %"
+msgstr ""
+
+msgctxt "#32603"
+msgid "Maximum start %"
+msgstr ""
+
+msgctxt "#32604"
+msgid "Video clip length (seconds)"
+msgstr ""
+
+msgctxt "#32605"
+msgid "These settings apply to question types that play a clip from a movie or TV show."
+msgstr ""

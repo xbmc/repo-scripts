@@ -1,0 +1,136 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Latvian (http://www.transifex.com/projects/p/xbmc-addons/language/lv/)\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that displays an image slideshow"
+msgstr "Ekrānsaudzētājs, kas rāda attēlu slīdīti"
+
+msgctxt "Addon Description"
+msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
+msgstr "Slīdītes ekrānsaudzētājs parādīs slīdīti ar attēliem, izmantojot dažādus pārejas efektus. To var konfigurēt, lai rāda fanumākslu no mūzikas vai video bibliotekām, vai arī no pielāgotas attēlu mapes"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Slīdītes attēlu avots"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Mape"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Video fanumāksla"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Mūzikas fanumāksla"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Attēlu mape"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Tumšuma līmenis"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekts"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Izslēgts"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Use full path"
+msgstr ""
+
+# empty string with id 30017
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr ""
+
+# empty strings from id 30019 to 30020
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Pamata"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Papildus"
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr ""
+
+# empty strings from id 30027 to 30028
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Use vignette overlay"
+msgstr ""

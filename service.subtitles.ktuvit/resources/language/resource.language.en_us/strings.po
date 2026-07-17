@@ -1,0 +1,43 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Main\n"
+"Report-Msgid-Bugs-To: https://github.com/xbmc/xbmc/issues/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (United States) (http://www.transifex.com/projects/p/kodi-main/language/en_GB/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#English
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Email"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Encoded Password"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Login Details"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Check login details"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Wrong email or password"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Logged in successfully"
+msgstr ""

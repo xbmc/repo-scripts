@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.dropbox_auth"
+       name="Dropbox Authentification"
+       version="10.3.1"
+       provider-name="schapplm">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.dropbox" version="10.3.1+matrix.1" />
+    <import addon="script.module.requests" version="2.31.0" />
+    <import addon="script.module.six" version="1.15.0+matrix.1" />
+    <import addon="script.module.qrcode" version="6.1.0+matrix.3" /> <!-- For QR Code display for Dropbox API authentication -->
+  </requires>
+  <extension point="xbmc.python.library" library="authenticate.py" /> <!-- entry to start the authentification script from the settings dialog of other addons -->
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Dropbox Auth API</summary>
+    <description lang="en_GB">Provide Dropbox Authentification</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <source>https://github.com/SchapplM/xbmc-addon-dropboxauth</source>
+  </extension>
+</addon>

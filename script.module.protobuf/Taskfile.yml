@@ -1,0 +1,57 @@
+version: "3"
+
+vars:
+  # TODO: read name and version from addon.xml
+  PACKAGE_NAME: protobuf
+  VERSION: 4.23.2
+  DIST_PATH: "resources/lib"
+
+tasks:
+  install:package:
+    label: 'install:{{.PACKAGE_NAME}}'
+    vars:
+      PACKAGE_NAME: '{{.PACKAGE_NAME}}'
+      COMMAND_NAME: '{{default .PACKAGE_NAME .COMMAND_NAME}}'
+    cmds:
+      - "pip install {{.PACKAGE_NAME}}"
+    status:
+      - 'command -v {{.COMMAND_NAME}}'
+
+  install:addon-check:
+    cmds:
+      - task: install:package
+        vars:
+          PACKAGE_NAME: kodi-addon-checker
+
+  clean:
+    cmds:
+      - "rm -rf {{.DIST_PATH}}"
+
+  download:
+    cmds:
+      - "mkdir -p {{.DIST_PATH}}"
+      - "pip install --ignore-installed --target {{.DIST_PATH}} {{.PACKAGE_NAME}}=={{.VERSION}}"
+    generates:
+      - "{{.DIST_PATH}}/**/*.py"
+
+  fix-mode:
+    cmds:
+      - "find {{.DIST_PATH}} -type f -print0 | xargs -0 chmod 644"
+
+  dist:
+    deps:
+      - download
+      - fix-mode
+    cmds:
+      - "touch {{.DIST_PATH}}/google/__init__.py"
+      - "rm -rf {{.DIST_PATH}}/*.dist-info"
+
+  lint:
+    deps:
+      - install:addon-check
+    cmds:
+      - kodi-addon-checker . --branch nexus
+
+  default:
+    - task: dist
+    - task: lint

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audiooffsetmanager" version="2.0.0" name="Audio Offset Manager" provider-name="matthane">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.python.script" library="script.py" />
+    <extension point="xbmc.addon.metadata">
+        <source>https://github.com/matthane/script.audiooffsetmanager</source>
+        <news>v2.0.0 (2026-07-16)
+- More reliable offset application: stream changes are detected and verified before offsets are applied, eliminating misapplied offsets during playback startup and format switches
+- Manual offset adjustments are now detected from any input method (keymaps, remotes, JSON-RPC), not just the Kodi audio settings dialog
+- Smarter notifications: they wait for the stream to settle, and no longer get cut short when two notifications arrive close together
+- Improved coexistence with PM4K (Plexmod for Kodi): seek-backs are announced via the script.audiooffsetmanager.seeking window property
+- New Advanced settings category with a debug logging toggle
+- Smaller package: the onboarding test video is now a lightweight dummy clip
+        </news>
+        <summary lang="en_GB">Dynamically manages audio offsets</summary>
+        <description lang="en_GB">This add-on intelligently adjusts the audio offset based on the detected HDR type, audio format, and FPS type according to user-configured settings, along with other helpful features</description>
+        <platform>all</platform>
+        <license>GPL-3.0-or-later</license>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <screenshot>resources/screenshot-1.jpg</screenshot>
+            <screenshot>resources/screenshot-2.jpg</screenshot>
+            <screenshot>resources/screenshot-3.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>

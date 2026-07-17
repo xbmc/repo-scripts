@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.skinvariables"
+version="2.1.33"
+name="Skin Variables"
+provider-name="jurialmunkey">
+<requires>
+  <import addon="xbmc.python" version="3.0.0" />
+  <import addon="script.module.jurialmunkey" version="0.2.28" />
+  <import addon="script.module.infotagger" version="0.0.5" />
+</requires>
+<extension point="xbmc.python.script" library="script.py" />
+<extension point="xbmc.python.pluginsource" library="plugin.py">
+  <provides>video</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+  <summary lang="en_GB">Skin Variables helps skinners to construct variables and expressions for multiple containers and listitems using a template</summary>
+  <summary lang="fr_FR">Skin Variables aide les skinners à créer des variables et des expressions pour plusieurs conteneurs et listes à l'aide d'un modèle</summary>
+  <description lang="en_GB">Skin Variables helps skinners to construct variables and expressions for multiple containers and listitems using a template</description>
+  <description lang="fr_FR">Skin Variables aide les skinners à créer des variables et des expressions pour plusieurs conteneurs et listes à l'aide d'un modèle</description>
+  <disclaimer lang="en_GB">For skinners</disclaimer>
+  <disclaimer lang="fr_FR">Pour les skinners</disclaimer>
+  <license>GPL-3.0-or-later</license>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+  </assets>
+</extension>
+</addon>

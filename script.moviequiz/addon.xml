@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.moviequiz" name="Movie Quiz" version="2.1.1" provider-name="twinther, seveerekaj">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="be_BY">Movie and TV Shows Quiz</summary>
+        <summary lang="da_DK">Quiz om Film og TV-serier</summary>
+        <summary lang="de_DE">Film und TV-Sendungen Quiz</summary>
+        <summary lang="el_GR">Κουίζ Ταινιών και Τηλεοπτικών Σειρών</summary>
+        <summary lang="en_GB">Movie and TV Shows Quiz</summary>
+        <summary lang="es_ES">Quiz de Películas y Series</summary>
+        <summary lang="fr_FR">Quizz de films et de séries TV</summary>
+        <summary lang="gl_ES">Concurso sobre Filmes e Series de TV</summary>
+        <summary lang="hu_HU">Mozifilm és televízió kvíz</summary>
+        <summary lang="it_IT">Quiz su Film e Programmi TV</summary>
+        <summary lang="ko_KR">영화와 TV 쇼 퀴즈</summary>
+        <summary lang="nl_NL">Film en TV Series Quiz</summary>
+        <summary lang="nb_NO">Film og TV serie Quiz</summary>
+        <summary lang="pl_PL">Quiz z Filmów i Seriali TV</summary>
+        <summary lang="pt_PT">Questionário de Filmes e Séries TV</summary>
+        <summary lang="pt_BR">Quis de Seriados e Filmes</summary>
+        <summary lang="sk_SK">Filmový a TV seriálový kvíz</summary>
+        <summary lang="sv_SE">Film och TV serie Quiz</summary>
+        <description lang="be_BY">Test your wit and skill against all the information on your movie and TV-shows stored inside Kodi.[CR]* Can you tell which movie is playing from a ten seconds clip?[CR]* Do you know the actors by appearance?[CR]* Any idea when your favorite TV show was first aired?[CR]You will get these questions, and a lot more, all presented nicely with movie clips, actor photos, cover art, etc.</description>
+        <description lang="da_DK">Test din viden og dygtighed op imod de oplysninger om film og TV-serier, der er lagret i Kodi.[CR]* Kan du se, hvilken film der er tale om ud fra et ti-sekunders klip?[CR]* Kender du skuespillerne på deres udseende?[CR]* Nogen ide om, hvornår din yndlings-TV-serie blev sendt første gang?[CR]Du vil få stillet disse spørgsmål og mange flere, præsenteret pænt med filmklip, billeder af skuespillere, covers, mv.</description>
+        <description lang="de_DE">Teste dich und dein Können gegen all die Informationen über deine Filme und Fernsehsendungen in Kodi.[CR]* Erkennst du einen Film an einem zehnsekündigen Ausschnitt?[CR]* Kennst du dessen Darsteller?[CR]* Erinnerst du dich noch, wann deine Lieblingssendung zum ersten Mal ausgestrahlt wurde?[CR]Diese und viele weiteren Fragen werden auf dich zukommen, alle unterlegt mit Videoclips, Darstellerfotos, CoverArt, etc.</description>
+        <description lang="el_GR">Δοκιμάστε την ευφυΐα και τις ικανότητές σας σχετικά με τις ταινίες και τις τηλεοπτικές σειρές που έχετε στο Kodi.[CR]* Μπορείτε να βρείτε τον τίτλο μιας ταινίας από ένα απόσπασμα 10 δευτερολέπτων;[CR]* Ξεχωρίζετε τους ηθοποιούς από την εμφάνισή τους;[CR]* Έχετε ιδέα πότε προβλήθηκε για πρώτη φορά η αγαπημένη σας τηλεοπτική σειρά;[CR]Θα έχετε αυτές τις ερωτήσεις και πολλά περισσότερα, μαζί με αποσπάσματα ταινιών, φωτογραφίες ηθοποιών, εικόνες, αφίσες, κτλ.</description>
+        <description lang="en_GB">Test your wit and skill against all the information on your movie and TV-shows stored inside Kodi.[CR]* Can you tell which movie is playing from a ten seconds clip?[CR]* Do you know the actors by appearance?[CR]* Any idea when your favorite TV show was first aired?[CR]You will get these questions, and a lot more, all presented nicely with movie clips, actor photos, cover art, etc.</description>
+        <description lang="es_ES">Pon a prueba tu ingenio y habilidad con toda la información de tus películas y series de TV almacenados en Kodi.[CR]* ¿Puedes identificar una película a partir de un fragmento de 10 segundos?[CR]* ¿Puedes identificar a los actores por sus fotos?[CR]* ¿Sabes cuándo se estrenó tu show de TV favorito?[CR]Tendrás todas estas preguntas, y muchas más, aderezadas con fragmentos de películas, fotos de actores, carátulas, etc.</description>
+        <description lang="fr_FR">Testez votre savoir et votre habileté contre toutes les informations sur votre film et séries télé stockée à l'intérieur Kodi. [CR] * Pouvez-vous dire quel film vient ce générique ? [CR] * Connaissez-vous les acteurs d'après leurs apparences? [CR] * Quand votre séries favorite a été diffusée pour la 1ère fois ? [CR] Vous obtiendrez ces questions, et bien plus encore, le tout joliment présentée avec des clips, des photos d'acteurs, de l'art de couverture, etc</description>
+        <description lang="gl_ES">Poña a proba o seu enxeño e habilidade contra toda a información da súa biblioteca de filmes e series de TV do Kodi.[CR]* Pode adiviñar cal é o filme dun clip de 10 segundos?[CR]* En que filmes apareceron certos actores?[CR]* Ten algunha idea de cando se emitiu por primeira vez a súa serie favorita?[CR]Esas preguntas e moitas máis, se lle apresentarán xunto con clips dos filmes, fotos dos actores, portadas, etc.</description>
+        <description lang="it_IT">Testa la tua intelligenza ed abilità contro le informazioni sui tuoi Film e Programmi TV memorizzate nel tuo Kodi. [CR]* Sai riconoscere un film da una clip di 10 secondi?[CR]* Riconosci gli attori dall'aspetto?[CR]* Hai idea di quando il tuo Programma TV preferito è stato trasmesso per la prima volta?[CR] Avrai queste domande e tante altre, tutte ben presentate con clip video, foto degli attori, copertine ecc...</description>
+        <description lang="ko_KR">Kodi에 저장되어 있는 영화와 TV 쇼 정보에 대한 당신의 재치와 기량을 테스트 해 보세요.[CR]* 10초짜리 영상을 보고 어떤 영화인지 말 할 수 있습니까?[CR]* 출연하는 배우가 누군지 알겠습니까?[CR]* 당신이 좋아하는 TV 쇼의 첫 방송일을 아시나요?[CR]영화 클립, 배우 사진, 커버 사진과 함께 멋지게 표시되는 여러가지 질문들을 받게 될 것입니다.</description>
+        <description lang="pl_PL">Sprawdź swój spryt i umiejętności na bazie informacji ze wszystkich swoich filmów i seriali TV z Kodi.[CR]* Czy potrafisz odgadnąć tytuł filmu na podstawie 10 sek. fragmentu?[CR]* Czy znasz aktorów, którzy w nich wystęują?[CR]* Pamiętasz kiedy po raz pierwszy wyemitowano Twój ulubiony serial?[CR]Te i wiele innych pytań zostaną Ci zaprezentowane w atrakcyjnej formie wraz z fragmentami filmów, zdjęciami aktorów i okładek, idp.</description>
+        <description lang="pt_PT">Teste a sua inteligência e rapidez em toda a informação de filmes e séries de TV contida no seu Kodi.[CR]* Consegue adivinhar qual é o filme a partir de um trecho de 10 segundos?[CR]* Conhece os filmes em que os actores participaram?[CR]* Sabe quando a sua série de TV preferida estreou?[CR]Serão feitas todas estas perguntas e muitas mais, com uma apresentação de trechos de filmes, fotos de actores, capas, etc.</description>
+        <description lang="pt_BR">Teste sua inteligência e habilidade contra todas as informações sobre o seu filme e seriado armazenados no Kodi. [CR] * Você pode dizer qual o nome do filme que está sendo reproduzido a partir de um clipe de dez segundos? [CR] * Você conhece os atores pela aparência? [CR] * Tens ideia de quando seu programa favorito de TV foi exibido pela primeira vez? [CR] Você vai ter essas questões, e muito mais, tudo apresentado com clipes de filme, fotos ator, arte da capa, etc</description>
+        <description lang="sk_SK">Testujte svoj dôvtip a šikovnosť voči všetkým informáciám o Vašich filmoch a TV seriáloch uložených v Kodi. * Viete povedať o ktorý film sa jedná z desať sekundového klipu? * Poznáte herca podľa výzoru? * Máte tušenie kedy bol Váš obľúbený seriál po prvé vysielaný? Dostanete takéto otázky a ešte mnohé iné, všetky pekne prezentované s filmovými klipmi, fotkami hercov, obalmi vydané a podobne.</description>
+        <description lang="sv_SE">Testa din kvickhet och skicklighet mot all information från dina filmer och TV-serier i Kodi.[CR]* Kan du säga vilken film som spelas från ett tio sekunders klipp?[CR]* Vet du vilka skådespelare som uppträder?[CR]* Någon ide när din favorit TV-serie först sändes?[CR]Du kommer att få dessa frågor, och fler, allt trevligt presenterat med filmklipp, skådespelarfoton, omslagsbilder, etc.</description>
+        <license>GPL 2.0</license>
+        <platform>all</platform>
+        <website>github.com/seveerekaj/script.moviequiz</website>
+        <forum>forum.kodi.tv/showthread.php?tid=364172</forum>
+        <source>github.com/seveerekaj/script.moviequiz</source>
+        <news>v2.1.1 (2025-07-16)
+        - changed MPAA rating filter to multiselect list
+        - fixed questions: "what movie is this actor not in?" and "what actor is in these movies?"
+        - changed main background image, updated layout
+        - fixed bugs
+
+v2.1.0 (2024-01-02)
+        - The quiz interface has a new look! The answers are now in a horizontal layout, with a cover image for each answer option. The video player can now be toggled full screen.
+
+v2.0.0 (2021-08-26)
+        - Complete overhaul of the addon to get it working in Kodi 19 Matrix, add new features, and remove old non-essential features.
+        </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.png</fanart>
+            <screenshot>resources/media/screenshot-1.jpg</screenshot>
+            <screenshot>resources/media/screenshot-2.jpg</screenshot>
+            <screenshot>resources/media/screenshot-3.jpg</screenshot>
+            <screenshot>resources/media/screenshot-4.jpg</screenshot>
+            <screenshot>resources/media/screenshot-5.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>

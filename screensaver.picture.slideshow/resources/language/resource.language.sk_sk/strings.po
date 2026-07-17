@@ -1,0 +1,137 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-03-04 09:16+0000\n"
+"Last-Translator: Patrik Špaňo <patrik.spano@gmail.com>\n"
+"Language-Team: Slovak <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/sk_sk/>\n"
+"Language: sk_sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that displays an image slideshow"
+msgstr "Šetrič obrazovky zobrazujúci prezentáciu obrázkov"
+
+msgctxt "Addon Description"
+msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
+msgstr "Šetrič obrazovky Prezentácia vám zobrazí prezentáciu obrázkov s použitím rôznych prechodových efektov. Môže byť nastavený na zobrazovanie vašej knižnice hudby alebo video fanartov, alebo vlastného priečinku s obrázkami"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Zdroj obrázkov prezentácie"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Priečinok"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Video Fanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Hudobný Fanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Priečinok obrázkov"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Úroveň zatemnenia"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Diapozitívy"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Prelínanie"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Postupné približovanie"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Počet sekúnd, počas ktorých bude zobrazený obrázok"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Zmenšiť obrázky na celú obrazovku"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Zobraziť názov obrázku"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Zakázaný"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Použiť názov súboru"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Použiť názov priečinku"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Zobrazovať obrázky v náhodnom poradí"
+
+msgctxt "#30017"
+msgid "Use full path"
+msgstr ""
+
+# empty string with id 30017
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr ""
+
+# empty strings from id 30019 to 30020
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Zobraziť dátum obrázku"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Zobraziť dodatočné značky obrázkov"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Zobraziť informácie o hudbe počas prehrávania audia"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Základné"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Dodatočné"
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr ""
+
+# empty strings from id 30027 to 30028
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Use vignette overlay"
+msgstr ""

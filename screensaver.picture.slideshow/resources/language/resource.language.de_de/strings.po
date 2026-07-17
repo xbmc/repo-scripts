@@ -1,0 +1,137 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-01-31 22:15+0000\n"
+"Last-Translator: Demian <Demian@gmx.co.uk>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/de_de/>\n"
+"Language: de_de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that displays an image slideshow"
+msgstr "Bildschirmschoner, der eine Bilder-Diashow anzeigt"
+
+msgctxt "Addon Description"
+msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
+msgstr "Der Slideshow-Bildschirmschoner zeigt eine Bilder-Diashow mit verschiedenen Übergangseffekten. Er kann so konfiguriert werden, dass Musik- oder Videofanart aus der Bibliothek oder Bilder eines bestimmten Ordners angezeigt werden"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Quelle der Diashowbilder"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Ordner"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Videofanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Musikfanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Bildordner"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Abdunkelungsgrad"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Seite"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Überblendung"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Schwenk und Zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Anzahl an Sekunden, die jedes Bild angezeigt wird"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Bilder auf Vollbild skalieren"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Bildname anzeigen"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Dateiname verwenden"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Ordnername verwenden"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Bilder in zufälliger Reihenfolge anzeigen"
+
+msgctxt "#30017"
+msgid "Use full path"
+msgstr "Vollständigen Pfad verwenden"
+
+# empty string with id 30017
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Ordner- und Dateiname verwenden"
+
+# empty strings from id 30019 to 30020
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Bilddatum anzeigen"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Zusätzliche Bildschlagwörter anzeigen"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Musikinformationen während der Wiedergabe anzeigen"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basis"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Zusätzlich"
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr "Diashow von letzter Position vorsetzen"
+
+# empty strings from id 30027 to 30028
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Hintergrundbild anzeigen"
+
+msgctxt "#30030"
+msgid "Use vignette overlay"
+msgstr "Vignettenoverlay verwenden"

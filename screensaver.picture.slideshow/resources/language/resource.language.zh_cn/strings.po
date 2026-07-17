@@ -1,0 +1,137 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-07-19 09:14+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/zh_cn/>\n"
+"Language: zh_cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that displays an image slideshow"
+msgstr "幻灯片屏幕保护程序"
+
+msgctxt "Addon Description"
+msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
+msgstr "幻灯片屏保将使用各种过渡效果以幻灯片形式显示您的图片。你可以设置它显示音乐或视频资料库同人画，或某个文件夹中的图片"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "幻灯片图片来源"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "文件夹"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "视频同人画"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "音乐同人画"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "图片文件夹"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "变暗级别"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "特效"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "幻灯片"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "淡入淡出"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "平移缩放"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "图片显示时间"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "图片缩放为全屏"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "显示图片名"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "禁用"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "使用文件名"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "使用文件夹名"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "以随机顺序显示图片"
+
+msgctxt "#30017"
+msgid "Use full path"
+msgstr "使用完整路径"
+
+# empty string with id 30017
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "使用文件夹和文件名"
+
+# empty strings from id 30019 to 30020
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "显示图片日期"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "显示附加图片标签"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "在音频播放时显示音乐信息"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "基本信息"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "附加的"
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr "从最后位置恢复幻灯片"
+
+# empty strings from id 30027 to 30028
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "显示背景图片"
+
+msgctxt "#30030"
+msgid "Use vignette overlay"
+msgstr "使用渐晕覆盖"
