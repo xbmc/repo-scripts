@@ -6,10 +6,10 @@
 
 import sys
 import threading
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 
 
-from . import ADDON, AMBI_RUNNING, BRIDGE_SETTINGS_CHANGED, KODIVERSION, ADDONVERSION
+from . import ADDON, AMBI_RUNNING, BRIDGE_SETTINGS_CHANGED, KODIVERSION, ADDONVERSION, TIMERS_DIRTY
 from . import lightgroup, ambigroup, settings
 from .hue import Hue
 from .kodiutils import notification, cache_set, cache_get, log
@@ -40,7 +40,7 @@ class CommandHandler:
         }
 
     def handle_command(self, command, *args):
-        log(f"[SCRIPT.SERVICE.HUE] Started with {command}, Kodi: {KODIVERSION}, Addon: {ADDONVERSION},  Python: {sys.version}")
+        log(f"[SCRIPT.SERVICE.HUE] Started with {command}, Kodi: {KODIVERSION}, Addon: {ADDONVERSION}, Python: {sys.version}")
         command_func = self.commands.get(command)
 
         if command_func:
@@ -51,13 +51,13 @@ class CommandHandler:
 
     def discover(self):
         bridge = Hue(self.settings_monitor, discover=True)
+        # Open the settings dialog either way so the user can inspect or fix the
+        # bridge configuration; the log line distinguishes the two outcomes.
         if bridge.connected:
             log("[SCRIPT.SERVICE.HUE] Found bridge. Opening settings.")
-            ADDON.openSettings()
-
         else:
             log("[SCRIPT.SERVICE.HUE] No bridge found. Opening settings.")
-            ADDON.openSettings()
+        ADDON.openSettings()
 
     def scene_select(self, light_group, action):
         log(f"[SCRIPT.SERVICE.HUE] sceneSelect: light_group: {light_group}, action: {action}")
@@ -83,11 +83,13 @@ class HueService:
         self.bridge = Hue(settings_monitor)
         self.light_groups = []
         self.timers = None
-        self.service_enabled = True
+        # The cache is the source of truth for service_enabled — menu.py (plugin
+        # process) reads and writes it via cache_get/cache_set. Initialize True
+        # so the first cache_get in run() agrees with the default.
         cache_set("service_enabled", True)
 
     def run(self):
-        log(f"[SCRIPT.SERVICE.HUE] Starting Hue Service, Kodi: {KODIVERSION}, Addon: {ADDONVERSION},  Python: {sys.version}")
+        log(f"[SCRIPT.SERVICE.HUE] Starting Hue Service, Kodi: {KODIVERSION}, Addon: {ADDONVERSION}, Python: {sys.version}")
         self.light_groups = self.initialize_light_groups()
         self.timers = Timers(self.settings_monitor, self.bridge, self)
 
@@ -95,11 +97,11 @@ class HueService:
             self.timers.start()
 
         # Track the previous state of the service
-        prev_service_enabled = self.service_enabled
+        prev_service_enabled = True
 
         while not self.settings_monitor.abortRequested(): # main loop, once per second
             # Update the current state of the service
-            self.service_enabled = cache_get("service_enabled")
+            service_enabled = cache_get("service_enabled")
 
             # Check if the bridge settings have changed, if so, reconnect the bridge
             if BRIDGE_SETTINGS_CHANGED.is_set():
@@ -109,7 +111,7 @@ class HueService:
             #Process pending action commands
             self._process_action()
 
-            if self.service_enabled:
+            if service_enabled:
                 # If the service was previously disabled and is now enabled, activate light groups
                 if not prev_service_enabled and self.bridge.connected:
                     self.activate()
@@ -126,7 +128,7 @@ class HueService:
                 self.timers.start()
 
             # Update the previous state for the next iteration
-            prev_service_enabled = self.service_enabled
+            prev_service_enabled = service_enabled
 
             if self.settings_monitor.waitForAbort(1):
                 break
@@ -143,7 +145,7 @@ class HueService:
 
     def activate(self):
         # Activates play action as appropriate for all groups. Used at sunset and when service is re-enabled via Actions.
-        log(f"[SCRIPT.SERVICE.HUE] Activating scenes")
+        log("[SCRIPT.SERVICE.HUE] Activating scenes")
 
         for g in self.light_groups:
             if ADDON.getSettingBool(f"group{g.light_group_id}_enabled"):
@@ -167,92 +169,164 @@ class HueService:
 
 
 class Timers(threading.Thread):
+    """Background thread that fires once at morning_time and once at sunset+offset.
+
+    The thread sleeps via xbmc.Monitor.waitForAbort, which is the only Kodi-sanctioned
+    way to wait in service code: xbmc.sleep / threading.Event.wait would block Kodi's
+    shutdown. waitForAbort can only be woken by Kodi abort, however, so we slice the
+    wait into short chunks (_wait_chunked) to stay responsive to stop() and to
+    settings changes signalled via TIMERS_DIRTY.
+    """
+
+    # Slice length for the chunked wait. Picks the worst-case latency for
+    # observing stop() / TIMERS_DIRTY; 1s matches the main service loop cadence
+    # and is negligibly more expensive than a single long waitForAbort.
+    _WAIT_CHUNK_SECONDS = 1.0
+
     def __init__(self, settings_monitor, bridge, hue_service):
         self.settings_monitor = settings_monitor
         self.bridge = bridge
         self.hue_service = hue_service
-        self.morning_time = self.settings_monitor.morning_time
         self.stop_timers = threading.Event()  # Flag to stop the thread
 
-        super().__init__()
+        # Daemon=True so an in-flight bridge.update_sunset() HTTP call inside
+        # _run_morning() doesn't hold Kodi's shutdown open: the chunked wait
+        # observes abort within ~1s, but a request that is already mid-flight
+        # has to finish (or hit its retry timeout) before the thread can check
+        # anything. Daemon threads are killed by the interpreter on exit, so
+        # the worst case is a torn-down HTTP call — which is fine, since the
+        # state being updated (sunset time) is recomputed on next service start.
+        super().__init__(daemon=True)
 
     def run(self):
+        # Establish the daytime cache before entering the loop so other components
+        # querying it before the first event fires get a correct answer.
         self._set_daytime()
         self._task_loop()
 
     def stop(self):
+        # Cooperative stop: observed by _wait_chunked within _WAIT_CHUNK_SECONDS.
         self.stop_timers.set()
 
     def _run_morning(self):
         cache_set("daytime", True)
+        # Sunset shifts day to day, so refresh it from the bridge here.
+        # update_sunset() performs HTTP I/O and can't be cancelled mid-request;
+        # the thread is a daemon so a Kodi shutdown during this call won't hang
+        # the host process.
         self.bridge.update_sunset()
         log(f"[SCRIPT.SERVICE.HUE] run_morning(): new sunset: {self.bridge.sunset}")
 
     def _run_sunset(self):
-        log(f"[SCRIPT.SERVICE.HUE] in run_sunset(): Sunset. ")
+        log("[SCRIPT.SERVICE.HUE] run_sunset(): Sunset.")
         cache_set("daytime", False)
         if self.settings_monitor.force_on_sunset:
             self.hue_service.activate()
 
+    def _compute_sun_events(self, now):
+        """Return (next_morning_dt, next_sunset_dt) as full datetimes, both >= now.
+
+        Anchoring against today's date and rolling forward by one day if the
+        event has already passed lets _task_loop measure remaining time to the
+        next occurrence with a simple subtraction. Reads timing values live from
+        settings_monitor so that updates take effect on the next iteration
+        without any snapshot to keep in sync.
+        """
+        today = now.date()
+        morning_dt = datetime.combine(today, self.settings_monitor.morning_time)
+        sunset_dt = (
+            datetime.combine(today, self.bridge.sunset)
+            + timedelta(minutes=self.settings_monitor.sunset_offset)
+        )
+        if morning_dt <= now:
+            morning_dt += timedelta(days=1)
+        if sunset_dt <= now:
+            sunset_dt += timedelta(days=1)
+        return morning_dt, sunset_dt
 
     def _set_daytime(self):
+        """Cache whether we are currently inside the daylight window.
+
+        Compares full datetimes rather than naked time() values: a large positive
+        sunset_offset can push sunset past midnight, in which case dropping the
+        date component would invert the inequality (e.g. now=22:00 is NOT
+        < sunset_with_offset.time()=00:30, even though we're clearly still
+        before that sunset).
+        """
         now = datetime.now()
-        log(f"[SCRIPT.SERVICE.HUE] _set_daytime(): Morning Time: {self.morning_time}, Now: {now.time()}, bridge.sunset: {self.bridge.sunset}, Sunset offset: {self.settings_monitor.sunset_offset}")
+        today = now.date()
 
-        # Convert self.bridge.sunset to a datetime object by combining it with today's date
-        sunset_datetime = datetime.combine(datetime.today(), self.bridge.sunset)
+        morning_dt = datetime.combine(today, self.settings_monitor.morning_time)
+        sunset_dt = (
+            datetime.combine(today, self.bridge.sunset)
+            + timedelta(minutes=self.settings_monitor.sunset_offset)
+        )
 
-        # Apply the sunset offset
-        sunset_with_offset = sunset_datetime + timedelta(minutes=self.settings_monitor.sunset_offset)
-
-        # Compare times
-        if self.morning_time <= now.time() < sunset_with_offset.time():
-            daytime=True
-        else:
-            daytime = False
+        daytime = morning_dt <= now < sunset_dt
         cache_set("daytime", daytime)
-        log(f"[SCRIPT.SERVICE.HUE] in _set_daytime(): Sunset with offset: {sunset_with_offset}, Daytime: {daytime} ")
+        log(
+            f"[SCRIPT.SERVICE.HUE] _set_daytime(): now={now}, "
+            f"morning={morning_dt}, sunset(+offset)={sunset_dt}, daytime={daytime}"
+        )
+
+    def _wait_chunked(self, total_seconds):
+        """Sleep up to total_seconds, returning early on abort, stop, or settings change.
+
+        Returns one of:
+            "abort"   - Kodi requested abort; caller should exit the thread.
+            "stop"    - Timers.stop() was called.
+            "dirty"   - TIMERS_DIRTY was set; caller should recompute and re-sleep.
+            "timeout" - The full duration elapsed; the scheduled event is due.
+
+        See class docstring for why this slices waitForAbort instead of issuing
+        a single long call.
+        """
+        remaining = total_seconds
+        while remaining > 0:
+            chunk = min(self._WAIT_CHUNK_SECONDS, remaining)
+            if self.settings_monitor.waitForAbort(chunk):
+                return "abort"
+            if self.stop_timers.is_set():
+                return "stop"
+            if TIMERS_DIRTY.is_set():
+                # Consume the flag here so the next iteration's wait starts
+                # clean; the caller is responsible for recomputing.
+                TIMERS_DIRTY.clear()
+                return "dirty"
+            remaining -= chunk
+        return "timeout"
 
     def _task_loop(self):
+        while not self.settings_monitor.abortRequested() and not self.stop_timers.is_set():
+            now = datetime.now()
+            morning_dt, sunset_dt = self._compute_sun_events(now)
 
-        while not self.settings_monitor.abortRequested() and not self.stop_timers.is_set(): #todo: Update timers if sunset offset changes.
+            time_to_morning = (morning_dt - now).total_seconds()
+            time_to_sunset = (sunset_dt - now).total_seconds()
+            morning_is_next = time_to_morning < time_to_sunset
+            wait_seconds = time_to_morning if morning_is_next else time_to_sunset
 
-            now = datetime.now() #+ timedelta(seconds=5)
-            today = date.today()
+            log(
+                f"[SCRIPT.SERVICE.HUE] Timers: now={now}, "
+                f"next morning={morning_dt} ({time_to_morning:.0f}s), "
+                f"next sunset={sunset_dt} ({time_to_sunset:.0f}s); "
+                f"waiting for {'morning' if morning_is_next else 'sunset'}"
+            )
 
-            morning_datetime = datetime.combine(today, self.settings_monitor.morning_time)
-            # Convert self.bridge.sunset to a datetime object and apply the sunset offset
-            sunset_datetime = datetime.combine(today, self.bridge.sunset) + timedelta(minutes=self.settings_monitor.sunset_offset)
+            result = self._wait_chunked(wait_seconds)
 
-            if sunset_datetime < now:
-                sunset_datetime += timedelta(days=1)
-            if morning_datetime < now:
-                morning_datetime += timedelta(days=1)
-
-            time_to_sunset = (sunset_datetime - now).total_seconds()
-            time_to_morning = (morning_datetime - now).total_seconds()
-
-            # Log the calculated times
-            log(f"[SCRIPT.SERVICE.HUE] Time to sunset: {time_to_sunset}, Time to morning: {time_to_morning}")
-
-            # Determine which event is next based on the time calculations
-            if time_to_morning < time_to_sunset:
-                # Morning is next
-                log(f"[SCRIPT.SERVICE.HUE] Timers: Morning is next. wait_time: {time_to_morning}")
-                if self.settings_monitor.waitForAbort(time_to_morning):
-                    break
+            if result in ("abort", "stop"):
+                break
+            if result == "dirty":
+                # Timing settings changed mid-wait. Refresh the daytime cache
+                # against the new values and re-enter the loop to recompute
+                # which event is next and how long until it fires.
+                self._set_daytime()
+                continue
+            # result == "timeout": the scheduled event is due now.
+            if morning_is_next:
                 self._run_morning()
             else:
-                # Sunset is next
-                log(f"[SCRIPT.SERVICE.HUE] Timers: Sunset is next. wait_time: {time_to_sunset}")
-                if self.settings_monitor.waitForAbort(time_to_sunset):
-                    break
                 self._run_sunset()
-        log("[SCRIPT.SERVICE.HUE] Timers stopped")
 
-    @staticmethod
-    def _time_until(current, target):
-        # Calculates remaining time from current to target
-        now = datetime(1, 1, 1, current.hour, current.minute, current.second)
-        then = datetime(1, 1, 1, target.hour, target.minute, target.second)
-        return (then - now).seconds
+        log("[SCRIPT.SERVICE.HUE] Timers stopped")
