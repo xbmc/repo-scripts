@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore[import-untyped]
 import threading
 
 
@@ -12,20 +12,21 @@ def _session():
     return _local.session
 
 
-def _get_proxy_cfg(kw):
+def _get_proxy_cfg(kw: dict) -> dict | None:
     proxy = kw.pop('proxy', None)
     proxy_user = kw.pop('proxy_user', None)
     proxy_password = kw.pop('proxy_password', None)
     if proxy and proxy_user and proxy_password:
         return {
-            'http': 'http://{}:{}@{}'.format(proxy_user, proxy_password, proxy),
-            'https': 'http://{}:{}@{}'.format(proxy_user, proxy_password, proxy),
+            'http': f'http://{proxy_user}:{proxy_password}@{proxy}',
+            'https': f'http://{proxy_user}:{proxy_password}@{proxy}',
         }
     elif proxy:
         return {
-            'http': 'http://{}'.format(proxy),
-            'https': 'http://{}'.format(proxy),
+            'http': f'http://{proxy}',
+            'https': f'http://{proxy}',
         }
+    return None
 
 
 def configure_pool(**kw):

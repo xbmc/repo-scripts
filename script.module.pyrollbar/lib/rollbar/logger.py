@@ -18,12 +18,53 @@ Usage:
     logger.addHandler(rollbar_handler)
 
 """
-import copy
+from __future__ import annotations
+
 import logging
 import threading
-import time
+
+from logging.config import ConvertingDict, ConvertingList, ConvertingTuple
 
 import rollbar
+
+
+def check_level(level: str | int ) -> int:
+    """
+    Convert level to numeric logging level.
+    """
+    if isinstance(level, int):
+        return level
+    elif isinstance(level, str):
+        # Note: getLevelName() returns an `int` if the arg is a valid level name `str` and returns a `str` if the arg is
+        # a valid level `int`.
+        result = logging.getLevelName(level)
+        if isinstance(result, int):
+            return result
+        raise ValueError(f"Unknown level: {level!r}")
+    raise TypeError(f"Level not an integer or a valid string: {level!r}")
+
+
+EXCLUDE_RECORD_KEYS = {
+    # Attributes that are disallowed in `logging.Logger.makeRecord`
+    'asctime',
+    'message',
+    # Attributes that are used internally by pyrollbar
+    'extra_data',
+    'payload_data',
+    'request',
+    *vars(logging.makeLogRecord({})).keys(),
+}
+
+
+def resolve_logging_types(obj):
+    if isinstance(obj, (dict, ConvertingDict)):
+        return {k: resolve_logging_types(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, ConvertingList)):
+        return [resolve_logging_types(i) for i in obj]
+    elif isinstance(obj, (tuple, ConvertingTuple)):
+        return tuple(resolve_logging_types(i) for i in obj)
+
+    return obj
 
 
 class RollbarHandler(logging.Handler):
@@ -36,14 +77,18 @@ class RollbarHandler(logging.Handler):
                  environment=None,
                  level=logging.INFO,
                  history_size=10,
-                 history_level=logging.DEBUG):
+                 history_level=logging.DEBUG,
+                 **kw):
 
         logging.Handler.__init__(self)
 
         if access_token is not None:
-            rollbar.init(access_token, environment)
+            rollbar.init(
+                access_token, environment,
+                allow_logging_basic_config=False,   # a handler shouldn't configure the root logger
+                **resolve_logging_types(kw))
 
-        self.notify_level = level
+        self.notify_level = check_level(level)
 
         self.history_size = history_size
         if history_size > 0:
@@ -57,7 +102,7 @@ class RollbarHandler(logging.Handler):
         log records we notify Rollbar about instead of which
         records we save to the history.
         """
-        self.notify_level = level
+        self.notify_level = check_level(level)
 
     def setHistoryLevel(self, level):
         """
@@ -68,6 +113,11 @@ class RollbarHandler(logging.Handler):
         logging.Handler.setLevel(self, level)
 
     def emit(self, record):
+        # If the record came from Rollbar's own logger don't report it
+        # to Rollbar
+        if record.name == rollbar.__log_name__:
+            return
+
         level = record.levelname.lower()
 
         if level not in self.SUPPORTED_LEVELS:
@@ -75,8 +125,6 @@ class RollbarHandler(logging.Handler):
 
         exc_info = record.exc_info
 
-        # use the original message, not the formatted one
-        message = record.msg
         extra_data = {
             'args': record.args,
             'record': {
@@ -92,9 +140,10 @@ class RollbarHandler(logging.Handler):
                 'thread': record.thread,
                 'threadName': record.threadName
             }
-        }
-
-        extra_data.update(getattr(record, 'extra_data', {}))
+        } | {  # include any extras
+            k: v for k, v in vars(record).items()
+            if k not in EXCLUDE_RECORD_KEYS
+        } | getattr(record, 'extra_data', {})  # include historical extra_data
 
         payload_data = getattr(record, 'payload_data', {})
 
@@ -109,21 +158,29 @@ class RollbarHandler(logging.Handler):
         # load the request
         request = getattr(record, "request", None) or rollbar.get_request()
 
+        # Rather than copy the log record and disable exception and stack trace
+        # formatting, this does the same steps to prepare the log record
+        # as `logging.Formatter.format` does before calling
+        # `logging.Formatter.formatMessage`.
+        formatter = self.formatter or logging._defaultFormatter
+        record.message = record.getMessage()
+        if formatter.usesTime():
+            record.asctime = formatter.formatTime(record, formatter.datefmt)
+
+        message = formatter.formatMessage(record)
+
         uuid = None
         try:
             # when not in an exception handler, exc_info == (None, None, None)
             if exc_info and exc_info[0]:
-                if message:
+                if record.msg:
                     message_template = {
                         'body': {
-                            'trace': {
-                                'exception': {
-                                    'description': message
-                                }
-                            }
+                            'trace': {'exception': {'description': message}}
                         }
                     }
-                    payload_data = rollbar.dict_merge(payload_data, message_template)
+                    payload_data = rollbar.dict_merge(
+                        payload_data, message_template, silence_errors=True)
 
                 uuid = rollbar.report_exc_info(exc_info,
                                                level=level,
@@ -158,7 +215,8 @@ class RollbarHandler(logging.Handler):
 
     def _build_history_data(self, record):
         data = {'timestamp': record.created,
-                'message': record.getMessage()}
+                'format': record.msg,
+                'args': record.args}
 
         if hasattr(record, 'rollbar_uuid'):
             data['uuid'] = record.rollbar_uuid

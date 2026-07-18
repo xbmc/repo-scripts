@@ -1,5 +1,7 @@
 # Pyrollbar
-[![Build Status](https://travis-ci.org/rollbar/pyrollbar.svg?branch=v0.15.0)](https://travis-ci.org/rollbar/pyrollbar)
+
+![Build Status](https://github.com/rollbar/pyrollbar/workflows/Pyrollbar%20CI/badge.svg?tag=latest)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rollbar)
 
 Python notifier for reporting exceptions, errors, and log messages to [Rollbar](https://rollbar.com).
 
@@ -11,7 +13,7 @@ Python notifier for reporting exceptions, errors, and log messages to [Rollbar](
 # Usage and Reference
 
 For complete usage instructions and configuration reference, see our [Python SDK docs](https://docs.rollbar.com/docs/python).
-  
+
 # Release History & Changelog
 
 See our [Releases](https://github.com/rollbar/pyrollbar/releases) page for a list of all releases, including changes.

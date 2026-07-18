@@ -1,18 +1,16 @@
+from __future__ import annotations
+
 from array import array
 import collections
 import itertools
+import reprlib
 
-try:
-    # Python 3
-    from collections.abc import Mapping
-except ImportError:
-    # Python 2.7
-    from collections import Mapping
+from collections.abc import Mapping
 
 from rollbar.lib import (
-    integer_types, iteritems, key_in, number_types, reprlib, sequence_types,
-    string_types, text)
-from rollbar.lib.transforms import Transform
+    integer_types, key_in, key_depth, sequence_types,
+    string_types)
+from rollbar.lib.transform import Transform
 
 
 _type_name_mapping = {
@@ -29,18 +27,100 @@ _type_name_mapping = {
 }
 
 
+def _max_left_right(max_len: int, seperator_len: int) -> tuple[int, int]:
+    left = max(0, (max_len-seperator_len)//2)
+    right = max(0, max_len-seperator_len-left)
+    return left, right
+
+
+def shorten_array(obj: array, max_len: int) -> array:
+    if len(obj) <= max_len:
+        return obj
+
+    return obj[:max_len]
+
+
+def shorten_bytes(obj: bytes, max_len: int) -> bytes:
+    if len(obj) <= max_len:
+        return obj
+
+    return obj[:max_len]
+
+
+def shorten_deque(obj: collections.deque, max_len: int) -> collections.deque:
+    if len(obj) <= max_len:
+        return obj
+
+    return collections.deque(itertools.islice(obj, max_len))
+
+
+def shorten_frozenset(obj: frozenset, max_len: int) -> frozenset:
+    if len(obj) <= max_len:
+        return obj
+
+    return frozenset([elem for i, elem in enumerate(obj) if i < max_len] + ['...'])
+
+
+def shorten_int(obj: int, max_len: int) -> int | str:
+    s = repr(obj)
+    if len(s) <= max_len:
+        return obj
+
+    left, right = _max_left_right(max_len, 3)
+    return s[:left] + '...' + s[len(s)-right:]
+
+
+def shorten_list(obj: list, max_len: int) -> list:
+    if len(obj) <= max_len:
+        return obj
+
+    return obj[:max_len] + ['...']
+
+
+def shorten_mapping(obj: dict | Mapping, max_keys: int) -> dict | Mapping:
+    if len(obj) <= max_keys:
+        return obj
+
+    return {k: obj[k] for k in itertools.islice(obj.keys(), max_keys)}
+
+
+def shorten_set(obj: set, max_len: int) -> set:
+    if len(obj) <= max_len:
+        return obj
+
+    return set([elem for i, elem in enumerate(obj) if i < max_len] + ['...'])
+
+
+def shorten_string(obj: str, max_len: int) -> str:
+    if len(obj) <= max_len:
+        return obj
+
+    left, right = _max_left_right(max_len, 3)
+    return obj[:left] + '...' + obj[len(obj)-right:]
+
+
+def shorten_tuple(obj: tuple, max_len: int) -> tuple:
+    if len(obj) <= max_len:
+        return obj
+
+    return obj[:max_len] + ('...',)
+
+
 class ShortenerTransform(Transform):
-    def __init__(self, safe_repr=True, keys=None, **sizes):
+    depth_first: bool = False
+    priority: int = 10
+
+    def __init__(self, safe_repr=True, keys: list[tuple[str, ...]] | None = None, **sizes):
         super(ShortenerTransform, self).__init__()
         self.safe_repr = safe_repr
         self.keys = keys
         self._repr = reprlib.Repr()
 
-        for name, size in iteritems(sizes):
+        for name, size in sizes.items():
             setattr(self._repr, name, size)
 
     def _get_max_size(self, obj):
-        for name, _type in iteritems(_type_name_mapping):
+        for name, _type in _type_name_mapping.items():
             # Special case for dicts since we are using collections.abc.Mapping
             # to provide better type checking for dict-like objects
             if name == 'mapping':
@@ -51,48 +131,47 @@ class ShortenerTransform(Transform):
 
         return self._repr.maxother
 
-    def _shorten_sequence(self, obj, max_keys):
-        _len = len(obj)
-        if _len <= max_keys:
-            return obj
+    def _shorten(self, val):
+        max_size = self._get_max_size(val)
 
-        return self._repr.repr(obj)
+        if isinstance(val, array):
+            return shorten_array(val, max_size)
+        if isinstance(val, bytes):
+            return shorten_bytes(val, max_size)
+        if isinstance(val, collections.deque):
+            return shorten_deque(val, max_size)
+        if isinstance(val, (dict, Mapping)):
+            return shorten_mapping(val, max_size)
+        if isinstance(val, float):
+            return val
+        if isinstance(val, frozenset):
+            return shorten_frozenset(val, max_size)
+        if isinstance(val, int):
+            return shorten_int(val, max_size)
+        if isinstance(val, list):
+            return shorten_list(val, max_size)
+        if isinstance(val, set):
+            return shorten_set(val, max_size)
+        if isinstance(val, str):
+            return shorten_string(val, max_size)
+        if isinstance(val, tuple):
+            return shorten_tuple(val, max_size)
 
-    def _shorten_mapping(self, obj, max_keys):
-        _len = len(obj)
-        if _len <= max_keys:
-            return obj
-
-        return {k: obj[k] for k in itertools.islice(obj.keys(), max_keys)}
-
-    def _shorten_basic(self, obj, max_len):
-        val = text(obj)
-        if len(val) <= max_len:
-            return obj
-
-        return self._repr.repr(obj)
+        return self._shorten_other(val)
 
     def _shorten_other(self, obj):
         if obj is None:
             return None
 
+        # If the object has a __rollbar_repr__() method, use it.
+        custom = Transform.rollbar_repr(obj)
+        if custom is not None:
+            return custom
+
         if self.safe_repr:
-            obj = text(obj)
+            obj = str(obj)
 
         return self._repr.repr(obj)
-
-    def _shorten(self, val):
-        max_size = self._get_max_size(val)
-
-        if isinstance(val, dict):
-            return self._shorten_mapping(val, max_size)
-        if isinstance(val, (string_types, sequence_types)):
-            return self._shorten_sequence(val, max_size)
-
-        if isinstance(val, number_types):
-            return self._shorten_basic(val, self._repr.maxlong)
-
-        return self._shorten_other(val)
 
     def _should_shorten(self, val, key):
         if not key:
@@ -100,7 +179,23 @@ class ShortenerTransform(Transform):
 
         return key_in(key, self.keys)
 
+    def _should_drop(self, val, key) -> bool:
+        if not key:
+            return False
+
+        max_depth = key_depth(key, self.keys)
+        if max_depth == 0:
+            return False
+
+        return (max_depth + self._repr.maxlevel) <= len(key)
+
     def default(self, o, key=None):
+        if self._should_drop(o, key):
+            if isinstance(o, (dict, Mapping)):
+                return {'...': '...'}
+            if isinstance(o, sequence_types):
+                return ['...']
+
         if self._should_shorten(o, key):
             return self._shorten(o)
 

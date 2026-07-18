@@ -1,89 +1,25 @@
+from __future__ import annotations
+
 import base64
 import collections
 import copy
-import os
-import sys
 from array import array
-import json
 
-try:
-    # Python 3
-    from collections.abc import Mapping
-except ImportError:
-    # Python 2.7
-    from collections import Mapping
+from collections.abc import Mapping
+from typing import Any, TypeVar, MutableMapping
 
-import six
-from six.moves import urllib
-
-iteritems = six.iteritems
-reprlib = six.moves.reprlib
-
-binary_type = six.binary_type
-integer_types = six.integer_types
-number_types = integer_types + (float, )
-string_types = six.string_types
+binary_type = bytes
+integer_types = int
+number_types = (float, int)
+string_types = str
 sequence_types = (Mapping, list, tuple, set, frozenset, array, collections.deque)
 
-urlparse = urllib.parse.urlparse
-urlsplit = urllib.parse.urlsplit
-urlunparse = urllib.parse.urlunparse
-urlunsplit = urllib.parse.urlunsplit
-parse_qs = urllib.parse.parse_qs
-urlencode = urllib.parse.urlencode
-urljoin = urllib.parse.urljoin
-quote = urllib.parse.quote
 
-
-_version = sys.version_info
-
-
-def python_major_version():
-    return _version[0]
-
-
-if python_major_version() < 3:
-    def text(val):
-        if isinstance(val, (str, unicode)):
-            return val
-
-        conversion_options = [unicode, lambda x: unicode(x, encoding='utf8')]
-        for option in conversion_options:
-            try:
-                return option(val)
-            except UnicodeDecodeError:
-                pass
-
-        return repr(val)
-
-    _map = map
-
-    def map(*args):
-        return _map(*args)
-
-    def force_lower(val):
+def force_lower(val):
+    try:
+        return val.lower()
+    except:
         return str(val).lower()
-
-else:
-    def text(val):
-        return str(val)
-
-    _map = map
-
-    def map(*args):
-        return list(_map(*args))
-
-    def force_lower(val):
-        try:
-            return val.lower()
-        except:
-            return str(val).lower()
-
-
-def do_for_python_version(two_fn, three_fn, *args, **kw):
-    if python_major_version() < 3:
-        return two_fn(*args, **kw)
-    return three_fn(*args, **kw)
 
 
 def prefix_match(key, prefixes):
@@ -91,42 +27,54 @@ def prefix_match(key, prefixes):
         return False
 
     for prefix in prefixes:
-        common_prefix = os.path.commonprefix((prefix, key))
-        if common_prefix == prefix:
+        if len(prefix) > len(key):
+            continue
+
+        if prefix == key[:len(prefix)]:
             return True
 
     return False
 
 
-def key_in(key, keys):
+def key_in(key, canonicals):
     if not key:
         return False
 
-    for k in keys:
-        if key_match(k, key):
+    for c in canonicals:
+        if key_match(key, c):
             return True
 
     return False
 
 
-def key_match(key1, key2):
-    key1_len = len(key1)
-    key2_len = len(key2)
-    if key1_len != key2_len:
+def key_depth(key, canonicals) -> int:
+    if not key:
+        return 0
+
+    for c in canonicals:
+        if key_match(key, c):
+            return len(c)
+
+    return 0
+
+
+def key_match(key, canonical):
+    if len(key) < len(canonical):
         return False
 
-    z_key = zip(key1, key2)
-    num_matches = 0
-    for p1, p2 in z_key:
-        if '*' in (p1, p2) or p1 == p2:
-            num_matches += 1
+    for k, c in zip(key, canonical):
+        if '*' == c:
+            continue
+        if c == k:
+            continue
+        return False
 
-    return num_matches == key1_len
+    return True
 
 
 def reverse_list_of_lists(l, apply_each_fn=None):
     apply_each_fn = apply_each_fn or (lambda x: x)
-    return map(lambda x: list(reversed(map(apply_each_fn, x))), l or [])
+    return [reversed([apply_each_fn(x) for x in inner]) for inner in l or []]
 
 
 def build_key_matcher(prefixes_or_suffixes, type='prefix', case_sensitive=False):
@@ -161,19 +109,22 @@ def build_key_matcher(prefixes_or_suffixes, type='prefix', case_sensitive=False)
     return matcher
 
 
-def is_builtin_type(obj):
+def is_builtin_type(obj) -> bool:
     return obj.__class__.__module__ in ('__builtin__', 'builtins')
+
+T = TypeVar('T', bound=dict | MutableMapping[str, Any])
+U = TypeVar('U', bound=dict | Mapping[str, Any] | Any)
 
 
 # http://www.xormedia.com/recursively-merge-dictionaries-in-python.html
-def dict_merge(a, b, silence_errors=False):
+def dict_merge(a: T, b: U, silence_errors: bool = False) -> T | U:
     """
     Recursively merges dict's. not just simple a['key'] = b['key'], if
-    both a and bhave a key who's value is a dict then dict_merge is called
+    both a and b have a key whose value is a dict then dict_merge is called
     on both values and the result stored in the returned dictionary.
     """
 
-    if not isinstance(b, dict):
+    if not isinstance(b, (dict, Mapping)):
         return b
 
     result = a
@@ -183,48 +134,46 @@ def dict_merge(a, b, silence_errors=False):
         else:
             try:
                 result[k] = copy.deepcopy(v)
-            except:
+            except Exception as e:
                 if not silence_errors:
-                    raise six.reraise(*sys.exc_info())
+                    raise e
 
-                result[k] = '<Uncopyable obj:(%s)>' % (v,)
+                result[k] = f'<Uncopyable obj:({v})>'
 
     return result
 
 
-def circular_reference_label(data, ref_key=None):
-    ref = '.'.join(map(text, ref_key))
-    return '<CircularReference type:(%s) ref:(%s)>' % (type(data).__name__, ref)
+def circular_reference_label(data: Any, ref_key=None) -> str:
+    ref = '.'.join([str(x) for x in ref_key])
+    return f'<CircularReference type:({type(data).__name__}) ref:({ref})>'
 
 
-def float_nan_label(data):
+def float_nan_label(data) -> str:
     return '<NaN>'
 
 
-def float_infinity_label(data):
+def float_infinity_label(data) -> str:
     if data > 1:
         return '<Infinity>'
     else:
         return '<NegativeInfinity>'
 
 
-def unencodable_object_label(data):
-    return '<Unencodable type:(%s) base64:(%s)>' % (type(data).__name__,
-                                                    base64.b64encode(data).decode('ascii'))
+def unencodable_object_label(data) -> str:
+    return f'<Unencodable type:({type(data).__name__}) base64:({base64.b64encode(data).decode("ascii")})>'
 
 
-def undecodable_object_label(data):
-    return '<Undecodable type:(%s) base64:(%s)>' % (type(data).__name__,
-                                                    base64.b64encode(data).decode('ascii'))
+def undecodable_object_label(data) -> str:
+    return f'<Undecodable type:({type(data).__name__}) base64:({base64.b64encode(data).decode("ascii")})>'
 
 try:
     from django.utils.functional import SimpleLazyObject
 except ImportError:
-    SimpleLazyObject = None
+    SimpleLazyObject = None  # type: ignore[assignment, misc] # MyPy does not like types assigned to None.
 
 
 def defaultJSONEncode(o):
-    if SimpleLazyObject and isinstance(o, SimpleLazyObject):
+    if SimpleLazyObject is not None and isinstance(o, SimpleLazyObject):
         if not o._wrapped:
             o._setup()
         return o._wrapped
