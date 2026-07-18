@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audiooffsetmanager" version="1.5.0" name="Audio Offset Manager" provider-name="matthane">
+<addon id="script.audiooffsetmanager" version="2.1.0" name="Audio Offset Manager" provider-name="matthane">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
     </requires>
@@ -7,9 +7,18 @@
     <extension point="xbmc.python.script" library="script.py" />
     <extension point="xbmc.addon.metadata">
         <source>https://github.com/matthane/script.audiooffsetmanager</source>
-        <news>v1.5.0 (2025-05-02)
-- Add notifications (toggleable) for when offsets are applied or saved during playback
-- Add test video bypass option
+        <news>v2.1.0 (2026-07-18)
+- HDR10+ offset settings are now available on Kodi 22 and later, and on other platforms once HDR10+ is first detected during playback
+- Offset changes made in the addon settings during playback are now applied as soon as the settings dialog is saved
+- Notifications now show the offset value in the heading and the stream details below, so nothing scrolls or gets cut off
+- Removed the onboarding flow and the bundled test video. Platform capabilities are now detected during normal video playback
+
+v2.0.0 (2026-07-16)
+- More reliable offset application: stream changes are detected and verified before offsets are applied, eliminating misapplied offsets during playback startup and format switches
+- Manual offset adjustments are now detected from any input method (keymaps, remotes, JSON-RPC), not just the Kodi audio settings dialog
+- Smarter notifications: they wait for the stream to settle, and no longer get cut short when two notifications arrive close together
+- Improved coexistence with PM4K (Plexmod for Kodi): seek-backs are announced via the script.audiooffsetmanager.seeking window property
+- New Advanced settings category with a debug logging toggle
         </news>
         <summary lang="en_GB">Dynamically manages audio offsets</summary>
         <description lang="en_GB">This add-on intelligently adjusts the audio offset based on the detected HDR type, audio format, and FPS type according to user-configured settings, along with other helpful features</description>

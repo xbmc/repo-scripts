@@ -98,7 +98,7 @@ msgid "Seek back amount (seconds)"
 msgstr ""
 
 msgctxt "#32022"
-msgid "Control the amount of time that the player seeks back after adjusting audio offset"
+msgid "Control the amount of time that the player seeks back after changing audio format"
 msgstr ""
 
 msgctxt "#32023"
@@ -229,44 +229,12 @@ msgctxt "#32054"
 msgid "Advanced HLG detection"
 msgstr ""
 
-msgctxt "#32055"
-msgid "Play video to initialize settings"
-msgstr ""
-
-msgctxt "#32056"
-msgid "Platform capabilities verified"
-msgstr ""
-
-msgctxt "#32057"
-msgid "On-boarding"
-msgstr ""
-
-msgctxt "#32058"
-msgid "Select video from library"
-msgstr ""
-
-msgctxt "#32059"
-msgid "Play bundled test video"
-msgstr ""
-
-msgctxt "#32060"
-msgid "Video will play for 5 seconds and then return to settings automatically"
-msgstr ""
-
 msgctxt "#32061"
 msgid "Other/PCM (ms)"
 msgstr ""
 
 msgctxt "#32062"
 msgid "Adjusts the audio offset for Other/PCM in milliseconds. Negative values delay the audio, positive values advance it."
-msgstr ""
-
-msgctxt "#32063"
-msgid "Re-validate platform capabilities"
-msgstr ""
-
-msgctxt "#32064"
-msgid "Play the test video again to re-validate your platform HDR capabilities"
 msgstr ""
 
 msgctxt "#32065"
@@ -337,14 +305,6 @@ msgctxt "#32081"
 msgid "Notifications"
 msgstr ""
 
-msgctxt "#32082"
-msgid "Skip and unlock settings"
-msgstr ""
-
-msgctxt "#32083"
-msgid "Bypass the test video and unlock settings. Some settings may not be visible until after first video playback."
-msgstr ""
-
 msgctxt "#32088"
 msgid "Offset controls for Dolby Vision sources"
 msgstr ""
@@ -375,4 +335,36 @@ msgstr ""
 
 msgctxt "#32091"
 msgid "Control the length of time that notifications appear"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Offset applied"
+msgstr ""
+
+msgctxt "#32093"
+msgid "Offset saved"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Advanced settings"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Show log items and debug snapshots within Kodi's standard log level"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Full HDR detection"
 msgstr ""

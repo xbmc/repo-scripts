@@ -1,7 +1,9 @@
-"""Addon helper script entry point."""
+"""Addon helper script entry point: opens the addon settings."""
 
-from resources.lib.script_handler import handle_script_call
+import xbmcaddon
+
+from resources.lib.aom.kodi.settings import ADDON_ID
 
 
 if __name__ == '__main__':
-    handle_script_call()
+    xbmcaddon.Addon(ADDON_ID).openSettings()

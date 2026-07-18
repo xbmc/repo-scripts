@@ -10,7 +10,7 @@ Audio Offset Manager is a utility addon for Kodi (v20.0+) designed to enhance yo
 
 - **Dynamic Audio Offset Application**: Automatically sets audio delay based on the HDR type, audio format, and FPS value of the current video, applying user-defined offsets to ensure consistent audio-visual sync without needing repeated manual adjustments.
 
-- **Active Monitoring Mode**: Monitors when users manually adjust audio delay via Kodi's OSD settings, stores those adjustments, and applies them for future playback of similar content. This feature is particularly useful for initial AV calibration, allowing users to fine-tune audio sync and have those settings automatically applied to similar content in the future.
+- **Active Monitoring Mode**: Monitors when users manually adjust audio delay during playback — from any input method, including Kodi's OSD settings dialog, keymapped delay keys, remote apps, and JSON-RPC — stores those adjustments, and applies them for future playback of similar content. This feature is particularly useful for initial AV calibration, allowing users to fine-tune audio sync and have those settings automatically applied to similar content in the future.
 
 - **Custom Seek-Backs**: Offers user-configurable "seek-back" functionality to rewind a few seconds in specific playback situations to keep audio synchronized, such as:
   - When playback starts or resumes
@@ -38,7 +38,7 @@ This addon streamlines your viewing experience by automating the process of audi
 ### Video Formats
 - Dolby Vision
 - HDR10
-- HDR10+ (platform/build specific)
+- HDR10+ (Kodi 22 and later, or platform/build specific on older versions)
 - HLG
 - SDR
 
@@ -51,7 +51,7 @@ This addon streamlines your viewing experience by automating the process of audi
 
 1. Download the addon from the Kodi repository or install it manually.
 2. Enable the addon in Kodi's addon settings.
-3. Open and briefly play any video to fully initialize and enable all addon settings.
+3. Play any video briefly so the addon can detect your platform's capabilities. Settings that depend on a detected capability appear after this first playback. The HDR10+ settings are available right away on Kodi 22 and later; on older versions they appear once the platform first detects HDR10+.
 4. Configure your desired audio offsets for different HDR types, audio formats, and FPS types in the addon settings. Enabling FPS based offsets allows different offsets to be applied and saved based on the FPS of the source video, in addition to the HDR type and audio format, allowing for more fine-tuned control.
 5. If you want to perform initial AV calibration, enable the active monitoring mode in the addon settings. This will allow the addon to learn and store your manual audio offset adjustments for future use.
 6. The addon will run as a background service, automatically applying your configured offsets during playback.
@@ -59,6 +59,25 @@ This addon streamlines your viewing experience by automating the process of audi
 ## Compatibility
 
 This addon is designed for Kodi v20.0 and above. It may not function correctly with earlier versions of Kodi.
+
+### Interoperability with other addons
+
+When Audio Offset Manager performs one of its own seek-backs, it announces it
+by setting the home window property `script.audiooffsetmanager.seeking` to
+`1` for the duration of the seek, then clearing it. Other addons that react
+to player seeks (for example PM4K / Plexmod for Kodi) can read this property
+to distinguish Audio Offset Manager's corrective seeks from user-initiated
+ones:
+
+```python
+import xbmcgui
+if xbmcgui.Window(10000).getProperty('script.audiooffsetmanager.seeking') == '1':
+    pass  # seek originated from Audio Offset Manager
+```
+
+Audio Offset Manager also honors quiet periods around seeks announced by
+players it coexists with, so the two sides do not fight over playback
+position.
 
 ## Contributing and Reporting Issues
 
