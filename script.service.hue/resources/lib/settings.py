@@ -7,7 +7,7 @@
 import xbmc
 import xbmcgui
 
-from . import ADDON, BRIDGE_SETTINGS_CHANGED
+from . import ADDON, BRIDGE_SETTINGS_CHANGED, TIMERS_DIRTY
 from .language import get_string as _
 from .kodiutils import convert_time, notification, log
 
@@ -29,6 +29,12 @@ class SettingsMonitor(xbmc.Monitor):
         old_ip = self.ip
         old_key = self.key
 
+        # Snapshot previous timing values so we can detect changes after reload.
+        # On the very first load these attributes don't exist yet — getattr keeps
+        # us from spuriously waking a Timers thread that hasn't been created.
+        old_morning_time = getattr(self, "morning_time", None)
+        old_sunset_offset = getattr(self, "sunset_offset", None)
+
         # bridge
         self.ip = ADDON.getSetting("bridgeIP")
         self.key = ADDON.getSetting("bridgeUser")
@@ -46,6 +52,22 @@ class SettingsMonitor(xbmc.Monitor):
         self.force_on_sunset = ADDON.getSettingBool("forceOnSunset")
         self.morning_time = convert_time(ADDON.getSettingString("morningTime"))
         self.sunset_offset = ADDON.getSettingNumber("sunsetOffset")
+
+        # Wake the Timers thread when its inputs change, otherwise the new
+        # values won't take effect until the current (potentially multi-hour)
+        # waitForAbort expires. Skipped on first load — the Timers thread is
+        # only started after the initial bridge connection succeeds.
+        if old_morning_time is not None and (
+            old_morning_time != self.morning_time
+            or old_sunset_offset != self.sunset_offset
+        ):
+            log(
+                "[SCRIPT.SERVICE.HUE] SettingsMonitor: Timing settings changed "
+                f"(morning {old_morning_time}->{self.morning_time}, "
+                f"sunset_offset {old_sunset_offset}->{self.sunset_offset}); "
+                "waking Timers"
+            )
+            TIMERS_DIRTY.set()
 
         self.schedule_enabled = ADDON.getSettingBool("enableSchedule")
         self.schedule_start = convert_time(ADDON.getSettingString("startTime"))
@@ -100,7 +122,7 @@ class SettingsMonitor(xbmc.Monitor):
         self.group3_saturation = ADDON.getSettingNumber("group3_Saturation")
         self.group3_capture_size = ADDON.getSettingInt("group3_CaptureSize")
         self.group3_resume_state = ADDON.getSettingBool("group3_ResumeState")
-        self.group3_resume_transition = ADDON.getSettingInt("group3_ResumeTransition") * 10  # convert seconds to multiple of 100ms
+        self.group3_resume_transition = ADDON.getSettingInt("group3_ResumeTransition") * 1000  # Hue API v2 expects milliseconds, setting is in seconds
         self.group3_update_interval = ADDON.getSettingInt("group3_Interval") / 1000
 
         if self.group3_update_interval == 0: #Never allow a 0 value for update interval
@@ -118,13 +140,13 @@ class SettingsMonitor(xbmc.Monitor):
         if self.group3_enabled:
             if self.group3_lights == ["-1"]:
                 ADDON.setSettingBool('group3_enabled', False)
-                log('[SCRIPT.SERVICE.HUE] _validate_ambilights: No ambilights selected')
+                log("[SCRIPT.SERVICE.HUE] _validate_ambilight: No ambilights selected")
                 notification(_('Hue Service'), _('No lights selected for Ambilight.'), icon=xbmcgui.NOTIFICATION_ERROR)
 
     def _validate_schedule(self):
         log(f"[SCRIPT.SERVICE.HUE] Validate schedule. Schedule Enabled: {self.schedule_enabled}, Start time: {self.schedule_start}, End time: {self.schedule_end}")
         if self.schedule_enabled:
             if self.schedule_start > self.schedule_end:  # checking if start time is after the end time
-                ADDON.setSettingBool('EnableSchedule', False)
-                log('[SCRIPT.SERVICE.HUE] _validate_schedule: Start time is after end time, schedule disabled')
+                ADDON.setSettingBool('enableSchedule', False)
+                log("[SCRIPT.SERVICE.HUE] _validate_schedule: Start time is after end time, schedule disabled")
                 notification(_('Hue Service'), _('Invalid start or end time, schedule disabled'), icon=xbmcgui.NOTIFICATION_ERROR)

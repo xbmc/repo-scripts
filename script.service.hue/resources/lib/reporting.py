@@ -4,7 +4,6 @@
 #      See LICENSE.TXT for more information.
 
 import platform
-import sys
 import traceback
 
 import rollbar
@@ -16,7 +15,7 @@ from .kodiutils import log
 
 
 def process_exception(exc, level="critical", error="", logging=False):
-    log(f"[SCRIPT.SERVICE.HUE] *** EXCEPTION ***:  Type: {type(exc)},\n Exception: {exc},\n Error: {error},\n Traceback: {traceback.format_exc()}")
+    log(f"[SCRIPT.SERVICE.HUE] *** EXCEPTION ***: Type: {type(exc)},\n Exception: {exc},\n Error: {error},\n Traceback: {traceback.format_exc()}")
     if ADDON.getSettingBool("error_reporting"):
         if _error_report_dialog(exc):
             _report_error(level, error, exc, logging)
@@ -44,15 +43,27 @@ def _report_error(level="critical", error="", exc="", logging=False):
     else:
         env = "production"
 
+    # Use the exception object passed in rather than sys.exc_info(), which is
+    # only valid inside an active except block on the same thread. The error
+    # dialog can block for arbitrarily long, and process_exception is invoked
+    # from worker / Player-callback threads where exc_info can be cleared.
+    if isinstance(exc, BaseException):
+        exc_traceback = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
+    else:
+        exc_traceback = ""
+
     data = {
         'machine': platform.machine(),
         'platform': platform.system(),
         'kodi': KODIVERSION,
         'error': error,
-        'exc': traceback.format_exc()
+        'exc': exc_traceback
     }
     rollbar.init(ROLLBAR_API_KEY, capture_ip=False, code_version="v" + ADDONVERSION, root=ADDONPATH, scrub_fields='bridgeUser, bridgeIP, bridge_user, bridge_ip, server.host', environment=env, handler="thread")
-    if logging:
-        rollbar.report_message(exc, extra_data=data, level=level)
+    if logging or not isinstance(exc, BaseException):
+        # logging=True path: caller wants to report a plain string/message
+        # not-BaseException fallback: avoid sending NoneType:None to Rollbar
+        rollbar.report_message(str(exc) if exc else (error or "unspecified"), extra_data=data, level=level)
     else:
-        rollbar.report_exc_info(sys.exc_info(), extra_data=data, level=level)
+        exc_info = (type(exc), exc, exc.__traceback__)
+        rollbar.report_exc_info(exc_info, extra_data=data, level=level)

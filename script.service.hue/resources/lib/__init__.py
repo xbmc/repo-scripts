@@ -27,6 +27,10 @@ class HueApiError(Exception):
         super().__init__(f"HTTP {status_code}: {message}")
 BRIDGE_SETTINGS_CHANGED = Event()
 AMBI_RUNNING = Event()
+# Signals the Timers thread that morning_time or sunset_offset has changed and
+# the currently-scheduled wait should be abandoned so the next event is
+# recomputed against the new values. Set by SettingsMonitor; cleared by Timers.
+TIMERS_DIRTY = Event()
 PROCESS_TIMES = deque(maxlen=100)
 ROLLBAR_API_KEY = "48f832ef0f3947c9a8443a36b94bcfbd"
 

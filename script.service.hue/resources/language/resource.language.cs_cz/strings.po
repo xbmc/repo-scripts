@@ -6,51 +6,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-02 12:40+0000\n"
-"Last-Translator: Patrik Špaňo <patrik.spano@gmail.com>\n"
+"PO-Revision-Date: 2026-07-07 08:31+0000\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-service-hue/cs_cz/>\n"
 "Language: cs_cz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 2026.7\n"
 
 msgctxt "Addon Summary"
 msgid "Automate Hue lights with Kodi playback"
-msgstr "Automatizace Hue světel s přehráváním Kodi"
+msgstr "Automatizace světel Hue při přehrávání v Kodi"
 
 msgctxt "Addon Description"
 msgid "Automate your Hue lights with Kodi. Use scenes configured in the official Hue app. Can use Hue's sunset time to automatically disable the service during daytime and turn on the lights at sunset during playback. Includes Ambilight support."
-msgstr ""
+msgstr "Automatizujte světla Hue pomocí Kodi. Používejte scény nastavené v oficiální aplikaci Hue. Služba může používat čas západu slunce z Hue k automatickému vypnutí během dne a k zapnutí světel při západu slunce během přehrávání. Obsahuje podporu Ambilight."
 
 msgctxt "Addon Disclaimer"
 msgid "Requires a Hue Bridge V2 (Square). Ambilight not available on all hardware."
-msgstr "Vyžaduje Hue Bridge V2 (čtvercový). Ambilight není podporován na všech zařízeních."
+msgstr "Vyžaduje Hue Bridge V2 (čtvercový). Ambilight není dostupný na veškerém hardwaru."
 
 msgctxt "#32100"
 msgid "Video Scenes"
-msgstr "Video Scenes"
+msgstr "Scény pro video"
 
 msgctxt "#32102"
 msgid "Audio Scenes"
-msgstr "Audio Scenes"
+msgstr "Scény pro zvuk"
 
 msgctxt "#32201"
 msgid "Start/Resume"
-msgstr "Začátek/Pokračování"
+msgstr "Spuštění/pokračování"
 
 msgctxt "#32202"
 msgid "Pause"
-msgstr "Pauza"
+msgstr "Pozastavení"
 
 msgctxt "#32203"
 msgid "Stop"
-msgstr "Konec"
+msgstr "Zastavení"
 
 msgctxt "#30036"
 msgid "Scene:"
-msgstr "Scene:"
+msgstr "Scéna:"
 
 msgctxt "#32511"
 msgid "Scene ID"
@@ -62,23 +62,23 @@ msgstr "Vybrat..."
 
 msgctxt "#30500"
 msgid "Bridge"
-msgstr "Bridge (most)"
+msgstr "Hue Bridge"
 
 msgctxt "#30501"
 msgid "Discover Hue Bridge / Enter IP"
-msgstr "Discover Hue Bridge / Enter IP"
+msgstr "Vyhledat Hue Bridge / zadat IP adresu"
 
 msgctxt "#30502"
 msgid "Bridge IP"
-msgstr "Bridge IP adresa"
+msgstr "IP adresa Hue Bridge"
 
 msgctxt "#30503"
 msgid "Bridge User"
-msgstr "Bridge uživatel"
+msgstr "Uživatel Hue Bridge"
 
 msgctxt "#30505"
 msgid "Enable Schedule (24h format)"
-msgstr ""
+msgstr "Povolit plán (24hodinový formát)"
 
 msgctxt "#30506"
 msgid "Start time:"
@@ -90,12 +90,12 @@ msgstr "Čas konce:"
 
 msgctxt "#30508"
 msgid "Disable during daytime"
-msgstr "Disable during daytime"
+msgstr "Vypnout během dne"
 
 #. If watching a movie or TV show, and sunset occurs, activate the scene in that moment
 msgctxt "#30509"
 msgid "Activate during playback at sunset"
-msgstr "Zapnout při západu slunce"
+msgstr "Aktivovat při západu slunce během přehrávání"
 
 msgctxt "#30510"
 msgid "General"
@@ -111,33 +111,33 @@ msgstr "Scény"
 
 msgctxt "#30513"
 msgid "Play Scene Enabled"
-msgstr ""
+msgstr "Povolit scénu při přehrávání"
 
 msgctxt "#30514"
 msgid "Pause Scene Enabled"
-msgstr "Scéna Pauza aktivována"
+msgstr "Povolit scénu při pozastavení"
 
 msgctxt "#30515"
 msgid "Stop Scene Enabled"
-msgstr "Scéna Konec aktivována"
+msgstr "Povolit scénu při zastavení"
 
 #. If any light in the selected scene is on, ignore the schedule restrictions
 msgctxt "#30516"
 msgid "Disable time check if any light already on"
-msgstr "Vypnout kontrolu již zapnutých světel"
+msgstr "Vypnout kontrolu času, pokud už svítí některé světlo"
 
 #. If any of the lights in the scene are off, don't activate the related scene
 msgctxt "#30517"
 msgid "Don't enable scene if any light is off"
-msgstr "Neaktivovat scény pokud jsou světla vypnuta"
+msgstr "Neaktivovat scénu, pokud je některé světlo vypnuté"
 
 msgctxt "#30521"
 msgid "[B][I]Warning: Not supported on all hardware[/B][/I]"
-msgstr "[B][I]Upozornění: Není podporované na všech zařízeních[/B][/I]"
+msgstr "[B][I]Upozornění: Není podporováno na veškerém hardwaru[/B][/I]"
 
 msgctxt "#30522"
 msgid "CPU & Hue performance"
-msgstr "Výkon CPU & Hue"
+msgstr "Výkon CPU a Hue"
 
 msgctxt "#30523"
 msgid "Ambilight"
@@ -149,19 +149,19 @@ msgstr "Pokročilé"
 
 msgctxt "#32106"
 msgid "Video Activation Rules"
-msgstr "Video Activation Rules"
+msgstr "Pravidla aktivace videa"
 
 msgctxt "#6101"
 msgid "Select Lights"
-msgstr "Vyberte světla"
+msgstr "Vybrat světla"
 
 msgctxt "#30520"
 msgid "Enabled"
-msgstr "Aktivováno"
+msgstr "Povoleno"
 
 msgctxt "#9001"
 msgid "Press connect button on Hue bridge"
-msgstr "Stiskněte tlačítko na Hue Bridge"
+msgstr "Stiskněte tlačítko pro připojení na Hue Bridge"
 
 msgctxt "#30000"
 msgid "Hue Service"
@@ -169,19 +169,19 @@ msgstr "Služba Hue"
 
 msgctxt "#30004"
 msgid "Check your bridge and network"
-msgstr "Zkontrolujte Bridge a síť"
+msgstr "Zkontrolujte Hue Bridge a síť"
 
 msgctxt "#30006"
 msgid "Hue connected"
-msgstr "Hue připojeno"
+msgstr "Hue je připojeno"
 
 msgctxt "#30008"
 msgid "Bridge not found"
-msgstr "Bridge nebyl nalezen"
+msgstr "Hue Bridge nebyl nalezen"
 
 msgctxt "#30010"
 msgid "User not found"
-msgstr "Uživatel neby nalezen"
+msgstr "Uživatel nebyl nalezen"
 
 msgctxt "#30011"
 msgid "Complete!"
@@ -189,31 +189,31 @@ msgstr "Hotovo!"
 
 msgctxt "#30013"
 msgid "Cancelled"
-msgstr "Ukončeno"
+msgstr "Zrušeno"
 
 msgctxt "#30015"
 msgid "Select Hue Lights..."
-msgstr "Vyberte Hue světla..."
+msgstr "Vybrat světla Hue..."
 
 msgctxt "#30017"
 msgid "Found bridge: "
-msgstr "Bridge nalezen: "
+msgstr "Nalezen Hue Bridge: "
 
 msgctxt "#30018"
 msgid "Discover bridge..."
-msgstr "Hledat Bridge..."
+msgstr "Vyhledat Hue Bridge..."
 
 msgctxt "#30021"
 msgid "Bridge connection failed"
-msgstr "Připojení k Bridge selhalo"
+msgstr "Připojení k Hue Bridge selhalo"
 
 msgctxt "#30022"
 msgid "Discovery started"
-msgstr "Hledání začalo"
+msgstr "Vyhledávání zahájeno"
 
 msgctxt "#30023"
 msgid "Bridge not configured"
-msgstr "Bridge není nastaven"
+msgstr "Hue Bridge není nastaven"
 
 msgctxt "#30024"
 msgid "Check Hue Bridge configuration"
@@ -237,7 +237,7 @@ msgstr "Chyba"
 
 msgctxt "#30047"
 msgid "Connection lost. Check settings. Shutting down"
-msgstr "Spojení přerušeno. Zkontrolujte nastavení. Vypínám"
+msgstr "Spojení bylo ztraceno. Zkontrolujte nastavení. Služba se ukončuje"
 
 msgctxt "#30050"
 msgid "N-UPnP discovery..."
@@ -245,11 +245,11 @@ msgstr "Hledání N-UPnP..."
 
 msgctxt "#30005"
 msgid "Searching for bridge..."
-msgstr "Hledám Bridge..."
+msgstr "Vyhledávám Hue Bridge..."
 
 msgctxt "#30052"
 msgid "Invalid start or end time, schedule disabled"
-msgstr "Chybný čas začátku nebo konce. Plán deaktivován"
+msgstr "Neplatný čas začátku nebo konce, plán je vypnutý"
 
 msgctxt "#30058"
 msgid "Light Names:"
@@ -269,36 +269,36 @@ msgstr "Velikost analyzovaného snímku"
 
 msgctxt "#30068"
 msgid "Show Hue bridge capacity errors"
-msgstr ""
+msgstr "Zobrazovat chyby kapacity Hue Bridge"
 
 #. Minimum duration of the media before activating light scene
 msgctxt "#30800"
 msgid "Minimum duration (Minutes)"
-msgstr "Minimální trvání (minuty)"
+msgstr "Minimální délka (minuty)"
 
 msgctxt "#30801"
 msgid "Enable for Movies"
-msgstr "Zapnout pro Filmy"
+msgstr "Povolit pro filmy"
 
 msgctxt "#30802"
 msgid "Enable for TV episodes"
-msgstr "Zapnout pro Seriály"
+msgstr "Povolit pro epizody seriálů"
 
 msgctxt "#30803"
 msgid "Enable for music videos"
-msgstr "Zapnout pro hudební videa"
+msgstr "Povolit pro hudební videa"
 
 msgctxt "#30804"
 msgid "Enable for other videos (Discs)"
-msgstr "Zapnout pro ostatní videa (CD/DVD)"
+msgstr "Povolit pro ostatní videa (disky)"
 
 msgctxt "#30805"
 msgid "Enable for live TV"
-msgstr "Zapnotu pro TV"
+msgstr "Povolit pro živou TV"
 
 msgctxt "#30809"
 msgid "Saturation"
-msgstr "Saturace"
+msgstr "Sytost"
 
 msgctxt "#30810"
 msgid "Minimum Brightness"
@@ -310,11 +310,11 @@ msgstr "Maximální jas"
 
 msgctxt "#30813"
 msgid "Average image processing time:"
-msgstr "Průměrný čas zpracování obrázku:"
+msgstr "Průměrná doba zpracování snímku:"
 
 msgctxt "#30814"
 msgid "On playback stop"
-msgstr "Při vypnutí přehrávání"
+msgstr "Při zastavení přehrávání"
 
 msgctxt "#30815"
 msgid "Resume light state"
@@ -322,11 +322,11 @@ msgstr "Obnovit stav světel"
 
 msgctxt "#30816"
 msgid "Resume transition time (secs.)"
-msgstr "Pokračovat v přechodu (vteřiny)"
+msgstr "Čas přechodu při obnovení (s)"
 
 msgctxt "#30071"
 msgid "Only colour lights are supported"
-msgstr "Pouze barevná světla jsou podporována"
+msgstr "Podporována jsou pouze barevná světla"
 
 #. Old or deperacted bridge firmware or hardware
 msgctxt "#30072"
@@ -335,7 +335,7 @@ msgstr "Nepodporovaný Hue Bridge"
 
 msgctxt "#30055"
 msgid "Disabled"
-msgstr "Deaktivováno"
+msgstr "Vypnuto"
 
 msgctxt "#30060"
 msgid "Play"
@@ -344,7 +344,7 @@ msgstr "Přehrát"
 #. Must end with a space, status string is appended
 msgctxt "#30061"
 msgid "Hue Status: "
-msgstr "Hue stav: "
+msgstr "Stav Hue: "
 
 msgctxt "#30062"
 msgid "Settings"
@@ -352,11 +352,11 @@ msgstr "Nastavení"
 
 msgctxt "#30063"
 msgid "Disabled by daytime"
-msgstr "Disabled by daytime"
+msgstr "Vypnuto kvůli denní době"
 
 msgctxt "#30064"
 msgid "ERROR: Scene not found, it may have been deleted"
-msgstr "ERROR: Scene not found, it may have been deleted"
+msgstr "CHYBA: Scéna nebyla nalezena, mohla být smazána"
 
 msgctxt "#30080"
 msgid "The following error occurred:"
@@ -364,7 +364,7 @@ msgstr "Došlo k následující chybě:"
 
 msgctxt "#30081"
 msgid "Automatically report this error?"
-msgstr "Odeslat report?"
+msgstr "Automaticky nahlásit tuto chybu?"
 
 msgctxt "#30069"
 msgid "No lights selected for Ambilight."
@@ -372,11 +372,11 @@ msgstr "Nebyla vybrána žádná světla pro Ambilight."
 
 msgctxt "#30070"
 msgid "Ok"
-msgstr "Ok"
+msgstr "OK"
 
 msgctxt "#30075"
 msgid "Hue Bridge over capacity"
-msgstr "Hue Bridge kapacita vyčerpána"
+msgstr "Kapacita Hue Bridge je vyčerpána"
 
 msgctxt "#30076"
 msgid "Network not ready"
@@ -384,15 +384,15 @@ msgstr "Síť není připravena"
 
 msgctxt "#30077"
 msgid "The Hue Bridge is over capacity. Increase refresh rate or reduce the number of Ambilights."
-msgstr "Hue Bridge kapacita vyčerpána. Zvyště obnovovací frekvenci nebo snižte počet světel."
+msgstr "Kapacita Hue Bridge je vyčerpána. Zvyšte interval aktualizace nebo snižte počet světel Ambilight."
 
 msgctxt "#30078"
 msgid "Bridge not found[CR]Check your bridge and network."
-msgstr "Bridge nenalezen[CR]Zkontrolujte Bridge a spojení."
+msgstr "Hue Bridge nebyl nalezen[CR]Zkontrolujte Hue Bridge a síť."
 
 msgctxt "#30082"
 msgid "Press link button on bridge. Waiting for 90 seconds..."
-msgstr "Stiskněte tlačítko na Bridge. Čekám 90 vteřin..."
+msgstr "Stiskněte tlačítko na Hue Bridge. Čeká se 90 sekund..."
 
 msgctxt "#30083"
 msgid "Unknown"
@@ -404,7 +404,7 @@ msgstr "Uživatel nalezen![CR]Ukládám nastavení..."
 
 msgctxt "#30086"
 msgid "User not found[CR]Check your bridge and network."
-msgstr "Uživatel nenalezen[CR]Zkontrolujte Bridge a spojení."
+msgstr "Uživatel nebyl nalezen[CR]Zkontrolujte Hue Bridge a síť."
 
 msgctxt "#30073"
 msgid "Do not show again"
@@ -412,108 +412,108 @@ msgstr "Nezobrazovat znovu"
 
 msgctxt "#30001"
 msgid "Hue Bridge V1 (Round) is unsupported. Hue Bridge V2 (Square) is required."
-msgstr ""
+msgstr "Hue Bridge V1 (kulatý) není podporován. Je vyžadován Hue Bridge V2 (čtvercový)."
 
 #. For ambilight, different color gamuts are supported. This means the colour gamut could not be fetched and the light is probably not compatible with ambilight.
 msgctxt "#30012"
 msgid "Unknown colour gamut for light:"
-msgstr ""
+msgstr "Neznámý barevný gamut světla:"
 
 msgctxt "#30016"
 msgid "Report errors"
-msgstr ""
+msgstr "Hlásit chyby"
 
 msgctxt "#30020"
 msgid "Never report errors"
-msgstr ""
+msgstr "Nikdy nehlásit chyby"
 
 msgctxt "#30032"
 msgid "Hue Service Error"
-msgstr ""
+msgstr "Chyba služby Hue"
 
 msgctxt "#30029"
 msgid "Connection Error"
-msgstr ""
+msgstr "Chyba připojení"
 
 msgctxt "#30014"
 msgid "Error: Lights incompatible with Ambilight"
-msgstr ""
+msgstr "Chyba: Světla nejsou kompatibilní s Ambilight"
 
 msgctxt "#30007"
 msgid "Bridge not found automatically. Please make sure your bridge is up to date and has access to the internet. [CR]Would you like to enter your bridge IP manually?"
-msgstr ""
+msgstr "Hue Bridge nebyl nalezen automaticky. Ujistěte se, že je Hue Bridge aktualizovaný a má přístup k internetu. [CR]Chcete zadat IP adresu Hue Bridge ručně?"
 
 msgctxt "#30009"
 msgid "Connecting..."
-msgstr ""
+msgstr "Připojování..."
 
 msgctxt "#30019"
 msgid "Bridge outdated. Please update your bridge."
-msgstr ""
+msgstr "Hue Bridge je zastaralý. Aktualizujte ho."
 
 msgctxt "#30033"
 msgid "Reconnected"
-msgstr ""
+msgstr "Znovu připojeno"
 
 #. Time at which the service should be disabled in the morning, paired with "Disable during daytime", until sunset
 msgctxt "#31334"
 msgid "Morning disable time:"
-msgstr ""
+msgstr "Čas ranního vypnutí:"
 
 #. Amount of time for the light scene transition to fade in, in seconds.
 msgctxt "#31335"
 msgid "Transition time (seconds):"
-msgstr ""
+msgstr "Čas přechodu (sekundy):"
 
 #. Number of minutes before or after sunset to consider as sunset
 msgctxt "#31336"
 msgid "Sunset Offset:"
-msgstr ""
+msgstr "Posun západu slunce:"
 
 #. Help text for sunset offset setting
 msgctxt "#31337"
 msgid "Adjust sunset back or forwards by this many minutes"
-msgstr ""
+msgstr "Posunout západ slunce o tento počet minut dozadu nebo dopředu"
 
 #. Help text for "morning disable time" setting
 msgctxt "#31338"
 msgid "Time at which to disable the service in the morning"
-msgstr ""
+msgstr "Čas, kdy má být služba ráno vypnuta"
 
 #. Help text for 'Disable during daytime'
 msgctxt "#31339"
 msgid "Disable the service between configured time and sunset"
-msgstr ""
+msgstr "Vypnout službu mezi nastaveným časem a západem slunce"
 
 #. Help text for 'activate at sunset'
 msgctxt "#31340"
 msgid "Activate scenes at sunset, during playback"
-msgstr ""
+msgstr "Aktivovat scény při západu slunce během přehrávání"
 
 msgctxt "#30002"
 msgid "Bridge overloaded, stopping ambilight"
-msgstr ""
+msgstr "Hue Bridge je přetížený, Ambilight se zastavuje"
 
 msgctxt "#30025"
 msgid "Bridge unauthorized, please reconfigure."
-msgstr ""
+msgstr "Hue Bridge není autorizován, nastavte ho znovu."
 
 msgctxt "#30026"
 msgid "Connection failed, retrying..."
-msgstr ""
+msgstr "Připojení selhalo, pokus se opakuje..."
 
 #. Default status in an empty configuration field; eg. scene/lights are not selected
 msgctxt "#30003"
 msgid "Not selected"
-msgstr ""
+msgstr "Nevybráno"
 
 msgctxt "#30027"
 msgid "ERROR: Light not found, it may have been deleted"
-msgstr ""
+msgstr "CHYBA: Světlo nebylo nalezeno, mohlo být smazáno"
 
 msgctxt "#30028"
 msgid "Configure Hue Home location to use Sunset time, defaulting to 19:00"
-msgstr ""
+msgstr "Nastavte polohu domácnosti Hue pro použití času západu slunce, jinak bude použito 19:00"
 
 #~ msgctxt "#30042"
 #~ msgid "Fade Time (Seconds)"

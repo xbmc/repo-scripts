@@ -88,7 +88,7 @@ class Menu():
 
     def _get_status(self):
         daytime_disable = ADDON.getSettingBool("daylightDisable")  # Legacy setting name, it's daytime everywhere now
-        log(f"[SCRIPT.SERVICE.HUE] _get_status enabled: {self.enabled}   -  {type(self.enabled)}, daytime: {self.daytime}, daytime_disable: {daytime_disable}")
+        log(f"[SCRIPT.SERVICE.HUE] _get_status: enabled: {self.enabled} ({type(self.enabled)}), daytime: {self.daytime}, daytime_disable: {daytime_disable}")
         if self.daytime and daytime_disable:
             return "Disabled by daytime"
         elif self.enabled:
@@ -99,7 +99,6 @@ class Menu():
     def _get_status_icon(self):
 
         daytime_disable = ADDON.getSettingBool("daylightDisable")
-        # log("[SCRIPT.SERVICE.HUE] Current status: {}".format(daytime_disable))
         if self.daytime and daytime_disable:
             return xbmcvfs.makeLegalFilename(ADDONPATH + "resources/icons/daylight.png")  # Disabled by daytime, legacy icon name
         elif self.enabled:
