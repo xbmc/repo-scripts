@@ -1,0 +1,419 @@
+# Kodi Media Center language file
+# Addon Name: Audio Offset Manager: Evolved
+# Addon id: script.audiooffsetmanager.evolved
+# Addon Provider: matthane
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Settings category label
+msgctxt "#32016"
+msgid "Playback Behavior"
+msgstr ""
+
+#. Subtitle of the Playback Behavior settings category
+msgctxt "#32017"
+msgid "Seek backs and playback notifications"
+msgstr ""
+
+#. Setting label; its help text is #32148
+msgctxt "#32021"
+msgid "Seek back amount (seconds)"
+msgstr ""
+
+#. Setting label; its help text is #32091
+msgctxt "#32090"
+msgid "Notification duration (seconds)"
+msgstr ""
+
+#. Help text for #32090
+msgctxt "#32091"
+msgid "Show notifications for this many seconds."
+msgstr ""
+
+#. Notification title when a stored offset is applied; the value is
+#. appended, e.g. "Offset applied: +50 ms"
+msgctxt "#32092"
+msgid "Offset applied"
+msgstr ""
+
+#. Notification title when a manual adjustment is saved; the value is
+#. appended, e.g. "Offset saved: +50 ms"
+msgctxt "#32093"
+msgid "Offset saved"
+msgstr ""
+
+#. Settings category label
+msgctxt "#32100"
+msgid "Advanced"
+msgstr ""
+
+#. Subtitle of the Advanced settings category
+msgctxt "#32101"
+msgid "Backup, restore, and debug logging"
+msgstr ""
+
+#. Setting label; its help text is #32104
+msgctxt "#32103"
+msgid "Enable debug logging"
+msgstr ""
+
+#. Help text for #32103
+msgctxt "#32104"
+msgid "Write the addon's debug detail to the Kodi log without enabling Kodi's global debug mode."
+msgstr ""
+
+#. Settings category label
+msgctxt "#32105"
+msgid "Offsets"
+msgstr ""
+
+#. Subtitle of the Offsets settings category
+msgctxt "#32106"
+msgid "Learning, applying, and managing stored audio offsets"
+msgstr ""
+
+#. Setting label; its help text is #32109
+msgctxt "#32108"
+msgid "Learn audio offsets"
+msgstr ""
+
+#. Help text for #32108
+msgctxt "#32109"
+msgid "When you adjust the audio offset during playback, the value is saved for that stream profile. Profiles are based on the HDR type and audio format of the video itself, not the display's output mode. Turning this off stops new offsets from being saved. Applying saved offsets is controlled by Apply audio offsets."
+msgstr ""
+
+#. Setting label; its help text is #32111
+msgctxt "#32110"
+msgid "Distinct frame-rate offsets"
+msgstr ""
+
+#. Help text for #32110
+msgctxt "#32111"
+msgid "Learn and apply a separate offset for each video frame rate. An offset only applies in the mode it was saved in: offsets saved while this was off cover all frame rates and are not applied while it is on. Per-rate offsets are kept, but not applied, while this is disabled."
+msgstr ""
+
+#. Settings button label, also the heading of the management dialog it opens
+msgctxt "#32115"
+msgid "Manage stored offsets"
+msgstr ""
+
+#. Help text for #32115
+msgctxt "#32116"
+msgid "View and remove the audio offsets the addon has learned."
+msgstr ""
+
+#. Setting label; its help text is #32118
+msgctxt "#32117"
+msgid "Show notification when an offset is applied"
+msgstr ""
+
+#. Help text for #32117
+msgctxt "#32118"
+msgid "Show a notification when a stored offset is applied to playback."
+msgstr ""
+
+#. Setting label; its help text is #32120
+msgctxt "#32119"
+msgid "Show notification when an offset is saved"
+msgstr ""
+
+#. Help text for #32119
+msgctxt "#32120"
+msgid "Show a notification when a manual adjustment is saved as a stored offset."
+msgstr ""
+
+#. Notification shown once when the stored-offsets file was corrupt and
+#. had to be reset
+msgctxt "#32121"
+msgid "Stored offsets were unreadable and were reset (backup kept as offsets.json.bad)"
+msgstr ""
+
+#. Management dialog message when no offsets are stored yet
+msgctxt "#32122"
+msgid "Nothing is stored yet. Adjust Kodi's audio offset during playback and the value will be saved for that stream profile."
+msgstr ""
+
+#. First line of the delete confirmation; the entry's profile and value
+#. follow on their own lines
+msgctxt "#32123"
+msgid "Delete this stored offset?"
+msgstr ""
+
+#. Confirmation for deleting every stored offset
+msgctxt "#32124"
+msgid "Delete ALL stored offsets? Every learned profile will be forgotten."
+msgstr ""
+
+#. Management dialog error when the background service did not respond
+msgctxt "#32125"
+msgid "The Audio Offset Manager service is not running. The change could not be made."
+msgstr ""
+
+#. List row in the management dialog
+msgctxt "#32126"
+msgid "Clear all stored offsets"
+msgstr ""
+
+#. Management dialog error when the stored-offsets file cannot be read
+msgctxt "#32127"
+msgid "The stored offsets file is unreadable. The service will quarantine and reset it the next time it starts."
+msgstr ""
+
+#. Management dialog error when a delete or clear did not go through
+msgctxt "#32128"
+msgid "Could not update the stored offsets"
+msgstr ""
+
+#. Warning dialog heading; its body is #32130
+msgctxt "#32129"
+msgid "Classic Audio Offset Manager detected"
+msgstr ""
+
+#. Body of the warning dialog #32129
+msgctxt "#32130"
+msgid "Audio Offset Manager: Evolved and the classic Audio Offset Manager are both enabled. Running both can apply audio offsets twice. Consider disabling the classic addon."
+msgstr ""
+
+#. Management dialog notice when the stored offsets were written by a
+#. newer version of this addon
+msgctxt "#32131"
+msgid "The stored offsets were saved by a newer version of this addon. They are preserved untouched, but this version cannot show or change them."
+msgstr ""
+
+#. Notification title when a manual adjustment was discarded by resetting
+#. the offset to zero; its body is #32133
+msgctxt "#32132"
+msgid "Offset not saved"
+msgstr ""
+
+#. Body of the notification #32132
+msgctxt "#32133"
+msgid "Reset to 0 ms. Nothing is stored for this stream"
+msgstr ""
+
+#. Entry count, singular; {0} is the number, e.g. "Dolby Vision — 1 entry"
+msgctxt "#32135"
+msgid "{0} entry"
+msgstr ""
+
+#. Entry count, plural; {0} is the number, e.g. "Dolby Vision — 6 entries"
+msgctxt "#32136"
+msgid "{0} entries"
+msgstr ""
+
+#. Group name in the management dialog for entries whose HDR type is not
+#. recognised
+msgctxt "#32137"
+msgid "Other"
+msgstr ""
+
+#. List row inside one group of the management dialog
+msgctxt "#32138"
+msgid "Clear all offsets in this group"
+msgstr ""
+
+#. Confirmation for #32138; the group's name and entry count follow
+msgctxt "#32139"
+msgid "Delete all stored offsets in this group?"
+msgstr ""
+
+#. Setting label; its help text is #32141
+msgctxt "#32140"
+msgid "Apply audio offsets"
+msgstr ""
+
+#. Help text for #32140
+msgctxt "#32141"
+msgid "Apply the saved audio offset automatically when a matching stream plays. Turning this off stops the addon from setting the offset during playback. Saved offsets are kept and learning is not affected."
+msgstr ""
+
+#. Setting label for a multi-select list; its options are #32144-#32147
+#. and its help text is #32143
+msgctxt "#32142"
+msgid "Seek back after"
+msgstr ""
+
+#. Help text for #32142
+msgctxt "#32143"
+msgid "Seek backwards after the selected events, replaying the last few seconds. With nothing selected, playback position is never changed."
+msgstr ""
+
+#. Option in the "Seek back after" list
+msgctxt "#32144"
+msgid "Playback start"
+msgstr ""
+
+#. Option in the "Seek back after" list
+msgctxt "#32145"
+msgid "Unpause"
+msgstr ""
+
+#. Option in the "Seek back after" list
+msgctxt "#32146"
+msgid "Audio format change"
+msgstr ""
+
+#. Option in the "Seek back after" list
+msgctxt "#32147"
+msgid "Manual offset change"
+msgstr ""
+
+#. Help text for #32021
+msgctxt "#32148"
+msgid "Seek back this many seconds after a selected event."
+msgstr ""
+
+#. Settings button label, also the heading of its dialogs; its help text
+#. is #32150
+msgctxt "#32149"
+msgid "Export stored offsets"
+msgstr ""
+
+#. Help text for #32149
+msgctxt "#32150"
+msgid "Save all stored offsets to a backup file in a folder you choose."
+msgstr ""
+
+#. Settings button label, also the heading of its dialogs; its help text
+#. is #32152
+msgctxt "#32151"
+msgid "Import stored offsets"
+msgstr ""
+
+#. Help text for #32151
+msgctxt "#32152"
+msgid "Restore stored offsets from a backup file. This replaces all currently stored offsets."
+msgstr ""
+
+#. Export success message; {0} is a count like "14 entries" (#32135/#32136),
+#. {1} is the folder the backup was saved to
+msgctxt "#32153"
+msgid "Saved {0} to {1}"
+msgstr ""
+
+#. Export error message
+msgctxt "#32154"
+msgid "Could not save the backup file"
+msgstr ""
+
+#. Import error message
+msgctxt "#32155"
+msgid "Could not read the selected file"
+msgstr ""
+
+#. Import error message
+msgctxt "#32156"
+msgid "The selected file is not a stored offsets backup"
+msgstr ""
+
+#. Import error message
+msgctxt "#32157"
+msgid "The selected file was saved by a newer version of this addon and cannot be imported"
+msgstr ""
+
+#. Import error message
+msgctxt "#32158"
+msgid "The selected file contains no stored offsets"
+msgstr ""
+
+#. Import confirmation; {0} is a count like "14 entries" (#32135/#32136)
+msgctxt "#32159"
+msgid "Import {0}? This replaces all currently stored offsets."
+msgstr ""
+
+#. Import success message; {0} is a count like "14 entries" (#32135/#32136)
+msgctxt "#32160"
+msgid "Imported {0}"
+msgstr ""
+
+#. Settings button label, also the heading of its dialogs; its help text
+#. is #32162
+msgctxt "#32161"
+msgid "Export addon log"
+msgstr ""
+
+#. Help text for #32161
+msgctxt "#32162"
+msgid "Save this addon's log entries from the current and previous Kodi sessions to a folder you choose. The file contains only this addon's entries, with no media titles or library paths, so it is safe to share when reporting a problem. Some problems may still need a full Kodi debug log."
+msgstr ""
+
+#. Log export message when there is nothing to export
+msgctxt "#32163"
+msgid "No addon log entries found. Turn on debug logging, play something, then export again."
+msgstr ""
+
+#. Log export success message; {0} is the saved file's path
+msgctxt "#32164"
+msgid "Saved the filtered log to {0}"
+msgstr ""
+
+#. Log export error message
+msgctxt "#32165"
+msgid "Could not save the log file"
+msgstr ""
+
+#. Log export error message
+msgctxt "#32166"
+msgid "Could not read the Kodi log file"
+msgstr ""
+
+#. Value line of a stored offset that is not applied right now (saved
+#. under a per-frame-rate, spatial-format, or channel-count mode that is
+#. not the one currently enabled); {0} is the value, e.g. "+125 ms"
+msgctxt "#32167"
+msgid "{0} — inactive"
+msgstr ""
+
+#. Suffix on a group row in the stored offsets view when some of the
+#. group's entries are inactive (saved under a per-frame-rate,
+#. spatial-format, or channel-count mode that is not the one currently
+#. enabled); {0} is how many, e.g. the full row reads
+#. "Dolby Vision — 3 entries (2 inactive)"
+msgctxt "#32170"
+msgid "({0} inactive)"
+msgstr ""
+
+#. Tag on the stored offset (or its group row) matching what is currently
+#. playing; {0} is the rest of the line, e.g. the full line reads
+#. "+125 ms · saved 19 Jul 2026 · playing now" or "3 entries · playing now"
+msgctxt "#32172"
+msgid "{0} · playing now"
+msgstr ""
+
+#. Marker leading the list row of the offset that is currently playing;
+#. {0} is the row text. Shown only in lists, never in dialog text; adjust
+#. the punctuation and its side to fit the language's direction.
+msgctxt "#32174"
+msgid "» {0}"
+msgstr ""
+
+#. Setting label; its help text is #32176
+msgctxt "#32175"
+msgid "Distinct spatial audio offsets"
+msgstr ""
+
+#. Help text for #32175
+msgctxt "#32176"
+msgid "Learn and apply separate offsets for spatial audio formats such as Dolby Atmos and DTS:X. When this is off, a spatial format shares its base codec's offset, for example TrueHD Atmos uses the TrueHD offset, and offsets saved for spatial formats are kept but not applied."
+msgstr ""
+
+#. Setting label; its help text is #32178
+msgctxt "#32177"
+msgid "Distinct channel count offsets"
+msgstr ""
+
+#. Help text for #32177
+msgctxt "#32178"
+msgid "Learn and apply a separate offset for each channel count, for example 5.1 and stereo versions of the same format. An offset only applies in the mode it was saved in: offsets saved while this was off cover all channel counts and are not applied while it is on. Per-count offsets are kept, but not applied, while this is disabled."
+msgstr ""

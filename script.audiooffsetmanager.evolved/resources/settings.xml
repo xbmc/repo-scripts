@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Behavior settings only: offsets live in the sparse JSON store, never
+     here. Every id must be read by Python and vice versa - the two-way
+     contract test enforces it. -->
+<settings version="1">
+    <section id="script.audiooffsetmanager.evolved">
+        <!-- Offset learning: the product. -->
+        <category id="learning" label="32105" help="32106">
+            <!-- Three untitled groups, matching the Playback and Advanced
+                 treatment: the dividers separate the learn/apply pair,
+                 the granularity toggles, and the management button, and
+                 the settings say the rest. -->
+            <group id="1">
+                <setting id="remember_adjustments" type="boolean" label="32108" help="32109">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <!-- The apply half of the learn/apply pair. The toggles are
+                     orthogonal: apply off + learn on is the re-teach state,
+                     and both off pauses the addon entirely. -->
+                <setting id="apply_offsets" type="boolean" label="32140" help="32141">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+            <!-- The three granularity toggles, all default off, in
+                 key-axis order (frame rate, spatial audio, channel
+                 count); the labels share the "Distinct ... offsets"
+                 shape so they read as one family. -->
+            <group id="2">
+                <setting id="per_fps_offsets" type="boolean" label="32110" help="32111">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <!-- Off collapses spatial variants onto the base codec. -->
+                <setting id="distinct_spatial_formats" type="boolean" label="32175" help="32176">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <!-- Off keys every channel count onto the 'all' segment. -->
+                <setting id="distinct_channel_counts" type="boolean" label="32177" help="32178">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+            <group id="7">
+                <setting id="manage_offsets" type="action" label="32115" help="32116">
+                    <level>0</level>
+                    <data>RunScript(script.audiooffsetmanager.evolved,manage_offsets)</data>
+                    <!-- close: never act while the dialog's save-on-close
+                         is pending. -->
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+            </group>
+        </category>
+
+        <!-- Playback behavior: seek-backs and notifications. -->
+        <category id="playback" label="32016" help="32017">
+            <!-- Both groups untitled, matching the Offsets and Advanced
+                 treatment: the divider separates seek-backs from
+                 notifications, and the settings say the rest. -->
+            <group id="3">
+                <!-- One multiselect enables seek-back per reason, with one
+                     shared amount below. Option VALUES are the
+                     SeekScheduler.REASONS vocabulary verbatim - the
+                     seek_back_config membership test depends on it. -->
+                <setting id="seek_back_events" type="list[string]" label="32142" help="32143">
+                    <level>0</level>
+                    <default></default>
+                    <constraints>
+                        <options>
+                            <option label="32144">resume</option>
+                            <option label="32145">unpause</option>
+                            <option label="32146">adjust</option>
+                            <option label="32147">change</option>
+                        </options>
+                        <delimiter>,</delimiter>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32142</heading>
+                        <multiselect>true</multiselect>
+                    </control>
+                </setting>
+                <setting id="seek_back_seconds" type="integer" label="32021" help="32148">
+                    <level>0</level>
+                    <dependencies>
+                        <dependency type="visible" setting="seek_back_events" operator="!is"></dependency>
+                    </dependencies>
+                    <default>4</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>10</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="4">
+                <!-- Per-kind toast gates, both default ON (the toasts are
+                     the learn loop's teaching surface). -->
+                <setting id="notify_apply" type="boolean" label="32117" help="32118">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="notify_learn" type="boolean" label="32119" help="32120">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="notification_seconds" type="integer" label="32090" help="32091">
+                    <level>0</level>
+                    <dependencies>
+                        <dependency type="visible">
+                            <or>
+                                <condition setting="notify_apply">true</condition>
+                                <condition setting="notify_learn">true</condition>
+                            </or>
+                        </dependency>
+                    </dependencies>
+                    <default>5</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>10</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+            </group>
+        </category>
+
+        <!-- Advanced -->
+        <category id="advanced" label="32100" help="32101">
+            <!-- Backup: verbatim export of offsets.json, and the staged
+                 replace-all restore over the mutation channel. Both close
+                 the dialog and land back in settings when the flow
+                 exits. -->
+            <group id="6">
+                <setting id="export_offsets" type="action" label="32149" help="32150">
+                    <level>0</level>
+                    <data>RunScript(script.audiooffsetmanager.evolved,export_offsets)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <setting id="import_offsets" type="action" label="32151" help="32152">
+                    <level>0</level>
+                    <data>RunScript(script.audiooffsetmanager.evolved,import_offsets)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+            </group>
+            <group id="5">
+                <setting id="enable_debug_logging" type="boolean" label="32103" help="32104">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <!-- Support report: the addon's entries from both Kodi log
+                     files, filtered and redacted, to a picked folder.
+                     Enabled only under the debug toggle (a useful export
+                     presupposes debug lines were being written). -->
+                <setting id="export_log" type="action" label="32161" help="32162">
+                    <level>0</level>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_debug_logging">true</dependency>
+                    </dependencies>
+                    <data>RunScript(script.audiooffsetmanager.evolved,export_log)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <!-- Internal once-flag (level 4, never rendered): set after
+                     the classic-AOM coexistence warning has shown once.
+                     Behavior state, not offset data. -->
+                <setting id="coexistence_warned" type="boolean" label="">
+                    <level>4</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>

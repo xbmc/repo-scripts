@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audiooffsetmanager.evolved" version="1.1.0" name="Audio Offset Manager: Evolved" provider-name="matthane">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.python.script" library="script.py" />
+    <extension point="xbmc.addon.metadata">
+        <source>https://github.com/matthane/script.audiooffsetmanager.evolved</source>
+        <news>v1.1.0 (2026-07-21)
+- Distinct spatial audio offsets: optional toggle that keeps spatial formats such as Dolby Atmos and DTS:X as their own profiles with their own offsets. Off by default: a spatial format shares its base codec's offset
+- Distinct channel count offsets: optional toggle that also keys offsets by the source's channel count, for example 5.1 and stereo versions of one format. Off by default
+- Per-frame-rate offsets is now Distinct frame-rate offsets; the three granularity toggles are grouped together in the settings
+- The management view marks the entry that is currently playing
+- Stored offsets upgrade to a new file format on first save; older versions read the upgraded file without changing it
+- Offsets saved for spatial formats by 1.0.0 are kept but not applied until the spatial toggle is enabled
+
+v1.0.0 (2026-07-19)
+First release. Supersedes the original Audio Offset Manager: profiles now cover any format Kodi reports instead of a very limited fixed list, and there is nothing to configure up front.
+- Adjust Kodi's audio offset during playback the way you always have; the value is remembered for that stream's HDR type, audio format, and frame rate
+- Saved offsets are applied automatically on every matching playback
+- Optional seek backs to help realign audio and video after key events
+- Notifications when an offset is saved or applied
+- Management view to browse, delete, or clear everything learned
+- Backup export and import of saved offsets
+        </news>
+        <!-- news is schema-capped at 1500 characters (addon-checker
+             enforces it): keep only the last couple of versions here;
+             earlier changelogs live in the git history. -->
+        <summary lang="en_GB">Kodi's missing lipsync tool</summary>
+        <description lang="en_GB">Adjust Kodi's audio offset during playback the way you always have. Audio Offset Manager: Evolved remembers the value for that stream's HDR type and audio format, with optional finer splits by frame rate, spatial audio format, and channel count, then re-applies it automatically on every matching playback. Includes seek-back after adjustments, playback notifications, and a management view of everything it has learned.</description>
+        <platform>all</platform>
+        <license>GPL-3.0-or-later</license>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <screenshot>resources/aome-screenshot-1.png</screenshot>
+            <screenshot>resources/aome-screenshot-2.png</screenshot>
+            <screenshot>resources/aome-screenshot-3.png</screenshot>
+            <screenshot>resources/aome-screenshot-4.png</screenshot>
+            <screenshot>resources/aome-screenshot-5.png</screenshot>
+            <screenshot>resources/aome-screenshot-6.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
