@@ -1,15 +1,17 @@
+from __future__ import annotations
+
 import math
 
 from rollbar.lib import binary_type, string_types
 from rollbar.lib import (
     circular_reference_label, float_infinity_label, float_nan_label,
     undecodable_object_label, unencodable_object_label)
-from rollbar.lib import iteritems, python_major_version, text
 
-from rollbar.lib.transforms import Transform
+from rollbar.lib.transform import Transform
 
 
 class SerializableTransform(Transform):
+    priority = 30
     def __init__(self, safe_repr=True, safelist_types=None):
         super(SerializableTransform, self).__init__()
         self.safe_repr = safe_repr
@@ -25,9 +27,9 @@ class SerializableTransform(Transform):
         for field in tuple_dict:
             new_vals.append(transformed_dict[field])
 
-        return '<%s>' % text(o._make(new_vals))
+        return '<%s>' % str(o._make(new_vals))
 
-    def transform_number(self, o, key=None):
+    def transform_number(self, o: float | int, key=None) -> float | int | str:
         if math.isnan(o):
             return float_nan_label(o)
         elif math.isinf(o):
@@ -35,15 +37,7 @@ class SerializableTransform(Transform):
         else:
             return o
 
-    def transform_py2_str(self, o, key=None):
-        try:
-            o.decode('utf8')
-        except UnicodeDecodeError:
-            return undecodable_object_label(o)
-        else:
-            return o
-
-    def transform_py3_bytes(self, o, key=None):
+    def transform_bytes(self, o, key=None) -> bytes | str:
         try:
             o.decode('utf8')
         except UnicodeDecodeError:
@@ -61,20 +55,14 @@ class SerializableTransform(Transform):
 
     def transform_dict(self, o, key=None):
         ret = {}
-        for k, v in iteritems(o):
+        for k, v in o.items():
             if isinstance(k, string_types) or isinstance(k, binary_type):
-                if python_major_version() < 3:
-                    if isinstance(k, unicode):
-                        new_k = self.transform_unicode(k)
-                    else:
-                        new_k = self.transform_py2_str(k)
+                if isinstance(k, bytes):
+                    new_k = self.transform_bytes(k)
                 else:
-                    if isinstance(k, bytes):
-                        new_k = self.transform_py3_bytes(k)
-                    else:
-                        new_k = self.transform_unicode(k)
+                    new_k = self.transform_unicode(k)
             else:
-                new_k = text(k)
+                new_k = str(k)
 
             ret[new_k] = v
 
@@ -87,6 +75,11 @@ class SerializableTransform(Transform):
         # Best to be very careful when we call user code in the middle of
         # preparing a stack trace. So we put a try/except around it all.
         try:
+            # If the object has a __rollbar_repr__() method, use it.
+            custom = Transform.rollbar_repr(o)
+            if custom is not None:
+                return custom
+
             if any(filter(lambda x: isinstance(o, x), self.safelist)):
                 try:
                     return repr(o)

@@ -9,6 +9,7 @@ REDACT_REF = RedactRef()
 
 
 class ScrubRedactTransform(ScrubTransform):
+    priority = 20
     def default(self, o, key=None):
         if o is REDACT_REF:
             return self.redact(o)
@@ -16,4 +17,4 @@ class ScrubRedactTransform(ScrubTransform):
         return super(ScrubRedactTransform, self).default(o, key=key)
 
 
-__all__ = ['ScrubRedactTransform']
+__all__ = ['ScrubRedactTransform', 'REDACT_REF']
