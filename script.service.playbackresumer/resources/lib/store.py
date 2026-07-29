@@ -25,6 +25,11 @@ class Store:
     kodi_event_monitor = None
     player_monitor = None
 
+    # True while a startup resume seek (see player.resume_if_was_playing) is being
+    # attempted/verified. Used (non-blockingly) to avoid the periodic save loop clobbering a
+    # fresh resume seek before it's confirmed.
+    currently_resuming = False
+
     # Store the full path of the currently playing file
     currently_playing_file_path = ''
     # What type of video is it?  episode, movie, musicvideo

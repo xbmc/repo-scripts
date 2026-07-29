@@ -91,10 +91,14 @@ class KodiPlayer(xbmc.Player):
 
         while self.isPlaying() and not Store.kodi_event_monitor.abortRequested():
 
-            try:
-                self.update_resume_point(self.getTime())
-            except RuntimeError:
-                Logger.error('Could not get current playback time from player')
+            # Skip (don't block on) this iteration's save while a startup resume seek is still
+            # being verified (see resume_if_was_playing()), so it can't overwrite the real resume
+            # point with a near-zero value - the next iteration picks it up as normal.
+            if not Store.currently_resuming:
+                try:
+                    self.update_resume_point(self.getTime())
+                except RuntimeError:
+                    Logger.error('Could not get current playback time from player')
 
             for i in range(0, Store.save_interval_seconds):
                 # Shutting down or not playing video anymore...stop handling playback
@@ -256,51 +260,134 @@ class KodiPlayer(xbmc.Player):
     def resume_if_was_playing(self):
         """
         Attempt to resume playback after a previous shutdown if resuming is enabled and saved resume data exist.
-        
-        If configured and valid resume data are present, the player will start the saved file and seek to the stored resume time; on any failure or if no resume data are applicable, no playback is resumed.
-        
+
+        If configured and valid resume data are present, the player will start the saved file and seek to the
+        stored resume time; on any failure or if no resume data are applicable, no playback is resumed. Verifies
+        the seek actually landed, retrying a few times if not, since a seek requested too soon after playback
+        starts can be silently ignored by Kodi. The whole attempt is wrapped so a player exception (e.g. playback
+        stopping mid-seek) can never crash the service.
+
         Returns:
-            True if playback was resumed and seeked to the saved position, False otherwise.
+            True if a resume was attempted (playback was started), False otherwise.
         """
 
-        if Store.resume_on_startup \
-                and os.path.exists(Store.file_to_store_resume_point) \
-                and os.path.exists(Store.file_to_store_last_played):
+        Logger.info("resume_if_was_playing: checking whether to attempt a resume on startup")
 
-            with open(Store.file_to_store_resume_point, 'r') as f:
-                try:
-                    resume_point = float(f.read())
-                except Exception:
-                    Logger.error("Error reading resume point from file, therefore not resuming.")
-                    return False
+        if not Store.resume_on_startup:
+            Logger.info("resume_if_was_playing: 'resume on startup' setting is disabled - not attempting resume")
+            return False
 
-            # neg 1 means the video wasn't playing when Kodi ended
-            if resume_point < 0:
-                Logger.info("Not resuming playback because nothing was playing when Kodi last closed")
-                return False
+        if not os.path.exists(Store.file_to_store_resume_point):
+            Logger.info(f"resume_if_was_playing: resume point file not found ({Store.file_to_store_resume_point}) - not attempting resume")
+            return False
 
-            with open(Store.file_to_store_last_played, 'r') as f:
-                full_path = f.read()
+        if not os.path.exists(Store.file_to_store_last_played):
+            Logger.info(f"resume_if_was_playing: last played file not found ({Store.file_to_store_last_played}) - not attempting resume")
+            return False
 
-            if not full_path:
-                Logger.info("No last-played file found; skipping resume.")
-                return False
+        with open(Store.file_to_store_resume_point, 'r') as f:
+            raw_resume_point = f.read()
 
-            mins, secs = divmod(int(resume_point), 60)
-            str_timestamp = f'{mins}:{secs:02d}'
+        try:
+            resume_point = float(raw_resume_point)
+        except Exception:
+            Logger.error(f"resume_if_was_playing: error parsing resume point [{raw_resume_point}] from file, therefore not resuming.")
+            return False
 
+        # neg 1 means the video wasn't playing when Kodi ended
+        if resume_point < 0:
+            Logger.info(f"resume_if_was_playing: stored resume point is {resume_point} - nothing was playing when Kodi last closed, not resuming")
+            return False
+
+        with open(Store.file_to_store_last_played, 'r') as f:
+            full_path = f.read()
+
+        if not full_path:
+            Logger.info("resume_if_was_playing: no last-played file found; skipping resume.")
+            return False
+
+        mins, secs = divmod(int(resume_point), 60)
+        str_timestamp = f'{mins}:{secs:02d}'
+
+        Logger.info(f"resume_if_was_playing: will attempt to resume [{full_path}] at {str_timestamp} ({resume_point} seconds)")
+
+        # Flag that a resume attempt is in progress. onAVStarted's periodic save loop checks this
+        # and skips its save (non-blocking) so it doesn't overwrite the real resume data with a
+        # near-zero value while we're still trying to establish/verify the seek below.
+        Store.currently_resuming = True
+
+        try:
             self.play(full_path)
 
-            # wait up to 10 secs for the video to start playing before we try to seek
-            for _ in range(100):
-                if not self.isPlayingVideo() and not Store.kodi_event_monitor.abortRequested():
-                    xbmc.sleep(100)
-                else:
-                    Notify.info(f'Resuming playback at {str_timestamp}')
-                    self.seekTime(resume_point)
-                    return True
+            started = False
+            for i in range(100):
+                if Store.kodi_event_monitor.abortRequested():
+                    Logger.info("resume_if_was_playing: abort requested while waiting for playback to start - giving up on resume")
+                    return False
+                if self.isPlayingVideo():
+                    started = True
+                    break
+                xbmc.sleep(100)
 
-        return False
+            if not started:
+                Logger.warning("resume_if_was_playing: timed out (10s) waiting for isPlayingVideo() to become True - giving up on resume seek")
+                return False
+
+            Notify.info(f'Resuming playback at {str_timestamp}')
+
+            # Attempt the seek, then verify it actually landed - retrying a few times if not, since a
+            # seek requested too soon after playback starts can be silently ignored by Kodi. Every
+            # player call here is guarded: if playback has stopped/aborted underneath us (e.g. the
+            # device is shutting down), we log and bail out cleanly rather than raising.
+            seek_succeeded = False
+            attempt = 0
+            for attempt in range(1, 6):
+
+                if Store.kodi_event_monitor.abortRequested() or not self.isPlaying():
+                    Logger.info(f"resume_if_was_playing: playback stopped/abort requested before seek attempt {attempt} - stopping verification")
+                    break
+
+                try:
+                    self.seekTime(resume_point)
+                except RuntimeError as e:
+                    Logger.warning(f"resume_if_was_playing: seekTime() raised RuntimeError on attempt {attempt} ({e}) - playback has likely stopped, giving up on resume seek")
+                    break
+
+                xbmc.sleep(500)
+
+                if Store.kodi_event_monitor.abortRequested() or not self.isPlaying():
+                    Logger.info("resume_if_was_playing: playback stopped/abort requested while verifying seek - stopping verification")
+                    break
+
+                try:
+                    post_seek_time = self.getTime()
+                except RuntimeError:
+                    Logger.warning("resume_if_was_playing: could not read player time while verifying seek (RuntimeError) - playback has likely stopped")
+                    break
+
+                if post_seek_time is not None and abs(post_seek_time - resume_point) < 5:
+                    seek_succeeded = True
+                    break
+
+                Logger.warning(f"resume_if_was_playing: seek attempt {attempt} does not appear to have landed (expected ~{resume_point}s, got {post_seek_time}s) - retrying")
+
+            if not seek_succeeded:
+                Logger.warning(f"resume_if_was_playing: could NOT confirm the seek to {resume_point}s landed after {attempt} attempt(s) - "
+                                f"playback may have started from 0:00 despite the notification, or playback stopped before the seek could be verified.")
+            else:
+                Logger.info("resume_if_was_playing: resume seek confirmed successful")
+
+            return True
+
+        except Exception as e:
+            # Belt and braces: nothing in the resume path should ever be allowed to raise up out
+            # of this function and crash the service - that leaves the whole addon not running for
+            # the rest of the session, which is far worse than a failed resume.
+            Logger.error(f"resume_if_was_playing: unexpected exception during resume attempt - giving up on resume, but continuing normally: {e}")
+            return False
+
+        finally:
+            Store.currently_resuming = False
 
     def get_random_library_video(self):
         """

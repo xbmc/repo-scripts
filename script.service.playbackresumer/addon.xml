@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.9" provider-name="bossanova808, bradvido88">
+<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.10" provider-name="bossanova808, bradvido88">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.bossanova808" version="1.0.0"/>
@@ -24,8 +24,9 @@
     <source>https://github.com/bossanova808/script.service.playbackresumer</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=355383</forum>
     <email>bossanova808@gmail.com</email>
-    <news>v2.0.9
-- User submitted Chinese language translations (thanks @wabisabi926!)       
+    <news>v2.0.10
+- Fixed the startup resume seek silently failing (video would auto-play from 0:00 despite the "Resuming at X:XX" notification): the addon now waits for playback to actually be ready before seeking, then verifies the seek landed and retries if not
+- Fixed a rare crash on startup during a resume, which in turn caused the *next* startup's resume to silently fail too (no video was playing at Kodi's last shutdown)
     </news>
     <assets>
       <icon>icon.png</icon>
