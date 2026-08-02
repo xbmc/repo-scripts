@@ -1,6 +1,15 @@
+v2.0.10
+- Fixed a bug where the startup resume seek could silently fail - video would auto-play from
+  0:00 despite the "Resuming at X:XX" notification showing the correct saved time:
+  https://forum.kodi.tv/showthread.php?tid=355383
+- The resume now waits until playback is actually ready (not just "playing") before seeking,
+  then verifies the seek landed and retries a few times if it didn't
+- Fixed a rare crash on startup during a resume, which also explained why the *next* startup's
+  resume could fail too (no resume data was saved from the session that crashed)
+
 v2.0.9
 - User submitted Chinese language translations (thanks @wabisabi926!)
-       
+
 v2.0.8
 - Minor changes for Piers
 
