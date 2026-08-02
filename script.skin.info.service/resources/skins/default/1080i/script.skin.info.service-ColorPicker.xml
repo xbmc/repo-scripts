@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<!--
+	CONTROL IDs:
+	  100 - Red slider
+	  101 - Green slider
+	  102 - Blue slider
+	  103 - Alpha slider
+	  110 - Red percentage label
+	  111 - Green percentage label
+	  112 - Blue percentage label
+	  113 - Alpha percentage label
+	  200 - OK button
+	  201 - Cancel button
+	  202 - Reset to Default button
+	  203 - Enter Hex button (manual hex code input)
+	  300 - Color palette panel
+	-->
+	<defaultcontrol always="true">300</defaultcontrol>
+	<controls>
+		<!-- Background -->
+		<control type="image">
+			<width>1920</width>
+			<height>1080</height>
+			<texture>background.jpg</texture>
+		</control>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="zoom" start="150" end="100" center="auto" time="250" tween="cubic" easing="out" />
+				<effect type="fade" end="100" time="100" />
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="fade" start="100" end="0" time="100" delay="100" />
+				<effect type="zoom" start="100" end="130" center="auto" time="250" tween="cubic" easing="in" />
+			</animation>
+			<!-- Header -->
+			<control type="label">
+				<left>60</left>
+				<top>60</top>
+				<width>1800</width>
+				<height>60</height>
+				<font>font13</font>
+				<label>$ADDON[script.skin.info.service 32659]</label>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>FFFFFFFF</textcolor>
+			</control>
+			<!-- Color Palette Panel -->
+			<control type="panel" id="300">
+				<left>60</left>
+				<top>157</top>
+				<width>1800</width>
+				<height>600</height>
+				<ondown>9000</ondown>
+				<scrolltime>200</scrolltime>
+				<onclick>SetFocus(200)</onclick>
+				<itemlayout width="100" height="100">
+					<control type="image">
+						<width>100</width>
+						<height>100</height>
+						<texture colordiffuse="$INFO[ListItem.Property(color)]">white.png</texture>
+						<bordersize>8</bordersize>
+						<bordertexture border="8" colordiffuse="20FFFFFF">white.png</bordertexture>
+					</control>
+				</itemlayout>
+				<focusedlayout width="100" height="100">
+					<control type="group">
+						<animation effect="zoom" time="200" tween="sine" easing="inout" start="100" end="110" center="50,50">Focus</animation>
+						<control type="image">
+							<width>100</width>
+							<height>100</height>
+							<texture colordiffuse="$INFO[ListItem.Property(color)]">white.png</texture>
+							<bordersize>4</bordersize>
+							<bordertexture border="4" colordiffuse="FFFFFFFF">white.png</bordertexture>
+						</control>
+					</control>
+				</focusedlayout>
+			</control>
+			<!-- Color Preview -->
+			<control type="group">
+				<right>50</right>
+				<top>799</top>
+				<width>400</width>
+				<height>190</height>
+				<control type="image">
+					<width>400</width>
+					<height>160</height>
+					<texture colordiffuse="$INFO[Window(Home).Property(SkinInfo.ColorPicker.Preview)]">white.png</texture>
+					<bordersize>4</bordersize>
+					<bordertexture border="4" colordiffuse="40FFFFFF">white.png</bordertexture>
+				</control>
+				<control type="label">
+					<top>165</top>
+					<width>400</width>
+					<height>30</height>
+					<font>font13</font>
+					<label>$INFO[Window(Home).Property(SkinInfo.ColorPicker.Preview)]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>
+			</control>
+			<!-- Custom Sliders Group -->
+			<control type="group" id="400">
+				<left>40</left>
+				<top>794</top>
+				<width>600</width>
+				<control type="image">
+					<width>500</width>
+					<height>64</height>
+					<texture colordiffuse="805599CC" border="4">white.png</texture>
+					<animation effect="slide" end="0,64" condition="Control.HasFocus(101)">Conditional</animation>
+					<animation effect="slide" end="0,128" condition="Control.HasFocus(102)">Conditional</animation>
+					<animation effect="slide" end="0,192" condition="Control.HasFocus(103)">Conditional</animation>
+					<visible>Control.HasFocus(100) | Control.HasFocus(101) | Control.HasFocus(102) | Control.HasFocus(103)</visible>
+				</control>
+				<!-- Red Row -->
+				<control type="group">
+					<left>30</left>
+					<top>18</top>
+					<height>64</height>
+					<control type="label">
+						<width>100</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$LOCALIZE[13343]</label>
+					</control>
+					<control type="slider" id="100">
+						<description>Red Slider</description>
+						<left>150</left>
+						<width>150</width>
+						<height>28</height>
+						<texturesliderbar>slider_back.png</texturesliderbar>
+						<textureslidernib colordiffuse="4DFFFFFF">slider_nib.png</textureslidernib>
+						<textureslidernibfocus>slider_nib.png</textureslidernibfocus>
+						<onup>300</onup>
+						<ondown>101</ondown>
+					</control>
+					<control type="label" id="110">
+						<left>290</left>
+						<width>150</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$INFO[Control.GetLabel(100)]</label>
+						<align>right</align>
+					</control>
+				</control>
+				<!-- Green Row -->
+				<control type="group">
+					<left>30</left>
+					<top>82</top>
+					<control type="label">
+						<width>100</width>
+						<height>28</height>
+						<font>font13</font>
+						<align>left</align>
+						<label>$LOCALIZE[13341]</label>
+					</control>
+					<control type="slider" id="101">
+						<description>Green Slider</description>
+						<left>150</left>
+						<width>150</width>
+						<height>28</height>
+						<texturesliderbar>slider_back.png</texturesliderbar>
+						<textureslidernib colordiffuse="4DFFFFFF">slider_nib.png</textureslidernib>
+						<textureslidernibfocus>slider_nib.png</textureslidernibfocus>
+						<onup>100</onup>
+						<ondown>102</ondown>
+						<onright>200</onright>
+					</control>
+					<control type="label" id="111">
+						<left>290</left>
+						<width>150</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$INFO[Control.GetLabel(101)]</label>
+						<align>right</align>
+					</control>
+				</control>
+				<!-- Blue Row -->
+				<control type="group">
+					<left>30</left>
+					<top>146</top>
+					<control type="label">
+						<width>100</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$LOCALIZE[762]</label>
+					</control>
+					<control type="slider" id="102">
+						<description>Blue Slider</description>
+						<left>150</left>
+						<width>150</width>
+						<height>28</height>
+						<texturesliderbar>slider_back.png</texturesliderbar>
+						<textureslidernib colordiffuse="4DFFFFFF">slider_nib.png</textureslidernib>
+						<textureslidernibfocus>slider_nib.png</textureslidernibfocus>
+						<onup>101</onup>
+						<ondown>103</ondown>
+						<onright>200</onright>
+					</control>
+					<control type="label" id="112">
+						<left>290</left>
+						<width>150</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$INFO[Control.GetLabel(102)]</label>
+						<align>right</align>
+					</control>
+				</control>
+				<!-- Alpha Row -->
+				<control type="group">
+					<left>30</left>
+					<top>210</top>
+					<control type="label">
+						<width>100</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$ADDON[script.skin.info.service 32660]</label>
+					</control>
+					<control type="slider" id="103">
+						<description>Alpha Slider</description>
+						<left>150</left>
+						<width>150</width>
+						<height>28</height>
+						<texturesliderbar>slider_back.png</texturesliderbar>
+						<textureslidernib colordiffuse="4DFFFFFF">slider_nib.png</textureslidernib>
+						<textureslidernibfocus>slider_nib.png</textureslidernibfocus>
+						<onup>102</onup>
+						<ondown>9000</ondown>
+					</control>
+					<control type="label" id="113">
+						<left>290</left>
+						<width>150</width>
+						<height>28</height>
+						<font>font13</font>
+						<label>$INFO[Control.GetLabel(103)]</label>
+						<align>right</align>
+					</control>
+				</control>
+			</control>
+			<!-- Button Group -->
+			<control type="grouplist" id="9000">
+				<right>50</right>
+				<top>1000</top>
+				<height>60</height>
+				<orientation>horizontal</orientation>
+				<itemgap>10</itemgap>
+				<align>right</align>
+				<onup>300</onup>
+				<onleft>103</onleft>
+				<!-- Enter Hex Button -->
+				<control type="button" id="203">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$ADDON[script.skin.info.service 32661]</label>
+					<texturefocus colordiffuse="FFAA00FF" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				</control>
+				<!-- Reset Button -->
+				<control type="button" id="202">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$LOCALIZE[409]</label>
+					<texturefocus colordiffuse="FFFF8800" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				</control>
+				<!-- OK Button -->
+				<control type="button" id="200">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$LOCALIZE[186]</label>
+					<texturefocus colordiffuse="FF00AA00" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				</control>
+				<!-- Cancel Button -->
+				<control type="button" id="201">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$LOCALIZE[222]</label>
+					<texturefocus colordiffuse="FFFF4444" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

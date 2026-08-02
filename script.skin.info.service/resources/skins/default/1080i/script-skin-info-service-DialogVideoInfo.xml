@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">5001</defaultcontrol>
+	<controls>
+		<!-- Hidden container for local library -->
+		<control type="list" id="9000">
+			<visible>false</visible>
+			<content>$INFO[Window.Property(container.library.path)]</content>
+		</control>
+		<control type="group">
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<!-- Background -->
+			<control type="image">
+				<width>100%</width>
+				<height>100%</height>
+				<texture colordiffuse="FF000000">white.png</texture>
+			</control>
+			<!-- Fanart -->
+			<control type="image">
+				<width>100%</width>
+				<height>100%</height>
+				<texture background="true" colordiffuse="33FFFFFF">$INFO[Window.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+			</control>
+			<control type="group">
+				<left>50</left>
+				<top>40</top>
+				<width>1820</width>
+				<height>1000</height>
+				<control type="group">
+					<animation effect="slide" start="0" end="0,-700" time="500" tween="cubic" easing="inout" condition="ControlGroup(5000).HasFocus">Conditional</animation>
+					<!-- Poster -->
+					<control type="image">
+						<width>350</width>
+						<height>525</height>
+						<texture fallback="DefaultVideo.png" background="true">$INFO[Window.Property(Poster)]</texture>
+						<aspectratio>scale</aspectratio>
+					</control>
+					<!-- Video info -->
+					<control type="group">
+						<left>440</left>
+						<control type="label">
+							<width>1360</width>
+							<height>40</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<textoffsetx>10</textoffsetx>
+							<label>[B]$INFO[Window.Property(Title)][/B]$INFO[Window.Property(Year), (,)]</label>
+						</control>
+						<control type="label">
+							<top>40</top>
+							<width>1360</width>
+							<height>40</height>
+							<font>font13</font>
+							<textcolor>silver</textcolor>
+							<textoffsetx>10</textoffsetx>
+							<label>$INFO[Window.Property(Genre)]$INFO[Window.Property(Runtime), · ]$INFO[Window.Property(MPAA), · ]</label>
+						</control>
+						<control type="label">
+							<top>80</top>
+							<width>1360</width>
+							<height>40</height>
+							<font>font13</font>
+							<textcolor>silver</textcolor>
+							<textoffsetx>10</textoffsetx>
+							<label>$INFO[Window.Property(Rating.tmdb),TMDB: ]$INFO[Window.Property(Rating.imdb), · IMDb: ]$INFO[Window.Property(Rating.trakt), · Trakt: ]</label>
+						</control>
+						<control type="label">
+							<top>120</top>
+							<width>1360</width>
+							<height>40</height>
+							<font>font13</font>
+							<textcolor>darkgray</textcolor>
+							<textoffsetx>10</textoffsetx>
+							<visible>!String.IsEmpty(Window.Property(Tagline))</visible>
+							<label>[I]$INFO[Window.Property(Tagline)][/I]</label>
+						</control>
+						<!-- Plot -->
+						<control type="group">
+							<top>180</top>
+							<width>1360</width>
+							<height>300</height>
+							<control type="textbox">
+								<left>10</left>
+								<width>1350</width>
+								<height>256</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<label>$INFO[Window.Property(Plot)]</label>
+								<autoscroll delay="6000" time="3000" repeat="10000">true</autoscroll>
+							</control>
+							<control type="button" id="5001">
+								<top>-10</top>
+								<width>1360</width>
+								<height>276</height>
+								<texturefocus colordiffuse="40FFFFFF">white.png</texturefocus>
+								<texturenofocus />
+								<label />
+								<onclick>RunScript(script.skin.info.service,dialog=textviewer,heading=$ESCINFO[Window.Property(Title)],text=$ESCINFO[Window.Property(Plot)])</onclick>
+								<ondown>5000</ondown>
+							</control>
+						</control>
+						<control type="label">
+							<top>450</top>
+							<width>1360</width>
+							<height>40</height>
+							<font>font13</font>
+							<textcolor>silver</textcolor>
+							<textoffsetx>10</textoffsetx>
+							<visible>!String.IsEmpty(Window.Property(Director)) | !String.IsEmpty(Window.Property(Writer))</visible>
+							<label>$INFO[Window.Property(Director),[B]$LOCALIZE[20339]:[/B] ]$INFO[Window.Property(Writer), · [B]$LOCALIZE[20417]:[/B] ]</label>
+						</control>
+						<control type="label">
+							<top>490</top>
+							<width>1360</width>
+							<height>40</height>
+							<font>font13</font>
+							<textcolor>silver</textcolor>
+							<textoffsetx>10</textoffsetx>
+							<visible>!String.IsEmpty(Window.Property(Studio))</visible>
+							<label>[B]$LOCALIZE[572]:[/B] $INFO[Window.Property(Studio)]</label>
+						</control>
+					</control>
+				</control>
+				<control type="grouplist" id="5000">
+					<top>540</top>
+					<width>1820</width>
+					<height>1080</height>
+					<orientation>vertical</orientation>
+					<usecontrolcoords>true</usecontrolcoords>
+					<itemgap>0</itemgap>
+					<scrolltime tween="cubic" easing="out">500</scrolltime>
+					<onup>5001</onup>
+					<ondown>noop</ondown>
+					<animation effect="slide" start="0" end="0,-540" time="500" tween="cubic" easing="inout" condition="ControlGroup(5000).HasFocus">Conditional</animation>
+					<!-- Cast -->
+					<control type="group" id="1210">
+						<height>0</height>
+						<visible>Control.IsVisible(1510)</visible>
+						<control type="label" id="1410">
+							<height>50</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<label>[B]$LOCALIZE[206][/B]$INFO[Container(1510).CurrentItem, (,/]$INFO[Container(1510).NumItems,,)]</label>
+						</control>
+					</control>
+					<control type="panel" id="1510">
+						<top>50</top>
+						<height>490</height>
+						<width>1820</width>
+						<orientation>horizontal</orientation>
+						<scrolltime>200</scrolltime>
+						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1510).NumItems,0)</visible>
+						<onclick>RunScript(script.skin.info.service,action=dialog_actor_info,person_id=$INFO[Container(1510).ListItem.Property(person_id)],name=$ESCINFO[Container(1510).ListItem.Label])</onclick>
+						<itemlayout width="260" height="490">
+							<control type="image">
+								<width>240</width>
+								<height>360</height>
+								<texture fallback="DefaultActor.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+							</control>
+							<control type="label">
+								<top>360</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Label2]</label>
+							</control>
+							<control type="label">
+								<top>400</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Label]</label>
+							</control>
+						</itemlayout>
+						<focusedlayout width="260" height="490">
+							<control type="group">
+								<animation effect="zoom" start="90" end="100" time="200" tween="sine" easing="inout" center="auto">Focus</animation>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture fallback="DefaultActor.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio>scale</aspectratio>
+								</control>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture colordiffuse="steelblue" border="8" infill="false">white.png</texture>
+								</control>
+								<control type="label">
+									<top>360</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>white</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Label2]</label>
+								</control>
+								<control type="label">
+									<top>400</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>white</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+							</control>
+						</focusedlayout>
+						<content>$INFO[Window.Property(container.cast.path)]</content>
+					</control>
+					<!-- Recommendations -->
+					<control type="group" id="1211">
+						<height>0</height>
+						<visible>Control.IsVisible(1511)</visible>
+						<control type="label" id="1411">
+							<height>50</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<label>[B]$ADDON[script.skin.info.service 32682][/B]$INFO[Container(1511).CurrentItem, (,/]$INFO[Container(1511).NumItems,,)]</label>
+						</control>
+					</control>
+					<control type="panel" id="1511">
+						<top>50</top>
+						<height>490</height>
+						<width>1820</width>
+						<orientation>horizontal</orientation>
+						<scrolltime>200</scrolltime>
+						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1511).NumItems,0)</visible>
+						<onclick>RunScript(script.skin.info.service,action=dialog_video_info,tmdb_id=$INFO[Container(1511).ListItem.Property(tmdb_id)],dbtype=$INFO[Container(1511).ListItem.Property(MediaType)])</onclick>
+						<itemlayout width="260" height="490">
+							<control type="image">
+								<width>240</width>
+								<height>360</height>
+								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio>scale</aspectratio>
+							</control>
+							<control type="label">
+								<top>360</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<top>400</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>silver</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+							</control>
+						</itemlayout>
+						<focusedlayout width="260" height="490">
+							<control type="group">
+								<animation effect="zoom" start="90" end="100" time="200" tween="sine" easing="inout" center="auto">Focus</animation>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(poster)]</texture>
+									<aspectratio>scale</aspectratio>
+								</control>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture colordiffuse="steelblue" border="8" infill="false">white.png</texture>
+								</control>
+								<control type="label">
+									<top>360</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>white</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Title]</label>
+								</control>
+								<control type="label">
+									<top>400</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>silver</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+								</control>
+							</control>
+						</focusedlayout>
+						<content>$INFO[Window.Property(container.recommendations.path)]</content>
+					</control>
+					<!-- Similar -->
+					<control type="group" id="1212">
+						<height>0</height>
+						<visible>Control.IsVisible(1512)</visible>
+						<control type="label" id="1412">
+							<height>50</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<label>[B]$ADDON[script.skin.info.service 32683][/B]$INFO[Container(1512).CurrentItem, (,/]$INFO[Container(1512).NumItems,,)]</label>
+						</control>
+					</control>
+					<control type="panel" id="1512">
+						<top>50</top>
+						<height>490</height>
+						<width>1820</width>
+						<orientation>horizontal</orientation>
+						<scrolltime>200</scrolltime>
+						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1512).NumItems,0)</visible>
+						<onclick>RunScript(script.skin.info.service,action=dialog_video_info,dbid=$INFO[Container(1512).ListItem.DBID],dbtype=$INFO[Container(1512).ListItem.DBType])</onclick>
+						<itemlayout width="260" height="490">
+							<control type="image">
+								<width>240</width>
+								<height>360</height>
+								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio>scale</aspectratio>
+							</control>
+							<control type="label">
+								<top>360</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<top>400</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>silver</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+							</control>
+						</itemlayout>
+						<focusedlayout width="260" height="490">
+							<control type="group">
+								<animation effect="zoom" start="90" end="100" time="200" tween="sine" easing="inout" center="auto">Focus</animation>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(poster)]</texture>
+									<aspectratio>scale</aspectratio>
+								</control>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture colordiffuse="steelblue" border="8" infill="false">white.png</texture>
+								</control>
+								<control type="label">
+									<top>360</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>white</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Title]</label>
+								</control>
+								<control type="label">
+									<top>400</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>silver</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+								</control>
+							</control>
+						</focusedlayout>
+						<content>$INFO[Window.Property(container.similar.path)]</content>
+					</control>
+					<!-- Crew -->
+					<control type="group" id="1213">
+						<height>0</height>
+						<visible>Control.IsVisible(1513)</visible>
+						<control type="label" id="1413">
+							<height>50</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<label>[B]$ADDON[script.skin.info.service 32684][/B]$INFO[Container(1513).CurrentItem, (,/]$INFO[Container(1513).NumItems,,)]</label>
+						</control>
+					</control>
+					<control type="panel" id="1513">
+						<top>50</top>
+						<height>490</height>
+						<width>1820</width>
+						<orientation>horizontal</orientation>
+						<scrolltime>200</scrolltime>
+						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1513).NumItems,0)</visible>
+						<onclick>RunScript(script.skin.info.service,action=dialog_actor_info,person_id=$INFO[Container(1513).ListItem.Property(person_id)],name=$ESCINFO[Container(1513).ListItem.Label])</onclick>
+						<itemlayout width="260" height="490">
+							<control type="image">
+								<width>240</width>
+								<height>360</height>
+								<texture fallback="DefaultActor.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+							</control>
+							<control type="label">
+								<top>360</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Property(Job)]</label>
+							</control>
+							<control type="label">
+								<top>400</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>whitesmoke</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Label]</label>
+							</control>
+						</itemlayout>
+						<focusedlayout width="260" height="490">
+							<control type="group">
+								<animation effect="zoom" start="90" end="100" time="200" tween="sine" easing="inout" center="auto">Focus</animation>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture fallback="DefaultActor.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio>scale</aspectratio>
+								</control>
+								<control type="image">
+									<width>240</width>
+									<height>360</height>
+									<texture colordiffuse="steelblue" border="8" infill="false">white.png</texture>
+								</control>
+								<control type="label">
+									<top>360</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>white</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Property(Job)]</label>
+								</control>
+								<control type="label">
+									<top>400</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>white</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+							</control>
+						</focusedlayout>
+						<content>$INFO[Window.Property(container.crew.path)]</content>
+					</control>
+				</control>
+			</control>
+		</control>
+		<!-- Busy spinner -->
+		<control type="group">
+			<visible>Container(1510).IsUpdating | Container(1511).IsUpdating | Container(1512).IsUpdating | Container(1513).IsUpdating</visible>
+			<control type="image">
+				<width>100%</width>
+				<height>100%</height>
+				<texture colordiffuse="FF000000">white.png</texture>
+			</control>
+			<control type="group">
+				<left>912</left>
+				<top>492</top>
+				<control type="image">
+					<width>96</width>
+					<height>96</height>
+					<texture colordiffuse="steelblue">busyspinner_clockwise.png</texture>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" start="0" end="360" center="auto" time="2000" loop="true" condition="true">Conditional</animation>
+				</control>
+				<control type="image">
+					<width>96</width>
+					<height>96</height>
+					<texture colordiffuse="steelblue">busyspinner_counterclockwise.png</texture>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" start="360" end="0" center="auto" time="2000" loop="true" condition="true">Conditional</animation>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

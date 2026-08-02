@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">301</defaultcontrol>
+	<controls>
+		<!-- Background -->
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1920</width>
+			<height>1080</height>
+			<texture>background.jpg</texture>
+		</control>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="zoom" start="150" end="100" center="auto" time="250" tween="cubic" easing="out" />
+				<effect type="fade" end="100" time="100" />
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="fade" start="100" end="0" time="100" delay="100" />
+				<effect type="zoom" start="100" end="130" center="auto" time="250" tween="cubic" easing="in" />
+			</animation>
+			<!-- Heading -->
+			<control type="label">
+				<width>1800</width>
+				<height>60</height>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[Window.Property(heading)]</label>
+			</control>
+			<!-- Art Type + Count -->
+			<control type="label">
+				<top>60</top>
+				<width>1800</width>
+				<height>60</height>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[Window.Property(arttype)]$INFO[Window.Property(count), - ]</label>
+			</control>
+			<control type="group">
+				<centerleft>50%</centerleft>
+				<top>120</top>
+				<width>1720</width>
+				<height>860</height>
+				<!-- Vertical divider between panels -->
+				<control type="image">
+					<left>560</left>
+					<top>40</top>
+					<width>2</width>
+					<height>820</height>
+					<texture colordiffuse="FF444444">white.png</texture>
+				</control>
+				<!-- LEFT PANEL - Working Set -->
+				<control type="group">
+					<left>20</left>
+					<top>40</top>
+					<width>520</width>
+					<height>820</height>
+					<!-- Panel Label -->
+					<control type="label">
+						<width>520</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FFCCCCCC</textcolor>
+						<align>left</align>
+						<label>$ADDON[script.skin.info.service 32653]</label>
+					</control>
+					<!-- Current art list -->
+					<control type="panel" id="100">
+						<left>0</left>
+						<top>40</top>
+						<width>520</width>
+						<height>780</height>
+						<onright>200</onright>
+						<ondown>300</ondown>
+						<scrolltime>200</scrolltime>
+						<itemlayout height="180" width="520">
+							<control type="image">
+								<width>520</width>
+								<height>180</height>
+								<texture colordiffuse="FF2A2A2A" border="1">white.png</texture>
+							</control>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>280</width>
+								<height>157</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+							</control>
+							<control type="label">
+								<left>300</left>
+								<top>10</top>
+								<width>210</width>
+								<height>30</height>
+								<font>font13</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<label>$INFO[ListItem.Label]</label>
+							</control>
+							<control type="label">
+								<left>300</left>
+								<top>45</top>
+								<width>210</width>
+								<height>25</height>
+								<font>font13</font>
+								<textcolor>FF888888</textcolor>
+								<label>$INFO[ListItem.Property(dimensions)]</label>
+								<visible>!String.IsEmpty(ListItem.Property(dimensions))</visible>
+							</control>
+						</itemlayout>
+						<!-- Focused/Selected for removal layout -->
+						<focusedlayout height="180" width="520">
+							<control type="image">
+								<width>520</width>
+								<height>180</height>
+								<texture colordiffuse="FF0088FF" border="3">white.png</texture>
+								<visible>String.IsEqual(ListItem.Property(selected),false)</visible>
+							</control>
+							<control type="image">
+								<width>520</width>
+								<height>180</height>
+								<texture colordiffuse="FFFF4444" border="3">white.png</texture>
+								<visible>String.IsEqual(ListItem.Property(selected),true)</visible>
+							</control>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>280</width>
+								<height>157</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+							</control>
+							<control type="label">
+								<left>300</left>
+								<top>10</top>
+								<width>210</width>
+								<height>30</height>
+								<font>font13</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="label">
+								<left>300</left>
+								<top>45</top>
+								<width>210</width>
+								<height>25</height>
+								<font>font13</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<label>$INFO[ListItem.Property(dimensions)]</label>
+								<visible>!String.IsEmpty(ListItem.Property(dimensions))</visible>
+							</control>
+							<control type="label">
+								<left>300</left>
+								<top>75</top>
+								<width>210</width>
+								<height>25</height>
+								<font>font13</font>
+								<textcolor>FFFF6666</textcolor>
+								<label>[B]$LOCALIZE[1210][/B]</label>
+								<visible>String.IsEqual(ListItem.Property(selected),true)</visible>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<!-- RIGHT PANEL - Available Options -->
+				<control type="group">
+					<left>580</left>
+					<top>40</top>
+					<width>1120</width>
+					<height>820</height>
+					<!-- Panel Label -->
+					<control type="label">
+						<left>0</left>
+						<top>0</top>
+						<width>1120</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FFCCCCCC</textcolor>
+						<align>left</align>
+						<label>$ADDON[script.skin.info.service 32654]</label>
+					</control>
+					<!-- Available art grid -->
+					<control type="panel" id="200">
+						<left>0</left>
+						<top>40</top>
+						<width>1120</width>
+						<height>780</height>
+						<onleft>100</onleft>
+						<ondown>300</ondown>
+						<scrolltime>200</scrolltime>
+						<orientation>vertical</orientation>
+						<itemlayout height="260" width="373">
+							<control type="image">
+								<left>0</left>
+								<top>0</top>
+								<width>373</width>
+								<height>260</height>
+								<texture colordiffuse="FF2A2A2A" border="1">white.png</texture>
+							</control>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>353</width>
+								<height>198</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+								<bordersize>8</bordersize>
+							</control>
+							<!-- Current Main Art indicator -->
+							<control type="group">
+								<left>320</left>
+								<top>15</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>38</width>
+									<height>38</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>38</width>
+									<height>38</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+							<control type="label">
+								<left>10</left>
+								<top>215</top>
+								<width>353</width>
+								<height>35</height>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+							</control>
+						</itemlayout>
+						<focusedlayout height="260" width="373">
+							<control type="image">
+								<left>0</left>
+								<top>0</top>
+								<width>373</width>
+								<height>260</height>
+								<texture colordiffuse="FF0088FF" border="3">white.png</texture>
+								<visible>String.IsEqual(ListItem.Property(selected),false)</visible>
+							</control>
+							<control type="image">
+								<left>0</left>
+								<top>0</top>
+								<width>373</width>
+								<height>260</height>
+								<texture colordiffuse="FF00AA00" border="3">white.png</texture>
+								<visible>String.IsEqual(ListItem.Property(selected),true)</visible>
+							</control>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>353</width>
+								<height>198</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<!-- Current Main Art indicator -->
+							<control type="group">
+								<left>320</left>
+								<top>15</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>38</width>
+									<height>38</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>38</width>
+									<height>38</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+							<control type="label">
+								<left>10</left>
+								<top>215</top>
+								<width>353</width>
+								<height>35</height>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+			</control>
+		</control>
+		<!-- Button Group -->
+		<control type="grouplist" id="9000">
+			<top>1020</top>
+			<width>100%</width>
+			<height>120</height>
+			<orientation>horizontal</orientation>
+			<itemgap>10</itemgap>
+			<align>center</align>
+			<onup>200</onup>
+			<ondown>SetFocus(200,0,absolute)</ondown>
+			<!-- Sort Button -->
+			<control type="button" id="303">
+				<width>280</width>
+				<height>50</height>
+				<font>font13_title</font>
+				<align>center</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<label>$INFO[Window.Property(sort_label)]</label>
+				<texturefocus colordiffuse="FFAA00FF" border="4">white.png</texturefocus>
+				<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				<visible>String.IsEqual(Window.Property(show_sort_button),true)</visible>
+			</control>
+			<!-- Source Button -->
+			<control type="button" id="304">
+				<width>280</width>
+				<height>50</height>
+				<font>font13_title</font>
+				<align>center</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<label>$INFO[Window.Property(source_label)]</label>
+				<texturefocus colordiffuse="FF00AAFF" border="4">white.png</texturefocus>
+				<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				<visible>String.IsEqual(Window.Property(show_source_button),true)</visible>
+			</control>
+			<!-- Clear Selection Button -->
+			<control type="button" id="302">
+				<width>280</width>
+				<height>50</height>
+				<font>font13_title</font>
+				<align>center</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<label>$ADDON[script.skin.info.service 32655]</label>
+				<texturefocus colordiffuse="FF0088FF" border="4">white.png</texturefocus>
+				<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+			</control>
+			<!-- Apply/Confirm Button -->
+			<control type="button" id="300">
+				<width>280</width>
+				<height>50</height>
+				<font>font13_title</font>
+				<align>center</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<label>$ADDON[script.skin.info.service 32656]</label>
+				<texturefocus colordiffuse="FF00AA00" border="4">white.png</texturefocus>
+				<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+			</control>
+			<!-- Cancel Button -->
+			<control type="button" id="301">
+				<width>280</width>
+				<height>50</height>
+				<font>font13_title</font>
+				<align>center</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<label>$LOCALIZE[222]</label>
+				<texturefocus colordiffuse="FFFF4444" border="4">white.png</texturefocus>
+				<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+			</control>
+		</control>
+	</controls>
+</window>

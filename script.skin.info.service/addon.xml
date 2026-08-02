@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.skin.info.service"
+	   name="Skin Info Service"
+	   version="2.0.0"
+	   provider-name="MikeSiLVO">
+	<requires>
+		<import addon="xbmc.python" version="3.0.1" />
+		<import addon="xbmc.json" version="13.5.0" />
+		<import addon="script.module.pil" version="1.1.7" />
+		<import addon="script.module.requests" version="2.31.0" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.python.library" library="script.py" />
+	<extension point="xbmc.service" library="service.py" />
+	<extension point="kodi.context.item">
+		<menu id="kodi.core.main">
+			<item library="context.py">
+				<label>$ADDON[script.skin.info.service 32102]</label>
+				<visible>!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]</visible>
+			</item>
+		</menu>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<license>GPL-3.0-only</license>
+		<source>https://github.com/MikeSiLVO/script.skin.info.service</source>
+		<forum>https://forum.kodi.tv/showthread.php?tid=384016</forum>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>
+2.0.0
+- Complete rewrite of the service
+- Online metadata and multi-source ratings (TMDb, OMDb, MDBList, Trakt, IMDb, Rotten Tomatoes, Metacritic and more)
+- Incremental IMDb rating updates and IMDb Top 250 rankings
+- Bulk TV show metadata sync and a tool to repair missing IMDb, TMDB and TVDB IDs
+- Smart caching that adapts to content age and TV show status, no manual settings
+- Music and music video online data and artwork (TheAudioDB, Last.fm, Wikipedia, Fanart.tv)
+- Artwork review tool plus single and bulk artwork download
+- Metadata editor for movies, TV shows, episodes, music videos, artists, albums and songs, plus NFO export
+- Plugin widgets: Next Up, Discovery, Recommendations, Cast, Crew, Similar, letter jump and more
+- Info dialogs: Actor Info, Video Info and Image Viewer
+- Stinger (mid/post-credits) notifications with skin override support
+- Tools: image blur, color picker, fanart slideshow, texture cache cleanup and GIF poster scanner
+- Skinner helpers: JSON-RPC wrapper (action=json) and skin setting actions
+- Requires Kodi 21 (Omega) or newer; skins enable it with Skin.SetBool(SkinInfo.Service)
+		</news>
+		<summary lang="en_GB">Provides rich media info and artwork to skins.</summary>
+		<summary lang="fr_FR">Fournit aux habillages des informations enrichies sur les médias ainsi que leurs visuels.</summary>
+		<summary lang="pl_PL">Dostarcza bogatych informacji o mediach i grafikę dla skórek.</summary>
+		<description lang="en_GB">Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library.</description>
+		<description lang="fr_FR">Skin Info Service fournit des informations supplémentaires telles que les notes, les illustrations et les détails de flux pour les films, les séries, les sagas, les artistes et les albums. Comprend un outil de recherche d&apos;affiches GIF pour trouver et ajouter automatiquement des affiches GIF animées à votre médiathèque.</description>
+		<description lang="pl_PL">Skin Info Service dostarcza skórkom bogate metadane i grafikę, wykraczając daleko poza to, co Kodi udostępnia domyślnie. Dodaje dodatkowe właściwości, takie jak oceny z wielu źródeł, grafikę, szczegóły transmisji oraz informacje o obsadzie i fabule filmów, seriali, odcinków, kolekcji filmowych, teledysków, wykonawców i albumów, korzystając zarówno z Twojej biblioteki, jak i danych online. Zawiera również narzędzie do wyszukiwania i dodawania animowanych plakatów GIF do Twojej biblioteki.</description>
+	</extension>
+</addon>

@@ -1,0 +1,2242 @@
+# Kodi strings for script.skin.info.service
+msgid ""
+msgstr ""
+"Project-Id-Version: script.skin.info.service\n"
+"POT-Creation-Date: 2024-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-07-08 21:20+0000\n"
+"Last-Translator: Nanomani <nicolas.pouliquen@gmail.com>\n"
+"Language-Team: French (France) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skin-info-service/fr_fr/>\n"
+"Language: fr_fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2026.7\n"
+
+msgctxt "Addon Summary"
+msgid "Provides rich media info and artwork to skins."
+msgstr "Fournit aux habillages des informations enrichies sur les médias ainsi que leurs visuels."
+
+msgctxt "Addon Description"
+msgid "Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library."
+msgstr "Skin Info Service fournit des informations supplémentaires telles que les notes, les illustrations et les détails de flux pour les films, les séries, les sagas, les artistes et les albums. Comprend un outil de recherche d'affiches GIF pour trouver et ajouter automatiquement des affiches GIF animées à votre médiathèque."
+
+msgctxt "#32000"
+msgid "Animated Art"
+msgstr "Illustration animé"
+
+msgctxt "#32002"
+msgid "Gif filename patterns (exact/suffix)"
+msgstr "Modèles de noms de fichiers Gif (exact/suffixe)"
+
+msgctxt "#32003"
+msgid "Comma-separated list of gif filename patterns. Matches exact filenames (e.g., 'poster.gif') or files ending with the pattern (e.g., 'movie.poster.gif')"
+msgstr "Liste séparée par des virgules de modèles de noms de fichiers gif. Correspond aux noms de fichiers exacts (ex : 'poster.gif') ou aux fichiers se terminant par le modèle (ex : 'movie.poster.gif')"
+
+msgctxt "#32004"
+msgid "Artwork"
+msgstr "Illustrations"
+
+#. Label for language dropdown in settings (used for both metadata and artwork language selection)
+msgctxt "#32006"
+msgid "Preferred language"
+msgstr "Langue préférée"
+
+msgctxt "#32007"
+msgid "Artwork in this language is prioritized for posters, logos, and other language-sensitive art."
+msgstr "Les illustrations dans cette langue sont prioritaires pour les affiches, logos et autres éléments sensibles à la langue."
+
+msgctxt "#32008"
+msgid "Prefer fanart in selected language"
+msgstr "Préférer le fanart dans la langue sélectionnée"
+
+msgctxt "#32009"
+msgid "No artwork available from scrapers"
+msgstr "Aucune illustration disponible via les scrapers"
+
+msgctxt "#32010"
+msgid "No artwork matched language preferences"
+msgstr "Aucune illustration ne correspond aux préférences linguistiques"
+
+msgctxt "#32011"
+msgid "Needs manual review"
+msgstr "Nécessite une vérification manuelle"
+
+msgctxt "#32012"
+msgid "No images selected"
+msgstr "Aucune image sélectionnée"
+
+msgctxt "#32013"
+msgid "Downloaded {0} files"
+msgstr "{0} fichiers téléchargés"
+
+msgctxt "#32014"
+msgid "{0} files"
+msgstr "{0} fichiers"
+
+msgctxt "#32015"
+msgid "{0} image(s) selected"
+msgstr "{0} image(s) sélectionnée(s)"
+
+msgctxt "#32016"
+msgid "{0} seasons"
+msgstr "{0} saisons"
+
+msgctxt "#32017"
+msgid "{0} episodes"
+msgstr "{0} épisodes"
+
+msgctxt "#32019"
+msgid "Add 'Download' option to missing artwork and pre-cache"
+msgstr "Ajouter l'option 'Télécharger' aux illustrations manquantes et à la pré-mise en cache"
+
+msgctxt "#32020"
+msgid "Show additional menu options to download artwork to filesystem during review and pre-cache operations"
+msgstr "Afficher des options de menu supplémentaires pour télécharger les illustrations sur le système de fichiers lors des opérations de vérification et de pré-mise en cache"
+
+msgctxt "#32022"
+msgid "When File Already Exists"
+msgstr "Si le fichier existe déjà"
+
+msgctxt "#32023"
+msgid "What to do when artwork file already exists on filesystem"
+msgstr "Action à effectuer lorsque le fichier d'illustration existe déjà sur le système de fichiers"
+
+msgctxt "#32024"
+msgid "Skip (don't download)"
+msgstr "Ignorer (ne pas télécharger)"
+
+msgctxt "#32025"
+msgid "Overwrite existing file"
+msgstr "Écraser le fichier existant"
+
+msgctxt "#32027"
+msgid "Use Movie Filename Prefix"
+msgstr "Utiliser le préfixe du nom de fichier du film"
+
+msgctxt "#32028"
+msgid "Save as 'Avatar-poster.jpg' instead of 'poster.jpg' in movie folder"
+msgstr "Enregistrer sous 'Avatar-poster.jpg' au lieu de 'poster.jpg' dans le dossier du film"
+
+msgctxt "#32029"
+msgid "Export to NFO"
+msgstr "Exporter au format NFO"
+
+msgctxt "#32030"
+msgid "NFO file written"
+msgstr "Fichier NFO créé"
+
+msgctxt "#32031"
+msgid "Could not write NFO file"
+msgstr "Impossible d'écrire le fichier NFO"
+
+msgctxt "#32032"
+msgid "Processing cancelled"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Art Fetcher - Cancelled"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Always Ask"
+msgstr "Toujours demander"
+
+msgctxt "#32036"
+msgid "GIF Scanner Mode"
+msgstr "Mode de recherche GIF"
+
+msgctxt "#32037"
+msgid "Scan mode for animated art scanner"
+msgstr "Mode de recherche pour le scanner d'art animé"
+
+msgctxt "#32038"
+msgid "Incremental"
+msgstr "Incrémentiel"
+
+msgctxt "#32039"
+msgid "Full Scan"
+msgstr "Analyse complète"
+
+msgctxt "#32040"
+msgid "Download Report"
+msgstr "Rapport de téléchargement"
+
+msgctxt "#32041"
+msgid "No download history found."
+msgstr "Aucun historique de téléchargement trouvé."
+
+msgctxt "#32042"
+msgid "Cancelled"
+msgstr "Annulé"
+
+msgctxt "#32043"
+msgid "No valid media types to download."
+msgstr "Aucun type de média valide à télécharger."
+
+msgctxt "#32045"
+msgid "Downloaded:"
+msgstr "Téléchargé :"
+
+msgctxt "#32044"
+msgid "API Keys"
+msgstr "Clés API"
+
+msgctxt "#32046"
+msgid "Configure TMDB API Key"
+msgstr "Configurer la clé API TMDB"
+
+msgctxt "#32047"
+msgid "Get your API key from https://www.themoviedb.org/settings/api"
+msgstr "Obtenez votre clé API sur https://www.themoviedb.org/settings/api"
+
+msgctxt "#32048"
+msgid "Test Connection"
+msgstr "Tester la connexion"
+
+msgctxt "#32049"
+msgid "Clear API Key"
+msgstr "Effacer la clé API"
+
+msgctxt "#32050"
+msgid "MDBList"
+msgstr "MDBList"
+
+msgctxt "#32051"
+msgid "Configure MDBList API Key"
+msgstr "Configurer la clé API MDBList"
+
+msgctxt "#32052"
+msgid "Get your API key from https://mdblist.com/preferences/"
+msgstr "Obtenez votre clé API sur https://mdblist.com/preferences/"
+
+msgctxt "#32053"
+msgid "OMDb"
+msgstr "OMDb"
+
+msgctxt "#32054"
+msgid "Configure OMDb API Key"
+msgstr "Configurer la clé API OMDb"
+
+msgctxt "#32055"
+msgid "Get your API key from http://www.omdbapi.com/apikey.aspx"
+msgstr "Obtenez votre clé API sur http://www.omdbapi.com/apikey.aspx"
+
+msgctxt "#32056"
+msgid "Fanart.tv · fanart.tv/get-an-api-key[CR]No key: 7 days · Personal: 2 days · VIP: immediate"
+msgstr "Fanart.tv · fanart.tv/get-an-api-key[CR]Sans clé : 7 jours · Personnel : 2 jours · VIP : immédiat"
+
+msgctxt "#32057"
+msgid "Configure Fanart.tv API Key"
+msgstr "Configurer la clé API Fanart.tv"
+
+msgctxt "#32059"
+msgid "Trakt"
+msgstr "Trakt"
+
+msgctxt "#32060"
+msgid "Authorize Trakt"
+msgstr "Autoriser Trakt"
+
+msgctxt "#32061"
+msgid "Authorize this addon to access your Trakt account"
+msgstr "Autoriser cette extension à accéder à votre compte Trakt"
+
+msgctxt "#32062"
+msgid "Test Trakt Connection"
+msgstr "Tester la connexion Trakt"
+
+msgctxt "#32063"
+msgid "Revoke Authorization"
+msgstr "Révoquer l'autorisation"
+
+msgctxt "#32064"
+msgid "Ratings"
+msgstr "Notes"
+
+msgctxt "#32065"
+msgid "Not configured"
+msgstr "Non configuré"
+
+msgctxt "#32066"
+msgid "Stopped early: downloads stalled"
+msgstr ""
+
+msgctxt "#32067"
+msgid "No progress for over {0} seconds. Run it again to finish the rest."
+msgstr ""
+
+msgctxt "#32072"
+msgid "Processing Artwork Queue"
+msgstr "Traitement de la file d'attente des illustrations"
+
+msgctxt "#32073"
+msgid "Cache is empty"
+msgstr "Le cache est vide"
+
+msgctxt "#32074"
+msgid "Default ratings source"
+msgstr "Source de notes par défaut"
+
+msgctxt "#32075"
+msgid "Primary source to display when multiple ratings are available"
+msgstr "Source principale à afficher lorsque plusieurs notes sont disponibles"
+
+msgctxt "#32076"
+msgid "IMDb"
+msgstr "IMDb"
+
+msgctxt "#32077"
+msgid "TMDB"
+msgstr "TMDB"
+
+msgctxt "#32080"
+msgid "API Key"
+msgstr "Clé API"
+
+msgctxt "#32081"
+msgid "Status: Authorized"
+msgstr "Statut : Autorisé"
+
+msgctxt "#32082"
+msgid "Texture Cache Manager"
+msgstr "Gestionnaire du cache de textures"
+
+msgctxt "#32083"
+msgid "Pre-Cache Library Artwork"
+msgstr "Pré-mise en cache des illustrations de la médiathèque"
+
+msgctxt "#32085"
+msgid "Statistics & Info"
+msgstr "Statistiques et informations"
+
+msgctxt "#32086"
+msgid "View Last Report"
+msgstr "Voir le dernier rapport"
+
+msgctxt "#32087"
+msgid "Cleanup Textures"
+msgstr "Nettoyer les textures"
+
+msgctxt "#32088"
+msgid "Library Artwork Orphans"
+msgstr "Illustrations orphelines de la médiathèque"
+
+msgctxt "#32089"
+msgid "By Age (Older Than...)"
+msgstr "Par âge (plus vieux que...)"
+
+msgctxt "#32090"
+msgid "By Usage (Low Usage)"
+msgstr "Par utilisation (faible utilisation)"
+
+msgctxt "#32091"
+msgid "By URL Pattern (Force Re-Cache)"
+msgstr "Par modèle d'URL (forcer la mise en cache)"
+
+msgctxt "#32092"
+msgid "Advanced Cleanup..."
+msgstr "Nettoyage avancé..."
+
+msgctxt "#32093"
+msgid "Enter {0} API Key"
+msgstr "Saisir la clé API {0}"
+
+msgctxt "#32094"
+msgid "Are you sure you want to clear the {0} API key?"
+msgstr "Voulez-vous vraiment effacer la clé API {0} ?"
+
+msgctxt "#32095"
+msgid ""
+"Error testing connection:\n"
+"\n"
+"{0}"
+msgstr ""
+"Erreur lors du test de connexion :\n"
+"\n"
+"{0}"
+
+msgctxt "#32096"
+msgid "Failed to get device code from Trakt."
+msgstr "Échec de l'obtention du code de l'appareil auprès de Trakt."
+
+msgctxt "#32097"
+msgid ""
+"Error:\n"
+"\n"
+"{0}"
+msgstr ""
+"Erreur :\n"
+"\n"
+"{0}"
+
+msgctxt "#32098"
+msgid ""
+"Are you sure you want to revoke Trakt authorization?\n"
+"\n"
+"You will need to re-authorize to use Trakt ratings."
+msgstr ""
+"Voulez-vous vraiment révoquer l'autorisation Trakt ?\n"
+"\n"
+"Vous devrez vous réautoriser pour utiliser les notes Trakt."
+
+msgctxt "#32099"
+msgid "Downloaded {0} files ({1} MB)"
+msgstr "{0} fichiers téléchargés ({1} Mo)"
+
+#. Context menu item and settings group - opens artwork browser for selected item
+msgctxt "#32100"
+msgid "Manage Artwork"
+msgstr "Gérer les illustrations"
+
+msgctxt "#32101"
+msgid "Update Ratings"
+msgstr "Mettre à jour les notes"
+
+msgctxt "#32102"
+msgid "Skin Info Tools"
+msgstr "Outils Skin Info"
+
+msgctxt "#32103"
+msgid "Edit Metadata"
+msgstr "Modifier les métadonnées"
+
+msgctxt "#32104"
+msgid "{0} - Connection Test"
+msgstr "{0} - Test de connexion"
+
+msgctxt "#32105"
+msgid ""
+"Connection successful!\n"
+"\n"
+"API key is valid and working."
+msgstr ""
+"Connexion réussie !\n"
+"\n"
+"La clé API est valide et fonctionnelle."
+
+msgctxt "#32106"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please check your API key."
+msgstr ""
+"Échec de la connexion.\n"
+"\n"
+"Veuillez vérifier votre clé API."
+
+msgctxt "#32107"
+msgid "Trakt Authorization Failed"
+msgstr "Échec de l'autorisation Trakt"
+
+msgctxt "#32108"
+msgid "Trakt - Connection Test"
+msgstr "Trakt - Test de connexion"
+
+msgctxt "#32109"
+msgid ""
+"Authorization successful!\n"
+"\n"
+"Trakt is now connected."
+msgstr ""
+"Autorisation réussie !\n"
+"\n"
+"Trakt est maintenant connecté."
+
+msgctxt "#32110"
+msgid ""
+"Authorization timed out.\n"
+"\n"
+"Please try again."
+msgstr ""
+"L'autorisation a expiré.\n"
+"\n"
+"Veuillez réessayer."
+
+msgctxt "#32111"
+msgid "Context Menu Items"
+msgstr "Éléments du menu contextuel"
+
+msgctxt "#32112"
+msgid "Show Manage Artwork"
+msgstr "Afficher Gérer les illustrations"
+
+msgctxt "#32113"
+msgid "Show Update Ratings"
+msgstr "Afficher Mettre à jour les notes"
+
+msgctxt "#32114"
+msgid "Show Edit Metadata"
+msgstr "Afficher Modifier les métadonnées"
+
+msgctxt "#32115"
+msgid ""
+"Connection successful!\n"
+"\n"
+"Trakt is authorized and working."
+msgstr ""
+"Connexion réussie !\n"
+"\n"
+"Trakt est autorisé et fonctionnel."
+
+msgctxt "#32116"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please authorize Trakt first."
+msgstr ""
+"Échec de la connexion.\n"
+"\n"
+"Veuillez d'abord autoriser Trakt."
+
+msgctxt "#32117"
+msgid "Show Download Artwork"
+msgstr "Afficher Télécharger les illustrations"
+
+msgctxt "#32118"
+msgid "No HTTP artwork URLs found in {0} library items."
+msgstr "Aucune URL d'illustration HTTP trouvée dans {0} éléments de la médiathèque."
+
+msgctxt "#32119"
+msgid "Overwrite Mode Warning"
+msgstr "Avertissement mode écrasement"
+
+msgctxt "#32120"
+msgid "Change Language"
+msgstr "Changer de langue"
+
+msgctxt "#32121"
+msgid "Download Complete"
+msgstr "Téléchargement terminé"
+
+msgctxt "#32122"
+msgid "Text-free / Untagged"
+msgstr "Sans texte / Non tagué"
+
+msgctxt "#32128"
+msgid "Skip"
+msgstr "Ignorer"
+
+msgctxt "#32130"
+msgid "Multi-Art..."
+msgstr "Multi-Illustrations..."
+
+msgctxt "#32131"
+msgid "Sort"
+msgstr "Trier"
+
+msgctxt "#32132"
+msgid "Source: All"
+msgstr "Source : Tout"
+
+msgctxt "#32133"
+msgid "Source: TMDB"
+msgstr "Source : TMDB"
+
+msgctxt "#32134"
+msgid "Source: Fanart.tv"
+msgstr "Source : Fanart.tv"
+
+msgctxt "#32135"
+msgid "IMDb Ratings"
+msgstr "Notes IMDb"
+
+msgctxt "#32136"
+msgid "Auto-update"
+msgstr "Mise à jour automatique"
+
+msgctxt "#32137"
+msgid "Automatically update IMDb ratings in your library"
+msgstr "Mettre à jour automatiquement les notes IMDb dans votre médiathèque"
+
+msgctxt "#32139"
+msgid "After library scan"
+msgstr "Après l'analyse de la médiathèque"
+
+msgctxt "#32140"
+msgid "When new ratings available"
+msgstr "Lorsque de nouvelles notes sont disponibles"
+
+msgctxt "#32141"
+msgid "Both"
+msgstr "Les deux"
+
+msgctxt "#32142"
+msgid "Scope"
+msgstr "Portée"
+
+msgctxt "#32143"
+msgid "Which media types to include in auto-updates"
+msgstr "Types de médias à inclure dans les mises à jour automatiques"
+
+msgctxt "#32144"
+msgid "All (Movies, TV Shows, Episodes)"
+msgstr "Tout (Films, séries, épisodes)"
+
+msgctxt "#32145"
+msgid "Movies and TV Shows only"
+msgstr "Films et séries uniquement"
+
+msgctxt "#32146"
+msgid "Movies only"
+msgstr "Films uniquement"
+
+msgctxt "#32150"
+msgid "Stinger Detection"
+msgstr "Détection de stinger"
+
+msgctxt "#32151"
+msgid "Enable stinger detection"
+msgstr "Activer la détection de stinger"
+
+msgctxt "#32152"
+msgid "Notify about post-credits scenes during movie playback"
+msgstr "Notifier les scènes post-générique pendant la lecture du film"
+
+msgctxt "#32156"
+msgid "Minutes before end"
+msgstr "Minutes avant la fin"
+
+msgctxt "#32157"
+msgid "For movies without chapters, notify this many minutes before the end"
+msgstr "Pour les films sans chapitres, notifier ce nombre de minutes avant la fin"
+
+msgctxt "#32158"
+msgid "Notification duration (seconds)"
+msgstr "Durée de la notification (secondes)"
+
+msgctxt "#32159"
+msgid "How long to display the notification"
+msgstr "Durée d'affichage de la notification"
+
+msgctxt "#32162"
+msgid "Wait For It..."
+msgstr "Attendez un peu..."
+
+msgctxt "#32163"
+msgid "Stay for scene during credits"
+msgstr "Restez pour une scène pendant le générique"
+
+msgctxt "#32164"
+msgid "Stay for scene after credits"
+msgstr "Restez pour une scène après le générique"
+
+msgctxt "#32165"
+msgid "Stay for scenes during and after credits"
+msgstr "Restez pour des scènes pendant et après le générique"
+
+msgctxt "#32170"
+msgid "Operation failed"
+msgstr "L'opération a échoué"
+
+msgctxt "#32171"
+msgid "No items to display"
+msgstr "Aucun élément à afficher"
+
+msgctxt "#32172"
+msgid "Task Already Running"
+msgstr "Tâche déjà en cours"
+
+msgctxt "#32173"
+msgid "Another background task is currently running"
+msgstr "Une autre tâche de fond est actuellement en cours"
+
+msgctxt "#32180"
+msgid "Texture Cache Statistics"
+msgstr "Statistiques du cache de textures"
+
+msgctxt "#32181"
+msgid "Failed to gather statistics"
+msgstr "Échec de la collecte des statistiques"
+
+msgctxt "#32182"
+msgid "No textures found in cache"
+msgstr "Aucune texture trouvée dans le cache"
+
+msgctxt "#32183"
+msgid "Orphaned Textures Report"
+msgstr "Rapport des textures orphelines"
+
+msgctxt "#32184"
+msgid "Analysis Failed"
+msgstr "L'analyse a échoué"
+
+msgctxt "#32190"
+msgid "Art Fetcher Report"
+msgstr "Rapport du récupérateur d'art"
+
+msgctxt "#32191"
+msgid "Art Fetcher - Detailed Report"
+msgstr "Récupérateur d'art - Rapport détaillé"
+
+msgctxt "#32192"
+msgid "Animated Art Scanner"
+msgstr "Scanner d'art animé"
+
+msgctxt "#32200"
+msgid "graphic"
+msgstr "graphique"
+
+msgctxt "#32201"
+msgid "a lot of"
+msgstr "beaucoup de"
+
+msgctxt "#32202"
+msgid "some"
+msgstr "quelques"
+
+msgctxt "#32203"
+msgid "a little"
+msgstr "un peu"
+
+msgctxt "#32204"
+msgid "very little"
+msgstr "très peu"
+
+msgctxt "#32210"
+msgid "violence or scares"
+msgstr "violence ou peur"
+
+msgctxt "#32211"
+msgid "sexual content"
+msgstr "contenu sexuel"
+
+#. Content advisory category - profanity/swearing (e.g., "Rated R for graphic language")
+msgctxt "#32212"
+msgid "language"
+msgstr "langage"
+
+msgctxt "#32213"
+msgid "substance use or smoking"
+msgstr "usage de substances ou tabac"
+
+msgctxt "#32220"
+msgid "Rated {0}+ for {1}"
+msgstr "Classé {0}+ pour {1}"
+
+#. Conjunction between content advisory items - spaces are intentional (e.g., "violence and language")
+msgctxt "#32221"
+msgid " and "
+msgstr " et "
+
+msgctxt "#32250"
+msgid "Unsupported field type"
+msgstr "Type de champ non supporté"
+
+msgctxt "#32251"
+msgid "Failed to save"
+msgstr "Échec de l'enregistrement"
+
+msgctxt "#32252"
+msgid "Rating Source (e.g., imdb, tmdb)"
+msgstr "Source de la note (ex : imdb, tmdb)"
+
+msgctxt "#32253"
+msgid "Vote Count"
+msgstr "Nombre de votes"
+
+msgctxt "#32254"
+msgid "Invalid Value"
+msgstr "Valeur invalide"
+
+msgctxt "#32255"
+msgid "Invalid Date"
+msgstr "Date invalide"
+
+msgctxt "#32256"
+msgid "Invalid Rating"
+msgstr "Note invalide"
+
+msgctxt "#32257"
+msgid "Already Exists"
+msgstr "Existe déjà"
+
+#. Notification title for metadata editor operations
+msgctxt "#32258"
+msgid "Editor"
+msgstr "Éditeur"
+
+msgctxt "#32259"
+msgid "No valid item selected"
+msgstr "Aucun élément valide sélectionné"
+
+msgctxt "#32260"
+msgid "Fix Library IDs"
+msgstr "Réparer les IDs de la médiathèque"
+
+msgctxt "#32261"
+msgid "All IDs are valid"
+msgstr "Tous les IDs sont valides"
+
+msgctxt "#32262"
+msgid "Failed to load item"
+msgstr "Échec du chargement de l'élément"
+
+msgctxt "#32263"
+msgid "Unsupported type: {0}"
+msgstr "Type non supporté : {0}"
+
+msgctxt "#32270"
+msgid "No path provided"
+msgstr "Aucun chemin fourni"
+
+msgctxt "#32271"
+msgid "No items found in directory"
+msgstr "Aucun élément trouvé dans le dossier"
+
+msgctxt "#32272"
+msgid "Select Actor"
+msgstr "Sélectionner un acteur"
+
+#. Menu title and feature name - scans library for items without artwork
+msgctxt "#32273"
+msgid "Missing Artwork"
+msgstr "Illustrations manquantes"
+
+msgctxt "#32274"
+msgid "Scan failed"
+msgstr "Analyse échouée"
+
+msgctxt "#32275"
+msgid "Select Artwork"
+msgstr "Sélectionner une illustration"
+
+msgctxt "#32276"
+msgid "Loading artwork for {0}..."
+msgstr "Chargement des illustrations pour {0}..."
+
+msgctxt "#32277"
+msgid "Preparing library scan..."
+msgstr "Préparation de l'analyse de la médiathèque..."
+
+msgctxt "#32278"
+msgid "Initializing..."
+msgstr "Initialisation..."
+
+msgctxt "#32279"
+msgid "Processing complete!"
+msgstr "Traitement terminé !"
+
+msgctxt "#32280"
+msgid "Art Fetcher"
+msgstr "Récupérateur d'art"
+
+msgctxt "#32281"
+msgid "Art Fetcher - Complete"
+msgstr "Récupérateur d'art - Terminé"
+
+msgctxt "#32282"
+msgid "View Report"
+msgstr "Voir le rapport"
+
+msgctxt "#32284"
+msgid "Processed: {0} items"
+msgstr "Traités : {0} éléments"
+
+msgctxt "#32285"
+msgid "Auto-applied: {0}"
+msgstr "Appliqués automatiquement : {0}"
+
+msgctxt "#32286"
+msgid "Skipped: {0}"
+msgstr "Ignorés : {0}"
+
+msgctxt "#32287"
+msgid "Errors: {0}"
+msgstr "Erreurs : {0}"
+
+msgctxt "#32288"
+msgid "No items in queue"
+msgstr "Aucun élément dans la file d'attente"
+
+msgctxt "#32289"
+msgid "No pending items found in queue"
+msgstr "Aucun élément en attente trouvé dans la file d'attente"
+
+msgctxt "#32290"
+msgid "Download Artwork"
+msgstr "Télécharger les illustrations"
+
+msgctxt "#32291"
+msgid "Preparing..."
+msgstr "Préparation..."
+
+msgctxt "#32292"
+msgid "Scanning library..."
+msgstr "Analyse de la médiathèque..."
+
+msgctxt "#32293"
+msgid "Building download list from {0} items..."
+msgstr "Construction de la liste de téléchargement à partir de {0} éléments..."
+
+msgctxt "#32294"
+msgid "Starting download of {0} artwork files..."
+msgstr "Démarrage du téléchargement de {0} fichiers d'illustration..."
+
+msgctxt "#32295"
+msgid "Scan complete. No missing artwork found."
+msgstr "Analyse terminée. Aucune illustration manquante trouvée."
+
+msgctxt "#32296"
+msgid "No remote artwork to download"
+msgstr "Aucune illustration distante à télécharger"
+
+msgctxt "#32297"
+msgid "Preparing download..."
+msgstr "Préparation du téléchargement..."
+
+msgctxt "#32298"
+msgid "Downloading artwork..."
+msgstr "Téléchargement des illustrations..."
+
+msgctxt "#32299"
+msgid "Loading seasons and episodes..."
+msgstr "Chargement des saisons et des épisodes..."
+
+msgctxt "#32300"
+msgid "Ratings Updater"
+msgstr "Mise à jour des notes"
+
+msgctxt "#32301"
+msgid "Remove Rating?"
+msgstr "Supprimer la note ?"
+
+msgctxt "#32302"
+msgid "Remove {0} rating?"
+msgstr "Supprimer la note {0} ?"
+
+msgctxt "#32303"
+msgid "Loading {0}s..."
+msgstr "Chargement des {0}..."
+
+msgctxt "#32304"
+msgid "Updating {0} {1}s..."
+msgstr "Mise à jour de {0} {1}..."
+
+msgctxt "#32305"
+msgid "Downloading IMDb dataset..."
+msgstr "Téléchargement du jeu de données IMDb..."
+
+msgctxt "#32306"
+msgid "Updating: {0}/{1} - {2}"
+msgstr "Mise à jour : {0}/{1} - {2}"
+
+msgctxt "#32307"
+msgid "Updating: {0}/{1} items"
+msgstr "Mise à jour : {0}/{1} éléments"
+
+msgctxt "#32308"
+msgid "Finalizing: {0}/{1}"
+msgstr "Finalisation : {0}/{1}"
+
+msgctxt "#32309"
+msgid "Finalizing: {0}/{1} items"
+msgstr "Finalisation : {0}/{1} éléments"
+
+msgctxt "#32310"
+msgid "Retrying failed items..."
+msgstr "Nouvelle tentative pour les éléments échoués..."
+
+msgctxt "#32311"
+msgid "Retrying: {0}/{1}"
+msgstr "Nouvelle tentative : {0}/{1}"
+
+msgctxt "#32312"
+msgid "Updating episode data..."
+msgstr "Mise à jour des données d'épisode..."
+
+msgctxt "#32313"
+msgid "{0} - Rate Limit"
+msgstr "{0} - Limite de débit"
+
+msgctxt "#32314"
+msgid "Waiting to retry..."
+msgstr "Attente avant nouvel essai..."
+
+msgctxt "#32315"
+msgid "Waiting {0}s before retry..."
+msgstr "Attente de {0}s avant nouvel essai..."
+
+msgctxt "#32316"
+msgid "Ratings Updated - {0}"
+msgstr "Notes mises à jour - {0}"
+
+msgctxt "#32317"
+msgid "Ratings Updater - Complete"
+msgstr "Mise à jour des notes - Terminé"
+
+msgctxt "#32318"
+msgid "IMDb Ratings Update"
+msgstr "Mise à jour des notes IMDb"
+
+msgctxt "#32319"
+msgid "{0} IMDb ratings updated"
+msgstr "{0} Notes IMDb mises à jour"
+
+msgctxt "#32320"
+msgid "IMDb ratings up to date"
+msgstr "Notes IMDb à jour"
+
+msgctxt "#32330"
+msgid "Analyzing Textures"
+msgstr "Analyse des textures"
+
+msgctxt "#32331"
+msgid "Scanning texture cache..."
+msgstr "Analyse du cache de textures..."
+
+msgctxt "#32332"
+msgid "Analyzing {0} textures..."
+msgstr "Analyse de {0} textures..."
+
+msgctxt "#32333"
+msgid "Cleanup Textures by Age"
+msgstr "Nettoyer les textures par âge"
+
+msgctxt "#32334"
+msgid "Clean Orphaned Textures"
+msgstr "Nettoyer les textures orphelines"
+
+msgctxt "#32335"
+msgid "Starting cleanup..."
+msgstr "Démarrage du nettoyage..."
+
+msgctxt "#32336"
+msgid "Starting..."
+msgstr "Démarrage..."
+
+msgctxt "#32350"
+msgid "Loading library..."
+msgstr "Chargement de la médiathèque..."
+
+msgctxt "#32351"
+msgid "Loading TV shows..."
+msgstr "Chargement des séries TV..."
+
+msgctxt "#32352"
+msgid "Loading episodes..."
+msgstr "Chargement des épisodes..."
+
+msgctxt "#32353"
+msgid "Analyzing library..."
+msgstr "Analyse de la médiathèque..."
+
+msgctxt "#32354"
+msgid "Downloading episode data..."
+msgstr "Téléchargement des données d'épisode..."
+
+msgctxt "#32355"
+msgid "Matching episodes (dataset)... {0}/{1}"
+msgstr "Correspondance des épisodes (jeu de données)... {0}/{1}"
+
+msgctxt "#32356"
+msgid "Fetching episodes (TMDB)... {0}/{1}"
+msgstr "Récupération des épisodes (TMDB)... {0}/{1}"
+
+msgctxt "#32357"
+msgid "Fixing TMDB IDs... {0}/{1}"
+msgstr "Réparation des IDs TMDB... {0}/{1}"
+
+msgctxt "#32358"
+msgid "Fetching {0}... {1}/{2}"
+msgstr "Récupération de {0}... {1}/{2}"
+
+msgctxt "#32359"
+msgid "No IDs could be fixed"
+msgstr "Aucun ID n'a pu être réparé"
+
+msgctxt "#32370"
+msgid "Testing {0}"
+msgstr "Test de {0}"
+
+msgctxt "#32371"
+msgid "Connecting to API..."
+msgstr "Connexion à l'API..."
+
+msgctxt "#32372"
+msgid "Trakt Authorization"
+msgstr "Autorisation Trakt"
+
+msgctxt "#32373"
+msgid "Requesting device code..."
+msgstr "Demande du code de l'appareil..."
+
+msgctxt "#32374"
+msgid "Testing Trakt"
+msgstr "Test de Trakt"
+
+msgctxt "#32390"
+msgid "No Library Values"
+msgstr "Aucune valeur dans la médiathèque"
+
+#. Displayed when user rating is 0 (no rating given by user)
+msgctxt "#32391"
+msgid "Not Rated"
+msgstr "Non noté"
+
+#. Placeholder shown when a field has no value
+msgctxt "#32392"
+msgid "(Not Set)"
+msgstr "(Non défini)"
+
+msgctxt "#32393"
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+msgctxt "#32394"
+msgid "Add {0}"
+msgstr "Ajouter {0}"
+
+msgctxt "#32395"
+msgid "Quick Edit: {0}"
+msgstr "Modification rapide : {0}"
+
+msgctxt "#32396"
+msgid "Select from Library"
+msgstr "Sélectionner dans la médiathèque"
+
+msgctxt "#32397"
+msgid "Add/Remove Items"
+msgstr "Ajouter/Supprimer des éléments"
+
+msgctxt "#32399"
+msgid "Edit {0} (comma-separated)"
+msgstr "Modifier {0} (séparés par des virgules)"
+
+msgctxt "#32400"
+msgid "No rating sources available. Please configure API keys in settings."
+msgstr "Aucune source de notes disponible. Veuillez configurer les clés API dans les paramètres."
+
+msgctxt "#32401"
+msgid "{0} not found"
+msgstr "{0} non trouvé"
+
+msgctxt "#32402"
+msgid "Updating ratings..."
+msgstr "Mise à jour des notes..."
+
+msgctxt "#32403"
+msgid "No changes needed"
+msgstr "Aucune modification nécessaire"
+
+msgctxt "#32404"
+msgid "Item skipped (no IDs or rate limit)"
+msgstr "Élément ignoré (pas d'ID ou limite de débit)"
+
+msgctxt "#32405"
+msgid "Failed to update ratings"
+msgstr "Échec de la mise à jour des notes"
+
+msgctxt "#32406"
+msgid "Update Movies"
+msgstr "Mettre à jour les films"
+
+msgctxt "#32407"
+msgid "Update TV Shows"
+msgstr "Mettre à jour les séries TV"
+
+msgctxt "#32408"
+msgid "Update Episodes"
+msgstr "Mettre à jour les épisodes"
+
+msgctxt "#32409"
+msgid "Update All"
+msgstr "Tout mettre à jour"
+
+msgctxt "#32410"
+msgid "Run Mode"
+msgstr "Mode d'exécution"
+
+msgctxt "#32411"
+msgid "Show progress dialog (Foreground)"
+msgstr "Afficher le dialogue de progression (premier plan)"
+
+msgctxt "#32412"
+msgid "Run in background"
+msgstr "Exécuter en tâche de fond"
+
+msgctxt "#32413"
+msgid "No {0}s found in library"
+msgstr "Aucun(e) {0} trouvé(e) dans la médiathèque"
+
+msgctxt "#32414"
+msgid "Fetching ratings batch {0}/{1}..."
+msgstr "Récupération du lot de notes {0}/{1}..."
+
+msgctxt "#32415"
+msgid "Retry Failed Items"
+msgstr "Réessayer les éléments échoués"
+
+msgctxt "#32416"
+msgid "{0} item(s) had temporary network issues."
+msgstr "{0} élément(s) ont eu des problèmes réseau temporaires."
+
+msgctxt "#32417"
+msgid "Retry these items now?"
+msgstr "Réessayer ces éléments maintenant ?"
+
+msgctxt "#32418"
+msgid "Network Issues"
+msgstr "Problèmes réseau"
+
+msgctxt "#32419"
+msgid "Items with network issues"
+msgstr "Éléments avec problèmes réseau"
+
+msgctxt "#32420"
+msgid "Retry: {0}/{1} succeeded"
+msgstr "Réessai : {0}/{1} réussi"
+
+msgctxt "#32421"
+msgid "IMDb ID Corrections"
+msgstr "Corrections d'ID IMDb"
+
+msgctxt "#32422"
+msgid "{0} item(s) have outdated IMDb ID(s) (redirects)."
+msgstr "{0} élément(s) ont des IDs IMDb obsolètes (redirections)."
+
+msgctxt "#32423"
+msgid "Correct them in your library?"
+msgstr "Les corriger dans votre médiathèque ?"
+
+msgctxt "#32424"
+msgid "No ratings update history found."
+msgstr "Aucun historique de mise à jour des notes trouvé."
+
+msgctxt "#32425"
+msgid "Calculating disk usage..."
+msgstr "Calcul de l'utilisation du disque..."
+
+msgctxt "#32426"
+msgid "Complete"
+msgstr "Terminé"
+
+#. Button label meaning "display/reveal" (not TV Show)
+msgctxt "#32427"
+msgid "Show"
+msgstr "Afficher"
+
+msgctxt "#32429"
+msgid "Retry"
+msgstr "Réessayer"
+
+msgctxt "#32430"
+msgid "Ratings Update Report"
+msgstr "Rapport de mise à jour des notes"
+
+msgctxt "#32440"
+msgid "Pre-Cache + Download"
+msgstr "Pré-mise en cache + Téléchargement"
+
+msgctxt "#32441"
+msgid "Pre-Cache Artwork - Select Scope"
+msgstr "Pré-mise en cache des illustrations - Sélectionner la portée"
+
+msgctxt "#32451"
+msgid "Pre-Cache + Download - Select Scope"
+msgstr "Pré-mise en cache + Téléchargement - Sélectionner la portée"
+
+msgctxt "#32455"
+msgid "Pre-Cache Artwork"
+msgstr "Pré-mise en cache des illustrations"
+
+msgctxt "#32457"
+msgid "[B]{0}[/B] is currently running."
+msgstr "[B]{0}[/B] est actuellement en cours."
+
+msgctxt "#32458"
+msgid "Cannot start another background task."
+msgstr "Impossible de démarrer une autre tâche de fond."
+
+msgctxt "#32459"
+msgid "Pre-Cache Cancelled"
+msgstr "Pré-mise en cache annulée"
+
+msgctxt "#32460"
+msgid "Pre-Cache Complete"
+msgstr "Pré-mise en cache terminée"
+
+msgctxt "#32461"
+msgid "Cleanup Cancelled"
+msgstr "Nettoyage annulé"
+
+msgctxt "#32462"
+msgid "Cleanup Complete"
+msgstr "Nettoyage terminé"
+
+msgctxt "#32463"
+msgid "Total: {0}"
+msgstr "Total : {0}"
+
+msgctxt "#32464"
+msgid "Cached: {0}"
+msgstr "Mis en cache : {0}"
+
+msgctxt "#32465"
+msgid "Downloaded: {0} ({1:.1f} MB)"
+msgstr "Téléchargés : {0} ({1:.1f} Mo)"
+
+msgctxt "#32467"
+msgid "Failed: {0} cache, {1} download"
+msgstr "Échoués : {0} cache, {1} téléchargement"
+
+msgctxt "#32468"
+msgid "Already Cached: {0}"
+msgstr "Déjà mis en cache : {0}"
+
+msgctxt "#32469"
+msgid "Newly Cached: {0}"
+msgstr "Nouvellement mis en cache : {0}"
+
+msgctxt "#32470"
+msgid "Failed: {0}"
+msgstr "Échoués : {0}"
+
+msgctxt "#32471"
+msgid "Status: Cancelled"
+msgstr "Statut : Annulé"
+
+msgctxt "#32472"
+msgid "Gathering statistics..."
+msgstr "Collecte des statistiques..."
+
+msgctxt "#32473"
+msgid "Remove textures not used in..."
+msgstr "Supprimer les textures non utilisées depuis..."
+
+msgctxt "#32474"
+msgid "30 days"
+msgstr "30 jours"
+
+msgctxt "#32475"
+msgid "60 days"
+msgstr "60 jours"
+
+msgctxt "#32476"
+msgid "90 days"
+msgstr "90 jours"
+
+msgctxt "#32477"
+msgid "180 days"
+msgstr "180 jours"
+
+msgctxt "#32478"
+msgid "365 days (1 year)"
+msgstr "365 jours (1 an)"
+
+msgctxt "#32479"
+msgid "No Old Textures"
+msgstr "Aucune texture ancienne"
+
+msgctxt "#32480"
+msgid "No textures found older than {0} days."
+msgstr "Aucune texture trouvée de plus de {0} jours."
+
+msgctxt "#32481"
+msgid "Total textures checked: {0}"
+msgstr "Total des textures vérifiées : {0}"
+
+msgctxt "#32482"
+msgid "Confirm Cleanup"
+msgstr "Confirmer le nettoyage"
+
+msgctxt "#32483"
+msgid "Remove {0} textures older than {1} days?"
+msgstr "Supprimer {0} textures de plus de {1} jours ?"
+
+msgctxt "#32484"
+msgid "Total: {0} | Oldest: {1}"
+msgstr "Total : {0} | Plus ancienne : {1}"
+
+msgctxt "#32485"
+msgid "Cleanup by Usage"
+msgstr "Nettoyage par utilisation"
+
+msgctxt "#32486"
+msgid "Feature coming soon!"
+msgstr "Fonctionnalité bientôt disponible !"
+
+msgctxt "#32487"
+msgid "Force Re-Cache by Pattern"
+msgstr "Forcer la mise en cache par modèle"
+
+msgctxt "#32488"
+msgid "Texture Cache - Last Run"
+msgstr "Cache de textures - Dernière exécution"
+
+msgctxt "#32489"
+msgid "No previous operations found."
+msgstr "Aucune opération précédente trouvée."
+
+msgctxt "#32490"
+msgid "Fetching texture database..."
+msgstr "Récupération de la base de données de textures..."
+
+msgctxt "#32492"
+msgid "Removing {0} old textures..."
+msgstr "Suppression de {0} anciennes textures..."
+
+msgctxt "#32493"
+msgid "Checked: {0} textures"
+msgstr "Vérifiées : {0} textures"
+
+msgctxt "#32494"
+msgid "Older than {0} days: {1}"
+msgstr "Plus de {0} jours : {1}"
+
+msgctxt "#32495"
+msgid "Removed: {0}"
+msgstr "Supprimées : {0}"
+
+msgctxt "#32496"
+msgid "Total Cached: {0} | Library: {1}"
+msgstr "Total mis en cache : {0} | Médiathèque : {1}"
+
+msgctxt "#32497"
+msgid "Orphaned Found: {0} | Removed: {1}"
+msgstr "Orphelines trouvées : {0} | Supprimées : {1}"
+
+msgctxt "#32498"
+msgid "{0} artwork files not found on disk.[CR]These are stale library entries pointing to missing files.[CR][CR]View the list?"
+msgstr "{0} fichiers d'illustration non trouvés sur le disque.[CR]Ce sont des entrées de médiathèque périmées pointant vers des fichiers manquants.[CR][CR]Voir la liste ?"
+
+msgctxt "#32499"
+msgid "Missing Artwork Files"
+msgstr "Fichiers d'illustration manquants"
+
+msgctxt "#32500"
+msgid "Session Report"
+msgstr "Rapport de session"
+
+msgctxt "#32501"
+msgid "Continue Selection ({0} pending)"
+msgstr "Continuer la sélection ({0} en attente)"
+
+msgctxt "#32502"
+msgid "Select Missing Artwork"
+msgstr "Sélectionner les illustrations manquantes"
+
+msgctxt "#32503"
+msgid "Select + Download Missing Artwork"
+msgstr "Sélectionner + Télécharger les illustrations manquantes"
+
+msgctxt "#32504"
+msgid "Auto-Apply Missing Artwork"
+msgstr "Appliquer automatiquement les illustrations manquantes"
+
+msgctxt "#32505"
+msgid "View Session History"
+msgstr "Voir l'historique de session"
+
+msgctxt "#32507"
+msgid "Browse & Choose Artwork - Select Library"
+msgstr "Parcourir et choisir les illustrations - Sélectionner la médiathèque"
+
+msgctxt "#32508"
+msgid "Browse & Choose + Download - Select Library"
+msgstr "Parcourir et choisir + Télécharger - Sélectionner la médiathèque"
+
+msgctxt "#32509"
+msgid "Auto-Fill Missing Artwork - Select Library"
+msgstr "Remplissage auto. des illustrations manquantes - Sélectionner la médiathèque"
+
+msgctxt "#32510"
+msgid "Last Session (any library)"
+msgstr "Dernière session (toute médiathèque)"
+
+msgctxt "#32511"
+msgid "Current Queue Status"
+msgstr "Statut actuel de la file d'attente"
+
+msgctxt "#32512"
+msgid "Session History"
+msgstr "Historique de session"
+
+msgctxt "#32513"
+msgid "Missing Artwork - Queue Status"
+msgstr "Illustrations manquantes - Statut de la file d'attente"
+
+msgctxt "#32514"
+msgid "Start new scan (clears queue)"
+msgstr "Démarrer une nouvelle analyse (vide la file d'attente)"
+
+msgctxt "#32515"
+msgid "View last report"
+msgstr "Voir le dernier rapport"
+
+msgctxt "#32516"
+msgid "Start new scan"
+msgstr "Démarrer une nouvelle analyse"
+
+msgctxt "#32520"
+msgid "Artwork Download Report"
+msgstr "Rapport de téléchargement des illustrations"
+
+msgctxt "#32522"
+msgid "Download Artwork to Filesystem"
+msgstr "Télécharger les illustrations sur le système de fichiers"
+
+msgctxt "#32523"
+msgid "Download Artwork - Select Scope"
+msgstr "Télécharger les illustrations - Sélectionner la portée"
+
+msgctxt "#32530"
+msgid "Tools"
+msgstr "Outils"
+
+msgctxt "#32532"
+msgid "Add/Fix IMDb & TMDB IDs"
+msgstr "Ajouter/Réparer les IDs IMDb et TMDB"
+
+msgctxt "#32540"
+msgid "Scan for Animated Posters"
+msgstr "Rechercher des affiches animées"
+
+msgctxt "#32541"
+msgid "View Cache Statistics"
+msgstr "Voir les statistiques du cache"
+
+msgctxt "#32542"
+msgid "Reset GIF Cache"
+msgstr "Réinitialiser le cache GIF"
+
+msgctxt "#32543"
+msgid "GIF Scanner - Last Run"
+msgstr "Scanner GIF - Dernière exécution"
+
+msgctxt "#32544"
+msgid "GIF Cache Statistics"
+msgstr "Statistiques du cache GIF"
+
+msgctxt "#32546"
+msgid "Clear {0} cached GIF entries?[CR][CR]Use this to troubleshoot cache issues.[CR][CR]Tip: Use 'Full Rescan' mode instead to re-process GIFs."
+msgstr "Effacer {0} entrées GIF du cache ?[CR][CR]Utilisez ceci pour résoudre les problèmes de cache.[CR][CR]Astuce : Utilisez le mode 'Nouvelle analyse complète' pour traiter à nouveau les GIFs."
+
+msgctxt "#32547"
+msgid "GIF Cache"
+msgstr "Cache GIF"
+
+msgctxt "#32548"
+msgid "Reset complete - cleared {0} entries"
+msgstr "Réinitialisation terminée - {0} entrées effacées"
+
+msgctxt "#32549"
+msgid "Cache is already empty"
+msgstr "Le cache est déjà vide"
+
+msgctxt "#32550"
+msgid "Auto-Applied Artwork Report"
+msgstr "Rapport des illustrations appliquées automatiquement"
+
+msgctxt "#32551"
+msgid "Skipped Items Report"
+msgstr "Rapport des éléments ignorés"
+
+msgctxt "#32552"
+msgid "Scan for GIF Posters"
+msgstr "Rechercher des affiches GIF"
+
+msgctxt "#32553"
+msgid "Select scan mode"
+msgstr "Sélectionner le mode de recherche"
+
+msgctxt "#32554"
+msgid "Select Language"
+msgstr "Sélectionner la langue"
+
+msgctxt "#32555"
+msgid "Select Artwork Type - {0}"
+msgstr "Sélectionner le type d'illustration - {0}"
+
+msgctxt "#32556"
+msgid "Select {0}"
+msgstr "Sélectionner {0}"
+
+msgctxt "#32557"
+msgid "Edit {0}"
+msgstr "Modifier {0}"
+
+msgctxt "#32560"
+msgid "Edit: {0}"
+msgstr "Modification : {0}"
+
+msgctxt "#32561"
+msgid "Dialog Error"
+msgstr "Erreur de dialogue"
+
+msgctxt "#32562"
+msgid "File not found: {0}"
+msgstr "Fichier non trouvé : {0}"
+
+msgctxt "#32563"
+msgid "Failed to read file: {0}"
+msgstr "Échec de la lecture du fichier : {0}"
+
+msgctxt "#32564"
+msgid "Rating source '{0}' already exists."
+msgstr "La source de note '{0}' existe déjà."
+
+msgctxt "#32565"
+msgid "Rating (0-10)"
+msgstr "Note (0-10)"
+
+msgctxt "#32566"
+msgid "Continue"
+msgstr "Continuer"
+
+msgctxt "#32567"
+msgid "Auto-Fill"
+msgstr "Remplissage auto"
+
+msgctxt "#32568"
+msgid "Resume in Background"
+msgstr "Reprendre en tâche de fond"
+
+msgctxt "#32569"
+msgid "Yes, Cancel It"
+msgstr "Oui, l'annuler"
+
+msgctxt "#32570"
+msgid "No, Keep Running"
+msgstr "Non, continuer"
+
+msgctxt "#32571"
+msgid "Cancel Running Task?"
+msgstr "Annuler la tâche en cours ?"
+
+msgctxt "#32572"
+msgid "Scan Cancelled"
+msgstr "Analyse annulée"
+
+msgctxt "#32573"
+msgid "Scan paused. Resume in background?"
+msgstr "Analyse en pause. Reprendre en tâche de fond ?"
+
+msgctxt "#32574"
+msgid "Cancel to resume later"
+msgstr "Annuler pour reprendre plus tard"
+
+msgctxt "#32575"
+msgid "Invalid scope: {0}"
+msgstr "Portée invalide : {0}"
+
+msgctxt "#32576"
+msgid "Invalid scan mode: {0}"
+msgstr "Mode de recherche invalide : {0}"
+
+msgctxt "#32577"
+msgid "Resuming scan..."
+msgstr "Reprise de l'analyse..."
+
+msgctxt "#32578"
+msgid "Background scan complete"
+msgstr "Analyse de fond terminée"
+
+msgctxt "#32579"
+msgid "All (Movies + TV Shows)"
+msgstr "Tout (Films + Séries TV)"
+
+msgctxt "#32580"
+msgid "Movies Only"
+msgstr "Films uniquement"
+
+msgctxt "#32581"
+msgid "TV Shows Only"
+msgstr "Séries TV uniquement"
+
+msgctxt "#32582"
+msgid "Incremental Scan"
+msgstr "Analyse incrémentielle"
+
+msgctxt "#32583"
+msgid "Skip unchanged GIFs, detect new/modified ones"
+msgstr "Ignorer les GIFs inchangés, détecter les nouveaux/modifiés"
+
+msgctxt "#32584"
+msgid "Full Rescan"
+msgstr "Nouvelle analyse complète"
+
+msgctxt "#32585"
+msgid "Rescan all items, rebuild cache from scratch"
+msgstr "Analyser tous les éléments, reconstruire le cache de zéro"
+
+msgctxt "#32586"
+msgid "{0} GIFs cached"
+msgstr "{0} GIFs en cache"
+
+msgctxt "#32587"
+msgid "no cache"
+msgstr "pas de cache"
+
+msgctxt "#32588"
+msgid "Total Cached GIFs: {0}"
+msgstr "Total des GIFs en cache : {0}"
+
+msgctxt "#32589"
+msgid "Recently Scanned (Last {0}):"
+msgstr "Récemment analysés (derniers {0}) :"
+
+msgctxt "#32590"
+msgid "... and {0} more"
+msgstr "... et {0} de plus"
+
+msgctxt "#32591"
+msgid "Cannot resume in background."
+msgstr "Impossible de reprendre en tâche de fond."
+
+msgctxt "#32592"
+msgid "Cancel it and start {0}?"
+msgstr "L'annuler et démarrer {0} ?"
+
+msgctxt "#32593"
+msgid "Scan cancelled. Found: {0} | Cached: {1} | Existing: {2}"
+msgstr "Analyse annulée. Trouvés : {0} | Mis en cache : {1} | Existants : {2}"
+
+msgctxt "#32594"
+msgid "Scan complete! Found: {0} | Cached: {1} | Existing: {2}"
+msgstr "Analyse terminée ! Trouvés : {0} | Mis en cache : {1} | Existants : {2}"
+
+msgctxt "#32600"
+msgid "IMDb Top 250"
+msgstr "Top 250 IMDb"
+
+msgctxt "#32601"
+msgid "Fetching Top 250 from Trakt..."
+msgstr "Récupération du Top 250 auprès de Trakt..."
+
+msgctxt "#32602"
+msgid "Loading library..."
+msgstr "Chargement de la médiathèque..."
+
+msgctxt "#32603"
+msgid "Matching movies..."
+msgstr "Correspondance des films..."
+
+msgctxt "#32604"
+msgid "Updating: {0}/{1}"
+msgstr "Mise à jour : {0}/{1}"
+
+msgctxt "#32605"
+msgid "Top 250 Update Complete"
+msgstr "Mise à jour du Top 250 terminée"
+
+msgctxt "#32606"
+msgid "Updated: {0} | Cleared: {1} | Already correct: {2}"
+msgstr "Mis à jour : {0} | Effacés : {1} | Déjà corrects : {2}"
+
+msgctxt "#32607"
+msgid "Failed to fetch Top 250 list from Trakt."
+msgstr "Échec de la récupération de la liste Top 250 auprès de Trakt."
+
+msgctxt "#32608"
+msgid "No movies found in library."
+msgstr "Aucun film trouvé dans la médiathèque."
+
+msgctxt "#32609"
+msgid "Update IMDb Top 250?"
+msgstr "Mettre à jour le Top 250 IMDb ?"
+
+msgctxt "#32610"
+msgid "Set/update: {0} movies[CR]Clear: {1} movies[CR]Already correct: {2} movies[CR][CR]This will overwrite existing Top 250 values."
+msgstr "Définir/Mettre à jour : {0} films[CR]Effacer : {1} films[CR]Déjà corrects : {2} films[CR][CR]Ceci écrasera les valeurs Top 250 existantes."
+
+msgctxt "#32611"
+msgid "Cancelled. Updated: {0} | Cleared: {1} before cancellation."
+msgstr "Annulé. Mis à jour : {0} | Effacés : {1} avant l'annulation."
+
+msgctxt "#32612"
+msgid "Trakt Not Signed In"
+msgstr ""
+
+msgctxt "#32613"
+msgid "Sign in to Trakt or remove this widget"
+msgstr ""
+
+msgctxt "#32614"
+msgid "Search"
+msgstr ""
+
+msgctxt "#32615"
+msgid "Widgets"
+msgstr ""
+
+msgctxt "#32616"
+msgid "Search Movies"
+msgstr ""
+
+msgctxt "#32617"
+msgid "Search TV Shows"
+msgstr ""
+
+msgctxt "#32618"
+msgid "Search People"
+msgstr ""
+
+msgctxt "#32619"
+msgid "Discover"
+msgstr ""
+
+msgctxt "#32620"
+msgid "Next Up"
+msgstr ""
+
+msgctxt "#32621"
+msgid "Recent Episodes"
+msgstr ""
+
+msgctxt "#32622"
+msgid "Seasonal"
+msgstr ""
+
+msgctxt "#32623"
+msgid "Recommended Movies"
+msgstr ""
+
+msgctxt "#32624"
+msgid "Recommended TV Shows"
+msgstr ""
+
+msgctxt "#32625"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32626"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32627"
+msgid "TMDB Trending"
+msgstr ""
+
+msgctxt "#32628"
+msgid "TMDB Popular"
+msgstr ""
+
+msgctxt "#32629"
+msgid "TMDB Top Rated"
+msgstr ""
+
+msgctxt "#32630"
+msgid "TMDB Now Playing"
+msgstr ""
+
+msgctxt "#32631"
+msgid "TMDB Upcoming"
+msgstr ""
+
+msgctxt "#32632"
+msgid "TMDB Airing Today"
+msgstr ""
+
+msgctxt "#32633"
+msgid "TMDB On The Air"
+msgstr ""
+
+msgctxt "#32634"
+msgid "Trakt Trending"
+msgstr ""
+
+msgctxt "#32635"
+msgid "Trakt Popular"
+msgstr ""
+
+msgctxt "#32636"
+msgid "Trakt Anticipated"
+msgstr ""
+
+msgctxt "#32637"
+msgid "Trakt Most Watched"
+msgstr ""
+
+msgctxt "#32638"
+msgid "Trakt Most Collected"
+msgstr ""
+
+msgctxt "#32639"
+msgid "Trakt Box Office"
+msgstr ""
+
+msgctxt "#32640"
+msgid "Trakt Recommendations"
+msgstr ""
+
+msgctxt "#32641"
+msgid "(OAuth)"
+msgstr ""
+
+msgctxt "#32642"
+msgid "Christmas"
+msgstr ""
+
+msgctxt "#32643"
+msgid "Halloween"
+msgstr ""
+
+msgctxt "#32644"
+msgid "Valentine's Day"
+msgstr ""
+
+msgctxt "#32645"
+msgid "Thanksgiving"
+msgstr ""
+
+msgctxt "#32646"
+msgid "Star Wars Day"
+msgstr ""
+
+msgctxt "#32647"
+msgid "Star Trek"
+msgstr ""
+
+msgctxt "#32648"
+msgid "New Year"
+msgstr ""
+
+msgctxt "#32649"
+msgid "Easter"
+msgstr ""
+
+msgctxt "#32650"
+msgid "Independence Day"
+msgstr ""
+
+# Recommended widget label, single-seed mode. {0} = seed title -> "Recommended based on Avatar"
+msgctxt "#32651"
+msgid "Recommended based on {0}"
+msgstr ""
+
+msgctxt "#32652"
+msgid "Recommended based on recent watches"
+msgstr ""
+
+# Artwork selection dialogs
+msgctxt "#32653"
+msgid "Current Extra Art (Click to Remove)"
+msgstr ""
+
+msgctxt "#32654"
+msgid "Available Art (Click to Add)"
+msgstr ""
+
+msgctxt "#32655"
+msgid "Clear Selection"
+msgstr ""
+
+msgctxt "#32656"
+msgid "Apply"
+msgstr ""
+
+msgctxt "#32657"
+msgid "Sort: Popularity"
+msgstr ""
+
+msgctxt "#32658"
+msgid "Sort: Resolution"
+msgstr ""
+
+# Colour picker dialog
+msgctxt "#32659"
+msgid "Colour Manager"
+msgstr ""
+
+msgctxt "#32660"
+msgid "Alpha"
+msgstr ""
+
+msgctxt "#32661"
+msgid "Enter Hex"
+msgstr ""
+
+# Metadata editor, unique IDs
+msgctxt "#32663"
+msgid "Add ID"
+msgstr ""
+
+msgctxt "#32664"
+msgid "ID type (imdb, tmdb, tvdb...)"
+msgstr ""
+
+# {0} = id type, e.g. tmdb -> "tmdb ID (leave empty to remove)"
+msgctxt "#32665"
+msgid "{0} ID (leave empty to remove)"
+msgstr ""
+
+msgctxt "#32666"
+msgid "Kodi won't remove the default ID. Change its value, or set another ID as default first."
+msgstr ""
+
+# {0} = id type, e.g. tmdb -> "Remove the tmdb ID?"
+msgctxt "#32667"
+msgid "Remove the {0} ID?"
+msgstr ""
+
+msgctxt "#32668"
+msgid "User Rating"
+msgstr ""
+
+msgctxt "#32669"
+msgid "External Ratings"
+msgstr ""
+
+msgctxt "#32670"
+msgid "Display Artist"
+msgstr ""
+
+msgctxt "#32671"
+msgid "Sort Artist"
+msgstr ""
+
+msgctxt "#32672"
+msgid "Record Label"
+msgstr ""
+
+msgctxt "#32673"
+msgid "Album Type"
+msgstr ""
+
+msgctxt "#32674"
+msgid "Sort Name"
+msgstr ""
+
+# Info dialog section headers with no Kodi core string
+msgctxt "#32675"
+msgid "Top Movies"
+msgstr ""
+
+msgctxt "#32676"
+msgid "Top TV Shows"
+msgstr ""
+
+msgctxt "#32677"
+msgid "In Your Library - Movies"
+msgstr ""
+
+msgctxt "#32678"
+msgid "In Your Library - TV Shows"
+msgstr ""
+
+msgctxt "#32679"
+msgid "All Credits"
+msgstr ""
+
+msgctxt "#32680"
+msgid "Crew Credits"
+msgstr ""
+
+msgctxt "#32681"
+msgid "Images"
+msgstr ""
+
+msgctxt "#32682"
+msgid "Recommendations"
+msgstr ""
+
+msgctxt "#32683"
+msgid "Similar in Library"
+msgstr ""
+
+msgctxt "#32684"
+msgid "Crew"
+msgstr ""
+
+msgctxt "#32901"
+msgid "Enable Debug Output"
+msgstr "Activer le journal de débogage"
+
+msgctxt "#32930"
+msgid "English"
+msgstr "Anglais"
+
+msgctxt "#32931"
+msgid "Spanish"
+msgstr "Espagnol"
+
+msgctxt "#32932"
+msgid "Portuguese (Brazil)"
+msgstr "Portugais (Brésil)"
+
+msgctxt "#32933"
+msgid "Portuguese (Portugal)"
+msgstr "Portugais (Portugal)"
+
+msgctxt "#32934"
+msgid "French"
+msgstr "Français"
+
+msgctxt "#32935"
+msgid "German"
+msgstr "Allemand"
+
+msgctxt "#32936"
+msgid "Chinese (Simplified)"
+msgstr "Chinois (simplifié)"
+
+msgctxt "#32937"
+msgid "Chinese (Traditional)"
+msgstr "Chinois (traditionnel)"
+
+msgctxt "#32938"
+msgid "Italian"
+msgstr "Italien"
+
+msgctxt "#32939"
+msgid "Polish"
+msgstr "Polonais"
+
+msgctxt "#32940"
+msgid "Russian"
+msgstr "Russe"
+
+msgctxt "#32941"
+msgid "Dutch"
+msgstr "Néerlandais"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Suédois"
+
+msgctxt "#32943"
+msgid "Korean"
+msgstr "Coréen"
+
+msgctxt "#32944"
+msgid "Japanese"
+msgstr "Japonais"
+
+msgctxt "#32950"
+msgid "Advanced API Configuration"
+msgstr "Configuration API avancée"
+
+msgctxt "#32951"
+msgid "Use Custom TMDb API Key"
+msgstr "Utiliser une clé API TMDb personnalisée"
+
+msgctxt "#32952"
+msgid "A built-in TMDb API key is provided and works for most users. Enable this only if you need higher rate limits or want to use your own dedicated quota."
+msgstr "Une clé API TMDb intégrée est fournie et fonctionne pour la plupart des utilisateurs. N'activez ceci que si vous avez besoin de limites de débit plus élevées ou si vous souhaitez utiliser votre propre quota dédié."
+
+msgctxt "#32960"
+msgid "Missing Artwork Types"
+msgstr "Types d'illustration manquants"
+
+msgctxt "#32963"
+msgid "Clearlogo"
+msgstr "Clearlogo"
+
+msgctxt "#32964"
+msgid "Clearart"
+msgstr "Clearart"
+
+msgctxt "#32966"
+msgid "Landscape"
+msgstr "Landscape"
+
+msgctxt "#32967"
+msgid "Discart"
+msgstr "Discart"
+
+msgctxt "#32968"
+msgid "Keyart"
+msgstr "Keyart"
+
+msgctxt "#32969"
+msgid "Characterart"
+msgstr "Characterart"
+
+msgctxt "#32970"
+msgid "Auto-download after Manage Artwork"
+msgstr "Téléchargement auto après Gérer les illustrations"
+
+msgctxt "#32971"
+msgid "Automatically download selected artwork to filesystem after selection in Manage Artwork"
+msgstr "Télécharger automatiquement les illustrations sélectionnées sur le système de fichiers après la sélection dans Gérer les illustrations"
+
+msgctxt "#32974"
+msgid "Download Settings"
+msgstr "Paramètres de téléchargement"
+
+#. Settings group - language for data from online APIs (TMDb titles, plots, etc.)
+msgctxt "#32976"
+msgid "Online Service"
+msgstr "Service en ligne"
+
+msgctxt "#32977"
+msgid "Language for online metadata from TMDb, Last.fm, and TheAudioDB"
+msgstr "Langue pour les métadonnées en ligne de TMDb, Last.fm et TheAudioDB"
+
+#. Actor image download feature (context menu)
+msgctxt "#32981"
+msgid "Downloading actor images..."
+msgstr "Téléchargement des images d'acteurs..."
+
+msgctxt "#32982"
+msgid "{0} actors"
+msgstr "{0} acteurs"
+
+msgctxt "#32983"
+msgid "Include TV Episode Guest Stars"
+msgstr "Inclure les vedettes invitées des épisodes"
+
+msgctxt "#32984"
+msgid "Download guest star images from TV show episodes (increases API calls)"
+msgstr "Télécharger les images des vedettes invitées des épisodes de séries TV (augmente les appels API)"
+
+msgctxt "#32985"
+msgid "Include Episode Thumbnails"
+msgstr "Inclure les miniatures d'épisodes"
+
+msgctxt "#32986"
+msgid "Download episode thumbnail artwork during bulk operations"
+msgstr "Télécharger les miniatures d'épisodes lors des opérations en vrac"
+
+msgctxt "#32987"
+msgid "Text too long to fully display"
+msgstr "Texte trop long pour être affiché entièrement"
+
+msgctxt "#32988"
+msgid "Sync TV Show Metadata"
+msgstr "Synchroniser les métadonnées des séries TV"
+
+msgctxt "#32989"
+msgid "Updates online metadata for every TV show in your library. Large libraries may take significantly longer."
+msgstr "Met à jour les métadonnées en ligne pour chaque série TV de votre médiathèque. Les grandes médiathèques peuvent prendre beaucoup plus de temps."
+
+msgctxt "#32990"
+msgid "Fetching {0:d} of {1:d}"
+msgstr "Récupération de {0:d} sur {1:d}"
+
+msgctxt "#32991"
+msgid "Updated: {0:d}[CR]Skipped: {1:d}[CR]Failed: {2:d}"
+msgstr "Mis à jour : {0:d}[CR]Ignorés : {1:d}[CR]Échoués : {2:d}"
+
+msgctxt "#32992"
+msgid "Library Maintenance"
+msgstr "Maintenance de la médiathèque"
+
+msgctxt "#32993"
+msgid "NFO Files"
+msgstr "Fichiers NFO"
+
+msgctxt "#32994"
+msgid "Write metadata changes to NFO files"
+msgstr "Enregistrer les modifications des métadonnées dans les fichiers NFO"
+
+msgctxt "#32995"
+msgid "When you edit metadata, also write the change to the item's local NFO file so it survives a library refresh or rescrape."
+msgstr "Lorsque vous modifiez des métadonnées, les changements sont également enregistrés dans le fichier NFO local de l'élément afin qu'ils soient préservés après une mise à jour de la médiathèque ou une nouvelle récupération des informations."
+
+msgctxt "#32996"
+msgid "Create an NFO file when none exists"
+msgstr "Créer un fichier NFO si aucun n'existe"
+
+msgctxt "#32997"
+msgid "If the item has no NFO file yet, create one. When off, only existing NFO files are updated."
+msgstr "Si aucun fichier NFO n'existe pour l'élément, un nouveau fichier est créé. Lorsque cette option est désactivée, seuls les fichiers NFO existants sont mis à jour."
+
+msgctxt "#32998"
+msgid "Include watched state in NFO files"
+msgstr "Inclure l'état de visionnage dans les fichiers NFO"
+
+msgctxt "#32999"
+msgid "Write playcount and last-played date to NFO files. Turn off to keep watched state out of your NFO files."
+msgstr "Enregistrer le nombre de lectures et la date de dernier visionnage dans les fichiers NFO. Désactivez cette option pour exclure l'état de visionnage des fichiers NFO."

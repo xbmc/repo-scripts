@@ -1,0 +1,1086 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">100</defaultcontrol>
+	<!--
+	CONTROL IDs:
+	  100 - Artwork list control (displays available options, click to select)
+	  201 - Skip button
+	  202 - Cancel button
+	  203 - Multi-Art button (visibility controlled by show_multiart property)
+	  204 - Change Language button (visibility controlled by show_change_language property)
+	  205 - Sort button (toggles between popularity and resolution sort modes)
+	  206 - Source button (toggles between all/TMDB/Fanart.tv filtering)
+
+	WINDOW PROPERTIES use $INFO[Window.Property(name)]:
+	  - heading: Title (e.g., "The Matrix")
+	  - year: Release year
+	  - mediatype: Media type (movie, tvshow, etc.)
+	  - arttype: Specific art type (e.g., "poster", "fanart", "spine", "3dcase")
+	  - artlayout: Layout category for shared layouts: "poster", "fanart", "landscape", "square"
+	                Empty for unique types - use arttype instead (banner, clearlogo, characterart, spine, etc.)
+	  - state: State text ("Missing artwork" / "Replace existing artwork" / "" for single)
+	  - hascurrentart: "true" or "false" - whether item already has this art type
+	  - currentarturl: URL of current artwork (if any)
+	  - count: Smart display string ("58 available" or "24 of 58 available (English)")
+	  - count_filtered: Raw number of filtered items (string)
+	  - count_total: Raw number of total items (string)
+	  - language: Display name for current language filter (e.g., "English")
+	  - language_short: Current language filter code (e.g., "en")
+	  - show_change_language: "true" or "false" - whether to show Change Language button
+	  - show_multiart: "true" or "false" - multi-art button availability
+
+	LISTITEM PROPERTIES use $INFO[ListItem.Property(name)]:
+	  - is_current: "true" if this artwork is currently assigned
+	  - dimensions: Width x Height (e.g., "1920x1080")
+	  - width: Image width in pixels
+	  - height: Image height in pixels
+	  - source: Source name (e.g., "TMDB", "fanart.tv")
+	  - language: Display name for this artwork's language (e.g., "English")
+	  - language_short: Language code for this artwork (e.g., "en")
+	  - season: Season number (when available)
+	  - fullurl: Full resolution image URL
+	  - index: 0-based index for selection tracking
+	-->
+	<controls>
+		<!-- Background -->
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1920</width>
+			<height>1080</height>
+			<texture>background.jpg</texture>
+		</control>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="zoom" start="150" end="100" center="auto" time="250" tween="cubic" easing="out" />
+				<effect type="fade" end="100" time="100" />
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="fade" start="100" end="0" time="100" delay="100" />
+				<effect type="zoom" start="100" end="130" center="auto" time="250" tween="cubic" easing="in" />
+			</animation>
+			<!-- Heading -->
+			<control type="label">
+				<width>1800</width>
+				<height>60</height>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[Window.Property(heading)]$INFO[Window.Property(year), (,)]</label>
+			</control>
+			<control type="label">
+				<top>60</top>
+				<width>1800</width>
+				<height>60</height>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[Window.Property(arttype)]$INFO[Window.Property(count), - ]</label>
+			</control>
+			<control type="group">
+				<centerleft>50%</centerleft>
+				<centertop>50%</centertop>
+				<width>1800</width>
+				<height>960</height>
+				<!-- Artwork Panel -->
+				<control type="panel" id="100">
+					<left>0</left>
+					<top>60</top>
+					<width>1800</width>
+					<height>880</height>
+					<ondown>201</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>vertical</orientation>
+					<preloaditems>2</preloaditems>
+					<!-- Poster layout: 6x2 grid (12 items) - 2:3 aspect ratio -->
+					<itemlayout height="440" width="300" condition="String.IsEqual(Window.Property(artlayout),poster)">
+						<control type="image">
+							<left>18</left>
+							<top>10</top>
+							<width>264</width>
+							<height>388</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>scale</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>226</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>407</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="440" width="300" condition="String.IsEqual(Window.Property(artlayout),poster)">
+						<control type="group">
+							<animation effect="zoom" center="auto" start="100" end="105" time="420" tween="back" reversible="false">Focus</animation>
+							<control type="image">
+								<left>18</left>
+								<top>10</top>
+								<width>264</width>
+								<height>388</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>scale</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<control type="group">
+								<left>226</left>
+								<top>18</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>48</width>
+									<height>48</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>48</width>
+									<height>48</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>407</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Fanart layout: 3x2 grid (6 items) - 16:9 aspect ratio -->
+					<itemlayout height="440" width="600" condition="String.IsEqual(Window.Property(artlayout),fanart)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>580</width>
+							<height>326</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>529</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>358</top>
+							<width>580</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="440" width="600" condition="String.IsEqual(Window.Property(artlayout),fanart)">
+						<control type="group">
+							<animation effect="zoom" center="auto" start="100" end="105" time="420" tween="back" reversible="false">Focus</animation>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>580</width>
+								<height>326</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>keep</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<control type="group">
+								<left>529</left>
+								<top>18</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>48</width>
+									<height>48</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>48</width>
+									<height>48</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>358</top>
+							<width>580</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Landscape layout: 4x3 grid (12 items) - 16:9 aspect ratio -->
+					<itemlayout height="293" width="450" condition="String.IsEqual(Window.Property(artlayout),landscape)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>430</width>
+							<height>242</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>379</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>260</top>
+							<width>430</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="293" width="450" condition="String.IsEqual(Window.Property(artlayout),landscape)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>430</width>
+							<height>242</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+						</control>
+						<control type="group">
+							<left>379</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>260</top>
+							<width>430</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Banner: 2x4 grid (8 items) - 5.405:1 aspect ratio -->
+					<itemlayout height="220" width="900" condition="String.IsEqual(Window.Property(arttype),banner)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>880</width>
+							<height>163</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>812</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>190</top>
+							<width>880</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="220" width="900" condition="String.IsEqual(Window.Property(arttype),banner)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>880</width>
+							<height>163</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+						</control>
+						<control type="group">
+							<left>812</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>190</top>
+							<width>880</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Square layout: 6x2 grid (12 items) - 1:1 aspect ratio -->
+					<itemlayout height="440" width="300" condition="String.IsEqual(Window.Property(artlayout),square)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>280</width>
+							<height>280</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>246</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>300</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="440" width="300" condition="String.IsEqual(Window.Property(artlayout),square)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>280</width>
+							<height>280</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+						</control>
+						<control type="group">
+							<left>246</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>300</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Characterart: 6x2 grid (12 items) - 0.715 aspect ratio -->
+					<itemlayout height="440" width="300" condition="String.IsEqual(Window.Property(arttype),characterart)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>280</width>
+							<height>392</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>246</left>
+							<top>74</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>400</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="440" width="300" condition="String.IsEqual(Window.Property(arttype),characterart)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>280</width>
+							<height>392</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+						</control>
+						<control type="group">
+							<left>246</left>
+							<top>74</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>400</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Clearlogo: 3x4 grid (12 items) - 2.581 aspect ratio -->
+					<itemlayout height="293" width="600" condition="String.IsEqual(Window.Property(arttype),clearlogo)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>580</width>
+							<height>225</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>536</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>245</top>
+							<width>580</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="293" width="600" condition="String.IsEqual(Window.Property(arttype),clearlogo)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>580</width>
+							<height>225</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+						</control>
+						<control type="group">
+							<left>536</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>245</top>
+							<width>580</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- Spine: 12x2 grid (24 items) - 1:20 narrow portrait -->
+					<itemlayout height="880" width="150" condition="String.IsEqual(Window.Property(arttype),spine)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>130</width>
+							<height>800</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>96</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>840</top>
+							<width>130</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="880" width="150" condition="String.IsEqual(Window.Property(arttype),spine)">
+						<control type="group">
+							<animation effect="zoom" center="auto" start="100" end="105" time="420" tween="back" reversible="false">Focus</animation>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>130</width>
+								<height>800</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>keep</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<control type="group">
+								<left>96</left>
+								<top>18</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>840</top>
+							<width>130</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- 3D Case: 4x2 grid (8 items) - 1.39:1 aspect ratio -->
+					<itemlayout height="380" width="450" condition="String.IsEqual(Window.Property(arttype),3dcase)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>430</width>
+							<height>310</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>386</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>330</top>
+							<width>430</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="380" width="450" condition="String.IsEqual(Window.Property(arttype),3dcase)">
+						<control type="group">
+							<animation effect="zoom" center="auto" start="100" end="105" time="420" tween="back" reversible="false">Focus</animation>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>430</width>
+								<height>310</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>keep</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<control type="group">
+								<left>386</left>
+								<top>18</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>330</top>
+							<width>430</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- 3D Flat: 3x2 grid (6 items) - 2.17:1 wide aspect ratio -->
+					<itemlayout height="330" width="600" condition="String.IsEqual(Window.Property(arttype),3dflat)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>580</width>
+							<height>267</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>536</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>287</top>
+							<width>580</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="330" width="600" condition="String.IsEqual(Window.Property(arttype),3dflat)">
+						<control type="group">
+							<animation effect="zoom" center="auto" start="100" end="105" time="420" tween="back" reversible="false">Focus</animation>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>580</width>
+								<height>267</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>keep</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<control type="group">
+								<left>536</left>
+								<top>18</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>287</top>
+							<width>580</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+					<!-- 3D Face: 4x2 grid (8 items) - 1.47:1 aspect ratio -->
+					<itemlayout height="380" width="450" condition="String.IsEqual(Window.Property(arttype),3dface)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>430</width>
+							<height>293</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>386</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>315</top>
+							<width>430</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="380" width="450" condition="String.IsEqual(Window.Property(arttype),3dface)">
+						<control type="group">
+							<animation effect="zoom" center="auto" start="100" end="105" time="420" tween="back" reversible="false">Focus</animation>
+							<control type="image">
+								<left>10</left>
+								<top>10</top>
+								<width>430</width>
+								<height>293</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio>keep</aspectratio>
+								<bordersize>8</bordersize>
+								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+							</control>
+							<control type="group">
+								<left>386</left>
+								<top>18</top>
+								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>80000000</colordiffuse>
+									<texture>overlay.png</texture>
+								</control>
+								<control type="image">
+									<width>36</width>
+									<height>36</height>
+									<colordiffuse>FF00CC00</colordiffuse>
+									<texture>check_circle.png</texture>
+								</control>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>315</top>
+							<width>430</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Property(dimensions),, • ]$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+				</control>
+			</control>
+			<!-- Button Group -->
+			<control type="grouplist" id="9000">
+				<top>1020</top>
+				<width>100%</width>
+				<height>120</height>
+				<orientation>horizontal</orientation>
+				<itemgap>10</itemgap>
+				<align>center</align>
+				<onup>100</onup>
+				<ondown>SetFocus(100,0,absolute)</ondown>
+				<!-- Change Language Button -->
+				<control type="button" id="204">
+					<width>auto</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$ADDON[script.skin.info.service 32120]</label>
+					<texturefocus colordiffuse="FFFF8800" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+					<visible>String.IsEqual(Window.Property(show_change_language),true)</visible>
+				</control>
+				<!-- Sort Button -->
+				<control type="button" id="205">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$INFO[Window.Property(sort_label)]</label>
+					<texturefocus colordiffuse="FFAA00FF" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+					<visible>String.IsEqual(Window.Property(show_sort_button),true)</visible>
+				</control>
+				<!-- Source Preference Button -->
+				<control type="button" id="206">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$INFO[Window.Property(source_label)]</label>
+					<texturefocus colordiffuse="FF00AAFF" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+					<visible>String.IsEqual(Window.Property(show_source_button),true)</visible>
+				</control>
+				<!-- Multi-Art Button -->
+				<control type="button" id="203">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$ADDON[script.skin.info.service 32130]</label>
+					<texturefocus colordiffuse="FF00AA00" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+					<visible>String.IsEqual(Window.Property(show_multiart),true)</visible>
+				</control>
+				<!-- Skip Button -->
+				<control type="button" id="201">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$ADDON[script.skin.info.service 32128]</label>
+					<texturefocus colordiffuse="FF0088FF" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				</control>
+				<!-- Cancel Button -->
+				<control type="button" id="202">
+					<width>280</width>
+					<height>50</height>
+					<font>font13_title</font>
+					<align>center</align>
+					<textcolor>FFFFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<label>$LOCALIZE[222]</label>
+					<texturefocus colordiffuse="FFFF4444" border="4">white.png</texturefocus>
+					<texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol>5001</defaultcontrol>
+	<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+	<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+	<controls>
+		<!-- Background -->
+		<control type="image">
+			<width>1920</width>
+			<height>1080</height>
+			<texture colordiffuse="FF000000">white.png</texture>
+		</control>
+		<!-- Hidden list -->
+		<control type="list" id="1520">
+			<top>-3000</top>
+			<left>-3000</left>
+			<width>1</width>
+			<height>1</height>
+			<orientation>horizontal</orientation>
+			<scrolltime>0</scrolltime>
+			<itemlayout />
+			<focusedlayout />
+			<content>$INFO[Window.Property(container.viewer.path)]</content>
+		</control>
+		<!-- Hidden button -->
+		<control type="button" id="5001">
+			<left>-3000</left>
+			<top>-3000</top>
+			<width>1</width>
+			<height>1</height>
+			<texturenofocus />
+			<texturefocus />
+			<label />
+			<onleft>Control.Move(1520,-1)</onleft>
+			<onright>Control.Move(1520,1)</onright>
+			<onup>noop</onup>
+			<ondown>noop</ondown>
+		</control>
+		<control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<texture background="true">$INFO[Container(1520).ListItem.Art(thumb)]</texture>
+			<aspectratio>keep</aspectratio>
+		</control>
+		<control type="group">
+			<animation effect="fade" start="100" end="0" time="300" condition="System.IdleTime(3)">Conditional</animation>
+			<animation effect="fade" start="0" end="100" time="300" condition="!System.IdleTime(3)">Conditional</animation>
+			<control type="image">
+				<bottom>0</bottom>
+				<width>1920</width>
+				<height>60</height>
+				<texture colordiffuse="99000000">white.png</texture>
+			</control>
+			<!-- Image count -->
+			<control type="label">
+				<left>60</left>
+				<bottom>0</bottom>
+				<width>300</width>
+				<height>50</height>
+				<font>font13</font>
+				<textcolor>whitesmoke</textcolor>
+				<label>$INFO[Container(1520).CurrentItem] / $INFO[Container(1520).NumItems]</label>
+			</control>
+			<!-- Dimensions -->
+			<control type="label">
+				<right>60</right>
+				<bottom>0</bottom>
+				<width>400</width>
+				<height>50</height>
+				<font>font13</font>
+				<textcolor>whitesmoke</textcolor>
+				<align>right</align>
+				<label>$INFO[Container(1520).ListItem.Property(Dimensions)]</label>
+			</control>
+		</control>
+	</controls>
+</window>

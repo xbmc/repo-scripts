@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings version="1">
+	<section id="script.skin.info.service">
+		<category id="api_keys" label="32044">
+			<group id="1" label="32056">
+				<setting id="fanarttv_always_false" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="fanarttv_configured" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="fanarttv_api_key_display" type="string" label="32080">
+					<default>Not configured</default>
+					<control type="edit" format="string" />
+					<dependencies>
+						<dependency type="enable" setting="fanarttv_always_false">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="fanarttv_api_key_action" type="action" label="32057">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=edit_api_key,provider=fanarttv)</data>
+					</control>
+				</setting>
+				<setting id="fanarttv_api_key" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="fanarttv_test_action" type="action" label="32048">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=test_api_key,provider=fanarttv)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="fanarttv_configured">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="fanarttv_clear_action" type="action" label="32049">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=clear_api_key,provider=fanarttv)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="fanarttv_configured">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+			<group id="2" label="32050">
+				<setting id="mdblist_always_false" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="mdblist_configured" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="mdblist_api_key_display" type="string" label="32080">
+					<default>Not configured</default>
+					<control type="edit" format="string" />
+					<dependencies>
+						<dependency type="enable" setting="mdblist_always_false">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="mdblist_api_key_action" type="action" label="32051" help="32052">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=edit_api_key,provider=mdblist)</data>
+					</control>
+				</setting>
+				<setting id="mdblist_api_key" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="mdblist_test_action" type="action" label="32048">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=test_api_key,provider=mdblist)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="mdblist_configured">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="mdblist_clear_action" type="action" label="32049">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=clear_api_key,provider=mdblist)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="mdblist_configured">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+			<group id="3" label="32053">
+				<setting id="omdb_always_false" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="omdb_configured" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="omdb_api_key_display" type="string" label="32080">
+					<default>Not configured</default>
+					<control type="edit" format="string" />
+					<dependencies>
+						<dependency type="enable" setting="omdb_always_false">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="omdb_api_key_action" type="action" label="32054" help="32055">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=edit_api_key,provider=omdb)</data>
+					</control>
+				</setting>
+				<setting id="omdb_api_key" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="omdb_test_action" type="action" label="32048">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=test_api_key,provider=omdb)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="omdb_configured">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="omdb_clear_action" type="action" label="32049">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=clear_api_key,provider=omdb)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="omdb_configured">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+			<group id="4" label="32059">
+				<setting id="trakt_configured" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="trakt_status" type="action" label="32081">
+					<control type="button" format="action" />
+					<dependencies>
+						<dependency type="visible" setting="trakt_configured">true</dependency>
+						<dependency type="enable" setting="trakt_configured">false</dependency>
+					</dependencies>
+				</setting>
+				<setting id="trakt_authorize_action" type="action" label="32060" help="32061">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=authorize_trakt)</data>
+					</control>
+					<dependencies>
+						<dependency type="visible" setting="trakt_configured">false</dependency>
+					</dependencies>
+				</setting>
+				<setting id="trakt_access_token" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="trakt_refresh_token" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="trakt_token_expires" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="trakt_test_action" type="action" label="32062">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=test_trakt_connection)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="trakt_configured">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="trakt_revoke_action" type="action" label="32063">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=revoke_trakt_authorization)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="trakt_configured">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+		</category>
+		<category id="language" label="248">
+			<group id="1" label="32976">
+				<setting id="online.metadata_language" type="string" label="32006" help="32977">
+					<default>en</default>
+					<constraints>
+						<options>
+							<option label="32930">en</option>
+							<option label="32931">es</option>
+							<option label="32932">pt-br</option>
+							<option label="32933">pt</option>
+							<option label="32934">fr</option>
+							<option label="32935">de</option>
+							<option label="32936">zh-cn</option>
+							<option label="32937">zh-tw</option>
+							<option label="32938">it</option>
+							<option label="32939">pl</option>
+							<option label="32940">ru</option>
+							<option label="32941">nl</option>
+							<option label="32942">sv</option>
+							<option label="32943">ko</option>
+							<option label="32944">ja</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+			</group>
+			<group id="2" label="32004">
+				<setting id="preferred_language" type="string" label="32006" help="32007">
+					<default>en</default>
+					<constraints>
+						<options>
+							<option label="32930">en</option>
+							<option label="32931">es</option>
+							<option label="32932">pt-br</option>
+							<option label="32933">pt</option>
+							<option label="32934">fr</option>
+							<option label="32935">de</option>
+							<option label="32936">zh-cn</option>
+							<option label="32937">zh-tw</option>
+							<option label="32938">it</option>
+							<option label="32939">pl</option>
+							<option label="32940">ru</option>
+							<option label="32941">nl</option>
+							<option label="32942">sv</option>
+							<option label="32943">ko</option>
+							<option label="32944">ja</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+				<setting id="prefer_fanart_language" type="boolean" label="32008">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+		</category>
+		<category id="ratings" label="32064">
+			<group id="1" label="5">
+				<setting id="ratings_default_source" type="string" label="32074" help="32075">
+					<default>imdb</default>
+					<constraints>
+						<options>
+							<option label="32076">imdb</option>
+							<option label="32077">tmdb</option>
+							<option label="32059">trakt</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+			</group>
+			<group id="2" label="32135">
+				<setting id="imdb_auto_update" type="string" label="32136" help="32137">
+					<default>off</default>
+					<constraints>
+						<options>
+							<option label="351">off</option>
+							<option label="32139">library_scan</option>
+							<option label="32140">when_updated</option>
+							<option label="32141">both</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+				<setting id="imdb_auto_update_scope" type="string" label="32142" help="32143">
+					<default>movies_tvshows</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="imdb_auto_update">off</condition>
+						</dependency>
+					</dependencies>
+					<constraints>
+						<options>
+							<option label="32144">all</option>
+							<option label="32145">movies_tvshows</option>
+							<option label="32146">movies</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+			</group>
+		</category>
+		<category id="stinger" label="32150">
+			<group id="1" label="32150">
+				<setting id="stinger_enabled" type="boolean" label="32151" help="32152">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="stinger_minutes_before_end" type="integer" label="32156" help="32157">
+					<default>8</default>
+					<dependencies>
+						<dependency type="visible" setting="stinger_enabled">true</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>3</minimum>
+						<maximum>15</maximum>
+						<step>1</step>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+				<setting id="stinger_notification_duration" type="integer" label="32158" help="32159">
+					<default>4</default>
+					<dependencies>
+						<dependency type="visible" setting="stinger_enabled">true</dependency>
+					</dependencies>
+					<constraints>
+						<minimum>2</minimum>
+						<maximum>10</maximum>
+						<step>1</step>
+					</constraints>
+					<control type="slider" format="integer" />
+				</setting>
+			</group>
+		</category>
+		<category id="artwork" label="32004">
+			<group id="1" label="32974">
+				<setting id="download.existing_file_mode" type="integer" label="32022" help="32023">
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32024">0</option>
+							<option label="32025">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="integer" />
+				</setting>
+				<setting id="download.savewith_basefilename" type="boolean" label="32027" help="32028">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="download.include_guest_stars" type="boolean" label="32983" help="32984">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="download.include_episode_thumbs" type="boolean" label="32985" help="32986">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+			<group id="2" label="32273">
+				<setting id="download.enable_combo_workflows" type="boolean" label="32019" help="32020">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+			<group id="3" label="32100">
+				<setting id="download.after_manage_artwork" type="boolean" label="32970" help="32971">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+			<group id="4" label="32000">
+				<setting id="gif_scan.scan_mode" type="string" label="32036" help="32037">
+					<default>incremental</default>
+					<constraints>
+						<options>
+							<option label="32038">incremental</option>
+							<option label="32039">full</option>
+							<option label="32035">always_ask</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+				<setting id="gif_patterns" type="string" label="32002" help="32003">
+					<default>poster.gif,animatedposter.gif</default>
+					<control type="edit" format="string" />
+				</setting>
+			</group>
+			<group id="5" label="32960">
+				<setting id="art_type_poster" type="boolean" label="20021">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_fanart" type="boolean" label="20445">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_clearlogo" type="boolean" label="32963">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_clearart" type="boolean" label="32964">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_banner" type="boolean" label="20020">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_landscape" type="boolean" label="32966">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_discart" type="boolean" label="32967">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_keyart" type="boolean" label="32968">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="art_type_characterart" type="boolean" label="32969">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+		</category>
+		<category id="advanced" label="10038">
+			<group id="1" label="32950">
+				<setting id="tmdb_use_custom_key" type="boolean" label="32951" help="32952">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="tmdb_always_false" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="tmdb_configured" type="string">
+					<visible>false</visible>
+					<default>false</default>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="tmdb_api_key_display" type="string" label="32080">
+					<default>Using built-in key</default>
+					<control type="edit" format="string" />
+					<dependencies>
+						<dependency type="enable" setting="tmdb_always_false">true</dependency>
+						<dependency type="visible" setting="tmdb_use_custom_key">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="tmdb_api_key_action" type="action" label="32046" help="32047">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=edit_api_key,provider=tmdb)</data>
+					</control>
+					<dependencies>
+						<dependency type="visible" setting="tmdb_use_custom_key">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="tmdb_api_key" type="string">
+					<visible>false</visible>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string" />
+				</setting>
+				<setting id="tmdb_test_action" type="action" label="32048">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=test_api_key,provider=tmdb)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="tmdb_configured">true</dependency>
+						<dependency type="visible" setting="tmdb_use_custom_key">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="tmdb_clear_action" type="action" label="32049">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=clear_api_key,provider=tmdb)</data>
+					</control>
+					<dependencies>
+						<dependency type="enable" setting="tmdb_configured">true</dependency>
+						<dependency type="visible" setting="tmdb_use_custom_key">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+			<group id="3" label="32111">
+				<setting id="context_show_review_artwork" type="boolean" label="32112">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="context_show_download_artwork" type="boolean" label="32117">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="context_show_update_ratings" type="boolean" label="32113">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="context_show_edit_metadata" type="boolean" label="32114">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="context_show_export_nfo" type="boolean" label="32029">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+			<group id="6" label="32993">
+				<setting id="nfo.write_on_edit" type="boolean" label="32994" help="32995">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="nfo.create_missing" type="boolean" label="32996" help="32997">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle" />
+					<dependencies>
+						<dependency type="enable" setting="nfo.write_on_edit">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="nfo.write_watched_state" type="boolean" label="32998" help="32999">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle" />
+					<dependencies>
+						<dependency type="enable" setting="nfo.write_on_edit">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+			<group id="4" label="14260">
+				<setting id="enable_debug" type="boolean" label="32901">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
+			<group id="5" label="32992">
+				<setting id="sync_tvshows_action" type="action" label="32988" help="32989">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=sync_tvshows)</data>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
