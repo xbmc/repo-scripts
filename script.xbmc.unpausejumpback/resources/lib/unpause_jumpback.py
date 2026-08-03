@@ -344,18 +344,19 @@ class MyPlayer(xbmc.Player):
                 Logger.info(f"Ignored because '{_filename}' is in exclusion settings.")
                 return
             else:
-                if self.jump_back_secs_after_pause > 0 and current_time > 0:
-                    if current_time > self.jump_back_secs_after_pause:
-                        resume_time = current_time - self.jump_back_secs_after_pause
-                        Logger.info(f"Resuming playback from saved time: {int(current_time)} "
-                                    f"with jump back seconds: {self.jump_back_secs_after_pause}, "
-                                    f"thus resume time: {int(resume_time)}")
-                        self.seekTime(resume_time)
-                    else:
-                        # Saved resume point is within the jump back window - round off to the very start instead of not seeking at all
-                        Logger.info(f"Saved resume time ({int(current_time)}) is within the jump back window - "
-                                    f"resuming from 0:00 instead")
-                        self.seekTime(0)
+                # Note: unlike onPlayBackPaused/onPlayBackResumed, we deliberately do NOT round off to 0:00
+                # when current_time is within the jump back window here. Shortly after playback starts,
+                # Kodi can report a small non-zero getTime() that reflects real elapsed decode time rather
+                # than an actual saved resume bookmark (an old XBMC/Kodi timer quirk - see v2.3.1 changelog).
+                # Treating that as "resume near the start" causes a spurious seek-to-0 stutter on sources
+                # with a bit of startup latency (reported with the Play Random Videos add-on), even though
+                # the video was never actually resuming from a saved point.
+                if 0 < self.jump_back_secs_after_pause < current_time:
+                    resume_time = current_time - self.jump_back_secs_after_pause
+                    Logger.info(f"Resuming playback from saved time: {int(current_time)} "
+                                f"with jump back seconds: {self.jump_back_secs_after_pause}, "
+                                f"thus resume time: {int(resume_time)}")
+                    self.seekTime(resume_time)
 
     def onPlayBackSpeedChanged(self, speed):
         """
