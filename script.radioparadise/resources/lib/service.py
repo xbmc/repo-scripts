@@ -1,281 +1,185 @@
+from abc import ABC, abstractmethod
 import time
+from typing import Union
 
-import requests
 import xbmc
-import xbmcaddon
-import xbmcgui
 
 from .logger import Logger
-from .radioparadise import CHANNEL_INFO, NowPlaying, build_key
+from .player import Player, PlayerUpdater, Slideshow
+from .radioparadise import NowPlaying
+from .song import Song, SongKey
 
 
-EXPIRATION_DELAY = 10
-
-RESTART_DELAY = 1.0
-RESTART_TIMEOUT = 1.0
-
-LOG = Logger('rp_service')
+_LOG = Logger('rp_service')
 
 
-class Song():
-    """Current song information."""
+class SongTracker:
+    """Tracks song metadata/expiration and updates the player."""
 
-    def __init__(self, key, data, fanart, start_time):
-        self.key = key
-        self.data = data
-        self.fanart = fanart
-        self.cover = data['cover']
-        self.start_time = start_time
-        self.duration = int(data['duration']) / 1000
+    def __init__(
+            self,
+            now_playing: NowPlaying,
+            slideshow: Slideshow,
+            updater: PlayerUpdater,
+            expiration_delay: int = 10) -> None:
+        """
+        Parameters
+        ----------
+        expiration_delay
+            Grace period after a tracked song has expired, in seconds.
+        """
+        self.waiting_state = SongTrackerWaitingState(self, now_playing)
+        self.tracking_state = SongTrackerTrackingState(self, now_playing)
+        self._state: SongTrackerState = self.waiting_state
+        self._tracked_key: Union[SongKey, None] = None
+        self._tracked_time = 0.0
+        self._tracked_song: Union[Song, None] = None
+        self._slideshow = slideshow
+        self._updater = updater
+        self._expiration_delay = expiration_delay
 
-    def __str__(self):
-        artist = self.data.get('artist', 'Unknown Artist')
-        title = self.data.get('title', 'Unknown Title')
-        return f'{artist} - {title}'
+    def update(self, player_key: SongKey) -> None:
+        """Update tracked data and the player, as necessary."""
+        if self._tracked_key != player_key:
+            # Keep track of the local start time on song changes
+            if self._tracked_key is not None:
+                self._tracked_time = time.time()
+            self._tracked_key = player_key
+            _LOG.log(f'tracked_key: {player_key}')
+            self._state.update_new_key(self._tracked_key)
+        else:
+            self._state.update_same_key(self._tracked_key)
+        if (slide := self._slideshow.next_slide()) is not None:
+            self._updater.update(fanart=slide)
 
-    def expired(self):
-        """Return True if this Song should be considered overdue."""
-        if self.start_time:
-            expiration = self.start_time + self.duration + EXPIRATION_DELAY
+    def set_state(self, state: 'SongTrackerState') -> None:
+        """Set the new state."""
+        self._state = state
+
+    def set_tracked_song(self, song: Union[Song, None]) -> None:
+        """Set the new tracked song and update the player.
+
+        If None is passed, it will only clear the player.
+        """
+        old_song_expired = self.is_tracked_song_expired()
+        old_song_duration = self._tracked_song.duration if self._tracked_song else 0
+        if old_song_expired:
+            _LOG.log('Tracked song expired.')
+
+        if song is not None:
+            if old_song_expired:
+                # We have enough information to continue tracking
+                self._tracked_time += old_song_duration
+            self._tracked_song = song
+            self._slideshow.set_slides(song.slides)
+            slide = self._slideshow.next_slide()
+            self._updater.update(song=song, fanart=slide)
+            _LOG.log(f'>>>>> {self._tracked_song} <<<<<')
+        else:
+            self._slideshow.set_slides(None)
+            self._updater.clear()
+            _LOG.log('<<<<< Player cleared! >>>>>')
+
+    def is_tracked_song_expired(self) -> bool:
+        """Return True if the tracked song should be considered expired.
+
+        This can only happen if the tracked key hasn't changed.
+        """
+        if (
+            self._tracked_song and
+            self._tracked_song.key == self._tracked_key and
+            self._tracked_song.duration and
+            self._tracked_time
+        ):
+            expiration = self._tracked_time + self._tracked_song.duration + self._expiration_delay
             return time.time() > expiration
         else:
             return False
 
 
-class Player(xbmc.Player):
-    """Adds xbmc.Player callbacks and integrates with the RP API."""
+class SongTrackerState(ABC):
+    """Base class for SongTrackerStates."""
 
-    def __init__(self):
-        """Constructor"""
-        super().__init__()
-        self.song = None
-        self.stream_url = None
-        self.restart_time = 0
-        self.tracked_key = None
-        self.tracked_time = 0
-        self.now_playing = NowPlaying()
-        self.slideshow = Slideshow()
+    def __init__(self, tracker: SongTracker, now_playing: NowPlaying):
+        self._tracker = tracker
+        self._now_playing = now_playing
 
-    def get_song_key(self):
-        """Return a key for the current song, or None."""
-        result = None
-        if self.isPlayingAudio():
-            try:
-                info = self.getMusicInfoTag()
-                artist_title = (info.getArtist(), info.getTitle())
-                if artist_title != ('', ''):
-                    result = build_key(artist_title)
-            except Exception:
-                pass
-        return result
+    @abstractmethod
+    def update_new_key(self, key: SongKey) -> None:
+        """Perform updates for a new tracked key."""
+        pass
 
-    def reset(self):
-        """Reset internal state when not playing RP."""
-        self.song = None
-        self.stream_url = None
-        self.restart_time = 0
-        self.tracked_key = None
-        self.tracked_time = 0
-        self.now_playing.set_channel(None)
-        self.slideshow.set_slides(None)
+    @abstractmethod
+    def update_same_key(self, key: SongKey) -> None:
+        """Perform updates for an unchanged tracked key."""
+        pass
 
-    def restart(self):
-        """Restart playback, if necessary."""
-        if not self.restart_time or time.time() < self.restart_time:
-            return
-        try:
-            res = requests.head(self.stream_url, timeout=RESTART_TIMEOUT)
-            do_restart = res.status_code == 200
-        except Exception:
-            do_restart = False
-        if do_restart:
-            self.restart_time = 0
-            self.play(self.stream_url)
-        else:
-            self.restart_time = time.time() + RESTART_DELAY
 
-    def update(self):
-        """Perform updates."""
-        if self.restart_time:
-            self.restart()
-        elif self.stream_url:
-            self.now_playing.update()
-            self.update_song()
-            self.update_slideshow()
+class SongTrackerWaitingState(SongTrackerState):
+    """Waiting for a matching song from the API."""
 
-    def update_player(self):
-        """Update the Kodi player with song metadata."""
-        song = self.song
-        player_key = self.get_song_key()
-        if song is None or player_key is None or song.key != player_key:
-            return
+    def update_new_key(self, key: SongKey) -> None:
+        self._match_key(key)
 
-        item = self.getPlayingItem()
-        tag = item.getMusicInfoTag()
-        tag.setArtist(song.data['artist'])
-        tag.setTitle(song.data['title'])
-        tag.setGenres([])
-        tag.setAlbum(song.data.get('album', ''))
-        rating = song.data.get('listener_rating', 0)
-        tag.setRating(rating)
-        tag.setUserRating(int(round(rating)))
-        tag.setYear(int(song.data.get('year', 0)))
-        item.setArt({'thumb': song.cover})
-        item.setArt({'fanart': song.fanart})
-        self.updateInfoTag(item)
+    def update_same_key(self, key: SongKey) -> None:
+        if not self._tracker.is_tracked_song_expired():
+            self._match_key(key)
 
-    def clear_player(self):
-        """Clear most of the Kodi player's song information."""
-        if not self.isPlayingAudio():
-            return
+    def _match_key(self, key: SongKey) -> None:
+        song = self._now_playing.get_song(key)
+        if song is not None:
+            self._tracker.set_tracked_song(song)
+            self._tracker.set_state(self._tracker.tracking_state)
 
-        info = self.getMusicInfoTag()
-        item = self.getPlayingItem()
-        tag = item.getMusicInfoTag()
-        tag.setArtist(info.getArtist())
-        tag.setTitle(info.getTitle())
-        tag.setGenres([])
-        tag.setAlbum('')
-        tag.setRating(0)
-        tag.setUserRating(0)
-        tag.setYear(0)
-        item.setArt({'thumb': None})
-        item.setArt({'fanart': None})
-        self.updateInfoTag(item)
 
-    def update_slideshow(self):
-        """Update the slideshow, if necessary."""
-        song = self.song
-        next_slide = self.slideshow.next_slide()
-        if song and next_slide:
-            song.fanart = next_slide
-            self.update_player()
+class SongTrackerTrackingState(SongTrackerState):
+    """Tracking a matched song from the API."""
 
-    def update_song(self):
-        """Update song metadata, if necessary."""
-        player_key = self.get_song_key()
-        if player_key is None:
-            return
-
-        song = self.song
-        if song and not (song.key != player_key or song.expired()):
-            return
-
-        # Keep track of the local song start time
-        if self.tracked_key != player_key:
-            if self.tracked_key is not None:
-                self.tracked_time = time.time()
-            self.tracked_key = player_key
-            LOG.log(f'player_key: {player_key}')
-
-        start_time = None
-        song_data = None
-
+    def update_new_key(self, key: SongKey) -> None:
+        song = self._now_playing.get_song(key)
+        self._tracker.set_tracked_song(song)
         if song is None:
-            start_time = 0
-            song_data = self.now_playing.get_song_data(player_key)
-        elif song.key != player_key and not song.expired():
-            start_time = self.tracked_time
-            song_data = self.now_playing.get_song_data(player_key)
-            self.slideshow.set_slides(None)
-        elif song.expired():
-            start_time = song.start_time + song.duration
-            song_data = self.now_playing.get_next_song(player_key)
-            # Fall back to stream metadata
-            if song_data is None:
-                song.start_time = 0
-                self.tracked_time = 0
-                self.slideshow.set_slides(None)
-                self.clear_player()
+            self._tracker.set_state(self._tracker.waiting_state)
 
-        # API metadata may not be available yet
-        if song_data is None:
+    def update_same_key(self, key: SongKey) -> None:
+        if not self._tracker.is_tracked_song_expired():
             return
 
-        addon = xbmcaddon.Addon()
-        slideshow = addon.getSetting('slideshow')
-        if slideshow == 'rp':
-            slides = song_data.get('slide_urls')
-            delay = addon.getSettingInt('slide_duration')
-            self.slideshow.set_slides(slides, delay)
-            fanart = self.slideshow.next_slide()
-        else:
-            self.slideshow.set_slides(None)
-            fanart = None
-
-        self.song = Song(player_key, song_data, fanart, start_time)
-        LOG.log(f'Song: {self.song}')
-        self.update_player()
-
-    def onAVStarted(self):
-        if self.isPlaying() and self.getPlayingFile() in CHANNEL_INFO:
-            url = self.getPlayingFile()
-            info = CHANNEL_INFO[url]
-            # Kodi switches to fullscreen for FLAC, but not AAC
-            if url == info['url_aac']:
-                xbmc.executebuiltin('Action(FullScreen)')
-        else:
-            self.reset()
-
-    def onPlayBackEnded(self):
-        if self.stream_url:
-            self.restart_time = time.time()
-        else:
-            self.reset()
-
-    def onPlayBackError(self):
-        self.reset()
-
-    def onPlayBackStarted(self):
-        if self.isPlaying() and self.getPlayingFile() in CHANNEL_INFO:
-            url = self.getPlayingFile()
-            self.stream_url = url
-            self.restart_time = 0
-            info = CHANNEL_INFO[url]
-            self.now_playing.set_channel(info['channel_id'])
-        else:
-            self.reset()
-
-    def onPlayBackStopped(self):
-        self.reset()
+        song = self._now_playing.get_next_song(key)
+        self._tracker.set_tracked_song(song)
+        if song is None:
+            self._tracker.set_state(self._tracker.waiting_state)
 
 
-class Slideshow():
-    """Provides timed slide URLs."""
-
-    def __init__(self):
-        self.set_slides(None)
-
-    def set_slides(self, slides, delay=10):
-        """Set slides and delay, or None."""
-        if slides:
-            self.slides = slides
-            self.delay = delay
-            self.index = 0
-            self.time = 0
-        else:
-            self.slides = None
-
-    def next_slide(self):
-        """Return the next slide URL, or None."""
-        result = None
-        now = time.time()
-        if self.slides and self.time + self.delay < now:
-            result = self.slides[self.index]
-            self.index = (self.index + 1) % len(self.slides)
-            self.time = now
-        return result
-
-
-def run_service():
-    LOG.log('Service started.')
+def run_service() -> None:
+    _LOG.log('Service started.')
+    now_playing = NowPlaying()
+    slideshow = Slideshow()
+    updater = PlayerUpdater()
+    tracker = SongTracker(now_playing, slideshow, updater)
     player = Player()
     monitor = xbmc.Monitor()
+
+    stream_url = None
     while not monitor.abortRequested():
-        if monitor.waitForAbort(0.1):
+        if monitor.waitForAbort(0.2):
             break
-        try:
-            player.update()
-        except Exception as e:
-            LOG.exception(e)
-    LOG.log('Service exiting.')
+
+        if stream_url != player.stream_url:
+            stream_url = player.stream_url
+            now_playing.set_channel(stream_url)
+
+        if stream_url:
+            try:
+                now_playing.update()
+            except Exception as e:
+                _LOG.error('API update failed.', exc=e)
+
+            try:
+                if (player_key := player.get_player_key()):
+                    tracker.update(player_key)
+                else:
+                    player.restart()
+            except Exception as e:
+                _LOG.error('Exception in run_service.', exc=e)
+    _LOG.log('Service exiting.')

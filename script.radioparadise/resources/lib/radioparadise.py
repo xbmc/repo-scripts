@@ -1,160 +1,217 @@
 import json
 from pathlib import Path
-import re
 import time
+from typing import Any, Dict, List, Union
 
 import requests
 import xbmcaddon
 
 from .logger import Logger
+from .song import Song, SongKey
 
 
-NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list_v2022?chan={}&list_num=10'
-COVER_URL = 'https://img.radioparadise.com/{}'
-SLIDESHOW_URL = 'https://img.radioparadise.com/slideshow/720/{}.jpg'
+# RP URLs
+_NOWPLAYING_URL = 'https://api.radioparadise.com/api/nowplaying_list_v2022?chan={}&list_num=10'
+_COVER_URL = 'https://img.radioparadise.com/{}'
+_SLIDESHOW_URL = 'https://img.radioparadise.com/slideshow/720/{}.jpg'
 
 # Metadata for the "station break", which does not appear in the API
-BREAK_SONG = None
-# Song key for the "station break"
-BREAK_KEY = None
-
-# Characters to allow in song keys
-KEY_FILTER_RE = re.compile(r'[^\w\']+')
+_BREAK_SONG = Song(
+    'Commercial-free',
+    'Listener-supported',
+    '',
+    0,
+    0,
+    'https://img.radioparadise.com/covers/l/101.jpg',
+    [],
+    0.0
+)
 
 # Number of seconds to wait for API responses
-UPDATE_TIMEOUT = 3
+_UPDATE_TIMEOUT = 3
 # Number of seconds to wait before retrying API updates
-UPDATE_WAIT = 5
-# Maximum number of seconds to wait between API updates
-MAX_UPDATE_WAIT = 300
+_UPDATE_WAIT = 5
 
-# List of channel objects from channels.json
-CHANNELS = None
-# Map of stream URL to channel object
-CHANNEL_INFO = None
-
-LOG = Logger('rp_api')
+_LOG = Logger('rp_api')
 
 
-class NowPlaying():
-    """Provides song information from the "nowplaying" API."""
+class NowPlaying:
+    """Provides song information from the ``nowplaying`` API."""
 
-    def __init__(self):
-        """Constructor"""
-        self.songs = dict()
+    def __init__(self) -> None:
+        self._url = None
+        self._next_update = 0.0
+        self._songs: List[Song] = []
         self.set_channel(None)
 
-    def get_song_data(self, song_key):
-        """Return a dict for the build_key()-created key, or None.
+    def get_song(self, key: SongKey) -> Union[Song, None]:
+        """Return the Song for key, or None."""
+        if key == _BREAK_SONG.key:
+            return _BREAK_SONG
+        for song in self._songs:
+            if song.key == key:
+                return song
+        return None
 
-        The "cover" value will be an absolute URL.
-        """
-        if song_key != BREAK_KEY:
-            return self.songs.get(song_key)
+    def get_next_song(self, key: SongKey) -> Union[Song, None]:
+        """Return the next Song for key, or None."""
+        for index, song in enumerate(self._songs):
+            if song.key == key and index > 0:
+                return self._songs[index - 1]
+        return None
+
+    def set_channel(self, stream_url: Union[str, None]) -> None:
+        """Set the RP channel, or None to stop updates."""
+        if stream_url is not None:
+            c = Channels().by_url(stream_url)
+            self._url = _NOWPLAYING_URL.format(c.channel_id) if c else None
         else:
-            return BREAK_SONG
+            self._url = None
+        self._next_update = 0.0
+        self._songs.clear()
 
-    def get_next_song(self, song_key):
-        """Return a dict for song_key's successor, or None.
-
-        The "cover" value will be an absolute URL.
-        """
-        next_key = self.songs.get(song_key, {}).get('next_key')
-        return self.songs.get(next_key)
-
-    def set_channel(self, channel_id):
-        """Set the RP channel ID, or None."""
-        if channel_id is not None:
-            self.url = NOWPLAYING_URL.format(channel_id)
-        else:
-            self.url = None
-        self.next_update = 0
-        self.songs.clear()
-
-    def update(self):
+    def update(self) -> None:
         """Update song information from the API, if necessary.
 
-        Calls the API only when the "current" song ends.
+        Calls the API only when the latest known song ends.
 
         Raises an exception on error responses or timeouts.
         """
-        if self.url is None:
+        if self._url is None:
             return
-        if time.time() < self.next_update:
+        if time.time() < self._next_update:
             return
+
+        latest_song = None
+        latest_time = 0
 
         try:
-            res = requests.get(self.url, timeout=UPDATE_TIMEOUT)
+            res = requests.get(self._url, timeout=_UPDATE_TIMEOUT)
             res.raise_for_status()
-            data = res.json()
+
+            self._songs.clear()
+            songs = res.json().get('song', [])
+            songs.sort(key=lambda s: s.get('play_time'), reverse=True)
+            for data in songs:
+                song = NowPlaying._parse_song(data)
+                self._songs.append(song)
+                play_time = round(data.get('play_time', 0) / 1000)
+                if play_time > latest_time:
+                    latest_song = song
+                    latest_time = play_time
         except Exception:
-            self.next_update = time.time() + UPDATE_WAIT
+            self._next_update = time.time() + _UPDATE_WAIT
             raise
 
-        current_song = None
-
-        self.songs.clear()
-        next_key = None
-        for index, song in enumerate(data['song']):
-            if song['artist'] is None:
-                song['artist'] = 'Unknown Artist'
-            if song['title'] is None:
-                song['title'] = 'Unknown Title'
-            song['cover'] = COVER_URL.format(song['cover'])
-            slides = song.get('slideshow', '').split(',')
-            slides = [SLIDESHOW_URL.format(s) for s in slides if s]
-            song['slide_urls'] = slides
-            song['next_key'] = next_key
-            key = build_key((song['artist'], song['title']))
-            self.songs[key] = song
-            next_key = key
-            if index == 0:
-                current_song = song
-
-        now = time.time()
-        if current_song:
-            next_update = (current_song['play_time'] + int(current_song['duration'])) / 1000
-            LOG.log(f'update: {current_song["artist"]} - {current_song["title"]}')
+        if latest_song:
+            next_update = latest_time + latest_song.duration
         else:
             next_update = 0
-            LOG.log(f'update: No song data.')
-
+        now = time.time()
         if next_update > now:
-            self.next_update = min(next_update, now + MAX_UPDATE_WAIT)
+            self._next_update = next_update
         else:
-            self.next_update = now + UPDATE_WAIT
+            self._next_update = now + _UPDATE_WAIT
+
+        next_update_hms = time.strftime('%H:%M:%S', time.localtime(self._next_update))
+        if latest_song:
+            _LOG.log(f'latest_song: {latest_song} (next: {next_update_hms})')
+        else:
+            _LOG.error(f'No song data. (next: {next_update_hms})')
+
+    @staticmethod
+    def _parse_song(data: Dict[str, Any]) -> Song:
+        # Replace unexpected null values from the API
+        d = ReplaceNoneDict(data)
+        artist = d.get('artist', 'Unknown Artist')
+        title = d.get('title', 'Unknown Title')
+        album = d.get('album', '')
+        year = int(d.get('year', '0'))
+        duration = round(int(d.get('duration', '0')) / 1000)
+        cover = _COVER_URL.format(d.get('cover', ''))
+        slideshow = d.get('slideshow', '').split(',')
+        slides = [_SLIDESHOW_URL.format(s) for s in slideshow if s]
+        rating = d.get('listener_rating', 0.0)
+        return Song(artist, title, album, year, duration, cover, slides, rating)
 
 
-def build_key(strings):
-    """Return a normalized tuple of words in the strings.
+class ReplaceNoneDict(Dict[str, Any]):
+    """dict that replaces None values."""
 
-    A few songs in the RP library (mostly classical music) format artist and
-    title differently in stream metadata vs. the API, hence this key.
+    def get(self, key: str, default: Any = None) -> Any:
+        """Returns the default if the value for key is None."""
+        value = super().get(key, default)
+        return value if value is not None else default
+
+
+class Channel:
+    """Channel information.
+
+    Attributes
+    ----------
+    channel_id
+        Channel ID for the ``nowplaying`` API.
+    title
+        Channel title.
+    url_aac
+        Stream URL to use when the addon is set to ``AAC``.
+    url_flac
+        Stream URL to use when the addon is set to ``FLAC``.
     """
-    result = []
-    for s in strings:
-        words = KEY_FILTER_RE.sub(' ', s).casefold().split()
-        result.extend(words)
-    return tuple(sorted(result))
+
+    def __init__(
+            self,
+            channel_id: int,
+            title: str,
+            url_aac: str,
+            url_flac: str) -> None:
+        self.channel_id = channel_id
+        self.title = title
+        self.url_aac = url_aac
+        self.url_flac = url_flac
 
 
-def init():
-    global BREAK_SONG, BREAK_KEY, CHANNELS, CHANNEL_INFO
+class Channels:
+    """Channel list and lookup.
 
-    BREAK_SONG = {
-        'artist': 'Commercial-free',
-        'title': 'Listener-supported',
-        'cover': 'https://img.radioparadise.com/covers/l/101.jpg',
-        'duration': '60000',
-    }
-    BREAK_KEY = build_key((BREAK_SONG['artist'], BREAK_SONG['title']))
+    Its creation is not thread-safe, but the data is static.
+    """
 
-    addon = xbmcaddon.Addon()
-    addon_path = addon.getAddonInfo('path')
-    channels_json = Path(addon_path, 'resources', 'channels.json')
-    CHANNELS = json.loads(channels_json.read_text())
-    CHANNEL_INFO = {s['url_aac']: s for s in CHANNELS}
-    CHANNEL_INFO.update({s['url_flac']: s for s in CHANNELS})
+    _instance: Union['Channels', None] = None
 
+    def __new__(cls) -> 'Channels':
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._load_channels()
+        return cls._instance
 
-init()
+    def _load_channels(self) -> None:
+        addon = xbmcaddon.Addon()
+        addon_path = addon.getAddonInfo('path')
+        channels_file = Path(addon_path, 'resources', 'channels.json')
+        channels_list = json.loads(channels_file.read_text())
+        self._channels = []
+        self._by_id = {}
+        self._by_url = {}
+        for data in channels_list:
+            channel_id = int(data['channel_id'])
+            title = str(data['title'])
+            url_aac = str(data['url_aac'])
+            url_flac = str(data['url_flac'])
+            channel = Channel(channel_id, title, url_aac, url_flac)
+            self._channels.append(channel)
+            self._by_id[channel.channel_id] = channel
+            self._by_url[channel.url_aac] = channel
+            self._by_url[channel.url_flac] = channel
+
+    def list(self) -> List[Channel]:
+        """Return all Channels."""
+        return self._channels
+
+    def by_id(self, channel_id: int) -> Union[Channel, None]:
+        """Return the Channel matching the ID, or None."""
+        return self._by_id.get(channel_id)
+
+    def by_url(self, url: str) -> Union[Channel, None]:
+        """Return the Channel matching the stream URL, or None."""
+        return self._by_url.get(url)

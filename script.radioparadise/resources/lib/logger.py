@@ -1,27 +1,37 @@
 import traceback
+from typing import Union
 
 import xbmc
 
 
-DEVELOPMENT = False
+_DEVELOPMENT = False
 
 
-class Logger():
-    def __init__(self, name):
-        self.name = name
+class Logger:
+    def __init__(self, name: str) -> None:
+        self._name = name
 
-    def log(self, message, level=None):
+    def log(
+            self,
+            message: str,
+            exc: Union[Exception, None] = None,
+            level: Union[int, None] = None) -> None:
         """Log the message."""
         if level is not None:
-            xbmc.log(f'{self.name}: {message}', level)
-        elif DEVELOPMENT:
-            xbmc.log(f'{self.name}: {message}', xbmc.LOGINFO)
+            xbmc.log(f'{self._name}: {message}', level)
+        elif _DEVELOPMENT:
+            xbmc.log(f'{self._name}: {message}', xbmc.LOGINFO)
         else:
-            xbmc.log(f'{self.name}: {message}', xbmc.LOGDEBUG)
+            xbmc.log(f'{self._name}: {message}', xbmc.LOGDEBUG)
+        if exc is not None:
+            if _DEVELOPMENT:
+                xbmc.log(traceback.format_exc(), xbmc.LOGERROR)
+            else:
+                xbmc.log(repr(exc), xbmc.LOGERROR)
 
-    def exception(self, exc):
-        """Log the exception."""
-        if DEVELOPMENT:
-            self.log(traceback.format_exc(), xbmc.LOGERROR)
-        else:
-            self.log(repr(exc), xbmc.LOGERROR)
+    def error(
+            self,
+            message: str,
+            exc: Union[Exception, None] = None) -> None:
+        """Log the error."""
+        self.log(message, exc=exc, level=xbmc.LOGERROR)

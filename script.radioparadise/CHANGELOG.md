@@ -1,3 +1,9 @@
+## v2.5.0
+
+- Fix UI stacking issue
+- Fix song tracking issues
+- Code cleanup
+
 ## v2.4.0
 
 - Restore Serenity channel
