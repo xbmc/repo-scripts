@@ -32,7 +32,6 @@ def set_property(window: xbmcgui.Window, name: str, value: str | None = None) ->
 
     value = str(value)
     if value:
-        Logger.debug(f'Setting window property {name} to value {value}')
         window.setProperty(name, value)
     else:
         clear_property(window, name)
@@ -45,7 +44,6 @@ def clear_property(window: xbmcgui.Window, name: str) -> None:
     :param window:
     :param name:
     """
-    Logger.debug(f'Clearing window property {name}')
     window.clearProperty(name)
 
 
@@ -69,15 +67,7 @@ def get_property_as_bool(window: xbmcgui.Window, name: str) -> bool | None:
     :param name: the name of the property to get
     :return: the value of the window property in boolean form, or None if not set
     """
-    value = get_property(window, name)
-    if value is None:
-        return None
-    lowered = value.strip().lower()
-    if lowered in ("true", "1", "yes", "on"):
-        return True
-    if lowered in ("false", "0", "no", "off"):
-        return False
-    return None
+    return _parse_bool_string(get_property(window, name))
 
 
 def send_kodi_json(human_description: str, json_dict_or_string: str | dict) -> dict | None:
@@ -90,7 +80,11 @@ def send_kodi_json(human_description: str, json_dict_or_string: str | dict) -> d
     """
     Logger.debug(f'KODI JSON RPC command: {human_description}', json_dict_or_string)
     if isinstance(json_dict_or_string, dict):
-        json_dict_or_string = json.dumps(json_dict_or_string)
+        try:
+            json_dict_or_string = json.dumps(json_dict_or_string)
+        except TypeError as e:
+            Logger.error(f'Unable to encode JSON RPC command for {human_description}:', e)
+            return None
     result = xbmc.executeJSONRPC(json_dict_or_string)
     try:
         result = json.loads(result)
@@ -123,10 +117,19 @@ def get_setting_as_bool(setting: str) -> bool | None:
     :param setting: The addon setting to return
     :return: the setting value as boolean, or None if not found
     """
-    value = get_setting(setting)
+    return _parse_bool_string(get_setting(setting))
+
+
+def _parse_bool_string(value: str | None) -> bool | None:
+    """
+    Parse a loosely-formatted string as a boolean
+
+    :param value: the string to parse, or None
+    :return: True/False if value is a recognised boolean string, otherwise None
+    """
     if value is None:
         return None
-    lowered = value.lower()
+    lowered = value.strip().lower()
     if lowered in ("true", "1", "yes", "on"):
         return True
     if lowered in ("false", "0", "no", "off"):
@@ -159,8 +162,8 @@ def get_advancedsetting(setting_path: str) -> str | None:
     """
     Helper function to extract a setting from Kodi's advancedsettings.xml file,
     Remember: cast the result appropriately and provide the Kodi default value as a fallback if the setting is not found.
-    E.g.::
-        Store.ignore_seconds_at_start = int(get_advancedsetting('./video/ignoresecondsatstart')) or 180
+    E.g.:
+        Store.ignore_seconds_at_start = int(get_advancedsetting('video/ignoresecondsatstart')) or 180
 
     :param setting_path: The advanced setting, in 'section/setting' (i.e. path) form, to look for (e.g. video/ignoresecondsatstart)
     :return: The setting value if found, None if not found/advancedsettings.xml doesn't exist
@@ -186,7 +189,11 @@ def get_advancedsetting(setting_path: str) -> str | None:
         return None
     # Normalise: accept either 'section/setting' or './section/setting'
     normalised_path = setting_path if setting_path.startswith('.') else f'./{setting_path.lstrip("./")}'
-    setting_element = root.find(normalised_path)
+    try:
+        setting_element = root.find(normalised_path)
+    except SyntaxError:
+        Logger.error(f"Invalid setting path: {setting_path}")
+        return None
 
     if setting_element is not None:
         text = (setting_element.text or "").strip()
@@ -241,10 +248,17 @@ def version_tuple(version_str: str) -> tuple:
     Helper function to return a version tuple from a version string "2.1.5" -> (2, 1 , 5)
     Useful for comparisons, e.g. if version_tuple(version) <= version_tuple('2.1.5')
 
+    Non-numeric suffixes on a segment (e.g. the "3~alpha1" in "1.2.3~alpha1") are ignored,
+    since Kodi addon versions can legally include them and this is used purely for comparison.
+
     :param version_str: the addon version string
     :return: version in tuple form (1, 2, 3)
     """
-    return tuple(map(int, version_str.split('.')))
+    parts = []
+    for segment in version_str.split('.'):
+        match = re.match(r'\d+', segment)
+        parts.append(int(match.group(0)) if match else 0)
+    return tuple(parts)
 
 
 def get_resume_point(library_type: str, dbid: int) -> float | None:
