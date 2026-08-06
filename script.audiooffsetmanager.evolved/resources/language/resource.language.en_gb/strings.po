@@ -90,7 +90,7 @@ msgstr ""
 
 #. Help text for #32108
 msgctxt "#32109"
-msgid "When you adjust the audio offset during playback, the value is saved for that stream profile. Profiles are based on the HDR type and audio format of the video itself, not the display's output mode. Turning this off stops new offsets from being saved. Applying saved offsets is controlled by Apply audio offsets."
+msgid "When you adjust the audio offset during playback, the value is saved for that stream profile. Profiles are based on the HDR type and audio format of the video itself, not the display's output mode. A profile is only as detailed as what your Kodi build reports, so formats it does not tell apart share one profile. Turning this off stops new offsets from being saved. Applying saved offsets is controlled by Apply audio offsets."
 msgstr ""
 
 #. Setting label; its help text is #32111
@@ -136,7 +136,7 @@ msgstr ""
 #. Notification shown once when the stored-offsets file was corrupt and
 #. had to be reset
 msgctxt "#32121"
-msgid "Stored offsets were unreadable and were reset (backup kept as offsets.json.bad)"
+msgid "Stored offsets were unreadable and were reset. The unreadable file is kept as offsets.json.bad"
 msgstr ""
 
 #. Management dialog message when no offsets are stored yet
@@ -369,23 +369,25 @@ msgid "Could not read the Kodi log file"
 msgstr ""
 
 #. Value line of a stored offset that is not applied right now (saved
-#. under a per-frame-rate, spatial-format, or channel-count mode that is
-#. not the one currently enabled); {0} is the value, e.g. "+125 ms"
+#. under a per-frame-rate, spatial-format, channel-count, or
+#. output-device mode that is not the one currently enabled); {0} is the
+#. value, e.g. "+125 ms"
 msgctxt "#32167"
 msgid "{0} — inactive"
 msgstr ""
 
-#. Suffix on a group row in the stored offsets view when some of the
-#. group's entries are inactive (saved under a per-frame-rate,
-#. spatial-format, or channel-count mode that is not the one currently
-#. enabled); {0} is how many, e.g. the full row reads
-#. "Dolby Vision — 3 entries (2 inactive)"
+#. Suffix on an output device row or an HDR group row in the stored
+#. offsets view when some of its entries are inactive (saved under a
+#. per-frame-rate, spatial-format, channel-count, or output-device mode
+#. that is not the one currently enabled); {0} is how many, e.g. the full
+#. row reads "Dolby Vision — 3 entries (2 inactive)"
 msgctxt "#32170"
 msgid "({0} inactive)"
 msgstr ""
 
-#. Tag on the stored offset (or its group row) matching what is currently
-#. playing; {0} is the rest of the line, e.g. the full line reads
+#. Tag on the stored offset matching what is currently playing, and on
+#. the output device row and HDR group row it sits under; {0} is the rest
+#. of the line, e.g. the full line reads
 #. "+125 ms · saved 19 Jul 2026 · playing now" or "3 entries · playing now"
 msgctxt "#32172"
 msgid "{0} · playing now"
@@ -405,7 +407,7 @@ msgstr ""
 
 #. Help text for #32175
 msgctxt "#32176"
-msgid "Learn and apply separate offsets for spatial audio formats such as Dolby Atmos and DTS:X. When this is off, a spatial format shares its base codec's offset, for example TrueHD Atmos uses the TrueHD offset, and offsets saved for spatial formats are kept but not applied."
+msgid "Learn and apply separate offsets for spatial audio formats such as Dolby Atmos and DTS:X. When this is off, a spatial format shares its base codec's offset, for example TrueHD Atmos uses the TrueHD offset, and offsets saved for spatial formats are kept but not applied. This setting only has an effect where your Kodi build reports the spatial format, and not all builds do. Where yours reports the base codec instead, spatial streams are already learned and applied as that codec. Manage stored offsets lists the formats your system has reported."
 msgstr ""
 
 #. Setting label; its help text is #32178
@@ -416,4 +418,71 @@ msgstr ""
 #. Help text for #32177
 msgctxt "#32178"
 msgid "Learn and apply a separate offset for each channel count, for example 5.1 and stereo versions of the same format. An offset only applies in the mode it was saved in: offsets saved while this was off cover all channel counts and are not applied while it is on. Per-count offsets are kept, but not applied, while this is disabled."
+msgstr ""
+
+#. Setting label; its help text is #32180
+msgctxt "#32179"
+msgid "Distinct output device offsets"
+msgstr ""
+
+#. Help text for #32179
+msgctxt "#32180"
+msgid "Learn and apply a separate offset for each audio output device set in Kodi, for example a soundbar and headphones. Kodi has a separate output device setting for passthrough audio, and offsets follow whichever device the stream is using. An offset only applies in the mode it was saved in: offsets saved while this was off cover all devices and are not applied while it is on. Per-device offsets are kept, but not applied, while this is disabled. Devices are named by your system, and one that reports no name, or the same name as another device, is listed with its system identifier. Device offsets belong to this machine and do not transfer to another one."
+msgstr ""
+
+#. List row inside one output device's section of the management dialog
+msgctxt "#32181"
+msgid "Clear all offsets for this device"
+msgstr ""
+
+#. Confirmation for #32181; the device's name and entry count follow
+msgctxt "#32182"
+msgid "Delete all stored offsets for this device?"
+msgstr ""
+
+#. Notification shown once when the stored-offsets file was unreadable and
+#. its contents were taken from the automatic backup instead; the
+#. reset-instead wording is #32121
+msgctxt "#32183"
+msgid "Stored offsets were unreadable and were restored from the automatic backup. The most recent change may be missing"
+msgstr ""
+
+#. Second message line of the "Offset saved" notification, shown under the
+#. profile summary when the save replaced an earlier value for the same
+#. stream; {0} is that earlier value with its sign, e.g. the line reads
+#. "Was +85 ms"
+msgctxt "#32184"
+msgid "Was {0} ms"
+msgstr ""
+
+#. List row inside one output device's section of the management dialog,
+#. below #32181; copies that device's stored offsets onto whichever output
+#. device Kodi is set to use now
+msgctxt "#32185"
+msgid "Copy these offsets to the current audio output"
+msgstr ""
+
+#. Confirmation for #32185; the source device's name, entry count and
+#. inactive count follow
+msgctxt "#32186"
+msgid "Copy these offsets to the current audio output? Offsets already stored there are kept."
+msgstr ""
+
+#. Result of #32185, one line per device the offsets were copied to; {0} is
+#. an entry count such as "6 entries" (#32135/#32136) and {1} is that
+#. device's name
+msgctxt "#32187"
+msgid "Copied {0} to {1}"
+msgstr ""
+
+#. Shown instead of #32187 when the offsets being copied already belong to
+#. the output device Kodi is set to use
+msgctxt "#32188"
+msgid "These offsets already belong to the current audio output."
+msgstr ""
+
+#. Shown instead of #32187 when the output device Kodi is set to use
+#. already has an offset for every profile in the copy
+msgctxt "#32189"
+msgid "The current audio output already has an offset for every one of these. Nothing was copied."
 msgstr ""

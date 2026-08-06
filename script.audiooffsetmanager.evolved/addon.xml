@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audiooffsetmanager.evolved" version="1.1.0" name="Audio Offset Manager: Evolved" provider-name="matthane">
+<addon id="script.audiooffsetmanager.evolved" version="1.3.0" name="Audio Offset Manager: Evolved" provider-name="matthane">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
     </requires>
@@ -7,28 +7,27 @@
     <extension point="xbmc.python.script" library="script.py" />
     <extension point="xbmc.addon.metadata">
         <source>https://github.com/matthane/script.audiooffsetmanager.evolved</source>
-        <news>v1.1.0 (2026-07-21)
-- Distinct spatial audio offsets: optional toggle that keeps spatial formats such as Dolby Atmos and DTS:X as their own profiles with their own offsets. Off by default: a spatial format shares its base codec's offset
-- Distinct channel count offsets: optional toggle that also keys offsets by the source's channel count, for example 5.1 and stereo versions of one format. Off by default
-- Per-frame-rate offsets is now Distinct frame-rate offsets; the three granularity toggles are grouped together in the settings
-- The management view marks the entry that is currently playing
-- Stored offsets upgrade to a new file format on first save; older versions read the upgraded file without changing it
-- Offsets saved for spatial formats by 1.0.0 are kept but not applied until the spatial toggle is enabled
+        <news>v1.3.0 (2026-08-06)
+- Stored offsets are backed up automatically and restored if the file is ever damaged
+- The offset saved notification shows the value it replaced
+- Stored offsets can be copied to the current audio output from Manage stored offsets
+- Settings help text now says where an option depends on what your Kodi build reports
+- Fixed: an adjustment made just as the stream changed could be saved to the wrong profile
+- Fixed: a codec switch could briefly follow the wrong output device when PCM and passthrough use different ones
+- Fixed: re-teaching a value deleted moments earlier did not trigger the seek-back replay
 
-v1.0.0 (2026-07-19)
-First release. Supersedes the original Audio Offset Manager: profiles now cover any format Kodi reports instead of a very limited fixed list, and there is nothing to configure up front.
-- Adjust Kodi's audio offset during playback the way you always have; the value is remembered for that stream's HDR type, audio format, and frame rate
-- Saved offsets are applied automatically on every matching playback
-- Optional seek backs to help realign audio and video after key events
-- Notifications when an offset is saved or applied
-- Management view to browse, delete, or clear everything learned
-- Backup export and import of saved offsets
+v1.2.0 (2026-08-03)
+- Distinct output device offsets: optional toggle that keys offsets by Kodi's configured audio output device, so a soundbar and a pair of headphones can each keep their own value. Off by default
+- An output device change during playback is picked up within a second and the matching offset is applied
+- The management view groups by output device, then HDR type, and skips a level when it holds only one entry
+- Device offsets belong to the machine that learned them and do not transfer to another one; every other offset still does
+- Stored offsets upgrade to a new file format on first save. Version 1.1.0 and earlier can still read the file but will not add to it
         </news>
         <!-- news is schema-capped at 1500 characters (addon-checker
              enforces it): keep only the last couple of versions here;
              earlier changelogs live in the git history. -->
         <summary lang="en_GB">Kodi's missing lipsync tool</summary>
-        <description lang="en_GB">Adjust Kodi's audio offset during playback the way you always have. Audio Offset Manager: Evolved remembers the value for that stream's HDR type and audio format, with optional finer splits by frame rate, spatial audio format, and channel count, then re-applies it automatically on every matching playback. Includes seek-back after adjustments, playback notifications, and a management view of everything it has learned.</description>
+        <description lang="en_GB">Adjust Kodi's audio offset during playback the way you always have. Audio Offset Manager: Evolved remembers the value for that stream's HDR type and audio format, with optional finer splits by frame rate, spatial audio format, channel count, and audio output device, then re-applies it automatically on every matching playback. Includes seek-back after adjustments, playback notifications, and a management view of everything it has learned.</description>
         <platform>all</platform>
         <license>GPL-3.0-or-later</license>
         <assets>

@@ -16,30 +16,48 @@ scheduled events rather than sleeps:
 - ``AvChanged`` triggers an immediate single-shot re-probe: unchanged
   profile ignored; changed re-adopts and re-verifies; lost regresses to
   STABILIZING for the verify loop to chase.
+- ``AudioDeviceChanged`` (the DeviceWatcher's polled fact, since Kodi fires
+  nothing for a core setting change) rides the same path. Its payload is
+  logged, never trusted: this component re-gathers for authority, exactly as
+  it treats Kodi's own ``AvChanged``.
 
-Every gather posts ``StreamProbed`` platform facts (log-only).
+A mid-session change is adopted eagerly unless the reading is SUSPECT: the
+device segment moved AND the passthrough condition dropped true -> false.
+Kodi closes the old audio codec before opening the new one, and with no
+codec to ask the condition reads false, resolving the decoded endpoint — so
+at that instant a genuine device move and a codec-switch gap are one fact.
+A suspect gather is held and re-verified rather than adopted, and adopted
+once a gather a verify window later agrees with it.
+
+The rule is directional because the gap can only read FALSE, so a gather
+that RAISED the condition is provably not it. What that leaves uncovered is
+accepted: a switch into a bitstreamed track spends its gap reading false on
+the decoded endpoint, which is what an ordinary decoded codec change reads
+too, so it is adopted eagerly and the decoded endpoint's offset lands until
+the condition rises.
+
+``SettingsChanged`` is deliberately NOT a trigger. A save changes no stream
+fact, so re-gathering on one buys nothing and costs a full probe at an
+arbitrary instant: any infolabel transiently blank at that moment yields a
+confident, complete profile, since the HDR chain-of-evidence defaults to
+'sdr', and this component would adopt it — a wrong offset, a toast and a
+seek-back for no net change. The one case a re-gather was meant to serve, a
+distinct-devices flip, belongs to the ``DeviceWatcher``. Do not add that
+subscription.
 
 "Same stream" is judged on the offset-relevant identity
-(``policies.stream_identity`` with the live granularity toggles), not
-raw dataclass equality: incidental fields (player_id and, per the toggles,
-the fps rate, a spatial-variant distinction, or the channel count) can
-wiggle between gathers without the stream changing for offset purposes. An
-identity-equal gather silently refreshes ``session.profile`` with no
-events and no state change; comparing raw equality would strand
+(``policies.stream_identity`` with the live granularity toggles) rather than
+raw dataclass equality, since incidental fields wiggle between gathers
+without the stream changing for offset purposes. An identity-equal gather
+silently refreshes ``session.profile``; comparing raw equality would strand
 verification in a perpetual re-adopt loop.
 
-Verbatim acceptance: the audio and HDR axes carry what Kodi reported,
-normalized by ``aome.store.keys`` (case-fold/trim, absence to 'unknown', and
-on the HDR axis the cross-build canonicalization). The per-fps granularity
-question lives at the store's lookup/write instant. The HDR chain-of-evidence
-runs primary -> fallback -> sdr default -> HLG-gamut sniff.
-
-Timing:
-- Offsets re-apply eagerly on mid-play changes: adoption posts
-  ``ProfileChanged`` immediately (the apply is provisional; notifications
-  wait for STABLE), because A/V sync matters before the stream settles.
-- HDR- or FPS-only mid-play changes are full change episodes (offset
-  re-apply, notification, the 'adjust' seek-back), not just codec changes.
+Acceptance is verbatim: the audio and HDR axes carry what Kodi reported,
+normalized by ``aome.store.keys``, and the granularity question lives at the
+store's lookup/write instant. Adoption posts ``ProfileChanged`` immediately
+and the apply is marked provisional, because A/V sync matters before the
+stream settles. Every gather also posts ``StreamProbed`` platform facts
+(log-only).
 
 Pure app layer: Kodi I/O through the injected gateway, settings through the
 injected facade; no Kodi imports, log sinks injected.
@@ -59,6 +77,10 @@ INFOLABEL_FPS = 'Player.Process(videofps)'
 INFOLABEL_HDR = 'Player.Process(video.source.hdr.type)'
 INFOLABEL_HDR_FALLBACK = 'VideoPlayer.HdrType'
 INFOLABEL_GAMUT = 'Player.Process(amlogic.eoft_gamut)'
+# The device axis's source strings are deliberately NOT here: the
+# DeviceWatcher reads the same three, so they live with the rest of the
+# device facts in ``domain.formats`` and neither app component imports the
+# other.
 
 
 @dataclass(frozen=True)
@@ -83,24 +105,30 @@ def _is_valid_infolabel(label, value):
 
 
 def derive_stream_facts(player_id, raw_codec, raw_channels, raw_fps, raw_hdr,
-                        raw_hdr_fallback, raw_gamut):
+                        raw_hdr_fallback, raw_gamut, raw_device='',
+                        passthrough=False):
     """Pure derivation of a StreamProfile from raw single-shot readings.
 
     The HDR chain-of-evidence runs primary -> fallback -> sdr default, with
-    an HLG-via-gamut sniff and echo guards (a reading that merely echoes the
-    infolabel name back is treated as absent). Acceptance is verbatim: audio
+    an HLG-via-gamut sniff and echo guards. Acceptance is verbatim: audio
     strings key the store as reported, HDR strings additionally get the key
     codec's cross-build canonicalization, and fps is the exact parsed rate.
+
+    ``raw_device`` is Kodi's audio-device setting verbatim and is carried
+    onto the profile untouched, since the id/name split and the 'all'
+    degradation are the store's job. None (the read failed) is carried
+    through untouched too, because that is the state
+    ``policies.is_complete`` screens on; '' is the "deliberately not read"
+    reading the detector passes with distinct-devices off.
     """
     audio_format = keys.audio_segment(raw_codec)
 
     try:
         fps_value = float(raw_fps)
-        # A rate must be finite and positive to count as detected: 'nan'/
-        # 'inf' parse but would blow up fps_int()/key composition later, and
-        # a reported 0 is the decoder's not-locked-yet placeholder — storing
-        # under an <hdr>|0|<audio> key would strand the offset on a bucket
-        # that never recurs.
+        # A rate must be finite and positive to count as detected: 'nan' and
+        # 'inf' parse but blow up key composition later, and a reported 0 is
+        # the decoder's not-locked-yet placeholder, which would strand the
+        # offset on a bucket that never recurs.
         if not math.isfinite(fps_value) or fps_value <= 0:
             fps_value = None
     except (ValueError, TypeError):
@@ -117,10 +145,10 @@ def derive_stream_facts(player_id, raw_codec, raw_channels, raw_fps, raw_hdr,
 
     hdr_type = keys.hdr_segment(hdr_raw)
     if hdr_type == formats.UNKNOWN:
-        # Absent HDR reading: the chain-of-evidence default. (Echo shapes
-        # never reach here: the primary branch is taken only after
-        # _is_valid_infolabel screened its echo, and an unresolved fallback
-        # reads '' — absence — rather than an echo.)
+        # Absent HDR reading: the chain-of-evidence default. Echo shapes
+        # never reach here, since the primary branch is taken only after
+        # _is_valid_infolabel screened its echo and an unresolved fallback
+        # reads '' rather than an echo.
         hdr_type = 'sdr'
         hdr_source = 'default-sdr'
 
@@ -136,6 +164,8 @@ def derive_stream_facts(player_id, raw_codec, raw_channels, raw_fps, raw_hdr,
         video_fps=fps_value,
         player_id=player_id,
         audio_channels=raw_channels,
+        audio_device=raw_device,
+        passthrough=passthrough,
     )
     return StreamFacts(
         profile=profile,
@@ -156,10 +186,10 @@ class StreamDetector:
     VERIFY_WINDOW_SECONDS = 1.0
     # Attempt at which a discovery still missing only the frame rate logs
     # its one diagnostic line (~2s in). That shape is the signature of a
-    # file that declares no frame rate, leaving Kodi to measure it:
-    # Player.Process(videofps) reads 0.000 for ~6s while every other axis
-    # is ready. Threshold, not attempt 1: a rate a probe or two behind the
-    # codec is ordinary startup, not the signature.
+    # file declaring no frame rate, leaving Kodi to measure it, so
+    # Player.Process(videofps) reads 0.000 for ~6s while every other axis is
+    # ready. A threshold rather than attempt 1, since a rate a probe or two
+    # behind the codec is ordinary startup.
     FPS_WAIT_LOG_ATTEMPT = 5
 
     _PROBE_KEY = 'aome.detector.probe'
@@ -178,9 +208,15 @@ class StreamDetector:
         # Events stamped with a superseded session_id are dropped on receipt.
         self._discovering = False
         self._verify_seq = 0
+        # The gather held back by the suspect rule. It stands until a
+        # gather contradicts it (a different reading, an adoption, or a
+        # return to the adopted profile); only _hold_if_suspect sets it.
+        self._pending_suspect = None
 
         dispatcher.subscribe(events.PlaybackStarted, self._on_playback_started)
         dispatcher.subscribe(events.AvChanged, self._on_av_changed)
+        dispatcher.subscribe(events.AudioDeviceChanged,
+                             self._on_audio_device_changed)
         dispatcher.subscribe(events.ProbeStream, self._on_probe)
         dispatcher.subscribe(events.VerifyStream, self._on_verify)
         dispatcher.subscribe(events.PlaybackStopped, self._on_playback_ended)
@@ -194,6 +230,7 @@ class StreamDetector:
             return  # tracker subscribes first; defensive only
         self._cancel_scheduled()
         self._discovering = True
+        self._pending_suspect = None
         self._log(f"AOMe_StreamDetector: session #{session.session_id} "
                   f"discovery started")
         self._dispatcher.post(
@@ -202,6 +239,7 @@ class StreamDetector:
     def _on_playback_ended(self, _event):
         self._cancel_scheduled()
         self._discovering = False
+        self._pending_suspect = None
 
     def _cancel_scheduled(self):
         self._dispatcher.cancel(self._PROBE_KEY)
@@ -239,26 +277,56 @@ class StreamDetector:
 
     # -- change detection --------------------------------------------------------
 
+    def _on_audio_device_changed(self, event):
+        """A polled output-device move: re-probe exactly like an AV change.
+
+        The event's ``device`` is logged, never consumed: ``_gather``
+        re-reads the setting, so this component stays the sole authority on
+        what the profile says. Only the canonical id segment reaches the log,
+        since the friendly half can carry a person's name. The shared path
+        adopts and posts ``ProfileChanged``, which is what makes the new
+        device's offset apply without waiting for a stream event Kodi will
+        never send.
+        """
+        if not self._sessions.is_alive(event.session_id):
+            return
+        self._log(f"AOMe_StreamDetector: audio output device changed to "
+                  f"{formats.normalize_device(event.device)!r}; re-probing")
+        self._reevaluate('device change')
+
     def _on_av_changed(self, _event):
+        self._reevaluate('AV change')
+
+    def _reevaluate(self, reason):
+        """Single-shot re-probe: unchanged ignored, changed adopted, lost chased.
+
+        ``reason`` names the trigger in the log lines only. Kodi's AV change
+        and a polled device move take the identical path, since both mean
+        "what we adopted may no longer describe the stream we are keying on".
+        """
         session = self._sessions.current
         if session is None:
-            self._log("AOMe_StreamDetector: AV change with no session; ignoring")
+            self._log(f"AOMe_StreamDetector: {reason} with no session; "
+                      f"ignoring")
             return
         if self._discovering:
             # The probe chain reads fresh facts on every attempt, so it will
             # observe whatever this change did — no extra work to schedule.
-            self._log("AOMe_StreamDetector: AV change during discovery; "
-                      "probes will observe it")
+            self._log(f"AOMe_StreamDetector: {reason} during discovery; "
+                      f"probes will observe it")
             return
         facts = self._gather(session.session_id)
         if self._same_stream(facts.profile, session.profile):
             # Same offset-relevant stream: refresh incidental fields
             # (player_id/channels/raw fps) silently — no events, no state.
-            session.profile = facts.profile
-            self._log("AOMe_StreamDetector: AV change with unchanged profile; "
-                      "ignoring")
+            self._pending_suspect = None
+            self._refresh(session, facts.profile)
+            self._log(f"AOMe_StreamDetector: {reason} with unchanged profile; "
+                      f"ignoring")
             return
         if policies.is_complete(facts.profile):
+            if self._hold_if_suspect(session, facts.profile, reason):
+                return
             self._log(f"AOMe_StreamDetector: stream change detected: "
                       f"{session.profile} -> {facts.profile}")
             self._adopt(session, facts.profile)
@@ -266,8 +334,9 @@ class StreamDetector:
             # Discovery gave up earlier and the stream is still incomplete —
             # a change means it may be completing now; restart the budget.
             self._discovering = True
-            self._log("AOMe_StreamDetector: AV change after exhausted "
-                      "discovery; restarting probes")
+            self._pending_suspect = None
+            self._log(f"AOMe_StreamDetector: {reason} after exhausted "
+                      f"discovery; restarting probes")
             self._dispatcher.post(
                 events.ProbeStream(session_id=session.session_id, attempt=1))
         else:
@@ -277,7 +346,12 @@ class StreamDetector:
             session.mark_verifying()
             self._log("AOMe_StreamDetector: profile lost mid-playback; "
                       "verifying until it settles")
-            self._schedule_verify(session.session_id)
+            if self._pending_suspect is None:
+                # A held reading already armed one, and re-arming pushes its
+                # deadline out by a whole window each time a trigger lands:
+                # a storm faster than the window would hold the second look
+                # off indefinitely.
+                self._schedule_verify(session.session_id)
 
     # -- verification: whole-profile quiescence ---------------------------------
 
@@ -286,13 +360,14 @@ class StreamDetector:
             return
         if event.seq != self._verify_seq:
             # Superseded verification. key-replace already supersedes the
-            # pending timer; the seq guard documents intent and protects any
-            # future path that lets a stale VerifyStream reach the queue.
+            # pending timer; the seq guard protects any future path that
+            # lets a stale VerifyStream reach the queue.
             return
         session = self._sessions.current
         facts = self._gather(event.session_id)
         if self._same_stream(facts.profile, session.profile):
-            session.profile = facts.profile   # silent incidental-field refresh
+            self._pending_suspect = None
+            self._refresh(session, facts.profile)  # silent incidental fields
             session.mark_stable()
             announce = session.profile_changed_since_stabilized
             session.profile_changed_since_stabilized = False
@@ -304,13 +379,20 @@ class StreamDetector:
                 session_id=event.session_id, profile_changed=announce,
                 initial=session.stabilized_count == 1))
         elif policies.is_complete(facts.profile):
+            if self._hold_if_suspect(session, facts.profile, 'verification',
+                                     second_look=True):
+                return
             self._log(f"AOMe_StreamDetector: profile changed during "
                       f"verification: {session.profile} -> {facts.profile}; "
                       f"re-verifying")
             self._adopt(session, facts.profile)
         else:
             # Profile went incomplete inside the window (codec blip):
-            # keep watching. Session-bound: playback stop cancels the key.
+            # keep watching, and keep any held reading — an unreadable
+            # gather contradicts nothing. Re-arms unconditionally, unlike
+            # its sibling in _reevaluate: this branch runs because the one
+            # pending verify just fired, so skipping would leave none armed
+            # at all. Session-bound: playback stop cancels the key.
             self._log("AOMe_StreamDetector: profile incomplete during "
                       "verification; re-verifying")
             self._schedule_verify(event.session_id)
@@ -320,23 +402,86 @@ class StreamDetector:
     def _same_stream(self, profile, adopted):
         """Offset-relevant identity at the granularity in force now.
 
-        All granularity toggles are read at compare instant: with per-fps
-        off, an fps wiggle is an incidental-field refresh; with
-        distinct-spatial off, a switch between a codec and its spatial
-        variant is too; with distinct-channels off, so is a channel-count
-        wiggle. On, each axis joins the identity like the lookup key.
+        Every granularity toggle is read at compare instant. An axis its
+        toggle folds out makes a wiggle an incidental-field refresh rather
+        than a stream change; an axis its toggle folds in joins the identity
+        exactly as it joins the lookup key.
         """
         if adopted is None:
             return False
         per_fps = self._settings.per_fps_offsets_enabled()
         distinct = self._settings.distinct_spatial_enabled()
         channels = self._settings.distinct_channels_enabled()
-        return (policies.stream_identity(profile, per_fps, distinct, channels)
+        devices = self._settings.distinct_devices_enabled()
+        return (policies.stream_identity(profile, per_fps, distinct, channels,
+                                         devices)
                 == policies.stream_identity(adopted, per_fps, distinct,
-                                            channels))
+                                            channels, devices))
+
+    def _refresh(self, session, profile):
+        """Silently replace the session's profile with an identity-equal gather.
+
+        Guarded on completeness, which is the invariant this component owes
+        the rest of the graph: ``session.profile`` is only ever written with
+        a profile the store can key. An identity-equal gather CAN be
+        incomplete on an axis the identity does not carry (an unreadable
+        device when the adopted one was the 'all' bucket, or an fps that
+        momentarily fails to parse with per-fps off), and writing that in
+        would leave the applier, the publisher and the learn loop all reading
+        an incomplete profile for a stream that never changed. Keeping the
+        previous facts is better: they are the ones the session is keyed on,
+        and the next gather refreshes them.
+        """
+        if policies.is_complete(profile):
+            session.profile = profile
+
+    def _hold_if_suspect(self, session, profile, reason, second_look=False):
+        """Hold a suspect changed gather rather than adopt it; True when held.
+
+        Suspect is the module docstring's rule, asked of a complete,
+        identity-changed gather. ``adopted is None`` is load-bearing rather
+        than defensive: an exhausted discovery leaves a live session with no
+        profile, and its next complete gather arrives here.
+
+        A held gather stands as evidence until something contradicts it, so
+        a trigger that merely re-reads it neither replaces it nor restarts
+        the verify it armed — a trigger stream faster than the window would
+        otherwise defer adoption for as long as it lasted.
+
+        Only ``second_look``, the verify path, settles on agreement, since
+        only there does a whole window separate the two reads. Not while
+        playback is paused, though: Kodi recomputes the condition per demux
+        packet, so a paused player latches whatever it last read and
+        elapsed time proves nothing about it.
+        """
+        adopted = session.profile
+        if (adopted is None
+                or not adopted.passthrough
+                or profile.passthrough
+                or profile.device_id() == adopted.device_id()):
+            return False
+        if self._same_stream(profile, self._pending_suspect):
+            if not second_look:
+                self._log(f"AOMe_StreamDetector: {reason}: still the held "
+                          f"reading; its verification stands")
+                return True
+            if not session.paused:
+                return False
+            self._log("AOMe_StreamDetector: paused while a held reading "
+                      "awaits verification; re-verifying")
+            self._schedule_verify(session.session_id)
+            return True
+        self._pending_suspect = profile
+        session.mark_verifying()
+        self._log(f"AOMe_StreamDetector: {reason}: the output device moved "
+                  f"as the passthrough condition dropped, so {adopted} -> "
+                  f"{profile} is held for verification")
+        self._schedule_verify(session.session_id)
+        return True
 
     def _adopt(self, session, profile):
         """Write the session's profile and (re-)earn stability for it."""
+        self._pending_suspect = None
         session.profile = profile
         session.profile_changed_since_stabilized = True
         if not session.mark_profile_built():
@@ -363,6 +508,30 @@ class StreamDetector:
         raw_hdr = self._gateway.infolabel(INFOLABEL_HDR)
         raw_hdr_fallback = self._gateway.infolabel(INFOLABEL_HDR_FALLBACK)
         raw_gamut = self._gateway.infolabel(INFOLABEL_GAMUT)
+        # Whether the PLAYER is bitstreaming this stream, which decides
+        # WHICH device setting names its endpoint (one-way: see
+        # formats.device_setting_id). Ungated, because a condition is an
+        # in-process read and it is the JSON-RPC setting read below that
+        # needs the toggle. False also covers "no player / not knowable
+        # yet", which is the right default: Kodi routes a non-RAW stream to
+        # the ordinary device, so a stream still negotiating reads that one
+        # rather than reading nothing.
+        passthrough = self._gateway.condition(formats.CONDITION_PASSTHROUGH)
+        # The one gathered fact read under a toggle. gateway.setting_value
+        # is a full JSON-RPC round trip, and with distinct-devices off the
+        # reading keys nothing, so a discovery chain would spend up to
+        # PROBE_BUDGET round trips on a fact nobody consults.
+        #
+        # The two branches answer two DIFFERENT absences and must not be
+        # merged: '' is "deliberately not read", which is complete because
+        # no key consults the axis, while the gateway's None is "read and
+        # failed", which is incomplete so discovery keeps probing and a live
+        # session keeps the device it is already keyed on.
+        if self._settings.distinct_devices_enabled():
+            raw_device = self._gateway.setting_value(
+                formats.device_setting_id(passthrough))
+        else:
+            raw_device = ''
         facts = derive_stream_facts(
             player_id=player_id,
             raw_codec=raw_codec,
@@ -371,15 +540,28 @@ class StreamDetector:
             raw_hdr=raw_hdr,
             raw_hdr_fallback=raw_hdr_fallback,
             raw_gamut=raw_gamut,
+            raw_device=raw_device,
+            passthrough=passthrough,
         )
-        # The raw gateway strings are logged verbatim: they are the store's
-        # key material, and logs are how key fragmentation gets diagnosed.
+        # The raw gateway strings are logged verbatim, since they are the
+        # store's key material and logs are how key fragmentation gets
+        # diagnosed. The device is the exception: only its id half is
+        # logged, never the friendly half. That id half stays RAW here
+        # uniquely, because this is the raw-readings line and the same
+        # line's profile repr renders the canonical segment beside it, so
+        # the pair exposes a spelling problem normalization would hide. A
+        # failed read logs as None, which is the one place it is told apart
+        # from an absent one (profile.describe() renders both '?').
+        logged_device = (None if raw_device is None
+                         else formats.split_device(raw_device)[0])
         self._log(f"AOMe_StreamDetector: probed {facts.profile} "
                   f"(hdr_source={facts.hdr_source}, "
                   f"platform_hdr_full={facts.platform_hdr_full}, "
                   f"gamut={facts.gamut_info}, "
-                  f"raw codec={raw_codec!r} hdr={raw_hdr!r}"
-                  f"/{raw_hdr_fallback!r} fps={raw_fps!r})")
+                  f"raw codec={raw_codec!r} passthrough={passthrough} "
+                  f"hdr={raw_hdr!r}"
+                  f"/{raw_hdr_fallback!r} fps={raw_fps!r} "
+                  f"device={logged_device!r})")
         self._dispatcher.post(events.StreamProbed(
             session_id=session_id,
             platform_hdr_full=facts.platform_hdr_full,

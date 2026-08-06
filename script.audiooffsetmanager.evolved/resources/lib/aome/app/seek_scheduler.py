@@ -15,44 +15,33 @@ session is not yet STABLE, for up to STABILITY_GRACE seconds, after which
 the quiet window alone decides (so a stream whose profile never completes
 still gets its replay).
 
-Behavior:
+Triggers: PlaybackStarted -> 'resume'; Resumed -> 'unpause'; a
+change-announcing, non-initial StreamStabilized -> 'adjust';
+UserOffsetSettled -> 'change' (the user-action fact rather than the store, so
+it fires with learning off too). Each is debounced per reason, and a
+re-trigger while pending key-replaces the attempt chain with a fresh
+requested_at, restarting the deadline.
 
-- Triggers: PlaybackStarted -> 'resume'; Resumed -> 'unpause'; a
-  change-announcing, non-initial StreamStabilized -> 'adjust';
-  UserOffsetSettled -> 'change' (the user-action fact, not the store, so it
-  fires with learning off too; session-stamped, so a settle racing an
-  in-place reopen cannot seek the new session).
-- Per-reason debounce: a trigger within DEBOUNCE_SECONDS of that reason's
-  last executed seek is dropped; a re-trigger while pending key-replaces the
-  attempt chain (its requested_at restarts the deadline).
-- Cross-type suppression: a request served by one of our own seeks
-  (executed at/after the request) is abandoned by the policy; a genuinely
-  new trigger just after an own seek defers and executes.
-- Unpause yields to the playhead: 'unpause' is the one trigger an external
-  actor may mirror (a vendor's own unpause seek-back), so its first attempt
-  waits the detection grace (letting a reactor reveal itself) and any seek
-  activity at or after the trigger cancels the replay rather than deferring
-  it. The signals are the generic activity view, never a specific addon; the
-  yield is single-shot, and an external seek landing after our committed
-  replay is the accepted residual (a corrective seek would be a worse third
-  jump). The other reasons do not yield: 'resume' keeps defer-past semantics
-  (start-of-playback seeks are positioning, not replays), and
-  'adjust'/'change' ride internal facts no external actor mirrors.
-- Session start counts as seek activity, so playback always gets a settle
-  window before the first replay (Kodi's resume-position seek defers the
-  replay past itself; a start under a sustained seek storm abandons at the
-  deadline).
-- Pause cancels the pending seek at fire time.
-- Stale requests are inert: ExecuteSeek is session-stamped and stop/end/
-  reopen cancels the per-reason timer keys. The request state is the
-  key-replaced timer and its event payload; there is no side bookkeeping.
+Unpause is the one trigger an external actor may mirror, so it alone yields
+to the playhead: its first attempt waits the detection grace to let a
+reactor reveal itself, and any seek activity at or after the trigger cancels
+the replay rather than deferring it. The yield is single-shot, and an
+external seek landing after our committed replay is the accepted residual, a
+corrective seek being a worse third jump. The other reasons ride internal
+facts no external actor mirrors, and 'resume' additionally keeps defer-past
+semantics because start-of-playback seeks are positioning rather than
+replays.
+
+Session start counts as seek activity, so playback always gets a settle
+window and Kodi's resume-position seek defers the replay past itself. Stale
+requests are inert: ExecuteSeek is session-stamped and stop/end/reopen
+cancels the per-reason timer keys. Request state is the key-replaced timer
+plus its event payload; there is no side bookkeeping.
 
 ``ExternalSeekCoordinator`` owns the inter-addon seek protocol both ways:
-the read side (the vendor busy-property list as data, aggregated
-cross-session into the policy's ``last_activity`` view) and the write side
-(the seek actuator, which sets our reciprocal
-``script.audiooffsetmanager.evolved.seeking`` property around the seek so
-other addons get the courtesy we consume from the vendor list).
+the vendor busy-property list as an activity view, and the actuator that
+sets our reciprocal seeking property around a seek so other addons get the
+courtesy we consume.
 
 Pure app layer: Kodi I/O through the injected gateway, settings through the
 injected facade, log sinks injected; no Kodi imports.
@@ -96,10 +85,10 @@ class ExternalSeekCoordinator:
     def last_activity(self, session):
         """Most recent seek-like activity relevant to this session.
 
-        Session start counts as activity (the post-start
-        settle); SeekOccurred and our own executed seeks feed
-        ``session.last_seek_activity``; vendor busy sightings are
-        coordinator-wide (they outlive sessions).
+        Session start counts as activity, giving playback its post-start
+        settle. SeekOccurred and our own executed seeks feed
+        ``session.last_seek_activity``, while vendor busy sightings are
+        coordinator-wide because they outlive sessions.
         """
         candidates = [session.started_at]
         if session.last_seek_activity is not None:
@@ -134,11 +123,11 @@ class SeekScheduler:
     RECHECK_SECONDS = 0.5
     DEBOUNCE_SECONDS = 2.0
     # The yielding reasons' first-attempt delay. Numerically equal to
-    # RECHECK_SECONDS today but its own knob: RECHECK tunes the re-poll
-    # cadence, this tunes the window in which an external reactor to the same
+    # RECHECK_SECONDS but its own knob: RECHECK tunes the re-poll cadence,
+    # while this tunes the window in which an external reactor to the same
     # trigger can reveal itself (a busy flag within ms, a mirrored seek
-    # within ~200ms; 0.5s covers both). Retune this, never RECHECK, if a
-    # slower reactor surfaces.
+    # within ~200ms). Retune this, never RECHECK, if a slower reactor
+    # surfaces.
     DETECTION_GRACE_SECONDS = 0.5
     # How long a 'seek' verdict defers waiting for STABLE before the quiet
     # window alone decides (never-stabilizing streams keep their replay).
@@ -146,9 +135,9 @@ class SeekScheduler:
 
     # The closed trigger vocabulary; also the cancellation key set.
     REASONS = ('resume', 'unpause', 'adjust', 'change')
-    # Reasons whose replay an external actor may mirror (see the module
-    # docstring): the first attempt waits one recheck (detection grace)
-    # and the policy yields to any activity at/after the trigger.
+    # Reasons whose replay an external actor may mirror: the first attempt
+    # waits the detection grace and the policy yields to any activity at or
+    # after the trigger.
     YIELDING_REASONS = ('unpause',)
 
     def __init__(self, dispatcher, session_tracker, settings_facade,
@@ -203,8 +192,8 @@ class SeekScheduler:
     def _on_user_offset_settled(self, event):
         """A manual adjustment settled: replay the glitched audio.
 
-        Rides the settle (user-action) fact, not the store — the replay
-        must work with learning off or the store unwritable.
+        Rides the settle (user-action) fact rather than the store, so the
+        replay works with learning off or the store unwritable.
         """
         if not self._sessions.is_alive(event.session_id):
             return
@@ -228,8 +217,8 @@ class SeekScheduler:
                       f"{event.reason} seek back")
             return
 
-        # Probe vendors on every attempt (a busy sighting during
-        # stabilization must count): the recording feeds last_activity, so
+        # Probe vendors on every attempt, since a busy sighting during
+        # stabilization must count. The recording feeds last_activity, so
         # the quiet window is the only vendor gate needed.
         self._coordinator.vendor_busy()
 

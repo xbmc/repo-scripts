@@ -25,10 +25,11 @@
                     <control type="toggle"/>
                 </setting>
             </group>
-            <!-- The three granularity toggles, all default off, in
+            <!-- The four granularity toggles, all default off, in
                  key-axis order (frame rate, spatial audio, channel
-                 count); the labels share the "Distinct ... offsets"
-                 shape so they read as one family. -->
+                 count, output device); the labels share the
+                 "Distinct ... offsets" shape so they read as one
+                 family. -->
             <group id="2">
                 <setting id="per_fps_offsets" type="boolean" label="32110" help="32111">
                     <level>0</level>
@@ -43,6 +44,13 @@
                 </setting>
                 <!-- Off keys every channel count onto the 'all' segment. -->
                 <setting id="distinct_channel_counts" type="boolean" label="32177" help="32178">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <!-- Off keys every audio output device onto the 'all'
+                     segment. -->
+                <setting id="distinct_output_devices" type="boolean" label="32179" help="32180">
                     <level>0</level>
                     <default>false</default>
                     <control type="toggle"/>

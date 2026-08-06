@@ -8,21 +8,15 @@ One decision path, four triggers:
   next stabilization, and the ``session.applied`` dedupe makes the common
   already-applied case a no-op.
 - ``SettingsChanged`` — the immediate-effect edge: every input to the
-  decision is read fresh at decision instant, so re-running it on a settings
-  save makes mid-playback edits act now, through the same gates. One
-  divergence from the stream-change triggers: a save changes no profile, so
-  a foreign delay (the user's hand) still targets the stream in force; the
-  miss path's baseline reset is withheld when the delay diverged from our
-  last apply (``profile_unchanged``). Only our own orphaned residue (a
-  toggle flip stranding the value we applied) is reset by a save.
+  decision is read fresh at decision instant, so re-running it on a save
+  makes mid-playback edits act now, through the same gates. One divergence
+  from the stream-change triggers: a save changes no profile, so a foreign
+  delay still targets the stream in force, and the miss path's baseline
+  reset is withheld when the delay diverged from our last apply
+  (``profile_unchanged``). Only our own orphaned residue is reset by a save.
 - ``StoreMutated`` — the management-view edge: a delete/clear that changed
   the store is a resolve moment too, so deleting the playing profile's
-  offset takes effect immediately (the marked miss forces its 0 at the
-  deletion). Same shape as SettingsChanged otherwise.
-
-Both silent reset paths post a session-stamped ``DelayReset`` on a
-successful reset, so the watcher drops any in-flight observation (a reset is
-an automatic delay change like an apply).
+  offset takes effect immediately. Same shape as ``SettingsChanged``.
 
 Two contracts, both pinned by tests:
 
@@ -31,43 +25,21 @@ Two contracts, both pinned by tests:
   suppression compares observed delays against it, so record-after-success
   would let it store our own apply as a user adjustment. Do not reorder.
 - **Freshness**: the profile is read from ``session.profile`` at the moment
-  of use (the detector is its sole writer, on this same thread); the
-  granularity toggles (per-fps, distinct-spatial, distinct-channels) are
-  resolved inside the OffsetTable for the same reason.
+  of use (the detector is its sole writer, on this same thread), and the
+  granularity toggles are resolved inside the OffsetTable for the same
+  reason.
 
-The apply is eager: it runs on adoption, before stability, because A/V sync
-matters immediately. It is marked ``provisional`` unless the session is
-already STABLE, and the ``OffsetApplied`` lets the Notifier hold the toast
-until stabilization. This component never toasts.
+The apply is eager, running on adoption before stability because A/V sync
+matters immediately, and is marked ``provisional`` unless the session is
+already STABLE so the Notifier can hold the toast. This component never
+toasts.
 
-Offsets come from the injected ``OffsetTable``. A miss is a no-op until the
-addon has acted on the session, then a zero-reset: before the first
-apply/store a miss leaves Kodi's delay untouched (a fresh install must not
-clobber the user's own per-file delay); after that the delay in force is
-ours or the previous profile's, so an unlearned profile resets it to 0 —
-silently for our own residue, or with an ``UnsavedOffsetDiscarded`` (the
-"Offset not saved" toast) when it diverged from the last apply. One debug
-line per distinct consulted chain (``session.miss_announced`` dedupes), and
-the reset is idempotent.
-
-A miss whose consulted chain carries reset markers (the user deleted those
-keys) forces the delay to 0 immediately, first action or not: the deletion
-is the authorization the gate otherwise waits for. The forced 0 consumes the
-markers (one-shot) and is silent.
-
-The applier also publishes the live profile to the home-window property
-``script.audiooffsetmanager.evolved.profile``: the write key of the current
-complete profile under the current toggle, retracted at every playback
-boundary — start included, since an in-place reopen fires no stop callback
-and the old key must not outlive its stream — and when the profile is
-incomplete. Publishing rides the same four triggers and runs before the
-apply gates, so the property stays fresh at every resolve moment (a toggle
-flip republishes the other mode's key) and keeps working with applying off.
-The management view in the script process reads it to tag the playing
-entry; nothing in-process consumes it. Window properties outlive a
-crashed service until Kodi exits, so the runtime retracts at service
-start/stop via ``clear_published_profile``, which bypasses the repeat-write
-dedupe.
+The applier also publishes the live profile's write key to a home-window
+property the management view reads to tag the playing entry. Publishing
+rides the same four triggers and runs before the apply gates, so it stays
+fresh at every resolve moment and keeps working with applying off. Window
+properties outlive a crashed service until Kodi exits, so the runtime
+retracts at start and stop via ``clear_published_profile``.
 
 Pure app layer: Kodi I/O via the injected gateway, settings via the injected
 adapter, log sinks injected; no Kodi imports.
@@ -126,17 +98,17 @@ class OffsetApplier:
 
     def _on_store_mutated(self, _event):
         """Management-view edge: a store-changing delete/clear re-runs the
-        decision, so deleting the playing profile's offset acts NOW (the
-        marked miss forces its 0 at the deletion itself)."""
+        decision, so deleting the playing profile's offset acts now and the
+        marked miss forces its 0 at the deletion itself."""
         self._reconcile_live_session()
 
     def _on_playback_boundary(self, _event):
         """Retract the published profile at every playback edge.
 
-        A stop/end has no live profile; a start has none YET — and it is
-        the only edge an in-place reopen fires, so without it the previous
-        stream's key would stand for the whole discovery window (or
-        forever, when the new stream never completes a profile).
+        A stop/end has no live profile and a start has none yet. Start is
+        also the only edge an in-place reopen fires, so without it the
+        previous stream's key would stand for the whole discovery window, or
+        forever when the new stream never completes a profile.
         """
         self._publish_key(None)
 
@@ -169,9 +141,9 @@ class OffsetApplier:
         resolution = self._offsets.resolve(profile)
         if resolution.entry is None:
             # One debug line per distinct consulted chain, then the miss
-            # policy — untouched before the addon's first action of the
-            # session, zero-reset after; a chain carrying reset markers
-            # forces the 0 regardless.
+            # policy: untouched before the addon's first action of the
+            # session, zero-reset after, and forced to 0 regardless when the
+            # chain carries reset markers.
             if session.miss_announced != resolution.tried:
                 session.miss_announced = resolution.tried
                 self._log(f"AOMe_OffsetApplier: no stored offset for "
@@ -221,22 +193,23 @@ class OffsetApplier:
         """Force the 0 a deletion promised.
 
         Runs on a miss whose consulted chain carries reset markers,
-        bypassing the ``session.applied`` gate: the user's delete is the
-        authorization the gate otherwise waits for. The forced 0 is one-shot
-        (markers consumed on success and on the confirmed already-0 case; a
-        failed RPC keeps them so the next stabilization retries). Silent: 0
-        is the expected outcome of the deletion, so no toast fires.
+        bypassing the ``session.applied`` gate because the user's delete is
+        the authorization that gate otherwise waits for. One-shot: markers
+        are consumed on success and on the confirmed already-0 case, while a
+        failed RPC keeps them so the next stabilization retries. Silent,
+        since 0 is the expected outcome of the deletion.
         """
         raw = self._gateway.infolabel(AdjustmentWatcher.INFOLABEL_AUDIO_DELAY)
         current_ms = policies.parse_delay_ms(raw)
         if current_ms == 0 and (session.applied is None
                                 or session.applied[1] == 0):
-            # Genuinely at baseline: the label agrees with our bookkeeping.
-            # Nothing to do, but the marker is spent. A 0 that contradicts a
-            # nonzero session.applied is a stale label (the infolabel can lag
-            # our RPC) and falls through to the reset RPC instead; consuming
-            # the marker on a stale 0 would cancel the deletion permanently
-            # once Kodi's per-file memory replays the old value.
+            # Genuinely at baseline: the label agrees with our bookkeeping,
+            # so there is nothing to do but spend the marker. A 0 that
+            # contradicts a nonzero session.applied is a stale label (the
+            # infolabel can lag our RPC) and falls through to the reset RPC
+            # instead, since consuming the marker on a stale 0 would cancel
+            # the deletion permanently once Kodi's per-file memory replays
+            # the old value.
             self._consume_markers(reset_keys)
             return
 
@@ -262,22 +235,21 @@ class OffsetApplier:
             self._offsets.consume_reset(key)
 
     def _reset_if_owned(self, session, profile, *, profile_unchanged=False):
-        """The miss policy's second half: reset our own stale residue.
+        """The miss policy: leave a delay we never set, reset our own residue.
 
-        ``session.applied is None`` means the addon has not touched this
-        session, so whatever delay exists belongs to the user or Kodi's
-        per-file memory and must not be clobbered. Once we have acted, the
-        delay in force was set for the previous profile, so an unlearned
-        profile returns to 0. The reset is idempotent: a delay already at 0
-        is left alone.
+        A miss does nothing until the addon has acted on the session, because
+        a fresh install must not clobber the user's own per-file delay. After
+        that the delay in force is ours or the previous profile's, so an
+        unlearned profile returns it to 0.
 
-        ``profile_unchanged`` (the settings-save and store-mutation
-        triggers) withholds the reset when the delay diverged from our last
-        apply: those triggers change no profile, so a foreign value still
-        targets the stream in force, and wiping it because an unrelated knob
-        was saved would clobber the user's hand. Only our own residue,
-        orphaned by the trigger itself, is reset. An unreadable delay is also
-        left alone on this path.
+        Idempotent: a delay already at 0 is left alone.
+
+        ``profile_unchanged`` (the settings-save and store-mutation triggers)
+        withholds the reset when the delay diverged from our last apply.
+        Those triggers change no profile, so a foreign value still targets
+        the stream in force and wiping it because an unrelated knob was saved
+        would clobber the user's hand. An unreadable delay is left alone on
+        this path too.
         """
         if session.applied is None:
             return
@@ -288,9 +260,9 @@ class OffsetApplier:
             return
 
         # Divergence from the last apply means the value being discarded
-        # contains a manual adjustment that never reached the store
-        # (remember off, or a stream change inside the quiescence window).
-        # An unreadable delay resets silently — never toast on a hiccup.
+        # contains a manual adjustment that never reached the store (learning
+        # off, or a stream change inside the quiescence window). An
+        # unreadable delay resets silently: never toast on a hiccup.
         discarded = None
         if current_ms is not None and current_ms != session.applied[1]:
             discarded = current_ms
@@ -351,9 +323,8 @@ class OffsetApplier:
         """Unconditional retract for the runtime's start/stop hygiene.
 
         Bypasses the dedupe on purpose: at service start the property may
-        hold a value a crashed predecessor never retracted (window
-        properties persist until Kodi exits), which fresh dedupe state
-        cannot see.
+        hold a value a crashed predecessor never retracted, which fresh
+        dedupe state cannot see.
         """
         self._published = None
         self._gateway.clear_window_property(self.PROFILE_PROPERTY)

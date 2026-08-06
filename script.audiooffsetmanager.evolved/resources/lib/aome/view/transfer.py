@@ -1,48 +1,42 @@
 """TransferView: the script-process offsets backup surface (export/import).
 
 The manage view's sibling: it runs in the script process, honours the same
-no-value-entry boundary (a backup transports values learned during playback,
-never typed), and never writes the store file. Export is pure read: the
-store file is validated through the read-only reader and copied verbatim to
-a folder the user picks, so a backup round-trips exactly, resets section and
-all. Import is the restore: the picked file is copied to the channel's
-staging path (``<store>.import``, a staging file, not the store file),
-pre-validated with the same reader the service will use, confirmed, and
-requested over the mutation channel as the ``import`` op; the service
-re-validates the staged file, replaces the whole store (restore semantics,
-never merge; the backup's reset markers are restored too), and discards the
+no-value-entry boundary, and never writes the store file. Export is pure
+read, validating the store through the read-only reader and copying it
+verbatim to a folder the user picks, so a backup round-trips exactly, resets
+section and all. Import is the restore: the picked file is copied to the
+channel's staging path, pre-validated with the same reader the service will
+use, confirmed, and requested over the mutation channel; the service
+re-validates the staged file, replaces the whole store, and discards the
 staging file. No path and no values ever travel on the wire.
 
 The seams are injected callables, wired by the script router:
 
-* ``read_entries()`` — validated snapshot of the live store (export's
-  count + refuse-to-export-garbage gate); raises :class:`StoreUnreadable`.
+* ``read_entries()`` — validated snapshot of the live store (export's count
+  plus its refuse-to-export-garbage gate); raises :class:`StoreUnreadable`.
 * ``read_staged()`` — validated snapshot of the staged backup (import's
   pre-flight); raises :class:`StoreUnreadable`, including for a missing file.
 * ``export_file(destination)`` — copy the store file to ``destination``
-  (``xbmcvfs.copy``, so network/USB destinations work).
-* ``stage_file(source)`` — copy ``source`` to the staging path (again
-  ``xbmcvfs.copy``, since the picked source may be a VFS path).
+  through ``xbmcvfs``, so network and USB destinations work.
+* ``stage_file(source)`` — copy ``source`` to the staging path, again
+  through ``xbmcvfs``, since the picked source may be a VFS path.
 * ``discard_staged()`` — best-effort staging cleanup. The view discards
   before every stage and right after the pre-flight read, so nothing sits
-  staged while the confirmation dialog waits; only a confirmed import
-  re-stages, just before the send. After a sent request the service owns the
-  cleanup: an ack timeout does not mean the request died (it may still be
-  queued), and deleting the staging file out from under it would turn a slow
-  import into a refused one. A stale staging file is inert (overwritten
-  before every request).
-* ``send_mutation(op)`` — the channel client's send; ``None`` (no ack) is
-  the report-only "service not running" signal, as in the manage view.
+  staged while the confirmation dialog waits, and only a confirmed import
+  re-stages. After a sent request the service owns the cleanup: an ack
+  timeout means "no reply in time" rather than "the request died", so
+  deleting the staging file out from under it would turn a slow import into
+  a refused one.
+* ``send_mutation(op)`` — the channel client's send, where ``None`` is the
+  report-only "service not running" signal, as in the manage view.
 
-Import refuses an empty (but valid) backup before confirming: export refuses
-to write one, so an empty file is hand-made, and "restore nothing" is
-clear-all in a costume. The service enforces the same refusal (the choke
-point); this is the friendly pre-flight.
+Import refuses an empty but valid backup before confirming: export refuses
+to write one, so such a file is hand-made and restoring it would be
+clear-all in a costume. The service enforces the same refusal at the choke
+point; this is the friendly pre-flight.
 
-Every dialog string that is the entire message carries an English fallback,
-and the shared ids reuse the manage view's fallback texts. Templates are
-format-guarded the same way, so a translation that drops or malforms a
-placeholder degrades to the English template.
+Dialog strings and their fallbacks follow the manage view's conventions, and
+the shared ids reuse its fallback texts.
 """
 
 import time
@@ -95,10 +89,10 @@ _FALLBACKS.update({
 # The import file picker's extension filter (backups are plain JSON).
 _IMPORT_MASK = '.json'
 
-# Service refusal details with dedicated user wordings — the conditions
-# the pre-flight also detects, reachable on an ack only when the staged
-# file changed between the script's read and the service's (re)read.
-# Anything else renders the generic failure line with the raw token.
+# Service refusal details with dedicated user wordings. These are the
+# conditions the pre-flight also detects, reachable on an ack only when the
+# staged file changed between the script's read and the service's. Anything
+# else renders the generic failure line with the raw token.
 _DETAIL_MESSAGES = {
     'invalid': _MSG_NOT_A_BACKUP,
     'future': _MSG_IMPORT_FUTURE,
@@ -113,9 +107,9 @@ def _noop(_message):
 def _join(folder, name):
     """Append ``name`` to a browsed folder path.
 
-    Kodi's folder browser answers with a trailing separator; the guard
-    covers hand-fed paths without one ('/' is accepted by every VFS protocol
-    and by Windows APIs).
+    Kodi's folder browser answers with a trailing separator; the guard covers
+    hand-fed paths without one, and '/' is accepted by every VFS protocol
+    and by Windows APIs.
     """
     if folder.endswith('/') or folder.endswith('\\'):
         return folder + name
@@ -148,7 +142,8 @@ class TransferView:
         except StoreUnreadable as error:
             self._log("AOMe_TransferView: store unreadable ({0})".format(error))
             # Same split as the manage view: a newer-schema store is
-            # preserved, not corrupt — its wording must not promise a reset.
+            # preserved rather than corrupt, so its wording must not promise
+            # a reset.
             message = _MSG_FUTURE if getattr(error, 'future', False) \
                 else _MSG_UNREADABLE
             self._gui.ok(heading, self._text(message))
@@ -174,20 +169,21 @@ class TransferView:
             _MSG_EXPORTED, self._counted(len(entries)), destination))
 
     def _export_name(self):
-        """Timestamped backup filename, second resolution: repeated exports
-        get distinct names (two completions inside one second would collide,
-        which the dialog-paced flow cannot produce)."""
+        """Timestamped backup filename at second resolution, so repeated
+        exports get distinct names. Two completions inside one second would
+        collide, which the dialog-paced flow cannot produce."""
         stamp = time.strftime('%Y%m%d-%H%M%S', time.localtime(self._clock()))
         return 'aom-evolved-offsets-{0}.json'.format(stamp)
 
     # -- import ---------------------------------------------------------------
 
     def run_import(self):
-        """Pick a backup, pre-flight it, confirm, stage + request the restore.
+        """Pick a backup, pre-flight it, confirm, then stage and request the
+        restore.
 
         The staged copy lives at the well-known path only in two short
-        windows: around the pre-flight read (a finally block discards it, so
-        no exit path leaks it into the confirm window) and between the
+        windows: around the pre-flight read, where a finally block discards
+        it so no exit path leaks it into the confirm window, and between the
         post-confirmation re-stage and the service consuming it.
         """
         heading = self._gui.localized(_HEADING_IMPORT)
@@ -213,9 +209,9 @@ class TransferView:
             # unusable path, the guards below, AND the confirm window.
             self._discard_staged()
         if not entries:
-            # An empty-but-valid backup is hand-made (export refuses to
-            # write one); restoring it would be clear-all in a costume.
-            # The service refuses it too — this is the friendly wording.
+            # An empty-but-valid backup is hand-made, since export refuses to
+            # write one, and restoring it would be clear-all in a costume.
+            # The service refuses it too; this is the friendly wording.
             self._log("AOMe_TransferView: staged backup holds no entries")
             self._gui.ok(heading, self._text(_MSG_BACKUP_EMPTY))
             return
@@ -237,8 +233,8 @@ class TransferView:
 
     def _stage(self, source):
         """Copy ``source`` to the staging path, sweeping any stale copy
-        first (a leftover must not survive a failed copy and be read as
-        if it were the picked file)."""
+        first, so a leftover cannot survive a failed copy and be read as if
+        it were the picked file."""
         self._discard_staged()
         if self._stage_file(source):
             return True
@@ -250,11 +246,10 @@ class TransferView:
         """Surface the import ack.
 
         Once a request was sent the service owns the staging cleanup, even on
-        an ack timeout (which means "no reply in time", not "the request
-        died"): sweeping the staging file here would turn a slow import into
-        a refused one. Refusal details the pre-flight also detects map to the
-        same dedicated wordings; unexpected details fall back to the generic
-        failure line with the raw token.
+        an ack timeout, so sweeping the staging file here would turn a slow
+        import into a refused one. Refusal details the pre-flight also
+        detects map to the same dedicated wordings; unexpected details fall
+        back to the generic failure line with the raw token.
         """
         if ack is None:
             self._log("AOMe_TransferView: no ack (service not running)")
@@ -287,9 +282,8 @@ class TransferView:
 
     def _template(self, string_id, *values):
         """A format template with the manage view's translation guards: a
-        translation missing any of the expected ``{0}..{n}`` placeholders
-        (32153 carries two), or one malformed enough to raise, degrades to
-        the English fallback."""
+        translation missing any of the expected ``{0}..{n}`` placeholders, or
+        one malformed enough to raise, degrades to the English fallback."""
         template = self._text(string_id)
         if any('{' + str(index) + '}' not in template
                for index in range(len(values))):

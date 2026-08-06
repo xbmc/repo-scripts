@@ -1,17 +1,16 @@
 """Script-process client for the store mutation channel.
 
 The management view's only write path: one ``JSONRPC.NotifyAll`` request to
-the service (broadcast through the injected gateway's ``notify_all``), then
-a bounded poll for the matching ack. The service's dispatcher executes the
-mutation and acks back over NotifyAll; ``send`` returns that ack dict, or
-``None`` when no ack arrives inside the timeout (the view's "service not
-running" signal). There is no fallback write path here (report-only).
+the service, then a bounded poll for the matching ack. ``send`` returns that
+ack dict, or ``None`` when no ack arrives inside the timeout, which is the
+view's report-only "service not running" signal. There is no fallback write
+path.
 
 Request/ack matching uses a per-request ``request_id`` echoed by the
-service; acks are ignored while no request is in flight, so a stale or
+service, and acks are ignored while no request is in flight, so a stale or
 id-less broadcast cannot pre-seed a reply. ``onNotification`` runs on Kodi's
-announce thread while ``send`` polls; the single-reference handoff (assign
-whole dict, read whole dict) is safe under the GIL.
+announce thread while ``send`` polls; the single-reference handoff is safe
+under the GIL.
 
 An ``aome.kodi`` adapter: the only aome layer permitted to import ``xbmc``.
 """
@@ -35,9 +34,9 @@ class MutationClient(xbmc.Monitor):
     POLL_SECONDS = 0.1
 
     def __init__(self, gateway, *, log):
-        """``gateway`` is the process's ``KodiGateway`` (its ``notify_all``
-        is the broadcast leg); ``log`` is a REQUIRED ``(message, level)``
-        sink (house convention)."""
+        """``gateway`` is the process's ``KodiGateway``, whose ``notify_all``
+        is the broadcast leg; ``log`` is a required ``(message, level)``
+        sink."""
         super().__init__()
         self._gateway = gateway
         self._log = log
@@ -50,8 +49,8 @@ class MutationClient(xbmc.Monitor):
         if sender != ADDON_ID or method != _ACK_METHOD:
             return
         if self._pending_id is None:
-            # No request in flight: nothing on the bus is ours (guards the
-            # idle state against an id-less ack matching None).
+            # No request in flight, so nothing on the bus is ours. Also
+            # guards the idle state against an id-less ack matching None.
             return
         payload = decode_payload(data)
         if payload is None:
@@ -62,13 +61,13 @@ class MutationClient(xbmc.Monitor):
 
     # -- script thread -------------------------------------------------------------
 
-    def send(self, op, key=None):
+    def send(self, op, key=None, device=None):
         """Broadcast one mutation request; return the ack dict or None.
 
         ``None`` means the broadcast failed or no ack arrived within
-        ``TIMEOUT_SECONDS`` — the caller treats both as "service not
-        running" (report-only). The poll uses ``waitForAbort`` slices so
-        a Kodi shutdown mid-wait aborts cleanly.
+        ``TIMEOUT_SECONDS``, and the caller treats both as "service not
+        running". The poll uses ``waitForAbort`` slices so a Kodi shutdown
+        mid-wait aborts cleanly.
         """
         request_id = uuid.uuid4().hex
         self._pending_id = request_id
@@ -77,6 +76,8 @@ class MutationClient(xbmc.Monitor):
         payload = {'op': op, 'request_id': request_id}
         if key is not None:
             payload['key'] = key
+        if device is not None:
+            payload['device'] = device
 
         if not self._gateway.notify_all(ADDON_ID, MUTATION_MESSAGE, payload):
             # The gateway already logged the RPC failure.

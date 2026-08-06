@@ -23,13 +23,11 @@ class KodiGateway:
     """Single-shot wrapper over Kodi's JSON-RPC, InfoLabels, and window props."""
 
     def __init__(self, *, log):
-        """``log`` is a required ``(message, level)`` sink (production
-        injects the ``KodiLogger`` callable), so one instance per process
-        carries the addon-wide LOGDEBUG->LOGINFO escalation.
-        """
+        """``log`` is a required ``(message, level)`` sink, so one instance
+        per process carries the addon-wide LOGDEBUG->LOGINFO escalation."""
         self._log = log
-        # Home-window handle, created LAZILY on first window-property use:
-        # constructing a gateway must perform no Kodi GUI I/O.
+        # Created lazily on first window-property use: constructing a
+        # gateway must perform no Kodi GUI I/O.
         self._home_window = None
 
     def _execute_rpc(self, request):
@@ -39,9 +37,9 @@ class KodiGateway:
     def active_player_id(self):
         """Return the active player id, or -1 when there is none.
 
-        Single ``Player.GetActivePlayers`` call. Returns the first player's
-        ``playerid`` when present, else -1. No retry loop — the caller owns any
-        patience for a player that is not ready yet.
+        Single ``Player.GetActivePlayers`` call, returning the first
+        player's ``playerid``. No retry loop: the caller owns any patience
+        for a player that is not ready yet.
         """
         try:
             response = self._execute_rpc({
@@ -62,12 +60,18 @@ class KodiGateway:
         """Return ``(codec, channels)`` for the current audio stream.
 
         Single ``Player.GetProperties`` call. A codec of ``'none'`` (audio
-        not yet negotiated) is returned AS-IS: retry patience belongs to
-        the caller, so this gateway reports whatever the player currently
-        says.
+        not yet negotiated) is returned as-is, since retry patience belongs
+        to the caller.
 
-        A missing ``currentaudiostream`` (LOGDEBUG) or any exception (LOGERROR)
-        yields ``("unknown", "unknown")``.
+        The codec name is the DEMUXER's, verbatim: VideoPlayer fills
+        ``currentaudiostream.codec`` from the demuxer's own naming and never
+        rewrites it once the audio codec opens, so this field NEVER reports
+        passthrough and no 'pt-' prefix should be stripped from it. The
+        passthrough signal is ``formats.CONDITION_PASSTHROUGH``, read through
+        :meth:`condition`.
+
+        A missing ``currentaudiostream`` or any exception yields
+        ``("unknown", "unknown")``.
         """
         try:
             response = self._execute_rpc({
@@ -82,7 +86,7 @@ class KodiGateway:
 
             if "result" in response and "currentaudiostream" in response["result"]:
                 audio_stream = response["result"]["currentaudiostream"]
-                return (audio_stream.get("codec", "unknown").replace('pt-', ''),
+                return (audio_stream.get("codec", "unknown"),
                         audio_stream.get("channels", "unknown"))
 
             self._log("AOMe_Gateway: No currentaudiostream in response", xbmc.LOGDEBUG)
@@ -91,14 +95,58 @@ class KodiGateway:
             self._log(f"AOMe_Gateway: Error getting audio info: {str(e)}", xbmc.LOGERROR)
             return "unknown", "unknown"
 
+    def setting_value(self, setting_id):
+        """Return a Kodi CORE setting's value as a string, or None on failure.
+
+        Single ``Settings.GetSettingValue`` round-trip. That method returns
+        the stored value straight from the setting object and runs no options
+        filler, so reading is free of side effects.
+
+        NEVER read a core setting through ``Settings.GetSettings`` instead:
+        merely enumerating settings that way silently rewrites the user's
+        audio output device (docs/kodi-platform-notes.md). A read of the
+        user's configuration must never mutate it.
+
+        The two answers are NOT interchangeable and callers must not collapse
+        them. None means "could not read": an error response (a hidden
+        setting answers InvalidParams), a non-string value, or an exception.
+        '' means Kodi genuinely returned an empty value. A failed read keeps
+        a profile incomplete (``policies.is_complete``) so the detector stays
+        patient, while an empty one is a real reading that legitimately keys
+        the 'all' bucket; a single sentinel for both would let one failed
+        read re-key a session and discard the user's learned offset.
+        """
+        try:
+            response = self._execute_rpc({
+                "jsonrpc": "2.0",
+                "method": "Settings.GetSettingValue",
+                "params": {"setting": setting_id},
+                "id": 1
+            })
+
+            if "error" in response:
+                self._log(f"AOMe_Gateway: Failed to read setting {setting_id}: "
+                          f"{response['error']}", xbmc.LOGDEBUG)
+                return None
+
+            value = response.get("result", {}).get("value")
+            if not isinstance(value, str):
+                self._log(f"AOMe_Gateway: Setting {setting_id} answered a "
+                          f"non-string value", xbmc.LOGDEBUG)
+                return None
+            return value
+        except Exception as e:
+            self._log(f"AOMe_Gateway: Error reading setting {setting_id}: "
+                      f"{str(e)}", xbmc.LOGERROR)
+            return None
+
     def infolabel(self, label):
         """Return ``xbmc.getInfoLabel(label)``, or '' if the read raises.
 
-        The gateway does not interpret the value; callers apply the echo guard
-        (dropping a label that just repeats the query) themselves. The
-        exception guard matches the sibling methods: a transient read failure
-        must yield the "unresolved" sentinel, not unwind the caller's
-        probe/verify chain before its next attempt is scheduled.
+        The gateway does not interpret the value; callers apply the echo
+        guard themselves. As with the sibling methods, a transient read
+        failure yields the unresolved sentinel rather than unwinding the
+        caller's probe/verify chain before its next attempt is scheduled.
         """
         try:
             return xbmc.getInfoLabel(label)
@@ -107,13 +155,28 @@ class KodiGateway:
                       xbmc.LOGERROR)
             return ''
 
-    def set_audio_delay(self, player_id, delay_seconds):
-        """Set the audio delay via ``Player.SetAudioDelay``; return success.
+    def condition(self, name):
+        """Return ``xbmc.getCondVisibility(name)``, or False if it raises.
 
-        An ``error``
-        key in the response logs LOGWARNING and returns False; success logs
-        LOGDEBUG and returns True; an exception logs LOGERROR and returns False.
+        Kodi's boolean conditions are a separate namespace from InfoLabels
+        and answer a bool, so they need their own accessor. Like
+        ``infolabel`` this is an in-process read, not a JSON-RPC round trip.
+
+        False is the only sensible failure answer, and it is not a lie a
+        caller has to screen: Kodi's own conditions answer false whenever the
+        state they describe is not in effect, including when there is no
+        player at all. Callers must therefore not read False as "resolved and
+        false"; it also covers "not knowable yet".
         """
+        try:
+            return bool(xbmc.getCondVisibility(name))
+        except Exception as e:
+            self._log(f"AOMe_Gateway: Error reading condition {name}: "
+                      f"{str(e)}", xbmc.LOGERROR)
+            return False
+
+    def set_audio_delay(self, player_id, delay_seconds):
+        """Set the audio delay via ``Player.SetAudioDelay``; return success."""
         try:
             response = self._execute_rpc({
                 "jsonrpc": "2.0",
@@ -141,10 +204,7 @@ class KodiGateway:
         """Seek backward by ``seconds`` via ``Player.Seek``; return success.
 
         A ``player_id`` of ``None`` falls back to player id ``1``.
-        Error/exception handling mirrors
-        :meth:`set_audio_delay`.
         """
-        # No explicit player id -> assume player 1.
         target_player_id = player_id if player_id is not None else 1
         request = {
             "jsonrpc": "2.0",
@@ -177,10 +237,10 @@ class KodiGateway:
         """True when ``addon_id`` is installed and enabled; False otherwise.
 
         Single ``Addons.GetAddonDetails`` call (the coexistence probe). A
-        missing addon is a JSON-RPC error response; that and any exception
-        answer False, the safe reading of every failure (the once-flag is
-        only set after a warning shows, so a transient error just retries
-        next start).
+        missing addon is a JSON-RPC error response, and that plus any
+        exception answer False, the safe reading of every failure: the
+        once-flag is only set after a warning shows, so a transient error
+        simply retries next start.
         """
         try:
             response = self._execute_rpc({
@@ -208,10 +268,8 @@ class KodiGateway:
     def notify_all(self, sender, message, data):
         """Broadcast a ``JSONRPC.NotifyAll`` message; return success.
 
-        The store mutation channel's reply path (the service acks script-
-        process requests through this). Single-shot like every sibling:
-        an ``error`` response logs LOGWARNING and returns False, an
-        exception logs LOGERROR and returns False.
+        The store mutation channel's reply path: the service acks
+        script-process requests through this.
         """
         try:
             response = self._execute_rpc({
@@ -245,10 +303,9 @@ class KodiGateway:
     def settings_dialog_open(self):
         """True while an addon-settings dialog is the active dialog.
 
-        The window-id knowledge lives here (the Kodi layer) so callers only
-        ask the question. ``getCurrentWindowDialogId()`` reports 9999 when no
-        dialog is open; the error fallback answers False, since a transient
-        read failure must not wedge a write forever.
+        The window-id knowledge lives here so callers only ask the question.
+        The error fallback answers False, since a transient read failure must
+        not wedge a write forever.
         """
         try:
             return xbmcgui.getCurrentWindowDialogId() == self._SETTINGS_DIALOG_ID
@@ -264,8 +321,8 @@ class KodiGateway:
         return self._home_window
 
     # The window-property methods carry the same exception guards as the RPC
-    # methods: a transient GUI-layer failure must degrade to the unset
-    # sentinel / a no-op, never unwind a caller mid-handler.
+    # methods: a transient GUI-layer failure degrades to the unset sentinel
+    # or a no-op rather than unwinding a caller mid-handler.
 
     def window_property(self, name):
         """Return the home-window property ``name`` (empty string if unset)."""

@@ -21,9 +21,8 @@ class Gui:
     """Single-shot wrapper over Kodi's notification dialog and string table."""
 
     def __init__(self, *, log):
-        """``log`` is a required ``(message, level)`` sink (production
-        injects the ``KodiLogger`` callable), so one logger instance serves
-        the whole process."""
+        """``log`` is a required ``(message, level)`` sink, so one logger
+        instance serves the whole process."""
         addon = xbmcaddon.Addon(ADDON_ID)
         self._addon = addon
         self._name = addon.getAddonInfo('name')
@@ -33,9 +32,8 @@ class Gui:
     def localized(self, string_id):
         """Return the localized string for ``string_id`` ('' on failure).
 
-        The exception guard mirrors the gateway's reads: a transient string
-        lookup failure yields the empty sentinel instead of unwinding the
-        caller's message assembly.
+        As with the gateway's reads, a transient lookup failure yields the
+        empty sentinel rather than unwinding the caller's message assembly.
         """
         try:
             return self._addon.getLocalizedString(string_id)
@@ -47,11 +45,11 @@ class Gui:
     def select(self, heading, options):
         """Show a selection list; return the chosen index, -1 on cancel/error.
 
-        Each option is a plain string (single-line row) or a
+        Each option is a plain string (a single-line row) or a
         ``(label, detail)`` tuple; any tuple upgrades the whole dialog to
-        Kodi's two-line detail rows (``useDetails``), with strings rendering
-        as detail-less items. -1 (Kodi's cancel value) doubles as the error
-        fallback, so a transient failure reads as "user backed out".
+        Kodi's two-line detail rows, with strings rendering as detail-less
+        items. Kodi's cancel value doubles as the error fallback, so a
+        transient failure reads as "user backed out".
         """
         try:
             if any(isinstance(option, tuple) for option in options):
@@ -72,8 +70,8 @@ class Gui:
     def yesno(self, heading, message):
         """Show a yes/no confirmation; return True only on an explicit yes.
 
-        The error fallback is False — a transient GUI failure must never
-        read as consent (the view uses this to confirm delete/clear).
+        The error fallback is False: a transient GUI failure must never read
+        as consent, since the views confirm deletions through this.
         """
         try:
             return bool(xbmcgui.Dialog().yesno(heading, message))
@@ -86,9 +84,9 @@ class Gui:
         """Show a modal OK dialog; True when it actually rendered.
 
         The bool matters to callers that gate a side effect on the user
-        having seen the dialog (the coexistence once-flag): a swallowed
-        failure returns False so the caller can retry rather than mark an
-        unshown warning as shown.
+        having seen the dialog, such as the coexistence once-flag: a
+        swallowed failure returns False so the caller can retry rather than
+        mark an unshown warning as shown.
         """
         try:
             xbmcgui.Dialog().ok(heading, message)
@@ -103,9 +101,8 @@ class Gui:
 
         The export destination surface: type 3 is Kodi's
         ShowAndGetWriteableDirectory over the 'files' shares, so local
-        drives, network shares, and USB mounts all offer themselves. Kodi
-        answers a cancel with the empty default, so '' doubles as the error
-        fallback, like select().
+        drives, network shares and USB mounts all offer themselves. '' is
+        both the cancel and the error answer, as in ``select``.
         """
         try:
             return xbmcgui.Dialog().browseSingle(3, heading, 'files')
@@ -117,9 +114,8 @@ class Gui:
     def browse_file(self, heading, mask):
         """Show a file picker filtered to ``mask``; '' on cancel/error.
 
-        The import source surface: type 1 is ShowAndGetFile, ``mask`` an
-        extension filter like '.json'. Cancel/error semantics as
-        browse_folder.
+        The import source surface: type 1 is ShowAndGetFile and ``mask`` an
+        extension filter like '.json'.
         """
         try:
             return xbmcgui.Dialog().browseSingle(1, heading, 'files',
@@ -132,10 +128,8 @@ class Gui:
     def notification(self, message, duration_ms, title=None, icon=None):
         """Raise one Kodi toast for ``message`` lasting ``duration_ms``.
 
-        ``title`` and ``icon`` default to the addon's name and icon; callers
-        may override them (e.g. ``xbmcgui.NOTIFICATION_ERROR`` toasts).
-        Exception guard: a GUI-layer failure logs LOGERROR through the sink
-        and never unwinds the caller.
+        ``title`` and ``icon`` default to the addon's name and icon and may
+        be overridden. A GUI-layer failure logs and never unwinds the caller.
         """
         try:
             xbmcgui.Dialog().notification(

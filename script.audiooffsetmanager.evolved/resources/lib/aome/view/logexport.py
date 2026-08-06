@@ -2,27 +2,27 @@
 
 The transfer view's sibling for support reports: it reads the Kodi log files
 (previous session first, then the current one), keeps only this addon's
-entries, and writes them as one file to a folder the user picks. The goal is
-a file safe to hand to a stranger: AOMe lines carry stream profiles, offsets
-and session ids, never media titles or library paths, and the two leaks the
-wider net could reintroduce are scrubbed at render time (absolute install
-paths fold back to their ``special://`` form, URL credentials are masked the
-way Kodi masks them). The disclaimer lives in the button's help text: some
-problems still need a full Kodi debug log.
+entries, and writes them as one file to a folder the user picks.
 
-Filtering works on log entries, not lines: a Kodi log line starts with a
-timestamp, and continuation lines (traceback bodies) belong to the
-timestamped line before them. An entry is kept when any of its lines mentions
-the ``AOMe_`` prefix or the addon id (the id catches unhandled-exception
-tracebacks and Kodi's own lifecycle lines, which carry no AOMe prefix). Each
-file's opening entries also contribute the Kodi version/platform lines every
-report wants, matched only within the first few dozen lines so lookalike text
-deep in a log cannot smuggle itself in.
+The goal is a file safe to hand to a stranger. AOMe lines carry stream
+profiles, offsets and session ids, never media titles, library paths or
+audio-device friendly names, and the three leaks the wider net could
+reintroduce are scrubbed at render time: Kodi's resolved roots fold back to
+their ``special://`` form, the OS user profile folds to ``~/`` (a picked
+export destination sits outside Kodi's home and would otherwise carry the
+username), and URL credentials are masked the way Kodi masks them. The
+disclaimer that some problems still need a full Kodi debug log lives in the
+button's help text.
 
-The export is bounded: both files stream through a constant-size pass (a
-debug log can run to hundreds of MB and must never be loaded whole), and once
-the kept entries pass the size cap the oldest are dropped and the file says
-so.
+Filtering works on log entries rather than lines: a Kodi log line starts
+with a timestamp, and continuation lines such as traceback bodies belong to
+the timestamped line before them. An entry is kept when any of its lines
+mentions the ``AOMe_`` prefix or the addon id, the id catching
+unhandled-exception tracebacks and Kodi's own lifecycle lines.
+
+The export is bounded: both files stream through a constant-size pass, since
+a debug log can run to hundreds of MB, and once the kept entries pass the
+size cap the oldest are dropped and the file says so.
 
 The seams are injected callables, wired by the script router:
 
@@ -30,8 +30,8 @@ The seams are injected callables, wired by the script router:
   over ``kodi.old.log`` / ``kodi.log``, or ``None`` when that file does not
   exist. A reader that fails mid-stream surrenders what it produced so far
   rather than the whole export.
-* ``write_export(destination, text)`` — write the rendered file
-  (``xbmcvfs.File``, so network/USB destinations work).
+* ``write_export(destination, text)`` — write the rendered file through
+  ``xbmcvfs``, so network and USB destinations work.
 * ``redactions`` — ``(resolved_prefix, special_form)`` pairs computed by the
   router, applied longest-first so ``special://profile`` folds before its
   ``special://home`` parent swallows the match.
@@ -64,24 +64,23 @@ _FALLBACKS = {
 # continuation of the entry above it (traceback bodies, wrapped dumps).
 _TIMESTAMP_RE = re.compile(r'^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}')
 
-# An entry is the addon's when any line carries the log prefix or the
-# addon id — the id catches tracebacks and Kodi's lifecycle lines, and
-# cannot match the original Audio Offset Manager's lines (its id lacks
-# the ``.evolved``).
+# An entry is the addon's when any line carries the log prefix or the addon
+# id. The id catches tracebacks and Kodi's lifecycle lines, and cannot match
+# the original Audio Offset Manager's lines, whose id lacks the '.evolved'.
 _ADDON_TOKENS = ('AOMe_', 'script.audiooffsetmanager.evolved')
 
 # The startup entries every report wants (Kodi version, platform, OS),
-# trusted only near the top of a file — the whitelist must not let
-# lookalike text deep in a log ride along.
+# trusted only near the top of a file so lookalike text deep in a log cannot
+# ride along.
 _HEADER_RE = re.compile(r'Starting Kodi|Running on ')
 _HEADER_SCAN_LINES = 60
 
-# Oldest-first trim threshold for the rendered export. Far above what a
-# real session's filtered entries reach; small enough to attach anywhere.
+# Oldest-first trim threshold for the rendered export: far above what a real
+# session's filtered entries reach, small enough to attach anywhere.
 _MAX_EXPORT_BYTES = 5 * 1024 * 1024
 
-# Kodi's own credential masking for URLs (CURL::GetRedacted does the
-# same): anything userinfo-shaped between :// and @ is not for sharing.
+# Kodi's own credential masking for URLs (CURL::GetRedacted does the same):
+# anything userinfo-shaped between :// and @ is not for sharing.
 _CREDENTIALS_RE = re.compile(r'://[^@/\s]+@')
 
 # The two log files, oldest first — the export reads chronologically.
@@ -93,9 +92,8 @@ def _noop(_message):
 
 
 def _join(folder, name):
-    """Append ``name`` to a browsed folder path (the transfer view's guard:
-    Kodi's folder browser answers with a trailing separator, the fallback
-    covers hand-fed paths without one)."""
+    """Append ``name`` to a browsed folder path (the transfer view's
+    guard)."""
     if folder.endswith('/') or folder.endswith('\\'):
         return folder + name
     return folder + '/' + name
@@ -104,11 +102,11 @@ def _join(folder, name):
 def _entries(lines, on_error=None):
     """Group raw lines into ``(entry_lines, start_index)`` tuples.
 
-    A timestamped line opens a new entry; non-timestamped lines attach to the
-    entry above them. Lines before the first timestamp form a headless first
-    entry rather than being lost. The line pull is guarded: a source failing
-    mid-stream ends the file where it stands, the buffered entry still
-    flushes, and the error goes to ``on_error``.
+    A timestamped line opens a new entry and non-timestamped lines attach to
+    the entry above them; lines before the first timestamp form a headless
+    first entry rather than being lost. The line pull is guarded, so a source
+    failing mid-stream ends the file where it stands, the buffered entry
+    still flushes, and the error goes to ``on_error``.
     """
     iterator = iter(lines)
     current = []
@@ -157,8 +155,7 @@ class LogExportView:
                          'kodi.log': read_current_log}
         self._write_export = write_export
         # Longest resolved prefix first: special://profile lives under
-        # special://home, and the parent must not swallow the child's
-        # match before it runs.
+        # special://home, and the parent must not swallow the child's match.
         self._redactions = sorted(
             redactions, key=lambda pair: len(pair[0]), reverse=True)
         self._version = version
@@ -185,9 +182,9 @@ class LogExportView:
             self._gui.ok(heading, self._text(_MSG_UNREADABLE))
             return
         if not matched_total:
-            # Header-only matches are not a report: nothing the addon
-            # logged is in either file (debug just turned on, no playback
-            # since restart) — teach the flow instead of writing a shell.
+            # Header-only matches are not a report: nothing the addon logged
+            # is in either file, so teach the flow instead of writing a
+            # shell.
             self._log("AOMe_LogExportView: no addon entries in the logs")
             self._gui.ok(heading, self._text(_MSG_NO_ENTRIES))
             return
@@ -210,9 +207,9 @@ class LogExportView:
 
     def _collect(self, name):
         """``(kept_entries, addon_count)`` for one log file, ``None`` when
-        the file does not exist (or its reader could not open it). A
-        failure mid-stream keeps what was already collected — a partially
-        rotated log still carries the report."""
+        the file does not exist or its reader could not open it. A failure
+        mid-stream keeps what was already collected, so a partially rotated
+        log still carries the report."""
         try:
             lines = self._readers[name]()
         except Exception as error:
@@ -241,12 +238,11 @@ class LogExportView:
     def _render(self, sources):
         """One text blob: preamble, then each file's kept entries behind a
         labeled divider, oldest file first, redacted line by line. The size
-        cap drops whole entries oldest-first (never mid-entry) and announces
-        the trim up top.
+        cap drops whole entries oldest-first and announces the trim up top.
 
-        The blob leads with a UTF-8 BOM: log lines carry multi-byte
-        characters (the notifier's em dash), and without the BOM an editor
-        that sniffs encoding can guess ANSI and render them as mojibake.
+        The blob leads with a UTF-8 BOM, because log lines carry multi-byte
+        characters and without one an editor that sniffs encoding can guess
+        ANSI and render them as mojibake.
         """
         combined = deque()
         total = 0
@@ -288,7 +284,7 @@ class LogExportView:
         return _CREDENTIALS_RE.sub('://USERNAME:PASSWORD@', line)
 
     def _export_name(self):
-        """Timestamped filename, second resolution — same collision
+        """Timestamped filename at second resolution, the same collision
         stance as the transfer view's backup name."""
         stamp = time.strftime('%Y%m%d-%H%M%S', time.localtime(self._clock()))
         return 'aome-log-{0}.log'.format(stamp)

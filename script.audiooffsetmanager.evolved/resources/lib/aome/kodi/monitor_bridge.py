@@ -1,10 +1,11 @@
-"""Kodi monitor bridge: settings-change and NotifyAll callbacks post to the dispatcher.
+"""Kodi monitor bridge: settings-change and NotifyAll callbacks post to the
+dispatcher.
 
-Also the service's abort monitor (the runtime blocks on this instance's
-``waitForAbort()``). Near-zero logic: ``onNotification`` filters for the
-addon's own mutation message and decodes the JSON payload; the fields
-travel verbatim on the typed event and the StoreMutationHandler owns all
-validation.
+Also the service's abort monitor, since the runtime blocks on this
+instance's ``waitForAbort()``. Near-zero logic: ``onNotification`` filters
+for the addon's own mutation message and decodes the JSON payload, then the
+fields travel verbatim on the typed event and the StoreMutationHandler owns
+all validation.
 """
 
 import xbmc
@@ -39,4 +40,5 @@ class MonitorBridge(xbmc.Monitor):
         self._dispatcher.post(events.StoreMutationRequested(
             op=payload.get('op'),
             key=payload.get('key'),
+            device=payload.get('device'),
             request_id=payload.get('request_id')))

@@ -11,29 +11,25 @@ from resources.lib.aome.domain import formats
 def parse_delay_ms(delay_str):
     """Parse Kodi's localized ``Player.AudioDelay`` string to ms, or None.
 
-    Handles '-0.075 s', comma decimals ('-0,075 s'), a Unicode minus
-    (U+2212, some CLDR locales), and narrow no-break spaces around the
-    unit. Clamps to +/-10 s.
+    The infolabel is localized text rather than a number, so this handles
+    comma decimals, a Unicode minus and narrow no-break spaces
+    (docs/kodi-platform-notes.md). Clamps to +/-10 s.
 
-    Two non-obvious choices: a narrow no-break space (the CLDR unit
-    separator) is normalized to a regular space before the unit is
-    stripped, not deleted (deleting it would leave '-0.075s' for float);
-    and the ms conversion rounds, since float('-0.115') * 1000 is
-    -114.999... and truncation would report -114 for a -115 ms value.
+    One non-obvious choice: the ms conversion rounds, since
+    float('-0.115') * 1000 is -114.999... and truncation would report -114
+    for a -115 ms value.
     """
     try:
         normalized = (delay_str.replace('\u202f', ' ')  # narrow no-break space
-                      .replace('\u2212', '-')  # Unicode minus sign (CLDR locales)
+                      .replace('\u2212', '-')  # Unicode minus (CLDR locales)
                       .replace(',', '.')
                       .strip())
-        # Strip the trailing unit however it is separated: 's' never appears
-        # inside a parseable number, so dropping one trailing 's' (plus any
-        # remaining spaces) is unambiguous.
+        # 's' never appears inside a parseable number, so dropping one
+        # trailing 's' is an unambiguous way to strip the unit.
         if normalized.endswith('s'):
             normalized = normalized[:-1]
         normalized = normalized.replace(' ', '')
         delay_seconds = float(normalized)
-        # Clamp to reasonable bounds (-10s to +10s) to avoid junk values
         delay_seconds = max(-10.0, min(delay_seconds, 10.0))
         return int(round(delay_seconds * 1000))
     except (ValueError, AttributeError):
@@ -43,33 +39,37 @@ def parse_delay_ms(delay_str):
 def is_complete(profile):
     """True when the profile carries enough facts to key the store.
 
-    The HDR axis always resolves (the detector defaults an absent reading
-    to 'sdr'), so completeness means an audio format was reported and the
-    fps rate parsed. Requiring fps keeps discovery patient while a stream's
-    rate is still unreadable, and guarantees the per-fps write key is always
-    composable for a complete profile.
+    The HDR axis always resolves (the detector defaults an absent reading to
+    'sdr'), so completeness means an audio format was reported, the fps rate
+    parsed, and the device axis resolved. Requiring fps keeps discovery
+    patient while a rate is still unreadable and guarantees the per-fps write
+    key is always composable.
+
+    ``audio_device is None`` (the read failed) is incomplete so the
+    detector's verify path leaves ``session.profile`` untouched and the
+    session keeps the device it is keyed on, rather than collapsing onto the
+    all-devices bucket and writing any adjustment made during the outage to
+    a dormant key. The toggle is deliberately not threaded in: '' is a
+    deliberate non-read and stays complete, so the None-vs-'' distinction
+    already encodes the mode.
     """
     if profile is None:
         return False
     return (profile.audio_format != formats.UNKNOWN
             and profile.hdr_type != formats.UNKNOWN
-            and profile.video_fps is not None)
+            and profile.video_fps is not None
+            and profile.audio_device is not None)
 
 
 def stream_identity(profile, per_fps, distinct_spatial=True,
-                    distinct_channels=False):
+                    distinct_channels=False, distinct_devices=False):
     """The "same stream" comparison key at the granularity that matters.
 
-    Identity tracks the lookup key's granularity on every axis. With
-    per_fps off the fps axis is excluded, so a VFR rate wiggle between
-    gathers does not read as a stream change; with it on, the truncated
-    rate is part of the identity. With distinct_spatial off the audio axis
-    is the spatial base, so a track switch between a codec and its
-    object-audio variant (same key, same offset) is not a stream change
-    either. With distinct_channels on the normalized count joins the
-    identity (an unusable count normalizes to None, matching the 'all'
-    key both such profiles resolve to); off, a count wiggle is not a
-    stream change.
+    Identity tracks the lookup key's granularity on every axis: an axis its
+    toggle folds out cannot make a wiggle read as a stream change, and an
+    axis its toggle folds in re-resolves the offset when it moves. The
+    channel axis normalizes an unusable count to None, matching the 'all'
+    key both such profiles resolve to.
     """
     audio = (profile.audio_format if distinct_spatial
              else formats.spatial_base(profile.audio_format))
@@ -79,6 +79,8 @@ def stream_identity(profile, per_fps, distinct_spatial=True,
     identity.append(audio)
     if distinct_channels:
         identity.append(profile.channels_int())
+    if distinct_devices:
+        identity.append(profile.device_id())
     return tuple(identity)
 
 
@@ -92,14 +94,12 @@ def seek_decision(now, requested_at, last_activity, last_own_seek,
     already served by one of our own seeks (executed at or after the
     request; same-instant counts as served) is abandoned.
 
-    ``yield_to_activity`` is the stronger rule for triggers an external
-    actor may mirror (the scheduler passes it for 'unpause'): any seek
-    activity at or after ``requested_at`` yields the request rather than
-    deferring it, because someone else moved the playhead since the trigger
-    and replaying would double their seek. Activity strictly before the
-    request never yields (the quiet window handles it). The caller's
-    activity view is a generic aggregate (SeekOccurred, the vendor busy
-    list, our own seeks), never a specific addon.
+    ``yield_to_activity`` is the stronger rule for triggers an external actor
+    may mirror (the scheduler passes it for 'unpause'): any seek activity at
+    or after ``requested_at`` yields the request rather than deferring it,
+    because someone else moved the playhead since the trigger and replaying
+    would double their seek. Activity strictly before the request never
+    yields.
 
     Args (timestamps monotonic; the caller resolves them):
         now: current time.

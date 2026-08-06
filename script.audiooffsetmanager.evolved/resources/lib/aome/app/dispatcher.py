@@ -151,10 +151,10 @@ class Dispatcher:
     def run_pending(self):
         """Dispatch all queued events and due timers without blocking.
 
-        The manual pump for tests (with an injected fake clock) — production
+        The manual pump for tests, with an injected fake clock; production
         uses start()/stop() and never calls this. Loops until a full pass
-        makes no progress, so cascades (handlers that post or schedule) are
-        fully drained.
+        makes no progress, so cascades from handlers that post or schedule
+        are fully drained.
         """
         progressed = True
         while progressed and not self._stopped:
@@ -222,14 +222,14 @@ class Dispatcher:
     def _dispatch(self, event):
         handlers = list(self._subscribers.get(type(event), ()))
         for handler in handlers:
-            # started is read unconditionally: the log_runtimes check happens
+            # Read unconditionally, because the log_runtimes check happens
             # AFTER the handler so a mid-dispatch flip takes effect for the
-            # flipping handler itself (documented, pinned by the test suite).
-            # One monotonic read per handler is the accepted cost.
+            # flipping handler itself. One monotonic read per handler is the
+            # accepted cost.
             started = self._clock()
             try:
                 handler(event)
-            except Exception as exc:  # isolation: one bad handler never starves the rest
+            except Exception as exc:  # one bad handler never starves the rest
                 self._log_error(
                     f"AOMe_Dispatcher: {type(event).__name__} handler "
                     f"{_handler_name(handler)} failed: {exc!r}")

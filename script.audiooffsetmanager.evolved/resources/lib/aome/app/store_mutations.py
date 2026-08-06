@@ -7,45 +7,50 @@ events, and this component executes them on the dispatcher thread, the same
 thread that owns every other store write.
 
 The op whitelist is the channel's security boundary: only ``delete``,
-``clear``, and ``import`` exist. There is no value field and no ``set`` op,
-so the channel structurally cannot carry a value write; an unknown op or a
-malformed payload is rejected loudly (a warning line plus a failed ack).
+``clear``, ``import`` and ``copy_device`` exist. There is no value field and
+no ``set`` op, so the channel structurally cannot carry a value write; an
+unknown op or a malformed payload is rejected loudly (a warning line plus a
+failed ack).
 
-``import`` is the backup-restore op and keeps the no-value rule intact: it
-transports values learned during playback, never typed ones. The wire
-carries no path and no payload; the script process stages the chosen backup
-at the well-known ``<store>.import`` sibling path (a staging file, not the
-store file), and the service reads it there, re-validates it with the same
-reader, replaces the whole store (restore semantics, never merge; the
-backup's reset markers ride along), and discards the staging file whatever
-the outcome. The window a spoofed ``import`` could exploit is small: the
-view stages the file for its pre-flight read, discards it before the
-confirmation dialog, and re-stages only after the user confirmed; outside
-that instant a spoofed request finds no staged file, and a valid-but-empty
-staged file is refused here regardless.
+``copy_device`` seeds the audio endpoints Kodi outputs to from another
+device's stored offsets. It names its SOURCE device and nothing else: the
+destinations are resolved here and the values are read out of the store, so
+neither crosses the wire. The all-devices bucket is neither a legal source
+nor a legal destination, since it is where a device-less read resolves
+rather than a device.
 
-Every request is acknowledged through the injected ``ack`` callable (wired
-to ``KodiGateway.notify_all`` under ``ACK_MESSAGE``), echoing ``request_id``
-so the script process can match the reply; no ack within its timeout is the
-"service not running" signal (report-only, no direct-write fallback).
+``import`` is the backup-restore op and keeps the no-value rule intact,
+since it transports values learned during playback rather than typed ones.
+The wire carries no path and no payload: the script process stages the
+chosen backup at the well-known ``<store>.import`` sibling path, and the
+service reads it there, re-validates it, replaces the whole store, and
+discards the staging file whatever the outcome. The window a spoofed
+``import`` could exploit is small, because the view discards the staged file
+before the confirmation dialog and re-stages only after the user confirmed,
+and a valid-but-empty staged file is refused here regardless.
 
-After a store-changing mutation the handler runs ``_store_changed``:
-synchronous session-state invalidation (miss dedupe + watcher observation)
-plus a typed ``StoreMutated`` the applier consumes as a resolve moment, so
-deleting the playing profile's offset takes effect immediately.
+Every request is acknowledged through the injected ``ack`` callable, echoing
+``request_id`` so the script process can match the reply; no ack within its
+timeout is the "service not running" signal (report-only, with no
+direct-write fallback).
+
+After a store-changing mutation the handler runs ``_store_changed``.
 "Store-changing" means the in-memory store the live session resolves
-against: a delete that removed an entry, a clear with entries, or an import
-that replaced the store, including their persist-failed variants (OffsetStore
-keeps the in-memory mutation when only the disk write failed; the ack reports
-the durability truth). A missing-key delete, an empty clear, refused ops, and
-an import whose staged backup failed validation trigger nothing. Nothing here
-touches Kodi's live delay; the applier owns that, behind its standing gates.
+against, which includes the persist-failed variants, since OffsetStore keeps
+the in-memory mutation when only the disk write failed and the ack reports
+the durability truth. Nothing here touches Kodi's live delay; the applier
+owns that, behind its standing gates.
 
 Protocol constants live here (pure Python) so the monitor bridge and the
 script-process client share one definition.
 """
 
 from resources.lib.aome.app import events
+from resources.lib.aome.domain.formats import (DEVICE_ALL,
+                                               SETTING_AUDIO_DEVICE,
+                                               SETTING_PASSTHROUGH_DEVICE,
+                                               split_device)
+from resources.lib.aome.store import keys
 from resources.lib.aome.store.offset_store import (StoreUnreadable,
                                                   discard_import,
                                                   read_import_document)
@@ -60,9 +65,9 @@ def _noop(_message):
 MUTATION_MESSAGE = 'store_mutation'
 ACK_MESSAGE = 'store_mutation_ack'
 
-# The complete op vocabulary of the channel: removal and the backup
-# restore — never value entry.
-ALLOWED_OPS = ('delete', 'clear', 'import')
+# The complete op vocabulary of the channel: removal, the backup restore,
+# and the device-to-device copy — never value entry.
+ALLOWED_OPS = ('delete', 'clear', 'import', 'copy_device')
 
 # The import staging file: the store path plus this suffix, derived
 # identically by both processes (a protocol constant, like the message
@@ -73,18 +78,19 @@ IMPORT_SUFFIX = '.import'
 class StoreMutationHandler:
     """Executes whitelisted cross-process store mutations on the dispatcher."""
 
-    def __init__(self, dispatcher, session_tracker, store, ack, *,
+    def __init__(self, dispatcher, session_tracker, store, gateway, ack, *,
                  import_path, log_debug=None, log_warning=None):
-        """``store`` is the raw ``OffsetStore`` (mutations target literal
-        keys the view listed, bypassing the ``OffsetTable`` algebra).
-        ``ack`` is a required callable taking the reply payload dict.
-        ``import_path`` is the required local staging path the script
-        process copies a backup to (store path + ``IMPORT_SUFFIX``; the
+        """``store`` is the raw ``OffsetStore``, since mutations target the
+        literal keys the view listed and bypass the ``OffsetTable`` algebra.
+        ``gateway`` reads the output device settings a copy lands on. ``ack`` is
+        a required callable taking the reply payload dict. ``import_path`` is
+        the local staging path the script process copies a backup to; the
         runtime derives it, keeping this module free of Kodi path
-        translation)."""
+        translation."""
         self._dispatcher = dispatcher
         self._sessions = session_tracker
         self._store = store
+        self._gateway = gateway
         self._ack = ack
         self._import_path = import_path
         self._log = log_debug or _noop
@@ -101,10 +107,12 @@ class StoreMutationHandler:
             reply = self._clear()
         elif event.op == 'import':
             reply = self._import()
+        elif event.op == 'copy_device':
+            reply = self._copy_device(event.device)
         else:
-            # The loud rejection: anything outside the whitelist —
-            # including a would-be value write or a malformed payload —
-            # is named in the log, refused, and acked as failed.
+            # The loud rejection: anything outside the whitelist, including
+            # a would-be value write or a malformed payload, is named in the
+            # log, refused, and acked as failed.
             self._warn(f"AOMe_StoreMutations: rejected op {event.op!r} "
                        f"(allowed: {', '.join(ALLOWED_OPS)})")
             reply = {'ok': False, 'detail': 'rejected'}
@@ -163,14 +171,13 @@ class StoreMutationHandler:
         """Replace the whole store from the staged backup file (restore).
 
         The staging file is validated by the same reader the script process
-        ran (defense in depth: it sat on disk between the two reads, and the
-        service must not trust another process's validation), then the store
-        is replaced, with reset markers for every key the backup drops and
-        every marker the backup carried. A valid-but-empty backup is refused
-        here, not just in the view ("restore nothing" is clear-all in a
-        costume, and the service is the choke point). The staging file is
-        discarded whatever the outcome; the user's original backup is
-        untouched.
+        ran, as defense in depth: it sat on disk between the two reads, and
+        the service must not trust another process's validation. The store
+        is then replaced, with reset markers for every key the backup drops
+        and every marker the backup carried. A valid-but-empty backup is
+        refused here rather than only in the view, since the service is the
+        choke point. The staging file is discarded whatever the outcome; the
+        user's original backup is untouched.
         """
         try:
             if self._store.read_only:
@@ -204,34 +211,100 @@ class StoreMutationHandler:
         finally:
             discard_import(self._import_path, log_warning=self._warn)
 
+    def _copy_device(self, device):
+        """Seed the endpoints Kodi is configured for from ``device``'s entries.
+
+        A copy targets EVERY endpoint the two output device settings name,
+        deduplicated: nothing is playing at the moment a copy is requested,
+        so there is no fact of which of the two the next playback will use,
+        and on a split configuration seeding only one strands half the
+        profiles.
+
+        Refusals ack their own detail, since the view words them: nothing to
+        copy from ('missing'), destinations that already hold every candidate
+        ('all_present'), and the two device answers that make the request
+        meaningless ('no_device', 'same_device').
+        """
+        if not isinstance(device, str) or not device or device == DEVICE_ALL:
+            self._warn(f"AOMe_StoreMutations: rejected copy_device with bad "
+                       f"source {device!r}")
+            return {'ok': False, 'detail': 'rejected'}
+        if self._store.read_only:
+            self._warn(f"AOMe_StoreMutations: store is read-only; refusing "
+                       f"copy_device({device!r})")
+            return {'ok': False, 'detail': 'read_only'}
+        endpoints = self._configured_endpoints()
+        if not endpoints:
+            self._warn("AOMe_StoreMutations: the audio output settings name "
+                       "no device; refusing copy_device")
+            return {'ok': False, 'detail': 'no_device'}
+        destinations = [(segment, name) for segment, name in endpoints
+                        if segment != device]
+        if not destinations:
+            return {'ok': False, 'detail': 'same_device'}
+        result = self._store.copy_device(device, destinations)
+        if not result.copied:
+            return {'ok': False,
+                    'detail': 'all_present' if result.skipped else 'missing'}
+        self._store_changed(op='copy_device')
+        if not result.durable:
+            return {'ok': False, 'detail': 'persist_failed'}
+        # Devices are named by their key segment here; the friendly half
+        # travels to the view and never to a log line.
+        self._log(f"AOMe_StoreMutations: copied {result.copied} stored "
+                  f"offset(s) from {device} to "
+                  f"{', '.join(entry.device for entry in result.devices)}, "
+                  f"keeping {result.skipped} already there")
+        names = dict(destinations)
+        return {'ok': True, 'detail': 'copied', 'count': result.copied,
+                'skipped': result.skipped,
+                'devices': [{'device': entry.device,
+                             'name': names.get(entry.device),
+                             'count': entry.copied,
+                             'skipped': entry.skipped}
+                            for entry in result.devices if entry.copied]}
+
     # -- internals ---------------------------------------------------------------
+
+    def _configured_endpoints(self):
+        """The distinct endpoints Kodi's two output device settings name.
+
+        One ``(segment, friendly name)`` per endpoint, the ordinary device
+        first, dropping a reading that names no device and collapsing the
+        usual case where both settings name one endpoint.
+        """
+        endpoints = []
+        seen = set()
+        for setting_id in (SETTING_AUDIO_DEVICE, SETTING_PASSTHROUGH_DEVICE):
+            raw = self._gateway.setting_value(setting_id)
+            segment = keys.device_segment(raw, True)
+            if segment == DEVICE_ALL or segment in seen:
+                continue
+            seen.add(segment)
+            endpoints.append((segment, split_device(raw)[1]))
+        return endpoints
 
     def _store_changed(self, op, key=None):
         """The store changed under the session: reconcile and re-log.
 
         Three consequences, the first two synchronous on purpose:
 
-        - ``miss_announced`` is cleared: it dedupes the applier's "no stored
-          offset" line per consulted chain, and a mutation makes any
+        - ``miss_announced`` is cleared, since it dedupes the applier's "no
+          stored offset" line per consulted chain and a mutation makes any
           remembered chain stale.
-        - The watcher's observation state is cleared: an in-flight candidate
-          was dialed against a store that no longer exists. This cannot ride
-          on a queued event, because the dispatcher fires due timers between
-          queue items, so a quiescence-deadline WatchTick could land between
-          this handler and any event it posts and store the stale candidate
-          under the just-deleted key; and the applier's already-0/failed-RPC
-          reset branches post no DelayReset. Synchronous assignment on the
-          dispatcher thread is race-free.
+        - The watcher's observation state is cleared, because an in-flight
+          candidate was dialed against a store that no longer exists. This
+          cannot ride on a queued event: a quiescence-deadline WatchTick due
+          in the same dispatcher sweep would reach the store first
+          (docs/kodi-platform-notes.md) and write the stale candidate under
+          the just-deleted key. The settled marker goes with it, or a
+          re-teach landing on the value settled before the mutation is
+          deduped against it and never posts ``UserOffsetSettled``.
         - A typed ``StoreMutated`` is posted so the applier re-runs its
-          decision for the live session, acting now when the deleted
-          profile is playing.
+          decision for the live session.
         """
         session = self._sessions.current
         if session is not None:
             session.miss_announced = None
-            # The watcher's _clear_observation logic, applied inline
-            # (baseline and pending fall together — a pre-mutation baseline
-            # must not classify post-mutation readings).
-            session.watch_pending = None
-            session.watch_baseline_ms = None
+            session.clear_watch_observation()
         self._dispatcher.post(events.StoreMutated(op=op, key=key))

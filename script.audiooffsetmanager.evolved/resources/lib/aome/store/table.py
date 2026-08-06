@@ -2,14 +2,14 @@
 
 Wraps the pure store and the injected settings reads. Keys are composed at
 call time from the profile's verbatim facts plus the live granularity
-toggles (``per_fps_offsets``, ``distinct_spatial_formats``,
-``distinct_channel_counts``), never captured and never conditional on
-lookup history. Lookup routes through ``resolve.resolve`` (one candidate key per
-mode); writes route through ``resolve.write_key``, the only sanctioned
-write-key derivation. The store-entry dict shape stays inside the store
-package: consumers read values via ``Resolution.ms`` and ``stored_ms_at``.
+toggles, never captured and never conditional on lookup history. Lookup
+routes through ``resolve.resolve``, writes through ``resolve.write_key``,
+the only sanctioned write-key derivation. The store-entry dict shape stays
+inside the store package: consumers read values via ``Resolution.ms`` and
+``stored_ms_at``.
 """
 
+from resources.lib.aome.store import keys as store_keys
 from resources.lib.aome.store import resolve as store_resolve
 
 
@@ -36,7 +36,9 @@ class OffsetTable:
             profile.audio_format, profile.audio_channels,
             per_fps=self._settings.per_fps_offsets_enabled(),
             distinct_spatial=self._settings.distinct_spatial_enabled(),
-            distinct_channels=self._settings.distinct_channels_enabled())
+            distinct_channels=self._settings.distinct_channels_enabled(),
+            device=profile.audio_device,
+            distinct_devices=self._settings.distinct_devices_enabled())
 
     def consume_reset(self, key):
         """Discard a pending reset marker (applier acted on it)."""
@@ -51,9 +53,26 @@ class OffsetTable:
                 profile.audio_channels,
                 per_fps=self._settings.per_fps_offsets_enabled(),
                 distinct_spatial=self._settings.distinct_spatial_enabled(),
-                distinct_channels=self._settings.distinct_channels_enabled())
+                distinct_channels=self._settings.distinct_channels_enabled(),
+                device=profile.audio_device,
+                distinct_devices=self._settings.distinct_devices_enabled())
         except ValueError:
             return None
+
+    def device_label(self, raw_device):
+        """The toast's display label for a live device reading, or None.
+
+        The service side's reach into the shared device label rule
+        (``keys.device_label_for``), fed the store's OWN entries, which is
+        the same input the management view feeds it, so a toast and a row
+        can never name one device two ways. Narrowed to the toast's width,
+        the one divergence the rule sanctions.
+
+        Reads the store rather than a Kodi setting, so it costs no round
+        trip; callers still gate it on the distinct-devices toggle, since
+        with the toggle off no surface names a device at all.
+        """
+        return store_keys.device_label_for(raw_device, self._store.entries())
 
     def get_at(self, key):
         """The entry stored at an exact key (or None) — no fallback chain."""
@@ -70,12 +89,16 @@ class OffsetTable:
     def store(self, profile, ms):
         """Store a user adjustment; returns the key written, or None.
 
-        The exact reported rate rides along as entry metadata for the
-        management view.
+        The exact reported rate and the audio device's friendly name ride
+        along as entry metadata for the management view. Both are already in
+        the facts the key came from, so they cost nothing here; the device
+        name is absent on Kodi 20, where the view falls back to the key's id
+        segment.
         """
         key = self.write_key(profile)
         if key is None:
             return None
-        if not self._store.set(key, ms, video_fps=profile.video_fps):
+        if not self._store.set(key, ms, video_fps=profile.video_fps,
+                               device_name=profile.device_name()):
             return None
         return key

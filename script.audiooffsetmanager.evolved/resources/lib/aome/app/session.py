@@ -43,57 +43,69 @@ class PlaybackSession:
     profile: object = None
     # True while a profile (re)adoption has happened since the last
     # StreamStabilized post. The detector consumes it to stamp
-    # StreamStabilized.profile_changed, which downstream consumers (the seek
-    # scheduler's 'adjust' replay) use to ignore pure re-confirmations (a
-    # codec blip that reverted).
+    # StreamStabilized.profile_changed, which lets the seek scheduler ignore
+    # a pure re-confirmation (a codec blip that reverted).
     profile_changed_since_stabilized: bool = False
-    # (store_key, delay_ms) — what we believe Kodi's audio delay is set to.
-    # The key is None after a baseline zero-reset (the 0 belongs to no stored
-    # profile). Writers, all on the dispatcher thread: the OffsetApplier
-    # records it before each apply/reset RPC (restoring on failure), and the
-    # AdjustmentWatcher updates it when it stores a user's manual value. It
-    # is the applier's dedupe guard, the watcher's self-echo reference, and
-    # the miss policy's "has the addon acted on this session" flag (None =
-    # untouched, so a miss must leave Kodi's delay alone).
+    # (store_key, delay_ms): what we believe Kodi's audio delay is set to.
+    # The key is None after a baseline zero-reset, whose 0 belongs to no
+    # stored profile. Writers, all on the dispatcher thread: the
+    # OffsetApplier records it before each apply/reset RPC and restores it on
+    # failure, and the AdjustmentWatcher updates it when it stores a user's
+    # manual value. It is the applier's dedupe guard, the watcher's
+    # self-echo reference, and the miss policy's "has the addon acted on
+    # this session" flag, where None means a miss must leave Kodi's delay
+    # alone.
     applied: tuple = None
     pending_notification: tuple = None      # (held profile, delay_ms) awaiting STABLE
     # The applier's miss-dedupe: the last consulted-key chain announced as a
     # lookup miss, so a stable stream re-stabilizing does not re-log the
-    # same "no stored offset" line (one debug line per distinct chain).
+    # same "no stored offset" line.
     miss_announced: tuple = None
     paused: bool = False
     # How many times this session has earned STABLE. Written only by
-    # mark_stable() (the diagram's one edge into STABLE); the detector stamps
-    # StreamStabilized.initial from it, so "is this startup settling?" is
-    # answered by the state machine itself.
+    # mark_stable(), so "is this startup settling?" is answered by the state
+    # machine itself; the detector stamps StreamStabilized.initial from it.
     stabilized_count: int = 0
-    # Monotonic timestamps; None = never (a 0.0 sentinel would be wrong for
-    # monotonic clocks, whose epoch is arbitrary).
+    # Monotonic timestamps; None means never (a 0.0 sentinel would be wrong
+    # for monotonic clocks, whose epoch is arbitrary).
     last_seek_activity: Optional[float] = None
     seek_history: dict = field(default_factory=dict)  # reason -> monotonic ts
     # AdjustmentWatcher observation state. The baseline is the last delay
-    # value accounted for (ours, or already stored): only a change away from
-    # it can become a user adjustment, so a pre-existing delay first observed
-    # (e.g. a failed apply RPC's leftover) is adopted silently, never stored.
-    # watch_pending is the quiescence candidate (observed_ms,
-    # first_seen_monotonic). watch_settled_ms is the value this observation
-    # episode last posted UserOffsetSettled for, keeping the event at one per
-    # user action even when the store-failure path re-settles the same value.
+    # value accounted for (ours, or already stored), so only a change away
+    # from it can become a user adjustment and a pre-existing delay first
+    # observed is adopted silently rather than stored. watch_pending is the
+    # quiescence candidate (observed_ms, first_seen_monotonic, profile); its
+    # third element is the profile the value was DIALLED under, captured
+    # when the candidate opens, because the store refuses a write whose
+    # stream moved since then and the queued ProfileChanged can arrive a
+    # dispatch pass too late to prevent it.
+    # watch_settled_ms is the value this episode last posted
+    # UserOffsetSettled for, keeping that event at one per user action even
+    # when the store-failure path re-settles the same value.
     watch_baseline_ms: Optional[int] = None
     watch_pending: tuple = None
     watch_settled_ms: Optional[int] = None
 
     def describe(self):
-        """One-line state snapshot for logs.
-
-        Emitted by the applier after each apply decision so logs keep a
-        greppable state line at the moments that matter.
-        """
+        """One-line state snapshot for logs, emitted by the applier after
+        each apply decision."""
         described = (self.profile.describe()
                      if self.profile is not None else None)
         return (f"session#{self.session_id} state={self.stream_state.value} "
                 f"profile={described} applied={self.applied} "
                 f"paused={self.paused}")
+
+    def clear_watch_observation(self):
+        """Drop the whole AdjustmentWatcher observation triple.
+
+        Candidate, baseline and settled marker fall together, and every
+        component that has to clear this state calls here so none can clear
+        two of the three. Each caller keeps its own reason; this owns only
+        what "cleared" means.
+        """
+        self.watch_pending = None
+        self.watch_baseline_ms = None
+        self.watch_settled_ms = None
 
     # -- stream-state transitions (the only sanctioned writers) ---------------
 
@@ -114,10 +126,10 @@ class PlaybackSession:
         """STABILIZING -> STABLE (the diagram's only edge into STABLE).
 
         A confirmation landing on STARTING means no verification was
-        requested for this session, so refuse rather than jump states (the
-        caller logs it). Returns True when the transition happened. A failed
-        verification does not strand STABILIZING: the StreamDetector
-        re-schedules verification until the profile settles.
+        requested for this session, so refuse rather than jump states.
+        Returns True when the transition happened. A failed verification does
+        not strand STABILIZING: the StreamDetector re-schedules verification
+        until the profile settles.
         """
         if self.stream_state is StreamState.STABILIZING:
             self.stream_state = StreamState.STABLE
@@ -138,7 +150,7 @@ class SessionTracker:
         dispatcher.subscribe(events.PlaybackStopped, self._on_ended)
         dispatcher.subscribe(events.PlaybackEnded, self._on_ended)
         # The tracker owns generic session state, so the paused flag is
-        # written here (not by whichever consumer happens to need it) —
+        # written here rather than by whichever consumer needs it;
         # subscription order guarantees it is current before any other
         # handler of the same event reads it.
         dispatcher.subscribe(events.Paused, self._on_paused)
@@ -147,9 +159,9 @@ class SessionTracker:
     def is_alive(self, session_id):
         """True while the given session is still the live one.
 
-        Every caller runs on the dispatcher thread. The single read of
-        self.current is kept anyway: it is free and keeps the method safe
-        for any future off-thread caller.
+        Every caller runs on the dispatcher thread; the single read of
+        ``self.current`` is free and keeps the method safe for any future
+        off-thread caller.
         """
         current = self.current
         return current is not None and current.session_id == session_id
