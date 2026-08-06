@@ -5,7 +5,33 @@ import xbmc
 
 from typing import Any
 # noinspection PyPackages
-from .constants import ADDON_NAME, ADDON_VERSION, KODI_VERSION, KODI_MAJOR_VERSION, ADDON_ARGUMENTS
+from .constants import ADDON_NAME, ADDON_VERSION, KODI_VERSION, KODI_MAJOR_VERSION, ADDON_ARGUMENTS, \
+    BOSSANOVA808_VERSION, OS_PLATFORM
+
+# xbmc.getUserAgent() always returns a non-empty string inside real Kodi, and is used here purely
+# as a cheap "are we actually running inside Kodi" probe - it returns falsy under the lightweight
+# xbmc stubs used when unit testing a module outside Kodi. Computed once, since this can't change
+# part-way through a running addon process.
+_IN_KODI = bool(xbmc.getUserAgent())
+
+
+def _debug_logging_enabled() -> bool:
+    """
+    Whether debug logging is currently active - true if either Settings > System > Logging >
+    'Enable debug logging' is on, or the active profile's advancedsettings.xml sets an explicit
+    <loglevel> of 1 or higher. The latter can enable debug logging while the GUI setting above
+    still reads False, since advancedsettings.xml overrides it without changing that setting.
+    """
+    if xbmc.getCondVisibility("System.GetBool(debug.showloginfo)"):
+        return True
+    # Local import: utilities.py imports Logger from this module, so importing it at module level
+    # here would be circular. By the time this runs, module loading has long finished, so it's safe.
+    from .utilities import get_advancedsetting
+    loglevel = get_advancedsetting('loglevel')
+    try:
+        return bool(loglevel) and int(loglevel) >= 1
+    except ValueError:
+        return False
 
 
 class Logger:
@@ -20,12 +46,12 @@ class Logger:
             be formatted using `pformat` before logging.
         :param level: The log level for the message, default `xbmc.LOGDEBUG`.
         """
-        # (The below test will fail if we're unit testing a module)
-        if xbmc.getUserAgent():
+        if _IN_KODI:
+            prefix = f'### {ADDON_NAME.replace("Kodi ","")} {ADDON_VERSION}: '
             if isinstance(message, str):
-                xbmc.log(f'### {ADDON_NAME.replace("Kodi ","")} {ADDON_VERSION}: {message}', level)
+                xbmc.log(prefix + message, level)
             else:
-                xbmc.log(pformat(message), level)
+                xbmc.log(prefix + pformat(message), level)
         else:
             # ONLY USED WHEN UNIT TESTING A MODULE!
             pprint(message)
@@ -81,7 +107,10 @@ class Logger:
         if extra_messages:
             Logger.info(*extra_messages)
         Logger.info(f'Kodi {KODI_VERSION} (Major version {KODI_MAJOR_VERSION})')
+        Logger.info(f'OS: {OS_PLATFORM}')
         Logger.info(f'Python {sys.version}')
+        Logger.info(f'script.module.bossanova808 version: {BOSSANOVA808_VERSION}')
+        Logger.info(f'Kodi debug logging enabled: {_debug_logging_enabled()}')
         if ADDON_ARGUMENTS != "['']":
             Logger.info(f'Run {ADDON_ARGUMENTS}')
         else:

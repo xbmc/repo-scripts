@@ -1,13 +1,20 @@
-v1.0.2
+v1.0.3 (2026-08-06)
+- Defensive coding pass: guard against malformed/missing settings and RPC responses instead of crashing
+- Log OS, module version, and Kodi's actual debug logging status at addon startup
+- Redact sensitive-looking local variables when logging an unhandled exception
+- Always prefix log lines with addon name/version, even for non-string messages
+- Reduce noisy window-property debug logging
+
+v1.0.2 (2025-10-06)
 - Fix for previous, for systems using older Python
 - Add some more helper functions
 
-v1.0.1
+v1.0.1 (2025-09-21)
 - Updates for Piers and some defensive programming
 
-v1.0.0 
+v1.0.0 (2025-09-21)
 - Initial release
 
-v0.0.1
+v0.0.1 (2024-10-10)
 - Alpha pre-release
 

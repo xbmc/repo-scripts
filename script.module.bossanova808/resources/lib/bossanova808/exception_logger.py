@@ -19,10 +19,11 @@
 """Exception logger with extended diagnostic info"""
 
 import inspect
+import re
 from contextlib import contextmanager
 from platform import uname
 from pprint import pformat
-from typing import Text, Callable, Generator
+from typing import Callable, Generator
 import sys
 
 # noinspection PyUnresolvedReferences
@@ -30,9 +31,13 @@ import xbmc
 # noinspection PyPackages
 from .logger import Logger
 
+# Local variable names matching this are logged as <redacted> rather than dumped in full,
+# so an unhandled exception near credential-handling code doesn't write secrets to kodi.log
+_SENSITIVE_NAME_PATTERN = re.compile(r'(key|token|password|passwd|pwd|secret|credential|auth|cookie|session)', re.IGNORECASE)
+
 
 def _format_vars(variables):
-    # type: (dict) -> Text
+    # type: (dict) -> str
     """
     Format variables dictionary
 
@@ -44,12 +49,20 @@ def _format_vars(variables):
     var_list.sort(key=lambda i: i[0])
     lines = []
     for var, val in var_list:
-        lines.append('{} = {}'.format(var, pformat(val)))
+        if _SENSITIVE_NAME_PATTERN.search(var):
+            lines.append('{} = <redacted>'.format(var))
+            continue
+        try:
+            formatted = pformat(val)
+        except Exception as format_exc:
+            # A broken __repr__ on a local variable must not shadow the real exception being logged
+            formatted = '<unformattable: {}>'.format(format_exc)
+        lines.append('{} = {}'.format(var, formatted))
     return '\n'.join(lines)
 
 
 def _format_code_context(frame_info):
-    # type: (tuple) -> Text
+    # type: (tuple) -> str
     context = ''
     if frame_info[4] is not None:
         for i, line in enumerate(frame_info[4], frame_info[2] - frame_info[5]):
@@ -73,7 +86,7 @@ Local variables:
 
 
 def _format_frame_info(frame_info):
-    # type: (tuple) -> Text
+    # type: (tuple) -> str
     return FRAME_INFO_TEMPLATE.format(
             file_path=frame_info[1],
             lineno=frame_info[2],
@@ -106,7 +119,7 @@ sys.path:
 
 @contextmanager
 def log_exception(logger_func=Logger.error):
-    # type: (Callable[[Text], None]) -> Generator[None, None, None]
+    # type: (Callable[[str], None]) -> Generator[None, None, None]
     """
     Diagnostic helper context manager
 

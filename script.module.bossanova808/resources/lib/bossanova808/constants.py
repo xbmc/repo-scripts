@@ -1,5 +1,6 @@
 import sys
 import re
+import platform
 import xbmc
 import xbmcvfs
 import xbmcgui
@@ -24,6 +25,14 @@ KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
 version_label = KODI_VERSION or ''
 version_match = re.search(r'\d+', version_label)
 KODI_MAJOR_VERSION = int(version_match.group(0)) if version_match else 21
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+# This module's own version - independent of ADDON_VERSION above, which is the *calling* addon's
+# version. Handy in logs, since this module updates independently of the addons that use it.
+try:
+    BOSSANOVA808_VERSION = xbmcaddon.Addon(id='script.module.bossanova808').getAddonInfo('version')
+except RuntimeError:
+    BOSSANOVA808_VERSION = None
+OS_PLATFORM = platform.platform()
+# Update this periodically - some sites/CDNs reject requests from very old browser versions
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 HOME_WINDOW = xbmcgui.Window(10000)
 WEATHER_WINDOW = xbmcgui.Window(12600)

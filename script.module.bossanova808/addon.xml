@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.2" provider-name="bossanova808">
+<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.3" provider-name="bossanova808">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.infotagger" version="0.0.7"/>
     </requires>
     <extension point="xbmc.python.module" library="resources/lib" />
     <extension point="xbmc.addon.metadata">
@@ -10,9 +11,13 @@
         <license>GPL-3.0-only</license>
         <website>https://github.com/bossanova808/script.module.bossanova808</website>
         <source>https://github.com/bossanova808/script.module.bossanova808</source>
-        <news>v1.0.2
-- Fix for previous, for systems using older Python
-- Add some more helper functions
+        <news>v1.0.3
+- Defensive coding pass: guard against malformed/missing settings and RPC responses instead of crashing
+- Log OS, module version, and Kodi's actual debug logging status at addon startup
+- Redact sensitive-looking local variables when logging an unhandled exception
+- Always prefix log lines with addon name/version, even for non-string messages
+- Add a shared Playback class for tracking/resuming what's currently playing (library, PVR, and addon sources), for use by other Bossanova808 addons
+- Requires script.module.infotagger
 </news>
         <assets>
             <icon>resources/icon.png</icon>
