@@ -1,0 +1,25 @@
+v1.1.0 (2026-08-07)
+- Add OMDb as a rating source (IMDb rating via OMDb API, vote count fixed to 1)
+- Add TMDB as a fallback source for TV episodes that OMDb has no rating for
+- OMDb and TMDB API keys are now configured by the user in the addon settings
+- Disable IMDb scraping entry point (IMDb blocks scripted requests with AWS WAF)
+- Improved multi-source resilience: a failing source no longer affects others
+- Add unit tests for OMDb source and multi-source failure handling
+
+v1.0.2 (2025-01-08)
+- Maintenance fixes
+
+v1.0.1 (2025-01-08)
+- Minor fixes
+
+v1.0.0 (2025-01-08)
+- Initial release
+- Automatic rating updates for movies and TV shows
+- Support for IMDb and Trakt as rating sources
+- Weighted average calculation when multiple sources are enabled
+- Configurable update interval (in days)
+- Year-based filter for movies
+- Air date filter for TV shows
+- Built-in log viewer for rating updates
+- Rate limiting for API calls
+- Detailed logging system
