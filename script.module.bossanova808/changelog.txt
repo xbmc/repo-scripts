@@ -1,3 +1,7 @@
+v1.0.4 (2026-08-08)
+- Add Playback.identity_key, a stable per-media identity (library dbid+type, falling back to path) for consumers that need to recognise repeat plays of the same item even when the reported path/file differs between plays
+- Add get_playcount_and_resume_point(), combining what were two separate JSON-RPC round trips into one, for consumers that need both
+
 v1.0.3 (2026-08-06)
 - Defensive coding pass: guard against malformed/missing settings and RPC responses instead of crashing
 - Log OS, module version, and Kodi's actual debug logging status at addon startup

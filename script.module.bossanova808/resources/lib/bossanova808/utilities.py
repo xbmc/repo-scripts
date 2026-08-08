@@ -357,6 +357,62 @@ def get_playcount(library_type: str, dbid: int) -> int | None:
     return play_count
 
 
+def get_playcount_and_resume_point(library_type: str, dbid: int) -> tuple[int | None, float | None]:
+    """
+    Get both the playcount and resume point for a given Kodi DB item, in a single JSON-RPC round
+    trip - more efficient than calling get_playcount() and get_resume_point() separately when both
+    are needed, e.g. when refreshing a whole list of library items.
+
+    :param library_type: one of 'episode', 'movie' or 'musicvideo'
+    :param dbid: the Kodi DB item ID
+    :return: (playcount, resume_point) - either may be None if not available/on error
+    """
+
+    params = _get_jsonrpc_video_lib_params(library_type)
+    # Short circuit if there is an issue get the JSON RPC method etc.
+    if not params:
+        return None, None
+    get_method, id_name, result_key = params
+
+    json_dict = {
+            "jsonrpc":"2.0",
+            "id":"getPlayCountAndResumePoint",
+            "method":get_method,
+            "params":{
+                    id_name:dbid,
+                    "properties":["playcount", "resume"],
+            }
+    }
+
+    query = json.dumps(json_dict)
+    json_response = send_kodi_json(f'Get playcount and resume point for {library_type} with dbid: {dbid}', query)
+    if not json_response:
+        Logger.error("Nothing returned from JSON-RPC query")
+        return None, None
+
+    result = json_response.get('result')
+    if not result:
+        Logger.error("No result returned from JSON-RPC query")
+        return None, None
+
+    details = result.get(result_key)
+    if not details:
+        Logger.error("Could not get playcount/resume point")
+        return None, None
+
+    play_count = details.get('playcount')
+    try:
+        resume_point = details['resume']['position']
+    except (KeyError, TypeError) as e:
+        Logger.error("Could not get resume point")
+        Logger.error(e)
+        resume_point = None
+
+    Logger.info(f"Playcount retrieved: {play_count}, resume point retrieved: {resume_point}")
+
+    return play_count, resume_point
+
+
 def footprints(startup: bool = True) -> None:
     """
     TODO - this has moved to Logger - update all addons to use Logger.start/.stop directly, then ultimately remove this!
