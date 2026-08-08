@@ -7,8 +7,14 @@
         <setting label="Run script every X days" type="number" id="update_interval" default="1"/>
         <setting label="Only update movies from last X years" type="number" id="movie_years_back" default="2"/>
         <setting label="Only update TV shows aired in last X months" type="number" id="tvshow_months_back" default="6"/>
-        <setting label="Use IMDb to fetch ratings" type="bool" id="use_imdb" default="true"/>
+        <!-- IMDb is currently unavailable (IMDb blocks scraping with AWS WAF). -->
+        <!-- The setting is hidden so users cannot enable it, but kept for future re-enabling. -->
+        <setting label="Use IMDb to fetch ratings" type="bool" id="use_imdb" default="false" visible="false"/>
         <setting label="Use Trakt to fetch ratings" type="bool" id="use_trakt" default="false"/>
+        <setting label="Use OMDb to fetch ratings" type="bool" id="use_omdb" default="true"/>
+        <setting label="OMDb API key" type="text" id="omdb_api_key" default="" enable="eq(-1,true)" visible="true"/>
+        <setting label="Use TMDB to fetch ratings" type="bool" id="use_tmdb" default="true"/>
+        <setting label="TMDB API key" type="text" id="tmdb_api_key" default="" enable="eq(-1,true)" visible="true"/>
         <setting id="last_completion" type="text" default="" visible="false"/>
     </category>
 </settings> 
