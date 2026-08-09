@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.3" provider-name="bossanova808">
+<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.4" provider-name="bossanova808">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -10,13 +10,9 @@
         <license>GPL-3.0-only</license>
         <website>https://github.com/bossanova808/script.module.bossanova808</website>
         <source>https://github.com/bossanova808/script.module.bossanova808</source>
-        <news>v1.0.3
-- Defensive coding pass: guard against malformed/missing settings and RPC responses instead of crashing
-- Log OS, module version, and Kodi's actual debug logging status at addon startup
-- Redact sensitive-looking local variables when logging an unhandled exception
-- Always prefix log lines with addon name/version, even for non-string messages
-- Add a shared Playback class for tracking/resuming what's currently playing (library, PVR, and addon sources), with rich metadata (art, plot, cast/crew, ratings etc), for use by other Bossanova808 addons
-- Uses Kodi's modern InfoTagVideo API when available (Nexus+), falling back to the older setInfo()/setProperty() API on Matrix - no extra dependency required
+        <news>v1.0.4
+- Add Playback.identity_key, a stable per-media identity (library dbid+type, falling back to path) for consumers that need to recognise repeat plays of the same item even when the reported path/file differs between plays
+- Add get_playcount_and_resume_point(), combining what were two separate JSON-RPC round trips into one, for consumers that need both
 </news>
         <assets>
             <icon>resources/icon.png</icon>

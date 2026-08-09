@@ -139,6 +139,26 @@ class Playback:
         mins, secs = divmod(int(self.resumetime), 60)
         return f"{mins}:{secs:02d}"
 
+    @property
+    def identity_key(self) -> str:
+        """
+        A stable identifier for "the piece of media this Playback represents", for deduplicating/
+        looking up entries across repeated plays of the same thing - independent of exactly which
+        URL Kodi happens to report for a given play. This matters because .path and .file can -
+        and for some sources reliably do - differ between plays of the same media: a direct library
+        click typically records a videodb:// path, while a later addon-triggered replay of that same
+        library item resolves via .file instead (see create_list_item_from_playback()), which for an
+        addon-backed library item (e.g. Jellyfin) can be a session-specific HTTP stream URL that may
+        not even be stable from one play to the next. Library items therefore use their permanent
+        dbid, namespaced by type since movieid/episodeid/musicvideoid are separate Kodi ID spaces;
+        everything else (PVR, addon, non-library file) falls back to path, which is otherwise stable.
+
+        :return: a string that should be equal for two Playbacks representing the same media
+        """
+        if self.source == "kodi_library" and self.dbid:
+            return f"kodi_library:{self.type}:{self.dbid}"
+        return self.path or ""
+
     def _is_addon_playback(self) -> bool:
         """
         Determine if playback originates from an addon
