@@ -1,4 +1,11 @@
-v2.0.10
+v2.2.0 (2026-08-09)
+- Major internal rewrite: playback tracking and resume now use the shared Playback class from script.module.bossanova808
+- Startup resume now uses Kodi's own StartOffset/PlayMedia resume mechanism instead of a manual seek after playback starts, fixing a range of resume-reliability issues
+- Added proper support for resuming PVR live TV (retunes the channel) and PVR recordings (resumes from Kodi/the PVR backend's own tracked position) on startup, both with correct channel/playback controls
+- Resume notifications now show a timestamp, distinguish live TV/recordings from other video, note that retuning live TV may take a few seconds, and show the item's artwork like Switchback's do
+- Requires script.module.bossanova808 1.0.3
+
+v2.0.10 (2026-07-29)
 - Fixed a bug where the startup resume seek could silently fail - video would auto-play from
   0:00 despite the "Resuming at X:XX" notification showing the correct saved time:
   https://forum.kodi.tv/showthread.php?tid=355383
@@ -7,54 +14,54 @@ v2.0.10
 - Fixed a rare crash on startup during a resume, which also explained why the *next* startup's
   resume could fail too (no resume data was saved from the session that crashed)
 
-v2.0.9
+v2.0.9 (2026-04-27)
 - User submitted Chinese language translations (thanks @wabisabi926!)
 
-v2.0.8
+v2.0.8 (2025-10-07)
 - Minor changes for Piers
 
-v2.0.7
+v2.0.7 (2024-10-15)
 - Remove old common code, use new module
 
-v2.0.6
+v2.0.6 (2024-04-19)
 - Add support for non library videos
 
-v2.0.5
+v2.0.5 (2023-08-20)
 - Fix wierd bug with resume points: https://forum.kodi.tv/showthread.php?tid=355383&pid=3163480#pid3163480
 
-v2.0.4
+v2.0.4 (2021-10-13)
 - Handle unicode characters in video names
 
-v2.0.3
+v2.0.3 (2021-08-28)
 - Bug fix for playing non-library videos
 - Use common code, better logging
 
-v2.0.2
+v2.0.2 (2021-07-17)
 - Complete re-write into more modular, modern Python 3
 - Add support for advancedsettings ignoresecondsatstart and ignorepercentatend
 - Handle player seeking past end of file more gracefully
 
-v2.0.1 
+v2.0.1 (2020-06-20)
 - Update settings to Matrix format
 
-v2.0.0 
+v2.0.0 (2020-06-16)
 - Port to Python 3 and prepare for submission to Matrix repo
 
-v1.2.0 
+v1.2.0 (2019-05-07)
 - Updated for Kodi Leia.  Dev taken over by bossanova808.
 
-v1.1.0 
+v1.1.0
 - added ability to Auto-Play a random video if nothing is playing
 
-v1.0.3 
+v1.0.3
 - converted strings.xml to strings.po
 - updated startup type to login
 
-v1.0.2 
+v1.0.2
 - changed startup type and updated links to forum/source
 
-v1.0.1 
+v1.0.1
 - updated descriptions in addon xml
 
-v1.0.0 
+v1.0.0
 - initial commit for frodo
