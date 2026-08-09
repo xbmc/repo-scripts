@@ -2,6 +2,7 @@ from random import randint
 
 from bossanova808.logger import Logger
 from bossanova808.notify import Notify
+from bossanova808.playback import Playback
 from bossanova808.utilities import send_kodi_json
 
 # noinspection PyPackages
@@ -86,19 +87,21 @@ class KodiPlayer(xbmc.Player):
 
         xbmc.sleep(1500)  # give it a bit to start playing and let the stopped method finish
 
-        Store.update_current_playing_file_path(self.getPlayingFile())
-        Store.length_of_currently_playing_file = self.getTotalTime()
+        file = self.getPlayingFile()
+        if Store.is_excluded(file):
+            Logger.info("Skipping excluded filepath: " + file)
+            return
+
+        Store.current_playback = Playback()
+        Store.current_playback.update_playback_details(file, self.getPlayingItem())
+        Logger.info(f'Kodi type: {Store.current_playback.type}, dbid: {Store.current_playback.dbid}')
 
         while self.isPlaying() and not Store.kodi_event_monitor.abortRequested():
 
-            # Skip (don't block on) this iteration's save while a startup resume seek is still
-            # being verified (see resume_if_was_playing()), so it can't overwrite the real resume
-            # point with a near-zero value - the next iteration picks it up as normal.
-            if not Store.currently_resuming:
-                try:
-                    self.update_resume_point(self.getTime())
-                except RuntimeError:
-                    Logger.error('Could not get current playback time from player')
+            try:
+                self.update_resume_point(self.getTime())
+            except RuntimeError:
+                Logger.error('Could not get current playback time from player')
 
             for i in range(0, Store.save_interval_seconds):
                 # Shutting down or not playing video anymore...stop handling playback
@@ -116,16 +119,18 @@ class KodiPlayer(xbmc.Player):
                            -2 -> stopped normally, let Kodi persist native resume (no-op here)
                            -1 -> end-of-file, clear resume point (sends 0)
                             0 -> explicit clear resume point
-        :param: Store.library_id: the Kodi library id of the currently playing file
+        :param: Store.current_playback.dbid: the Kodi library id of the currently playing file, if any
         :return: None
         """
 
         # cast to int just to be sure
         seconds = int(seconds)
 
+        playback = Store.current_playback
+
         # short circuit if we haven't got a record of the file that is currently playing
-        if not Store.currently_playing_file_path:
-            Logger.info("No valid currently_playing_file_path found - therefore not setting resume point")
+        if not playback or not playback.file:
+            Logger.info("No current playback recorded - therefore not setting resume point")
             return
 
         # -1 indicates that the video has stopped playing
@@ -146,18 +151,16 @@ class KodiPlayer(xbmc.Player):
 
                 xbmc.sleep(100)
 
-        # Short circuit if current time < Kodi's ignoresecondsatstart setting
-        if 0 < seconds < Store.ignore_seconds_at_start:
+        # Short circuit if current time < Kodi's ignoresecondsatstart setting - doesn't apply to
+        # live TV, which has no meaningful position to wait out; we want to remember the channel
+        # that was on immediately, not after some seconds of viewing
+        if playback.source != "pvr_live" and 0 < seconds < Store.ignore_seconds_at_start:
             Logger.info(f'Not updating resume point as current time ({seconds}) is below Kodi\'s ignoresecondsatstart'
                         f' setting of {Store.ignore_seconds_at_start}')
             return
 
         # Short circuits
 
-        # Weird library ID
-        if Store.library_id and Store.library_id < 0:
-            Logger.info(f"No/invalid library id ({Store.library_id}) for {Store.currently_playing_file_path}")
-            return
         # Kodi doing its normal stopping thing
         if seconds == -2:
             Logger.info("Not updating Kodi native resume point because the file was stopped normally, so Kodi should do it itself")
@@ -168,8 +171,7 @@ class KodiPlayer(xbmc.Player):
             seconds = 0
 
         # if current time > Kodi's ignorepercentatend setting
-        # if current time > Kodi's ignorepercentatend setting
-        total = Store.length_of_currently_playing_file
+        total = playback.totaltime
         if total:
             percent_played = int((seconds * 100) / total)
             if percent_played > (100 - Store.ignore_percent_at_end):
@@ -178,33 +180,43 @@ class KodiPlayer(xbmc.Player):
 
         # OK, BELOW HERE, we're probably going to set a resume point
 
-        # First update the resume point in the tracker file for later retrieval if needed
+        # First update our own tracker file (used to resume on next startup) with the full
+        # playback details, not just the resume point - so we can rebuild a proper ListItem
+        # (title, art, episode/season etc) for Kodi to display when resuming after a restart.
         Logger.info(f'Setting custom resume seconds to {seconds}')
-        with open(Store.file_to_store_resume_point, 'w') as f:
-            f.write(str(seconds))
+        playback.resumetime = seconds
+        with open(Store.file_to_store_playback, 'w', encoding='utf-8') as f:
+            f.write(playback.toJson())
+
+        # Neither PVR source accepts a library/file resume point via JSON-RPC - Files.SetFileDetails
+        # rejects pvr:// paths outright ("Invalid params"), and there's no VideoLibrary.SetXDetails
+        # equivalent for PVR recordings. Our own tracker file above is what resume_if_was_playing()
+        # actually uses, so this JSON-RPC step is only meaningful for library/file items.
+        if playback.source in ("pvr_live", "pvr_recording"):
+            return
 
         # Log what we are doing
         if seconds == 0:
-            Logger.info(f'Removing resume point for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, library id: {Store.library_id}')
+            Logger.info(f'Removing resume point for: {playback.file}, type: {playback.type}, dbid: {playback.dbid}')
         else:
-            Logger.info(f'Setting resume point for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, library id: {Store.library_id}, to: {seconds} seconds')
+            Logger.info(f'Setting resume point for: {playback.file}, type: {playback.type}, dbid: {playback.dbid}, to: {seconds} seconds')
 
         # Determine the JSON-RPC setFooDetails method to use and what the library id name is based of the type of video
         id_name = None
-        if Store.type_of_video == 'episode':
+        if playback.dbid and playback.type == 'episode':
             method = 'VideoLibrary.SetEpisodeDetails'
             get_method = 'VideoLibrary.GetEpisodeDetails'
             id_name = 'episodeid'
-        elif Store.type_of_video == 'movie':
+        elif playback.dbid and playback.type == 'movie':
             method = 'VideoLibrary.SetMovieDetails'
             get_method = 'VideoLibrary.GetMovieDetails'
             id_name = 'movieid'
-        elif Store.type_of_video == 'musicvideo':
+        elif playback.dbid and playback.type == 'musicvideo':
             method = 'VideoLibrary.SetMusicVideoDetails'
             get_method = 'VideoLibrary.GetMusicVideoDetails'
             id_name = 'musicvideoid'
         else:
-            Logger.info(f'Did not recognise type of video [{Store.type_of_video}] - assume non-library video')
+            Logger.info(f'Not a recognised library item (type [{playback.type}], dbid [{playback.dbid}]) - treating as a non-library video')
             method = 'Files.SetFileDetails'
             get_method = 'Files.GetFileDetails'
 
@@ -215,25 +227,25 @@ class KodiPlayer(xbmc.Player):
         }
         if id_name:
             params = {
-                    id_name: Store.library_id,
+                    id_name: playback.dbid,
                     "resume": {
                         "position": seconds,
-                        "total": Store.length_of_currently_playing_file
+                        "total": total
                     }
             }
         else:
             params = {
-                "file": Store.currently_playing_file_path,
+                "file": playback.file,
                 "media": "video",
                 "resume": {
                     "position": seconds,
-                    "total": Store.length_of_currently_playing_file
+                    "total": total
                 }
             }
 
         json_dict['params'] = params
         query = json.dumps(json_dict)
-        send_kodi_json(f'Set resume point for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, id: {Store.library_id}, to: {seconds} seconds, total: {Store.length_of_currently_playing_file}', query)
+        send_kodi_json(f'Set resume point for: {playback.file}, type: {playback.type}, dbid: {playback.dbid}, to: {seconds} seconds, total: {total}', query)
 
         # For debugging - let's retrieve and log the current resume point to check it was actually set as intended...
         json_dict = {
@@ -243,29 +255,44 @@ class KodiPlayer(xbmc.Player):
         }
         if id_name:
             params = {
-                id_name: Store.library_id,
+                id_name: playback.dbid,
                 "properties": ["resume"],
             }
         else:
             params = {
-                "file": Store.currently_playing_file_path,
+                "file": playback.file,
                 "media": "video",
                 "properties": ["resume"],
             }
 
         json_dict['params'] = params
         query = json.dumps(json_dict)
-        send_kodi_json(f'Check new resume point & total for: {Store.currently_playing_file_path}, type: {Store.type_of_video}, id: {Store.library_id}', query)
+        send_kodi_json(f'Check new resume point & total for: {playback.file}, type: {playback.type}, dbid: {playback.dbid}', query)
 
     def resume_if_was_playing(self):
         """
         Attempt to resume playback after a previous shutdown if resuming is enabled and saved resume data exist.
 
-        If configured and valid resume data are present, the player will start the saved file and seek to the
-        stored resume time; on any failure or if no resume data are applicable, no playback is resumed. Verifies
-        the seek actually landed, retrying a few times if not, since a seek requested too soon after playback
-        starts can be silently ignored by Kodi. The whole attempt is wrapped so a player exception (e.g. playback
-        stopping mid-seek) can never crash the service.
+        If configured and valid resume data are present, rebuilds a proper ListItem (title, artwork,
+        episode/season etc) from the persisted playback details and starts it with a StartOffset
+        property set to the saved resume point - Kodi applies this directly when opening the file, so
+        there's no separate seek call needed (and so nothing to race against onAVStarted's own periodic
+        save loop). PVR is a special case throughout - both live TV and recordings are started via the
+        PlayMedia(...) builtin rather than Player.play(), since a directly-resolved ListItem never
+        routes through Kodi's PVR-aware CPVRGUIActionsPlayback playback path, so Kodi never activates
+        a real PVR session (no channel-up/down, no OSD, etc) even though basic playback "works" -
+        confirmed still required on current Kodi, not just an old-Kodi workaround (see
+        https://forum.kodi.tv/showthread.php?tid=381623, posts #17-18). Specifically:
+        - Live TV has no seek position at all - "resuming" just means retuning the channel, via
+          PlayMedia(path) with no resume keyword.
+        - PVR recordings do have a real position, but a manually-set StartOffset causes a black screen
+          rather than actually resuming them. Kodi's own PVR manager already tracks each recording's
+          resume position itself - the PVR client addon persists it to the backend automatically as
+          part of ordinary playback, regardless of what started that playback - which is why the
+          native "Resume from..." prompt just works. The reliable way to use that tracked position from
+          an addon is PlayMedia(path, resume) - the same builtin Kodi's own resume prompt uses under
+          the hood - rather than setting a position of our own.
+        The whole attempt is wrapped so a player exception can never crash the service.
 
         Returns:
             True if a resume was attempted (playback was started), False otherwise.
@@ -277,106 +304,99 @@ class KodiPlayer(xbmc.Player):
             Logger.info("resume_if_was_playing: 'resume on startup' setting is disabled - not attempting resume")
             return False
 
-        if not os.path.exists(Store.file_to_store_resume_point):
-            Logger.info(f"resume_if_was_playing: resume point file not found ({Store.file_to_store_resume_point}) - not attempting resume")
+        if not os.path.exists(Store.file_to_store_playback):
+            Logger.info(f"resume_if_was_playing: no stored playback found ({Store.file_to_store_playback}) - not attempting resume")
             return False
-
-        if not os.path.exists(Store.file_to_store_last_played):
-            Logger.info(f"resume_if_was_playing: last played file not found ({Store.file_to_store_last_played}) - not attempting resume")
-            return False
-
-        with open(Store.file_to_store_resume_point, 'r') as f:
-            raw_resume_point = f.read()
 
         try:
-            resume_point = float(raw_resume_point)
-        except Exception:
-            Logger.error(f"resume_if_was_playing: error parsing resume point [{raw_resume_point}] from file, therefore not resuming.")
+            with open(Store.file_to_store_playback, 'r', encoding='utf-8') as f:
+                playback = Playback.from_dict(json.load(f))
+        except (OSError, ValueError, TypeError) as e:
+            Logger.error(f"resume_if_was_playing: error reading/parsing stored playback, therefore not resuming: {e}")
             return False
 
-        # neg 1 means the video wasn't playing when Kodi ended
-        if resume_point < 0:
-            Logger.info(f"resume_if_was_playing: stored resume point is {resume_point} - nothing was playing when Kodi last closed, not resuming")
+        if not playback.file:
+            Logger.info("resume_if_was_playing: stored playback has no file path - not attempting resume")
             return False
 
-        with open(Store.file_to_store_last_played, 'r') as f:
-            full_path = f.read()
-
-        if not full_path:
-            Logger.info("resume_if_was_playing: no last-played file found; skipping resume.")
-            return False
-
-        mins, secs = divmod(int(resume_point), 60)
-        str_timestamp = f'{mins}:{secs:02d}'
-
-        Logger.info(f"resume_if_was_playing: will attempt to resume [{full_path}] at {str_timestamp} ({resume_point} seconds)")
-
-        # Flag that a resume attempt is in progress. onAVStarted's periodic save loop checks this
-        # and skips its save (non-blocking) so it doesn't overwrite the real resume data with a
-        # near-zero value while we're still trying to establish/verify the seek below.
-        Store.currently_resuming = True
+        # Live TV has no seek position to resume to at all - "resuming" just means retuning the
+        # channel, so it's not gated on resumetime the way a video's position is. PVR recordings do
+        # have a real resume position and are still gated on resumetime (to decide whether this is
+        # worth resuming at all), but the actual position used comes from Kodi/NextPVR's own tracking
+        # (via PlayMedia resume, see docstring) rather than our own - our locally-observed resumetime
+        # is only used here as a "was this being watched" signal.
+        is_live = playback.source == "pvr_live"
+        is_recording = playback.source == "pvr_recording"
+        is_pvr = is_live or is_recording
+        str_timestamp = None
+        if is_live:
+            Logger.info(f"resume_if_was_playing: will attempt to resume live channel [{playback.pluginlabel}]")
+        else:
+            if not playback.resumetime or playback.resumetime < Store.ignore_seconds_at_start:
+                Logger.info(f"resume_if_was_playing: stored resume point is {playback.resumetime} - nothing meaningful to resume, not resuming")
+                return False
+            str_timestamp = playback.resume_timestamp
+            if is_recording:
+                Logger.info(f"resume_if_was_playing: will attempt to resume [{playback.pluginlabel}] (last seen around {str_timestamp}) "
+                            f"via Kodi's own PVR resume tracking")
+            else:
+                Logger.info(f"resume_if_was_playing: will attempt to resume [{playback.pluginlabel}] at {str_timestamp} ({playback.resumetime} seconds)")
 
         try:
-            self.play(full_path)
+            # PVR items (live or recorded) are started via PlayMedia, not Player.play() - see
+            # docstring above - so no ListItem is built/used for them at all; Kodi resolves its own
+            # item (with its own metadata) for both. A manually-set StartOffset works fine for
+            # ordinary library/file playback, so that's still built and used as before.
+            list_item = None if is_pvr else playback.create_list_item_from_playback()
+            if list_item is not None:
+                list_item.setProperty('StartOffset', str(playback.resumetime))
 
+            # PVR items (live or recorded) can fail to resolve for several seconds after Kodi
+            # startup, while the PVR manager is still connecting to the backend and loading
+            # channels/recordings - retry a few times (polling more briefly each time) rather than
+            # giving up on the first attempt. Library/file playback doesn't have this startup race,
+            # so one 10s-wait attempt, as before, is enough for those.
+            max_attempts = 15 if is_pvr else 1
+            wait_iterations = 30 if is_pvr else 100  # 3s per attempt (PVR) vs one 10s wait (VOD)
             started = False
-            for i in range(100):
-                if Store.kodi_event_monitor.abortRequested():
-                    Logger.info("resume_if_was_playing: abort requested while waiting for playback to start - giving up on resume")
-                    return False
-                if self.isPlayingVideo():
-                    started = True
+            for attempt in range(1, max_attempts + 1):
+                if is_recording:
+                    xbmc.executebuiltin(f'PlayMedia("{playback.file}", resume)')
+                elif is_live:
+                    xbmc.executebuiltin(f'PlayMedia("{playback.file}")')
+                else:
+                    self.play(playback.file, list_item)
+
+                for i in range(wait_iterations):
+                    if Store.kodi_event_monitor.abortRequested():
+                        Logger.info("resume_if_was_playing: abort requested while waiting for playback to start - giving up on resume")
+                        return False
+                    if self.isPlayingVideo():
+                        started = True
+                        break
+                    xbmc.sleep(100)
+
+                if started:
                     break
-                xbmc.sleep(100)
+
+                if attempt < max_attempts:
+                    Logger.info(f"resume_if_was_playing: playback did not start on attempt {attempt}/{max_attempts} "
+                                f"(PVR backend may still be starting up) - retrying shortly")
+                    xbmc.sleep(2000)
 
             if not started:
-                Logger.warning("resume_if_was_playing: timed out (10s) waiting for isPlayingVideo() to become True - giving up on resume seek")
+                Logger.warning(f"resume_if_was_playing: giving up after {max_attempts} attempt(s) - playback never started")
                 return False
 
-            Notify.info(f'Resuming playback at {str_timestamp}')
-
-            # Attempt the seek, then verify it actually landed - retrying a few times if not, since a
-            # seek requested too soon after playback starts can be silently ignored by Kodi. Every
-            # player call here is guarded: if playback has stopped/aborted underneath us (e.g. the
-            # device is shutting down), we log and bail out cleanly rather than raising.
-            seek_succeeded = False
-            attempt = 0
-            for attempt in range(1, 6):
-
-                if Store.kodi_event_monitor.abortRequested() or not self.isPlaying():
-                    Logger.info(f"resume_if_was_playing: playback stopped/abort requested before seek attempt {attempt} - stopping verification")
-                    break
-
-                try:
-                    self.seekTime(resume_point)
-                except RuntimeError as e:
-                    Logger.warning(f"resume_if_was_playing: seekTime() raised RuntimeError on attempt {attempt} ({e}) - playback has likely stopped, giving up on resume seek")
-                    break
-
-                xbmc.sleep(500)
-
-                if Store.kodi_event_monitor.abortRequested() or not self.isPlaying():
-                    Logger.info("resume_if_was_playing: playback stopped/abort requested while verifying seek - stopping verification")
-                    break
-
-                try:
-                    post_seek_time = self.getTime()
-                except RuntimeError:
-                    Logger.warning("resume_if_was_playing: could not read player time while verifying seek (RuntimeError) - playback has likely stopped")
-                    break
-
-                if post_seek_time is not None and abs(post_seek_time - resume_point) < 5:
-                    seek_succeeded = True
-                    break
-
-                Logger.warning(f"resume_if_was_playing: seek attempt {attempt} does not appear to have landed (expected ~{resume_point}s, got {post_seek_time}s) - retrying")
-
-            if not seek_succeeded:
-                Logger.warning(f"resume_if_was_playing: could NOT confirm the seek to {resume_point}s landed after {attempt} attempt(s) - "
-                                f"playback may have started from 0:00 despite the notification, or playback stopped before the seek could be verified.")
+            image = playback.poster or playback.icon
+            if is_live:
+                # Retuning live TV involves Kodi spinning up a full PVR session (buffering etc),
+                # which can take several seconds - call this out so it doesn't read as broken
+                Notify.kodi_notification(f'Re-tuning live TV: {playback.pluginlabel_short} (this may take a moment)', 5000, image)
+            elif is_recording:
+                Notify.kodi_notification(f'Resuming PVR Recording: {playback.pluginlabel_short} at {str_timestamp}', 5000, image)
             else:
-                Logger.info("resume_if_was_playing: resume seek confirmed successful")
-
+                Notify.kodi_notification(f'Resuming: {playback.pluginlabel_short} at {str_timestamp}', 5000, image)
             return True
 
         except Exception as e:
@@ -385,9 +405,6 @@ class KodiPlayer(xbmc.Player):
             # the rest of the session, which is far worse than a failed resume.
             Logger.error(f"resume_if_was_playing: unexpected exception during resume attempt - giving up on resume, but continuing normally: {e}")
             return False
-
-        finally:
-            Store.currently_resuming = False
 
     def get_random_library_video(self):
         """
@@ -444,14 +461,13 @@ class KodiPlayer(xbmc.Player):
                 }
         }
 
-        Logger.info(f'Executing JSON-RPC: {json.dumps(query)}')
-        json_response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
-        Logger.info(f'JSON-RPC VideoLibrary.{method} response: {json.dumps(json_response)}')
+        json_response = send_kodi_json(f'Get a random video from: {result_type}', query)
+        result = json_response.get('result') if json_response else None
 
         # found a video!
-        if json_response['result']['limits']['total'] > 0:
+        if result and result.get('limits', {}).get('total', 0) > 0:
             Store.video_types_in_library[result_type] = True
-            return json_response['result'][result_type][0]['file']
+            return result[result_type][0]['file']
         # no videos of this type
         else:
             Logger.info("There are no " + result_type + " in the library")

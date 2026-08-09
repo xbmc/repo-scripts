@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.10" provider-name="bossanova808, bradvido88">
+<addon id="script.service.playbackresumer" name="Playback Resumer" version="2.2.0" provider-name="bossanova808, bradvido88">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.bossanova808" version="1.0.0"/>
+    <import addon="script.module.bossanova808" version="1.0.3"/>
   </requires>
   <extension point="xbmc.service" library="default.py" />
   <extension point="xbmc.addon.metadata">
@@ -24,9 +24,12 @@
     <source>https://github.com/bossanova808/script.service.playbackresumer</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=355383</forum>
     <email>bossanova808@gmail.com</email>
-    <news>v2.0.10
-- Fixed the startup resume seek silently failing (video would auto-play from 0:00 despite the "Resuming at X:XX" notification): the addon now waits for playback to actually be ready before seeking, then verifies the seek landed and retries if not
-- Fixed a rare crash on startup during a resume, which in turn caused the *next* startup's resume to silently fail too (no video was playing at Kodi's last shutdown)
+    <news>v2.2.0
+- Major internal rewrite: playback tracking and resume now use the shared Playback class from script.module.bossanova808
+- Startup resume now uses Kodi's own StartOffset/PlayMedia resume mechanism instead of a manual seek after playback starts, fixing a range of resume-reliability issues
+- Added proper support for resuming PVR live TV (retunes the channel) and PVR recordings (resumes from Kodi/the PVR backend's own tracked position) on startup, both with correct channel/playback controls
+- Resume notifications now show a timestamp, distinguish live TV/recordings from other video, note that retuning live TV may take a few seconds, and show the item's artwork like Switchback's do
+- Requires script.module.bossanova808 1.0.3
     </news>
     <assets>
       <icon>icon.png</icon>
