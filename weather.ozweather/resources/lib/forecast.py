@@ -8,7 +8,7 @@ import xbmc
 import xbmcvfs
 
 from bossanova808.constants import ADDON, ADDON_NAME, ADDON_VERSION, WEATHER_WINDOW, CWD
-from bossanova808.utilities import set_property, clear_property
+from bossanova808.utilities import set_property, clear_property, get_setting
 from bossanova808.logger import Logger
 from resources.lib.store import Store
 
@@ -243,8 +243,8 @@ def get_weather():
         pass
 
     # Retrieve the currently chosen location geohash & radar code
-    geohash = ADDON.getSetting(f'Location{sys.argv[1]}BOMGeoHash')
-    radar = ADDON.getSetting(f'Radar{sys.argv[1]}') or ADDON.getSetting(f'Location{sys.argv[1]}ClosestRadar')
+    geohash = get_setting(f'Location{sys.argv[1]}BOMGeoHash')
+    radar = get_setting(f'Radar{sys.argv[1]}') or get_setting(f'Location{sys.argv[1]}ClosestRadar') or ""
 
     # With the new closest radar system, the radar is stored as e.g. 'Melbourne - IDR023' so strip the name off...
     split_code = radar.split(' - ')
@@ -272,9 +272,9 @@ def get_weather():
     set_property(WEATHER_WINDOW, 'WeatherVersion', ADDON_VERSION)
 
     # Set the location we updated
-    location_in_use = ADDON.getSetting(f'Location{sys.argv[1]}BOM')
-    latitude = ADDON.getSetting(f'Location{sys.argv[1]}Lat')
-    longitude = ADDON.getSetting(f'Location{sys.argv[1]}Lon')
+    location_in_use = get_setting(f'Location{sys.argv[1]}BOM') or ""
+    latitude = get_setting(f'Location{sys.argv[1]}Lat')
+    longitude = get_setting(f'Location{sys.argv[1]}Lon')
     try:
         location_in_use = location_in_use[0:location_in_use.index(',')]
     except ValueError:

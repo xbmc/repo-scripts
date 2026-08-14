@@ -1,5 +1,5 @@
-from bossanova808.constants import ADDON, WEATHER_WINDOW
-from bossanova808.utilities import set_property
+from bossanova808.constants import WEATHER_WINDOW
+from bossanova808.utilities import set_property, get_setting
 from bossanova808.logger import Logger
 
 
@@ -9,12 +9,12 @@ def refresh_locations():
     """
     Logger.info("Refreshing weather locations from settings")
 
-    location1 = ADDON.getSetting('Location1BOM') or ""
-    location2 = ADDON.getSetting('Location2BOM') or ""
-    location3 = ADDON.getSetting('Location3BOM') or ""
-    location4 = ADDON.getSetting('Location4BOM') or ""
-    location5 = ADDON.getSetting('Location5BOM') or ""
-    location6 = ADDON.getSetting('Location6BOM') or ""	
+    location1 = get_setting('Location1BOM') or ""
+    location2 = get_setting('Location2BOM') or ""
+    location3 = get_setting('Location3BOM') or ""
+    location4 = get_setting('Location4BOM') or ""
+    location5 = get_setting('Location5BOM') or ""
+    location6 = get_setting('Location6BOM') or ""
 
     Logger.info(f"Location1: {location1}")
     Logger.info(f"Location2: {location2}")
@@ -53,12 +53,12 @@ def refresh_locations():
 
     Logger.info("Refreshing radar locations from settings")
 
-    radar1 = ADDON.getSetting('Radar1') or ADDON.getSetting('Location1ClosestRadar') or ""
-    radar2 = ADDON.getSetting('Radar2') or ADDON.getSetting('Location2ClosestRadar') or ""
-    radar3 = ADDON.getSetting('Radar3') or ADDON.getSetting('Location3ClosestRadar') or ""
-    radar4 = ADDON.getSetting('Radar4') or ADDON.getSetting('Location4ClosestRadar') or ""
-    radar5 = ADDON.getSetting('Radar5') or ADDON.getSetting('Location5ClosestRadar') or ""
-    radar6 = ADDON.getSetting('Radar6') or ADDON.getSetting('Location6ClosestRadar') or ""	
+    radar1 = get_setting('Radar1') or get_setting('Location1ClosestRadar') or ""
+    radar2 = get_setting('Radar2') or get_setting('Location2ClosestRadar') or ""
+    radar3 = get_setting('Radar3') or get_setting('Location3ClosestRadar') or ""
+    radar4 = get_setting('Radar4') or get_setting('Location4ClosestRadar') or ""
+    radar5 = get_setting('Radar5') or get_setting('Location5ClosestRadar') or ""
+    radar6 = get_setting('Radar6') or get_setting('Location6ClosestRadar') or ""
 
     Logger.info(f"Radar1: {radar1}")
     Logger.info(f"Radar2: {radar2}")

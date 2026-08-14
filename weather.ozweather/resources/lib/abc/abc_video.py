@@ -16,6 +16,7 @@ if not xbmc.getUserAgent():
 from resources.lib.store import Store
 from bossanova808.constants import CWD
 from bossanova808.logger import Logger
+from bossanova808.notify import Notify
 
 
 def scrape_and_play_abc_weather_video():
@@ -25,7 +26,7 @@ def scrape_and_play_abc_weather_video():
     url = get_abc_weather_video_link()
     # Construct an offscreen list item with metadata...
     if not url:
-        xbmcgui.Dialog().notification("OzWeather", "Couldn't retrieve ABC weather video - sorry!", xbmcgui.NOTIFICATION_ERROR, 4000)
+        Notify.error("Couldn't retrieve ABC weather video - sorry!", 4000)
         return
     item = xbmcgui.ListItem(path=url)
     item.setProperty('mimetype', 'video/mp4')

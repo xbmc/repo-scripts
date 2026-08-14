@@ -303,8 +303,8 @@ def bom_forecast(geohash):
             # Date (Apr 4)
             set_key(weather_data, i, "ShortDate", forecast_datetime.strftime('%b ') + forecast_datetime.strftime('%d').lstrip('0'))
             # Outlook / Condition (same thing)
-            set_key(weather_data, i, "Outlook", forecast_seven_days[i]['short_text'])
-            set_key(weather_data, i, "Condition", forecast_seven_days[i]['short_text'])
+            set_key(weather_data, i, "Outlook", forecast_seven_days[i]['short_text'] or "")
+            set_key(weather_data, i, "Condition", forecast_seven_days[i]['short_text'] or "")
             #  See end of loop for the extended forecast (OutlookLong, ConditionLong)
             #  as we add warnings and sun protection info.OutlookLong / ConditionLong (same thing) - extended text forecast -
 
@@ -328,9 +328,13 @@ def bom_forecast(geohash):
                 else:
                     icon_code = Store.WEATHER_CODES[icon_descriptor]
             except KeyError:
-                Logger.error(f'Could not find icon code for BOM icon_descriptor: {forecast_seven_days[i]["icon_descriptor"]} and from short text {descriptor_from_short_text}')
-                # Pop the missing icon descriptor into the outlook to make it easier for people to report in the forum thread
-                set_key(weather_data, i, "Outlook", f"[{forecast_seven_days[i]['icon_descriptor']}] {forecast_seven_days[i]['short_text']}")
+                if icon_descriptor is None and not forecast_seven_days[i]['short_text']:
+                    # BOM has not yet published forecast data for this (usually the furthest-out) day - expected/normal, not a real unmapped-icon bug
+                    Logger.debug(f'BOM has not yet published forecast data for day {i} - falling back to the "na" icon')
+                else:
+                    Logger.error(f'Could not find icon code for BOM icon_descriptor: {forecast_seven_days[i]["icon_descriptor"]} and from short text {descriptor_from_short_text}')
+                    # Pop the missing icon descriptor into the outlook to make it easier for people to report in the forum thread
+                    set_key(weather_data, i, "Outlook", f"[{forecast_seven_days[i]['icon_descriptor']}] {forecast_seven_days[i]['short_text']}")
 
             Logger.debug(f"Icon descriptor is: {icon_descriptor}, icon code is {icon_code}")
             set_keys(weather_data, i, ["OutlookIcon", "ConditionIcon"], f'{icon_code}.png')
@@ -352,7 +356,7 @@ def bom_forecast(geohash):
                 elif forecast_seven_days[i]['now']['later_label'] == "Tomorrow's Max":
                     Logger.debug("Using now->temp_later as now->later_label is Tomorrow's Max")
                     temp_max = forecast_seven_days[i]['now']['temp_later']
-            set_keys(weather_data, i, ["HighTemp", "HighTemperature"], temp_max)
+            set_keys(weather_data, i, ["HighTemp", "HighTemperature"], "" if temp_max is None else temp_max)
 
             temp_min = forecast_seven_days[i]['temp_min']
             if i == 0 and not temp_min:
@@ -362,27 +366,36 @@ def bom_forecast(geohash):
                 elif forecast_seven_days[i]['now']['later_label'] == 'Overnight Min':
                     Logger.debug("Using now->temp_later as now->later_label is Overnight Min")
                     temp_min = forecast_seven_days[i]['now']['temp_later']
-            set_keys(weather_data, i, ["LowTemp", "LowTemperature"], temp_min)
+            set_keys(weather_data, i, ["LowTemp", "LowTemperature"], "" if temp_min is None else temp_min)
 
             # Chance & amount of rain
-            set_keys(weather_data, i, ["RainChance", "ChancePrecipitation"], f'{forecast_seven_days[i]["rain"]["chance"]}%')
-            amount_min = forecast_seven_days[i]['rain']['amount']['min'] or '0'
-            amount_max = forecast_seven_days[i]['rain']['amount']['max'] or '0'
-            if amount_min == '0' and amount_max == '0':
-                set_keys(weather_data, i, ["RainChanceAmount", "RainAmount", "Precipitation"], 'None')
+            # rain.chance is only None when BOM hasn't yet published forecast data for this day - distinct from a
+            # genuine 0% chance, which is a real forecast value we do want to show (as is 0mm expected amount)
+            rain_chance = forecast_seven_days[i]['rain']['chance']
+            if rain_chance is None:
+                set_keys(weather_data, i, ["RainChance", "ChancePrecipitation"], "")
+                set_keys(weather_data, i, ["RainChanceAmount", "RainAmount", "Precipitation"], "")
             else:
-                set_keys(weather_data, i, ["RainChanceAmount", "RainAmount", "Precipitation"], f'{amount_min}-{amount_max}mm')
+                set_keys(weather_data, i, ["RainChance", "ChancePrecipitation"], f'{rain_chance}%')
+                amount_min = forecast_seven_days[i]['rain']['amount']['min'] or '0'
+                amount_max = forecast_seven_days[i]['rain']['amount']['max'] or '0'
+                if amount_min == '0' and amount_max == '0':
+                    set_keys(weather_data, i, ["RainChanceAmount", "RainAmount", "Precipitation"], 'None')
+                else:
+                    set_keys(weather_data, i, ["RainChanceAmount", "RainAmount", "Precipitation"], f'{amount_min}-{amount_max}mm')
 
             # UV - Predicted max, text for such, and the recommended 'Wear Sun Protection' period
-            set_key(weather_data, i, 'UVIndex',  f'{forecast_seven_days[i]["uv"]["max_index"]}' or "")
-            if forecast_seven_days[i]['uv']['category']:
-                set_key(weather_data, i, 'UVIndex', f'{forecast_seven_days[i]["uv"]["max_index"]} ({forecast_seven_days[i]["uv"]["category"].title()})' or "")
-                set_key(weather_data, i, 'UVCategory', forecast_seven_days[i]['uv']['category'].title() or "")
+            uv_max_index = forecast_seven_days[i]['uv']['max_index']
+            uv_category = forecast_seven_days[i]['uv']['category']
+            if uv_category:
+                set_key(weather_data, i, 'UVIndex', f'{uv_max_index} ({uv_category.title()})')
+                set_key(weather_data, i, 'UVCategory', uv_category.title())
             else:
-                set_key(weather_data, i, 'UVCategory', "None")
+                set_key(weather_data, i, 'UVIndex', "" if uv_max_index is None else f'{uv_max_index}')
+                set_key(weather_data, i, 'UVCategory', "")
 
             # OutlookLong / Condition Long
-            extended_text = f'{forecast_seven_days[i]["extended_text"]}' or ""
+            extended_text = forecast_seven_days[i]["extended_text"] or ""
 
             # Add sun protection recommendation, if there is one
             if i == 0 and forecast_seven_days[i]['uv']['start_time'] and forecast_seven_days[i]['uv']['end_time']:
