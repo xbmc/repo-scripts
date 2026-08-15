@@ -21,6 +21,12 @@ from resources.lib.rate_limiter import RateLimiter
 # - IMDb rating logic from libs/imdbratings.py
 # - Trakt rating logic from libs/traktratings.py
 
+# IMDb direct scraping is disabled because IMDb now blocks scripted requests
+# IMDb direct scraping is currently unavailable: IMDb blocks scripted requests
+# with an AWS WAF challenge (HTTP 202), so ratings can no longer be scraped.
+# The IMDb code below is kept intact (for future re-enabling) but its entry point
+# is disabled via IMDB_ENABLED so users cannot enable it in the UI.
+IMDB_ENABLED = False
 IMDB_RATINGS_URL = 'https://www.imdb.com/title/{}/'
 IMDB_JSON_REGEX = re.compile(r'<script type="application/ld\+json">(.*?)</script>')
 IMDB_HEADERS = {
@@ -31,6 +37,19 @@ IMDB_HEADERS = {
 # Rate limits (calls per second)
 IMDB_RATE_LIMIT = 2   # 2 request per second
 TRAKT_RATE_LIMIT = 2  # 2 request per second
+OMDB_RATE_LIMIT = 2   # 2 request per second
+TMDB_RATE_LIMIT = 2   # 2 request per second
+
+# OMDb API (https://www.omdbapi.com/)
+OMDB_URL = 'https://www.omdbapi.com/'
+# OMDb API key is read from addon settings (setting id: omdb_api_key)
+
+# TMDB API (https://developers.themoviedb.org/3)
+TMDB_URL = 'https://api.themoviedb.org/3'
+# TMDB API key is read from addon settings (setting id: tmdb_api_key)
+# TMDB lookup flow for a TV episode:
+#   1. /find/{show_imdb_id}?external_source=imdb_id  -> tmdb show id
+#   2. /tv/{tmdb_show_id}/season/{s}/episode/{e}     -> vote_average + vote_count
 
 TRAKT_HEADERS = {
     # Not sure if I can keep this info intact
@@ -53,21 +72,29 @@ class RatingUpdater:
         self.rating_sources = self._get_enabled_sources()
         self.rate_limiters = {
             'imdb': RateLimiter(IMDB_RATE_LIMIT),
-            'trakt': RateLimiter(TRAKT_RATE_LIMIT)
+            'trakt': RateLimiter(TRAKT_RATE_LIMIT),
+            'omdb': RateLimiter(OMDB_RATE_LIMIT),
+            'tmdb': RateLimiter(TMDB_RATE_LIMIT)
         }
         
     def _get_enabled_sources(self):
         sources = []
-        if self.addon.getSettingBool('use_imdb'):
+        # IMDb is currently disabled (IMDB_ENABLED = False). The code is kept intact
+        # so the source can be re-enabled in the future by flipping the flag.
+        if IMDB_ENABLED and self.addon.getSettingBool('use_imdb'):
             sources.append('imdb')
         if self.addon.getSettingBool('use_trakt'):
             sources.append('trakt')
+        if self.addon.getSettingBool('use_omdb'):
+            sources.append('omdb')
+        if self.addon.getSettingBool('use_tmdb'):
+            sources.append('tmdb')
         
         if not sources:
             # Ensure at least one source is enabled
-            self.addon.setSettingBool('use_imdb', True)
-            sources.append('imdb')
-            self.logger.warning("No rating source selected, defaulting to IMDb")
+            self.addon.setSettingBool('use_omdb', True)
+            sources.append('omdb')
+            self.logger.warning("No rating source selected, defaulting to OMDb")
         
         return sources
 
@@ -88,7 +115,7 @@ class RatingUpdater:
                 new_rating = self._fetch_rating(movie['imdbnumber'], is_movie=True)
                 if new_rating and new_rating != old_rating:
                     self._update_movie_rating(movie['movieid'], new_rating)
-                    self.logger.update_result(f"Movie: {movie['title']} - Rating: {old_rating} → {new_rating}")
+                    self.logger.update_result(f"{old_rating} → {new_rating} - [Movie]{movie['title']}")
             except Exception as e:
                 self.logger.error(f"Error updating {movie['title']}: {str(e)}")
 
@@ -114,7 +141,7 @@ class RatingUpdater:
 
                 if new_rating and new_rating != old_rating:
                     self._update_episode_rating(episode['episodeid'], new_rating)
-                    self.logger.update_result(f"TV: {show_title} S{season:02d}E{episode_num:02d} - Rating: {old_rating} → {new_rating}")
+                    self.logger.update_result(f"{old_rating} → {new_rating} - [TV]{show_title} S{season:02d}E{episode_num:02d}")
             except Exception as e:
                 self.logger.error(f"Error updating {show_title} S{season:02d}E{episode_num:02d}: {str(e)}")
 
@@ -324,7 +351,7 @@ class RatingUpdater:
         """
         Fetch rating from a specific source
         Args:
-            source: 'imdb' or 'trakt'
+            source: 'imdb', 'trakt' or 'omdb'
             imdb_id: For movies: IMDb ID
                     For TV: Dictionary containing both episode and show IMDb IDs
             is_movie: True if fetching movie rating, False for TV show
@@ -342,6 +369,14 @@ class RatingUpdater:
             # For Trakt, use show ID for TV shows
             show_id = imdb_id if is_movie else imdb_id['show_imdbnumber']
             return self._fetch_trakt_rating(show_id, is_movie, season, episode)
+        elif source == 'omdb':
+            # For OMDb, use episode ID for TV shows
+            episode_id = imdb_id if is_movie else imdb_id['imdbnumber']
+            return self._fetch_omdb_rating(episode_id, is_movie)
+        elif source == 'tmdb':
+            # For TMDB, use show ID for TV shows and movie ID for movies
+            tmdb_id = imdb_id if is_movie else imdb_id['show_imdbnumber']
+            return self._fetch_tmdb_rating(tmdb_id, is_movie, season, episode)
         
         return -1, -1
 
@@ -410,6 +445,123 @@ class RatingUpdater:
             
         except (requests.RequestException, json.JSONDecodeError, ValueError) as e:
             self.logger.error(f"Error fetching Trakt rating for {imdb_id}: {str(e)}")
+            return -1, -1
+
+    def _get_omdb_api_key(self):
+        """Read the OMDb API key from addon settings. Returns '' if not set."""
+        return self.addon.getSetting('omdb_api_key').strip()
+
+    def _fetch_omdb_rating(self, imdb_id, is_movie):
+        """
+        Fetch IMDb rating via OMDb API.
+        Uses imdbRating as the rating value and imdbVotes as the vote count, so
+        the source participates in the weighted average with its real weight.
+        """
+        try:
+            self.rate_limiters['omdb'].wait_for_token('omdb')
+
+            api_key = self._get_omdb_api_key()
+            if not api_key:
+                self.logger.error("OMDb API key is not configured. Set it in addon settings (id: omdb_api_key).")
+                return -1, -1
+
+            params = {
+                'apikey': api_key,
+                'i': imdb_id,
+                'type': 'movie' if is_movie else 'episode',
+            }
+            response = requests.get(OMDB_URL, params=params)
+            response.raise_for_status()
+
+            data = response.json()
+
+            # OMDb returns an error payload like {"Response":"False","Error":"..."} when not found
+            if data.get('Response') == 'False':
+                self.logger.error(f"OMDb error for {imdb_id}: {data.get('Error', 'Unknown error')}")
+                return -1, -1
+
+            rating_str = data.get('imdbRating')
+            if rating_str is None or rating_str == 'N/A':
+                self.logger.error(f"No OMDb rating found for {imdb_id}")
+                return -1, -1
+
+            # imdbVotes is a string like "3,182,645" or "N/A". Parse to int.
+            votes_str = data.get('imdbVotes', '0')
+            try:
+                votes = int(votes_str.replace(',', ''))
+            except ValueError:
+                votes = 0
+            if votes <= 0:
+                self.logger.error(f"No OMDb vote count found for {imdb_id}")
+                return -1, -1
+
+            self.rate_limiters['omdb'].add_call('omdb')
+            return float(rating_str), votes
+
+        except (requests.RequestException, json.JSONDecodeError, ValueError) as e:
+            self.logger.error(f"Error fetching OMDb rating for {imdb_id}: {str(e)}")
+            return -1, -1
+
+    def _get_tmdb_api_key(self):
+        """Read the TMDB API key from addon settings. Returns '' if not set."""
+        return self.addon.getSetting('tmdb_api_key').strip()
+
+    def _fetch_tmdb_rating(self, tmdb_id, is_movie, season=None, episode=None):
+        """
+        Fetch rating from TMDB API. Used as a fallback for TV episodes that OMDb
+        does not have data for (new shows often lag behind on OMDb).
+        Flow:
+          - Movie: /find/{imdb_id}?external_source=imdb_id -> movie id -> /movie/{id}
+          - TV episode: /find/{show_imdb_id}?external_source=imdb_id -> show id
+                        -> /tv/{id}/season/{season}/episode/{episode}
+        """
+        try:
+            self.rate_limiters['tmdb'].wait_for_token('tmdb')
+
+            api_key = self._get_tmdb_api_key()
+            if not api_key:
+                self.logger.error("TMDB API key is not configured. Set it in addon settings (id: tmdb_api_key).")
+                return -1, -1
+
+            # Step 1: resolve IMDb id to a TMDB id via /find
+            find_params = {'api_key': api_key, 'external_source': 'imdb_id'}
+            find_resp = requests.get(f'{TMDB_URL}/find/{tmdb_id}', params=find_params)
+            find_resp.raise_for_status()
+            find_data = find_resp.json()
+
+            if is_movie:
+                results = find_data.get('movie_results', [])
+                if not results:
+                    self.logger.error(f"No TMDB movie found for {tmdb_id}")
+                    return -1, -1
+                tmdb_id_resolved = results[0]['id']
+                ep_url = f'{TMDB_URL}/movie/{tmdb_id_resolved}'
+            else:
+                results = find_data.get('tv_results', [])
+                if not results:
+                    self.logger.error(f"No TMDB show found for {tmdb_id}")
+                    return -1, -1
+                tmdb_id_resolved = results[0]['id']
+                if not season or not episode:
+                    self.logger.error(f"TMDB episode rating requires season and episode for {tmdb_id}")
+                    return -1, -1
+                ep_url = f'{TMDB_URL}/tv/{tmdb_id_resolved}/season/{season}/episode/{episode}'
+
+            # Step 2: fetch the rating
+            resp = requests.get(ep_url, params={'api_key': api_key, 'language': 'en-US'})
+            resp.raise_for_status()
+            data = resp.json()
+
+            rating = data.get('vote_average')
+            votes = data.get('vote_count')
+            if rating is not None and votes is not None:
+                self.rate_limiters['tmdb'].add_call('tmdb')
+                return float(rating), int(votes)
+
+            return -1, -1
+
+        except (requests.RequestException, json.JSONDecodeError, ValueError, KeyError) as e:
+            self.logger.error(f"Error fetching TMDB rating for {tmdb_id}: {str(e)}")
             return -1, -1
 
     def _update_movie_rating(self, movie_id, rating):

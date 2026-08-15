@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.latestrating" name="Latest Rating Service" version="1.0.2" provider-name="pizzamx">
+<addon id="script.service.latestrating" name="Latest Rating Service" version="1.1.0" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="xbmc.addon" version="19.1.0"/>
@@ -9,7 +9,7 @@
     <extension point="xbmc.service" library="service.py"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">Latest Rating Service</summary>
-        <description lang="en_GB">Automatically updates ratings for movies and TV shows in your library. Enalbe in settings first after install.</description>
+        <description lang="en_GB">Automatically updates ratings for movies and TV shows in your library. Supports OMDb, TMDB and Trakt as rating sources. Enable in settings first after install.</description>
         <platform>all</platform>
         <license>GPL-3.0</license>
         <source>https://github.com/pizzamx/script.service.latestrating</source>
@@ -17,5 +17,10 @@
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.jpg</fanart>
         </assets>
+        <news>- 1.1.0: Add OMDb and TMDB as additional rating sources
+- 1.1.0: OMDb/TMDB API keys are now configured in the addon settings
+- 1.1.0: Use real IMDb vote count from OMDb for weighted averaging
+- 1.1.0: TMDB fallback for TV episodes that OMDb has no rating for
+- 1.1.0: Disable IMDb scraping (blocked by AWS WAF); improved source resilience</news>
     </extension>
 </addon> 
