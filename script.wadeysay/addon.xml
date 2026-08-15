@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.wadeysay" name="wadeysay" version="0.0.11" provider-name="iCR8IONS LLC www.icr8ions.com">
+<addon id="script.wadeysay" name="wadeysay" version="0.0.12" provider-name="iCR8IONS LLC www.icr8ions.com">
    <requires>
       <import addon="xbmc.python" version="3.0.0"/>
       <!--import addon="script.module.web-pdb"/-->
@@ -20,6 +20,8 @@ NOTE: use Keymap Editor to map desired input or edit keymap file (fullscreenvide
       <!--source>https://github.com/icr8ions/script.wadeysay</source-->
       <assets>
          <icon>resources/icon-512x512.png</icon>
+         <screenshot>resources/qr-icr8ions.png</screenshot>
+         <screenshot>resources/qr-forum.png</screenshot>
       </assets>
    </extension>
 </addon>
