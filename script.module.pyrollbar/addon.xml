@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.pyrollbar"
        name="pyrollbar"
-       version="1.4.0"
+       version="1.4.0.1+v1_3_0"
        provider-name="rollbar">
   <requires>
     <import addon="script.module.requests" version="2.31.0" />
@@ -12,6 +12,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Error tracking and logging from Python to Rollbar</summary>
     <description lang="en_GB">Python notifier for reporting exceptions, errors, and log messages to Rollbar.</description>
+    <news>Rollback to rollbar 1.3.0 for windows compatability. This version has been released after an erroneous 1.4.0 upgrade.</news>
     <platform>all</platform>
     <license>MIT</license>
     <source>https://github.com/rollbar/pyrollbar</source>

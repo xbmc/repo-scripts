@@ -17,4 +17,4 @@ class ScrubRedactTransform(ScrubTransform):
         return super(ScrubRedactTransform, self).default(o, key=key)
 
 
-__all__ = ['ScrubRedactTransform', 'REDACT_REF']
+__all__ = ['ScrubRedactTransform']
