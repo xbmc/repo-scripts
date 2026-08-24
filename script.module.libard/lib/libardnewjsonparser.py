@@ -117,15 +117,47 @@ class parser:
 	"""
 
 	def parseVideo(self,clipId='Y3JpZDovL2JyLmRlL3ZpZGVvL2NkNzBjODMwLTM2ZTAtNDljNC1iMDJiLTQyNWNhMWIyZDg3NA',client="ard"):
-		j = requests.get(f'{apiUrl}/mediacollection/{clipId}?devicetype={self.deviceType}',headers=headers).json()
-		for item in j['_mediaArray'][0]['_mediaStreamArray']:
-			if item['_quality'] == 'auto':
-				url = item['_stream']
-		if url.startswith('//'): 
-			url = 'http:' + url
+		response = requests.get(
+			f'{apiUrl}/pages/ard/item/{clipId}?embedded=false&mcV6=true&devicetype={self.deviceType}',
+			headers=headers
+		)
+		response.raise_for_status()
+		j = response.json()
+
+		mediaCollection = next(
+			widget['mediaCollection']['embedded']
+			for widget in j['widgets']
+			if 'mediaCollection' in widget
+		)
+
+		url = None
+		for stream in mediaCollection.get('streams', []):
+			for media in stream.get('media', []):
+				if media.get('mimeType') == 'application/vnd.apple.mpegurl':
+					url = media['url']
+					break
+			if url:
+				break
+
+		if not url:
+			raise RuntimeError('ARD: no HLS stream found')
+
 		d = {'media':[{'url':url, 'stream':'HLS'}]}
-		if '_subtitleUrl' in j:
-			d['subtitle'] = [{'url':j['_subtitleUrl'], 'type':'ttml', 'lang':'de', 'colour':True}]
+
+		subtitles = []
+		for subtitle in mediaCollection.get('subtitles', []):
+			for source in subtitle.get('sources', []):
+				if source.get('kind') == 'webvtt':
+					subtitles.append({
+						'url': source['url'],
+						'type': 'webvtt',
+						'lang': subtitle.get('languageCode', 'deu'),
+						'colour': True
+					})
+
+		if subtitles:
+			d['subtitle'] = subtitles
+
 		return d
 
 
