@@ -1,2 +1,28 @@
+v1.0.4
+- Fix Pillow 10+ compatibility: Image.ANTIALIAS was removed in Pillow 10.0
+- Fix MyGaussianBlur: the PIL core gaussian_blur signature changed, inherit
+  ImageFilter.GaussianBlur so Pillow supplies the correct call
+- Fix hls_to_rgb: ONE_THIRD, ONE_SIXTH and TWO_THIRD were rounded to one
+  decimal, which skewed every hue and pushed channels past 255
+- Clamp in RGB_to_hex so an out-of-range channel can no longer produce a
+  nine character colour string
+- fhls and fhsv: restore the '-' form, and force the hue channel rather
+  than flooring it, since hue is circular and max() is meaningless on it
+- Drop a leftover debug window property from rgb_to_hsv
+- Drop the commented-out RNG daemon scaffolding from default.py
+- New maintainer, updated source and contact details
+
+v1.0.3
+- Revert the daemon poll interval back to 0.2s
+
+v1.0.2
+- Lower the daemon poll interval to 0.1s
+
+v1.0.1
+- Use colorsys for the hls and hsv colour conversions
+- check_mod now floors the modifier at the current channel value; the '-'
+  form still keeps the channel unchanged
+- Point the forum link at the add-on's own thread
+
 v1.0.0
 - Matrix ready Py3
