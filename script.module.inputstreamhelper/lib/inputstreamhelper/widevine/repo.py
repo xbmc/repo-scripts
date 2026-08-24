@@ -11,7 +11,7 @@ from ..utils import arch, http_post, system_os
 def cdm_from_repo():
     """Whether the Widevine CDM is available from Google's library CDM repository"""
     # Based on https://source.chromium.org/chromium/chromium/src/+/master:third_party/widevine/cdm/widevine.gni
-    if 'x86' in arch() or arch() == 'arm64' and system_os() in ('Darwin', 'Windows'):
+    if 'x86' in arch() or arch() == 'arm64' and system_os() in ('Darwin', 'Linux', 'Windows'):
         return True
     return False
 
@@ -45,7 +45,7 @@ def latest_widevine_available_from_repo(cdm_os, cdm_arch):
                 'platform': cdm_os,
             },
             'protocol': '4.0',
-            'updaterversion': '142.0.7444.175'
+            'updaterversion': '151.0.7922.173'
         }
     }
     text = http_post(url, data=json.dumps(payload).encode('utf-8'), headers=headers)
