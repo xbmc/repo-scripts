@@ -4,14 +4,34 @@ PunchPlay is a background service addon that tracks movies and TV episodes you w
 
 It supports Kodi Nexus 20 and Omega 21.
 
-## What's New In 1.3.0
+## What's New In 1.5.2
 
-- Backend-assisted `/api/identify` matching for files without reliable Kodi IDs.
-- Stronger local parsing for movie years, season folders, anime absolute episodes, and multi-episode files.
-- Rating prompt delay plus `Later`, `Never for this title`, `Never for this show`, and `Disable rating prompts` actions.
-- Preview mode for Kodi library import before sending watched history.
-- Stricter backend URL validation with an explicit developer-mode override for insecure HTTP testing.
-- Richer status and debug export data, including queue endpoint summaries and identify-cache state.
+- Fixed the token-refresh request being rejected by the server's network edge (a missing User-Agent header), which broke reconnection for every user once their access token expired and forced repeated manual re-logins.
+- Fixed playback staying "now playing" on the server forever if Kodi was closed while something was still playing.
+- Fixed intermittent HTTP 401 errors during PunchPlay to Kodi sync when playback and the service refreshed an expired token at the same time.
+- Fixed live watched toggles being suppressed after resume syncs, lost on transient Kodi detail failures, mistaken for playback echoes, or still uploaded after being un-watched within the same debounce window.
+- Fixed the "never for this show" rating suppression still varying between episodes of the same show; it's now keyed on the show's title rather than per-episode ids or year, both of which change episode to episode.
+- Pull sync now reports and retries Kodi library write failures without allowing one bad item to block the checkpoint forever, resets incremental state when the account or enabled sync halves change, no longer lets a stale remote resume position overwrite a locally completed item, and no longer falls back to a stale checkpoint after a failed full pull.
+- Kodi shutdown now preserves queued and in-flight playback events for correctly ordered offline replay, and a queued offline event can no longer replay after it was already cleaned up by a stop event racing it, or reach the backend after a new playback's start — even under a full post queue, where the drain and the start now dispatch as a single unit instead of two that could be split apart.
+- A playback event can no longer overtake an earlier event from the same session that's still stuck in the offline queue — once one event for a session goes durable, later events for it stay durable too until a complete flush replays the backlog.
+- Live watched-toggle syncs no longer block the background service for up to 15-30s on a slow backend; they route through the same worker as every other network write, which also means offline-queue replay is now pinned to the account it was queued under.
+- A stop event that hits a full post queue still runs its full cleanup and rating prompt instead of only being persisted for retry.
+- Logout now discards old-account work still in memory, and device-code pollers no longer race after the QR window is dismissed.
+- Rating prompts can now be limited to movies while episode scrobbling continues normally.
+- Rating suppressions written under an earlier version's key format are migrated automatically on upgrade.
+
+1.5.1 improved large-library imports, moved scrobbles off Kodi's player callback thread, and made device-code login friendlier to shared connections.
+
+## What's New In 1.5.1
+
+- Large library imports now run to completion. Previously a full sync stopped being accepted after roughly 5,000 items and still reported success, silently dropping the rest.
+- A sync that hits errors now says how many items could not be sent, and stops after three consecutive failed batches instead of grinding on against an unreachable backend.
+- Scrobbles are sent from a background worker rather than on Kodi's player callback thread, so a slow or unreachable backend no longer stalls play, pause, resume, or the start of the next episode.
+- Login polling is friendlier to shared connections and now tells you when it has been rate limited instead of reporting a generic timeout.
+
+1.5.0 added live watched sync (marking a movie or episode watched in the Kodi library syncs to PunchPlay within seconds, and un-watching never deletes PunchPlay history) and pull sync on library scan, so newly added files inherit watched states and resume points.
+
+1.4.0 added two-way sync (PunchPlay watched history and resume points applied to the Kodi library), rewatch playcounts on library import, UTC-correct watch dates, non-blocking rating prompts, and several reliability fixes.
 
 ## Install
 
@@ -45,12 +65,14 @@ The addon sends these playback events to PunchPlay:
 | Progress heartbeat | `/api/scrobble/progress` | Updates continue-watching progress |
 | Stop or end | `/api/scrobble/stop` | Saves final progress and decides watched vs continue-watching |
 
-The default watched threshold is 70%. Playback only becomes watched when the final stop event crosses that threshold.
+The default watched threshold is 90%. Playback only becomes watched when the final stop event crosses that threshold.
 
 ## Current Features
 
 - Automatic movie and TV episode scrobbling.
 - Continue-watching progress on PunchPlay.
+- Two-way sync: PunchPlay watched history and resume points applied back to the Kodi library (manual or 6-hourly auto-sync).
+- Live watched sync: manual watched toggles in the Kodi library sync to PunchPlay within seconds.
 - Backend-assisted canonical matching when Kodi metadata is incomplete.
 - Post-watch rating dialog for movies and episodes with suppression options.
 - Preview and import of watched Kodi library items.
@@ -76,13 +98,20 @@ Open **Configure** from the addon details page.
 | Scrobble movies | On | Enables movie tracking. |
 | Scrobble TV shows | On | Enables episode tracking. |
 | Scrobble anime | On | Applies to episodes with the `anime` genre. |
+| Sync Kodi watched changes to PunchPlay | On | Pushes manual watched toggles in the Kodi library to PunchPlay within seconds. |
 | Anime episode format | Auto | `Auto`, `Season/Episode`, or `Absolute episodes` for anime-heavy libraries. |
 | Watched threshold (%) | 90 | Minimum progress needed to log a completed watch. |
 | Minimum file length (minutes) | 5 | Ignores trailers and short clips. |
 | Preview Library Import | - | Runs a dry preview and can optionally continue into a real import. |
 | Sync Kodi Library | - | Imports watched movies and episodes from Kodi's local library. |
+| Apply PunchPlay watched history to Kodi library | On | Lets pull sync mark local items watched. |
+| Apply PunchPlay resume points to Kodi library | On | Lets pull sync set local resume points. |
+| Auto-sync from PunchPlay every 6 hours | Off | Runs an incremental pull sync in the background. |
+| Sync From PunchPlay Now | - | Applies PunchPlay watched history and resume points to the Kodi library. |
 | Rate after watching | On | Shows the PunchPlay rating dialog after a completed scrobble. |
+| Rating prompts for | Movies and episodes | Choose whether completed episodes should also show a rating prompt. |
 | Rating prompt delay (seconds) | 2 | Lets Kodi settle before prompting, which avoids interrupting autoplay. |
+| Clear Rating Prompt Suppressions | - | Undoes previous "Never for this title/show" choices. |
 | Show scrobble notifications | On | Shows Kodi notifications for completed scrobbles. |
 | Show notifications during playback | Off | Keeps notifications quiet while another video is already playing. |
 | Export Debug Info | - | Writes a token-safe JSON status snapshot into addon data. |
@@ -117,6 +146,8 @@ If PunchPlay cannot be reached, scrobble events are written to a local SQLite qu
 
 The queue is capped at 500 events, stores retry metadata, and drops entries older than 30 days. When the queue is full, the addon drops older low-value progress events before it drops authoritative stop events.
 
+If the in-memory network worker queue itself fills, authoritative stop events are persisted directly to the offline queue rather than dropped.
+
 Completed playback sessions clear their older queued session events before the final stop is sent, which prevents stale progress from bringing a watched item back into continue-watching.
 
 Progress heartbeats are sent every 15 seconds internally. This is fixed by design so public installs do not accidentally hammer the backend with overly aggressive update intervals.
@@ -127,7 +158,29 @@ Use **Configure -> Library -> Preview Library Import** to preview what PunchPlay
 
 Real imports still use **Configure -> Library -> Sync Kodi Library**.
 
-The sync reads watched movies and episodes from Kodi's video library using JSON-RPC, sends them in batches, and reports imported, skipped duplicate, unmatched, and failed items. When the backend returns item-level diagnostics, the addon writes a JSON diagnostics file into addon data for support.
+The sync reads watched movies and episodes from Kodi's video library using JSON-RPC, sends them in batches, and reports imported, skipped duplicate, unmatched, and failed items. Items with a Kodi playcount above 1 import their rewatches too (capped at 10 per item; rewatches beyond the dated one are stored as date-unknown watches). When the backend returns item-level diagnostics, the addon writes a JSON diagnostics file into addon data for support.
+
+## Two-Way Sync (PunchPlay → Kodi)
+
+**Configure -> Library -> Sync From PunchPlay Now** pulls your PunchPlay history and applies it to the Kodi library:
+
+- Watched movies and episodes are marked watched (playcount + lastplayed), matched by TMDB id first, then IMDb id. Items already watched in Kodi are left alone — the sync never *un*-watches anything.
+- In-progress items become Kodi resume points. A local resume point is only overwritten when the PunchPlay progress is newer than Kodi's last playback, and positions in the first minute or final two minutes are ignored.
+
+Enable **Auto-sync from PunchPlay every 6 hours** for background incremental syncs (only activity since the previous sync is fetched). The watched and resume halves can be toggled independently.
+
+Items not present in the Kodi library are counted as unmatched and skipped — this sync never adds files or library entries, it only updates watched state and resume points on items Kodi already knows.
+
+## Live Watched Sync (Kodi → PunchPlay)
+
+With **Sync Kodi watched changes to PunchPlay** enabled (default), manually marking a movie or episode watched in the Kodi library logs it on PunchPlay within a few seconds. Bulk operations (marking a whole season watched) are batched into a single request, and duplicates are skipped server-side.
+
+Notes:
+
+- Un-watching an item in Kodi does **not** delete PunchPlay history.
+- Watched changes caused by normal playback or by the pull sync itself are recognised as echoes and skipped — only genuine manual toggles are pushed.
+- The movie/TV/anime scrobble toggles apply here too.
+- When auto-sync is enabled, finishing a library scan also triggers a pull sync (at most every 30 minutes) so newly added files inherit their watched state and resume points.
 
 ## Status And Debug
 
@@ -139,6 +192,7 @@ The sync reads watched movies and episodes from Kodi's video library using JSON-
 - offline queue size and queued endpoint summary
 - last successful scrobble and last error
 - identifier cache size and last identify result
+- configured movie/episode rating-prompt scope
 - addon version, Kodi version, platform, and Python version in debug export
 
 Basic debug export avoids tokens and file paths. Verbose debug export warns before including queued file paths.
@@ -233,6 +287,8 @@ zip -r /tmp/script.punchplay.zip "$repo_dir" \
   -x "$repo_dir/.git/*" \
      "$repo_dir/.github/*" \
      "$repo_dir/tests/*" \
+     "$repo_dir/docs/*" \
+     "$repo_dir/README.md" \
      "$repo_dir/__pycache__/*" \
      "$repo_dir/**/__pycache__/*" \
      "$repo_dir/.DS_Store" \

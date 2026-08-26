@@ -19,6 +19,7 @@ import xbmc
 
 from constants import (
     IDENTIFIER_CACHE_TTL_SECS,
+    MAX_QUEUE_ATTEMPTS,
     OFFLINE_QUEUE_MAX_ITEMS,
     QUEUE_ENTRY_MAX_AGE_SECS,
     SCROBBLE_PROGRESS_ENDPOINT,
@@ -58,6 +59,7 @@ class Cache:
                     endpoint        TEXT    NOT NULL,
                     payload         TEXT    NOT NULL,
                     created_at      INTEGER NOT NULL,
+                    event_created_at INTEGER,
                     attempt_count   INTEGER NOT NULL DEFAULT 0,
                     last_attempt_at INTEGER,
                     last_error      TEXT
@@ -74,7 +76,12 @@ class Cache:
                     last_identify_at           INTEGER,
                     last_identify_status       TEXT,
                     last_identify_title        TEXT,
-                    last_identify_confidence   REAL
+                    last_identify_confidence   REAL,
+                    last_pull_sync_at          INTEGER,
+                    last_pull_sync_summary     TEXT,
+                    pull_sync_held_runs        INTEGER,
+                    pull_sync_failure_counts   TEXT,
+                    pull_sync_context          TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS rating_suppressions (
@@ -90,6 +97,7 @@ class Cache:
             self._migrate_identifier_cache(conn)
             self._migrate_pending_scrobbles(conn)
             self._migrate_runtime_status(conn)
+            self._migrate_rating_suppression_keys(conn)
 
     def _migrate_identifier_cache(self, conn: sqlite3.Connection) -> None:
         existing_columns = {
@@ -124,6 +132,21 @@ class Cache:
                 "ALTER TABLE pending_scrobbles "
                 "ADD COLUMN last_error TEXT"
             )
+        if "event_created_at" not in existing_columns:
+            # Replay order must follow when each event actually happened, not
+            # the order it was written to this table — a later event can be
+            # persisted here before an earlier one that was still in flight
+            # (e.g. a slow request abandoned at Kodi shutdown). Backfill from
+            # created_at for pre-existing rows, which predate this column and
+            # have no better timestamp available.
+            conn.execute(
+                "ALTER TABLE pending_scrobbles "
+                "ADD COLUMN event_created_at INTEGER"
+            )
+            conn.execute(
+                "UPDATE pending_scrobbles SET event_created_at = created_at "
+                "WHERE event_created_at IS NULL"
+            )
 
     def _migrate_runtime_status(self, conn: sqlite3.Connection) -> None:
         existing_columns = {
@@ -135,6 +158,11 @@ class Cache:
             ("last_identify_status", "TEXT"),
             ("last_identify_title", "TEXT"),
             ("last_identify_confidence", "REAL"),
+            ("last_pull_sync_at", "INTEGER"),
+            ("last_pull_sync_summary", "TEXT"),
+            ("pull_sync_held_runs", "INTEGER"),
+            ("pull_sync_failure_counts", "TEXT"),
+            ("pull_sync_context", "TEXT"),
         ):
             if column_name not in existing_columns:
                 if not column_name.replace("_", "").isalnum():
@@ -145,6 +173,36 @@ class Cache:
                     f"ALTER TABLE runtime_status ADD COLUMN {column_name} {column_type}"
                 )
 
+    def _migrate_rating_suppression_keys(self, conn: sqlite3.Connection) -> None:
+        """One-time cleanup for the 1.5.2 show-suppression key format
+        change: `show:{id-or-title}:{title}:{year}` -> `show:{title}`.
+
+        The old key varied almost as much per episode as the field it
+        replaced (an episode-level id or year, not a show-level one), so
+        rows written under it rarely matched reliably in the first place.
+        There's no safe way to rewrite an old key into the new format when
+        a title itself may contain colons, so old rows are cleared rather
+        than migrated — the user re-suppresses if they still want to.
+
+        Gated on PRAGMA user_version so this runs exactly once rather than
+        on every launch (a real show:{title} key can itself contain extra
+        colons if the title does, and would otherwise match the old
+        format's pattern forever).
+        """
+        version = conn.execute("PRAGMA user_version").fetchone()[0]
+        if version >= 1:
+            return
+        deleted = conn.execute(
+            "DELETE FROM rating_suppressions WHERE key GLOB 'show:*:*:*'"
+        ).rowcount
+        if deleted:
+            xbmc.log(
+                f"[PunchPlay] Cleared {deleted} rating suppression(s) from "
+                "the old show-key format",
+                xbmc.LOGINFO,
+            )
+        conn.execute("PRAGMA user_version = 1")
+
     def _drop_expired_pending_scrobbles_locked(
         self,
         conn: sqlite3.Connection,
@@ -154,7 +212,12 @@ class Cache:
             "DELETE FROM pending_scrobbles WHERE created_at < ?",
             (cutoff,),
         )
-        return max(cur.rowcount or 0, 0)
+        dropped = max(cur.rowcount or 0, 0)
+        cur = conn.execute(
+            "DELETE FROM pending_scrobbles WHERE attempt_count >= ?",
+            (MAX_QUEUE_ATTEMPTS,),
+        )
+        return dropped + max(cur.rowcount or 0, 0)
 
     def _drop_one_low_value_pending_scrobble_locked(
         self,
@@ -255,6 +318,14 @@ class Cache:
     # ------------------------------------------------------------------
 
     def enqueue_scrobble(self, endpoint: str, payload: dict[str, Any]) -> None:
+        self.enqueue_scrobbles([(endpoint, payload)])
+
+    def enqueue_scrobbles(self, items: list[tuple[str, dict[str, Any]]]) -> None:
+        """Batched form of enqueue_scrobble — one connection/transaction for
+        several events, so draining several unsent posts at once (e.g. Kodi
+        shutdown) doesn't reconnect per item."""
+        if not items:
+            return
         now = int(time.time())
         with self._connect() as conn:
             expired = self._drop_expired_pending_scrobbles_locked(conn)
@@ -269,27 +340,34 @@ class Cache:
                     "SELECT COUNT(*) FROM pending_scrobbles"
                 ).fetchone()[0]
             )
-            while count >= OFFLINE_QUEUE_MAX_ITEMS:
-                if not self._drop_one_low_value_pending_scrobble_locked(conn):
-                    break
-                count -= 1
+            for endpoint, payload in items:
+                while count >= OFFLINE_QUEUE_MAX_ITEMS:
+                    if not self._drop_one_low_value_pending_scrobble_locked(conn):
+                        break
+                    count -= 1
 
-            conn.execute(
-                """
-                INSERT INTO pending_scrobbles (
-                    endpoint,
-                    payload,
-                    created_at,
-                    attempt_count,
-                    last_attempt_at,
-                    last_error
+                event_created_at = payload.get("event_created_at")
+                if not isinstance(event_created_at, int):
+                    event_created_at = now * 1000
+
+                conn.execute(
+                    """
+                    INSERT INTO pending_scrobbles (
+                        endpoint,
+                        payload,
+                        created_at,
+                        event_created_at,
+                        attempt_count,
+                        last_attempt_at,
+                        last_error
+                    )
+                    VALUES (?, ?, ?, ?, 0, NULL, NULL)
+                    """,
+                    (endpoint, json.dumps(payload), now, event_created_at),
                 )
-                VALUES (?, ?, ?, 0, NULL, NULL)
-                """,
-                (endpoint, json.dumps(payload), now),
-            )
+                count += 1
 
-        xbmc.log(f"[PunchPlay] Queued offline scrobble → {endpoint}", xbmc.LOGDEBUG)
+        xbmc.log(f"[PunchPlay] Queued {len(items)} offline scrobble(s)", xbmc.LOGDEBUG)
 
     def get_pending_scrobbles(self) -> list[dict[str, Any]]:
         with self._connect() as conn:
@@ -304,7 +382,7 @@ class Cache:
                     last_attempt_at,
                     last_error
                 FROM pending_scrobbles
-                ORDER BY id
+                ORDER BY event_created_at, id
                 """
             ).fetchall()
 
@@ -333,6 +411,14 @@ class Cache:
                 "DELETE FROM pending_scrobbles WHERE id = ?",
                 (scrobble_id,),
             )
+
+    def pending_scrobble_exists(self, scrobble_id: int) -> bool:
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT 1 FROM pending_scrobbles WHERE id = ?",
+                (scrobble_id,),
+            ).fetchone()
+        return row is not None
 
     def mark_pending_scrobble_attempt(self, scrobble_id: int, error: str) -> None:
         with self._connect() as conn:
@@ -425,6 +511,11 @@ class Cache:
             ).fetchone()
         return bool(row)
 
+    def clear_rating_suppressions(self) -> int:
+        with self._connect() as conn:
+            cur = conn.execute("DELETE FROM rating_suppressions")
+        return max(cur.rowcount or 0, 0)
+
     # ------------------------------------------------------------------
     # Runtime status
     # ------------------------------------------------------------------
@@ -443,7 +534,10 @@ class Cache:
                     last_identify_at,
                     last_identify_status,
                     last_identify_title,
-                    last_identify_confidence
+                    last_identify_confidence,
+                    last_pull_sync_at,
+                    last_pull_sync_summary,
+                    pull_sync_held_runs
                 FROM runtime_status
                 WHERE singleton = 1
                 """
@@ -461,14 +555,66 @@ class Cache:
             "last_identify_status": row[7],
             "last_identify_title": row[8],
             "last_identify_confidence": row[9],
+            "last_pull_sync_at": row[10],
+            "last_pull_sync_summary": row[11],
+            "pull_sync_held_runs": row[12] or 0,
         }
 
     def set_account_username(self, username: str | None) -> None:
         with self._connect() as conn:
+            current = conn.execute(
+                "SELECT account_username FROM runtime_status WHERE singleton = 1"
+            ).fetchone()
+            account_changed = (
+                username is None
+                or current is None
+                or current[0] != username
+            )
+            if account_changed:
+                conn.execute(
+                    """
+                    UPDATE runtime_status
+                    SET account_username = ?,
+                        last_pull_sync_at = NULL,
+                        last_pull_sync_summary = NULL,
+                        pull_sync_held_runs = 0,
+                        pull_sync_failure_counts = NULL,
+                        pull_sync_context = NULL
+                    WHERE singleton = 1
+                    """,
+                    (username,),
+                )
+                return
             conn.execute(
                 "UPDATE runtime_status SET account_username = ? WHERE singleton = 1",
                 (username,),
             )
+
+    def ensure_pull_sync_context(self, context: str) -> bool:
+        """Reset incremental state when the enabled sync halves change.
+
+        Returns True when *context* already matched, False when a full sync is
+        now required.
+        """
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT pull_sync_context FROM runtime_status WHERE singleton = 1"
+            ).fetchone()
+            if row and row[0] == context:
+                return True
+            conn.execute(
+                """
+                UPDATE runtime_status
+                SET pull_sync_context = ?,
+                    last_pull_sync_at = NULL,
+                    last_pull_sync_summary = NULL,
+                    pull_sync_held_runs = 0,
+                    pull_sync_failure_counts = NULL
+                WHERE singleton = 1
+                """,
+                (context,),
+            )
+        return False
 
     def record_success(self, endpoint: str, title: str = "") -> None:
         with self._connect() as conn:
@@ -494,6 +640,82 @@ class Cache:
                 """,
                 (int(time.time() * 1000), error[:500]),
             )
+
+    def record_pull_sync(self, summary: str) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                """
+                UPDATE runtime_status
+                SET last_pull_sync_at = ?,
+                    last_pull_sync_summary = ?,
+                    pull_sync_held_runs = 0,
+                    pull_sync_failure_counts = NULL
+                WHERE singleton = 1
+                """,
+                (int(time.time() * 1000), summary[:300]),
+            )
+
+    def clear_pull_sync_checkpoint(self) -> None:
+        """Force the next automatic pull to run without a `since` filter.
+
+        Failure counters are deliberately preserved: clearing the timestamp
+        changes what the next run fetches, while the held-run policy still
+        decides when a persistently bad item may stop blocking progress.
+        """
+        with self._connect() as conn:
+            conn.execute(
+                """
+                UPDATE runtime_status
+                SET last_pull_sync_at = NULL
+                WHERE singleton = 1
+                """
+            )
+
+    def record_pull_sync_held(self, failed_items: set[str]) -> int:
+        """Record one failed pull run and return its minimum retry count.
+
+        Counts are consecutive per failed-item identity. Items that succeeded
+        on this run are removed, while newly failing items start at one, so an
+        unrelated failure cannot inherit another item's exhausted allowance.
+        `record_pull_sync` clears the state after a clean run or intentional
+        checkpoint advance.
+        """
+        if not failed_items:
+            # Defensive fallback for callers that only have an aggregate
+            # failure count (primarily old tests or third-party integrations).
+            failed_items = {"unknown-apply-failure"}
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT pull_sync_failure_counts FROM runtime_status "
+                "WHERE singleton = 1"
+            ).fetchone()
+            previous: dict[str, int] = {}
+            if row and row[0]:
+                try:
+                    decoded = json.loads(row[0])
+                    if isinstance(decoded, dict):
+                        previous = {
+                            str(key): max(0, int(value))
+                            for key, value in decoded.items()
+                        }
+                except (TypeError, ValueError):
+                    previous = {}
+
+            current = {
+                item: previous.get(item, 0) + 1
+                for item in sorted(failed_items)
+            }
+            held_runs = min(current.values())
+            conn.execute(
+                """
+                UPDATE runtime_status
+                SET pull_sync_held_runs = ?,
+                    pull_sync_failure_counts = ?
+                WHERE singleton = 1
+                """,
+                (held_runs, json.dumps(current, sort_keys=True)),
+            )
+        return held_runs
 
     def record_identify_result(
         self,

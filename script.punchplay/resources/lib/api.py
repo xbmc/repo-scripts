@@ -35,6 +35,9 @@ from constants import (
     AUTH_ME_ENDPOINT,
     AUTH_REFRESH_ENDPOINT,
     DEFAULT_BACKEND_URL,
+    DEVICE_CODE_MAX_BACKOFF_SECS,
+    DEVICE_CODE_POLL_INTERVAL_SECS,
+    DEVICE_CODE_THROTTLED_BACKOFF_SECS,
     HEARTBEAT_INTERVAL_SECS,
     IDENTIFIER_NO_MATCH_CACHE_TTL_SECS,
     IDENTIFIER_SUCCESS_CACHE_TTL_SECS,
@@ -56,6 +59,23 @@ from constants import (
 
 class BackendConfigurationError(ValueError):
     """Raised when the configured backend URL is unsafe or malformed."""
+
+
+class AuthenticationChangedError(RuntimeError):
+    """Raised when a request outlives the login generation that created it."""
+
+
+def _retry_after_seconds(exc: urllib.error.HTTPError, default: int) -> int:
+    """Read a Retry-After header, clamped to a sane polling range."""
+    try:
+        raw = (exc.headers or {}).get("Retry-After")
+    except AttributeError:
+        raw = None
+    try:
+        value = int(raw) if raw else 0
+    except (TypeError, ValueError):
+        value = 0
+    return max(default, min(value or default, DEVICE_CODE_MAX_BACKOFF_SECS))
 
 
 def _sanitise_url_for_display(url: str) -> str:
@@ -142,6 +162,15 @@ class APIClient:
 
         self._tokens: dict[str, str] = self._load_tokens()
         self.device_id: str = self._get_or_create_device_id()
+        # Incremented whenever the user logs out. Playback posts snapshot this
+        # value so work created for one account can never be queued or replayed
+        # after a later login to another account.
+        self._auth_generation = 0
+
+        # Guards _do_refresh: the heartbeat thread and the service thread can
+        # both hit a 401 at the same time, and concurrent refreshes with a
+        # rotating refresh token would invalidate the first retry.
+        self._refresh_lock = threading.Lock()
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -195,6 +224,10 @@ class APIClient:
         except Exception as exc:
             xbmc.log(f"[PunchPlay] Status error update failed: {exc}", xbmc.LOGDEBUG)
 
+    @property
+    def auth_generation(self) -> int:
+        return self._auth_generation
+
     def _record_identify_result(
         self,
         *,
@@ -240,14 +273,14 @@ class APIClient:
         with os.fdopen(fd, "w") as f:
             json.dump(tokens, f, indent=2)
 
-    def _headers(self) -> dict[str, str]:
+    def _headers(self, access_token: str | None) -> dict[str, str]:
         headers = {
             "Content-Type": "application/json",
             "User-Agent": f"{ADDON_ID}/{self._client_version} Kodi",
             "Accept": "application/json",
         }
-        if self._tokens.get("access_token"):
-            headers["Authorization"] = f"Bearer {self._tokens['access_token']}"
+        if access_token:
+            headers["Authorization"] = f"Bearer {access_token}"
         return headers
 
     def _identify_cache_key(
@@ -430,16 +463,37 @@ class APIClient:
         *,
         retry_on_401: bool = True,
         timeout: int = REQUEST_TIMEOUT_SECS,
+        expected_auth_generation: int | None = None,
     ) -> dict[str, Any]:
         """
         Perform an HTTP request.  Returns the parsed JSON body.
         Raises ConnectionError on network failure, urllib.error.HTTPError on
         non-2xx responses.
         """
+        # Keep the credential that is actually sent with this request.  A
+        # different thread may rotate the token while this request is in
+        # flight; in that case its 401 must reuse the newer token rather than
+        # rotating the refresh chain a second time. Pair the token with the
+        # account generation under the refresh/logout lock so an old payload
+        # can never pick up credentials from a later login.
+        with self._refresh_lock:
+            auth_generation_at_request = self._auth_generation
+            if (
+                expected_auth_generation is not None
+                and expected_auth_generation != auth_generation_at_request
+            ):
+                raise AuthenticationChangedError(
+                    "Login changed before request could be sent"
+                )
+            access_token_at_request = self._tokens.get("access_token")
+
         url = f"{self._base_url()}{path}"
         body = json.dumps(payload).encode("utf-8") if payload is not None else None
         req = urllib.request.Request(
-            url, data=body, headers=self._headers(), method=method
+            url,
+            data=body,
+            headers=self._headers(access_token_at_request),
+            method=method,
         )
 
         try:
@@ -449,9 +503,17 @@ class APIClient:
         except urllib.error.HTTPError as exc:
             if exc.code == 401 and retry_on_401:
                 xbmc.log("[PunchPlay] 401 — attempting token refresh", xbmc.LOGDEBUG)
-                if self._do_refresh():
+                if self._do_refresh(
+                    access_token_at_request,
+                    auth_generation_at_request,
+                ):
                     return self._request(
-                        method, path, payload, retry_on_401=False, timeout=timeout
+                        method,
+                        path,
+                        payload,
+                        retry_on_401=False,
+                        timeout=timeout,
+                        expected_auth_generation=auth_generation_at_request,
                     )
             raise
         except (urllib.error.URLError, OSError, TimeoutError) as exc:
@@ -461,17 +523,44 @@ class APIClient:
     # Token refresh
     # ------------------------------------------------------------------
 
-    def _do_refresh(self) -> bool:
-        refresh_token = self._tokens.get("refresh_token")
-        if not refresh_token:
-            return False
+    def _do_refresh(
+        self,
+        stale_access_token: str | None,
+        expected_auth_generation: int,
+    ) -> bool:
+        with self._refresh_lock:
+            if self._auth_generation != expected_auth_generation:
+                raise AuthenticationChangedError(
+                    "Login changed while request was in flight"
+                )
+            # The request that produced the 401 may have been sent before
+            # another thread refreshed successfully.  Reuse that refresh
+            # result; refreshing again rotates the backend's access token and
+            # invalidates the other thread's retry.
+            current_access_token = self._tokens.get("access_token")
+            if current_access_token != stale_access_token:
+                return bool(current_access_token)
+
+            refresh_token = self._tokens.get("refresh_token")
+            if not refresh_token:
+                return False
+
+            return self._do_refresh_locked(refresh_token)
+
+    def _do_refresh_locked(self, refresh_token: str) -> bool:
         try:
             url = f"{self._base_url()}{AUTH_REFRESH_ENDPOINT}"
             body = json.dumps({"refresh_token": refresh_token}).encode("utf-8")
+            # Use the same headers as every other request. This call used to
+            # build its own minimal dict and skip the User-Agent that
+            # identifies every other request as coming from this addon — a
+            # bare `Python-urllib/x.x` is a common bot-mitigation signature,
+            # and edge protection in front of the backend was rejecting every
+            # refresh attempt with a 403 before it ever reached the route.
             req = urllib.request.Request(
                 url,
                 data=body,
-                headers={"Content-Type": "application/json", "Accept": "application/json"},
+                headers=self._headers(None),
                 method="POST",
             )
             with urllib.request.urlopen(req, timeout=15) as resp:
@@ -495,50 +584,100 @@ class APIClient:
     def _is_permanent_client_error(self, status_code: int) -> bool:
         return status_code in PERMANENT_HTTP_STATUS_CODES
 
-    def post(self, path: str, payload: dict[str, Any]) -> dict[str, Any] | None:
+    def post(
+        self,
+        path: str,
+        payload: dict[str, Any],
+        *,
+        expected_auth_generation: int | None = None,
+    ) -> dict[str, Any] | None:
         """
         POST *payload* to *path*.  On network error, writes the event to the
         offline queue — never silently drops it.  Returns the response dict on
         success, or None when the request was queued.
         """
+        auth_generation = (
+            self._auth_generation
+            if expected_auth_generation is None
+            else expected_auth_generation
+        )
+
+        def _discarded_by_logout() -> bool:
+            if self._auth_generation == auth_generation:
+                return False
+            xbmc.log(
+                f"[PunchPlay] Discarding {path} from a logged-out account",
+                xbmc.LOGDEBUG,
+            )
+            return True
+
         try:
-            result = self._request("POST", path, payload)
+            result = self._request(
+                "POST",
+                path,
+                payload,
+                expected_auth_generation=auth_generation,
+            )
             self._record_success(path, payload)
             return result
+        except AuthenticationChangedError:
+            xbmc.log(
+                f"[PunchPlay] Discarding {path} after the login changed",
+                xbmc.LOGDEBUG,
+            )
+            return None
         except BackendConfigurationError as exc:
+            if _discarded_by_logout():
+                return None
             xbmc.log(
                 f"[PunchPlay] Backend URL invalid ({exc}) — preserving {path}",
                 xbmc.LOGWARNING,
             )
             self._record_error(f"Backend configuration error: {exc}")
-            if self._cache is not None:
-                self._cache.enqueue_scrobble(path, payload)
+            self.preserve_post_for_retry(
+                path,
+                payload,
+                expected_auth_generation=auth_generation,
+            )
             return None
         except ConnectionError as exc:
+            if _discarded_by_logout():
+                return None
             xbmc.log(
                 f"[PunchPlay] Network error ({exc}) — queuing {path}", xbmc.LOGWARNING
             )
             self._record_error(f"Network error on {path}: {exc}")
-            if self._cache is not None:
-                self._cache.enqueue_scrobble(path, payload)
+            self.preserve_post_for_retry(
+                path,
+                payload,
+                expected_auth_generation=auth_generation,
+            )
             return None
         except urllib.error.HTTPError as exc:
+            if _discarded_by_logout():
+                return None
             if 500 <= exc.code < 600:
                 # Transient server error — queue for retry.
                 xbmc.log(
                     f"[PunchPlay] HTTP {exc.code} on {path} — queuing", xbmc.LOGWARNING
                 )
                 self._record_error(f"HTTP {exc.code} on {path}")
-                if self._cache is not None:
-                    self._cache.enqueue_scrobble(path, payload)
+                self.preserve_post_for_retry(
+                    path,
+                    payload,
+                    expected_auth_generation=auth_generation,
+                )
             elif not self._is_permanent_client_error(exc.code):
                 xbmc.log(
                     f"[PunchPlay] HTTP {exc.code} on {path} — preserving for retry",
                     xbmc.LOGWARNING,
                 )
                 self._record_error(f"HTTP {exc.code} on {path}")
-                if self._cache is not None:
-                    self._cache.enqueue_scrobble(path, payload)
+                self.preserve_post_for_retry(
+                    path,
+                    payload,
+                    expected_auth_generation=auth_generation,
+                )
             else:
                 # Permanent client error (4xx) — drop, retrying won't help.
                 xbmc.log(
@@ -562,14 +701,66 @@ class APIClient:
         self._record_success(path, payload)
         return result
 
+    def preserve_post_for_retry(
+        self,
+        path: str,
+        payload: dict[str, Any],
+        *,
+        expected_auth_generation: int,
+    ) -> bool:
+        """Persist a post only while its originating login is still active.
+
+        The generation check and SQLite write share the refresh/logout lock.
+        Logout therefore either clears this newly persisted event afterward,
+        or advances the generation first and prevents the write entirely.
+        """
+        with self._refresh_lock:
+            if (
+                self._auth_generation != expected_auth_generation
+                or self._cache is None
+            ):
+                return False
+            try:
+                self._cache.enqueue_scrobble(path, payload)
+            except Exception as exc:
+                xbmc.log(
+                    f"[PunchPlay] Could not preserve {path}: {exc}",
+                    xbmc.LOGWARNING,
+                )
+                return False
+        return True
+
+    def get(self, path: str, timeout: int = REQUEST_TIMEOUT_SECS) -> dict[str, Any]:
+        """GET *path*.  Raises on failure — no offline queue fallback."""
+        return self._request("GET", path, timeout=timeout)
+
     # ------------------------------------------------------------------
     # Offline queue flush
     # ------------------------------------------------------------------
 
-    def flush_queue(self) -> None:
-        """Replay pending offline scrobbles in insertion order."""
+    def flush_queue(self, *, expected_auth_generation: int | None = None) -> bool:
+        """Replay pending offline scrobbles in playback-event order.
+
+        *expected_auth_generation* pins every replayed row to the account
+        active when this flush was scheduled — the same guarantee every
+        other network write in this module carries. Queued rows have no
+        per-row account identity of their own (pending_scrobbles has no
+        auth_generation column), so without this a flush that spans a
+        logout+relogin to a different account could send an old account's
+        queued watch event under the new account's credentials.
+
+        Returns True only when the durable queue is empty at the end of the
+        attempt. A transient failure returns False so callers that require an
+        ordering barrier (notably a new playback start) do not send newer
+        state while older events are still waiting to replay.
+        """
         if self._cache is None:
-            return
+            return True
+        generation = (
+            self._auth_generation
+            if expected_auth_generation is None
+            else expected_auth_generation
+        )
         expired = self._cache.drop_expired_pending_scrobbles()
         if expired:
             xbmc.log(
@@ -579,7 +770,7 @@ class APIClient:
 
         pending = self._cache.get_pending_scrobbles()
         if not pending:
-            return
+            return True
         xbmc.log(
             f"[PunchPlay] Flushing {len(pending)} queued scrobble(s)", xbmc.LOGINFO
         )
@@ -587,14 +778,35 @@ class APIClient:
             scrobble_id = int(item["id"])
             endpoint = str(item["endpoint"])
             payload = dict(item["payload"])
+            if not self._cache.pending_scrobble_exists(scrobble_id):
+                # Removed since this flush's snapshot was taken — most
+                # likely delete_pending_scrobbles_for_session() clearing a
+                # now-superseded event as its playback session stopped.
+                # Replaying it here would resurrect stale state after the
+                # authoritative stop already landed.
+                continue
             try:
-                self._request("POST", endpoint, payload)
+                self._request(
+                    "POST", endpoint, payload, expected_auth_generation=generation
+                )
                 self._cache.delete_pending_scrobble(scrobble_id)
                 self._record_success(endpoint, payload)
                 xbmc.log(
                     f"[PunchPlay] Replayed queued scrobble id={scrobble_id} → {endpoint}",
                     xbmc.LOGDEBUG,
                 )
+            except AuthenticationChangedError:
+                # Logged out (or into a different account) since this flush
+                # started. The remaining rows in this snapshot all belong to
+                # the same stale generation, so stop rather than send any of
+                # them under whichever account is active now — they stay
+                # queued for the next flush, which will pick up the current
+                # generation.
+                xbmc.log(
+                    "[PunchPlay] Stopping queue flush — account changed mid-flush",
+                    xbmc.LOGDEBUG,
+                )
+                return False
             except BackendConfigurationError as exc:
                 self._cache.mark_pending_scrobble_attempt(
                     scrobble_id,
@@ -602,7 +814,7 @@ class APIClient:
                 )
                 self._record_error(f"Backend configuration error replaying {endpoint}: {exc}")
                 xbmc.log("[PunchPlay] Invalid backend URL — stopping queue flush", xbmc.LOGWARNING)
-                break
+                return False
             except ConnectionError as exc:
                 self._cache.mark_pending_scrobble_attempt(
                     scrobble_id,
@@ -610,7 +822,7 @@ class APIClient:
                 )
                 self._record_error(f"Network error replaying {endpoint}: {exc}")
                 xbmc.log("[PunchPlay] Still offline — stopping queue flush", xbmc.LOGDEBUG)
-                break  # remain offline; try again later
+                return False  # remain offline; try again later
             except urllib.error.HTTPError as exc:
                 if self._is_permanent_client_error(exc.code):
                     self._cache.mark_pending_scrobble_attempt(
@@ -634,7 +846,15 @@ class APIClient:
                     f"[PunchPlay] HTTP {exc.code} replaying id={scrobble_id} — keeping queued",
                     xbmc.LOGWARNING,
                 )
-                break
+                return False
+
+        # A callback can add another durable event while this worker is
+        # replaying its snapshot (for example a queue-full fallback). Treat
+        # that as an incomplete barrier too; the caller must not overtake it.
+        return not any(
+            self._cache.pending_scrobble_exists(int(item["id"]))
+            for item in self._cache.get_pending_scrobbles()
+        )
 
     # ------------------------------------------------------------------
     # Device-code login — QR dialog helpers
@@ -687,10 +907,16 @@ class APIClient:
         user_code: str,
         device_code: str,
         expires_in: int,
+        deadline: float,
+        status: dict[str, Any],
     ) -> bool | None:
         """
         Present the QR LoginDialog while polling for approval in the
         background.
+
+        *deadline* is the absolute monotonic time the device code expires —
+        shared with the fallback poll loop so the two never poll a dead code.
+        *status* is written back into: {"throttled": bool}.
 
         Returns:
           True  — login succeeded (dialog auto-closed on approval)
@@ -724,12 +950,12 @@ class APIClient:
 
             def poll_loop() -> None:
                 monitor = xbmc.Monitor()
-                deadline = time.monotonic() + expires_in
                 while (
                     not stop_event.is_set()
                     and time.monotonic() < deadline
                     and not monitor.abortRequested()
                 ):
+                    wait_secs = DEVICE_CODE_POLL_INTERVAL_SECS
                     try:
                         resp = self._request(
                             "POST",
@@ -756,14 +982,30 @@ class APIClient:
                             login_dialog.approve()
                             return
                     except urllib.error.HTTPError as exc:
-                        xbmc.log(f"[PunchPlay] QR poll: HTTP {exc.code}", xbmc.LOGDEBUG)
+                        if exc.code == 429:
+                            # Polling faster than the backend allows only digs
+                            # the hole deeper — back off and remember why.
+                            status["throttled"] = True
+                            wait_secs = _retry_after_seconds(
+                                exc, DEVICE_CODE_THROTTLED_BACKOFF_SECS
+                            )
+                            xbmc.log(
+                                f"[PunchPlay] QR poll rate limited — waiting {wait_secs}s",
+                                xbmc.LOGWARNING,
+                            )
+                        else:
+                            xbmc.log(
+                                f"[PunchPlay] QR poll: HTTP {exc.code}", xbmc.LOGDEBUG
+                            )
                     except Exception as exc:
                         xbmc.log(f"[PunchPlay] QR poll error: {exc}", xbmc.LOGWARNING)
                     # Sleep in short slices so we can react to stop_event.
-                    for _ in range(6):
+                    slept = 0.0
+                    while slept < wait_secs:
                         if stop_event.is_set():
                             return
                         time.sleep(0.5)
+                        slept += 0.5
 
             thread = threading.Thread(
                 target=poll_loop, name="PunchPlayQRPoll", daemon=True
@@ -773,8 +1015,13 @@ class APIClient:
             login_dialog.doModal()
 
             # Dialog closed — either by approve() or by the user.
+            login_dialog.mark_closed()
             stop_event.set()
-            thread.join(timeout=3)
+            # The request is bounded by REQUEST_TIMEOUT_SECS. Wait for that
+            # one outstanding poll to finish before starting the fallback
+            # poller: device tokens are one-time credentials, so two pollers
+            # must never race to consume the successful response.
+            thread.join()
 
             approved = login_dialog.was_approved
             del login_dialog
@@ -839,6 +1086,13 @@ class APIClient:
         #   True  → login completed, we're done
         #   None  → user dismissed manually, fall through to poll loop
         #   False → dialog failed to show, fall back to text dialog
+        # One absolute deadline for the whole attempt.  The QR dialog and the
+        # fallback poll loop run back to back, so giving each its own fresh
+        # `expires_in` window would poll an already-dead code for a second
+        # full period — and burn the per-IP token budget doing it.
+        deadline = time.monotonic() + expires_in
+        status: dict[str, Any] = {"throttled": False}
+
         qr_result: bool | None = False
         if verification_uri_qr:
             qr_path = self._write_qr_image(verification_uri_qr)
@@ -849,6 +1103,8 @@ class APIClient:
                     user_code=user_code,
                     device_code=device_code,
                     expires_in=expires_in,
+                    deadline=deadline,
+                    status=status,
                 )
 
         if qr_result is True:
@@ -868,7 +1124,6 @@ class APIClient:
         # Step 3 — poll for the token with a cancellable progress dialog.
         # (Only reached if QR dialog was dismissed manually or not shown.)
         monitor = xbmc.Monitor()
-        deadline = time.monotonic() + expires_in
         progress = xbmcgui.DialogProgress()
         progress.create(_s(32006), _s(32007))
 
@@ -881,6 +1136,7 @@ class APIClient:
                 remaining = max(0, int(deadline - time.monotonic()))
                 pct = int(100 * (1 - remaining / expires_in))
                 progress.update(pct, _s(32008).format(remaining))
+                wait_secs = DEVICE_CODE_POLL_INTERVAL_SECS
 
                 try:
                     token_resp = self._request(
@@ -908,6 +1164,21 @@ class APIClient:
                 except ConnectionError as exc:
                     xbmc.log(f"[PunchPlay] Poll network error: {exc}", xbmc.LOGDEBUG)
                 except urllib.error.HTTPError as exc:
+                    if exc.code == 429:
+                        # Distinct from authorization_pending: the request was
+                        # never evaluated.  Back off instead of spending the
+                        # remaining budget at the same rate.
+                        status["throttled"] = True
+                        wait_secs = _retry_after_seconds(
+                            exc, DEVICE_CODE_THROTTLED_BACKOFF_SECS
+                        )
+                        xbmc.log(
+                            f"[PunchPlay] Login poll rate limited — waiting {wait_secs}s",
+                            xbmc.LOGWARNING,
+                        )
+                        monitor.waitForAbort(wait_secs)
+                        continue
+
                     # The /token endpoint returns 400 for all non-success
                     # states.  Read the body to distinguish between
                     # "authorization_pending" (keep polling) and terminal
@@ -940,14 +1211,16 @@ class APIClient:
                         xbmc.LOGWARNING,
                     )
 
-                monitor.waitForAbort(5)
+                monitor.waitForAbort(wait_secs)
         finally:
             try:
                 progress.close()
             except Exception:
                 pass
 
-        dialog.ok(_s(32000), _s(32010))
+        # A run that spent its window being throttled is not the same failure
+        # as nobody approving the code — say which one happened.
+        dialog.ok(_s(32000), _s(32136) if status["throttled"] else _s(32010))
         return False
 
     # ------------------------------------------------------------------
@@ -971,16 +1244,28 @@ class APIClient:
             if not confirmed:
                 return False
 
-        if os.path.exists(self._token_file):
-            os.remove(self._token_file)
-        self._tokens = {}
+        # Serialize with token refresh. A refresh already in flight finishes
+        # first and is then cleared; a refresh arriving later sees no token.
+        # Increment the account generation before clearing persistence so an
+        # in-flight playback request cannot repopulate the queue afterward.
+        with self._refresh_lock:
+            self._auth_generation += 1
+            if os.path.exists(self._token_file):
+                os.remove(self._token_file)
+            self._tokens = {}
         if self._cache is not None:
             try:
                 self._cache.clear_pending_scrobbles()
-                self._cache.set_account_username(None)
                 xbmc.log("[PunchPlay] Offline queue cleared on logout", xbmc.LOGDEBUG)
             except Exception as exc:
                 xbmc.log(f"[PunchPlay] Queue clear error: {exc}", xbmc.LOGDEBUG)
+            try:
+                # Keep account/checkpoint invalidation independent of queue
+                # cleanup so one SQLite failure cannot leak the old account's
+                # incremental pull-sync position into the next login.
+                self._cache.set_account_username(None)
+            except Exception as exc:
+                xbmc.log(f"[PunchPlay] Account-state clear error: {exc}", xbmc.LOGDEBUG)
         xbmc.log("[PunchPlay] Tokens cleared (logged out)", xbmc.LOGINFO)
         xbmcgui.Dialog().notification(
             NOTIFICATION_TITLE, localize(32012),
@@ -1075,12 +1360,24 @@ class APIClient:
             "last_identify_status": runtime_status.get("last_identify_status"),
             "last_identify_title": runtime_status.get("last_identify_title"),
             "last_identify_confidence": runtime_status.get("last_identify_confidence"),
+            "last_pull_sync_at": runtime_status.get("last_pull_sync_at"),
+            "last_pull_sync_summary": runtime_status.get("last_pull_sync_summary"),
+            "rating_prompt_scope": self._rating_prompt_scope(),
             "identifier_cache_size": identifier_cache_size,
             "addon_version": self._client_version,
             "kodi_version": xbmc.getInfoLabel("System.BuildVersion") or localize(32071),
             "platform": platform.platform(),
             "python_version": sys.version.split()[0],
         }
+
+    def _rating_prompt_scope(self) -> str:
+        setting = get_addon().getSetting("rating_prompt_scope") or "1"
+        return {
+            "0": "movies",
+            "1": "all",
+            "movies": "movies",
+            "all": "all",
+        }.get(setting, "all")
 
     def _settings_summary(self) -> dict[str, Any]:
         addon = get_addon()
@@ -1102,6 +1399,7 @@ class APIClient:
             "min_length_minutes": addon.getSettingInt("min_length"),
             "heartbeat_interval": HEARTBEAT_INTERVAL_SECS,
             "rate_after_watching": addon.getSettingBool("rate_after_watching"),
+            "rating_prompt_scope": self._rating_prompt_scope(),
             "rating_prompt_delay_secs": addon.getSettingInt("rating_prompt_delay"),
             "show_notifications": addon.getSettingBool("show_notifications"),
             "notify_during_playback": addon.getSettingBool("notify_during_playback"),

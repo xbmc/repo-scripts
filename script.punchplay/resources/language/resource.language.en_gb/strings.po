@@ -469,3 +469,107 @@ msgstr ""
 msgctxt "#32116"
 msgid "Library import preview failed: {0}"
 msgstr ""
+
+msgctxt "#32117"
+msgid "Sync From PunchPlay Now"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Apply PunchPlay watched history to Kodi library"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Apply PunchPlay resume points to Kodi library"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Auto-sync from PunchPlay every 6 hours"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Syncing From PunchPlay"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Fetching PunchPlay history…"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Updating Kodi library ({0}/{1})…"
+msgstr ""
+
+msgctxt "#32124"
+msgid "PunchPlay sync: {0} marked watched, {1} resume point(s) set"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Kodi library already up to date with PunchPlay"
+msgstr ""
+
+msgctxt "#32126"
+msgid "PunchPlay sync failed: {0}"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Last PunchPlay to Kodi sync: {0}"
+msgstr ""
+
+msgctxt "#32128"
+msgid "OK to confirm  ·  Back to skip"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Clear Rating Prompt Suppressions"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Cleared {0} rating prompt suppression(s)"
+msgstr ""
+
+msgctxt "#32131"
+msgid "No rating prompt suppressions to clear"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Enable watched or resume sync in Library settings first"
+msgstr ""
+
+msgctxt "#32133"
+msgid "PunchPlay sync cancelled"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Sync Kodi watched changes to PunchPlay"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Partial sync — imported {0}. {1} item(s) could not be sent; run sync again."
+msgstr ""
+
+msgctxt "#32136"
+msgid "Too many login attempts from this network. Wait a few minutes, then try again."
+msgstr ""
+
+msgctxt "#32137"
+msgid "PunchPlay sync: {0} applied, {1} failed — will retry"
+msgstr ""
+
+msgctxt "#32138"
+msgid "{0} watched, {1} resume, {2} unmatched, {3} failed"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Rating prompts for"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Movies only"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Movies and episodes"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Rating prompts: {0}"
+msgstr ""

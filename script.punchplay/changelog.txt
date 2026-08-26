@@ -1,3 +1,147 @@
+v1.5.2 (2026-08-24)
+- Fixed the token-refresh request being rejected outright by the server's
+  network edge, which silently broke reconnection for every user once their
+  hour-long access token expired and forced a repeated manual re-login. The
+  refresh call was missing the addon's User-Agent header that every other
+  request sends.
+- Fixed playback left "now playing" forever on the server if Kodi was closed
+  while something was still playing. Shutdown now always sends the stop event
+  for active playback instead of only clearing local state.
+- Fixed intermittent HTTP 401 errors during PunchPlay to Kodi sync. When a
+  playback heartbeat and a manual sync both observed an expired access token,
+  the delayed request could refresh the rotating token chain a second time and
+  invalidate the first request's retry. Delayed 401s now reuse the token that
+  the other thread already refreshed.
+- Fixed manual watched-toggles being silently dropped by live sync's echo
+  suppression. A pull-sync resume-point write (which never touches playcount)
+  no longer suppresses a later watched-toggle, and playback/pull echoes now
+  match the timestamp of the Kodi write instead of swallowing every manual
+  toggle for the same title during a blanket time window. Transient Kodi
+  detail lookup failures are requeued rather than losing the toggle.
+- Fixed un-watching an item within the same debounce window as marking it
+  watched still uploading the watch the user had just undone.
+- Fixed the "never rate this show" suppression key still varying between
+  episodes of the same show, which let rating prompts reappear for a show
+  already opted out. Kodi's per-episode ids and per-episode year are both
+  unstable across a show's episodes; the key is now built from the show's
+  title alone, the only field that's actually consistent show-to-show.
+- Fixed a stale remote resume position overwriting a locally completed item's
+  progress back to "in progress" during pull sync.
+- Fixed a queued offline event able to be replayed after it was already
+  cleaned up. Marking playback stopped now double-checks a queued event is
+  still pending immediately before resending it, instead of trusting a
+  snapshot that a concurrent stop could have already invalidated.
+- Fixed a stale offline event able to reach the backend after a new
+  playback's start, when connectivity returns right as a new item begins
+  playing. Starting playback now drains any leftover queued events first,
+  instead of relying solely on the independent 60-second background flush.
+- Fixed live watched-toggle syncs blocking the background service for up to
+  15-30s on a slow backend, and writing into the offline queue from a thread
+  independent of every other network write. They now route through the same
+  worker as playback events.
+- Fixed the pre-start offline-queue drain silently dropping instead of
+  retrying if the post queue was still full at that exact moment, which
+  could still let a stale event land after the new start under sustained
+  load. The drain and the start now dispatch as a single unit, so a full
+  queue can only reject them together.
+- Fixed a stop event hitting a full post queue skipping its session cleanup
+  and rating prompt — it now runs the same logic as a normal stop, just
+  without the network call, instead of only persisting the raw event.
+- Fixed "never rate this show" suppressions from earlier versions silently
+  losing effect after upgrading to this version; a one-time migration clears
+  suppressions written under the old key format.
+- Fixed the offline queue's replay not being pinned to the account it was
+  queued under, so a logout immediately followed by logging into a different
+  account mid-replay could send an old account's queued event under the new
+  account's credentials.
+- Malformed Kodi watch-date values are now logged instead of silently
+  discarded during library import.
+- Fixed unbounded memory growth in the live-sync echo-suppression tracker
+  for accounts with auto pull sync on but live watched sync off.
+- Fixed a playback event able to reach the backend ahead of an earlier event
+  from the same session that was still stuck in the offline queue. Once any
+  event for a session goes durable, every later event for that session now
+  stays durable too until a complete flush replays the whole backlog,
+  instead of a later event slipping out live while an older one waits.
+- Fixed a failed full pull sync (not filtered to changes since a checkpoint)
+  silently falling back to its previous incremental checkpoint on the next
+  automatic run, which could permanently miss whatever the failed run was
+  meant to catch up on. The checkpoint now clears so the next run is full
+  again too.
+- Pull sync now reports Kodi library write failures and retries each failed
+  item without letting one persistently bad item block newer changes forever.
+  Incremental checkpoints now reset after an account or enabled-setting change.
+- Shutdown now preserves both queued and in-flight playback events for ordered
+  offline replay when the network worker cannot finish within its grace period.
+- Authoritative stop events are persisted instead of dropped if the in-memory
+  network worker queue fills behind a slow backend.
+- Logout discards queued and in-flight work from the previous account, and QR
+  login no longer lets its background and fallback pollers race for a token.
+- "Never for this show" rating suppression now applies to every episode.
+- Rating prompts can now be limited to movies without disabling episode
+  scrobbling or watched sync.
+
+v1.5.1 (2026-07-26)
+- Library sync no longer claims success when batches failed. Entries that
+  never reached PunchPlay are counted and reported so the run can be
+  repeated, instead of being dropped from the total.
+- Library sync now stops after three consecutive failed batches rather than
+  grinding through the rest of the library against an unreachable backend.
+- Import batches raised from 50 to 100 entries (the backend maximum),
+  halving the number of requests a full library sync needs.
+- Together with the matching backend change removing the import rate limit,
+  large libraries now import completely; previously a sync stopped being
+  accepted after roughly 5,000 items and reported an under-counted total.
+- Playback is smoother: scrobble events are now sent from a background worker
+  instead of on Kodi's player callback thread, so a slow or unreachable
+  backend can no longer stall play, pause, resume, or the start of the next
+  episode. Events are still sent in order, and a queued stop event is
+  flushed before Kodi shuts down.
+- Removed a redundant offline-queue flush that ran when playback started; it
+  could replay hundreds of queued events before the video began.
+- Login is more reliable on shared connections: the approval poll now runs
+  every 5 seconds instead of every 3, no longer restarts its countdown when
+  the QR window is dismissed, and backs off when the server asks it to.
+  Being rate limited now says so instead of reporting a generic timeout.
+
+v1.5.0 (2026-07-10)
+- Live watched sync: manually marking a movie or episode watched in the
+  Kodi library now syncs to PunchPlay within seconds (batched through the
+  import pipeline, so dedup and rewatch playcounts apply). Un-watching in
+  Kodi never deletes PunchPlay history.
+- Echo suppression: playcount changes caused by our own pull sync or by
+  normal playback (already scrobbled at stop) are recognised and skipped,
+  as are library-scan updates.
+- Library scans now trigger a debounced full pull sync (when auto-sync is
+  enabled) so newly added files immediately inherit PunchPlay watched
+  states and resume points.
+- New "Sync Kodi watched changes to PunchPlay" toggle under Scrobbling
+  (on by default); respects the movie/TV/anime scrobble toggles.
+
+v1.4.0 (2026-07-09)
+- Two-way sync: new "Sync From PunchPlay Now" action applies PunchPlay
+  watched history (playcount + lastplayed) and resume points to the Kodi
+  library, matched by TMDB/IMDb ids. Never un-watches local items and only
+  overwrites local resume points when the PunchPlay progress is newer.
+- Optional auto-sync from PunchPlay every 6 hours (incremental, off by
+  default).
+- Library import now sends per-item playcounts so rewatches are imported
+  (capped, recorded as date-unknown watches) instead of collapsing to a
+  single watch.
+- Library import converts Kodi's local-time lastplayed to UTC before upload,
+  fixing watch dates shifted by the device timezone.
+- Rating prompts no longer block Kodi's player callbacks: the prompt is
+  queued and shown by the service loop after the configured delay.
+- Heartbeat progress updates survive transient errors instead of stopping
+  for the rest of playback (stops only after 3 consecutive failures).
+- Token refresh is now serialized behind a lock so concurrent 401s from the
+  heartbeat and service threads cannot race a rotating refresh token.
+- Offline queue entries are dropped after ~1 day of continuous failed
+  retries (previously retried for up to 30 days).
+- New "Clear Rating Prompt Suppressions" action undoes "Never for this
+  title/show" choices.
+- Rating dialog footer text is now localizable.
+
 v1.3.0 (2026-05-23)
 - Add backend-assisted `/api/identify` matching for items without reliable
   Kodi IDs, with confidence thresholds, safe fallback behavior, and local
