@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <settings version="1">
-    <section id="service.subtitles.opensubtitles">
+    <section id="service.subtitles.opensubtitles-com">
         <category id="user" label="32101">
             <group id="1">
                 <setting id="OSuser" type="string" label="32201">
@@ -24,21 +24,74 @@
                         <hidden>true</hidden>
                     </control>
                 </setting>
-                <setting id="APIKey" type="string">
-                    <level>4</level>
-                    <default>qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6</default>
-                </setting>
                 <setting id="test_connection" type="action" label="32010">
                     <level>0</level>
                     <default/>
                     <control type="button" format="action">
+                        <!-- <close> makes Kodi save the settings and close this dialog before
+                             running the script. Without it the script reads the values last
+                             written to disk, so freshly typed credentials look empty and the
+                             user is asked for a username and password they just entered. -->
+                        <close>true</close>
                         <data>RunScript(special://home/addons/service.subtitles.opensubtitles-com/test_connection.py)</data>
                     </control>
+                </setting>
+                <setting id="account_status" type="string" label="32204">
+                    <level>0</level>
+                    <default>Not Verified</default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="enable" setting="account_status" operator="is">__disabled__</dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>32204</heading>
+                    </control>
+                </setting>
+                <setting id="account_details" type="string" label="32205">
+                    <level>0</level>
+                    <default>Click Test Connection to verify</default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="enable" setting="account_details" operator="is">__disabled__</dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>32205</heading>
+                    </control>
+                </setting>
+                <setting id="account_checked_at" type="string" label="32206">
+                    <level>0</level>
+                    <default>Not yet checked</default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="enable" setting="account_checked_at" operator="is">__disabled__</dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>32206</heading>
+                    </control>
+                </setting>
+                <setting id="account_verified_at" type="string">
+                    <level>4</level>
+                    <default>0</default>
+                </setting>
+                <setting id="APIKey" type="string">
+                    <level>4</level>
+                    <default>qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6</default>
                 </setting>
             </group>
         </category>
         <category id="filter" label="32102">
             <group id="1">
+                <setting id="smart_ranking" type="boolean" label="32221">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
                 <setting id="hearing_impaired" type="string" label="32211">
                     <level>0</level>
                     <default>exclude</default>
@@ -74,7 +127,6 @@
                         <options>
                             <option label="include">include</option>
                             <option label="exclude">exclude</option>
-                            <option label="only">only</option>
                         </options>
                     </constraints>
                     <control type="list" format="string">
@@ -88,22 +140,54 @@
                         <options>
                             <option label="include">include</option>
                             <option label="exclude">exclude</option>
-                            <option label="only">only</option>
                         </options>
                     </constraints>
                     <control type="list" format="string">
                         <heading>32215</heading>
                     </control>
                 </setting>
+            </group>
+        </category>
+        <category id="debug" label="32103">
+            <group id="1">
+                <setting id="addon_version" type="action" label="32219">
+                    <level>3</level>
+                    <default/>
+                    <control type="button" format="action">
+                        <close>true</close>
+                        <data>RunScript(special://home/addons/service.subtitles.opensubtitles-com/check_updates.py)</data>
+                    </control>
+                </setting>
                 <setting id="search_cache_duration" type="integer" label="32216">
-                    <level>0</level>
-                    <default>5</default>
+                    <level>3</level>
+                    <default>180</default>
                     <constraints>
                         <minimum>0</minimum>
-                        <step>5</step>
-                        <maximum>120</maximum>
+                        <step>15</step>
+                        <maximum>1440</maximum>
                     </constraints>
                     <control type="spinner" format="string" />
+                </setting>
+                <setting id="cache_stats" type="string" label="32220">
+                    <level>3</level>
+                    <default>0 items (0.0 KB)</default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="enable" setting="cache_stats" operator="is">__disabled__</dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>32220</heading>
+                    </control>
+                </setting>
+                <setting id="clear_cache" type="action" label="32217">
+                    <level>3</level>
+                    <default/>
+                    <control type="button" format="action">
+                        <close>true</close>
+                        <data>RunScript(special://home/addons/service.subtitles.opensubtitles-com/clear_cache.py)</data>
+                    </control>
                 </setting>
             </group>
         </category>
