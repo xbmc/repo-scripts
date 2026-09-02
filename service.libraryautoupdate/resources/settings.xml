@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <settings version="1">
   <section id="service.libraryautoupdate">
-    <category id="general" label="30001" help="">
+    <category id="general_cat" label="30001" help="">
       <group id="1" label="">
         <!-- startup delay 0 to 5 min -->
         <setting id="startup_delay" type="integer" label="30008" help="30074">
@@ -55,7 +55,7 @@
         </setting>
       </group>
     </category>
-    <category id="video_timer" label="30002">
+    <category id="video_timer_cat" label="30002">
       <group id="1" label="">
     		<setting id="update_video" type="boolean" label="30004" help="">
           <level>0</level>
@@ -126,7 +126,7 @@
         </setting>
       </group>
   	</category>
-    <category id="music_timer" label="30003">
+    <category id="music_timer_cat" label="30003">
       <group id="1" label="">
         <setting id="update_music" type="boolean" label="30005" help="">
           <level>0</level>
@@ -197,7 +197,7 @@
         </setting>
       </group>
   	</category>
-    <category id="clean_timer" label="30040">
+    <category id="clean_timer_cat" label="30040">
       <group id="1" label="">
         <setting id="clean_libraries" type="boolean" label="30041" help="30082">
           <level>1</level>
@@ -207,7 +207,7 @@
         <!-- options are both, video and music -->
         <setting id="library_to_clean" type="integer" label="30054" help="">
           <level>1</level>
-          <default>30055</default>
+          <default>0</default>
           <constraints>
             <options>
               <option label="30055">0</option>

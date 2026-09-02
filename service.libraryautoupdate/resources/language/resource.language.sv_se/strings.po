@@ -5,36 +5,37 @@
 # Translators:
 # Gunnar Norin <blittan@xbmc.org>, 2012-2013
 # Robin Björnsvik <robin@bjornsvik.se>, 2014,2016
+# Luna Jernberg <droidbittin@gmail.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-01-15 03:13+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2025-06-03 12:42+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
 "Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-xbmclibraryautoupdate/sv_se/>\n"
-"Language: sv_se\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
 
 msgctxt "Addon Summary"
 msgid "Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi service so you never miss an update."
-msgstr "Uppdatera ditt Kodi video och musikbibliotek schemalagt. Schemaläggaren körs som en Kodi-service så du aldrig missar en uppdatering."
+msgstr "Uppdatera dina Kodi-video- och musikbibliotek med en timer. Timer körs som en Kodi-tjänst så att du aldrig missar en uppdatering."
 
 msgctxt "Addon Description"
 msgid "This is an Kodi Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported."
-msgstr "Detta är en Kodi-service som schemalagt kommer att uppdatera ditt musik och videobibliotek. Du kan välja olika intervall att skanna dina mediadatabaser (Musik,Video,Båda) eller så kan du ange ett cron-inspirerad schemaläggare för bättre kontroll. Om du spelare en musik eller videofil när schemaläggaren startar, kan det hoppa över biblioteksuppdateringen till uppspelningen är klar så mediaupplevelsen inte avbryts. Uppdatering av en specifik videosökväg och rensning av musik/videobiblioteken stödjs nu."
+msgstr "Det här är en Kodi-tjänst som uppdaterar dina musik- och videobibliotek med en timer. Du kan välja ett annat intervall för att söka igenom dina mediadatabaser (ljud, video, båda) eller så kan du ställa in en cron-liknande timer för större kontroll. Om du spelar upp en ljud- eller videofil när timern startar kan den hoppa över biblioteksuppdateringen tills den är klar så att din mediaupplevelse inte avbryts. Uppdatering av en specifik videosökväg och städning av musik- och videobiblioteken stöds nu."
 
 msgctxt "#30000"
 msgid "Kodi Library Auto Update"
-msgstr "Kodi biblioteksautouppdaterare"
+msgstr "Automatisk uppdatering av Kodi-biblioteket"
 
 msgctxt "#30001"
 msgid "General"
-msgstr "Allmän"
+msgstr "Allmänt"
 
 msgctxt "#30002"
 msgid "Video"
@@ -46,15 +47,15 @@ msgstr "Musik"
 
 msgctxt "#30004"
 msgid "Update Video Library"
-msgstr "Uppdatera videobibliotek"
+msgstr "Uppdatera videobiblioteket"
 
 msgctxt "#30005"
 msgid "Update Music Library"
-msgstr "Uppdatera musikbibliotek"
+msgstr "Uppdatera musikbiblioteket"
 
 msgctxt "#30006"
 msgid "Show Notifications"
-msgstr "Visa notifieringar"
+msgstr "Visa aviseringar"
 
 msgctxt "#30007"
 msgid "Run during playback"
@@ -62,7 +63,7 @@ msgstr "Kör under uppspelning"
 
 msgctxt "#30008"
 msgid "Startup Delay"
-msgstr ""
+msgstr "Uppstartsfördröjning"
 
 msgctxt "#30009"
 msgid "Used Advanced Timer"
@@ -74,31 +75,31 @@ msgstr "Tid mellan uppdateringar"
 
 msgctxt "#30011"
 msgid "Cron Expression"
-msgstr "Cronuttryck"
+msgstr "Cron-uttryck"
 
 msgctxt "#30012"
 msgid "Update Video Library"
-msgstr "Uppdatera videobibliotek"
+msgstr "Uppdatera videobiblioteket"
 
 msgctxt "#30013"
 msgid "Update Music Library"
-msgstr "Uppdatera musikbibliotek"
+msgstr "Uppdatera musikbiblioteket"
 
 msgctxt "#30014"
 msgid "Only run when idle"
-msgstr "Kör endast vid inaktivitet"
+msgstr "Kör endast vid overksam"
 
 msgctxt "#30015"
 msgid "Disable manual run prompt"
-msgstr "Inaktivera förfrågan vid manuell körning"
+msgstr "Inaktivera manuell körprompt"
 
 msgctxt "#30016"
 msgid "Cron syntax %s is incorrect, defaulting to 2 hours"
-msgstr ""
+msgstr "Cron-syntaxen %s är felaktig, standardvärdet är 2 timmar"
 
 msgctxt "#30017"
 msgid "Check if sources exist before scan"
-msgstr "Kontrollera om källor finns före skanning"
+msgstr "Kontrollera om källorna finns före genomsökning"
 
 msgctxt "#30020"
 msgid "Edit Custom Paths"
@@ -106,11 +107,11 @@ msgstr "Redigera anpassade sökvägar"
 
 msgctxt "#30021"
 msgid "Choose Action"
-msgstr ""
+msgstr "Välj åtgärd"
 
 msgctxt "#30022"
 msgid "Delete this item?"
-msgstr "Ta bort det här objektet?"
+msgstr "Ta bort den här posten?"
 
 msgctxt "#30023"
 msgid "Browse for path"
@@ -118,11 +119,11 @@ msgstr "Bläddra efter sökväg"
 
 msgctxt "#30030"
 msgid "This update broke custom paths, you must remake them"
-msgstr ""
+msgstr "Denna uppdatering förstörde anpassade sökvägar, du måste skapa dem på nytt"
 
 msgctxt "#30031"
 msgid "Custom Paths Disclaimer"
-msgstr ""
+msgstr "Ansvarsfriskrivning för anpassade sökvägar"
 
 msgctxt "#30032"
 msgid "Path must already be a valid source with content"
@@ -130,19 +131,19 @@ msgstr "Sökvägen måste redan vara en giltig källa med innehåll"
 
 msgctxt "#30033"
 msgid "Path must match source path exactly to scan"
-msgstr "Sökväg måste matcha källsökvägen exakt för att skannas"
+msgstr "Sökvägen måste matcha källans sökväg exakt för att genomsöka"
 
 msgctxt "#30040"
 msgid "Cleaning"
-msgstr "Rensar"
+msgstr "Städar"
 
 msgctxt "#30041"
 msgid "Clean Libraries"
-msgstr "Rensa bibliotek"
+msgstr "Städa biblioteken"
 
 msgctxt "#30042"
 msgid "Verify Sources Before Clean"
-msgstr "Verifiera källor innan rensning"
+msgstr "Verifiera källor före städning"
 
 msgctxt "#30043"
 msgid "Frequency"
@@ -154,43 +155,43 @@ msgstr "Efter uppdatering"
 
 msgctxt "#30045"
 msgid "Once Per Day"
-msgstr "Dagligen"
+msgstr "En gång per dag"
 
 msgctxt "#30046"
 msgid "Once Per Week"
-msgstr "Veckovis"
+msgstr "En gång per vecka"
 
 msgctxt "#30047"
 msgid "Once Per Month"
-msgstr "Månadsvis"
+msgstr "En gång per månad"
 
 msgctxt "#30048"
 msgid "Clean Video Library"
-msgstr "Rensa videobibliotek"
+msgstr "Städa videobiblioteket"
 
 msgctxt "#30049"
 msgid "Clean Music Library"
-msgstr "Rensa musikbibliotek"
+msgstr "Städa musikbiblioteket"
 
 msgctxt "#30050"
 msgid "Error Cleaning Database"
-msgstr "Fel vid rensning av databas"
+msgstr "Fel vid städning av databas"
 
 msgctxt "#30051"
 msgid "Prompt User Before Cleaning Library"
-msgstr "Fråga innan rensning av bibliotek"
+msgstr "Fråga användaren före städning av biblioteket"
 
 msgctxt "#30052"
 msgid "A database clean is scheduled to run"
-msgstr "En databasrensning är schemalagd att köras"
+msgstr "En databasstädning är schemalagd för att köras"
 
 msgctxt "#30053"
 msgid "Would you like to run it now?"
-msgstr "Vill du köra den nu?"
+msgstr "Skulle du vilja köra den nu?"
 
 msgctxt "#30054"
 msgid "Library to clean"
-msgstr "Bibliotek att rensa"
+msgstr "Bibliotek att städa"
 
 msgctxt "#30055"
 msgid "Both"
@@ -198,23 +199,23 @@ msgstr "Båda"
 
 msgctxt "#30056"
 msgid "Video Cron Expression"
-msgstr "Video-cronuttryck"
+msgstr "Cron-uttryck för video"
 
 msgctxt "#30057"
 msgid "Music Cron Expression"
-msgstr "Musik-cronuttryck"
+msgstr "Cron-uttryck för musik"
 
 msgctxt "#30060"
 msgid "Update will run again "
-msgstr "Uppdatering kommer att köras igen"
+msgstr "Uppdateringen kommer att köras igen "
 
 msgctxt "#30061"
 msgid "Do you wish to manually run an update?"
-msgstr "Vill du manuellt köra en uppdatering?"
+msgstr "Vill du köra en uppdatering manuellt?"
 
 msgctxt "#30062"
 msgid "No Delay"
-msgstr ""
+msgstr "Ingen fördröjning"
 
 msgctxt "#30063"
 msgid "1 Minute"
@@ -262,47 +263,47 @@ msgstr "24 timmar"
 
 msgctxt "#30074"
 msgid "How long to delay missed scan after system startup"
-msgstr ""
+msgstr "Hur länge ska man fördröja missad genomsökning efter systemstart"
 
 msgctxt "#30075"
 msgid "Allow library scans when media is playing"
-msgstr ""
+msgstr "Tillåt bibliotekssökning när media spelas upp"
 
 msgctxt "#30076"
 msgid "Only allow scans to start when system is idle (screensaver active)"
-msgstr "Tillåt endast skanningar att starta när systemet är inaktivt (skärmsläckare aktiv)"
+msgstr "Tillåt endast att genomsökningar startar när systemet är inaktivt (skärmsläckaren är aktiv)"
 
 msgctxt "#30077"
 msgid "Disables the dialog box when starting a Manual Run"
-msgstr ""
+msgstr "Inaktiverar dialogrutan när du startar en manuell körning"
 
 msgctxt "#30078"
 msgid "Toggle use a cron timer instead of the simple timer"
-msgstr ""
+msgstr "Använd en cron-timer istället för den enkla timern"
 
 msgctxt "#30079"
 msgid "Select how often to start library scans"
-msgstr ""
+msgstr "Välj hur ofta biblioteksgenomsökningar ska startas"
 
 msgctxt "#30080"
 msgid "Set a custom interval using cron syntax - example is '15 */5 * * *' for quarter past the hour every 5 hours every day"
-msgstr ""
+msgstr "Ange ett anpassat intervall med hjälp av cron-syntax - exempel är \"15 */5 * * *\" för kvart över en timme var 5:e timme varje dag"
 
 msgctxt "#30081"
 msgid "Launch the custom paths editor to select specific scan directories instead of the entire library"
-msgstr ""
+msgstr "Starta redigeraren för anpassade sökvägar för att välja specifika genomsökningskataloger i stället för hela biblioteket"
 
 msgctxt "#30082"
 msgid "Run the Kodi library clean process to remove deleted media"
-msgstr ""
+msgstr "Kör Kodi-bibliotekets städningsprocess för att ta bort borttagna medier"
 
 msgctxt "#30083"
 msgid "Adds additional confirmation prompt before clean process runs"
-msgstr "Lägger till ytterligare bekräftelsemeddelande innan rensningsprocessen körs"
+msgstr "Lägger till ytterligare en bekräftelseprompt innan städningsprocessen körs"
 
 msgctxt "#30084"
 msgid "Set how often to run the clean process. After each update, once a day, once a week, once a month, or custom"
-msgstr "Ställ in hur ofta rensningsprocessen ska köras. Efter varje uppdatering, en gång om dagen, en gång i veckan, en gång i månaden eller anpassad"
+msgstr "Ställ in hur ofta städningsprocessen ska köras. Efter varje uppdatering, en gång om dagen, en gång i veckan, en gång i månaden eller anpassad"
 
 #~ msgctxt "#30008"
 #~ msgid "Startup Delay (minutes)"

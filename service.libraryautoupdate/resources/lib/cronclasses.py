@@ -11,6 +11,11 @@ class CronSchedule:
     next_run = 0
     on_delay = False  # used to defer processing until after player finishes
 
+    def __init__(self, name, command, expression=""):
+        self.name = name
+        self.command = command
+        self.expression = expression
+
     def executeCommand(self):
         jsonCommand = {'jsonrpc': '2.0', 'method': self.command['method'], 'params': self.command['params'], 'id': 44}
         utils.log(json.dumps(jsonCommand))

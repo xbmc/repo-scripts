@@ -74,7 +74,7 @@ class AutoUpdater:
                     if(not player.isPlaying() or utils.getSetting("run_during_playback") == "true"):
 
                         # check if run on idle is checked and screen is idle - disable this on manual run
-                        if(not utils.getSettingBool('run_on_idle') or (utils.getSettingBool('run_on_idle') and (self.monitor.screensaver_running or manual))):
+                        if(manual or not utils.getSettingBool('run_on_idle') or (utils.getSettingBool('run_on_idle') and self.monitor.screensaver_running)):
 
                             # check for valid network connection - check sources if setting enabled
                             if(self._networkUp() and (not utils.getSettingBool('check_sources') or (utils.getSettingBool('check_sources') and self._checkSources(cronJob)))):
@@ -128,10 +128,10 @@ class AutoUpdater:
 
                 if(utils.getSettingInt('library_to_clean') == 0 or utils.getSettingInt('library_to_clean') == 1):
                     # video clean schedule starts at 12am by default
-                    aSchedule = CronSchedule()
-                    aSchedule.name = utils.getString(30048)
+                    aSchedule = CronSchedule(utils.getString(30048),
+                                             {'method': 'VideoLibrary.Clean', 'params': {'showdialogs': showDialogs}})
                     aSchedule.timer_type = utils.__addon_id__
-                    aSchedule.command = {'method': 'VideoLibrary.Clean', 'params': {'showdialogs': showDialogs}}
+
                     if(utils.getSettingInt("clean_timer") == 4):
                         aSchedule.expression = utils.getSetting("clean_video_cron_expression")
                     else:
@@ -142,10 +142,10 @@ class AutoUpdater:
 
                 if(utils.getSettingInt('library_to_clean') == 2 or utils.getSettingInt('library_to_clean') == 0):
                     # music clean schedule starts at 2am by default
-                    aSchedule = CronSchedule()
-                    aSchedule.name = utils.getString(30049)
+                    aSchedule = CronSchedule(utils.getString(30049),
+                                             {'method': 'AudioLibrary.Clean', 'params': {'showdialogs': showDialogs}})
                     aSchedule.timer_type = utils.__addon_id__
-                    aSchedule.command = {'method': 'AudioLibrary.Clean', 'params': {'showdialogs': showDialogs}}
+
                     if(utils.getSettingInt("clean_timer") == 4):
                         aSchedule.expression = utils.getSetting("clean_music_cron_expression")
                     else:
@@ -157,10 +157,9 @@ class AutoUpdater:
         if(utils.getSettingBool('update_video')):
             utils.log("Creating timer for Video Library")
             # create the video schedule
-            aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30012)
-            aSchedule.command = {'method': 'VideoLibrary.Scan', 'params': {'showdialogs': showDialogs}}
-            aSchedule.expression = self.checkTimer('video')
+            aSchedule = CronSchedule(utils.getString(30012),
+                                     {'method': 'VideoLibrary.Scan', 'params': {'showdialogs': showDialogs}},
+                                     self.checkTimer('video'))
             aSchedule.next_run = self.calcNextRun(aSchedule.expression, self.last_run)
             self.schedules.append(aSchedule)
 
@@ -174,10 +173,9 @@ class AutoUpdater:
         if(utils.getSettingBool('update_music')):
             utils.log("Creating timer for Music Library")
             # create the music schedule
-            aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30013)
-            aSchedule.command = {'method': 'AudioLibrary.Scan', 'params': {'showdialogs': showDialogs}}
-            aSchedule.expression = self.checkTimer('music')
+            aSchedule = CronSchedule(utils.getString(30013),
+                                     {'method': 'AudioLibrary.Scan', 'params': {'showdialogs': showDialogs}},
+                                     self.checkTimer('music'))
             aSchedule.next_run = self.calcNextRun(aSchedule.expression, self.last_run)
 
             self.schedules.append(aSchedule)
@@ -204,39 +202,45 @@ class AutoUpdater:
         if(utils.getSettingBool(settingName + '_advanced_timer')):
             # copy the expression
             result = utils.getSetting(settingName + "_cron_expression")
+
+            # check that this expression is valid
+            try:
+                cron = croniter(result)  # noqa: F841
+            except (ValueError, KeyError):
+                # syntax error
+                xbmcgui.Dialog().ok(utils.getString(30000), utils.getString(30016) % result)
+                utils.log('Cron syntax error %s' % result, xbmc.LOGDEBUG)
+
+                result = '0 */2 * * *'
+
+                # save the new result
+                utils.setSetting(settingName + "_cron_expression", result)
         else:
             result = '0 */' + str(utils.getSetting(settingName + "_timer")) + ' * * *'
 
         return result
 
     def calcNextRun(self, cronExp, startTime):
-        nextRun = -1
+        # create croniter for this expression
+        cron = croniter(cronExp, startTime)
 
-        try:
-            # create croniter for this expression
-            cron = croniter(cronExp, startTime)
-            nextRun = cron.get_next(float)
-        except ValueError:
-            # error in syntax
-            xbmcgui.Dialog().ok(utils.getString(30000), utils.getString(30016) % cronExp)
-            utils.log('Cron syntax error %s' % cronExp, xbmc.LOGDEBUG)
-
-            # rerun with a valid syntax
-            nextRun = self.calcNextRun('0 */2 * * *', startTime)
-
-        return nextRun
+        return cron.get_next(float)
 
     def showNotify(self, displayToScreen=True):
-        # go through and find the next schedule to run
-        next_run_time = CronSchedule()
-        for cronJob in self.schedules:
-            if(cronJob.next_run < next_run_time.next_run or next_run_time.next_run == 0):
-                next_run_time = cronJob
+        inWords = ""
 
-        inWords = self.nextRunCountdown(next_run_time.next_run)
-        # show the notification (if applicable)
-        if(next_run_time.next_run > time.time() and utils.getSettingBool('notify_next_run') and displayToScreen):
-            utils.showNotification(utils.getString(30000), inWords + " - " + next_run_time.name)
+        if(len(self.schedules) > 0):
+            # go through and find the next schedule to run
+            next_run_time = self.schedules[0]
+
+            for cronJob in self.schedules:
+                if(cronJob.next_run < next_run_time.next_run or next_run_time.next_run == 0):
+                    next_run_time = cronJob
+
+            inWords = self.nextRunCountdown(next_run_time.next_run)
+            # show the notification (if applicable)
+            if(next_run_time.next_run > time.time() and utils.getSettingBool('notify_next_run') and displayToScreen):
+                utils.showNotification(utils.getString(30000), inWords + " - " + next_run_time.name)
 
         return inWords
 
@@ -315,21 +319,22 @@ class AutoUpdater:
 
     def databaseUpdated(self, database):
         showDialogs = utils.getSettingBool('notify_next_run')  # if the user has selected to show dialogs for library operations
+
         # check if we should clean the library
         if(utils.getSettingBool('clean_libraries')):
             # check if should update while playing media
             if(not xbmc.Player().isPlaying() or utils.getSettingBool("run_during_playback")):
+
                 if(utils.getSettingInt("clean_timer") == 0):
                     # check if we should clean music, or video
-                    aJob = CronSchedule()
-                    aJob.name = utils.getString(30048)
-                    aJob.timer_type = utils.__addon_id__
                     if((utils.getSettingInt('library_to_clean') == 0 or utils.getSettingInt('library_to_clean') == 1) and database == 'video'):
                         # create the clean job schedule
-                        aJob.command = {'method': 'VideoLibrary.Clean', 'params': {'showdialogs': showDialogs}}
+                        clean_command = {'method': 'VideoLibrary.Clean', 'params': {'showdialogs': showDialogs}}
                     if((utils.getSettingInt('library_to_clean') == 2 or utils.getSettingInt('library_to_clean') == 0) and database == 'music'):
-                        aJob.command = {'method': 'AudioLibrary.Clean', 'params': {'showdialogs': showDialogs}}
+                        clean_command = {'method': 'AudioLibrary.Clean', 'params': {'showdialogs': showDialogs}}
 
+                    aJob = CronSchedule(utils.getString(30048), clean_command)
+                    aJob.timer_type = utils.__addon_id__
                     self.cleanLibrary(aJob)
 
         # writeLastRun will trigger notifications
