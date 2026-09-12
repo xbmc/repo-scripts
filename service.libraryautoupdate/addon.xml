@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.libraryautoupdate"
-    name="Library Auto Update" version="1.2.5" provider-name="robweber">
+    name="Library Auto Update" version="1.2.6" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.dateutil" version="2.7.3" />
@@ -16,10 +16,12 @@
 	<assets>
 		<icon>resources/media/icon.png</icon>
 	</assets>
-	<news>Version 1.2.5
-use a connection check URL instead of google.com
-refactored manual run to avoid scan loops
-updated translations</news>
+	<news>Version 1.2.6
+Fixed issue with crashing on manual run
+more robust cron expression checking
+set default when cron expression is invalid
+fixed looping when clean libraries on update is configured
+</news>
     <summary lang="bg_BG">Обновява библиотеките в Kodi (за видео и музика) чрез брояч. Той се стартира като Kodi услуга, затова няма да изпуснете нито едно обновяване.</summary>
     <summary lang="ca_ES">Actualitza les llibreries de vídeo i música de l&apos;Kodi amb un temporitzador. El temporitzador arranca com un servei de l&apos;Kodi, per tant mai es perdrà una actualització.</summary>
     <summary lang="cs_CZ">Aktualizujte svou knihovnu videa a hudby v Kodi podle časovače. Časovač běží jako služba Kodi, takže nikdy nezmeškáte aktualizaci.</summary>
@@ -51,7 +53,7 @@ updated translations</news>
     <summary lang="pt_PT">Actualize as suas bibliotecas de vídeo e música do Kodi com um temporizador. Ele actua como um serviço do Kodi para que nunca perca uma actualização.</summary>
     <summary lang="ru_RU">Обновляет вашу медиатеку по таймеру. Таймер работает как сервис Kodi, поэтому вы никогда не забудете об обновлении.</summary>
     <summary lang="sk_SK">Aktualizujte Vašu Kodi Video a Hudobnú knižnicu podľa časovača. Časovač beží ako Kodi služba, takže nikdy nezmeškáte aktualizáciu.</summary>
-    <summary lang="sv_SE">Uppdatera ditt Kodi video och musikbibliotek schemalagt. Schemaläggaren körs som en Kodi-service så du aldrig missar en uppdatering.</summary>
+    <summary lang="sv_SE">Uppdatera dina video- och musikbibliotek för Kodi med en timer. Timern körs som en Kodi-tjänst så att du aldrig missar en uppdatering.</summary>
     <summary lang="vi_VN">Cập nhật Thư viện video và âm nhạc Kodi của bạn theo bộ hẹn giờ. Hẹn giờ chạy dưới dạng dịch vụ Kodi để bạn không bao giờ bỏ lỡ bản cập nhật.</summary>
     <summary lang="zh_CN">定时更新你的 Kodi 视频和音乐资料库。定时器以 Kodi 服务的方式运行以保证不会错过更新。</summary>
     <description lang="bg_BG">Услугата ще обновява видео и музикалната библиотека в Kodi през определен интервал от време. Можете да променяте интервала за сканиране (на източниците на видео, аудио или и за двата вида информация). Можете да зададете брояч в стил Cron (за запознатите с Linux), който Ви осигурява по-голям контрол. Ако се случи, че гледате/слушате файл от библиотека за която се е задействал брояч сканирането ще се отложи до момента в който не приключите активността. Също така се поддържа и обновяване на определени папки и почистване на библиотеките.</description>
@@ -85,7 +87,7 @@ updated translations</news>
     <description lang="pt_PT">Este é um serviço do Kodi que actualizará as suas bibliotecas de música e vídeo por temporizador. Pode seleccionar intervalos de tempo para analisar as suas bases de média (áudio, vídeo, ambas) ou pode definir um temporizador cron para maior controlo. Se estiver a reproduzir um ficheiro áudio ou vídeo quando o temporizador inicia, este pode adiar a actualização da biblioteca até a reprodução estar concluída, para não interromper. Agora pode também actualizar uma localização de vídeo específica e limpar as bibliotecas áudio/vídeo.</description>
     <description lang="ru_RU">Это сервис, который обновляет вашу медиатеку по таймеру. Вы можете выбрать разные периоды для сканирования ваших баз (Аудио, Видео, и то и то) или установить таймер по-времени для большего контроля. Если запущено проигрывание аудио или видео файла, когда срабатывает таймер, он может отменить процесс обновления до тех пор, пока Вы не закончите прослушивание или просмотр чего-либо. Выборочное обновление папок с Видео, очистка медиатеки теперь также поддерживается.</description>
     <description lang="sk_SK">Toto je Kodi služba, ktorá aktualizuje Vašu Kodi Hudobnú a Video knižnicu podľa časovača. Môžete zvoliť rôzne intervaly aktualizácie databáz (Audio, Video, oboje) alebo pre väčšiu kontrolu zadáte časovač podobný Cron-u. Pokiaľ práve prehrávate audio alebo video súbor počas štartu časovača, môže byť aktualizácia odložená, aby nebol Váš mediálny zážitok narušený. Aktualizácia špecifických ciest a upratovanie Hudobnej/Video databázy je tiež podporované.</description>
-    <description lang="sv_SE">Detta är en Kodi-service som schemalagt kommer att uppdatera ditt musik och videobibliotek. Du kan välja olika intervall att skanna dina mediadatabaser (Musik,Video,Båda) eller så kan du ange ett cron-inspirerad schemaläggare för bättre kontroll. Om du spelare en musik eller videofil när schemaläggaren startar, kan det hoppa över biblioteksuppdateringen till uppspelningen är klar så mediaupplevelsen inte avbryts. Uppdatering av en specifik videosökväg och rensning av musik/videobiblioteken stödjs nu.</description>
+    <description lang="sv_SE">Detta är en Kodi-tjänst som uppdaterar dina musik- och videobibliotek enligt en timer. Du kan välja ett annat intervall för att skanna dina mediedatabaser (ljud, video, båda) eller ställa in en cron-timer för bättre kontroll. Om du spelar upp en ljud- eller videofil när timern startar kan den hoppa över uppdateringen av biblioteket tills den är klar, så att din medieupplevelse inte avbryts. Det går också att uppdatera en specifik videoväg och rensa musik-/videobiblioteken.</description>
     <description lang="zh_CN">这是一个定时更新你的音乐和视频资料库的 Kodi 服务程序。你可以设置不同的时间间隔来扫描媒体库（音频、视频或二者），或者设置一个 cron 类型的定时器来获得更好的控制。如果定时动作开始时你正在播放一个音频或视频文件，它会跳过此次更新直到播放完毕以避免影响你欣赏媒体。现在已支持更新指定的视频路径以及清理音视频资料库。</description>
   </extension>
 </addon>
