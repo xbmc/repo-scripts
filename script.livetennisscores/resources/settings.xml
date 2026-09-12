@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings version="1">
+	<section id="script.livetennisscores">
+		<category id="account" label="30001" help="">
+			<group id="1">
+				<setting id="api_key" type="string" label="30010" help="30011">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>30010</heading>
+					</control>
+				</setting>
+				<setting id="poll_minutes" type="integer" label="30012" help="30013">
+					<level>0</level>
+					<default>20</default>
+					<constraints>
+						<minimum>15</minimum>
+						<step>5</step>
+						<maximum>240</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="notifications" label="30002" help="">
+			<group id="1">
+				<setting id="notify_match_live" type="boolean" label="30020" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="notify_set_done" type="boolean" label="30021" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="notify_match_done" type="boolean" label="30022" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="notify_break_point" type="boolean" label="30023" help="30024">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="display_seconds" type="integer" label="30014" help="">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<minimum>2</minimum>
+						<step>1</step>
+						<maximum>30</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

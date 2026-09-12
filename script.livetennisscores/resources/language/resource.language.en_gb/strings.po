@@ -1,0 +1,129 @@
+# Kodi Media Center language file
+# Addon Name: Live Tennis Scores
+# Addon id: script.livetennisscores
+# Addon Provider: Ben Abulafia
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: 2026-09-12 00:00+0000\n"
+"PO-Revision-Date: 2026-09-12 00:00+0000\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (United Kingdom)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_gb\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Live Tennis Scores"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Account"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Notifications"
+msgstr ""
+
+msgctxt "#30010"
+msgid "API key"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Your key from your livetennisapi.com account. It is stored in this add-on's settings and sent only to that API. Without a key the add-on stays idle."
+msgstr ""
+
+msgctxt "#30012"
+msgid "Minutes between checks"
+msgstr ""
+
+msgctxt "#30013"
+msgid "The free plan allows 100 requests a day. Checking every 15 minutes uses 96 of them, every 20 minutes uses 72. Fifteen minutes is the fastest this add-on will check."
+msgstr ""
+
+msgctxt "#30014"
+msgid "Seconds a notification stays on screen"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Tell me when a match goes on court"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Tell me when a set is won"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Tell me when a match finishes"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Tell me about break points"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Break points come and go inside a single game, so a check every 15 minutes or more will only catch some of them."
+msgstr ""
+
+msgctxt "#30040"
+msgid "Now on court"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Set complete"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Match finished"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Break point"
+msgstr ""
+
+msgctxt "#30044"
+msgid "and {count} more changes"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Matches in play"
+msgstr ""
+
+msgctxt "#30051"
+msgid "No matches are in play right now."
+msgstr ""
+
+msgctxt "#30052"
+msgid "Set an API key in this add-on's settings to see live scores."
+msgstr ""
+
+msgctxt "#30053"
+msgid "Could not reach the Live Tennis API. Check the connection and try again."
+msgstr ""
+
+msgctxt "#30054"
+msgid "The API key was not accepted. Check it in this add-on's settings."
+msgstr ""
+
+msgctxt "#30055"
+msgid "Daily request limit reached. Scores return when the limit resets."
+msgstr ""
+
+msgctxt "#30056"
+msgid "This key's plan does not include the live match list."
+msgstr ""
+
+msgctxt "#30057"
+msgid "* serving    BP break point"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Scores as at {minutes} min ago."
+msgstr ""
+
+msgctxt "#30059"
+msgid "The Live Tennis API could not answer just now. Try again shortly."
+msgstr ""
