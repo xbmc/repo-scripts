@@ -28,7 +28,6 @@ from __future__ import annotations
 
 import re
 
-_OR_SPLIT_PATTERN = re.compile(r"\s*\|\s*")
 _CONDITION_MATCH_PATTERN = re.compile(r"^(!?)([a-zA-Z_][a-zA-Z0-9_\.]*)(=|~)(.*)$")
 
 # Keyword to symbol mappings (applied with word boundaries)
@@ -117,7 +116,7 @@ def _split_preserving_brackets(text: str, delimiter: str) -> list[str]:
 
 def _expand_or_segment(segment: str) -> str:
     """Expand a single OR segment."""
-    parts = _OR_SPLIT_PATTERN.split(segment)
+    parts = _split_preserving_brackets(segment, "|")
     if len(parts) <= 1:
         return segment
 
@@ -128,6 +127,15 @@ def _expand_or_segment(segment: str) -> str:
     for part in parts:
         part = part.strip()
         if not part:
+            continue
+
+        # a group is a condition of its own, never a bare value for the running property
+        stripped = part.lstrip("!")
+        if stripped.startswith("["):
+            if _is_wrapped_in_brackets(stripped):
+                negation = part[: len(part) - len(stripped)]
+                part = f"{negation}[{expand_compact_or(stripped[1:-1])}]"
+            result_parts.append(part)
             continue
 
         match = _CONDITION_MATCH_PATTERN.match(part)
@@ -146,16 +154,7 @@ def _expand_or_segment(segment: str) -> str:
 
 
 def evaluate_condition(condition: str, properties: dict[str, str]) -> bool:
-    """Evaluate a condition against property values.
-
-    Args:
-        condition: Condition string to evaluate
-        properties: Dict of property name -> value to check against
-
-    Returns:
-        True if condition matches, False otherwise.
-        Empty/None conditions return True.
-    """
+    """Evaluate a condition against property values."""
     if not condition:
         return True
 
@@ -196,13 +195,14 @@ def _evaluate_expanded(condition: str, properties: dict[str, str]) -> bool:
         return _evaluate_expanded(condition[1:-1], properties)
 
     # Split AND/OR before negation: !a + b = (!a) + b, not !(a + b)
-    and_parts = _split_preserving_brackets(condition, "+")
-    if len(and_parts) > 1:
-        return all(_evaluate_expanded(part.strip(), properties) for part in and_parts)
-
+    # OR splits first so AND binds tighter, as Kodi's own conditions do
     or_parts = _split_preserving_brackets(condition, "|")
     if len(or_parts) > 1:
         return any(_evaluate_expanded(part.strip(), properties) for part in or_parts)
+
+    and_parts = _split_preserving_brackets(condition, "+")
+    if len(and_parts) > 1:
+        return all(_evaluate_expanded(part.strip(), properties) for part in and_parts)
 
     if condition.startswith("!"):
         inner = condition[1:].strip()
@@ -211,6 +211,13 @@ def _evaluate_expanded(condition: str, properties: dict[str, str]) -> bool:
         return not _evaluate_single(inner, properties)
 
     return _evaluate_single(condition, properties)
+
+
+def _matches(actual: str, value: str) -> bool:
+    """Value comparison, case insensitive when the value is a boolean."""
+    if value.lower() in ("true", "false"):
+        return actual.lower() == value.lower()
+    return actual == value
 
 
 def _evaluate_single(condition: str, properties: dict[str, str]) -> bool:
@@ -240,7 +247,7 @@ def _evaluate_single(condition: str, properties: dict[str, str]) -> bool:
         values_str = values_str.strip()
         actual = properties.get(prop_name, "")
         values = [v.strip() for v in values_str.split(",")]
-        result = actual in values
+        result = any(_matches(actual, v) for v in values)
         return not result if negated else result
 
     if "=" in condition:
@@ -255,7 +262,7 @@ def _evaluate_single(condition: str, properties: dict[str, str]) -> bool:
             actual = prop_name
         else:
             actual = ""
-        result = actual == value
+        result = _matches(actual, value)
         return not result if negated else result
 
     if "~" in condition:

@@ -21,35 +21,6 @@ DEFAULT_ICON = "DefaultShortcut.png"
 DEFAULT_TARGET = "videos"
 DEFAULT_VIEW_PREFIX = "ShortcutView_"
 
-WIDGET_TYPES = frozenset(
-    {
-        "movies",
-        "tvshows",
-        "episodes",
-        "musicvideos",
-        "artists",
-        "albums",
-        "songs",
-        "pvr",
-        "pictures",
-        "programs",
-        "addons",
-        "files",
-        "custom",
-    }
-)
-
-WIDGET_TARGETS = frozenset(
-    {
-        "videos",
-        "music",
-        "pictures",
-        "programs",
-        "pvr",
-        "files",
-    }
-)
-
 PROPERTY_TYPES = frozenset(
     {
         "select",
@@ -71,6 +42,9 @@ WINDOW_MAP: dict[str, str] = {
     "images": "Pictures",
     "programs": "Programs",
     "executable": "Programs",
+    "files": "Files",
+    "games": "Games",
+    "game": "Games",
     "pvr": "TVChannels",
     "tv": "TVChannels",
     "radio": "RadioChannels",
@@ -85,8 +59,15 @@ TARGET_MAP: dict[str, str] = {
     "audio": "music",
     "pictures": "pictures",
     "images": "pictures",
+    "image": "pictures",
     "programs": "programs",
     "executable": "programs",
+    "games": "games",
+    "game": "games",
+    "files": "files",
+    "file": "files",
+    "tv": "tv",
+    "radio": "radio",
 }
 
 ADDONS_SOURCE_MAP: dict[str, tuple[str, str]] = {
@@ -108,6 +89,13 @@ def get_shortcuts_path() -> str:
     if not IN_KODI:
         return ""
     return xbmcvfs.translatePath("special://skin/shortcuts/")
+
+
+def extract_window_from_action(action: str) -> str:
+    """Window an ActivateWindow action opens; empty for any other action."""
+    if action.lower().startswith("activatewindow("):
+        return action[15:-1].split(",")[0].strip()
+    return ""
 
 
 def extract_path_from_action(action: str) -> str:

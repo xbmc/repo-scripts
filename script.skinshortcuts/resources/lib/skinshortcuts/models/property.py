@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from .override import Override
+
 
 @dataclass
 class IconVariant:
@@ -35,6 +37,7 @@ class ButtonMapping:
     show_icons: bool = True  # Show icons in select dialog (useDetails=True)
     type: str = ""  # "widget", "background", "toggle", "text", "number", or "select"
     requires: str = ""  # Property name that must have a value for button to be active
+    rename: bool = False  # Opt-in: prompt for a label after picking (type="widget" only)
 
 
 @dataclass
@@ -72,6 +75,7 @@ class PropertySchema:
     properties: dict[str, SchemaProperty] = field(default_factory=dict)
     fallbacks: dict[str, PropertyFallback] = field(default_factory=dict)
     buttons: dict[int, ButtonMapping] = field(default_factory=dict)  # button_id -> mapping
+    overrides: list[Override] = field(default_factory=list)
 
     def get_property(self, name: str) -> SchemaProperty | None:
         """Get property by name."""
@@ -84,16 +88,7 @@ class PropertySchema:
     def get_property_for_button(
         self, button_id: int
     ) -> tuple[SchemaProperty | None, ButtonMapping | None]:
-        """Get property and button mapping for a button ID.
-
-        Args:
-            button_id: The button control ID
-
-        Returns:
-            Tuple of (property, button_mapping) or (None, None) if not found.
-            Always returns the base property - suffix is applied at runtime
-            by the caller when getting/setting values.
-        """
+        """Get property and button mapping for a button ID."""
         button = self.buttons.get(button_id)
         if not button:
             return None, None

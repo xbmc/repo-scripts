@@ -16,14 +16,7 @@ log = get_logger("ViewBuilder")
 
 
 class ViewExpressionBuilder:
-    """Builds Kodi visibility expressions for view locking.
-
-    Generates minimal expressions:
-        - {prefix}{ViewId} - Combined visibility for each view
-        - {prefix}{ViewId}_Include - Whether view is used at all
-        - {prefix}{Content}_HasPluginOverride - Only when plugin overrides exist
-        - {prefix}{Content}_IsGenericPlugin - Only when plugin overrides exist
-    """
+    """Builds Kodi visibility expressions for view locking."""
 
     def __init__(self, config: ViewConfig, userdata: UserData):
         self.config = config

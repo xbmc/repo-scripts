@@ -21,7 +21,7 @@ from .constants import INCLUDES_FILE, MENUS_FILE, VIEWS_FILE, get_shortcuts_path
 from .hashing import generate_config_hashes, hash_file, needs_rebuild, write_hashes
 from .localize import LANGUAGE
 from .log import get_logger
-from .userdata import get_userdata_path
+from .userdata import get_userdata_path, save_userdata
 
 log = get_logger("Entry")
 
@@ -64,7 +64,7 @@ def _unsupported_marker() -> Path:
 
 
 def _warn_unsupported(marker: Path) -> None:
-    """Modal once per session: switch skins, ignore (marks the skin so it never warns again), or cancel."""
+    """Modal once per session: switch skins, ignore (marks the skin so it won't warn) or cancel."""
     win = xbmcgui.Window(10000)
     if win.getProperty("skinshortcuts-unsupported-warned"):
         return
@@ -101,16 +101,7 @@ def build_includes(
     output_path: str | None = None,
     force: bool = False,
 ) -> bool:
-    """Build includes.xml from skin config files.
-
-    Args:
-        shortcuts_path: Path to shortcuts folder (default: special://skin/shortcuts/)
-        output_path: Path to write includes.xml (default: auto-detect from addon.xml)
-        force: Force rebuild even if hashes match
-
-    Returns:
-        True if built successfully, False otherwise
-    """
+    """Build includes.xml from skin config files."""
     log.debug(f"build_includes called: path={shortcuts_path}, output={output_path}, force={force}")
 
     home = xbmcgui.Window(10000) if IN_KODI else None
@@ -164,25 +155,37 @@ def build_includes(
             log.error("Could not determine output paths")
             return False
 
+        previous = {
+            out_path: hash_file(Path(out_path) / INCLUDES_FILE) for out_path in output_paths
+        }
+
         for out_path in output_paths:
             output_file = Path(out_path) / INCLUDES_FILE
             config.build_includes(str(output_file))
             log.info(f"Generated: {output_file}")
 
+        if config.migrated and save_userdata(config.userdata, config.userdata_path):
+            log.info(f"Applied {config.migrated} skin override(s) to userdata")
+
         hashes = generate_config_hashes(shortcuts_path)
 
+        output_changed = False
         for out_path in output_paths:
             output_file = Path(out_path) / INCLUDES_FILE
             includes_hash = hash_file(output_file)
             if includes_hash:
                 hashes[f"includes:{out_path}"] = includes_hash
                 log.debug(f"Stored includes hash for {out_path}")
+            if includes_hash != previous[out_path]:
+                output_changed = True
 
         write_hashes(hashes)
         log.debug("Saved config hashes")
 
-        if IN_KODI:
+        if IN_KODI and output_changed:
             xbmc.executebuiltin("ReloadSkin()")
+        elif IN_KODI:
+            log.debug("Includes unchanged, skipping skin reload")
 
         return True
 
@@ -204,18 +207,7 @@ def clear_custom_widget(
     property_name: str = "",
     shortcuts_path: str | None = None,
 ) -> bool:
-    """Clear a custom widget menu and optionally reset related properties.
-
-    Args:
-        menu: Parent menu ID (e.g., "mainmenu")
-        item: Item ID to clear custom widget from (e.g., "movies")
-        suffix: Widget slot suffix (e.g., ".2" for second slot)
-        property_name: Optional property prefix to clear (e.g., "widget")
-        shortcuts_path: Path to shortcuts folder
-
-    Returns:
-        True if cleared successfully
-    """
+    """Clear a custom widget menu and optionally reset related properties."""
     if not menu or not item:
         log.warning("clear_custom_widget: menu and item are required")
         return False
@@ -265,14 +257,7 @@ def clear_custom_widget(
 
 
 def reset_all_menus(shortcuts_path: str | None = None) -> bool:
-    """Reset all menus to skin defaults by deleting skin's userdata.
-
-    Args:
-        shortcuts_path: Path to shortcuts folder (for rebuild after reset)
-
-    Returns:
-        True if reset successfully
-    """
+    """Reset all menus to skin defaults by deleting skin's userdata."""
     if not IN_KODI:
         return False
 
@@ -307,16 +292,7 @@ def view_select(
     plugin: str = "",
     shortcuts_path: str | None = None,
 ) -> bool:
-    """Show view selection dialog.
-
-    Args:
-        content: Optional content type (e.g., "movies") for direct picker
-        plugin: Optional plugin ID for plugin-specific override
-        shortcuts_path: Path to shortcuts folder
-
-    Returns:
-        True if changes were made
-    """
+    """Show view selection dialog."""
     if not IN_KODI:
         return False
 
@@ -343,14 +319,7 @@ def view_select(
 
 
 def reset_views(shortcuts_path: str | None = None) -> bool:
-    """Reset all view selections to defaults.
-
-    Args:
-        shortcuts_path: Path to shortcuts folder (for rebuild after reset)
-
-    Returns:
-        True if reset successfully
-    """
+    """Reset all view selections to defaults."""
     if not IN_KODI:
         return False
 
@@ -378,14 +347,7 @@ def reset_views(shortcuts_path: str | None = None) -> bool:
 
 
 def reset_menus(shortcuts_path: str | None = None) -> bool:
-    """Reset all menu selections to defaults (keeps view selections).
-
-    Args:
-        shortcuts_path: Path to shortcuts folder (for rebuild after reset)
-
-    Returns:
-        True if reset successfully
-    """
+    """Reset all menu selections to defaults (keeps view selections)."""
     if not IN_KODI:
         return False
 
@@ -414,7 +376,7 @@ def reset_menus(shortcuts_path: str | None = None) -> bool:
 
 def main() -> None:
     """Main entry point for RunScript."""
-    log.info("Skin Shortcuts started")
+    log.debug("Skin Shortcuts started")
 
     args: dict[str, str] = {}
     prop_names: list[str] = []
@@ -463,6 +425,7 @@ def main() -> None:
 
 
 def _dispatch(args: dict[str, str]) -> None:
+    """Run the action named by the type parameter, building includes by default."""
     action = args.get("type", "buildxml")
 
     if action == "buildxml":

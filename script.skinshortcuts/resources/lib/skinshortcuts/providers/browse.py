@@ -7,13 +7,33 @@ browsable (directory) vs selectable (file) items.
 from __future__ import annotations
 
 import json
+import time
+import urllib.parse
 from dataclasses import dataclass
 
 import xbmc
 
 from ..log import get_logger
 
+from ..models.menu import IconOverrides
+
 log = get_logger("BrowseProvider")
+
+
+def normalize_image(path: str) -> str:
+    """Unwrap Kodi's image:// wrapper to the plain path inside.
+
+    Embedded-media art (image://music@.../, video@...) stays wrapped: the
+    <type>@ is a texture handler, and unwrapping it yields a dead path.
+    """
+    if not path.startswith("image://"):
+        return path
+    inner = path[len("image://"):]
+    if inner.endswith("/"):
+        inner = inner[:-1]
+    if "@" in inner:
+        return path
+    return urllib.parse.unquote(inner)
 
 
 @dataclass
@@ -30,33 +50,26 @@ class BrowseItem:
 class BrowseProvider:
     """Lists directory contents via JSON-RPC."""
 
-    def __init__(self, icon_overrides: dict[str, str] | None = None) -> None:
+    def __init__(self, icon_overrides: IconOverrides | None = None) -> None:
         self._icon_overrides = icon_overrides or {}
 
-    def set_icon_overrides(self, overrides: dict[str, str]) -> None:
+    def set_icon_overrides(self, overrides: IconOverrides) -> None:
         """Refresh the override map; setter exists for the module-level singleton."""
         self._icon_overrides = overrides or {}
 
     def list_directory(
         self, path: str, include_art: bool = False
     ) -> list[BrowseItem] | None:
-        """List contents of a directory.
+        """List a directory's items, or None if the path isn't listable.
 
-        Args:
-            path: The path to list (plugin://, videodb://, library://, etc.)
-            include_art: Ask Kodi for per-item `art` so BrowseItem.icon reflects
-                each item's specific icon (e.g., DefaultMusicGenres.png). Leave
-                False for large lists or plain-text display; fetching art for
-                tens of thousands of library items is prohibitively slow.
-
-        Returns:
-            List of BrowseItem objects, empty list for empty directories,
-            or None if path is not listable (error).
+        include_art fetches per-item art for type-aware icons; skip it on big
+        listings, art on tens of thousands of items is too slow.
         """
         properties = ["file", "mimetype"]
         if include_art:
             properties.append("art")
 
+        start = time.monotonic()
         result = self._jsonrpc(
             "Files.GetDirectory",
             {
@@ -64,6 +77,10 @@ class BrowseProvider:
                 "media": "files",
                 "properties": properties,
             },
+        )
+        log.debug(
+            f"list_directory: {path} rows={len((result or {}).get('files') or [])} "
+            f"{(time.monotonic() - start) * 1000:.0f}ms"
         )
 
         if result is None:
@@ -73,7 +90,7 @@ class BrowseProvider:
             return []
 
         items = []
-        for file_info in result["files"]:
+        for file_info in result["files"] or []:
             label = file_info.get("label", "")
             file_path = file_info.get("file", "")
             filetype = file_info.get("filetype", "file")
@@ -85,17 +102,18 @@ class BrowseProvider:
             icon = ""
             if include_art:
                 art = file_info.get("art", {})
-                # Prefer per-item imagery. Skip art.icon - it's always the
-                # generic Kodi default; our fallback provides a type-aware one.
+                # art.icon is always the generic Kodi default; the fallback below is type-aware
                 icon = (
                     art.get("poster", "")
                     or art.get("thumb", "")
                     or file_info.get("thumbnail", "")
                 )
+                icon = normalize_image(icon)
             if not icon:
                 icon = self._get_icon_for_item(file_info, filetype)
-                if self._icon_overrides:
-                    icon = self._icon_overrides.get(icon, icon)
+            # Overrides key on bare DefaultX.png names; real art paths match none.
+            if icon and self._icon_overrides:
+                icon = self._icon_overrides.get(icon, icon)
 
             items.append(
                 BrowseItem(
@@ -122,7 +140,7 @@ class BrowseProvider:
     }
 
     def _get_icon_for_item(self, file_info: dict, filetype: str) -> str:
-        """Determine appropriate icon for an item."""
+        """Fallback icon by media type, then filetype, then mimetype."""
         item_type = file_info.get("type", "")
         if item_type in self._TYPE_DEFAULTS:
             return self._TYPE_DEFAULTS[item_type]

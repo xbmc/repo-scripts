@@ -7,10 +7,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class View:
-    """A view definition.
-
-    Represents a single view that can be assigned to content types.
-    """
+    """A view definition."""
 
     id: str
     label: str
@@ -19,11 +16,7 @@ class View:
 
 @dataclass
 class ViewContent:
-    """A content type definition with detection rules and available views.
-
-    Content types define what views are available for specific content
-    (movies, tvshows, etc.) and how to detect that content at runtime.
-    """
+    """A content type definition with detection rules and available views."""
 
     name: str
     label: str
@@ -42,10 +35,7 @@ class ViewContent:
 
 @dataclass
 class ViewConfig:
-    """View configuration including views, content rules, and settings.
-
-    Loaded from views.xml in the skin's shortcuts folder.
-    """
+    """View configuration including views, content rules, and settings."""
 
     views: list[View] = field(default_factory=list)
     content_rules: list[ViewContent] = field(default_factory=list)

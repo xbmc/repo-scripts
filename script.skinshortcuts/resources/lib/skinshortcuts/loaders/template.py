@@ -117,11 +117,16 @@ class TemplateLoader:
         for elem in section.findall("expression"):
             name = (elem.get("name") or "").strip()
             if not name:
-                log.warning(f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping")
+                log.warning(
+                    f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping"
+                )
                 continue
             value = (elem.text or "").strip()
             nosuffix = get_bool(elem, "nosuffix")
-            self._expressions[name] = Expression(value=value, nosuffix=nosuffix)
+            # one term, so callers can compound it without brackets, as Kodi stores them
+            self._expressions[name] = Expression(
+                value=f"[{value}]" if value else "", nosuffix=nosuffix
+            )
 
     def _parse_presets_section(self, root: ET.Element) -> None:
         """Parse <presets> section."""
@@ -145,7 +150,6 @@ class TemplateLoader:
     def _parse_preset_group(self, elem: ET.Element) -> PresetGroup | None:
         """Parse a presetGroup element.
 
-        Children can be <preset content="name"/> or <values attr="val"/>.
         First matching condition wins (document order).
         """
         name = (elem.get("name") or "").strip()
@@ -167,7 +171,8 @@ class TemplateLoader:
                     )
                 else:
                     log.warning(
-                        f"{self.path}: <preset> in <presetGroup> missing 'content' attribute, skipping"
+                        f"{self.path}: <preset> in <presetGroup> missing "
+                        "'content' attribute, skipping"
                     )
             elif child.tag == "values":
                 condition = (child.get("condition") or "").strip()
@@ -189,7 +194,9 @@ class TemplateLoader:
         for elem in section.findall("propertyGroup"):
             name = (elem.get("name") or "").strip()
             if not name:
-                log.warning(f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping")
+                log.warning(
+                    f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping"
+                )
                 continue
 
             properties = []
@@ -252,13 +259,12 @@ class TemplateLoader:
         return VariableGroup(name=name, references=references, group_refs=group_refs)
 
     def _parse_variable_reference(self, elem: ET.Element) -> VariableReference | None:
-        """Parse a variable reference within a variableGroup.
-
-        Uses content="" attribute (v4 syntax) for the reference name.
-        """
+        """Parse a variable reference within a variableGroup."""
         name = (elem.get("content") or "").strip()
         if not name:
-            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
+            log.warning(
+                f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping"
+            )
             return None
         condition = (elem.get("condition") or "").strip()
         return VariableReference(name=name, condition=condition)
@@ -271,7 +277,9 @@ class TemplateLoader:
         for elem in section.findall("include"):
             name = (elem.get("name") or "").strip()
             if not name:
-                log.warning(f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping")
+                log.warning(
+                    f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping"
+                )
                 continue
 
             self._includes[name] = IncludeDefinition(
@@ -491,20 +499,7 @@ class TemplateLoader:
         )
 
     def _parse_items_template(self, elem: ET.Element, name: str) -> ItemsDefinition | None:
-        """Parse <template items="X"> into an ItemsDefinition.
-
-        Syntax:
-            <template items="widgets" source="widgets" filter="widgetPath">
-                <condition>widgetType=custom</condition>
-                <property name="id" from="index" />
-                <var name="style">...</var>
-                <preset content="layoutDims" />
-                <propertyGroup content="widgetProps" />
-                <controls>
-                    <control type="group">...</control>
-                </controls>
-            </template>
-        """
+        """Parse <template items="X"> into an ItemsDefinition."""
         source = (elem.get("source") or "").strip()
         filter_cond = (elem.get("filter") or "").strip()
 
@@ -557,13 +552,12 @@ class TemplateLoader:
         )
 
     def _parse_property_group_ref(self, elem: ET.Element) -> PropertyGroupReference | None:
-        """Parse a property group reference element.
-
-        Uses content="" attribute (v4 syntax) for the reference name.
-        """
+        """Parse a property group reference element."""
         name = (elem.get("content") or "").strip()
         if not name:
-            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
+            log.warning(
+                f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping"
+            )
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -576,13 +570,12 @@ class TemplateLoader:
         )
 
     def _parse_preset_ref(self, elem: ET.Element) -> PresetReference | None:
-        """Parse a preset reference element for direct property resolution.
-
-        Uses content="" attribute (v4 syntax) for the reference name.
-        """
+        """Parse a preset reference element for direct property resolution."""
         name = (elem.get("content") or "").strip()
         if not name:
-            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
+            log.warning(
+                f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping"
+            )
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -595,13 +588,12 @@ class TemplateLoader:
         )
 
     def _parse_preset_group_ref(self, elem: ET.Element) -> PresetGroupReference | None:
-        """Parse a presetGroup reference element in a template.
-
-        Uses content="" attribute (v4 syntax) for the reference name.
-        """
+        """Parse a presetGroup reference element in a template."""
         name = (elem.get("content") or "").strip()
         if not name:
-            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
+            log.warning(
+                f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping"
+            )
             return None
 
         suffix = (elem.get("suffix") or "").strip()
@@ -614,13 +606,12 @@ class TemplateLoader:
         )
 
     def _parse_variable_group_ref(self, elem: ET.Element) -> VariableGroupReference | None:
-        """Parse a variableGroup reference element in a template.
-
-        Uses content="" attribute (v4 syntax) for the reference name.
-        """
+        """Parse a variableGroup reference element in a template."""
         name = (elem.get("content") or "").strip()
         if not name:
-            log.warning(f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping")
+            log.warning(
+                f"{self.path}: <{elem.tag}> reference missing 'content' attribute, skipping"
+            )
             return None
 
         suffix = (elem.get("suffix") or "").strip()

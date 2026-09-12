@@ -14,7 +14,16 @@ from ..models.background import (
     BrowseSource,
     PlaylistSource,
 )
-from .base import get_attr, get_bool, get_text, parse_content, parse_xml
+from .base import (
+    get_attr,
+    get_bool,
+    get_text,
+    parse_content,
+    parse_name_overrides,
+    parse_xml,
+)
+
+from ..models.menu import IconOverrides
 
 log = get_logger("BackgroundLoader")
 
@@ -37,17 +46,10 @@ OPTIONAL_PATH_TYPES = {
 
 
 def load_backgrounds(
-    path: str | Path, icon_overrides: dict[str, str] | None = None
+    path: str | Path, icon_overrides: IconOverrides | None = None
 ) -> BackgroundConfig:
-    """Load background configuration from XML file.
-
-    Parses <background> and <group> elements directly from root <backgrounds> element.
-    Backgrounds at root level appear flat in picker, groups create nested navigation.
-
-    Returns:
-        BackgroundConfig containing backgrounds, groupings, and settings.
-    """
-    overrides = icon_overrides or {}
+    """Load background configuration from XML file."""
+    overrides = icon_overrides or IconOverrides()
     path = Path(path)
     if not path.exists():
         return BackgroundConfig()
@@ -70,12 +72,14 @@ def load_backgrounds(
     return BackgroundConfig(
         backgrounds=backgrounds,
         groupings=groupings,
+        overrides=parse_name_overrides(root, "background"),
     )
 
 
 def _parse_background(
-    elem, path: str, icon_overrides: dict[str, str] | None = None
+    elem, path: str, icon_overrides: IconOverrides | None = None
 ) -> Background:
+    """Parse a background element; name and label are required."""
     bg_name = get_attr(elem, "name")
     if not bg_name:
         raise BackgroundConfigError(path, "Background missing 'name' attribute")
@@ -91,7 +95,11 @@ def _parse_background(
     if not bg_path and bg_type not in OPTIONAL_PATH_TYPES:
         raise BackgroundConfigError(path, f"Background '{bg_name}' missing <path>")
 
-    if bg_path and bg_type in (BackgroundType.BROWSE, BackgroundType.MULTI) and elem.find("source") is not None:
+    if (
+        bg_path
+        and bg_type in (BackgroundType.BROWSE, BackgroundType.MULTI)
+        and elem.find("source") is not None
+    ):
         log.warning(
             f"Background '{bg_name}' in {path} has both <path> and <source>; ignoring <path>"
         )
@@ -148,7 +156,9 @@ def _parse_background_group(elem, path: str) -> BackgroundGroup | None:
         notify("Background Group Error", "Group missing 'name' (see log)")
         return None
     if not label and not flat:
-        log.warning(f"Background group '{group_name}' in {path} missing 'label' (required when not flat)")
+        log.warning(
+            f"Background group '{group_name}' in {path} missing 'label' (required when not flat)"
+        )
         notify("Background Group Error", f"'{group_name}' missing label")
         return None
 

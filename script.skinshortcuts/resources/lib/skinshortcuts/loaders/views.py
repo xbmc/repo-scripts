@@ -11,11 +11,7 @@ from .base import get_attr, parse_xml
 
 
 def load_views(path: str | Path) -> ViewConfig:
-    """Load view configuration from views.xml.
-
-    Returns:
-        ViewConfig containing view definitions, content rules, and settings.
-    """
+    """Load view configuration from views.xml."""
     path = Path(path)
     if not path.exists():
         return ViewConfig()

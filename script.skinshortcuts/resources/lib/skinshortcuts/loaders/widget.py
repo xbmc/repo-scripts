@@ -9,21 +9,21 @@ from ..exceptions import WidgetConfigError
 from ..log import get_logger, notify
 from ..models import Content, Widget, WidgetGroup
 from ..models.widget import WidgetConfig
-from .base import get_attr, get_bool, get_int, get_text, parse_content, parse_xml
+from .base import (
+    get_attr,
+    get_bool,
+    get_int,
+    get_text,
+    parse_content,
+    parse_name_overrides,
+    parse_xml,
+)
 
 log = get_logger("WidgetLoader")
 
 
 def load_widgets(path: str | Path) -> WidgetConfig:
-    """Load widget configuration from XML file.
-
-    Parses <widget>, <group>, and <content> elements directly from the root
-    <widgets> element. Widgets at root level appear flat in picker, groups
-    create nested navigation, and root-level <content> resolves dynamically.
-
-    Returns:
-        WidgetConfig containing widgets, groupings, and settings.
-    """
+    """Load widget configuration from XML file."""
     path = Path(path)
     if not path.exists():
         return WidgetConfig()
@@ -50,10 +50,12 @@ def load_widgets(path: str | Path) -> WidgetConfig:
     return WidgetConfig(
         widgets=widgets,
         groupings=groupings,
+        overrides=parse_name_overrides(root, "widget"),
     )
 
 
 def _parse_widget(elem, path: str, default_source: str = "") -> Widget:
+    """Parse a widget element; only a custom widget may leave out its path."""
     widget_name = get_attr(elem, "name")
     if not widget_name:
         raise WidgetConfigError(path, "Widget missing 'name' attribute")
@@ -104,7 +106,9 @@ def _parse_widget_group(elem, path: str, default_source: str = "") -> WidgetGrou
         notify("Widget Group Error", "Group missing 'name' (see log)")
         return None
     if not label and not flat:
-        log.warning(f"Widget group '{group_name}' in {path} missing 'label' (required when not flat)")
+        log.warning(
+            f"Widget group '{group_name}' in {path} missing 'label' (required when not flat)"
+        )
         notify("Widget Group Error", f"'{group_name}' missing label")
         return None
 

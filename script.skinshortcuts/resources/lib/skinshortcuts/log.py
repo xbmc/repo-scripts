@@ -32,11 +32,13 @@ class Logger:
         self.component = component
 
     def _format(self, msg: str) -> str:
+        """Tag a message with the addon prefix and the component."""
         if self.component:
             return f"{PREFIX} {self.component} - {msg}"
         return f"{PREFIX} {msg}"
 
     def _log(self, msg: str, level: int | None = None) -> None:
+        """Write to the Kodi log, or stdout when running outside Kodi."""
         formatted = self._format(msg)
         if IN_KODI:
             if level is None:
@@ -48,15 +50,19 @@ class Logger:
             print(formatted)
 
     def debug(self, msg: str) -> None:
+        """Log at debug level; the debug setting promotes these to info."""
         self._log(msg, xbmc.LOGDEBUG if IN_KODI else None)
 
     def info(self, msg: str) -> None:
+        """Log at info level."""
         self._log(msg, xbmc.LOGINFO if IN_KODI else None)
 
     def warning(self, msg: str) -> None:
+        """Log at warning level."""
         self._log(msg, xbmc.LOGWARNING if IN_KODI else None)
 
     def error(self, msg: str) -> None:
+        """Log at error level."""
         self._log(msg, xbmc.LOGERROR if IN_KODI else None)
 
 
@@ -70,10 +76,20 @@ def get_logger(component: str = "") -> Logger:
     return _loggers[component]
 
 
+_notified: set[tuple[str, str]] = set()
+
+
 def notify(heading: str, message: str) -> None:
-    """Fire a Kodi notification. No-op outside Kodi so loaders stay testable."""
+    """Fire a Kodi notification, once per identical heading+message this run.
+
+    No-op outside Kodi so loaders stay testable.
+    """
     if not IN_KODI:
         return
+    key = (heading, message)
+    if key in _notified:
+        return
+    _notified.add(key)
     import xbmcgui
 
     xbmcgui.Dialog().notification(heading, message)

@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-from ..log import get_logger
+from ..log import get_logger, notify
 
 _log = get_logger("Properties")
 
@@ -20,38 +19,10 @@ except ImportError:
     IN_KODI = False
 
 
-def _get_playlists_base_path() -> str:
-    """Get the playlist base path from Kodi settings.
-
-    Returns the user-configured playlist path, or the default
-    special://profile/playlists/ if not set.
-    """
-    if not IN_KODI:
-        return "special://profile/playlists/"
-
-    try:
-        request = {
-            "jsonrpc": "2.0",
-            "method": "Settings.GetSettingValue",
-            "params": {"setting": "system.playlistspath"},
-            "id": 1,
-        }
-        response = json.loads(xbmc.executeJSONRPC(json.dumps(request)))
-        if "result" in response and response["result"].get("value"):
-            base = response["result"]["value"]
-            if not base.endswith("/"):
-                base += "/"
-            return base
-    except Exception:
-        pass
-    return "special://profile/playlists/"
-
-
 def _resolve_playlist_path(filepath: str) -> str | None:
     """Resolve a playlist path to an actual readable file path.
 
-    Handles special://videoplaylists/ which is a multipath combining
-    video and mixed playlist directories.
+    special://videoplaylists/ is a multipath over the video and mixed dirs.
     """
     import xbmcvfs
 
@@ -70,13 +41,7 @@ def _resolve_playlist_path(filepath: str) -> str | None:
 
 
 def _parse_smart_playlist(filepath: str) -> tuple[str, str]:
-    """Parse a smart playlist (.xsp file) for name and type.
-
-    Returns:
-        Tuple of (name, playlist_type). Falls back to ("", "") on error.
-        playlist_type is the raw type: movies, tvshows, episodes, musicvideos,
-        songs, albums, artists, mixed, etc.
-    """
+    """Parse a smart playlist (.xsp file) for name and type."""
     if not IN_KODI:
         return "", ""
 
@@ -120,26 +85,37 @@ from ..models import (
     Widget,
     WidgetGroup,
 )
-from ..playlists import unpack_multipath
+from ..playlists import playlists_base_path, unpack_multipath
 from ..providers import scan_playlist_files
+from .pickers import picker_select
 
 if TYPE_CHECKING:
     from ..manager import MenuManager
     from ..models import PropertySchema
 
 
+def _split_suffix(prop_name: str) -> tuple[str, str]:
+    """Split "widget.2" into ("widget", ".2"); an unsuffixed name gives ("widget", "")."""
+    if "." in prop_name:
+        base, suffix = prop_name.rsplit(".", 1)
+        return base, f".{suffix}"
+    return prop_name, ""
+
+
+def _label_property_name(prop_name: str) -> str:
+    """Label key for a widget slot: "widget.2" -> "widgetLabel.2"."""
+    base, suffix = _split_suffix(prop_name)
+    return f"{base}Label{suffix}"
+
+
+# handled off the button alone; every other type falls through to options, which needs the property
+BUTTON_ONLY_TYPES = ("widget", "background", "toggle", "text", "number")
+
+
 class PropertiesMixin:
     """Mixin providing property management - widget, background, toggle, options.
 
-    This mixin implements:
-    - Property button handling from schema
-    - Widget property setting/clearing
-    - Background property setting/clearing
-    - Toggle property handling
-    - Options list property handling
-    - Playlist picker
-
-    Requires DialogBaseMixin and PickersMixin to be mixed in first.
+    Requires DialogBaseMixin and PickersMixin first.
     """
 
     menu_id: str
@@ -171,7 +147,6 @@ class PropertiesMixin:
             sources: list,
             title: str,
             browse_type: int,
-            mask: str = "",
             item_properties: dict[str, str] | None = None,
             default_path: str = "",
         ) -> str | None: ...
@@ -188,22 +163,14 @@ class PropertiesMixin:
         ) -> Widget | None | Literal[False]: ...
 
         def _pick_background(
-            self, item_props: dict[str, str], current_value: str = ""
+            self,
+            item_props: dict[str, str],
+            current_value: str = "",
+            positions: dict[str, int] | None = None,
         ) -> Background | None | Literal[False]: ...
 
     def _check_requires(self, item: MenuItem, requires_name: str) -> bool:
-        """Check if a required property is satisfied.
-
-        For widget/background requirements, also accepts the Path variant
-        as proof the property is configured (e.g., widgetPath for widget).
-
-        Args:
-            item: The menu item to check
-            requires_name: The required property name (e.g., "widget", "widget.2")
-
-        Returns:
-            True if requirement is satisfied, False otherwise
-        """
+        """Check if a required property is satisfied."""
         if item.properties.get(requires_name, ""):
             return True
 
@@ -222,14 +189,7 @@ class PropertiesMixin:
         return False
 
     def _handle_property_button(self, button_id: int) -> bool:
-        """Handle a property button click from the schema.
-
-        Args:
-            button_id: The control button ID that was clicked
-
-        Returns:
-            True if handled, False if not a property button
-        """
+        """Handle a property button click from the schema."""
         if not self.property_schema or not self.manager:
             return False
 
@@ -260,7 +220,9 @@ class PropertiesMixin:
         prop_type = button.type or (prop.type if prop else "")
 
         if prop_type == "widget":
-            self._handle_widget_property(prop, item, prop_name)
+            widget = self._handle_widget_property(prop, item, prop_name)
+            if widget is not None and button.rename:
+                self._prompt_widget_rename(item, prop_name, widget)
             return True
         if prop_type == "background":
             self._handle_background_property(prop, item, prop_name)
@@ -275,29 +237,26 @@ class PropertiesMixin:
             self._handle_number_property(item, button, prop_name)
             return True
 
+        if prop is None:
+            notify(
+                "Property Button Error",
+                f"button {button_id}: '{button.property_name}' not defined",
+            )
+            return True
+
         return self._handle_options_property(prop, item, button, prop_name)
 
-    def _handle_widget_property(self, prop, item: MenuItem, prop_name: str) -> None:
+    def _handle_widget_property(self, prop, item: MenuItem, prop_name: str) -> Widget | None:
         """Handle a widget-type property.
 
-        Shows widget picker and auto-populates related properties:
-        - {prefix}Name, {prefix}Path, {prefix}Type, {prefix}Target
-
-        For custom widgets, the user selects "Custom list" which sets widgetType=custom.
-        When the subdialog closes, the onclose action checks this condition and opens
-        the custom widget menu editor automatically.
-
-        Args:
-            prop: The property schema
-            item: The menu item
-            prop_name: Effective property name (may include suffix like "widget.2")
+        Custom list sets widgetType=custom, which an onclose opens the editor for.
         """
         if self.manager is None:
-            return
+            return None
         menu = self.manager.config.get_menu(self.menu_id)
         if menu and not menu.allow.widgets:
             xbmcgui.Dialog().notification(LANGUAGE(32143), LANGUAGE(32144))
-            return
+            return None
 
         prefix = prop_name
         slot = prefix
@@ -315,11 +274,11 @@ class PropertiesMixin:
             widgets = self.manager.get_widgets()
             if not widgets:
                 xbmcgui.Dialog().notification(LANGUAGE(32147), LANGUAGE(32148))
-                return
+                return None
             result = self._pick_widget_flat(widgets, item_props, slot)
 
         if result is None:
-            return
+            return None
 
         if result is False:
             self._clear_widget_properties(item, prefix)
@@ -327,7 +286,10 @@ class PropertiesMixin:
             self._log(f"Widget selected: {result.name}")
             self._set_widget_properties(item, prefix, result)
 
-            if self.dialog_mode in ("widgets", "customwidget") or self.dialog_mode.startswith("custom-widget"):
+            if (
+                self.dialog_mode in ("widgets", "customwidget")
+                or self.dialog_mode.startswith("custom-widget")
+            ):
                 self.manager.set_label(self.menu_id, item.name, result.label)
                 item.label = result.label
                 if result.icon:
@@ -335,27 +297,44 @@ class PropertiesMixin:
                     item.icon = result.icon
 
         self._refresh_selected_item()
+        return None if result is False else result
+
+    def _prompt_widget_rename(self, item: MenuItem, prop_name: str, widget: Widget) -> None:
+        """Prompt for a custom widget label after a pick, when the button opts in."""
+        if widget.type == "custom":
+            return
+        if (
+            self.dialog_mode in ("widgets", "customwidget")
+            or self.dialog_mode.startswith("custom-widget")
+        ):
+            return
+
+        default_label = resolve_label(widget.label)
+
+        keyboard = xbmc.Keyboard(default_label, xbmc.getLocalizedString(13334))
+        keyboard.doModal()
+        if not keyboard.isConfirmed():
+            return
+
+        # space, because "" gets dropped and the default comes back
+        new_label = keyboard.getText() or " "
+        if new_label == default_label:
+            return
+
+        label_name = _label_property_name(prop_name)
+        self._log(f"Renaming {label_name} to '{new_label}' on item {item.name}")
+        self._set_item_property(item, label_name, new_label, apply_suffix=False)
+        self._refresh_selected_item()
 
     def _set_widget_properties(self, item: MenuItem, prefix: str, widget: Widget) -> None:
-        """Set widget properties on item with auto-populated values.
-
-        Args:
-            item: The menu item
-            prefix: Property name prefix (e.g., "widget" or "widget.2")
-            widget: The Widget object
-        """
+        """Set widget properties on item with auto-populated values."""
         self._log(f"Setting widget properties for {prefix}: {widget.name}")
 
-        if "." in prefix:
-            base, suffix = prefix.rsplit(".", 1)
-            suffix = f".{suffix}"
-        else:
-            base = prefix
-            suffix = ""
+        base, suffix = _split_suffix(prefix)
 
         widget_path = widget.path.replace("{menuitem}", item.name)
         related: dict[str, str | None] = {
-            f"{base}Label{suffix}": resolve_label(widget.label),
+            f"{base}Label{suffix}": widget.label,
             f"{base}Path{suffix}": widget_path,
             f"{base}Type{suffix}": widget.type or "",
             f"{base}Target{suffix}": widget.target or "",
@@ -371,12 +350,7 @@ class PropertiesMixin:
         """Clear all widget properties for a prefix."""
         self._log(f"Clearing widget properties for {prefix}")
 
-        if "." in prefix:
-            base, suffix = prefix.rsplit(".", 1)
-            suffix = f".{suffix}"
-        else:
-            base = prefix
-            suffix = ""
+        base, suffix = _split_suffix(prefix)
 
         related: dict[str, str | None] = {
             f"{base}Label{suffix}": None,
@@ -392,19 +366,7 @@ class PropertiesMixin:
             self.manager.clear_custom_widget(self.menu_id, item.name, suffix)
 
     def _handle_background_property(self, prop, item: MenuItem, prop_name: str) -> None:
-        """Handle a background-type property.
-
-        Shows background picker and auto-populates related properties:
-        - {prefix}Name, {prefix}Path
-
-        For type="browse" backgrounds, opens single image browser.
-        For type="multi" backgrounds, opens folder browser.
-
-        Args:
-            prop: The property schema
-            item: The menu item
-            prop_name: Effective property name (may include suffix)
-        """
+        """Handle a background-type property."""
         if self.manager is None:
             return
         menu = self.manager.config.get_menu(self.menu_id)
@@ -415,9 +377,10 @@ class PropertiesMixin:
         prefix = prop_name
         current_bg = self._get_item_property(item, prefix)
         item_props = self._get_item_properties(item)
+        positions: dict[str, int] = {}
 
         while True:
-            bg = self._pick_background(item_props, current_value=current_bg)
+            bg = self._pick_background(item_props, current_bg, positions)
 
             if bg is None:
                 return
@@ -431,7 +394,6 @@ class PropertiesMixin:
                     sources=bg.browse_sources,
                     title=resolve_label(bg.label),
                     browse_type=2,  # Image file
-                    mask=".jpg|.png|.gif",
                     item_properties=item.properties,
                     default_path=bg.path,
                 )
@@ -456,7 +418,8 @@ class PropertiesMixin:
                 continue
 
             if bg.type in (BackgroundType.PLAYLIST, BackgroundType.LIVE_PLAYLIST) and not bg.path:
-                current_playlist = self._get_item_property(item, f"{prefix}Path")
+                base, suffix = _split_suffix(prefix)
+                current_playlist = self._get_item_property(item, f"{base}Path{suffix}")
                 result = self._pick_playlist(
                     bg.sources, bg.label if bg.sources else "", current_playlist
                 )
@@ -477,10 +440,12 @@ class PropertiesMixin:
         """Set background properties on item with auto-populated values."""
         self._log(f"Setting background properties for {prefix}: {bg.name}")
 
+        base, suffix = _split_suffix(prefix)
+
         related: dict[str, str | None] = {
-            f"{prefix}Label": resolve_label(bg.label),
-            f"{prefix}Path": bg.path,
-            f"{prefix}Type": bg.type_name,
+            f"{base}Label{suffix}": bg.label,
+            f"{base}Path{suffix}": bg.path,
+            f"{base}Type{suffix}": bg.type_name,
         }
 
         self._set_item_property(item, prefix, bg.name, related, apply_suffix=False)
@@ -494,35 +459,25 @@ class PropertiesMixin:
         custom_label: str | None = None,
         playlist_type: str | None = None,
     ) -> None:
-        """Set background properties with a user-browsed custom path.
-
-        Used for type="browse" (single image), type="multi" (folder),
-        and type="playlist" backgrounds.
-
-        Args:
-            item: The menu item
-            prefix: Property name prefix
-            bg: The Background object
-            custom_path: User-selected path
-            custom_label: Optional custom label (e.g., "Live Background: Random Movies")
-            playlist_type: Optional playlist content type ("video" or "music")
-        """
+        """Set background properties with a user-browsed custom path."""
         self._log(f"Setting custom background for {prefix}: {bg.name} -> {custom_path}")
+
+        base, suffix = _split_suffix(prefix)
 
         if bg.type in (BackgroundType.BROWSE, BackgroundType.MULTI):
             label = custom_label if custom_label else custom_path
             value = custom_path
         else:
-            label = custom_label if custom_label else resolve_label(bg.label)
+            label = custom_label if custom_label else bg.label
             value = bg.name
 
         related: dict[str, str | None] = {
-            f"{prefix}Label": label,
-            f"{prefix}Path": custom_path,
-            f"{prefix}Type": bg.type_name,
+            f"{base}Label{suffix}": label,
+            f"{base}Path{suffix}": custom_path,
+            f"{base}Type{suffix}": bg.type_name,
         }
         if playlist_type:
-            related[f"{prefix}PlaylistType"] = playlist_type
+            related[f"{base}PlaylistType{suffix}"] = playlist_type
 
         self._set_item_property(item, prefix, value, related, apply_suffix=False)
 
@@ -530,11 +485,13 @@ class PropertiesMixin:
         """Clear all background properties for a prefix."""
         self._log(f"Clearing background properties for {prefix}")
 
+        base, suffix = _split_suffix(prefix)
+
         related: dict[str, str | None] = {
-            f"{prefix}Label": None,
-            f"{prefix}Path": None,
-            f"{prefix}Type": None,
-            f"{prefix}PlaylistType": None,
+            f"{base}Label{suffix}": None,
+            f"{base}Path{suffix}": None,
+            f"{base}Type{suffix}": None,
+            f"{base}PlaylistType{suffix}": None,
         }
 
         self._set_item_property(item, prefix, "", related, apply_suffix=False)
@@ -545,21 +502,9 @@ class PropertiesMixin:
         label_prefix: str = "",
         current_path: str = "",
     ) -> tuple[str, str, str] | None:
-        """Show picker for available playlists.
-
-        Args:
-            sources: List of PlaylistSource objects defining where to scan.
-                     If None/empty, uses default user playlist locations.
-            label_prefix: Prefix to show on all playlist labels (e.g., "Live Background")
-            current_path: Current playlist path to preselect
-
-        Returns:
-            Tuple of (path, display_label, playlist_type) or None if cancelled.
-            display_label includes the prefix if provided.
-            playlist_type is the raw type from the .xsp file (movies, tvshows, etc.)
-        """
+        """Show picker for available playlists."""
         if not sources:
-            base = _get_playlists_base_path()
+            base = playlists_base_path()
             sources = [
                 PlaylistSource(
                     label=xbmc.getLocalizedString(20012),
@@ -602,19 +547,20 @@ class PropertiesMixin:
         sources: list[PlaylistSource],
         prefix: str,
     ) -> PlaylistSource | None:
+        """Pick which source to scan, skipping the dialog when the skin lists one."""
         if len(sources) == 1:
             return sources[0]
 
         listitems = []
         for source in sources:
             label = resolve_label(source.label) if source.label else source.path
-            listitem = xbmcgui.ListItem(label)
+            listitem = xbmcgui.ListItem(f"{label} >", offscreen=True)
             if source.icon:
                 listitem.setArt({"icon": source.icon})
             listitems.append(listitem)
 
         title = f"{LANGUAGE(32181)} {prefix}" if prefix else LANGUAGE(32157)
-        selected = xbmcgui.Dialog().select(title, listitems, useDetails=True)
+        selected = picker_select("playlist", title, listitems, useDetails=True)
         if selected == -1:
             return None
         return sources[selected]
@@ -625,6 +571,7 @@ class PropertiesMixin:
         prefix: str,
         current_path: str,
     ) -> tuple[str, str, str] | None:
+        """Pick a playlist from one source, returning its path, label and type."""
         playlists = []
 
         for raw_label, path in scan_playlist_files(source.path):
@@ -653,12 +600,12 @@ class PropertiesMixin:
 
         listitems = []
         for label, _path, icon, _content_type in playlists:
-            listitem = xbmcgui.ListItem(label)
+            listitem = xbmcgui.ListItem(label, offscreen=True)
             listitem.setArt({"icon": icon})
             listitems.append(listitem)
 
         title = resolve_label(source.label) if source.label else LANGUAGE(32157)
-        selected = xbmcgui.Dialog().select(title, listitems, useDetails=True, preselect=preselect)
+        selected = picker_select("playlist", title, listitems, useDetails=True, preselect=preselect)
 
         if selected == -1:
             return None
@@ -666,17 +613,7 @@ class PropertiesMixin:
         return (playlists[selected][1], playlists[selected][0], playlists[selected][3])
 
     def _handle_toggle_property(self, prop, item: MenuItem, button, prop_name: str) -> None:
-        """Handle a toggle-type property.
-
-        Toggles between a value and empty (cleared).
-        Uses prop.value if set, otherwise defaults to "True".
-
-        Args:
-            prop: The property schema
-            item: The menu item
-            button: The button mapping
-            prop_name: Effective property name (may include suffix)
-        """
+        """Handle a toggle-type property."""
         toggle_value = (prop.value if prop else "") or "True"
         current_value = item.properties.get(prop_name, "")
         if current_value == toggle_value:
@@ -722,14 +659,7 @@ class PropertiesMixin:
         self._refresh_selected_item()
 
     def _handle_options_property(self, prop, item: MenuItem, button, prop_name: str) -> bool:
-        """Handle a regular property with options list.
-
-        Args:
-            prop: The property schema
-            item: The menu item
-            button: The button mapping
-            prop_name: Effective property name (may include suffix)
-        """
+        """Handle a regular property with options list."""
         item_props = self._get_item_properties(item)
         use_suffix = button.suffix and self.property_suffix
 
@@ -747,12 +677,12 @@ class PropertiesMixin:
 
         listitems = []
         if button.show_none:
-            none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231))
+            none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231), offscreen=True)
             none_item.setArt({"icon": "DefaultAddonNone.png"})
             listitems.append(none_item)
 
         for opt in visible_options:
-            listitem = xbmcgui.ListItem(resolve_label(opt.label))
+            listitem = xbmcgui.ListItem(resolve_label(opt.label), offscreen=True)
             icon = "DefaultAddonNone.png"
             if opt.icons:
                 for icon_variant in opt.icons:
@@ -774,8 +704,8 @@ class PropertiesMixin:
                 preselect = i + offset
                 break
 
-        selected = xbmcgui.Dialog().select(
-            title, listitems, useDetails=button.show_icons, preselect=preselect
+        selected = picker_select(
+            "property", title, listitems, useDetails=button.show_icons, preselect=preselect
         )
 
         if selected == -1:

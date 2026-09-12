@@ -19,6 +19,8 @@ from .localize import LANGUAGE, resolve_label
 from .log import get_logger
 from .models import MenuItem
 
+from .models.menu import IconOverrides
+
 log = get_logger("SkinString")
 
 
@@ -26,41 +28,37 @@ class _StandalonePicker(PickersMixin):
     """Minimal adapter for PickersMixin outside the management dialog."""
 
     def __init__(
-        self, shortcuts_path: str, icon_overrides: dict[str, str] | None = None
+        self, shortcuts_path: str, icon_overrides: IconOverrides | None = None
     ) -> None:
         self.shortcuts_path = shortcuts_path
         self.manager = None  # type: ignore[assignment]
         self.menu_id = ""
         self.items: list[MenuItem] = []
-        self._overrides = icon_overrides or {}
+        self._overrides = icon_overrides or IconOverrides()
 
-    def _icon_overrides(self) -> dict[str, str]:
+    def _icon_overrides(self) -> IconOverrides:
+        """Overrides handed in by the caller."""
         return self._overrides
 
     def _get_selected_item(self) -> MenuItem | None:
+        """No item is selected outside the management dialog."""
         return None
 
     def _get_item_properties(self, _item: MenuItem) -> dict[str, str]:
+        """No item properties to test picker conditions against."""
         return {}
 
     def _refresh_selected_item(self) -> None:
+        """Nothing to refresh without a list control."""
         pass
 
     def _log(self, msg: str) -> None:
+        """Send picker logging to this module's logger."""
         log.debug(msg)
 
 
 def pick_widget_skinstring(shortcuts_path: str, params: dict[str, str]) -> None:
-    """Open widget picker and store result in skin strings.
-
-    Args:
-        shortcuts_path: Path to skin's shortcuts folder
-        params: Dict with skin string names:
-            skinPath - Skin string for widget path
-            skinLabel - Skin string for widget label
-            skinType - Skin string for widget type
-            skinTarget - Skin string for widget target
-    """
+    """Open widget picker and store result in skin strings."""
     if not IN_KODI:
         return
 

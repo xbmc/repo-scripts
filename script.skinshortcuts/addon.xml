@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.1" provider-name="MikeSiLVO">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.3" provider-name="MikeSiLVO">
     <requires>
         <import addon="xbmc.python" version="3.0.2"/>
     </requires>
     <extension point="xbmc.python.script" library="default.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-3.0.1
-  - Add: show a source as a library view instead of files (movies, TV shows, episodes, music videos, songs, albums, artists), or everything except it, with a sort order
-  - Add: a global submenuPath element under menus, plus a submenuPath property on menu items for their widget submenu
-  - Add: prompt to switch skins or downgrade the add-on when a skin is built for Skin Shortcuts v2
-  - Add: program add-ons that expose plugin content are browsable in the content picker
-  - Add: skin icon overrides apply to the add-on content placeholder
-  - Fix: Create menu item to here names the menu item after the add-on category
-  - Fix: templateonly now hides a property's numbered slot variants
-  - Fix: a playlist shortcut or background resolves to a valid path
-  - Updated translations
+3.0.3
+  - Fix: a widget picked from a library node takes its type from the node, so add-on nodes are no longer mistyped
+
+3.0.2
+  - Add: skins can restyle the DialogSelect pickers with a skinshortcuts-picker property and ListItem metadata
+  - Add: skins can define the management dialog context menu, the buttons it lists and where it opens
+  - Add: skins can retire a widget, background or property in an overrides block and point saved menus at its replacement
+  - Add: icon overrides name a source folder, so a skin's own icons replace the Kodi defaults, packed or loose
+  - Add: a rename attribute on a widget picker button prompts for a custom widget label
+  - Add: a global submenuPath element, plus a submenuPath property on menu items for their widget submenu
+  - Add: show a source as a library view instead of files, with a sort order
+  - Fix: program add-ons that expose plugin content are browsable in the content picker
+  - Fix: property conditions combine + and | as Kodi does, and an expression reference expands as a single term
+  - Fix: the includes file is written with unix line endings on every platform
+  - Fix: the skin reloads only when a rebuild changes the includes
+  - Fix: the picker keeps its place when it reopens instead of jumping back to the current selection
+  - Fix: backgrounds that open a browse or playlist dialog get the same folder arrow as groups
         </news>
-        <summary lang="en_GB">Custom menus, properties, and artwork for skins</summary>
         <platform>all</platform>
         <license>GPL-2.0-only</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=383314</forum>
@@ -26,34 +32,44 @@
             <icon>resources/media/icon.png</icon>
             <fanart>resources/media/fanart.jpg</fanart>
         </assets>
+        <summary lang="cs_CZ">Vlastní nabídky, vlastnosti a grafika pro vzhledy</summary>
+        <summary lang="en_GB">Custom menus, properties, and artwork for skins</summary>
+        <summary lang="es_ES">Menús, propiedades y arte personalizado para skins</summary>
+        <summary lang="hu_HU">Egyéni menük, tulajdonságok és képek a felszínekhez</summary>
+        <summary lang="it_IT">Menu personalizzati, proprietà e grafica per le skin</summary>
+        <summary lang="pl_PL">Niestandardowe menu, właściwości i grafika dla skórek</summary>
+        <summary lang="ru_RU">Пользовательские меню, свойства и иллюстрации для обложек</summary>
+        <summary lang="zh_CN">皮肤自定义菜单、属性与艺术图</summary>
         <description lang="ar_SA">إضافة مخصصه للمظهر لتوفير إدارة بسيطة للودجيت &quot;الأقسام&quot; و الاختصارات على الشاشة (تتطلب دعم المظهر لها)</description>
-        <description lang="cs_CZ">Doplněk pro vzhledy poskytující jednoduchý management a seznamy uživatelských zkratek (vyžaduje podporu vzhledu)</description>
+        <description lang="bs_BA">Dodatak za skinove koji omogućava jednostavno upravljanje i prikaz korisničkih prečica (potrebna je podrška za skinove)</description>
+        <description lang="cs_CZ">Doplněk pro vzhledy poskytující jednoduchou správu a vypisování uživatelských zkratek (vyžaduje podporu vzhledu)</description>
         <description lang="da_DK">Add-on til skins der giver enkel styring og lister over brugergenveje (kræver skin-understøttelse)</description>
-        <description lang="de_DE">Addon für Skins zum einfachen Bearbeiten und Auflisten von benutzerdefinierten Verknüpfungen (erfordert Skinunterstützung)</description>
+        <description lang="de_DE">Addon für Skins zum einfachen Verwalten und Anzeigen von benutzerdefinierten Verknüpfungen (erfordert Skinunterstützung)</description>
         <description lang="el_GR">Πρόσθετο για κελύφη, το οποίο παρέχει έναν απλό τρόπο διαχείρισης και κατηγοριοποίησης των συντομεύσεων του χρήστη (πρέπει να υποστηρίζεται από το κέλυφος)</description>
         <description lang="en_GB">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
         <description lang="en_NZ">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
         <description lang="en_US">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
-        <description lang="es_ES">Complemento para las pieles para proporcionar una gestión sencilla y lista de atajos de usuario (requiere que la piel lo soporte)</description>
-        <description lang="fi_FI">Lisäosa, joka mahdollistaa ulkoasujen valikkokohteiden ja omien pikavalintojen lisäyksen ja niiden muokkauksen (vaatii tuen ulkoasulta)</description>
+        <description lang="es_ES">Complemento para skins para proporcionar una gestión y listado sencillo de accesos directos de usuario (requiere que el skin lo soporte)</description>
+        <description lang="et_EE">Lisamoodul, mis võimaldab lisada ja redigeerida rüü menüüelemente ja oma otseteid (vajab rüü tuge)</description>
+        <description lang="fi_FI">Lisäosa, jonka avulla ulkoasut voivat tarjota käyttäjille helpon tavan hallita ja mukauttaa valikoita ja pikavalintoja (vaatii ulkoasukohtaisen tuen).</description>
         <description lang="fr_CA">Addiciel pour habillages qui fournit une gestion simple et un listage des raccourcis utilisateurs (exige la prise en charge de l&apos;habillage)</description>
         <description lang="fr_FR">Module complémentaire pour les skins pour fournir une gestion et une liste simples de raccourcis utilisateur (nécessite la prise en charge des skins)</description>
         <description lang="gl_ES">Complemento que fornece aos temas dunha xestión sinxela dos atallos dos usuarios (require soporte do tema)</description>
         <description lang="hr_HR">Dodatak za presvlake koji omogućuje jednostavno upravljanje i prikaz prečaca korisnika (zahtijeva podršku presvlake)</description>
         <description lang="hu_HU">Felszín kiegészítő amely könnyen kezelhetővé és listázhatóvá teszi a felhasználói parancsikonokat (Felszín támogatás szükséges)</description>
         <description lang="is_IS">Viðbót fyrir viðmót til að halda utan um flýtivísa og fá yfirlit yfir þá (þarfnast stuðnings frá viðmóti)</description>
-        <description lang="it_IT">Add-on per gli skin per consentire un facile gestione ed elenco delle scorciatoie utente (richiede che lo skin lo supporti)</description>
+        <description lang="it_IT">Add-on per skin per fornire una semplice gestione ed elenco delle scorciatoie utente (richiede il supporto della skin)</description>
         <description lang="ko_KR">사용자 단축키의 간단한 관리 및 목록을 제공하는 스킨용 애드온(스킨 지원 필요)</description>
         <description lang="lt_LT">Priedas teminėms išvaizdoms, kad jos turėtų galimybę paprastai tvarkyti ir atvaizduoti vartotojo sukurtas nuorodas (reikalingas teminės išvaizdos palaikymas)</description>
         <description lang="nb_NO">Tillegg for enkel administrering og opplisting av bruker-snarveier i tema (krever støtte i tema)</description>
         <description lang="nl_NL">Add-on voor skins om te voorzien in het eenvoudig beheren en sorteren van gebruikers snelkoppelingen (vereist skin ondersteuning)</description>
-        <description lang="pl_PL">Wtyczka dla skór, która zapewnia proste zarządzanie i tworzenie list skrótów użytkownika (wymaga wsparcia skóry)</description>
+        <description lang="pl_PL">Wtyczka dla skór, która umożliwia proste zarządzanie i tworzenie list skrótów użytkownika (wymaga wsparcia skóry)</description>
         <description lang="pt_BR">Add-on para que as skins possam prover gerenciamento de lista de atalhos para o menu principal (requer suporte da skin)</description>
         <description lang="pt_PT">Um add-on que permite que os temas tenham recursos simples para gerir e listar atalhos de utilizadores (é necessário suporte do tema)</description>
         <description lang="ru_RU">Дополнение для обложек, предоставляющее простой способ управления пользовательскими ярлыками (требуется поддержка обложкой)</description>
         <description lang="sk_SK">Doplnok poskytujúci jednoduchý manažment zoznamu užívateľských odkazov (vyžaduje podporu v doplnku pre vzhľad)</description>
         <description lang="sv_SE">Skinntillägg som tillhandahåller enkel hantering och översikt av användargenvägar (om skinnet stöder det)</description>
-        <description lang="zh_CN">皮肤加载项，提供简单的用户快捷方式管理和列表（需要皮肤支持）</description>
+        <description lang="zh_CN">用于皮肤的插件，提供简易的用户快捷方式管理和列表展示（需要皮肤支持）</description>
         <description lang="zh_TW">插件为皮肤提供了简单的管理和用户连接方式列表 (需要皮肤支持)</description>
     </extension>
 </addon>

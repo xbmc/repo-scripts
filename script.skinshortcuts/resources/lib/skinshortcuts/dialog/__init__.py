@@ -56,32 +56,14 @@ class ManagementDialog(
     ItemsMixin,
     DialogBaseMixin,
 ):
-    """Dialog for managing menu shortcuts.
-
-    Composes multiple mixins to provide full functionality:
-    - DialogBaseMixin: Core initialization, list management, event routing
-    - ItemsMixin: Item operations (add, delete, move, label, icon, action)
-    - PickersMixin: Shortcut and widget picker dialogs
-    - PropertiesMixin: Property management (widget, background, toggle, options)
-    - SubdialogsMixin: Subdialog management (submenu editing, onclose handling)
-
-    DialogBaseMixin inherits from xbmcgui.WindowXMLDialog, providing the base.
-    """
+    """Dialog for managing menu shortcuts."""
 
 
 def show_management_dialog(
     menu_id: str = "mainmenu",
     shortcuts_path: str | None = None,
 ) -> bool:
-    """Show the management dialog.
-
-    Args:
-        menu_id: ID of menu to manage
-        shortcuts_path: Path to shortcuts folder (auto-detected if None)
-
-    Returns:
-        True if changes were saved, False otherwise
-    """
+    """Show the management dialog."""
     if not IN_KODI:
         return False
 

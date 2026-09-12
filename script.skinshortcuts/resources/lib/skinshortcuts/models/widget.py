@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+
+from .override import Override
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -64,15 +66,13 @@ class WidgetGroup:
     icon: str = ""  # Optional icon for group display
     items: list[WidgetGroupContent] = field(default_factory=list)
     flat: bool = False  # No folder header; children render at parent level
+    path: str = ""  # Real browsable path, set on content folders only
 
 
 @dataclass
 class WidgetConfig:
-    """Widget configuration including widgets, groupings, and settings.
-
-    Groupings can contain WidgetGroup (folders), standalone Widget items, and
-    Content references at the top level.
-    """
+    """Widget configuration including widgets, groupings, and settings."""
 
     widgets: list[Widget] = field(default_factory=list)
     groupings: list[WidgetGroupContent] = field(default_factory=list)
+    overrides: list[Override] = field(default_factory=list)

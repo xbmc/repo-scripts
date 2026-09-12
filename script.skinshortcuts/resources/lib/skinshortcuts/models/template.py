@@ -37,13 +37,7 @@ class TemplateParam:
 
 @dataclass
 class TemplateProperty:
-    """Property assignment in a template.
-
-    Can be:
-    - Literal value: name="left", value="245"
-    - From source: name="content", from_source="widgetPath"
-    - Conditional: name="aspect", condition="widgetArt=Poster", value="stretch"
-    """
+    """Property assignment in a template."""
 
     name: str
     value: str = ""
@@ -53,14 +47,7 @@ class TemplateProperty:
 
 @dataclass
 class TemplateVar:
-    """Multi-conditional property for internal template resolution.
-
-    Example:
-        <var name="aspect">
-            <value condition="widgetArt=Poster">stretch</value>
-            <value>scale</value>
-        </var>
-    """
+    """Multi-conditional property for internal template resolution."""
 
     name: str
     values: list[TemplateProperty] = field(default_factory=list)
@@ -84,11 +71,7 @@ class Preset:
 
 @dataclass
 class PropertyGroup:
-    """Reusable property group definition.
-
-    Contains properties and vars that can be referenced by templates.
-    Supports suffix transforms for Widget 1/2 property reuse.
-    """
+    """Reusable property group definition."""
 
     name: str
     properties: list[TemplateProperty] = field(default_factory=list)
@@ -106,11 +89,7 @@ class PropertyGroupReference:
 
 @dataclass
 class PresetReference:
-    """Reference to a preset for direct property resolution.
-
-    When used in a template, evaluates the preset conditions and sets
-    all matched attributes as properties directly.
-    """
+    """Reference to a preset for direct property resolution."""
 
     name: str  # Name of preset to apply
     suffix: str = ""  # Suffix for condition transforms (e.g., ".2")
@@ -163,13 +142,7 @@ class IncludeDefinition:
 
 @dataclass
 class VariableDefinition:
-    """Kodi variable definition.
-
-    Contains the actual <variable> content with $PROPERTY[id] placeholders.
-    Can be defined:
-    - Inside a template's <variables> section (inline)
-    - In the global <variables> section (for reuse via variableGroups)
-    """
+    """Kodi variable definition."""
 
     name: str  # Variable name (e.g., "PosterVar")
     condition: str = ""  # Only build if item matches (evaluated per-item)
@@ -179,11 +152,7 @@ class VariableDefinition:
 
 @dataclass
 class VariableReference:
-    """Reference to a variable definition within a variableGroup.
-
-    Points to a global variable definition with an optional condition
-    for when to build it.
-    """
+    """Reference to a variable definition within a variableGroup."""
 
     name: str  # Name of variable definition to use
     condition: str = ""  # Only build if item matches this condition
@@ -204,12 +173,7 @@ class VariableGroupReference:
 
 @dataclass
 class VariableGroup:
-    """Group of variable references for reuse across templates.
-
-    Allows defining which variables to build together, with conditions
-    for each. Supports suffix transforms for Widget 1/2 property reuse.
-    Can also include references to other variableGroups for composition.
-    """
+    """Group of variable references for reuse across templates."""
 
     name: str
     references: list[VariableReference] = field(default_factory=list)
@@ -231,25 +195,7 @@ class TemplateOutput:
 
 @dataclass
 class ItemsDefinition:
-    """Definition for items insertion within a template.
-
-    Defines what content to generate for each submenu item at insert points.
-    Used with <skinshortcuts insert="X" /> markers in controls.
-
-    Attributes:
-        name: Insert point name to match (e.g., "widgets", "breadcrumb")
-        source: Submenu name suffix - looks up {parent}.{source} submenu.
-                If empty, defaults to name.
-        condition: Optional condition evaluated against parent menu item.
-                   If false, the entire insert is skipped.
-        filter: Optional condition evaluated against each submenu item.
-                Items not matching are skipped.
-        properties: Property definitions for each submenu item.
-        vars: Variable definitions for conditional property values.
-        preset_refs: Preset references to apply.
-        property_groups: Property group references to apply.
-        controls: XML content to generate for each submenu item.
-    """
+    """Definition for items insertion within a template."""
 
     name: str
     source: str = ""
@@ -307,11 +253,7 @@ class Template:
         )
 
     def get_outputs(self) -> list[TemplateOutput]:
-        """Get output configurations.
-
-        Returns outputs list if defined, otherwise creates single output
-        from legacy include/id_prefix attributes.
-        """
+        """Get output configurations."""
         if self.outputs:
             return self.outputs
         if self.include:

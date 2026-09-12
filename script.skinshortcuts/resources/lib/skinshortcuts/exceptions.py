@@ -11,6 +11,7 @@ class ConfigError(SkinShortcutsError):
     """Error in configuration file."""
 
     def __init__(self, file_path: str, message: str, line: int | None = None):
+        """Prefix the message with the file, and the line when it is known."""
         self.file_path = file_path
         self.line = line
         location = f"{file_path}:{line}" if line else file_path

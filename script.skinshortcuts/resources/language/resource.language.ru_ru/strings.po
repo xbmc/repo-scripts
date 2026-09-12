@@ -1,17 +1,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: noreply@noreply.com\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-06-10 07:59+0000\n"
-"Last-Translator: vgbsd <vg72i@protonmail.com>\n"
+"PO-Revision-Date: 2026-08-21 01:16+0000\n"
+"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/ru_ru/>\n"
 "Language: ru_ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.6.1\n"
+"X-Generator: Weblate 2026.8.1\n"
+
+msgctxt "Addon Summary"
+msgid "Custom menus, properties, and artwork for skins"
+msgstr "Пользовательские меню, свойства и иллюстрации для обложек"
 
 msgctxt "Addon Description"
 msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
@@ -519,315 +523,319 @@ msgstr "Это дополнение предназначено для разра
 
 msgctxt "#32125"
 msgid "Delete item?"
-msgstr ""
+msgstr "Удалить элемент?"
 
 msgctxt "#32126"
 msgid "Are you sure you want to delete this item?"
-msgstr ""
+msgstr "Вы уверены, что хотите удалить этот элемент?"
 
 msgctxt "#32127"
 msgid "Modify item?"
-msgstr ""
+msgstr "Изменить элемент?"
 
 msgctxt "#32128"
 msgid "Are you sure you want to modify this item?"
-msgstr ""
+msgstr "Вы уверены, что хотите изменить этот элемент?"
 
 msgctxt "#32129"
 msgid "New Item"
-msgstr ""
+msgstr "Новый элемент"
 
 msgctxt "#32130"
 msgid "Cannot Delete"
-msgstr ""
+msgstr "Не удаётся удалить"
 
 msgctxt "#32131"
 msgid "Delete Item"
-msgstr ""
+msgstr "Удалить элемент"
 
 msgctxt "#32132"
 msgid "Modify Action"
-msgstr ""
+msgstr "Изменить действие"
 
 msgctxt "#32133"
 msgid "Cannot Disable"
-msgstr ""
+msgstr "Не удаётся отключить"
 
 msgctxt "#32134"
 msgid "Disable Item"
-msgstr ""
+msgstr "Отключить элемент"
 
 msgctxt "#32135"
 msgid "No Deleted Items"
-msgstr ""
+msgstr "Нет удалённых элементов"
 
 msgctxt "#32136"
 msgid "No items to restore"
-msgstr ""
+msgstr "Нет элементов для восстановления"
 
 msgctxt "#32137"
 msgid "Restore Deleted Item"
-msgstr ""
+msgstr "Восстановить удалённый элемент"
 
 msgctxt "#32138"
 msgid "Reset Item"
-msgstr ""
+msgstr "Сбросить элемент"
 
 msgctxt "#32139"
 msgid "Edit Submenu"
-msgstr ""
+msgstr "Править подменю"
 
 msgctxt "#32140"
 msgid "Select Widget Type"
-msgstr ""
+msgstr "Выбрать тип виджета"
 
 msgctxt "#32141"
 msgid "No Items"
-msgstr ""
+msgstr "Нет элементов"
 
 msgctxt "#32142"
 msgid "No items available in this group"
-msgstr ""
+msgstr "В этой группе нет доступных элементов"
 
 msgctxt "#32143"
 msgid "Not Allowed"
-msgstr ""
+msgstr "Не разрешено"
 
 msgctxt "#32144"
 msgid "Widgets not enabled for this menu"
-msgstr ""
+msgstr "Виджеты не включены для этого меню"
 
 msgctxt "#32145"
 msgid "Submenus not enabled for this menu"
-msgstr ""
+msgstr "Подменю не включены для этого меню"
 
 msgctxt "#32146"
 msgid "Backgrounds not enabled for this menu"
-msgstr ""
+msgstr "Фоны не включены для этого меню"
 
 msgctxt "#32147"
 msgid "No Widgets"
-msgstr ""
+msgstr "Нет виджетов"
 
 msgctxt "#32148"
 msgid "No widgets defined in skin"
-msgstr ""
+msgstr "В обложке не определено виджетов"
 
 msgctxt "#32149"
 msgid "Cannot Browse"
-msgstr ""
+msgstr "Не удаётся просмотреть"
 
 msgctxt "#32150"
 msgid "Unable to list directory contents"
-msgstr ""
+msgstr "Невозможно отобразить содержимое каталога"
 
 msgctxt "#32151"
 msgid "Browse"
-msgstr ""
+msgstr "Просмотреть"
 
 msgctxt "#32152"
 msgid "No Backgrounds"
-msgstr ""
+msgstr "Нет фонов"
 
 msgctxt "#32153"
 msgid "No backgrounds defined"
-msgstr ""
+msgstr "Фоны не определены"
 
 msgctxt "#32154"
 msgid "No Playlists"
-msgstr ""
+msgstr "Нет плейлистов"
 
 msgctxt "#32155"
 msgid "No playlist locations found"
-msgstr ""
+msgstr "Не найдено местоположений плейлистов"
 
 msgctxt "#32156"
 msgid "No playlists found in this location"
-msgstr ""
+msgstr "В этом местоположении не найдено плейлистов"
 
 msgctxt "#32157"
 msgid "Select Playlist"
-msgstr ""
+msgstr "Выбрать плейлист"
 
 msgctxt "#32158"
 msgid "Mixed Playlists"
-msgstr ""
+msgstr "Смешанные плейлисты"
 
 msgctxt "#32159"
 msgid "No Options"
-msgstr ""
+msgstr "Нет параметров"
 
 msgctxt "#32160"
 msgid "No options available"
-msgstr ""
+msgstr "Нет доступных параметров"
 
 msgctxt "#32164"
 msgid "Reset Library Views"
-msgstr ""
+msgstr "Сбросить виды медиатеки"
 
 msgctxt "#32165"
 msgid "Reset Add-on Views"
-msgstr ""
+msgstr "Сбросить виды дополнений"
 
 msgctxt "#32166"
 msgid "Add Override"
-msgstr ""
+msgstr "Добавить переопределение"
 
 msgctxt "#32167"
 msgid "No Add-ons"
-msgstr ""
+msgstr "Нет дополнений"
 
 msgctxt "#32168"
 msgid "No video add-ons installed"
-msgstr ""
+msgstr "Не установлено видеодополнений"
 
 msgctxt "#32169"
 msgid "Select Add-on"
-msgstr ""
+msgstr "Выбрать дополнение"
 
 msgctxt "#32170"
 msgid "Confirm"
-msgstr ""
+msgstr "Подтвердить"
 
 msgctxt "#32171"
 msgid "Edit Label"
-msgstr ""
+msgstr "Править подпись"
 
 msgctxt "#32172"
 msgid "Edit Action"
-msgstr ""
+msgstr "Править действие"
 
 msgctxt "#32173"
 msgid "Change Icon"
-msgstr ""
+msgstr "Сменить значок"
 
 msgctxt "#32174"
 msgid "'%s' is required."
-msgstr ""
+msgstr "Требуется «%s»."
 
 msgctxt "#32175"
 msgid "Delete '%s'?"
-msgstr ""
+msgstr "Удалить «%s»?"
 
 msgctxt "#32176"
 msgid "Modify '%s'?"
-msgstr ""
+msgstr "Изменить «%s»?"
 
 msgctxt "#32177"
 msgid "Disable '%s'?"
-msgstr ""
+msgstr "Отключить «%s»?"
 
 msgctxt "#32178"
 msgid "Reset '%s' to defaults?"
-msgstr ""
+msgstr "Сбросить «%s» до значений по умолчанию?"
 
 msgctxt "#32179"
 msgid "No Shortcuts"
-msgstr ""
+msgstr "Нет ярлыков"
 
 msgctxt "#32180"
 msgid "No shortcut groupings defined in skin"
-msgstr ""
+msgstr "В обложке не определено группировок ярлыков"
 
 msgctxt "#32181"
 msgid "Select"
-msgstr ""
+msgstr "Выбрать"
 
 msgctxt "#32182"
 msgid "Location"
-msgstr ""
+msgstr "Местоположение"
 
 msgctxt "#32183"
 msgid "Not Available"
-msgstr ""
+msgstr "Недоступно"
 
 msgctxt "#32184"
 msgid "Requires %s to be set first"
-msgstr ""
+msgstr "Требуется сначала установить %s"
 
 msgctxt "#32185"
 msgid "View Settings"
-msgstr ""
+msgstr "Настройки вида"
 
 msgctxt "#32186"
 msgid "Select Content Type"
-msgstr ""
+msgstr "Выбрать тип содержимого"
 
 msgctxt "#32187"
 msgid "Reset all library view selections?"
-msgstr ""
+msgstr "Сбросить все выбранные виды медиатеки?"
 
 msgctxt "#32188"
 msgid "Reset all add-on view selections?"
-msgstr ""
+msgstr "Сбросить все выбранные виды дополнений?"
 
 msgctxt "#32189"
 msgid "%s (reset)"
-msgstr ""
+msgstr "%s (сброс)"
 
 msgctxt "#32191"
 msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
-msgstr ""
+msgstr "Сбросить все меню до значений обложки по умолчанию?[CR]Все настройки будут удалены."
 
 msgctxt "#32192"
 msgid "Reset all view selections to skin defaults?"
-msgstr ""
+msgstr "Сбросить все выбранные виды до значений обложки по умолчанию?"
 
 msgctxt "#32193"
 msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
-msgstr ""
+msgstr "Сбросить все меню до значений обложки по умолчанию?[CR]Выбранные виды будут сохранены."
 
 msgctxt "#32194"
 msgid "Reset '%s' and its submenus to skin defaults?"
-msgstr ""
+msgstr "Сбросить «%s» и его подменю до значений обложки по умолчанию?"
 
 msgctxt "#32195"
 msgid "Reset '%s' to skin defaults?"
-msgstr ""
+msgstr "Сбросить «%s» до значений обложки по умолчанию?"
 
 msgctxt "#32196"
 msgid "Reset all submenus to skin defaults?"
-msgstr ""
+msgstr "Сбросить все подменю до значений обложки по умолчанию?"
 
 msgctxt "#32197"
 msgid "Enter action"
-msgstr ""
+msgstr "Введите действие"
 
 msgctxt "#32198"
 msgid "Reset views for %s?"
-msgstr ""
+msgstr "Сбросить виды для %s?"
 
 msgctxt "#32199"
 msgid "%s - Select View"
-msgstr ""
+msgstr "%s — выбрать вид"
 
 msgctxt "#32200"
 msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
-msgstr ""
+msgstr "Эта обложка создана для Skin Shortcuts v2. Смените обложку или откатите дополнение."
 
 msgctxt "#32201"
 msgid "Open settings"
-msgstr ""
+msgstr "Открыть настройки"
 
 msgctxt "#32202"
 msgid "Ignore for this skin"
-msgstr ""
+msgstr "Игнорировать для этой обложки"
 
 msgctxt "#32203"
 msgid "Sort order"
-msgstr ""
+msgstr "Порядок сортировки"
 
 msgctxt "#32204"
 msgid "Episodes not in this source"
-msgstr ""
+msgstr "Серии не из этого источника"
 
 msgctxt "#32205"
 msgid "This source has no matching items in your library"
-msgstr ""
+msgstr "В этом источнике нет соответствующих элементов в вашей медиатеке"
 
 msgctxt "#32206"
 msgid "Artists not in this source"
-msgstr ""
+msgstr "Исполнители не из этого источника"
+
+msgctxt "#32207"
+msgid "Enable shortcut"
+msgstr "Включить ярлык"
 
 #~ msgctxt "#32024"
 #~ msgid "Custom shortcut"

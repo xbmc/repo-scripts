@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import contextlib
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Literal, Protocol, runtime_checkable
 
@@ -15,17 +17,12 @@ except ImportError:
 
 
 def _check_visible(visible: str) -> bool:
-    """Evaluate a Kodi visibility condition.
-
-    Returns True if condition passes or is empty.
-    """
+    """Evaluate a Kodi visibility condition."""
     if not visible:
         return True
     if not IN_KODI:
         return True
     return xbmc.getCondVisibility(visible)
-
-
 
 
 @runtime_checkable
@@ -51,9 +48,16 @@ class PickerGroup(Protocol):
     items: list
 
 
-from ..constants import ADDONS_SOURCE_MAP, WINDOW_MAP, extract_path_from_action
+from ..constants import (
+    ADDONS_SOURCE_MAP,
+    TARGET_MAP,
+    WINDOW_MAP,
+    extract_path_from_action,
+    extract_window_from_action,
+)
 from ..loaders import evaluate_condition, load_groupings
 from ..localize import LANGUAGE, resolve_label
+from ..log import get_logger
 from ..playlists import (
     SORT_OPTIONS,
     SortOption,
@@ -67,6 +71,7 @@ from ..models import (
     Action,
     Background,
     BackgroundGroup,
+    BackgroundType,
     Content,
     Input,
     MenuItem,
@@ -75,20 +80,169 @@ from ..models import (
     Widget,
     WidgetGroup,
 )
-from ..providers import ContentProvider, get_browse_provider
+from ..providers import ContentProvider, get_browse_provider, library_node_type
 
 if TYPE_CHECKING:
     from ..manager import MenuManager
+    from ..providers.content import ResolvedShortcut
+
+
+from ..models.menu import IconOverrides
+
+log = get_logger("Pickers")
+
+PLACEHOLDER_PREFIX = "content-placeholder-"
+
+
+SLOW_RESOLVE_MS = 250
+
+
+def _ms(start: float) -> float:
+    """Elapsed milliseconds, for the picker's timing lines."""
+    return (time.monotonic() - start) * 1000
+
+
+def _log_slow_resolve(content: Content, rows: int, start: float) -> None:
+    """Name the <content> element when resolving it takes long enough to notice."""
+    elapsed = _ms(start)
+    if elapsed >= SLOW_RESOLVE_MS:
+        log.debug(
+            f"slow content: source={content.source} target={content.target} "
+            f"rows={rows} {elapsed:.0f}ms"
+        )
+
+
+def picker_kind(leaf_types: tuple) -> str:
+    """skinshortcuts-picker value for a hierarchy picker, from what it is picking."""
+    if Widget in leaf_types:
+        return "widget"
+    if Background in leaf_types:
+        return "background"
+    return "shortcut"
+
+
+@contextlib.contextmanager
+def picker_context(kind: str):
+    """Set Window(Home).Property(skinshortcuts-picker)=kind for the duration of the block.
+
+    Marker goes on Home, not the dialog: while select() is up the active window is
+    DialogSelect, so a bare Window.Property() would resolve there, not against our dialog.
+    """
+    home = xbmcgui.Window(10000)
+    home.setProperty("skinshortcuts-picker", kind)
+    try:
+        yield
+    finally:
+        home.clearProperty("skinshortcuts-picker")
+
+
+def picker_select(kind: str, *args, **kwargs):
+    """Dialog().select() with the skinshortcuts-picker marker set for its lifetime."""
+    with picker_context(kind):
+        return xbmcgui.Dialog().select(*args, **kwargs)
+
+
+def _group_count(
+    item: object,
+    item_props: dict[str, str],
+    content_resolver: Callable[[Content], list] | None = None,
+) -> str:
+    """Rows a group will show; empty when a content element cannot be counted."""
+    total = 0
+    for child in getattr(item, "items", []):
+        if not _check_visible(getattr(child, "visible", "")):
+            continue
+        condition = getattr(child, "condition", "")
+        if condition and not evaluate_condition(condition, item_props):
+            continue
+        if isinstance(child, Content):
+            if content_resolver is None:
+                return ""
+            start = time.monotonic()
+            resolved = content_resolver(child)
+            _log_slow_resolve(child, len(resolved), start)
+            if child.folder:
+                # folder row is dropped when it resolves to nothing
+                if resolved or _browse_placeholder_for_content(child):
+                    total += 1
+                continue
+            total += len(resolved)
+            continue
+        if getattr(child, "name", "").startswith(PLACEHOLDER_PREFIX):
+            continue
+        if getattr(child, "flat", False):
+            nested = _group_count(child, item_props, content_resolver)
+            if not nested:
+                return ""
+            total += int(nested)
+            continue
+        total += 1
+    return str(total)
+
+
+def stamp_picker_props(
+    listitem: xbmcgui.ListItem,
+    item: object,
+    item_props: dict[str, str] | None = None,
+    content_resolver: Callable[[Content], list] | None = None,
+) -> None:
+    """Stamp an option's metadata as ListItem properties for DialogSelect layouts."""
+    if isinstance(item, Widget):
+        props = item.to_properties()
+        props["path"] = item.path
+        props["type"] = item.type
+    elif isinstance(item, Background):
+        props = item.to_properties()
+        props["path"] = item.path
+        props["type"] = item.type_name
+    elif isinstance(item, Shortcut):
+        props = {
+            "path": item.path or (extract_path_from_action(item.action) if item.action else ""),
+            "type": item.type,
+            "action": item.action or "",
+        }
+    elif isinstance(item, (WidgetGroup, ShortcutGroup, BackgroundGroup)):
+        props = {
+            "path": item.path,
+            "type": "group",
+            "count": _group_count(item, item_props or {}, content_resolver),
+        }
+    else:
+        return
+
+    props["name"] = item.name
+    for key, value in props.items():
+        listitem.setProperty(key, value)
+
+
+def _drills_down(item: object) -> bool:
+    """Leaf that opens another dialog rather than committing on click."""
+    if isinstance(item, Background):
+        if item.type in (BackgroundType.BROWSE, BackgroundType.MULTI):
+            return True
+        playlist = (BackgroundType.PLAYLIST, BackgroundType.LIVE_PLAYLIST)
+        return item.type in playlist and not item.path
+    return isinstance(item, (Shortcut, Widget)) and bool(item.browse and item.path)
+
+
+def _content_folder_path(content: Content) -> str:
+    """Real browsable path behind an addons content folder; empty for other sources."""
+    if content.source.lower() != "addons":
+        return ""
+    target = content.target.lower() if content.target else "video"
+    entry = ADDONS_SOURCE_MAP.get(target)
+    return entry[0] if entry else ""
 
 
 def _browse_placeholder_for_content(
-    content: Content, *, as_widget: bool = False, parent_label: str = ""
+    content: Content, *, as_widget: bool = False, parent_label: str = "", parent_icon: str = ""
 ) -> Shortcut | Widget | None:
     """Create a "Create menu item to here" placeholder for an addons content section.
 
-    Returns a Shortcut (shortcut picker) or Widget (widget picker) pointing at
-    addons://sources/<type>/, so users can commit a menu item or widget to the
-    addon category root even when no addons of that type are installed.
+    Shortcut or Widget pointing at addons://sources/<type>/, so a menu item can
+    commit to the addon category root with no addons of that type installed. The
+    picker shows this row as string 32058, so the label and icon set here are the
+    ones the committed item gets.
     """
     if content.source.lower() != "addons":
         return None
@@ -98,17 +252,17 @@ def _browse_placeholder_for_content(
         return None
 
     path, window = ADDONS_SOURCE_MAP[target]
-    name = f"content-placeholder-{content.source}-{target}"
-    icon = content.icon if content.icon else "DefaultFolder.png"
+    name = f"{PLACEHOLDER_PREFIX}{content.source}-{target}"
+    icon = content.icon or parent_icon or "DefaultFolder.png"
 
-    label = content.label or parent_label or LANGUAGE(32058)
+    label = content.label or content.folder or parent_label or LANGUAGE(32058)
 
     if as_widget:
         return Widget(
             name=name,
             label=label,
             path=path,
-            type=target,
+            type="addons",
             target=window,
             icon=icon,
             source="addon",
@@ -125,18 +279,14 @@ def _browse_placeholder_for_content(
 class PickersMixin:
     """Mixin providing picker dialogs for shortcuts and widgets.
 
-    This mixin implements:
-    - Shortcut picker from groupings
-    - Widget picker from groups/flat list
-    - Content resolution (dynamic shortcuts/widgets)
-
-    Requires DialogBaseMixin to be mixed in first.
+    Requires DialogBaseMixin first.
     """
 
     menu_id: str
     shortcuts_path: str
     manager: MenuManager | None
     items: list[MenuItem]
+    _content_provider: ContentProvider | None = None
 
     if TYPE_CHECKING:
         def _get_selected_item(self) -> MenuItem | None: ...
@@ -144,11 +294,11 @@ class PickersMixin:
         def _refresh_selected_item(self) -> None: ...
         def _log(self, msg: str) -> None: ...
 
-    def _icon_overrides(self) -> dict[str, str]:
+    def _icon_overrides(self) -> IconOverrides:
         """Icon override map from the active skin config, empty if none loaded."""
         if self.manager and self.manager.config:
             return self.manager.config.icon_overrides
-        return {}
+        return IconOverrides()
 
     def _choose_shortcut(self) -> None:
         """Choose a shortcut from groupings."""
@@ -214,7 +364,6 @@ class PickersMixin:
         if shortcut.action_play:
             action = self._choose_playlist_action(shortcut)
             return [action] if action else None
-        # Browse mode resolves to a single action
         if shortcut.browse and shortcut.path:
             return [shortcut.get_action()]
         return shortcut.actions if shortcut.actions else None
@@ -222,7 +371,7 @@ class PickersMixin:
     def _choose_playlist_action(self, shortcut: Shortcut) -> str | None:
         """Show dialog asking what to do with a playlist shortcut."""
         if shortcut.action_party:
-            result = xbmcgui.Dialog().yesnocustom(  # type: ignore[attr-defined]
+            result = xbmcgui.Dialog().yesnocustom(
                 LANGUAGE(32040),
                 LANGUAGE(32060),
                 customlabel=xbmc.getLocalizedString(589),
@@ -261,16 +410,14 @@ class PickersMixin:
             xbmc.getLocalizedString(o.label_id) if o.core else LANGUAGE(o.label_id)
             for o in options
         ]
-        choice = xbmcgui.Dialog().select(LANGUAGE(32078), labels)
+        choice = picker_select("sourceview", LANGUAGE(32078), labels)
         if choice == -1:
             return None
         option = options[choice]
         if not option.media_type:
             return shortcut.get_action()
 
-        # Include views are populated: detection confirmed the domain's type, albums and
-        # artists derive from songs, and a scanned show has episodes. Only an exclude can
-        # legitimately empty out (every item of that type sits under this one source).
+        # only an exclude can legitimately come back empty
         if option.exclude and not path_has_content(option.media_type, paths, exclude=True):
             use_files = xbmcgui.Dialog().yesno(
                 LANGUAGE(32078),
@@ -299,7 +446,7 @@ class PickersMixin:
     def _pick_sort(self) -> SortOption | None:
         """Pick a sort order for a generated playlist. None if cancelled."""
         labels = [xbmc.getLocalizedString(o.label_id) for o in SORT_OPTIONS]
-        choice = xbmcgui.Dialog().select(LANGUAGE(32203), labels)
+        choice = picker_select("sort", LANGUAGE(32203), labels)
         if choice == -1:
             return None
         return SORT_OPTIONS[choice]
@@ -318,11 +465,12 @@ class PickersMixin:
             default_group_icon="DefaultFolder.png",
             show_none=False,
             content_resolver=self._resolve_content_to_shortcuts,
-            create_folder_group=lambda label, items: ShortcutGroup(
+            create_folder_group=lambda label, items, icon, path: ShortcutGroup(
                 name=f"folder-{label}",
                 label=label,
-                icon="DefaultFolder.png",
+                icon=icon or "DefaultFolder.png",
                 items=items,
+                path=path,
             ),
         )
         return result if isinstance(result, Shortcut) else None
@@ -333,17 +481,9 @@ class PickersMixin:
         item_props: dict[str, str],
         slot: str = "",
     ) -> Widget | None | Literal[False]:
-        """Show widget picker dialog with back navigation.
+        """Widget picker with back navigation over widgets, groups, and content.
 
-        Handles standalone widgets, groups, and dynamic content at the top level.
-
-        Args:
-            items: Widget groups, widgets, and/or content references to pick from
-            item_props: Current item properties for condition evaluation
-            slot: Current widget slot being edited (e.g., "widget", "widget.2")
-
-        Returns:
-            Widget if selected, None if cancelled completely, False if "None" chosen.
+        Returns the chosen Widget, None if cancelled, False if "None" picked.
         """
         current_widget = item_props.get(slot, "")
         items = self._filter_widgets_by_slot(items, slot)
@@ -359,10 +499,12 @@ class PickersMixin:
             show_none=True,
             current_value=current_widget,
             content_resolver=self._resolve_content_to_widgets,
-            create_folder_group=lambda label, grp_items: WidgetGroup(
+            create_folder_group=lambda label, grp_items, icon, path: WidgetGroup(
                 name=f"folder-{label}",
                 label=label,
+                icon=icon or "DefaultFolder.png",
                 items=grp_items,
+                path=path,
             ),
         )
 
@@ -371,35 +513,31 @@ class PickersMixin:
     def _pick_widget_flat(
         self, widgets: list, item_props: dict[str, str] | None = None, slot: str = ""
     ) -> Widget | None | Literal[False]:
-        """Pick from flat widget list.
-
-        Args:
-            widgets: List of (name, label, icon) tuples
-            item_props: Current item properties for finding current widget
-            slot: Widget slot name (e.g., "widget", "widget.2")
-
-        Returns:
-            Widget if selected, None if cancelled, False if "None" chosen.
-        """
+        """Pick from a flat widget list. False when the user picks "None"."""
         current_widget = item_props.get(slot, "") if item_props else ""
         preselect = -1
         overrides = self._icon_overrides()
 
         listitems = []
-        none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231))
-        none_item.setArt({"icon": overrides.get("DefaultAddonNone.png", "DefaultAddonNone.png")})
+        none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231), offscreen=True)
+        none_icon = overrides.get("DefaultAddonNone.png", "DefaultAddonNone.png")
+        none_item.setArt({"icon": resolve_label(none_icon)})
         listitems.append(none_item)
 
         for i, w in enumerate(widgets):
-            listitem = xbmcgui.ListItem(resolve_label(w[1]))
+            listitem = xbmcgui.ListItem(resolve_label(w[1]), offscreen=True)
             icon = w[2] if len(w) > 2 and w[2] else "DefaultAddonNone.png"
-            listitem.setArt({"icon": overrides.get(icon, icon)})
+            listitem.setArt({"icon": resolve_label(overrides.get(icon, icon))})
+            if self.manager is not None:
+                widget_obj = self.manager.config.get_widget(w[0])
+                if widget_obj is not None:
+                    stamp_picker_props(listitem, widget_obj)
             listitems.append(listitem)
             if preselect == -1 and w[0] == current_widget:
                 preselect = i + 1  # +1 for "None" option
 
-        selected = xbmcgui.Dialog().select(
-            LANGUAGE(32044), listitems, useDetails=True, preselect=preselect
+        selected = picker_select(
+            "widget", LANGUAGE(32044), listitems, useDetails=True, preselect=preselect
         )
 
         if selected == -1:
@@ -412,22 +550,34 @@ class PickersMixin:
             return None
         return self.manager.config.get_widget(widget_name)
 
+    def _get_content_provider(self) -> ContentProvider:
+        """One provider per dialog, so its cache outlives a single picker redraw."""
+        if self._content_provider is None:
+            self._content_provider = ContentProvider(icon_overrides=self._icon_overrides())
+        return self._content_provider
+
     def _resolve_content_to_widgets(self, content: Content) -> list[Widget]:
-        """Resolve a Content reference to a list of Widget objects for the picker."""
-        provider = ContentProvider(icon_overrides=self._icon_overrides())
-        resolved = provider.resolve(content)
+        """Resolve a Content reference to a list of Widget objects for the picker.
+
+        Script-only addons resolve to a launcher, which lists nothing, so they are
+        offered as shortcuts but never as widget content.
+        """
+        resolved = self._get_content_provider().resolve(content)
 
         source = content.source.rstrip("s") if content.source.endswith("s") else content.source
 
         widgets = []
         for item in resolved:
+            if content.source.lower() == "addons" and not item.browse_path:
+                continue
+
             path = item.browse_path or extract_path_from_action(item.action)
             widget = Widget(
                 name=f"dynamic-{content.source}-{len(widgets)}",
                 label=item.label,
                 path=path,
-                type=item.content_type or content.target or "",
-                target=self._map_target_to_window(content.target),
+                type=item.content_type,
+                target=self._widget_target_window(item, content.target),
                 icon=item.icon,
                 source=source,
                 browse=bool(item.browse_path),
@@ -438,8 +588,7 @@ class PickersMixin:
 
     def _resolve_content_to_shortcuts(self, content: Content) -> list[Shortcut]:
         """Resolve a Content reference to a list of Shortcut objects for the picker."""
-        provider = ContentProvider(icon_overrides=self._icon_overrides())
-        resolved = provider.resolve(content)
+        resolved = self._get_content_provider().resolve(content)
 
         shortcuts = []
         for item in resolved:
@@ -461,21 +610,32 @@ class PickersMixin:
 
     def _map_target_to_window(self, target: str) -> str:
         """Map content target to widget target window."""
-        from ..constants import TARGET_MAP
+        if not target:
+            return "videos"
 
-        return TARGET_MAP.get(target.lower(), "videos") if target else "videos"
+        window = TARGET_MAP.get(target.lower())
+        if window is None:
+            log.debug(f"target '{target}' is not a known window, using videos")
+            return "videos"
+        return window
+
+    def _widget_target_window(self, item: ResolvedShortcut, content_target: str) -> str:
+        """Window the provider put this item in, falling back to the content target.
+
+        Per item, because one content block can span windows: source="nodes"
+        target="library" resolves to a video entry and a music entry. A favourite
+        can name any window at all, so anything non-media takes the fallback.
+        """
+        window = item.browse_window or extract_window_from_action(item.action)
+        mapped = TARGET_MAP.get(window.lower()) if window else None
+
+        return mapped or self._map_target_to_window(content_target)
 
     def _pick_widget_type(self, addon_type: str) -> str | None:
-        """Show dialog to pick widget content type.
-
-        Args:
-            addon_type: The addon category (video, audio, executable, pictures)
-
-        Returns:
-            Selected widget type string, or None if cancelled.
-        """
-        if addon_type == "pictures":
-            return "pictures"
+        """Pick a widget content type for an addon category."""
+        # one possible type, nothing to ask
+        if addon_type in ("pictures", "games"):
+            return addon_type
 
         if addon_type == "video":
             types = [
@@ -501,11 +661,11 @@ class PickersMixin:
         overrides = self._icon_overrides()
         listitems = []
         for _type_id, label, icon in types:
-            listitem = xbmcgui.ListItem(label)
-            listitem.setArt({"icon": overrides.get(icon, icon)})
+            listitem = xbmcgui.ListItem(label, offscreen=True)
+            listitem.setArt({"icon": resolve_label(overrides.get(icon, icon))})
             listitems.append(listitem)
 
-        selected = xbmcgui.Dialog().select(LANGUAGE(32140), listitems, useDetails=True)
+        selected = picker_select("widgettype", LANGUAGE(32140), listitems, useDetails=True)
 
         if selected == -1:
             return None
@@ -527,6 +687,7 @@ class PickersMixin:
             "programs": "programs",
             "files": "files",
             "pictures": "pictures",
+            "games": "games",
         }
         return type_to_target.get(widget_type, default)
 
@@ -540,13 +701,9 @@ class PickersMixin:
     def _browse_widget_path(self, widget: Widget) -> Widget | None:
         """Browse into a widget's path and let user select location.
 
-        Args:
-            widget: Widget with browsable path
-
-        Returns:
-            New Widget with browsed path, or None if cancelled
+        A plugin:// path has to ask, its content type can't be read off the addon category.
         """
-        result = self._browse_directory(widget.path, resolve_label(widget.label))
+        result = self._browse_directory(widget.path, resolve_label(widget.label), icon=widget.icon)
         if result is None:
             return None
 
@@ -557,10 +714,12 @@ class PickersMixin:
             addon_type = "audio"
         elif widget.target == "programs":
             addon_type = "executable"
-        elif widget.target == "pictures":
-            addon_type = "pictures"
+        elif widget.target in ("pictures", "games"):
+            addon_type = widget.target
 
-        widget_type = self._pick_widget_type(addon_type)
+        widget_type = (
+            widget.type or library_node_type(path) or self._pick_widget_type(addon_type)
+        )
         if widget_type is None:
             return None
 
@@ -573,7 +732,7 @@ class PickersMixin:
             type=widget_type,
             target=widget_target,
             icon=icon or widget.icon,
-            source="addon",
+            source=widget.source,
         )
 
     def _pick_from_hierarchy(
@@ -589,62 +748,48 @@ class PickersMixin:
         show_none: bool = False,
         current_value: str = "",
         content_resolver: Callable[[Content], list] | None = None,
-        create_folder_group: Callable[[str, list], Any] | None = None,
+        create_folder_group: Callable[[str, list, str, str], Any] | None = None,
         custom_action: tuple[str, str, Callable[[], Any | None]] | None = None,
+        positions: dict[str, int] | None = None,
     ) -> Any | None | Literal[False]:
-        """Generic hierarchical picker with back navigation.
-
-        Works with any types that have: name, label, icon, condition, visible.
-        Groups additionally have an items list.
-
-        Args:
-            items: List of items/groups to pick from
-            item_props: Current item properties for condition evaluation
-            title: Dialog title
-            leaf_types: Tuple of types considered leaf items (selectable)
-            group_types: Tuple of types considered groups (navigable)
-            default_leaf_icon: Default icon for leaf items
-            default_group_icon: Default icon for groups
-            show_none: Whether to show "None" option at top level
-            current_value: Current item name for preselect
-            content_resolver: Optional function to resolve Content to list of items
-            create_folder_group: Optional function to create folder group from (label, items)
-            custom_action: Optional tuple of (label, icon, callback) for a custom action
-                shown at the bottom of the list. The callback should return an item if
-                successful, or None to return to the picker.
-
-        Returns:
-            Selected leaf item, None if cancelled, False if "None" chosen.
-        """
+        """Hierarchical picker with back navigation. False when the user picks "None"."""
+        positions = {} if positions is None else positions
+        start = time.monotonic()
         visible_items = self._filter_picker_items(
             items, item_props, leaf_types, group_types, content_resolver, create_folder_group
+        )
+        log.debug(
+            f"picker: {picker_kind(leaf_types)} root rows={len(visible_items)} "
+            f"built in {_ms(start):.0f}ms"
         )
 
         if not visible_items:
             xbmcgui.Dialog().notification(LANGUAGE(32141), LANGUAGE(32064))
             return None
 
-        preselect = -1
         offset = 1 if show_none else 0
+        preselect = positions.get("", -1)
 
-        for i, vis_item in enumerate(visible_items):
-            if hasattr(vis_item, "name") and vis_item.name == current_value:
-                preselect = i + offset
-                break
+        if preselect == -1:
+            for i, vis_item in enumerate(visible_items):
+                if hasattr(vis_item, "name") and vis_item.name == current_value:
+                    preselect = i + offset
+                    break
 
         overrides = self._icon_overrides()
 
         while True:
             listitems = []
             if show_none:
-                none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231))
-                none_item.setArt({"icon": overrides.get("DefaultAddonNone.png", "DefaultAddonNone.png")})
+                none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231), offscreen=True)
+                none_icon = overrides.get("DefaultAddonNone.png", "DefaultAddonNone.png")
+                none_item.setArt({"icon": resolve_label(none_icon)})
                 listitems.append(none_item)
 
             for vis_item in visible_items:
                 is_placeholder = (
                     isinstance(vis_item, (Shortcut, Widget))
-                    and vis_item.name.startswith("content-placeholder-")
+                    and vis_item.name.startswith(PLACEHOLDER_PREFIX)
                 )
                 if is_placeholder:
                     label = LANGUAGE(32058)
@@ -653,31 +798,31 @@ class PickersMixin:
                 if isinstance(vis_item, group_types):
                     label = f"{label} >"
                     icon = vis_item.icon if vis_item.icon else default_group_icon
-                elif (
-                    isinstance(vis_item, (Shortcut, Widget))
-                    and not is_placeholder
-                    and self._is_browsable(vis_item)
-                ):
-                    label = f"{label} >"
-                    icon = vis_item.icon if vis_item.icon else default_leaf_icon
                 else:
+                    if not is_placeholder and _drills_down(vis_item):
+                        label = f"{label} >"
                     icon = vis_item.icon if vis_item.icon else default_leaf_icon
-                listitem = xbmcgui.ListItem(label)
-                listitem.setArt({"icon": overrides.get(icon, icon)})
+                listitem = xbmcgui.ListItem(label, offscreen=True)
+                listitem.setArt({"icon": resolve_label(overrides.get(icon, icon))})
+                stamp_picker_props(listitem, vis_item, item_props, content_resolver)
                 listitems.append(listitem)
 
             if custom_action:
                 action_label, action_icon, _callback = custom_action
-                action_item = xbmcgui.ListItem(action_label)
-                action_item.setArt({"icon": overrides.get(action_icon, action_icon)})
+                action_item = xbmcgui.ListItem(action_label, offscreen=True)
+                action_item.setArt({"icon": resolve_label(overrides.get(action_icon, action_icon))})
                 listitems.append(action_item)
 
-            selected = xbmcgui.Dialog().select(
-                title or LANGUAGE(32181), listitems, useDetails=True, preselect=preselect
+            selected = picker_select(
+                picker_kind(leaf_types),
+                title or LANGUAGE(32181),
+                listitems,
+                useDetails=True,
+                preselect=preselect,
             )
 
             if selected == -1:
-                return None  # Cancelled
+                return None
 
             if show_none and selected == 0:
                 return False
@@ -690,6 +835,7 @@ class PickersMixin:
                 continue
 
             preselect = selected
+            positions[""] = selected
             selected_item = visible_items[selected - offset]
 
             if isinstance(selected_item, Input):
@@ -701,7 +847,7 @@ class PickersMixin:
             if isinstance(selected_item, leaf_types):
                 is_browsable_shortcut = (
                     isinstance(selected_item, Shortcut)
-                    and not selected_item.name.startswith("content-placeholder-")
+                    and not selected_item.name.startswith(PLACEHOLDER_PREFIX)
                     and self._is_browsable(selected_item)
                 )
                 if is_browsable_shortcut:
@@ -713,6 +859,7 @@ class PickersMixin:
                             title=resolve_label(selected_item.label),
                             target_window=target_window,
                             source_media=selected_item.source_media,
+                            icon=selected_item.icon,
                         )
                         if result is not None:
                             return result
@@ -735,6 +882,8 @@ class PickersMixin:
                 default_group_icon=default_group_icon,
                 content_resolver=content_resolver,
                 create_folder_group=create_folder_group,
+                positions=positions,
+                level=f"/{selected}",
             )
 
             if result is not None:
@@ -750,26 +899,30 @@ class PickersMixin:
         default_leaf_icon: str,
         default_group_icon: str,
         content_resolver: Callable[[Content], list] | None = None,
-        create_folder_group: Callable[[str, list], Any] | None = None,
+        create_folder_group: Callable[[str, list, str, str], Any] | None = None,
+        positions: dict[str, int],
+        level: str,
     ) -> Any | None:
         """Pick from items within a group with back navigation."""
+        start = time.monotonic()
         visible_items = self._filter_picker_items(
             group.items, item_props, leaf_types, group_types, content_resolver,
-            create_folder_group, parent_label=resolve_label(group.label),
+            create_folder_group, parent_label=group.label, parent_icon=group.icon,
         )
+        log.debug(f"picker: {group.name} rows={len(visible_items)} built in {_ms(start):.0f}ms")
 
         if not visible_items:
             xbmcgui.Dialog().notification(LANGUAGE(32141), LANGUAGE(32142))
             return None
 
         overrides = self._icon_overrides()
-        preselect = -1
+        preselect = positions.get(level, -1)
         while True:
             listitems = []
             for vis_item in visible_items:
                 is_placeholder = (
                     isinstance(vis_item, (Shortcut, Widget))
-                    and vis_item.name.startswith("content-placeholder-")
+                    and vis_item.name.startswith(PLACEHOLDER_PREFIX)
                 )
                 if is_placeholder:
                     label = LANGUAGE(32058)
@@ -778,28 +931,25 @@ class PickersMixin:
                 if isinstance(vis_item, group_types):
                     label = f"{label} >"
                     icon = vis_item.icon if vis_item.icon else default_group_icon
-                elif (
-                    isinstance(vis_item, (Shortcut, Widget))
-                    and not is_placeholder
-                    and self._is_browsable(vis_item)
-                ):
-                    label = f"{label} >"
-                    icon = vis_item.icon if vis_item.icon else default_leaf_icon
                 else:
+                    if not is_placeholder and _drills_down(vis_item):
+                        label = f"{label} >"
                     icon = vis_item.icon if vis_item.icon else default_leaf_icon
-                listitem = xbmcgui.ListItem(label)
-                listitem.setArt({"icon": overrides.get(icon, icon)})
+                listitem = xbmcgui.ListItem(label, offscreen=True)
+                listitem.setArt({"icon": resolve_label(overrides.get(icon, icon))})
+                stamp_picker_props(listitem, vis_item, item_props, content_resolver)
                 listitems.append(listitem)
 
             title = resolve_label(group.label)
-            selected = xbmcgui.Dialog().select(
-                title, listitems, useDetails=True, preselect=preselect
+            selected = picker_select(
+                picker_kind(leaf_types), title, listitems, useDetails=True, preselect=preselect
             )
 
             if selected == -1:
                 return None  # Go back
 
             preselect = selected
+            positions[level] = selected
             selected_item = visible_items[selected]
 
             if isinstance(selected_item, Input):
@@ -811,7 +961,7 @@ class PickersMixin:
             if isinstance(selected_item, leaf_types):
                 is_browsable_shortcut = (
                     isinstance(selected_item, Shortcut)
-                    and not selected_item.name.startswith("content-placeholder-")
+                    and not selected_item.name.startswith(PLACEHOLDER_PREFIX)
                     and self._is_browsable(selected_item)
                 )
                 if is_browsable_shortcut:
@@ -823,6 +973,7 @@ class PickersMixin:
                             title=resolve_label(selected_item.label),
                             target_window=target_window,
                             source_media=selected_item.source_media,
+                            icon=selected_item.icon,
                         )
                         if result is not None:
                             return result
@@ -845,6 +996,8 @@ class PickersMixin:
                 default_group_icon=default_group_icon,
                 content_resolver=content_resolver,
                 create_folder_group=create_folder_group,
+                positions=positions,
+                level=f"{level}/{selected}",
             )
 
             if result is not None:
@@ -857,14 +1010,11 @@ class PickersMixin:
         leaf_types: tuple,
         group_types: tuple,
         content_resolver: Callable[[Content], list] | None = None,
-        create_folder_group: Callable[[str, list], Any] | None = None,
+        create_folder_group: Callable[[str, list, str, str], Any] | None = None,
         parent_label: str = "",
+        parent_icon: str = "",
     ) -> list:
-        """Filter and resolve picker items based on conditions and visibility.
-
-        parent_label is the label of the group currently being browsed; it names
-        an addons content placeholder when the content element carries no label.
-        """
+        """Filter and resolve picker items by condition and visibility."""
         visible_items = []
 
         for item in items:
@@ -874,19 +1024,31 @@ class PickersMixin:
                 if item.visible and not _check_visible(item.visible):
                     continue
                 if content_resolver:
+                    start = time.monotonic()
                     resolved = content_resolver(item)
+                    _log_slow_resolve(item, len(resolved), start)
                     placeholder = _browse_placeholder_for_content(
-                        item, as_widget=Widget in leaf_types, parent_label=parent_label
+                        item,
+                        as_widget=Widget in leaf_types,
+                        parent_label=parent_label,
+                        parent_icon=parent_icon,
                     )
+                    overrides = self._icon_overrides()
                     if placeholder:
-                        overrides = self._icon_overrides()
                         placeholder.icon = overrides.get(placeholder.icon, placeholder.icon)
-                        visible_items.append(placeholder)
-                    if item.folder and resolved and create_folder_group:
-                        folder = create_folder_group(item.folder, resolved)
-                        visible_items.append(folder)
-                    elif resolved:
-                        visible_items.extend(resolved)
+                    if item.folder and (resolved or placeholder) and create_folder_group:
+                        if placeholder:
+                            resolved = [placeholder, *resolved]
+                        visible_items.append(
+                            create_folder_group(
+                                item.folder, resolved, item.icon, _content_folder_path(item)
+                            )
+                        )
+                    else:
+                        if placeholder:
+                            visible_items.append(placeholder)
+                        if resolved:
+                            visible_items.extend(resolved)
             elif isinstance(item, (Input, *leaf_types, *group_types)):
                 if not _check_visible(getattr(item, "visible", "")):
                     continue
@@ -901,7 +1063,8 @@ class PickersMixin:
                         group_types,
                         content_resolver,
                         create_folder_group,
-                        parent_label=resolve_label(getattr(item, "label", "")) or parent_label,
+                        parent_label=getattr(item, "label", "") or parent_label,
+                        parent_icon=getattr(item, "icon", "") or parent_icon,
                     )
                     visible_items.extend(expanded)
                     continue
@@ -910,14 +1073,7 @@ class PickersMixin:
         return visible_items
 
     def _handle_input_selection(self, input_item: Input) -> Shortcut | None:
-        """Handle selection of an Input item by showing keyboard.
-
-        Args:
-            input_item: The Input item that was selected
-
-        Returns:
-            Shortcut with entered value, or None if cancelled
-        """
+        """Handle selection of an Input item by showing keyboard."""
         input_type_map = {
             "text": xbmcgui.INPUT_ALPHANUM,
             "numeric": xbmcgui.INPUT_NUMERIC,
@@ -960,28 +1116,23 @@ class PickersMixin:
         self,
         path: str,
         title: str = "",
+        icon: str = "",
     ) -> tuple[str, str, str] | None:
-        """Browse into a path and let user select location or navigate deeper.
+        """Browse a path, navigating into folders, returning the picked location.
 
-        Shows directory contents with "Use this location" at top.
-        Selecting a directory navigates into it.
-        Selecting "Use this location" or a file returns path info.
-
-        Args:
-            path: Starting path to browse
-            title: Dialog title (defaults to path basename)
-
-        Returns:
-            Tuple of (path, label, icon) for selected location, or None if cancelled
+        A "Use this location" row sits at the top; picking it or a file returns
+        (path, label, icon), None if cancelled.
         """
         browse_provider = get_browse_provider()
         browse_provider.set_icon_overrides(self._icon_overrides())
         current_path = path
         current_label = title
-        history: list[tuple[str, str]] = []
+        history: list[tuple[str, str, str]] = []
 
         overrides = self._icon_overrides()
         folder_icon = overrides.get("DefaultFolder.png", "DefaultFolder.png")
+        root_icon = icon or folder_icon
+        current_icon = root_icon
 
         while True:
             xbmc.executebuiltin("ActivateWindow(busydialognocancel)")
@@ -996,36 +1147,45 @@ class PickersMixin:
                 dialog_title = current_label or LANGUAGE(32151)
 
                 listitems = []
-                use_location_item = xbmcgui.ListItem(LANGUAGE(32058))
-                use_location_item.setArt({"icon": folder_icon})
+                use_location_item = xbmcgui.ListItem(LANGUAGE(32058), offscreen=True)
+                use_location_item.setArt({"icon": resolve_label(current_icon)})
+                use_location_item.setProperty("path", current_path)
+                use_location_item.setProperty("name", current_label)
                 listitems.append(use_location_item)
+                # label doubles as name for DialogSelect; browse rows have no slug or type
                 for item in items:
                     label = item.label
                     if item.is_directory:
                         label = f"{label} >"
-                    listitem = xbmcgui.ListItem(label)
-                    listitem.setArt({"icon": item.icon})
+                    listitem = xbmcgui.ListItem(label, offscreen=True)
+                    listitem.setArt({"icon": resolve_label(item.icon)})
+                    listitem.setProperty("path", item.path)
+                    listitem.setProperty("name", item.label)
                     listitems.append(listitem)
             finally:
                 xbmc.executebuiltin("Dialog.Close(busydialognocancel)")
 
-            selected = xbmcgui.Dialog().select(dialog_title, listitems, useDetails=True)
+            selected = picker_select("browse", dialog_title, listitems, useDetails=True)
 
             if selected == -1:
                 if history:
-                    current_path, current_label = history.pop()
+                    current_path, current_label, current_icon = history.pop()
                     continue
                 return None
 
             if selected == 0:
-                return (current_path, current_label or LANGUAGE(32182), folder_icon)
+                return (current_path, current_label or LANGUAGE(32182), current_icon)
 
             selected_item = items[selected - 1]
 
             if selected_item.is_directory:
-                history.append((current_path, current_label))
+                history.append((current_path, current_label, current_icon))
                 current_path = selected_item.path
                 current_label = selected_item.label
+                # only the generic folder is worth replacing
+                current_icon = (
+                    root_icon if selected_item.icon == folder_icon else selected_item.icon
+                )
                 continue
 
             return (selected_item.path, selected_item.label, selected_item.icon)
@@ -1036,22 +1196,10 @@ class PickersMixin:
         title: str = "",
         target_window: str = "videos",
         source_media: str = "",
+        icon: str = "",
     ) -> Shortcut | None:
-        """Browse into a path and let user select location or navigate deeper.
-
-        Shows directory contents with "Use this location" at top.
-        Selecting a directory navigates into it.
-        Selecting "Use this location" or a file returns a Shortcut.
-
-        Args:
-            path: Starting path to browse
-            title: Dialog title (defaults to path basename)
-            target_window: Window for ActivateWindow action
-
-        Returns:
-            Shortcut for selected location, or None if cancelled
-        """
-        result = self._browse_directory(path, title)
+        """Browse into a path and let user select location or navigate deeper."""
+        result = self._browse_directory(path, title, icon=icon)
         if result is None:
             return None
 
@@ -1066,10 +1214,7 @@ class PickersMixin:
         )
 
     def _filter_widgets_by_slot(self, items: list, slot: str) -> list:
-        """Filter widget items by slot. Widgets with no slot show for all slots.
-        Widgets with a specific slot only show when that slot is being edited.
-        Recurses into WidgetGroups.
-        """
+        """Filter widget items by slot. Widgets with no slot show for all slots."""
         from ..models.widget import Widget, WidgetGroup
 
         filtered = []
@@ -1102,19 +1247,16 @@ class PickersMixin:
         if not self._is_browsable(shortcut):
             return None
 
-        from ..constants import WINDOW_MAP
-
         window = WINDOW_MAP.get(shortcut.browse.lower(), "Videos")
         return (shortcut.path, window)
 
     def _pick_background(
-        self, item_props: dict[str, str], current_value: str = ""
+        self,
+        item_props: dict[str, str],
+        current_value: str = "",
+        positions: dict[str, int] | None = None,
     ) -> Background | None | Literal[False]:
-        """Pick a background from groupings.
-
-        Returns:
-            Background if selected, None if cancelled, False if "None" chosen.
-        """
+        """Pick a background from groupings. False when the user picks "None"."""
         if not self.manager:
             return None
 
@@ -1133,4 +1275,5 @@ class PickersMixin:
             default_group_icon="DefaultFolder.png",
             show_none=True,
             current_value=current_value,
+            positions=positions,
         )

@@ -19,7 +19,7 @@ from ..localize import resolve_label
 from ..log import get_logger
 from ..manager import MenuManager
 from ..models import MenuItem, PropertySchema
-from ..providers.content import clear_content_cache
+from ..models.menu import ContextMenu
 
 _log = get_logger("Dialog")
 
@@ -46,19 +46,15 @@ ACTION_CANCEL = (9, 10, 92, 216, 247, 257, 275, 61467, 61448)
 ACTION_CONTEXT = (117,)
 
 
+def _display_label(value: str) -> str:
+    """Resolve an emitted $LOCALIZE label for the dialog; user text passes through."""
+    return resolve_label(value) if value.startswith("$") else value
+
+
 class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     """Core dialog functionality - initialization, list management, event routing.
 
-    This mixin provides:
-    - Constructor with all shared state setup
-    - onInit/close lifecycle methods
-    - List control management (display, rebuild, refresh)
-    - Property access helpers
-    - Event routing (onClick/onAction)
-
-    Inherits from WindowXMLDialog for type checking. At runtime, the final
-    ManagementDialog class also inherits from WindowXMLDialog, so the MRO
-    is correct.
+    Inherits WindowXMLDialog for typing; the runtime class does too, so the MRO holds.
     """
 
 
@@ -68,7 +64,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     items: list[MenuItem]
     property_schema: PropertySchema | None
     icon_sources: list[IconSource]
-    show_context_menu: bool
+    context_menu: ContextMenu
     dialog_mode: str
     property_suffix: str
     is_child: bool
@@ -76,7 +72,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     _shared_manager: MenuManager | None
     _shared_schema: PropertySchema | None
     _shared_icon_sources: list[IconSource] | None
-    _shared_show_context_menu: bool | None
+    _shared_context_menu: ContextMenu | None
     _shared_subdialogs: list[SubDialog] | None
     _subdialogs: dict[int, SubDialog]
     _setfocus: int | None
@@ -85,6 +81,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     _skin_path: str
 
     def __init__(self, *args, **kwargs):
+        """Read dialog state from kwargs; a child reuses the parent's shared objects."""
         super().__init__(*args)
         self.menu_id = kwargs.get("menu_id", "mainmenu")
         self.shortcuts_path = kwargs.get("shortcuts_path", get_shortcuts_path())
@@ -93,14 +90,16 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         self.manager = None
         self.items = []
 
+        self._content_provider = kwargs.get("content_provider")
+
         self._shared_schema = kwargs.get("property_schema")
         self.property_schema = None
 
         self._shared_icon_sources = kwargs.get("icon_sources")
         self.icon_sources = []
 
-        self._shared_show_context_menu = kwargs.get("show_context_menu")
-        self.show_context_menu = True
+        self._shared_context_menu = kwargs.get("context_menu")
+        self.context_menu = ContextMenu()
 
         self._shared_subdialogs = kwargs.get("subdialogs")
         self._subdialogs = {}
@@ -117,42 +116,22 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         self.changes_saved = False
 
     def _suffixed_name(self, name: str) -> str:
-        """Apply property suffix to a property name.
-
-        Widget properties are stored with suffix (e.g., widgetArt.2) to allow
-        multiple widget slots per menu item. This method applies the current
-        dialog's suffix to property names.
-
-        Args:
-            name: Base property name (e.g., "widgetArt", "widgetStyle")
-
-        Returns:
-            Suffixed property name (e.g., "widgetArt.2") or original if no suffix
-        """
+        """Apply the dialog's suffix; slots let one item hold several widgets (widgetArt.2)."""
         if self.property_suffix:
             return f"{name}{self.property_suffix}"
         return name
 
     def _get_item_property(self, item: MenuItem, name: str) -> str:
-        """Get a property value with suffix applied.
-
-        Args:
-            item: The menu item to read from
-            name: Base property name (suffix will be applied)
-
-        Returns:
-            Property value or empty string if not set
-        """
+        """Get a property value with suffix applied."""
         suffixed = self._suffixed_name(name)
         return item.properties.get(suffixed, "")
 
-    def onInit(self):  # noqa: N802
-        """Called when dialog is initialized.
+    def _list(self, control_id: int) -> xbmcgui.ControlList:
+        """getControl typed as ControlList; Kodi's getControl returns base Control."""
+        return self.getControl(control_id)  # type: ignore[return-value]
 
-        Note: In Kodi, onInit() is called every time the window regains focus,
-        not just on first open. We must avoid recreating the manager to preserve
-        unsaved changes.
-        """
+    def onInit(self):  # noqa: N802
+        """Called when dialog is initialized."""
         self._log(f"onInit: shortcuts_path={self.shortcuts_path}, menu_id={self.menu_id}")
 
         if self.manager is None:
@@ -160,7 +139,6 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
                 self.manager = self._shared_manager
             else:
                 self.manager = MenuManager(self.shortcuts_path)
-                clear_content_cache()
 
             menu_ids = self.manager.get_menu_ids()
             self._log(f"Loaded menus: {menu_ids}")
@@ -175,18 +153,14 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         if not self.icon_sources:
             if self._shared_icon_sources is not None:
                 self.icon_sources = self._shared_icon_sources
-                self.show_context_menu = (
-                    self._shared_show_context_menu
-                    if self._shared_show_context_menu is not None
-                    else True
-                )
+                self.context_menu = self._shared_context_menu or ContextMenu()
                 if self._shared_subdialogs:
                     self._subdialogs = {sd.button_id: sd for sd in self._shared_subdialogs}
             else:
                 menus_path = Path(self.shortcuts_path) / "menus.xml"
                 menu_config = load_menus(menus_path)
                 self.icon_sources = menu_config.icon_sources
-                self.show_context_menu = menu_config.show_context_menu
+                self.context_menu = menu_config.context_menu
                 self._subdialogs = {sd.button_id: sd for sd in menu_config.subdialogs}
 
         if not self.dialog_mode and self.manager:
@@ -200,7 +174,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         if self.dialog_mode:
             self.setProperty("skinshortcuts-dialog", self.dialog_mode)
 
-        # Mirror to Home so visibility checks work when native dialogs (DialogSelect, etc) take focus
+        # Mirror to Home so visibility checks work when a native dialog takes focus
         if self.dialog_mode:
             home = xbmcgui.Window(10000)
             home.setProperty("skinshortcuts-dialog", self.dialog_mode)
@@ -253,11 +227,10 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _populate_subdialog_list(self) -> None:
         """Populate Container 212 with current item for subdialog variable access.
 
-        Container 212 is a single-item list used by widget settings controls
-        to read properties without conflicting with the parent dialog's Container 211.
+        Separate container so widget settings controls don't fight the parent's 211.
         """
         try:
-            subdialog_list = self.getControl(CONTROL_SUBDIALOG_LIST)
+            subdialog_list = self._list(CONTROL_SUBDIALOG_LIST)
         except RuntimeError:
             self._log("Container 212 not found in skin - subdialog list not populated")
             return
@@ -279,7 +252,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _clear_subdialog_list(self) -> None:
         """Clear Container 212 after subdialog closes."""
         try:
-            subdialog_list = self.getControl(CONTROL_SUBDIALOG_LIST)
+            subdialog_list = self._list(CONTROL_SUBDIALOG_LIST)
             subdialog_list.reset()
         except RuntimeError:
             pass
@@ -287,19 +260,17 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _rebuild_list(self, focus_index: int | None = None) -> None:
         """Rebuild the list control from self.items.
 
-        Use this for structural changes (add/delete/move/reset).
-        For property changes, use _refresh_selected_item() instead.
+        Structural changes only; a property change wants _refresh_selected_item.
         """
         try:
-            list_control = self.getControl(CONTROL_LIST)
+            list_control = self._list(CONTROL_LIST)
         except RuntimeError:
             return
 
         list_control.reset()
 
-        for item in self.items:
-            listitem = self._create_listitem(item)
-            list_control.addItem(listitem)
+        # addItem re-sends the whole list on every call
+        list_control.addItems([self._create_listitem(item) for item in self.items])
 
         if focus_index is not None and 0 <= focus_index < len(self.items):
             list_control.selectItem(focus_index)
@@ -307,7 +278,8 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _create_listitem(self, item: MenuItem) -> xbmcgui.ListItem:
         """Create a ListItem from a MenuItem."""
         display_label = resolve_label(item.label)
-        listitem = xbmcgui.ListItem(label=display_label, offscreen=True)
+        # not offscreen: _refresh_selected_item rewrites these in place while bound
+        listitem = xbmcgui.ListItem(label=display_label)
         self._populate_listitem(listitem, item)
         return listitem
 
@@ -324,13 +296,16 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         listitem.setProperty("skinshortcuts-isProtected", "True" if item.protection else "False")
 
         if item.icon:
-            listitem.setArt({"thumb": item.icon, "icon": item.icon})
+            icon = _display_label(item.icon)
+            listitem.setArt({"thumb": icon, "icon": icon})
 
         widget_name = item.properties.get("widget", "")
         has_widget = bool(widget_name or item.properties.get("widgetPath"))
         if has_widget:
             listitem.setProperty("widget", widget_name)
-            listitem.setProperty("widgetLabel", item.properties.get("widgetLabel", ""))
+            listitem.setProperty(
+                "widgetLabel", _display_label(item.properties.get("widgetLabel", ""))
+            )
             listitem.setProperty("widgetPath", item.properties.get("widgetPath", ""))
             listitem.setProperty("widgetType", item.properties.get("widgetType", ""))
             listitem.setProperty("widgetTarget", item.properties.get("widgetTarget", ""))
@@ -346,7 +321,9 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         background_name = item.properties.get("background", "")
         if background_name:
             listitem.setProperty("background", background_name)
-            listitem.setProperty("backgroundLabel", item.properties.get("backgroundLabel", ""))
+            listitem.setProperty(
+                "backgroundLabel", _display_label(item.properties.get("backgroundLabel", ""))
+            )
             listitem.setProperty("backgroundPath", item.properties.get("backgroundPath", ""))
         else:
             listitem.setProperty("background", "")
@@ -367,6 +344,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
                 "backgroundPath",
                 "name",
                 "label",
+                "disabled",
             ):
                 continue
             if self._is_widget_dependent(prop_name):
@@ -379,6 +357,8 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
                     listitem.setProperty(prop_name, "")
                     listitem.setProperty(f"{prop_name}Label", "")
                     continue
+            if prop_name.split(".")[0].endswith("Label"):
+                prop_value = _display_label(prop_value)
             listitem.setProperty(prop_name, prop_value)
             resolved_label = self._get_property_label(prop_name, prop_value)
             if resolved_label:
@@ -403,17 +383,10 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
             listitem.setProperty("isResettable", "true" if is_modified else "")
 
     def _is_widget_dependent(self, prop_name: str) -> bool:
-        """Check if a property depends on a widget being set.
-
-        Uses the property schema's requires field rather than prefix matching,
-        so custom properties that happen to start with 'widget' aren't affected.
-        Checks both property-level and button-level requires, since a skin may
-        declare a widget-dependent toggle only via a <button> entry.
-        """
+        """Check if a property depends on a widget being set."""
         if not self.property_schema:
             return False
         widget_requires = ("widget", "widgetPath", "widgetStyle")
-        # Strip suffix (e.g., "widgetStyle.2" -> "widgetStyle")
         base_name = prop_name.split(".")[0] if "." in prop_name else prop_name
         prop = self.property_schema.properties.get(base_name)
         if prop and prop.requires in widget_requires:
@@ -426,16 +399,13 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _get_selected_listitem(self) -> xbmcgui.ListItem | None:
         """Get the currently selected ListItem from the control."""
         try:
-            list_control = self.getControl(CONTROL_LIST)
+            list_control = self._list(CONTROL_LIST)
             return list_control.getSelectedItem()
         except RuntimeError:
             return None
 
     def _refresh_selected_item(self) -> None:
-        """Refresh the selected item's ListItem from our local item state.
-
-        Call this after making changes to sync the UI with item state.
-        """
+        """Refresh the selected item's ListItem from our local item state."""
         index = self._get_selected_index()
         if index < 0 or index >= len(self.items):
             return
@@ -450,7 +420,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _get_selected_index(self) -> int:
         """Get the currently selected list index."""
         try:
-            list_control = self.getControl(CONTROL_LIST)
+            list_control = self._list(CONTROL_LIST)
             return list_control.getSelectedPosition()
         except RuntimeError:
             return -1
@@ -458,8 +428,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
     def _get_selected_item(self) -> MenuItem | None:
         """Get the currently selected MenuItem.
 
-        In subdialog mode, uses _selected_index (the item being edited) rather
-        than querying Container 211 which may have different focus.
+        Subdialog mode reads _selected_index; Container 211 may be focused elsewhere.
         """
         if (
             self.dialog_mode
@@ -473,22 +442,16 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         return None
 
     def _get_item_properties(self, item: MenuItem) -> dict[str, str]:
-        """Get all properties of an item as a dict for condition evaluation.
-
-        All properties including widget and background are stored in item.properties.
-        """
+        """Get all properties of an item as a dict for condition evaluation."""
         props = dict(item.properties)
         props["name"] = item.name
         props["label"] = resolve_label(item.label)
+        props["disabled"] = "True" if item.disabled else "False"
 
         return props
 
     def _get_effective_properties(self, item: MenuItem) -> dict[str, str]:
-        """Get item properties with fallbacks applied.
-
-        Returns a dict of property name -> effective value, including
-        fallback values for properties that aren't explicitly set.
-        """
+        """Get item properties with fallbacks applied."""
         props = self._get_item_properties(item)
 
         if not self.property_schema:
@@ -513,18 +476,7 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         return props
 
     def _get_property_label(self, prop_name: str, prop_value: str) -> str | None:
-        """Get the resolved display label for a property value.
-
-        Looks up the property in the schema, finds the matching option,
-        and returns its resolved label.
-
-        Args:
-            prop_name: The property name (e.g., "widgetStyle")
-            prop_value: The property value (e.g., "Panel")
-
-        Returns:
-            The resolved label, or None if not found
-        """
+        """Get the resolved display label for a property value."""
         if not self.property_schema:
             return None
 
@@ -607,10 +559,24 @@ class DialogBaseMixin(xbmcgui.WindowXMLDialog):
         """Handle actions."""
         action_id = action.getId()
         if action_id in ACTION_CANCEL:
-            self._log(f"Back/Cancel received (action_id={action_id}), menu={self.menu_id}, mode={self.dialog_mode}, is_child={self.is_child}")
+            self._log(
+                f"Back/Cancel received (action_id={action_id}), menu={self.menu_id}, "
+                f"mode={self.dialog_mode}, is_child={self.is_child}"
+            )
             self.close()
-        elif action_id in ACTION_CONTEXT and self.show_context_menu:
+        elif action_id in ACTION_CONTEXT and self._context_menu_allowed():
             self._show_context_menu()
+
+    def _context_menu_allowed(self) -> bool:
+        """Whether the context action opens the menu with the current focus."""
+        if not self.context_menu.enabled:
+            return False
+        if not self.context_menu.enable_on:
+            return True
+        try:
+            return self.getFocusId() in self.context_menu.enable_on
+        except RuntimeError:
+            return False
 
     def close(self) -> None:
         """Save changes and close dialog.

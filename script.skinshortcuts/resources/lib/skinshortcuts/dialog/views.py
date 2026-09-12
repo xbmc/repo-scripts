@@ -26,21 +26,7 @@ def show_view_browser(
     config: ViewConfig,
     userdata: UserData,
 ) -> bool:
-    """Show hierarchical view browser for managing all view settings.
-
-    Opens a dialog with:
-    - Library > (content types)
-    - Plugins > (content types + Add Plugin Override)
-    - Reset Library Views
-    - Reset Plugin Views
-
-    Args:
-        config: View configuration from views.xml
-        userdata: User data for reading/writing selections
-
-    Returns:
-        True if any changes were made
-    """
+    """Show hierarchical view browser for managing all view settings."""
     if not IN_KODI or not config.content_rules:
         return False
 
@@ -58,19 +44,7 @@ def show_view_picker(
     content: str,
     plugin: str = "",
 ) -> bool:
-    """Show view picker for a specific content type.
-
-    Opens a dialog to select a view for the specified content.
-
-    Args:
-        config: View configuration from views.xml
-        userdata: User data for reading/writing selections
-        content: Content type name (e.g., "movies")
-        plugin: Optional plugin ID for plugin-specific override
-
-    Returns:
-        True if a change was made
-    """
+    """Show view picker for a specific content type."""
     if not IN_KODI:
         return False
 
@@ -104,8 +78,8 @@ def _browse_main_menu(config: ViewConfig, userdata: UserData) -> bool:
 
     while True:
         items = [
-            xbmcgui.ListItem(f"{xbmc.getLocalizedString(14022)} >"),
-            xbmcgui.ListItem(f"{xbmc.getLocalizedString(24001)} >"),
+            xbmcgui.ListItem(f"{xbmc.getLocalizedString(14022)} >", offscreen=True),
+            xbmcgui.ListItem(f"{xbmc.getLocalizedString(24001)} >", offscreen=True),
         ]
         items[0].setArt({"icon": "DefaultFolder.png"})
         items[1].setArt({"icon": "DefaultAddonProgram.png"})
@@ -113,20 +87,20 @@ def _browse_main_menu(config: ViewConfig, userdata: UserData) -> bool:
         plugin_overrides = _get_all_addon_overrides(userdata)
         if plugin_overrides:
             for plugin_id in sorted(plugin_overrides):
-                item = xbmcgui.ListItem(f"{LANGUAGE(32189) % plugin_id} >")
+                item = xbmcgui.ListItem(f"{LANGUAGE(32189) % plugin_id} >", offscreen=True)
                 item.setArt({"icon": "DefaultAddonVideo.png"})
                 items.append(item)
 
-        reset_library = xbmcgui.ListItem(LANGUAGE(32164))
+        reset_library = xbmcgui.ListItem(LANGUAGE(32164), offscreen=True)
         reset_library.setArt({"icon": "DefaultIconWarning.png"})
         items.append(reset_library)
 
-        reset_plugins = xbmcgui.ListItem(LANGUAGE(32165))
+        reset_plugins = xbmcgui.ListItem(LANGUAGE(32165), offscreen=True)
         reset_plugins.setArt({"icon": "DefaultIconWarning.png"})
         items.append(reset_plugins)
 
         selected = xbmcgui.Dialog().select(
-            LANGUAGE(32185), items, useDetails=True
+            LANGUAGE(32185), items, useDetails=True  # type: ignore[arg-type]
         )
 
         if selected == -1:
@@ -181,7 +155,7 @@ def _browse_source_menu(
                 if view:
                     view_label = resolve_label(view.label)
 
-            item = xbmcgui.ListItem(resolve_label(content.label))
+            item = xbmcgui.ListItem(resolve_label(content.label), offscreen=True)
             item.setLabel2(view_label)
             item.setArt({"icon": content.icon or "DefaultFolder.png"})
             items.append(item)
@@ -216,12 +190,12 @@ def _browse_plugins_menu(config: ViewConfig, userdata: UserData) -> bool:
                 if view:
                     view_label = resolve_label(view.label)
 
-            item = xbmcgui.ListItem(resolve_label(content.label))
+            item = xbmcgui.ListItem(resolve_label(content.label), offscreen=True)
             item.setLabel2(view_label)
             item.setArt({"icon": content.icon or "DefaultFolder.png"})
             items.append(item)
 
-        add_override = xbmcgui.ListItem(f"{LANGUAGE(32166)} >")
+        add_override = xbmcgui.ListItem(f"{LANGUAGE(32166)} >", offscreen=True)
         add_override.setArt({"icon": "DefaultAddonProgram.png"})
         items.append(add_override)
 
@@ -250,7 +224,7 @@ def _add_plugin_override(config: ViewConfig, userdata: UserData) -> bool:
 
     items = []
     for addon_id, addon_name in addons:
-        item = xbmcgui.ListItem(addon_name)
+        item = xbmcgui.ListItem(addon_name, offscreen=True)
         item.setArt({"icon": f"special://home/addons/{addon_id}/icon.png"})
         item.setProperty("addon_id", addon_id)
         items.append(item)
@@ -263,7 +237,7 @@ def _add_plugin_override(config: ViewConfig, userdata: UserData) -> bool:
 
     content_items = []
     for content in config.content_rules:
-        item = xbmcgui.ListItem(resolve_label(content.label))
+        item = xbmcgui.ListItem(resolve_label(content.label), offscreen=True)
         item.setArt({"icon": content.icon or "DefaultFolder.png"})
         content_items.append(item)
 
@@ -283,10 +257,7 @@ def _pick_view_for_content(
     content: ViewContent,
     source: str,
 ) -> bool:
-    """Show view picker dialog for a content type.
-
-    Returns True if a selection was made.
-    """
+    """Show view picker dialog for a content type."""
     views = config.get_views_for_content(content.name)
     if not views:
         return False
@@ -311,7 +282,7 @@ def _pick_view_for_content(
         if is_current or is_default_fallback:
             preselect = i
 
-        item = xbmcgui.ListItem(label)
+        item = xbmcgui.ListItem(label, offscreen=True)
         if view.id == default_view:
             item.setLabel2(xbmc.getLocalizedString(571))
         icon = view.icon or "DefaultFolder.png"

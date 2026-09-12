@@ -15,13 +15,14 @@ from .loaders import (
     load_views,
     load_widgets,
 )
-from .localize import resolve_label
-from .models import Background, Menu, Widget
+from .models import Background, Menu, MenuItem, Widget
 from .models.background import BackgroundConfig, BackgroundGroup
-from .models.menu import ActionOverride, SubDialog
+from .models.menu import IconOverrides, SubDialog
+from .models.override import Override
 from .models.property import PropertySchema
 from .models.template import TemplateSchema
 from .models.views import ViewConfig
+from .migrations import apply_overrides
 from .models.widget import WidgetConfig
 from .userdata import (
     UserData,
@@ -44,8 +45,10 @@ class SkinConfig:
     templates: TemplateSchema = field(default_factory=TemplateSchema)
     property_schema: PropertySchema = field(default_factory=PropertySchema)
     subdialogs: list[SubDialog] = field(default_factory=list)
-    icon_overrides: dict[str, str] = field(default_factory=dict)
+    icon_overrides: IconOverrides = field(default_factory=IconOverrides)
     submenu_path_all: bool = False
+    userdata_path: str | None = None
+    migrated: int = 0
 
     @property
     def widgets(self) -> list[Widget]:
@@ -79,13 +82,7 @@ class SkinConfig:
         load_user: bool = True,
         userdata_path: str | None = None,
     ) -> SkinConfig:
-        """Load configuration from shortcuts directory.
-
-        Args:
-            shortcuts_path: Path to skin's shortcuts folder
-            load_user: Whether to load and merge user customizations
-            userdata_path: Optional path to userdata file (for testing)
-        """
+        """Load configuration from shortcuts directory."""
         path = Path(shortcuts_path)
 
         menu_config = load_menus(path / "menus.xml")
@@ -98,6 +95,9 @@ class SkinConfig:
         views = load_views(path / "views.xml")
 
         userdata = load_userdata(userdata_path) if load_user else UserData()
+        migrated = (
+            apply_overrides(userdata, property_schema, widgets, backgrounds) if load_user else 0
+        )
 
         template_map = {m.name: m for m in menu_config.menus if m.is_submenu}
 
@@ -125,12 +125,14 @@ class SkinConfig:
                     continue
                 # source="N" lookups read flat keys; merge user customizations there too
                 override = userdata.menus.get(menu.name)
-                merged = merge_menu(menu, override) if override else menu
+                merged = (
+                    merge_menu(menu, override, menu_config.icon_overrides) if override else menu
+                )
                 _apply_action_overrides(merged, menu_config.action_overrides)
                 menus.append(merged)
                 continue
             override = userdata.menus.get(menu.name)
-            merged = merge_menu(menu, override)
+            merged = merge_menu(menu, override, menu_config.icon_overrides)
             _apply_action_overrides(merged, menu_config.action_overrides)
             menus.append(merged)
 
@@ -145,9 +147,11 @@ class SkinConfig:
                         continue
                     instance = Menu(name=key, is_submenu=True)
                     for item_override in instance_override.items:
-                        instance.items.append(_create_item_from_override(item_override))
+                        instance.items.append(
+                            _create_item_from_override(item_override, menu_config.icon_overrides)
+                        )
                 else:
-                    instance = merge_menu(template, instance_override)
+                    instance = merge_menu(template, instance_override, menu_config.icon_overrides)
                     instance.name = key
                     instance.template_origin = template_name
                 _apply_action_overrides(instance, menu_config.action_overrides)
@@ -163,7 +167,9 @@ class SkinConfig:
                     continue
             user_menu = Menu(name=menu_name, is_submenu=True)
             for item_override in menu_override.items:
-                user_menu.items.append(_create_item_from_override(item_override))
+                user_menu.items.append(
+                    _create_item_from_override(item_override, menu_config.icon_overrides)
+                )
             menus.append(user_menu)
 
         return cls(
@@ -178,13 +184,12 @@ class SkinConfig:
             subdialogs=menu_config.subdialogs,
             icon_overrides=menu_config.icon_overrides,
             submenu_path_all=menu_config.submenu_path_all,
+            userdata_path=userdata_path,
+            migrated=migrated,
         )
 
     def get_widget(self, widget_name: str) -> Widget | None:
-        """Get widget by name.
-
-        Searches both top-level widgets and widgets within groupings.
-        """
+        """Get widget by name."""
         for widget in self.widgets:
             if widget.name == widget_name:
                 return widget
@@ -208,10 +213,7 @@ class SkinConfig:
         return None
 
     def get_background(self, bg_name: str) -> Background | None:
-        """Get background by name.
-
-        Searches both top-level backgrounds and backgrounds within groupings.
-        """
+        """Get background by name."""
         for bg in self.backgrounds:
             if bg.name == bg_name:
                 return bg
@@ -260,12 +262,7 @@ class SkinConfig:
     def build_includes_from_menus(
         self, output_path: str | Path, menus: list[Menu]
     ) -> None:
-        """Build and write includes.xml from provided menus.
-
-        Args:
-            output_path: Path to write includes.xml
-            menus: List of Menu objects (typically merged with userdata)
-        """
+        """Build and write includes.xml from provided menus."""
         for menu in menus:
             self.resolve_item_properties(menu)
 
@@ -280,38 +277,51 @@ class SkinConfig:
         )
         builder.write(output_path)
 
-    def resolve_item_properties(self, menu: Menu) -> None:
-        """Resolve background and widget names to their full properties."""
-        for item in menu.items:
-            bg_name = item.properties.get("background")
-            if bg_name and "backgroundLabel" not in item.properties:
-                bg = self.get_background(bg_name)
+    def derived_item_properties(self, item: MenuItem) -> dict[str, str]:
+        """Widget/background sub-properties derivable from the item's assigned names.
+
+        Covers numbered slots, so what the skin owns is recomputed rather than stored.
+        Labels stay in $LOCALIZE form so a language change reaches the menu.
+        """
+        derived: dict[str, str] = {}
+
+        for key, name in item.properties.items():
+            if not name:
+                continue
+            base, _, slot = key.partition(".")
+            if slot and not slot.isdigit():
+                continue
+            tail = f".{slot}" if slot else ""
+            if base == "background":
+                bg = self.get_background(name)
                 if bg:
-                    item.properties["backgroundLabel"] = resolve_label(bg.label)
-                    item.properties["backgroundPath"] = bg.path
-
-            widget_name = item.properties.get("widget")
-            if widget_name and "widgetLabel" not in item.properties:
-                widget = self.get_widget(widget_name)
+                    derived[f"backgroundLabel{tail}"] = bg.label
+                    derived[f"backgroundPath{tail}"] = bg.path
+                    derived[f"backgroundType{tail}"] = bg.type_name
+            elif base == "widget":
+                widget = self.get_widget(name)
                 if widget:
-                    props = widget.to_properties()
-                    if "widgetLabel" in props:
-                        props["widgetLabel"] = resolve_label(props["widgetLabel"])
-                    for key, value in props.items():
-                        if key not in item.properties:
-                            item.properties[key] = value
+                    derived[f"widgetLabel{tail}"] = widget.label
+                    derived[f"widgetPath{tail}"] = widget.path.replace("{menuitem}", item.name)
+                    derived[f"widgetType{tail}"] = widget.type
+                    derived[f"widgetTarget{tail}"] = widget.target
+                    derived[f"widgetSource{tail}"] = widget.source
+
+        return {k: v for k, v in derived.items() if v}
+
+    def resolve_item_properties(self, menu: Menu) -> None:
+        """Fill widget/background sub-properties, keeping any the user set."""
+        for item in menu.items:
+            for key, value in self.derived_item_properties(item).items():
+                item.properties.setdefault(key, value)
 
 
-def _apply_action_overrides(menu: Menu, overrides: list[ActionOverride]) -> None:
-    """Apply action overrides to all items in a menu.
-
-    Replaces deprecated/changed actions with their updated versions.
-    Comparison is case-insensitive to handle variations in action strings.
-    """
+def _apply_action_overrides(menu: Menu, overrides: list[Override]) -> None:
+    """Apply action overrides to all items in a menu."""
     if not overrides:
         return
 
-    override_map = {o.replace.lower(): o.action for o in overrides}
+    override_map = {o.replace.lower(): o.value for o in overrides}
 
     for item in menu.items:
         for action in item.actions:

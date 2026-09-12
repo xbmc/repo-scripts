@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -15,8 +16,11 @@ try:
 except ImportError:
     IN_KODI = False
 
+from .constants import DEFAULT_ICON
 from .log import get_logger
 from .models import Action, Menu, MenuItem
+
+from .models.menu import IconOverrides
 
 log = get_logger("UserData")
 
@@ -40,6 +44,7 @@ class MenuItemOverride:
     icon: str | None = None
     disabled: bool | None = None
     properties: dict[str, str] = field(default_factory=dict)  # Includes widget/background
+    removed_properties: list[str] = field(default_factory=list)  # Skin defaults the user cleared
     position: int | None = None  # For reordering
     is_new: bool = False  # True if user-added item
     submenu: str | None = None  # Submenu template reference (picker auto-attach)
@@ -86,6 +91,8 @@ def _item_override_to_dict(item: MenuItemOverride) -> dict[str, Any]:
         result["disabled"] = item.disabled
     if item.properties:
         result["properties"] = item.properties
+    if item.removed_properties:
+        result["removed_properties"] = item.removed_properties
     if item.position is not None:
         result["position"] = item.position
     if item.is_new:
@@ -100,12 +107,7 @@ def _item_override_to_dict(item: MenuItemOverride) -> dict[str, Any]:
 
 @dataclass
 class UserData:
-    """All user customizations for a skin.
-
-    The views field stores user view selections:
-    source -> content -> view_id
-    Sources are: 'library', 'plugins', or 'plugin.video.X' for specific plugins.
-    """
+    """All user customizations for a skin."""
 
     menus: dict[str, MenuOverride] = field(default_factory=dict)
     views: dict[str, dict[str, str]] = field(default_factory=dict)
@@ -140,11 +142,7 @@ class UserData:
         self.views.clear()
 
     def get_addon_overrides(self, content: str) -> dict[str, str]:
-        """Get all addon-specific view overrides for a content type.
-
-        Returns dict of addon_id -> view_id for addons with custom selections.
-        Includes any source that isn't 'library' or 'plugins' (generic).
-        """
+        """Get all addon-specific view overrides for a content type."""
         overrides = {}
         for source, selections in self.views.items():
             if source not in ("library", "plugins") and content in selections:
@@ -213,8 +211,11 @@ def save_userdata(userdata: UserData, path: str | None = None) -> bool:
     try:
         file_path = Path(path)
         file_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(file_path, "w", encoding="utf-8") as f:
+        # write beside the target and swap, so a kill mid-write cannot truncate userdata
+        temp_path = file_path.with_name(f"{file_path.name}.tmp")
+        with open(temp_path, "w", encoding="utf-8") as f:
             json.dump(userdata.to_dict(), f, indent=2)
+        os.replace(temp_path, file_path)
         return True
     except OSError as e:
         log.error(f"Failed to save userdata to {path}: {e}")
@@ -222,10 +223,7 @@ def save_userdata(userdata: UserData, path: str | None = None) -> bool:
 
 
 def _check_dialog_visible(condition: str) -> bool:
-    """Check if a Kodi visibility condition passes for dialog filtering.
-
-    Returns True if condition is empty or passes.
-    """
+    """Check if a Kodi visibility condition passes for dialog filtering."""
     if not condition:
         return True
     if not IN_KODI:
@@ -233,7 +231,10 @@ def _check_dialog_visible(condition: str) -> bool:
     return xbmc.getCondVisibility(condition)
 
 
-def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
+def merge_menu(
+    default_menu: Menu, override: MenuOverride | None,
+    icon_overrides: IconOverrides | None = None,
+) -> Menu:
     """Merge default menu with user overrides."""
     if override is None:
         # No user customization - filter by dialog_visible
@@ -250,6 +251,7 @@ def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
             is_submenu=default_menu.is_submenu,
             menu_type=default_menu.menu_type,
             controltype=default_menu.controltype,
+            icons=default_menu.icons,
             startid=default_menu.startid,
             template_only=default_menu.template_only,
             build=default_menu.build,
@@ -275,7 +277,7 @@ def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
 
     new_items = [o for o in override.items if o.is_new]
     for new_item in new_items:
-        items.append(_create_item_from_override(new_item))
+        items.append(_create_item_from_override(new_item, icon_overrides))
 
     positioned_items: dict[int, MenuItem] = {}
     unpositioned_items: list[MenuItem] = []
@@ -316,6 +318,7 @@ def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
         is_submenu=default_menu.is_submenu,
         menu_type=default_menu.menu_type,
         controltype=default_menu.controltype,
+        icons=default_menu.icons,
         startid=default_menu.startid,
         template_only=default_menu.template_only,
         build=default_menu.build,
@@ -327,6 +330,9 @@ def merge_menu(default_menu: Menu, override: MenuOverride | None) -> Menu:
 
 def _apply_override(item: MenuItem, override: MenuItemOverride) -> MenuItem:
     """Apply user override to a menu item."""
+    properties = {**item.properties, **override.properties}
+    for key in override.removed_properties:
+        properties.pop(key, None)
     return MenuItem(
         name=item.name,
         label=override.label if override.label is not None else item.label,
@@ -338,20 +344,23 @@ def _apply_override(item: MenuItem, override: MenuItemOverride) -> MenuItem:
         disabled=override.disabled if override.disabled is not None else item.disabled,
         required=item.required,
         protection=item.protection,
-        properties={**item.properties, **override.properties},
+        properties=properties,
         submenu=override.submenu if override.submenu is not None else item.submenu,
         original_action=item.action,  # Store original for protection matching
         includes=item.includes,
     )
 
 
-def _create_item_from_override(override: MenuItemOverride) -> MenuItem:
+def _create_item_from_override(
+    override: MenuItemOverride, icon_overrides: IconOverrides | None = None
+) -> MenuItem:
     """Create a new menu item from user override."""
+    fallback = (icon_overrides or IconOverrides()).get(DEFAULT_ICON, DEFAULT_ICON)
     return MenuItem(
         name=override.name,
         label=override.label or "",
         actions=override.actions or [Action(action="noop")],
-        icon=override.icon or "DefaultShortcut.png",
+        icon=override.icon or fallback,
         visible=override.visible or "",
         disabled=override.disabled or False,
         properties=override.properties,

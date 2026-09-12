@@ -43,16 +43,7 @@ class IncludesBuilder:
         """Build the includes XML tree."""
         root = ET.Element("includes")
 
-        # Build includes only for root menus (not submenus)
-        # A menu is a root menu if:
-        # 1. It was defined with <menu> tag (is_submenu=False), AND
-        # 2. It's not referenced as a submenu by another menu item
-        #
-        # Submenus defined with <submenu> tag are never built as root includes,
-        # even if deleted from the parent menu (they become orphaned).
-        #
-        # Menus with named submenu templates (e.g., <submenu name="powermenu">)
-        # don't get raw includes - only the template version is built.
+        # root menus only; <submenu> definitions and templated menus get no raw include
 
         template_menu_names: set[str] = set()
         if self.templates:
@@ -136,6 +127,7 @@ class IncludesBuilder:
         return root
 
     def _build_menu_include(self, menu: Menu, name_override: str | None = None) -> ET.Element:
+        """Build a menu's include, one entry per item the user left enabled."""
         include = ET.Element("include")
         include.set("name", f"skinshortcuts-{name_override or menu.name}")
 
@@ -207,16 +199,7 @@ class IncludesBuilder:
         return elem
 
     def _build_custom_widget_includes(self, parent_menu: Menu) -> list[ET.Element]:
-        """Build custom widget includes for a root menu.
-
-        Custom widgets are referenced via item properties:
-        - customWidget -> slot 1, include: skinshortcuts-{item}-customwidget
-        - customWidget.2 -> slot 2, include: skinshortcuts-{item}-customwidget2
-        - etc.
-
-        Returns:
-            List of include elements, one per custom widget reference found.
-        """
+        """Build custom widget includes for a root menu."""
         includes = []
 
         for parent_item in parent_menu.items:
@@ -248,6 +231,7 @@ class IncludesBuilder:
         return includes
 
     def _build_item(self, item: MenuItem, idx: int, menu: Menu) -> ET.Element:
+        """Build one menu entry, as a control when the menu names a controltype."""
         if menu.controltype:
             elem = ET.Element("control")
             elem.set("type", menu.controltype)
@@ -258,7 +242,8 @@ class IncludesBuilder:
         ET.SubElement(elem, "label").text = item.label
         if item.label2:
             ET.SubElement(elem, "label2").text = item.label2
-        ET.SubElement(elem, "icon").text = item.icon
+        if not menu.controltype and menu.icons:
+            ET.SubElement(elem, "icon").text = item.icon
         if item.thumb:
             ET.SubElement(elem, "thumb").text = item.thumb
 
@@ -305,22 +290,27 @@ class IncludesBuilder:
             ET.SubElement(elem, "visible").text = item.visible
 
         if not menu.controltype:
-            self._add_property(elem, "id", str(idx))
-            self._add_property(elem, "name", item.name)
-            self._add_property(elem, "menu", menu.template_origin or menu.name)
-            self._add_property(elem, "action", item.action)
-            path = extract_path_from_action(item.action) if item.action else ""
-            self._add_property(elem, "path", path)
-
-            self._add_property(elem, "submenuVisibility", item.name)
+            builtins = {
+                "id": str(idx),
+                "name": item.name,
+                "menu": menu.template_origin or menu.name,
+                "action": item.action,
+                "path": extract_path_from_action(item.action) if item.action else "",
+                "submenuVisibility": item.name,
+            }
 
             submenu_key = f"{menu.name}/{item.name}"
             submenu = self._menu_map.get(submenu_key)
             if submenu and submenu.items:
-                self._add_property(elem, "hasSubmenu", "True")
+                builtins["hasSubmenu"] = "True"
 
             all_properties = {**menu.defaults.properties, **item.properties}
             all_properties.update(self._submenu_paths_for_item(item, menu))
+
+            # a skin value of the same name replaces the default, in the default's slot
+            for key, value in builtins.items():
+                self._add_property(elem, key, all_properties.pop(key, value))
+
             for key, value in all_properties.items():
                 if self._is_template_only(key):
                     continue
@@ -340,8 +330,7 @@ class IncludesBuilder:
     def _widget_submenu_for_item(self, item: MenuItem) -> Menu | None:
         """The item's widgets submenu, found via a {item}.X subdialog ref.
 
-        Matched by widget content, not menu_type (runtime submenus have none).
-        Skips custom-widget content menus.
+        Matched by widget content, not menu_type; runtime submenus have none.
         """
         cw_ids = {
             value
@@ -365,9 +354,9 @@ class IncludesBuilder:
         return None
 
     def _submenu_paths_for_item(self, item: MenuItem, parent_menu: Menu) -> dict[str, str]:
-        """The item's submenuPath (its first widget), plus the numbered
-        submenuPath.N tail when "all" is opted in on the parent menu or globally
-        on <menus>."""
+        """The item's submenuPath (its first widget), plus the numbered submenuPath.N
+        tail when "all" is opted in on the parent menu or globally on <menus>.
+        """
         submenu = self._widget_submenu_for_item(item)
         if submenu is None:
             return {}
@@ -409,18 +398,23 @@ class IncludesBuilder:
 
     @staticmethod
     def _add_property(parent: ET.Element, name: str, value: str) -> None:
+        """Append a property element, skipping empty values."""
         if value:
             prop = ET.SubElement(parent, "property")
             prop.set("name", name)
             prop.text = value
 
     def write(self, path: str | Path, indent: bool = True) -> None:
-        """Write includes XML to file."""
+        """Write includes XML to file.
+
+        Binary handle so ElementTree writes LF; given a filename Windows gets CRLF.
+        """
         root = self.build()
         if indent:
             _indent_xml(root)
         tree = ET.ElementTree(root)
-        tree.write(str(path), encoding="UTF-8", xml_declaration=True)
+        with open(path, "wb") as f:
+            tree.write(f, encoding="UTF-8", xml_declaration=True)
 
 
 def _indent_xml(elem: ET.Element, level: int = 0) -> None:

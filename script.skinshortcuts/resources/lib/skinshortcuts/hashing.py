@@ -154,5 +154,5 @@ def needs_rebuild(shortcuts_path: str | Path, output_paths: list[str] | None = N
             return True
         log.debug(f"  {key}: match")
 
-    log.info("No rebuild needed: all hashes match")
+    log.debug("No rebuild needed: all hashes match")
     return False

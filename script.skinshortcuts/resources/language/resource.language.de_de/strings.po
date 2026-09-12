@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-06-10 07:56+0000\n"
-"Last-Translator: Chillbo <admin.weblate@contribute-osmc.com>\n"
+"PO-Revision-Date: 2026-06-23 11:27+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-autotranslate@weblate.org>\n"
 "Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/de_de/>\n"
 "Language: de_de\n"
 "MIME-Version: 1.0\n"
@@ -13,9 +13,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2026.6.1\n"
 
+msgctxt "Addon Summary"
+msgid "Custom menus, properties, and artwork for skins"
+msgstr ""
+
 msgctxt "Addon Description"
 msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
-msgstr "Addon für Skins zum einfachen Bearbeiten und Auflisten von benutzerdefinierten Verknüpfungen (erfordert Skinunterstützung)"
+msgstr "Addon für Skins zum einfachen Verwalten und Anzeigen von benutzerdefinierten Verknüpfungen (erfordert Skinunterstützung)"
 
 msgctxt "#32000"
 msgid "Add"
@@ -163,7 +167,7 @@ msgstr "Auswählen, welche Einträge im Hauptmenü angezeigt werden sollen"
 
 msgctxt "#32036"
 msgid "Choose shortcuts for %s"
-msgstr "Abkürzungen auswählen für %s"
+msgstr "Verknüpfungen für %s auswählen"
 
 msgctxt "#32037"
 msgid "Reset all menu items"
@@ -175,7 +179,7 @@ msgstr "Sollen alle Menüeinträge zurückgesetzt werden?"
 
 msgctxt "#32039"
 msgid "Pick widget for %s"
-msgstr "Widget auswählen für %s"
+msgstr "Widget für %s auswählen"
 
 msgctxt "#32040"
 msgid "Playlist"
@@ -291,7 +295,7 @@ msgstr "Letzter Radiosender"
 
 msgctxt "#32068"
 msgid "Last channel"
-msgstr "Letzter Sender"
+msgstr "Letzter Kanal"
 
 msgctxt "#32069"
 msgid "Video Source"
@@ -371,7 +375,7 @@ msgstr "Radio"
 
 msgctxt "#32088"
 msgid "Channels"
-msgstr "Sender"
+msgstr "Kanäle"
 
 msgctxt "#32089"
 msgid "Picture Source"
@@ -395,7 +399,7 @@ msgstr "Fehlerdiagnoseprotokoll hochladen ?"
 
 msgctxt "#32094"
 msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
-msgstr "Bitte Kodi Log Uploader-Addon installieren, um einfach ein Debug-Protokoll bereit zu stellen."
+msgstr "Bitte Kodi Log Uploader-Addon installieren, um ein Debug-Protokoll bereitstellen zu können."
 
 msgctxt "#32095"
 msgid "Choose default action for menu item"
@@ -499,7 +503,7 @@ msgstr "Standardwidgets"
 
 msgctxt "#32120"
 msgid "Never hide PVR shortcuts"
-msgstr "PVR-Lesezeichen niemals ausblenden"
+msgstr "PVR-Verküpfungen niemals ausblenden"
 
 msgctxt "#32121"
 msgid "Share menu between compatible skins"
@@ -515,83 +519,83 @@ msgstr "Spiele"
 
 msgctxt "#32124"
 msgid "This addon is for skin developers, and requires skin support"
-msgstr "Dieses Addon ist für Skinentwickler und benötigt Skinunterstützung"
+msgstr "Dieses Addon ist für Skinentwickler und benötigt Skin-Unterstützung"
 
 msgctxt "#32125"
 msgid "Delete item?"
-msgstr ""
+msgstr "Eintrag löschen?"
 
 msgctxt "#32126"
 msgid "Are you sure you want to delete this item?"
-msgstr ""
+msgstr "Soll dieser Eintrag wirklich gelöscht werden?"
 
 msgctxt "#32127"
 msgid "Modify item?"
-msgstr ""
+msgstr "Eintrag bearbeiten?"
 
 msgctxt "#32128"
 msgid "Are you sure you want to modify this item?"
-msgstr ""
+msgstr "Soll dieser Eintrag wirklich bearbeitet werden?"
 
 msgctxt "#32129"
 msgid "New Item"
-msgstr ""
+msgstr "Neuer Eintrag"
 
 msgctxt "#32130"
 msgid "Cannot Delete"
-msgstr ""
+msgstr "Nicht löschbar"
 
 msgctxt "#32131"
 msgid "Delete Item"
-msgstr ""
+msgstr "Eintrag löschen"
 
 msgctxt "#32132"
 msgid "Modify Action"
-msgstr ""
+msgstr "Bearbeitungsaktion"
 
 msgctxt "#32133"
 msgid "Cannot Disable"
-msgstr ""
+msgstr "Nicht deaktivierbar"
 
 msgctxt "#32134"
 msgid "Disable Item"
-msgstr ""
+msgstr "Eintrag deaktivieren"
 
 msgctxt "#32135"
 msgid "No Deleted Items"
-msgstr ""
+msgstr "Keine gelöschten Einträge"
 
 msgctxt "#32136"
 msgid "No items to restore"
-msgstr ""
+msgstr "Keine wiederherstellbaren Einträge"
 
 msgctxt "#32137"
 msgid "Restore Deleted Item"
-msgstr ""
+msgstr "Gelöschten Eintrag wiederherstellen"
 
 msgctxt "#32138"
 msgid "Reset Item"
-msgstr ""
+msgstr "Eintrag zurücksetzen"
 
 msgctxt "#32139"
 msgid "Edit Submenu"
-msgstr ""
+msgstr "Untermenü bearbeiten"
 
 msgctxt "#32140"
 msgid "Select Widget Type"
-msgstr ""
+msgstr "Widgettyp auswählen"
 
 msgctxt "#32141"
 msgid "No Items"
-msgstr ""
+msgstr "Keine Einträge"
 
 msgctxt "#32142"
 msgid "No items available in this group"
-msgstr ""
+msgstr "Keine Einträge in dieser Gruppe verfügbar"
 
 msgctxt "#32143"
 msgid "Not Allowed"
-msgstr ""
+msgstr "Nicht gestattet"
 
 msgctxt "#32144"
 msgid "Widgets not enabled for this menu"
@@ -671,87 +675,87 @@ msgstr ""
 
 msgctxt "#32166"
 msgid "Add Override"
-msgstr ""
+msgstr "Widgets sind für dieses Menü nicht aktiviert"
 
 msgctxt "#32167"
 msgid "No Add-ons"
-msgstr ""
+msgstr "Keine Addons"
 
 msgctxt "#32168"
 msgid "No video add-ons installed"
-msgstr ""
+msgstr "Keine Video-Addons installiert"
 
 msgctxt "#32169"
 msgid "Select Add-on"
-msgstr ""
+msgstr "Addon auswählen"
 
 msgctxt "#32170"
 msgid "Confirm"
-msgstr ""
+msgstr "Bestätigen"
 
 msgctxt "#32171"
 msgid "Edit Label"
-msgstr ""
+msgstr "Label bearbeiten"
 
 msgctxt "#32172"
 msgid "Edit Action"
-msgstr ""
+msgstr "Aktion bearbeiten"
 
 msgctxt "#32173"
 msgid "Change Icon"
-msgstr ""
+msgstr "Symbol ändern"
 
 msgctxt "#32174"
 msgid "'%s' is required."
-msgstr ""
+msgstr "‚%s‘ ist erforderlich."
 
 msgctxt "#32175"
 msgid "Delete '%s'?"
-msgstr ""
+msgstr "‚%s‘ löschen?"
 
 msgctxt "#32176"
 msgid "Modify '%s'?"
-msgstr ""
+msgstr "‚%s‘ anpassen?"
 
 msgctxt "#32177"
 msgid "Disable '%s'?"
-msgstr ""
+msgstr "‚%s‘ deaktivieren?"
 
 msgctxt "#32178"
 msgid "Reset '%s' to defaults?"
-msgstr ""
+msgstr "‚%s‘ auf Stadardeinstellungen zurücksetzen?"
 
 msgctxt "#32179"
 msgid "No Shortcuts"
-msgstr ""
+msgstr "Keine Verküpfungen"
 
 msgctxt "#32180"
 msgid "No shortcut groupings defined in skin"
-msgstr ""
+msgstr "Keine Verknüpfungs-Gruppierungen im Skin definiert"
 
 msgctxt "#32181"
 msgid "Select"
-msgstr ""
+msgstr "Auswählen"
 
 msgctxt "#32182"
 msgid "Location"
-msgstr ""
+msgstr "Standort"
 
 msgctxt "#32183"
 msgid "Not Available"
-msgstr ""
+msgstr "Nicht verfügbar"
 
 msgctxt "#32184"
 msgid "Requires %s to be set first"
-msgstr ""
+msgstr "Erfordert %s vorher festzulegen"
 
 msgctxt "#32185"
 msgid "View Settings"
-msgstr ""
+msgstr "Ansichteneinstellungen"
 
 msgctxt "#32186"
 msgid "Select Content Type"
-msgstr ""
+msgstr "Inhaltstyp auswählen"
 
 msgctxt "#32187"
 msgid "Reset all library view selections?"
@@ -807,7 +811,7 @@ msgstr ""
 
 msgctxt "#32201"
 msgid "Open settings"
-msgstr ""
+msgstr "Einstellungen öffnen"
 
 msgctxt "#32202"
 msgid "Ignore for this skin"
@@ -827,6 +831,10 @@ msgstr ""
 
 msgctxt "#32206"
 msgid "Artists not in this source"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Enable shortcut"
 msgstr ""
 
 #~ msgctxt "#32024"

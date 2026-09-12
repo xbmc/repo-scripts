@@ -14,7 +14,7 @@ from __future__ import annotations
 import re
 
 from .conditions import evaluate_condition
-from .log import get_logger
+from .log import get_logger, notify
 
 log = get_logger("Expressions")
 
@@ -47,9 +47,11 @@ class MathEvaluator:
             return str(result)
         except (ValueError, ZeroDivisionError) as e:
             log.debug(f"Math eval failed for '{expr}': {e}")
+            notify("Expression Error", f"$MATH failed: {expr}")
             return expr
 
     def _skip_whitespace(self) -> None:
+        """Advance to the next non-space character."""
         while self.pos < len(self.expr) and self.expr[self.pos].isspace():
             self.pos += 1
 
@@ -186,15 +188,7 @@ class MathEvaluator:
 
 
 def evaluate_math(expr: str, properties: dict[str, str]) -> str:
-    """Evaluate a $MATH expression.
-
-    Args:
-        expr: The expression inside $MATH[...] (without the $MATH[] wrapper)
-        properties: Property values available as variables
-
-    Returns:
-        The computed result as a string, or the original expression on error.
-    """
+    """Evaluate a $MATH expression."""
     evaluator = MathEvaluator(properties)
     return evaluator.evaluate(expr)
 
@@ -206,13 +200,6 @@ def evaluate_if(expr: str, properties: dict[str, str]) -> str:
         condition THEN trueValue
         condition THEN trueValue ELSE falseValue
         cond1 THEN val1 ELIF cond2 THEN val2 ELSE val3
-
-    Args:
-        expr: The expression inside $IF[...] (without the $IF[] wrapper)
-        properties: Property values for condition evaluation
-
-    Returns:
-        The selected value based on condition evaluation.
     """
     expr = expr.strip()
 
@@ -274,15 +261,7 @@ def process_math_expressions(
     text: str,
     properties: dict[str, str],
 ) -> str:
-    """Process all $MATH[...] expressions in text.
-
-    Args:
-        text: Text potentially containing $MATH[...] expressions
-        properties: Property values available as variables
-
-    Returns:
-        Text with all $MATH expressions evaluated.
-    """
+    """Process all $MATH[...] expressions in text."""
     pattern = re.compile(r"\$MATH\[([^\]]+)\]")
 
     def replace(match: re.Match) -> str:
@@ -295,15 +274,7 @@ def process_if_expressions(
     text: str,
     properties: dict[str, str],
 ) -> str:
-    """Process all $IF[...] expressions in text.
-
-    Args:
-        text: Text potentially containing $IF[...] expressions
-        properties: Property values available as variables
-
-    Returns:
-        Text with all $IF expressions evaluated.
-    """
+    """Process all $IF[...] expressions in text."""
     pattern = re.compile(r"\$IF\[([^\]]+)\]")
 
     def replace(match: re.Match) -> str:

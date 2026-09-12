@@ -18,19 +18,14 @@ from ..models import MenuItem
 if TYPE_CHECKING:
     from ..manager import MenuManager
     from ..models import IconSource, PropertySchema
-    from ..models.menu import SubDialog
+    from ..models.menu import ContextMenu, SubDialog
+    from ..providers import ContentProvider
 
 
 class SubdialogsMixin:
     """Mixin providing subdialog management - submenu editing, widget slots.
 
-    This mixin implements:
-    - Edit submenu spawning
-    - Subdialog spawning with mode/suffix
-    - Onclose action handling
-    - Custom widget menu creation
-
-    Requires DialogBaseMixin to be mixed in first.
+    Requires DialogBaseMixin first.
     """
 
     menu_id: str
@@ -38,7 +33,7 @@ class SubdialogsMixin:
     manager: MenuManager | None
     property_schema: PropertySchema | None
     icon_sources: list[IconSource]
-    show_context_menu: bool
+    context_menu: ContextMenu
     _subdialogs: dict[int, SubDialog]
     _dialog_xml: str
     _skin_path: str
@@ -50,6 +45,7 @@ class SubdialogsMixin:
         def _refresh_selected_item(self) -> None: ...
         def _clear_subdialog_list(self) -> None: ...
         def _log(self, msg: str) -> None: ...
+        def _get_content_provider(self) -> ContentProvider: ...
 
         def setProperty(self, key: str, value: str) -> None: ...
         def clearProperty(self, key: str) -> None: ...
@@ -70,9 +66,10 @@ class SubdialogsMixin:
             menu_id=menu_id,
             shortcuts_path=self.shortcuts_path,
             manager=self.manager,
+            content_provider=self._get_content_provider(),
             property_schema=self.property_schema,
             icon_sources=self.icon_sources,
-            show_context_menu=self.show_context_menu,
+            context_menu=self.context_menu,
             subdialogs=list(self._subdialogs.values()),
             dialog_mode=dialog_mode,
             **kwargs,
@@ -120,9 +117,6 @@ class SubdialogsMixin:
 
         If subdialog has `menu` but no `mode`, opens the menu directly.
         Otherwise opens the subdialog, and after it closes, evaluates onclose actions.
-
-        Args:
-            subdialog: The subdialog definition containing the mode, menu, suffix, and onclose
         """
         item = self._get_selected_item()
         if not item:
@@ -146,10 +140,6 @@ class SubdialogsMixin:
 
         Evaluates each onclose action's condition against the current item state.
         The first matching action is executed.
-
-        Args:
-            subdialog: The subdialog definition with onclose actions
-            item: The original menu item (used as fallback)
         """
         if not self.manager:
             return
@@ -179,14 +169,6 @@ class SubdialogsMixin:
         Handles special placeholders:
         - {customWidget} or {customWidget.N} - get/create custom widget menu
         - {item}.X - legacy format, converted to explicit reference
-
-        Args:
-            menu_ref: The menu reference string from onclose action
-            item: The current menu item
-            subdialog: The subdialog definition
-
-        Returns:
-            Resolved menu name/ID
         """
         if not self.manager:
             return ""
@@ -241,12 +223,7 @@ class SubdialogsMixin:
         return resolved
 
     def _open_onclose_menu(self, menu_name: str, subdialog: SubDialog) -> None:
-        """Open a menu from an onclose action.
-
-        Args:
-            menu_name: Name of the menu to open (already resolved)
-            subdialog: The parent subdialog definition (for dialog mode)
-        """
+        """Open a menu from an onclose action."""
         if not self.manager:
             return
 
@@ -261,11 +238,7 @@ class SubdialogsMixin:
         self._refresh_selected_item()
 
     def _open_subdialog(self, subdialog: SubDialog) -> None:
-        """Open the subdialog for widget/property editing.
-
-        Args:
-            subdialog: The subdialog definition
-        """
+        """Open the subdialog for widget/property editing."""
         self._run_child_dialog(
             self.menu_id,
             subdialog.mode,

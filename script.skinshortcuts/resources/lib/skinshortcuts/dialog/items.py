@@ -13,27 +13,71 @@ try:
 except ImportError:
     IN_KODI = False
 
+from ..conditions import evaluate_condition
+from ..loaders.base import apply_suffix_transform
 from ..localize import LANGUAGE, resolve_label
 from ..models import Action, BrowseSource, IconSource, MenuItem
+from ..models.menu import ContextMenu, ContextMenuButton
+from ..providers import normalize_image
+from .base import (
+    CONTROL_ADD,
+    CONTROL_CHOOSE_SHORTCUT,
+    CONTROL_DELETE,
+    CONTROL_EDIT_SUBMENU,
+    CONTROL_MOVE_DOWN,
+    CONTROL_MOVE_UP,
+    CONTROL_RESET_ITEM,
+    CONTROL_RESTORE_DELETED,
+    CONTROL_SET_ACTION,
+    CONTROL_SET_ICON,
+    CONTROL_SET_LABEL,
+    CONTROL_TOGGLE_DISABLED,
+)
+from .pickers import picker_select
+from .properties import BUTTON_ONLY_TYPES
 
 if TYPE_CHECKING:
     from ..manager import MenuManager
     from ..models import PropertySchema
+    from ..models.menu import SubDialog
+
+CONTEXT_DEFAULT_BUTTONS = (
+    CONTROL_SET_LABEL,
+    CONTROL_SET_ACTION,
+    CONTROL_SET_ICON,
+    CONTROL_EDIT_SUBMENU,
+    CONTROL_DELETE,
+)
+
+
+def _default_context_labels(item: MenuItem) -> dict[int, str]:
+    """Default label per built-in button the context menu can route."""
+    return {
+        CONTROL_ADD: LANGUAGE(32000),
+        CONTROL_DELETE: xbmc.getLocalizedString(117),
+        CONTROL_MOVE_UP: LANGUAGE(32002),
+        CONTROL_MOVE_DOWN: LANGUAGE(32003),
+        CONTROL_SET_LABEL: LANGUAGE(32171),
+        CONTROL_SET_ICON: LANGUAGE(32173),
+        CONTROL_SET_ACTION: LANGUAGE(32172),
+        CONTROL_RESTORE_DELETED: LANGUAGE(32028),
+        CONTROL_RESET_ITEM: LANGUAGE(32104),
+        CONTROL_TOGGLE_DISABLED: LANGUAGE(32207 if item.disabled else 32117),
+        CONTROL_CHOOSE_SHORTCUT: LANGUAGE(32043),
+        CONTROL_EDIT_SUBMENU: LANGUAGE(32139),
+    }
+
+
+def _browse_path(browse_type: int, title: str, start: str = "") -> str:
+    """Browse for a file, unwrapping the image:// form Kodi's image browser returns."""
+    result = xbmcgui.Dialog().browse(browse_type, title, "files", defaultt=start)
+    return normalize_image(result) if isinstance(result, str) else ""
 
 
 class ItemsMixin:
     """Mixin providing item operations - add, delete, move, label, icon, action.
 
-    This mixin implements:
-    - Add/delete/move items
-    - Set label, icon, action
-    - Toggle disabled state
-    - Restore deleted items
-    - Reset item to defaults
-    - Context menu
-    - File/image browsing with sources
-
-    Requires DialogBaseMixin to be mixed in first.
+    Requires DialogBaseMixin first.
     """
 
     menu_id: str
@@ -41,8 +85,11 @@ class ItemsMixin:
     items: list[MenuItem]
     property_schema: PropertySchema | None
     icon_sources: list[IconSource]
+    context_menu: ContextMenu
     shortcuts_path: str
     dialog_mode: str
+    property_suffix: str
+    _subdialogs: dict[int, SubDialog]
 
     if TYPE_CHECKING:
         from typing import Literal
@@ -61,6 +108,7 @@ class ItemsMixin:
         def _suffixed_name(self, name: str) -> str: ...
         def _log(self, msg: str) -> None: ...
         def _get_item_properties(self, item: MenuItem) -> dict[str, str]: ...
+        def onClick(self, control_id: int) -> None: ...  # noqa: N802
         def _pick_widget_from_groups(
             self,
             items: list[WidgetGroup | Widget | Content],
@@ -75,7 +123,10 @@ class ItemsMixin:
 
         index = self._get_selected_index()
 
-        if self.dialog_mode in ("widgets", "customwidget") or self.dialog_mode.startswith("custom-widget"):
+        if (
+            self.dialog_mode in ("widgets", "customwidget")
+            or self.dialog_mode.startswith("custom-widget")
+        ):
             widget = self._pick_widget_for_add()
             if not widget:
                 return
@@ -133,7 +184,7 @@ class ItemsMixin:
         if widget.source:
             properties["widgetSource"] = widget.source
         if widget.label:
-            properties["widgetLabel"] = resolve_label(widget.label)
+            properties["widgetLabel"] = widget.label
 
         return MenuItem(
             name=widget.name,
@@ -143,11 +194,7 @@ class ItemsMixin:
         )
 
     def _make_unique_item_name(self, base_name: str) -> str:
-        """Generate a unique item name by appending a counter suffix if needed.
-
-        If an item with the same name already exists in the current menu,
-        appends -2, -3, etc. until a unique name is found.
-        """
+        """Generate a unique item name by appending a counter suffix if needed."""
         existing_names = {item.name for item in self.items}
 
         if base_name not in existing_names:
@@ -222,8 +269,7 @@ class ItemsMixin:
                 return
             self.manager.set_label(self.menu_id, item.name, new_label)
             item.label = new_label
-            # widgetLabel is seeded from label for widget submenus; sync on edit so list 211 and widget output match
-            # custom widget menus only exist in working[]
+            # widget submenus seed widgetLabel from label; keep it in sync on edit
             menu = self.manager.working.get(self.menu_id)
             if menu and menu.menu_type == "widgets":
                 self.manager.set_custom_property(self.menu_id, item.name, "widgetLabel", new_label)
@@ -240,7 +286,7 @@ class ItemsMixin:
             return
 
         self._log(f"Opening icon picker, current icon: {item.icon}")
-        # <icons>path</icons> simple mode is parsed as one unlabeled source; treat as direct browse start
+        # simple <icons>path</icons> parses as one unlabeled source; browse straight from it
         sources = self.icon_sources
         default_path = ""
         if len(sources) == 1 and not sources[0].label:
@@ -250,7 +296,6 @@ class ItemsMixin:
             sources=sources,
             title=xbmc.getLocalizedString(1030),  # "Choose icon"
             browse_type=2,  # Image file
-            mask=".png|.jpg|.gif",
             item_properties=item.properties,
             default_path=default_path,
         )
@@ -322,7 +367,7 @@ class ItemsMixin:
             return
 
         labels = [resolve_label(item.label) for item in removed]
-        selected = xbmcgui.Dialog().select(LANGUAGE(32137), labels)
+        selected = picker_select("restore", LANGUAGE(32137), labels)
 
         if selected < 0:
             return
@@ -365,25 +410,10 @@ class ItemsMixin:
         sources: list[IconSource] | list[BrowseSource],
         title: str,
         browse_type: int,
-        mask: str = "",
         item_properties: dict[str, str] | None = None,
         default_path: str = "",
     ) -> str | None:
-        """Browse for a file using configured sources.
-
-        Args:
-            sources: List of IconSource or BrowseSource objects
-            title: Dialog title
-            browse_type: Kodi browse type (0=folder, 2=image file)
-            mask: File mask for filtering (e.g., ".png|.jpg")
-            item_properties: Current item properties for condition evaluation
-            default_path: Starting path when sources is empty (direct browse mode)
-
-        Returns:
-            Selected path, or None if cancelled
-        """
-        from ..conditions import evaluate_condition
-
+        """Browse for a file using configured sources."""
         props = item_properties or {}
 
         visible_sources = []
@@ -397,23 +427,23 @@ class ItemsMixin:
 
         if not visible_sources:
             if default_path:
-                result = xbmcgui.Dialog().browse(
-                    browse_type, title, "files", mask, False, False, default_path
-                )
-                return result if isinstance(result, str) and result != default_path else None
-            result = xbmcgui.Dialog().browse(browse_type, title, "files", mask)
-            return result if isinstance(result, str) else None
+                result = _browse_path(browse_type, title, default_path)
+                return result if result and result != default_path else None
+            return _browse_path(browse_type, title) or None
 
         while True:
             listitems = []
             for source in visible_sources:
                 label = resolve_label(source.label) if source.label else source.path
-                listitem = xbmcgui.ListItem(label)
+                listitem = xbmcgui.ListItem(label, offscreen=True)
                 if source.icon:
                     listitem.setArt({"icon": source.icon})
+                row_path = "" if source.path.lower() == "browse" else source.path
+                listitem.setProperty("path", row_path)
+                listitem.setProperty("name", label)
                 listitems.append(listitem)
 
-            selected = xbmcgui.Dialog().select(title, listitems, useDetails=True)
+            selected = picker_select("browse", title, listitems, useDetails=True)
 
             if selected == -1:
                 return None  # Cancelled
@@ -422,13 +452,11 @@ class ItemsMixin:
             path = source.path
 
             if path.lower() == "browse":
-                result = xbmcgui.Dialog().browse(browse_type, title, "files", mask)
+                result = _browse_path(browse_type, title)
             else:
-                result = xbmcgui.Dialog().browse(
-                    browse_type, title, "files", mask, False, False, path
-                )
+                result = _browse_path(browse_type, title, path)
 
-            if result and isinstance(result, str) and result != path:
+            if result and result != path:
                 return result
 
     def _show_context_menu(self) -> None:
@@ -437,19 +465,56 @@ class ItemsMixin:
         if not item:
             return
 
-        options = [
-            (LANGUAGE(32171), self._set_label),
-            (LANGUAGE(32172), self._set_action),
-            (LANGUAGE(32173), self._set_icon),
-            (LANGUAGE(32139), self._edit_submenu),
-            (xbmc.getLocalizedString(117), self._delete_item),
-        ]
+        rows = self._context_menu_rows(item)
+        if not rows:
+            return
 
-        labels = [opt[0] for opt in options]
-        selected = xbmcgui.Dialog().contextmenu(labels)
-
+        selected = xbmcgui.Dialog().contextmenu([label for _, label in rows])
         if selected >= 0:
-            options[selected][1]()
+            self.onClick(rows[selected][0])
+
+    def _context_menu_rows(self, item: MenuItem) -> list[tuple[int, str]]:
+        """Button ID and label per row, after condition and visibility filtering."""
+        buttons = self.context_menu.buttons or [
+            ContextMenuButton(button_id=button_id) for button_id in CONTEXT_DEFAULT_BUTTONS
+        ]
+        props = self._get_item_properties(item)
+        defaults = _default_context_labels(item)
+
+        rows = []
+        for button in buttons:
+            condition = apply_suffix_transform(button.condition, self.property_suffix)
+            if condition and not evaluate_condition(condition, props):
+                continue
+            if button.visible and not xbmc.getCondVisibility(button.visible):
+                continue
+
+            if not self._context_button_routes(button.button_id, defaults):
+                self._log(f"Context menu button {button.button_id} does nothing, skipping")
+                continue
+
+            label = resolve_label(button.label) if button.label else defaults.get(button.button_id)
+            if not label:
+                self._log(f"Context menu button {button.button_id} has no label, skipping")
+                continue
+
+            rows.append((button.button_id, label))
+
+        return rows
+
+    def _context_button_routes(self, button_id: int, builtin_labels: dict[int, str]) -> bool:
+        """Whether onClick can route this button ID."""
+        if button_id in builtin_labels or button_id in self._subdialogs:
+            return True
+        if not self.property_schema:
+            return False
+
+        prop, mapping = self.property_schema.get_property_for_button(button_id)
+        if mapping is None:
+            return False
+        if prop is not None:
+            return True
+        return mapping.type in BUTTON_ONLY_TYPES
 
     def _set_item_property(
         self,
@@ -461,17 +526,7 @@ class ItemsMixin:
     ) -> None:
         """Unified property setter for menu items.
 
-        All properties (including widget and background) are stored in item.properties.
-        Updates both the manager (for persistence) and local item state (for UI).
-
-        Args:
-            item: The menu item to update
-            name: Property name (e.g., "widget", "background", "widgetStyle")
-            value: Property value, or None/empty string to clear
-            related: Optional dict of related properties to auto-populate
-                     (e.g., {"widgetLabel": "Movies", "widgetPath": "..."})
-            apply_suffix: If True, apply property_suffix to name and related props.
-                         Set to False for shared properties like widget/background.
+        Writes the manager for persistence and the local item for the UI.
         """
         if not self.manager:
             return
