@@ -46,6 +46,7 @@ class LoginDialog(xbmcgui.WindowDialog):
         # Layout is authored at 1280x720; Kodi scales automatically.
 
         self._approved = threading.Event()
+        self._dismissed = threading.Event()
 
         # Backdrop (stretches the 32x32 dark PNG across the full screen).
         self.addControl(xbmcgui.ControlImage(0, 0, 1280, 720, bg_path))
@@ -139,6 +140,8 @@ class LoginDialog(xbmcgui.WindowDialog):
     def approve(self) -> None:
         """Called from the poll thread when tokens are received."""
         self._approved.set()
+        if self._dismissed.is_set():
+            return
         # Use executebuiltin to close the dialog on the main thread —
         # calling self.close() directly from a background thread is
         # unsafe in Kodi's UI framework.
@@ -146,6 +149,11 @@ class LoginDialog(xbmcgui.WindowDialog):
 
         xbmc.executebuiltin("Action(Back)")
 
+    def mark_closed(self) -> None:
+        """Prevent a late poll response from sending Back to another window."""
+        self._dismissed.set()
+
     def onAction(self, action) -> None:  # type: ignore[override]
         if action.getId() in _ACTION_CLOSE_IDS:
+            self._dismissed.set()
             self.close()

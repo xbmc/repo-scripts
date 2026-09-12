@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.punchplay"
        name="PunchPlay"
-       version="1.3.0"
+       version="1.5.2"
        provider-name="PunchPlay">
 
   <requires>
@@ -22,7 +22,7 @@
     <forum/>
     <website>https://punchplay.tv</website>
     <source>https://github.com/PunchPlay/kodi.addon.punchplay</source>
-    <news>1.3.0 - Add backend identify fallback, stronger movie/TV/anime parsing, library import preview, rating suppression options, stricter backend URL validation, and broader tests/docs</news>
+    <news>1.5.2 - Fixed a missing header that caused token refresh to fail outright, forcing repeated manual re-logins. Fixed playback staying "now playing" forever if Kodi closed mid-episode. Fixed concurrent token-refresh 401 errors, old-account work surviving logout, and watched toggles being lost, over-suppressed, or un-done watches still uploading. Fixed a queued offline event able to replay after it was already cleaned up by a stop event, or reach the backend after a new playback's start even under a full post queue. Live watched-toggle syncs and offline-queue replay now go through the same account-pinned worker as every other network write, instead of a separate thread. A playback event can no longer overtake an earlier event from the same session still stuck in the offline queue. Pull-sync checkpoints now follow the active account and enabled sync options, reset after a failed full pull instead of falling back to a stale cursor, and a stale remote resume position no longer overwrites a finished item. Rating prompts can be limited to movies, and the "never for this show" suppression is now keyed on the show's title instead of per-episode ids or year (existing suppressions from earlier versions are migrated automatically).</news>
     <assets>
       <icon>icon.png</icon>
       <fanart>fanart.jpg</fanart>

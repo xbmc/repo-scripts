@@ -12,6 +12,7 @@
     <setting id="scrobble_movies"        type="bool"   label="32038"  default="true"/>
     <setting id="scrobble_tv"            type="bool"   label="32039"  default="true"/>
     <setting id="scrobble_anime"         type="bool"   label="32040"  default="true"/>
+    <setting id="live_watched_sync"      type="bool"   label="32134"  default="true"/>
     <setting id="anime_episode_format"   type="enum" label="32090" lvalues="32091|32111|32112" default="0"/>
     <setting id="watched_threshold"      type="slider" label="32043"  default="90" range="50,5,95" option="int"/>
     <setting id="min_length"             type="number" label="32044"  default="5"/>
@@ -20,11 +21,17 @@
   <category label="32046">
     <setting id="preview_library_btn" type="action" label="32109" action="SetProperty(punchplay_preview_library,1,10000)" option="action"/>
     <setting id="sync_library_btn" type="action" label="32024" action="SetProperty(punchplay_sync_library,1,10000)" option="action"/>
+    <setting id="pull_watched" type="bool" label="32118" default="true"/>
+    <setting id="pull_resume" type="bool" label="32119" default="true"/>
+    <setting id="pull_sync_auto" type="bool" label="32120" default="false"/>
+    <setting id="pull_sync_btn" type="action" label="32117" action="SetProperty(punchplay_pull_sync,1,10000)" option="action"/>
   </category>
 
   <category label="32048">
     <setting id="rate_after_watching" type="bool" label="32020" default="true"/>
+    <setting id="rating_prompt_scope" type="enum" label="32139" lvalues="32140|32141" default="1"/>
     <setting id="rating_prompt_delay" type="number" label="32110" default="2"/>
+    <setting id="clear_rating_suppressions" type="action" label="32129" action="SetProperty(punchplay_clear_suppressions,1,10000)" option="action"/>
   </category>
 
   <category label="32049">

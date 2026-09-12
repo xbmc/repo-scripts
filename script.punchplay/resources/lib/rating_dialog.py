@@ -32,6 +32,7 @@ class RatingDialog(xbmcgui.WindowDialog):
         *,
         bg_path: str,
         heading: str,
+        footer: str,
         initial: int = 5,
     ):
         self._rating = max(1, min(10, initial))
@@ -85,7 +86,7 @@ class RatingDialog(xbmcgui.WindowDialog):
         self.addControl(
             xbmcgui.ControlLabel(
                 0, 620, 1280, 30,
-                "OK to confirm  ·  Back to skip",
+                footer,
                 font="font12",
                 alignment=2,
                 textColor="FF777777",
