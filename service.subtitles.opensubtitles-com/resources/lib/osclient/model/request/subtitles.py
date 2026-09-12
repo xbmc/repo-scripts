@@ -1,7 +1,7 @@
 
 from datetime import date
 
-from resources.lib.os.model.request.abstract import OpenSubtitlesRequest
+from resources.lib.osclient.model.request.abstract import OpenSubtitlesRequest
 
 INCLUDE_LIST = ["include", "exclude", "only"]
 INCLUDE_ONLY_LIST = ["include", "only"]
@@ -18,6 +18,19 @@ LANGUAGE_LIST = ["af", "sq", "ar", "an", "hy", "at", "eu", "be", "bn", "bs", "br
                  "ur", "uz", "vi", "ro", "pt-br", "me", "zh-tw", "ze", "se"]
 
 
+def _to_int(value):
+    """Coerce Kodi InfoLabel values ('5', ' 5 ', 5, '') to int or None.
+
+    Callers pass season/episode/year straight from InfoLabels as strings; a
+    string surviving into the request would hit integer comparisons in the
+    property setters and go out as the wrong type on the wire."""
+    try:
+        s = str(value).strip()
+        return int(s) if s.lstrip("-").isdigit() else None
+    except Exception:
+        return None
+
+
 class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
     def __init__(self, id_: int = None, imdb_id: int = None, tmdb_id: int = None, type_="all", query="", languages="",
                  moviehash="", user_id: int = None, hearing_impaired="include", foreign_parts_only="include",
@@ -25,11 +38,12 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
                  order_direction="", parent_feature_id: int = None, parent_imdb_id: int = None,
                  parent_tmdb_id: int = None, season_number: int = None, episode_number: int = None, year: int = None,
                  moviehash_match="include", page: int = None, **catch_overflow):
-        self._id = id_
-        self._imdb_id = imdb_id
-        self._tmdb_id = tmdb_id
+        self._id = _to_int(id_)
+        self._imdb_id = _to_int(imdb_id)
+        self._tmdb_id = _to_int(tmdb_id)
         self._type = type_
-        self._query = query
+        import unicodedata
+        self._query = unicodedata.normalize("NFC", query) if query and isinstance(query, str) else query
         self._languages = languages
         self._moviehash = moviehash
         self._user_id = user_id
@@ -40,14 +54,14 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
         self._ai_translated = ai_translated
         self._order_by = order_by
         self._order_direction = order_direction
-        self._parent_feature_id = parent_feature_id
-        self._parent_imdb_id = parent_imdb_id
-        self._parent_tmdb_id = parent_tmdb_id
-        self._season_number = season_number
-        self._episode_number = episode_number
-        self._year = year
+        self._parent_feature_id = _to_int(parent_feature_id)
+        self._parent_imdb_id = _to_int(parent_imdb_id)
+        self._parent_tmdb_id = _to_int(parent_tmdb_id)
+        self._season_number = _to_int(season_number)
+        self._episode_number = _to_int(episode_number)
+        self._year = _to_int(year)
         self._moviehash_match = moviehash_match
-        self._page = page
+        self._page = _to_int(page)
 
         super().__init__()
 
@@ -65,7 +79,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @id.setter
     def id(self, value):
-        if value > 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("id should be positive integer.")
         self._id = value
 
@@ -75,7 +90,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @imdb_id.setter
     def imdb_id(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("imdb_id should be positive integer.")
         self._imdb_id = value
 
@@ -85,7 +101,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @tmdb_id.setter
     def tmdb_id(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("tmdb_id should be positive integer.")
         self._tmdb_id = value
 
@@ -105,7 +122,11 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @query.setter
     def query(self, value):
-        self._query = value
+        if value and isinstance(value, str):
+            import unicodedata
+            self._query = unicodedata.normalize("NFC", value)
+        else:
+            self._query = value
 
     @property
     def languages(self):
@@ -114,16 +135,17 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
     @languages.setter
     def languages(self, value):
         languages_error = "languages should be a list or a string with coma separated languages (en,fr)."
-        if value is str:
-            language_list = value.split(',')
-        elif value is list:
+        if isinstance(value, str):
+            language_list = value.split(",") if value else []
+        elif isinstance(value, list):
             language_list = value
         else:
             raise ValueError(languages_error)
         for lang in language_list:
             if lang not in LANGUAGE_LIST:
                 raise ValueError(languages_error)
-        self._languages = ",".join(value)
+        # NEVER sort: the value order is the user's preference order
+        self._languages = ",".join(language_list)
 
     @property
     def moviehash(self):
@@ -131,9 +153,9 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @moviehash.setter
     def moviehash(self, value):
-        if value.length() != 16:
+        if value and len(str(value)) != 16:
             raise ValueError("moviehash should be 16 symbol hash. with leading 0 if needed.")
-        self._moviehash = value
+        self._moviehash = value or ""
 
     @property
     def user_id(self):
@@ -141,7 +163,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @user_id.setter
     def user_id(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("user_id should be positive integer.")
         self._user_id = value
 
@@ -231,7 +254,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @parent_feature_id.setter
     def parent_feature_id(self, value):
-        if value > 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("parent_feature_id should be positive integer.")
         self._parent_feature_id = value
 
@@ -241,7 +265,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @parent_imdb_id.setter
     def parent_imdb_id(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("parent_imdb_id should be positive integer.")
         self._parent_imdb_id = value
 
@@ -251,7 +276,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @parent_tmdb_id.setter
     def parent_tmdb_id(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("parent_tmdb_id should be positive integer.")
         self._parent_tmdb_id = value
 
@@ -261,8 +287,10 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @season_number.setter
     def season_number(self, value):
-        if value > 0:
-            raise ValueError("season_number should be positive integer.")
+        value = _to_int(value)
+        # season 0 is valid: specials
+        if value is not None and value < 0:
+            raise ValueError("season_number should be a non-negative integer.")
         self._season_number = value
 
     @property
@@ -271,7 +299,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @episode_number.setter
     def episode_number(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("episode_number should be positive integer.")
         self._episode_number = value
 
@@ -281,7 +310,8 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @year.setter
     def year(self, value):
-        if value < 1927 or value > date.today().year + 1:
+        value = _to_int(value)
+        if value is not None and (value < 1927 or value > date.today().year + 1):
             raise ValueError("year should be valid year.")
         self._year = value
 
@@ -303,6 +333,7 @@ class OpenSubtitlesSubtitlesRequest(OpenSubtitlesRequest):
 
     @page.setter
     def page(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("page should be positive integer.")
         self._page = value
