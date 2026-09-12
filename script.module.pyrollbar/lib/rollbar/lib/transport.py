@@ -1,4 +1,6 @@
-import requests  # type: ignore[import-untyped]
+from typing import Optional
+
+import requests
 import threading
 
 
@@ -12,7 +14,7 @@ def _session():
     return _local.session
 
 
-def _get_proxy_cfg(kw: dict) -> dict | None:
+def _get_proxy_cfg(kw: dict) -> Optional[dict]:
     proxy = kw.pop('proxy', None)
     proxy_user = kw.pop('proxy_user', None)
     proxy_password = kw.pop('proxy_password', None)
@@ -26,7 +28,6 @@ def _get_proxy_cfg(kw: dict) -> dict | None:
             'http': f'http://{proxy}',
             'https': f'http://{proxy}',
         }
-    return None
 
 
 def configure_pool(**kw):

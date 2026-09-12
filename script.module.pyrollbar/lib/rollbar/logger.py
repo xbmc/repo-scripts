@@ -18,8 +18,6 @@ Usage:
     logger.addHandler(rollbar_handler)
 
 """
-from __future__ import annotations
-
 import logging
 import threading
 
@@ -27,33 +25,11 @@ from logging.config import ConvertingDict, ConvertingList, ConvertingTuple
 
 import rollbar
 
-
-def check_level(level: str | int ) -> int:
-    """
-    Convert level to numeric logging level.
-    """
-    if isinstance(level, int):
-        return level
-    elif isinstance(level, str):
-        # Note: getLevelName() returns an `int` if the arg is a valid level name `str` and returns a `str` if the arg is
-        # a valid level `int`.
-        result = logging.getLevelName(level)
-        if isinstance(result, int):
-            return result
-        raise ValueError(f"Unknown level: {level!r}")
-    raise TypeError(f"Level not an integer or a valid string: {level!r}")
-
-
-EXCLUDE_RECORD_KEYS = {
-    # Attributes that are disallowed in `logging.Logger.makeRecord`
-    'asctime',
-    'message',
-    # Attributes that are used internally by pyrollbar
-    'extra_data',
-    'payload_data',
-    'request',
-    *vars(logging.makeLogRecord({})).keys(),
-}
+# hack to fix backward compatibility in Python3
+try:
+    from logging import _checkLevel
+except ImportError:
+    _checkLevel = lambda lvl: lvl
 
 
 def resolve_logging_types(obj):
@@ -88,7 +64,7 @@ class RollbarHandler(logging.Handler):
                 allow_logging_basic_config=False,   # a handler shouldn't configure the root logger
                 **resolve_logging_types(kw))
 
-        self.notify_level = check_level(level)
+        self.notify_level = _checkLevel(level)
 
         self.history_size = history_size
         if history_size > 0:
@@ -102,7 +78,7 @@ class RollbarHandler(logging.Handler):
         log records we notify Rollbar about instead of which
         records we save to the history.
         """
-        self.notify_level = check_level(level)
+        self.notify_level = _checkLevel(level)
 
     def setHistoryLevel(self, level):
         """
@@ -140,10 +116,9 @@ class RollbarHandler(logging.Handler):
                 'thread': record.thread,
                 'threadName': record.threadName
             }
-        } | {  # include any extras
-            k: v for k, v in vars(record).items()
-            if k not in EXCLUDE_RECORD_KEYS
-        } | getattr(record, 'extra_data', {})  # include historical extra_data
+        }
+
+        extra_data.update(getattr(record, 'extra_data', {}))
 
         payload_data = getattr(record, 'payload_data', {})
 
@@ -158,17 +133,6 @@ class RollbarHandler(logging.Handler):
         # load the request
         request = getattr(record, "request", None) or rollbar.get_request()
 
-        # Rather than copy the log record and disable exception and stack trace
-        # formatting, this does the same steps to prepare the log record
-        # as `logging.Formatter.format` does before calling
-        # `logging.Formatter.formatMessage`.
-        formatter = self.formatter or logging._defaultFormatter
-        record.message = record.getMessage()
-        if formatter.usesTime():
-            record.asctime = formatter.formatTime(record, formatter.datefmt)
-
-        message = formatter.formatMessage(record)
-
         uuid = None
         try:
             # when not in an exception handler, exc_info == (None, None, None)
@@ -176,7 +140,11 @@ class RollbarHandler(logging.Handler):
                 if record.msg:
                     message_template = {
                         'body': {
-                            'trace': {'exception': {'description': message}}
+                            'trace': {
+                                'exception': {
+                                    'description': record.getMessage()
+                                }
+                            }
                         }
                     }
                     payload_data = rollbar.dict_merge(
@@ -188,7 +156,7 @@ class RollbarHandler(logging.Handler):
                                                extra_data=extra_data,
                                                payload_data=payload_data)
             else:
-                uuid = rollbar.report_message(message,
+                uuid = rollbar.report_message(record.getMessage(),
                                               level=level,
                                               request=request,
                                               extra_data=extra_data,

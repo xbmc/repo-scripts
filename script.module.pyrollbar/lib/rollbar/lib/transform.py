@@ -1,57 +1,51 @@
-from __future__ import annotations
-from os import PathLike
-from typing import TypeVar, TYPE_CHECKING
+from typing import Optional
 
-if TYPE_CHECKING:
-    from rollbar.lib.type_info import KeyType
-
-T = TypeVar('T')
 
 class Transform(object):
-    depth_first: bool = True
-    priority: int = 100
+    depth_first = True
+    priority = 100
 
-    def default(self, o: T, key: tuple[KeyType, ...]|None = None) -> T:
+    def default(self, o, key=None):
         return o
 
-    def transform_circular_reference(self, o, key: tuple[KeyType, ...]|None = None, ref_key=None):
+    def transform_circular_reference(self, o, key=None, ref_key=None):
         # By default, we just perform a no-op for circular references.
         # Subclasses should implement this method to return whatever representation
         # for the circular reference they need.
         return self.default(o, key=key)
 
-    def transform_tuple(self, o: tuple, key: tuple[KeyType, ...]|None = None) -> tuple:
+    def transform_tuple(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_namedtuple(self, o, key: tuple[KeyType, ...]|None = None):
+    def transform_namedtuple(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_list(self, o, key: tuple[KeyType, ...]|None = None):
+    def transform_list(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_dict(self, o: dict, key: tuple[KeyType, ...]|None = None) -> dict:
+    def transform_dict(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_number(self, o: float | int, key: tuple[KeyType, ...]|None = None) -> float | int | str:
+    def transform_number(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_bytes(self, o: bytes, key: tuple[KeyType, ...]|None = None) -> bytes | str:
+    def transform_bytes(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_unicode(self, o: str, key: tuple[KeyType, ...]|None = None) -> str:
+    def transform_unicode(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_boolean(self, o: bool, key: tuple[KeyType, ...]|None = None) -> bool:
+    def transform_boolean(self, o, key=None):
         return self.default(o, key=key)
 
-    def transform_path(self, o: PathLike, key: tuple[KeyType, ...]|None = None) -> str:
+    def transform_path(self, o, key=None):
         return self.default(str(o), key=key)
 
-    def transform_custom(self, o: T, key: tuple[KeyType, ...]|None = None) -> T:
+    def transform_custom(self, o, key=None):
         return self.default(o, key=key)
 
     @staticmethod
-    def rollbar_repr(obj: object) -> str | None:
+    def rollbar_repr(obj: object) -> Optional[str]:
         r = None
         if hasattr(obj, '__rollbar_repr__'):
             r = obj.__rollbar_repr__()

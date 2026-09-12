@@ -1,11 +1,10 @@
-from __future__ import annotations
-
 from array import array
 import collections
 import itertools
 import reprlib
 
 from collections.abc import Mapping
+from typing import Union, Tuple
 
 from rollbar.lib import (
     integer_types, key_in, key_depth, sequence_types,
@@ -27,7 +26,7 @@ _type_name_mapping = {
 }
 
 
-def _max_left_right(max_len: int, seperator_len: int) -> tuple[int, int]:
+def _max_left_right(max_len: int, seperator_len: int) -> Tuple[int, int]:
     left = max(0, (max_len-seperator_len)//2)
     right = max(0, max_len-seperator_len-left)
     return left, right
@@ -61,7 +60,7 @@ def shorten_frozenset(obj: frozenset, max_len: int) -> frozenset:
     return frozenset([elem for i, elem in enumerate(obj) if i < max_len] + ['...'])
 
 
-def shorten_int(obj: int, max_len: int) -> int | str:
+def shorten_int(obj: int, max_len: int) -> Union[int, str]:
     s = repr(obj)
     if len(s) <= max_len:
         return obj
@@ -77,7 +76,7 @@ def shorten_list(obj: list, max_len: int) -> list:
     return obj[:max_len] + ['...']
 
 
-def shorten_mapping(obj: dict | Mapping, max_keys: int) -> dict | Mapping:
+def shorten_mapping(obj: Union[dict, Mapping], max_keys: int) -> dict:
     if len(obj) <= max_keys:
         return obj
 
@@ -107,10 +106,10 @@ def shorten_tuple(obj: tuple, max_len: int) -> tuple:
 
 
 class ShortenerTransform(Transform):
-    depth_first: bool = False
-    priority: int = 10
+    depth_first = False
+    priority = 10
 
-    def __init__(self, safe_repr=True, keys: list[tuple[str, ...]] | None = None, **sizes):
+    def __init__(self, safe_repr=True, keys=None, **sizes):
         super(ShortenerTransform, self).__init__()
         self.safe_repr = safe_repr
         self.keys = keys

@@ -1,12 +1,9 @@
-from __future__ import annotations
-
 import base64
 import collections
 import copy
 from array import array
 
 from collections.abc import Mapping
-from typing import Any, TypeVar, MutableMapping
 
 binary_type = bytes
 integer_types = int
@@ -109,22 +106,19 @@ def build_key_matcher(prefixes_or_suffixes, type='prefix', case_sensitive=False)
     return matcher
 
 
-def is_builtin_type(obj) -> bool:
+def is_builtin_type(obj):
     return obj.__class__.__module__ in ('__builtin__', 'builtins')
-
-T = TypeVar('T', bound=dict | MutableMapping[str, Any])
-U = TypeVar('U', bound=dict | Mapping[str, Any] | Any)
 
 
 # http://www.xormedia.com/recursively-merge-dictionaries-in-python.html
-def dict_merge(a: T, b: U, silence_errors: bool = False) -> T | U:
+def dict_merge(a, b, silence_errors=False):
     """
     Recursively merges dict's. not just simple a['key'] = b['key'], if
-    both a and b have a key whose value is a dict then dict_merge is called
+    both a and bhave a key who's value is a dict then dict_merge is called
     on both values and the result stored in the returned dictionary.
     """
 
-    if not isinstance(b, (dict, Mapping)):
+    if not isinstance(b, dict):
         return b
 
     result = a
@@ -138,42 +132,44 @@ def dict_merge(a: T, b: U, silence_errors: bool = False) -> T | U:
                 if not silence_errors:
                     raise e
 
-                result[k] = f'<Uncopyable obj:({v})>'
+                result[k] = '<Uncopyable obj:(%s)>' % (v,)
 
     return result
 
 
-def circular_reference_label(data: Any, ref_key=None) -> str:
+def circular_reference_label(data, ref_key=None):
     ref = '.'.join([str(x) for x in ref_key])
-    return f'<CircularReference type:({type(data).__name__}) ref:({ref})>'
+    return '<CircularReference type:(%s) ref:(%s)>' % (type(data).__name__, ref)
 
 
-def float_nan_label(data) -> str:
+def float_nan_label(data):
     return '<NaN>'
 
 
-def float_infinity_label(data) -> str:
+def float_infinity_label(data):
     if data > 1:
         return '<Infinity>'
     else:
         return '<NegativeInfinity>'
 
 
-def unencodable_object_label(data) -> str:
-    return f'<Unencodable type:({type(data).__name__}) base64:({base64.b64encode(data).decode("ascii")})>'
+def unencodable_object_label(data):
+    return '<Unencodable type:(%s) base64:(%s)>' % (type(data).__name__,
+                                                    base64.b64encode(data).decode('ascii'))
 
 
-def undecodable_object_label(data) -> str:
-    return f'<Undecodable type:({type(data).__name__}) base64:({base64.b64encode(data).decode("ascii")})>'
+def undecodable_object_label(data):
+    return '<Undecodable type:(%s) base64:(%s)>' % (type(data).__name__,
+                                                    base64.b64encode(data).decode('ascii'))
 
 try:
     from django.utils.functional import SimpleLazyObject
 except ImportError:
-    SimpleLazyObject = None  # type: ignore[assignment, misc] # MyPy does not like types assigned to None.
+    SimpleLazyObject = None
 
 
 def defaultJSONEncode(o):
-    if SimpleLazyObject is not None and isinstance(o, SimpleLazyObject):
+    if SimpleLazyObject and isinstance(o, SimpleLazyObject):
         if not o._wrapped:
             o._setup()
         return o._wrapped

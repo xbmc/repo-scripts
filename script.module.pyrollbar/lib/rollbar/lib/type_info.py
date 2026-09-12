@@ -1,11 +1,7 @@
-from __future__ import annotations
-
-from typing import Hashable, Any
-
 from rollbar.lib import binary_type, string_types
 
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, Sequence, Set
 from pathlib import Path
 
 
@@ -20,7 +16,7 @@ STRING = 6
 PATH = 7
 
 
-def get_type(obj: Any) -> int:
+def get_type(obj):
     if isinstance(obj, (string_types, binary_type)):
         return STRING
 
@@ -44,9 +40,6 @@ def get_type(obj: Any) -> int:
 
     return DEFAULT
 
-# The keys will be coming from data objects in the payload, so they could be just about anything hashable.
-KeyType = str | int | float | binary_type | Hashable
-
 
 __all__ = [
     "CIRCULAR",
@@ -59,5 +52,4 @@ __all__ = [
     "STRING",
     "PATH",
     "get_type",
-    "KeyType",
 ]

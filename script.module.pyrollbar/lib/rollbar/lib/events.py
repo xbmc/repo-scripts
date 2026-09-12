@@ -1,39 +1,32 @@
-from __future__ import annotations
-from typing import Any, Callable, Literal
+EXCEPTION_INFO = 'exception_info'
+MESSAGE = 'message'
+PAYLOAD = 'payload'
 
-EventHandler = Callable[..., Literal[False] | Any]
-
-EXCEPTION_INFO: Literal['exception_info'] = 'exception_info'
-MESSAGE: Literal['message'] = 'message'
-PAYLOAD: Literal['payload'] = 'payload'
-
-EventType = Literal['exception_info', 'message', 'payload']
-
-_event_handlers: dict[EventType, list[EventHandler]] = {
+_event_handlers = {
     EXCEPTION_INFO: [],
     MESSAGE: [],
     PAYLOAD: []
 }
 
 
-def _check_type(typ: str):
+def _check_type(typ):
     if typ not in _event_handlers:
         raise ValueError('Unknown type: %s. Must be one of %s' % (typ, _event_handlers.keys()))
 
 
-def _add_handler(typ: EventType, handler_fn: EventHandler, pos: int | None = None) -> None:
+def _add_handler(typ, handler_fn, pos):
     _check_type(typ)
 
-    insert_pos = pos if pos is not None else -1
+    pos = pos if pos is not None else -1
     handlers = _event_handlers[typ]
 
     try:
         handlers.index(handler_fn)
     except ValueError:
-        handlers.insert(insert_pos, handler_fn)
+        handlers.insert(pos, handler_fn)
 
 
-def _remove_handler(typ: EventType, handler_fn: EventHandler):
+def _remove_handler(typ, handler_fn):
     _check_type(typ)
 
     handlers = _event_handlers[typ]
@@ -45,7 +38,7 @@ def _remove_handler(typ: EventType, handler_fn: EventHandler):
         pass
 
 
-def _on_event(typ: EventType, target, **kw):
+def _on_event(typ, target, **kw):
     _check_type(typ)
 
     ref = target
@@ -61,27 +54,27 @@ def _on_event(typ: EventType, target, **kw):
 
 # Add/remove event handlers
 
-def add_exception_info_handler(handler_fn: EventHandler, pos: int | None = None) -> None:
+def add_exception_info_handler(handler_fn, pos=None):
     _add_handler(EXCEPTION_INFO, handler_fn, pos)
 
 
-def remove_exception_info_handler(handler_fn: EventHandler) -> None:
+def remove_exception_info_handler(handler_fn):
     _remove_handler(EXCEPTION_INFO, handler_fn)
 
 
-def add_message_handler(handler_fn: EventHandler, pos: int | None = None) -> None:
+def add_message_handler(handler_fn, pos=None):
     _add_handler(MESSAGE, handler_fn, pos)
 
 
-def remove_message_handler(handler_fn: EventHandler) -> None:
+def remove_message_handler(handler_fn):
     _remove_handler(MESSAGE, handler_fn)
 
 
-def add_payload_handler(handler_fn: EventHandler, pos: int | None = None) -> None:
+def add_payload_handler(handler_fn, pos=None):
     _add_handler(PAYLOAD, handler_fn, pos)
 
 
-def remove_payload_handler(handler_fn: EventHandler) -> None:
+def remove_payload_handler(handler_fn):
     _remove_handler(PAYLOAD, handler_fn)
 
 
