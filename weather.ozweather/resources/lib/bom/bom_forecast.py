@@ -303,8 +303,21 @@ def bom_forecast(geohash):
             # Date (Apr 4)
             set_key(weather_data, i, "ShortDate", forecast_datetime.strftime('%b ') + forecast_datetime.strftime('%d').lstrip('0'))
             # Outlook / Condition (same thing)
-            set_key(weather_data, i, "Outlook", forecast_seven_days[i]['short_text'] or "")
-            set_key(weather_data, i, "Condition", forecast_seven_days[i]['short_text'] or "")
+            # BOM sometimes omits short_text for a whole forecast region (seen for "West and South
+            # Gippsland", for example) even while extended_text and/or icon_descriptor are still
+            # present - fall back to those in turn rather than showing nothing
+            if forecast_seven_days[i]['short_text']:
+                outlook_text = forecast_seven_days[i]['short_text']
+            elif forecast_seven_days[i]['extended_text']:
+                outlook_text = forecast_seven_days[i]['extended_text'].split('. ')[0].strip()
+                if outlook_text and not outlook_text.endswith('.'):
+                    outlook_text += '.'
+            elif forecast_seven_days[i]['icon_descriptor']:
+                outlook_text = forecast_seven_days[i]['icon_descriptor'].replace('_', ' ').capitalize() + '.'
+            else:
+                outlook_text = ""
+            set_key(weather_data, i, "Outlook", outlook_text)
+            set_key(weather_data, i, "Condition", outlook_text)
             #  See end of loop for the extended forecast (OutlookLong, ConditionLong)
             #  as we add warnings and sun protection info.OutlookLong / ConditionLong (same thing) - extended text forecast -
 
@@ -334,7 +347,10 @@ def bom_forecast(geohash):
                 else:
                     Logger.error(f'Could not find icon code for BOM icon_descriptor: {forecast_seven_days[i]["icon_descriptor"]} and from short text {descriptor_from_short_text}')
                     # Pop the missing icon descriptor into the outlook to make it easier for people to report in the forum thread
-                    set_key(weather_data, i, "Outlook", f"[{forecast_seven_days[i]['icon_descriptor']}] {forecast_seven_days[i]['short_text']}")
+                    # (using outlook_text, not the possibly-None short_text, so this can't clobber the fallback above with literal "None")
+                    debug_outlook_text = f"[{forecast_seven_days[i]['icon_descriptor']}] {outlook_text}"
+                    set_key(weather_data, i, "Outlook", debug_outlook_text)
+                    set_key(weather_data, i, "Condition", debug_outlook_text)
 
             Logger.debug(f"Icon descriptor is: {icon_descriptor}, icon code is {icon_code}")
             set_keys(weather_data, i, ["OutlookIcon", "ConditionIcon"], f'{icon_code}.png')

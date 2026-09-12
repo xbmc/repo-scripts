@@ -1,3 +1,6 @@
+v2.2.2 (2026-08-26)
+- Fix blank Outlook/Condition text on any day where the BOM omits short_text (falls back to the first sentence of extended_text, then the icon descriptor)
+
 v2.2.1 (2026-08-15)
 - Fix log spam and garbled display text (RainChance, RainAmount, HighTemp, UVIndex, etc. showing "None") for the furthest-out forecast day when the BOM hasn't yet published its data
 - Use shared bossanova808 helpers for settings access and error notifications, for consistency
