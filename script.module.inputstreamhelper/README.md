@@ -90,6 +90,9 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+### v0.8.6 (2026-08-24)
+- Enable Widevine CDM installation from repo on 64-bit ARM (@HiassofT)
+
 ### v0.8.5 (2025-12-29)
 - Fix Widevine CDM installation on 32-bit ARM (@mediaminister)
 
