@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.livetennisscores" name="Live Tennis Scores" version="1.0.0" provider-name="Ben Abulafia">
+	<requires>
+		<import addon="xbmc.python" version="3.0.1"/>
+	</requires>
+	<extension point="xbmc.service" library="default.py"/>
+	<extension point="xbmc.python.script" library="scoreboard.py" name="Live Tennis Scores">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Live tennis score notifications and a scoreboard of the matches in play</summary>
+		<description lang="en_GB">Notifies you while you watch when a tennis match goes on court, when a set is won and when a match finishes, and optionally on break points. Opening the add-on shows the matches in play with set scores, the current game's points, a marker against the player serving and a break-point marker. Covers ATP, WTA, Challenger and ITF.
+
+Scores come from the Live Tennis API (livetennisapi.com), which the add-on's author also operates. You need a key from that service; its free plan needs no card and is enough for this add-on. Paste the key into the add-on's settings. With no key the add-on does nothing.
+
+The free plan allows 100 requests a day, so the add-on checks every 20 minutes by default and will not check more often than every 15 minutes. That is a real limit on how promptly it can report: break points in particular last only a few points, so a check every 15 minutes catches only some of them.</description>
+		<platform>all</platform>
+		<language>en</language>
+		<license>GPL-3.0-or-later</license>
+		<website>https://livetennisapi.com</website>
+		<source>https://github.com/livetennisapi/script.livetennisscores</source>
+		<email>ben@synapsereality.io</email>
+		<news>v1.0.0
+- First release.
+- Service notifications for a match going on court, a set being won, a match finishing, and break points when enabled.
+- Scoreboard window listing the matches in play with set scores, current points, a serve marker and a break-point marker.
+- Checks every 20 minutes by default, never faster than every 15, to stay inside the data provider's free daily request allowance.</news>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>

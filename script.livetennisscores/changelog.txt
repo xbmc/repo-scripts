@@ -1,0 +1,20 @@
+v1.0.0 (2026-09-12)
+- First release.
+- Service notifications for the score changes worth interrupting a viewer for:
+  a match going on court, a set being won, a match finishing, and break points
+  when they are switched on.
+- Scoreboard window listing the matches in play with set scores, the current
+  game's points, a marker against the player serving and a break-point marker.
+- Break point is read as the receiver holding advantage, or the receiver at 40
+  while the server is at 0, 15 or 30. Never during a tiebreak. At most one
+  notification per game.
+- Checks every 20 minutes by default and never faster than every 15 minutes,
+  which keeps a full day inside the data provider's free allowance of 100
+  requests a day (1440 / 15 = 96).
+- A finished match is inferred, not observed: the live list only ever reports
+  matches in progress, so a match must be absent from three consecutive checks
+  before its finish is announced, and no winner is claimed unless the feed
+  named one. A feed outage longer than that can still report a match as
+  finished while it is being played.
+- Needs a Live Tennis API key in the add-on's settings. With no key the add-on
+  stays idle and the scoreboard says what to do about it.
