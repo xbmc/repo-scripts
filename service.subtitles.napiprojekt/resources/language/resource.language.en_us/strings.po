@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Main\n"
+"Report-Msgid-Bugs-To: https://github.com/xbmc/xbmc/issues/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (United States) (http://www.transifex.com/projects/p/kodi-main/language/en_US/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Failed to download the subtitle"
+msgstr ""
+
+msgctxt "#32002"
+msgid "No matching subtitles were found"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Kodi did not provide a video file"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Could not calculate the video hash"
+msgstr ""
+
+msgctxt "#32005"
+msgid "NapiProjekt request limit reached. Try again later"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Could not connect to NapiProjekt"
+msgstr ""
+
+msgctxt "#32007"
+msgid "NapiProjekt returned an invalid response"
+msgstr ""

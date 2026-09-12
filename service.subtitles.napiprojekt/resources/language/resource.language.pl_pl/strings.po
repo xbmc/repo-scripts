@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Main\n"
+"Report-Msgid-Bugs-To: https://github.com/xbmc/xbmc/issues/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/kodi-main/language/pl_PL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl_PL\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32001"
+msgid "Failed to download the subtitle"
+msgstr "Nie udało się pobrać napisów"
+
+msgctxt "#32002"
+msgid "No matching subtitles were found"
+msgstr "Nie znaleziono pasujących napisów"
+
+msgctxt "#32003"
+msgid "Kodi did not provide a video file"
+msgstr "Kodi nie przekazało pliku wideo"
+
+msgctxt "#32004"
+msgid "Could not calculate the video hash"
+msgstr "Nie udało się obliczyć hasha pliku wideo"
+
+msgctxt "#32005"
+msgid "NapiProjekt request limit reached. Try again later"
+msgstr "Osiągnięto limit zapytań NapiProjektu. Spróbuj później"
+
+msgctxt "#32006"
+msgid "Could not connect to NapiProjekt"
+msgstr "Nie udało się połączyć z NapiProjektem"
+
+msgctxt "#32007"
+msgid "NapiProjekt returned an invalid response"
+msgstr "NapiProjekt zwrócił nieprawidłową odpowiedź"
