@@ -1,0 +1,85 @@
+# XBMC Media Center Swedish language file
+# Addon Name: MyEpisodes
+# Addon id: script.myepisodes
+# Addon version: 1.0.2
+# Addon Provider: Maxime Hadjinlian
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-06-09 17:14+0000\n"
+"PO-Revision-Date: 2025-06-01 18:42+0200\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
+"Language-Team: sv\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
+
+msgctxt "Addon Summary"
+msgid "MyEpisodes"
+msgstr "MyEpisodes"
+
+msgctxt "Addon Description"
+msgid "Automatically set watched episodes on MyEpisodes.com"
+msgstr "Ställ automatiskt in sedda avsnitt på MyEpisodes.com"
+
+msgctxt "#32901"
+msgid "General Settings"
+msgstr "Allmänna inställningar"
+
+msgctxt "#32902"
+msgid "Username"
+msgstr "Användarnamn"
+
+msgctxt "#32903"
+msgid "Password"
+msgstr "Lösenord"
+
+msgctxt "#32904"
+msgid "Mark as watched from"
+msgstr "Markera som sedd från"
+
+msgctxt "#32905"
+msgid "Automatically add shows"
+msgstr "Lägg automatiskt till serier"
+
+msgctxt "#32906"
+msgid "Exclude path"
+msgstr "Exkludera sökväg"
+
+msgctxt "#32907"
+msgid "Folder's path (including subfolders)"
+msgstr "Mappens sökväg (inklusive undermappar)"
+
+# empty strings from id 32907 to 32910
+msgctxt "#32911"
+msgid "connected"
+msgstr "ansluten"
+
+msgctxt "#32912"
+msgid "Authentification failed"
+msgstr "Autentiseringen misslyckades"
+
+# empty strings from id 32913 to 32922
+msgctxt "#32923"
+msgid "not found."
+msgstr "hittades inte."
+
+msgctxt "#32924"
+msgid "marked as watched."
+msgstr "markerad som sedd."
+
+msgctxt "#32925"
+msgid "added."
+msgstr "lades till."
+
+msgctxt "#32926"
+msgid "can not be added."
+msgstr "kan inte läggas till."
+
+msgctxt "#32927"
+msgid "unable to retrieve your show lists."
+msgstr "inte kan hämta dina serielistor."
