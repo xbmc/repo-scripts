@@ -1,3 +1,324 @@
+v1.0.90 (2026-08-28)
+- search error handling logs the HTTP status code only: not one byte of any error response body reaches the log, closing the last conceivable echo channel for playback-derived values
+
+v1.0.89 (2026-08-28)
+- search HTTP-error logging keeps only the server-authored message field - error bodies that echo request parameters (the query among them) never reach the log verbatim
+- request builders log parameter KEYS only; the per-property debug lines and underscore-keyed request internals that carried the query value are gone
+- the structured-log scrubber treats _query and friends like their public names
+
+v1.0.88 (2026-08-28)
+- both guessit clients log structural results only (year, type, title presence) - the parsed title itself never reaches the debug log; the static gate now also catches .get('title')-style payload pulls in log lines
+
+v1.0.87 (2026-08-28)
+- the final query summary and the look-alike gate messages no longer carry title values - the last three log lines with viewing history are cleared, verified by an end-to-end test that plants a title through the whole flow including a non-matching result set
+
+v1.0.86 (2026-08-28)
+- every structured mapping that reaches a log line is scrubbed through one recursive helper: titles, filenames and query values become presence markers at every nesting level (fallback attempt lists included), URLs lose query and credentials; end-to-end test plants a title through the whole search flow and asserts no log line carries it
+
+v1.0.85 (2026-08-28)
+- viewing history removed from logging entirely: playback filenames, parsed titles and query values no longer appear in any debug log line - only structural information (coordinates, ratios, cache-key prefixes) remains
+
+v1.0.84 (2026-08-28)
+- guessit log lines identify requests by cache-key prefix only - the playback-derived filename reaches no log line at all
+- a download invocation without an id parameter shows the proper error dialog instead of an uncaught KeyError
+
+v1.0.83 (2026-08-28)
+- a null, empty or non-HTTP download link from the API raises a controlled provider error instead of a raw requests exception with no dialog
+- second deep audit: search error-body logging capped; 503 download errors carry no exception internals; guessit never caches non-object payloads; library titles coerced before comparison; download-model fps setters coerce safely and negative timeshift (a legitimate value) is accepted
+
+v1.0.82 (2026-08-28)
+- season, episode and year InfoLabels are validated at intake (specials sN labels convert first), so a malformed player value can never fail the request and stop the fallback chain
+
+v1.0.81 (2026-08-28)
+- the scraper-written episodeguide field is size-capped (64KB) and rejected on DOCTYPE/ENTITY declarations before XML parsing, matching the remote-manifest protections
+
+v1.0.80 (2026-08-28)
+- cache index mutations verify AFTER releasing the lock and re-run the acquire-merge cycle on loss; combined with merge semantics this makes even a theoretical double lock entry harmless - no interleaving can lose an update
+
+v1.0.79 (2026-08-28)
+- percent-encoded credentials in a URL's authority part (user%3Apass%40host) are decoded and stripped before logging
+- a one-word title (Up, It, Her) is confirmed only by an exactly matching feature title (a year token aside), never by a longer title containing the word
+- the movie title retry validates its year, so an implausible InfoLabel year cannot fail the request and stop the fallback chain
+
+v1.0.78 (2026-08-28)
+- update check compares ALL remote manifests and takes the highest version - a lagging feed could advertise an older release than GitHub already carried
+- Clear Cache recounts statistics honestly instead of hardcoding zero - entries a concurrent invocation wrote during the clear stay counted
+- invocation parameter parsing always returns a mapping and tolerates short argv - RunScript-style calls could crash it
+- a malformed oshash property from a playback integration is dropped instead of failing the search request
+- a failed download stops cleanly after its error dialog instead of running the file-path logic with nothing to write
+- one subtitle row with a bad rating value, null title/release fields or a non-object attributes block renders (or is skipped) without costing the rest of the list
+- unranked sorting survives mixed-type votes/ratings fields
+- error dialogs no longer route the raw exception object into the debug log; connection-failure messages carry the exception class, never the request URL
+- static gate extended to catch payload dumps and exception objects in every log call form (f-string, %%-format, bare argument)
+
+v1.0.77 (2026-08-28)
+- guessit-derived season/episode/year validated at intake, so implausible values can never turn into a failing API request that stops the fallback chain
+- the cache index lock renews its lease during long clears (heartbeat), so a slow holder can no longer be mistaken for crashed and stolen from mid-mutation
+- every exception reaching a log line is reduced to its class name across the whole add-on - error messages embed paths, URLs and payloads
+- remaining parameter-dict log sites redacted; internal static gate (greptile simulator) now enforces all of this in the test suite
+
+v1.0.76 (2026-08-28)
+- the initial InfoLabel metadata log line redacts URL-shaped values, closing the last log site where a playback integration's tokened URL could reach a shared debug log
+
+v1.0.75 (2026-08-28)
+- the media metadata debug log redacts every URL-shaped value, so a library entry resolving to a tokened file URL cannot leak into shared logs
+- non-object entries in the result list are dropped before ranking, so they can no longer re-raise inside the score-failure handler and disable smart ranking for the page
+
+v1.0.74 (2026-08-28)
+- redaction fails closed: a path still percent-decoding after twenty layers is dropped entirely (redacted placeholder in logs, empty filename for searches) instead of passing residue through
+
+v1.0.73 (2026-08-27)
+- both redaction helpers decode percent-encoding to fixpoint before stripping, so double- or deeper-encoded tokens surface and are removed - no encoding depth can smuggle a credential into the log or a search query
+
+v1.0.72 (2026-08-27)
+- the log path redaction decodes percent-encoding before stripping, so a token smuggled inside the path component (video%3Ftoken%3D...) can no longer reach the debug log
+
+v1.0.71 (2026-08-27)
+- multipart RAR hashing works again: Python 3 float division produced a fractional part index that broke the last-part filename, silently dropping the moviehash for every multipart archive
+
+v1.0.70 (2026-08-27)
+- prepared API request URLs (feature lookup, guessit, search) are logged path-only through the redaction helper, so playback-derived query parameters never reach the debug log
+
+v1.0.69 (2026-08-27)
+- a download invocation with a missing or nonnumeric file id raises a controlled provider error with a user-facing dialog instead of an uncaught KeyError
+- a malformed videoinfo.current_size property from a playback integration degrades to hashless search instead of aborting it
+
+v1.0.68 (2026-08-27)
+- Machine Translated and AI Translated settings no longer offer "only" - the API accepts include/exclude for these; a stored "only" maps to include instead of breaking every search
+- guessit logging carries a parsed summary and exception class only - the full payload and urllib errors echo the playback-derived filename and request URL
+
+v1.0.67 (2026-08-27)
+- the download request coerces file_id from the invocation query string to an integer, matching every other numeric field
+- a lock holder that stalls past the stale window releases only its own lock, never a thief's - a third invocation can no longer slip into the mutation
+
+v1.0.66 (2026-08-27)
+- cache writes publish the value and its index entry in one lock hold, so a Clear Cache overlapping a write can never delete the fresh value while registering a dead index key
+- every numeric request-model setter coerces and validates uniformly; parent_feature_id had an inverted comparison rejecting all valid ids
+
+v1.0.65 (2026-08-27)
+- Clear Cache performs its snapshot, property deletion and index rewrite in one lock hold, so a key re-cached mid-clear can never survive untracked
+- repaired three broken request-model setters: id rejected every positive value, languages compared instances to class objects, moviehash called a nonexistent method; languages keeps user preference order (never sorted)
+
+v1.0.64 (2026-08-27)
+- if the cache index lock could ever be lost to pathological contention, the fallback now merges with verification instead of one blind write, so no interleaving can drop an index entry
+
+v1.0.63 (2026-08-27)
+- cache index updates are serialized with a token spinlock over window properties, so concurrent invocations can never drop each other's entries; stale locks from crashed invocations are stolen after two seconds
+
+v1.0.62 (2026-08-27)
+- one malformed result entry can no longer make a whole page of look-alikes pass the title gate and skip the no-year and filename retries
+
+v1.0.61 (2026-08-27)
+- a release year that disagrees with the film's year no longer hides it: the title search is retried without the year, the single most common reason a correctly named file found nothing
+- results matching none of the titles we searched for no longer end the search - the remaining attempts still run, and the look-alikes are shown only when nothing better is found
+- the look-alike gate judges each fallback attempt against the title that attempt searched, and one-word titles (Up, It, Her) are confirmed only by a near-exact feature title, never by a shared token in a release name
+
+v1.0.60 (2026-08-27)
+- fast-track walkthrough (dialog and README) now tells users to disable Unknown sources again after the one-time zip install
+- when the install origin cannot be read and the update does not confirm, the dialog explains repository pinning instead of claiming the update is still installing
+
+v1.0.59 (2026-08-27)
+- hash-failure log lines carry only the exception class - vfs error messages embed the raw playback path, tokens included
+- a features-resolved episode with a nonnumeric season or episode falls back to the id-alone search instead of silently widening to the whole show
+- specials detection matches only bare "sN" episode labels - compound labels like S01E05 no longer get their season zeroed and episode truncated
+
+v1.0.58 (2026-08-27)
+- a specials episode (season 0) resolved through the features lookup keeps its show id and season/episode coordinates instead of degrading to an id-only search
+
+v1.0.57 (2026-08-27)
+- season 0 (specials) is sent to the API instead of being dropped by truthiness filtering
+- fallback search attempts clear id fields they do not name, so a resolved parent id can no longer over-constrain a retry into missing subtitles
+- every derived basename goes through the credential-safe helper, covering stack:// members and other URL-shaped paths
+
+v1.0.56 (2026-08-27)
+- season, episode, year and id fields are coerced to integers at the request model, so InfoLabel strings can never hit integer comparisons or go out mistyped on the wire
+- fixed inverted season validation that rejected every positive season if the setter was used; season 0 (specials) accepted
+- Clear Cache temp deletion honors the same 1-hour safety window as the downloader cleanup, so a subtitle Kodi has not consumed yet is never removed
+- fixed unquoted msgstr in the Chinese (zh_CN) catalog that made Kodi fall back to English; test now validates every shipped catalog
+
+v1.0.55 (2026-08-27)
+- Clear Cache reconciles the index instead of wiping it, so an entry written by a concurrent invocation mid-clear stays tracked for statistics and future clears
+
+v1.0.54 (2026-08-27)
+- cache index writes verify-and-retry, so overlapping invocations can no longer drop each other's entries from Clear Cache and statistics
+
+v1.0.53 (2026-08-27)
+- search query mappings are redacted before logging, so playback URLs carrying access tokens never reach the debug log
+
+v1.0.52 (2026-08-27)
+- invocation arguments are no longer logged verbatim; only a whitelist of known-safe parameters reaches the debug log, so stream tokens from calling add-ons cannot leak
+
+v1.0.51 (2026-08-27)
+- README documentation links point at the GitHub repository, so they work from the installed add-on too
+
+v1.0.50 (2026-08-27)
+- searches invoked without a languages parameter no longer abort before fallbacks can run
+- guessit replies that are valid JSON but not an object are handled cleanly instead of raising
+
+v1.0.49 (2026-08-27)
+- rar archive names go through the credential-safe filename deriver like every other source
+- Clear Cache spares files written in the last minute, so it can no longer race an active download out of its subtitle
+- one malformed subtitle entry can no longer disable smart ranking for the whole result list - it just scores zero
+- release notes trimmed well under the Kodi schema cap
+
+v1.0.48 (2026-08-27)
+- every API response consumer survives a top-level non-object JSON body (null, list, string) - the last of the malformed-response abort class
+
+v1.0.47 (2026-08-27)
+- API responses with a null or wrong-typed data field surface as a normal provider error instead of crashing the search
+
+v1.0.46 (2026-08-27)
+- a missing API key ends the subtitle listing cleanly after the configuration-error dialog instead of crashing mid-search
+
+v1.0.45 (2026-08-27)
+- metadata-enrichment steps tolerate every malformed data shape (TypeError/AttributeError join the caught families) - enrichment is optional and can never abort a search
+
+v1.0.44 (2026-08-26)
+- a scraper episode-guide entry decoding to non-object JSON can no longer abort the search (same degrade-not-abort rule as all other parsing)
+
+v1.0.43 (2026-08-26)
+- the /features lookup now degrades to unknown-id for every malformed response layer (non-list data, non-dict entries, non-dict attributes) - no shape of bad API data can abort a search
+
+v1.0.42 (2026-08-26)
+- security: filename derivation is centralized and strips credentials both before AND after percent-decoding - an encoded '?token=' inside a URL path could previously reappear in the search query and debug log
+
+v1.0.41 (2026-08-26)
+- security hardening: update manifests carrying DOCTYPE or ENTITY declarations are rejected before XML parsing (entity-expansion protection); legitimate manifests never contain them
+
+v1.0.40 (2026-08-26)
+- fixed episode searches aborting when the /features endpoint returns a malformed (non-numeric) parent id: the lookup now falls through to searching the episode id alone
+- release gate enforces the 1500-character addon.xml news schema cap
+
+v1.0.39 (2026-08-26)
+- security: the external-player integration path (videoinfo window properties) derives filenames from the URL path component only - closing the last spot where a stream token could reach the debug log or the search query
+- release pipeline: every GitHub Actions step is pinned to a reviewed commit SHA; secret-named files are denied from shipped zips regardless of extension
+
+v1.0.38 (2026-08-26)
+- security: the last-resort title fallback no longer derives the search query from a raw stream URL - the query string is stripped everywhere a playback URL becomes a filename or log line
+- release packaging denies .secret/.token suffixes and secret/token/apikey-named config files in any shipped directory
+
+v1.0.37 (2026-08-26)
+- security: the remaining playback-URL log sites are redacted (the non-library filename-parse branch still logged the raw path), and filenames derived from stream URLs no longer keep the query string glued on - tokens never reach logs or search queries
+- release infrastructure: write-privileged deploy actions pinned to reviewed commit SHAs; docs no longer instruct passing credentials on the command line
+
+v1.0.36 (2026-08-26)
+- Check for Updates verifies this install can actually receive fast-track updates: an add-on installed from a different repository (typically the official Kodi one) stays pinned there, so instead of a dead-end update prompt it now explains how to switch. Unpinned zip installs remain eligible
+- release packaging denies env files, keys, certificates, logs and editor droppings even from a dirty build workspace
+- release gate now fails when addon.xml news or the README What's New drift behind the current version
+
+v1.0.35 (2026-08-26)
+- security: playback URLs are redacted before reaching the debug log - stream and plugin URLs can carry access tokens or credentials, and debug logs are what users paste on forums
+- update checker streams its manifests and abandons anything over 512 KB instead of parsing an unbounded body
+
+v1.0.34 (2026-08-26)
+- a malformed /features response (valid JSON, wrong-shaped data payload) no longer aborts the subtitle search - the lookup degrades to unknown-id and the existing id/title fallbacks run
+
+v1.0.33 (2026-08-26)
+- regression tests for every review fix from the Kodi repo submission rounds, with two behavior-neutral helper extractions to make them directly testable (player tvshowid guard, invocation-unique subtitle paths, Kodi version fallback)
+
+v1.0.32 (2026-08-26)
+- downloaded subtitle temp names are unique per invocation (uuid): Kodi runs add-on scripts as sub-interpreters inside one process, so the process-id-based names from 1.0.31 could still collide when downloads overlap
+
+v1.0.31 (2026-08-26)
+- fixed non-library playback of shows that ARE in the Kodi library: the empty player DBID overwrote the library id found via filename lookup, skipping the original-title and parent-id refinement that makes localized-title searches work
+- downloaded subtitles use per-invocation unique temp names and cleanup spares files younger than an hour, so overlapping searches can no longer delete or overwrite each other's subtitle
+
+v1.0.30 (2026-08-26)
+- fixed subtitle search aborting for local files smaller than 128 KiB: the hasher returned a scalar sentinel where the caller expected (size, hash), raising ValueError before the name-search fallback could run. Small files now search hashless
+- any hashing failure (unsupported rar layout, vfs error) now degrades to a hashless search instead of aborting; removed a dead duplicate rar-hash implementation
+
+v1.0.29 (2026-08-25)
+- fixed filename (basename) detection mangling plain local paths: a leftover rar:// prefix slice removed six characters from every path, so short paths like /tv/E1.mkv searched as ".mkv" - degraded fallback search and smart ranking. Surfaced by review on the official Kodi repo submission
+
+v1.0.28 (2026-08-25)
+- Kodi version detection in Check for Updates falls back to System.BuildVersion when System.BuildVersionShort is absent (not universal across Kodi releases)
+- compatibility verified on real Kodi Matrix 19.5, Nexus 20.5, Omega 21.3 and Piers 22.0 beta via the new headless smoke-test harness; shipped code held to the true Matrix floor of Python 3.6 by a static gate; CI test matrix widened to Python 3.8-3.13
+
+v1.0.27 (2026-08-25)
+- every API request now carries an X-Kodi-Origin-Repo header with the install channel (repository id, "zip" for manual installs, "unknown" when undetectable), read once per process from Kodi's addon database - Kodi exposes the installing repository nowhere in its Python API. Server-side this gives real distribution statistics across fast-track repo / official Kodi repo / manual zips
+
+v1.0.26 (2026-08-25)
+- after a confirmed update the stale add-on info screen now closes automatically, dropping back to the refreshed add-on list. The info dialog populates its labels once at open and cannot be repainted in place, so it kept showing the old version and icon until manually reopened
+
+v1.0.25 (2026-08-25)
+- new add-on and repository icon: white logo on dark background (color-inverted) - the previous opaque white square glared on Kodi's dark skins. Repository add-on bumped to 1.2.1 to carry the same icon
+
+v1.0.24 (2026-08-25)
+- fixed the fast-track repository warning not firing when the repository is disabled: Kodi's System.HasAddon reports disabled add-ons as installed, so detection now uses JSON-RPC Addons.GetAddonDetails (enabled / disabled / missing). A disabled repository gets a one-step "enable it under My add-ons" hint instead of the full install walkthrough
+
+v1.0.23 (2026-08-25)
+- Check for Updates now warns on the up-to-date result too when the fast-track repository is missing or disabled: being current today does not mean the next update can arrive (Kodi only updates from the repository an add-on was installed from). Same instructions dialog offered from both paths
+
+v1.0.22 (2026-08-25)
+- Check for Updates now respects Kodi's origin pinning: without the OpenSubtitles fast-track repository installed, Kodi would never deliver the advertised version (it only updates from the repository an add-on was installed from). The dialog now shows both the fast-track and the official-Kodi-repo version for the running Kodi release, and offers step-by-step instructions for enabling fast-track updates
+- after a confirmed update, the add-on info screen refreshes so the new version is visible without backing out and re-entering
+
+v1.0.21 (2026-08-25)
+- maintenance release exercising the 1.0.20 update flow end to end: progress dialog while Kodi installs the update in the background, then "Updated to vX.Y.Z" confirmation; no code changes
+
+v1.0.20 (2026-08-25)
+- Check for Updates now reports the actual result: after Yes, a cancellable progress dialog polls the add-on database for up to 60 seconds and confirms "Updated to vX.Y.Z" once Kodi finishes the background install; on timeout or cancel it says the install may still land and where to check. Previously the update installed silently and the new version was only visible by leaving settings and opening the add-on list
+
+v1.0.19 (2026-08-25)
+- compact Check for Updates dialogs: the update prompt shows old → new version on one line plus the question, and the up-to-date / connection-error results fit without scrolling (the dialog scrolls past ~3 lines and cannot be resized)
+
+v1.0.18 (2026-08-25)
+- compact Test Connection dialog (backported from the 2.0.0 branch): username, VIP flag and downloads today on two bold lines. "Remaining downloads" only restated what X / Y already shows, and the level line duplicated the VIP flag; the ok-dialog scrolls past ~3 lines and cannot be resized
+
+v1.0.17 (2026-08-25)
+- maintenance release verifying repository auto-update delivery end to end; the add-on code is identical to 1.0.16
+- fixed the repository source (kodi.opensubtitles.com) listing as an empty folder in Kodi's file manager: GitHub Pages serves no directory autoindex and Kodi's HTTP browser only recognizes plain anchors, so the portal now ships Kodi-parsable directory listings and the documented Install from zip file flow works
+
+v1.0.16 (2026-08-20)
+- fixed Test Connection failing with "ModuleNotFoundError: No module named 'resources.lib.osclient'" when another installed add-on ships its own top-level 'resources' folder. The import-path guard added in 1.0.11 was lost when test_connection.py was rewritten for 1.0.15; it is restored, extended to Clear Cache and Check for Updates, and a test now fails if it ever goes missing again (issue #39)
+- fixed TV episode searches returning nothing when the Kodi library holds a non-IMDb id in its imdbnumber field. That field contains whatever the scraper treats as the item's primary id, which for a TVDB-scraped show is not an IMDb id: it was sent as parent_imdb_id and matched nothing, while the episode's own id was discarded. The field is now only trusted with a 'tt' prefix, uniqueid is preferred, and the episode id is kept as a fallback attempt
+- fixed a subtitle returned in an unexpected shape hiding every other result: ranking and rendering are now guarded per entry, so one odd item is skipped instead of emptying the list and leaving the subtitle dialog open with nothing in it
+- fixed Check for Updates being left out of release zips, which made the settings button do nothing
+
+v1.0.15 (2026-08-18)
+- added Smart Subtitle Matcher and precision ranking engine comparing video filename and Guessit metadata with release groups, sources, and cuts
+- added multi-language top-picks and grouped ranking by user preferred language order
+- added adaptive language memory: dynamically prioritizes last downloaded subtitle language
+- added Kodi Hearing Impaired (SDH) accessibility system reflection and score boost
+- added language grouping when smart matching is disabled, sorted by community popularity
+- added Gzip + Base64 cache compression, reducing memory cache footprint by 70%-85%
+- added selectable Add-on Version row in settings with one-click update check
+- added Smart Account Status display with 3 dedicated lines (Status, Quota & Details, Last Checked) and 24-hour verification expiration
+- added Guessit video filename analysis (/api/v1/utilities/guessit) with 30-day client-side caching
+- added live search cache metrics display (cache_stats) and configurable cache duration (up to 24 hours)
+- improved Test Connection dialog with comprehensive HTTP error handling (400, 401, 406, 429, 5xx)
+- fixed Unicode normalization (NFC) for search queries with diacritics and international titles
+- optimized ID search strategy: omits redundant query and year filters when unique IMDb/TMDb ID exists
+- added informative on-screen search toast displaying active search criteria and languages
+- implemented safe temp directory garbage collection and atomic subtitle download writes
+- added clear cache utility for clearing memory properties and orphaned subtitle files across all namespaces
+- added official OpenSubtitles Kodi repository package and automated GitHub Actions deployment
+- added comprehensive pytest test suite (62 unit, integration, and TV search tests) and GitHub Actions CI workflow
+
+v1.0.14 (2026-08-14)
+- security: stopped writing credentials, session tokens and API keys to the Kodi debug log. The log previously included the password when only one credential was filled in, the full login response (which contains the session token), and the request headers (which contain the API key) - and debug logs are exactly what users share on forums when asking for help
+- expired login sessions now refresh automatically: the cached session token outlives its server-side validity, so downloads on long-running devices failed with "login failed" until the cache expired. A rejected token is now refreshed once and the download retried
+- fixed subtitle list failing to build when a subtitle has no rating
+- failed downloads no longer hand Kodi a path to a subtitle file that was never written
+- added a timeout to the filename-analysis (guessit) request so playback can no longer hang on it
+- User-Agent now reports the real add-on version instead of a hardcoded string
+- fixed addon.xml source link (wrong GitHub organisation name) and the settings section id
+
+v1.0.13 (2026-08-10)
+- TV episode searches now ask OpenSubtitles.com what the id supplied by the video add-on actually refers to, instead of assuming. One cached /features lookup says whether it is a show or an episode, and for an episode it also returns the show's id and the real season/episode numbers, so the search is built correctly whatever the add-on reported
+- fixed TV episode searches for video add-ons that report the show's IMDb/TMDb id rather than the episode's (Umbrella, POV), which 1.0.11 broke by always treating the player's id as an episode id. Add-ons disagree about what they put in that field and nothing local tells the two apart, so the add-on no longer guesses: it tries the show reading first (id + season/episode), then the episode reading (id on its own), and only falls back to a title search if neither matches. That also stops the title fallback from surfacing subtitles for a different show with a similar name (thanks peno64)
+
+v1.0.12 (2026-08-07)
+- Test Connection now works with the credentials as typed: Kodi saves and closes the settings dialog before running the test, so you no longer have to press OK and reopen settings first. The settings reopen once you dismiss the result (thanks rosensama)
+
+v1.0.11 (2026-08-06)
+- fixed Test Connection failing with "ModuleNotFoundError: No module named 'resources.lib.osclient'" when another installed add-on ships its own top-level 'resources' package: the settings script now puts its own directory first on the import path (the v1.0.10 rename did not address this)
+- fixed TV episode searches returning nothing when only the episode's own IMDb/TMDb id is known: the id is now sent on its own instead of alongside query/season/episode, with an automatic title fallback if it finds nothing (thanks peno64)
+- fixed connection and timeout errors crashing with AttributeError instead of reporting the service as unavailable, during login, search and download
+
+v1.0.10 (2026-07-01)
+- fixed "ModuleNotFoundError: No module named 'resources.lib.os'" on some devices (notably Android): added package __init__.py files so imports no longer rely on implicit namespace packages, and renamed the internal 'os' package to 'osclient' to stop it shadowing Python's standard-library os module
+- fixed subtitle search for TV shows in non-English (localized) libraries by querying the show's original title from the Kodi library instead of the translated on-screen title (thanks notoco)
 
 v1.0.9 (2026-03-01)
 - added Test Connection button in settings to verify credentials and view account info

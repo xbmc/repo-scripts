@@ -1,13 +1,28 @@
 
-from resources.lib.os.model.request.abstract import OpenSubtitlesRequest
+from resources.lib.osclient.model.request.abstract import OpenSubtitlesRequest
+from resources.lib.osclient.model.request.subtitles import _to_int
 
 SUB_FORMAT_LIST = ["srt", "sub", "mpl", "webvtt", "dfxp", "txt"]
+
+
+def _to_float(value):
+    """Coerce to float or None - matches the numeric intake policy of the
+    subtitles model; malformed external values must never raise here."""
+    try:
+        if value is None or value == "":
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
 
 
 class OpenSubtitlesDownloadRequest(OpenSubtitlesRequest):
     def __init__(self, file_id: int, sub_format="", file_name="", in_fps: float = None, out_fps: float = None,
                  timeshift: float = None, force_download: bool = None, **catch_overflow):
-        self._file_id = file_id
+        # file_id arrives from the invocation query string as a string -
+        # coerce like every other numeric field so it goes out as an int
+        self._file_id = _to_int(file_id)
         self._sub_format = sub_format
         self._file_name = file_name
         self._in_fps = in_fps
@@ -27,7 +42,8 @@ class OpenSubtitlesDownloadRequest(OpenSubtitlesRequest):
 
     @file_id.setter
     def file_id(self, value):
-        if value <= 0:
+        value = _to_int(value)
+        if value is not None and value <= 0:
             raise ValueError("file_id should be positive integer.")
         self._file_id = value
 
@@ -55,7 +71,8 @@ class OpenSubtitlesDownloadRequest(OpenSubtitlesRequest):
 
     @in_fps.setter
     def in_fps(self, value):
-        if value <= 0:
+        value = _to_float(value)
+        if value is not None and value <= 0:
             raise ValueError("in_fps should be positive number.")
         self._in_fps = value
 
@@ -65,7 +82,8 @@ class OpenSubtitlesDownloadRequest(OpenSubtitlesRequest):
 
     @out_fps.setter
     def out_fps(self, value):
-        if value <= 0:
+        value = _to_float(value)
+        if value is not None and value <= 0:
             raise ValueError("out_fps should be positive number.")
         self._out_fps = value
 
@@ -75,9 +93,9 @@ class OpenSubtitlesDownloadRequest(OpenSubtitlesRequest):
 
     @timeshift.setter
     def timeshift(self, value):
-        if value <= 0:
-            raise ValueError("timeshift should be positive number.")
-        self._timeshift = value
+        # a NEGATIVE shift is legitimate (subtitles running ahead) - the old
+        # check rejected half the valid range; only coerce, never range-limit
+        self._timeshift = _to_float(value)
 
     @property
     def force_download(self):

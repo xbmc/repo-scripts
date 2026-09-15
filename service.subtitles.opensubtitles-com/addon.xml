@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.subtitles.opensubtitles-com"
        name="OpenSubtitles.com"
-       version="1.0.9"
+       version="1.0.90"
        provider-name="amet, opensubtitles, juokelis, opensubtitlesdev">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
@@ -11,7 +11,7 @@
              library="service.py" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">OpenSubtitles.com</summary>
-		<description lang="en_GB">Search and download subtitles for movies and TV-Series from OpenSubtitles.com. Search in 75 languages, 8.000.000+ subtitles, daily updates. Register/Import your account on OpenSubtitles.com before use.</description>
+		<description lang="en_GB">Search and download subtitles for movies and TV-Series from OpenSubtitles.com. Search in 100+ languages, 10,000,000+ subtitles, daily updates. Register/Import your account on OpenSubtitles.com before use.</description>
 		<description lang="ast_ES">Pelis and Subtítulos TV en munches llingües, milenta de subtítulos traducíos y xubíos caldía. Descarga llibre dende la fonte, sofitu API, millones d'usuarios.</description>
 		<description lang="br_FR">Istitloù Filmoù ha TV e meur a yezh, miliadoù a istitloù troet hag uskarget bemdez. Pellgargadenn digoust diouzh ar vammenn, skoazell an API, millionoù a implijerien.</description>
 		<description lang="ca_ES">Subtítols de films i televisió en múltiples idiomes, milers de subtítols traduïts carregats diàriament. Descàrrega gratuïta des de la font, suport de l'API, amb milions d'usuaris.</description>
@@ -51,55 +51,39 @@
 		<description lang="uz_UZ">Film va TV Taglavhalari ko'p tillarda, minglab tarjima qilingan taglavhalar har kuni tizimga yuklanadi. Bepul resursdan yuklab oling, API qo'llaydi, millionlab foydalanuvchilar.</description>
 		<description lang="zh_CN">多语种的电影及剧集字幕，每日更新千余条翻译好的字幕。免费下载，提供API接口，已拥有上百万的用户。</description>
 		<disclaimer lang="en_GB">Users need to provide OpenSubtitles.com username and password in add-on configuration. This is our new extension, old opensubtitles.org will not work on this, but the account can be easily imported on opensubtitles.com.</disclaimer>
-		<news>
-v1.0.9 (2026-03-01)
-- added Test Connection button in settings to verify credentials and view account info
-- show specific error message when search or download fails
-- added search results caching with configurable duration
-- fixed trailing slash on subdirectory folder path
+		<news>v1.0.90 - everything new since v1.0.9 (the version in the official Kodi repository):
 
-v1.0.8 (2025-10-07)
-- performs a query to kodi library if imdb or tmdb ID is missing
+LATEST (1.0.90): error responses log status codes only - not one byte of any response body or request parameter reaches the log
 
-v1.0.7 (2025-08-26)
-- added IMDB and TMDB collection on files for more accurate search to the API
+SEARCH AND MATCHING
+- Smart release matcher (file hash, release group, source, resolution) - best match first with score badge
+- Top picks per preferred language, adaptive language memory, hearing-impaired (SDH) sync
+- Reliable TV episode detection via the API, original titles for localized libraries
+- Filename analysis (guessit) with caching; compressed search cache with Clear Cache button
+- One malformed result never hides or aborts the rest; atomic race-free downloads
 
-v1.0.6 (2024-11-29)
-- fixed issue with RAR archives 
-- handles default chinese language to zh-cn  
+ACCOUNT AND SECURITY
+- Credentials, tokens and playback URLs never reach the debug log
+- Sessions refresh automatically; clear dialogs for every error
+- Account status, quota and VIP shown in settings
 
-v1.0.5 (2024-07-30)
-- fixed issue with portuguese file names
-- added AI translated filter 
+UPDATES
+- Check for Updates with progress and confirmation, aware of Kodi's repository origin pinning
 
-v1.0.4 (2024-01-15)
-- Sanitize language query
-- Improved sorting
-- Improved error messages 
-- Improved usage of moviehash 
-
-v1.0.3 (2023-12-18)
-- Fixed issue with file path
-
-v1.0.2 (2023-08-28)
-- Update user agent header
-
-v1.0.1 (2023-07-28)
-- Remove limit of 10 subtitles for the returned values
-- Fix Portuguese and Brazilian flags
-		</news>
+COMPATIBILITY
+- Verified on real Kodi 19-22; works down to Python 3.6 devices; dark-skin icon</news>
 		<platform>all</platform>
 		<license>GPL-2.0-only</license>
-		<forum>https://forum.opensubtitles.com/t/new-kodi-extension/1673</forum>
-		<website>https://www.opensubtitles.com/en</website>
+		<forum>https://forum.opensubtitles.com/t/new-opensubtitles-com-kodi-subtitles-addon/1673</forum>
+		<website>https://www.opensubtitles.com</website>
 		<email>cto [at] opensubtitles {dot} org</email>
 		<assets>
-			<icon>resources/media/os_logo_512x512.png</icon>
+			<icon>resources/media/os_logo_512x512_inverted.png</icon>
 			<fanart>resources/media/os_fanart.jpg</fanart>
 			<screenshot>resources/media/screenshot_1.jpg</screenshot>
 			<screenshot>resources/media/screenshot_2.jpg</screenshot>
 			<screenshot>resources/media/screenshot_3.jpg</screenshot>
 		</assets>
-		<source>https://github.com/opensubtitlesdev/service.subtitles.opensubtitles-com</source>
+		<source>https://github.com/opensubtitles-dev/service.subtitles.opensubtitles-com</source>
 	</extension>
 </addon>
