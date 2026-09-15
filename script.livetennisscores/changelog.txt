@@ -1,0 +1,39 @@
+v1.0.0 (2026-09-12)
+- First release.
+- Service notifications for the score changes worth interrupting a viewer for:
+  a match going on court, a set being won, a match finishing, and break points
+  when they are switched on.
+- Scoreboard window listing the matches in play with set scores, the current
+  game's points, a marker against the player serving and a break-point marker.
+- Break point is read as the receiver holding advantage, or the receiver at 40
+  while the server is at 0, 15 or 30. Never during a tiebreak. At most one
+  notification per game.
+- Checks every 20 minutes by default and never faster than every 15 minutes,
+  which is 72 and 96 checks a day. A check is not always one request, because
+  the live list is paginated, so the cadence alone cannot bound what a day
+  costs: the add-on also keeps its own count of every request it makes and
+  stops for the rest of the day when it reaches its daily limit. That limit
+  defaults to the free plan's 100 a day, resets at midnight UTC, survives a
+  Kodi restart, and can be raised in the settings for a paid plan. Enough
+  requests for one whole scoreboard read are held back from the polling
+  service, so opening the scoreboard by hand still works late in the day.
+- A finished match is inferred, not observed: the live list only ever reports
+  matches in progress, so a match must be absent from three consecutive checks
+  before its finish is announced, and no winner is claimed unless the feed
+  named one. A feed outage longer than that can still report a match as
+  finished while it is being played. An absence is only counted when the list
+  it is absent from was the complete list -- a list cut short by a page error,
+  by the page cap, by the daily request limit, or by an envelope the add-on
+  cannot read retires nothing and announces no finishes. The scoreboard says
+  so too, rather than showing part of the list as though it were all of it,
+  and it never reports that nothing is in play on the strength of a list it
+  could not fully read.
+- Pasting a key into the settings starts the first check within seconds
+  instead of at the end of the current interval.
+- Opening the scoreboard when the service's copy has gone stale now stores
+  what it reads, so reopening the window costs no further requests.
+- The score cache and the request count are both written to a temporary file
+  and moved into place, so the window can never read a half-written one, and
+  an unreadable one is treated as absent rather than as an error.
+- Needs a Live Tennis API key in the add-on's settings. With no key the add-on
+  stays idle and the scoreboard says what to do about it.
