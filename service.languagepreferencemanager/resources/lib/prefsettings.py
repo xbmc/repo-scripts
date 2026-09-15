@@ -71,7 +71,17 @@ class settings():
       self.audio_original_preflist_enabled = addon.getSetting('enableAudioOriginalPreflist') == 'true'
       self.audio_original_preflist = addon.getSetting('AudioOriginalPreflist')
       if self.audio_original_preflist and self.audio_original_preflist_enabled:
-          self.audio_original_preflist = self.audio_original_preflist.lower().split(',')
+            self.audio_original_preflist = self.audio_original_preflist.lower().split(',')
+            # Expand the user original preferred list with 2 and 3 digits equivalent codes
+            expanded_audio_original_preflist = []
+            for code in self.audio_original_preflist:
+                expanded_codes = multicode_languageTranslate(code)
+                if len(expanded_codes) == 2:
+                    expanded_audio_original_preflist.extend(expanded_codes[1].split(','))
+                else:
+                    log(LOG_INFO, 'Original pref list: lang code not found in db!'\
+                     ' Please report this: {0}'.format(code))
+            self.audio_original_preflist = expanded_audio_original_preflist
       else:
           self.audio_original_preflist = []
       self.sub_prefs_on = addon.getSetting('enableSub') == 'true'
@@ -104,45 +114,45 @@ class settings():
       
       self.AudioPrefs = [(set(), [
           (languageTranslate(addon.getSetting('AudioLang01'), 4, 0) ,
-           languageTranslate(addon.getSetting('AudioLang01'), 4, 3)),
+           languageTranslate(addon.getSetting('AudioLang01'), 4, 2)+","+languageTranslate(addon.getSetting('AudioLang01'), 4, 3)),
           (languageTranslate(addon.getSetting('AudioLang02'), 4, 0) ,
-           languageTranslate(addon.getSetting('AudioLang02'), 4, 3)),
+           languageTranslate(addon.getSetting('AudioLang02'), 4, 2)+","+languageTranslate(addon.getSetting('AudioLang02'), 4, 3)),
           (languageTranslate(addon.getSetting('AudioLang03'), 4, 0) ,
-           languageTranslate(addon.getSetting('AudioLang03'), 4, 3))]
+           languageTranslate(addon.getSetting('AudioLang03'), 4, 2)+","+languageTranslate(addon.getSetting('AudioLang03'), 4, 3))]
       )]
       self.SubtitlePrefs = [(set(), [
           (languageTranslate(addon.getSetting('SubLang01'), 4, 0) ,
-           languageTranslate(addon.getSetting('SubLang01'), 4, 3),
+           languageTranslate(addon.getSetting('SubLang01'), 4, 2)+","+languageTranslate(addon.getSetting('SubLang01'), 4, 3),
            addon.getSetting('SubForced01')),
           (languageTranslate(addon.getSetting('SubLang02'), 4, 0) ,
-           languageTranslate(addon.getSetting('SubLang02'), 4, 3),
+           languageTranslate(addon.getSetting('SubLang02'), 4, 2)+","+languageTranslate(addon.getSetting('SubLang02'), 4, 3),
            addon.getSetting('SubForced02')),
           (languageTranslate(addon.getSetting('SubLang03'), 4, 0) ,
-           languageTranslate(addon.getSetting('SubLang03'), 4, 3),
+           languageTranslate(addon.getSetting('SubLang03'), 4, 2)+","+languageTranslate(addon.getSetting('SubLang03'), 4, 3),
            addon.getSetting('SubForced03'))]
       )]
       self.CondSubtitlePrefs = [(set(), [
           (
               languageTranslate(addon.getSetting('CondAudioLang01'), 4, 0),
-              languageTranslate(addon.getSetting('CondAudioLang01'), 4, 3),
+              languageTranslate(addon.getSetting('CondAudioLang01'), 4, 2)+","+languageTranslate(addon.getSetting('CondAudioLang01'), 4, 3),
               languageTranslate(addon.getSetting('CondSubLang01'), 4, 0),
-              languageTranslate(addon.getSetting('CondSubLang01'), 4, 3),
+              languageTranslate(addon.getSetting('CondSubLang01'), 4, 2)+","+languageTranslate(addon.getSetting('CondSubLang01'), 4, 3),
               addon.getSetting('CondSubForced01'),
               self.CondSubTag
           ),
           (
               languageTranslate(addon.getSetting('CondAudioLang02'), 4, 0),
-              languageTranslate(addon.getSetting('CondAudioLang02'), 4, 3),
+              languageTranslate(addon.getSetting('CondAudioLang02'), 4, 2)+","+languageTranslate(addon.getSetting('CondAudioLang02'), 4, 3),
               languageTranslate(addon.getSetting('CondSubLang02'), 4, 0),
-              languageTranslate(addon.getSetting('CondSubLang02'), 4, 3),
+              languageTranslate(addon.getSetting('CondSubLang02'), 4, 2)+","+languageTranslate(addon.getSetting('CondSubLang02'), 4, 3),
               addon.getSetting('CondSubForced02'),
               self.CondSubTag
           ),
           (
               languageTranslate(addon.getSetting('CondAudioLang03'), 4, 0),
-              languageTranslate(addon.getSetting('CondAudioLang03'), 4, 3),
+              languageTranslate(addon.getSetting('CondAudioLang03'), 4, 2)+","+languageTranslate(addon.getSetting('CondAudioLang03'), 4, 3),
               languageTranslate(addon.getSetting('CondSubLang03'), 4, 0),
-              languageTranslate(addon.getSetting('CondSubLang03'), 4, 3),
+              languageTranslate(addon.getSetting('CondSubLang03'), 4, 2)+","+languageTranslate(addon.getSetting('CondSubLang03'), 4, 3),
               addon.getSetting('CondSubForced03'),
               self.CondSubTag
           )]
