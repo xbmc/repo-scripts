@@ -1,3 +1,7 @@
+3.2.1
++ Fix login and episode updates broken by the myepisodes.com redesign. Every
+POST now carries the site's CSRF token, and show ids are read from the new
+/show/id-<n>/ links.
 3.2.0
 + Important refactor and bug fixes.
 3.0.2

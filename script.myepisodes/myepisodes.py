@@ -6,7 +6,7 @@ from typing import final, TypeVar, Any, Callable, Optional, cast
 import re
 import requests
 from urllib3.util.retry import Retry
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 SHOW_ID_ERR = -1
 
@@ -30,11 +30,22 @@ REGEX_EXPRESSIONS = [
 MYEPISODE_URL = "https://www.myepisodes.com"
 MAX_RETRY_ATTEMPTS = 5
 
+# Show links come in two shapes: /show/id-15082/ on the account pages and
+# /epsbyshow/15082/Name in search results.
+SHOW_LINK = re.compile(r"/(?:show|epsbyshow)/(?:id-)?([0-9]+)")
+
 
 def sanitize(title: str, replace: str) -> str:
     for char in ["[", "]", "_", "(", ")", ".", "-"]:
         title = title.replace(char, replace)
     return title
+
+
+def parse_show_id(href: str) -> Optional[int]:
+    match = SHOW_LINK.search(href)
+    if match is None:
+        return None
+    return int(match.group(1))
 
 
 F = TypeVar("F", bound=Callable[..., Any])
@@ -50,7 +61,7 @@ def logged(func: F) -> F:
     return cast(F, wrapper)
 
 
-def retry_session(retries, backoff_factor=0.5):
+def retry_session(retries: int, backoff_factor: float = 0.5) -> requests.Session:
     session = requests.Session()
     retry = Retry(
         total=retries,
@@ -77,12 +88,45 @@ class MyEpisodes:
         self.title_is_filename = False
         self.is_logged = False
         self.shows: dict[str, int] = {}
+        self.csrf_token: Optional[str] = None
 
     def __del__(self) -> None:
         self.req.close()
 
     def __repr__(self) -> str:
         return f"MyEpisodes('{self.userid}', '{self.password}')"
+
+    def _fetch_csrf_token(self) -> Optional[str]:
+        # The site now guards every POST with a session-bound CSRF token,
+        # handed out as a hidden field on any page render. Grab it from the
+        # login page since that works whether or not we're logged in yet.
+        page = self.req.get(f"{MYEPISODE_URL}/login/")
+        soup = BeautifulSoup(page.content, "html.parser")
+        token_field = soup.find("input", {"name": "csrf_token"})
+        if not isinstance(token_field, Tag):
+            return None
+        value = token_field.get("value")
+        return value if isinstance(value, str) else None
+
+    def _post(
+        self,
+        url: str,
+        params: Optional[dict[str, str]] = None,
+        data: Optional[dict[str, Any]] = None,
+    ) -> requests.Response:
+        if self.csrf_token is None:
+            self.csrf_token = self._fetch_csrf_token()
+
+        post_data = {**(data or {}), "csrf_token": self.csrf_token}
+        response = self.req.post(url, params=params, data=post_data)
+        if response.status_code != 403:
+            return response
+
+        # A 403 on a token-bearing POST means our token went stale. Get a
+        # fresh one and try once more.
+        self.csrf_token = self._fetch_csrf_token()
+        post_data["csrf_token"] = self.csrf_token
+        return self.req.post(url, params=params, data=post_data)
 
     def login(self) -> None:
         login_attempts = MAX_RETRY_ATTEMPTS
@@ -94,10 +138,14 @@ class MyEpisodes:
         }
 
         while login_attempts > 0 and not self.is_logged:
-            data = self.req.post(f"{MYEPISODE_URL}/login/", data=login_data)
+            data = self._post(f"{MYEPISODE_URL}/login/", data=login_data)
             # Quickly check if it seems we are logged on.
             if self.userid.lower() in data.content.decode("utf8").strip().lower():
                 self.is_logged = True
+                return
+            if self.csrf_token is None:
+                # Without a token no POST can succeed, so retrying only makes
+                # Kodi wait longer for the same failure.
                 return
             login_attempts -= 1
 
@@ -120,8 +168,9 @@ class MyEpisodes:
                 continue
 
             link = row.find("a", {"href": True})
-            link_url = link.get("href")
-            showid = int(link_url.split("/")[2])
+            showid = parse_show_id(link.get("href"))
+            if showid is None:
+                continue
 
             show_name = link.text.strip()
             sanitized_show_name = sanitize(show_name, "")
@@ -144,6 +193,11 @@ class MyEpisodes:
 
         for link in soup.findAll("a", href=True):
             if link.string is None:
+                continue
+
+            # Only shows are candidates; the page is full of navigation links
+            # whose text can start with the show name too.
+            if parse_show_id(link.get("href")) is None:
                 continue
 
             link_text = link.string.lower()
@@ -191,12 +245,12 @@ class MyEpisodes:
             "tvshow": name,
             "action": "Search",
         }
-        data = self.req.post(f"{MYEPISODE_URL}/search/", data=search_data)
+        data = self._post(f"{MYEPISODE_URL}/search/", data=search_data)
 
         show_href = self.find_show_link(data.content, name)
         if show_href is None:
             # Try to lookup the list of all the shows to find the exact title
-            data = self.req.post(
+            data = self._post(
                 f"{MYEPISODE_URL}/shows.php", params={"list": name[0].upper()}
             )
             show_href = self.find_show_link(data.content, name, strict=True)
@@ -205,11 +259,7 @@ class MyEpisodes:
         if show_href is None:
             return SHOW_ID_ERR
 
-        try:
-            show_id = int(show_href.split("/")[2])
-        except IndexError:
-            return SHOW_ID_ERR
-
+        show_id = parse_show_id(show_href)
         if show_id is None:
             return SHOW_ID_ERR
 
@@ -246,7 +296,7 @@ class MyEpisodes:
     @logged
     def _add_del_show(self, show_id: int, mode: str = "add") -> bool:
         add_del_data = {"action": mode, "showid": show_id}
-        data = self.req.post(
+        data = self._post(
             f"{MYEPISODE_URL}/ajax/service.php",
             params={"mode": "show_manage"},
             data=add_del_data,
@@ -274,7 +324,7 @@ class MyEpisodes:
         # because the backend of MyEpisodes is so smart that it doesn't
         # understand "True" but only "true"...
         un_watched_data = {key: str(watched).lower()}
-        data = self.req.post(
+        data = self._post(
             f"{MYEPISODE_URL}/ajax/service.php",
             params={"mode": "eps_update"},
             data=un_watched_data,
