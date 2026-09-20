@@ -17,6 +17,7 @@ from __future__ import absolute_import, division, unicode_literals
 
 import os.path
 import sys
+import json
 import math
 import platform
 import socket
@@ -66,7 +67,7 @@ except ImportError:  # Kodi v18 and older
     # pylint: disable=ungrouped-imports
     from xbmc import translatePath
 
-from kodiutils import addon_path, localize, log
+from kodiutils import addon_path, get_setting, get_setting_bool, get_setting_int, localize, log
 
 
 IMAGE_RESULT = None
@@ -78,6 +79,63 @@ USER_AGENT = 'Mozilla/5.0 ({system}; U; {arch}; en-us) Python/{version} (KHTML, 
     arch=platform.architecture()[0],
     version=platform.python_version(),
 )
+
+SERVERS_API = 'https://www.speedtest.net/api/js/servers'
+
+
+def get_servers(search=None, server_id=None, https_only=False, limit=20):
+    """Fetch servers from Ookla's modern JSON endpoint (used by the speedtest.net web client).
+
+    This replaces the deprecated speedtest-servers-static.php XML list.
+    - No arguments -> nearest servers based on the requesting IP (best for automatic mode).
+    - search -> servers matching a city or country query.
+    - server_id -> a single, specific server.
+    """
+    try:  # Python 3
+        from urllib.parse import quote
+    except ImportError:  # Python 2
+        from urllib import quote  # pylint: disable=no-name-in-module
+
+    url = '%s?engine=js&limit=%d' % (SERVERS_API, int(limit))
+    if server_id:
+        url += '&serverid=%s' % quote(str(server_id))
+    elif search:
+        url += '&search=%s' % quote(search)
+    if https_only:
+        url += '&https_functional=true'
+
+    try:
+        request = build_request(url, headers={'Accept': 'application/json'})
+        handler = catch_request(request)
+        if not hasattr(handler, 'read'):
+            return []
+        raw = handler.read()
+        handler.close()
+        data = json.loads(raw.decode('utf-8', 'replace'))
+    except (ValueError, HTTPError, URLError, socket.error, AttributeError):
+        return []
+
+    # The endpoint should return a JSON array; anything else (e.g. an error
+    # object) is treated as "no servers" instead of crashing the iteration.
+    if not isinstance(data, list):
+        return []
+
+    result = []
+    for entry in data:
+        if not entry.get('url'):
+            continue
+        result.append(dict(
+            url=entry['url'],
+            lat=entry.get('lat'),
+            lon=entry.get('lon'),
+            name=entry.get('name', ''),
+            country=entry.get('country', ''),
+            cc=entry.get('cc', ''),
+            sponsor=entry.get('sponsor', ''),
+            host=entry.get('host', ''),
+            id=str(entry.get('id', '')),
+        ))
+    return result
 
 
 class SpeedtestCliServerListError(Exception):
@@ -133,7 +191,7 @@ class FileGetter(threading.Thread):
             if timeit.default_timer() - self.starttime <= 10:
                 request = build_request(self.url)
                 handler = urlopen(request)
-                while not SHUTDOWN_EVENT.isSet():
+                while not SHUTDOWN_EVENT.is_set():
                     self.result.append(len(handler.read(10240)))
                     if not self.result[-1]:
                         break
@@ -155,7 +213,7 @@ class FilePutter(threading.Thread):
 
     def run(self):
         try:
-            if timeit.default_timer() - self.starttime <= 10 and not SHUTDOWN_EVENT.isSet():
+            if timeit.default_timer() - self.starttime <= 10 and not SHUTDOWN_EVENT.is_set():
                 request = build_request(self.url, data=self.data)
                 handler = urlopen(request)
                 handler.read(11)
@@ -175,9 +233,9 @@ def get_attributes_by_tag_name(dom, tag_name):
 def get_config():
     request = build_request('http://www.speedtest.net/speedtest-config.php')
     handler = catch_request(request)
-    if handler is False:
+    if not hasattr(handler, 'read'):
         log(0, 'Could not retrieve speedtest.net configuration')
-        sys.exit(1)
+        return None
     configxml = []
     while True:
         configxml.append(handler.read(10240))
@@ -218,70 +276,53 @@ def get_config():
 
 
 def closest_servers(client, total=False):
+    """Return the closest servers for the client, using the modern JSON endpoint.
 
-    urls = [
-        'https://www.speedtest.net/speedtest-servers-static.php',
-        'http://c.speedtest.net/speedtest-servers-static.php',
-    ]
-    errors = []
-    servers = {}
-    for url in urls:
-        try:
-            request = build_request(url)
-            handler = catch_request(request)
-            if handler is False:
-                # errors.append('%s' % e)
-                raise SpeedtestCliServerListError
-            serversxml = []
-            while not Monitor().abortRequested():
-                serversxml.append(handler.read(10240))
-                if not serversxml[-1]:
-                    break
-            if int(handler.code) != 200:
-                handler.close()
-                raise SpeedtestCliServerListError
-            handler.close()
-            try:
-                if 'minidom' in sys.modules:
-                    root = minidom.parseString(''.join(serversxml))
-                    elements = root.getElementsByTagName('server')
-                else:
-                    root = ElementTree.fromstring(''.encode().join(serversxml))
-                    elements = root.iter(tag='server')
-            except SyntaxError:
-                raise SpeedtestCliServerListError  # pylint: disable=raise-missing-from
-            for server in elements:
-                try:
-                    attrib = server.attrib
-                except AttributeError:
-                    attrib = dict(list(server.attributes.items()))
-                ddd = distance([float(client['lat']), float(client['lon'])], [float(attrib.get('lat')), float(attrib.get('lon'))])
-                attrib['d'] = ddd
-                if ddd not in servers:
-                    servers[ddd] = [attrib]
-                else:
-                    servers[ddd].append(attrib)
-            del root
-            del serversxml
-            del elements
-        except SpeedtestCliServerListError:
-            continue
-        if servers:
-            break
-    if not servers:
-        log(0, 'Failed to retrieve list of speedtest.net servers: {errors}', errors='\n'.join(errors))
+    Selection driven by keys optionally present in ``client``:
+    ``search`` (city/country), ``server_id`` (specific server), ``https_only``.
+    When the client latitude/longitude are known, servers are sorted by real
+    distance; otherwise the JSON order (nearest-by-IP) is preserved.
+    """
+    search = client.get('search') if isinstance(client, dict) else None
+    server_id = client.get('server_id') if isinstance(client, dict) else None
+    https_only = bool(client.get('https_only')) if isinstance(client, dict) else False
+
+    raw = get_servers(search=search, server_id=server_id, https_only=https_only)
+
+    # Fallback: retry without the HTTPS filter, then a plain nearest-by-IP query.
+    # Both fallbacks are logged so a dropped HTTPS/server/location preference is
+    # visible in the Kodi log instead of being silently ignored.
+    if not raw and https_only:
+        log(1, 'No HTTPS-capable servers matched the request; retrying without the HTTPS filter')
+        raw = get_servers(search=search, server_id=server_id, https_only=False)
+    if not raw and (search or server_id):
+        log(1, 'Requested server/location returned no servers; falling back to the nearest servers')
+        raw = get_servers()
+
+    if not raw:
+        log(0, 'Failed to retrieve list of speedtest.net servers')
         sys.exit(1)
-    closest = []
-    for ddd in sorted(servers.keys()):
-        for sss in servers[ddd]:
-            closest.append(sss)
-            if len(closest) == 5 and not total:
-                break
-        else:
-            continue
-        break
-    del servers
-    return closest
+
+    # Sort by distance when we have valid client coordinates.
+    try:
+        client_geo = [float(client['lat']), float(client['lon'])]
+    except (KeyError, TypeError, ValueError):
+        client_geo = None
+
+    if client_geo:
+        for attrib in raw:
+            try:
+                attrib['d'] = distance(client_geo, [float(attrib['lat']), float(attrib['lon'])])
+            except (TypeError, ValueError):
+                attrib['d'] = 99999
+        raw.sort(key=lambda a: a.get('d', 99999))
+    else:
+        for idx, attrib in enumerate(raw):
+            attrib.setdefault('d', float(idx))
+
+    if total:
+        return raw
+    return raw[:5]
 
 
 def get_best_server(servers):
@@ -660,7 +701,8 @@ class SpeedTest(Animation):
             self.display_ping_test(False)
             self.display_gauge_test(False)
             self.display_results(False)
-            self.show_end_result()
+            if IMAGE_RESULT:
+                self.show_end_result()
             self.show_end_result_sp()
             self.display_button_close('visible')
         if control == self.button_close_id:
@@ -725,7 +767,7 @@ class SpeedTest(Animation):
                 thread.start()
                 queue.put(thread, True)
 
-                if not quiet and not SHUTDOWN_EVENT.isSet():
+                if not quiet and not SHUTDOWN_EVENT.is_set():
                     sys.stdout.write('.')
                     sys.stdout.flush()
 
@@ -763,7 +805,7 @@ class SpeedTest(Animation):
                 thread = FilePutter(url, start, size)
                 thread.start()
                 queue.put(thread, True)
-                if not quiet and not SHUTDOWN_EVENT.isSet():
+                if not quiet and not SHUTDOWN_EVENT.is_set():
                     sys.stdout.write('.')
                     sys.stdout.flush()
         finished = []
@@ -800,6 +842,7 @@ class SpeedTest(Animation):
         global SHUTDOWN_EVENT, SOURCE  # pylint: disable=global-statement
         SHUTDOWN_EVENT = threading.Event()
 
+        timeout = get_setting_int('socket_timeout', timeout) or timeout
         socket.setdefaulttimeout(timeout)
 
         if src:
@@ -811,7 +854,23 @@ class SpeedTest(Animation):
         try:
             config = get_config()
         except URLError:
-            return False
+            config = None
+        if not config or not config.get('client'):
+            config = dict(client=dict(ip='', isp='ISP', lat='', lon=''))
+
+        # Server selection (0 = automatic/nearest, 1 = by location, 2 = specific server id)
+        selection = get_setting_int('server_selection', 0)
+        config['client']['https_only'] = get_setting_bool('prefer_https', True)
+        if selection == 1:
+            query = get_setting('location_query', '')
+            if query:
+                config['client']['search'] = query
+                config['client']['lat'] = ''
+                config['client']['lon'] = ''
+        elif selection == 2:
+            server_id = get_setting('server_id', '')
+            if server_id:
+                config['client']['server_id'] = server_id
 
         start_st.append(localize(30962))  # Retrieving speedtest.net server list
         self.update_textbox(start_st)
@@ -868,16 +927,20 @@ class SpeedTest(Animation):
             for _ in range(0, 25):
                 sizes.append(size)
 
-        start_st.append(localize(30973))  # Testing upload speed...
-        self.update_textbox(start_st)
-        ulspeed = self.upload_speed(best['url'], sizes, simple)
-        start_st[-1] = localize(30974, speed=ulspeed * 8 / 1000 / 1000)  # Upload speed
-        self.update_textbox(start_st)
-        self.ul_textbox.setLabel('%.2f' % float(ulspeed * 8 / 1000 / 1000))
-        self.config_gauge(0, ulspeed * 8 / 1000 / 1000, time=3000)
-        Monitor().waitForAbort(2)
+        if get_setting_bool('upload_test', True):
+            start_st.append(localize(30973))  # Testing upload speed...
+            self.update_textbox(start_st)
+            ulspeed = self.upload_speed(best['url'], sizes, simple)
+            start_st[-1] = localize(30974, speed=ulspeed * 8 / 1000 / 1000)  # Upload speed
+            self.update_textbox(start_st)
+            self.ul_textbox.setLabel('%.2f' % float(ulspeed * 8 / 1000 / 1000))
+            self.config_gauge(0, ulspeed * 8 / 1000 / 1000, time=3000)
+            Monitor().waitForAbort(2)
+        else:
+            ulspeed = 0
+            self.ul_textbox.setLabel('-')
 
-        if share:
+        if share and get_setting_bool('result_submit', False):
             dlspeedk = int(round(dlspeed * 8 / 1000, 0))
             ping = int(round(best['latency'], 0))
             ulspeedk = int(round(ulspeed * 8 / 1000, 0))

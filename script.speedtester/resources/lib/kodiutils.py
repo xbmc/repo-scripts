@@ -86,6 +86,21 @@ def get_setting_int(key, default=None):
         return default
 
 
+def get_setting_bool(key, default=None):
+    """Get an add-on setting as boolean"""
+    try:
+        return ADDON.getSettingBool(key)
+    except (AttributeError, TypeError):  # On Krypton or older, or when not a boolean
+        value = get_setting(key, default)
+        if value in ('true', 'True', True):
+            return True
+        if value in ('false', 'False', False):
+            return False
+        return default
+    except RuntimeError:  # Occurs when the add-on is disabled
+        return default
+
+
 def get_global_setting(key):
     """Get a Kodi setting"""
     result = jsonrpc(method='Settings.GetSettingValue', params=dict(setting=key))
