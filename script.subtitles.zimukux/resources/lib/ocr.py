@@ -157,7 +157,6 @@ class BmpOcr:
                 1 if self._is_foreground(char_x_offset + px - one_offset, py) else 0
                 for px, py in self.SAMPLE_POINTS
             ]
-            print(feature_vector)
 
             # Find the best match for the vector
             recognized_char = self._match_digit(feature_vector)

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.3b" provider-name="pizzamx">
+<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.3c" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -20,6 +20,11 @@
             <fanart>resources/fanart.png</fanart>
         </assets>
         <news>
+v0.3c(2026/09/22)
+- Fix captcha verification for the current Yunsuo challenge flow
+- Persist verification cookies to reduce repeated challenges
+- Improve subtitle search reliability
+
 v0.3(2025/06/30)
 - Hardcoded OCR mechanism, credits to @realaboo( and behind-the-scene Gemini Code Assist)
 
