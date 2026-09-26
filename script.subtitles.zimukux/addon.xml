@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.3b" provider-name="pizzamx">
+<addon id="script.subtitles.zimukux" name="ZiMuKuX" version="0.3c" provider-name="pizzamx">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
@@ -20,42 +20,16 @@
             <fanart>resources/fanart.png</fanart>
         </assets>
         <news>
-v0.3(2025/06/30)
-- Hardcoded OCR mechanism, credits to @realaboo( and behind-the-scene Gemini Code Assist)
+v0.3c (2026/09/22)
+- Fix Yunsuo captcha verification
+- Persist verification cookies
+- Improve subtitle search reliability
 
-v0.2c(2024/10/28)
-- Add new OCR vender (Tencent), ref: https://console.cloud.tencent.com/ocr/overview
+v0.3 (2025/06/30)
+- Improved OCR and captcha handling
 
-v0.2b(2024/4/6)
-- Need to resolve Captcha issue again
-- Do change OCR service URL to your own, ref: https://cloud.baidu.com/doc/OCR/s/dk3iqnq51
-
-v0.2.0(2023/5/30)
-- Merged https://github.com/pizzamx/zimuku_for_kodi/pull/18 (big thanks to lm317379829 for solving the captcha issue)
-- Let's bump version a bit
-
-v0.1.9(2022/12/23)
-- Merged https://github.com/pizzamx/zimuku_for_kodi/pull/14
-- New setting allow showing only language suffix of sub file name to prevent the UI from scrolling (slowly!)
-- New setting to allow search with year info. to make result more accurate (default to False, attributed to @fsi044689)
-- Minor tweaks, please refer to PR comment
-
-v0.1.8(2022/10/10)
-- zimuku.org captcha design changed again and this plugin works again
-
-v0.1.7(2022/6/18)
-- zimuku.org code changed again, made adaptions
-
-v0.1.6(2022/5/25)
-- Adaption made for Zimuku's latest "anti-spoofing" mechanism (contribute by @SaneBow)
-- Optimization to reduce the number of requests (contribute by @SaneBow)
-
-v0.1.5(2022/4/22)
-- Adaption made for Zimuku's new anti-spoofing mechanism
-- Misc. bug fix and code tweaks
-- Is COVID-19 gonna last forever?
-
-CHECK https://github.com/pizzamx/zimuku_for_kodi/releases FOR EARLIER RELEASE NOTES...
+Earlier release notes:
+https://github.com/pizzamx/zimuku_for_kodi/releases
         </news>
     </extension>
 </addon>

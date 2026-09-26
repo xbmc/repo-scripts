@@ -19,8 +19,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 
 import os
+import re
 import sys
 import time
+import http.cookiejar
 import urllib
 import requests
 from bs4 import BeautifulSoup
@@ -28,7 +30,8 @@ from ocr import BmpOcr
 
 
 class Zimuku_Agent:
-    def __init__(self, base_url, dl_location, logger, unpacker, settings):
+    def __init__(self, base_url, dl_location, logger, unpacker, settings,
+                 cookie_file=None):
         self.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
         self.ZIMUKU_BASE = base_url
         # self.ZIMUKU_API = '%s/search?q=%%s&vertoken=%%s' % base_url
@@ -36,12 +39,29 @@ class Zimuku_Agent:
         self.INIT_PAGE = base_url + '/?security_verify_data=313932302c31303830'
         self.DOWNLOAD_LOCATION = dl_location
         self.FILE_MIN_SIZE = 1024
+        self.VERIFY_DATA = '313932302c31303830'
+        # OCR 认错是常事，过验证码允许重试几轮
+        self.VERIFY_MAX_TRY = 3
 
         self.logger = logger
         self.unpacker = unpacker
         self.plugin_settings = settings
+
         self.session = requests.Session()
+        # 云锁把「过没过验证码」记在 cookie 里，存下来下次就不用再撞一遍
+        self.cookie_file = cookie_file
+        # 只带一个 UA 太像脚本了，把浏览器本来会带的头补齐
+        self.default_headers = {
+            'User-Agent': self.ua,
+            'Accept': 'text/html, application/xhtml+xml, */*',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Accept-Encoding': 'gzip, deflate',
+            'Connection': 'Keep-Alive',
+            'Upgrade-Insecure-Requests': '1',
+        }
         self.vertoken = ''
+
+        self.load_cookies()
 
         # 一次性调用，获取必需的cookies，验证机制可能之后会变
         self.init_site()
@@ -50,9 +70,46 @@ class Zimuku_Agent:
         # for unittestting purpose
         self.plugin_settings = settings
 
+    def load_cookies(self):
+        """
+        载入上次存下来的 cookie。
+
+        认证通过后云锁会下发 security_session_verify，带着它后续请求不必再破验证码，
+        所以值得存盘复用。
+        """
+        if not self.cookie_file or not os.path.exists(self.cookie_file):
+            return
+        try:
+            jar = http.cookiejar.MozillaCookieJar(self.cookie_file)
+            jar.load(ignore_discard=True, ignore_expires=True)
+            self.session.cookies.update(jar)
+            self.logger.log(sys._getframe().f_code.co_name,
+                            'Loaded cookies from %s' % (self.cookie_file), level=1)
+        except Exception as e:
+            self.logger.log(sys._getframe().f_code.co_name,
+                            "ERROR LOADING COOKIES(%s): %s" % (self.cookie_file, e), level=2)
+
+    def save_cookies(self):
+        if not self.cookie_file:
+            return
+        try:
+            jar = http.cookiejar.MozillaCookieJar(self.cookie_file)
+            for cookie in self.session.cookies:
+                jar.set_cookie(cookie)
+            dir_name = os.path.dirname(os.path.abspath(self.cookie_file))
+            if not os.path.isdir(dir_name):
+                os.makedirs(dir_name)
+            jar.save(ignore_discard=True, ignore_expires=True)
+        except Exception as e:
+            self.logger.log(sys._getframe().f_code.co_name,
+                            "ERROR SAVING COOKIES(%s): %s" % (self.cookie_file, e), level=2)
+
     def init_site(self):
-        self.get_page(self.INIT_PAGE)
-        self.get_page(self.INIT_PAGE)
+        # 有存下来的 cookie 时一次就通，没必要每次都固定打两遍
+        for _ in range(2):
+            _, http_body = self.get_page(self.INIT_PAGE)
+            if http_body is not None and not self.is_challenge(http_body):
+                break
 
     def get_page(self, url, **kwargs):
         """
@@ -70,7 +127,7 @@ class Zimuku_Agent:
         http_body = None
         s = self.session
         try:
-            request_headers = {'User-Agent': self.ua}
+            request_headers = dict(self.default_headers)
             if kwargs:
                 for key, value in list(kwargs.items()):
                     request_headers[key.replace('_', '-')] = value
@@ -90,9 +147,10 @@ class Zimuku_Agent:
                 s.get(url, headers=request_headers)
                 http_response = s.get(url, headers=request_headers)
             """
-            if 'class="verifyimg"' in str(http_response.content):
-                self.verify(url)
-                http_response = s.get(url, headers=request_headers)
+            if self.is_challenge(http_response.content):
+                # 被云锁拦下来了，尝试过验证码；只有过了才值得重发请求
+                if self.verify(url, http_response):
+                    http_response = s.get(url, headers=request_headers)
 
             headers = http_response.headers
             http_body = http_response.content
@@ -102,48 +160,137 @@ class Zimuku_Agent:
 
         return headers, http_body
 
-    def verify(self, url):
-        headers = None
-        http_body = None
+    def verify(self, url, challenge_response=None):
+        """
+        突破云锁（网站防火墙）的「网站访问认证页面」。
+
+        页面里的 YunsuoAutoJump() 干了两件事：
+            1. 把当前地址的 hex 写进 srcurl cookie；
+            2. 再跳到站点根路径的
+               /?security_verify_data=...&security_verify_img=<验证码的 hex>。
+        第二步不是把参数追加到原始搜索地址后面；原页面的 JS 固定跳到根路径。
+
+        Return:
+            bool    是否拿到了通过认证的 cookie。
+        """
         session = self.session
+        request_headers = dict(self.default_headers)
+
+        a = requests.adapters.HTTPAdapter(max_retries=3)
+        session.mount('http://', a)
+        session.mount('https://', a)
+
+        for attempt in range(self.VERIFY_MAX_TRY):
+            self.logger.log(sys._getframe().f_code.co_name,
+                            '[CHALLENGE VERI-CODE] round %d, GET [%s]' % (attempt + 1, url),
+                            level=3)
+            try:
+                if challenge_response is not None and attempt == 0:
+                    http_response = challenge_response
+                else:
+                    http_response = session.get(url, headers=request_headers)
+                if not self.is_challenge(http_response.content):
+                    self.save_cookies()
+                    return True
+
+                img_src = self.get_verify_img_src(http_response.content)
+                if img_src is None:
+                    self.logger.log(sys._getframe().f_code.co_name,
+                                    'CHALLENGE PAGE WITHOUT VERI-CODE IMAGE: %s' % (url),
+                                    level=2)
+                    return False
+
+                code = BmpOcr(img_src).recognize()
+                self.logger.log(sys._getframe().f_code.co_name,
+                                'VERI-CODE RECOGNIZED: %s' % (code), level=1)
+
+                if not code.isdigit() or len(code) != 5:
+                    self.logger.log(sys._getframe().f_code.co_name,
+                                    'INVALID VERI-CODE: %s' % code, level=2)
+                    challenge_response = None
+                    continue
+
+                # 对应 YunsuoAutoJump() 里写 srcurl cookie 的那一步。虽然当前
+                # 页面脚本对带 security_verify_ 的地址会跳过这一步，但云锁的
+                # 服务端在直接访问验证地址时也会校验它；缺少该 cookie 时会把
+                # 正确验证码当成无效验证码。
+                self.set_srcurl_cookie(url)
+
+                # 云锁页面的 JS 无论原始请求是搜索、详情还是下载，都会跳到
+                # 站点根路径提交验证码。之前把参数拼到 url 后面，搜索请求因此
+                # 永远提交到了错误的地址。
+                get_cookie_url = self.verify_url(url, http_response.content, code)
+                submit_headers = dict(request_headers)
+                # 认证页是跳转过去的，浏览器会带上 Referer
+                submit_headers['Referer'] = url
+                submit_response = session.get(get_cookie_url, headers=submit_headers)
+
+                # 提交完立刻确认，免得最后一轮白提交
+                confirmed = session.get(url, headers=request_headers)
+                if not self.is_challenge(confirmed.content):
+                    self.save_cookies()
+                    return True
+                self.logger.log(sys._getframe().f_code.co_name,
+                                'VERI-CODE REJECTED: submit status=%s, response=%s' %
+                                (submit_response.status_code, submit_response.url), level=2)
+                challenge_response = None
+            except Exception as e:
+                self.logger.log(sys._getframe().f_code.co_name,
+                                "ERROR CHALLENGING VERI-CODE(target URL: %s): %s" % (url, e),
+                                level=3)
+
+        return False
+
+    def is_challenge(self, content):
+        """
+        判断响应是不是云锁的认证页。正常页面里不会有这两个特征。
+        """
+        return content is not None and b'class="verifyimg"' in content
+
+    def get_verify_img_src(self, content):
+        """
+        从认证页里取出 base64 编码的验证码图片（不含 data URI 前缀）。
+
+        Return:
+            str 或 None     取不到就返回 None。
+        """
         try:
-            request_headers = {'User-Agent': self.ua}
+            img = BeautifulSoup(content, 'html.parser').find(
+                attrs={'class': 'verifyimg'})
+            src = img.get('src') if img is not None else ''
+            marker = 'data:image/bmp;base64,'
+            return src.split(marker)[1] if marker in src else None
+        except Exception:
+            return None
 
-            a = requests.adapters.HTTPAdapter(max_retries=3)
-            session.mount('https://', a)
+    @staticmethod
+    def to_hex(s):
+        # 对应认证页 JS 里的 stringToHex()
+        return ''.join('%02x' % ord(c) for c in s)
 
-            self.logger.log(sys._getframe().f_code.co_name,
-                            '[CHALLENGE VERI-CODE] requests GET [%s]' % (url), level=3)
+    def set_srcurl_cookie(self, url):
+        """Set the source URL cookie on the same host as the challenge page."""
+        parsed = urllib.parse.urlsplit(url)
+        cookie_kwargs = {'path': '/'}
+        if parsed.hostname:
+            cookie_kwargs['domain'] = parsed.hostname
+        self.session.cookies.set('srcurl', self.to_hex(url), **cookie_kwargs)
 
-            http_response = session.get(url, headers=request_headers)
-
-            if http_response.status_code != 200:
-                soup = BeautifulSoup(http_response.content, 'html.parser')
-                imgSrc = soup.find_all(attrs={'class': 'verifyimg'})[
-                    0].get('src')
-                if imgSrc is not None:
-                    base64 = imgSrc.split('data:image/bmp;base64,')[1]
-                    # 处理编码
-                    ocr = BmpOcr(base64)
-                    text = ocr.recognize()
-                    str1 = ''
-                    i = 0
-                    for ch in text:
-                        if str1 == '':
-                            str1 = hex(ord(text[i]))
-                        else:
-                            str1 += hex(ord(text[i]))
-                        i = i + 1
-                    # 使用带验证码的访问
-                    sep_char = '&' if '?' in url else '?'
-                    get_cookie_url = '%s%s&%s' % (
-                        url, sep_char, 'security_verify_img=' + str1.replace('0x', ''))
-                    http_response = session.get(
-                        get_cookie_url, headers=request_headers)
-
-        except Exception as e:
-            self.logger.log(sys._getframe().f_code.co_name,
-                            "ERROR CHALLENGING VERI-CODE(target URL: %s): %s" % (url, e), level=3)
+    def verify_url(self, url, challenge_content, code):
+        """Build the exact root URL used by the challenge page's JavaScript."""
+        parsed = urllib.parse.urlsplit(url)
+        verify_data = self.VERIFY_DATA
+        match = re.search(
+            rb'security_verify_data=([0-9a-fA-F]+)', challenge_content or b'')
+        if match:
+            verify_data = match.group(1).decode('ascii')
+        return urllib.parse.urlunsplit((
+            parsed.scheme,
+            parsed.netloc,
+            '/',
+            'security_verify_data=%s&security_verify_img=%s' %
+            (verify_data, self.to_hex(code)),
+            ''))
 
     def extract_sub_info(self, sub, lang_info_mode):
         """
@@ -251,6 +398,18 @@ class Zimuku_Agent:
                             (Exception, e), level=3)
             return ''
 
+    @staticmethod
+    def sub_rows(soup):
+        """
+        取出带字幕链接的 <tr>。
+
+        页面里的 <tr> 不一定都含 <a>（表头、其它表格，以及被反爬拦截时返回的认证页），
+        这些行取 .a.text 会抛 AttributeError，所以先过滤掉。
+        """
+        if soup is None:
+            return []
+        return [tr for tr in soup.find_all('tr') if tr.a is not None]
+
     def search(self, title, items):
         """
         搜索字幕
@@ -300,7 +459,7 @@ class Zimuku_Agent:
             s_e_CN = '第%d季第%d集' % (int(items['season']), int(items['episode']))
         if s_e != 'N/A':
             # 1. 从搜索结果中看看是否能直接找到
-            sub_list = soup.find_all('tr')
+            sub_list = self.sub_rows(soup)
             self.logger.log(sys._getframe().f_code.co_name, "to find [%s] in %s" % (
                 s_e, [ep.a.text for ep in sub_list]))
             for sub in reversed(sub_list):
@@ -350,7 +509,11 @@ class Zimuku_Agent:
                     self.logger.log(sys._getframe().f_code.co_name,
                                     'Error getting sub page', level=3)
                     return []
-                subs = soup.tbody.find_all("tr")
+                if soup is None or soup.tbody is None:
+                    self.logger.log(sys._getframe().f_code.co_name,
+                                    'NO SUB LIST IN PAGE: %s' % (url), level=2)
+                    return []
+                subs = self.sub_rows(soup.tbody)
                 unfiltered_sub_list = []
                 for sub in reversed(subs):
                     subtitle = self.extract_sub_info(sub, 2)
@@ -380,7 +543,9 @@ class Zimuku_Agent:
                 self.logger.log(sys._getframe().f_code.co_name,
                                 'Error getting sub page', level=3)
                 return []
-            subs = soup.tbody.find_all("tr")
+            if soup is None or soup.tbody is None:
+                continue
+            subs = self.sub_rows(soup.tbody)
             for sub in reversed(subs):
                 subtitle_list.append(self.extract_sub_info(sub, 2))
 
@@ -678,4 +843,5 @@ class Zimuku_Agent:
             return '', ''
 
     def close(self):
+        self.save_cookies()
         self.session.close()

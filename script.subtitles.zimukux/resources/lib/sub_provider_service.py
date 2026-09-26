@@ -230,9 +230,11 @@ def run():
         os.environ["HTTP_PROXY"] = os.environ["HTTPS_PROXY"] = proxy
 
 
-    # 查询
-    agent = zmkagnt.Zimuku_Agent(zimuku_base_url, __temp__, logger, Unpacker(),
-                                 {'subtype': tpe, 'sublang': lang})
+    # 查询。cookie 存在 profile 目录，避免每次调用都重新过一遍验证码
+    agent = zmkagnt.Zimuku_Agent(
+        zimuku_base_url, __temp__, logger, Unpacker(),
+        {'subtype': tpe, 'sublang': lang},
+        cookie_file=os.path.join(__profile__, 'zimuku_cookies.txt'))
 
     handle_params(params)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
