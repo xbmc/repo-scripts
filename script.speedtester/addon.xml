@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.speedtester" name="Speed Tester" version="1.1.3+matrix.1" provider-name="Dr0idGuy, dagwieers">
+<addon id="script.speedtester" name="Speed Tester" version="2.0.0" provider-name="Dr0idGuy, dagwieers, TomSzo_HUN">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -9,16 +9,22 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary lang="en_GB">Test your Internet bandwidth</summary>
-    <description lang="en_GB">This add-on tests your Internet bandwith and reports both download and upload speeds and latency from within Kodi.
+    <description lang="en_GB">This add-on tests your Internet bandwidth and reports download and upload speeds and latency from within Kodi.
 
-Use this if you are experiencing streaming issues and you suspect your network to be the cause.</description>
+Servers are selected automatically based on your location, or you can pick a city, country or specific server. Use this if you are experiencing streaming issues and suspect your network to be the cause.</description>
     <disclaimer lang="en_GB">Speed Tester is powered by speedtest.net</disclaimer>
-    <language>en</language>
+    <language>en de es fr hu it nl pl pt ru zh</language>
     <license>Apache-2.0</license>
-    <email>dag@wieers.com</email>
     <website>https://kodi.wiki/view/Add-on:Speed_Tester</website>
-    <source>https://github.com/add-ons/script.speedtester</source>
+    <source>https://github.com/TomSzo/script.speedtester</source>
     <news>
+v2.0.0 (2026-07-26)
+- Modern Ookla server discovery (api/js/servers) replacing the deprecated servers-static.php list (@TomSzo_HUN)
+- Automatic nearest-server selection worldwide, plus optional city/country search or specific server ID (@TomSzo_HUN)
+- Prefer-HTTPS server option and configurable connection timeout (@TomSzo_HUN)
+- Optional download-only mode and optional result submission, off by default (@TomSzo_HUN)
+- Modern settings format and localization for 11 languages (@TomSzo_HUN)
+- Python 3.9-3.12 compatibility (threading is_set) for Kodi 19-21 Omega (@TomSzo_HUN)
 v1.1.3 (2022-01-26)
 - Add support for Python 3.9 and later (@dobo90)
 - Add Dutch translations (@dagwieers)

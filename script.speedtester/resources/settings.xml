@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+    <section id="script.speedtester">
+        <category id="server" label="30900">
+            <group id="1" label="30901">
+                <setting id="server_selection" type="integer" label="30902" help="30903">
+                    <level>0</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="30904">0</option>
+                            <option label="30905">1</option>
+                            <option label="30906">2</option>
+                        </options>
+                    </constraints>
+                    <control type="spinner" format="integer"/>
+                </setting>
+                <setting id="location_query" type="string" label="30907" help="30908">
+                    <level>0</level>
+                    <default></default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible" setting="server_selection" operator="is">1</dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30907</heading>
+                    </control>
+                </setting>
+                <setting id="server_id" type="string" label="30909" help="30910">
+                    <level>0</level>
+                    <default></default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible" setting="server_selection" operator="is">2</dependency>
+                    </dependencies>
+                    <control type="edit" format="string">
+                        <heading>30909</heading>
+                    </control>
+                </setting>
+                <setting id="prefer_https" type="boolean" label="30911" help="30912">
+                    <level>1</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="test" label="30920">
+            <group id="1">
+                <setting id="upload_test" type="boolean" label="30921" help="30922">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="result_submit" type="boolean" label="30923" help="30924">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="advanced" label="30930">
+            <group id="1">
+                <setting id="socket_timeout" type="integer" label="30931" help="30932">
+                    <level>2</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>5</minimum>
+                        <step>1</step>
+                        <maximum>60</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>false</popup>
+                    </control>
+                </setting>
+                <setting id="max_log_level" type="integer" label="30933" help="30934">
+                    <level>2</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="30935">0</option>
+                            <option label="30936">1</option>
+                            <option label="30937">2</option>
+                            <option label="30938">3</option>
+                        </options>
+                    </constraints>
+                    <control type="spinner" format="integer"/>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
