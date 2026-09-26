@@ -1,0 +1,40 @@
+# SubtitleDB
+msgid ""
+msgstr ""
+"Project-Id-Version: service.subtitles.subtitledb\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "API address"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Where to ask. Change this only to point at your own copy of the API."
+msgstr ""
+
+msgctxt "#32003"
+msgid "Subtitles per language"
+msgstr ""
+
+msgctxt "#32004"
+msgid "The most to list for each language. Past 100, each further 100 is one more request."
+msgstr ""
+
+msgctxt "#32011"
+msgid "SubtitleDB did not answer"
+msgstr ""
+
+msgctxt "#32012"
+msgid "That subtitle could not be downloaded"
+msgstr ""
+
+msgctxt "#32013"
+msgid "{0} lines"
+msgstr ""
