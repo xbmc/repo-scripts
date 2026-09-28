@@ -1,10 +1,4 @@
-"""Logging utilities for Skin Shortcuts.
-
-Usage:
-    from skinshortcuts.log import get_logger
-    log = get_logger("TemplateBuilder")
-    log.debug("Loading templates...")  # -> script.skinshortcuts: TemplateBuilder - ...
-"""
+"""Logging utilities, tagging each message with the addon and the calling component."""
 
 from __future__ import annotations
 
@@ -38,7 +32,7 @@ class Logger:
         return f"{PREFIX} {msg}"
 
     def _log(self, msg: str, level: int | None = None) -> None:
-        """Write to the Kodi log, or stdout when running outside Kodi."""
+        """Log to Kodi, or to stdout when running outside it."""
         formatted = self._format(msg)
         if IN_KODI:
             if level is None:
@@ -80,10 +74,7 @@ _notified: set[tuple[str, str]] = set()
 
 
 def notify(heading: str, message: str) -> None:
-    """Fire a Kodi notification, once per identical heading+message this run.
-
-    No-op outside Kodi so loaders stay testable.
-    """
+    """Fire a Kodi notification, once per identical heading and message; outside Kodi a no-op."""
     if not IN_KODI:
         return
     key = (heading, message)

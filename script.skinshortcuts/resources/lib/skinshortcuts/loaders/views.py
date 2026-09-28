@@ -7,7 +7,7 @@ from pathlib import Path
 from ..constants import DEFAULT_VIEW_PREFIX
 from ..exceptions import ViewConfigError
 from ..models.views import View, ViewConfig, ViewContent
-from .base import get_attr, parse_xml
+from .base import get_attr, parse_xml, warn_duplicate_names
 
 
 def load_views(path: str | Path) -> ViewConfig:
@@ -21,7 +21,10 @@ def load_views(path: str | Path) -> ViewConfig:
 
     prefix = get_attr(root, "prefix") or DEFAULT_VIEW_PREFIX
     views = _parse_views(root, path_str)
+    warn_duplicate_names((v.id for v in views), "view", path_str)
+
     content_rules = _parse_rules(root, path_str, views)
+    warn_duplicate_names((c.name for c in content_rules), "content", path_str)
 
     return ViewConfig(
         views=views,
@@ -62,15 +65,15 @@ def _parse_rules(root, path: str, views: list[View]) -> list[ViewContent]:
     content_rules = []
 
     for elem in rules_elem.findall("content"):
-        content = _parse_content(elem, path, view_ids)
+        content = _parse_content_rule(elem, path, view_ids)
         if content:
             content_rules.append(content)
 
     return content_rules
 
 
-def _parse_content(elem, path: str, valid_view_ids: set[str]) -> ViewContent | None:
-    """Parse a content element."""
+def _parse_content_rule(elem, path: str, valid_view_ids: set[str]) -> ViewContent | None:
+    """Parse a content element into a view content rule."""
     name = get_attr(elem, "name")
     if not name:
         raise ViewConfigError(path, "Content rule missing 'name' attribute")

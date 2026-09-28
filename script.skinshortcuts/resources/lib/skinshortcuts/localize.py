@@ -26,16 +26,7 @@ def LANGUAGE(string_id: int) -> str:
 
 
 def resolve_label(label: str) -> str:
-    """Resolve a label string to its localized value.
-
-    Handles formats:
-        $LOCALIZE[#####] - Kodi/skin string ID
-        $NUMBER[#####] - Numeric value
-        $ADDON[addon.id #####] - Addon string ID
-        32000-32999 - Script string ID (auto-wrapped)
-        ##### - Plain number treated as $LOCALIZE string ID
-        Plain text - returned as-is
-    """
+    """Resolve a $LOCALIZE, $ADDON or bare string ID to its localized value; text passes through."""
     if not label or not IN_KODI:
         return label
 

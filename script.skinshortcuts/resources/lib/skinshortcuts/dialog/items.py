@@ -13,12 +13,11 @@ try:
 except ImportError:
     IN_KODI = False
 
-from ..conditions import evaluate_condition
-from ..loaders.base import apply_suffix_transform
+from ..conditions import evaluate_condition, suffix_condition
 from ..localize import LANGUAGE, resolve_label
-from ..models import Action, BrowseSource, IconSource, MenuItem
-from ..models.menu import ContextMenu, ContextMenuButton
-from ..providers import normalize_image
+from ..models.background import BrowseSource
+from ..models.menu import Action, ContextMenu, ContextMenuButton, IconSource, MenuItem
+from ..providers.browse import normalize_image
 from .base import (
     CONTROL_ADD,
     CONTROL_CHOOSE_SHORTCUT,
@@ -38,7 +37,7 @@ from .properties import BUTTON_ONLY_TYPES
 
 if TYPE_CHECKING:
     from ..manager import MenuManager
-    from ..models import PropertySchema
+    from ..models.property import PropertySchema
     from ..models.menu import SubDialog
 
 CONTEXT_DEFAULT_BUTTONS = (
@@ -68,17 +67,14 @@ def _default_context_labels(item: MenuItem) -> dict[int, str]:
     }
 
 
-def _browse_path(browse_type: int, title: str, start: str = "") -> str:
+def _browse_for_file(browse_type: int, title: str, start: str = "") -> str:
     """Browse for a file, unwrapping the image:// form Kodi's image browser returns."""
     result = xbmcgui.Dialog().browse(browse_type, title, "files", defaultt=start)
     return normalize_image(result) if isinstance(result, str) else ""
 
 
 class ItemsMixin:
-    """Mixin providing item operations - add, delete, move, label, icon, action.
-
-    Requires DialogBaseMixin first.
-    """
+    """Mixin providing item operations - add, delete, move, label, icon, action."""
 
     menu_id: str
     manager: MenuManager | None
@@ -94,7 +90,8 @@ class ItemsMixin:
     if TYPE_CHECKING:
         from typing import Literal
 
-        from ..models import Content, Widget, WidgetGroup
+        from ..models.menu import Content
+        from ..models.widget import Widget, WidgetGroup
 
         def _get_selected_index(self) -> int: ...
         def _get_selected_item(self) -> MenuItem | None: ...
@@ -144,7 +141,7 @@ class ItemsMixin:
         """Pick a widget when adding to a widget submenu."""
         from pathlib import Path
 
-        from ..loaders import load_widgets
+        from ..loaders.widget import load_widgets
 
         widgets_path = Path(self.shortcuts_path) / "widgets.xml"
         widget_config = load_widgets(widgets_path)
@@ -163,7 +160,7 @@ class ItemsMixin:
 
     def _create_item_from_widget(self, widget) -> MenuItem:
         """Create a MenuItem from a Widget using the standard mapping."""
-        from ..models import Widget
+        from ..models.widget import Widget
 
         if not isinstance(widget, Widget):
             raise TypeError("Expected Widget instance")
@@ -185,6 +182,8 @@ class ItemsMixin:
             properties["widgetSource"] = widget.source
         if widget.label:
             properties["widgetLabel"] = widget.label
+        if self.property_schema:
+            properties = {self.property_schema.declared_name(k): v for k, v in properties.items()}
 
         return MenuItem(
             name=widget.name,
@@ -194,7 +193,7 @@ class ItemsMixin:
         )
 
     def _make_unique_item_name(self, base_name: str) -> str:
-        """Generate a unique item name by appending a counter suffix if needed."""
+        """Make a unique item name by appending a counter suffix if needed."""
         existing_names = {item.name for item in self.items}
 
         if base_name not in existing_names:
@@ -250,7 +249,7 @@ class ItemsMixin:
             self._rebuild_list(focus_index=new_index)
 
     def _set_label(self) -> None:
-        """Change the label of selected item."""
+        """Set the label of the selected item."""
         if not self.manager:
             return
 
@@ -277,7 +276,7 @@ class ItemsMixin:
             self._refresh_selected_item()
 
     def _set_icon(self) -> None:
-        """Browse for a new icon using icon sources from menus.xml."""
+        """Set the icon by browsing from the icon sources in menus.xml."""
         if not self.manager:
             return
 
@@ -357,7 +356,7 @@ class ItemsMixin:
         self._refresh_selected_item()
 
     def _restore_deleted_item(self) -> None:
-        """Show picker to restore a previously deleted item."""
+        """Restore a previously deleted item chosen from a picker."""
         if not self.manager:
             return
 
@@ -427,9 +426,9 @@ class ItemsMixin:
 
         if not visible_sources:
             if default_path:
-                result = _browse_path(browse_type, title, default_path)
+                result = _browse_for_file(browse_type, title, default_path)
                 return result if result and result != default_path else None
-            return _browse_path(browse_type, title) or None
+            return _browse_for_file(browse_type, title) or None
 
         while True:
             listitems = []
@@ -446,15 +445,15 @@ class ItemsMixin:
             selected = picker_select("browse", title, listitems, useDetails=True)
 
             if selected == -1:
-                return None  # Cancelled
+                return None
 
             source = visible_sources[selected]
             path = source.path
 
             if path.lower() == "browse":
-                result = _browse_path(browse_type, title)
+                result = _browse_for_file(browse_type, title)
             else:
-                result = _browse_path(browse_type, title, path)
+                result = _browse_for_file(browse_type, title, path)
 
             if result and result != path:
                 return result
@@ -483,7 +482,7 @@ class ItemsMixin:
 
         rows = []
         for button in buttons:
-            condition = apply_suffix_transform(button.condition, self.property_suffix)
+            condition = suffix_condition(button.condition, self.property_suffix)
             if condition and not evaluate_condition(condition, props):
                 continue
             if button.visible and not xbmc.getCondVisibility(button.visible):
@@ -524,14 +523,14 @@ class ItemsMixin:
         related: Mapping[str, str | None] | None = None,
         apply_suffix: bool = True,
     ) -> None:
-        """Unified property setter for menu items.
-
-        Writes the manager for persistence and the local item for the UI.
-        """
+        """Set an item property in the manager and on the local item, under its declared name."""
         if not self.manager:
             return
 
+        schema = self.property_schema
         prop_name = self._suffixed_name(name) if apply_suffix else name
+        if schema:
+            prop_name = schema.declared_name(prop_name)
 
         self.manager.set_custom_property(self.menu_id, item.name, prop_name, value)
         if value:
@@ -547,6 +546,8 @@ class ItemsMixin:
         if related:
             for rel_name, rel_value in related.items():
                 rel_prop_name = self._suffixed_name(rel_name) if apply_suffix else rel_name
+                if schema:
+                    rel_prop_name = schema.declared_name(rel_prop_name)
                 self.manager.set_custom_property(
                     self.menu_id, item.name, rel_prop_name, rel_value
                 )
@@ -558,7 +559,3 @@ class ItemsMixin:
                     listitem = self._get_selected_listitem()
                     if listitem:
                         listitem.setProperty(rel_prop_name, "")
-
-    def _edit_submenu(self) -> None:
-        """Edit submenu - implemented by SubdialogsMixin."""
-        raise NotImplementedError

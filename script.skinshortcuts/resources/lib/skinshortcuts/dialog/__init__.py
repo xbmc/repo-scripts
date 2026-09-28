@@ -1,19 +1,4 @@
-"""Management dialog package for skin shortcuts.
-
-This package provides the ManagementDialog class for editing menus,
-composed of several mixins for separation of concerns:
-
-- DialogBaseMixin: Core initialization, list management, event routing
-- ItemsMixin: Item operations (add, delete, move, label, icon, action)
-- PickersMixin: Shortcut and widget picker dialogs
-- PropertiesMixin: Property management (widget, background, toggle, options)
-- SubdialogsMixin: Subdialog management (submenu editing, onclose handling)
-
-Public API:
-- ManagementDialog: The complete dialog class
-- show_management_dialog(): Convenience function to show the dialog
-- get_shortcuts_path(): Get the current skin's shortcuts folder path
-"""
+"""Management dialog for editing menus, composed from this package's mixins."""
 
 from __future__ import annotations
 

@@ -2,22 +2,19 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator
+from itertools import chain
 from typing import Any
 
+from .constants import BACKGROUND_SIBLINGS, WIDGET_EXTRAS, WIDGET_SIBLINGS
+from .loaders.base import iter_nested
 from .log import get_logger
 from .models.background import Background, BackgroundConfig, BackgroundGroup
 from .models.override import Override
 from .models.property import PropertySchema
 from .models.widget import Widget, WidgetConfig, WidgetGroup
-from .userdata import MenuItemOverride, UserData
+from .userdata import MenuItemDiff, UserData
 
 log = get_logger("Migrations")
-
-WIDGET_SIBLINGS = ("Label", "Path", "Type", "Target", "Source")
-BACKGROUND_SIBLINGS = ("Label", "Path", "Type", "PlaylistType")
-# baked onto a widget the user added, never derived back, so not siblings to drop
-WIDGET_EXTRAS = ("Limit", "SortBy", "SortOrder")
 
 # keys the widget and background machinery writes; renaming one strips a user's stored pick
 RESERVED = (
@@ -39,15 +36,10 @@ def apply_overrides(
     known_properties = set(property_schema.properties) | {
         b.property_name for b in property_schema.buttons.values() if b.property_name
     }
-    known_widgets = {
-        w.name: w for w in _leaves(widgets.widgets, widgets.groupings, Widget, WidgetGroup)
-    }
-    known_backgrounds = {
-        b.name: b
-        for b in _leaves(
-            backgrounds.backgrounds, backgrounds.groupings, Background, BackgroundGroup
-        )
-    }
+    known_widgets = _definitions_by_name(widgets.widgets, widgets.groupings, Widget, WidgetGroup)
+    known_backgrounds = _definitions_by_name(
+        backgrounds.backgrounds, backgrounds.groupings, Background, BackgroundGroup
+    )
 
     plan = (
         [(o, "property", known_properties) for o in property_schema.overrides]
@@ -112,23 +104,18 @@ def _apply_one(userdata: UserData, override: Override, kind: str, known: Any) ->
     return count
 
 
-def _leaves(flat: list, groupings: list, leaf_type: type, group_type: type) -> Iterator[Any]:
-    """Every leaf, top level and nested inside groups."""
-    yield from flat
-    stack = list(groupings)
-    while stack:
-        node = stack.pop()
-        if isinstance(node, group_type):
-            stack.extend(node.items)
-        elif isinstance(node, leaf_type):
-            yield node
+def _definitions_by_name(
+    flat: list, groupings: list, item_type: type, group_type: type
+) -> dict[str, Any]:
+    """Definitions by name, top level first; a repeated name keeps its first."""
+    known: dict[str, Any] = {}
+    for definition in chain(flat, iter_nested(groupings, item_type, group_type)):
+        known.setdefault(definition.name, definition)
+    return known
 
 
 def _slot_keys(properties: dict[str, str], name: str) -> list[str]:
-    """The property key plus its numbered slots, so widget also covers widget.2.
-
-    The slot must be a number, or background.2Label would read as a slot of background.
-    """
+    """The property key plus its numbered slots."""
     return [k for k in properties if k == name or _slot_of(k, name).isdigit()]
 
 
@@ -140,14 +127,14 @@ def _slot_of(key: str, name: str) -> str:
 
 
 def _sibling_names(kind: str, key: str) -> list[str]:
-    """The baked keys the dialog writes beside a stored widget or background name."""
+    """The keys the dialog writes beside a stored widget or background name."""
     base, _, slot = key.partition(".")
     tail = f".{slot}" if slot else ""
     parts = BACKGROUND_SIBLINGS if kind == "background" else WIDGET_SIBLINGS
     return [f"{base}{part}{tail}" for part in parts]
 
 
-def _move_keys(item: MenuItemOverride, override: Override) -> int:
+def _move_keys(item: MenuItemDiff, override: Override) -> int:
     """Rename a stored property, or drop it when the skin retired it outright."""
     changed = 0
     for key in _slot_keys(item.properties, override.replace):
@@ -176,11 +163,7 @@ def _move_keys(item: MenuItemOverride, override: Override) -> int:
 
 
 def _stale_siblings(kind: str, key: str, element: Any) -> list[str]:
-    """Baked keys the new definition supplies again; a user-set label is not one of them.
-
-    A user's own path is stored under a picker-generated name no override matches, so a
-    slot naming a skin element only holds what the picker put there.
-    """
+    """Sibling keys the new definition supplies again; a user-set label is not one of them."""
     base, _, slot = key.partition(".")
     tail = f".{slot}" if slot else ""
 
@@ -192,7 +175,7 @@ def _stale_siblings(kind: str, key: str, element: Any) -> list[str]:
     return [f"{base}{part}{tail}" for part in parts]
 
 
-def _move_values(item: MenuItemOverride, override: Override, kind: str, known: Any) -> int:
+def _move_values(item: MenuItemDiff, override: Override, kind: str, known: Any) -> int:
     """Point a stored widget or background name at its replacement, or clear it."""
     changed = 0
     for key in _slot_keys(item.properties, kind):

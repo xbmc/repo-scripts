@@ -16,12 +16,10 @@ try:
 except ImportError:
     IN_KODI = False
 
-from .config import SkinConfig
 from .constants import INCLUDES_FILE, MENUS_FILE, VIEWS_FILE, get_shortcuts_path
 from .hashing import generate_config_hashes, hash_file, needs_rebuild, write_hashes
 from .localize import LANGUAGE
 from .log import get_logger
-from .userdata import get_userdata_path, save_userdata
 
 log = get_logger("Entry")
 
@@ -81,11 +79,7 @@ def _warn_unsupported(marker: Path) -> None:
 
 
 def _skin_supported(shortcuts_path: str, *, menus_only: bool = False) -> bool:
-    """True if the skin has v3 config; otherwise warn (unless ignored) and return False.
-
-    Clears a stale ignore marker once the skin is supported.
-    menus_only: manage edits menus only; views.xml is a separate runscript.
-    """
+    """True if the skin has v3 config, clearing a stale ignore marker; else warn unless ignored."""
     path = Path(shortcuts_path)
     marker = _unsupported_marker()
     if (path / MENUS_FILE).exists() or (not menus_only and (path / VIEWS_FILE).exists()):
@@ -136,6 +130,8 @@ def build_includes(
 
         log.debug(f"Loading config from: {shortcuts_path}")
 
+        from .config import SkinConfig
+
         config = SkinConfig.load(shortcuts_path)
         log.info(
             f"Loaded {len(config.menus)} menus, "
@@ -163,6 +159,8 @@ def build_includes(
             output_file = Path(out_path) / INCLUDES_FILE
             config.build_includes(str(output_file))
             log.info(f"Generated: {output_file}")
+
+        from .userdata import save_userdata
 
         if config.migrated and save_userdata(config.userdata, config.userdata_path):
             log.info(f"Applied {config.migrated} skin override(s) to userdata")
@@ -256,8 +254,8 @@ def clear_custom_widget(
         return False
 
 
-def reset_all_menus(shortcuts_path: str | None = None) -> bool:
-    """Reset all menus to skin defaults by deleting skin's userdata."""
+def reset_all(shortcuts_path: str | None = None) -> bool:
+    """Reset menus and views to skin defaults by deleting the skin's userdata."""
     if not IN_KODI:
         return False
 
@@ -268,6 +266,8 @@ def reset_all_menus(shortcuts_path: str | None = None) -> bool:
         LANGUAGE(32191),
     ):
         return False
+
+    from .userdata import get_userdata_path
 
     userdata_path = Path(get_userdata_path())
     if userdata_path.exists():
@@ -406,7 +406,6 @@ def main() -> None:
                     key, value = arg.split("=", 1)
                     _store(key, value)
 
-    # Pair props with values by position; unpaired prop defaults to "true" (boolean flag)
     window_props = {
         name: prop_values[i] if i < len(prop_values) else "true"
         for i, name in enumerate(prop_names)
@@ -457,7 +456,7 @@ def _dispatch(args: dict[str, str]) -> None:
         else:
             log.debug("No changes saved, skipping rebuild")
     elif action == "resetall":
-        reset_all_menus(args.get("path"))
+        reset_all(args.get("path"))
     elif action == "resetmenus":
         reset_menus(args.get("path"))
     elif action == "resetviews":

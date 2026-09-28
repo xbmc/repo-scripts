@@ -1,33 +1,36 @@
-"""Condition evaluation utilities for Skin Shortcuts.
-
-Evaluates property conditions using a simple expression language:
-
-Operators (symbol and keyword forms):
-- Equality: propertyName=value or propertyName EQUALS value
-- Contains: propertyName~value or propertyName CONTAINS value
-- Empty check: propertyName EMPTY
-- List membership: propertyName IN value1,value2,value3
-- AND: condition1 + condition2 or condition1 AND condition2
-- OR: condition1 | condition2 or condition1 OR condition2
-- NOT: !condition or NOT condition
-- Grouping: [condition1 | condition2]
-- Compact OR: propertyName=value1 | value2 | value3
-
-Compact OR Notes:
-    The property name cascades from the most recent full condition:
-        prop=a | other=b | c  ->  prop=a | other=b | other=c
-
-Negation Precedence:
-    Negation applies to the adjacent condition only:
-        !prop=a | b  ->  (!prop=a) | (prop=b)
-    For group negation, use brackets:
-        ![prop=a | b]  ->  !(prop=a | prop=b)
-"""
+"""Condition evaluation utilities for Skin Shortcuts."""
 
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping
+from typing import TypeVar
 
+try:
+    import xbmc
+
+    IN_KODI = True
+except ImportError:
+    IN_KODI = False
+
+NO_SUFFIX_PROPERTIES = frozenset({
+    "name",
+    "label",
+    "disabled",
+    "default",
+    "menu",
+    "index",
+    "id",
+    "idprefix",
+    "suffix",
+})
+
+V = TypeVar("V")
+
+_OPERATOR_PATTERN = re.compile(r"[=~]")
+_NOSUFFIX_PATTERN = re.compile(r"\{NOSUFFIX:[^}]+\}")
+_HELD_PATTERN = re.compile(r"\x00(\d+)\x00")
+_SLOT_PATTERN = re.compile(r"\.\d+$")
 _CONDITION_MATCH_PATTERN = re.compile(r"^(!?)([a-zA-Z_][a-zA-Z0-9_\.]*)(=|~)(.*)$")
 
 # Keyword to symbol mappings (applied with word boundaries)
@@ -40,23 +43,28 @@ _KEYWORD_REPLACEMENTS = [
 ]
 
 
-def _normalize_keywords(condition: str) -> str:
-    """Convert keyword operators to symbol equivalents.
+def lookup(name: str, *sources: Mapping[str, V]) -> V | None:
+    """The value under a property name, exact across the sources, then ignoring case."""
+    for source in sources:
+        if name in source:
+            return source[name]
+    folded = name.lower()
+    for source in sources:
+        for key, value in source.items():
+            if key.lower() == folded:
+                return value
+    return None
 
-    Converts: AND->+, OR->|, NOT->!, EQUALS->=, CONTAINS->~
-    Uses word boundaries to avoid replacing within values.
-    """
+
+def _normalize_keywords(condition: str) -> str:
+    """Normalize keyword operators (AND, OR, NOT, EQUALS, CONTAINS) to their symbols."""
     for pattern, replacement in _KEYWORD_REPLACEMENTS:
         condition = pattern.sub(replacement, condition)
     return condition
 
 
 def expand_compact_or(condition: str) -> str:
-    """Expand compact OR syntax to full form.
-
-    "widgetType=movies | episodes | tvshows" becomes
-    "widgetType=movies | widgetType=episodes | widgetType=tvshows"
-    """
+    """Expand compact OR syntax, so "a=x | y" becomes "a=x | a=y"."""
     if not condition:
         return condition
 
@@ -162,7 +170,6 @@ def evaluate_condition(condition: str, properties: dict[str, str]) -> bool:
     if not condition:
         return True
 
-    # Convert keywords to symbols (AND->+, OR->|, etc.)
     condition = _normalize_keywords(condition)
 
     if "|" in condition:
@@ -171,7 +178,7 @@ def evaluate_condition(condition: str, properties: dict[str, str]) -> bool:
 
 
 def _is_wrapped_in_brackets(text: str) -> bool:
-    """Check if text is wrapped in matching brackets (not just starts/ends with them)."""
+    """Whether text is wrapped in matching brackets (not just starts/ends with them)."""
     if not text.startswith("[") or not text.endswith("]"):
         return False
     depth = 0
@@ -233,44 +240,35 @@ def _evaluate_single(condition: str, properties: dict[str, str]) -> bool:
         result = _evaluate_expanded(condition[1:-1], properties)
         return not result if negated else result
 
-    # EMPTY operator: propertyName EMPTY
     if condition.endswith(" EMPTY"):
         prop_name = condition[:-6].strip()
-        actual = properties.get(prop_name, "")
+        actual = lookup(prop_name, properties) or ""
         result = actual == ""
         return not result if negated else result
 
-    # IN operator: propertyName IN value1,value2,value3
     if " IN " in condition:
         prop_name, values_str = condition.split(" IN ", 1)
         prop_name = prop_name.strip()
         values_str = values_str.strip()
-        actual = properties.get(prop_name, "")
+        actual = lookup(prop_name, properties) or ""
         values = [v.strip() for v in values_str.split(",")]
         result = any(_matches(actual, v) for v in values)
         return not result if negated else result
 
-    if "=" in condition:
-        prop_name, value = condition.split("=", 1)
-        prop_name = prop_name.strip()
-        value = value.strip()
-        # Check if left side is a property name or a literal value
-        if prop_name in properties:
-            actual = properties[prop_name]
+    operator = _OPERATOR_PATTERN.search(condition)
+    if operator:
+        prop_name = condition[: operator.start()].strip()
+        value = condition[operator.end() :].strip()
+        actual = lookup(prop_name, properties)
+        if operator.group() == "~":
+            result = value in (actual or "")
+        elif actual is not None:
+            result = _matches(actual, value)
         elif prop_name.lower() in ("true", "false"):
             # Literal boolean comparison (e.g., from $IF after $PROPERTY substitution)
-            actual = prop_name
+            result = _matches(prop_name, value)
         else:
-            actual = ""
-        result = _matches(actual, value)
-        return not result if negated else result
-
-    if "~" in condition:
-        prop_name, value = condition.split("~", 1)
-        prop_name = prop_name.strip()
-        value = value.strip()
-        actual = properties.get(prop_name, "")
-        result = value in actual
+            result = _matches("", value)
         return not result if negated else result
 
     # Literal boolean value (e.g., from $PROPERTY substitution)
@@ -279,9 +277,79 @@ def _evaluate_single(condition: str, properties: dict[str, str]) -> bool:
         return not result if negated else result
 
     # Property name only: truthy if non-empty (but "false" string is falsy)
-    val = properties.get(condition, "")
+    val = lookup(condition, properties) or ""
     if val.lower() in ("true", "false"):
         result = val.lower() == "true"
     else:
         result = bool(val)
     return not result if negated else result
+
+
+def check_visible(condition: str) -> bool:
+    """Check a Kodi visibility condition; empty passes, as does anything outside Kodi."""
+    if not condition or not IN_KODI:
+        return True
+    return xbmc.getCondVisibility(condition)
+
+
+def suffix_condition(condition: str, suffix: str) -> str:
+    """Suffix each property name the evaluator reads, leaving values and slots alone."""
+    if not suffix or not condition:
+        return condition
+
+    held: list[str] = []
+
+    def hold(match: re.Match) -> str:
+        held.append(match.group(0))
+        return f"[\x00{len(held) - 1}\x00]"
+
+    text = _normalize_keywords(_NOSUFFIX_PATTERN.sub(hold, condition)).strip()
+    if "|" in text:
+        text = expand_compact_or(text)
+    text = _suffix_expression(text, suffix)
+    return _HELD_PATTERN.sub(lambda m: held[int(m.group(1))], text)
+
+
+def _suffix_expression(condition: str, suffix: str) -> str:
+    """Rebuild a condition along the evaluator's own split, suffixing each term."""
+    condition = condition.strip()
+    if _is_wrapped_in_brackets(condition):
+        return f"[{_suffix_expression(condition[1:-1], suffix)}]"
+
+    for delimiter in ("|", "+"):
+        parts = _split_preserving_brackets(condition, delimiter)
+        if len(parts) > 1:
+            return f" {delimiter} ".join(_suffix_expression(p, suffix) for p in parts)
+
+    if condition.startswith("!"):
+        return f"!{_suffix_expression(condition[1:], suffix)}"
+    return _suffix_term(condition, suffix)
+
+
+def _suffix_term(term: str, suffix: str) -> str:
+    """Suffix the property name of one comparison, EMPTY, IN or presence check."""
+
+    def slot(name: str) -> str:
+        name = name.strip()
+        if (
+            not name
+            or name in NO_SUFFIX_PROPERTIES
+            or name.startswith("$")
+            or "\x00" in name
+            or _SLOT_PATTERN.search(name)
+        ):
+            return name
+        return f"{name}{suffix}"
+
+    if term.endswith(" EMPTY"):
+        return f"{slot(term[:-6])} EMPTY"
+    if " IN " in term:
+        name, values = term.split(" IN ", 1)
+        return f"{slot(name)} IN {values.strip()}"
+    operator = _OPERATOR_PATTERN.search(term)
+    if operator:
+        value = term[operator.end() :].strip()
+        return f"{slot(term[: operator.start()])}{operator.group()}{value}"
+    if term.lower() in ("true", "false"):
+        return term
+    return slot(term)

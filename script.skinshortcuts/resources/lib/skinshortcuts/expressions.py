@@ -1,30 +1,17 @@
-"""Expression parsing for $MATH and $IF template features.
-
-$MATH - Arithmetic expressions with property substitution:
-    $MATH[id * 100 + 5000]
-    $MATH[(mainmenuid * 1000) + 600 + id]
-
-$IF - Conditional expressions:
-    $IF[condition THEN trueValue ELSE falseValue]
-    $IF[cond1 THEN val1 ELIF cond2 THEN val2 ELSE val3]
-"""
+"""Expression parsing for $MATH and $IF template features."""
 
 from __future__ import annotations
 
 import re
 
-from .conditions import evaluate_condition
+from .conditions import evaluate_condition, lookup
 from .log import get_logger, notify
 
 log = get_logger("Expressions")
 
 
 class MathEvaluator:
-    """Simple arithmetic expression evaluator.
-
-    Supports: +, -, *, /, //, %, parentheses, and property variables.
-    All property values are automatically converted to numbers.
-    """
+    """Arithmetic expression evaluator over property variables, read as numbers."""
 
     def __init__(self, variables: dict[str, str]):
         self.variables = variables
@@ -41,7 +28,6 @@ class MathEvaluator:
             self._skip_whitespace()
             if self.pos < len(self.expr):
                 raise ValueError(f"Unexpected character: {self.expr[self.pos]}")
-            # Return as int if whole number, else float
             if isinstance(result, float) and result.is_integer():
                 return str(int(result))
             return str(result)
@@ -130,7 +116,6 @@ class MathEvaluator:
         if self.pos >= len(self.expr):
             raise ValueError("Unexpected end of expression")
 
-        # Parenthesized expression
         if self.expr[self.pos] == "(":
             self.pos += 1
             result = self._parse_expression()
@@ -140,11 +125,9 @@ class MathEvaluator:
             self.pos += 1
             return result
 
-        # Number (integer or float)
         if self.expr[self.pos].isdigit() or self.expr[self.pos] == ".":
             return self._parse_number()
 
-        # Variable name (property)
         if self.expr[self.pos].isalpha() or self.expr[self.pos] == "_":
             return self._parse_variable()
 
@@ -179,7 +162,7 @@ class MathEvaluator:
                 break
 
         name = self.expr[start : self.pos]
-        value = self.variables.get(name, "0")
+        value = lookup(name, self.variables) or "0"
 
         try:
             return float(value) if value else 0.0
@@ -194,16 +177,9 @@ def evaluate_math(expr: str, properties: dict[str, str]) -> str:
 
 
 def evaluate_if(expr: str, properties: dict[str, str]) -> str:
-    """Evaluate a $IF expression.
-
-    Syntax:
-        condition THEN trueValue
-        condition THEN trueValue ELSE falseValue
-        cond1 THEN val1 ELIF cond2 THEN val2 ELSE val3
-    """
+    """Evaluate a $IF expression to the first matching clause's value."""
     expr = expr.strip()
 
-    # Parse ELIF chains: split into (condition, value) pairs + optional else
     clauses: list[tuple[str, str]] = []
     else_value: str | None = None
 
@@ -211,10 +187,8 @@ def evaluate_if(expr: str, properties: dict[str, str]) -> str:
     while remaining:
         remaining = remaining.strip()
 
-        # Find THEN keyword
         then_match = re.search(r"\bTHEN\b", remaining, re.IGNORECASE)
         if not then_match:
-            # No more THEN, treat remainder as else value if we have clauses
             if clauses and remaining:
                 else_value = remaining
             break
@@ -222,11 +196,9 @@ def evaluate_if(expr: str, properties: dict[str, str]) -> str:
         condition = remaining[: then_match.start()].strip()
         after_then = remaining[then_match.end() :].strip()
 
-        # Find the value: everything until ELIF, ELSE, or end
         elif_match = re.search(r"\bELIF\b", after_then, re.IGNORECASE)
         else_match = re.search(r"\bELSE\b", after_then, re.IGNORECASE)
 
-        # Determine where value ends
         end_pos = len(after_then)
         next_keyword = None
 
@@ -248,12 +220,10 @@ def evaluate_if(expr: str, properties: dict[str, str]) -> str:
         else:
             break
 
-    # Evaluate clauses in order
     for condition, value in clauses:
         if evaluate_condition(condition, properties):
             return value
 
-    # Return else value or empty string
     return else_value if else_value is not None else ""
 
 

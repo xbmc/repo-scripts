@@ -4,29 +4,28 @@ from __future__ import annotations
 
 import copy
 from dataclasses import dataclass, field
+from itertools import chain
 from pathlib import Path
 
-from .builders import IncludesBuilder
-from .loaders import (
-    load_backgrounds,
-    load_menus,
-    load_properties,
-    load_templates,
-    load_views,
-    load_widgets,
-)
-from .models import Background, Menu, MenuItem, Widget
-from .models.background import BackgroundConfig, BackgroundGroup
-from .models.menu import IconOverrides, SubDialog
+from .builders.includes import IncludesBuilder
+from .loaders.background import load_backgrounds
+from .loaders.base import iter_nested
+from .loaders.menu import load_menus
+from .loaders.property import load_properties
+from .loaders.template import load_templates
+from .loaders.views import load_views
+from .loaders.widget import load_widgets
+from .migrations import apply_overrides
+from .models.background import Background, BackgroundConfig, BackgroundGroup
+from .models.menu import IconOverrides, Menu, MenuItem, SubDialog
 from .models.override import Override
 from .models.property import PropertySchema
 from .models.template import TemplateSchema
 from .models.views import ViewConfig
-from .migrations import apply_overrides
-from .models.widget import WidgetConfig
+from .models.widget import Widget, WidgetConfig, WidgetGroup
 from .userdata import (
     UserData,
-    _create_item_from_override,
+    _create_item_from_diff,
     load_userdata,
     merge_menu,
 )
@@ -108,10 +107,10 @@ class SkinConfig:
             for item in menu.items:
                 if item.submenu and item.submenu in template_map:
                     referenced_templates.add(item.submenu)
-        for menu_override in userdata.menus.values():
-            for item_override in menu_override.items:
-                if item_override.submenu and item_override.submenu in template_map:
-                    referenced_templates.add(item_override.submenu)
+        for menu_diff in userdata.menus.values():
+            for item_diff in menu_diff.items:
+                if item_diff.submenu and item_diff.submenu in template_map:
+                    referenced_templates.add(item_diff.submenu)
 
         menus = []
         skin_menu_names = set()
@@ -124,15 +123,15 @@ class SkinConfig:
                 if menu.name in referenced_templates:
                     continue
                 # source="N" lookups read flat keys; merge user customizations there too
-                override = userdata.menus.get(menu.name)
+                diff = userdata.menus.get(menu.name)
                 merged = (
-                    merge_menu(menu, override, menu_config.icon_overrides) if override else menu
+                    merge_menu(menu, diff, menu_config.icon_overrides) if diff else menu
                 )
                 _apply_action_overrides(merged, menu_config.action_overrides)
                 menus.append(merged)
                 continue
-            override = userdata.menus.get(menu.name)
-            merged = merge_menu(menu, override, menu_config.icon_overrides)
+            diff = userdata.menus.get(menu.name)
+            merged = merge_menu(menu, diff, menu_config.icon_overrides)
             _apply_action_overrides(merged, menu_config.action_overrides)
             menus.append(merged)
 
@@ -140,24 +139,24 @@ class SkinConfig:
                 template_name = item.submenu or ""
                 template = template_map.get(template_name) if template_name else None
                 key = f"{merged.name}/{item.name}"
-                instance_override = userdata.menus.get(key)
+                instance_diff = userdata.menus.get(key)
                 if template is None:
                     # No template means item owns its submenu without seed defaults.
-                    if instance_override is None:
+                    if instance_diff is None:
                         continue
                     instance = Menu(name=key, is_submenu=True)
-                    for item_override in instance_override.items:
+                    for item_diff in instance_diff.items:
                         instance.items.append(
-                            _create_item_from_override(item_override, menu_config.icon_overrides)
+                            _create_item_from_diff(item_diff, menu_config.icon_overrides)
                         )
                 else:
-                    instance = merge_menu(template, instance_override, menu_config.icon_overrides)
+                    instance = merge_menu(template, instance_diff, menu_config.icon_overrides)
                     instance.name = key
                     instance.template_origin = template_name
                 _apply_action_overrides(instance, menu_config.action_overrides)
                 menus.append(instance)
 
-        for menu_name, menu_override in userdata.menus.items():
+        for menu_name, menu_diff in userdata.menus.items():
             if menu_name in skin_menu_names:
                 continue
             # Per-item submenu entries already expanded above; skip duplicates.
@@ -166,9 +165,9 @@ class SkinConfig:
                 if parent_name in skin_menu_names:
                     continue
             user_menu = Menu(name=menu_name, is_submenu=True)
-            for item_override in menu_override.items:
+            for item_diff in menu_diff.items:
                 user_menu.items.append(
-                    _create_item_from_override(item_override, menu_config.icon_overrides)
+                    _create_item_from_diff(item_diff, menu_config.icon_overrides)
                 )
             menus.append(user_menu)
 
@@ -189,50 +188,14 @@ class SkinConfig:
         )
 
     def get_widget(self, widget_name: str) -> Widget | None:
-        """Get widget by name."""
-        for widget in self.widgets:
-            if widget.name == widget_name:
-                return widget
-
-        return self._find_widget_in_groupings(widget_name, self.widget_groupings)
-
-    def _find_widget_in_groupings(self, widget_name: str, groups: list) -> Widget | None:
-        """Recursively search for a widget within groupings."""
-        from .models.widget import WidgetGroup
-
-        for group in groups:
-            if not isinstance(group, WidgetGroup):
-                continue
-            for item in group.items:
-                if isinstance(item, Widget) and item.name == widget_name:
-                    return item
-                if isinstance(item, WidgetGroup):
-                    result = self._find_widget_in_groupings(widget_name, [item])
-                    if result:
-                        return result
-        return None
+        """Get widget by name, top level first, then nested in groupings."""
+        nested = iter_nested(self.widget_groupings, Widget, WidgetGroup)
+        return next((w for w in chain(self.widgets, nested) if w.name == widget_name), None)
 
     def get_background(self, bg_name: str) -> Background | None:
-        """Get background by name."""
-        for bg in self.backgrounds:
-            if bg.name == bg_name:
-                return bg
-
-        return self._find_background_in_groupings(bg_name, self.background_groupings)
-
-    def _find_background_in_groupings(self, bg_name: str, groups: list) -> Background | None:
-        """Recursively search for a background within groupings."""
-        for group in groups:
-            if not isinstance(group, BackgroundGroup):
-                continue
-            for item in group.items:
-                if isinstance(item, Background) and item.name == bg_name:
-                    return item
-                if isinstance(item, BackgroundGroup):
-                    result = self._find_background_in_groupings(bg_name, [item])
-                    if result:
-                        return result
-        return None
+        """Get background by name, top level first, then nested in groupings."""
+        nested = iter_nested(self.background_groupings, Background, BackgroundGroup)
+        return next((b for b in chain(self.backgrounds, nested) if b.name == bg_name), None)
 
     def get_menu(self, menu_name: str) -> Menu | None:
         """Get menu by name."""
@@ -246,13 +209,6 @@ class SkinConfig:
         for menu in self.default_menus:
             if menu.name == menu_name:
                 return menu
-        return None
-
-    def get_subdialog(self, button_id: int) -> SubDialog | None:
-        """Get subdialog definition by button ID."""
-        for subdialog in self.subdialogs:
-            if subdialog.button_id == button_id:
-                return subdialog
         return None
 
     def build_includes(self, output_path: str | Path) -> None:
@@ -278,11 +234,7 @@ class SkinConfig:
         builder.write(output_path)
 
     def derived_item_properties(self, item: MenuItem) -> dict[str, str]:
-        """Widget/background sub-properties derivable from the item's assigned names.
-
-        Covers numbered slots, so what the skin owns is recomputed rather than stored.
-        Labels stay in $LOCALIZE form so a language change reaches the menu.
-        """
+        """Widget/background sub-properties the item's names imply; labels stay $LOCALIZE."""
         derived: dict[str, str] = {}
 
         for key, name in item.properties.items():
@@ -306,14 +258,19 @@ class SkinConfig:
                     derived[f"widgetType{tail}"] = widget.type
                     derived[f"widgetTarget{tail}"] = widget.target
                     derived[f"widgetSource{tail}"] = widget.source
+                    derived[f"widgetLimit{tail}"] = str(widget.limit or "")
+                    derived[f"widgetSortBy{tail}"] = widget.sort_by
+                    derived[f"widgetSortOrder{tail}"] = widget.sort_order
 
-        return {k: v for k, v in derived.items() if v}
+        return {self.property_schema.declared_name(k): v for k, v in derived.items() if v}
 
     def resolve_item_properties(self, menu: Menu) -> None:
         """Fill widget/background sub-properties, keeping any the user set."""
         for item in menu.items:
+            present = {k.lower() for k in item.properties}
             for key, value in self.derived_item_properties(item).items():
-                item.properties.setdefault(key, value)
+                if key.lower() not in present:
+                    item.properties[key] = value
 
 
 def _apply_action_overrides(menu: Menu, overrides: list[Override]) -> None:

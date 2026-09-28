@@ -35,10 +35,7 @@ def skin_has_image(path: str) -> bool:
 
 @dataclass
 class IconOverrides:
-    """Kodi default icon names mapped to the replacements a skin ships.
-
-    An expression source resolves for the lookup and stays unresolved in the output.
-    """
+    """Kodi default icon names mapped to the replacements a skin ships."""
 
     source: str = ""
     explicit: dict[str, str] = field(default_factory=dict)
@@ -115,6 +112,15 @@ class Action:
     condition: str = ""
 
 
+def display_action(actions: list[Action]) -> str:
+    """The action shown in display properties: last unconditional one, else the first."""
+    last = ""
+    for act in actions:
+        if not act.condition:
+            last = act.action
+    return last or (actions[0].action if actions else "")
+
+
 @dataclass
 class IncludeRef:
     """A reference to an include, output as <include>name</include>."""
@@ -133,15 +139,15 @@ class Protection:
     message: str = ""
 
     def protects_delete(self) -> bool:
-        """Return True if this protection applies to deletion."""
+        """True when the protection covers deletion."""
         return self.type in ("delete", "all")
 
     def protects_action(self) -> bool:
-        """Return True if this protection applies to action changes."""
+        """True when the protection covers action changes."""
         return self.type in ("action", "all")
 
     def protects_disable(self) -> bool:
-        """Return True if this protection applies to disabling."""
+        """True when the protection covers disabling."""
         return self.type in ("disable", "all")
 
 
@@ -151,7 +157,7 @@ class Shortcut:
 
     name: str
     label: str
-    actions: list[str] = field(default_factory=list)
+    actions: list[Action] = field(default_factory=list)
     primary_action: str = ""  # Action marked primary="true", for display props
     path: str = ""
     browse: str = ""
@@ -166,13 +172,13 @@ class Shortcut:
 
     @property
     def action(self) -> str:
-        """Primary action for display. Uses explicit primary, falls back to last action."""
+        """Primary action for display. Uses explicit primary, falls back to last unconditional."""
         if self.primary_action:
             return self.primary_action
-        return self.actions[-1] if self.actions else ""
+        return display_action(self.actions)
 
-    def get_action(self) -> str:
-        """Get the resolved primary action string."""
+    def resolved_action(self) -> str:
+        """The action a pick commits: ActivateWindow for a browse shortcut, else the primary."""
         if self.browse and self.path:
             from ..constants import WINDOW_MAP
 
@@ -209,7 +215,7 @@ class MenuItem:
     dialog_visible: str = ""  # Filter in management dialog (visible= attribute)
     disabled: bool = False
     required: bool = False  # If True, item cannot be deleted
-    protection: Protection | None = None  # Optional protection against delete/modify
+    protection: Protection | None = None
 
     properties: dict[str, str] = field(default_factory=dict)
     submenu: str | None = None
@@ -219,12 +225,8 @@ class MenuItem:
 
     @property
     def action(self) -> str:
-        """Primary action for display (last unconditional action)."""
-        last = ""
-        for act in self.actions:
-            if not act.condition:
-                last = act.action
-        return last or (self.actions[0].action if self.actions else "")
+        """Primary action for display: last unconditional one, else the first."""
+        return display_action(self.actions)
 
     @action.setter
     def action(self, value: str) -> None:

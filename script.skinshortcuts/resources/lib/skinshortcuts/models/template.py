@@ -16,12 +16,7 @@ class BuildMode(Enum):
 
 @dataclass
 class Expression:
-    """Reusable condition expression.
-
-    When nosuffix=False (default), property names in the expression are
-    automatically transformed when a suffix is active (e.g., widgetArt -> widgetArt.2).
-    When nosuffix=True, the expression is fixed and won't be transformed.
-    """
+    """Reusable condition expression."""
 
     value: str
     nosuffix: bool = False
@@ -82,39 +77,32 @@ class PropertyGroup:
 class PropertyGroupReference:
     """Reference to a property group."""
 
-    name: str  # Name of property group to apply
+    name: str
     suffix: str = ""  # Suffix for property transforms (e.g., ".2")
-    condition: str = ""  # Optional condition for applying this group
+    condition: str = ""
 
 
 @dataclass
 class PresetReference:
     """Reference to a preset for direct property resolution."""
 
-    name: str  # Name of preset to apply
+    name: str
     suffix: str = ""  # Suffix for condition transforms (e.g., ".2")
-    condition: str = ""  # Optional condition for applying this preset
+    condition: str = ""
 
 
 @dataclass
 class PresetGroupChild:
-    """Child element in a presetGroup - either a preset reference or inline values.
+    """Child element in a presetGroup - either a preset reference or inline values."""
 
-    Used for conditional preset selection where first match wins (document order).
-    """
-
-    preset_name: str = ""  # Reference to named preset (mutually exclusive with values)
-    values: dict[str, str] = field(default_factory=dict)  # Inline values
+    preset_name: str = ""  # mutually exclusive with values
+    values: dict[str, str] = field(default_factory=dict)
     condition: str = ""
 
 
 @dataclass
 class PresetGroup:
-    """Conditional preset selection group.
-
-    Evaluates children in order, first matching condition wins.
-    Children can be preset references or inline values.
-    """
+    """Conditional preset selection group, evaluated in order with the first match winning."""
 
     name: str
     children: list[PresetGroupChild] = field(default_factory=list)
@@ -124,17 +112,14 @@ class PresetGroup:
 class PresetGroupReference:
     """Reference to a presetGroup from a template."""
 
-    name: str  # Name of presetGroup to apply
+    name: str
     suffix: str = ""  # Suffix for condition transforms (e.g., ".2")
-    condition: str = ""  # Optional condition for applying this group
+    condition: str = ""
 
 
 @dataclass
 class IncludeDefinition:
-    """Reusable include definition for controls (like Kodi includes).
-
-    Contains control XML that can be inserted via <skinshortcuts include="name"/>.
-    """
+    """Reusable control include, inserted via <skinshortcuts include="name"/>."""
 
     name: str
     controls: ET.Element | None = None  # Raw XML for control content
@@ -144,7 +129,7 @@ class IncludeDefinition:
 class VariableDefinition:
     """Kodi variable definition."""
 
-    name: str  # Variable name (e.g., "PosterVar")
+    name: str
     condition: str = ""  # Only build if item matches (evaluated per-item)
     output: str = ""  # Override output name pattern
     content: ET.Element | None = None  # The <variable> XML content
@@ -154,17 +139,13 @@ class VariableDefinition:
 class VariableReference:
     """Reference to a variable definition within a variableGroup."""
 
-    name: str  # Name of variable definition to use
+    name: str
     condition: str = ""  # Only build if item matches this condition
 
 
 @dataclass
 class VariableGroupReference:
-    """Reference to a variable group.
-
-    Used both for template references (with suffix/condition) and nested
-    group composition within variableGroups (with defaults).
-    """
+    """Reference to a variable group, from a template or from another group."""
 
     name: str
     suffix: str = ""
@@ -182,11 +163,7 @@ class VariableGroup:
 
 @dataclass
 class TemplateOutput:
-    """Output configuration for a template.
-
-    Allows a single template to generate multiple includes with different
-    suffixes applied (e.g., widget1 and widget2 from one definition).
-    """
+    """Output configuration, letting one template build an include per suffix."""
 
     include: str  # Output include name
     id_prefix: str = ""  # For computed control IDs
@@ -215,31 +192,25 @@ class ItemsDefinition:
 
 @dataclass
 class Template:
-    """Main template definition.
+    """Main template definition, iterating menu items or emitting raw output."""
 
-    Iterates menu items (default) or outputs raw (build="true").
-
-    Supports multiple outputs via the `outputs` list. When outputs is empty,
-    falls back to single output using `include` and `id_prefix` attributes.
-    """
-
-    include: str = ""  # Output include name (legacy, use outputs instead)
+    include: str = ""  # Output include name, unless outputs are declared
     build: BuildMode = BuildMode.MENU
-    id_prefix: str = ""  # For computed control IDs (legacy, use outputs instead)
+    id_prefix: str = ""  # For computed control IDs
     template_only: str = ""  # "true"=never generate, "auto"=skip if unassigned
     menu: str = ""  # Filter to specific menu (e.g., "mainmenu")
 
-    outputs: list[TemplateOutput] = field(default_factory=list)  # Multi-output support
+    outputs: list[TemplateOutput] = field(default_factory=list)
     conditions: list[str] = field(default_factory=list)  # ANDed together
     params: list[TemplateParam] = field(default_factory=list)  # For build="true"
     properties: list[TemplateProperty] = field(default_factory=list)
     vars: list[TemplateVar] = field(default_factory=list)  # Internal context resolution
     property_groups: list[PropertyGroupReference] = field(default_factory=list)
-    preset_refs: list[PresetReference] = field(default_factory=list)  # Direct preset lookups
+    preset_refs: list[PresetReference] = field(default_factory=list)
     preset_group_refs: list[PresetGroupReference] = field(default_factory=list)
     controls: ET.Element | None = None  # Raw XML for controls output
-    variables: list[VariableDefinition] = field(default_factory=list)  # Inline variables
-    variable_groups: list[VariableGroupReference] = field(default_factory=list)  # Group refs
+    variables: list[VariableDefinition] = field(default_factory=list)
+    variable_groups: list[VariableGroupReference] = field(default_factory=list)
 
     @property
     def has_transformations(self) -> bool:

@@ -21,6 +21,10 @@ DEFAULT_ICON = "DefaultShortcut.png"
 DEFAULT_TARGET = "videos"
 DEFAULT_VIEW_PREFIX = "ShortcutView_"
 
+WIDGET_SIBLINGS = ("Label", "Path", "Type", "Target", "Source")
+BACKGROUND_SIBLINGS = ("Label", "Path", "Type", "PlaylistType")
+WIDGET_EXTRAS = ("Limit", "SortBy", "SortOrder")
+
 PROPERTY_TYPES = frozenset(
     {
         "select",
@@ -99,7 +103,7 @@ def extract_window_from_action(action: str) -> str:
 
 
 def extract_path_from_action(action: str) -> str:
-    """Extract the bare content path from a full action string."""
+    """Extract the bare content path from an action, or the action itself if it has no path."""
     lower = action.lower()
     if lower.startswith("activatewindow("):
         inner = action[15:-1]

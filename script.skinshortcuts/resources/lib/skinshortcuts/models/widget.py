@@ -17,12 +17,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class Widget:
-    """A widget that can be assigned to menu items.
-
-    For custom widgets (type="custom"), the slot attribute specifies which
-    widget property slot this custom widget applies to (e.g., "widget", "widget.2").
-    When selected, the dialog opens an item editor for the custom menu.
-    """
+    """A widget that can be assigned to menu items."""
 
     name: str
     label: str
@@ -40,10 +35,7 @@ class Widget:
     browse: bool = False  # Opt-in: allow browse-into during picker
 
     def to_properties(self, prefix: str = "widget") -> dict[str, str]:
-        """Convert to property dictionary for skin access.
-
-        Core properties only - skins extend via properties.xml.
-        """
+        """Convert to property dictionary for the picker's DialogSelect rows."""
         props = {
             f"{prefix}": self.name,
             f"{prefix}Label": self.label,

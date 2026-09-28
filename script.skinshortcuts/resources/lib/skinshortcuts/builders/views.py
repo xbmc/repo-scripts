@@ -88,10 +88,8 @@ class ViewExpressionBuilder:
 
         if library_view in self._view_conditions:
             if library_view == generic_plugin_view and not plugin_overrides:
-                # Same view for both, no overrides - just use content visible
                 self._view_conditions[library_view].append(f"[{visible}]")
             else:
-                # Different views or has overrides - need source check
                 self._view_conditions[library_view].append(
                     f"[{visible} + String.IsEmpty(Container.PluginName)]"
                 )
@@ -136,20 +134,20 @@ class ViewExpressionBuilder:
         user_view = self.userdata.get_view("library", content.name)
         if user_view and user_view in content.views:
             return user_view
-        return content.library_default
+        return content.get_default(is_plugin=False)
 
     def _get_effective_generic_plugin_view(self, content: ViewContent) -> str:
         """Get the effective generic plugin view (user selection or default)."""
         user_view = self.userdata.get_view("plugins", content.name)
         if user_view and user_view in content.views:
             return user_view
-        return content.plugin_default or content.library_default
+        return content.get_default(is_plugin=True)
 
     def _get_effective_plugin_overrides(self, content: ViewContent) -> dict[str, str]:
         """Get plugin-specific view overrides, filtering invalid selections."""
         valid_views = set(content.views)
         overrides = {}
-        for plugin_id, view_id in self.userdata.get_addon_overrides(content.name).items():
+        for plugin_id, view_id in self.userdata.get_plugin_overrides(content.name).items():
             if view_id in valid_views:
                 overrides[plugin_id] = view_id
         return overrides
