@@ -65,7 +65,11 @@ class PrefParser:
                 if len(pref) != 2:
                             log(LOG_INFO, 'Custom cond subs prefs parse error: {0}'.format(pref))
                 else:
-                    temp_a = (languageTranslate(pref[0], 3, 0), pref[0])
+                    # Manage 2 or 3 digits language codes in custom rules
+                    if len(pref[0]) == 2:
+                        temp_a = (languageTranslate(pref[0], 2, 0), pref[0]+','+languageTranslate(pref[0], 2, 3))
+                    else:
+                        temp_a = (languageTranslate(pref[0], 3, 0), pref[0]+','+languageTranslate(pref[0], 3, 2))
                      # Searching if a sub tag is present (like Eng:Jpn-ff to prioritize Forced tracks of another language)
                     if pref[1].endswith('-ff'):
                         ff_tag = True
@@ -78,9 +82,13 @@ class PrefParser:
                         pref[1] = pref[1].rstrip('-ss')
                     else:
                         ss_tag = 'false'
-                    temp_s = (languageTranslate(pref[1], 3, 0), pref[1])
+                    # Manage 2 or 3 digits language codes in custom rules
+                    if len(pref[1]) == 2:
+                        temp_s = (languageTranslate(pref[1], 2, 0), pref[1]+','+languageTranslate(pref[1], 2, 3))
+                    else:
+                        temp_s = (languageTranslate(pref[1], 3, 0), pref[1]+','+languageTranslate(pref[1], 3, 2))
                     if (temp_a[0] and temp_a[1] and temp_s[0] and temp_s[1]):
-                        if (temp_s[1] == 'non' or ff_tag):
+                        if (temp_s[1] == 'non,non' or ff_tag):
                             forced_tag = 'true'
                         else:
                             forced_tag = 'false'
@@ -90,7 +98,11 @@ class PrefParser:
                                  ' Please report this: {0}:{1}'.format(temp_a, temp_s))
             # custom audio or subtitle pref                            
             else:
-                temp_pref = (languageTranslate(pref, 3, 0), pref)
+                # Manage 2 or 3 digits language codes in custom rules
+                if len(pref) == 2:
+                    temp_pref = (languageTranslate(pref, 2, 0), pref+','+languageTranslate(pref, 2, 3))
+                else:
+                    temp_pref = (languageTranslate(pref, 3, 0), pref+','+languageTranslate(pref, 3, 2))
                 if temp_pref[0]:
                     lang_prefs.append(temp_pref)
                 else:
