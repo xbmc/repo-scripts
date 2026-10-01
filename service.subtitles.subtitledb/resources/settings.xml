@@ -3,6 +3,11 @@
   <section id="service.subtitles.subtitledb">
     <category id="general" label="32000">
       <group id="1">
+        <setting id="instant" type="boolean" label="32005" help="32006">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
         <setting id="per_language" type="integer" label="32003" help="32004">
           <level>0</level>
           <default>500</default>
