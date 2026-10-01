@@ -12,7 +12,7 @@ a Bazarr install without touching either one's dependency tree.
         print(candidate_label(c), c.subtitle["download_url"])
 """
 
-from .client import DEFAULT_API_BASE, Client, SubtitleDbError
+from .client import DEFAULT_API_BASE, VERSION, Client, SubtitleDbError
 from .find import (
     PER_LANGUAGE,
     TIER_IMDB,
@@ -36,7 +36,7 @@ from .match import (
     similarity,
 )
 
-__version__ = "0.3.1"
+__version__ = VERSION
 
 __all__ = [
     "DEFAULT_API_BASE",
