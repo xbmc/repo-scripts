@@ -1,3 +1,31 @@
+--- Version 1.1.0
+
+- More robust code in 2digits/3digits ISO639 languages codes support
+	        (as requested from greptile KODI automated tests)
+	- Proper handling & reporting of incorrect lang codes in Custom Prefs and Original Prefs
+	- Refine "Only peform seekback if subtitle active"
+
+--- Version 1.0.9
+
+- Support 2digits ISO639 languages codes in addition to 3digits so far
+	(Required for Kodi22-Piers and first step toward BCP47 codes)
+- Fix audio blacklist was not considered when searching for Original audio tracks
+- 'Any' as Original Preference list will activate the first found Original audio track whatever the language
+- Only perform seek back if a subtitle is active
+
+--- Version 1.0.9Beta4
+
+- Only perform seek back if a subtitle is active
+
+--- Version 1.0.9Beta3
+
+- 'Any' as Original Preference list will activate the first found Original audio track whatever the language
+
+--- Version 1.0.9Beta2
+
+- Fix audio blacklist was not considered when searching for Original audio tracks
+- Support 2digits languages codes in addition to 3digits (Required from Kodi22 and move to BCP47)
+
 --- Version 1.0.8
 
 - Fix addon not closing properly when "Store Preferences" is used (Kodi exit : freeze on Piers, thread error message on Omega)
