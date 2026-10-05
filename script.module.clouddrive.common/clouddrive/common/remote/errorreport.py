@@ -17,11 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-import threading
-import urllib
-
 from clouddrive.common.exception import ExceptionUtils, RequestException
-from clouddrive.common.remote.request import Request
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
@@ -30,14 +26,8 @@ from urllib.error import HTTPError
 
 
 class ErrorReport(object):
-    
-    @staticmethod
-    def send_report(report):
-        if KodiUtils.get_addon_setting('report_error') == 'true':
-            report_url = KodiUtils.get_signin_server() + '/report'
-            t = threading.Thread(target=Request(report_url, urllib.parse.urlencode({'stacktrace' : report})).request)
-            t.setDaemon(True)
-            t.start()
+    # Errors are only written to the Kodi log (with tokens redacted). They used to be sent to the
+    # sign-in server, which has no endpoint for them anymore, and the reports could contain tokens.
     
     @staticmethod
     def handle_exception(ex):
@@ -49,7 +39,7 @@ class ErrorReport(object):
         line1 = ''
         line2 = Utils.unicode(ex)
         
-        send_report = True
+        log_notice = True
         log_report = True
         if rex and rex.response:
             line1 = Utils.unicode(rex)
@@ -57,12 +47,12 @@ class ErrorReport(object):
         
         if httpex:
             if httpex.code == 401:
-                send_report = False
+                log_notice = False
             elif httpex.code == 404:
-                send_report = False
+                log_notice = False
                 log_report = False
         if dnf:
-            send_report = False
+            log_notice = False
             log_report = False
             
         addonid = KodiUtils.get_addon_info('id')
@@ -75,10 +65,8 @@ class ErrorReport(object):
             Logger.debug(report)
         else:
             Logger.debug(ex)
-        if send_report:
+        if log_notice:
             Logger.notice(report)
-            Logger.notice('Report sent')
-            ErrorReport.send_report(report)
     
     
     

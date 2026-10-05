@@ -19,7 +19,7 @@
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 import datetime
-from clouddrive.common.utils import Utils, timeit
+from clouddrive.common.utils import Utils, timeit, ARCHIVE_EXTENSIONS
 from clouddrive.common.ui.dialog import ExportScheduleDialog, DialogProgressBG
 from calendar import weekday
 from clouddrive.common.remote.errorreport import ErrorReport
@@ -43,8 +43,8 @@ class ExportService(object):
         self._startup_type = Utils.str(ExportScheduleDialog._startup_type)
         self.export_manager = ExportManager(self._profile_path)
         self._account_manager = AccountManager(self._profile_path)
-        self._video_file_extensions = [x for x in KodiUtils.get_supported_media("video") if x not in ('','zip')]
-        self._audio_file_extensions = KodiUtils.get_supported_media("music")
+        self._video_file_extensions = [x for x in KodiUtils.get_supported_media("video") if x not in ARCHIVE_EXTENSIONS]
+        self._audio_file_extensions = [x for x in KodiUtils.get_supported_media("music") if x not in ARCHIVE_EXTENSIONS]
         self._artwork_file_extensions = ['back', 'banner', 'characterart', 'clearart', 'clearlogo', 'discart', 'fanart', 'keyart', 'landscape', 'poster', 'spine', 'thumb', 'folder', 'cover', 'animatedposter', 'animatedfanart']
         self._export_progress_dialog_bg = DialogProgressBG(self._addon_name)
     

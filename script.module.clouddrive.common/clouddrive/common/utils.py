@@ -19,6 +19,10 @@
 from clouddrive.common.ui.logger import Logger
 from timeit import default_timer as timer
 
+# Kodi lists archives as music/picture types because it can browse them like folders. From a cloud drive that
+# means downloading the whole archive (e.g. multi-GB backups) just to look inside, so they are not treated as media.
+ARCHIVE_EXTENSIONS = ('', 'zip', 'rar', '001', '7z', 'cbz', 'cbr')
+
 class Utils:
     
     _extension_map = {

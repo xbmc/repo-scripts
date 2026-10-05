@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.4.0" provider-name="Carlos Guzman (cguZZman)">
+<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.5.1" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.dateutil"/>
@@ -20,6 +20,22 @@
 			<icon>icon.png</icon>
 		</assets>
 		<news>
+v1.5.1 released Oct 5, 2026:
+- Account migration keeps accounts.cfg if any account could not be saved
+- The download service no longer sends the authorization header to other hosts on redirect
+- Download links stop working as soon as their account is removed
+- URL fragments are also redacted in the log
+- Library exports skip archives too
+- Error responses from the download service are complete again
+- Unused strings removed
+
+v1.5.0 released Oct 4, 2026:
+- Security: access and refresh tokens are removed from the Kodi log and from error details
+- Error reports are no longer sent to the sign-in server (they could contain tokens), only written to the Kodi log
+- The old plain-text accounts.cfg.migrated file is deleted
+- Files are streamed through the local service, so play URLs no longer carry tokens or pre-authenticated download links (seeking supported, tokens refreshed during long videos)
+- Archives (zip, rar, 7z, cbz, cbr) are no longer listed as music or pictures, so Kodi doesn't download them to look inside
+
 v1.4.0 released Jan 20, 2023:
 - Kodi 20 fix
 		</news>

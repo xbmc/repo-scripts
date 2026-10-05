@@ -29,14 +29,13 @@ from clouddrive.common.account import AccountManager, AccountNotFoundException, 
     DriveNotFoundException
 from clouddrive.common.exception import UIException, ExceptionUtils, RequestException
 from clouddrive.common.export import ExportManager
-from clouddrive.common.remote.errorreport import ErrorReport
 from clouddrive.common.remote.request import Request
 from clouddrive.common.service.download import DownloadServiceUtil
 from clouddrive.common.ui.dialog import DialogProgress, DialogProgressBG, \
     QRDialogProgress, ExportMainDialog
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
-from clouddrive.common.utils import Utils
+from clouddrive.common.utils import Utils, ARCHIVE_EXTENSIONS
 import xbmcgui
 import xbmcplugin
 import xbmcvfs
@@ -66,9 +65,9 @@ class CloudDriveAddon:
     _progress_dialog = None
     _progress_dialog_bg = None
     _system_monitor = None
-    _video_file_extensions = [x for x in KodiUtils.get_supported_media("video") if x not in ('','zip')]
-    _audio_file_extensions = KodiUtils.get_supported_media("music")
-    _image_file_extensions = KodiUtils.get_supported_media("picture")
+    _video_file_extensions = [x for x in KodiUtils.get_supported_media("video") if x not in ARCHIVE_EXTENSIONS]
+    _audio_file_extensions = [x for x in KodiUtils.get_supported_media("music") if x not in ARCHIVE_EXTENSIONS]
+    _image_file_extensions = [x for x in KodiUtils.get_supported_media("picture") if x not in ARCHIVE_EXTENSIONS]
     _account_manager = None
     _action = None
     _ip_before_pin = None
@@ -610,7 +609,6 @@ class CloudDriveAddon:
         elif rex and rex.response:
             line1 += ' ' + Utils.unicode(rex)
             line2 = ExceptionUtils.extract_error_message(rex.response)
-        send_report = True
         add_account_cmd = 'RunPlugin('+self._addon_url + '?' + urllib.parse.urlencode({'action':'_add_account', 'content_type': self._content_type})+')'
         if isinstance(ex, AccountNotFoundException) or isinstance(ex, DriveNotFoundException):
             show_error_dialog = False
@@ -627,7 +625,6 @@ class CloudDriveAddon:
                     account = self._account_manager.get_by_driveid('account', driveid)
                     drive = self._account_manager.get_by_driveid('drive', driveid, account)
                     if KodiUtils.get_signin_server() in rex.request or httpex.code == 401:
-                        send_report = False
                         show_error_dialog = False
                         if self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32046) % (self._get_display_name(account, drive, True) + '\n')):
                             KodiUtils.executebuiltin(add_account_cmd)
@@ -635,7 +632,6 @@ class CloudDriveAddon:
                         line1 = self._common_addon.getLocalizedString(32019)
                         line2 = line3 = None
                     elif httpex.code == 404:
-                        send_report = False
                         line1 = self._common_addon.getLocalizedString(32037)
                         line2 = line2 = None
                     else:
@@ -645,7 +641,6 @@ class CloudDriveAddon:
                     if KodiUtils.get_signin_server()+'/pin/' in rex.request and httpex.code == 404 and self._ip_before_pin:
                         ip_after_pin = Request(KodiUtils.get_signin_server() + '/ip', None).request()
                         if self._ip_before_pin != ip_after_pin:
-                            send_report = False
                             line1 = self._common_addon.getLocalizedString(32072)
                             line2 = self._common_addon.getLocalizedString(32073) % (self._ip_before_pin, ip_after_pin,)
         elif urlex:
@@ -671,14 +666,6 @@ class CloudDriveAddon:
             if line3:
                 line1 += '\n' + line3
             self._dialog.ok(self._addon_name, line1)
-        if send_report:
-            report_error = KodiUtils.get_addon_setting('report_error', self._common_addon_id) == 'true'
-            report_error_invite = KodiUtils.get_addon_setting('report_error_invite', self._common_addon_id) == 'true'
-            if not report_error and not report_error_invite:
-                if not self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32050), self._common_addon.getLocalizedString(32012), self._common_addon.getLocalizedString(32013)):
-                    KodiUtils.set_addon_setting('report_error', 'true', self._common_addon_id)
-                KodiUtils.set_addon_setting('report_error_invite', 'true', self._common_addon_id)
-            ErrorReport.send_report(report)
     
     def _open_common_settings(self):
         self._common_addon.openSettings()
