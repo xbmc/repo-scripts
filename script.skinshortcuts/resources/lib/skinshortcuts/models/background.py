@@ -64,11 +64,11 @@ class Background:
 
     @property
     def type_name(self) -> str:
-        """Return normalized type name matching XML attribute values."""
+        """The type name in its XML attribute form."""
         return self.type.name.lower().replace("_", "-")
 
     def to_properties(self) -> dict[str, str]:
-        """Convert to property dictionary for skin access."""
+        """Convert to property dictionary for the picker's DialogSelect rows."""
         return {
             "background": self.name,
             "backgroundPath": self.path,
@@ -85,7 +85,7 @@ class BackgroundGroup:
     label: str
     condition: str = ""  # Property condition (evaluated against item properties)
     visible: str = ""  # Kodi visibility condition (evaluated at runtime)
-    icon: str = ""  # Optional icon for group display
+    icon: str = ""
     items: list[BackgroundGroupContent] = field(default_factory=list)
     flat: bool = False  # No folder header; children render at parent level
     path: str = ""  # Real browsable path, set on content folders only

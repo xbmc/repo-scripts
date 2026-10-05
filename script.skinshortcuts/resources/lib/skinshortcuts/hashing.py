@@ -23,7 +23,6 @@ from .constants import (
     WIDGETS_FILE,
 )
 from .log import get_logger
-from .userdata import get_userdata_path
 
 log = get_logger("Hashing")
 
@@ -40,7 +39,7 @@ def get_hash_file_path() -> str:
 
 
 def hash_file(path: str | Path) -> str | None:
-    """Generate MD5 hash for a file."""
+    """Hash a file with MD5; None when it cannot be read."""
     path = Path(path)
     if not path.exists():
         return None
@@ -71,6 +70,8 @@ def generate_config_hashes(shortcuts_path: str | Path) -> dict[str, str | None]:
     for filename in config_files:
         file_path = path / filename
         hashes[filename] = hash_file(file_path)
+
+    from .userdata import get_userdata_path
 
     userdata_path = get_userdata_path()
     if userdata_path:
@@ -123,7 +124,7 @@ def write_hashes(hashes: dict[str, str | None]) -> bool:
 
 
 def needs_rebuild(shortcuts_path: str | Path, output_paths: list[str] | None = None) -> bool:
-    """Check if menu needs to be rebuilt by comparing hashes."""
+    """Whether a config or output file's hash differs from the stored one, or none is stored."""
     stored = read_stored_hashes()
 
     if not stored:

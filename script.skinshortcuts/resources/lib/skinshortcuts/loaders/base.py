@@ -2,53 +2,22 @@
 
 from __future__ import annotations
 
-import re
 import xml.etree.ElementTree as ET
+from collections.abc import Iterable, Iterator
 from pathlib import Path
+from typing import TypeVar
 
+from ..conditions import NO_SUFFIX_PROPERTIES
 from ..exceptions import ConfigError
+from ..log import get_logger, notify
 from ..models.override import Override
 
-NO_SUFFIX_PROPERTIES = frozenset({
-    "name",
-    "label",
-    "disabled",
-    "default",
-    "menu",
-    "index",
-    "id",
-    "idprefix",
-})
+log = get_logger("loaders.base")
 
-_PROPERTY_PATTERN = re.compile(r"([a-zA-Z_][a-zA-Z0-9_\.]*)([=~])")
-
-
-def apply_suffix_transform(text: str, suffix: str) -> str:
-    """Apply suffix transform to property names in conditions/from attributes.
-
-    Transforms property names (before = or ~) but not values.
-    Skips properties in NO_SUFFIX_PROPERTIES.
-    """
-    if not suffix or not text:
-        return text
-
-    def replace_property(match: re.Match) -> str:
-        prop_name = match.group(1)
-        operator = match.group(2)
-        if prop_name in NO_SUFFIX_PROPERTIES:
-            return f"{prop_name}{operator}"
-        return f"{prop_name}{suffix}{operator}"
-
-    return _PROPERTY_PATTERN.sub(replace_property, text)
-
+T = TypeVar("T")
 
 def apply_suffix_to_from(from_value: str, suffix: str) -> str:
-    """Apply suffix to a from attribute value.
-
-    E.g., "widgetPath" -> "widgetPath.2"
-
-    Skips built-ins like index, name, menu, id.
-    """
+    """Apply a suffix to a from attribute value, except for the built-in sources."""
     if not suffix or not from_value:
         return from_value
 
@@ -112,7 +81,6 @@ def get_bool(elem: ET.Element, attr: str, default: bool = False) -> bool:
 
 def parse_content(elem: ET.Element):
     """Parse a content reference element."""
-    # Import here to avoid circular dependency
     from ..models.menu import Content
 
     source = get_attr(elem, "source")
@@ -144,3 +112,26 @@ def parse_name_overrides(root, tag: str) -> list[Override]:
             overrides.append(Override(replace=replace, value=(elem.text or "").strip()))
 
     return overrides
+
+
+def warn_duplicate_names(names: Iterable[str], kind: str, path: str, scope: str = "") -> None:
+    """Warn per repeated name; lookups take one match, so a duplicate is unreachable."""
+    seen: set[str] = set()
+    for name in names:
+        if name in seen:
+            where = f" in {scope}" if scope else ""
+            log.warning(
+                f"{path}: {kind} '{name}' is defined more than once{where}; "
+                "names must be unique"
+            )
+            notify("Duplicate Name", f"{kind} '{name}'{where} (see log)")
+        seen.add(name)
+
+
+def iter_nested(items: Iterable, item_type: type[T], group_type: type) -> Iterator[T]:
+    """Every item of a type in a picker hierarchy in document order, nested groups included."""
+    for item in items:
+        if isinstance(item, group_type):
+            yield from iter_nested(item.items, item_type, group_type)
+        elif isinstance(item, item_type):
+            yield item

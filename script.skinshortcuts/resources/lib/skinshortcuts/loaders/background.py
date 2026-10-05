@@ -18,9 +18,11 @@ from .base import (
     get_attr,
     get_bool,
     get_text,
+    iter_nested,
     parse_content,
     parse_name_overrides,
     parse_xml,
+    warn_duplicate_names,
 )
 
 from ..models.menu import IconOverrides
@@ -68,6 +70,12 @@ def load_backgrounds(
             group = _parse_background_group(child, str(path))
             if group:
                 groupings.append(group)
+
+    warn_duplicate_names(
+        (b.name for b in iter_nested(groupings, Background, BackgroundGroup)),
+        "background",
+        str(path),
+    )
 
     return BackgroundConfig(
         backgrounds=backgrounds,

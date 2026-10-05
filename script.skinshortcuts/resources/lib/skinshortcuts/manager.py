@@ -6,16 +6,16 @@ import copy
 import uuid
 from pathlib import Path
 
+from .conditions import check_visible
 from .config import SkinConfig
 from .localize import resolve_label
 from .log import get_logger
-from .models import Action, Menu, MenuItem
+from .models.menu import Action, Menu, MenuItem
 from .playlists import cleanup_orphan_playlists
 from .userdata import (
-    MenuItemOverride,
-    MenuOverride,
+    MenuItemDiff,
+    MenuDiff,
     UserData,
-    _check_dialog_visible,
     save_userdata,
 )
 
@@ -31,13 +31,9 @@ def _is_derived(derived: dict[str, str], key: str, value: str) -> bool:
 
 
 class MenuManager:
-    """Manages menu operations with working copy and diff-based save.
-
-    Edits land in the working copy; save diffs it against defaults for minimal userdata.
-    """
+    """Manages menu edits in a working copy, saved as a minimal diff against the defaults."""
 
     def __init__(self, shortcuts_path: str | Path, userdata_path: str | None = None):
-        """Initialize manager."""
         self.shortcuts_path = Path(shortcuts_path)
         self.userdata_path = userdata_path
 
@@ -57,29 +53,22 @@ class MenuManager:
         self._changed = False
 
     def _referenced_submenu_templates(self) -> set[str]:
-        """Set of submenu template names referenced by any item (defaults or userdata).
-
-        Referenced ones seed per-item copies; the rest stay under their template name.
-        """
+        """Set of submenu template names any item references, the seeds for per-item copies."""
         referenced: set[str] = set()
         for menu in self.config.default_menus:
             for item in menu.items:
                 if item.submenu:
                     referenced.add(item.submenu)
-        for menu_override in self.config.userdata.menus.values():
-            for item_override in menu_override.items:
-                if item_override.submenu:
-                    referenced.add(item_override.submenu)
+        for menu_diff in self.config.userdata.menus.values():
+            for item_diff in menu_diff.items:
+                if item_diff.submenu:
+                    referenced.add(item_diff.submenu)
         submenu_names = {m.name for m in self.config.default_menus if m.is_submenu}
         return referenced & submenu_names
 
     def get_menu_ids(self) -> list[str]:
         """Get all available menu names."""
         return [menu.name for menu in self.config.menus]
-
-    def get_all_menus(self) -> list[Menu]:
-        """Get all menus from working copy."""
-        return list(self.working.values())
 
     def get_menu_items(self, menu_id: str) -> list[MenuItem]:
         """Get items for a menu from working copy."""
@@ -91,17 +80,17 @@ class MenuManager:
         """Get available widgets as (name, label) tuples."""
         return [(w.name, w.label) for w in self.config.widgets]
 
-    def get_backgrounds(self) -> list[tuple[str, str]]:
-        """Get available backgrounds as (name, label) tuples."""
-        return [(b.name, b.label) for b in self.config.backgrounds]
-
     def _get_working_item(self, menu_id: str, item_name: str) -> MenuItem | None:
         """Get item from working copy."""
-        if menu_id in self.working:
-            for item in self.working[menu_id].items:
-                if item.name == item_name:
-                    return item
-        return None
+        menu = self.working.get(menu_id)
+        return menu.get_item(item_name) if menu else None
+
+    def _default_item(self, menu_id: str, item_id: str) -> MenuItem | None:
+        """The skin default for an item, per-item submenu keys read from their template."""
+        default_menu = self.config.get_default_menu(menu_id)
+        if default_menu is None and "/" in menu_id:
+            default_menu = self._template_for_submenu_key(menu_id)
+        return default_menu.get_item(item_id) if default_menu else None
 
     def _ensure_working_menu(self, menu_id: str) -> Menu:
         """Ensure menu exists in working copy, create if needed."""
@@ -120,7 +109,7 @@ class MenuManager:
         return item.submenu or ""
 
     def ensure_item_submenu(self, parent_menu_name: str, item: MenuItem) -> Menu:
-        """Return the per-item submenu, seeding from template on first access."""
+        """Ensure the item has its own submenu, seeded from the template on first access."""
         key = self.submenu_key(parent_menu_name, item.name)
         if key not in self.working:
             template_name = self.submenu_template(item)
@@ -134,11 +123,8 @@ class MenuManager:
                 self.working[key] = Menu(name=key, is_submenu=True)
         return self.working[key]
 
-    def drop_per_item_submenu(self, parent_menu_name: str, item_name: str) -> None:
-        """Discard the per-item submenu so the next access reseeds from the template.
-
-        Needed when the item's shortcut or submenu reference changes.
-        """
+    def drop_item_submenu(self, parent_menu_name: str, item_name: str) -> None:
+        """Discard the per-item submenu so the next access reseeds from the template."""
         key = self.submenu_key(parent_menu_name, item_name)
         if key in self.working:
             del self.working[key]
@@ -231,7 +217,7 @@ class MenuManager:
         return new_item
 
     def _item_name_exists(self, menu: Menu, name: str) -> bool:
-        """Check if an item name already exists in a menu."""
+        """Whether an item name already exists in a menu."""
         return any(item.name == name for item in menu.items)
 
     def remove_item(self, menu_id: str, item_id: str) -> bool:
@@ -261,18 +247,7 @@ class MenuManager:
 
     def reset_item(self, menu_id: str, item_id: str) -> bool:
         """Reset an item to its skin default values."""
-        default_menu = self.config.get_default_menu(menu_id)
-        if default_menu is None and "/" in menu_id:
-            default_menu = self._template_for_submenu_key(menu_id)
-        if not default_menu:
-            return False
-
-        default_item = None
-        for item in default_menu.items:
-            if item.name == item_id:
-                default_item = item
-                break
-
+        default_item = self._default_item(menu_id, item_id)
         if not default_item:
             return False
 
@@ -298,22 +273,19 @@ class MenuManager:
 
         if "/" in menu_id:
             parent_name, _, item_name = menu_id.partition("/")
-            parent = self.working.get(parent_name)
-            if parent:
-                for item in parent.items:
-                    if item.name == item_name:
-                        template_name = self.submenu_template(item)
-                        template = self.config.get_default_menu(template_name)
-                        if template is not None:
-                            seeded = copy.deepcopy(template)
-                            seeded.name = menu_id
-                            self.working[menu_id] = seeded
-                        elif menu_id in self.working:
-                            self.working[menu_id].items.clear()
-                        else:
-                            self.working[menu_id] = Menu(name=menu_id, is_submenu=True)
-                        self._changed = True
-                        return True
+            item = self._get_working_item(parent_name, item_name)
+            if item:
+                template = self.config.get_default_menu(self.submenu_template(item))
+                if template is not None:
+                    seeded = copy.deepcopy(template)
+                    seeded.name = menu_id
+                    self.working[menu_id] = seeded
+                elif menu_id in self.working:
+                    self.working[menu_id].items.clear()
+                else:
+                    self.working[menu_id] = Menu(name=menu_id, is_submenu=True)
+                self._changed = True
+                return True
 
         if menu_id in self.working:
             self.working[menu_id].items.clear()
@@ -356,23 +328,12 @@ class MenuManager:
         return changed
 
     def is_item_modified(self, menu_id: str, item_id: str) -> bool:
-        """Check if an item differs from its skin default."""
+        """Whether an item differs from its skin default."""
         working_item = self._get_working_item(menu_id, item_id)
         if not working_item:
             return False
 
-        default_menu = self.config.get_default_menu(menu_id)
-        if default_menu is None and "/" in menu_id:
-            default_menu = self._template_for_submenu_key(menu_id)
-        if not default_menu:
-            return False
-
-        default_item = None
-        for item in default_menu.items:
-            if item.name == item_id:
-                default_item = item
-                break
-
+        default_item = self._default_item(menu_id, item_id)
         if not default_item:
             return False
 
@@ -404,13 +365,13 @@ class MenuManager:
         for item in default_menu.items:
             if item.name in working_names:
                 continue
-            if item.dialog_visible and not _check_dialog_visible(item.dialog_visible):
+            if item.dialog_visible and not check_visible(item.dialog_visible):
                 continue
             removed.append(item)
         return removed
 
     def has_removed_items(self, menu_id: str) -> bool:
-        """Check if menu has removed items that can be restored."""
+        """Whether the menu has removed items that can be restored."""
         return bool(self.get_removed_items(menu_id))
 
     def move_item(self, menu_id: str, item_id: str, direction: int) -> bool:
@@ -442,39 +403,31 @@ class MenuManager:
 
     def set_label(self, menu_id: str, item_id: str, label: str) -> bool:
         """Set the label for an item."""
-        return self._set_item_property(menu_id, item_id, "label", label)
+        return self._set_item_field(menu_id, item_id, "label", label)
 
-    def set_action(self, menu_id: str, item_id: str, action: str | list[str]) -> bool:
+    def set_action(self, menu_id: str, item_id: str, action: str | list[Action]) -> bool:
         """Set the action(s) for an item."""
         if isinstance(action, str):
-            actions = [action]
+            actions = [Action(action=action)]
         else:
-            actions = action
-        return self._set_item_property(menu_id, item_id, "actions", actions)
+            actions = [Action(action=a.action, condition=a.condition) for a in action]
+        return self._set_item_field(menu_id, item_id, "actions", actions)
 
     def set_icon(self, menu_id: str, item_id: str, icon: str) -> bool:
         """Set the icon for an item."""
-        return self._set_item_property(menu_id, item_id, "icon", icon)
+        return self._set_item_field(menu_id, item_id, "icon", icon)
 
     def set_submenu(self, menu_id: str, item_id: str, submenu: str | None) -> bool:
         """Set or clear the submenu template reference for an item."""
-        return self._set_item_property(menu_id, item_id, "submenu", submenu)
-
-    def set_widget(self, menu_id: str, item_id: str, widget: str | None) -> bool:
-        """Set the widget for an item."""
-        return self.set_custom_property(menu_id, item_id, "widget", widget)
-
-    def set_background(self, menu_id: str, item_id: str, background: str | None) -> bool:
-        """Set the background for an item."""
-        return self.set_custom_property(menu_id, item_id, "background", background)
+        return self._set_item_field(menu_id, item_id, "submenu", submenu)
 
     def set_disabled(self, menu_id: str, item_id: str, disabled: bool) -> bool:
         """Set the disabled state for an item."""
-        return self._set_item_property(menu_id, item_id, "disabled", disabled)
+        return self._set_item_field(menu_id, item_id, "disabled", disabled)
 
     def set_visible(self, menu_id: str, item_id: str, visible: str) -> bool:
         """Set the runtime visibility condition for an item."""
-        return self._set_item_property(menu_id, item_id, "visible", visible)
+        return self._set_item_field(menu_id, item_id, "visible", visible)
 
     def set_custom_property(
         self, menu_id: str, item_id: str, prop_name: str, value: str | None
@@ -493,25 +446,21 @@ class MenuManager:
         self._changed = True
         return True
 
-    def _set_item_property(
-        self, menu_id: str, item_id: str, prop: str, value: str | bool | list[str] | None
+    def _set_item_field(
+        self, menu_id: str, item_id: str, prop: str, value: str | bool | list[Action] | None
     ) -> bool:
-        """Set a property on an item in working copy."""
+        """Set a field on an item in working copy."""
         item = self._get_working_item(menu_id, item_id)
         if not item:
             return False
 
-        if prop == "actions" and isinstance(value, list):
-            item.actions = [Action(action=a) for a in value]
-        else:
-            setattr(item, prop, value)
-
+        setattr(item, prop, value)
         item.is_placeholder = False
         self._changed = True
         return True
 
     def has_changes(self) -> bool:
-        """Check if there are unsaved changes."""
+        """Whether there are unsaved changes."""
         return self._changed
 
     def save(self) -> bool:
@@ -591,36 +540,30 @@ class MenuManager:
             default_menu = default_menus.get(menu_id)
             if default_menu is None and "/" in menu_id:
                 default_menu = self._template_for_submenu_key(menu_id)
-            menu_override = self._diff_menu(working_menu, default_menu)
-            if menu_override:
-                userdata.menus[menu_id] = menu_override
+            menu_diff = self._diff_menu(working_menu, default_menu)
+            if menu_diff:
+                userdata.menus[menu_id] = menu_diff
 
         return userdata
 
     def _template_for_submenu_key(self, key: str) -> Menu | None:
         """Resolve the submenu template a per-item working key was seeded from."""
         parent_name, _, item_name = key.partition("/")
-        parent = self.working.get(parent_name)
-        if not parent:
-            return None
-        for item in parent.items:
-            if item.name == item_name:
-                template_name = self.submenu_template(item)
-                return self.config.get_default_menu(template_name)
-        return None
+        item = self._get_working_item(parent_name, item_name)
+        return self.config.get_default_menu(self.submenu_template(item)) if item else None
 
-    def _diff_menu(self, working: Menu, default: Menu | None) -> MenuOverride | None:
+    def _diff_menu(self, working: Menu, default: Menu | None) -> MenuDiff | None:
         """Generate diff for a single menu."""
-        override = MenuOverride()
+        diff = MenuDiff()
 
         if default is None:
             for idx, item in enumerate(working.items):
                 if item.is_placeholder:
                     continue
-                item_override = self._item_to_override(item, is_new=True)
-                item_override.position = idx
-                override.items.append(item_override)
-            return override if override.items else None
+                item_diff = self._item_to_diff(item, is_new=True)
+                item_diff.position = idx
+                diff.items.append(item_diff)
+            return diff if diff.items else None
 
         default_items = {item.name: item for item in default.items}
         working_items = {item.name: item for item in working.items if not item.is_placeholder}
@@ -628,11 +571,11 @@ class MenuManager:
         for name, default_item in default_items.items():
             if name not in working_items:
                 # Skip items filtered by dialog_visible - they weren't user-removed
-                if default_item.dialog_visible and not _check_dialog_visible(
+                if default_item.dialog_visible and not check_visible(
                     default_item.dialog_visible
                 ):
                     continue
-                override.removed.append(name)
+                diff.removed.append(name)
 
         for idx, working_item in enumerate(working.items):
             if working_item.is_placeholder:
@@ -640,9 +583,9 @@ class MenuManager:
             default_item = default_items.get(working_item.name)
 
             if default_item is None:
-                item_override = self._item_to_override(working_item, is_new=True)
-                item_override.position = idx
-                override.items.append(item_override)
+                item_diff = self._item_to_diff(working_item, is_new=True)
+                item_diff.position = idx
+                diff.items.append(item_diff)
             else:
                 default_idx = next(
                     (i for i, d in enumerate(default.items) if d.name == working_item.name),
@@ -653,17 +596,17 @@ class MenuManager:
 
                 if item_diff or position_changed:
                     if item_diff is None:
-                        item_diff = MenuItemOverride(name=working_item.name)
+                        item_diff = MenuItemDiff(name=working_item.name)
                     item_diff.position = idx
-                    override.items.append(item_diff)
+                    diff.items.append(item_diff)
 
-        if not override.items and not override.removed:
+        if not diff.items and not diff.removed:
             return None
-        return override
+        return diff
 
-    def _diff_item(self, working: MenuItem, default: MenuItem) -> MenuItemOverride | None:
+    def _diff_item(self, working: MenuItem, default: MenuItem) -> MenuItemDiff | None:
         """Diff for a single item, changed fields only."""
-        diff = MenuItemOverride(name=working.name)
+        diff = MenuItemDiff(name=working.name)
         has_changes = False
 
         if working.label != default.label:
@@ -708,9 +651,9 @@ class MenuManager:
 
         return diff if has_changes else None
 
-    def _item_to_override(self, item: MenuItem, is_new: bool = False) -> MenuItemOverride:
-        """Convert full item to override format."""
-        return MenuItemOverride(
+    def _item_to_diff(self, item: MenuItem, is_new: bool = False) -> MenuItemDiff:
+        """Convert full item to diff format."""
+        return MenuItemDiff(
             name=item.name,
             label=item.label,
             actions=item.actions,

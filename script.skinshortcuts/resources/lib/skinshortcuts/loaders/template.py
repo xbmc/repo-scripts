@@ -1,7 +1,4 @@
-"""Template loader for Skin Shortcuts v3.
-
-Parses templates.xml with support for expressions, includes, presets, and templates.
-"""
+"""Template loader, parsing templates.xml expressions, includes, presets and templates."""
 
 from __future__ import annotations
 
@@ -36,7 +33,8 @@ from ..models.template import (
     VariableGroupReference,
     VariableReference,
 )
-from .base import apply_suffix_to_from, apply_suffix_transform, get_bool
+from ..conditions import suffix_condition
+from .base import apply_suffix_to_from, get_bool
 
 log = get_logger("TemplateLoader")
 
@@ -123,7 +121,7 @@ class TemplateLoader:
                 continue
             value = (elem.text or "").strip()
             nosuffix = get_bool(elem, "nosuffix")
-            # one term, so callers can compound it without brackets, as Kodi stores them
+            # one term, so callers can compound it without brackets
             self._expressions[name] = Expression(
                 value=f"[{value}]" if value else "", nosuffix=nosuffix
             )
@@ -148,10 +146,7 @@ class TemplateLoader:
                 self._preset_groups[group.name] = group
 
     def _parse_preset_group(self, elem: ET.Element) -> PresetGroup | None:
-        """Parse a presetGroup element.
-
-        First matching condition wins (document order).
-        """
+        """Parse a presetGroup element, where the first matching condition wins."""
         name = (elem.get("name") or "").strip()
         if not name:
             log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
@@ -311,7 +306,7 @@ class TemplateLoader:
             if from_source:
                 from_source = apply_suffix_to_from(from_source, suffix)
             if condition:
-                condition = apply_suffix_transform(condition, suffix)
+                condition = suffix_condition(condition, suffix)
 
         return TemplateProperty(
             name=name,
@@ -333,7 +328,7 @@ class TemplateLoader:
             condition = (value_elem.get("condition") or "").strip()
 
             if suffix and condition:
-                condition = apply_suffix_transform(condition, suffix)
+                condition = suffix_condition(condition, suffix)
 
             values.append(TemplateProperty(name=name, value=value, condition=condition))
 

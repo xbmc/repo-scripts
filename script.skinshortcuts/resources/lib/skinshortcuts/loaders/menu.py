@@ -28,7 +28,14 @@ from ..models.menu import (
     SubDialog,
 )
 from ..log import get_logger, notify
-from .base import get_attr, get_bool, get_text, parse_content, parse_xml
+from .base import (
+    get_attr,
+    get_bool,
+    get_text,
+    parse_content,
+    parse_xml,
+    warn_duplicate_names,
+)
 
 log = get_logger("MenuLoader")
 
@@ -43,7 +50,7 @@ def load_menus(path: str | Path) -> MenuConfig:
     path_str = str(path)
 
     icon_sources = _parse_icons(root)
-    icon_overrides = _parse_icon_overrides(root, icon_sources)
+    icon_overrides = _parse_icon_overrides(root)
 
     menus = _parse_menus(root, path_str, icon_overrides)
     groupings = _parse_shortcut_groupings(root, path_str, icon_overrides=icon_overrides)
@@ -76,6 +83,8 @@ def _parse_menus(root, path: str, icon_overrides: IconOverrides | None = None) -
     for elem in root.findall("submenu"):
         menu = _parse_menu(elem, path, is_submenu=True, icon_overrides=overrides)
         menus.append(menu)
+
+    warn_duplicate_names((m.name for m in menus), "menu", path)
 
     return menus
 
@@ -165,11 +174,7 @@ def _parse_enable_on(value: str) -> list[int]:
 
 
 def _parse_submenu_path(root) -> bool:
-    """Parse the global submenuPath setting from <submenuPath>.
-
-    Returns True when set to "all": emit the numbered submenuPath.N tail for
-    every widget submenu. Off unless explicitly enabled.
-    """
+    """Parse <submenuPath>; True when "all" opts every widget submenu into the .N tail."""
     elem = root.find("submenuPath")
     if elem is None:
         return False
@@ -257,12 +262,8 @@ def _parse_overrides(root) -> list[Override]:
     return overrides
 
 
-def _parse_icon_overrides(root, _picker_sources: list[IconSource]) -> IconOverrides:
-    """Parse icon overrides from <overrides><icons>.
-
-    Source is opt-in, not inherited from the root <icons>, which is usually a flat icon
-    library rather than a substitution map.
-    """
+def _parse_icon_overrides(root) -> IconOverrides:
+    """Parse icon overrides from <overrides><icons>; its source is opt-in, not the root <icons>."""
     overrides_elem = root.find("overrides")
     if overrides_elem is None:
         return IconOverrides()
@@ -315,6 +316,7 @@ def _parse_menu(
     for item_elem in elem.findall("item"):
         item = _parse_item(item_elem, menu_name, path, is_widget_submenu, overrides)
         items.append(item)
+    warn_duplicate_names((i.name for i in items), "item", path, f"menu '{menu_name}'")
 
     defaults = _parse_defaults(elem.find("defaults"))
     allow = _parse_allow(elem.find("allow"))
@@ -501,10 +503,7 @@ def _parse_allow(elem) -> MenuAllow:
 def load_groupings(
     path: str | Path, menu_id: str = ""
 ) -> list[Shortcut | ShortcutGroup | Content | Input]:
-    """Load shortcut groupings from menus.xml file.
-
-    load_menus returns these inside the full MenuConfig; prefer it.
-    """
+    """Load shortcut groupings from a menus.xml file."""
     path = Path(path)
     if not path.exists():
         return []
@@ -616,7 +615,7 @@ def _parse_shortcut_group(
 
 def _parse_shortcut(
     elem,
-    _path: str,
+    path: str,
     icon_overrides: IconOverrides | None = None,
 ) -> Shortcut | None:
     """Parse a shortcut element."""
@@ -624,7 +623,7 @@ def _parse_shortcut(
     shortcut_name = get_attr(elem, "name")
     label = get_attr(elem, "label")
     if not shortcut_name or not label:
-        log.warning(f"Shortcut in {_path} missing 'name' or 'label', skipping")
+        log.warning(f"Shortcut in {path} missing 'name' or 'label', skipping")
         return None
 
     actions = []
@@ -633,14 +632,13 @@ def _parse_shortcut(
         action_text = (a.text or "").strip()
         if not action_text:
             continue
-        actions.append(action_text)
+        actions.append(Action(action=action_text, condition=get_attr(a, "condition") or ""))
         if get_bool(a, "primary"):
             primary_action = action_text
 
     shortcut_path = get_text(elem, "path") or ""
     browse = get_attr(elem, "browse") or ""
 
-    # Must have either action(s) or (browse + path)
     if not actions and not (browse and shortcut_path):
         return None
 

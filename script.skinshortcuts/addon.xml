@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.3" provider-name="MikeSiLVO">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.4" provider-name="MikeSiLVO">
     <requires>
         <import addon="xbmc.python" version="3.0.2"/>
     </requires>
     <extension point="xbmc.python.script" library="default.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-3.0.3
-  - Fix: a widget picked from a library node takes its type from the node, so add-on nodes are no longer mistyped
+3.0.4
+  - Add: property names match regardless of case
+  - Add: limit, sortby and sortorder from a widget definition reach every item the widget is assigned to
+  - Add: EMPTY, IN and bare checks in a suffixed condition follow the suffix
+  - Add: a warning when a menu, item, widget, background or view name is defined more than once
+  - Add: log off, screensaver and library update/clean in the commands source
+  - Add: the commands source only lists what the system can run
+  - Fix: the commands source labels match the command each one runs
+  - Fix: a shortcut picked from the groupings keeps the conditions on its actions
+  - Fix: a variable a template declares stays defined when no menu item matches it
 
-3.0.2
-  - Add: skins can restyle the DialogSelect pickers with a skinshortcuts-picker property and ListItem metadata
-  - Add: skins can define the management dialog context menu, the buttons it lists and where it opens
-  - Add: skins can retire a widget, background or property in an overrides block and point saved menus at its replacement
-  - Add: icon overrides name a source folder, so a skin's own icons replace the Kodi defaults, packed or loose
-  - Add: a rename attribute on a widget picker button prompts for a custom widget label
-  - Add: a global submenuPath element, plus a submenuPath property on menu items for their widget submenu
-  - Add: show a source as a library view instead of files, with a sort order
-  - Fix: program add-ons that expose plugin content are browsable in the content picker
-  - Fix: property conditions combine + and | as Kodi does, and an expression reference expands as a single term
-  - Fix: the includes file is written with unix line endings on every platform
-  - Fix: the skin reloads only when a rebuild changes the includes
-  - Fix: the picker keeps its place when it reopens instead of jumping back to the current selection
-  - Fix: backgrounds that open a browse or playlist dialog get the same folder arrow as groups
         </news>
         <platform>all</platform>
         <license>GPL-2.0-only</license>

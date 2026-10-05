@@ -1,8 +1,4 @@
-"""Browse provider for navigating Kodi paths.
-
-Uses Files.GetDirectory JSON-RPC to list directory contents and detect
-browsable (directory) vs selectable (file) items.
-"""
+"""Browse provider, listing Kodi paths through Files.GetDirectory."""
 
 from __future__ import annotations
 
@@ -21,11 +17,7 @@ log = get_logger("BrowseProvider")
 
 
 def normalize_image(path: str) -> str:
-    """Unwrap Kodi's image:// wrapper to the plain path inside.
-
-    Embedded-media art (image://music@.../, video@...) stays wrapped: the
-    <type>@ is a texture handler, and unwrapping it yields a dead path.
-    """
+    """Normalize Kodi's image:// wrapper to the path inside; embedded-media art stays wrapped."""
     if not path.startswith("image://"):
         return path
     inner = path[len("image://"):]
@@ -54,17 +46,13 @@ class BrowseProvider:
         self._icon_overrides = icon_overrides or {}
 
     def set_icon_overrides(self, overrides: IconOverrides) -> None:
-        """Refresh the override map; setter exists for the module-level singleton."""
+        """Set the override map, which the module-level singleton needs after construction."""
         self._icon_overrides = overrides or {}
 
     def list_directory(
         self, path: str, include_art: bool = False
     ) -> list[BrowseItem] | None:
-        """List a directory's items, or None if the path isn't listable.
-
-        include_art fetches per-item art for type-aware icons; skip it on big
-        listings, art on tens of thousands of items is too slow.
-        """
+        """List a directory's items, or None if it is not listable; art is opt-in, being slow."""
         properties = ["file", "mimetype"]
         if include_art:
             properties.append("art")
