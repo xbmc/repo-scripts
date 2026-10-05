@@ -54,12 +54,12 @@ LANGUAGES      = (
     ("Turkish"                    , "30",       "tr",            "tur",                 "42",                    30243  ),
     ("Ukrainian"                  , "46",       "uk",            "ukr",                 "43",                    30244  ),
     ("Vietnamese"                 , "51",       "vi",            "vie",                 "44",                    30245  ),
-    ("English Middle"             , "2",        "",              "enm",                 "47",                    30248  ),
+    ("English Middle"             , "2",        "enm",           "enm",                 "47",                    30248  ),
     ("Norwegian Bokmal"           , "3",        "nb",            "nob",                 "48",                    30249  ),
     ("New Norwegian"              , "3",        "nn",            "nno",                 "49",                    30250  ),
-    ("None"                       , "-1",       "",              "non",                 "45",                    30200  ),
-    ("Any"                        , "-2",       "",              "any",                 "46",                    30300  ),
-    ("Undefined"                  , "-3",       "",              "und",                 "50",                    30350  ) )
+    ("None"                       , "-1",       "non",           "non",                 "45",                    30200  ),
+    ("Any"                        , "-2",       "any",           "any",                 "46",                    30300  ),
+    ("Undefined"                  , "-3",       "und",           "und",                 "50",                    30350  ) )
 
 def languageTranslate(lang, lang_from, lang_to):
   for x in LANGUAGES:
@@ -67,3 +67,20 @@ def languageTranslate(lang, lang_from, lang_to):
     for code in codes:
       if lang == code :
         return x[lang_to]
+
+def multicode_languageTranslate(lang):
+  """
+  Wrapper to languageTranslate to support multi language codes in custom preferences and in Kodi reported track language.
+  (Can evolve later to support more codes like BCP47 : en-US, en-GB, fr-FR, Fr-CA, etc...)
+
+  :return: The full language name and the comma separated list of corresponding ISO 639 codes.
+          None if no full match found in above LANGUAGES DB
+  """
+
+  multi_pref = []
+  if len(lang) == 2 and languageTranslate(lang, 2, 0) and languageTranslate(lang, 2, 3):
+      multi_pref = (languageTranslate(lang, 2, 0), lang+','+languageTranslate(lang, 2, 3))
+  elif len(lang) >= 3 and languageTranslate(lang, 3, 0) and languageTranslate(lang, 3, 2):
+      multi_pref = (languageTranslate(lang, 3, 0), lang+','+languageTranslate(lang, 3, 2))
+  return multi_pref
+

@@ -195,7 +195,7 @@ class CustomMediaPreference:
         if found_audio_languages:
             log(LOG_DEBUG,
                 "Multiple audio tracks found for language " + self.audio_language + " for file " + player.getPlayingFile() + " and no set index. Picking first.")
-            return found_audio_languages
+            return found_audio_languages[0]
 
         return None
 
