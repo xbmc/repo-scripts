@@ -210,6 +210,7 @@ class KodiUtils:
     def log(msg, level):
         import xbmc
         from clouddrive.common.utils import Utils
+        from clouddrive.common.redaction import redact
         if level == 0:
             level = xbmc.LOGDEBUG
         elif level == 1:
@@ -218,7 +219,7 @@ class KodiUtils:
             level = xbmc.LOGWARNING
         elif level == 3:
             level = xbmc.LOGERROR
-        xbmc.log(u'[%s][%s-%s]: %s' % (KodiUtils.get_addon_info('id'), threading.current_thread().name,threading.current_thread().ident, Utils.str(msg)), level)
+        xbmc.log(u'[%s][%s-%s]: %s' % (KodiUtils.get_addon_info('id'), threading.current_thread().name,threading.current_thread().ident, redact(Utils.str(msg))), level)
 
     @staticmethod
     def translate_path(path):
