@@ -127,5 +127,12 @@ class BaseHandler(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self.do_GET()
 
+    def log_message(self, format, *args):
+        # http.server writes a line per request to stderr, which Kodi logs as an error. Requests are routine.
+        Logger.debug('%s - %s' % (self.address_string(), format % args))
+
+    def log_error(self, format, *args):
+        Logger.warning('%s - %s' % (self.address_string(), format % args))
+
 class InvalidResponseException(Exception):
     pass

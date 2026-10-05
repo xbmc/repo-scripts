@@ -19,6 +19,8 @@
 
 
 from threading import Lock
+import os
+import re
 import threading
 import time
 import urllib
@@ -197,9 +199,29 @@ class KodiUtils:
         with KodiUtils.lock:
             KodiUtils.set_addon_setting('%s.service.port' % service, Utils.str(port), addonid)
     
+    # Default sign-in server of earlier add-on versions. When an add-on update changes the default, Kodi keeps the
+    # old default as if the user had chosen it, so get_signin_server moves it to the add-on's current default.
+    _OLD_SIGNIN_SERVER = 'https://drive-login.herokuapp.com'
+
     @staticmethod
     def get_signin_server(addonid=None):
-        return KodiUtils.get_addon_setting('sign-in-server', addonid)
+        server = KodiUtils.get_addon_setting('sign-in-server', addonid)
+        if server.strip().rstrip('/').lower() == KodiUtils._OLD_SIGNIN_SERVER:
+            default = KodiUtils.get_signin_server_default(addonid)
+            if default and default.rstrip('/').lower() != KodiUtils._OLD_SIGNIN_SERVER:
+                KodiUtils.set_addon_setting('sign-in-server', default, addonid)
+                return default
+        return server
+
+    @staticmethod
+    def get_signin_server_default(addonid=None):
+        try:
+            path = os.path.join(KodiUtils.get_addon_info('path', addonid), 'resources', 'settings.xml')
+            with open(path, encoding='utf-8') as settings:
+                match = re.search(r'id="sign-in-server"[^>]*\sdefault="([^"]+)"', settings.read())
+            return match.group(1) if match else None
+        except Exception:
+            return None
     
     @staticmethod
     def get_cache_expiration_time(addonid=None):
@@ -210,6 +232,7 @@ class KodiUtils:
     def log(msg, level):
         import xbmc
         from clouddrive.common.utils import Utils
+        from clouddrive.common.redaction import redact
         if level == 0:
             level = xbmc.LOGDEBUG
         elif level == 1:
@@ -218,7 +241,7 @@ class KodiUtils:
             level = xbmc.LOGWARNING
         elif level == 3:
             level = xbmc.LOGERROR
-        xbmc.log(u'[%s][%s-%s]: %s' % (KodiUtils.get_addon_info('id'), threading.current_thread().name,threading.current_thread().ident, Utils.str(msg)), level)
+        xbmc.log(u'[%s][%s-%s]: %s' % (KodiUtils.get_addon_info('id'), threading.current_thread().name,threading.current_thread().ident, redact(Utils.str(msg))), level)
 
     @staticmethod
     def translate_path(path):

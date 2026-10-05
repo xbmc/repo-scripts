@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Expires in %s seconds..."
 msgstr ""
 
-msgctxt "#32012"
-msgid "Yes! Count me in"
-msgstr ""
-
 msgctxt "#32013"
 msgid "No"
 msgstr ""
@@ -134,14 +130,6 @@ msgstr ""
 
 msgctxt "#32029"
 msgid "Need help? Go to the forum and post a message in: kodi.daro.mx/forum"
-msgstr ""
-
-msgctxt "#32030"
-msgid "Collaboration"
-msgstr ""
-
-msgctxt "#32031"
-msgid "Report errors automatically to help resolve them quickly"
 msgstr ""
 
 msgctxt "#32032"
@@ -214,10 +202,6 @@ msgstr ""
 
 msgctxt "#32049"
 msgid "Loading %s items in this folder, please wait..."
-msgstr ""
-
-msgctxt "#32050"
-msgid "Do you want to help reporting errors to resolve them quickly?"
 msgstr ""
 
 msgctxt "#32051"

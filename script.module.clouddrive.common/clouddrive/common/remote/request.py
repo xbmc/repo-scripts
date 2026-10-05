@@ -21,6 +21,7 @@ import json
 import time
 
 from clouddrive.common.exception import RequestException
+from clouddrive.common.redaction import redact
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.utils import Utils
 from http.cookiejar import CookieJar
@@ -86,19 +87,12 @@ class Request(object):
         self.on_update_download = on_update_download
     
     def get_url_for_report(self, url):
-        index = url.find('access_token=')
-        if index > -1:
-            url_report = url[:index + 13] + '*removed*'
-            index = url.find('&', index + 1)
-            if index > -1:
-                url_report += url[index:]
-            return url_report
-        return url
+        return redact(url)
     
     def get_headers_for_report(self, headers):
         headers_report = {}
         for header in headers:
-            if header == 'authorization':
+            if header.lower() == 'authorization':
                 headers_report[header] = '*removed*'
             else:
                 headers_report[header] = headers[header]
@@ -120,7 +114,7 @@ class Request(object):
             if self.cancel_operation and self.cancel_operation():
                 break
             request_report = 'Request URL: ' + self.get_url_for_report(self.url)
-            request_report += '\nRequest data: ' + Utils.str(self.data)
+            request_report += '\nRequest data: ' + redact(Utils.str(self.data))
             request_report += '\nRequest headers: ' + Utils.str(self.get_headers_for_report(self.headers))
             response_report = '<response_not_set>'
             response = None
@@ -156,7 +150,7 @@ class Request(object):
                 response_report = '\nResponse Headers:\n%s' % Utils.str(self.response_info)
                 response_report += '\nResponse (%d) content-length=%s, len=<%s>:\n' % (self.response_code, content_length, len(self.response_text),)
                 try:
-                    response_report += Utils.str(self.response_text)
+                    response_report += redact(Utils.str(self.response_text))
                 except:
                     response_report += '<possible binary content>'
                 self.success = True
@@ -168,7 +162,7 @@ class Request(object):
                 if isinstance(e, HTTPError):
                     self.response_code = e.code
                     self.response_text = Utils.str(e.read())
-                    response_report += self.response_text
+                    response_report += redact(self.response_text)
                 else:
                     response_report += Utils.str(e)
                 rex = RequestException(Utils.str(e), root_exception, request_report, response_report)
