@@ -5,254 +5,254 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-03-09 14:05+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2026-08-16 23:16+0000\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/cs_cz/>\n"
 "Language: cs_cz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
-msgstr ""
+msgstr "Stahuje obrázky a další informace o právě přehrávaném interpretovi"
 
 msgctxt "Addon Description"
 msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
-msgstr ""
+msgstr "Doplněk pro stahování obrázků a dalších informací o právě přehrávaném interpretovi z fanart.tv a theaudiodb.com. Vzhled může tyto obrázky společně s místními obrázky interpretů a informacemi použít k vytvoření prezentace poslouchaného interpreta."
 
 # Section Headings
 msgctxt "#32000"
 msgid "Slideshow"
-msgstr ""
+msgstr "Prezentace"
 
 msgctxt "#32001"
 msgid "Storage"
-msgstr ""
+msgstr "Úložiště"
 
 msgctxt "#32002"
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
 msgctxt "#32003"
 msgid "Album Info"
-msgstr ""
+msgstr "Informace o albu"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr ""
+msgstr "Biografie interpreta"
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr ""
+msgstr "Podobní interpreti"
 
 msgctxt "#32006"
 msgid "Advanced"
-msgstr "Rozšířený"
+msgstr "Pokročilé"
 
 # empty strings from id 32007 to 32099
 # Settings
 msgctxt "#32101"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "Stahovat obrázky z fanart.tv"
 
 msgctxt "#32102"
 msgid "Download images from theaudiodb.com"
-msgstr ""
+msgstr "Stahovat obrázky z theaudiodb.com"
 
 msgctxt "#32103"
 msgid "Download album info from the audiodb.com"
-msgstr ""
+msgstr "Stahovat informace o albu z theaudiodb.com"
 
 msgctxt "#32104"
 msgid "Download album info from the last.fm"
-msgstr ""
+msgstr "Stahovat informace o albu z last.fm"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr ""
+msgstr "Stahovat biografii interpreta z theaudiodb.com"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr ""
+msgstr "Stahovat biografii interpreta z last.fm"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr ""
+msgstr "Stahovat podobné interprety z last.fm"
 
 msgctxt "#32108"
 msgid "Download all images regardless of resolution"
-msgstr ""
+msgstr "Stahovat všechny obrázky bez ohledu na rozlišení"
 
 msgctxt "#32109"
 msgid "Client API key"
-msgstr ""
+msgstr "Klíč API klienta"
 
 msgctxt "#32110"
 msgid "I donate to this service"
-msgstr ""
+msgstr "Přispívám této službě"
 
 msgctxt "#32111"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "Použít záložní prezentaci"
 
 msgctxt "#32112"
 msgid "Use override slideshow"
-msgstr ""
+msgstr "Použít vynucenou prezentaci"
 
 msgctxt "#32113"
 msgid "Custom location"
-msgstr ""
+msgstr "Vlastní umístění"
 
 msgctxt "#32114"
 msgid "Include Kodi artist fanart"
-msgstr ""
+msgstr "Zahrnout fanart interpreta z Kodi"
 
 msgctxt "#32115"
 msgid "Include Kodi album fanart"
-msgstr ""
+msgstr "Zahrnout fanart alba z Kodi"
 
 msgctxt "#32116"
 msgid "Limit size of download cache"
-msgstr ""
+msgstr "Omezit velikost mezipaměti stahování"
 
 msgctxt "#32117"
 msgid "Maximum cache size (in megabytes)"
-msgstr ""
+msgstr "Maximální velikost mezipaměti (v MB)"
 
 msgctxt "#32118"
 msgid "Alternate name for local fanart folder"
-msgstr ""
+msgstr "Alternativní název složky místního fanartu"
 
 msgctxt "#32119"
 msgid "Enable debug logging"
-msgstr "Povolit protokolování ladění"
+msgstr "Povolit ladicí protokolování"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr ""
+msgstr "Zakázat obrázky vedlejších a hostujících interpretů"
 
 msgctxt "#32121"
 msgid "Store artist images in"
-msgstr ""
+msgstr "Ukládat obrázky interpretů do"
 
 msgctxt "#32122"
 msgid "addon_data folder"
-msgstr ""
+msgstr "Složka addon_data"
 
 msgctxt "#32123"
 msgid "Kodi artist information folder"
-msgstr ""
+msgstr "Složka Kodi s informacemi o interpretech"
 
 msgctxt "#32124"
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 msgctxt "#32125"
 msgid "Store artist information in"
-msgstr ""
+msgstr "Ukládat informace o interpretech do"
 
 msgctxt "#32126"
 msgid "Preferred language for artist bio"
-msgstr ""
+msgstr "Preferovaný jazyk biografie interpreta"
 
 msgctxt "#32127"
 msgid "Use extrafanart folder"
-msgstr ""
+msgstr "Použít složku extrafanart"
 
 msgctxt "#32128"
 msgid "Platform for image storage"
-msgstr ""
+msgstr "Platforma pro ukládání obrázků"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr ""
+msgstr "Nahradit nepovolené znaky v cestě v názvu interpreta za"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
-msgstr ""
+msgstr "Nahradit tečku na konci názvu interpreta za"
 
 msgctxt "#32131"
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 msgctxt "#32132"
 msgid "Other"
-msgstr ""
+msgstr "Ostatní"
 
 msgctxt "#32133"
 msgid "MacOS"
-msgstr ""
+msgstr "macOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr ""
+msgstr "Přesunout obrázky do složky Kodi s hudebními interprety"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
-msgstr ""
+msgstr "Získat biografii interpreta z Kodi"
 
 msgctxt "#32136"
 msgid "Custom location"
-msgstr ""
+msgstr "Vlastní umístění"
 
 msgctxt "#32137"
 msgid "Delay between slide transitions (in seconds)"
-msgstr ""
+msgstr "Prodleva mezi přechody snímků (v sekundách)"
 
 msgctxt "#32138"
 msgid "Fade to black during change in artists"
-msgstr ""
+msgstr "Při změně interpreta prolínat do černé"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
-msgstr ""
+msgstr "Doba uspání hlavního vlákna (v sekundách)"
 
 msgctxt "#32140"
 msgid "Main thread idle sleep time (in seconds)"
-msgstr ""
+msgstr "Doba uspání hlavního vlákna při nečinnosti (v sekundách)"
 
 msgctxt "#32141"
 msgid "Slideshow thread sleep time (in seconds)"
-msgstr ""
+msgstr "Doba uspání vlákna prezentace (v sekundách)"
 
 msgctxt "#32142"
 msgid "Show notification during image downloads"
-msgstr ""
+msgstr "Zobrazovat oznámení během stahování obrázků"
 
 msgctxt "#32143"
 msgid "Only show notification if there are images to download"
-msgstr ""
+msgstr "Zobrazovat oznámení pouze v případě, že jsou k dispozici obrázky ke stažení"
 
 msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
-msgstr ""
+msgstr "Použít agresivnější vyhledávání interpretů pro streamy"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
-msgstr ""
+msgstr "Pozastavit prezentaci při pozastavení přehrávání"
 
 msgctxt "#32146"
 msgid "Use Audio Stream Monitor for artist information"
-msgstr ""
+msgstr "Použít Audio Stream Monitor pro informace o interpretovi"
 
 msgctxt "#32147"
 msgid "Ignore currently playing song when changing slideshow"
-msgstr ""
+msgstr "Při změně prezentace ignorovat právě přehrávanou skladbu"
 
 # empty strings from id 32145 to 32199
 # Dialog headings
 msgctxt "#32200"
 msgid "Artist Slideshow"
-msgstr ""
+msgstr "Artist Slideshow"
 
 msgctxt "#32201"
 msgid "Warning"
-msgstr ""
+msgstr "Varování"
 
 msgctxt "#32202"
 msgid "Error"
@@ -260,235 +260,235 @@ msgstr "Chyba"
 
 msgctxt "#32203"
 msgid "Progress"
-msgstr ""
+msgstr "Průběh"
 
 msgctxt "#32204"
 msgid "Downloading"
-msgstr ""
+msgstr "Stahování"
 
 msgctxt "#32205"
 msgid "Download Complete"
-msgstr ""
+msgstr "Stahování dokončeno"
 
 # empty strings from id 32206 to 32299
 # Dialog texts
 msgctxt "#32300"
 msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
-msgstr ""
+msgstr "Tímto přesunete a přejmenujete soubory obrázků a tuto akci nelze vrátit zpět. Opravdu to chcete provést?"
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr ""
+msgstr "Nepodařilo se získat cestu k úložišti obrázků hudebních interpretů Kodi. Zkontrolujte Nastavení > Média > Hudba a ověřte, že je nastavena složka s informacemi o interpretech."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr ""
+msgstr "Artist Slideshow už je nastaveno na použití složky Kodi s informacemi o interpretech. Nastavte použití složky addon_data nebo vlastního umístění a zkuste to znovu."
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
-msgstr ""
+msgstr "Přesouvání a přejmenovávání obrázků z vlastního umístění..."
 
 msgctxt "#32304"
 msgid "Moving and renaming images from addon_data folder..."
-msgstr ""
+msgstr "Přesouvání a přejmenovávání obrázků ze složky addon_data..."
 
 msgctxt "#32305"
 msgid "No artist directories found."
-msgstr ""
+msgstr "Nebyly nalezeny žádné složky interpretů."
 
 msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
-msgstr ""
+msgstr "Přesun obrázků byl dokončen. Nyní můžete změnit umístění úložiště Artist Slideshow na složku Kodi s informacemi o interpretech."
 
 msgctxt "#32307"
 msgid "Downloading new artist images"
-msgstr ""
+msgstr "Stahování nových obrázků interpretů"
 
 msgctxt "#32308"
 msgid "artist images downloaded"
-msgstr ""
+msgstr "obrázků interpretů staženo"
 
 msgctxt "#32309"
 msgid "artist image downloaded"
-msgstr ""
+msgstr "obrázek interpreta stažen"
 
 # empty strings from id 32310 to 32900
 # Languages
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "albánština"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "arabština"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "běloruština"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "bosenština (latinka)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "bulharština"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "katalánština"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "čínština"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "chorvatština"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "čeština"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "dánština"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "nizozemština"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "angličtina"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "estonština"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "finština"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "francouzština"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "němčina"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "řečtina"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "hebrejština"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "hindština"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "maďarština"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "islandština"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
+msgstr "indonéština"
 
 # empty string with id 32923
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "italština"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "japonština"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "korejština"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "lotyština"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "litevština"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "makedonština"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
+msgstr "norština"
 
 # empty string with id 32931
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "polština"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "portugalština"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "brazilská portugalština"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "rumunština"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "ruština"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "srbština (latinka)"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "slovenština"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "slovinština"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
+msgstr "španělština"
 
 # empty string with id 32941
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "Švédština"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "thajština"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "turečtina"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "ukrajinština"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "vietnamština"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "perština"

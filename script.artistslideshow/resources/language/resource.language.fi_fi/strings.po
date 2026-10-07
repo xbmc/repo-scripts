@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-12-11 16:13+0000\n"
+"PO-Revision-Date: 2026-08-22 08:16+0000\n"
 "Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-artistslideshow/fi_fi/>\n"
 "Language: fi_fi\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 msgctxt "Addon Summary"
 msgid "Download images and additional info of the currently playing artist"
-msgstr "Noutaa kuvia ja lisätietoja parhaillaan toistettavasta esittäjästä"
+msgstr "Noutaa kuvia ja lisätietoja parhaillaan toistettavasta artistista"
 
 msgctxt "Addon Description"
 msgid "Addon to download images and additional information from fanart.tv and theaudiodb.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to."
-msgstr "Lisäosa parhaillaan kuunneltavan esittäjän kuvien ja tietojen noutoon mm. Fanart.tv- ja TheAudioDB.com-palveluista. Ulkoasut voivat luoda kuvaesityksiä kuunneltavasta esittäjästä käyttäen näitä tietoja ja esittäjien paikallisia kuvia."
+msgstr "Lisäosa parhaillaan kuunneltavan artistin kuvien ja tietojen noutoon mm. Fanart.tv- ja TheAudioDB.com-palveluista. Ulkoasut voivat luoda kuvaesityksiä kuunneltavasta artitista käyttäen näitä tietoja ja paikallisia artistikuvia."
 
 # Section Headings
 msgctxt "#32000"
@@ -44,11 +44,11 @@ msgstr "Albumien tiedot"
 
 msgctxt "#32004"
 msgid "Artist Bio"
-msgstr "Esittäjien elämänkerrat"
+msgstr "Artistien biografiat"
 
 msgctxt "#32005"
 msgid "Similar Artists"
-msgstr "Samakaltaisia esittäjiä"
+msgstr "Samakaltaisia artisteja"
 
 msgctxt "#32006"
 msgid "Advanced"
@@ -74,15 +74,15 @@ msgstr "Nouda albumitietoja Last.fm-palvelusta"
 
 msgctxt "#32105"
 msgid "Download artist bio from theaudiodb.com"
-msgstr "Nouda esittäjätietoja TheAudioDB.com-palvelusta"
+msgstr "Nouda artistitietoja TheAudioDB.com-palvelusta"
 
 msgctxt "#32106"
 msgid "Download artist bio from last.fm"
-msgstr "Nouda esittäjien elämänkertoja Last.fm-palvelusta"
+msgstr "Nouda artistien biografioita Last.fm-palvelusta"
 
 msgctxt "#32107"
 msgid "Download similar artists from last.fm"
-msgstr "Nouda samakaltaisia esittäjiä Last.fm-palvelusta"
+msgstr "Nouda samakaltaisia artisteja Last.fm-palvelusta"
 
 msgctxt "#32108"
 msgid "Download all images regardless of resolution"
@@ -134,11 +134,11 @@ msgstr "Käytä vianselvityslokia"
 
 msgctxt "#32120"
 msgid "Disable secondary and featured artist images"
-msgstr "Älä käytä toissijaisia ja esiteltävien esittäjien kuvia"
+msgstr "Älä käytä toissijaisia ja esiteltävien artistien kuvia"
 
 msgctxt "#32121"
 msgid "Store artist images in"
-msgstr "Tallenna esittäjien kuvat kohteeseen"
+msgstr "Tallenna artistien kuvat kohteeseen"
 
 msgctxt "#32122"
 msgid "addon_data folder"
@@ -146,7 +146,7 @@ msgstr "addon_data-kansio"
 
 msgctxt "#32123"
 msgid "Kodi artist information folder"
-msgstr "Kodin esittäjätietojen kansio"
+msgstr "Kodin artistitietojen kansio"
 
 msgctxt "#32124"
 msgid "Priority"
@@ -154,11 +154,11 @@ msgstr "Painotus"
 
 msgctxt "#32125"
 msgid "Store artist information in"
-msgstr "Tallenna esittäjien tiedot kohteeseen"
+msgstr "Tallenna artistien tiedot kohteeseen"
 
 msgctxt "#32126"
 msgid "Preferred language for artist bio"
-msgstr "Ensisijainen kieli esittäjien elämänkerroille"
+msgstr "Ensisijainen kieli artistien biografioille"
 
 msgctxt "#32127"
 msgid "Use extrafanart folder"
@@ -170,11 +170,11 @@ msgstr "Kuvien tallennusalusta"
 
 msgctxt "#32129"
 msgid "Replace illegal path characters in artist name with"
-msgstr "Korvaa esittäjänimien virheelliset merkit sijainneissa merkillä"
+msgstr "Korvaa artistinimien virheelliset merkit sijainneissa merkillä"
 
 msgctxt "#32130"
 msgid "Replace trailing period in artist name with"
-msgstr "Korvaa esittäjiänimien lopussa olevat pisteet merkillä"
+msgstr "Korvaa artistinimien lopussa olevat pisteet merkillä"
 
 msgctxt "#32131"
 msgid "Windows"
@@ -190,11 +190,11 @@ msgstr "macOS"
 
 msgctxt "#32134"
 msgid "Move images to Kodi music artist folder"
-msgstr "Siirrä kuvat Kodin musiikkiesittäjien kansioon"
+msgstr "Siirrä kuvat Kodin musiikkiartistien kansioon"
 
 msgctxt "#32135"
 msgid "Get artist bio from Kodi"
-msgstr "Nouda esittäjien elämänkerrat Kodin tiedoista"
+msgstr "Nouda artistien biografiat Kodin tiedoista"
 
 msgctxt "#32136"
 msgid "Custom location"
@@ -206,7 +206,7 @@ msgstr "Kuvaesityksen kuvien vaihtoviive (sekuntia)"
 
 msgctxt "#32138"
 msgid "Fade to black during change in artists"
-msgstr "Häivytä esittäjän vaihtuessa mustaksi"
+msgstr "Häivytä mustaksi artistien vaihtuessa"
 
 msgctxt "#32139"
 msgid "Main thread sleep time (in seconds)"
@@ -230,7 +230,7 @@ msgstr "Näytä ilmoitus vain, jos noudettavia kuvia löydetään"
 
 msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
-msgstr "Käytä mediavirroille agressiivisempaa esittäjähakua"
+msgstr "Käytä mediavirroille agressiivisempaa artistihakua"
 
 msgctxt "#32145"
 msgid "Pause slideshow on playback pause"
@@ -278,11 +278,11 @@ msgstr "Tämä siirtää ja nimeää kuvatiedostosi, eikä se ole peruttavissa. 
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
-msgstr "Kodin musiikkiesittäjien kuvien tallennussijainntia ei voitu noutaa. Tarkista Asetukset > Media > Musiikki ja varmista, että esittäjien tiedoille on määritetty kansio."
+msgstr "Kodin musiikkiartistien kuvien tallennussijainntia ei voitu noutaa. Tarkista Asetukset > Media > Musiikki ja varmista, että artistien tiedoille on määritetty kansio."
 
 msgctxt "#32302"
 msgid "Artist Slideshow is already set to use the Kodi artist information folder. Please set to use either addon_data folder or a custom location and try again."
-msgstr "Artist Slideshow on jo määritetty käyttämään Kodin esittäjätietojen kansiota. Määritä se käyttämään joko addon_data-kansiota tai omaa sijaintiasi ja yritä uudelleen."
+msgstr "Artist Slideshow on jo määritetty käyttämään Kodin artistitietojen kansiota. Määritä se käyttämään joko addon_data-kansiota tai omaa sijaintiasi ja yritä uudelleen."
 
 msgctxt "#32303"
 msgid "Moving and renaming images from custom location..."
@@ -294,23 +294,23 @@ msgstr "Kuvien siirto ja uudelleenimeäminen addon_data-kansiosta..."
 
 msgctxt "#32305"
 msgid "No artist directories found."
-msgstr "Esittäjäkansioita ei löytynyt."
+msgstr "Artistikansioita ei löytynyt."
 
 msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
-msgstr "Kuvien siirto on valmis. Voit nyt vaihtaa Artis Slideshown tallennussijainniksi Kodin esittäjätietojen kansion."
+msgstr "Kuvien siirto on valmis. Voit nyt vaihtaa Artis Slideshown tallennussijainniksi Kodin artistitietojen kansion."
 
 msgctxt "#32307"
 msgid "Downloading new artist images"
-msgstr "Noudetaan esittäjälle uusia kuvia"
+msgstr "Noudetaan artistille uusia kuvia"
 
 msgctxt "#32308"
 msgid "artist images downloaded"
-msgstr "esittäjän kuvaa noudetiin"
+msgstr "artistin kuvaa noudetiin"
 
 msgctxt "#32309"
 msgid "artist image downloaded"
-msgstr "esittäjän kuva noudetiin"
+msgstr "artistin kuva noudetiin"
 
 # empty strings from id 32310 to 32900
 # Languages

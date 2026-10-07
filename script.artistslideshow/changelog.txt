@@ -1,3 +1,6 @@
+v.4.2.1
+- Keep running between items of a player that is not gapless
+
 v.4.2.0
 - updated artist split logic to apply in more places
 - added [+] as separator for artist splits
