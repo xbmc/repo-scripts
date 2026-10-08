@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: WatchNPlay
+# Addon id: service.watchnplay
+# Addon Provider: WatchNPlay
+msgid ""
+msgstr ""
+"Project-Id-Version: service.watchnplay\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: WatchNPlay\n"
+"Language-Team: Dutch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Account"
+msgstr "Account"
+
+msgctxt "#32001"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "#32002"
+msgid "Connect with WatchNPlay"
+msgstr "Verbinden met WatchNPlay"
+
+msgctxt "#32003"
+msgid "Disconnect"
+msgstr "Loskoppelen"
+
+msgctxt "#32004"
+msgid "Sync now"
+msgstr "Nu synchroniseren"
+
+msgctxt "#32005"
+msgid "Not connected"
+msgstr "Niet verbonden"
+
+msgctxt "#32006"
+msgid "Connected as %s"
+msgstr "Verbonden als %s"
+
+msgctxt "#32008"
+msgid "Paused: WatchNPlay Pro needed"
+msgstr "Gepauzeerd: WatchNPlay Pro nodig"
+
+msgctxt "#32009"
+msgid "API address (for testing only)"
+msgstr "API-adres (alleen voor testen)"
+
+msgctxt "#32010"
+msgid "Scan the QR code with your phone, or open Data & sync › Kodi in the app and enter this code:"
+msgstr "Scan de QR-code met je telefoon, of open Gegevens & sync › Kodi in de app en voer deze code in:"
+
+msgctxt "#32011"
+msgid "Without the app: %s"
+msgstr "Zonder app: %s"
+
+msgctxt "#32012"
+msgid "Code valid for %s"
+msgstr "Code nog %s geldig"
+
+msgctxt "#32013"
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgctxt "#32014"
+msgid "Connected with %s"
+msgstr "Verbonden met %s"
+
+msgctxt "#32015"
+msgid "Code expired, getting a new one…"
+msgstr "Code verlopen, nieuwe code wordt opgehaald…"
+
+msgctxt "#32016"
+msgid "Too many attempts. Please try again later."
+msgstr "Te veel pogingen. Probeer het later opnieuw."
+
+msgctxt "#32017"
+msgid "WatchNPlay cannot be reached. Please check your internet connection."
+msgstr "WatchNPlay is niet bereikbaar. Controleer je internetverbinding."
+
+msgctxt "#32018"
+msgid "Connection removed. You can connect again in the add-on settings."
+msgstr "Verbinding verwijderd. Je kunt opnieuw verbinden in de add-on-instellingen."
+
+msgctxt "#32019"
+msgid "WatchNPlay Pro is needed to keep syncing."
+msgstr "Je hebt WatchNPlay Pro nodig om te blijven synchroniseren."
+
+msgctxt "#32020"
+msgid "Disconnected from WatchNPlay."
+msgstr "Losgekoppeld van WatchNPlay."
+
+msgctxt "#32021"
+msgid "Disconnect this device from WatchNPlay?"
+msgstr "Dit apparaat loskoppelen van WatchNPlay?"
+
+msgctxt "#32022"
+msgid "Sync started."
+msgstr "Synchronisatie gestart."
+
+msgctxt "#32024"
+msgid "Requesting code…"
+msgstr "Code wordt opgevraagd…"
+
+msgctxt "#32025"
+msgid "Device"
+msgstr "Apparaat"

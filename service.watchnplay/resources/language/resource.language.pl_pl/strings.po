@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: WatchNPlay
+# Addon id: service.watchnplay
+# Addon Provider: WatchNPlay
+msgid ""
+msgstr ""
+"Project-Id-Version: service.watchnplay\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: WatchNPlay\n"
+"Language-Team: Polish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl_PL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Account"
+msgstr "Konto"
+
+msgctxt "#32001"
+msgid "Status"
+msgstr "Stan"
+
+msgctxt "#32002"
+msgid "Connect with WatchNPlay"
+msgstr "Połącz z WatchNPlay"
+
+msgctxt "#32003"
+msgid "Disconnect"
+msgstr "Rozłącz"
+
+msgctxt "#32004"
+msgid "Sync now"
+msgstr "Synchronizuj teraz"
+
+msgctxt "#32005"
+msgid "Not connected"
+msgstr "Nie połączono"
+
+msgctxt "#32006"
+msgid "Connected as %s"
+msgstr "Połączono jako %s"
+
+msgctxt "#32008"
+msgid "Paused: WatchNPlay Pro needed"
+msgstr "Wstrzymano: wymagane WatchNPlay Pro"
+
+msgctxt "#32009"
+msgid "API address (for testing only)"
+msgstr "Adres API (tylko do testów)"
+
+msgctxt "#32010"
+msgid "Scan the QR code with your phone, or open Data & sync › Kodi in the app and enter this code:"
+msgstr "Zeskanuj kod QR telefonem albo otwórz w aplikacji Dane i synchronizacja › Kodi i wpisz ten kod:"
+
+msgctxt "#32011"
+msgid "Without the app: %s"
+msgstr "Bez aplikacji: %s"
+
+msgctxt "#32012"
+msgid "Code valid for %s"
+msgstr "Kod ważny jeszcze %s"
+
+msgctxt "#32013"
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgctxt "#32014"
+msgid "Connected with %s"
+msgstr "Połączono z %s"
+
+msgctxt "#32015"
+msgid "Code expired, getting a new one…"
+msgstr "Kod wygasł, pobieranie nowego…"
+
+msgctxt "#32016"
+msgid "Too many attempts. Please try again later."
+msgstr "Zbyt wiele prób. Spróbuj ponownie później."
+
+msgctxt "#32017"
+msgid "WatchNPlay cannot be reached. Please check your internet connection."
+msgstr "Brak połączenia z WatchNPlay. Sprawdź połączenie z internetem."
+
+msgctxt "#32018"
+msgid "Connection removed. You can connect again in the add-on settings."
+msgstr "Połączenie usunięte. Możesz połączyć się ponownie w ustawieniach dodatku."
+
+msgctxt "#32019"
+msgid "WatchNPlay Pro is needed to keep syncing."
+msgstr "Do dalszej synchronizacji potrzebujesz WatchNPlay Pro."
+
+msgctxt "#32020"
+msgid "Disconnected from WatchNPlay."
+msgstr "Rozłączono z WatchNPlay."
+
+msgctxt "#32021"
+msgid "Disconnect this device from WatchNPlay?"
+msgstr "Odłączyć to urządzenie od WatchNPlay?"
+
+msgctxt "#32022"
+msgid "Sync started."
+msgstr "Synchronizacja rozpoczęta."
+
+msgctxt "#32024"
+msgid "Requesting code…"
+msgstr "Pobieranie kodu…"
+
+msgctxt "#32025"
+msgid "Device"
+msgstr "Urządzenie"
