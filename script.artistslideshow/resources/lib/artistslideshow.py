@@ -280,7 +280,7 @@ class Main(xbmc.Player):
                     change_slideshow = True
                 if self._waitForAbort(wait_time=self.MAINIDLESLEEP):
                     break
-            elif not self.DAEMON:
+            elif not self.DAEMON and not self._playback_resumed():
                 break
         self._clear_properties(slideshowstopping=True)
         self._set_property('ArtistSlideshowRunning')
@@ -1100,6 +1100,18 @@ class Main(xbmc.Player):
         else:
             self.RUNFROMSETTINGS = False
             self.SETTINGSACTION = ''
+
+    def _playback_resumed(self, wait_time=5):
+        # Players that are not gapless, like VideoPlayer, stop for a moment
+        # between two items of a playlist.
+        waited = 0
+        while waited < wait_time:
+            if self._waitForAbort(wait_time=1):
+                return False
+            if self._is_playing():
+                return True
+            waited = waited + 1
+        return False
 
     def _playback_stopped_or_changed(self, wait_time=1):
         if self._waitForAbort(wait_time=wait_time):
