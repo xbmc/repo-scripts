@@ -19,9 +19,13 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import zlib
+from collections.abc import Callable
 from dataclasses import dataclass
 
 DEFAULT_API_BASE = "https://api.thesubtitledb.org"
+
+#: This library's version, which Bazarr ships as its own. pyproject.toml carries it too.
+VERSION = "0.3.3"
 
 RETRY_BASE_S = 0.3
 MAX_BACKOFF_S = 8.0
@@ -66,14 +70,24 @@ class _OurHostsOnly(urllib.request.HTTPRedirectHandler):
 @dataclass
 class Client:
     api_base: str = DEFAULT_API_BASE
-    #: Sent as a query parameter, not a header: identifies the plugin in our logs.
+    #: Sent as a query parameter, not a header: identifies the plugin in our logs,
+    #: on every lookup and on every download.
     client: str = "subtitledb-plugin"
     timeout: float = 15.0
     retries: int = 2
-    user_agent: str = "subtitledb-plugin/0.1 (+https://thesubtitledb.org)"
+    #: The plugin's version, for the User-Agent. This library's when not given.
+    version: str = VERSION
+    #: "subtitledb-<client>/<version> (+https://thesubtitledb.org)" when not given.
+    user_agent: str = ""
+    #: For a host that gives a plugin seconds to stop, as Kodi does on quit: True once
+    #: it has asked. No request starts after that, and a wait to retry ends early.
+    stopping: Callable[[], bool] | None = None
 
     def __post_init__(self) -> None:
         self.api_base = self.api_base.rstrip("/")
+        if not self.user_agent:
+            self.user_agent = "subtitledb-%s/%s (+https://thesubtitledb.org)" % (
+                self.client, self.version or VERSION)
 
     # ---- requests ---------------------------------------------------------
 
@@ -83,7 +97,11 @@ class Client:
         return "%s%s?%s" % (self.api_base, path, urllib.parse.urlencode(query))
 
     def _open(self, url: str, accept: str):
-        req = urllib.request.Request(url, method="GET")  # noqa: S310 - _url builds it
+        try:
+            req = urllib.request.Request(url, method="GET")  # noqa: S310 - _url builds it
+        except ValueError as err:
+            # The API address is a free-text setting. A typo there is said once, plainly.
+            raise SubtitleDbError("not a web address: %s" % self.api_base) from err
         req.add_header("Accept", accept)
         req.add_header("Accept-Encoding", "gzip")
         req.add_header("User-Agent", self.user_agent)
@@ -104,10 +122,24 @@ class Client:
                 pass
         return random.random() * min(RETRY_BASE_S * (2**attempt), MAX_BACKOFF_S)  # noqa: S311
 
+    def _go_on(self) -> None:
+        if self.stopping is not None and self.stopping():
+            raise SubtitleDbError("stopped: the host is shutting down")
+
+    def _sleep(self, seconds: float) -> None:
+        if self.stopping is None:
+            time.sleep(seconds)
+            return
+        for _ in range(int(seconds * 10)):
+            if self.stopping():
+                return
+            time.sleep(0.1)
+
     def _get(self, path: str, params: dict | None = None) -> dict:
         url = self._url(path, params)
         last: Exception | None = None
         for attempt in range(self.retries + 1):
+            self._go_on()
             try:
                 with self._open(url, "application/json") as res:
                     raw = _read(res)
@@ -123,17 +155,20 @@ class Client:
                     raise SubtitleDbError(str(message), err.code, body) from err
                 last = SubtitleDbError(str(message), err.code, body)
                 if attempt < self.retries:
-                    time.sleep(self._backoff(attempt, err.headers.get("Retry-After")))
+                    self._sleep(self._backoff(attempt, err.headers.get("Retry-After")))
                 continue
             except _BROKEN as err:
                 last = SubtitleDbError("cannot reach %s: %s" % (self.api_base, err))
                 if attempt < self.retries:
-                    time.sleep(self._backoff(attempt, None))
+                    self._sleep(self._backoff(attempt, None))
                 continue
             try:
-                return json.loads(raw.decode("utf-8"))
+                body = json.loads(raw.decode("utf-8"))
             except ValueError as err:
                 raise SubtitleDbError("the API sent something that is not JSON") from err
+            if not isinstance(body, dict):
+                raise SubtitleDbError("the API sent JSON that is not an object")
+            return body
         raise last if last else SubtitleDbError("request failed")
 
     # ---- lookup verbs -----------------------------------------------------
@@ -168,13 +203,29 @@ class Client:
         """
         if not _ours(url, self.api_base):
             raise SubtitleDbError("refusing to download from %s" % url)
+        self._go_on()
         try:
-            with self._open(url, "*/*") as res:
-                return _read(res)
+            with self._open(self.with_client(url), "*/*") as res:
+                content = _read(res)
         except urllib.error.HTTPError as err:
             raise SubtitleDbError("HTTP %d from %s" % (err.code, url), err.code) from err
         except _BROKEN as err:
             raise SubtitleDbError("cannot download %s: %s" % (url, err)) from err
+        head = content.lstrip()[:15].lower()
+        if not head or head.startswith((b"<!doctype html", b"<html")):
+            # A captive portal or an error page can answer 200 as well. Handed to a
+            # player as a subtitle it shows nothing, and the plugin would say it worked.
+            sent = "a web page" if head else "nothing"
+            raise SubtitleDbError("%s sent %s, not a subtitle" % (url, sent))
+        return content
+
+    def with_client(self, url: str) -> str:
+        """``url`` with the plugin's name in its query, as every lookup carries it, so a
+        download can be put down to the plugin that made it."""
+        parts = urllib.parse.urlsplit(url)
+        query = urllib.parse.urlencode({"client": self.client})
+        return urllib.parse.urlunsplit(
+            parts._replace(query="%s&%s" % (parts.query, query) if parts.query else query))
 
 
 def _read(res) -> bytes:
