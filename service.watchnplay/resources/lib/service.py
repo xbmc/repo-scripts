@@ -15,6 +15,9 @@ from resources.lib.sync import SyncEngine
 STARTUP_DELAY = 30
 # Wiedergabeposition: eigener Takt, unabhaengig von laufenden Anfragen
 SAMPLE_EVERY = 1
+# Anzeige in den Einstellungen nachziehen: eine offene Einstellungsseite schreibt beim
+# Schliessen ihren alten Stand zurueck (liest nur, schreibt nur bei Abweichung)
+UI_HEAL_EVERY = 30
 
 
 class Ui(object):
@@ -97,9 +100,13 @@ class Service(xbmc.Monitor):
         sampler.start()
         if not self.waitForAbort(STARTUP_DELAY):
             self.engine.refresh_ui()
+            ticks = 0
             while not self.abortRequested():
                 try:
                     self.engine.tick()
+                    ticks += 1
+                    if ticks % UI_HEAL_EVERY == 0:
+                        self.engine.refresh_ui()
                 except Exception as exc:
                     util.warn('sync tick failed: %s' % exc)
                 if self.waitForAbort(1):

@@ -15,9 +15,14 @@ from .api import ApiError, ProRequired, Retryable, Unauthorized
 # Fehler, nach denen derselbe Stapel spaeter wieder gesendet wird
 KEEP_ERRORS = (Retryable, Unauthorized, ProRequired)
 
-STATUS_EVERY = 5 * 60
+# Jede Minute: so schnell kommt ein 'Jetzt synchronisieren' aus der App an (die App
+# erreicht Kodi nicht selbst) und mit Rueck-Sync eine Aenderung aus WatchNPlay
+STATUS_EVERY = 60
 FULL_EVERY = 6 * 3600
-PRO_RETRY = 6 * 3600
+# Ohne Pro nur noch /status (braucht kein Pro). Viertelstuendlich statt alle 6 h: so lange
+# stand ein in der App entferntes Geraet sonst als verbunden da, und ein 'Jetzt syncen'
+# nach verlaengertem Pro kam nicht an
+PRO_RETRY = 15 * 60
 DEBOUNCE = 5
 GUARD_TTL = 120
 BACKOFF = (30, 120, 600, 1800)
@@ -76,6 +81,8 @@ class SyncEngine(object):
         self.full_forced = False
         # zaehlt Kopplung/Trennung; ein laufender Durchgang erkennt so, dass er veraltet ist
         self.session = 0
+        # Token, zu dem Zustand und Warteschlange gehoeren (tick erkennt einen Wechsel selbst)
+        self.session_token = store.token
         self.last_status = 0
         self.notified_401 = False
         # Id-Index der Kodi-Bibliothek aus dem letzten Lesen (None = noch nie gelesen)
@@ -101,10 +108,15 @@ class SyncEngine(object):
 
     def _reset_session(self):
         self.session += 1
-        self.store.reset_state()
-        self.store.clear_queue()
+        # einzeln: scheitert ein Schreiben, bleibt trotzdem nichts vom vorigen Konto im Speicher
+        for step in (self.store.reset_state, self.store.clear_queue):
+            try:
+                step()
+            except OSError as exc:
+                self.ui.warn('state not written: %s' % exc)
         self.guard.clear()
         self.write_retry.clear()
+        self.session_token = self.store.token
 
     def on_paired(self):
         """Nach Kopplung: Zustand frisch, sofort voller Abgleich.
@@ -126,6 +138,8 @@ class SyncEngine(object):
         self.full_gen += 1
         if forced:
             self.full_forced = True
+            # ausdruecklich verlangt: von vorn, nicht einen unterbrochenen Durchgang fortsetzen
+            self.store.state.pop('fullPass', None)
         if now:
             self.fails = 0
             self.next_retry = 0
@@ -139,7 +153,7 @@ class SyncEngine(object):
             self.store.save_state()
 
     def _check_session(self, session):
-        if session != self.session or not self.paired:
+        if session != self.session or not self.paired or self.store.token != self.session_token:
             raise _Stale()
 
     # --- Schleifenschutz ---
@@ -243,13 +257,14 @@ class SyncEngine(object):
     def tick(self):
         """Regelmaessig (etwa sekuendlich) aufrufen."""
         self.store.save_if_dirty()
+        self._detect_switch()
         if not self.paired:
             return
         now = self.clock()
         self.retry_writes()
         st = self.store.state
         if self.pro_paused:
-            # Waehrend der Pause nur alle 6 h /status; Wiedergaben werden weiter gesammelt
+            # Waehrend der Pause nur alle 15 min /status; Wiedergaben werden weiter gesammelt
             if now >= st.get('proCheckAt', 0) and now >= self.next_retry:
                 self.check_status()
             return
@@ -268,6 +283,21 @@ class SyncEngine(object):
             return
         self.flush_plays()
 
+    def _detect_switch(self):
+        """Kopplung oder Trennung durch das Skript, dessen Meldung den Dienst nicht erreicht
+        hat: Zustand und Warteschlange gehoeren zum vorigen Konto und duerfen nicht unter
+        dem neuen weiterlaufen."""
+        token = self.store.token
+        if token == self.session_token:
+            return
+        self.ui.log('connection changed without notice, starting clean')
+        self._reset_session()
+        if token:
+            self.notified_401 = False
+            self.request_full(now=True)
+            self.last_status = 0
+        self.refresh_ui()
+
     def _playing(self):
         if self.is_playing is None:
             return False
@@ -281,7 +311,7 @@ class SyncEngine(object):
         try:
             res = self._api().status()
         except ApiError as exc:
-            # 402 hier: weiter pausiert, naechster Versuch in 6 h, Hinweis hoechstens einmal am Tag
+            # 402 hier: weiter pausiert, naechster Versuch in 15 min, Hinweis hoechstens einmal am Tag
             self._handle(exc)
             return False
         self._ok()
@@ -310,6 +340,13 @@ class SyncEngine(object):
             st['version'] = version
         if was_paused:
             self.request_full()
+        sync_request = res.get('syncRequest')
+        if sync_request and sync_request != st.get('syncHandled'):
+            # 'Jetzt synchronisieren' in App oder Web: voller Abgleich, auch waehrend einer
+            # Wiedergabe. Gemerkt wird der Wunsch, damit er nur einmal ausgeloest wird.
+            st['syncHandled'] = sync_request
+            self.ui.log('sync requested from WatchNPlay')
+            self.request_full(now=True, forced=True)
         self.store.save_state()
         self.refresh_ui()
         return True
@@ -436,7 +473,7 @@ class SyncEngine(object):
                         self._save_pass(fpass, idx)
                         return False
                 try:
-                    part = api.library(chunks[idx], True)
+                    part = api.library(chunks[idx], True, idx == len(chunks) - 1)
                 except ApiError as exc:
                     self._check_session(session)
                     if isinstance(exc, KEEP_ERRORS):
@@ -451,7 +488,7 @@ class SyncEngine(object):
                     applied += self._apply(part, known)
                 self._save_pass(fpass, idx + 1)
             if not chunks:
-                part = api.library([], True)
+                part = api.library([], True, True)
                 self._check_session(session)
                 fpass['version'] = part.get('version')
         except _Stale:

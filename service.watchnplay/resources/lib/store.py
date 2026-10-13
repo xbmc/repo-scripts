@@ -10,6 +10,7 @@ Drei Dateien, damit Skript (default.py) und Dienst sich nicht gegenseitig uebers
 
 import json
 import os
+import time
 
 MAX_PLAYS = 1000
 MAX_DELTAS = 5000
@@ -24,6 +25,19 @@ def _read(path, default):
         return default
 
 
+def _replace(tmp, path):
+    """Unter Windows haelt ein Virenscanner die frische Datei kurz offen (Zugriff
+    verweigert): ein paar Mal neu versuchen statt den Stand zu verlieren."""
+    for attempt in range(5):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            if attempt == 4:
+                raise
+            time.sleep(0.05 * (attempt + 1))
+
+
 def _write(path, data):
     # Zwischendatei je Prozess: Dienst und Skript schreiben sonst in dieselbe .tmp
     tmp = '%s.%d.tmp' % (path, os.getpid())
@@ -33,7 +47,7 @@ def _write(path, data):
             f.flush()
             # erst auf der Speicherkarte, dann umbenennen: nach Stromausfall keine leere Datei
             os.fsync(f.fileno())
-        os.replace(tmp, path)
+        _replace(tmp, path)
     except OSError:
         try:
             os.remove(tmp)

@@ -122,10 +122,15 @@ class Api(object):
     def status(self):
         return self._request('GET', '/status')
 
-    def library(self, items, full):
-        """Antwort: mark, unmark, backSync, version (Gesehen-Stand nach diesem Abgleich)."""
-        return self._request('POST', '/library', {'items': items, 'full': bool(full)},
-                             timeout=LIBRARY_TIMEOUT)
+    def library(self, items, full, last=None):
+        """Antwort: mark, unmark, backSync, version (Gesehen-Stand nach diesem Abgleich).
+
+        last: letztes Haeppchen eines vollen Abgleichs. Erst damit gilt er dem Server als
+        abgeschlossen ('Jetzt syncen' in der App meldet sonst zu frueh 'Abgeglichen')."""
+        body = {'items': items, 'full': bool(full)}
+        if full and last is not None:
+            body['last'] = bool(last)
+        return self._request('POST', '/library', body, timeout=LIBRARY_TIMEOUT)
 
     def plays(self, plays, min_percent=None):
         body = {'plays': plays}
