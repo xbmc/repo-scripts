@@ -1,0 +1,157 @@
+# Kodi Media Center language file
+# Addon Name: Game Manuals
+# Addon id: script.game.manuals
+# Addon Provider: sunlollyking
+msgid ""
+msgstr ""
+"Project-Id-Version: script.game.manuals\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: 2026-10-02 16:00+0100\n"
+"PO-Revision-Date: 2026-10-02 16:00+0100\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (United Kingdom) (https://kodi.weblate.cloud/languages/en_gb/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Page {0} of {1}"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Find a manual"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Searching..."
+msgstr ""
+
+msgctxt "#32004"
+msgid "No manual found for this game"
+msgstr ""
+
+msgctxt "#32005"
+msgid "No add-on that finds manuals is installed"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Get more..."
+msgstr ""
+
+msgctxt "#32007"
+msgid "Downloading the manual"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Couldn't download the manual"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Provider"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Select to download this manual"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Couldn't open the manual"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Select to zoom in, the bumpers turn the page"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Try another provider, or get more"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Asking"
+msgstr ""
+
+msgctxt "#32015"
+msgid "System"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Region"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Year"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Publisher"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Developer"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Genre"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Size"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Ask another"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Asking {0} for a manual..."
+msgstr ""
+
+msgctxt "#32024"
+msgid "Manuals are found by add-ons, the way subtitles are"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Check the connection and try again"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Couldn't ask {0}"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Downloaded manuals"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Space for downloaded manuals"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Manuals this add-on downloads are deleted, least recently read first, to stay within this. Manuals you put beside your games yourself are never deleted."
+msgstr ""
+
+msgctxt "#32033"
+msgid "100 MB"
+msgstr ""
+
+msgctxt "#32034"
+msgid "250 MB"
+msgstr ""
+
+msgctxt "#32035"
+msgid "500 MB"
+msgstr ""
+
+msgctxt "#32036"
+msgid "1 GB"
+msgstr ""
+
+msgctxt "#32037"
+msgid "2 GB"
+msgstr ""
