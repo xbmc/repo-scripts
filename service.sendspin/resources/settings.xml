@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+    <section id="service.sendspin">
+        <category id="general" label="30000">
+            <group id="1">
+                <setting id="enabled" type="boolean" label="30001" help="30101">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="player_name" type="string" label="30002" help="30102">
+                    <level>0</level>
+                    <default></default>
+                    <constraints><allowempty>true</allowempty></constraints>
+                    <control type="edit" format="string"><heading>30002</heading></control>
+                </setting>
+                <setting id="server_url" type="string" label="30003" help="30103">
+                    <level>0</level>
+                    <default></default>
+                    <constraints><allowempty>true</allowempty></constraints>
+                    <control type="edit" format="string"><heading>30003</heading></control>
+                </setting>
+                <setting id="yield_to_video" type="boolean" label="30004" help="30104">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="remote_skip" type="boolean" label="30006" help="30106">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="notifications" type="boolean" label="30005" help="30105">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="sync" label="30010">
+            <group id="1">
+                <setting id="auto_sync" type="boolean" label="30014" help="30114">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="lead_ms" type="integer" label="30011" help="30111">
+                    <level>2</level>
+                    <default>3000</default>
+                    <constraints><minimum>200</minimum><step>50</step><maximum>5000</maximum></constraints>
+                    <control type="slider" format="integer"><popup>false</popup></control>
+                </setting>
+                <setting id="static_delay_ms" type="integer" label="30012" help="30112">
+                    <level>1</level>
+                    <default>0</default>
+                    <constraints><minimum>-1000</minimum><step>10</step><maximum>5000</maximum></constraints>
+                    <control type="slider" format="integer"><popup>false</popup></control>
+                </setting>
+                <setting id="debug" type="boolean" label="30013" help="30113">
+                    <level>2</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
