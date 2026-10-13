@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.sendspin" name="Kodi-Sendspin" version="1.0.2" provider-name="McMoobud">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Turn Kodi into a Music Assistant (Sendspin) speaker</summary>
+        <description lang="en_GB">Registers this Kodi box as a Sendspin player with Music Assistant. Music Assistant can then stream synchronised multi-room audio to Kodi, with title, artist and artwork shown on Kodi's Now Playing screen. Pure Python, no extra dependencies - works on Android / Fire TV, LibreELEC, Windows, macOS and Linux.</description>
+        <disclaimer lang="en_GB">Unofficial community add-on. Uses the unencrypted Sendspin transition mode supported by Music Assistant 2.10 ("Allow legacy clients" must stay enabled).</disclaimer>
+        <platform>all</platform>
+        <license>GPL-2.0-or-later</license>
+        <source>https://github.com/McMoobud/kodi-sendspin</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <banner>resources/banner.png</banner>
+            <clearlogo>resources/clearlogo.png</clearlogo>
+        </assets>
+        <news>1.0.2 - new Kodi-Sendspin artwork (icon, fanart, banner, clear logo). 1.0.1 - robustness fixes: network message limits, safer discovery, rediscovers a moved server, cleaner reconnects. 1.0.0 - first stable release.</news>
+    </extension>
+</addon>
