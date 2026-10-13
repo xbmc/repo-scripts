@@ -17,7 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 from clouddrive.common.ui.logger import Logger
+import socket
+import struct
 from timeit import default_timer as timer
+
+# Kodi lists archives as music/picture types because it can browse them like folders. From a cloud drive that
+# means downloading the whole archive (e.g. multi-GB backups) just to look inside, so they are not treated as media.
+ARCHIVE_EXTENSIONS = ('', 'zip', 'rar', '001', '7z', 'cbz', 'cbr')
 
 class Utils:
     
@@ -121,13 +127,16 @@ class Utils:
     
     @staticmethod
     def get_source_id(ip):
-        data = ip.split('.')
-        source_id = 0
-        Logger.debug("ip is:" + ip)
-        for n in data:
-            Logger.debug("part: " + n)
-            source_id += int(n)
-        return source_id
+        # Shown to compare networks between Kodi and the browser, as on the sign-in server's page: the sum of the
+        # parts of an IPv4 address, or of the four network groups (the /64) of an IPv6 address. -1 if not an address.
+        try:
+            ip = ip.strip()
+            if ':' in ip:
+                return sum(struct.unpack('!4H', socket.inet_pton(socket.AF_INET6, ip)[:8]))
+            parts = [int(n) for n in ip.split('.')]
+            return sum(parts) if len(parts) == 4 else -1
+        except Exception:
+            return -1
 
     @staticmethod
     def remove_folder(folder_path, system_monitor=None):

@@ -49,10 +49,6 @@ msgctxt "#32011"
 msgid "Expires in %s seconds..."
 msgstr "פג ב- %s שניות."
 
-msgctxt "#32012"
-msgid "כן! אני בפנים"
-msgstr ""
-
 msgctxt "#32013"
 msgid "No"
 msgstr "לא"
@@ -121,14 +117,6 @@ msgctxt "#32029"
 msgid "Need help? Go to the forum and post a message in: kodi.daro.mx/forum"
 msgstr "זקוק לעזרה? עבור אל הפורום ופרסם הודעה ב: kodi.daro.mx/forum"
 
-msgctxt "#32030"
-msgid "Collaboration"
-msgstr "שיתוף פעולה"
-
-msgctxt "#32031"
-msgid "Report errors automatically to help resolve them quickly"
-msgstr "דווח על שגיאות באופן אוטומטי כדי לסייע בפתרון הבעיות במהירות"
-
 msgctxt "#32034"
 msgid "'%s' is not a folder"
 msgstr "'%s' זה לא תיקייה"
@@ -192,10 +180,6 @@ msgstr "%s פריטים  נטענו, אנא המתן..."
 msgctxt "#32049"
 msgid "Loading %s items in this folder, please wait..."
 msgstr "טוען %s פריטים בתיקיה זו, המתן ..."
-
-msgctxt "#32050"
-msgid "Do you want to help reporting errors to resolve them quickly?"
-msgstr "האם ברצונך לעזור בדיווח שגיאות כדי לפתור אותן במהירות?"
 
 msgctxt "#32052"
 msgid "Files"

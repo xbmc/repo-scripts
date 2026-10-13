@@ -40,6 +40,9 @@ class Provider(OAuth2):
     def create_pin(self, request_params=None):
         return self._signin.create_pin(self.name, request_params)
     
+    def register_networks(self, pin_info):
+        return self._signin.register_networks(pin_info)
+
     def fetch_tokens_info(self, pin_info, request_params=None):
         tokens_info = self._signin.fetch_tokens_info(pin_info, request_params)
         if tokens_info:

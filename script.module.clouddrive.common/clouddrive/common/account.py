@@ -41,11 +41,23 @@ class AccountManager(object):
                         accounts = json.loads(fo.read())
                         for accountid in accounts:
                             self.db.set(accountid, accounts[accountid])
-                    os.rename(config_path, os.path.join(_base_path, 'accounts.cfg.migrated'))
+                    # The db only logs write errors, so check every account before deleting the only other copy.
+                    if any(self.db.get(accountid) != accounts[accountid] for accountid in accounts):
+                        raise Exception('Not all accounts were saved')
+                    os.remove(config_path)
                 except Exception as ex:
                     Logger.debug("Error migrating accounts.")
                     Logger.debug(ex)
                     os.rename(config_path, os.path.join(_base_path, 'accounts.cfg.failed'))
+        
+        # Earlier versions kept the migrated file, a plain-text copy of the tokens. The accounts are in the db.
+        migrated_path = os.path.join(_base_path, 'accounts.cfg.migrated')
+        if os.path.exists(migrated_path):
+            try:
+                os.remove(migrated_path)
+            except OSError as ex:
+                Logger.debug("Unable to delete accounts.cfg.migrated.")
+                Logger.debug(ex)
     
     def get_accounts(self):
         return self.db.getall()
