@@ -32,14 +32,13 @@ class LyricsFetcher:
             headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; rv:77.0) Gecko/20100101 Firefox/77.0'}
             url = self.url % (song.artist, song.title)
             req = requests.get(url, headers=headers, timeout=10)
-            response = req.text
+            response = req.json()
         except:
             return None
-        data = json.loads(response)
         links = []
-        if (len(data['response']['sections']) < 2):
+        if (len(response['response']['sections']) < 2):
             return None
-        for item in data['response']['sections'][1]['hits']:
+        for item in response['response']['sections'][1]['hits']:
             try:
                 artistname = item['result']['artist_names']
                 songtitle = item['result']['title']

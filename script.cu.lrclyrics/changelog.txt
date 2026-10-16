@@ -1,3 +1,16 @@
+v6.7.5
+- bug fixes
+
+v6.7.4
+- fix musicmatchlrc scraper
+
+v6.7.3
+- fix megalobiz scraper
+
+v6.7.2
+- fix some broken scrapers
+- remove some unfixable broken scrapets
+
 v6.7.1
 - fix genius scraper
 - fix musicmatch scraper
