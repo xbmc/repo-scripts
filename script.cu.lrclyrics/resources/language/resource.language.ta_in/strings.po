@@ -282,18 +282,10 @@ msgctxt "#32914"
 msgid "AZLyrics"
 msgstr ""
 
-msgctxt "#32915"
-msgid "Lyrics.com"
-msgstr ""
-
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr ""
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
-
-msgctxt "#32918"
-msgid "RCLyricsBand"
 msgstr ""

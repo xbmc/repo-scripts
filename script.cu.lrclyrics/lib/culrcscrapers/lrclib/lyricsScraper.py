@@ -36,6 +36,8 @@ class LyricsFetcher:
         except:
             return None
         links = []
+        if isinstance(result, dict): # lrclib sometimes does not return a list, but a 3 item error code dict
+            return None
         for item in result: 
             artistname = item['artistName']
             songtitle = item['name']
