@@ -25,7 +25,7 @@ from calendar import weekday
 from clouddrive.common.remote.errorreport import ErrorReport
 from clouddrive.common.export import ExportManager
 from clouddrive.common.account import AccountManager
-from _collections import deque
+from collections import deque
 import os
 
 class ExportService(object):
@@ -211,7 +211,7 @@ class ExportService(object):
             KodiUtils.show_notification(self._common_addon.getLocalizedString(32059) + ' ' + self._common_addon.getLocalizedString(32038))
     
     def get_folder_changes(self, driveid, folder, on_before_add_item=None):
-        return self.provider.get_folder_items(Utils.default(Utils.get_safe_value(folder, 'drive_id'), driveid), folder['id'], include_download_info=True, on_before_add_item=on_before_add_item)
+        return self.provider.get_export_folder_items(Utils.default(Utils.get_safe_value(folder, 'drive_id'), driveid), folder['id'], on_before_add_item=on_before_add_item)
     
     def on_before_add_item(self, export, item):
         item['origin'] = Utils.get_safe_value(export, 'origin', '')
@@ -253,7 +253,7 @@ class ExportService(object):
                         changes_done.append(change)
                         if change_type == 'create_folder' or (change_type == 'create_folder_ignored' and Utils.get_safe_value(change, 'origin', '') == 'schedule'):
                             before_add_item = lambda item: self.on_before_add_item(change, item)
-                            pending_changes.extendleft(self.get_folder_changes(export['driveid'], change, before_add_item))
+                            pending_changes.extendleft(self.get_folder_changes(export['driveid'], change, before_add_item) or [])
                             self.export_manager.save_pending_changes(exportid, pending_changes)
                 else:
                     ignored += 1

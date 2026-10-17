@@ -25,6 +25,37 @@ from clouddrive.common.utils import Utils
 
 
 class Provider(OAuth2):
+    """
+    The cloud service behind an add-on. A plugin subclasses it and implements the methods below; the add-on UI
+    (ui/addon.py) and the services (download, source, export, player) only talk to the service through them.
+
+    Items are dicts with these keys. Required for every item:
+      id                  unique id of the file or folder; also used in play and download URLs
+      name                file or folder name, with its extension
+      name_extension      extension without the dot, lowercase not required (Utils.get_extension(name))
+      parent              the containing folder, in a form get_folder_items and get_subtitles accept. Items listed
+                          with get_folder_items(item_id=...) must use that item_id: library exports link items to
+                          their folder through it.
+      size                bytes (0 for folders)
+      last_modified_date  ISO 8601 string, or None
+    Folders:
+      folder              {'child_count': number of children, or 0 if unknown}
+    Files, when requested with include_download_info=True:
+      download_info       {'url': address the download service fetches}. Set download_requires_auth = True when
+                          that address needs the Authorization header (it is then added, and refreshed, by
+                          prepare_request); leave it False only for pre-authenticated links.
+    Optional:
+      drive_id            drive of the item when it differs from the account's drive (shared drives, shared items)
+      mimetype            used when the extension is unknown to Kodi
+      thumbnail           image URL Kodi can open directly
+      video               {'width', 'height', 'duration' (seconds)}
+      audio               {'tracknumber', 'discnumber', 'duration', 'year', 'genre', 'album', 'artist', 'title'}
+      image               {'size', ...}: marks the item as a picture even without a known extension
+      description         shown by the source service
+      subtitles           list of subtitle items, set by get_item(find_subtitles=True)
+      deleted / removed   true for deleted items in changes()
+      extra_params        extra URL parameters for the item's play and list actions
+    """
     name = ''
     source_mode = False
     download_requires_auth = False
@@ -98,9 +129,68 @@ class Provider(OAuth2):
     
     def get_drive_type_name(self, drive_type):
         return drive_type
+
+    def get_folder_items(self, item_driveid=None, item_id=None, path=None, on_items_page_completed=None, include_download_info=False, on_before_add_item=None):
+        """
+        The items in a folder, given by item_id, or by path ('/' for the root, or a special path returned by the
+        add-on's get_custom_drive_folders). For services that page results: call on_items_page_completed(items) after
+        each page, on_before_add_item(item) before adding each item, and return None if cancel_operation() is true.
+        """
+        raise NotImplementedError()
+
+    def get_item(self, item_driveid=None, item_id=None, path=None, find_subtitles=False, include_download_info=False):
+        """One item by id or path. With find_subtitles, also fills 'subtitles' using get_subtitles."""
+        raise NotImplementedError()
+
+    def search(self, query, item_driveid=None, item_id=None, on_items_page_completed=None):
+        """Files whose name matches query, in the folder item_id (and below) or in the whole drive."""
+        raise NotImplementedError()
+
+    def get_subtitles(self, parent, name, item_driveid=None, include_download_info=False):
+        """Subtitle items stored next to the video called name, in the folder parent (as given in the item's 'parent')."""
+        raise NotImplementedError()
     
+    def list_subtree(self, item_driveid, item_id):
+        """
+        Optional, to make library exports fast: the items, with download info, of the folder item_id and of every
+        folder below it, as {folder id: [items]}, in much fewer requests than one per folder. Items use their
+        folder's id as 'parent'. Return None when the service can't list a tree at once (folders are then listed one
+        by one), or if cancel_operation() is true.
+        """
+        return None
+
+    # Exports list every folder of a tree. With list_subtree, the first folder's call lists the whole tree and the
+    # other folders' items are kept here: each is handed out once, for a few minutes after the listing, so the
+    # long-running export service never reuses an old listing.
+    _SUBTREE_TTL = 600
+
+    def get_export_folder_items(self, item_driveid, item_id, on_before_add_item=None):
+        """The items, with download info, of the folder item_id for a library export."""
+        cache = self.__dict__.setdefault('_subtree_cache', {})
+        cached = cache.pop(item_id, None)
+        if cached and time.time() - cached[0] < self._SUBTREE_TTL:
+            items = cached[1]
+        else:
+            tree = self.list_subtree(item_driveid, item_id)
+            if self.cancel_operation():
+                return None
+            if tree is None:
+                return self.get_folder_items(item_driveid, item_id, include_download_info=True, on_before_add_item=on_before_add_item)
+            items = tree.pop(item_id, [])
+            listed = time.time()
+            for folder_id, folder_items in tree.items():
+                cache[folder_id] = (listed, folder_items)
+        if on_before_add_item:
+            for item in items:
+                on_before_add_item(item)
+        return items
+
     def cancel_operation(self):
         return False
 
     def changes(self):
+        """
+        Items changed since the last call, for exports that watch for changes. The token that marks the position is
+        kept with get_change_token and persist_change_token. Providers that can't report changes return [].
+        """
         return []

@@ -23,16 +23,15 @@ import sys
 import threading
 import time
 import urllib
-from urllib.error import HTTPError, URLError
 
-from clouddrive.common.account import AccountManager, AccountNotFoundException, \
-    DriveNotFoundException
-from clouddrive.common.exception import UIException, ExceptionUtils, RequestException
+from clouddrive.common.account import AccountManager
+from clouddrive.common.exception import ExceptionUtils, RequestException
 from clouddrive.common.export import ExportManager
 from clouddrive.common.remote.request import Request
 from clouddrive.common.service.download import DownloadServiceUtil
-from clouddrive.common.ui.dialog import DialogProgress, DialogProgressBG, \
-    QRDialogProgress, ExportMainDialog
+from clouddrive.common.ui.dialog import DialogProgress, DialogProgressBG, ExportMainDialog
+from clouddrive.common.ui.errors import ErrorMessage, ErrorMessages
+from clouddrive.common.ui.signin import AccountSignin
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils, ARCHIVE_EXTENSIONS
@@ -44,7 +43,11 @@ from clouddrive.common.cache.cache import Cache
 
 
 class CloudDriveAddon:
-    _DEFAULT_SIGNIN_TIMEOUT = 120
+    # The methods a plugin URL may run, by its "action" parameter. Plugins list their own in _plugin_actions.
+    _actions = ('_add_account', '_clear_cache', '_list_drive', '_list_exports', '_list_folder', '_open_common_settings',
+                '_open_export', '_remove_account', '_remove_drive', '_remove_export', '_run_export', '_search', '_slideshow',
+                'download', 'play')
+    _plugin_actions = ()
     _addon = None
     _addon_handle = None
     _addonid = None
@@ -70,7 +73,7 @@ class CloudDriveAddon:
     _image_file_extensions = [x for x in KodiUtils.get_supported_media("picture") if x not in ARCHIVE_EXTENSIONS]
     _account_manager = None
     _action = None
-    _ip_before_pin = None
+    _signin = None
     
     def __init__(self):
         self._addon = KodiUtils.get_addon()
@@ -87,8 +90,6 @@ class CloudDriveAddon:
         self._progress_dialog_bg = DialogProgressBG(self._addon_name)
         self._system_monitor = KodiUtils.get_system_monitor()
         self._account_manager = AccountManager(self._profile_path)
-        self._pin_dialog = None
-        self.iskrypton = KodiUtils.get_home_property('iskrypton') == 'true'
         
         if len(sys.argv) > 1:
             self._addon_handle = int(sys.argv[1])
@@ -129,7 +130,7 @@ class CloudDriveAddon:
         return
     
     def cancel_operation(self):
-        return self._system_monitor.abortRequested() or self._progress_dialog.iscanceled() or self._cancel_operation or (self._pin_dialog and self._pin_dialog.iscanceled())
+        return self._system_monitor.abortRequested() or self._progress_dialog.iscanceled() or self._cancel_operation or (self._signin is not None and self._signin.cancelled())
 
     def _get_display_name(self, account, drive=None, with_format=False):
         return self._account_manager.get_account_display_name(account, drive, self.get_provider(), with_format)
@@ -172,100 +173,10 @@ class CloudDriveAddon:
         xbmcplugin.endOfDirectory(self._addon_handle, True)
     
     def _add_account(self):
-        request_params = {
-            'waiting_retry': lambda request, remaining: self._progress_dialog_bg.update(
-                int((request.current_delay - remaining)/request.current_delay*100),
-                heading=self._common_addon.getLocalizedString(32043) % ('' if request.current_tries == 1 else ' again'),
-                message=self._common_addon.getLocalizedString(32044) % str(int(remaining)) + ' ' +
-                        self._common_addon.getLocalizedString(32045) % (str(request.current_tries + 1), str(request.tries))
-            ),
-            'on_complete': lambda request: (self._progress_dialog.close(), self._progress_dialog_bg.close()),
-            'cancel_operation': self.cancel_operation,
-            'wait': self._system_monitor.waitForAbort
-        }
-        provider = self.get_provider()
-        self._progress_dialog.update(0, self._common_addon.getLocalizedString(32008))
-        
-        self._ip_before_pin = Request(KodiUtils.get_signin_server() + '/ip', None).request()
-        pin_info = provider.create_pin(request_params)
-        self._progress_dialog.close()
-        if self.cancel_operation():
-            return
-        if not pin_info:
-            raise Exception('Unable to retrieve a pin code')
-        source_ids = provider.register_networks(pin_info)
-        source_id = ', '.join(source_ids) if source_ids else str(Utils.get_source_id(Utils.unicode(self._ip_before_pin)))
-
-        tokens_info = {}
-        request_params['on_complete'] = lambda request: self._progress_dialog_bg.close()
-        self._pin_dialog = QRDialogProgress.create(self._addon_name,
-                                      KodiUtils.get_signin_server() + '/signin/%s' % pin_info['pin'], 
-                                      self._common_addon.getLocalizedString(32009), 
-                                      self._common_addon.getLocalizedString(32010) % ('[B]%s[/B]' % KodiUtils.get_signin_server(), '[B][COLOR lime]%s[/COLOR][/B]' % pin_info['pin']))
-        self._pin_dialog.show()
-        max_waiting_time = time.time() + self._DEFAULT_SIGNIN_TIMEOUT
-        while not self.cancel_operation() and max_waiting_time > time.time():
-            remaining = round(max_waiting_time-time.time())
-            percent = int(remaining/self._DEFAULT_SIGNIN_TIMEOUT*100)
-            self._pin_dialog.update(percent, line3='[CR]'+self._common_addon.getLocalizedString(32011) % str(int(remaining)) + '[CR][CR]Your source id is: %s' % source_id)
-            if int(remaining) % 5 == 0 or remaining == 1:
-                tokens_info = provider.fetch_tokens_info(pin_info, request_params = request_params)
-                if self.cancel_operation() or tokens_info:
-                    break
-            if self._system_monitor.waitForAbort(1):
-                break
-        self._pin_dialog.close()
-        
-        if self.cancel_operation() or time.time() >= max_waiting_time:
-            return
-        if not tokens_info:
-            raise Exception('Unable to retrieve the auth2 tokens')
-        
-        self._progress_dialog.update(25, self._common_addon.getLocalizedString(32064),' ',' ')
-        try:
-            account = provider.get_account(request_params = request_params, access_tokens = tokens_info)
-        except Exception as e:
-            raise UIException(32065, e)
-        if self.cancel_operation():
-            return
-        
-        self._progress_dialog.update(50, self._common_addon.getLocalizedString(32017))
-        try:
-            account['drives'] = provider.get_drives(request_params = request_params, access_tokens = tokens_info)
-        except Exception as e:
-            raise UIException(32018, e)
-        if self.cancel_operation():
-            return
-        
-        self._progress_dialog.update(75, self._common_addon.getLocalizedString(32020))
-        try:
-            account['access_tokens'] = tokens_info
-            self._account_manager.save_account(account)
-        except Exception as e:
-            raise UIException(32021, e)
-        if self.cancel_operation():
-            return
-        
-        self._progress_dialog.update(90)
-        try:
-            accounts = self._account_manager.get_accounts()
-            for drive in account['drives']:
-                driveid = drive['id']
-                Logger.debug('Looking for account %s...' % driveid)
-                if driveid in accounts:
-                    drive = accounts[driveid]['drives'][0]
-                    Logger.debug(drive)
-                    if drive['id'] == driveid and drive['type'] == 'migrated':
-                        Logger.debug('Account %s removed.' % driveid)
-                        self._account_manager.remove_account(driveid)
-                        
-        except Exception as e:
-            pass
-        if self.cancel_operation():
-            return
-        
-        self._progress_dialog.close()
-        KodiUtils.executebuiltin('Container.Refresh')
+        self._signin = AccountSignin(self.get_provider(), self._account_manager, self._common_addon, self._addon_name,
+                                     self._progress_dialog, self._progress_dialog_bg, self._system_monitor)
+        if self._signin.run():
+            KodiUtils.executebuiltin('Container.Refresh')
 
     def _remove_drive(self, driveid):
         account = self._account_manager.get_by_driveid('account', driveid)
@@ -416,7 +327,8 @@ class CloudDriveAddon:
                 context_options.append((self._common_addon.getLocalizedString(32051), cmd))
                 params['action'] = 'play'
                 url = self._addon_url + '?' + urllib.parse.urlencode(params)
-                info_type = self._content_type
+                # Kodi's info type for audio is 'music'.
+                info_type = 'music' if self._content_type == 'audio' else self._content_type
                 if 'audio' in item:
                     info.update(item['audio'])
                     info_type = 'music'
@@ -434,7 +346,7 @@ class CloudDriveAddon:
                 if 'url' in item:
                     url = item['url']
                 else:
-                    url = self._get_item_play_url(urllib.parse.quote(Utils.str(item_name)), driveid, item_driveid, item_id)
+                    url = self._get_item_play_url(item_name, driveid, item_driveid, item_id)
                 if 'image' in item:
                     info.update(item['image'])
                 list_item.setInfo('pictures', info)
@@ -501,8 +413,7 @@ class CloudDriveAddon:
             wait_for_slideshow = True
         else:
             Logger.notice('Slideshow child count is the same, nothing to refresh...')
-        t = threading.Thread(target=self._refresh_slideshow, args=(driveid, item_driveid, item_id, path, new_change_token, wait_for_slideshow,))
-        t.setDaemon(True)
+        t = threading.Thread(target=self._refresh_slideshow, args=(driveid, item_driveid, item_id, path, new_change_token, wait_for_slideshow,), daemon=True)
         t.start()
     
     def _refresh_slideshow(self, driveid, item_driveid, item_id, path, change_token, wait_for_slideshow):
@@ -537,6 +448,7 @@ class CloudDriveAddon:
             Logger.debug('Abort requested...')
             
     def _get_item_play_url(self, file_name, driveid, item_driveid=None, item_id=None, is_subtitle=False):
+        # file_name as it is (not URL-encoded): it is encoded here, once.
         return DownloadServiceUtil.build_download_url(driveid, item_driveid, item_id, urllib.parse.quote(Utils.str(file_name)))
     
     def play(self, driveid, item_driveid=None, item_id=None):
@@ -561,9 +473,7 @@ class CloudDriveAddon:
                 resume = details['resume']
                 if resume['position'] > 0:
                     play_resume = False
-                    if self.iskrypton:
-                        play_resume = KodiUtils.get_addon_setting('resume_playing') == 'true'
-                    elif KodiUtils.get_addon_setting('ask_resume') == 'true':
+                    if KodiUtils.get_addon_setting('ask_resume') == 'true':
                         d = datetime(1,1,1) + timedelta(seconds=resume['position'])
                         t = '%02d:%02d:%02d' % (d.hour, d.minute, d.second)
                         Logger.debug(t)
@@ -590,7 +500,7 @@ class CloudDriveAddon:
         if find_subtitles and 'subtitles' in item:
             subtitles = []
             for subtitle in item['subtitles']:
-                subtitles.append(self._get_item_play_url(urllib.parse.quote(Utils.str(subtitle['name'])), driveid, Utils.default(Utils.get_safe_value(subtitle, 'drive_id'), driveid), subtitle['id'], True))
+                subtitles.append(self._get_item_play_url(subtitle['name'], driveid, Utils.default(Utils.get_safe_value(subtitle, 'drive_id'), driveid), subtitle['id'], True))
             list_item.setSubtitles(subtitles)
         if not self.cancel_operation():
             xbmcplugin.setResolvedUrl(self._addon_handle, succeeded, list_item)
@@ -598,77 +508,36 @@ class CloudDriveAddon:
     def _handle_exception(self, ex, show_error_dialog = True):
         stacktrace = ExceptionUtils.full_stacktrace(ex)
         rex = ExceptionUtils.extract_exception(ex, RequestException)
-        uiex = ExceptionUtils.extract_exception(ex, UIException)
-        httpex = ExceptionUtils.extract_exception(ex, HTTPError)
-        urlex = ExceptionUtils.extract_exception(ex, URLError)
-        line1 = self._common_addon.getLocalizedString(32027)
-        line2 = Utils.unicode(ex)
-        line3 = self._common_addon.getLocalizedString(32016)
-        
-        if uiex:
-            line1 = self._common_addon.getLocalizedString(int(Utils.str(uiex)))
-            line2 = Utils.unicode(uiex.root_exception)
-        elif rex and rex.response:
-            line1 += ' ' + Utils.unicode(rex)
-            line2 = ExceptionUtils.extract_error_message(rex.response)
+        signin_server = KodiUtils.get_signin_server()
+        driveid = Utils.get_safe_value(self._addon_params, 'driveid')
+        message = ErrorMessages(self._common_addon, signin_server).describe(
+            ex, bool(driveid), self._signin.ip_before_pin if self._signin else None,
+            lambda: Request(signin_server + '/ip', None).request())
         add_account_cmd = 'RunPlugin('+self._addon_url + '?' + urllib.parse.urlencode({'action':'_add_account', 'content_type': self._content_type})+')'
-        if isinstance(ex, AccountNotFoundException) or isinstance(ex, DriveNotFoundException):
+        if message.ask == ErrorMessage.ADD_ACCOUNT:
             show_error_dialog = False
             if self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32063) % '\n'):
                 KodiUtils.executebuiltin(add_account_cmd)
-        elif rex and httpex:
-            if httpex.code >= 500:
-                line1 = self._common_addon.getLocalizedString(32035)
-                line2 = None
-                line3 = self._common_addon.getLocalizedString(32038)
-            elif httpex.code >= 400:
-                driveid = Utils.get_safe_value(self._addon_params, 'driveid')
-                if driveid:
-                    account = self._account_manager.get_by_driveid('account', driveid)
-                    drive = self._account_manager.get_by_driveid('drive', driveid, account)
-                    if KodiUtils.get_signin_server() in rex.request or httpex.code == 401:
-                        show_error_dialog = False
-                        if self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32046) % (self._get_display_name(account, drive, True) + '\n')):
-                            KodiUtils.executebuiltin(add_account_cmd)
-                    elif httpex.code == 403:
-                        line1 = self._common_addon.getLocalizedString(32019)
-                        line2 = line3 = None
-                    elif httpex.code == 404:
-                        line1 = self._common_addon.getLocalizedString(32037)
-                        line2 = line2 = None
-                    else:
-                        line1 = self._common_addon.getLocalizedString(32036)
-                        line3 = self._common_addon.getLocalizedString(32038)
-                else:
-                    if KodiUtils.get_signin_server()+'/pin/' in rex.request and httpex.code == 404 and self._ip_before_pin:
-                        ip_after_pin = Request(KodiUtils.get_signin_server() + '/ip', None).request()
-                        if self._ip_before_pin != ip_after_pin:
-                            line1 = self._common_addon.getLocalizedString(32072)
-                            line2 = self._common_addon.getLocalizedString(32073) % (self._ip_before_pin, ip_after_pin,)
-        elif urlex:
-            reason = Utils.str(urlex.reason)
-            line3 = self._common_addon.getLocalizedString(32074)
-            if '[Errno 101]' in reason:
-                line1 = self._common_addon.getLocalizedString(32076)
-            elif '[Errno 11001]' in reason:
-                line1 = self._common_addon.getLocalizedString(32077)
-            elif 'CERTIFICATE_VERIFY_FAILED' in reason:
-                line1 = self._common_addon.getLocalizedString(32078)
-            else:
-                line1 = self._common_addon.getLocalizedString(32075)
-            
-        report = '[%s] [%s]/[%s]\n\n%s\n%s\n%s\n\n%s' % (self._addonid, self._addon_version, self._common_addon_version, line1, line2, line3, stacktrace)
+        elif message.ask == ErrorMessage.SIGN_IN_AGAIN:
+            show_error_dialog = False
+            account = self._account_manager.get_by_driveid('account', driveid)
+            drive = self._account_manager.get_by_driveid('drive', driveid, account)
+            if self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32046) % (self._get_display_name(account, drive, True) + '\n')):
+                KodiUtils.executebuiltin(add_account_cmd)
+
+        report = '[%s] [%s]/[%s]\n\n%s\n%s\n%s\n\n%s' % (self._addonid, self._addon_version, self._common_addon_version, message.line1, message.line2, message.line3, stacktrace)
         if rex:
             report += '\n\n%s\nResponse:\n%s' % (rex.request, rex.response)
         report += '\n\nshow_error_dialog: %s' % show_error_dialog
         Logger.error(report)
         if show_error_dialog:
-            if line2:
-                line1 += '\n' + line2
-            if line3:
-                line1 += '\n' + line3
-            self._dialog.ok(self._addon_name, line1)
-    
+            text = message.line1
+            if message.line2:
+                text += '\n' + message.line2
+            if message.line3:
+                text += '\n' + message.line3
+            self._dialog.ok(self._addon_name, text)
+
     def _open_common_settings(self):
         self._common_addon.openSettings()
     
@@ -686,6 +555,10 @@ class CloudDriveAddon:
             self._action = Utils.get_safe_value(self._addon_params, 'action')
             if self._action:
                 self._rename_action()
+                # URLs can come from anywhere (skins, favourites, other add-ons): only run the known actions.
+                if self._action not in self._actions and self._action not in self._plugin_actions:
+                    Logger.error('Unknown action: %s' % self._action)
+                    return
                 method = getattr(self, self._action)
                 arguments = {}
                 for name in inspect.getfullargspec(method)[0]:
@@ -699,5 +572,3 @@ class CloudDriveAddon:
         finally:
             self._progress_dialog.close()
             self._progress_dialog_bg.close()
-            if self._pin_dialog:
-                self._pin_dialog.close()

@@ -28,6 +28,7 @@ from clouddrive.common.exception import ExceptionUtils, RequestException
 from clouddrive.common.html import XHTML
 from clouddrive.common.remote.errorreport import ErrorReport
 from clouddrive.common.service.base import BaseServerService, BaseHandler
+from clouddrive.common.service.download import DownloadServiceUtil
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
@@ -211,7 +212,8 @@ class Source(BaseHandler):
         key = '%s%s:items' % (driveid, cache_path,)
         items = self._items_cache.get(key)
         if not items and isinstance(items, type(None)):
-            items = provider.get_folder_items(path=request_path, include_download_info=True)
+            # URL paths are percent-encoded; providers get the real names (cache keys stay encoded).
+            items = provider.get_folder_items(path=urllib.parse.unquote(request_path), include_download_info=True)
             self._items_cache.set(key, items)
             children_names = []
             cache_items = []
@@ -269,16 +271,20 @@ class Source(BaseHandler):
             provider = self._get_provider()
             provider.configure(self._account_manager, driveid)
             self.is_path_possible(driveid, path)
-            item = provider.get_item(path=path, include_download_info = True)
+            item = provider.get_item(path=urllib.parse.unquote(path), include_download_info = True)
             Logger.debug('Saving item in cache: %s' % key)
             self._items_cache.set(key, item)
         return item
     
     def get_download_url(self, driveid, path):
-        item = self.get_item(driveid, path) 
+        item = self.get_item(driveid, path)
         if 'folder' in item:
             return self.path + '/'
-        return item['download_info']['url']
+        # Files go through the add-on's local download service, like playback: it adds the Authorization header
+        # (a redirect can't carry one), refreshes the token, supports seeking, and keeps tokens and pre-authenticated
+        # links out of the URLs Kodi opens and logs.
+        item_driveid = Utils.default(Utils.get_safe_value(item, 'drive_id'), driveid)
+        return DownloadServiceUtil.build_download_url(driveid, item_driveid, item['id'], urllib.parse.quote(Utils.str(item['name'])), self._addonid)
     
     def get_subtitles(self, driveid, path):
         item = self.get_item(driveid, path) 
@@ -368,7 +374,8 @@ class Source(BaseHandler):
             cached_page['pending'] = False
             content_value = None
             if 'content' in cached_page:
-                content_value = cached_page['content'].getvalue()
+                # Stored as text: the page cache keeps JSON.
+                content_value = Utils.str(cached_page['content'].getvalue())
             self.write_response(cached_page['response_code'], content=Utils.get_safe_value(cached_page, 'content'), headers=Utils.get_safe_value(cached_page, 'headers', {}))
             cached_page['content'] = content_value
             if Utils.get_safe_value(cached_page, 'response_code', 0) >= 500:
