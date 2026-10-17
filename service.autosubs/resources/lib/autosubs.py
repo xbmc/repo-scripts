@@ -2,6 +2,7 @@
 
 import os
 import xbmc
+import xbmcvfs
 import xbmcaddon
 
 __addon__ = xbmcaddon.Addon()
@@ -11,9 +12,9 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 debug = __addon__.getSetting("debug")
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path'))
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources'))
+__cwd__ = xbmcvfs.translatePath(__addon__.getAddonInfo('path'))
+__profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
+__resource__ = xbmcvfs.translatePath(os.path.join(__cwd__, 'resources'))
 
 __settings__ = xbmcaddon.Addon("service.autosubs")
 
@@ -96,7 +97,8 @@ class AutoSubsPlayer(xbmc.Player):
         Debug("Ended")
         self.run = True
 
-    def onPlayBackStarted(self):
+    # onPlayBackStarted fires while streams still buffer (getTotalTime() == 0), so ExcludeTime skipped them
+    def onAVStarted(self):
         if self.isPlayingVideo():
             check_for_specific = __addon__.getSettingBool('check_for_specific')
             specific_language = __addon__.getSetting('selected_language')
