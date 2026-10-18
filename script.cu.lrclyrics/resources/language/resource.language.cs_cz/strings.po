@@ -7,22 +7,23 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
-"Language: cs\n"
+"PO-Revision-Date: 2026-10-18 17:02+0000\n"
+"Last-Translator: ronie <ronie@kodi.tv>\n"
+"Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-cu-lrclyrics/cs_cz/>\n"
+"Language: cs_cz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 msgctxt "Addon Summary"
 msgid "CU LRC Lyrics"
-msgstr ""
+msgstr "CU LRC Lyrics"
 
 msgctxt "Addon Description"
 msgid "CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music)."
-msgstr ""
+msgstr "CU LRC Lyrics je skript pro texty skladeb v Kodi. Podporuje běžné texty i texty ve formátu LRC. Skript umí vyhledávat synchronizované i nesynchronizované texty vložené v souboru, uložené v samostatném souboru nebo dostupné přes zdroje textů. Umí načíst soubor s textem .lrc/.txt uložený ve stejné cestě a se stejným názvem souboru jako .mp3 (nebo jiný typ hudebního souboru)."
 
 # Script labels
 msgctxt "#32000"
@@ -31,147 +32,147 @@ msgstr "Soubor"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr ""
+msgstr "Nebyly nalezeny žádné texty skladeb!"
 
 msgctxt "#32002"
 msgid "Embedded"
-msgstr ""
+msgstr "Vložené"
 
 msgctxt "#32003"
 msgid "Lyrics offset"
-msgstr ""
+msgstr "Posun textů skladeb"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr ""
+msgstr "Vyhledávají se texty skladeb..."
 
 msgctxt "#32005"
 msgid "Select lyrics:"
-msgstr ""
+msgstr "Vyberte texty skladeb:"
 
 msgctxt "#32006"
 msgid "Select different lyrics"
-msgstr ""
+msgstr "Vybrat jiné texty skladeb"
 
 msgctxt "#32007"
 msgid "Manually sync lyrics"
-msgstr ""
+msgstr "Ručně synchronizovat texty skladeb"
 
 msgctxt "#32008"
 msgid "Delayed by: %ss"
-msgstr ""
+msgstr "Zpožděno o: %s s"
 
 msgctxt "#32009"
 msgid "Ahead by: %ss"
-msgstr ""
+msgstr "Předbíhá o: %s s"
 
 # empty strings from id 32010 to 32100
 # Settings labels
 msgctxt "#32100"
 msgid "Search for and save lrc lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Vyhledávat a ukládat texty LRC do samostatné složky s texty"
 
 msgctxt "#32101"
 msgid "Search for and save txt lyrics in separate lyrics folder"
-msgstr ""
+msgstr "Vyhledávat a ukládat texty TXT do samostatné složky s texty"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr ""
+msgstr "- Složka s texty"
 
 msgctxt "#32103"
 msgid "- Filename format"
-msgstr ""
+msgstr "- Formát názvu souboru"
 
 msgctxt "#32104"
 msgid "%N %A - %T"
-msgstr ""
+msgstr "%N %A - %T"
 
 msgctxt "#32105"
 msgid "%A\\%T"
-msgstr ""
+msgstr "%A\\%T"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr ""
+msgstr "Pro vyhledávání použít pouze název souboru"
 
 msgctxt "#32107"
 msgid "Filename format"
-msgstr ""
+msgstr "Formát názvu souboru"
 
 msgctxt "#32108"
 msgid "%A - %T"
-msgstr ""
+msgstr "%A - %T"
 
 msgctxt "#32109"
 msgid "%A\\%B\\%T"
-msgstr ""
+msgstr "%A\\%B\\%T"
 
 msgctxt "#32110"
 msgid "%A\\%B\\%N (-) %T"
-msgstr ""
+msgstr "%A\\%B\\%N (-) %T"
 
 msgctxt "#32111"
 msgid "- Lyrics are in a subfolder"
-msgstr ""
+msgstr "- Texty jsou v podsložce"
 
 msgctxt "#32112"
 msgid "-- Subfolder name"
-msgstr ""
+msgstr "-- Název podsložky"
 
 msgctxt "#32113"
 msgid "Search for and save lrc lyrics in song folder"
-msgstr ""
+msgstr "Vyhledávat a ukládat texty LRC do složky skladby"
 
 msgctxt "#32114"
 msgid "%N - %A - %T"
-msgstr ""
+msgstr "%N - %A - %T"
 
 msgctxt "#32115"
 msgid "Display options"
-msgstr ""
+msgstr "Možnosti zobrazení"
 
 msgctxt "#32116"
 msgid "Search options"
-msgstr ""
+msgstr "Možnosti vyhledávání"
 
 msgctxt "#32117"
 msgid "Lyrics files"
-msgstr ""
+msgstr "Soubory s texty"
 
 msgctxt "#32118"
 msgid "Debugging"
-msgstr ""
+msgstr "Ladění"
 
 msgctxt "#32119"
 msgid "Search for and save txt lyrics in song folder"
-msgstr ""
+msgstr "Vyhledávat a ukládat texty TXT do složky skladby"
 
 msgctxt "#32120"
 msgid "%N. %A - %T"
-msgstr ""
+msgstr "%N. %A - %T"
 
 msgctxt "#32121"
 msgid "%A - %B - %N - %T"
-msgstr ""
+msgstr "%A - %B - %N - %T"
 
 # empty strings from id 32120 to 32146
 msgctxt "#32147"
 msgid "Search for local .txt lyrics files"
-msgstr ""
+msgstr "Vyhledávat místní soubory .txt s texty"
 
 # empty strings from id 32120 to 32147
 msgctxt "#32148"
 msgid "Hide dialog background, show lyrics only"
-msgstr ""
+msgstr "Skrýt pozadí dialogu a zobrazit pouze texty"
 
 msgctxt "#32149"
 msgid "Expert"
-msgstr ""
+msgstr "Expert"
 
 msgctxt "#32150"
 msgid "Scrapers"
-msgstr "Stahovače"
+msgstr "Zdroje textů"
 
 msgctxt "#32151"
 msgid "Options"
@@ -179,121 +180,121 @@ msgstr "Možnosti"
 
 msgctxt "#32152"
 msgid "Search for embedded lyrics"
-msgstr ""
+msgstr "Vyhledávat vložené texty"
 
 msgctxt "#32153"
 msgid "Search for local .lrc lyrics files"
-msgstr ""
+msgstr "Vyhledávat místní soubory .lrc s texty"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr ""
+msgstr "Zdroje synchronizovaných textů"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr ""
+msgstr "Zdroje běžných textů"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
-msgstr ""
+msgstr "Automaticky zobrazovat texty"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr ""
+msgstr "Vyčistit název skladby (odstranit část v závorkách)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
-msgstr ""
+msgstr "Skript už běží!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"
-msgstr "Povolit zaznamenávání ladících informací"
+msgstr "Povolit ladicí protokolování"
 
 msgctxt "#32160"
 msgid "Hide notifications"
-msgstr ""
+msgstr "Skrýt oznámení"
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
-msgstr ""
+msgstr "Odstraňovat z textů čínský/korejský text"
 
 msgctxt "#32162"
 msgid "Scraper test"
-msgstr ""
+msgstr "Test zdrojů textů"
 
 msgctxt "#32163"
 msgid "Testing: %s"
-msgstr ""
+msgstr "Testuje se: %s"
 
 msgctxt "#32164"
 msgid "All scrapers are working ok"
-msgstr ""
+msgstr "Všechny zdroje textů fungují správně"
 
 msgctxt "#32165"
 msgid "Failed scrapers: %s"
-msgstr ""
+msgstr "Nefunkční zdroje textů: %s"
 
 msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
-msgstr ""
+msgstr "Časový posun synchronizovaných textů"
 
 msgctxt "#32167"
 msgid "Delete lyrics"
-msgstr ""
+msgstr "Odstranit texty"
 
 msgctxt "#32168"
 msgid "If you hide the Music OSD and the Now Playing info, the background of the lyrics dialog will be hidden as well."
-msgstr ""
+msgstr "Pokud skryjete hudební OSD a informace o právě přehrávané položce, skryje se také pozadí dialogu s texty."
 
 msgctxt "#32169"
 msgid "Sources"
-msgstr ""
+msgstr "Zdroje"
 
 msgctxt "#32170"
 msgid "Get lyrics when listening to internet radio stations"
-msgstr ""
+msgstr "Získávat texty při poslechu internetových rozhlasových stanic"
 
 # Scrapers - do not translate!
 msgctxt "#32901"
 msgid "Lrclib"
-msgstr ""
+msgstr "Lrclib"
 
 msgctxt "#32902"
 msgid "MusixMatch"
-msgstr ""
+msgstr "MusixMatch"
 
 msgctxt "#32903"
 msgid "Megalobiz"
-msgstr ""
+msgstr "Megalobiz"
 
 msgctxt "#32904"
 msgid "Music 163"
-msgstr ""
+msgstr "Music 163"
 
 msgctxt "#32912"
 msgid "Genius"
-msgstr ""
+msgstr "Genius"
 
 msgctxt "#32913"
 msgid "Lyrics Mode"
-msgstr ""
+msgstr "Lyrics Mode"
 
 msgctxt "#32914"
 msgid "AZLyrics"
-msgstr ""
-
-msgctxt "#32915"
-msgid "Lyrics.com"
-msgstr ""
+msgstr "AZLyrics"
 
 msgctxt "#32916"
 msgid "Dark Lyrics"
-msgstr ""
+msgstr "Dark Lyrics"
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
+msgstr "Super Music"
 
-msgctxt "#32918"
-msgid "RCLyricsBand"
-msgstr ""
+#~ msgctxt "#32915"
+#~ msgid "Lyrics.com"
+#~ msgstr "Lyrics.com"
+
+#~ msgctxt "#32918"
+#~ msgid "RCLyricsBand"
+#~ msgstr "RCLyricsBand"
