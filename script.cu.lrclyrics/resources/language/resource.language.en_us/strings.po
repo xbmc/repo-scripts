@@ -270,10 +270,6 @@ msgctxt "#32904"
 msgid "Music 163"
 msgstr ""
 
-msgctxt "#32905"
-msgid "Lyricsify"
-msgstr ""
-
 msgctxt "#32912"
 msgid "Genius"
 msgstr ""
@@ -286,20 +282,12 @@ msgctxt "#32914"
 msgid "AZLyrics"
 msgstr ""
 
-msgctxt "#32915"
-msgid "Lyrics.com"
-msgstr ""
-
 msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr ""
 
 msgctxt "#32917"
 msgid "Super Music"
-msgstr ""
-
-msgctxt "#32918"
-msgid "RCLyricsBand"
 msgstr ""
 
 # empty strings from id 32010 to 32100
