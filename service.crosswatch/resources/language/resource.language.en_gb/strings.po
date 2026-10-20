@@ -1,0 +1,500 @@
+# Kodi Media Center language file
+# Addon Name: CrossWatch for Kodi
+# Addon id: service.crosswatch
+# Addon Provider: Rouzax
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_GB\n"
+
+msgctxt "#30000"
+msgid "CrossWatch"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Webhook URL"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Webhook token"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Device id (blank to generate)"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Viewers"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Configure viewers and playlists"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Ask who watched a film"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Skip PlexKodiConnect playback"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Progress report interval (seconds)"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Playlist refresh interval (minutes)"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Enable debug logging (records viewing history to disk)"
+msgstr ""
+
+msgctxt "#30030"
+msgid "CrossWatch for Kodi"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Playlist could not be read, so viewer identification is reduced: %s"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Everyone"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Remembered answers"
+msgstr ""
+
+msgctxt "#30039"
+msgid "Forget"
+msgstr ""
+
+msgctxt "#30041"
+msgid "will ask again"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Not in library"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Kodi library id %s"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Forget who watched %s shows? Each will be asked again."
+msgstr ""
+
+msgctxt "#30045"
+msgid "No remembered answers yet."
+msgstr ""
+
+msgctxt "#30046"
+msgid "Not stable"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Forget who watched this show? It will be asked again."
+msgstr ""
+
+msgctxt "#30048"
+msgid "Add viewer"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Playlists for %s"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Viewer name, as CrossWatch routes it"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Remove %s?"
+msgstr ""
+
+msgctxt "#30056"
+msgid "%s playlists"
+msgstr ""
+
+msgctxt "#30058"
+msgid "missing"
+msgstr ""
+
+msgctxt "#30059"
+msgid "1 playlist"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Pair with CrossWatch"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Status"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Unpair"
+msgstr ""
+
+msgctxt "#30063"
+msgid "CrossWatch address, for example 192.168.1.10:8787"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Pairing code from CrossWatch"
+msgstr ""
+
+msgctxt "#30065"
+msgid "Paired with %s"
+msgstr ""
+
+msgctxt "#30066"
+msgid "Code wrong or expired. Get a new code in CrossWatch."
+msgstr ""
+
+msgctxt "#30067"
+msgid "Too many tries. Wait a few minutes and try again."
+msgstr ""
+
+msgctxt "#30068"
+msgid "Can't reach CrossWatch at %s."
+msgstr ""
+
+msgctxt "#30069"
+msgid "Pairing failed: CrossWatch answered HTTP %s."
+msgstr ""
+
+msgctxt "#30070"
+msgid "Not a CrossWatch address: %s"
+msgstr ""
+
+msgctxt "#30071"
+msgid "Link this Kodi to CrossWatch at %s?"
+msgstr ""
+
+msgctxt "#30072"
+msgid "Paired with %s at %s"
+msgstr ""
+
+msgctxt "#30074"
+msgid "Not paired"
+msgstr ""
+
+msgctxt "#30075"
+msgid "Disconnect this Kodi from CrossWatch? It stops reporting until you pair again."
+msgstr ""
+
+msgctxt "#30077"
+msgid "Covered by"
+msgstr ""
+
+msgctxt "#30078"
+msgid "The certificate of %s was not accepted. HTTPS needs a certificate from a public certificate authority; a self-signed one does not work."
+msgstr ""
+
+msgctxt "#30081"
+msgid "Who watched it?"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Done"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#30084"
+msgid "Season %s, episode %s"
+msgstr ""
+
+msgctxt "#30085"
+msgid "Closes in %s s"
+msgstr ""
+
+msgctxt "#30086"
+msgid "Search"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Viewer: %s"
+msgstr ""
+
+msgctxt "#30088"
+msgid "All"
+msgstr ""
+
+msgctxt "#30089"
+msgid "Nothing matches"
+msgstr ""
+
+msgctxt "#30090"
+msgid "%s shows"
+msgstr ""
+
+msgctxt "#30091"
+msgid "%s of %s"
+msgstr ""
+
+msgctxt "#30092"
+msgid "Forget all"
+msgstr ""
+
+msgctxt "#30093"
+msgid "Forget %s shown"
+msgstr ""
+
+msgctxt "#30094"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#30095"
+msgid "No"
+msgstr ""
+
+msgctxt "#30096"
+msgid "Close"
+msgstr ""
+
+msgctxt "#30097"
+msgid "1 show"
+msgstr ""
+
+msgctxt "#30098"
+msgid "Also %s"
+msgstr ""
+
+msgctxt "#30099"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Kodi has no smart playlists of TV shows or films yet. Make one under Videos, Playlists, then come back here."
+msgstr ""
+
+msgctxt "#30101"
+msgid "No poster"
+msgstr ""
+
+msgctxt "#30102"
+msgid "1 viewer"
+msgstr ""
+
+msgctxt "#30103"
+msgid "%s viewers"
+msgstr ""
+
+msgctxt "#30105"
+msgid "1 profile"
+msgstr ""
+
+msgctxt "#30106"
+msgid "%s profiles"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Playlists"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Profiles"
+msgstr ""
+
+msgctxt "#30109"
+msgid "Rename"
+msgstr ""
+
+msgctxt "#30110"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#30113"
+msgid "none"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Profiles for %s"
+msgstr ""
+
+msgctxt "#30115"
+msgid "Remembered answers lose this name. A show nobody else is remembered for is asked again."
+msgstr ""
+
+msgctxt "#30116"
+msgid "Kodi's profiles could not be read. Try again in a moment."
+msgstr ""
+
+msgctxt "#30118"
+msgid "No viewers yet"
+msgstr ""
+
+msgctxt "#30119"
+msgid "CrossWatch route"
+msgstr ""
+
+msgctxt "#30120"
+msgid "No CrossWatch route"
+msgstr ""
+
+msgctxt "#30121"
+msgid "and %s more"
+msgstr ""
+
+msgctxt "#30122"
+msgid "unusable"
+msgstr ""
+
+msgctxt "#30123"
+msgid "Answer"
+msgstr ""
+
+msgctxt "#30124"
+msgid "%s's playlist '%s'"
+msgstr ""
+
+msgctxt "#30125"
+msgid "gone from Kodi's library"
+msgstr ""
+
+msgctxt "#30126"
+msgid "now points at %s"
+msgstr ""
+
+msgctxt "#30127"
+msgid "no title stored to check it"
+msgstr ""
+
+msgctxt "#30128"
+msgid "Change"
+msgstr ""
+
+msgctxt "#30129"
+msgid "Ask for a rating"
+msgstr ""
+
+msgctxt "#30130"
+msgid "Off"
+msgstr ""
+
+msgctxt "#30131"
+msgid "Films"
+msgstr ""
+
+msgctxt "#30132"
+msgid "Episodes"
+msgstr ""
+
+msgctxt "#30133"
+msgid "Films and episodes"
+msgstr ""
+
+msgctxt "#30134"
+msgid "When to ask"
+msgstr ""
+
+msgctxt "#30135"
+msgid "After each watch"
+msgstr ""
+
+msgctxt "#30136"
+msgid "At the end, for everything watched"
+msgstr ""
+
+msgctxt "#30137"
+msgid "Shared rating"
+msgstr ""
+
+msgctxt "#30138"
+msgid "Write the rating to Kodi's library"
+msgstr ""
+
+msgctxt "#30139"
+msgid "%s, how was it?"
+msgstr ""
+
+msgctxt "#30140"
+msgid "How was it?"
+msgstr ""
+
+msgctxt "#30141"
+msgid "Remove rating"
+msgstr ""
+
+msgctxt "#30143"
+msgid "Awful"
+msgstr ""
+
+msgctxt "#30144"
+msgid "Very bad"
+msgstr ""
+
+msgctxt "#30145"
+msgid "Bad"
+msgstr ""
+
+msgctxt "#30146"
+msgid "Poor"
+msgstr ""
+
+msgctxt "#30147"
+msgid "Average"
+msgstr ""
+
+msgctxt "#30148"
+msgid "Fair"
+msgstr ""
+
+msgctxt "#30149"
+msgid "Good"
+msgstr ""
+
+msgctxt "#30150"
+msgid "Great"
+msgstr ""
+
+msgctxt "#30151"
+msgid "Superb"
+msgstr ""
+
+msgctxt "#30152"
+msgid "Masterpiece"
+msgstr ""
+
+msgctxt "#30153"
+msgid "CrossWatch treats this name as the same as %s. Choose another name."
+msgstr ""
+
+msgctxt "#30154"
+msgid "Add viewers"
+msgstr ""
+
+msgctxt "#30155"
+msgid "Type a name"
+msgstr ""
+
+msgctxt "#30156"
+msgid "1 person"
+msgstr ""
+
+msgctxt "#30157"
+msgid "%s people"
+msgstr ""
+
+msgctxt "#30158"
+msgid "Name from CrossWatch"
+msgstr ""
+
+msgctxt "#30159"
+msgid "Renamed in CrossWatch"
+msgstr ""
+
+msgctxt "#30160"
+msgid "CrossWatch treats %s as the same as the viewer %s. Remove that viewer first, or rename the profile in CrossWatch."
+msgstr ""

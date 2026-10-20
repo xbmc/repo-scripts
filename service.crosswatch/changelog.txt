@@ -1,0 +1,238 @@
+CrossWatch for Kodi Changelog
+=============================
+
+v1.0.1 (2026-10-20)
+-------------------
+Bug Fixes:
+  - Fixed: a stream URL's query string, request headers after "|" and
+    credentials inside an archive path (zip://, rar:// over a share
+    with a user name and password) could reach the payload and the
+    debug log. strip_credentials now replaces a key=value query,
+    fragment and "|" options whole and decodes archive hostnames the
+    way Kodi does; redact() still runs last.
+  - Fixed: an address with a bad port (not a number, 0, above 65535)
+    raised a plain ValueError: pairing crashed without its message, a
+    manual address kept the service on the old one, and the service
+    did not start after a restart. validate_webhook_url now raises
+    InvalidWebhookUrl.
+  - Fixed: a 200 that was not a CrossWatch reply (a proxy login or
+    maintenance page, empty or non-JSON) counted as delivered, and a
+    proxy 3xx/4xx removed a saved watch from outbox.json. Only a JSON
+    object with "ok" now confirms or refuses; anything else is
+    "not reached" (reporter.failed reason=not_crosswatch) and the
+    outbox keeps the entry.
+  - Fixed: a profile renamed in CrossWatch during playback left the
+    watch in progress, the pending stop, queued ratings and the
+    playlist index under the old name, so the stop was refused and
+    the watch lost.
+  - Fixed: the outbox's seven-day limit was applied only at start-up;
+    it now applies before every retry.
+  - Fixed: the Viewers screen and the service could overwrite each
+    other's change to viewers.json or prompts.json. Each
+    read-modify-write now takes a lock file (storage.file_lock), since
+    the two run as interpreters of one Kodi process.
+
+Internal:
+  - Tested against CrossWatch v0.13.6 on Kodi 21.3 and the Kodi 22
+    release candidate.
+
+v1.0.0 (2026-10-20)
+-------------------
+Improvements:
+  - First stable release. The add-on is now called "CrossWatch for Kodi"
+    in Kodi (add-on browser, settings, notification heading), as agreed
+    with the CrossWatch maintainer, so add-on problems are not reported
+    as CrossWatch problems. The settings category for the server keeps
+    "CrossWatch".
+  - The add-on's summary and description say what CrossWatch is, that
+    the add-on needs one, and that add-on problems go to the add-on's
+    GitHub issues.
+  - Fanart (fanart.jpg, 1920x1080) for the add-on browser and skins.
+  - <forum> points at the Kodi forum thread.
+  - Tested on Kodi 22 (Piers) RC1: live checks and every window.
+
+Changed behaviour:
+  - INFO lines reach kodi.log at Kodi's debug level, as the official
+    repository's add-on rules ask: a normal kodi.log shows only the
+    add-on's warnings and errors. A rating a service refused
+    (reporter.rated with failed above 0) is now a warning, so it still
+    shows.
+
+Known issues:
+  - When Kodi stops the add-on (an update, disabling it, or Kodi
+    shutting down) while a question window is open, Kodi's script
+    manager lock blocks the GUI thread for the whole stop, so the
+    window cannot close and Kodi kills the service after 5 s. The
+    service then only starts again after a Kodi restart. Present since
+    beta2; issue #60.
+
+Internal:
+  - LICENSE renamed to LICENSE.txt and resources/licences/Apache-2.0.txt
+    to apache-2.0.txt, for the repository's file rules.
+  - docker/scripts/fanart.sh renders fanart.jpg and the repository's
+    social banner (docs/assets/banner.png) from icon.png.
+  - pytest 9.1.1 and ruff 0.17.0.
+
+v1.0.0~beta3 (2026-10-15)
+-------------------------
+New Features:
+  - People from CrossWatch (issue #51, contract 1.6). When CrossWatch's
+    check-in reply lists people (user profiles assigned to a route on
+    this Kodi without a username whitelist; CrossWatch v0.13.5), Add
+    viewer offers the ones not yet added in a list with ticks, several
+    at once, and asks for playlists per person. "Type a name" opens the
+    keyboard for anyone else. With an older CrossWatch, Add viewer opens
+    the keyboard as before.
+  - A viewer picked from that list, or a typed viewer whose name matches
+    exactly one person, is linked to that person by id (person_id in
+    viewers.json) and takes the profile's exact spelling. Existing
+    viewers are linked at the first check-in.
+  - A profile renamed in CrossWatch renames the linked viewer at the
+    next check-in, together with its remembered answers and the
+    completed watches kept in outbox.json, and shows a "Renamed in
+    CrossWatch" toast. A rename that would give two viewers one name is
+    skipped and logged as people.rename_skipped.
+  - A linked viewer shows "Name from CrossWatch" in the Viewers window
+    and has no Rename: it is renamed in CrossWatch.
+
+Improvements:
+  - Viewer names are compared as CrossWatch v0.13.5 does: accents count
+    ("Renée" and "Rene" are different names), names in other scripts
+    compare loosely, and a name of only symbols needs the exact text.
+    Two people picked from CrossWatch may differ only in spaces or
+    punctuation ("Anna B." and "Annab"); a typed name that CrossWatch
+    would read as an existing viewer's is still refused.
+
+Internal:
+  - New pure module resources/lib/people.py: crosswatch_name mirrors
+    CrossWatch's normalize_media_account_name, match_person its route
+    profile rule, and reconcile links and renames viewers. routes.py
+    parses people; routes.json stores them per pairing, and a missing
+    list means an older CrossWatch.
+  - The service reconciles viewers only after a ping from the current
+    pairing, and moves remembered answers (PromptMemory.rename_viewer)
+    and outbox entries (Outbox.rename_viewer) with a rename.
+  - The Viewers screen applies each edit to viewers.json as it is when
+    the edit is saved, finding a linked viewer by its id, so a rename
+    from CrossWatch is not overwritten. An edit to a viewer that is gone
+    or was linked meanwhile is dropped and logged as config.edit_dropped.
+  - viewers.json writes person_id only when set, so beta2 still reads
+    the file.
+  - User docs rewritten around tasks; pages updated for people, for
+    routing of events with no viewer, and for the CrossWatch versions
+    each feature needs. Coverage floor raised from 94 to 95. Test rig
+    pinned to CrossWatch v0.13.5.
+
+v1.0.0~beta2 (2026-10-11)
+-------------------------
+New Features:
+  - Custom CrossWatch windows in CrossWatch's flat dark palette replace
+    Kodi's standard dialogs: the who-watched question at the end of
+    playback (poster or a "No poster" placeholder, title, season and
+    episode or year, Everyone row, Done, Skip, a 120-second countdown;
+    it closes when the next item starts), the Viewers settings screen,
+    Remembered answers, and the playlist and profile pickers.
+  - The Viewers screen is one split window: viewers on the left, the
+    highlighted viewer's playlists, profiles and warnings on the right.
+    Add viewer, Playlists, Profiles, Rename and Remove; every change is
+    saved at once.
+  - Remembered answers is one split window: search, a viewer filter,
+    and each show with its poster and why an answer needs attention.
+    Change, Forget and Forget all (Forget N shown while filtered).
+  - The playlist and profile pickers have search and ticks, show
+    "Also <names>" for a playlist another viewer already has, and list
+    missing ones.
+  - The windows adapt their fonts to the active skin; checked in Estuary
+    and Arctic Zephyr Mod.
+  - Rating at the end of playback (issue #26, contract v1.5 `rate`
+    event), off by default. Settings under Viewers: "Ask for a rating"
+    (Off, Films, Episodes, Films and episodes), "When to ask" (after
+    each watch, or at the end for everything watched, so a binge is
+    rated newest first when playback stops), "Shared rating" (one
+    question for everyone who watched) and "Write the rating to Kodi's
+    library" (only when all scores given agree; library items only).
+    The window takes a score from 1 to 10 with Skip (focused first) and
+    Remove rating, and has a 60-second countdown. Nothing is sent on
+    Skip, Back or timeout. One rate event is sent per viewer, and it is
+    kept on disk through an outage like a completed watch. Needs a
+    CrossWatch release with rating support (the release after v0.13.3;
+    tested against CrossWatch's development build). v0.13.3 ignores
+    ratings.
+  - The Viewers window shows for each viewer whether a CrossWatch route
+    accepts their name ("CrossWatch route" or "No CrossWatch route"),
+    taken from CrossWatch's answer to the add-on's check-in.
+  - The playlist picker offers only smart playlists of TV shows or
+    films, the only kinds that can credit anyone. A playlist of another
+    kind that a viewer already had is tagged "unusable" and removed on
+    Done.
+  - A viewer name that CrossWatch would treat as another viewer's (it
+    ignores case and anything but a to z and 0 to 9, for example
+    "Anna-Lee" and "annalee") is refused with a message naming that
+    viewer.
+  - User documentation moved to a documentation site
+    (https://crosswatch-app.github.io/kodi-addon/), one page per task.
+    The README is a short front page. Every page was checked against
+    the add-on's behaviour.
+
+Bug Fixes:
+  - Fixed: with exactly one viewer configured, playback went out with no
+    viewer when no playlist or profile named one. It is now credited to
+    that viewer.
+  - Fixed: the pairing message for too many tries said to wait a
+    minute. CrossWatch allows 10 wrong codes in 10 minutes and forgets
+    each one only as it expires, so a minute was not always enough; the
+    message now says to wait a few minutes.
+  - Fixed: removed the pairing message for a switched-off add-on.
+    CrossWatch never sends that answer (switching the add-on off removes
+    the token and codes, so the code is reported as wrong or expired).
+
+Internal:
+  - prompt.gate no longer looks up the remembered answer; identity
+    resolution at playback start does it.
+  - Rate events are persisted in the outbox like completed stops, are
+    kept out of the reporter's per-session latest table, and
+    reporter.rated logs per-route results.
+  - Custom windows use inline skin XML with skin-mapped fonts
+    (resources/lib/ui/skin_fonts.py, ported from easyTV) and a shared
+    CrossWatchDialog base. A style test checks every window against one
+    palette and size set. The screenshot tool
+    (docker/scripts/screenshots.py) has scenes for every window.
+  - Material Symbols icons (Apache 2.0) are used for the status icons;
+    the licence is now GPL-2.0-only AND Apache-2.0.
+  - Docs are built with Zensical in CI (strict) and deployed to GitHub
+    Pages. Dependabot covers the actions and the pinned tools with a
+    7-day cooldown, and a test keeps the hash locks in step with the
+    pins.
+
+v1.0.0~beta1 (2026-10-07)
+-------------------------
+New Features:
+  - Reports Kodi playback to CrossWatch over its add-on webhook
+    (/webhook/kodiwatcher, contract 1.4): start, pause, resume,
+    progress, stop and a five-minute ping, with the viewers who
+    watched.
+  - Works out who is watching inside one Kodi profile: smart playlist
+    membership of the show first, then the active Kodi profile, then a
+    question at the end of playback that is remembered per show.
+  - Pairing with an address and a one-time code from CrossWatch, Link
+    from CrossWatch over JSON-RPC with a confirmation on the TV, and
+    Unpair. Connection changes take effect without a Kodi restart.
+  - Settings screens for viewers and their playlists or profiles, and
+    for remembered answers (change, forget, forget all; shows a
+    playlist covers are marked).
+  - Completed watches are kept in outbox.json through an outage and a
+    restart (7 days, 200 entries) and replayed once CrossWatch is back;
+    every other event is sent only within two minutes.
+  - PlexKodiConnect playback is skipped by default, and labelled when
+    it is reported.
+  - Supports https:// addresses for CrossWatch; a certificate the
+    add-on does not trust is reported with its own message instead of
+    a generic connection failure.
+  - Pairing and Link failures are shown in an OK dialog instead of a
+    toast notification, since Kodi's toast truncates longer messages.
+  - Added icon.png as the add-on icon.
+
+Internal:
+  - The token travels only in the X-CrossWatch-Token header.
+  - Gates: ruff, pyright with Kodistubs, vulture and pytest with a
+    coverage floor, from a hash-pinned lock, in CI and pre-commit.
