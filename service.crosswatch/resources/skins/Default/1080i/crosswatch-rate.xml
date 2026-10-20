@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Every control is inline: Kodi resolves includes and named colours from the active skin only, never from a script's own skin folder. Fonts are anchor names that skin_fonts.py maps onto the active skin. -->
+<window>
+    <zorder>1</zorder>
+    <!-- Skip, never a score: a stray OK must send nothing. -->
+    <defaultcontrol always="true">21</defaultcontrol>
+    <controls>
+        <control type="image">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <texture colordiffuse="E6090A0D">crosswatch/white.png</texture>
+            <animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
+        </control>
+        <control type="group">
+            <left>340</left><top>170</top><width>1240</width><height>740</height>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" delay="100"/>
+                <effect type="zoom" start="96" end="100" center="auto" tween="sine" easing="out" time="300" delay="100"/>
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="96" center="auto" tween="sine" easing="out" time="200"/>
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="200"/>
+            </animation>
+            <control type="image">
+                <left>0</left><top>0</top><width>1240</width><height>740</height>
+                <texture border="28">crosswatch/panel.png</texture>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1240</width><height>6</height>
+                <texture>crosswatch/gradient.png</texture>
+            </control>
+            <control type="image">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <texture border="16">crosswatch/poster_empty.png</texture>
+            </control>
+            <!-- No poster: one neutral fade flipped into each corner and tinted here, so the colours
+                 stay in the palette with everything else. Cyan, violet, pink: the top bar's order. -->
+            <control type="image">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <texture diffuse="crosswatch/mask_poster.png">crosswatch/glow.png</texture>
+                <colordiffuse>552DE2FF</colordiffuse>
+                <visible>String.IsEmpty(Window.Property(CW.Poster))</visible>
+            </control>
+            <control type="image">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <texture diffuse="crosswatch/mask_poster.png" flipx="true">crosswatch/glow.png</texture>
+                <colordiffuse>557C5CFF</colordiffuse>
+                <visible>String.IsEmpty(Window.Property(CW.Poster))</visible>
+            </control>
+            <control type="image">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <texture diffuse="crosswatch/mask_poster.png" flipy="true">crosswatch/glow.png</texture>
+                <colordiffuse>557C5CFF</colordiffuse>
+                <visible>String.IsEmpty(Window.Property(CW.Poster))</visible>
+            </control>
+            <control type="image">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <texture diffuse="crosswatch/mask_poster.png" flipx="true" flipy="true">crosswatch/glow.png</texture>
+                <colordiffuse>55FF7AE0</colordiffuse>
+                <visible>String.IsEmpty(Window.Property(CW.Poster))</visible>
+            </control>
+            <control type="label">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <align>center</align><aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>FF9299A6</textcolor>
+                <label>$ADDON[service.crosswatch 30101]</label>
+                <visible>String.IsEmpty(Window.Property(CW.Poster))</visible>
+            </control>
+            <control type="image">
+                <left>50</left><top>60</top><width>300</width><height>450</height>
+                <aspectratio>scale</aspectratio>
+                <texture diffuse="crosswatch/mask_poster.png">$INFO[Window.Property(CW.Poster)]</texture>
+            </control>
+            <control type="label">
+                <left>400</left><top>56</top><width>790</width><height>34</height>
+                <aligny>center</aligny>
+                <font>font25_title</font>
+                <textcolor>FF9299A6</textcolor>
+                <label>CROSSWATCH</label>
+            </control>
+            <control type="label">
+                <left>400</left><top>96</top><width>790</width><height>60</height>
+                <aligny>center</aligny>
+                <font>font40_title</font>
+                <textcolor>FFF1F3F5</textcolor>
+                <label>$INFO[Window.Property(CW.Title)]</label>
+            </control>
+            <control type="label">
+                <left>400</left><top>156</top><width>790</width><height>40</height>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>FF9299A6</textcolor>
+                <label>$INFO[Window.Property(CW.Subtitle)]</label>
+            </control>
+            <control type="label">
+                <left>890</left><top>56</top><width>300</width><height>34</height>
+                <align>right</align><aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>FF9299A6</textcolor>
+                <label>$INFO[Window.Property(CW.Counter)]</label>
+            </control>
+            <control type="label">
+                <left>400</left><top>222</top><width>480</width><height>50</height>
+                <aligny>center</aligny>
+                <font>font32_title</font>
+                <textcolor>FFF1F3F5</textcolor>
+                <label>$INFO[Window.Property(CW.Question)]</label>
+            </control>
+            <!-- The focused score and its word, so the number means the same to everyone on the sofa. -->
+            <control type="label">
+                <left>890</left><top>222</top><width>300</width><height>50</height>
+                <align>right</align><aligny>center</aligny>
+                <font>font32_title</font>
+                <textcolor>FF7C5CFF</textcolor>
+                <label>$INFO[Container(100).ListItem.Label]$INFO[Container(100).ListItem.Property(word), &#183; ]</label>
+                <visible>Control.HasFocus(100)</visible>
+            </control>
+            <control type="list" id="100">
+                <left>400</left><top>300</top><width>790</width><height>76</height>
+                <orientation>horizontal</orientation>
+                <scrolltime>0</scrolltime>
+                <ondown>21</ondown>
+                <itemlayout width="79" height="76">
+                    <control type="image">
+                        <left>0</left><top>0</top><width>69</width><height>66</height>
+                        <texture border="16">crosswatch/box.png</texture>
+                    </control>
+                    <control type="label">
+                        <left>0</left><top>0</top><width>69</width><height>66</height>
+                        <align>center</align><aligny>center</aligny>
+                        <font>font30_title</font>
+                        <textcolor>FFF1F3F5</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="79" height="76">
+                    <control type="image">
+                        <left>0</left><top>0</top><width>69</width><height>66</height>
+                        <texture border="16">crosswatch/box.png</texture>
+                    </control>
+                    <control type="image">
+                        <left>0</left><top>0</top><width>69</width><height>66</height>
+                        <texture border="16">crosswatch/box_accent_focus.png</texture>
+                        <visible>Control.HasFocus(100)</visible>
+                    </control>
+                    <control type="label">
+                        <left>0</left><top>0</top><width>69</width><height>66</height>
+                        <align>center</align><aligny>center</aligny>
+                        <font>font30_title</font>
+                        <textcolor>FFF1F3F5</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                </focusedlayout>
+            </control>
+            <control type="grouplist" id="25">
+                <left>400</left><top>620</top><width>480</width><height>72</height>
+                <orientation>horizontal</orientation>
+                <itemgap>16</itemgap>
+                <usecontrolcoords>false</usecontrolcoords>
+                <control type="button" id="21">
+                    <width>170</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <textoffsetx>10</textoffsetx>
+                    <font>font30_title</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>FFF1F3F5</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$ADDON[service.crosswatch 30083]</label>
+                    <texturenofocus border="16">crosswatch/box.png</texturenofocus>
+                    <texturefocus border="16">crosswatch/box_focus.png</texturefocus>
+                    <onup>100</onup>
+                </control>
+                <control type="button" id="22">
+                    <width>290</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <textoffsetx>10</textoffsetx>
+                    <font>font30_title</font>
+                    <textcolor>FFD86672</textcolor>
+                    <focusedcolor>FFD86672</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$ADDON[service.crosswatch 30141]</label>
+                    <texturenofocus border="16">crosswatch/box.png</texturenofocus>
+                    <texturefocus border="16">crosswatch/box_focus.png</texturefocus>
+                    <onup>100</onup>
+                </control>
+            </control>
+            <control type="label">
+                <left>890</left><top>636</top><width>300</width><height>40</height>
+                <align>right</align><aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FF9299A6</textcolor>
+                <label>$INFO[Window.Property(CW.Footer)]</label>
+            </control>
+        </control>
+    </controls>
+</window>
