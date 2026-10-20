@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
-from __future__ import absolute_import, division, unicode_literals
 from xbmc import PlayList
 from api import Api
 from player import UpNextPlayer
@@ -80,7 +79,7 @@ class PlayItem:
 
         self.state.tv_show_id = item.get('tvshowid')
         if int(self.state.tv_show_id) == -1:
-            current_show_title = item.get('showtitle').encode('utf-8')
+            current_show_title = item.get('showtitle')
             self.state.tv_show_id = self.api.showtitle_to_id(title=current_show_title)
             self.log('Fetched missing tvshowid %s' % self.state.tv_show_id, 2)
 
