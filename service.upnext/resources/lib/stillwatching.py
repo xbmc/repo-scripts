@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from platform import machine
 from xbmcgui import WindowXMLDialog
 from statichelper import from_unicode
-from utils import localize_time
+from utils import localize_date, localize_time
 
 ACTION_PLAYER_STOP = 13
 ACTION_NAV_BACK = 92
@@ -16,6 +16,7 @@ OS_MACHINE = machine()
 class StillWatching(WindowXMLDialog):
     item = None
     cancel = False
+    dismissed = False
     stillwatching = False
     progress_step_size = 0
     current_progress_percent = 100
@@ -54,7 +55,7 @@ class StillWatching(WindowXMLDialog):
             self.setProperty('season', str(self.item.get('season', '')))
             self.setProperty('episode', str(self.item.get('episode', '')))
             self.setProperty('seasonepisode', episode_info)
-            self.setProperty('year', str(self.item.get('firstaired', '')))
+            self.setProperty('year', localize_date(self.item.get('firstaired', '')))
             self.setProperty('rating', rating)
             self.setProperty('playcount', str(self.item.get('playcount', 0)))
             self.setProperty('runtime', str(self.item.get('runtime', '')))
@@ -93,6 +94,9 @@ class StillWatching(WindowXMLDialog):
     def is_cancel(self):
         return self.cancel
 
+    def is_dismissed(self):
+        return self.dismissed
+
     def set_still_watching(self, stillwatching):
         self.stillwatching = stillwatching
 
@@ -120,5 +124,6 @@ class StillWatching(WindowXMLDialog):
         if action == ACTION_PLAYER_STOP:
             self.close()
         elif action == ACTION_NAV_BACK:
+            self.dismissed = True
             self.set_cancel(True)
             self.close()

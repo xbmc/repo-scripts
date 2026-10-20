@@ -4,6 +4,8 @@
 from __future__ import absolute_import, division, unicode_literals
 import sys
 import json
+from datetime import date
+from re import split as re_split
 from xbmc import executeJSONRPC, getInfoLabel, getRegion, log as xlog, LOGDEBUG, LOGINFO
 from xbmcaddon import Addon
 from xbmcgui import Window
@@ -200,6 +202,23 @@ def localize(string_id):
     """Return the translated string from the .po language files"""
 
     return ADDON.getLocalizedString(string_id)
+
+
+def localize_date(date_string):
+    """Localize date format"""
+    date_format = getRegion('dateshort')
+
+    try:
+        # A number of assumptions are made here about date_string
+        # format to avoid having to import dateutil or similar
+        date_object = date(*(
+            int(part)
+            for part in re_split(r'[\W]', date_string)[:3]
+        ))
+    except ValueError:
+        return date_string
+
+    return date_object.strftime(date_format)
 
 
 def localize_time(time):
