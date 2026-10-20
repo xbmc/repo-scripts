@@ -4,10 +4,9 @@
 from __future__ import absolute_import, division, unicode_literals
 from datetime import datetime, timedelta
 from platform import machine
-from xbmc import Player
 from xbmcgui import WindowXMLDialog
 from statichelper import from_unicode
-from utils import get_setting_bool, localize, localize_time
+from utils import get_setting_bool, localize, localize_date, localize_time
 
 ACTION_PLAYER_STOP = 13
 ACTION_NAV_BACK = 92
@@ -17,6 +16,7 @@ OS_MACHINE = machine()
 class UpNext(WindowXMLDialog):
     item = None
     cancel = False
+    dismissed = False
     watchnow = False
     progress_step_size = 0
     current_progress_percent = 100
@@ -59,7 +59,7 @@ class UpNext(WindowXMLDialog):
             self.setProperty('season', str(self.item.get('season', '')))
             self.setProperty('episode', str(self.item.get('episode', '')))
             self.setProperty('seasonepisode', episode_info)
-            self.setProperty('year', str(self.item.get('firstaired', '')))
+            self.setProperty('year', localize_date(self.item.get('firstaired', '')))
             self.setProperty('rating', rating)
             self.setProperty('playcount', str(self.item.get('playcount', 0)))
             self.setProperty('runtime', str(self.item.get('runtime', '')))
@@ -98,6 +98,9 @@ class UpNext(WindowXMLDialog):
     def is_cancel(self):
         return self.cancel
 
+    def is_dismissed(self):
+        return self.dismissed
+
     def set_watch_now(self, watchnow):
         self.watchnow = watchnow
 
@@ -119,13 +122,13 @@ class UpNext(WindowXMLDialog):
             self.close()
         elif controlId == 3013:  # Close / Stop
             self.set_cancel(True)
-            if get_setting_bool('stopAfterClose'):
-                Player().stop()
+            # The playback manager owns Stop after the dialog has closed.
             self.close()
 
     def onAction(self, action):  # pylint: disable=invalid-name
         if action == ACTION_PLAYER_STOP:
             self.close()
         elif action == ACTION_NAV_BACK:
+            self.dismissed = True
             self.set_cancel(True)
             self.close()

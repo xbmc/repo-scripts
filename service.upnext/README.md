@@ -24,6 +24,18 @@ For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Integrati
 
 ## Releases
 
+### v1.1.10 (2026-10-20)
+- Stop playback once after closing the popup and preserve playback started while it was open (@Drahy)
+- Back dismisses the Up Next and Still Watching prompts without stopping the video (@Drahy)
+- Restore next-episode tracking, metadata and the Still Watching count after sleep, and keep tracking through temporary player errors (@Drahy)
+- Fix potential loss of queue state due to pre-emptive queue reset (@MoojMidge)
+- Workaround for Trakt playlist monitoring (@MoojMidge)
+- Use localised date in popups (@MoojMidge)
+- Use Python 2 compatible super() call in monitor (@rainman74)
+- Update Finnish translation (@olavinto)
+- Update Spanish add-on description (@roliverosc)
+- Update CI workflows (@MoojMidge, @im85288)
+
 ### v1.1.9 (2023-05-10)
 - Fix handling of non-ASCII filenames for Kodi18 (@MoojMidge)
 - Fix failing ci workflow (@MoojMidge)
