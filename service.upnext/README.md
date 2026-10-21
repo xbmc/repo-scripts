@@ -6,7 +6,7 @@
 
 # Up Next - Proposes to play the next episode automatically
 
-This Kodi add-on shows a Netflix-style notification for watching the next episode. After a few automatic iterations it asks the user if he is still there watching.
+This Kodi add-on shows a Netflix-style notification for watching the next episode. After a few automatic iterations it asks the user if they are still watching.
 
 A lot of existing add-ons already integrate with this service out-of-the-box.
 
@@ -15,14 +15,46 @@ The add-on has various settings to fine-tune the experience, however the default
 
   * Simple or fancy mode (defaults to fancy mode, but a more simple interface is possible)
   * The notification time can be adjusted (defaults to 30 seconds before the end)
+  * A credits delay can advance early when the provider supplies a credits offset (disabled by default). Back cancels the countdown and keeps the current episode playing; Pause freezes it with the video.
   * The default action can be configured, i.e. should it advance to the next episode (default) when the user does not respond, or stop
-  * The number of episodes to play automatically before asking the user if he is still there (defaults to 3 episodes)
+  * The number of episodes to play automatically before asking the user if they are still there (defaults to 3 episodes)
 
 > NOTE: The add-on settings are found in the Kodi add-ons section, in the *Services* category.
+
+Credits autoplay uses the provider's absolute `notification_offset`; it does not detect credits from the video. Enable it only when those timestamps match the stream, as an early transition can skip post-credits scenes. Leave the delay at 0 to keep normal episode-end playback and use Next Episode to advance manually.
 
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+
+### v1.2.3 (2026-10-21)
+- Close the popup when another episode starts while it is open, so its countdown can no longer skip into the next episode of the old one (@im85288)
+
+### v1.2.2 (2026-10-21)
+- Optionally advance during provider-supplied credits after a configurable delay, show the actual countdown and Back cancellation hint in both popup styles, and preserve normal episode-end playback when credits metadata is unavailable (@Drahy)
+- Keep tracking an episode that started while the previous popup was open, so it still gets its own prompt (@im85288)
+
+### v1.2.1 (2026-10-20)
+- Fix the popup failing to fill in when an add-on sends a partial or missing first-aired date (@im85288)
+- Add Simplified Chinese translation (@wabisabi926)
+
+### v1.2.0 (2026-10-20)
+- Drop support for Kodi 18 (Leia); Up Next now requires Kodi 19 (Matrix) or later (@im85288)
+- Remove Python 2 compatibility code, and fix looking up a TV show by title on Python 3 (@im85288)
+- Use gender-neutral wording in the description (@wedebe)
+- Fix empty GitHub release notes and add a manual Kodi submission workflow (@im85288)
+
+### v1.1.10 (2026-10-20)
+- Stop playback once after closing the popup and preserve playback started while it was open (@Drahy)
+- Back dismisses the Up Next and Still Watching prompts without stopping the video (@Drahy)
+- Restore next-episode tracking, metadata and the Still Watching count after sleep, and keep tracking through temporary player errors (@Drahy)
+- Fix potential loss of queue state due to pre-emptive queue reset (@MoojMidge)
+- Workaround for Trakt playlist monitoring (@MoojMidge)
+- Use localised date in popups (@MoojMidge)
+- Use Python 2 compatible super() call in monitor (@rainman74)
+- Update Finnish translation (@olavinto)
+- Update Spanish add-on description (@roliverosc)
+- Update CI workflows (@MoojMidge, @im85288)
 
 ### v1.1.9 (2023-05-10)
 - Fix handling of non-ASCII filenames for Kodi18 (@MoojMidge)

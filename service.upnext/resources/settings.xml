@@ -17,6 +17,7 @@
         <setting label="30619" type="slider" id="autoPlayTimeM" default="40" range="0,5,120" option="int" subsetting="true" visible="eq(-4,true)"/>
         <setting label="30621" type="slider" id="autoPlayTimeL" default="50" range="0,5,120" option="int" subsetting="true" visible="eq(-5,true)"/>
         <setting label="30623" type="slider" id="autoPlayTimeXL" default="60" range="0,5,120" option="int" subsetting="true" visible="eq(-6,true)"/>
+        <setting label="30625" type="slider" id="autoPlayCreditsTime" default="0" range="0,1,120" option="int"/>
     </category>
     <category label="30700"> <!-- Expert -->
         <setting label="30703" type="bool" id="disableNextUp" default="false"/>

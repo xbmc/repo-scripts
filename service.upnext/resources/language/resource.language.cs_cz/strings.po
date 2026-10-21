@@ -94,6 +94,14 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "Další epizoda"
 
+msgctxt "#30050"
+msgid "Next episode in $INFO[Window.Property(credits_remaining)] s"
+msgstr "Další díl za $INFO[Window.Property(credits_remaining)] s"
+
+msgctxt "#30051"
+msgid "Back: keep watching"
+msgstr "Zpět: sledovat dál"
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr ""
@@ -171,6 +179,10 @@ msgstr "Dlouhé epizody  [COLOR gray]> 40 min[/COLOR]"
 msgctxt "#30623"
 msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Velmi dlouhé epizody  [COLOR gray]> 60 min[/COLOR]"
+
+msgctxt "#30625"
+msgid "Advance during credits after (seconds, 0 disables)"
+msgstr "Za kolik sekund přejít během titulků (0 = vypnuto)"
 
 msgctxt "#30700"
 msgid "Expert"

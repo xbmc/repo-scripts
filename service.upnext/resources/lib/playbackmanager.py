@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
-from __future__ import absolute_import, division, unicode_literals
+from math import ceil
 from xbmc import sleep
-from api import Api
+from api import Api, credits_autoplay_deadline
 from demo import DemoOverlay
 from player import UpNextPlayer
 from playitem import PlayItem
@@ -40,18 +40,33 @@ class PlaybackManager:
             self.demo.hide()
 
     def launch_up_next(self):
+        """Show the popup and act on it. Returns True if other playback replaced the episode while the popup was open"""
         enable_playlist = get_setting_bool('enablePlaylist')
         episode, source = self.play_item.get_next()
         self.log('Playlist setting: %s' % enable_playlist)
         if source == 'playlist' and not enable_playlist:
             self.log('Playlist integration disabled', 2)
-            return
+            return False
         if not episode:
             # No episode get out of here
             self.log('Error: no episode could be found to play next...exiting', 1)
-            return
+            return False
         self.log('episode details %s' % episode, 2)
+        try:
+            playing_file = self.player.getPlayingFile()
+        except RuntimeError:
+            self.log('No active playback for the next-episode popup', 2)
+            return False
         play_next, keep_playing = self.launch_popup(episode, source)
+        if not play_next:
+            try:
+                current_file = self.player.getPlayingFile()
+            except RuntimeError:
+                current_file = None
+            if current_file != playing_file:
+                self.log('Playback changed while the popup was open; skipping stale cleanup', 2)
+                # Another file is playing now, its tracking must stay enabled
+                return current_file is not None
         self.state.playing_next = play_next
 
         # Dequeue and stop playback if not playing next file
@@ -62,6 +77,7 @@ class PlaybackManager:
             self.player.stop()
 
         self.api.reset_addon_data()
+        return False
 
     def launch_popup(self, episode, source=None):
         episode_id = episode.get('episodeid')
@@ -76,7 +92,9 @@ class PlaybackManager:
 
         # Add next file to playlist if existing playlist is not being used
         if source != 'playlist':
-            self.state.queued = self.api.queue_next_item(episode)
+            queued = self.state.queued = self.api.queue_next_item(episode)
+        else:
+            queued = False
 
         # We have a next up episode choose mode
         if get_setting_int('simpleMode') == 0:
@@ -105,6 +123,9 @@ class PlaybackManager:
         play_item_option_1 = (should_play_default and self.state.play_mode == 0)
         play_item_option_2 = (should_play_non_default and self.state.play_mode == 1)
         if not play_item_option_1 and not play_item_option_2:
+            if next_up_page.is_dismissed() if showing_next_up_page else still_watching_page.is_dismissed():
+                # Back dismisses the prompt without stopping the current video.
+                return False, True
             # play_next = False
             # keep_playing = next_up_page.is_cancel() if showing_next_up_page else still_watching_page.is_cancel()
             # keep_playing = keep_playing and not get_setting_bool('stopAfterClose')
@@ -118,10 +139,10 @@ class PlaybackManager:
         self.log('playing media episode', 2)
         # Signal to trakt previous episode watched
         event(message='NEXTUPWATCHEDSIGNAL', data={'episodeid': self.state.current_episode_id}, encoding='base64')
-        if source == 'playlist' or self.state.queued:
+        if source == 'playlist' or queued:
             # Play playlist media
-            if should_play_non_default:
-                # Only start the next episode if the user asked for it specifically
+            if should_play_non_default or next_up_page.is_auto_advance():
+                # Early credits expiry must also advance an already queued item.
                 self.player.playnext()
         elif self.api.has_addon_data():
             # Play add-on media
@@ -140,10 +161,14 @@ class PlaybackManager:
         try:
             play_time = self.player.getTime()
             total_time = self.player.getTotalTime()
+            playing_file = self.player.getPlayingFile()
         except RuntimeError:
             self.log('exit early because player is no longer running', 2)
             return False, False
         progress_step_size = calculate_progress_steps(total_time - play_time)
+        credits_deadline = (credits_autoplay_deadline(self.api.has_addon_data(), play_time, total_time)
+                            if self.state.play_mode == 0 else None)
+        credits_duration = credits_deadline - play_time if credits_deadline is not None else 0
         next_up_page.set_item(episode)
         next_up_page.set_progress_step_size(progress_step_size)
         still_watching_page.set_item(episode)
@@ -155,6 +180,7 @@ class PlaybackManager:
         showing_still_watching_page = False
         if not played_in_a_row_number or int(self.state.played_in_a_row) < int(played_in_a_row_number):
             self.log('showing next up page as played in a row is %s' % self.state.played_in_a_row, 2)
+            next_up_page.set_credits_countdown(int(ceil(credits_duration)) if credits_deadline is not None else None)
             next_up_page.show()
             set_property('service.upnext.dialog', 'true')
             showing_next_up_page = True
@@ -164,12 +190,11 @@ class PlaybackManager:
             set_property('service.upnext.dialog', 'true')
             showing_still_watching_page = True
         while (self.player.isPlaying() and (total_time - play_time > 1)
-               and not next_up_page.is_cancel() and not next_up_page.is_watch_now()
+               and not next_up_page.is_cancel() and not next_up_page.is_watch_now() and not next_up_page.is_auto_advance()
                and not still_watching_page.is_still_watching() and not still_watching_page.is_cancel()):
-            try:
-                play_time = self.player.getTime()
-                total_time = self.player.getTotalTime()
-            except RuntimeError:
+            position = self._playback_position(playing_file)
+            if position is None:
+                self.log('Playback stopped or changed while the popup was open, closing it', 2)
                 if showing_next_up_page:
                     next_up_page.close()
                     showing_next_up_page = False
@@ -177,16 +202,39 @@ class PlaybackManager:
                     still_watching_page.close()
                     showing_still_watching_page = False
                 break
+            play_time, total_time = position
 
             remaining = total_time - play_time
-            runtime = episode.get('runtime')
             if not self.state.pause:
                 if showing_next_up_page:
-                    next_up_page.update_progress_control(remaining=remaining, runtime=runtime)
+                    if credits_deadline is not None:
+                        remaining = max(0, min(remaining, credits_deadline - play_time))
+                        self._update_credits_progress(next_up_page, remaining, credits_duration)
+                    else:
+                        next_up_page.update_progress_control(remaining=remaining, runtime=episode.get('runtime'))
                 elif showing_still_watching_page:
-                    still_watching_page.update_progress_control(remaining=remaining, runtime=runtime)
+                    still_watching_page.update_progress_control(remaining=remaining, runtime=episode.get('runtime'))
             sleep(100)
         return showing_next_up_page, showing_still_watching_page
+
+    def _playback_position(self, playing_file):
+        """Return (play_time, total_time) while the popup's own file is playing, otherwise None"""
+        try:
+            # Times and the credits deadline only apply to the file the popup was opened for
+            if self.player.getPlayingFile() != playing_file:
+                return None
+            return self.player.getTime(), self.player.getTotalTime()
+        except RuntimeError:
+            return None
+
+    @staticmethod
+    def _update_credits_progress(page, remaining, duration):
+        progress = 100 * remaining / duration if duration > 0 else 0
+        page.set_credits_countdown(int(ceil(remaining)))
+        page.update_progress_control(remaining=int(ceil(remaining)), runtime=page.item.get('runtime'), progress=progress)
+        if remaining <= 0:
+            # Keep autoplay distinct from Watch Now so Still Watching counts survive.
+            page.set_auto_advance()
 
     def extract_play_info(self, next_up_page, showing_next_up_page, showing_still_watching_page, still_watching_page):
         if showing_next_up_page:
