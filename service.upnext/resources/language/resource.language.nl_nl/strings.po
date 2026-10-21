@@ -93,6 +93,14 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "Volgende aflevering"
 
+msgctxt "#30050"
+msgid "Next episode in $INFO[Window.Property(credits_remaining)] s"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Back: keep watching"
+msgstr ""
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr "[B]UP NEXT DEMO MODUS IS GEACTIVEERD[/B]"
@@ -170,6 +178,10 @@ msgstr "Lange afleveringen  [COLOR gray]> 40 min[/COLOR]"
 msgctxt "#30623"
 msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Zeer lange afleveringen  [COLOR gray]> 60 min[/COLOR]"
+
+msgctxt "#30625"
+msgid "Advance during credits after (seconds, 0 disables)"
+msgstr ""
 
 msgctxt "#30700"
 msgid "Expert"

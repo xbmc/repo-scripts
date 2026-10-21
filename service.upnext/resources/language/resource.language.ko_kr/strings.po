@@ -94,6 +94,14 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "다음 에피소드"
 
+msgctxt "#30050"
+msgid "Next episode in $INFO[Window.Property(credits_remaining)] s"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Back: keep watching"
+msgstr ""
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr "[B]UP NEXT 데모모드 사용가능[/B]"
@@ -171,6 +179,10 @@ msgstr "[COLOR gray]40분이상[/COLOR] 정도의 긴 것"
 msgctxt "#30623"
 msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "[COLOR gray]60분[/COLOR]이 넘어가는 상당히 긴 것"
+
+msgctxt "#30625"
+msgid "Advance during credits after (seconds, 0 disables)"
+msgstr ""
 
 msgctxt "#30700"
 msgid "Expert"
