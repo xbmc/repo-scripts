@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.upnext" name="Up Next" version="1.1.9+matrix.1" provider-name="im85288">
+<addon id="service.upnext" name="Up Next" version="1.2.2" provider-name="im85288">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -10,9 +10,13 @@
     <extension point="xbmc.service" library="resources/lib/service_entry.py"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">Propose to play the next episode automatically</summary>
-        <description lang="en_GB">A service add-on that shows a Netflix-style notification for watching the next episode. After a few automatic iterations it asks the user if he is still there watching.
+        <description lang="en_GB">A service add-on that shows a Netflix-style notification for watching the next episode. After a few automatic iterations it asks the user if they are still watching.
 
 A lot of existing add-ons already integrate with this service out-of-the-box.</description>
+        <summary lang="zh_CN">建议自动播放下一集</summary>
+        <description lang="zh_CN">一个服务插件，以 Netflix 风格的通知提醒观看下一集。连续自动播放数集后，它会询问用户是否还在观看。
+
+许多现有插件已经开箱即用地集成了该服务。</description>
         <summary lang="de_DE">Bietet Ihnen an, die nächste Episode automatisch wiederzugeben</summary>
         <description lang="de_DE">Ein kleines Hilfs-Add-on, welches eine Netflix-artige Benachrichtigung zur Wiedergabe der nächsten Episode anzeigt. Nach ein paar automatischen Iterationen fragt es den Anwender, ob er sie immer noch anschaut.
 
@@ -36,10 +40,37 @@ Många befintliga tillägg integreras redan med den här utanför lådan-tjänst
         <summary lang="es_ES">Sugiere reproducir el próximo episodio automáticamente</summary>
         <description lang="es_ES">Un complemento de servicio que muestra una notificación al estilo Netflix para ver el próximo episodio. Después de algunas iteraciones automáticas, le pregunta al usuario si todavía está allí mirando.
 
-            Muchos complementos existentes ya se integran con este servicio listo para usar.</description>
+Muchos complementos existentes ya se integran con este servicio listo para usar.</description>
         <platform>all</platform>
         <license>GPL-2.0-only</license>
         <news>
+v1.2.2 (2026-10-21)
+- New optional setting to play the next episode a set time into the credits
+- Keep tracking an episode started while the popup was open
+
+v1.2.1 (2026-10-20)
+- Fix the popup failing when an add-on sends a partial or missing date
+- New translation for Simplified Chinese
+
+v1.2.0 (2026-10-20)
+- Requires Kodi 19 (Matrix) or later; Kodi 18 (Leia) is no longer supported
+- Fix finding the TV show by title when the library has no show ID
+- Use gender-neutral wording in the description
+
+v1.1.10 (2026-10-20)
+- Stop playback only once when closing the popup
+- Back dismisses the popup without stopping playback
+- Restore next-episode tracking after sleep and player errors
+- Fix potential loss of queue state
+- Workaround for Trakt playlist monitoring
+- Use localised date in popups
+- Translation updates to Finnish and Spanish
+
+v1.1.9 (2023-05-10)
+- Fix handling of non-ASCII filenames for Kodi18
+- Update Swedish translation
+- Fix error when Kodi is not playing video any longer
+
 v1.1.8 (2022-09-13)
 - Never ask if Still Watching? if playedInARow is 0
 - Still Watching? checks number of plays not number+1
@@ -49,31 +80,6 @@ v1.1.7 (2022-09-03)
 - Check for physical disc or disc image being played
 - Translation update to Russian
 - Fix CI workflow
-
-v1.1.6 (2022-03-07)
-- Fix for missing mediatype video info with addon video content
-- Translation updates to Croatian, Japanese, Korean, Swedish and Finnish
-- New translation for Taiwanese Mandarin
-- Use onAVStarted instead of onPlayBackStarted
-- Fix for Kodi not using the video player/playlist to play videos
-- Fixes misalignment of system.time and endtime
-
-v1.1.5 (2021-02-21)
-- Fix playlists to work with non-library content
-- Fix to prevent unwanted playback when using playlist queueing method
-- New translation for Finnish
-
-v1.1.4 (2020-12-03)
-- Fix problem causing pop-up to not appear
-- Translation updates to Romanian, Russian and Spanish
-
-v1.1.3 (2020-10-14)
-- Enable customPlayTime by default
-- Do not seek to the end before playing next episode
-- Add Kodi v17 compatibility
-- Fix logging on Kodi v19 (Matrix) after recent breakage
-- Enqueue the next episode in the playlist
-- Translation updates to German
         </news>
         <assets>
             <icon>resources/media/icon.png</icon>
