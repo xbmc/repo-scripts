@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.karmamole.helper" name="KarmaMole Skin Helper" version="1.0.0" provider-name="KarmaMole">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+    <import addon="script.module.pil" version="1.1.7"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py"/>
+  <extension point="xbmc.python.pluginsource" library="plugin.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Optional helper for KarmaMole's Kodi skins: art colours, soft art, album spines, queue reordering and a genre wheel.</summary>
+    <description lang="en_GB">An optional helper for KarmaMole's Kodi skins. Each skin turns on only the features it uses, and every skin works fully without it. The features: the colours of the focused and the playing album's art, with a soft, blurred copy of the art to light the screen; a coloured spine for every album in the music library; reordering of the Up next queue; the library's genres, styles and moods with album counts, ready to play as a shuffled mix. While a skin that uses none of them is active, the helper stays idle. Album colours, soft art and spines use the Python Imaging Library (script.module.pil), which Kodi installs with it.</description>
+    <disclaimer lang="en_GB">Made for KarmaMole's Kodi skins. Other skins can opt in; see the API notes in the source repository.</disclaimer>
+    <platform>all</platform>
+    <license>GPL-2.0-or-later</license>
+    <source>https://github.com/KarmaMole/kodi-skins</source>
+    <news>1.0.0 - First release as the shared KarmaMole Skin Helper (it was the Groove helper): art colours with soft art, album spines, Up next reordering, genre/style/mood wheel and true shuffle, each turned on per skin. Shuffled mixes are put in a random order by the helper, so Kodi's own shuffle setting is never changed.</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>

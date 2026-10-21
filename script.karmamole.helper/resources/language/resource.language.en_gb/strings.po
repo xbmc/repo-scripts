@@ -1,0 +1,13 @@
+# Kodi add-on strings - script.karmamole.helper (en_GB)
+# Addon id: script.karmamole.helper
+msgid ""
+msgstr ""
+"Project-Id-Version: script.karmamole.helper\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#32001"
+msgid "Play a shuffled mix"
+msgstr ""
