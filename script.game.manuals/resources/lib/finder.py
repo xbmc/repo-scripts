@@ -48,6 +48,7 @@ class Finder(xbmcgui.WindowXMLDialog):
         self.game = kwargs["game"]
         self.title = kwargs["title"]
         self.downloaded = ""
+        self.install = ""
         self.providers = []
         self.provider = 0
         self.searches = 0
@@ -115,7 +116,12 @@ class Finder(xbmcgui.WindowXMLDialog):
             self.provider = (self.provider + 1) % len(self.providers)
             self.search()
         elif control_id == MORE:
+            missing = [addon_id for addon_id in providers.KNOWN
+                       if not xbmc.getCondVisibility("System.HasAddon(%s)" % addon_id)]
             self.close()
+            if missing:
+                self.install = missing[0]
+                return
             # Kodi won't open a window over a dialog, such as the menu of the
             # game being played
             xbmc.executebuiltin("Dialog.Close(all,true)", True)
