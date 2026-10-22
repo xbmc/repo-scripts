@@ -6,7 +6,7 @@ from pathlib import Path
 
 from ..constants import TARGET_MAP
 from ..exceptions import WidgetConfigError
-from ..log import get_logger, notify
+from ..log import notify
 from ..models.menu import Content
 from ..models.widget import Widget, WidgetConfig, WidgetGroup
 from .base import (
@@ -20,8 +20,6 @@ from .base import (
     parse_xml,
     warn_duplicate_names,
 )
-
-log = get_logger("WidgetLoader")
 
 
 def load_widgets(path: str | Path) -> WidgetConfig:
@@ -107,14 +105,19 @@ def _parse_widget_group(elem, path: str, default_source: str = "") -> WidgetGrou
     flat = get_bool(elem, "flat")
 
     if not group_name:
-        log.warning(f"Widget group in {path} missing 'name' attribute")
-        notify("Widget Group Error", "Group missing 'name' (see log)")
+        notify(
+            "Widget Group Error",
+            "group missing 'name'",
+            f"{path}: <group> has no name; group skipped; add name=\"...\"",
+        )
         return None
     if not label and not flat:
-        log.warning(
-            f"Widget group '{group_name}' in {path} missing 'label' (required when not flat)"
+        notify(
+            "Widget Group Error",
+            f"'{group_name}' missing label",
+            f"{path}: <group name=\"{group_name}\"> has no label and is not flat; group "
+            "skipped; add label=\"...\" or flat=\"true\"",
         )
-        notify("Widget Group Error", f"'{group_name}' missing label")
         return None
 
     condition = get_attr(elem, "condition") or ""

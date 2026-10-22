@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.4" provider-name="MikeSiLVO">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.5" provider-name="MikeSiLVO">
     <requires>
         <import addon="xbmc.python" version="3.0.2"/>
     </requires>
     <extension point="xbmc.python.script" library="default.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-3.0.4
-  - Add: property names match regardless of case
-  - Add: limit, sortby and sortorder from a widget definition reach every item the widget is assigned to
-  - Add: EMPTY, IN and bare checks in a suffixed condition follow the suffix
-  - Add: a warning when a menu, item, widget, background or view name is defined more than once
-  - Add: log off, screensaver and library update/clean in the commands source
-  - Add: the commands source only lists what the system can run
-  - Fix: the commands source labels match the command each one runs
-  - Fix: a shortcut picked from the groupings keeps the conditions on its actions
-  - Fix: a variable a template declares stays defined when no menu item matches it
+3.0.5
+  - Fix: a skin made for Skin Shortcuts v2 shows a modal leading to the skin setting or Add-ons
+  - Fix: the menu shows on the first start after a Kodi upgrade
+  - Add: a visible condition on property options
+  - Add: more reset labels for skins
+  - Add: template content that cannot be built is reported, with the fix in the log
+  - Fix: PVR channel shortcuts play the channel
+  - Fix: edits to an item a visible condition hides are kept on save
+  - Fix: a damaged userdata file falls back to skin defaults, keeping a .bak copy
+  - Fix: picking a new shortcut replaces the previous item's visible condition
+  - Fix: custom widget includes are built for every widget slot
+  - Fix: editing in a subdialog stays on the item it was opened for
+  - Misc fixes and improvements
 
         </news>
         <platform>all</platform>
@@ -31,7 +34,7 @@
         <summary lang="es_ES">Menús, propiedades y arte personalizado para skins</summary>
         <summary lang="hu_HU">Egyéni menük, tulajdonságok és képek a felszínekhez</summary>
         <summary lang="it_IT">Menu personalizzati, proprietà e grafica per le skin</summary>
-        <summary lang="pl_PL">Niestandardowe menu, właściwości i grafika dla skórek</summary>
+        <summary lang="pl_PL">Niestandardowe menu, właściwości i grafika dla skór</summary>
         <summary lang="ru_RU">Пользовательские меню, свойства и иллюстрации для обложек</summary>
         <summary lang="zh_CN">皮肤自定义菜单、属性与艺术图</summary>
         <description lang="ar_SA">إضافة مخصصه للمظهر لتوفير إدارة بسيطة للودجيت &quot;الأقسام&quot; و الاختصارات على الشاشة (تتطلب دعم المظهر لها)</description>

@@ -95,9 +95,10 @@ class ItemsMixin:
 
         def _get_selected_index(self) -> int: ...
         def _get_selected_item(self) -> MenuItem | None: ...
-        def _get_selected_listitem(self) -> xbmcgui.ListItem | None: ...
         def _rebuild_list(self, focus_index: int | None = None) -> None: ...
         def _refresh_selected_item(self) -> None: ...
+        def close(self) -> None:
+            """Close the dialog, saving changes and clearing the Home properties onInit set."""
         def _update_deleted_property(self) -> None: ...
         def _load_items(self) -> None: ...
         def _inject_empty_placeholder(self) -> None: ...
@@ -206,7 +207,7 @@ class ItemsMixin:
         return f"{base_name}-{counter}"
 
     def _delete_item(self) -> None:
-        """Delete the selected item."""
+        """Delete the selected item, closing a subdialog opened for it."""
         if not self.manager:
             return
 
@@ -227,6 +228,9 @@ class ItemsMixin:
 
         index = self._get_selected_index()
         self.manager.remove_item(self.menu_id, item.name)
+        if self.dialog_mode and self._selected_index is not None:
+            self.close()
+            return
 
         if not self.items:
             self._inject_empty_placeholder()
@@ -243,9 +247,10 @@ class ItemsMixin:
         if not item:
             return
 
-        index = self._get_selected_index()
-        new_index = index + direction
         if self.manager.move_item(self.menu_id, item.name, direction):
+            new_index = self.items.index(item)
+            if self.dialog_mode and self._selected_index is not None:
+                self._selected_index = new_index
             self._rebuild_list(focus_index=new_index)
 
     def _set_label(self) -> None:
@@ -479,9 +484,13 @@ class ItemsMixin:
         ]
         props = self._get_item_properties(item)
         defaults = _default_context_labels(item)
+        menu = self.manager.working.get(self.menu_id) if self.manager else None
+        in_submenu = bool(menu and menu.is_submenu)
 
         rows = []
         for button in buttons:
+            if in_submenu and button.button_id == CONTROL_EDIT_SUBMENU:
+                continue
             condition = suffix_condition(button.condition, self.property_suffix)
             if condition and not evaluate_condition(condition, props):
                 continue
@@ -538,10 +547,6 @@ class ItemsMixin:
         else:
             if prop_name in item.properties:
                 del item.properties[prop_name]
-            listitem = self._get_selected_listitem()
-            if listitem:
-                listitem.setProperty(prop_name, "")
-                listitem.setProperty(f"{prop_name}Label", "")
 
         if related:
             for rel_name, rel_value in related.items():
@@ -556,6 +561,3 @@ class ItemsMixin:
                 else:
                     if rel_prop_name in item.properties:
                         del item.properties[rel_prop_name]
-                    listitem = self._get_selected_listitem()
-                    if listitem:
-                        listitem.setProperty(rel_prop_name, "")

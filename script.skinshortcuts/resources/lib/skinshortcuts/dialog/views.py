@@ -14,6 +14,7 @@ except ImportError:
 
 from ..localize import LANGUAGE, resolve_label
 from ..log import get_logger
+from .pickers import picker_select
 
 if TYPE_CHECKING:
     from ..models.views import ViewConfig, ViewContent
@@ -135,7 +136,7 @@ def _browse_source_menu(
     source: str,
     title: str,
 ) -> bool:
-    """Browse content types for a source (library or plugins)."""
+    """Browse library or plugin content types and the view set for each."""
     changed = False
 
     while True:
@@ -157,7 +158,7 @@ def _browse_source_menu(
             item.setArt({"icon": content.icon or "DefaultFolder.png"})
             items.append(item)
 
-        selected = xbmcgui.Dialog().select(title, items, useDetails=True)
+        selected = picker_select("content", title, items, useDetails=True)
 
         if selected == -1:
             break
@@ -196,7 +197,9 @@ def _browse_plugins_menu(config: ViewConfig, userdata: UserData) -> bool:
         add_override.setArt({"icon": "DefaultAddonProgram.png"})
         items.append(add_override)
 
-        selected = xbmcgui.Dialog().select(xbmc.getLocalizedString(24001), items, useDetails=True)
+        selected = picker_select(
+            "content", xbmc.getLocalizedString(24001), items, useDetails=True
+        )
 
         if selected == -1:
             break
@@ -238,9 +241,7 @@ def _add_plugin_override(config: ViewConfig, userdata: UserData) -> bool:
         item.setArt({"icon": content.icon or "DefaultFolder.png"})
         content_items.append(item)
 
-    content_selected = xbmcgui.Dialog().select(
-        LANGUAGE(32186), content_items, useDetails=True
-    )
+    content_selected = picker_select("content", LANGUAGE(32186), content_items, useDetails=True)
     if content_selected == -1:
         return False
 
@@ -254,7 +255,7 @@ def _pick_view_for_content(
     content: ViewContent,
     source: str,
 ) -> bool:
-    """Pick a view for a content type from those its rule lists."""
+    """Pick and record a view for a content type from those its rule lists."""
     views = config.get_views_for_content(content.name)
     if not views:
         return False
@@ -287,7 +288,7 @@ def _pick_view_for_content(
         items.append(item)
 
     title = LANGUAGE(32199) % resolve_label(content.label)
-    selected = xbmcgui.Dialog().select(title, items, useDetails=True, preselect=preselect)
+    selected = picker_select("view", title, items, useDetails=True, preselect=preselect)
 
     if selected == -1:
         return False

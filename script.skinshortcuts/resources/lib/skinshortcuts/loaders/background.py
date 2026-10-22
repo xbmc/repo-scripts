@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from ..exceptions import BackgroundConfigError
-from ..log import get_logger, notify
+from ..log import notify
 from ..models.background import (
     Background,
     BackgroundConfig,
@@ -26,8 +26,6 @@ from .base import (
 )
 
 from ..models.menu import IconOverrides
-
-log = get_logger("BackgroundLoader")
 
 TYPE_MAP = {
     "static": BackgroundType.STATIC,
@@ -108,10 +106,12 @@ def _parse_background(
         and bg_type in (BackgroundType.BROWSE, BackgroundType.MULTI)
         and elem.find("source") is not None
     ):
-        log.warning(
-            f"Background '{bg_name}' in {path} has both <path> and <source>; ignoring <path>"
+        notify(
+            "Background Error",
+            f"'{bg_name}' has path and source",
+            f"{path}: background '{bg_name}' has both <path> and <source>; <path> ignored; "
+            "keep one of them",
         )
-        notify("Background Config", f"'{bg_name}' has both <path> and <source>")
         bg_path = ""
 
     sources = []
@@ -160,14 +160,19 @@ def _parse_background_group(elem, path: str) -> BackgroundGroup | None:
     flat = get_bool(elem, "flat")
 
     if not group_name:
-        log.warning(f"Background group in {path} missing 'name' attribute")
-        notify("Background Group Error", "Group missing 'name' (see log)")
+        notify(
+            "Background Group Error",
+            "group missing 'name'",
+            f"{path}: <group> has no name; group skipped; add name=\"...\"",
+        )
         return None
     if not label and not flat:
-        log.warning(
-            f"Background group '{group_name}' in {path} missing 'label' (required when not flat)"
+        notify(
+            "Background Group Error",
+            f"'{group_name}' missing label",
+            f"{path}: <group name=\"{group_name}\"> has no label and is not flat; group "
+            "skipped; add label=\"...\" or flat=\"true\"",
         )
-        notify("Background Group Error", f"'{group_name}' missing label")
         return None
 
     condition = get_attr(elem, "condition") or ""

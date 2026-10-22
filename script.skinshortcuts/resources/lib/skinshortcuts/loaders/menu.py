@@ -562,21 +562,26 @@ def _parse_shortcut_group(
     path: str,
     icon_overrides: IconOverrides | None = None,
 ) -> ShortcutGroup | None:
-    """Parse a group element (supports nested groups, shortcuts, content refs, and inputs)."""
+    """Parse a shortcut group element (supports nested groups, shortcuts, content, and inputs)."""
     overrides = icon_overrides or IconOverrides()
     group_name = get_attr(elem, "name")
     label = get_attr(elem, "label")
     flat = get_bool(elem, "flat")
 
     if not group_name:
-        log.warning(f"Shortcut group in {path} missing 'name' attribute")
-        notify("Shortcut Group Error", "Group missing 'name' (see log)")
+        notify(
+            "Shortcut Group Error",
+            "group missing 'name'",
+            f"{path}: <group> has no name; group skipped; add name=\"...\"",
+        )
         return None
     if not label and not flat:
-        log.warning(
-            f"Shortcut group '{group_name}' in {path} missing 'label' (required when not flat)"
+        notify(
+            "Shortcut Group Error",
+            f"'{group_name}' missing label",
+            f"{path}: <group name=\"{group_name}\"> has no label and is not flat; group "
+            "skipped; add label=\"...\" or flat=\"true\"",
         )
-        notify("Shortcut Group Error", f"'{group_name}' missing label")
         return None
 
     condition = get_attr(elem, "condition") or ""
