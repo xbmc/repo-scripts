@@ -115,6 +115,11 @@ def reader_ready(manual):
     else:
         xbmc.executebuiltin("InstallAddon(%s)" % addon_id, True)
     if xbmc.getCondVisibility(enabled):
+        # Kodi loads the add-on in the background, so the pages show up a moment later
+        monitor = xbmc.Monitor()
+        for _ in range(20):
+            if page_paths(manual) or monitor.waitForAbort(0.25):
+                break
         return True
     xbmcgui.Dialog().notification(localize(32000), localize(READER_MISSING[addon_id]),
                                   xbmcgui.NOTIFICATION_ERROR)
@@ -132,8 +137,26 @@ def fetch_with_progress(url, game):
         progress.close()
 
 
+def find_manual(game, title):
+    """A manual fetched through a provider, or ""."""
+    from .finder import Finder
+
+    while True:
+        finder = Finder("script-game-manuals-finder.xml", ADDON_PATH, "Default", "1080i", game=game,
+                        title=title)
+        finder.doModal()
+        manual, install = finder.downloaded, finder.install
+        del finder
+        if not install:
+            return manual
+        # Kodi asks before installing it, and the finder then looks again
+        xbmc.executebuiltin("InstallAddon(%s)" % install, True)
+        if not xbmc.getCondVisibility("System.AddonIsEnabled(%s)" % install):
+            return ""
+
+
 def run(args):
-    from .finder import Finder, offer_disabled_provider
+    from .finder import offer_disabled_provider
     from .viewer import Viewer
 
     arguments = manuals.parse_args(args)
@@ -156,11 +179,7 @@ def run(args):
         if not game:
             return
         offer_disabled_provider()
-        finder = Finder("script-game-manuals-finder.xml", ADDON_PATH, "Default", "1080i", game=game,
-                        title=title)
-        finder.doModal()
-        manual = finder.downloaded
-        del finder
+        manual = find_manual(game, title)
         if not manual:
             return
 

@@ -17,6 +17,10 @@ from . import manuals
 
 PREFIX = "plugin.game.manuals."
 
+# Offered for installing when none is installed, so finding a manual doesn't
+# start with a search of the add-on browser
+KNOWN = ("plugin.game.manuals.regvault",)
+
 
 def is_provider(addon_id):
     """Whether an add-on is a manual provider, going by its id."""
