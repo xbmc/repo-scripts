@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2026-08-13 08:20+0000\n"
 "Last-Translator: Frodo19 <bilbohu@gmail.com>\n"
@@ -770,16 +770,16 @@ msgid "%s (reset)"
 msgstr "%s (visszaállítás)"
 
 msgctxt "#32191"
-msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
-msgstr "Visszaállítod az összes menüt az alapértelmezett kinézetre?[CR]Minden testreszabás eltávolításra kerül."
+msgid "Reset all menus and views to skin defaults?[CR]All customizations will be removed."
+msgstr ""
 
 msgctxt "#32192"
 msgid "Reset all view selections to skin defaults?"
 msgstr "Visszaállítod az összes nézetkiválasztást az alapértelmezett felszín beállításokra?"
 
 msgctxt "#32193"
-msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
-msgstr "Visszaállítod az összes menüt az alapértelmezett kinézetre?[CR]A nézetben kiválasztott elemek megmaradnak."
+msgid "Reset all menus to skin defaults?"
+msgstr "Visszaállítod az összes menüt az alapértelmezett kinézetre?"
 
 msgctxt "#32194"
 msgid "Reset '%s' and its submenus to skin defaults?"
@@ -809,10 +809,6 @@ msgctxt "#32200"
 msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
 msgstr "Ez a felszín a Skin Shortcuts v2-höz készült. Válts másikra, vagy frissítsd a kiegészítőt alacsonyabb verzióra."
 
-msgctxt "#32201"
-msgid "Open settings"
-msgstr "Beállítások megnyitása"
-
 msgctxt "#32202"
 msgid "Ignore for this skin"
 msgstr "Kihagyás ennél a felszínnél"
@@ -836,6 +832,26 @@ msgstr "Ebben a forrásban nem szereplő művészek"
 msgctxt "#32207"
 msgid "Enable shortcut"
 msgstr "Parancsikon engedélyezése"
+
+msgctxt "#32208"
+msgid "Reset all menus"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Reset all views"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Reset menu"
+msgstr ""
+
+#~ msgctxt "#32191"
+#~ msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+#~ msgstr "Visszaállítod az összes menüt az alapértelmezett kinézetre?[CR]Minden testreszabás eltávolításra kerül."
+
+#~ msgctxt "#32201"
+#~ msgid "Open settings"
+#~ msgstr "Beállítások megnyitása"
 
 #~ msgctxt "#32024"
 #~ msgid "Custom shortcut"

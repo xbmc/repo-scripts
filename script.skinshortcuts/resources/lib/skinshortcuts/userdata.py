@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -173,7 +174,7 @@ class UserData:
 
 
 def load_userdata(path: str | None = None) -> UserData:
-    """Load user data from JSON file."""
+    """Load user data from JSON file; a damaged one gives defaults and a .bak copy when writable."""
     if path is None:
         path = get_userdata_path()
         log.debug(f"Userdata path: {path}")
@@ -182,8 +183,8 @@ def load_userdata(path: str | None = None) -> UserData:
         log.warning("No userdata path available")
         return UserData()
 
+    file_path = Path(path)
     try:
-        file_path = Path(path)
         if file_path.exists():
             log.debug(f"Loading userdata from: {file_path}")
             with open(file_path, encoding="utf-8") as f:
@@ -193,8 +194,19 @@ def load_userdata(path: str | None = None) -> UserData:
                 return userdata
         else:
             log.debug(f"Userdata file not found: {file_path}")
-    except (OSError, json.JSONDecodeError) as e:
+    except OSError as e:
         log.error(f"Failed to load userdata from {path}: {e}")
+    except (ValueError, TypeError, AttributeError) as e:
+        backup = file_path.with_name(f"{file_path.name}.bak")
+        try:
+            shutil.copyfile(file_path, backup)
+            kept = f"kept a copy as {backup.name}"
+        except OSError as copy_error:
+            kept = f"could not keep a copy ({copy_error})"
+        log.error(
+            f"{file_path}: unreadable userdata ({e}); using skin defaults, "
+            f"{kept}; fix or delete the file"
+        )
 
     return UserData()
 
@@ -221,42 +233,18 @@ def save_userdata(userdata: UserData, path: str | None = None) -> bool:
         return False
 
 
-def merge_menu(
+def merge_items(
     default_menu: Menu, diff: MenuDiff | None,
     icon_overrides: IconOverrides | None = None,
-) -> Menu:
-    """Merge a default menu with the user's diff."""
+) -> list[MenuItem]:
+    """Merge a menu's skin default items with the user's changes, keeping items visible= hides."""
     if diff is None:
-        # No user customization - filter by dialog_visible
-        filtered_items = [
-            item for item in default_menu.items
-            if check_visible(item.dialog_visible)
-        ]
-        return Menu(
-            name=default_menu.name,
-            items=filtered_items,
-            defaults=default_menu.defaults,
-            container=default_menu.container,
-            allow=default_menu.allow,
-            is_submenu=default_menu.is_submenu,
-            menu_type=default_menu.menu_type,
-            controltype=default_menu.controltype,
-            icons=default_menu.icons,
-            startid=default_menu.startid,
-            template_only=default_menu.template_only,
-            build=default_menu.build,
-            action=default_menu.action,
-            standalone=default_menu.standalone,
-            submenu_path=default_menu.submenu_path,
-        )
+        return list(default_menu.items)
 
-    items: list[MenuItem] = []
-    for item in default_menu.items:
-        if item.name in diff.removed and not item.required:
-            continue
-        if item.dialog_visible and not check_visible(item.dialog_visible):
-            continue
-        items.append(item)
+    items = [
+        item for item in default_menu.items
+        if item.name not in diff.removed or item.required
+    ]
 
     diff_map = {o.name: o for o in diff.items}
 
@@ -299,9 +287,23 @@ def merge_menu(
     for item in unpos_iter:
         final_items.append(item)
 
+    return final_items
+
+
+def merge_menu(
+    default_menu: Menu, diff: MenuDiff | None,
+    icon_overrides: IconOverrides | None = None,
+) -> Menu:
+    """Merge a menu's skin default with the user's changes, leaving out items visible= hides."""
+    hidden = {
+        item.name for item in default_menu.items if not check_visible(item.dialog_visible)
+    }
     return Menu(
         name=default_menu.name,
-        items=final_items,
+        items=[
+            item for item in merge_items(default_menu, diff, icon_overrides)
+            if item.name not in hidden
+        ],
         defaults=default_menu.defaults,
         container=default_menu.container,
         allow=default_menu.allow,

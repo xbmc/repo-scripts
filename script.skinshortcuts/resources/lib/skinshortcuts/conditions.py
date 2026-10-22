@@ -31,7 +31,8 @@ _OPERATOR_PATTERN = re.compile(r"[=~]")
 _NOSUFFIX_PATTERN = re.compile(r"\{NOSUFFIX:[^}]+\}")
 _HELD_PATTERN = re.compile(r"\x00(\d+)\x00")
 _SLOT_PATTERN = re.compile(r"\.\d+$")
-_CONDITION_MATCH_PATTERN = re.compile(r"^(!?)([a-zA-Z_][a-zA-Z0-9_\.]*)(=|~)(.*)$")
+_CONDITION_MATCH_PATTERN = re.compile(r"^(!?)([a-zA-Z_][a-zA-Z0-9_\.]*)\s*(=|~)\s*(.*)$")
+_KEYWORD_TERM_PATTERN = re.compile(r"^!?[a-zA-Z_][a-zA-Z0-9_\.]*\s+(?:IN\s+.+|EMPTY)$")
 
 # Keyword to symbol mappings (applied with word boundaries)
 _KEYWORD_REPLACEMENTS = [
@@ -56,6 +57,26 @@ def lookup(name: str, *sources: Mapping[str, V]) -> V | None:
     return None
 
 
+def with_defaults(defaults: Mapping[str, str], properties: Mapping[str, str]) -> dict[str, str]:
+    """Properties over the defaults, replacing a default whose name differs only in case."""
+    own = {key.lower() for key in properties}
+    kept = {key: value for key, value in defaults.items() if key.lower() not in own}
+    return {**kept, **properties}
+
+
+def slot_suffixes(name: str, properties: Mapping[str, str]) -> list[str]:
+    """Suffixes of the slots a property holds, ignoring case: '' for the base, then by slot."""
+    folded = name.lower()
+    slots: dict[int, str] = {}
+    for key in properties:
+        head, dot, slot = key.rpartition(".")
+        if key.lower() == folded:
+            slots.setdefault(1, "")
+        elif dot and head.lower() == folded and slot.isdecimal() and int(slot) > 1:
+            slots.setdefault(int(slot), f".{slot}")
+    return [slots[number] for number in sorted(slots)]
+
+
 def _normalize_keywords(condition: str) -> str:
     """Normalize keyword operators (AND, OR, NOT, EQUALS, CONTAINS) to their symbols."""
     for pattern, replacement in _KEYWORD_REPLACEMENTS:
@@ -64,7 +85,7 @@ def _normalize_keywords(condition: str) -> str:
 
 
 def expand_compact_or(condition: str) -> str:
-    """Expand compact OR syntax, so "a=x | y" becomes "a=x | a=y"."""
+    """Expand compact OR syntax: "a=x | y" becomes "a=x | a=y"."""
     if not condition:
         return condition
 
@@ -80,7 +101,7 @@ def expand_compact_or(condition: str) -> str:
         if is_negated:
             and_part = and_part[1:].strip()
 
-        if and_part.startswith("[") and and_part.endswith("]"):
+        if _is_wrapped_in_brackets(and_part):
             inner = and_part[1:-1].strip()
             expanded_inner = _expand_or_segment(inner)
             if is_negated:
@@ -123,7 +144,7 @@ def _split_preserving_brackets(text: str, delimiter: str) -> list[str]:
 
 
 def _expand_or_segment(segment: str) -> str:
-    """Expand a single OR segment."""
+    """Expand a single OR segment, a bare value taking the property of the comparison before it."""
     parts = _split_preserving_brackets(segment, "|")
     if len(parts) <= 1:
         return segment
@@ -143,6 +164,10 @@ def _expand_or_segment(segment: str) -> str:
             if _is_wrapped_in_brackets(stripped):
                 negation = part[: len(part) - len(stripped)]
                 part = f"{negation}[{expand_compact_or(stripped[1:-1])}]"
+            result_parts.append(part)
+            continue
+
+        if _KEYWORD_TERM_PATTERN.match(part):
             result_parts.append(part)
             continue
 
@@ -292,6 +317,15 @@ def check_visible(condition: str) -> bool:
     return xbmc.getCondVisibility(condition)
 
 
+def suffix_property(name: str, suffix: str) -> str:
+    """Suffix a property name, leaving built-ins and names that already carry a slot."""
+    if not suffix or not name or _SLOT_PATTERN.search(name):
+        return name
+    if name.lower() in NO_SUFFIX_PROPERTIES:
+        return name
+    return f"{name}{suffix}"
+
+
 def suffix_condition(condition: str, suffix: str) -> str:
     """Suffix each property name the evaluator reads, leaving values and slots alone."""
     if not suffix or not condition:
@@ -331,15 +365,9 @@ def _suffix_term(term: str, suffix: str) -> str:
 
     def slot(name: str) -> str:
         name = name.strip()
-        if (
-            not name
-            or name in NO_SUFFIX_PROPERTIES
-            or name.startswith("$")
-            or "\x00" in name
-            or _SLOT_PATTERN.search(name)
-        ):
+        if name.startswith("$") or "\x00" in name:
             return name
-        return f"{name}{suffix}"
+        return suffix_property(name, suffix)
 
     if term.endswith(" EMPTY"):
         return f"{slot(term[:-6])} EMPTY"

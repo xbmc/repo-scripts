@@ -245,7 +245,7 @@ class PickersMixin:
         return IconOverrides()
 
     def _choose_shortcut(self) -> None:
-        """Choose a shortcut from groupings."""
+        """Choose a shortcut from groupings and apply it to the selected item."""
         if not self.manager:
             return
 
@@ -286,9 +286,8 @@ class PickersMixin:
                 self.manager.set_icon(self.menu_id, item.name, shortcut.icon)
                 item.icon = shortcut.icon
 
-            if shortcut.item_visible:
-                self.manager.set_visible(self.menu_id, item.name, shortcut.item_visible)
-                item.visible = shortcut.item_visible
+            self.manager.set_visible(self.menu_id, item.name, shortcut.item_visible)
+            item.visible = shortcut.item_visible
 
             previous_submenu = item.submenu
             new_submenu: str | None = None
@@ -315,29 +314,21 @@ class PickersMixin:
 
     def _choose_playlist_action(self, shortcut: Shortcut) -> str | None:
         """Choose what to do with a playlist shortcut, through a dialog."""
-        if shortcut.action_party:
-            result = xbmcgui.Dialog().yesnocustom(
-                LANGUAGE(32040),
-                LANGUAGE(32060),
-                customlabel=xbmc.getLocalizedString(589),
-                nolabel=LANGUAGE(32061),
-                yeslabel=LANGUAGE(32062),
-            )
-            if result == -1:
-                return None
-            if result == 0:
-                return shortcut.action
-            if result == 1:
-                return shortcut.action_play
-            return shortcut.action_party
-
-        result = xbmcgui.Dialog().yesno(
+        # an empty custom label hides the party button
+        result = xbmcgui.Dialog().yesnocustom(
             LANGUAGE(32040),
             LANGUAGE(32060),
+            customlabel=xbmc.getLocalizedString(589) if shortcut.action_party else "",
             nolabel=LANGUAGE(32061),
             yeslabel=LANGUAGE(32062),
         )
-        return shortcut.action_play if result else shortcut.action
+        if result == -1:
+            return None
+        if result == 0:
+            return shortcut.action
+        if result == 1:
+            return shortcut.action_play
+        return shortcut.action_party
 
     def _source_playlist_action(self, shortcut: Shortcut, item: MenuItem) -> str | None:
         """Pick how to show a source: Files view, or a path-filtered library playlist."""

@@ -5,9 +5,7 @@ from __future__ import annotations
 import re
 
 from .conditions import evaluate_condition, lookup
-from .log import get_logger, notify
-
-log = get_logger("Expressions")
+from .log import notify
 
 
 class MathEvaluator:
@@ -19,7 +17,7 @@ class MathEvaluator:
         self.expr = ""
 
     def evaluate(self, expr: str) -> str:
-        """Evaluate a math expression and return result as string."""
+        """Evaluate a math expression; one that fails is reported and returned unchanged."""
         self.expr = expr.strip()
         self.pos = 0
 
@@ -32,8 +30,11 @@ class MathEvaluator:
                 return str(int(result))
             return str(result)
         except (ValueError, ZeroDivisionError) as e:
-            log.debug(f"Math eval failed for '{expr}': {e}")
-            notify("Expression Error", f"$MATH failed: {expr}")
+            notify(
+                "Expression Error",
+                "$MATH failed",
+                f"templates.xml: $MATH[{expr}] failed ({e}); left as bare text; fix the expression",
+            )
             return expr
 
     def _skip_whitespace(self) -> None:
@@ -71,11 +72,12 @@ class MathEvaluator:
             if self.pos >= len(self.expr):
                 break
 
-            # Check for // (floor division) first
             if self.expr[self.pos : self.pos + 2] == "//":
                 self.pos += 2
                 right = self._parse_unary()
-                left = float(int(left) // int(right))
+                if right == 0:
+                    raise ZeroDivisionError("Floor division by zero")
+                left = left // right
             elif self.expr[self.pos] == "*":
                 self.pos += 1
                 left = left * self._parse_unary()
@@ -187,17 +189,21 @@ def evaluate_if(expr: str, properties: dict[str, str]) -> str:
     while remaining:
         remaining = remaining.strip()
 
-        then_match = re.search(r"\bTHEN\b", remaining, re.IGNORECASE)
+        then_match = re.search(r"\bTHEN\b", remaining)
         if not then_match:
-            if clauses and remaining:
-                else_value = remaining
+            notify(
+                "Expression Error",
+                "$IF clause has no THEN",
+                f"templates.xml: $IF[{expr}] has a clause with no THEN, '{remaining}'; clause "
+                "ignored; write THEN, ELIF and ELSE in uppercase",
+            )
             break
 
         condition = remaining[: then_match.start()].strip()
         after_then = remaining[then_match.end() :].strip()
 
-        elif_match = re.search(r"\bELIF\b", after_then, re.IGNORECASE)
-        else_match = re.search(r"\bELSE\b", after_then, re.IGNORECASE)
+        elif_match = re.search(r"\bELIF\b", after_then)
+        else_match = re.search(r"\bELSE\b", after_then)
 
         end_pos = len(after_then)
         next_keyword = None

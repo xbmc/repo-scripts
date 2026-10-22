@@ -7,24 +7,11 @@ from collections.abc import Iterable, Iterator
 from pathlib import Path
 from typing import TypeVar
 
-from ..conditions import NO_SUFFIX_PROPERTIES
 from ..exceptions import ConfigError
-from ..log import get_logger, notify
+from ..log import notify
 from ..models.override import Override
 
-log = get_logger("loaders.base")
-
 T = TypeVar("T")
-
-def apply_suffix_to_from(from_value: str, suffix: str) -> str:
-    """Apply a suffix to a from attribute value, except for the built-in sources."""
-    if not suffix or not from_value:
-        return from_value
-
-    if from_value in NO_SUFFIX_PROPERTIES:
-        return from_value
-
-    return f"{from_value}{suffix}"
 
 
 def parse_xml(path: str | Path, expected_root: str, error_class: type[ConfigError]) -> ET.Element:
@@ -114,17 +101,29 @@ def parse_name_overrides(root, tag: str) -> list[Override]:
     return overrides
 
 
+_DUPLICATE_HEADINGS = {
+    "menu": ("Menu Error", ""),
+    "item": ("Menu Error", "item "),
+    "widget": ("Widget Error", ""),
+    "background": ("Background Error", ""),
+    "view": ("View Error", ""),
+    "content": ("View Error", "content "),
+}
+
+
 def warn_duplicate_names(names: Iterable[str], kind: str, path: str, scope: str = "") -> None:
-    """Warn per repeated name; lookups take one match, so a duplicate is unreachable."""
+    """Warn per repeated name; only one definition of it can be looked up."""
+    heading, prefix = _DUPLICATE_HEADINGS[kind]
     seen: set[str] = set()
     for name in names:
         if name in seen:
             where = f" in {scope}" if scope else ""
-            log.warning(
-                f"{path}: {kind} '{name}' is defined more than once{where}; "
-                "names must be unique"
+            notify(
+                heading,
+                f"{prefix}'{name}' defined twice{where}",
+                f"{path}: {kind} '{name}' is defined more than once{where}; only one can be "
+                "reached; give each a unique name",
             )
-            notify("Duplicate Name", f"{kind} '{name}'{where} (see log)")
         seen.add(name)
 
 

@@ -7,10 +7,16 @@ import re
 import xml.etree.ElementTree as ET
 from typing import TYPE_CHECKING
 
-from ..conditions import NO_SUFFIX_PROPERTIES, evaluate_condition, lookup, suffix_condition
+from ..conditions import (
+    evaluate_condition,
+    lookup,
+    slot_suffixes,
+    suffix_condition,
+    suffix_property,
+    with_defaults,
+)
 from ..constants import extract_path_from_action
 from ..expressions import process_if_expressions, process_math_expressions
-from ..loaders.base import apply_suffix_to_from
 from ..log import get_logger, notify
 from ..models.template import BuildMode, TemplateProperty
 
@@ -53,6 +59,7 @@ class TemplateBuilder:
         self.menus = menus
         self.property_schema = property_schema
         self._menu_map: dict[str, Menu] = {m.name: m for m in menus}
+        self._include_chain: list[str] = []
         self._assigned_templates: set[str] = self._collect_assigned_templates()
 
     def _collect_assigned_templates(self) -> set[str]:
@@ -77,7 +84,6 @@ class TemplateBuilder:
         include_map: dict[str, ET.Element] = {}
         variable_map: dict[str, ET.Element] = {}
 
-        # templateonly: "true" = never generate, "auto" = skip if unassigned
         template_only_settings: dict[str, str] = {}
 
         for template in self.schema.templates:
@@ -94,9 +100,7 @@ class TemplateBuilder:
 
                 include_elem = include_map[include_name]
                 if template.build == BuildMode.RAW:
-                    self._build_raw_template(
-                        template, output, include_elem, variable_map
-                    )
+                    self._build_raw_template(template, output, include_elem)
                 else:
                     self._build_template_into(
                         template, output, include_elem, variable_map
@@ -130,22 +134,25 @@ class TemplateBuilder:
         submenu_tpl: SubmenuTemplate,
         include_map: dict[str, ET.Element],
     ) -> None:
-        """Build a submenu template."""
-        if not submenu_tpl.controls:
-            return
-
+        """Build a submenu template into its include, from a named menu or by level."""
         include_name = f"skinshortcuts-{submenu_tpl.include}"
         if include_name not in include_map:
             include_elem = ET.Element("include")
             include_elem.set("name", include_name)
             include_map[include_name] = include_elem
         include_elem = include_map[include_name]
+        if submenu_tpl.controls is None:
+            return
 
         if submenu_tpl.name:
             menu = self._menu_map.get(submenu_tpl.name)
             if not menu:
-                log.debug(f"Named menu '{submenu_tpl.name}' not found for submenu template")
-                notify("Submenu Template Error", f"menu '{submenu_tpl.name}' not found")
+                notify(
+                    "Submenu Template Error",
+                    f"menu '{submenu_tpl.name}' not found",
+                    f"templates.xml: <submenu name=\"{submenu_tpl.name}\"> names a menu that is "
+                    "not defined; template skipped; define the menu or correct the name",
+                )
                 return
             self._build_submenu_named(submenu_tpl, menu, include_elem)
         elif submenu_tpl.level > 0:
@@ -242,7 +249,15 @@ class TemplateBuilder:
         """Apply a submenu template's property and var transforms; $PARENT[] reads the main item."""
         parent_context = dict(context)
 
+        resolved_props: set[str] = set()
         for prop in submenu_tpl.properties:
+            if prop.name in resolved_props:
+                continue
+            if prop.condition and not evaluate_condition(
+                self._expand_expressions(prop.condition), context
+            ):
+                continue
+            resolved_props.add(prop.name)
             if prop.from_source:
                 value = lookup(prop.from_source, context) or ""
             elif prop.value:
@@ -257,7 +272,7 @@ class TemplateBuilder:
         for var in submenu_tpl.vars:
             for val in var.values:
                 if val.condition:
-                    if evaluate_condition(val.condition, context):
+                    if evaluate_condition(self._expand_expressions(val.condition), context):
                         context[var.name] = val.value
                         break
                 else:
@@ -271,7 +286,7 @@ class TemplateBuilder:
         menu: Menu,
         parent_item: MenuItem | None = None,
     ) -> ET.Element | None:
-        """Process controls from a submenu template."""
+        """Process controls from a submenu template, expanding each insert into its items."""
         result = copy.deepcopy(elem)
 
         if result.text:
@@ -283,6 +298,7 @@ class TemplateBuilder:
             if attr_name.startswith("_"):
                 continue
             result.set(attr_name, self._substitute_submenu_text(attr_value, context))
+        self._handle_include_substitution(result)
 
         insert_attr = result.get("_skinshortcuts_insert")
         if insert_attr or result.tag == "skinshortcuts":
@@ -328,9 +344,32 @@ class TemplateBuilder:
         parent_context: dict[str, str] | None = None,
         parent_item: MenuItem | None = None,
     ) -> None:
-        """Expand items iteration within a submenu template."""
+        """Expand items iteration in a submenu template, warning on what it ignores."""
+        if items_def.condition:
+            if parent_item is None:
+                notify(
+                    "Submenu Template Error",
+                    f"'{items_def.name}' condition has no item to test",
+                    f"templates.xml: <template items=\"{items_def.name}\"> has "
+                    f"<condition>{items_def.condition}</condition> and is inserted by a named "
+                    "<submenu>, which has no parent item; the condition is ignored; insert it "
+                    "from a level-based submenu template or a menu template",
+                )
+            elif not self._eval_condition(items_def.condition, parent_item, parent_context or {}):
+                return
+        if items_def.variable_groups:
+            notify(
+                "Submenu Template Error",
+                f"'{items_def.name}' variableGroups are not built",
+                f"templates.xml: <template items=\"{items_def.name}\"> declares <variableGroup> "
+                "and is inserted by a submenu template, which builds no variables; they are "
+                "ignored; insert it from a menu template",
+            )
+
         for idx, item in enumerate(menu.items, start=1):
             if item.disabled:
+                continue
+            if items_def.filter and not self._eval_condition(items_def.filter, item, {}):
                 continue
 
             sub_context = self._build_items_context(item, idx, menu)
@@ -347,17 +386,13 @@ class TemplateBuilder:
                     container.append(cloned)
 
     def _build_raw_template(
-        self,
-        template: Template,
-        output: TemplateOutput,
-        include: ET.Element,
-        variable_map: dict[str, ET.Element],
+        self, template: Template, output: TemplateOutput, include: ET.Element
     ) -> None:
-        """Output build="true" controls, grouped per resolved output when properties transform."""
+        """Build raw controls, one copy per distinct resolved form when properties transform."""
         if template.controls is None:
             return
 
-        matching = self._collect_raw_matching_items(template)
+        matching = self._collect_raw_matching_items(template, output)
 
         if not template.has_transformations:
             for child in template.controls:
@@ -366,15 +401,7 @@ class TemplateBuilder:
                 include.append(cloned)
             return
 
-        groups: dict[
-            str,
-            tuple[
-                ET.Element,
-                list[tuple[MenuItem, Menu, int]],
-                dict[str, str],
-                MenuItem,
-            ],
-        ] = {}
+        groups: dict[str, tuple[ET.Element, list[tuple[MenuItem, Menu, int]]]] = {}
 
         for item, menu, idx in matching:
             context = self._build_context(template, output, item, idx, menu)
@@ -385,27 +412,16 @@ class TemplateBuilder:
             key: str = ET.tostring(resolved, encoding="unicode")  # type: ignore[assignment]
 
             if key not in groups:
-                groups[key] = (resolved, [], context, item)
+                groups[key] = (resolved, [])
             groups[key][1].append((item, menu, idx))
 
-        for resolved_controls, items, context, representative in groups.values():
+        for resolved_controls, items in groups.values():
             for child in list(resolved_controls):
                 self._resolve_raw_visibility(child, items)
                 include.append(child)
 
-            for var_def in template.variables:
-                var_elem = self._build_variable(var_def, context, representative)
-                if var_elem is not None:
-                    self._add_variable(var_elem, variable_map)
-
-            for group_ref in template.variable_groups:
-                effective_suffix = self._combine_suffixes(output.suffix, group_ref.suffix)
-                self._build_variable_group(
-                    group_ref, context, representative, variable_map, effective_suffix
-                )
-
     def _collect_raw_matching_items(
-        self, template: Template
+        self, template: Template, output: TemplateOutput
     ) -> list[tuple[MenuItem, Menu, int]]:
         """Collect menu items matching a raw template's filters."""
         matching: list[tuple[MenuItem, Menu, int]] = []
@@ -414,16 +430,13 @@ class TemplateBuilder:
                 continue
             if not menu.container:
                 if template.menu:
-                    log.warning(
-                        f"build=\"true\" template matched no items: menu '{menu.name}' has no "
-                        f"container attribute, which raw mode needs to build item visibility. "
-                        f"Add container= to the menu, or drop build=\"true\" to iterate items."
-                    )
+                    written = f'<template include="{output.include}" build="true">'
+                    self._warn_no_container(menu.name, written, "no items match")
                 continue
             for idx, item in enumerate(menu.items, start=1):
                 if item.disabled:
                     continue
-                if not self._check_conditions(template.conditions, item):
+                if not self._check_conditions(template.conditions, item, output.suffix):
                     continue
                 matching.append((item, menu, idx))
         return matching
@@ -434,7 +447,7 @@ class TemplateBuilder:
         context: dict[str, str],
         item: MenuItem,
     ) -> None:
-        """Substitute $PROPERTY/$EXP/$MATH/$IF in raw controls, leaving visibility markers alone."""
+        """Substitute $PROPERTY/$EXP/$MATH/$IF/$INCLUDE in raw controls, not visibility markers."""
         for child in elem:
             if (
                 child.tag == "skinshortcuts"
@@ -448,6 +461,7 @@ class TemplateBuilder:
                 child.tail = self._substitute_text(child.tail, context, item)
             for attr, value in list(child.attrib.items()):
                 child.set(attr, self._substitute_text(value, context, item))
+            self._handle_include_substitution(child)
             self._substitute_raw_controls(child, context, item)
 
     def _resolve_raw_visibility(
@@ -475,7 +489,12 @@ class TemplateBuilder:
         include: ET.Element,
         variable_map: dict[str, ET.Element],
     ) -> None:
-        """Build one output's template controls and variables, its suffix applied throughout."""
+        """Build one output's controls and variables, its suffix applied outside items templates."""
+        if template.controls is not None:
+            for name in sorted(self._find_insert_names(template.controls)):
+                if not self.schema.get_items_template(name):
+                    self._warn_missing_insert(name)
+
         for menu in self.menus:
             if template.menu and menu.name != template.menu:
                 continue
@@ -494,7 +513,7 @@ class TemplateBuilder:
 
                 if template.controls is not None:
                     controls = self._process_controls(
-                        template.controls, context, item, menu, variable_map, output.suffix
+                        template.controls, context, item, menu, variable_map
                     )
                     if controls is not None:
                         for child in controls:
@@ -524,7 +543,7 @@ class TemplateBuilder:
         menu: Menu,
     ) -> dict[str, str]:
         """Build property context for a menu item, the output's suffix applied to each ref."""
-        context: dict[str, str] = {**menu.defaults.properties, **item.properties}
+        context = with_defaults(menu.defaults.properties, item.properties)
 
         context["index"] = str(idx)
         context["name"] = item.name
@@ -678,21 +697,14 @@ class TemplateBuilder:
 
     @staticmethod
     def _resolve_iterate_suffixes(expr: str, item: MenuItem) -> list[str]:
-        """Resolve an iterate expression to its suffix list."""
+        """Resolve an iterate expression to its suffix list, by count or by the slots present."""
         if expr.isdigit():
-            n = int(expr)
-            return [""] + [f".{i}" for i in range(2, n + 1)]
-        suffixes: list[str] = []
-        if expr in item.properties:
-            suffixes.append("")
-        for i in range(2, 100):
-            if f"{expr}.{i}" in item.properties:
-                suffixes.append(f".{i}")
-        return suffixes
+            return [f".{i}" if i > 1 else "" for i in range(1, int(expr) + 1)]
+        return slot_suffixes(expr, item.properties)
 
     @staticmethod
     def _apply_iterate_to_text(text: str, suffix: str, index: int, as_name: str) -> str:
-        """Apply loop-locals and auto-suffix other $PROPERTY refs."""
+        """Apply one iterate slot: fill its Index and Suffix, suffix the other $PROPERTY names."""
         if not text:
             return text
         index_key = f"{as_name}Index"
@@ -704,9 +716,7 @@ class TemplateBuilder:
                 return str(index)
             if name == suffix_key:
                 return suffix
-            if name in NO_SUFFIX_PROPERTIES or not suffix:
-                return match.group(0)
-            return f"$PROPERTY[{name}{suffix}]"
+            return f"$PROPERTY[{suffix_property(name, suffix)}]"
 
         return _PROPERTY_PATTERN.sub(replace, text)
 
@@ -735,8 +745,13 @@ class TemplateBuilder:
         override_suffix: str = "",
         parent_context: dict[str, str] | None = None,
         parent_item: MenuItem | None = None,
+        _chain: tuple[str, ...] = (),
     ) -> None:
         """Build variables from a variableGroup reference."""
+        if group_ref.name in _chain:
+            written = f'<variableGroup content="{group_ref.name}"/>'
+            self._warn_circular("Variable Group", written, _chain, group_ref.name)
+            return
         if group_ref.condition:
             condition = self._expand_expressions(group_ref.condition)
             if not self._eval_condition(condition, item, context):
@@ -755,7 +770,8 @@ class TemplateBuilder:
                 name=nested_ref.name, suffix=suffix, condition=""
             )
             self._build_variable_group(
-                nested_group_ref, context, item, variable_map, "", parent_context, parent_item
+                nested_group_ref, context, item, variable_map, "", parent_context, parent_item,
+                (*_chain, group_ref.name),
             )
 
         for var_ref in var_group.references:
@@ -820,6 +836,10 @@ class TemplateBuilder:
             for group_ref in template.variable_groups:
                 self._collect_group_variables(group_ref.name, names, seen)
 
+        for items_def in self.schema.items_templates.values():
+            for group_ref in items_def.variable_groups:
+                self._collect_group_variables(group_ref.name, names, seen)
+
         for name in sorted(names - set(variable_map)):
             placeholder = ET.Element("variable")
             placeholder.set("name", name)
@@ -869,9 +889,7 @@ class TemplateBuilder:
                 return None
 
         if prop.from_source:
-            source = prop.from_source
-            if suffix:
-                source = apply_suffix_to_from(source, suffix)
+            source = suffix_property(prop.from_source, suffix)
             return self._get_from_source(source, item, context, suffix)
 
         value = prop.value
@@ -951,14 +969,16 @@ class TemplateBuilder:
         context: dict[str, str],
         suffix: str = "",
     ) -> None:
-        """Apply properties from a property group to context."""
+        """Apply a property group, first match per name; a literal only fills an unset name."""
+        resolved_props: set[str] = set()
         for prop in prop_group.properties:
+            if prop.name in resolved_props:
+                continue
             from_source = prop.from_source
             condition = prop.condition
 
             if suffix:
-                if from_source:
-                    from_source = apply_suffix_to_from(from_source, suffix)
+                from_source = suffix_property(from_source, suffix)
                 if condition:
                     condition = self._expand_expressions(condition)
                     condition = suffix_condition(condition, suffix)
@@ -970,7 +990,10 @@ class TemplateBuilder:
                 condition=condition,
             )
             value = self._resolve_property(modified_prop, item, context)
-            if value is not None and (from_source or prop.name not in context):
+            if value is None:
+                continue
+            resolved_props.add(prop.name)
+            if from_source or prop.name not in context:
                 context[prop.name] = value
 
         for var in prop_group.vars:
@@ -1084,7 +1107,7 @@ class TemplateBuilder:
             for suffix in suffixes_in_use:
                 suffixed_prop = f"{prop_name}{suffix}" if suffix else prop_name
 
-                if suffixed_prop in context or suffixed_prop in item.properties:
+                if lookup(suffixed_prop, context, item.properties) is not None:
                     continue
 
                 for rule in fallback.rules:
@@ -1136,6 +1159,51 @@ class TemplateBuilder:
 
         return False
 
+    @staticmethod
+    def _warn_circular(kind: str, written: str, chain: tuple[str, ...], name: str) -> None:
+        """Warn that a reference leads back to itself, naming every step of the loop."""
+        loop = " -> ".join((*chain[chain.index(name):], name))
+        notify(
+            f"{kind} Error",
+            f"'{name}' is circular",
+            f"templates.xml: {written} leads back to itself ({loop}); the repeated reference is "
+            "left out; remove one reference in the loop",
+        )
+
+    def _warn_missing_include(self, name: str) -> None:
+        """Warn that an include marker names no include, suggesting a close match."""
+        from difflib import get_close_matches
+
+        close = get_close_matches(name, list(self.schema.includes), n=1)
+        hint = f"; did you mean '{close[0]}'?" if close else ""
+        notify(
+            "Include Error",
+            f"'{name}' not defined",
+            f"templates.xml: <skinshortcuts include=\"{name}\"/> names no <include> in "
+            f"<includes>; the marker is left out; define the include or correct the name{hint}",
+        )
+
+    @staticmethod
+    def _warn_no_container(menu_name: str, written: str, outcome: str) -> None:
+        """Warn that a menu a template reads has no container to test items against."""
+        notify(
+            "Template Error",
+            f"menu '{menu_name}' has no container",
+            f"templates.xml: {written} reads menu '{menu_name}', which has no container; "
+            f"{outcome}; add container=\"<list id>\" to that <menu> in menus.xml",
+        )
+
+    @staticmethod
+    def _warn_missing_insert(name: str) -> None:
+        """Warn that an insert names no items template."""
+        notify(
+            "Items Template Error",
+            f"'{name}' not defined",
+            f"templates.xml: <skinshortcuts insert=\"{name}\"/> has no "
+            f"<template items=\"{name}\">; nothing is inserted; define the items template "
+            "or correct the insert name",
+        )
+
     def _find_insert_names(self, elem: ET.Element) -> set[str]:
         """Find all skinshortcuts insert names in an element tree."""
         names: set[str] = set()
@@ -1162,16 +1230,19 @@ class TemplateBuilder:
 
         return evaluate_condition(condition, properties)
 
-    def _expand_expressions(self, condition: str) -> str:
+    def _expand_expressions(self, condition: str, _chain: tuple[str, ...] = ()) -> str:
         """Expand $EXP[name] in a condition, wrapping nosuffix values in {NOSUFFIX:...} markers."""
 
         def replace_exp(match: re.Match) -> str:
             name = match.group(1)
             expr = self.schema.get_expression(name)
+            if expr and name in _chain:
+                self._warn_circular("Expression", f"$EXP[{name}]", _chain, name)
+                return match.group(0)
             if expr:
-                expanded = self._expand_expressions(expr.value)
+                expanded = self._expand_expressions(expr.value, (*_chain, name))
                 if expr.nosuffix:
-                    return f"{{NOSUFFIX:{expanded}}}"
+                    return f"{{NOSUFFIX:{self._strip_nosuffix_markers(expanded)}}}"
                 return expanded
             return match.group(0)
 
@@ -1184,11 +1255,10 @@ class TemplateBuilder:
         item: MenuItem,
         menu: Menu,
         variable_map: dict[str, ET.Element] | None = None,
-        output_suffix: str = "",
     ) -> ET.Element | None:
         """Process controls XML, applying substitutions."""
         result = copy.deepcopy(controls)
-        self._process_element(result, context, item, menu, variable_map, output_suffix)
+        self._process_element(result, context, item, menu, variable_map)
         self._remove_empty_elements(result)
 
         return result
@@ -1210,7 +1280,6 @@ class TemplateBuilder:
         item: MenuItem,
         menu: Menu,
         variable_map: dict[str, ET.Element] | None = None,
-        output_suffix: str = "",
     ) -> None:
         """Recursively process an element, applying substitutions."""
         if elem.tag == "skinshortcuts":
@@ -1222,10 +1291,10 @@ class TemplateBuilder:
                         f"ListItem.Property(name),{item.name})"
                     )
                 else:
-                    log.warning(
-                        f"<skinshortcuts>visibility in template for menu "
-                        f"'{menu.name}' but menu has no container attribute"
-                    )
+                    written = "<skinshortcuts>visibility</skinshortcuts>"
+                    self._warn_no_container(menu.name, written, "the marker is left out")
+                    elem.set("_skinshortcuts_remove", "true")
+                    return
             elif elem.text and elem.text.strip() == "onclick":
                 elem.set("_skinshortcuts_onclick", "true")
                 elem.text = ""
@@ -1240,7 +1309,11 @@ class TemplateBuilder:
                     return
 
                 include_def = self.schema.get_include(include_name)
-                if include_def and include_def.controls is not None:
+                if include_def is None:
+                    self._warn_missing_include(include_name)
+                    elem.set("_skinshortcuts_remove", "true")
+                    return
+                if include_def.controls is not None:
                     elem.set("_skinshortcuts_include", include_name)
                     wrap_attr = elem.get("wrap") or ""
                     wrap = wrap_attr.lower() == "true"
@@ -1267,30 +1340,28 @@ class TemplateBuilder:
 
         children_to_remove = []
         for child in elem:
-            self._process_element(child, context, item, menu, variable_map, output_suffix)
+            self._process_element(child, context, item, menu, variable_map)
             if child.get("_skinshortcuts_remove"):
                 children_to_remove.append(child)
 
-        self._handle_skinshortcuts_include(
-            elem, context, item, menu, variable_map, output_suffix
-        )
-        self._handle_skinshortcuts_items(elem, context, item, variable_map, output_suffix)
+        self._handle_skinshortcuts_include(elem, context, item, menu, variable_map)
+        self._handle_skinshortcuts_items(elem, context, item, variable_map)
         self._handle_skinshortcuts_onclick(elem, item, menu)
 
         for child in children_to_remove:
             elem.remove(child)
 
     def _handle_include_substitution(self, elem: ET.Element) -> None:
-        """Handle $INCLUDE[...] in element text as <include> child elements."""
-        if elem.text:
-            match = _INCLUDE_PATTERN.search(elem.text)
-            if match:
-                include_name = match.group(1)
-                include_elem = ET.Element("include")
-                include_elem.text = include_name
-                include_elem.tail = elem.text[match.end() :]
-                elem.text = elem.text[: match.start()]
-                elem.insert(0, include_elem)
+        """Handle each $INCLUDE[...] in element text as an <include> child element."""
+        if not elem.text:
+            return
+        parts = _INCLUDE_PATTERN.split(elem.text)
+        elem.text = parts[0]
+        for index, name in enumerate(parts[1::2]):
+            include_elem = ET.Element("include")
+            include_elem.text = name
+            include_elem.tail = parts[2 * index + 2]
+            elem.insert(index, include_elem)
 
     def _handle_skinshortcuts_include(
         self,
@@ -1299,7 +1370,6 @@ class TemplateBuilder:
         item: MenuItem,
         menu: Menu,
         variable_map: dict[str, ET.Element] | None = None,
-        output_suffix: str = "",
     ) -> None:
         """Handle <skinshortcuts include="..."/>, wrap="true" keeping a Kodi <include> wrapper."""
         children_to_replace = []
@@ -1311,10 +1381,19 @@ class TemplateBuilder:
 
         for i, child, include_name, wrap in reversed(children_to_replace):
             include_def = self.schema.get_include(include_name)
+            if include_name in self._include_chain:
+                written = f'<skinshortcuts include="{include_name}"/>'
+                self._warn_circular("Include", written, tuple(self._include_chain), include_name)
+                elem.remove(child)
+                continue
             if include_def and include_def.controls is not None:
-                expanded = self._process_controls(
-                    include_def.controls, context, item, menu, variable_map, output_suffix
-                )
+                self._include_chain.append(include_name)
+                try:
+                    expanded = self._process_controls(
+                        include_def.controls, context, item, menu, variable_map
+                    )
+                finally:
+                    self._include_chain.pop()
                 if expanded is not None:
                     tail = child.tail
                     elem.remove(child)
@@ -1341,7 +1420,6 @@ class TemplateBuilder:
         context: dict[str, str],
         item: MenuItem,
         variable_map: dict[str, ET.Element] | None = None,
-        output_suffix: str = "",
     ) -> None:
         """Handle <skinshortcuts insert="X" /> iteration over the {item}.{source} submenu."""
         children_to_replace: list[tuple[int, ET.Element, str]] = []
@@ -1353,8 +1431,7 @@ class TemplateBuilder:
         for i, child, insert_name in reversed(children_to_replace):
             items_def = self.schema.get_items_template(insert_name)
             if not items_def:
-                log.debug(f"Items definition '{insert_name}' not found")
-                notify("Items Template Error", f"'{insert_name}' not defined")
+                self._warn_missing_insert(insert_name)
                 elem.remove(child)
                 continue
 
@@ -1401,13 +1478,11 @@ class TemplateBuilder:
 
                 if variable_map is not None:
                     for group_ref in items_def.variable_groups:
-                        effective_suffix = self._combine_suffixes(output_suffix, group_ref.suffix)
                         self._build_variable_group(
                             group_ref,
                             sub_context,
                             sub_item,
                             variable_map,
-                            effective_suffix,
                             parent_context=context,
                             parent_item=item,
                         )
@@ -1507,7 +1582,7 @@ class TemplateBuilder:
         submenu: Menu,
     ) -> dict[str, str]:
         """Build property context for a submenu item; parent properties come via $PARENT[...]."""
-        context: dict[str, str] = {**submenu.defaults.properties, **sub_item.properties}
+        context = with_defaults(submenu.defaults.properties, sub_item.properties)
         context["index"] = str(sub_idx)
         context["name"] = sub_item.name
         context["menu"] = submenu.name

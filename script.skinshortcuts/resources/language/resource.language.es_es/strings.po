@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"Report-Msgid-Bugs-To: noreply@noreply.com\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2026-08-13 08:20+0000\n"
 "Last-Translator: Alfonso Cachero <alfonso.cachero@gmail.com>\n"
@@ -769,16 +769,16 @@ msgid "%s (reset)"
 msgstr "%s (reiniciar)"
 
 msgctxt "#32191"
-msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
-msgstr "¿Reiniciar todos los menús de la skin?[CR]Se eliminarán todas las personalizaciones."
+msgid "Reset all menus and views to skin defaults?[CR]All customizations will be removed."
+msgstr ""
 
 msgctxt "#32192"
 msgid "Reset all view selections to skin defaults?"
 msgstr "¿Reiniciar todas las vistas elegidas?"
 
 msgctxt "#32193"
-msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
-msgstr "¿Reiniciar todos los menús?[CR]Las vistas seleccionadas se mantendrán."
+msgid "Reset all menus to skin defaults?"
+msgstr "¿Reiniciar todos los menús?"
 
 msgctxt "#32194"
 msgid "Reset '%s' and its submenus to skin defaults?"
@@ -808,10 +808,6 @@ msgctxt "#32200"
 msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
 msgstr "Esta skin esta construioda para Skin Shortcuts v2. Cambie la skin o baje la version del addon."
 
-msgctxt "#32201"
-msgid "Open settings"
-msgstr "Abrir ajustes"
-
 msgctxt "#32202"
 msgid "Ignore for this skin"
 msgstr "Ignorar para esta skin"
@@ -835,6 +831,26 @@ msgstr "No hay Interpretes en esta fuente"
 msgctxt "#32207"
 msgid "Enable shortcut"
 msgstr "Activar atajo"
+
+msgctxt "#32208"
+msgid "Reset all menus"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Reset all views"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Reset menu"
+msgstr ""
+
+#~ msgctxt "#32191"
+#~ msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+#~ msgstr "¿Reiniciar todos los menús de la skin?[CR]Se eliminarán todas las personalizaciones."
+
+#~ msgctxt "#32201"
+#~ msgid "Open settings"
+#~ msgstr "Abrir ajustes"
 
 #~ msgctxt "#32024"
 #~ msgid "Custom shortcut"

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -22,6 +23,9 @@ from .localize import LANGUAGE
 from .log import get_logger
 
 log = get_logger("Entry")
+
+SKIN_SETTING = "ActivateWindow(InterfaceSettings,lookandfeel.skin)"
+ADDON_BROWSER = "ActivateWindow(AddonBrowser,addons://)"
 
 
 def get_output_paths() -> list[str]:
@@ -61,33 +65,59 @@ def _unsupported_marker() -> Path:
     return Path(data) / f"{xbmc.getSkinDir()}.unsupported-ack"
 
 
-def _warn_unsupported(marker: Path) -> None:
-    """Modal once per session: switch skins, ignore (marks the skin so it won't warn) or cancel."""
-    win = xbmcgui.Window(10000)
-    if win.getProperty("skinshortcuts-unsupported-warned"):
+def _warn_unsupported(marker: Path, built: bool, user_action: bool) -> None:
+    """Warn the skin is built for v2; only an automatic warning on a built skin offers ignore."""
+    skin, addons = xbmc.getLocalizedString(166), xbmc.getLocalizedString(24001)
+    if not built:
+        picked = xbmcgui.Dialog().yesno(
+            "Skin Shortcuts", LANGUAGE(32200), nolabel=skin, yeslabel=addons
+        )
+        xbmc.executebuiltin(ADDON_BROWSER if picked else SKIN_SETTING)
         return
-    win.setProperty("skinshortcuts-unsupported-warned", "1")
     choice = xbmcgui.Dialog().yesnocustom(
         "Skin Shortcuts", LANGUAGE(32200),
-        customlabel=LANGUAGE(32202), nolabel=xbmc.getLocalizedString(222), yeslabel=LANGUAGE(32201),
+        customlabel=addons if user_action else LANGUAGE(32202),
+        nolabel=xbmc.getLocalizedString(222), yeslabel=skin,
     )
     if choice == 1:
-        xbmc.executebuiltin("ActivateWindow(Settings)")
+        xbmc.executebuiltin(SKIN_SETTING)
+    elif choice == 2 and user_action:
+        xbmc.executebuiltin(ADDON_BROWSER)
     elif choice == 2:
         marker.parent.mkdir(parents=True, exist_ok=True)
         marker.touch()
 
 
-def _skin_supported(shortcuts_path: str, *, menus_only: bool = False) -> bool:
-    """True if the skin has v3 config, clearing a stale ignore marker; else warn unless ignored."""
+def _skin_supported(
+    shortcuts_path: str, *, menus_only: bool = False, user_action: bool = False
+) -> bool:
+    """True with v3 config; else warn, a built skin once per session unless ignored or clicked."""
     path = Path(shortcuts_path)
     marker = _unsupported_marker()
     if (path / MENUS_FILE).exists() or (not menus_only and (path / VIEWS_FILE).exists()):
         marker.unlink(missing_ok=True)
         return True
-    if not marker.exists():
-        _warn_unsupported(marker)
+    built = any((Path(out) / INCLUDES_FILE).exists() for out in get_output_paths())
+    win = xbmcgui.Window(10000)
+    warned = win.getProperty("skinshortcuts-unsupported-warned")
+    if built and not user_action and (warned or marker.exists()):
+        return False
+    win.setProperty("skinshortcuts-unsupported-warned", "1")
+    _warn_unsupported(marker, built, user_action)
     return False
+
+
+def _wait_for_dialogs() -> bool:
+    """Wait until modal dialogs have closed and stayed closed; False when Kodi is exiting."""
+    monitor = xbmc.Monitor()
+    if xbmc.getCondVisibility("System.HasVisibleModalDialog"):
+        log.debug("Waiting for modal dialogs to close before reloading the skin")
+    clear = 0
+    while clear < 3:
+        if monitor.waitForAbort(0.1):
+            return False
+        clear = 0 if xbmc.getCondVisibility("System.HasVisibleModalDialog") else clear + 1
+    return True
 
 
 def build_includes(
@@ -95,7 +125,7 @@ def build_includes(
     output_path: str | None = None,
     force: bool = False,
 ) -> bool:
-    """Build includes.xml from skin config files."""
+    """Build includes.xml from skin config files, reloading the skin when the output changes."""
     log.debug(f"build_includes called: path={shortcuts_path}, output={output_path}, force={force}")
 
     home = xbmcgui.Window(10000) if IN_KODI else None
@@ -181,7 +211,9 @@ def build_includes(
         log.debug("Saved config hashes")
 
         if IN_KODI and output_changed:
-            xbmc.executebuiltin("ReloadSkin()")
+            # Kodi drops a reload made while its startup dialogs are still open
+            if _wait_for_dialogs():
+                xbmc.executebuiltin("ReloadSkin()")
         elif IN_KODI:
             log.debug("Includes unchanged, skipping skin reload")
 
@@ -255,14 +287,14 @@ def clear_custom_widget(
 
 
 def reset_all(shortcuts_path: str | None = None) -> bool:
-    """Reset menus and views to skin defaults by deleting the skin's userdata."""
+    """Reset menus and views to skin defaults after confirming, by deleting the skin's userdata."""
     if not IN_KODI:
         return False
 
     import xbmcgui
 
     if not xbmcgui.Dialog().yesno(
-        xbmc.getLocalizedString(186),  # "Reset"
+        xbmc.getLocalizedString(13007),
         LANGUAGE(32191),
     ):
         return False
@@ -319,14 +351,14 @@ def view_select(
 
 
 def reset_views(shortcuts_path: str | None = None) -> bool:
-    """Reset all view selections to defaults."""
+    """Reset all view selections to defaults after confirming."""
     if not IN_KODI:
         return False
 
     import xbmcgui
 
     if not xbmcgui.Dialog().yesno(
-        xbmc.getLocalizedString(186),  # "Reset"
+        xbmc.getLocalizedString(13007),
         LANGUAGE(32192),
     ):
         return False
@@ -347,14 +379,14 @@ def reset_views(shortcuts_path: str | None = None) -> bool:
 
 
 def reset_menus(shortcuts_path: str | None = None) -> bool:
-    """Reset all menu selections to defaults (keeps view selections)."""
+    """Reset all menu selections to defaults after confirming, keeping view selections."""
     if not IN_KODI:
         return False
 
     import xbmcgui
 
     if not xbmcgui.Dialog().yesno(
-        xbmc.getLocalizedString(186),  # "Reset"
+        xbmc.getLocalizedString(13007),
         LANGUAGE(32193),
     ):
         return False
@@ -372,6 +404,25 @@ def reset_menus(shortcuts_path: str | None = None) -> bool:
 
     build_includes(shortcuts_path, force=True)
     return True
+
+
+def play_channel(channel: str) -> None:
+    """Play a PVR channel by its ID, logging a warning when it does not play."""
+    if not channel.isdigit():
+        log.warning(f"playchannel: '{channel}' is not a channel ID")
+        return
+    request = {
+        "jsonrpc": "2.0",
+        "method": "Player.Open",
+        "params": {"item": {"channelid": int(channel)}},
+        "id": 1,
+    }
+    response = json.loads(xbmc.executeJSONRPC(json.dumps(request)))
+    if "error" in response:
+        log.warning(
+            f"PVR channel {channel} did not play: {response['error'].get('message')}; "
+            "if the channel list changed, pick the channel again"
+        )
 
 
 def main() -> None:
@@ -424,8 +475,16 @@ def main() -> None:
 
 
 def _dispatch(args: dict[str, str]) -> None:
-    """Run the action named by the type parameter, building includes by default."""
+    """Dispatch the named action, building by default; on a v2 skin only the build runs."""
     action = args.get("type", "buildxml")
+    if action != "buildxml":
+        # v2 skins run hidesubmenu from a list onback; every Back press would raise the modal
+        supported = _skin_supported(
+            args.get("path") or get_shortcuts_path(),
+            menus_only=action == "manage", user_action=action != "hidesubmenu",
+        )
+        if not supported:
+            return
 
     if action == "buildxml":
         shortcuts_path = args.get("path")
@@ -434,9 +493,6 @@ def _dispatch(args: dict[str, str]) -> None:
         build_includes(shortcuts_path, output_path, force)
     elif action == "manage":
         shortcuts_path = args.get("path") or get_shortcuts_path()
-        if not _skin_supported(shortcuts_path, menus_only=True):
-            return
-
         from .dialog import show_management_dialog
 
         menu_id = args.get("menu", "mainmenu")
@@ -477,7 +533,7 @@ def _dispatch(args: dict[str, str]) -> None:
                 if include_subs
                 else LANGUAGE(32195) % menu
             )
-            if xbmcgui.Dialog().yesno(xbmc.getLocalizedString(186), prompt_msg):
+            if xbmcgui.Dialog().yesno(xbmc.getLocalizedString(13007), prompt_msg):
                 from .manager import MenuManager
                 shortcuts_path = args.get("path") or get_shortcuts_path()
                 manager = MenuManager(shortcuts_path)
@@ -490,7 +546,7 @@ def _dispatch(args: dict[str, str]) -> None:
     elif action == "resetsubmenus":
         import xbmcgui
         if xbmcgui.Dialog().yesno(
-            xbmc.getLocalizedString(186),
+            xbmc.getLocalizedString(13007),
             LANGUAGE(32196),
         ):
             from .manager import MenuManager
@@ -512,6 +568,8 @@ def _dispatch(args: dict[str, str]) -> None:
 
         shortcuts_path = args.get("path") or get_shortcuts_path()
         pick_widget_skinstring(shortcuts_path, args)
+    elif action == "playchannel":
+        play_channel(args.get("channel", ""))
     else:
         log.warning(f"Unknown action: {action}")
 
