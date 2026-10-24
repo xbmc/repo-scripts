@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-from __future__ import unicode_literals
 
 import json
 import os
@@ -28,7 +27,7 @@ from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils, timeit
 from clouddrive.common.db import SimpleKeyValueDb
-from _collections import deque
+from collections import deque
 from clouddrive.common.remote.errorreport import ErrorReport
 
 

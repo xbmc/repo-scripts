@@ -17,11 +17,55 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import ast
+import json
 import sqlite3
 
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
-from clouddrive.common.utils import Utils
+
+
+# Values are stored as JSON after this prefix. Earlier versions stored Python repr() text, which literal_eval reads
+# without running code. The prefix tells them apart without a failing json.loads: in Kodi, json's C decoder can raise
+# an exception class left over from an earlier add-on run, which fails with "NameError: ValueError".
+_JSON_PREFIX = 'json:'
+
+
+def to_text(value):
+    return _JSON_PREFIX + json.dumps(value)
+
+
+def from_text(text):
+    if text.startswith(_JSON_PREFIX):
+        return json.loads(text[len(_JSON_PREFIX):])
+    return ast.literal_eval(text)
+
+
+def execute(name, con, monitor, is_aborted, query, data=None, fetchall=False):
+    # Runs a query, retrying while another process holds the lock. Errors are logged (without the data, which can
+    # hold tokens) and give None.
+    for attempt in range(15):
+        try:
+            if isinstance(data, list):
+                cur = con.executemany(query, data)
+            elif data:
+                cur = con.execute(query, data)
+            else:
+                cur = con.execute(query)
+            return cur.fetchall() if fetchall else cur.fetchone()
+        except sqlite3.OperationalError as ex:
+            if 'database is locked' not in str(ex) or is_aborted() or monitor.abortRequested():
+                Logger.debug('db [%s] - error executing query [%s]: %s' % (name, query, ex))
+                return None
+            Logger.debug('db [%s] - database locked, retry %d: [%s]' % (name, attempt + 1, query))
+            # Kodi is shutting down: stop retrying.
+            if monitor.waitForAbort(0.3):
+                return None
+        except Exception as ex:
+            Logger.debug('db [%s] - error executing query [%s]: %s' % (name, query, ex))
+            return None
+    Logger.debug('db [%s] - database still locked, giving up: [%s]' % (name, query))
+    return None
 
 
 class SimpleKeyValueDb(object):
@@ -34,93 +78,49 @@ class SimpleKeyValueDb(object):
         self._base_path = _base_path
         self._name = name
         self._monitor = KodiUtils.get_system_monitor()
-    
+
     def __del__(self):
         self._abort = True
         del self._monitor
-    
+
     def _get_connection(self):
         if not KodiUtils.file_exists(self._base_path):
             KodiUtils.mkdirs(self._base_path)
         db = KodiUtils.translate_path("%s/%s.db" % (self._base_path, self._name,))
         con = sqlite3.connect(db, timeout=30, isolation_level=None)
-        con.execute("pragma journal_mode=wal")
-        rs = con.execute("select name from sqlite_master where type='table' AND name='store'")
-        if not rs.fetchone():
-            try:
-                con.execute("create table store(key text unique, value text)")
-            except Exception as ex:
-                Logger.debug("error in db [%s] - %s" % (self._name, Utils.str(ex),))
+        # Setup statements can meet a lock too: same retries as the queries.
+        execute(self._name, con, self._monitor, lambda: self._abort, "pragma journal_mode=wal")
+        execute(self._name, con, self._monitor, lambda: self._abort, "create table if not exists store(key text unique, value text)")
         return con
 
     def get(self, key):
-        row = self._read(key)
+        row = self._execute_sql("select value from store where key = ?", (key,))
         if row:
-            return eval(row[0])
+            return from_text(row[0])
         return
-    
+
     def getall(self):
-        d = {}
-        rows = self._readall()
-        for row in rows:
-            d[row[0]] = eval(row[1])
-        return d
+        rows = self._execute_sql("select key, value from store", fetchall=True) or []
+        return dict((key, from_text(value)) for key, value in rows)
 
     def set(self, key, value):
-        self._insert(key, value)
-    
+        self._execute_sql("insert or replace into store(key, value) values(?,?)", (key, to_text(value)))
+
     def setmany(self, key_value_list):
-        for kv in key_value_list:
-            kv[1] = repr(kv[1])
-        self._execute_sql("insert or replace into store(key, value) values(?,?)", key_value_list)
-        
+        self._execute_sql("insert or replace into store(key, value) values(?,?)", [(key, to_text(value)) for key, value in key_value_list])
+
     def remove(self, key):
         self._execute_sql("delete from store where key = ?", (key,))
-    
+
     def checkpoint(self):
         row = self._execute_sql("PRAGMA wal_checkpoint(TRUNCATE)")
-        Logger.debug("Db '%s' checkpoint: #d, #d, #d" % (self._name, row[0], row[1], row[2],))
-        
-    def _readall(self):
-        return self._execute_sql("select key, value from store", fetchall=True)
-    
-    def _read(self, key):
-        return self._execute_sql("select value from store where key = ?", (key,))
-    
-    def _insert(self, key, value):
-        self._execute_sql("insert or replace into store(key, value) values(?,?)", (key, repr(value)))
-        
-    def _execute_sql(self, query, data=None, fetchall=False):
-        result = None
-        con = self._get_connection()
-        with con:
-            retries = 0
-            error = None
-            while retries < 15 and not self._abort:
-                try:
-                    if isinstance(data, list):
-                        cur = con.executemany(query, data)
-                    elif data:
-                        cur = con.execute(query, data)
-                    else:
-                        cur = con.execute(query)
-                    
-                    if fetchall:
-                        result = cur.fetchall()
-                    else:
-                        result = cur.fetchone()
-                    break
-                except sqlite3.OperationalError as error:
-                    if "_database is locked" in error:
-                        retries += 1
-                        Logger.debug("db [%s] - query retry #d: [%s]: %s" % (self._name, retries, query, str(data),))
-                        self._monitor.waitForAbort(0.3)
-                    else:
-                        break
-                except Exception as error:
-                    break
-            if error:
-                Logger.debug("db [%s] - Error executing query [%s]: %s" % (self._name, query, str(error),))
-        con.close()
-        return result
+        if row:
+            Logger.debug("Db '%s' checkpoint: %s, %s, %s" % (self._name, row[0], row[1], row[2],))
 
+    def _execute_sql(self, query, data=None, fetchall=False):
+        con = self._get_connection()
+        try:
+            with con:
+                return execute(self._name, con, self._monitor, lambda: self._abort, query, data, fetchall)
+        finally:
+            con.close()
