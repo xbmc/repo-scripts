@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
-from __future__ import absolute_import, division, unicode_literals
 from xbmc import getCondVisibility, Player, Monitor
 from api import Api
 from state import State
@@ -43,15 +42,19 @@ class UpNextPlayer(Player):
         if not getCondVisibility('videoplayer.content(episodes)'):
             return
         self.state.track = True
-        self.reset_queue()
 
     if callable(getattr(Player, 'onAVStarted', None)):
         def onAVStarted(self):  # pylint: disable=invalid-name
             """Will be called when Kodi has a video or audiostream"""
             self._check_video()
+
+        def onPlayBackStarted(self):  # pylint: disable=invalid-name
+            """Will be called when kodi starts playing a file"""
+            self.reset_queue()
     else:
         def onPlayBackStarted(self):  # pylint: disable=invalid-name
             """Will be called when kodi starts playing a file"""
+            self.reset_queue()
             self._check_video()
 
     def onPlayBackPaused(self):  # pylint: disable=invalid-name
@@ -59,6 +62,8 @@ class UpNextPlayer(Player):
 
     def onPlayBackResumed(self):  # pylint: disable=invalid-name
         self.state.pause = False
+        if self.api.has_addon_data() or getCondVisibility('videoplayer.content(episodes)'):
+            self.enable_tracking()
 
     def onPlayBackStopped(self):  # pylint: disable=invalid-name
         """Will be called when user stops playing a file"""

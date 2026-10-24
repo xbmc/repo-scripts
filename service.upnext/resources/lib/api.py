@@ -1,9 +1,30 @@
 # -*- coding: utf-8 -*-
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
-from __future__ import absolute_import, division, unicode_literals
 from xbmc import sleep, PLAYLIST_VIDEO, PLAYLIST_MUSIC
 from utils import event, get_int, get_setting_bool, get_setting_int, jsonrpc, log as ulog
+
+
+# Episode details shown in the popup
+EPISODE_PROPERTIES = ['art', 'dateadded', 'episode', 'file', 'firstaired', 'lastplayed',
+                      'playcount', 'plot', 'rating', 'resume', 'runtime', 'season',
+                      'showtitle', 'streamdetails', 'title', 'tvshowid', 'writer']
+
+
+def credits_autoplay_deadline(data, play_time, total_time):
+    """Return an opt-in playback deadline only when a credits offset is known."""
+    delay = get_setting_int('autoPlayCreditsTime')
+    if delay <= 0:
+        return None
+    try:
+        offset = float(data.get('notification_offset'))
+    except (TypeError, ValueError):
+        return None
+    if not 0 < offset < total_time:
+        return None
+    # An earlier notification_time may show the prompt before the credits.
+    # A late prompt still gives the viewer the full configured response time.
+    return min(total_time, max(play_time, offset) + delay)
 
 
 class Api:
@@ -134,9 +155,7 @@ class Api:
             'playlistid': Api.get_playlistid(),
             # limits are zero indexed, position is one indexed
             'limits': {'start': position, 'end': position + 1},
-            'properties': ['art', 'dateadded', 'episode', 'file', 'firstaired', 'lastplayed',
-                           'playcount', 'plot', 'rating', 'resume', 'runtime', 'season',
-                           'showtitle', 'streamdetails', 'title', 'tvshowid', 'writer'],
+            'properties': EPISODE_PROPERTIES,
         })
 
         item = result.get('result', {}).get('items')
@@ -168,19 +187,20 @@ class Api:
             self.log('Playing the next episode directly: %(play_url)s' % self.data, 2)
             jsonrpc(method='Player.Open', params={'item': {'file': self.data.get('play_url')}})
         else:
-            self.log('Sending %(encoding)s data to add-on to play: %(play_info)s' % dict(encoding=self.encoding, **self.data), 2)  # pylint: disable=use-dict-literal
+            message = 'Sending %(encoding)s data to add-on to play: %(play_info)s'
+            self.log(message % dict(encoding=self.encoding, **self.data), 2)  # pylint: disable=use-dict-literal
             event(message=self.data.get('id'), data=self.data.get('play_info'), sender='upnextprovider', encoding=self.encoding)
 
     def handle_addon_lookup_of_next_episode(self):
         if not self.data:
             return None
-        self.log('handle_addon_lookup_of_next_episode episode returning data %(next_episode)s' % self.data, 2)
+        self.log('handle_addon_lookup_of_next_episode episode returning data %s' % self.data.get('next_episode'), 2)
         return self.data.get('next_episode')
 
     def handle_addon_lookup_of_current_episode(self):
         if not self.data:
             return None
-        self.log('handle_addon_lookup_of_current episode returning data %(current_episode)s' % self.data, 2)
+        self.log('handle_addon_lookup_of_current episode returning data %s' % self.data.get('current_episode'), 2)
         return self.data.get('current_episode')
 
     def notification_time(self, total_time=None):
@@ -208,14 +228,16 @@ class Api:
         return get_setting_int('autoPlaySeasonTime')
 
     def get_now_playing(self):
-        # Seems to work too fast loop whilst waiting for it to become active
-        result = {}
-        while not result.get('result'):
+        # The player can take a moment to become active, but don't wait forever
+        for _ in range(10):
             result = jsonrpc(method='Player.GetActivePlayers')
-            self.log('Got active player %s' % result, 2)
-
-        if not result.get('result'):
+            if result.get('result'):
+                break
+            sleep(100)
+        else:
+            self.log('No active player found', 1)
             return None
+        self.log('Got active player %s' % result, 2)
 
         playerid = result.get('result')[0].get('playerid')
 
@@ -229,49 +251,31 @@ class Api:
         return result
 
     def handle_kodi_lookup_of_episode(self, tvshowid, current_file, include_watched, current_episode_id):
+        # Only fetch what's needed to choose, then the full details of the chosen episode
         result = jsonrpc(method='VideoLibrary.GetEpisodes', params={
             'tvshowid': tvshowid,
-            'properties': ['art', 'dateadded', 'episode', 'file', 'firstaired', 'lastplayed',
-                           'playcount', 'plot', 'rating', 'resume', 'runtime', 'season',
-                           'showtitle', 'streamdetails', 'title', 'tvshowid', 'writer'],
+            'properties': ['episode', 'file', 'playcount', 'season'],
             'sort': {'method': 'episode'},
         })
 
         if not result.get('result'):
             return None
 
-        self.log('Got details of next up episode %s' % result, 2)
-        sleep(100)
+        self.log('Got %d episodes of the show' % len(result.get('result', {}).get('episodes', [])), 2)
 
         # Find the next unwatched and the newest added episodes
-        return self.find_next_episode(result, current_file, include_watched, current_episode_id)
-
-    def handle_kodi_lookup_of_current_episode(self, tvshowid, current_episode_id):
-        result = jsonrpc(method='VideoLibrary.GetEpisodes', params={
-            'tvshowid': tvshowid,
-            'properties': ['art', 'dateadded', 'episode', 'file', 'firstaired', 'lastplayed',
-                           'playcount', 'plot', 'rating', 'resume', 'runtime', 'season',
-                           'showtitle', 'streamdetails', 'title', 'tvshowid', 'writer'],
-            'sort': {'method': 'episode'},
-        })
-
-        if not result.get('result'):
+        episode = self.find_next_episode(result, current_file, include_watched, current_episode_id)
+        if not episode:
             return None
+        return self.get_episode_details(episode.get('episodeid'))
 
-        self.log('Find current episode called', 2)
-        sleep(100)
-
-        # Find the next unwatched and the newest added episodes
-        episodes = result.get('result', {}).get('episodes', [])
-        for idx, episode in enumerate(episodes):
-            # Find position of current episode
-            if current_episode_id == episode.get('episodeid'):
-                self.log('Find current episode found episode in position: %d' % idx, 2)
-                return episode
-
-        # No next episode found
-        self.log('No next episode found', 1)
-        return None
+    @staticmethod
+    def get_episode_details(episodeid):
+        result = jsonrpc(method='VideoLibrary.GetEpisodeDetails', params={
+            'episodeid': episodeid,
+            'properties': EPISODE_PROPERTIES,
+        })
+        return result.get('result', {}).get('episodedetails')
 
     @staticmethod
     def showtitle_to_id(title):
@@ -289,6 +293,7 @@ class Api:
         result = jsonrpc(method='VideoLibrary.GetEpisodes', params={
             'properties': ['episode', 'season'],
             'tvshowid': int(showid),
+            'season': show_season,
         })
 
         episodeid = 0
