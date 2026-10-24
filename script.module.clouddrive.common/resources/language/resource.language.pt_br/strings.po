@@ -248,3 +248,23 @@ msgstr "Não há contas adicionadas em %s."
 msgctxt "#32071"
 msgid "Go to [Add-ons > %s > Add an account...] to add one."
 msgstr "Vá paara [Add-ons > %s > adicionar uma conta...] para adicionar uma."
+
+msgctxt "#32089"
+msgid "Remove from this Kodi only"
+msgstr "Remover só deste Kodi"
+
+msgctxt "#32090"
+msgid "Remove and revoke access at %s (also signs out your other Kodi devices using this account)"
+msgstr "Remover e revogar o acesso no %s (também desconecta seus outros dispositivos Kodi com esta conta)"
+
+msgctxt "#32091"
+msgid "Access could not be revoked. You can remove it in your %s account settings."
+msgstr "Não foi possível revogar o acesso. Você pode removê-lo nas configurações da sua conta %s."
+
+msgctxt "#32092"
+msgid "Remove account '%s'"
+msgstr "Remover a conta '%s'"
+
+msgctxt "#32093"
+msgid "Remove and revoke this Kodi's access at %s"
+msgstr "Remover e revogar o acesso deste Kodi no %s"

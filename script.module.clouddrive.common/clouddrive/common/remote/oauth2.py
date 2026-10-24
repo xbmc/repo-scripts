@@ -67,7 +67,7 @@ class OAuth2(object):
         if re.search("^https?://", path):
             url = path
         else:
-            if not (re.search("^\/", path)):
+            if not (re.search(r'^/', path)):
                 path = '/' + path
             url += path
         if method == 'get' and parameters:

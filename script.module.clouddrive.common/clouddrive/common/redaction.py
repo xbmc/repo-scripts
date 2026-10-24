@@ -21,7 +21,8 @@ import re
 
 # Values that give access to an account. Users post their Kodi logs publicly, so these must never reach a log.
 # tempauth: OneDrive's pre-authenticated download links (?tempauth=...) open the file without signing in.
-_SECRET_KEYS = r'access_token|refresh_token|id_token|client_secret|code_verifier|device_code|password|code|tempauth'
+# token: the field of OAuth revocation requests (token=<refresh token>).
+_SECRET_KEYS = r'access_token|refresh_token|id_token|client_secret|code_verifier|device_code|password|code|tempauth|token'
 _REMOVED = '*removed*'
 
 # key=value in query strings, URL fragments, form bodies and Kodi's "url|Header=value" options

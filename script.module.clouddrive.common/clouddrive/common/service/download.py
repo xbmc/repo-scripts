@@ -17,31 +17,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-import shutil
 import threading
 import time
-import urllib.parse
-import urllib.request
 
 from clouddrive.common.account import AccountManager, DriveNotFoundException
 from clouddrive.common.exception import ExceptionUtils
 from clouddrive.common.remote.errorreport import ErrorReport
+from clouddrive.common.service import upstream
 from clouddrive.common.service.base import BaseServerService, BaseHandler
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
 from urllib.error import HTTPError
-
-
-class _SameHostAuthRedirectHandler(urllib.request.HTTPRedirectHandler):
-    # urllib copies every request header to a redirect target, including Authorization. Only keep it for the same host.
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        new_req = super(_SameHostAuthRedirectHandler, self).redirect_request(req, fp, code, msg, headers, newurl)
-        if new_req is not None and urllib.parse.urlsplit(newurl).netloc != urllib.parse.urlsplit(req.full_url).netloc:
-            new_req.remove_header('Authorization')
-        return new_req
-
-_opener = urllib.request.build_opener(_SameHostAuthRedirectHandler)
 
 
 class DownloadService(BaseServerService):
@@ -108,12 +95,21 @@ class Download(BaseHandler):
             Download._url_cache[key] = (url, now + Download._URL_CACHE_SECONDS)
         return url
     
-    def _stream(self, provider, url):
+    # The provider is read in bounded chunks over a kept-open connection (service/upstream.py): a player probes a
+    # file with open-ended ranges and hangs up after a few bytes, and only a chunk can be finished quickly enough to
+    # reuse the connection for the player's next request. Chunks start small, for the probes, and grow for playback.
+    _FIRST_CHUNK = 1024 * 1024
+    _MAX_CHUNK = 8 * 1024 * 1024
+    # When the player hangs up, the rest of the current chunk is read (if no larger) so the connection can be reused.
+    _DRAIN_LIMIT = 2 * 1024 * 1024
+    _READ_SIZE = 256 * 1024
+
+    def _upstream_request(self, provider, url, byte_range):
         # Files are streamed through this local service instead of redirecting Kodi to the provider, because
         # Kodi logs the URLs it opens: Google needed "url|Authorization=Bearer <token>" and OneDrive's
         # download links carry a pre-authenticated "tempauth" code, so both ended up in the log.
         if provider.download_requires_auth:
-            # prepare_request adds the Authorization header and refreshes the token when needed,
+            # prepare_request adds the Authorization header and refreshes the token when needed, for every chunk,
             # so long videos keep playing after the token expires.
             request = provider.prepare_request('get', url)
             url = request.url
@@ -121,31 +117,110 @@ class Download(BaseHandler):
         else:
             # Pre-authenticated links (OneDrive) must not get an Authorization header.
             headers = {}
-        for name in ('Range', 'If-Range'):
-            value = self.headers.get(name)
+        if byte_range:
+            headers['Range'] = byte_range
+        if self.headers.get('If-Range'):
+            headers['If-Range'] = self.headers.get('If-Range')
+        return upstream.fetch(url, headers)
+
+    def _stream(self, provider, url):
+        wanted = upstream.parse_range(self.headers.get('Range')) if self.headers.get('Range') else (0, None)
+        if self.command == 'HEAD' or wanted is None:
+            # Not worth chunking: passed on as one request.
+            self._send_as_is(*self._upstream_request(provider, url, self.headers.get('Range')))
+            return
+        start, end = wanted
+        first_last = start + self._FIRST_CHUNK - 1 if end is None else min(end, start + self._FIRST_CHUNK - 1)
+        key, connection, response = self._upstream_request(provider, url, 'bytes=%d-%d' % (start, first_last))
+        content_range = upstream.parse_content_range(response.getheader('Content-Range'))
+        if response.status != 206 or not content_range:
+            # An error, or a provider that ignores ranges: its answer is passed on as it is.
+            self._send_as_is(key, connection, response)
+            return
+        total = content_range[2]
+        last = total - 1 if end is None else min(end, total - 1)
+        ranged = 'Range' in self.headers
+        self.send_response(206 if ranged else 200)
+        for name in ('Content-Type', 'Accept-Ranges', 'Last-Modified', 'ETag'):
+            value = response.getheader(name)
             if value:
-                headers[name] = value
+                self.send_header(name, value)
+        self.send_header('Content-Length', str(last - start + 1))
+        if ranged:
+            self.send_header('Content-Range', 'bytes %d-%d/%d' % (start, last, total))
+        self.send_header('Connection', 'close')
+        self.end_headers()
+        position = start
+        chunk = self._FIRST_CHUNK
+        while True:
+            sent, player_gone, failed = self._copy(response)
+            position += sent
+            if failed:
+                connection.close()
+                return
+            if player_gone:
+                self._drain(key, connection, response)
+                return
+            upstream.pool.release(key, connection, response)
+            if position > last:
+                return
+            chunk = min(chunk * 2, self._MAX_CHUNK)
+            key, connection, response = self._upstream_request(provider, url, 'bytes=%d-%d' % (position, min(last, position + chunk - 1)))
+            if response.status != 206:
+                Logger.debug('Stream stopped: the provider answered %d' % response.status)
+                response.close()
+                connection.close()
+                return
+
+    def _copy(self, response):
+        """Copies the response to the player. Returns (bytes sent, the player hung up, reading the provider failed)."""
+        sent = 0
+        while True:
+            try:
+                data = response.read(self._READ_SIZE)
+            except Exception as e:
+                Logger.debug('Stream ended: reading from the provider failed: %s' % Utils.str(e))
+                return sent, False, True
+            if not data:
+                return sent, False, False
+            try:
+                self.wfile.write(data)
+            except Exception as e:
+                # Usually Kodi closing the connection to seek or stop.
+                Logger.debug('Stream ended early: %s' % Utils.str(e))
+                return sent, True, False
+            sent += len(data)
+
+    def _drain(self, key, connection, response):
+        remaining = response.length
+        if remaining is not None and remaining <= self._DRAIN_LIMIT:
+            try:
+                response.read()
+                upstream.pool.release(key, connection, response)
+                return
+            except Exception:
+                pass
+        connection.close()
+
+    def _send_as_is(self, key, connection, response):
         try:
-            response = _opener.open(urllib.request.Request(url, None, headers))
-        except HTTPError as e:
-            response = e
-        try:
-            self.send_response(response.getcode())
+            self.send_response(response.status)
             for name in self._STREAM_HEADERS:
-                value = response.headers.get(name)
+                value = response.getheader(name)
                 if value:
                     self.send_header(name, value)
             self.send_header('Connection', 'close')
             self.end_headers()
             if self.command != 'HEAD':
-                try:
-                    shutil.copyfileobj(response, self.wfile, self._STREAM_CHUNK_SIZE)
-                except Exception as e:
-                    # Usually Kodi closing the connection to seek or stop. The response has started, so just stop.
-                    Logger.debug('Stream ended early: %s' % Utils.str(e))
+                sent, player_gone, failed = self._copy(response)
+                if not player_gone and not failed:
+                    upstream.pool.release(key, connection, response)
+                    return
         finally:
-            response.close()
-        
+            if not response.isclosed():
+                connection.close()
+
+
 class DownloadServiceUtil(object):
     @staticmethod
     def build_download_url(driveid, item_driveid, item_id, name, addonid=None):
