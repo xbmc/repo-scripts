@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.imdbratings"
+  name="IMDb Ratings"
+  version="1.0.0"
+  provider-name="Team Kodi">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">IMDb ratings for add-ons</summary>
+    <description lang="en_GB">IMDb ratings and vote counts from IMDb's ratings dataset, updated when IMDb publishes a new one.</description>
+    <disclaimer lang="en_GB">Information courtesy of IMDb (https://www.imdb.com). Used with permission.</disclaimer>
+    <news>
+1.0.0
+- Initial release
+    </news>
+    <platform>all</platform>
+    <license>GPL-3.0-or-later</license>
+    <source>https://github.com/MikeSiLVO/script.module.imdbratings</source>
+  </extension>
+</addon>
