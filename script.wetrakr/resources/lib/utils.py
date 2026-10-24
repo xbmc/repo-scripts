@@ -36,7 +36,8 @@ def get_playing_item(player_id):
         "playerid": player_id,
         "properties": [
             "title", "showtitle", "season", "episode", "year",
-            "tvshowid", "uniqueid", "imdbnumber", "file", "type"
+            "tvshowid", "uniqueid", "imdbnumber", "file", "type",
+            "firstaired"
         ]
     }).get("item", {})
 
@@ -94,6 +95,40 @@ def extract_ids(item):
     return {"tmdb": tmdb, "imdb": imdb, "tvdb": tvdb}
 
 
+def detect_show_id_source(show_item):
+    """
+    Which scraper matched the TV show in the Kodi library: 'tvdb' or 'tmdb'.
+
+    Kodi stores the id of the scraper that matched the show as its *default*
+    unique id, and JSON-RPC returns that value in `imdbnumber` (a legacy name,
+    it is not always an IMDb id). Comparing it with the uniqueid dict tells the
+    scraper, and with it the episode numbering: TheTVDB and TMDB number some
+    shows differently (The Great British Bake Off is season 17 on TheTVDB and
+    season 10 on TMDB), and WeTrakr translates TheTVDB numbers when it knows.
+
+    Returns None when it cannot tell (no library item, or an IMDb default).
+    """
+    if not show_item:
+        return None
+    default_id = str(show_item.get("imdbnumber") or "").strip()
+    if not default_id:
+        return None
+    uniqueid = show_item.get("uniqueid", {}) or {}
+    for source in ("tvdb", "tmdb"):
+        value = uniqueid.get(source)
+        if value is not None and str(value).strip() == default_id:
+            return source
+    return None
+
+
+def _aired_date(value):
+    """'YYYY-MM-DD' from Kodi's firstaired, or None."""
+    value = str(value or "").strip()[:10]
+    if len(value) == 10 and value[4] == "-" and value[7] == "-" and value[:4].isdigit():
+        return value
+    return None
+
+
 def build_payload(event, item, show_item=None, progress=0.0):
     """
     Build the JSON payload to send to WeTrakr API.
@@ -124,7 +159,7 @@ def build_payload(event, item, show_item=None, progress=0.0):
         # every "Now Playing"/"Scrobble" event into "Episode not found".
         show_ids = extract_ids(show_item) if show_item else {}
         show_title = item.get("showtitle") or (show_item.get("title", "") if show_item else "")
-        return {
+        payload = {
             "event": event,
             "media_type": "episode",
             "title": item.get("title", ""),
@@ -135,6 +170,15 @@ def build_payload(event, item, show_item=None, progress=0.0):
             "ids": ids,
             "progress": round(progress, 1)
         }
+        # Numbering hints for shows that TheTVDB and TMDB number differently:
+        # the library scraper and the episode air date.
+        show_id_source = detect_show_id_source(show_item)
+        if show_id_source:
+            payload["show_id_source"] = show_id_source
+        aired = _aired_date(item.get("firstaired"))
+        if aired:
+            payload["aired"] = aired
+        return payload
 
     if item_type == "movie":
         return {
