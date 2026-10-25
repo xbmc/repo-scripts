@@ -21,6 +21,7 @@ import datetime
 import sqlite3
 import time
 
+from clouddrive.common.db import execute, from_text, to_text
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 
@@ -28,58 +29,61 @@ from clouddrive.common.ui.utils import KodiUtils
 class Cache(object):
     _addonid = None
     _name = None
-    _expiration = None
+    _expiration_delta = None
     _monitor = None
     _abort = False
 
     def __init__(self, addonid, name, expiration):
         self._addonid = addonid
         self._name = name
-        self._expiration = expiration
+        self._expiration_delta = expiration
         self._monitor = KodiUtils.get_system_monitor()
-    
+
     def __del__(self):
         self._abort = True
         del self._monitor
-    
+
     def _get_connection(self):
         profile_path = KodiUtils.get_addon_info("profile", self._addonid)
         if not KodiUtils.file_exists(profile_path):
             KodiUtils.mkdirs(profile_path)
         db = KodiUtils.translate_path("%s/cache_%s.db" % (profile_path, self._name,))
         con = sqlite3.connect(db, timeout=30, isolation_level=None)
-        con.execute('pragma journal_mode=wal;')
-        rs = con.execute("select name from sqlite_master where type='table' AND name='cache'")
-        if not rs.fetchone():
-            try:
-                con.execute("create table cache(key text unique, value text, expiration integer)")
-            except Exception as ex:
-                Logger.debug(ex)
+        # Setup statements can meet a lock too: same retries as the queries.
+        name = 'cache_' + self._name
+        execute(name, con, self._monitor, lambda: self._abort, 'pragma journal_mode=wal')
+        execute(name, con, self._monitor, lambda: self._abort, "create table if not exists cache(key text unique, value text, expiration integer)")
         return con
 
     def _get_datetime(self, ts):
         return int(time.mktime(ts.timetuple()))
 
+    def _now(self):
+        return self._get_datetime(datetime.datetime.now())
+
+    def _expiration(self):
+        # Whole seconds, rounded up: an entry never expires before its time.
+        ts = datetime.datetime.now() + self._expiration_delta
+        return self._get_datetime(ts) + (1 if ts.microsecond else 0)
+
     def get(self, key):
-        row = self._read(key)
-        if row and row[1] > self._get_datetime(datetime.datetime.now()):
-            return eval(row[0])
+        row = self._execute_sql("select value, expiration from cache where key = ?", (key,))
+        if row and row[1] > self._now():
+            return from_text(row[0])
         return
 
     def set(self, key, value):
-        expiration = self._get_datetime(datetime.datetime.now() + self._expiration)
-        self._insert(key, value, expiration)
-    
+        expiration = self._expiration()
+        self._execute_sql("insert or replace into cache(key, value, expiration) values(?,?,?)", (key, to_text(value), expiration,), purge=True)
+
     def setmany(self, key_value_list):
-        expiration = self._get_datetime(datetime.datetime.now() + self._expiration)
-        for kv in key_value_list:
-            kv[1] = repr(kv[1])
-            kv.append(expiration)
-        self._execute_sql("insert or replace into cache(key, value, expiration) values(?,?,?)", key_value_list)
-        
+        expiration = self._expiration()
+        rows = [(key, to_text(value), expiration) for key, value in key_value_list]
+        self._execute_sql("insert or replace into cache(key, value, expiration) values(?,?,?)", rows, purge=True)
+
     def remove(self, key):
         self._execute_sql("delete from cache where key = ?", (key,))
-    
+
     def clear(self):
         self._execute_sql("delete from cache")
         Logger.debug("Cache '%s' cleared" % self._name)
@@ -87,41 +91,16 @@ class Cache(object):
 
     def checkpoint(self):
         row = self._execute_sql("PRAGMA wal_checkpoint(TRUNCATE)")
-        Logger.debug("Db '%s' checkpoint: %s, %s, %s" % (self._name, row[0], row[1], row[2],))
-        
-    def _read(self, key):
-        return self._execute_sql("select value, expiration from cache where key = ?", (key,))
-        
-    def _insert(self, key, value, expiration):
-        self._execute_sql("insert or replace into cache(key, value, expiration) values(?,?,?)", (key, repr(value), expiration,))
-        
-    def _execute_sql(self, query, data=None):
-        result = None
-        con = self._get_connection()
-        with con:
-            retries = 0
-            error = None
-            while retries < 15 and not self._abort:
-                try:
-                    con.execute("delete from cache where expiration < ?", (self._get_datetime(datetime.datetime.now()),))
-                    if isinstance(data, list):
-                        result = con.executemany(query, data).fetchone()
-                    elif data:
-                        result = con.execute(query, data).fetchone()
-                    else:
-                        result = con.execute(query).fetchone()
-                    break
-                except sqlite3.OperationalError as error:
-                    if "_database is locked" in error:
-                        retries += 1
-                        Logger.debug("Cache query retrying #d [%s]: %s" % (retries, query, str(data),))
-                        self._monitor.waitForAbort(0.3)
-                    else:
-                        break
-                except Exception as error:
-                    break
-            if error:
-                Logger.debug("Error executing cache query [%s]: %s" % (query, str(error),))
-        con.close()
-        return result
+        if row:
+            Logger.debug("Db '%s' checkpoint: %s, %s, %s" % (self._name, row[0], row[1], row[2],))
 
+    def _execute_sql(self, query, data=None, purge=False):
+        con = self._get_connection()
+        try:
+            with con:
+                # Expired rows are skipped when read, and deleted when something new is written.
+                if purge:
+                    execute('cache_' + self._name, con, self._monitor, lambda: self._abort, "delete from cache where expiration <= ?", (self._now(),))
+                return execute('cache_' + self._name, con, self._monitor, lambda: self._abort, query, data)
+        finally:
+            con.close()

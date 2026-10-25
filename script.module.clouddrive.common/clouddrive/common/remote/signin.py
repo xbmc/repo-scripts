@@ -19,6 +19,7 @@
 
 import base64
 import http.client
+import platform
 import socket
 import urllib
 
@@ -61,10 +62,21 @@ class Signin(object):
     
     def get_addon_header(self):
         return '%s %s/%s' % (KodiUtils.get_addon_info('id'), KodiUtils.get_addon_info('version'), KodiUtils.get_addon_info('version', 'script.module.clouddrive.common'))
-    
+
+    def get_user_agent(self):
+        # For the sign-in server's anonymous usage counts: which add-on, common module, Kodi and Python versions are in use.
+        import xbmc
+        kodi = (xbmc.getInfoLabel('System.BuildVersion') or '').split(' ')[0] or 'unknown'
+        return '%s/%s clouddrive.common/%s Kodi/%s Python/%s' % (
+            KodiUtils.get_addon_info('id'), KodiUtils.get_addon_info('version'), KodiUtils.get_addon_info('version', 'script.module.clouddrive.common'),
+            kodi, '.'.join(platform.python_version_tuple()[:2]))
+
+    def _headers(self):
+        return {'addon' : self.get_addon_header(), 'user-agent': self.get_user_agent()}
+
     def create_pin(self, provider_name, request_params=None):
         request_params = Utils.default(request_params, {})
-        headers = {'addon' : self.get_addon_header()}
+        headers = self._headers()
         body = urllib.parse.urlencode({'provider': provider_name})
         return Request(KodiUtils.get_signin_server() + '/pin', body, headers, **request_params).request_json()
     
@@ -82,7 +94,9 @@ class Signin(object):
         return request_params
     
     def _pin_headers(self, pin_info):
-        return {'authorization': 'Basic ' + Utils.str(base64.b64encode(Utils.encode(':' + pin_info['password']))), 'addon' : self.get_addon_header()}
+        headers = self._headers()
+        headers['authorization'] = 'Basic ' + Utils.str(base64.b64encode(Utils.encode(':' + pin_info['password'])))
+        return headers
 
     def _request_over(self, family, path, headers=None):
         # Status and body of a GET to the sign-in server over IPv4 or IPv6 only. Raises if that IP version doesn't work.
@@ -121,6 +135,6 @@ class Signin(object):
 
     def refresh_tokens(self, provider_name, refresh_token, request_params=None):
         request_params = Utils.default(request_params, {})
-        headers = {'addon' : self.get_addon_header()}
+        headers = self._headers()
         body = urllib.parse.urlencode({'provider': provider_name, 'refresh_token': refresh_token})
         return Request(KodiUtils.get_signin_server() + '/refresh', body, headers, **request_params).request_json()
