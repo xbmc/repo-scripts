@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
-from __future__ import absolute_import, division, unicode_literals
 from xbmc import PlayList
 from api import Api
 from player import UpNextPlayer
 from state import State
-from utils import log as ulog
+from utils import get_int, log as ulog
 
 
 class PlayItem:
@@ -43,7 +42,7 @@ class PlayItem:
         # Next video from addon data
         if has_addon_data:
             episode = self.api.handle_addon_lookup_of_next_episode()
-            current_episode = self.api.handle_addon_lookup_of_current_episode()
+            current_episode = self.api.handle_addon_lookup_of_current_episode() or {}
             self.state.current_episode_id = current_episode.get('episodeid')
             if self.state.current_tv_show_id != current_episode.get('tvshowid'):
                 self.log('Change in TV show ID: last: %s / current: %s' % (self.state.current_tv_show_id, current_episode.get('tvshowid')), 2)
@@ -61,7 +60,9 @@ class PlayItem:
             current_file = self.player.get_last_file()
             # Get the active player
             result = self.api.get_now_playing()
-            self.handle_now_playing_result(result)
+            if not self.handle_now_playing_result(result):
+                self.log('Could not identify the playing episode in the library', 1)
+                return None, 'library'
             # Get the next episode from Kodi
             episode = self.api.handle_kodi_lookup_of_episode(
                 self.state.tv_show_id, current_file, self.state.include_watched, self.state.current_episode_id
@@ -71,18 +72,21 @@ class PlayItem:
         return episode, source
 
     def handle_now_playing_result(self, result):
-        if not result.get('result'):
-            return
+        """Store the playing episode's show and episode IDs. Returns False when it isn't a known library episode"""
+        if not result or not result.get('result'):
+            return False
 
-        item = result.get('result').get('item')
+        item = result.get('result').get('item') or {}
         if item.get('type') != 'episode':
-            return
+            return False
 
-        self.state.tv_show_id = item.get('tvshowid')
-        if int(self.state.tv_show_id) == -1:
-            current_show_title = item.get('showtitle').encode('utf-8')
-            self.state.tv_show_id = self.api.showtitle_to_id(title=current_show_title)
+        self.state.tv_show_id = get_int(item, 'tvshowid')
+        if self.state.tv_show_id == -1:
+            current_show_title = item.get('showtitle')
+            self.state.tv_show_id = get_int(self.api.showtitle_to_id(title=current_show_title))
             self.log('Fetched missing tvshowid %s' % self.state.tv_show_id, 2)
+            if self.state.tv_show_id == -1:
+                return False
 
         current_episode_number = item.get('episode')
         current_season_id = item.get('season')
@@ -97,3 +101,4 @@ class PlayItem:
             self.log('Change in TV show ID: last: %s / current: %s' % (self.state.current_tv_show_id, self.state.tv_show_id), 2)
             self.state.current_tv_show_id = self.state.tv_show_id
             self.state.played_in_a_row = 1
+        return True

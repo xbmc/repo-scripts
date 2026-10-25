@@ -94,6 +94,22 @@ msgctxt "#30049"
 msgid "Next Episode"
 msgstr "次のエピソード"
 
+msgctxt "#30050"
+msgid "Next episode in $INFO[Window.Property(credits_remaining)] s"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Back: keep watching"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Skip intro"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Skip recap"
+msgstr ""
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr "[B]UP NEXT デモモードが使用可能になりました。[/B]"
@@ -172,6 +188,26 @@ msgctxt "#30623"
 msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "[COLOR gray]60分以上[/COLOR]の超長いエピソード"
 
+msgctxt "#30625"
+msgid "Advance during credits after (seconds, 0 disables)"
+msgstr ""
+
+msgctxt "#30627"
+msgid "Intros and recaps"
+msgstr ""
+
+msgctxt "#30629"
+msgid "Show a Skip button when the add-on marks them"
+msgstr ""
+
+msgctxt "#30631"
+msgid "Skip intros automatically"
+msgstr ""
+
+msgctxt "#30633"
+msgid "Skip recaps automatically"
+msgstr ""
+
 msgctxt "#30700"
 msgid "Expert"
 msgstr "エキスパート"
@@ -211,3 +247,7 @@ msgstr "StillWatching通知ウィンドウ"
 msgctxt "#30811"
 msgid "Show a StillWatchingSimple pop-up…"
 msgstr "StillWatchingSimple通知ウィンドウ"
+
+msgctxt "#30813"
+msgid "Test Skip button"
+msgstr ""

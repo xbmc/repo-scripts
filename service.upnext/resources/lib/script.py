@@ -2,12 +2,10 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 """This is the actual Up Next API script"""
 
-from __future__ import absolute_import, division, unicode_literals
 from datetime import datetime, timedelta
 from math import ceil
 from xbmc import Monitor
 from xbmcgui import WindowXMLDialog
-from statichelper import from_unicode
 from utils import addon_path, get_setting_bool, localize, localize_time
 
 
@@ -61,8 +59,8 @@ class TestPopup(WindowXMLDialog):
             return
         self.current_progress_percent -= 100 * wait / timeout
         self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member,useless-suppression
-        self.setProperty('remaining', from_unicode('%02d' % ceil((timeout / 1000) * (self.current_progress_percent / 100))))
-        self.setProperty('endtime', from_unicode(localize_time(datetime.now() + timedelta(seconds=50 * 60))))
+        self.setProperty('remaining', '%02d' % ceil((timeout / 1000) * (self.current_progress_percent / 100)))
+        self.setProperty('endtime', localize_time(datetime.now() + timedelta(seconds=50 * 60)))
 
     def onFocus(self, controlId):  # pylint: disable=invalid-name
         pass
@@ -99,6 +97,14 @@ def test_popup(window):
         step += wait
 
 
+def test_skip_button():
+    from skip import LABELS, make_button
+    button = make_button(localize(LABELS['intro']), on_skip=lambda: None)
+    button.show()
+    Monitor().waitForAbort(10)
+    button.close()
+
+
 def open_settings():
     from xbmcaddon import Addon
     Addon().openSettings()
@@ -106,7 +112,9 @@ def open_settings():
 
 def run(argv):
     """Route to API method"""
-    if len(argv) == 3 and argv[1] == 'test_window':
+    if len(argv) == 3 and argv[1] == 'test_window' and argv[2] == 'script-upnext-skip.xml':
+        test_skip_button()
+    elif len(argv) == 3 and argv[1] == 'test_window':
         test_popup(argv[2])
     else:
         open_settings()
