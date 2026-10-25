@@ -106,3 +106,39 @@ msgstr "Audios récemment recherchées"
 msgctxt "#30118"
 msgid "Recently searched shows"
 msgstr "Émissions récemment recherchées"
+
+msgctxt "#30120"
+msgid "In %sd"
+msgstr "Dans %sj"
+
+msgctxt "#30121"
+msgid "In %sh"
+msgstr "Dans %sh"
+
+msgctxt "#30122"
+msgid "Starting soon"
+msgstr "Commence bientôt"
+
+msgctxt "#30123"
+msgid "%sd left"
+msgstr "Encore %sj"
+
+msgctxt "#30124"
+msgid "%sh left"
+msgstr "Encore %sh"
+
+msgctxt "#30125"
+msgid "Ending soon"
+msgstr "Derniers instants"
+
+msgctxt "#30126"
+msgid "Available until %s"
+msgstr "Disponible jusqu'au %s"
+
+msgctxt "#30127"
+msgid "This content is only available in Switzerland."
+msgstr "Ce contenu n'est disponible qu'en Suisse."
+
+msgctxt "#30128"
+msgid "This content is currently not available."
+msgstr "Ce contenu n'est pas disponible actuellement."

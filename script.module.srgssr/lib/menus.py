@@ -203,7 +203,7 @@ class MenuBuilder:
 
         if cursor:
             symb = "&" if "?" in queries else "?"
-            url = f"{self.srgssr.apiv3_url}{queries}{symb}next={cursor}"
+            url = f"{self.srgssr.apiv3_url}{queries}{symb}next={quote_plus(cursor)}"
             data = json.loads(self.srgssr.open_url(url))
         else:
             data = json.loads(self.srgssr.open_url(self.srgssr.apiv3_url + queries))
@@ -215,12 +215,17 @@ class MenuBuilder:
             self.srgssr.log("No media found.")
             return
 
-        items = (
-            utils.try_get(data, "data", list, [])
-            or utils.try_get(data, "medias", list, [])
-            or utils.try_get(data, "results", list, [])
-            or data
-        )
+        items = utils.try_get(data, "data", list, None)
+        if items is None:
+            items = utils.try_get(data, "medias", list, None)
+        if items is None:
+            items = utils.try_get(data, "results", list, None)
+        if items is None:
+            items = data if isinstance(data, list) else []
+
+        if not items:
+            self.srgssr.log("No items found.")
+            return
 
         for item in items:
             self.build_entry_apiv3(item, is_show=is_show, whitelist_ids=whitelist_ids)
@@ -298,48 +303,31 @@ class MenuBuilder:
         """
         Builds the homepage menu.
         """
-        self.build_menu_from_page(
-            self.srgssr.playtv_url,
-            (
-                "state",
-                "loaderData",
-                "play-now",
-                "initialData",
-                "pacPageConfigs",
-                "landingPage",
-                "sections",
-            ),
-        )
+        self.build_menu_from_api("landing-page")
 
-    def build_menu_from_page(self, url, path):
+    def build_menu_from_api(self, query):
         """
-        Builds a menu by extracting some content directly from a website.
+        Builds a menu from the sections of a page provided by the v3 API.
 
         Keyword arguments:
-        url     -- the url of the website
-        path    -- the path to the relevant data in the json (as tuple
-                   or list of strings)
+        query   -- the API query of the page (e.g. 'landing-page')
         """
-        html = self.srgssr.open_url(url)
-        m = re.search(self.srgssr.data_regex, html)
-        if not m:
-            self.srgssr.log("build_menu_from_page: No data found in html")
-            return
-        content = m.groups()[0]
         try:
-            js = json.loads(content)
+            js = json.loads(self.srgssr.open_url(self.srgssr.apiv3_url + query))
         except Exception:
-            self.srgssr.log("build_menu_from_page: Invalid json")
+            self.srgssr.log("build_menu_from_api: Invalid json")
             return
-        data = utils.try_get(js, path, list, [])
+        data = utils.try_get(js, ("data", "sections"), list, [])
         if not data:
-            self.srgssr.log("build_menu_from_page: Could not find any data in json")
+            self.srgssr.log("build_menu_from_api: Could not find any sections in json")
             return
         for elem in data:
             try:
                 id = elem["id"]
                 section_type = elem["sectionType"]
                 title = utils.try_get(elem, ("representation", "title"))
+                if title:
+                    title = "".join(c for c in title if ord(c) <= 0xFFFF).strip()
                 if section_type in (
                     "MediaSection",
                     "ShowSection",
@@ -503,6 +491,36 @@ class MenuBuilder:
                 show_poster_image_url=show_poster_image_url,
             )
 
+    def availability_label(self, valid_from, valid_to):
+        """
+        Returns a coloured label for media that becomes available or
+        expires within the next 30 days, otherwise an empty string.
+
+        Keyword arguments:
+        valid_from -- datetime from which the media is available (or None)
+        valid_to   -- datetime until which the media is available (or None)
+        """
+        if not valid_to:
+            return ""
+        now = datetime.datetime.now()
+        if valid_from and valid_from > now:
+            delta, color, ids = valid_from - now, "cyan", (30120, 30121, 30122)
+        elif valid_to > now:
+            delta, ids = valid_to - now, (30123, 30124, 30125)
+            color = "gold" if delta.days else "red"
+        else:
+            return ""
+        if delta.days > 30:
+            return ""
+        hours = delta.seconds // 3600
+        if delta.days:
+            text = self.srgssr.language(ids[0]) % delta.days
+        elif hours:
+            text = self.srgssr.language(ids[1]) % hours
+        else:
+            text = self.srgssr.language(ids[2])
+        return f"[COLOR {color}][{text}][/COLOR]"
+
     def build_entry_apiv3(self, data, is_show=False, whitelist_ids=None):
         """
         Builds a entry from a APIv3 JSON data entry.
@@ -515,6 +533,16 @@ class MenuBuilder:
         urn = data["urn"]
         self.srgssr.log(f"build_entry_apiv3: urn = {urn}")
         title = utils.try_get(data, "title")
+
+        valid_to = utils.parse_datetime(utils.try_get(data, "validTo") or "")
+        label = self.availability_label(
+            utils.parse_datetime(
+                utils.try_get(data, "validFrom") or utils.try_get(data, "date") or ""
+            ),
+            valid_to,
+        )
+        if label:
+            title = f"{label} {title}"
 
         # Add the date & time to the title for upcoming livestreams:
         if utils.try_get(data, "type") == "SCHEDULED_LIVESTREAM":
@@ -530,6 +558,9 @@ class MenuBuilder:
             return
         description = utils.try_get(data, "description")
         lead = utils.try_get(data, "lead")
+        if valid_to:
+            expiry = self.srgssr.language(30126) % valid_to.strftime("%d.%m.%Y %H:%M")
+            description = "\n".join(filter(None, (f"[{expiry}]", description or lead)))
         image_url = utils.try_get(data, "imageUrl")
         poster_image_url = utils.try_get(data, "posterImageUrl")
         show_image_url = utils.try_get(data, ["show", "imageUrl"])
@@ -591,19 +622,7 @@ class MenuBuilder:
         elif "video" in urn:
             self.build_episode_menu(id)
         elif "topic" in urn:
-            self.build_menu_from_page(
-                self.srgssr.playtv_url,
-                (
-                    "state",
-                    "loaderData",
-                    "play-now",
-                    "initialData",
-                    "pacPageConfigs",
-                    "topicPages",
-                    urn,
-                    "sections",
-                ),
-            )
+            self.build_menu_from_api(f"topic-page?topicUrn={urn}")
 
     def build_entry(
         self,
