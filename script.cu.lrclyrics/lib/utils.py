@@ -118,8 +118,8 @@ class Song:
         else:
             ext = '.txt'
         # remove invalid filename characters
-        artist = "".join(i for i in self.artist if i not in "\/:*?<>|")
-        title = "".join(i for i in self.title if i not in "\/:*?<>|")
+        artist = "".join(i for i in self.artist if i not in r"\/:*?<>|")
+        title = "".join(i for i in self.title if i not in r"\/:*?<>|")
         if self.SETTING_SAVE_FILENAME_FORMAT == 0:
             return os.path.join(self.SETTING_SAVE_LYRICS_PATH, artist, title + ext)
         else:
@@ -167,7 +167,7 @@ class Song:
         song.embed = xbmc.getInfoLabel('MusicPlayer%s.Lyrics' % offset_str)
         song.source = xbmc.getInfoLabel('MusicPlayer%s.Property(culrc.source)' % offset_str)
         # some third party addons may insert the tracknumber in the song title
-        regex = re.compile('\d\d\.\s')
+        regex = re.compile(r'\d\d\.\s')
         match = regex.match(song.title)
         if match:
             song.title = song.title[4:]
