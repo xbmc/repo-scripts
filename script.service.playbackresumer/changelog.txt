@@ -1,3 +1,7 @@
+v2.2.1 (2026-10-18)
+- Fix a Python traceback in the log when playback stops just as it starts, or Kodi is shutting down, by no longer reading the playing file when nothing is playing (thanks @primez-x!)
+- Add unit tests for the playback start callback (run in CI)
+
 v2.2.0 (2026-08-09)
 - Major internal rewrite: playback tracking and resume now use the shared Playback class from script.module.bossanova808
 - Startup resume now uses Kodi's own StartOffset/PlayMedia resume mechanism instead of a manual seek after playback starts, fixing a range of resume-reliability issues
