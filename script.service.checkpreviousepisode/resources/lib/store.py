@@ -1,10 +1,15 @@
 import os
-import yaml
+
 import xbmcvfs
 
 from bossanova808.constants import PROFILE
 from bossanova808.utilities import get_setting_as_bool
 from bossanova808.logger import Logger
+from bossanova808.show_list import ShowList
+
+# The list of shows to ignore, and the YAML file it was kept in before v0.5.0
+IGNORED_SHOWS_FILE = 'ignored_shows.json'
+LEGACY_IGNORED_SHOWS_FILE = 'ignored_shows.yaml'
 
 
 class Store:
@@ -14,8 +19,7 @@ class Store:
 
     # Static class variables, referred to by Store.whatever
     # https://docs.python.org/3/faq/programming.html#how-do-i-create-static-class-data-and-static-class-methods
-    ignored_shows_file = None
-    ignored_shows = {}
+    ignored_shows = None
     force_browse = None
     force_all_seasons = None
     ignore_if_episode_absent_from_library = None
@@ -35,7 +39,6 @@ class Store:
         """
         Logger.info("Loading configuration")
 
-        Store.ignored_shows_file = xbmcvfs.translatePath(os.path.join(PROFILE, 'ignored_shows.yaml'))
         Store.get_ignored_shows_from_config_file()
 
         Store.force_browse = get_setting_as_bool('ForceBrowseForShow')
@@ -58,42 +61,54 @@ class Store:
     @staticmethod
     def get_ignored_shows_from_config_file():
         """
-        Load the user's list of shows to ignore from the saved file
+        (Re)load the user's list of shows to ignore from the saved file, first migrating the
+        legacy YAML file from before v0.5.0 if there is one.
         :return:
         """
-
-        # Update our internal list of ignored shows if there are any...
-        if os.path.exists(Store.ignored_shows_file):
-            Logger.info("Loading ignored shows from config file: " + Store.ignored_shows_file)
-            with open(Store.ignored_shows_file, 'r', encoding='utf-8') as yaml_file:
-                data = yaml.safe_load(yaml_file)
-                Store.ignored_shows = data if isinstance(data, dict) else {}
-        else:
-            Store.ignored_shows = {}
-
-        Logger.info(f'Ignored Shows, loaded from yaml file, is: {Store.ignored_shows}')
+        Store.migrate_legacy_yaml()
+        Store.ignored_shows = ShowList(IGNORED_SHOWS_FILE)
+        Logger.info(f'Ignored Shows, loaded from file, is: {dict(Store.ignored_shows.items())}')
 
     @staticmethod
-    def write_ignored_shows_to_config(new_to_ignore_tv_show_title=None, new_to_ignore_tv_show_id=None):
-
-        # Addon settings folder not there yet?  Make it...
-        if not xbmcvfs.exists(PROFILE):
-            xbmcvfs.mkdirs(PROFILE)
-
-        # Add new show, if supplied, to our dict of ignored shows if there is one...
-        if new_to_ignore_tv_show_id:
-            Logger.info(f'Set show title {new_to_ignore_tv_show_title}, id [{new_to_ignore_tv_show_id}], to ignore from now on.')
-            Store.ignored_shows[new_to_ignore_tv_show_id] = new_to_ignore_tv_show_title
-
-        # No ignored shows?  We've been called from settings after removal of the last ignored show
-        # Clean up & delete the empty file...
-        if len(Store.ignored_shows) == 0:
-            Logger.info("No shows left to ignore, removing ignored shows file")
-            if os.path.exists(Store.ignored_shows_file):
-                os.remove(Store.ignored_shows_file)
+    def migrate_legacy_yaml():
+        """
+        One-off: carry the ignored shows over from the old ignored_shows.yaml ({tvshowid: title})
+        into the new JSON file, then rename the YAML so it is not read again. The JSON is written
+        first, so if anything fails the YAML is left in place and we simply try again next time.
+        """
+        legacy_file = os.path.join(PROFILE, LEGACY_IGNORED_SHOWS_FILE)
+        if not xbmcvfs.exists(legacy_file):
             return
 
-        # Shows to ignore, so dump the current dict to our yaml file (clobber over any old file)
-        with open(Store.ignored_shows_file, 'w', encoding='utf-8') as yaml_file:
-            Logger.info(f'Ignored Shows to write to config is: {Store.ignored_shows}')
-            yaml.safe_dump(Store.ignored_shows, yaml_file, default_flow_style=False, allow_unicode=True)
+        ignored = ShowList(IGNORED_SHOWS_FILE)
+        if ignored.exists():
+            Logger.info("Ignored shows JSON already exists, not migrating the legacy YAML file")
+        else:
+            try:
+                import yaml
+                with xbmcvfs.File(legacy_file) as yaml_file:
+                    data = yaml.safe_load(yaml_file.read())
+                if isinstance(data, dict):
+                    ignored.update(data)
+                if not ignored.save():
+                    Logger.error(f'Could not save migrated ignored shows, leaving {legacy_file} in place to retry next time')
+                    return
+                Logger.info(f'Migrated {len(ignored)} ignored show(s) from {legacy_file}')
+            except Exception as e:
+                Logger.error(f'Could not migrate legacy ignored shows file {legacy_file}, will retry next time: {e}')
+                return
+
+        migrated_file = legacy_file + '.migrated'
+        if xbmcvfs.exists(migrated_file):
+            xbmcvfs.delete(migrated_file)
+        if not xbmcvfs.rename(legacy_file, migrated_file):
+            Logger.warning(f'Could not rename legacy ignored shows file {legacy_file}')
+
+    @staticmethod
+    def add_ignored_show(tvshow_title, tvshow_id):
+        """
+        Ignore a show from now on, and save the list.
+        """
+        Logger.info(f'Set show title {tvshow_title}, id [{tvshow_id}], to ignore from now on.')
+        Store.ignored_shows.add(tvshow_id, tvshow_title)
+        Store.ignored_shows.save()
