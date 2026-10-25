@@ -21,12 +21,22 @@ from urllib.parse import parse_qsl, ParseResult
 from urllib.parse import urlparse as urlps
 
 import json
+import xml.etree.ElementTree as ET
+
+import xbmc
 import xbmcgui
 import xbmcplugin
 
 import inputstreamhelper
 
 import utils
+from manifest_proxy import ManifestProxyServer
+
+# Force Python to use the standard DASH/CENC/PlayReady XML tags when
+# serializing
+ET.register_namespace("", "urn:mpeg:dash:schema:mpd:2011")
+ET.register_namespace("cenc", "urn:mpeg:cenc:2013")
+ET.register_namespace("mspr", "urn:microsoft:playready")
 
 
 class Player:
@@ -57,7 +67,8 @@ class Player:
             "https://il.srgssr.ch/integrationlayer/2.0/mediaComposition/byUrn/" + urn
         )
         json_response = json.loads(self.srgssr.open_url(detail_url))
-        title = utils.try_get(json_response, ["episode", "title"], str, urn)
+        # Some livestreams have an empty episode title:
+        title = utils.try_get(json_response, ["episode", "title"], str, "") or urn
 
         chapter_list = utils.try_get(
             json_response, "chapterList", data_type=list, default=[]
@@ -70,6 +81,19 @@ class Player:
         chapter = next(
             (e for e in chapter_list if e.get("id") == media_id), first_chapter
         )
+        block_reason = utils.try_get(chapter, "blockReason")
+        if block_reason:
+            self.srgssr.log(f"play_video: media is blocked ({block_reason})")
+            message = self.srgssr.language(
+                30127 if block_reason == "GEOBLOCK" else 30128
+            )
+            xbmcgui.Dialog().notification(
+                self.srgssr.real_settings.getAddonInfo("name"),
+                message,
+                self.srgssr.icon,
+            )
+            return
+
         resource_list = utils.try_get(
             chapter, "resourceList", data_type=list, default=[]
         )
@@ -89,7 +113,7 @@ class Player:
                 drm = True
                 break
 
-            if utils.try_get(resource, "protocol") == "HLS":
+            if utils.try_get(resource, "protocol") in ("HLS", "HLS-DVR"):
                 for key in ("SD", "HD"):
                     if utils.try_get(resource, "quality") == key:
                         stream_urls[key] = utils.try_get(resource, "url")
@@ -199,9 +223,19 @@ class Player:
             self.srgssr.log("play_drm: Unable to setup drm")
             return
 
-        play_item = xbmcgui.ListItem(
-            title, path=self.srgssr.get_auth_url(resource_data["url"])
-        )
+        # The DRM manifests list a trickplay track first, which
+        # inputstream.adaptive would play as a slideshow. If there is one,
+        # serve a filtered manifest through a local proxy instead.
+        proxy = None
+        try:
+            xml_data, removed_any = self._fetch_filtered_manifest(resource_data["url"])
+            if xml_data is not None and removed_any:
+                proxy = self._start_manifest_proxy(resource_data["url"], xml_data)
+        except Exception as e:
+            self.srgssr.log(f"play_drm: Error modifying manifest: {e}")
+
+        path = proxy.url if proxy else self.srgssr.get_auth_url(resource_data["url"])
+        play_item = xbmcgui.ListItem(title, path=path)
         ia = "inputstream.adaptive"
         play_item.setProperty("inputstream", ia)
         lic_key = (
@@ -211,4 +245,52 @@ class Player:
         play_item.setProperty(f"{ia}.manifest_type", manifest_type)
         play_item.setProperty(f"{ia}.license_type", drm)
         play_item.setProperty(f"{ia}.license_key", lic_key)
+        if proxy:
+            play_item.setProperty(f"{ia}.manifest_update_url", proxy.url)
         xbmcplugin.setResolvedUrl(self.handle, True, play_item)
+
+        if proxy:
+            # Blocks until playback ends, keeping the proxy alive that long.
+            proxy.wait_until_playback_stops(xbmc.Player())
+
+    def _start_manifest_proxy(self, stream_url, initial_xml):
+        """Starts a ManifestProxyServer that keeps re-fetching/filtering
+        `stream_url`.
+        """
+
+        def refresh():
+            xml_data, _ = self._fetch_filtered_manifest(stream_url)
+            return xml_data
+
+        return ManifestProxyServer(refresh, initial_xml, logger=self.srgssr.log)
+
+    def _fetch_filtered_manifest(self, stream_url):
+        """Fetches the manifest for `stream_url`, adds a BaseURL pointing to
+        the origin, and strips out the trickmode tracks.
+
+        Returns a (xml_bytes, removed_any) tuple. xml_bytes is None if the
+        manifest could not be fetched.
+        """
+        auth_url = self.srgssr.get_auth_url(stream_url, notify_on_error=False)
+        manifest = self.srgssr.open_url(
+            auth_url, use_cache=False, notify_on_error=False
+        )
+        if not manifest:
+            return None, False
+
+        root = ET.fromstring(manifest.encode("utf-8"))
+        base_elem = ET.Element("{urn:mpeg:dash:schema:mpd:2011}BaseURL")
+        base_elem.text = auth_url.split("?")[0].rsplit("/", 1)[0] + "/"
+        root.insert(0, base_elem)
+
+        removed_any = False
+        for period in root.findall(".//{*}Period"):
+            for aset in period.findall("{*}AdaptationSet"):
+                props = aset.findall("{*}EssentialProperty") + aset.findall(
+                    "{*}SupplementalProperty"
+                )
+                if any("trickmode" in p.get("schemeIdUri", "") for p in props):
+                    period.remove(aset)
+                    removed_any = True
+
+        return ET.tostring(root, encoding="utf-8"), removed_any
