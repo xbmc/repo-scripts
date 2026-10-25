@@ -242,7 +242,6 @@ class SubmenuTemplate:
 
     properties: list[TemplateProperty] = field(default_factory=list)
     vars: list[TemplateVar] = field(default_factory=list)
-    property_groups: list[PropertyGroupReference] = field(default_factory=list)
     controls: ET.Element | None = None
 
 

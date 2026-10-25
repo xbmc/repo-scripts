@@ -16,6 +16,7 @@ from .userdata import (
     MenuItemDiff,
     MenuDiff,
     UserData,
+    merge_items,
     save_userdata,
 )
 
@@ -49,6 +50,7 @@ class MenuManager:
             self.working[menu.name] = copy.deepcopy(menu)
         for menu in self.working.values():
             self.config.resolve_item_properties(menu)
+        self._hidden = self._hidden_items()
 
         self._changed = False
 
@@ -85,12 +87,47 @@ class MenuManager:
         menu = self.working.get(menu_id)
         return menu.get_item(item_name) if menu else None
 
-    def _default_item(self, menu_id: str, item_id: str) -> MenuItem | None:
-        """The skin default for an item, per-item submenu keys read from their template."""
+    def _default_menu(self, menu_id: str) -> Menu | None:
+        """The skin default for a menu, per-item submenu keys read from their template."""
         default_menu = self.config.get_default_menu(menu_id)
         if default_menu is None and "/" in menu_id:
             default_menu = self._template_for_submenu_key(menu_id)
+        return default_menu
+
+    def _default_item(self, menu_id: str, item_id: str) -> MenuItem | None:
+        """The skin default for an item, per-item submenu keys read from their template."""
+        default_menu = self._default_menu(menu_id)
         return default_menu.get_item(item_id) if default_menu else None
+
+    def _hidden_items(self) -> dict[str, list[tuple[list[str], MenuItem]]]:
+        """Items visible= hid at load per menu, each with the names before it, nearest first."""
+        hidden: dict[str, list[tuple[list[str], MenuItem]]] = {}
+        for menu_id, menu in self.working.items():
+            default_menu = self._default_menu(menu_id)
+            if default_menu is None:
+                continue
+            shown = {item.name for item in menu.items}
+            items = merge_items(
+                default_menu, self.config.userdata.menus.get(menu_id), self.config.icon_overrides
+            )
+            placed = [
+                ([before.name for before in reversed(items[:idx])], item)
+                for idx, item in enumerate(items) if item.name not in shown
+            ]
+            if placed:
+                hidden[menu_id] = placed
+        return hidden
+
+    def _with_hidden(self, menu_id: str, items: list[MenuItem]) -> list[MenuItem]:
+        """The items plus those visible= hid at load, each after the nearest item it followed."""
+        full = list(items)
+        for before, item in self._hidden.get(menu_id, []):
+            names = [i.name for i in full]
+            if item.name in names:
+                continue
+            at = next((names.index(name) + 1 for name in before if name in names), 0)
+            full.insert(at, item)
+        return full
 
     def _ensure_working_menu(self, menu_id: str) -> Menu:
         """Ensure menu exists in working copy, create if needed."""
@@ -126,6 +163,7 @@ class MenuManager:
     def drop_item_submenu(self, parent_menu_name: str, item_name: str) -> None:
         """Discard the per-item submenu so the next access reseeds from the template."""
         key = self.submenu_key(parent_menu_name, item_name)
+        self._hidden.pop(key, None)
         if key in self.working:
             del self.working[key]
             self._changed = True
@@ -264,6 +302,7 @@ class MenuManager:
 
     def reset_menu(self, menu_id: str) -> bool:
         """Reset a menu to its skin default values."""
+        self._hidden.pop(menu_id, None)
         default_menu = self.config.get_default_menu(menu_id)
 
         if default_menu:
@@ -350,9 +389,7 @@ class MenuManager:
 
     def get_removed_items(self, menu_id: str) -> list[MenuItem]:
         """Get default items that have been removed from working copy."""
-        default_menu = self.config.get_default_menu(menu_id)
-        if default_menu is None and "/" in menu_id:
-            default_menu = self._template_for_submenu_key(menu_id)
+        default_menu = self._default_menu(menu_id)
         if not default_menu:
             return []
 
@@ -496,6 +533,7 @@ class MenuManager:
             if menu.is_submenu and menu.name in referenced_templates:
                 continue
             self.working[menu.name] = copy.deepcopy(menu)
+        self._hidden = self._hidden_items()
         self._changed = False
 
     def _cleanup_orphaned_menus(self) -> None:
@@ -528,19 +566,15 @@ class MenuManager:
             del self.working[menu_id]
 
     def _generate_userdata(self) -> UserData:
-        """Generate userdata by diffing working copy against defaults."""
+        """Generate userdata by diffing working copy against defaults; drops orphaned menus."""
         self._cleanup_orphaned_menus()
 
         # views are set outside this dialog; a menu save must not drop them
         userdata = UserData(views=self.config.userdata.views)
 
-        default_menus = {m.name: m for m in self.config.default_menus}
-
         for menu_id, working_menu in self.working.items():
-            default_menu = default_menus.get(menu_id)
-            if default_menu is None and "/" in menu_id:
-                default_menu = self._template_for_submenu_key(menu_id)
-            menu_diff = self._diff_menu(working_menu, default_menu)
+            items = self._with_hidden(menu_id, working_menu.items)
+            menu_diff = self._diff_menu(items, self._default_menu(menu_id))
             if menu_diff:
                 userdata.menus[menu_id] = menu_diff
 
@@ -552,12 +586,12 @@ class MenuManager:
         item = self._get_working_item(parent_name, item_name)
         return self.config.get_default_menu(self.submenu_template(item)) if item else None
 
-    def _diff_menu(self, working: Menu, default: Menu | None) -> MenuDiff | None:
-        """Generate diff for a single menu."""
+    def _diff_menu(self, items: list[MenuItem], default: Menu | None) -> MenuDiff | None:
+        """Generate diff for a single menu against the skin's version, None when unchanged."""
         diff = MenuDiff()
 
         if default is None:
-            for idx, item in enumerate(working.items):
+            for idx, item in enumerate(items):
                 if item.is_placeholder:
                     continue
                 item_diff = self._item_to_diff(item, is_new=True)
@@ -566,18 +600,13 @@ class MenuManager:
             return diff if diff.items else None
 
         default_items = {item.name: item for item in default.items}
-        working_items = {item.name: item for item in working.items if not item.is_placeholder}
+        working_items = {item.name: item for item in items if not item.is_placeholder}
 
-        for name, default_item in default_items.items():
+        for name in default_items:
             if name not in working_items:
-                # Skip items filtered by dialog_visible - they weren't user-removed
-                if default_item.dialog_visible and not check_visible(
-                    default_item.dialog_visible
-                ):
-                    continue
                 diff.removed.append(name)
 
-        for idx, working_item in enumerate(working.items):
+        for idx, working_item in enumerate(items):
             if working_item.is_placeholder:
                 continue
             default_item = default_items.get(working_item.name)

@@ -28,6 +28,7 @@ class SubdialogsMixin:
     menu_id: str
     shortcuts_path: str
     manager: MenuManager | None
+    items: list[MenuItem]
     property_schema: PropertySchema | None
     icon_sources: list[IconSource]
     context_menu: ContextMenu
@@ -40,7 +41,10 @@ class SubdialogsMixin:
         def _get_selected_item(self) -> MenuItem | None: ...
         def _get_item_properties(self, item: MenuItem) -> dict[str, str]: ...
         def _refresh_selected_item(self) -> None: ...
-        def _clear_subdialog_list(self) -> None: ...
+        def _rebuild_list(self, focus_index: int | None = None) -> None:
+            """Rebuild the list on the given row or row 0, plus 212 in a subdialog."""
+        def _mirror_to_home(self) -> None:
+            """Mirror the dialog mode and suffix to Home, for a native dialog over this one."""
         def _log(self, msg: str) -> None: ...
         def _get_content_provider(self) -> ContentProvider: ...
 
@@ -48,11 +52,9 @@ class SubdialogsMixin:
         def clearProperty(self, key: str) -> None: ...
 
     def _run_child_dialog(self, menu_id: str, dialog_mode: str = "", **kwargs) -> None:
-        """Run a child ManagementDialog modally, sharing this dialog's loaded objects."""
+        """Run a child ManagementDialog on this dialog's objects, then restore its Home mirror."""
         if self.manager and menu_id not in self.manager.working:
             self.manager._ensure_working_menu(menu_id)
-
-        self.setProperty("additionalDialog", "true")
 
         from . import ManagementDialog
 
@@ -71,18 +73,26 @@ class SubdialogsMixin:
             dialog_mode=dialog_mode,
             **kwargs,
         )
-        child.doModal()
-        del child
-
-        self.clearProperty("additionalDialog")
+        self.setProperty("additionalDialog", "true")
+        try:
+            child.doModal()
+        finally:
+            del child
+            self.clearProperty("additionalDialog")
+            self._mirror_to_home()
 
     def _edit_submenu(self) -> None:
-        """Spawn a child dialog for the item's submenu, widget or shortcut mode by its type."""
+        """Edit the item's submenu in a widget or shortcut child dialog, then refresh its row."""
         item = self._get_selected_item()
         if not item:
             return
 
         if not self.manager:
+            return
+
+        menu = self.manager.working.get(self.menu_id)
+        if menu and menu.is_submenu:
+            self._log(f"No submenu for '{item.name}': submenus are one level deep")
             return
 
         template = (
@@ -103,6 +113,7 @@ class SubdialogsMixin:
         self.manager.ensure_item_submenu(self.menu_id, item)
         submenu_id = self.manager.submenu_key(self.menu_id, item.name)
         self._run_child_dialog(submenu_id, "widgets" if is_widget_submenu else "")
+        self._refresh_selected_item()
 
     def _spawn_subdialog(self, subdialog: SubDialog) -> None:
         """Spawn a subdialog, then run its onclose actions; a menu-only one just opens the menu."""
@@ -118,7 +129,8 @@ class SubdialogsMixin:
             return
 
         self._log(f"Spawning subdialog with mode: {subdialog.mode}, suffix: {subdialog.suffix}")
-        self._open_subdialog(subdialog)
+        if not self._open_subdialog(subdialog, item):
+            return
 
         if subdialog.onclose:
             self._handle_onclose(subdialog, item)
@@ -128,7 +140,7 @@ class SubdialogsMixin:
         if not self.manager:
             return
 
-        current_item = self._get_selected_item()
+        current_item = next((entry for entry in self.items if entry.name == item.name), None)
         if not current_item:
             return
 
@@ -215,14 +227,16 @@ class SubdialogsMixin:
         self._run_child_dialog(menu_name, dialog_mode)
         self._refresh_selected_item()
 
-    def _open_subdialog(self, subdialog: SubDialog) -> None:
-        """Open the subdialog for widget/property editing."""
+    def _open_subdialog(self, subdialog: SubDialog, item: MenuItem) -> bool:
+        """Open the subdialog for the item, then refocus it; False when the subdialog deleted it."""
+        index = self._get_selected_index()
         self._run_child_dialog(
             self.menu_id,
             subdialog.mode,
             property_suffix=subdialog.suffix,
             setfocus=subdialog.setfocus,
-            selected_index=self._get_selected_index(),
+            selected_index=index,
         )
-        self._clear_subdialog_list()
-        self._refresh_selected_item()
+        moved = next((i for i, entry in enumerate(self.items) if entry.name == item.name), -1)
+        self._rebuild_list(focus_index=moved if moved >= 0 else min(index, len(self.items) - 1))
+        return moved >= 0

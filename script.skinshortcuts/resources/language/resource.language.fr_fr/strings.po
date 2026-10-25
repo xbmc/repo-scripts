@@ -771,7 +771,7 @@ msgid "%s (reset)"
 msgstr ""
 
 msgctxt "#32191"
-msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+msgid "Reset all menus and views to skin defaults?[CR]All customizations will be removed."
 msgstr ""
 
 msgctxt "#32192"
@@ -779,7 +779,7 @@ msgid "Reset all view selections to skin defaults?"
 msgstr ""
 
 msgctxt "#32193"
-msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
+msgid "Reset all menus to skin defaults?"
 msgstr ""
 
 msgctxt "#32194"
@@ -810,10 +810,6 @@ msgctxt "#32200"
 msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
 msgstr ""
 
-msgctxt "#32201"
-msgid "Open settings"
-msgstr ""
-
 msgctxt "#32202"
 msgid "Ignore for this skin"
 msgstr ""
@@ -836,4 +832,16 @@ msgstr ""
 
 msgctxt "#32207"
 msgid "Enable shortcut"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Reset all menus"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Reset all views"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Reset menu"
 msgstr ""

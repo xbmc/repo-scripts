@@ -17,7 +17,7 @@ except ImportError:
     IN_KODI = False
 
 
-from ..conditions import evaluate_condition, suffix_condition
+from ..conditions import check_visible, evaluate_condition, suffix_condition
 from ..constants import BACKGROUND_SIBLINGS, WIDGET_EXTRAS, WIDGET_SIBLINGS
 from ..loaders.widget import load_widgets
 from ..localize import LANGUAGE, resolve_label
@@ -125,7 +125,7 @@ class PropertiesMixin:
         return False
 
     def _handle_property_button(self, button_id: int) -> bool:
-        """Handle a property button click from the schema."""
+        """Handle a property button click by the type the button or its property declares."""
         if not self.property_schema or not self.manager:
             return False
 
@@ -176,7 +176,10 @@ class PropertiesMixin:
         if prop is None:
             notify(
                 "Property Button Error",
-                f"button {button_id}: '{button.property_name}' not defined",
+                f"'{button.property_name}' not defined",
+                f"properties.xml: <button id=\"{button_id}\" property=\"{button.property_name}\"> "
+                "names a property with no <property> definition; button does nothing; define "
+                "the property or correct the button",
             )
             return True
 
@@ -375,10 +378,13 @@ class PropertiesMixin:
         base, suffix = _split_suffix(prefix)
 
         related: dict[str, str | None] = {
+            f"{base}{part}{suffix}": None for part in BACKGROUND_SIBLINGS
+        }
+        related.update({
             f"{base}Label{suffix}": bg.label,
             f"{base}Path{suffix}": bg.path,
             f"{base}Type{suffix}": bg.type_name,
-        }
+        })
 
         self._set_item_property(item, prefix, bg.name, related, apply_suffix=False)
 
@@ -404,10 +410,13 @@ class PropertiesMixin:
             value = bg.name
 
         related: dict[str, str | None] = {
+            f"{base}{part}{suffix}": None for part in BACKGROUND_SIBLINGS
+        }
+        related.update({
             f"{base}Label{suffix}": label,
             f"{base}Path{suffix}": custom_path,
             f"{base}Type{suffix}": bg.type_name,
-        }
+        })
         if playlist_type:
             related[f"{base}PlaylistType{suffix}"] = playlist_type
 
@@ -597,7 +606,9 @@ class PropertiesMixin:
             condition = opt.condition
             if condition and use_suffix:
                 condition = suffix_condition(condition, self.property_suffix)
-            if not condition or evaluate_condition(condition, item_props):
+            if condition and not evaluate_condition(condition, item_props):
+                continue
+            if check_visible(opt.visible):
                 visible_options.append(opt)
 
         if not visible_options:

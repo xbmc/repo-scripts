@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from ..exceptions import TemplateConfigError
-from ..log import get_logger
+from ..log import get_logger, notify
 from ..models.template import (
     BuildMode,
     Expression,
@@ -33,10 +33,57 @@ from ..models.template import (
     VariableGroupReference,
     VariableReference,
 )
-from ..conditions import suffix_condition
-from .base import apply_suffix_to_from, get_bool
+from ..conditions import suffix_condition, suffix_property
+from .base import get_bool
 
 log = get_logger("TemplateLoader")
+
+_SUBMENU_UNSUPPORTED = {
+    "propertyGroup": "move its values into <property> elements",
+    "preset": "use <property> or <var> elements",
+    "presetGroup": "use <property> or <var> elements",
+    "variableGroup": "build the variables from a menu template",
+    "variables": "build the variables from a menu template",
+    "condition": "put a condition on each <property> instead",
+}
+_SUBMENU_TEXT_FIXES = {
+    "$IF": "use a Kodi $VAR with conditions",
+    "$PARENT": "read the main item with Container(<main list>).ListItem.Property(...)",
+}
+
+
+def _drop_include_markers(controls: ET.Element | None) -> list[str]:
+    """Drop each <skinshortcuts include> marker from the tree, returning their names."""
+    dropped: list[str] = []
+    for parent in list(controls.iter()) if controls is not None else []:
+        for child in list(parent):
+            if child.tag == "skinshortcuts" and child.get("include"):
+                dropped.append(child.get("include") or "")
+                parent.remove(child)
+    return dropped
+
+
+def _drop_duplicate_definitions(elem: ET.Element, heading: str, written: str) -> None:
+    """Drop and report each <var>, or <property> after a <var>, reusing a name; the first stays."""
+    property_names: set[str] = set()
+    var_names: set[str] = set()
+    for child in list(elem):
+        name = (child.get("name") or "").strip().lower()
+        if child.tag not in ("property", "var") or not name:
+            continue
+        if name in var_names or (child.tag == "var" and name in property_names):
+            notify(
+                heading,
+                f"'{child.get('name')}' defined twice",
+                f"templates.xml: {written} defines '{child.get('name')}' again with "
+                f"<{child.tag}>; the first definition is used; keep one <var>, or only "
+                "<property> elements",
+            )
+            elem.remove(child)
+        elif child.tag == "var":
+            var_names.add(name)
+        else:
+            property_names.add(name)
 
 
 class TemplateLoader:
@@ -182,7 +229,7 @@ class TemplateLoader:
         return PresetGroup(name=name, children=children)
 
     def _parse_property_groups_section(self, root: ET.Element) -> None:
-        """Parse <propertyGroups> section."""
+        """Parse <propertyGroups> section, dropping and reporting duplicate definitions."""
         section = root.find("propertyGroups")
         if section is None:
             return
@@ -193,6 +240,7 @@ class TemplateLoader:
                     f"{self.path}: <{elem.tag}> definition missing 'name' attribute, skipping"
                 )
                 continue
+            _drop_duplicate_definitions(elem, "Template Error", f'<propertyGroup name="{name}">')
 
             properties = []
             for prop_elem in elem.findall("property"):
@@ -292,7 +340,7 @@ class TemplateLoader:
         return TemplateParam(name=name, default=default)
 
     def _parse_property(self, elem: ET.Element, suffix: str = "") -> TemplateProperty | None:
-        """Parse a property element."""
+        """Parse a property element; one with no name is skipped with a warning."""
         name = (elem.get("name") or "").strip()
         if not name:
             log.warning(f"{self.path}: <{elem.tag}> missing 'name' attribute, skipping")
@@ -303,8 +351,7 @@ class TemplateLoader:
         condition = (elem.get("condition") or "").strip()
 
         if suffix:
-            if from_source:
-                from_source = apply_suffix_to_from(from_source, suffix)
+            from_source = suffix_property(from_source, suffix)
             if condition:
                 condition = suffix_condition(condition, suffix)
 
@@ -349,7 +396,7 @@ class TemplateLoader:
         return Preset(name=name, rows=rows)
 
     def _parse_template(self, elem: ET.Element) -> Template:
-        """Parse a template element."""
+        """Parse a template, dropping duplicates; a raw one reports variables and drops markers."""
         outputs: list[TemplateOutput] = []
         for output_elem in elem.findall("output"):
             output_include = (output_elem.get("include") or "").strip()
@@ -390,6 +437,9 @@ class TemplateLoader:
             param = self._parse_param(param_elem)
             if param:
                 params.append(param)
+
+        name = include or outputs[0].include
+        _drop_duplicate_definitions(elem, "Template Error", f'<template include="{name}">')
 
         properties = []
         vars_list = []
@@ -433,6 +483,25 @@ class TemplateLoader:
                     variables.append(var_def)
 
         controls = elem.find("controls")
+        controls = copy.deepcopy(controls) if controls is not None else None
+
+        if build == BuildMode.RAW:
+            for tag, declared in (("variables", variables), ("variableGroup", variable_groups)):
+                if declared:
+                    notify(
+                        "Template Error",
+                        f"raw template '{name}' has <{tag}>",
+                        f"templates.xml: <template include=\"{name}\" build=\"true\"> declares "
+                        f"<{tag}>, which raw templates do not build; move it to a menu template",
+                    )
+            for marker in _drop_include_markers(controls):
+                notify(
+                    "Template Error",
+                    f"raw template '{name}' has <skinshortcuts include>",
+                    f"templates.xml: <template include=\"{name}\" build=\"true\"> uses "
+                    f"<skinshortcuts include=\"{marker}\"/>, which raw templates do not "
+                    "expand; the marker is left out; use a Kodi <include>",
+                )
 
         return Template(
             include=include,
@@ -448,13 +517,13 @@ class TemplateLoader:
             property_groups=property_groups,
             preset_refs=preset_refs,
             preset_group_refs=preset_group_refs,
-            controls=copy.deepcopy(controls) if controls is not None else None,
+            controls=controls,
             variables=variables,
             variable_groups=variable_groups,
         )
 
     def _parse_submenu(self, elem: ET.Element) -> SubmenuTemplate:
-        """Parse a submenu element."""
+        """Parse a submenu, reporting unbuilt features, dropping duplicates and include markers."""
         include = (elem.get("include") or "").strip()
         level_str = (elem.get("level") or "0").strip()
         try:
@@ -462,10 +531,12 @@ class TemplateLoader:
         except ValueError:
             level = 0
         name = (elem.get("name") or "").strip()
+        written = f'<submenu include="{include}">'
+        _drop_duplicate_definitions(elem, "Submenu Template Error", written)
 
         properties = []
         vars_list = []
-        property_groups = []
+        ignored: list[str] = []
 
         for child in elem:
             if child.tag == "property":
@@ -476,12 +547,35 @@ class TemplateLoader:
                 var = self._parse_var(child)
                 if var:
                     vars_list.append(var)
-            elif child.tag == "propertyGroup":
-                ref = self._parse_property_group_ref(child)
-                if ref:
-                    property_groups.append(ref)
+            elif child.tag in _SUBMENU_UNSUPPORTED and child.tag not in ignored:
+                ignored.append(child.tag)
+
+        for tag in ignored:
+            notify(
+                "Submenu Template Error",
+                f"'{include}' uses <{tag}>",
+                f"templates.xml: {written} contains <{tag}>, which submenu templates do not "
+                f"build; it is ignored; {_SUBMENU_UNSUPPORTED[tag]}",
+            )
 
         controls = elem.find("controls")
+        controls = copy.deepcopy(controls) if controls is not None else None
+        text = "" if controls is None else ET.tostring(controls, encoding="unicode")
+        for token, fix in _SUBMENU_TEXT_FIXES.items():
+            if f"{token}[" in text:
+                notify(
+                    "Submenu Template Error",
+                    f"'{include}' uses {token}",
+                    f"templates.xml: {written} uses {token}[...] in its controls, which "
+                    f"submenu templates leave as written; {fix}",
+                )
+        for marker in _drop_include_markers(controls):
+            notify(
+                "Submenu Template Error",
+                f"'{include}' uses <skinshortcuts include>",
+                f"templates.xml: {written} uses <skinshortcuts include=\"{marker}\"/>, which "
+                "submenu templates do not expand; the marker is left out; use a Kodi <include>",
+            )
 
         return SubmenuTemplate(
             include=include,
@@ -489,12 +583,11 @@ class TemplateLoader:
             name=name,
             properties=properties,
             vars=vars_list,
-            property_groups=property_groups,
-            controls=copy.deepcopy(controls) if controls is not None else None,
+            controls=controls,
         )
 
     def _parse_items_template(self, elem: ET.Element, name: str) -> ItemsDefinition | None:
-        """Parse <template items="X"> into an ItemsDefinition."""
+        """Parse <template items="X">, reporting and dropping duplicates and suffix=."""
         source = (elem.get("source") or "").strip()
         filter_cond = (elem.get("filter") or "").strip()
 
@@ -502,6 +595,8 @@ class TemplateLoader:
         cond_elem = elem.find("condition")
         if cond_elem is not None:
             condition = (cond_elem.text or "").strip()
+
+        _drop_duplicate_definitions(elem, "Items Template Error", f'<template items="{name}">')
 
         properties = []
         vars_list = []
@@ -530,6 +625,22 @@ class TemplateLoader:
                 ref = self._parse_variable_group_ref(child)
                 if ref:
                     variable_groups.append(ref)
+
+        refs = (
+            ("preset", preset_refs), ("propertyGroup", property_groups),
+            ("variableGroup", variable_groups),
+        )
+        for tag, tag_refs in refs:
+            for ref in tag_refs:
+                if ref.suffix:
+                    notify(
+                        "Items Template Error",
+                        f"'{name}' uses suffix=",
+                        f'templates.xml: <template items="{name}"> has <{tag} '
+                        f'content="{ref.name}" suffix="{ref.suffix}">; suffixes are ignored in '
+                        "items templates, whose items have no slots; remove suffix=",
+                    )
+                    ref.suffix = ""
 
         controls = elem.find("controls")
 

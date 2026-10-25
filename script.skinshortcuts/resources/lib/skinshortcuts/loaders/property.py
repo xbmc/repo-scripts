@@ -250,10 +250,11 @@ class PropertyLoader:
         return result
 
     def _parse_option(self, elem: ET.Element) -> SchemaOption:
-        """Parse a single option element."""
+        """Parse an option with its property condition, Kodi visibility condition and icons."""
         value = (elem.get("value") or "").strip()
         label = (elem.get("label") or "").strip()
         condition = (elem.get("condition") or "").strip()
+        visible = (elem.get("visible") or "").strip()
 
         icons = []
         for icon_elem in elem.findall("icon"):
@@ -266,6 +267,7 @@ class PropertyLoader:
             value=value,
             label=label,
             condition=condition,
+            visible=visible,
             icons=icons,
         )
 

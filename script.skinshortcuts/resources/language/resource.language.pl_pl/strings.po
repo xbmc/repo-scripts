@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-08-13 08:20+0000\n"
+"PO-Revision-Date: 2026-10-18 12:09+0000\n"
 "Last-Translator: Marek Adamski <fevbew@wp.pl>\n"
 "Language-Team: Polish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skinshortcuts/pl_pl/>\n"
 "Language: pl_pl\n"
@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.8.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 msgctxt "Addon Summary"
 msgid "Custom menus, properties, and artwork for skins"
-msgstr "Niestandardowe menu, właściwości i grafika dla skórek"
+msgstr "Niestandardowe menu, właściwości i grafika dla skór"
 
 msgctxt "Addon Description"
 msgid "Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)"
@@ -175,7 +175,7 @@ msgstr "Przywróć wszystkie pozycje menu"
 
 msgctxt "#32038"
 msgid "Are you sure you want to reset all menu items back to default?"
-msgstr "Czy jesteś pewien, że chcesz przywrócić wszystkie domyślne pozycje menu?"
+msgstr "Czy na pewno chcesz przywrócić wszystkie domyślne pozycje menu?"
 
 msgctxt "#32039"
 msgid "Pick widget for %s"
@@ -575,7 +575,7 @@ msgstr "Przywróć usuniętą pozycję"
 
 msgctxt "#32138"
 msgid "Reset Item"
-msgstr "Zresetuj pozycję"
+msgstr "Przywróć pozycję"
 
 msgctxt "#32139"
 msgid "Edit Submenu"
@@ -615,7 +615,7 @@ msgstr "Brak widżetów"
 
 msgctxt "#32148"
 msgid "No widgets defined in skin"
-msgstr "Brak zdefiniowanych widżetów w skórce"
+msgstr "Brak określonych widżetów w skórze"
 
 msgctxt "#32149"
 msgid "Cannot Browse"
@@ -667,11 +667,11 @@ msgstr "Brak dostępnych opcji"
 
 msgctxt "#32164"
 msgid "Reset Library Views"
-msgstr "Resetuj widoki biblioteki"
+msgstr "Przywróć widoki biblioteki"
 
 msgctxt "#32165"
 msgid "Reset Add-on Views"
-msgstr "Resetuj widoki dodatków"
+msgstr "Przywróć widoki dodatków"
 
 msgctxt "#32166"
 msgid "Add Override"
@@ -723,7 +723,7 @@ msgstr "Wyłączyć '%s'?"
 
 msgctxt "#32178"
 msgid "Reset '%s' to defaults?"
-msgstr "Zresetować '%s' do ustawień domyślnych?"
+msgstr "Przywrócić '%s' do ustawień domyślnych?"
 
 msgctxt "#32179"
 msgid "No Shortcuts"
@@ -731,7 +731,7 @@ msgstr "Brak skrótów"
 
 msgctxt "#32180"
 msgid "No shortcut groupings defined in skin"
-msgstr "Brak zdefiniowanych grup skrótów w skórce"
+msgstr "Brak określonych grup skrótów w skórze"
 
 msgctxt "#32181"
 msgid "Select"
@@ -759,39 +759,39 @@ msgstr "Wybierz typ zawartości"
 
 msgctxt "#32187"
 msgid "Reset all library view selections?"
-msgstr "Zresetować wszystkie wybory widoku biblioteki?"
+msgstr "Przywrócić wszystkie wybory widoku biblioteki?"
 
 msgctxt "#32188"
 msgid "Reset all add-on view selections?"
-msgstr "Zresetować wszystkie wybory widoku dodatku?"
+msgstr "Przywrócić wszystkie wybory widoku dodatku?"
 
 msgctxt "#32189"
 msgid "%s (reset)"
-msgstr "%s (resetowanie)"
+msgstr "%s (przywracanie)"
 
 msgctxt "#32191"
-msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
-msgstr "Zresetować wszystkie menu do domyślnych ustawień skórki?[CR]Wszystkie dostosowania zostaną usunięte."
+msgid "Reset all menus and views to skin defaults?[CR]All customizations will be removed."
+msgstr "Przywrócić wszystkie menu i widoki do ustawień domyślnych skóry?[CR]Wszystkie wprowadzone zmiany zostaną usunięte."
 
 msgctxt "#32192"
 msgid "Reset all view selections to skin defaults?"
-msgstr "Zresetować wszystkie wybrane widoki do domyślnych ustawień skórki?"
+msgstr "Przywrócić wszystkie wybrane widoki do domyślnych ustawień skóry?"
 
 msgctxt "#32193"
-msgid "Reset all menus to skin defaults?[CR]View selections will be preserved."
-msgstr "Zresetować wszystkie menu do domyślnych ustawień skórki?[CR]Wybrane widoki zostaną zachowane."
+msgid "Reset all menus to skin defaults?"
+msgstr "Przywrócić wszystkie menu do domyślnych ustawień skóry?"
 
 msgctxt "#32194"
 msgid "Reset '%s' and its submenus to skin defaults?"
-msgstr "Zresetować '%s' i jego podmenu do domyślnych ustawień skórki?"
+msgstr "Przywrócić '%s' i jego podmenu do domyślnych ustawień skóry?"
 
 msgctxt "#32195"
 msgid "Reset '%s' to skin defaults?"
-msgstr "Zresetować '%s' do domyślnych ustawień skórki?"
+msgstr "Przywrócić '%s' do domyślnych ustawień skóry?"
 
 msgctxt "#32196"
 msgid "Reset all submenus to skin defaults?"
-msgstr "Zresetować wszystkie podmenu do domyślnych ustawień skórki?"
+msgstr "Przywrócić wszystkie podmenu do domyślnych ustawień skóry?"
 
 msgctxt "#32197"
 msgid "Enter action"
@@ -799,7 +799,7 @@ msgstr "Wprowadź czynność"
 
 msgctxt "#32198"
 msgid "Reset views for %s?"
-msgstr "Zresetować widoki dla %s?"
+msgstr "Przywrócić widoki dla %s?"
 
 msgctxt "#32199"
 msgid "%s - Select View"
@@ -807,15 +807,11 @@ msgstr "%s – Wybierz widok"
 
 msgctxt "#32200"
 msgid "This skin is built for Skin Shortcuts v2. Switch skins or downgrade the add-on."
-msgstr "Ta skórka jest przeznaczona dla Skin Shortcuts v2. Zmień skórkę lub obniż wersję dodatku."
-
-msgctxt "#32201"
-msgid "Open settings"
-msgstr "Otwórz ustawienia"
+msgstr "Ta skóra jest przeznaczona dla Skin Shortcuts v2. Zmień skórę lub obniż wersję dodatku."
 
 msgctxt "#32202"
 msgid "Ignore for this skin"
-msgstr "Zignoruj dla tej skórki"
+msgstr "Zignoruj dla tej skóry"
 
 msgctxt "#32203"
 msgid "Sort order"
@@ -836,3 +832,23 @@ msgstr "Wykonawcy niewymienieni w tym źródle"
 msgctxt "#32207"
 msgid "Enable shortcut"
 msgstr "Włącz skrót"
+
+msgctxt "#32208"
+msgid "Reset all menus"
+msgstr "Przywróć wszystkie menu"
+
+msgctxt "#32209"
+msgid "Reset all views"
+msgstr "Przywróć wszystkie widoki"
+
+msgctxt "#32210"
+msgid "Reset menu"
+msgstr "Przywróć menu"
+
+#~ msgctxt "#32191"
+#~ msgid "Reset all menus to skin defaults?[CR]All customizations will be removed."
+#~ msgstr "Zresetować wszystkie menu do domyślnych ustawień skórki?[CR]Wszystkie dostosowania zostaną usunięte."
+
+#~ msgctxt "#32201"
+#~ msgid "Open settings"
+#~ msgstr "Otwórz ustawienia"

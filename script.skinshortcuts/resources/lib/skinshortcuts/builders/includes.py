@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from ..conditions import lookup, slot_suffixes, with_defaults
 from ..constants import extract_path_from_action
 
 if TYPE_CHECKING:
@@ -205,9 +206,9 @@ class IncludesBuilder:
             if parent_item.disabled:
                 continue
 
-            for suffix in ["", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9", ".10"]:
+            for suffix in slot_suffixes("customWidget", parent_item.properties):
                 prop_name = f"customWidget{suffix}"
-                cw_menu_ref = parent_item.properties.get(prop_name)
+                cw_menu_ref = lookup(prop_name, parent_item.properties)
                 if not cw_menu_ref:
                     continue
 
@@ -303,12 +304,14 @@ class IncludesBuilder:
             if submenu and submenu.items:
                 builtins["hasSubmenu"] = "True"
 
-            all_properties = {**menu.defaults.properties, **item.properties}
+            all_properties = with_defaults(menu.defaults.properties, item.properties)
             all_properties.update(self._submenu_paths_for_item(item, menu))
 
             # a skin value of the same name replaces the default, in the default's slot
+            folded = {key.lower(): key for key in all_properties}
             for key, value in builtins.items():
-                self._add_property(elem, key, all_properties.pop(key, value))
+                skin_key = folded.get(key.lower(), key)
+                self._add_property(elem, key, all_properties.pop(skin_key, value))
 
             for key, value in all_properties.items():
                 if self._is_template_only(key):
@@ -323,7 +326,7 @@ class IncludesBuilder:
         return [
             sub_item
             for sub_item in submenu.items
-            if not sub_item.disabled and sub_item.properties.get("widgetPath")
+            if not sub_item.disabled and lookup("widgetPath", sub_item.properties)
         ]
 
     def _widget_submenu_for_item(self, item: MenuItem) -> Menu | None:
@@ -331,7 +334,7 @@ class IncludesBuilder:
         cw_ids = {
             value
             for key, value in item.properties.items()
-            if key.startswith("customWidget") and value
+            if key.lower().startswith("customwidget") and value
         }
         for sub in self.subdialogs:
             refs = [sub.menu]
@@ -350,18 +353,16 @@ class IncludesBuilder:
         return None
 
     def _submenu_paths_for_item(self, item: MenuItem, parent_menu: Menu) -> dict[str, str]:
-        """The item's submenuPath (its first widget), plus the numbered submenuPath.N
-        tail when "all" is opted in on the parent menu or globally on <menus>.
-        """
+        """The item's submenuPath (its first widget), plus submenuPath.N when "all" is opted in."""
         submenu = self._widget_submenu_for_item(item)
         if submenu is None:
             return {}
         widgets = self._enabled_widgets(submenu)
-        paths = {"submenuPath": widgets[0].properties["widgetPath"]}
+        paths = {"submenuPath": lookup("widgetPath", widgets[0].properties) or ""}
         emit_tail = self.submenu_path_all or parent_menu.submenu_path == "all"
         if emit_tail:
             for index, widget in enumerate(widgets[1:], start=2):
-                paths[f"submenuPath.{index}"] = widget.properties["widgetPath"]
+                paths[f"submenuPath.{index}"] = lookup("widgetPath", widget.properties) or ""
         return paths
 
     def _get_all_actions(self, exclude: set[str]) -> set[str]:

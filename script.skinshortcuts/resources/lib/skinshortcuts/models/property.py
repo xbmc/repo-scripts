@@ -23,6 +23,7 @@ class SchemaOption:
     value: str
     label: str
     condition: str = ""
+    visible: str = ""
     icons: list[IconVariant] = field(default_factory=list)
 
 

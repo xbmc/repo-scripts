@@ -71,10 +71,14 @@ def get_logger(component: str = "") -> Logger:
 
 
 _notified: set[tuple[str, str]] = set()
+_logged: set[str] = set()
 
 
-def notify(heading: str, message: str) -> None:
-    """Fire a Kodi notification, once per identical heading and message; outside Kodi a no-op."""
+def notify(heading: str, message: str, detail: str) -> None:
+    """Notify with a Kodi toast and a warning log line, each once per identical text."""
+    if detail not in _logged:
+        _logged.add(detail)
+        get_logger().warning(detail)
     if not IN_KODI:
         return
     key = (heading, message)
@@ -83,4 +87,4 @@ def notify(heading: str, message: str) -> None:
     _notified.add(key)
     import xbmcgui
 
-    xbmcgui.Dialog().notification(heading, message)
+    xbmcgui.Dialog().notification(heading, f"{message} (see log)")
