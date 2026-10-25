@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.4" provider-name="bossanova808">
+<addon id="script.module.bossanova808" name="Bossanova808 Dependencies" version="1.0.5" provider-name="bossanova808">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -10,9 +10,8 @@
         <license>GPL-3.0-only</license>
         <website>https://github.com/bossanova808/script.module.bossanova808</website>
         <source>https://github.com/bossanova808/script.module.bossanova808</source>
-        <news>v1.0.4
-- Add Playback.identity_key, a stable per-media identity (library dbid+type, falling back to path) for consumers that need to recognise repeat plays of the same item even when the reported path/file differs between plays
-- Add get_playcount_and_resume_point(), combining what were two separate JSON-RPC round trips into one, for consumers that need both
+        <news>v1.0.5
+- Add ShowList, a small persistent list of TV shows (a JSON file in the calling addon's profile folder) with a dialog to remove entries, for addons that keep a list of shows to ignore or treat specially
 </news>
         <assets>
             <icon>resources/icon.png</icon>
