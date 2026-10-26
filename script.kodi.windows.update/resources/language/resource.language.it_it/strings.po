@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: script.kodi.windows.update\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-10-03 10:15+0000\n"
+"PO-Revision-Date: 2026-05-24 15:02+0000\n"
 "Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-kodi-windows-update/it_it/>\n"
 "Language: it_it\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 2026.5\n"
 
 msgctxt "Addon Summary"
 msgid "Download and Install Kodi packages."
-msgstr "Scarica e installa i pacchetti Kodi."
+msgstr "Scarica e installa i pacchetti di Kodi."
 
 msgctxt "Addon Description"
-msgid "Download and Install Kodi window executables; select from  Nightlies, Releases, Snapshots and Test-builds."
-msgstr "Scarica e installa gli eseguibili Windows di Kodi; seleziona da Nightlies, Release, Snapshot e Test build."
+msgid "Download and Install Kodi Windows executables; select from  Nightlies, Releases, Snapshots and Test-builds."
+msgstr "Scarica e installa gli eseguibili Windows di Kodi; seleziona da Nightlies, Release, Snapshot e Test-build."
 
 msgctxt "Addon Disclaimer"
 msgid "UWP not supported! Not intended for Kodi installation through the Windows Store."
@@ -31,7 +31,7 @@ msgstr "UWP non supportato! Non destinato all'installazione di Kodi tramite Wind
 
 msgctxt "#30000"
 msgid "Enable Debugging [Log errors]"
-msgstr "Abilita debug [Registra errori]"
+msgstr "Abilita debug [registra errori]"
 
 msgctxt "#30001"
 msgid "Something went wrong, Try again later..."
@@ -43,7 +43,7 @@ msgstr "Download in corso..."
 
 msgctxt "#30003"
 msgid "Keep all downloads?"
-msgstr "Conservare tutti i download?"
+msgstr "Mantenere tutti i download?"
 
 msgctxt "#30004"
 msgid "File already exists"
@@ -63,7 +63,7 @@ msgstr "Installazione completata, file rimosso"
 
 msgctxt "#30008"
 msgid "Cleanup download after installation"
-msgstr "Pulizia file di installazione scaricati"
+msgstr "Elimina il file scaricato dopo l'installazione"
 
 msgctxt "#30009"
 msgid "UWP Installations Not Supported!"
@@ -87,7 +87,7 @@ msgstr "Piattaforma Windows attuale (%s)"
 
 msgctxt "#30015"
 msgid "Semi-stable (Monthly builds)."
-msgstr "Semistabile (build mensili)."
+msgstr "Semi-stabile (build mensili)."
 
 msgctxt "#30016"
 msgid "Stable (Final releases)."
@@ -99,7 +99,7 @@ msgstr "Instabile (build giornaliere)."
 
 msgctxt "#30018"
 msgid "Experimental (Debugging builds)."
-msgstr "Sperimentale (debug build)."
+msgstr "Sperimentale (build di debug)."
 
 msgctxt "#30019"
 msgid "Incompatible platform"
@@ -107,15 +107,15 @@ msgstr "Piattaforma incompatibile"
 
 msgctxt "#30020"
 msgid "Enable Silent Installation"
-msgstr "Abilita installazione silenziosa"
+msgstr "Abilita installazione invisibile all'utente"
 
 msgctxt "#30021"
 msgid "Current Kodi Branch (%s.%s-%s)"
-msgstr "Branch Kodi attuale (%s.%s-%s)"
+msgstr "Branch attuale Kodi (%s.%s-%s)"
 
 msgctxt "#30023"
 msgid "[B]Downloading:[/B]"
-msgstr "[B]Download:[/B]"
+msgstr "[B]Download in corso:[/B]"
 
 msgctxt "#30024"
 msgid " | [B]Speed:[/B]"
