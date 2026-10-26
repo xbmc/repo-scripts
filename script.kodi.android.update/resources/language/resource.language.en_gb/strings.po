@@ -127,3 +127,11 @@ msgstr ""
 msgctxt "#30025"
 msgid " | [B]ETA:[/B]"
 msgstr ""
+
+msgctxt "#30026"
+msgid "Permission Required\nKodi needs full storage access to install this APK.\nPlease select 'Permissions' -> 'Files and Media' -> 'Allow all the time' on the next screen."
+msgstr ""
+
+msgctxt "#30027"
+msgid "Kodi will close in %s seconds to open the downloaded installer.\nSelect Cancel to keep Kodi running."
+msgstr ""

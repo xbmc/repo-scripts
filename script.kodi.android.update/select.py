@@ -1,4 +1,4 @@
-#  Copyright (C) 2024 Team-Kodi
+#  Copyright (C) 2026 Team-Kodi
 #
 #  This file is part of script.kodi.android.update
 #
@@ -8,7 +8,7 @@
 # -*- coding: utf-8 -*-
 
 import traceback
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
+from kodi_six import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 
 # Plugin Info
 ADDON_ID      = 'script.kodi.android.update'
@@ -26,11 +26,11 @@ APP_ICON      = 'androidapp://sources/apps/%s.png'
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
-    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
+    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, level)
 
 def selectDialog(label, items, pselect=-1, uDetails=True):
     select = xbmcgui.Dialog().select(label, items, preselect=pselect, useDetails=uDetails)
-    if select: return select
+    if select >= 0: return select
     return None
     
 class Select(object):
