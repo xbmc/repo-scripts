@@ -8,7 +8,7 @@
 # -*- coding: utf-8 -*-
 
 import platform, traceback, json
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
+from kodi_six import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 
 # Plugin Info
 ADDON_ID      = 'script.kodi.android.update'
@@ -57,25 +57,21 @@ class Service(object):
             
     def getPlatform(self): 
         log('getPlatform')
-        count = 0
         try:
-            while not self.myMonitor.abortRequested() and count < 15:
-                count += 1 
-                if self.myMonitor.waitForAbort(1): return
+            for count in range(15):
                 build = platform.machine()
                 if len(build) > 0: return REAL_SETTINGS.setSetting("Platform",build)
-        except Exception as e: log("getVersion Failed! " + str(e), xbmc.LOGERROR)
+                if self.myMonitor.waitForAbort(1): return
+        except Exception as e: log("getPlatform Failed! " + str(e), xbmc.LOGERROR)
               
               
     def getVersion(self):
         log('getVersion')
-        count = 0
         try:
-            while not self.myMonitor.abortRequested() and count < 15:
-                count += 1 
-                if self.myMonitor.waitForAbort(1): return
+            for count in range(15):
                 build = (xbmc.getInfoLabel('System.OSVersionInfo') or 'busy')
                 if build.lower() != 'busy': return REAL_SETTINGS.setSetting("Version",str(build))
+                if self.myMonitor.waitForAbort(1): return
         except Exception as e: log("getVersion Failed! " + str(e), xbmc.LOGERROR)
         
         
