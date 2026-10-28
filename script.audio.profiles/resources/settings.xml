@@ -1,0 +1,930 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.audio.profiles">
+		<category help="" id="profiles 1-5" label="32000">
+			<group id="1">
+				<setting help="" id="version_upgrade" label="hidden_upgrade" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition name="InfoBool" on="property">false</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>hidden_upgrade</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile1" label="32007" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name1" label="32001" parent="profile1" type="string">
+					<level>0</level>
+					<default>Digital</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile1">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32001</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile2" label="32008" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name2" label="32003" parent="profile2" type="string">
+					<level>0</level>
+					<default>Analog</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile2">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32003</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile3" label="32009" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name3" label="32005" type="string">
+					<level>0</level>
+					<default>Headphones</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile3">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32005</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile4" label="32010" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name4" label="32006" type="string">
+					<level>0</level>
+					<default>HDMI</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile4">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32006</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile5" label="32051" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name5" label="32052" type="string">
+					<level>0</level>
+					<default>Other</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile5">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32052</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="profiles 6-10" label="32070">
+			<group id="1">
+				<setting help="" id="profile6" label="32053" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name6" label="32054" type="string">
+					<level>0</level>
+					<default>Profile 6</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile6">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32054</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile7" label="32055" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name7" label="32056" type="string">
+					<level>0</level>
+					<default>Profile 7</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile7">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32056</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile8" label="32057" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name8" label="32058" type="string">
+					<level>0</level>
+					<default>Profile 8</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile8">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32058</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile9" label="32059" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name9" label="32060" type="string">
+					<level>0</level>
+					<default>Profile 9</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile9">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32060</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile10" label="32061" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="name10" label="32062" type="string">
+					<level>0</level>
+					<default>Profile 10</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="profile10">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32062</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="hdmi-cec" label="32027">
+			<group id="1">
+				<setting help="" id="profile1_cec" label="32007" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32007</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile2_cec" label="32008" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32008</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile3_cec" label="32009" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32009</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile4_cec" label="32010" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32010</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile5_cec" label="32051" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32051</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile6_cec" label="32053" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32053</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile7_cec" label="32055" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32055</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile8_cec" label="32057" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32057</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile9_cec" label="32059" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32059</heading>
+					</control>
+				</setting>
+				<setting help="" id="profile10_cec" label="32061" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32028">1</option>
+							<option label="32029">2</option>
+							<option label="32030">3</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32061</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="auto switch" label="32014">
+			<group id="1">
+				<setting help="" id="auto_gui" label="32021" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32021</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_movies" label="32022" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32022</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_tvshows" label="32023" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32023</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_pvr_tv" label="32024" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32024</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_videos" label="32031" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32031</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_music" label="32025" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32025</heading>
+					</control>
+				</setting>
+				<setting help="" id="aggressive_music_match" label="32074" parent="auto_music" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="auto_music">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="auto_musicvideo" label="32032" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32032</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_pvr_radio" label="32034" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32034</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_unknown" label="32033" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32033</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="codec detection" label="32063">
+			<group id="1">
+				<setting help="" id="codec_delay" label="32073" type="integer">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<minimum>0</minimum>
+						<step>1</step>
+						<maximum>10</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="auto_ac3" label="32064" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32064</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_eac3" label="32065" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32065</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_dts" label="32066" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32066</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_dtshd" label="32067" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32067</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_truehd" label="32068" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32068</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_othercodec" label="32069" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32069</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="2" label="32049">
+				<setting help="" id="auto_stereo" label="32071" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32071</heading>
+					</control>
+				</setting>
+				<setting help="" id="auto_multichannel" label="32072" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32072</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="extras" label="32048">
+			<group id="1">
+				<setting help="" id="volume" label="32004" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="player" label="32011" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="video" label="32012" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="player_show" label="32015" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="auto_default" label="32038" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32026">0</option>
+							<option label="32007">1</option>
+							<option label="32008">2</option>
+							<option label="32009">3</option>
+							<option label="32010">4</option>
+							<option label="32051">5</option>
+							<option label="32053">6</option>
+							<option label="32055">7</option>
+							<option label="32057">8</option>
+							<option label="32059">9</option>
+							<option label="32061">10</option>
+							<option label="32045">11</option>
+						</options>
+					</constraints>
+					<control format="string" type="list">
+						<heading>32038</heading>
+					</control>
+				</setting>
+				<setting help="" id="force_auto_default" label="32041" parent="auto_default" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="auto_default">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="use_custom_skin_menu" label="32046" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="include_skin_mods" label="32047" parent="use_custom_skin_menu" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="use_custom_skin_menu">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="player_autoclose" label="32016" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="player_autoclose_delay" label="32039" parent="player_autoclose" type="integer">
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>30</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="player_autoclose">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="notifications" label="32018">
+			<group id="1">
+				<setting help="" id="notify" label="32019" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="notify_time" label="32039" parent="notify" type="integer">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>30</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="notify">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="notify_auto" label="32042" parent="notify_time" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="notify">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="notify_manual" label="32043" parent="notify_auto" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="notify">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="notify_maintenance" label="32044" parent="notify_manual" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="notify">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="debug" label="32040" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

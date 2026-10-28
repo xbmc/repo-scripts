@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+    <animation type="windowOpen">
+        <effect type="fade" start="0" end="100" time="300"/>
+    </animation>
+    <animation type="windowClose">
+        <effect type="fade" start="100" end="0" time="300"/>
+    </animation>
+	<controls>
+		<control type="group" id="10072">
+			<width>640</width>
+			<control type="group">
+				<height>108</height>
+				<control type="image">
+		            <texture>colors/black.png</texture>
+        		    <colordiffuse>E9FFFFFF</colordiffuse>
+				</control>				
+				<control type="label" id="10071">
+					<top>20</top>
+					<left>20</left>
+					<height>72</height>
+					<width>600</width>
+					<font>pageTitle</font>
+					<aligny>center</aligny>
+					<textcolor>highlight</textcolor>
+					<label></label>
+				</control>
+			</control>
+			<control type="group" id="10073">
+				<control type="image">
+					<height>20</height>
+		            <texture>colors/black.png</texture>
+        		    <colordiffuse>E9FFFFFF</colordiffuse>
+				</control>				
+			</control>
+			<control type="panel" id="10070">
+				<top>108</top>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<orientation>vertical</orientation>
+				<itemlayout height="72">
+					<control type="image">
+			            <texture>colors/black.png</texture>
+        			    <colordiffuse>E9FFFFFF</colordiffuse>
+					</control>				
+					<control type="label">
+						<left>40</left>
+						<width>580</width>
+						<height>72</height>
+						<aligny>center</aligny>
+						<font>buttonTitle</font>
+						<textcolor>textActive</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="72">
+					<control type="image">
+			            <texture>colors/black.png</texture>
+        			    <colordiffuse>E9FFFFFF</colordiffuse>
+					</control>				
+					<control type="image">
+						<left>20</left>
+						<width>600</width>						
+						<texture colordiffuse="highlight">colors/white.png</texture>
+					</control>
+					<control type="label">
+						<left>40</left>
+						<width>580</width>
+						<height>72</height>
+						<aligny>center</aligny>
+						<font>buttonTitle</font>
+						<textcolor>textActive</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>
