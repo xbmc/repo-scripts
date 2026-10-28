@@ -1,0 +1,1342 @@
+# Kodi Media Center language file
+# Addon Name: CableBox 42
+# Addon id: script.cablebox42
+msgid ""
+msgstr ""
+"Project-Id-Version: script.cablebox42\n"
+"Report-Msgid-Bugs-To: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Settings
+msgctxt "#32000"
+msgid "Programming"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Commercials folder"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Bumps / station ID folder"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Guide channel music folder (optional)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Guide title"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Commercial breaks per half hour"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Schedule ahead (hours)"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Viewing"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Start on channel (0 = last watched)"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Show channel banner for (seconds)"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Static between channels"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Static sound"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Ask before turning off"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Go straight to TV when opened"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Turn the TV on when Kodi starts"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Sleep timer also puts the TV in standby (CEC)"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Weather"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Weather data from"
+msgstr ""
+
+msgctxt "#32022"
+msgid "City or lat,lon (for Open-Meteo)"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Units"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Weather channel title"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Weather channel music folder (smooth jazz!)"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Automatic"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Kodi weather service only"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Open-Meteo only"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Fahrenheit"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Celsius"
+msgstr ""
+
+msgctxt "#32900"
+msgid "CHANNEL"
+msgstr ""
+
+msgctxt "#32901"
+msgid "CURRENT CONDITIONS"
+msgstr ""
+
+msgctxt "#32902"
+msgid "LOCAL FORECAST"
+msgstr ""
+
+msgctxt "#32903"
+msgid "EXTENDED FORECAST"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Lo"
+msgstr ""
+
+msgctxt "#32905"
+msgid "Hi"
+msgstr ""
+
+msgctxt "#32906"
+msgid "THE NEXT FEW HOURS"
+msgstr ""
+
+msgctxt "#32907"
+msgid "No weather data yet"
+msgstr ""
+
+msgctxt "#32908"
+msgid "Kodi: Settings › Services › Weather  —  or set your city in CableBox 42 › Settings › Weather"
+msgstr ""
+
+# Interface
+msgctxt "#32100"
+msgid "Cartoon Corner"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Comedy Channel"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Drama Net"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Sci-Fi Channel"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Documentary 42"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Kids TV"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Family Channel"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Reality TV"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Action Channel"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Crime & Justice"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Mystery Channel"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Western Channel"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Game Show Channel"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Soap Channel"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Talk TV"
+msgstr ""
+
+msgctxt "#32115"
+msgid "News 42"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Reading TV shows"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Grouping by decade"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Reading movies"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Looking for studio channels"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Done"
+msgstr ""
+
+msgctxt "#32121"
+msgid "TV Guide"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Weather Channel"
+msgstr ""
+
+msgctxt "#32123"
+msgid "%s TV"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Movie Channel"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Classic Movies"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Channel %d"
+msgstr ""
+
+msgctxt "#32127"
+msgid "%s Movies"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Retro %02ds"
+msgstr ""
+
+msgctxt "#32129"
+msgid "%s Showcase"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Network (series + commercials)"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Movie channel"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Loop (back-to-back, no clock)"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Guide channel"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Weather channel"
+msgstr ""
+
+msgctxt "#32135"
+msgid "[B]Remote control[/B]\nCH+ / CH-, Up / Down, Page Up / Down ... change channel\nNumber keys ...................................... go to channel\nLeft ................................................... last channel\nRight ................................................ what's on now\nOK / Info ........................................... channel banner\nMenu / Context ................................. sleep timer & more\nBack / Stop ...................................... turn off the TV\n\n[B]How the schedule works[/B]\nNothing to compile.  Each channel pulls from your Kodi library (shows, genres,\ndecades, movies, smart playlists) or from folders, and its schedule writes itself\nas time goes by.  'Same show same time every day' channels air a fixed daily\nlineup and series always continue with the next episode.  Time blocks let you put\ncartoons on Saturday mornings or movies in prime time.\n\nEdit a channel and its schedule rebuilds itself from now on - episode progress is kept.\n\n[B]Fine-tuning[/B]\n'Move shows between channels': pick a show (say, Good Eats) and tick the channels it\nshould air on.  Unticking hides it there even if the channel's genre includes it.\nEach channel also has 'What's on this channel' - a checklist of everything it airs.\n\n[B]Studio channels[/B]\nAdd programming > 'A studio / network' makes e.g. a Disney channel from every movie\nand show whose studio contains 'Disney'.  Kodi tags work the same way.\n\n[B]Commercials & bumps[/B]\nPoint Settings at a folder of commercials and (optionally) bumps.  Breaks are cut\ninto shows to fill each half hour, like real cable.  Movie channels play commercials\nbetween films.  Without commercials the gap is filled with an 'Up next' card.\n'Check my commercials & bumps' shows which clips can't be used.\n\n[B]Files[/B]\nYour lineup lives in userdata/addon_data/script.cablebox42/channels.json if you\nprefer editing it by hand."
+msgstr ""
+
+msgctxt "#32136"
+msgid "Include"
+msgstr ""
+
+msgctxt "#32137"
+msgid "TV shows from my library"
+msgstr ""
+
+msgctxt "#32138"
+msgid "A TV genre"
+msgstr ""
+
+msgctxt "#32139"
+msgid "TV shows from a decade"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Movies (by genre / years / set)"
+msgstr ""
+
+msgctxt "#32141"
+msgid "A folder of videos"
+msgstr ""
+
+msgctxt "#32142"
+msgid "A Kodi smart playlist"
+msgstr ""
+
+msgctxt "#32143"
+msgid "A studio / network (e.g. Disney) - movies and shows"
+msgstr ""
+
+msgctxt "#32144"
+msgid "A Kodi tag - movies and shows"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Anything whose title contains..."
+msgstr ""
+
+msgctxt "#32146"
+msgid "Specific movies"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Add programming"
+msgstr ""
+
+msgctxt "#32148"
+msgid "Looking through your library..."
+msgstr ""
+
+msgctxt "#32149"
+msgid "Programming the channels..."
+msgstr ""
+
+msgctxt "#32150"
+msgid "Channel type"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Channel name"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Channel number"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Every day"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Weekdays"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Weekends"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Saturdays"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Sundays"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Building schedule..."
+msgstr ""
+
+msgctxt "#32159"
+msgid "Move shows between channels"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Working out what airs where..."
+msgstr ""
+
+msgctxt "#32161"
+msgid "Checking every clip (first time can take a while)..."
+msgstr ""
+
+msgctxt "#32162"
+msgid "Tip: a few dozen clips of mixed lengths (15/30/60s) fill breaks almost exactly. Unreadable files can be remuxed to .mp4 or .mkv."
+msgstr ""
+
+msgctxt "#32163"
+msgid "Commercial check"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Shows: "
+msgstr ""
+
+msgctxt "#32165"
+msgid "TV genre: %s"
+msgstr ""
+
+msgctxt "#32166"
+msgid "TV from the %ss"
+msgstr ""
+
+msgctxt "#32167"
+msgid "Movies: "
+msgstr ""
+
+msgctxt "#32168"
+msgid "Folder (%s): %s"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Smart playlist: %s"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Studio/network '%s' (%s)"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Tag '%s' (%s)"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Title contains '%s' (%s)"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Movies and TV shows"
+msgstr ""
+
+msgctxt "#32174"
+msgid "TV shows only"
+msgstr ""
+
+msgctxt "#32175"
+msgid "Movies only"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Pick shows"
+msgstr ""
+
+msgctxt "#32177"
+msgid "Genre"
+msgstr ""
+
+msgctxt "#32178"
+msgid "Any genre"
+msgstr ""
+
+msgctxt "#32179"
+msgid "Limit to a range of years?"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Choose folder"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Each sub-folder is a show (episodes in order)"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Play files in random order"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Play files in order"
+msgstr ""
+
+msgctxt "#32184"
+msgid "How should this folder air?"
+msgstr ""
+
+msgctxt "#32185"
+msgid "Choose smart playlist"
+msgstr ""
+
+msgctxt "#32186"
+msgid "Studios / networks (pick one or more)"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Tags (pick one or more)"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Title contains"
+msgstr ""
+
+msgctxt "#32189"
+msgid "Do you have a folder of old commercials?[CR][CR]They fill the breaks like real cable TV. You can add this later in Settings."
+msgstr ""
+
+msgctxt "#32190"
+msgid "Commercials folder"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Do you have a folder of bumps / station IDs?[CR](Short clips played right before the show comes back.)"
+msgstr ""
+
+msgctxt "#32192"
+msgid "Bumps folder"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Your city for the Weather Channel (optional, e.g. Dickson, TN)"
+msgstr ""
+
+msgctxt "#32194"
+msgid "Keep which channels? (you can fine-tune shows afterwards)"
+msgstr ""
+
+msgctxt "#32195"
+msgid "I couldn't find any TV shows or movies in your Kodi library.[CR]Scan your media into the library first, or add folder channels in the Channel Manager."
+msgstr ""
+
+msgctxt "#32196"
+msgid "Your lineup is ready:[CR]%s[CR][CR]Start watching?"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Rebuild every channel's schedule from now?[CR]Episode progress is kept."
+msgstr ""
+
+msgctxt "#32198"
+msgid "[B]+ Add a channel[/B]"
+msgstr ""
+
+msgctxt "#32199"
+msgid "[B]Rearrange channel numbers[/B]"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Channel manager"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Channel %d is %s"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Slide the channels in between over by one"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Pick a channel to move"
+msgstr ""
+
+msgctxt "#32205"
+msgid "[B]+ Add a time block[/B]"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Time blocks override the normal programming"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Sign-off hours (color bars)"
+msgstr ""
+
+msgctxt "#32208"
+msgid "%d %s - next 12 hours"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Nothing scheduled - add programming to this channel."
+msgstr ""
+
+msgctxt "#32210"
+msgid "Reading %s..."
+msgstr ""
+
+msgctxt "#32211"
+msgid "Nothing on this channel yet - add programming first."
+msgstr ""
+
+msgctxt "#32212"
+msgid "Untick what doesn't belong on %s"
+msgstr ""
+
+msgctxt "#32213"
+msgid "TV shows"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32215"
+msgid "No program channels yet."
+msgstr ""
+
+msgctxt "#32216"
+msgid "Commercials"
+msgstr ""
+
+msgctxt "#32217"
+msgid "Bumps"
+msgstr ""
+
+msgctxt "#32218"
+msgid "No commercials or bumps folder is set.[CR]Set them in Settings > Programming."
+msgstr ""
+
+msgctxt "#32219"
+msgid "all genres"
+msgstr ""
+
+msgctxt "#32220"
+msgid "movies + shows"
+msgstr ""
+
+msgctxt "#32221"
+msgid "No TV shows found in your Kodi library."
+msgstr ""
+
+msgctxt "#32222"
+msgid "TV genre"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Decade"
+msgstr ""
+
+msgctxt "#32224"
+msgid "From year"
+msgstr ""
+
+msgctxt "#32225"
+msgid "To year"
+msgstr ""
+
+msgctxt "#32226"
+msgid "Limit to one movie set/collection?"
+msgstr ""
+
+msgctxt "#32227"
+msgid "Movie set"
+msgstr ""
+
+msgctxt "#32228"
+msgid "No tags in your Kodi library yet.[CR]Tip: in Kodi, open a movie or show's information > Manage > Manage tags, e.g. tag everything 'Disney'."
+msgstr ""
+
+msgctxt "#32229"
+msgid "Pick movies"
+msgstr ""
+
+msgctxt "#32230"
+msgid "You already have %d channels"
+msgstr ""
+
+msgctxt "#32231"
+msgid "Replace my lineup"
+msgstr ""
+
+msgctxt "#32232"
+msgid "Add the auto channels after my current ones"
+msgstr ""
+
+msgctxt "#32233"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#32234"
+msgid "%3d  %s   [COLOR grey]%s[/COLOR]"
+msgstr ""
+
+msgctxt "#32235"
+msgid "Swap them  (%s goes to %d)"
+msgstr ""
+
+msgctxt "#32236"
+msgid "[B]Close the gaps (renumber 2, 3, 4...)[/B]"
+msgstr ""
+
+msgctxt "#32237"
+msgid "Start numbering at"
+msgstr ""
+
+msgctxt "#32238"
+msgid "Move %s to channel"
+msgstr ""
+
+msgctxt "#32239"
+msgid "Channel %d is already taken."
+msgstr ""
+
+msgctxt "#32240"
+msgid "On"
+msgstr ""
+
+msgctxt "#32241"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32242"
+msgid "[B]Preview today's schedule[/B]"
+msgstr ""
+
+msgctxt "#32243"
+msgid "[COLOR red]Delete channel[/COLOR]"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Name"
+msgstr ""
+
+msgctxt "#32245"
+msgid "[B]+ Add programming[/B]"
+msgstr ""
+
+msgctxt "#32246"
+msgid "Programming on %s"
+msgstr ""
+
+msgctxt "#32247"
+msgid "Name (e.g. Prime Time, Saturday Cartoons)"
+msgstr ""
+
+msgctxt "#32248"
+msgid "Prime Time"
+msgstr ""
+
+msgctxt "#32249"
+msgid "Starts at"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Ends at"
+msgstr ""
+
+msgctxt "#32251"
+msgid "[B]+ Add off-air hours[/B]"
+msgstr ""
+
+msgctxt "#32252"
+msgid "Sign off at"
+msgstr ""
+
+msgctxt "#32253"
+msgid "Sign on at"
+msgstr ""
+
+msgctxt "#32254"
+msgid "[B]%8s[/B]   %s   [COLOR grey]%s[/COLOR]"
+msgstr ""
+
+msgctxt "#32255"
+msgid "[COLOR grey]not on any channel[/COLOR]"
+msgstr ""
+
+msgctxt "#32256"
+msgid "Pick a %s, then tick its channels"
+msgstr ""
+
+msgctxt "#32257"
+msgid "[B]%s[/B]  [COLOR grey]%s[/COLOR]"
+msgstr ""
+
+msgctxt "#32258"
+msgid "  [COLOR red]No usable clips found[/COLOR]"
+msgstr ""
+
+msgctxt "#32259"
+msgid "Build my lineup automatically"
+msgstr ""
+
+msgctxt "#32260"
+msgid "Check my commercials & bumps"
+msgstr ""
+
+msgctxt "#32261"
+msgid "Rebuild schedules"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Help"
+msgstr ""
+
+msgctxt "#32264"
+msgid "set: "
+msgstr ""
+
+msgctxt "#32265"
+msgid " +%d more"
+msgstr ""
+
+msgctxt "#32266"
+msgid "Type part of a name  -  %d of %d shown"
+msgstr ""
+
+msgctxt "#32267"
+msgid "[B]Show everything[/B]"
+msgstr ""
+
+msgctxt "#32268"
+msgid "%3d   %s   [COLOR grey](%s, %d source%s)[/COLOR]"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Name: %s"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Number: %d"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Call letters: %s"
+msgstr ""
+
+msgctxt "#32272"
+msgid "Type: %s"
+msgstr ""
+
+msgctxt "#32273"
+msgid "Programming: %d source(s)"
+msgstr ""
+
+msgctxt "#32274"
+msgid "Time blocks (prime time, Saturday mornings...): %d"
+msgstr ""
+
+msgctxt "#32275"
+msgid "Off-air hours: %s"
+msgstr ""
+
+msgctxt "#32276"
+msgid "[B]What's on this channel[/B] (%d hidden)"
+msgstr ""
+
+msgctxt "#32277"
+msgid "Commercials: %s"
+msgstr ""
+
+msgctxt "#32278"
+msgid "Break into shows for commercials: %s"
+msgstr ""
+
+msgctxt "#32279"
+msgid "Bumps: %s"
+msgstr ""
+
+msgctxt "#32280"
+msgid "Lineup style: %s"
+msgstr ""
+
+msgctxt "#32281"
+msgid "Programs start on: %s"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Channel commercials folder: %s"
+msgstr ""
+
+msgctxt "#32283"
+msgid "Channel bumps folder: %s"
+msgstr ""
+
+msgctxt "#32284"
+msgid "Remove this?[CR]%s"
+msgstr ""
+
+msgctxt "#32285"
+msgid "%s  %s-%s  %s  (%d sources)"
+msgstr ""
+
+msgctxt "#32286"
+msgid "Block"
+msgstr ""
+
+msgctxt "#32287"
+msgid "Edit programming"
+msgstr ""
+
+msgctxt "#32288"
+msgid "Change times"
+msgstr ""
+
+msgctxt "#32289"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#32290"
+msgid "Remove %s?"
+msgstr ""
+
+msgctxt "#32291"
+msgid "  %d usable clips, %d minutes total, %ds to %ds long"
+msgstr ""
+
+msgctxt "#32292"
+msgid "  [COLOR orange]%d clips skipped - length unreadable (%s):[/COLOR]"
+msgstr ""
+
+msgctxt "#32293"
+msgid "  %d clips longer than 10 minutes skipped"
+msgstr ""
+
+msgctxt "#32294"
+msgid "[B]Watch TV[/B]"
+msgstr ""
+
+msgctxt "#32295"
+msgid "[B]Search: %s[/B]"
+msgstr ""
+
+msgctxt "#32296"
+msgid "[B]Done  (%d selected)[/B]"
+msgstr ""
+
+msgctxt "#32297"
+msgid "[B]Show only selected[/B]"
+msgstr ""
+
+msgctxt "#32298"
+msgid "  (%d selected)"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Keep your %d selections?"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Search %s"
+msgstr ""
+
+msgctxt "#32301"
+msgid "%d shows, %d movies"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Add more programming to %s?"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Same show same time every day"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Shuffle"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Call letters"
+msgstr ""
+
+msgctxt "#32306"
+msgid "Type"
+msgstr ""
+
+msgctxt "#32307"
+msgid "%s for %s"
+msgstr ""
+
+msgctxt "#32308"
+msgid "Nothing matches '%s'"
+msgstr ""
+
+msgctxt "#32309"
+msgid "no clock (back to back)"
+msgstr ""
+
+msgctxt "#32310"
+msgid ":00 and :30"
+msgstr ""
+
+msgctxt "#32311"
+msgid "the hour"
+msgstr ""
+
+msgctxt "#32312"
+msgid " - selected"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Programs start on"
+msgstr ""
+
+msgctxt "#32314"
+msgid ":00 and :30 (classic TV)"
+msgstr ""
+
+msgctxt "#32315"
+msgid "every 15 minutes"
+msgstr ""
+
+msgctxt "#32316"
+msgid "no clock - back to back"
+msgstr ""
+
+msgctxt "#32317"
+msgid "Folder"
+msgstr ""
+
+msgctxt "#32318"
+msgid "Use global setting"
+msgstr ""
+
+msgctxt "#32319"
+msgid "Choose folder..."
+msgstr ""
+
+msgctxt "#32320"
+msgid "Delete %d %s?"
+msgstr ""
+
+msgctxt "#32321"
+msgid "Off the Air"
+msgstr ""
+
+msgctxt "#32322"
+msgid "No Programming"
+msgstr ""
+
+msgctxt "#32323"
+msgid "Program Guide"
+msgstr ""
+
+msgctxt "#32324"
+msgid "Local Forecast"
+msgstr ""
+
+msgctxt "#32325"
+msgid "TECHNICAL DIFFICULTIES"
+msgstr ""
+
+msgctxt "#32326"
+msgid "Please stand by"
+msgstr ""
+
+msgctxt "#32327"
+msgid "What's on now"
+msgstr ""
+
+msgctxt "#32328"
+msgid "Last channel"
+msgstr ""
+
+msgctxt "#32329"
+msgid "Sleep timer"
+msgstr ""
+
+msgctxt "#32330"
+msgid "Turn off TV"
+msgstr ""
+
+msgctxt "#32331"
+msgid "No channels yet"
+msgstr ""
+
+msgctxt "#32332"
+msgid "Open the add-on and choose 'Build my lineup'"
+msgstr ""
+
+msgctxt "#32333"
+msgid "No programming"
+msgstr ""
+
+msgctxt "#32334"
+msgid "Add sources to this channel in the Channel Manager"
+msgstr ""
+
+msgctxt "#32335"
+msgid "CableBox 42 Program Guide"
+msgstr ""
+
+msgctxt "#32336"
+msgid "Thanks for watching CableBox 42"
+msgstr ""
+
+msgctxt "#32337"
+msgid "Press OK to pick a channel"
+msgstr ""
+
+msgctxt "#32338"
+msgid "'%s' removed from %s"
+msgstr ""
+
+msgctxt "#32339"
+msgid "Channel %d not available"
+msgstr ""
+
+msgctxt "#32340"
+msgid "UP NEXT"
+msgstr ""
+
+msgctxt "#32341"
+msgid "You're watching"
+msgstr ""
+
+msgctxt "#32342"
+msgid "We'll be right back"
+msgstr ""
+
+msgctxt "#32343"
+msgid "Next: %s  %s"
+msgstr ""
+
+msgctxt "#32344"
+msgid "Don't air '%s' on %s"
+msgstr ""
+
+msgctxt "#32345"
+msgid "at %s"
+msgstr ""
+
+msgctxt "#32346"
+msgid "Coming up at %s: %s"
+msgstr ""
+
+msgctxt "#32347"
+msgid "(cont.) "
+msgstr ""
+
+msgctxt "#32348"
+msgid "Coming up at %s on %s %s:  %s"
+msgstr ""
+
+msgctxt "#32349"
+msgid "%s   (until %s)"
+msgstr ""
+
+msgctxt "#32350"
+msgid "Programming resumes at %s"
+msgstr ""
+
+msgctxt "#32351"
+msgid "%d minutes"
+msgstr ""
+
+msgctxt "#32352"
+msgid "Sleep: %s"
+msgstr ""
+
+msgctxt "#32353"
+msgid "Turn off the TV?"
+msgstr ""
+
+msgctxt "#32354"
+msgid "Calm"
+msgstr ""
+
+msgctxt "#32355"
+msgid "Sunny"
+msgstr ""
+
+msgctxt "#32356"
+msgid "Mostly Sunny"
+msgstr ""
+
+msgctxt "#32357"
+msgid "Partly Cloudy"
+msgstr ""
+
+msgctxt "#32358"
+msgid "Cloudy"
+msgstr ""
+
+msgctxt "#32359"
+msgid "Fog"
+msgstr ""
+
+msgctxt "#32360"
+msgid "Freezing Fog"
+msgstr ""
+
+msgctxt "#32361"
+msgid "Light Drizzle"
+msgstr ""
+
+msgctxt "#32362"
+msgid "Drizzle"
+msgstr ""
+
+msgctxt "#32363"
+msgid "Heavy Drizzle"
+msgstr ""
+
+msgctxt "#32364"
+msgid "Freezing Drizzle"
+msgstr ""
+
+msgctxt "#32365"
+msgid "Light Rain"
+msgstr ""
+
+msgctxt "#32366"
+msgid "Rain"
+msgstr ""
+
+msgctxt "#32367"
+msgid "Heavy Rain"
+msgstr ""
+
+msgctxt "#32368"
+msgid "Freezing Rain"
+msgstr ""
+
+msgctxt "#32369"
+msgid "Light Snow"
+msgstr ""
+
+msgctxt "#32370"
+msgid "Snow"
+msgstr ""
+
+msgctxt "#32371"
+msgid "Heavy Snow"
+msgstr ""
+
+msgctxt "#32372"
+msgid "Snow Grains"
+msgstr ""
+
+msgctxt "#32373"
+msgid "Rain Showers"
+msgstr ""
+
+msgctxt "#32374"
+msgid "Heavy Showers"
+msgstr ""
+
+msgctxt "#32375"
+msgid "Snow Showers"
+msgstr ""
+
+msgctxt "#32376"
+msgid "Thunderstorms"
+msgstr ""
+
+msgctxt "#32377"
+msgid "T-Storms & Hail"
+msgstr ""
+
+msgctxt "#32378"
+msgid "Severe T-Storms"
+msgstr ""
+
+msgctxt "#32379"
+msgid "%.2f in"
+msgstr ""
+
+msgctxt "#32380"
+msgid "%d hPa"
+msgstr ""
+
+msgctxt "#32381"
+msgid " Chance of precipitation %s."
+msgstr ""
+
+msgctxt "#32382"
+msgid "TONIGHT...Low %s."
+msgstr ""
+
+msgctxt "#32383"
+msgid "%s...%s. High %s, low %s.%s"
+msgstr ""
+
+msgctxt "#32384"
+msgid "Your Local Forecast"
+msgstr ""
+
+msgctxt "#32385"
+msgid "Weather is not set up yet.   Choose a weather service in Kodi (Settings > Services > Weather) or type your city in CableBox 42 > Settings > Weather."
+msgstr ""
+
+msgctxt "#32386"
+msgid "Humidity"
+msgstr ""
+
+msgctxt "#32387"
+msgid "Dewpoint"
+msgstr ""
+
+msgctxt "#32388"
+msgid "Feels Like"
+msgstr ""
+
+msgctxt "#32389"
+msgid "Wind"
+msgstr ""
+
+msgctxt "#32390"
+msgid "Pressure"
+msgstr ""
+
+msgctxt "#32391"
+msgid "UV Index"
+msgstr ""
+
+msgctxt "#32392"
+msgid "Conditions at %s:   %s   Temperature %s   Humidity %s   Wind %s      %s"
+msgstr ""
+
+msgctxt "#32393"
+msgid "TODAY...%s. High %s.%s"
+msgstr ""
+
+msgctxt "#32394"
+msgid "Sunrise  %s      Sunset  %s"
+msgstr ""
+
+msgctxt "#32395"
+msgid "TOMORROW"
+msgstr ""
