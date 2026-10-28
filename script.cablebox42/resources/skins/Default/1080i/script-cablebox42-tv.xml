@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CableBox 42 - the "TV set".  Everything is driven by window properties
+     set from resources/lib/tv.py, so it works with any Kodi skin. -->
+<window>
+    <defaultcontrol>9000</defaultcontrol>
+    <backgroundcolor>FF000000</backgroundcolor>
+    <controls>
+        <!-- The picture.  Kodi's own player renders here (with the device's hardware decoding). -->
+        <control type="videowindow" id="10">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <visible>String.IsEqual(Window.Property(mode),video)</visible>
+        </control>
+
+        <!-- ============ Cards: station ID / up next / technical difficulties ============ -->
+        <control type="group" id="100">
+            <visible>String.IsEqual(Window.Property(mode),card)</visible>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>card_bg.jpg</texture>
+            </control>
+            <control type="label">
+                <left>0</left><top>250</top><width>1920</width><height>60</height>
+                <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+                <shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(card_kicker)]</label>
+            </control>
+            <control type="label">
+                <left>60</left><top>330</top><width>1800</width><height>140</height>
+                <align>center</align><font>font60</font><textcolor>FFFFFFFF</textcolor>
+                <shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(card_title)]</label>
+            </control>
+            <control type="label">
+                <left>60</left><top>490</top><width>1800</width><height>70</height>
+                <align>center</align><font>font37</font><textcolor>FFE0E8FF</textcolor>
+                <shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(card_sub)]</label>
+            </control>
+            <control type="label">
+                <left>60</left><top>580</top><width>1800</width><height>60</height>
+                <align>center</align><font>font30_title</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(card_line)]</label>
+            </control>
+            <control type="label">
+                <left>0</left><top>900</top><width>1920</width><height>60</height>
+                <align>center</align><font>font27</font><textcolor>AAFFFFFF</textcolor>
+                <label>$INFO[Window.Property(ch_number)]  $INFO[Window.Property(ch_name)]   •   $INFO[System.Time]</label>
+            </control>
+        </control>
+
+        <!-- ============ Off the air ============ -->
+        <control type="group" id="110">
+            <visible>String.IsEqual(Window.Property(mode),offair)</visible>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>bars.png</texture>
+            </control>
+            <control type="image">
+                <left>460</left><top>430</top><width>1000</width><height>200</height>
+                <texture colordiffuse="DD000000">white.png</texture>
+            </control>
+            <control type="label">
+                <left>460</left><top>450</top><width>1000</width><height>70</height>
+                <align>center</align><font>font45</font><textcolor>FFFFFFFF</textcolor>
+                <label>$INFO[Window.Property(ch_name)]</label>
+            </control>
+            <control type="label">
+                <left>460</left><top>535</top><width>1000</width><height>70</height>
+                <align>center</align><font>font30_title</font><textcolor>FFDDDDDD</textcolor>
+                <label>$INFO[Window.Property(offair_line)]</label>
+            </control>
+        </control>
+
+        <!-- ============ Guide channel ============ -->
+        <control type="group" id="120">
+            <visible>String.IsEqual(Window.Property(mode),guide)</visible>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>guide_bg.jpg</texture>
+            </control>
+            <control type="label">
+                <left>70</left><top>40</top><width>1200</width><height>80</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(guide_title)]</label>
+            </control>
+            <control type="label">
+                <left>1250</left><top>40</top><width>600</width><height>80</height>
+                <align>right</align><font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[System.Time]</label>
+            </control>
+            <control type="label">
+                <left>70</left><top>140</top><width>1780</width><height>200</height>
+                <font>font37</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor>
+                <wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(guide_promo)]</label>
+                <animation effect="fade" start="0" end="100" time="600">Conditional</animation>
+            </control>
+            <!-- time header -->
+            <control type="image">
+                <left>40</left><top>370</top><width>1840</width><height>60</height>
+                <texture colordiffuse="FF1B2A78">white.png</texture>
+            </control>
+            <control type="label">
+                <left>60</left><top>370</top><width>360</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><label>$ADDON[script.cablebox42 32900]</label>
+            </control>
+            <control type="label">
+                <left>460</left><top>370</top><width>460</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><label>$INFO[Window.Property(g_t1)]</label>
+            </control>
+            <control type="label">
+                <left>940</left><top>370</top><width>460</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><label>$INFO[Window.Property(g_t2)]</label>
+            </control>
+            <control type="label">
+                <left>1420</left><top>370</top><width>440</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><label>$INFO[Window.Property(g_t3)]</label>
+            </control>
+            <!-- scrolling grid -->
+            <control type="list" id="50">
+                <left>40</left><top>440</top><width>1840</width><height>620</height>
+                <orientation>vertical</orientation>
+                <scrolltime>900</scrolltime>
+                <autoscroll time="2500">true</autoscroll>
+                <itemlayout height="88">
+                    <control type="image">
+                        <left>0</left><top>2</top><width>1840</width><height>84</height>
+                        <texture>$INFO[ListItem.Property(rowbg)]</texture>
+                    </control>
+                    <control type="label">
+                        <left>20</left><top>4</top><width>110</width><height>80</height>
+                        <font>font37</font><textcolor>FFFFD24A</textcolor><align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <left>135</left><top>4</top><width>270</width><height>80</height>
+                        <font>font27</font><textcolor>FFFFFFFF</textcolor>
+                        <label>$INFO[ListItem.Label2]</label>
+                    </control>
+                    <control type="label">
+                        <left>420</left><top>4</top><width>460</width><height>80</height>
+                        <font>font27</font><textcolor>FFFFFFFF</textcolor>
+                        <label>$INFO[ListItem.Property(c1)]</label>
+                    </control>
+                    <control type="label">
+                        <left>900</left><top>4</top><width>460</width><height>80</height>
+                        <font>font27</font><textcolor>FFDDE4FF</textcolor>
+                        <label>$INFO[ListItem.Property(c2)]</label>
+                    </control>
+                    <control type="label">
+                        <left>1380</left><top>4</top><width>440</width><height>80</height>
+                        <font>font27</font><textcolor>FFC4CCEE</textcolor>
+                        <label>$INFO[ListItem.Property(c3)]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="88">
+                    <control type="image">
+                        <left>0</left><top>2</top><width>1840</width><height>84</height>
+                        <texture>$INFO[ListItem.Property(rowbg)]</texture>
+                    </control>
+                    <control type="label">
+                        <left>20</left><top>4</top><width>110</width><height>80</height>
+                        <font>font37</font><textcolor>FFFFD24A</textcolor><align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <left>135</left><top>4</top><width>270</width><height>80</height>
+                        <font>font27</font><textcolor>FFFFFFFF</textcolor>
+                        <label>$INFO[ListItem.Label2]</label>
+                    </control>
+                    <control type="label">
+                        <left>420</left><top>4</top><width>460</width><height>80</height>
+                        <font>font27</font><textcolor>FFFFFFFF</textcolor>
+                        <label>$INFO[ListItem.Property(c1)]</label>
+                    </control>
+                    <control type="label">
+                        <left>900</left><top>4</top><width>460</width><height>80</height>
+                        <font>font27</font><textcolor>FFDDE4FF</textcolor>
+                        <label>$INFO[ListItem.Property(c2)]</label>
+                    </control>
+                    <control type="label">
+                        <left>1380</left><top>4</top><width>440</width><height>80</height>
+                        <font>font27</font><textcolor>FFC4CCEE</textcolor>
+                        <label>$INFO[ListItem.Property(c3)]</label>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+
+        <!-- ============ Weather channel ============ -->
+        <control type="group" id="130">
+            <visible>String.IsEqual(Window.Property(mode),weather)</visible>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>weather_bg.jpg</texture>
+            </control>
+            <control type="label">
+                <left>90</left><top>38</top><width>1100</width><height>90</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$INFO[Window.Property(wx_title)]</label>
+            </control>
+            <control type="label">
+                <left>1150</left><top>30</top><width>680</width><height>50</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>right</align>
+                <label>$INFO[Window.Property(wx_location)]</label>
+            </control>
+            <control type="label">
+                <left>1150</left><top>82</top><width>680</width><height>50</height>
+                <font>font27</font><textcolor>FFE0E8FF</textcolor><shadowcolor>FF000000</shadowcolor><align>right</align>
+                <label>$INFO[System.Date(ddd mmm d)]   $INFO[System.Time]</label>
+            </control>
+            <control type="fadelabel">
+                <left>40</left><top>978</top><width>1840</width><height>70</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor>
+                <scroll>true</scroll><scrollspeed>90</scrollspeed><pauseatend>0</pauseatend>
+                <label>$INFO[Window.Property(wx_ticker)]</label>
+            </control>
+        </control>
+        <control type="group">
+            <visible>String.IsEqual(Window.Property(mode),weather) + String.IsEqual(Window.Property(wx_page),current)</visible>
+            <animation effect="fade" start="0" end="100" time="400">Visible</animation>
+            <control type="label">
+                <left>150</left><top>190</top><width>700</width><height>60</height>
+                <font>font30_title</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$ADDON[script.cablebox42 32901]</label>
+            </control>
+            <control type="image">
+                <left>170</left><top>280</top><width>320</width><height>320</height>
+                <aspectratio>keep</aspectratio><texture>$INFO[Window.Property(wx_icon)]</texture>
+            </control>
+            <control type="label">
+                <left>520</left><top>300</top><width>420</width><height>140</height>
+                <font>font60</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$INFO[Window.Property(wx_temp)]</label>
+            </control>
+            <control type="label">
+                <left>520</left><top>450</top><width>520</width><height>70</height>
+                <font>font37</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$INFO[Window.Property(wx_cond)]</label>
+            </control>
+            <control type="label">
+                <left>1020</left><top>300</top><width>380</width><height>500</height>
+                <font>font37</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_labels)]</label>
+            </control>
+            <control type="label">
+                <left>1400</left><top>300</top><width>420</width><height>500</height>
+                <font>font37</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_values)]</label>
+            </control>
+        </control>
+        <control type="group">
+            <visible>String.IsEqual(Window.Property(mode),weather) + String.IsEqual(Window.Property(wx_page),forecast)</visible>
+            <animation effect="fade" start="0" end="100" time="400">Visible</animation>
+            <control type="label">
+                <left>150</left><top>190</top><width>700</width><height>60</height>
+                <font>font30_title</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$ADDON[script.cablebox42 32902]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>280</top><width>1620</width><height>640</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_text)]</label>
+            </control>
+        </control>
+        <control type="group">
+            <visible>String.IsEqual(Window.Property(mode),weather) + String.IsEqual(Window.Property(wx_page),extended)</visible>
+            <animation effect="fade" start="0" end="100" time="400">Visible</animation>
+            <control type="label">
+                <left>150</left><top>190</top><width>700</width><height>60</height>
+                <font>font30_title</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$ADDON[script.cablebox42 32903]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>280</top><width>380</width><height>60</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d1_name)]</label>
+            </control>
+            <control type="image">
+                <left>220</left><top>350</top><width>240</width><height>240</height>
+                <aspectratio>keep</aspectratio><texture>$INFO[Window.Property(wx_d1_icon)]</texture>
+            </control>
+            <control type="label">
+                <left>150</left><top>600</top><width>380</width><height>110</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_d1_cond)]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32904]</label>
+            </control>
+            <control type="label">
+                <left>340</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32905]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d1_lo)]</label>
+            </control>
+            <control type="label">
+                <left>340</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d1_hi)]</label>
+            </control>
+            <control type="label">
+                <left>570</left><top>280</top><width>380</width><height>60</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d2_name)]</label>
+            </control>
+            <control type="image">
+                <left>640</left><top>350</top><width>240</width><height>240</height>
+                <aspectratio>keep</aspectratio><texture>$INFO[Window.Property(wx_d2_icon)]</texture>
+            </control>
+            <control type="label">
+                <left>570</left><top>600</top><width>380</width><height>110</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_d2_cond)]</label>
+            </control>
+            <control type="label">
+                <left>570</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32904]</label>
+            </control>
+            <control type="label">
+                <left>760</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32905]</label>
+            </control>
+            <control type="label">
+                <left>570</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d2_lo)]</label>
+            </control>
+            <control type="label">
+                <left>760</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d2_hi)]</label>
+            </control>
+            <control type="label">
+                <left>990</left><top>280</top><width>380</width><height>60</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d3_name)]</label>
+            </control>
+            <control type="image">
+                <left>1060</left><top>350</top><width>240</width><height>240</height>
+                <aspectratio>keep</aspectratio><texture>$INFO[Window.Property(wx_d3_icon)]</texture>
+            </control>
+            <control type="label">
+                <left>990</left><top>600</top><width>380</width><height>110</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_d3_cond)]</label>
+            </control>
+            <control type="label">
+                <left>990</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32904]</label>
+            </control>
+            <control type="label">
+                <left>1180</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32905]</label>
+            </control>
+            <control type="label">
+                <left>990</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d3_lo)]</label>
+            </control>
+            <control type="label">
+                <left>1180</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d3_hi)]</label>
+            </control>
+            <control type="label">
+                <left>1410</left><top>280</top><width>380</width><height>60</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d4_name)]</label>
+            </control>
+            <control type="image">
+                <left>1480</left><top>350</top><width>240</width><height>240</height>
+                <aspectratio>keep</aspectratio><texture>$INFO[Window.Property(wx_d4_icon)]</texture>
+            </control>
+            <control type="label">
+                <left>1410</left><top>600</top><width>380</width><height>110</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_d4_cond)]</label>
+            </control>
+            <control type="label">
+                <left>1410</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32904]</label>
+            </control>
+            <control type="label">
+                <left>1600</left><top>730</top><width>190</width><height>60</height>
+                <font>font27</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32905]</label>
+            </control>
+            <control type="label">
+                <left>1410</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFB8C4E0</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d4_lo)]</label>
+            </control>
+            <control type="label">
+                <left>1600</left><top>780</top><width>190</width><height>80</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$INFO[Window.Property(wx_d4_hi)]</label>
+            </control>
+        </control>
+        <control type="group">
+            <visible>String.IsEqual(Window.Property(mode),weather) + String.IsEqual(Window.Property(wx_page),almanac)</visible>
+            <animation effect="fade" start="0" end="100" time="400">Visible</animation>
+            <control type="label">
+                <left>150</left><top>190</top><width>900</width><height>60</height>
+                <font>font30_title</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$ADDON[script.cablebox42 32906]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>280</top><width>300</width><height>560</height>
+                <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_hours_t)]</label>
+            </control>
+            <control type="label">
+                <left>470</left><top>280</top><width>250</width><height>560</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_hours_v)]</label>
+            </control>
+            <control type="label">
+                <left>740</left><top>280</top><width>1050</width><height>560</height>
+                <font>font45</font><textcolor>FFE0E8FF</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align><wrapmultiline>true</wrapmultiline>
+                <label>$INFO[Window.Property(wx_hours_c)]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>860</top><width>1620</width><height>60</height>
+                <font>font30_title</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor><align>left</align>
+                <label>$INFO[Window.Property(wx_sun)]</label>
+            </control>
+        </control>
+        <control type="group">
+            <visible>String.IsEqual(Window.Property(mode),weather) + String.IsEqual(Window.Property(wx_page),nodata)</visible>
+            <animation effect="fade" start="0" end="100" time="400">Visible</animation>
+            <control type="label">
+                <left>150</left><top>380</top><width>1620</width><height>200</height>
+                <font>font60</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align>
+                <label>$ADDON[script.cablebox42 32907]</label>
+            </control>
+            <control type="label">
+                <left>150</left><top>540</top><width>1620</width><height>200</height>
+                <font>font30_title</font><textcolor>FFE0E8FF</textcolor><shadowcolor>FF000000</shadowcolor><align>center</align><wrapmultiline>true</wrapmultiline>
+                <label>$ADDON[script.cablebox42 32908]</label>
+            </control>
+        </control>
+
+        <!-- ============ Static between channels ============ -->
+        <control type="multiimage" id="20">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <imagepath>static</imagepath>
+            <timeperimage>45</timeperimage>
+            <fadetime>0</fadetime>
+            <randomize>true</randomize>
+            <aspectratio>stretch</aspectratio>
+            <visible>String.IsEqual(Window.Property(static),1)</visible>
+        </control>
+
+        <!-- ============ Channel banner (now / next) ============ -->
+        <control type="group" id="200">
+            <visible>String.IsEqual(Window.Property(banner),1)</visible>
+            <animation effect="slide" start="0,260" end="0,0" time="250" tween="cubic" easing="out">Visible</animation>
+            <animation effect="slide" start="0,0" end="0,260" time="200">Hidden</animation>
+            <control type="image">
+                <left>0</left><top>800</top><width>1920</width><height>280</height>
+                <texture>banner_bg.png</texture>
+            </control>
+            <control type="label">
+                <left>70</left><top>830</top><width>200</width><height>110</height>
+                <font>font60</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(ch_number)]</label>
+            </control>
+            <control type="label">
+                <left>70</left><top>935</top><width>260</width><height>50</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(ch_call)]</label>
+            </control>
+            <control type="label">
+                <left>300</left><top>830</top><width>1300</width><height>50</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(ch_name)]</label>
+            </control>
+            <control type="label">
+                <left>300</left><top>875</top><width>1300</width><height>70</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(now_title)]</label>
+            </control>
+            <control type="label">
+                <left>300</left><top>945</top><width>1300</width><height>45</height>
+                <font>font27</font><textcolor>FFDDE4FF</textcolor>
+                <label>$INFO[Window.Property(now_sub)]</label>
+            </control>
+            <control type="label">
+                <left>1550</left><top>830</top><width>300</width><height>50</height>
+                <align>right</align><font>font30_title</font><textcolor>FFFFFFFF</textcolor>
+                <label>$INFO[System.Time]</label>
+            </control>
+            <control type="label">
+                <left>1450</left><top>885</top><width>400</width><height>50</height>
+                <align>right</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(now_time)]</label>
+            </control>
+            <control type="progress" id="30">
+                <left>300</left><top>998</top><width>1550</width><height>10</height>
+                <texturebg colordiffuse="55FFFFFF">white.png</texturebg>
+                <midtexture colordiffuse="FFFFD24A">white.png</midtexture>
+            </control>
+            <control type="label">
+                <left>300</left><top>1018</top><width>1550</width><height>45</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(next_line)]</label>
+            </control>
+        </control>
+
+        <!-- ============ VCR style channel number, top right ============ -->
+        <control type="group" id="300">
+            <visible>String.IsEqual(Window.Property(osd),1)</visible>
+            <control type="image">
+                <left>1490</left><top>60</top><width>110</width><height>140</height>
+                <texture>$INFO[Window.Property(d1)]</texture>
+            </control>
+            <control type="image">
+                <left>1600</left><top>60</top><width>110</width><height>140</height>
+                <texture>$INFO[Window.Property(d2)]</texture>
+            </control>
+            <control type="image">
+                <left>1710</left><top>60</top><width>110</width><height>140</height>
+                <texture>$INFO[Window.Property(d3)]</texture>
+            </control>
+        </control>
+
+        <!-- small toast (sleep timer etc.) -->
+        <control type="label">
+            <left>70</left><top>60</top><width>1300</width><height>60</height>
+            <font>font30_title</font><textcolor>FF33FF66</textcolor><shadowcolor>FF000000</shadowcolor>
+            <label>$INFO[Window.Property(toast)]</label>
+            <visible>!String.IsEmpty(Window.Property(toast))</visible>
+        </control>
+    </controls>
+</window>
