@@ -1,0 +1,340 @@
+# script.audio.profiles language file
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"PO-Revision-Date: 2023-02-06 23:15+0000\n"
+"Last-Translator: Demian <Demian@gmx.co.uk>\n"
+"Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-audio-profiles/de_de/>\n"
+"Language: de_de\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.2\n"
+
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them."
+msgstr "Audioprofile speichern und einfach zwischen diesen wechseln."
+
+msgctxt "Addon Description"
+msgid "Save audio profile and easily switch between them."
+msgstr "Audioprofile speichern und einfach zwischen diesen wechseln."
+
+msgctxt "#32000"
+msgid "Profiles 1-5"
+msgstr "Profile 1-5"
+
+msgctxt "#32001"
+msgid " Name of profile 1"
+msgstr " -Name von Profil 1"
+
+msgctxt "#32002"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#32003"
+msgid " Name of profile 2"
+msgstr " -Name von Profil 2"
+
+msgctxt "#32004"
+msgid "Include volume level"
+msgstr "Lautstärkeniveau einbeziehen"
+
+msgctxt "#32005"
+msgid " Name of profile 3"
+msgstr " -Name von Profil 3"
+
+msgctxt "#32006"
+msgid " Name of profile 4"
+msgstr " -Name von Profil 4"
+
+msgctxt "#32007"
+msgid "Profile 1"
+msgstr "Profil 1"
+
+msgctxt "#32008"
+msgid "Profile 2"
+msgstr "Profil 2"
+
+msgctxt "#32009"
+msgid "Profile 3"
+msgstr "Profil 3"
+
+msgctxt "#32010"
+msgid "Profile 4"
+msgstr "Profil 4"
+
+msgctxt "#32011"
+msgid "Include video player settings"
+msgstr "Videoplayereinstellungen einbeziehen"
+
+msgctxt "#32012"
+msgid "Include display settings"
+msgstr "Anzeigeeinstellungen einbeziehen"
+
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr "Einstellungen einbeziehen"
+
+msgctxt "#32014"
+msgid "Auto Switch"
+msgstr "Automatischer Wechsel"
+
+msgctxt "#32015"
+msgid "Show audio profile select menu on media playback"
+msgstr "Audioprofil-Auswahlmenü bei Medienwiedergabe anzeigen"
+
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr "Auswahlmenü automatisch schließen"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+msgctxt "#32019"
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+msgctxt "#32021"
+msgid "Profile for GUI"
+msgstr "Profil für die Benutzeroberfläche"
+
+msgctxt "#32022"
+msgid "Profile for movies"
+msgstr "Profil für Filme"
+
+msgctxt "#32023"
+msgid "Profile for TV shows"
+msgstr "Profil for Serien"
+
+msgctxt "#32024"
+msgid "Profile for PVR TV"
+msgstr "Profil für TV"
+
+msgctxt "#32025"
+msgid "Profile for music"
+msgstr "Profil für Musik"
+
+msgctxt "#32026"
+msgid "None"
+msgstr "Keine"
+
+msgctxt "#32027"
+msgid "HDMI-CEC"
+msgstr "HDMI-CEC"
+
+msgctxt "#32028"
+msgid "Wake Up"
+msgstr "Aufwachen"
+
+msgctxt "#32029"
+msgid "StandBy"
+msgstr "Standby"
+
+msgctxt "#32030"
+msgid "Toggle state"
+msgstr "Status ändern"
+
+msgctxt "#32031"
+msgid "Profile for videos (not in library)"
+msgstr "Profil für Videos (nicht in der Bibliothek)"
+
+msgctxt "#32032"
+msgid "Profile for music videos"
+msgstr "Profil für Musikvideos"
+
+msgctxt "#32033"
+msgid "Profile for unknown content type"
+msgstr "Profil für unbekannten Inhaltstyp"
+
+msgctxt "#32034"
+msgid "Profile for PVR radio"
+msgstr "Profil für Radio"
+
+msgctxt "#32035"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32036"
+msgid "Audio"
+msgstr "Audio"
+
+msgctxt "#32037"
+msgid "Other"
+msgstr "Andere"
+
+msgctxt "#32038"
+msgid "Profile for KODI Start/Wakeup (Default)"
+msgstr "Profil für KODI-Start/Aufwachen (Standard)"
+
+msgctxt "#32039"
+msgid " Delay before close"
+msgstr " -Vor dem Schließen verzögern"
+
+msgctxt "#32040"
+msgid "Enable debug logging"
+msgstr "Debugprotokollierung aktivieren"
+
+msgctxt "#32041"
+msgid " Force load profile at startup"
+msgstr " -Laden des Profils beim Starten erzwingen"
+
+msgctxt "#32042"
+msgid " Auto switch notifications"
+msgstr " -Benachrichtigungen für automatische Wechsel"
+
+msgctxt "#32043"
+msgid " Manual switch notifications"
+msgstr " -Benachrichtigungen für manuelle Wechsel"
+
+msgctxt "#32044"
+msgid " Maintenance notifications"
+msgstr " -Wartungsbenachrichtigungen"
+
+msgctxt "#32045"
+msgid "Select menu"
+msgstr "Auswahlmenü"
+
+msgctxt "#32046"
+msgid "Use custom select menu"
+msgstr "Benutzerdefiniertes Auswahlmenü verwenden"
+
+msgctxt "#32047"
+msgid "Include skin mods"
+msgstr "Skinmodifikationen einbeziehen"
+
+msgctxt "#32048"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32049"
+msgid "By number of channels"
+msgstr "Nach Kanalanzahl"
+
+msgctxt "#32050"
+msgid "Menu Options"
+msgstr "Menüeinstellungen"
+
+msgctxt "#32051"
+msgid "Profile 5"
+msgstr "Profil 5"
+
+msgctxt "#32052"
+msgid "Name of profile 5"
+msgstr "Name von Profil 5"
+
+msgctxt "#32053"
+msgid "Profile 6"
+msgstr "Profil 6"
+
+msgctxt "#32054"
+msgid "Name of profile 6"
+msgstr "Name von Profil 6"
+
+msgctxt "#32055"
+msgid "Profile 7"
+msgstr "Profil 7"
+
+msgctxt "#32056"
+msgid "Name of profile 7"
+msgstr "Name von Profil 7"
+
+msgctxt "#32057"
+msgid "Profile 8"
+msgstr "Profil 8"
+
+msgctxt "#32058"
+msgid "Name of profile 8"
+msgstr "Name von Profil 8"
+
+msgctxt "#32059"
+msgid "Profile 9"
+msgstr "Profil 9"
+
+msgctxt "#32060"
+msgid "Name of profile 9"
+msgstr "Name von Profil 9"
+
+msgctxt "#32061"
+msgid "Profile 10"
+msgstr "Profil 10"
+
+msgctxt "#32062"
+msgid "Name of profile 10"
+msgstr "Name von Profil 10"
+
+msgctxt "#32063"
+msgid "Codec Detection"
+msgstr "Codec-Erkennung"
+
+msgctxt "#32064"
+msgid "Profile for AC3"
+msgstr "Profil für AC3"
+
+msgctxt "#32065"
+msgid "Profile for E-AC3"
+msgstr "Profil für E-AC3"
+
+msgctxt "#32066"
+msgid "Profile for DTS"
+msgstr "Profil für DTS"
+
+msgctxt "#32067"
+msgid "Profile for DTS HD"
+msgstr "Profil für DTS HD"
+
+msgctxt "#32068"
+msgid "Profile for True HD"
+msgstr "Profil für True HD"
+
+msgctxt "#32069"
+msgid "Profile for any other audio codec"
+msgstr "Profil für alle anderen Audiocodecs"
+
+msgctxt "#32070"
+msgid "Profiles 6-10"
+msgstr "Profile 6-10"
+
+msgctxt "#32071"
+msgid "Stereo audio"
+msgstr "Stereoaudio"
+
+msgctxt "#32072"
+msgid "Multi channel audio"
+msgstr "Mehrkanalaudio"
+
+msgctxt "#32073"
+msgid "delay before reading codec info"
+msgstr "Verzögerung vor dem Auslesen der Codec-Informationen"
+
+msgctxt "#32074"
+msgid "match streams with no codec details as music"
+msgstr "Streams ohne Codec-Details als Musik zuordnen"
+
+msgctxt "#32100"
+msgid "Select profile to save settings"
+msgstr "Profil zum Sichern der Einstellungen auswählen"
+
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr "Profil konfigurieren"
+
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr "Als Profil gespeichert"
+
+msgctxt "#32103"
+msgid "This profile is disabled"
+msgstr "Dieses Profil ist deaktiviert"
+
+msgctxt "#32104"
+msgid "Invalid file for profile"
+msgstr "Ungültige Profildatei"
+
+msgctxt "#32105"
+msgid "Enable profiles"
+msgstr "Profile aktivieren"
+
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr "Audioprofil auswählen"

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol always="true">10070</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="150" end="100" center="auto" time="300" tween="cubic" easing="out" />
+		<effect type="fade" end="100" time="150" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="fade" start="100" end="0" time="100" delay="100" />
+		<effect type="zoom" start="100" end="130" center="auto" time="200" tween="cubic" easing="in" />
+	</animation>
+	<coordinates>
+		<system>1</system>
+		<left>0</left>
+		<top>0</top>
+	</coordinates>
+	<controls>
+		<control type="group" id="10072">
+			<!-- this hides the menu until it's done with setup -->
+		    <left>-10000</left>
+		    <right>-10000</right>
+			<control type="image" id="10073">
+				<description>background image</description>
+				<top>-34</top>
+				<width>600</width>
+				<height></height>
+				<texture border="40">dialogs/default/bg.png</texture>
+			</control>
+			<control type="label" id="10071">
+				<left>15</left>
+				<height>64</height>
+				<width>570</width>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>themecolor</textcolor>
+				<font>font16_title_bold</font>
+				<label></label>
+			</control>
+			<control type="grouplist" id="10070">
+				<top>64</top>
+				<left>30</left>
+				<width>600</width>
+				<height min="60" max="1080">auto</height>
+				<control type="button" id="10080">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10081">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10082">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10083">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10084">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10085">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10086">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10087">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10088">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+				<control type="button" id="10089">
+					<width>540</width>
+					<height>60</height>
+					<font>font14</font>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus border="5">button_middle_focus.png</texturefocus>
+					<texturenofocus border="5">button_middle3.png</texturenofocus>
+					<label></label>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

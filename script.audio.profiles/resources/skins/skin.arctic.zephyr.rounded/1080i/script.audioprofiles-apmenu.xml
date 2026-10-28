@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+    <defaultcontrol always="true">10070</defaultcontrol>
+
+    <onload>CancelAlarm(power_menu_setfocus_399,true)</onload>
+    <onload condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onload>
+
+	<controls>
+        <include>Background_Overlay</include>
+
+		<control type="group" id="10072">
+            <include>Animation_Dialog_Menu_Top_Side</include>
+			
+			<animation effect="slide" start="0" end="0,-86" time="0" condition="Integer.IsGreater(Container(10070).NumItems,7)">Conditional</animation>
+				
+            <top>200</top>
+            <width>606</width>
+            <centerleft>50%</centerleft>
+
+            <!-- ARROWS -->
+
+            <include content="Object_Arrows_Dialog_Vertical">
+                <param name="container_id" value="10070" />
+            </include>
+
+            <!-- DIALOG BACKGROUND -->
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="199" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,1)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="269" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,2)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="339" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,3)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="409" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,4)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="479" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,5)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="549" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,6)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="619" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,7)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="689" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,8)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="759" />
+                <param name="visible" value="Integer.IsEqual(Container(10070).NumItems,9)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="829" />
+                <param name="visible" value="Integer.IsGreater(Container(10070).NumItems,9)" />
+            </include>
+
+            <!-- HEADER -->
+			
+            <include content="Def_Dialog_Header">
+                <param name="label" value="" />
+                <param name="label_width" value="470" />
+                <param name="icon" value="$VAR[Image_Header_Audio_Profile]" />
+                <param name="label_id" value="10071" />
+            </include>
+
+            <!-- CONTAINER -->
+			
+			<control type="list" id="10070">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>112</top>
+                <left>16</left>
+                <height min="100" max="700">auto</height>
+                <width>574</width>
+                <bottom>17</bottom>
+
+				<onleft>close</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+
+				<orientation>vertical</orientation>
+
+				<itemlayout width="574" height="70">
+                    <control type="image">
+                        <top>8</top>
+                        <left>16</left>
+                        <width>56</width>
+                        <height>56</height>
+                        <texture colordiffuse="$VAR[Color_Icon_Menu_List]">$VAR[Image_Icon_List_Audio_Profile]</texture>
+                    </control>
+                    <control type="label">
+                        <left>84</left>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <width>74%</width>
+                        <height>100%</height>
+                        <centertop>50%</centertop>
+                        <font>Tiny</font>
+                        <textcolor>Dark2</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+				</itemlayout>
+				<focusedlayout width="574" height="70">
+                    <include>Def_Layout_Item_Focus</include>
+                    <control type="image">
+                        <top>8</top>
+                        <left>16</left>
+                        <width>56</width>
+                        <height>56</height>
+                        <texture colordiffuse="Selected">$VAR[Image_Icon_List_Audio_Profile]</texture>
+                    </control>
+                    <control type="label">
+                        <left>84</left>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <width>74%</width>
+                        <height>100%</height>
+                        <centertop>50%</centertop>
+                        <font>Tiny</font>
+                        <textcolor>Selected</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>
