@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cablebox42" name="CableBox 42" version="1.3.0" provider-name="Seadog McGrog">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Retro cable TV from your own library - flip channels, not menus.</summary>
+        <description lang="en_GB">CableBox 42 turns your Kodi library into a live cable TV lineup. Shows air on a real-time schedule with commercial breaks and bumps from your own clip folders, a scrolling program guide channel, a retro weather channel, static between channels and a channel banner. Lineups build themselves from your library (genres, decades, studios, tags, smart playlists or folders) and can be fine-tuned show by show - there is no schedule to compile. Playback uses Kodi's own player, so hardware decoding works exactly as it does for the rest of your library.[CR][CR]Inspired by the FieldStation42 project; not affiliated with it.</description>
+        <disclaimer lang="en_GB">Plays only media from your own Kodi library and folders. The optional weather channel uses Kodi's weather service or, if you enter a location, fetches forecasts from open-meteo.com.</disclaimer>
+        <news>v1.3.0 (2026-10-27)
+- First public release
+- Self-building schedules with commercial breaks, bumps and strip programming
+- Guide and weather channels, time blocks, sign-off hours
+- Studio/tag/title sources, per-show channel editor, searchable pickers
+- Channel renumbering with swap/slide</news>
+        <platform>all</platform>
+        <license>MPL-2.0</license>
+        <source>https://github.com/SeadogMcGrog/script.cablebox42</source>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
