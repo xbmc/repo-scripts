@@ -93,6 +93,26 @@ msgctxt "#32135"
 msgid "To use maps, get an api key at: http://openweathermap.org/appid"
 msgstr "要使用气象图，请在以下位置获取 api 密钥：http://openweathermap.org/appid"
 
+msgctxt "#32196"
+msgid "Partly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Mostly Cloudy With Flurries"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Partly Sunny With Flurries"
+msgstr ""
+
+msgctxt "#32199"
+msgid "Mostly Cloudy With Snow"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Scattered Thunderstorms Night"
+msgstr ""
+
 msgctxt "#32201"
 msgid "Thunderstorm with light rain"
 msgstr "小雨雷雨"
@@ -244,6 +264,30 @@ msgstr "乌云"
 msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "不明降水"
+
+msgctxt "#32239"
+msgid "Partly Sunny"
+msgstr ""
+
+msgctxt "#32240"
+msgid "Intermittent Clouds"
+msgstr ""
+
+msgctxt "#32241"
+msgid "Hazy Sunshine"
+msgstr ""
+
+msgctxt "#32242"
+msgid "Hazy Moonlight"
+msgstr ""
+
+msgctxt "#32243"
+msgid "Ice"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Mostly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32245"
 msgid "Flurries"
@@ -442,12 +486,12 @@ msgid "Scattered Showers"
 msgstr "零星阵雨"
 
 msgctxt "#32294"
-msgid "Scattered Snow Showers"
-msgstr "零星阵雪"
+msgid "Partly Sunny With Showers"
+msgstr ""
 
 msgctxt "#32295"
-msgid "Scattered Thundershowers"
-msgstr "分散性雷阵雨（间歇性降水）"
+msgid "Partly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32296"
 msgid "Mostly Sunny"
@@ -456,6 +500,14 @@ msgstr "晴间多云"
 msgctxt "#32297"
 msgid "Mostly Clear"
 msgstr "大部晴朗"
+
+msgctxt "#32298"
+msgid "Mostly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Partly Sunny With Thunderstorms"
+msgstr ""
 
 msgctxt "#32300"
 msgid "New Moon"
@@ -488,3 +540,11 @@ msgstr "下弦月"
 msgctxt "#32307"
 msgid "Waning Crescent"
 msgstr "下蛾眉月"
+
+#~ msgctxt "#32294"
+#~ msgid "Scattered Snow Showers"
+#~ msgstr "零星阵雪"
+
+#~ msgctxt "#32295"
+#~ msgid "Scattered Thundershowers"
+#~ msgstr "分散性雷阵雨（间歇性降水）"

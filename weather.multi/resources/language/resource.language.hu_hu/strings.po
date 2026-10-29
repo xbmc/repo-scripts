@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Kodi add-ons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-03 06:27+0000\n"
+"PO-Revision-Date: 2026-08-23 06:16+0000\n"
 "Last-Translator: Frodo19 <bilbohu@gmail.com>\n"
 "Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-weather/weather-multi/hu_hu/>\n"
 "Language: hu_hu\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9.2\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 msgctxt "Addon Summary"
 msgid "Weather forecast from several providers"
@@ -92,6 +92,26 @@ msgstr "További időjárási adatok beszerzéséhez szerezzen be egy API kulcso
 msgctxt "#32135"
 msgid "To use maps, get an api key at: http://openweathermap.org/appid"
 msgstr "A térképek használatához szerezzen be egy API kulcsot a következő címen: http://openweathermap.org/appid"
+
+msgctxt "#32196"
+msgid "Partly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Mostly Cloudy With Flurries"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Partly Sunny With Flurries"
+msgstr ""
+
+msgctxt "#32199"
+msgid "Mostly Cloudy With Snow"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Scattered Thunderstorms Night"
+msgstr ""
 
 msgctxt "#32201"
 msgid "Thunderstorm with light rain"
@@ -245,29 +265,53 @@ msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Ismeretlen csapadék"
 
+msgctxt "#32239"
+msgid "Partly Sunny"
+msgstr ""
+
+msgctxt "#32240"
+msgid "Intermittent Clouds"
+msgstr ""
+
+msgctxt "#32241"
+msgid "Hazy Sunshine"
+msgstr ""
+
+msgctxt "#32242"
+msgid "Hazy Moonlight"
+msgstr ""
+
+msgctxt "#32243"
+msgid "Ice"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Mostly Cloudy With Showers"
+msgstr ""
+
 msgctxt "#32245"
 msgid "Flurries"
-msgstr ""
+msgstr "Hózáporok"
 
 msgctxt "#32246"
 msgid "Mostly Sunny"
-msgstr ""
+msgstr "Többnyire napos"
 
 msgctxt "#32247"
 msgid "Mostly Clear"
-msgstr ""
+msgstr "Többnyire tiszta"
 
 msgctxt "#32248"
 msgid "Rain And Snow"
-msgstr ""
+msgstr "Havaseső"
 
 msgctxt "#32249"
 msgid "Fog"
-msgstr ""
+msgstr "Köd"
 
 msgctxt "#32250"
 msgid "Frigid"
-msgstr ""
+msgstr "Fagyos"
 
 msgctxt "#32251"
 msgid "Tornado"
@@ -442,19 +486,27 @@ msgid "Scattered Showers"
 msgstr "Elszórtan zápor"
 
 msgctxt "#32294"
-msgid "Scattered Snow Showers"
-msgstr "Elszórtan hózápor"
+msgid "Partly Sunny With Showers"
+msgstr ""
 
 msgctxt "#32295"
-msgid "Scattered Thundershowers"
-msgstr "Elszórtan viharok"
+msgid "Partly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32296"
 msgid "Mostly Sunny"
-msgstr ""
+msgstr "Többnyire napos"
 
 msgctxt "#32297"
 msgid "Mostly Clear"
+msgstr "Többnyire tiszta"
+
+msgctxt "#32298"
+msgid "Mostly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Partly Sunny With Thunderstorms"
 msgstr ""
 
 msgctxt "#32300"
@@ -488,3 +540,11 @@ msgstr "Utolsó negyed"
 msgctxt "#32307"
 msgid "Waning Crescent"
 msgstr "fogyó félhold"
+
+#~ msgctxt "#32294"
+#~ msgid "Scattered Snow Showers"
+#~ msgstr "Elszórtan hózápor"
+
+#~ msgctxt "#32295"
+#~ msgid "Scattered Thundershowers"
+#~ msgstr "Elszórtan viharok"
