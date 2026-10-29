@@ -1,3 +1,9 @@
+v1.2.0
+- fix yahoo weather
+
+v1.1.7
+- language update
+
 v1.1.6
 - language update
 

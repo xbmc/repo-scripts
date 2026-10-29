@@ -93,6 +93,26 @@ msgctxt "#32135"
 msgid "To use maps, get an api key at: http://openweathermap.org/appid"
 msgstr "Для использования карт погоды получите ключ API по адресу: http://openweathermap.org/appid"
 
+msgctxt "#32196"
+msgid "Partly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Mostly Cloudy With Flurries"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Partly Sunny With Flurries"
+msgstr ""
+
+msgctxt "#32199"
+msgid "Mostly Cloudy With Snow"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Scattered Thunderstorms Night"
+msgstr ""
+
 msgctxt "#32201"
 msgid "Thunderstorm with light rain"
 msgstr "Небольшой дождь с грозой"
@@ -244,6 +264,30 @@ msgstr "Пасмурно"
 msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Без осадков"
+
+msgctxt "#32239"
+msgid "Partly Sunny"
+msgstr ""
+
+msgctxt "#32240"
+msgid "Intermittent Clouds"
+msgstr ""
+
+msgctxt "#32241"
+msgid "Hazy Sunshine"
+msgstr ""
+
+msgctxt "#32242"
+msgid "Hazy Moonlight"
+msgstr ""
+
+msgctxt "#32243"
+msgid "Ice"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Mostly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32245"
 msgid "Flurries"
@@ -442,12 +486,12 @@ msgid "Scattered Showers"
 msgstr "Рассеянные ливни"
 
 msgctxt "#32294"
-msgid "Scattered Snow Showers"
-msgstr "Разрозненные снежные дожди"
+msgid "Partly Sunny With Showers"
+msgstr ""
 
 msgctxt "#32295"
-msgid "Scattered Thundershowers"
-msgstr "Разрозненные грозовые дожди"
+msgid "Partly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32296"
 msgid "Mostly Sunny"
@@ -456,6 +500,14 @@ msgstr "Преимущественно солнечно"
 msgctxt "#32297"
 msgid "Mostly Clear"
 msgstr "Преимущественно ясно"
+
+msgctxt "#32298"
+msgid "Mostly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Partly Sunny With Thunderstorms"
+msgstr ""
 
 msgctxt "#32300"
 msgid "New Moon"
@@ -488,3 +540,11 @@ msgstr "Последняя четверть"
 msgctxt "#32307"
 msgid "Waning Crescent"
 msgstr "Старая луна"
+
+#~ msgctxt "#32294"
+#~ msgid "Scattered Snow Showers"
+#~ msgstr "Разрозненные снежные дожди"
+
+#~ msgctxt "#32295"
+#~ msgid "Scattered Thundershowers"
+#~ msgstr "Разрозненные грозовые дожди"

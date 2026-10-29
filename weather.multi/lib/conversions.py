@@ -201,14 +201,27 @@ CONDITION = {"Tornado": LANGUAGE(32251),
             "Blizzard": LANGUAGE(32291),
             "Not Available": LANGUAGE(32292),
             "Scattered Showers": LANGUAGE(32293),
-            "Scattered Snow Showers": LANGUAGE(32294),
-            "Scattered Thundershowers": LANGUAGE(32295),
             "Flurries": LANGUAGE(32245), # snow flurries
             "Mostly Sunny": LANGUAGE(32246), # fair day
             "Mostly Clear": LANGUAGE(32247), # fair night
             "Rain And Snow": LANGUAGE(32248), # sleet
             "Fog": LANGUAGE(32249), # foggy
-            "Frigid": LANGUAGE(32250)} # cold
+            "Frigid": LANGUAGE(32250), # cold
+            "Partly Sunny": LANGUAGE(32239),
+            "Intermittent Clouds": LANGUAGE(32240),
+            "Hazy Sunshine": LANGUAGE(32241),
+            "Hazy Moonlight": LANGUAGE(32242),
+            "Ice": LANGUAGE(32243),
+            "Mostly Cloudy With Showers": LANGUAGE(32244),
+            "Partly Sunny With Showers": LANGUAGE(32294),
+            "Partly Cloudy With Showers": LANGUAGE(32295),
+            "Mostly Cloudy With Thunderstorms": LANGUAGE(32298),
+            "Partly Sunny With Thunderstorms": LANGUAGE(32299),
+            "Partly Cloudy With Thunderstorms": LANGUAGE(32196),
+            "Mostly Cloudy With Flurries": LANGUAGE(32197),
+            "Partly Sunny With Flurries": LANGUAGE(32198),
+            "Mostly Cloudy With Snow": LANGUAGE(32199),
+            "Scattered Thunderstorms Night": LANGUAGE(32200)}
 
 OUTLOOK = {"Tornado": "0",
            "Tropical Storm": "1",
@@ -248,22 +261,53 @@ OUTLOOK = {"Tornado": "0",
            "Mixed Rain and Hail": "35",
            "Hot": "36",
            "Isolated Thunderstorms": "37",
-           "Scattered Thunderstorms": "38",
-           "Scattered Showers": "39",
+           "Scattered Thunderstorms Day": "38",
+           "Scattered Showers Day": "39",
            "Heavy Rain": "40",
-           "Scattered Snow Showers": "41",
+           "Scattered Snow Showers Day": "41",
            "Heavy Snow": "42",
            "Blizzard": "43",
            "Not Available": "44",
-           "Scattered Showers": "45",
-           "Scattered Snow Showers": "46",
+           "Scattered Showers Night": "45",
+           "Scattered Snow Showers Night": "46",
            "Scattered Thundershowers": "47",
            "Flurries": "13", # snow flurries
            "Mostly Sunny": "34", # fair day
            "Mostly Clear": "33", # fair night
            "Rain And Snow": "18", # sleet
            "Fog": "20", # foggy
-           "Frigid": "25"} # cold
+           "Frigid": "25", # cold
+           "Partly Sunny": "30", # partly cloudy day
+           "Intermittent Clouds Day": "30", # partly cloudy day
+           "Intermittent Clouds Night": "29", # partly cloudy night
+           "Hazy Sunshine": "21", # haze
+           "Hazy Moonlight": "21", # haze
+           "Ice": "10", # freezing rain
+           "Mostly Cloudy With Showers": "11", # showers
+           "Partly Sunny With Showers": "39", # scattered showers
+           "Partly Cloudy With Showers": "45", # scattered showers night
+           "Mostly Cloudy With Thunderstorms": "4", # thunderstorms
+           "Partly Sunny With Thunderstorms": "38", # scattered thunderstorms
+           "Partly Cloudy With Thunderstorms": "47", # scattered thundershowers night
+           "Mostly Cloudy With Flurries": "13", # snow flurries
+           "Partly Sunny With Flurries": "41", # scattered snow showers
+           "Mostly Cloudy With Snow": "16", # snow
+           "Scattered Thunderstorms Night": "47"} # scattered thundershowers
+
+# yahoo labels that get a day or night icon
+DAYNIGHT = ['mostly cloudy', 'partly cloudy', 'fair', 'intermittent clouds', 'scattered showers',
+            'scattered snow showers', 'scattered thunderstorms']
+
+OUTLOOK_LOWER = {key.lower(): value for key, value in OUTLOOK.items()}
+CONDITION_LOWER = {key.lower(): value for key, value in CONDITION.items()}
+
+# convert a yahoo label to a kodi weather code, 'na' when unknown
+def get_outlook(label):
+    return OUTLOOK_LOWER.get(label.lower(), 'na')
+
+# convert a yahoo label to a localized string, the label itself when unknown
+def get_condition(label):
+    return CONDITION_LOWER.get(label.lower(), label)
 
 # convert weatherbit.io forecast codes to localized strings
 FORECAST = { '200': LANGUAGE(32201),
