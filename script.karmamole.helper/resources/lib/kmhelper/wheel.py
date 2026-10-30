@@ -129,29 +129,43 @@ def songs_of_albums(ids):
     return dedupe(out)
 
 
-def songs_in(path):
-    """Every song under a musicdb:// (or any music) folder. Genre id paths take one AudioLibrary.GetSongs call;
-    anything else is walked with Files.GetDirectory (media=music gives each song its library id)."""
+def walk(path):
+    """(songs, complete) for every song under a musicdb:// (or any music) folder. Genre id paths take one
+    AudioLibrary.GetSongs call; anything else is walked with Files.GetDirectory (media=music gives each song its library
+    id). complete is False when the MAX_DIRS / MAX_DEPTH budget cut the walk short, so the caller can say so."""
     from .common import rpc
     m = GENRE_PATH.match(path)
     if m:
-        return songs_of_genre(m.group(1))
+        return songs_of_genre(m.group(1)), True
     out, seen, todo = [], set(), [(path, 0)]
-    while todo and len(seen) < MAX_DIRS:
+    complete = True
+    while todo:
         d, depth = todo.pop(0)
         if d in seen:
             continue
+        if len(seen) >= MAX_DIRS:
+            complete = False  # folders left unvisited
+            break
         seen.add(d)
         res = rpc('Files.GetDirectory', {'directory': d, 'media': 'music'}) or {}
         for e in res.get('files') or []:
             if e.get('filetype') == 'directory':
-                if depth < MAX_DEPTH and e.get('file'):
+                if not e.get('file'):
+                    continue
+                if depth < MAX_DEPTH:
                     todo.append((e['file'], depth + 1))
+                else:
+                    complete = False  # a deeper folder is skipped
             else:
                 it = song_item(e)
                 if it:
                     out.append(it)
-    return dedupe(out)
+    return dedupe(out), complete
+
+
+def songs_in(path):
+    """Every song walk() finds under a folder (the list only)."""
+    return walk(path)[0]
 
 
 def live_shuffle():
@@ -189,10 +203,19 @@ def play_shuffled(path):
     from .common import log
     if not path:
         return False
-    items = songs_in(path)
+    items, complete = walk(path)
     ok = start_queue(shuffled(items))
-    log('play_shuffled %s: %d songs -> %s' % (path, len(items), ok))
+    log('play_shuffled %s: %d songs -> %s%s' % (path, len(items), ok, '' if complete else ' (INCOMPLETE: walk budget)'))
+    if ok and not complete:
+        notify_incomplete()
     return ok
+
+
+def notify_incomplete():
+    """Tell the user the mix holds only part of the folder (the walk hit MAX_DIRS / MAX_DEPTH)."""
+    import xbmcgui
+    from .common import localize
+    xbmcgui.Dialog().notification(localize(32001), localize(32002), xbmcgui.NOTIFICATION_WARNING, 6000)
 
 
 def play(ring, value):

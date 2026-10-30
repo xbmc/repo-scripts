@@ -33,7 +33,10 @@ def albums(sig=None):
     cached = read_json(CACHE, {})
     if sig and cached.get('v') == VERSION and cached.get('sig') == sig:
         return cached.get('albums', [])
-    r = rpc('AudioLibrary.GetAlbums', {'properties': ALBUM_PROPS}) or {}
+    r = rpc('AudioLibrary.GetAlbums', {'properties': ALBUM_PROPS})
+    if r is None:  # a failed request is not an empty library: cache nothing, so the next call asks again
+        log('library index: AudioLibrary.GetAlbums failed, not cached')
+        return []
     out = []
     for a in r.get('albums', []):
         out.append({

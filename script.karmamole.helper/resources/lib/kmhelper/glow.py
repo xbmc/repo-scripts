@@ -36,19 +36,27 @@ PRUNE_AT = 900
 class Renderer(object):
     """url -> {field: value}. Memory LRU first; files on disk are reused by name (hash of the image version).
     soft=False (the skin has 'colours' without 'softart'): colours only, no PNG is written and the Art.* fields stay
-    empty."""
+    empty.
+    keep: optional callable -> the soft-art names (special:// paths) still published; prune() never deletes those, so a
+    playing album's Art.* properties can't point at removed files."""
 
-    def __init__(self, soft=True):
+    def __init__(self, soft=True, keep=None):
         self.mem = OrderedDict()
         self._pil = None
         self.writes = 0
         self.soft = soft
+        self.keep = keep
         self.prune()
 
     def set_soft(self, soft):
         if soft != self.soft:
             self.soft = soft
             self.mem.clear()
+
+    def forget(self):
+        """Drop the per-URL memory (the 'refresh' notification): the next render() re-reads the image version stamp,
+        so a cover replaced at the same URL gets new colours and new soft-art files."""
+        self.mem.clear()
 
     def pil(self):
         if self._pil is None:
@@ -113,8 +121,14 @@ class Renderer(object):
             return
         if len(files) <= PRUNE_AT:
             return
+        try:
+            keep = {os.path.basename(n) for n in (self.keep() if self.keep else ()) if n}
+        except Exception:  # noqa: BLE001 - pruning must never stop the service
+            keep = set()
         files.sort(key=lambda p: os.path.getmtime(p), reverse=True)
         for p in files[KEEP_FILES:]:
+            if os.path.basename(p) in keep:
+                continue  # still published (the playing album, the focused item, the outgoing slot)
             try:
                 os.remove(p)
             except OSError:
@@ -229,13 +243,23 @@ class Publisher(object):
         self.prefix = prefix
         self.fader = Fader(prefix, threaded)
         self.source = None
+        self.values = self.prev = None  # what the current and the outgoing slot show (files() for the prune)
         self.slot = 'A' if prop('%s.Slot' % prefix) == 'A' else 'B'  # carry on alternating across processes
+
+    def files(self):
+        """The soft-art names this publisher has on Window(Home) right now (both slots)."""
+        out = set()
+        for values in (self.values, self.prev):
+            if values:
+                out.update(values.get(f) for f in FIELDS if f.startswith('Art.') and values.get(f))
+        return out
 
     def publish(self, source, values):
         """values None = nothing to show (no art, no PIL, unreadable): clears the current names so the skin falls back."""
         if source == self.source:
             return
         self.source = source
+        self.prev, self.values = self.values, values
         p = self.prefix
         self.slot = 'A' if self.slot == 'B' else 'B'
         for f in FIELDS:
@@ -254,6 +278,7 @@ class Publisher(object):
         if self.source is None:
             return
         self.source = None
+        self.values = self.prev = None
         self.fader.set(None)
         for f in FIELDS:
             for name in ('%s.%s' % (self.prefix, f), '%s.A.%s' % (self.prefix, f), '%s.B.%s' % (self.prefix, f)):

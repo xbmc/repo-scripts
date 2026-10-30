@@ -60,11 +60,17 @@ class SpineBuilder(object):
     def _aborted(self):
         return self.stopping.is_set() or self.monitor.abortRequested()
 
-    def _wait(self, seconds):
-        """Sleep in short slices; True as soon as Kodi asks us to stop (then return at once)."""
+    def _cancelled(self):
+        """Stop the current build: shutdown, or the running skin no longer wants spines (a skin switch mid-build). The
+        worker thread itself stays; the next request (the skin switching back) builds again."""
+        return self._aborted() or 'spines' not in getattr(self.monitor, 'features', ())
+
+    def _wait(self, seconds, cancel=None):
+        """Sleep in short slices; True as soon as Kodi asks us to stop (or `cancel()` is true), then return at once."""
+        cancel = cancel or self._aborted
         end = time.time() + seconds
         while True:
-            if self._aborted():
+            if cancel():
                 return True
             left = end - time.time()
             if left <= 0:
@@ -118,9 +124,9 @@ class SpineBuilder(object):
             self._publish(gen, index.get('count', 0))
             return
         while self._busy():
-            if self._wait(5):
+            if self._wait(5, self._cancelled):
                 return
-        if self._aborted():
+        if self._cancelled():
             return
         albums = library.albums(sig)
         old = {} if force else index.get('colours', {})
@@ -128,7 +134,7 @@ class SpineBuilder(object):
         pil = None
         decoded = 0
         for a in albums:
-            if self._aborted():
+            if self._cancelled():
                 return
             url = a.get('thumb') or ''
             if not artload.usable(url):
@@ -143,7 +149,7 @@ class SpineBuilder(object):
             if not pil:
                 break
             while self._busy():
-                if self._wait(5):
+                if self._wait(5, self._cancelled):
                     return
             data, _ = artload.load(url)
             if not data:
@@ -155,7 +161,7 @@ class SpineBuilder(object):
                 log('spine colour failed for album %s: %s' % (aid, e))
                 continue
             decoded += 1
-            if self._wait(0.03):  # yield: a full first build of 229 albums takes ~15-30 s
+            if self._wait(0.03, self._cancelled):  # yield: a full first build of 229 albums takes ~15-30 s
                 return
         if not new:
             log('no spines (no covers or no PIL)')
@@ -163,10 +169,12 @@ class SpineBuilder(object):
         gen = str(int(time.time()))
         base = os.path.join(ROOT, gen)
         for aid, c in new.items():
-            if self._aborted():
+            if self._cancelled():
                 return  # not published; the next build removes the partial folder
             for room in ('dark', 'light'):
                 write_atomic(os.path.join(base, room, aid + '.png'), colours.spine_png(c['main'], room))
+        if self._cancelled():
+            return  # skin switched away while the last files were written: publish nothing
         write_json(INDEX, {'v': VERSION, 'sig': sig, 'gen': gen, 'count': len(new), 'colours': new})
         self._publish(gen, len(new))
         # old generations: Kodi has already loaded what it shows, so they can go now

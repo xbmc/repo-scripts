@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.karmamole.helper" name="KarmaMole Skin Helper" version="1.0.0" provider-name="KarmaMole">
+<addon id="script.karmamole.helper" name="KarmaMole Skin Helper" version="1.0.3" provider-name="KarmaMole">
   <requires>
     <import addon="xbmc.python" version="3.0.1"/>
     <import addon="script.module.pil" version="1.1.7"/>
@@ -16,7 +16,7 @@
     <platform>all</platform>
     <license>GPL-2.0-or-later</license>
     <source>https://github.com/KarmaMole/kodi-skins</source>
-    <news>1.0.0 - First release as the shared KarmaMole Skin Helper (it was the Groove helper): art colours with soft art, album spines, Up next reordering, genre/style/mood wheel and true shuffle, each turned on per skin. Shuffled mixes are put in a random order by the helper, so Kodi's own shuffle setting is never changed.</news>
+    <news>1.0.3 - Fix: two helper jobs saving the same file at the same moment could collide and show a "KarmaMole Skin Helper error" pop-up. Each save now uses its own temporary file and retries briefly if the file is busy.&#10;1.0.2 - Fix: Kodi 21 could crash a few seconds after switching views while art colours were on (seen in Groove). The focused item's art is now read on Kodi's GUI thread (JSON-RPC XBMC.GetInfoLabels) instead of xbmc.getInfoLabel, which reads the view without a lock while Kodi swaps it.&#10;1.0.1 - Fixes from the Kodi repository review: a failed library request no longer leaves the genre wheel and the spines empty until the library changes; Up next moves and removals are ignored once the music has stopped, instead of changing the wrong songs; cover loading uses its own temporary file per request; soft art still on screen is never pruned; refresh re-reads replaced covers; a skin switch stops a spine build at once; a shuffled mix of a very large folder says when only part of it was queued.&#10;1.0.0 - First release as the shared KarmaMole Skin Helper (it was the Groove helper): art colours with soft art, album spines, Up next reordering, genre/style/mood wheel and true shuffle, each turned on per skin. Shuffled mixes are put in a random order by the helper, so Kodi's own shuffle setting is never changed.</news>
     <assets>
       <icon>icon.png</icon>
       <fanart>fanart.jpg</fanart>
