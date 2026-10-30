@@ -18,7 +18,7 @@ import time
 import xbmc
 
 from . import artload, features as feats
-from .common import ADDON_ID, cond, info, log, prop, set_prop, skin_is_groove
+from .common import ADDON_ID, cond, infos, log, prop, set_prop, skin_is_groove
 from .glow import Publisher, Renderer
 from .spines import SpineBuilder
 
@@ -32,6 +32,7 @@ PAUSE_COND = ('Window.IsActive(fullscreenvideo) | Window.IsActive(slideshow) | S
 VIDEO_TYPES = ('movie', 'tvshow', 'season', 'episode', 'set', 'musicvideo', 'video')
 VIDEO_ART = ('fanart', 'landscape', 'thumb', 'poster')
 MUSIC_ART = ('thumb', 'album.thumb', 'fanart')
+ART_KEYS = tuple(dict.fromkeys(VIDEO_ART + MUSIC_ART))  # one read covers both chains
 PLAYER_ART = ('Player.Art(thumb)', 'Player.Art(album.thumb)', 'MusicPlayer.Cover')
 START_DELAY = 20.0  # first spine check after login: let Home settle first
 RUNNING = 'KarmaMole.Helper.Running'   # 'true' while the service runs (skins gate on it)
@@ -100,6 +101,7 @@ class Service(xbmc.Monitor):
                 self.spines.request(force=True)
         elif msg == 'refresh':  # republish everything (e.g. after the skin reloaded)
             if self.colours:
+                self.renderer.forget()  # else a URL memory hit keeps a replaced cover's old colours
                 self.browse.source = self.playing.source = None
                 self.done = self.player_key = None
             if 'spines' in self.features:
@@ -155,7 +157,7 @@ class Service(xbmc.Monitor):
         colours = 'colours' in want
         if colours and not self.colours:
             if self.renderer is None:
-                self.renderer = Renderer(soft='softart' in want)
+                self.renderer = Renderer(soft='softart' in want, keep=self.published_files)
                 self.browse = Publisher('Groove')
                 self.playing = Publisher('Groove.Player')
             self.player_dirty = True
@@ -175,13 +177,25 @@ class Service(xbmc.Monitor):
             self.spines.republish()
         self.features, self.colours, self.enabled, self.skin = want, colours, bool(want), skin
 
+    def published_files(self):
+        """Soft-art files on Window(Home) right now: the renderer's prune keeps them."""
+        out = set()
+        for pub in (self.browse, self.playing):
+            if pub is not None:
+                out |= pub.files()
+        return out
+
     # ------------------------------------------------------------------------------------------- browsing
     def focused_art(self):
         cid = prop('Groove.Helper.Container')
         base = 'Container(%s).ListItem' % cid if cid.isdigit() else 'ListItem'
-        keys = VIDEO_ART if info(base + '.DBType') in VIDEO_TYPES else MUSIC_ART
+        # one GUI-thread read of the type and every art key (common.infos: getInfoLabel on ListItem.* races a view
+        # switch and crashed Kodi 21.2)
+        names = [base + '.DBType'] + ['%s.Art(%s)' % (base, k) for k in ART_KEYS]
+        got = infos(*names)
+        keys = VIDEO_ART if got.get(names[0], '') in VIDEO_TYPES else MUSIC_ART
         for k in keys:
-            v = info('%s.Art(%s)' % (base, k))
+            v = got.get('%s.Art(%s)' % (base, k), '')
             if artload.usable(v):
                 return v
         return ''
@@ -209,12 +223,13 @@ class Service(xbmc.Monitor):
         if not self.music:
             return
         art = ''
+        got = infos('MusicPlayer.Album', *PLAYER_ART)  # GUI-thread read, see focused_art
         for label in PLAYER_ART:
-            v = info(label)
+            v = got.get(label, '')
             if artload.usable(v):
                 art = v
                 break
-        key = (info('MusicPlayer.Album'), art)  # not the artist: compilations change it every track
+        key = (got.get('MusicPlayer.Album', ''), art)  # not the artist: compilations change it every track
         if key == self.player_key:
             self.player_pending = None
         elif key == self.player_pending:  # the same new key on two polls: settled (art can lag the track)
