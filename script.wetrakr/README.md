@@ -43,6 +43,16 @@ The addon is distributed as a single zip file. Download it from the latest [GitH
 
 Advanced: the API URL can be overridden in the addon settings (default: `https://api.wetrakr.com`).
 
+## Next Episodes widget
+
+Your WeTrakr Next Episodes, including what you watched in other apps, as a skin widget. In your skin settings, add a widget and pick **Video add-ons > WeTrakr Scrobbler > Next Episodes**, or use this path:
+
+```
+plugin://script.wetrakr/?action=next_episodes&reload=$INFO[Window(Home).Property(WeTrakr.Widgets.Reload)]
+```
+
+The `reload` part makes the widget refresh after a scrobble or a sync. Episodes you have in the Kodi library play the local file. The others open with [TMDb Helper](https://github.com/jurialmunkey/plugin.video.themoviedb.helper) when it is installed (Settings > Widgets).
+
 ## Development
 
 The addon is pure Python (Kodi 19+, `xbmc.python` 3.0.0). No build step.

@@ -9,6 +9,8 @@ import json
 import xbmc
 import xbmcaddon
 
+from resources.lib import utils
+
 try:
     from urllib.request import Request, urlopen
     from urllib.error import URLError, HTTPError
@@ -56,7 +58,7 @@ class WeTrakrAPI:
 
         req = Request(self.url, data=body, method="POST")
         req.add_header("Content-Type", "application/json")
-        req.add_header("User-Agent", "WeTrakr-Kodi/1.1.6")
+        req.add_header("User-Agent", utils.user_agent())
 
         if debug:
             xbmc.log("[WeTrakr] POST {} | {}".format(self.url, payload), xbmc.LOGINFO)
