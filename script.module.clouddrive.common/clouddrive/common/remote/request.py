@@ -61,7 +61,7 @@ class Request(object):
     
     def __init__(self, url, data, headers=None, tries=4, delay=5, backoff=2, exceptions=None, \
                  before_request=None, on_exception=None, on_failure=None, on_success=None, on_complete=None, on_update_download=None, \
-                 cancel_operation=None, waiting_retry=None, wait=None, read_content=True, download_path=None):
+                 cancel_operation=None, waiting_retry=None, wait=None, read_content=True, download_path=None, timeout=None):
         self.url = url
         if isinstance(data, str):
             self.data = Utils.encode(data)
@@ -85,6 +85,8 @@ class Request(object):
         self.read_content = read_content
         self.download_path = download_path
         self.on_update_download = on_update_download
+        # Seconds without an answer (connecting or reading) before giving up. None waits as long as the system allows.
+        self.timeout = timeout
     
     def get_url_for_report(self, url):
         return redact(url)
@@ -123,7 +125,7 @@ class Request(object):
             try:
                 Logger.debug(request_report)
                 req = urllib.request.Request(self.url, self.data, self.headers)
-                response = urllib.request.urlopen(req)
+                response = urllib.request.urlopen(req, timeout=self.timeout) if self.timeout else urllib.request.urlopen(req)
                 self.response_code = response.getcode()
                 self.response_info = response.info()
                 self.response_url = response.geturl()

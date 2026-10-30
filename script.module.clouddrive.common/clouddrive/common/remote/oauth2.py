@@ -29,6 +29,8 @@ from urllib.error import HTTPError
 
 
 class OAuth2(object):
+    # Timeout in seconds of the requests that don't set one; None for none.
+    request_timeout = None
     
     def _get_api_url(self):
         raise NotImplementedError()
@@ -80,6 +82,8 @@ class OAuth2(object):
         encoded_parameters = urllib.parse.urlencode(parameters)
         url = self._build_url(method, path, encoded_parameters)
         request_params = self._wrap_on_exception(request_params)
+        if self.request_timeout and 'timeout' not in request_params:
+            request_params['timeout'] = self.request_timeout
         if not headers:
             headers = Utils.default(self._get_request_headers(), {})
         content_type = Utils.get_safe_value(headers, 'content-type', '')
