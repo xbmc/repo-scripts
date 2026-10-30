@@ -18,6 +18,7 @@ import xbmcgui
 import xbmcaddon
 
 from resources.lib.notification import notify as _notify
+from resources.lib import utils
 
 try:
     from urllib.request import Request, urlopen
@@ -36,6 +37,20 @@ except Exception:
 ACTION_PREVIOUS_MENU = 10
 ACTION_NAV_BACK = 92
 
+# Outcomes of run_device_auth_flow(). The service retries OFFLINE and EXPIRED
+# later on its own; CANCELLED means the user closed the dialog on purpose, so
+# it is not shown again until they press Connect in the settings.
+AUTH_OK = "ok"
+AUTH_OFFLINE = "offline"
+AUTH_EXPIRED = "expired"
+AUTH_CANCELLED = "cancelled"
+AUTH_BUSY = "busy"
+
+# The service and RunScript(script.wetrakr, login) run in different Python
+# interpreters: a Home window property keeps them from opening two dialogs.
+_LOCK_PROP = "script.wetrakr.auth_running"
+_LOCK_TTL = 15 * 60
+
 
 def _log(msg, level=xbmc.LOGINFO):
     xbmc.log("[WeTrakr] {}".format(msg), level)
@@ -44,6 +59,53 @@ def _log(msg, level=xbmc.LOGINFO):
 def _get_api_url():
     addon = xbmcaddon.Addon("script.wetrakr")
     return addon.getSetting("api_url") or "https://api.wetrakr.com"
+
+
+def server_reachable(timeout=5):
+    """True if a TCP connection to the API host opens. Cheap enough to call
+    before the device flow, so a box that has just booted (Wi-Fi not up yet)
+    waits quietly instead of showing "Could not connect"."""
+    import socket
+    try:
+        from urllib.parse import urlsplit
+    except ImportError:  # Kodi 18
+        from urlparse import urlsplit
+    parts = urlsplit(_get_api_url())
+    host = parts.hostname
+    if not host:
+        return False
+    port = parts.port or (443 if parts.scheme == "https" else 80)
+    try:
+        socket.create_connection((host, port), timeout=timeout).close()
+        return True
+    except Exception:
+        return False
+
+
+def wait_for_server(monitor, max_wait=120, step=5):
+    """Wait up to `max_wait` seconds for the API to be reachable."""
+    deadline = time.time() + max_wait
+    while True:
+        if server_reachable():
+            return True
+        if time.time() >= deadline or monitor.waitForAbort(step):
+            return False
+
+
+def _take_lock():
+    home = xbmcgui.Window(10000)
+    held = home.getProperty(_LOCK_PROP)
+    try:
+        if held and time.time() - float(held) < _LOCK_TTL:
+            return False
+    except ValueError:
+        pass
+    home.setProperty(_LOCK_PROP, str(time.time()))
+    return True
+
+
+def _release_lock():
+    xbmcgui.Window(10000).clearProperty(_LOCK_PROP)
 
 
 def is_authenticated():
@@ -114,7 +176,7 @@ def _download_qr(url):
 
     try:
         req = Request(qr_url)
-        req.add_header('User-Agent', 'WeTrakr-Kodi/1.0.0')
+        req.add_header('User-Agent', utils.user_agent())
 
         try:
             import ssl
@@ -182,7 +244,7 @@ class AuthDialog(xbmcgui.WindowDialog):
             "resources", "media", "logo.png"
         )
         logo_w = int(dw * 0.50)
-        logo_h = int(logo_w / 3.54)  # actual aspect ratio 5337:1506
+        logo_h = int(logo_w * 261 / 1200)  # logo.png is 1200x261
         logo_x = (w - logo_w) // 2
         self.addControl(xbmcgui.ControlImage(logo_x, y, logo_w, logo_h, logo_path))
         y += logo_h + int(h * 0.015)
@@ -300,7 +362,7 @@ def request_device_code():
 
     req = Request(url, data=b'{}')
     req.add_header('Content-Type', 'application/json')
-    req.add_header('User-Agent', 'WeTrakr-Kodi/1.0.0')
+    req.add_header('User-Agent', utils.user_agent())
 
     try:
         if ctx:
@@ -327,7 +389,7 @@ def _poll_once(device_code):
     try:
         req = Request(url, data=body)
         req.add_header('Content-Type', 'application/json')
-        req.add_header('User-Agent', 'WeTrakr-Kodi/1.0.0')
+        req.add_header('User-Agent', utils.user_agent())
 
         try:
             import ssl
@@ -351,19 +413,38 @@ def _poll_once(device_code):
 
 # ─── Main flow ────────────────────────────────────────────────────
 
-def run_device_auth_flow():
+def run_device_auth_flow(interactive=True):
     """
     Full device code authorization flow with custom QR code dialog.
-    Returns True if authorized, False otherwise.
+
+    `interactive` is True when the user asked for it (Connect in the
+    settings): a server that can't be reached gets a dialog. From the service
+    it is a short notification, and the service tries again later.
+
+    Returns one of AUTH_OK, AUTH_OFFLINE, AUTH_EXPIRED, AUTH_CANCELLED or
+    AUTH_BUSY (another flow is already on screen).
     """
+    if not _take_lock():
+        _log("Device auth already running")
+        return AUTH_BUSY
+    try:
+        return _device_flow(interactive)
+    finally:
+        _release_lock()
+
+
+def _device_flow(interactive):
     # 1. Request device code from API
     code_data = request_device_code()
     if not code_data:
-        xbmcgui.Dialog().ok(
-            "WeTrakr",
-            "Could not connect to server.\nPlease try again later."
-        )
-        return False
+        if interactive:
+            xbmcgui.Dialog().ok(
+                "WeTrakr",
+                "Could not connect to server.\nPlease try again later."
+            )
+        else:
+            _notify("WeTrakr", "Can't reach WeTrakr right now. Will retry.", 5000)
+        return AUTH_OFFLINE
 
     user_code = code_data.get('user_code', '')
     device_code = code_data.get('device_code', '')
@@ -420,12 +501,16 @@ def run_device_auth_flow():
 
         _notify("WeTrakr", "Connected as {}".format(username), 5000)
         _log("Device auth completed for user: {}".format(username))
-        success = True
+        outcome = AUTH_OK
     else:
         dialog.close()
-        if not dialog.cancelled:
+        if dialog.cancelled:
+            outcome = AUTH_CANCELLED
+        elif monitor.abortRequested():
+            outcome = AUTH_EXPIRED    # Kodi is closing: no toast
+        else:
             _notify("WeTrakr", "Authorization timed out. Try again.", 5000)
-        success = False
+            outcome = AUTH_EXPIRED
 
     # Clean up temp QR file
     if qr_path:
@@ -434,4 +519,4 @@ def run_device_auth_flow():
         except Exception:
             pass
 
-    return success
+    return outcome
