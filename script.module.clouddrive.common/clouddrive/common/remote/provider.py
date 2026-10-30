@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
+import hashlib
 import time
 
 from clouddrive.common.remote.oauth2 import OAuth2
@@ -66,6 +67,8 @@ class Provider(OAuth2):
     # only ends this device's (Dropbox). The remove dialog warns about other devices only in the first case.
     revoke_ends_all_sign_ins = True
     download_requires_auth = False
+    # Providers that implement get_folder_page: browsing in the add-on then lists folders a page at a time.
+    folder_paging_supported = False
     _signin = Signin()
     _account_manager = None
     _driveid = None
@@ -150,6 +153,26 @@ class Provider(OAuth2):
         each page, on_before_add_item(item) before adding each item, and return None if cancel_operation() is true.
         """
         raise NotImplementedError()
+
+    def get_folder_page(self, item_driveid=None, item_id=None, path=None, page_size=500, page_token=None, on_items_page_completed=None):
+        """
+        Up to page_size items of a folder, given as in get_folder_items, and the token of the next page (None after
+        the last one), as (items, next_page_token). Pages are in the API's order, by name where it can sort, so that
+        they follow each other. page_token is one returned before: it comes from a plugin URL, so it must not reach
+        anything but the service's API. Returns None if cancel_operation() is true.
+        """
+        raise NotImplementedError()
+
+    def folder_signature(self, item_driveid=None, item_id=None, path=None):
+        """
+        Changes when an item of the folder is added, removed or replaced: the auto-refreshed slideshow compares it.
+        A child count misses replaced pictures, and an addition with a removal. None if cancel_operation() is true.
+        """
+        items = self.get_folder_items(item_driveid, item_id, path)
+        if items is None:
+            return None
+        entries = sorted('%s|%s|%s' % (i['id'], Utils.get_safe_value(i, 'last_modified_date'), Utils.get_safe_value(i, 'size')) for i in items)
+        return hashlib.sha1('\n'.join(entries).encode('utf-8')).hexdigest()
 
     def get_item(self, item_driveid=None, item_id=None, path=None, find_subtitles=False, include_download_info=False):
         """One item by id or path. With find_subtitles, also fills 'subtitles' using get_subtitles."""
