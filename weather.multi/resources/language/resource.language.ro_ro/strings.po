@@ -93,6 +93,26 @@ msgctxt "#32135"
 msgid "To use maps, get an api key at: http://openweathermap.org/appid"
 msgstr "Pentru a folosi hărțile, luați o cheie API de la: http://openweathermap.org/appid"
 
+msgctxt "#32196"
+msgid "Partly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Mostly Cloudy With Flurries"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Partly Sunny With Flurries"
+msgstr ""
+
+msgctxt "#32199"
+msgid "Mostly Cloudy With Snow"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Scattered Thunderstorms Night"
+msgstr ""
+
 msgctxt "#32201"
 msgid "Thunderstorm with light rain"
 msgstr "Furtună cu tunete și ploaie ușoară"
@@ -244,6 +264,30 @@ msgstr "Nori mohorâți"
 msgctxt "#32238"
 msgid "Unknown Precipitation"
 msgstr "Precipitație necunoscută"
+
+msgctxt "#32239"
+msgid "Partly Sunny"
+msgstr ""
+
+msgctxt "#32240"
+msgid "Intermittent Clouds"
+msgstr ""
+
+msgctxt "#32241"
+msgid "Hazy Sunshine"
+msgstr ""
+
+msgctxt "#32242"
+msgid "Hazy Moonlight"
+msgstr ""
+
+msgctxt "#32243"
+msgid "Ice"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Mostly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32245"
 msgid "Flurries"
@@ -442,12 +486,12 @@ msgid "Scattered Showers"
 msgstr "Precipitații pe alocuri"
 
 msgctxt "#32294"
-msgid "Scattered Snow Showers"
-msgstr "Precipitații de zăpadă pe alocuri"
+msgid "Partly Sunny With Showers"
+msgstr ""
 
 msgctxt "#32295"
-msgid "Scattered Thundershowers"
-msgstr "Furtuni cu tunete pe alocuri"
+msgid "Partly Cloudy With Showers"
+msgstr ""
 
 msgctxt "#32296"
 msgid "Mostly Sunny"
@@ -455,6 +499,14 @@ msgstr ""
 
 msgctxt "#32297"
 msgid "Mostly Clear"
+msgstr ""
+
+msgctxt "#32298"
+msgid "Mostly Cloudy With Thunderstorms"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Partly Sunny With Thunderstorms"
 msgstr ""
 
 msgctxt "#32300"
@@ -488,3 +540,11 @@ msgstr "Ultimul pătrar"
 msgctxt "#32307"
 msgid "Waning Crescent"
 msgstr "Lună calmă"
+
+#~ msgctxt "#32294"
+#~ msgid "Scattered Snow Showers"
+#~ msgstr "Precipitații de zăpadă pe alocuri"
+
+#~ msgctxt "#32295"
+#~ msgid "Scattered Thundershowers"
+#~ msgstr "Furtuni cu tunete pe alocuri"
