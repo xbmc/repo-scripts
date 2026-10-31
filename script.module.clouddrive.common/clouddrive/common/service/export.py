@@ -24,7 +24,7 @@ from clouddrive.common.ui.dialog import ExportScheduleDialog, DialogProgressBG
 from calendar import weekday
 from clouddrive.common.remote.errorreport import ErrorReport
 from clouddrive.common.export import ExportManager
-from clouddrive.common.account import AccountManager
+from clouddrive.common.account import AccountManager, DriveNotFoundException
 from collections import deque
 import os
 
@@ -47,6 +47,7 @@ class ExportService(object):
         self._audio_file_extensions = [x for x in KodiUtils.get_supported_media("music") if x not in ARCHIVE_EXTENSIONS]
         self._artwork_file_extensions = ['back', 'banner', 'characterart', 'clearart', 'clearlogo', 'discart', 'fanart', 'keyart', 'landscape', 'poster', 'spine', 'thumb', 'folder', 'cover', 'animatedposter', 'animatedfanart']
         self._export_progress_dialog_bg = DialogProgressBG(self._addon_name)
+        self._skipped_exports = set()
     
     def __del__(self):
         del self._system_monitor
@@ -157,7 +158,22 @@ class ExportService(object):
             msg = Utils.get_safe_value(change,'name','n/a')
         self._export_progress_dialog_bg.update(self._get_percent(completed, target), self._addon_name + ' ' + self._get_progress_header(export), msg)
     
+    def _account_exists(self, export):
+        # An export stays when its account is removed: it's skipped then, with one notification per Kodi session,
+        # instead of an "Unknown error: <drive id>" every minute (plugin.googledrive#349).
+        try:
+            self._account_manager.get_by_driveid('drive', export['driveid'])
+            return True
+        except DriveNotFoundException:
+            if export['id'] not in self._skipped_exports:
+                self._skipped_exports.add(export['id'])
+                Logger.notice('Export %s skipped: its account was removed.' % Utils.str(export['id']))
+                KodiUtils.show_notification(self._common_addon.getLocalizedString(32095) % Utils.unicode(export['name']))
+            return False
+
     def run_export(self, export):
+        if not self._account_exists(export):
+            return
         exporting = Utils.get_safe_value(export, 'exporting', False)
         Logger.debug('Run export requested. Exporting = %s' % (exporting,))
         if not exporting:
@@ -272,7 +288,7 @@ class ExportService(object):
             watch = Utils.get_safe_value(export, 'watch', False)
             exporting = Utils.get_safe_value(export, 'exporting', False)
             retry_changes = self.export_manager.get_retry_changes(exportid)
-            if (watch or len(retry_changes) > 0) and not exporting:
+            if (watch or len(retry_changes) > 0) and not exporting and self._account_exists(export):
                 items_info = self.export_manager.get_items_info(exportid)
                 if items_info:
                     export['exporting'] = True

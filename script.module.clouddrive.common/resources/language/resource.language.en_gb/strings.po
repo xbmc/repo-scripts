@@ -375,3 +375,15 @@ msgstr ""
 msgctxt "#32093"
 msgid "Remove and revoke this Kodi's access at %s"
 msgstr ""
+
+msgctxt "#32094"
+msgid "Next page"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Export '%s' skipped: its account was removed. Add the account again, or remove the export in Exports of removed accounts."
+msgstr ""
+
+msgctxt "#32096"
+msgid "Exports of removed accounts"
+msgstr ""
