@@ -16,6 +16,7 @@ Idle cost: with nothing playing (or video playing) the loop only checks a flag t
 """
 import json
 import os
+import time
 from urllib.parse import unquote
 
 import xbmc
@@ -36,6 +37,7 @@ VIS_WINDOW = 'visualisation'  # 12006
 VIS_NAME = 'Shadertoy'
 ART_LABELS = ('Player.Art(thumb)', 'Player.Art(album.thumb)', 'MusicPlayer.Cover')
 POLL = 1.0
+RETRY_DELAYS = (5, 15, 30, 60, 120)  # s after a failed cover load / texture write for the same album; then give up
 
 
 # Debug lines go to LOGDEBUG. To read them without turning on Kodi's debug log, create an empty file named
@@ -211,10 +213,19 @@ class Service(xbmc.Monitor):
         self.pending = None     # a new key seen once, applied when the next poll confirms it
         self.pil = None
         self.pil_missing_logged = False
+        self.retry_at = None    # time.time() when a failed apply() of self.key is tried again (None = nothing to retry)
+        self.retries = 0        # failed attempts for self.key so far
 
     def onSettingsChanged(self):
-        self.pack = Pack()
+        pack = Pack()
+        if pack.dir == self.pack.dir:
+            return
+        self.pack = pack
         log('pack folder %s' % self.pack.dir)
+        # the new folder needs textures too: re-apply what plays now (or write the defaults when idle) on the next pass
+        self.key = self.pending = self.retry_at = None
+        self.retries = 0
+        self.dirty = True
 
     # PIL is optional (script.module.pil, optional="true" in addon.xml)
     def _pil(self):
@@ -241,9 +252,12 @@ class Service(xbmc.Monitor):
                     self.apply(None, None)
                 elif playing:
                     self.music = True
-                elif self.key is None:  # first pass with nothing playing: clear stale colours from last session
-                    self.key = ('',)
-                    self.write_defaults()
+                if not playing and self.key is None:  # first idle pass (stale colours from the last session) or
+                    self.key = ('',)                  # a new pack folder: the default textures
+                    try:
+                        self.write_defaults()
+                    except Exception as e:  # noqa: BLE001 - a read-only pack folder must not stop the skin colours
+                        log('writing default textures failed: %s' % e, xbmc.LOGERROR)
             if self.music:
                 self.tick()
             if self.waitForAbort(POLL):
@@ -264,34 +278,44 @@ class Service(xbmc.Monitor):
         key = (info('MusicPlayer.Album'), art)  # not the artist: compilations change it every track
         if key == self.key:
             self.pending = None
+            if self.retry_at is not None and time.time() >= self.retry_at:
+                self.retry_at = None
+                log('retrying %s (attempt %d)' % (key, self.retries + 1))
+                self.apply(key, art, retry=True)
         elif key == self.pending:  # same new key on two polls in a row: settled (art can lag the track by a moment)
             self.pending = None
             self.apply(key, art)
         else:
             self.pending = key
 
-    def apply(self, key, art):
+    def apply(self, key, art, retry=False):
         """Publish the palette for `key` (None = music stopped); if the pack is installed, write its textures and
-        relaunch Shadertoy once if it is on screen."""
+        relaunch Shadertoy once if it is on screen. Returns False when the cover could not be read / decoded or the
+        textures could not be written; then the same album is tried again after RETRY_DELAYS (tick())."""
         if key is None and self.key in (None, ('',)):
-            return
+            return True
+        if not retry:  # a new album (or music stopped): a fresh retry budget
+            self.retries, self.retry_at = 0, None
         self.key = key if key is not None else ('',)
         has_pack = self.pack.exists()
         pal = pal_png = art_png = None
+        ok = True
         if art:
-            pil = self._pil()
+            pil = self._pil()  # no PIL is permanent (logged once), not a failure to retry
             data = load_cover(art) if pil else b''
             if data:
                 try:
                     pal, pal_png, art_png = P.cover_pngs(data, *pil, with_art=has_pack)
                 except Exception as e:  # noqa: BLE001
                     log('cover decode failed for %s: %s' % (art, e), xbmc.LOGERROR)
+                    ok = False
             elif pil:
                 log('no cover bytes for %s' % art)
+                ok = False
         publish(pal, art)
         if not has_pack:
             log('palette %s for %s (no pack at %s)' % (pal, key, self.pack.dir))
-            return
+            return self._done(ok, key)
         changed = False
         try:
             if pal is not None:
@@ -303,9 +327,22 @@ class Service(xbmc.Monitor):
                 log('defaults for %s' % (key,))
         except Exception as e:  # noqa: BLE001
             log('writing textures failed: %s' % e, xbmc.LOGERROR)
-            return
+            return self._done(False, key)
         if changed:
             self.reload_shadertoy()
+        return self._done(ok, key)
+
+    def _done(self, ok, key):
+        """Schedule the next attempt for a failed album (never for 'music stopped'), RETRY_DELAYS apart."""
+        if ok or key is None:
+            self.retry_at = None
+        elif self.retries < len(RETRY_DELAYS):
+            self.retry_at = time.time() + RETRY_DELAYS[self.retries]
+            self.retries += 1
+        else:
+            self.retry_at = None
+            log('giving up on %s after %d attempts' % (key, self.retries + 1), xbmc.LOGWARNING)
+        return ok
 
     def write_defaults(self):
         if not self.pack.exists():
