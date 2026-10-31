@@ -202,7 +202,7 @@ class Player:
                 continue
             quality = utils.try_get(resource, "quality")
             lic_url = ""
-            if utils.try_get(resource, "protocol") == "DASH":
+            if utils.try_get(resource, "protocol").startswith("DASH"):
                 drmlist = utils.try_get(resource, "drmList", data_type=list, default=[])
                 for item in drmlist:
                     if utils.try_get(item, "type") == "WIDEVINE":
